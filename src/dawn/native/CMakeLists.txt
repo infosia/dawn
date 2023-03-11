@@ -481,6 +481,45 @@ if (DAWN_ENABLE_D3D12)
     )
 endif()
 
+if (DAWN_ENABLE_WGSL_INTERPRETER)
+    list(APPEND private_headers
+        "interpreter/BackendInterpreter.cpp"
+        "interpreter/BackendInterpreter.h"
+        "interpreter/BindGroupInterpreter.cpp"
+        "interpreter/BindGroupInterpreter.h"
+        "interpreter/BufferInterpreter.cpp"
+        "interpreter/BufferInterpreter.h"
+        "interpreter/CommandBufferInterpreter.cpp"
+        "interpreter/CommandBufferInterpreter.h"
+        "interpreter/ComputePipelineInterpreter.cpp"
+        "interpreter/ComputePipelineInterpreter.h"
+        "interpreter/DeviceInterpreter.cpp"
+        "interpreter/DeviceInterpreter.h"
+        "interpreter/Forward.h"
+        "interpreter/PhysicalDeviceInterpreter.cpp"
+        "interpreter/PhysicalDeviceInterpreter.h"
+        "interpreter/QueueInterpreter.cpp"
+        "interpreter/QueueInterpreter.h"
+        "interpreter/RenderPipelineInterpreter.cpp"
+        "interpreter/RenderPipelineInterpreter.h"
+        "interpreter/ShaderModuleInterpreter.cpp"
+        "interpreter/ShaderModuleInterpreter.h"
+    )
+    list(APPEND source
+        "interpreter/BackendInterpreter.cpp"
+        "interpreter/BindGroupInterpreter.cpp"
+        "interpreter/BufferInterpreter.cpp"
+        "interpreter/CommandBufferInterpreter.cpp"
+        "interpreter/ComputePipelineInterpreter.cpp"
+        "interpreter/DeviceInterpreter.cpp"
+        "interpreter/PhysicalDeviceInterpreter.cpp"
+        "interpreter/QueueInterpreter.cpp"
+        "interpreter/RenderPipelineInterpreter.cpp"
+        "interpreter/ShaderModuleInterpreter.cpp"
+    )
+    list(APPEND dawn_native_private_depends tint-interp)
+endif()
+
 if (DAWN_ENABLE_METAL)
     list(APPEND headers
         "${DAWN_INCLUDE_DIR}/dawn/native/MetalBackend.h"

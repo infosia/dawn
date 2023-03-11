@@ -514,7 +514,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
         const UnpackedPtr<TextureDescriptor>& descriptor) = 0;
     virtual ResultOrError<Ref<TextureViewBase>> CreateTextureViewImpl(
         TextureBase* texture,
-        const UnpackedPtr<TextureViewDescriptor>& descriptor) = 0;
+        const TextureViewDescriptor* descriptor) = 0;
     virtual Ref<ComputePipelineBase> CreateUninitializedComputePipelineImpl(
         const UnpackedPtr<ComputePipelineDescriptor>& descriptor) = 0;
     virtual Ref<RenderPipelineBase> CreateUninitializedRenderPipelineImpl(
