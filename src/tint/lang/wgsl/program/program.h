@@ -71,6 +71,12 @@ class Program {
     /// @return this Program
     Program& operator=(Program&& rhs);
 
+    /// @returns a reference to the program's constants
+    const core::constant::Manager& Constants() const {
+        AssertNotMoved();
+        return constants_;
+    }
+
     /// @returns a reference to the program's types
     const core::type::Manager& Types() const {
         AssertNotMoved();

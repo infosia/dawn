@@ -96,6 +96,8 @@ std::string BackendTypeToString(wgpu::BackendType type) {
             return "OpenGL";
         case wgpu::BackendType::OpenGLES:
             return "OpenGLES";
+        case wgpu::BackendType::WgslInterpreter:
+            return "WgslInterpreter";
         case wgpu::BackendType::Undefined:
             return "Undefined";
     }

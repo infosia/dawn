@@ -235,6 +235,9 @@ class DynamicBufferOffsetTests : public DawnTest {
 
 // Dynamic offsets are all zero and no effect to result.
 TEST_P(DynamicBufferOffsetTests, BasicRenderPipeline) {
+    // TODO(tint:1871): Render pipelines are not supported in the interpreter.
+    DAWN_SUPPRESS_TEST_IF(IsInterpreter());
+
     wgpu::RenderPipeline pipeline = CreateRenderPipeline();
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
@@ -258,6 +261,8 @@ TEST_P(DynamicBufferOffsetTests, BasicRenderPipeline) {
 TEST_P(DynamicBufferOffsetTests, SetDynamicOffsetsRenderPipeline) {
     // TODO(42242119): fail on Qualcomm Adreno X1.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
+    // TODO(tint:1871): Render pipelines are not supported in the interpreter.
+    DAWN_SUPPRESS_TEST_IF(IsInterpreter());
 
     wgpu::RenderPipeline pipeline = CreateRenderPipeline();
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
@@ -327,6 +332,8 @@ TEST_P(DynamicBufferOffsetTests, SetDynamicOffsetsComputePipeline) {
 TEST_P(DynamicBufferOffsetTests, BasicInheritRenderPipeline) {
     // TODO(42242119): fail on Qualcomm Adreno X1.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
+    // TODO(tint:1871): Render pipelines are not supported in the interpreter.
+    DAWN_SUPPRESS_TEST_IF(IsInterpreter());
 
     wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, R"(
             @vertex
@@ -431,6 +438,8 @@ TEST_P(DynamicBufferOffsetTests, InheritDynamicOffsetsRenderPipeline) {
 
     // TODO(42242119): fail on Qualcomm Adreno X1.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsQualcomm());
+    // TODO(tint:1871): Render pipelines are not supported in the interpreter.
+    DAWN_SUPPRESS_TEST_IF(IsInterpreter());
 
     // Using default pipeline and setting dynamic offsets
     wgpu::RenderPipeline pipeline = CreateRenderPipeline();
@@ -489,6 +498,9 @@ TEST_P(DynamicBufferOffsetTests, InheritDynamicOffsetsComputePipeline) {
 
 // Setting multiple dynamic offsets for the same bindgroup in one render pass.
 TEST_P(DynamicBufferOffsetTests, UpdateDynamicOffsetsMultipleTimesRenderPipeline) {
+    // TODO(tint:1871): Render pipelines are not supported in the interpreter.
+    DAWN_SUPPRESS_TEST_IF(IsInterpreter());
+
     // Using default pipeline and setting dynamic offsets
     wgpu::RenderPipeline pipeline = CreateRenderPipeline();
 
@@ -708,6 +720,7 @@ DAWN_INSTANTIATE_TEST(DynamicBufferOffsetTests,
                       D3D11Backend(),
                       D3D12Backend(),
                       D3D12Backend({}, {"d3d12_use_root_signature_version_1_1"}),
+                      InterpreterBackend(),
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),

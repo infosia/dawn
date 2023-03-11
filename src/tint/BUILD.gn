@@ -364,6 +364,9 @@ group("tests") {
   deps = []
   if (tint_build_unittests) {
     deps += [ "${tint_src_dir}/cmd/test:tint_unittests" ]
+    if (tint_build_interpreter) {
+      deps += [ "${tint_src_dir}/interp:tint-interp-tests" ]
+    }
   }
 }
 

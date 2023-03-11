@@ -275,6 +275,9 @@ TEST_P(ComputeDispatchTests, MaxWorkgroups) {
     // TODO(crbug.com/435074717): Flaky on WARP.
     DAWN_SUPPRESS_TEST_IF(IsWARP());
 
+    // TODO(jrprice): This is too slow with the interpreter right now.
+    DAWN_SUPPRESS_TEST_IF(IsInterpreter());
+
     uint32_t max = GetSupportedLimits().maxComputeWorkgroupsPerDimension;
 
     // Test that the maximum works in each dimension.
@@ -321,6 +324,7 @@ TEST_P(ComputeDispatchTests, ExceedsMaxWorkgroupsWithOffsetNoop) {
 DAWN_INSTANTIATE_TEST(ComputeDispatchTests,
                       D3D11Backend(),
                       D3D12Backend(),
+                      InterpreterBackend(),
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),

@@ -51,6 +51,7 @@ type flags struct {
 	isolated             bool
 	build                bool
 	validate             bool
+	debug                bool
 	dumpShaders          bool
 	dumpShadersPretty    bool
 	fxc                  bool
@@ -102,6 +103,7 @@ func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, e
 	flag.StringVar(&c.flags.backend, "backend", backendDefault, "backend to use: default|null|webgpu|d3d11|d3d12|metal|vulkan|opengl|opengles."+
 		" set to 'vulkan' if VK_ICD_FILENAMES environment variable is set, 'default' otherwise")
 	flag.StringVar(&c.flags.adapterName, "adapter", "", "name (or substring) of the GPU adapter to use")
+	flag.BoolVar(&c.flags.debug, "debug", false, "run the test with interactive debugging enabled")
 	flag.BoolVar(&c.flags.dumpShaders, "dump-shaders", false, "dump WGSL shaders. Enables --verbose")
 	flag.BoolVar(&c.flags.dumpShadersPretty, "dump-shaders-pretty", false, "dump WGSL shaders, but don't run symbol renaming. May fail tests that shadow predeclared builtins. Enables --verbose")
 	flag.BoolVar(&c.flags.fxc, "fxc", false, "Use FXC instead of DXC. Disables 'use_dxc' Dawn flag")
@@ -222,6 +224,13 @@ func (c *cmd) processFlags(fsReaderWriter oswrapper.FilesystemReaderWriter) erro
 		DumpShadersPretty: c.flags.dumpShadersPretty,
 		UseFXC:            c.flags.fxc,
 	})
+
+	if c.flags.debug {
+		c.flags.dawn.Set("enable-dawn-features=wgsl_interpreter_interactive")
+		c.flags.backend = "interpreter"
+		c.flags.isolated = true
+		c.flags.NumRunners = 1
+	}
 
 	if c.flags.dumpShaders {
 		c.flags.Verbose = true

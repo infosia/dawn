@@ -260,6 +260,7 @@ class DawnTestBase {
 
     bool IsD3D11() const;
     bool IsD3D12() const;
+    bool IsInterpreter() const;
     bool IsMetal() const;
     bool IsNull() const;
     bool IsWebGPUOnWebGPU() const;
