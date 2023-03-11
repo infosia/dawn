@@ -91,6 +91,7 @@ TEST_P(BasicTests, GetInstanceCapabilities) {
 DAWN_INSTANTIATE_TEST(BasicTests,
                       D3D11Backend(),
                       D3D12Backend(),
+                      InterpreterBackend(),
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),

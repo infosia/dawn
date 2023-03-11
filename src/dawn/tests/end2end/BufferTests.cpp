@@ -423,43 +423,43 @@ TEST_P(BufferMappingTests, MapWrite_ManySimultaneous) {
         buffers[i] = device.CreateBuffer(&descriptor);
     }
 
-        std::array<wgpu::Future, kBuffers> futures;
-        for (uint32_t i = 0; i < kBuffers; ++i) {
-            futures[i] = buffers[i].MapAsync(
-                wgpu::MapMode::Write, 0, descriptor.size, GetParam().mFutureCallbackMode,
-                [&mapCompletedCount](wgpu::MapAsyncStatus status, wgpu::StringView) {
-                    ASSERT_EQ(wgpu::MapAsyncStatus::Success, status);
-                    mapCompletedCount++;
-                });
-        }
+    std::array<wgpu::Future, kBuffers> futures;
+    for (uint32_t i = 0; i < kBuffers; ++i) {
+        futures[i] = buffers[i].MapAsync(
+            wgpu::MapMode::Write, 0, descriptor.size, GetParam().mFutureCallbackMode,
+            [&mapCompletedCount](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                ASSERT_EQ(wgpu::MapAsyncStatus::Success, status);
+                mapCompletedCount++;
+            });
+    }
 
-        switch (GetParam().mFutureCallbackMode) {
-            case wgpu::CallbackMode::WaitAnyOnly: {
-                std::array<wgpu::FutureWaitInfo, kBuffers> waitInfos;
-                for (uint32_t i = 0; i < kBuffers; ++i) {
-                    waitInfos[i] = {futures[i]};
-                }
-                size_t count = waitInfos.size();
-                wgpu::InstanceCapabilities instanceCapabilities;
-                wgpu::GetInstanceCapabilities(&instanceCapabilities);
-                do {
-                    size_t waitCount = std::min(count, instanceCapabilities.timedWaitAnyMaxCount);
-                    auto waitInfoStart = waitInfos.begin() + (count - waitCount);
-                    GetInstance().WaitAny(waitCount, &*waitInfoStart, UINT64_MAX);
-                    auto it = std::partition(waitInfoStart, waitInfoStart + waitCount,
-                                             [](const auto& info) { return !info.completed; });
-                    count = std::distance(waitInfos.begin(), it);
-                } while (count > 0);
-                break;
+    switch (GetParam().mFutureCallbackMode) {
+        case wgpu::CallbackMode::WaitAnyOnly: {
+            std::array<wgpu::FutureWaitInfo, kBuffers> waitInfos;
+            for (uint32_t i = 0; i < kBuffers; ++i) {
+                waitInfos[i] = {futures[i]};
             }
-            case wgpu::CallbackMode::AllowProcessEvents:
-            case wgpu::CallbackMode::AllowSpontaneous:
-                // Wait for all mappings to complete
-                while (mapCompletedCount != kBuffers) {
-                    WaitABit();
-                }
-                break;
+            size_t count = waitInfos.size();
+            wgpu::InstanceCapabilities instanceCapabilities;
+            wgpu::GetInstanceCapabilities(&instanceCapabilities);
+            do {
+                size_t waitCount = std::min(count, instanceCapabilities.timedWaitAnyMaxCount);
+                auto waitInfoStart = waitInfos.begin() + (count - waitCount);
+                GetInstance().WaitAny(waitCount, &*waitInfoStart, UINT64_MAX);
+                auto it = std::partition(waitInfoStart, waitInfoStart + waitCount,
+                                         [](const auto& info) { return !info.completed; });
+                count = std::distance(waitInfos.begin(), it);
+            } while (count > 0);
+            break;
         }
+        case wgpu::CallbackMode::AllowProcessEvents:
+        case wgpu::CallbackMode::AllowSpontaneous:
+            // Wait for all mappings to complete
+            while (mapCompletedCount != kBuffers) {
+                WaitABit();
+            }
+            break;
+    }
 
     // All buffers are mapped, write into them and unmap them all.
     for (uint32_t i = 0; i < kBuffers; ++i) {
@@ -591,8 +591,8 @@ TEST_P(BufferMappingTests, RegressChromium1421170) {
 }
 
 DAWN_INSTANTIATE_TEST_P(BufferMappingTests,
-                        {D3D11Backend(), D3D12Backend(), MetalBackend(), VulkanBackend(),
-                         OpenGLBackend(), OpenGLESBackend()},
+                        {D3D11Backend(), D3D12Backend(), InterpreterBackend(), MetalBackend(),
+                         VulkanBackend(), OpenGLBackend(), OpenGLESBackend()},
                         std::initializer_list<wgpu::CallbackMode>{
                             wgpu::CallbackMode::WaitAnyOnly, wgpu::CallbackMode::AllowProcessEvents,
                             wgpu::CallbackMode::AllowSpontaneous});
@@ -1013,6 +1013,7 @@ DAWN_INSTANTIATE_TEST(BufferMappedAtCreationTests,
                       D3D11Backend(),
                       D3D12Backend(),
                       D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
+                      InterpreterBackend(),
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
@@ -1171,6 +1172,7 @@ TEST_P(BufferTests, CreateBufferOOMMapAsync) {
 DAWN_INSTANTIATE_TEST(BufferTests,
                       D3D11Backend(),
                       D3D12Backend(),
+                      InterpreterBackend(),
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),

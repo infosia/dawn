@@ -462,6 +462,7 @@ bool BackendRequiresCompat(wgpu::BackendType backend) {
         case wgpu::BackendType::Metal:
         case wgpu::BackendType::Vulkan:
         case wgpu::BackendType::WebGPU:
+        case wgpu::BackendType::WgslInterpreter:
         case wgpu::BackendType::Null:
             return false;
         case wgpu::BackendType::D3D11:
