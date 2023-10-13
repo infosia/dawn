@@ -50,6 +50,7 @@ enum class InstanceExt {
 
     // Others
     DebugUtils,
+    DirectDriverLoading,
     ValidationFeatures,
 
     EnumCount,
