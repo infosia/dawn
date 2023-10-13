@@ -33,6 +33,7 @@
 #include <type_traits>
 
 #include "src/utils/assert.h"
+#include "src/utils/non_copyable.h"
 #include "src/utils/platform.h"
 
 #if DAWN_PLATFORM_IS(WINDOWS)
@@ -45,13 +46,10 @@
 
 namespace dawn {
 
-class DynamicLib {
+class DynamicLib : NonCopyable {
   public:
     DynamicLib() = default;
     ~DynamicLib();
-
-    DynamicLib(const DynamicLib&) = delete;
-    DynamicLib& operator=(const DynamicLib&) = delete;
 
     DynamicLib(DynamicLib&& other);
     DynamicLib& operator=(DynamicLib&& other);
