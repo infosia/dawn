@@ -50,6 +50,7 @@ enum class InstanceExt : uint32_t {
 
     // Others
     DebugUtils,
+    DirectDriverLoading,
     ValidationFeatures,
 
     EnumCount,
