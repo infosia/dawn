@@ -1561,6 +1561,16 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 cmd->timestampWrites.querySet = querySet;
                 cmd->timestampWrites.beginningOfPassWriteIndex = beginningOfPassWriteIndex;
                 cmd->timestampWrites.endOfPassWriteIndex = endOfPassWriteIndex;
+
+                // The render pass usage tracker contains data about written queries. This is
+                // necessary on Vulkan to be able to reset queries before the start of render passes
+                // (it can only be done outside of a render pass).
+                if (beginningOfPassWriteIndex != kQuerySetIndexUndefinedTyped) {
+                    usageTracker.TrackQueryAvailability(querySet, beginningOfPassWriteIndex);
+                }
+                if (endOfPassWriteIndex != kQuerySetIndexUndefinedTyped) {
+                    usageTracker.TrackQueryAvailability(querySet, endOfPassWriteIndex);
+                }
             }
 
             if (auto* pls = descriptor.Get<RenderPassPixelLocalStorage>()) {

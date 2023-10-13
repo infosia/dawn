@@ -33,9 +33,7 @@
 #include <cstring>
 #include <utility>
 
-#include "dawn/common/Constants.h"
 #include "dawn/native/Adapter.h"
-#include "dawn/native/Buffer.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/CommandValidation.h"
@@ -429,9 +427,9 @@ void RenderPassEncoder::APIEndOcclusionQuery() {
                 DAWN_INVALID_IF(!mOcclusionQueryActive, "No occlusion queries are active.");
             }
 
-            // XXX
-            // Track the query availability with true on render pass for rewrite validation and
-            // query reset on render pass on Vulkan
+            // The render pass usage tracker contains data about written queries. This is
+            // necessary on Vulkan to be able to reset queries before the start of render passes
+            // (it can only be done outside of a render pass).
             mUsageTracker.TrackQueryAvailability(mOcclusionQuerySet.Get(),
                                                  mCurrentOcclusionQueryIndex);
 
@@ -465,9 +463,9 @@ void RenderPassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t query
 
             mCommandEncoder->TrackUsedQuerySet(querySet);
 
-            // XXX
-            // Track the query availability with true on render pass for rewrite validation and
-            // query reset on render pass on Vulkan
+            // The render pass usage tracker contains data about written queries. This is
+            // necessary on Vulkan to be able to reset queries before the start of render passes
+            // (it can only be done outside of a render pass).
             mUsageTracker.TrackQueryAvailability(querySet, queryIndex);
 
             WriteTimestampCmd* cmd =
