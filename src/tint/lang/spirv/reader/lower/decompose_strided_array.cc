@@ -178,14 +178,22 @@ struct State {
             return constant;
         }
 
-        auto* element_type = new_type->Element(0);
+        // Check if the constant is an array of padded structures.
+        // A padded structure will only appear as the element type of an array, so we only need to
+        // check the first element type.
+        const core::type::Type* padded_struct_type = nullptr;
+        if (padded_structures.Contains(new_type->Element(0))) {
+            padded_struct_type = new_type->Element(0);
+        }
+
         Vector<const core::constant::Value*, 16> elements;
         for (uint32_t i = 0; i < constant->NumElements(); i++) {
             auto* new_element = RewriteConstant(constant->Index(i));
 
-            // If the new element type of the constant is a padded structure, wrap the element.
-            if (padded_structures.Contains(element_type)) {
-                new_element = ir.constant_values.Composite(element_type, Vector{new_element});
+            // If we are rewriting an array of padded structures, then we need to wrap the original
+            // element in a constant structure.
+            if (padded_struct_type) {
+                new_element = ir.constant_values.Composite(padded_struct_type, Vector{new_element});
             }
 
             elements.Push(new_element);

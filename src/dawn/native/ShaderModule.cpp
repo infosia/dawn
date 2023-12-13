@@ -34,6 +34,7 @@
 #include <utility>
 
 #include "dawn/common/Constants.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Sha3.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
@@ -48,6 +49,12 @@
 #include "dawn/native/Sampler.h"
 #include "dawn/native/ShaderModuleParseRequest.h"
 #include "dawn/native/TintUtils.h"
+#include "tint/lang/core/ir/disassembler.h"
+#include "tint/lang/core/type/vector.h"
+#include "tint/lang/wgsl/ast/module.h"
+#include "tint/lang/wgsl/ast/var.h"
+#include "tint/lang/wgsl/sem/variable.h"
+#include "tint/lang/wgsl/writer/ir_to_program/ir_to_program.h"
 
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
 #include "dawn/native/SpirvValidation.h"
@@ -376,6 +383,33 @@ ResultOrError<PixelLocalMemberType> FromTintPixelLocalMemberType(
     DAWN_UNREACHABLE();
 }
 
+bool CanRoundtrip(tint::Program& program) {
+    // The SPIR-V backend assumes SingleEntryPoint has run.
+    uint32_t num_entry_points = 0;
+    for (auto* func : program.AST().Functions()) {
+        if (func->IsEntryPoint()) {
+            num_entry_points++;
+        }
+    }
+    if (num_entry_points > 1) {
+        return false;
+    }
+
+    // Buffer variable whose top-level store types are vec3<> types will be wrapped in structures by
+    // the SPIR-V writer, which introduces extra padding.
+    for (auto* decl : program.AST().GlobalVariables()) {
+        auto* sem_var = program.Sem().Get(decl);
+        if (tint::core::IsHostShareable(sem_var->AddressSpace())) {
+            auto* vec = sem_var->Type()->UnwrapRef()->As<tint::core::type::Vector>();
+            if (vec && vec->Width() == 3) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 // Validation errors, if any, are stored within outputParseResult instead of get returned as
 // ErrorData.
 MaybeError ParseWGSL(std::unique_ptr<tint::Source::File> file,
@@ -393,6 +427,78 @@ MaybeError ParseWGSL(std::unique_ptr<tint::Source::File> file,
 
     // If WGSL parsing succeed, store the generated Tint program with no validation error.
     if (program.IsValid()) {
+#if 1
+        if (CanRoundtrip(program)) {
+#define DUMP_ROUNDTRIP 0
+#if DUMP_ROUNDTRIP
+            dawn::InfoLog() << "\n==================\n"
+                            << "Input WGSL\n"
+                            << "==================\n"
+                            << file->content.data;
+#endif
+
+            // Convert the AST program to an IR module.
+            auto ir_from_wgsl = tint::wgsl::reader::ProgramToLoweredIR(program);
+            DAWN_INVALID_IF(ir_from_wgsl != tint::Success,
+                            "An error occurred while generating Tint IR from WGSL\n%s",
+                            ir_from_wgsl.Failure().reason);
+            // Convert the IR module to SPIR-V.
+            tint::spirv::writer::Options spirv_options;
+            spirv_options.disable_robustness = true;
+            spirv_options.emit_vertex_point_size = false;
+            spirv_options.disable_polyfill_integer_div_mod = true;
+            spirv_options.disable_workgroup_init = true;
+            auto spirvResult = tint::spirv::writer::Generate(ir_from_wgsl.Get(), spirv_options);
+            DAWN_INVALID_IF(spirvResult != tint::Success,
+                            "An error occurred while generating SPIR-V\n%s",
+                            spirvResult.Failure().reason);
+
+#if DUMP_ROUNDTRIP && DAWN_ENABLE_SPIRV_VALIDATION
+            class RoundtripDump : public LogEmitter {
+                void EmitLog(std::string_view message) override {}
+                void EmitLog(wgpu::LoggingType type, std::string_view message) override {
+                    dawn::InfoLog() << "\n=====================\n"
+                                    << "SPIR-V output\n"
+                                    << "=====================\n"
+                                    << message;
+                }
+            } roundtripDumper;
+            DumpSpirv(&roundtripDumper, spirvResult->spirv.data(), spirvResult->spirv.size());
+#endif
+
+            // Convert the SPIR-V program to an IR module.
+            auto ir_from_spirv = tint::spirv::reader::ReadIR(spirvResult->spirv);
+            DAWN_INVALID_IF(ir_from_spirv != tint::Success,
+                            "An error occurred while generating Tint IR from SPIR-V\n%s",
+                            ir_from_spirv.Failure().reason);
+
+#if DUMP_ROUNDTRIP
+            dawn::InfoLog() << "\n===============================\n"
+                            << "Tint core IR from SPIR-V\n"
+                            << "===============================\n"
+                            << tint::core::ir::Disassembler(ir_from_spirv.Get()).Plain();
+#endif
+
+            // Convert the IR module to WGSL.
+            tint::wgsl::writer::ProgramOptions program_options;
+            program_options.allowed_features = options.allowed_features;
+            auto wgslResult = tint::wgsl::writer::WgslFromIR(ir_from_spirv.Get(), program_options);
+            DAWN_INVALID_IF(wgslResult != tint::Success,
+                            "An error occurred while generating WGSL from IR\n%s",
+                            wgslResult.Failure().reason);
+
+#if DUMP_ROUNDTRIP
+            dawn::InfoLog() << "\n===================\n"
+                            << "Output WGSL\n"
+                            << "===================\n"
+                            << wgslResult.Get().wgsl;
+#endif
+
+            file = std::make_unique<tint::Source::File>("", wgslResult.Get().wgsl);
+            program = tint::wgsl::reader::Parse(file.get(), options);
+        }
+#endif
+
         outputParseResult->tintProgram = UnsafeUnserializedValue<std::optional<Ref<TintProgram>>>(
             AcquireRef(new TintProgram(std::move(program), std::move(file))));
         DAWN_ASSERT(outputParseResult->HasTintProgram() && !outputParseResult->HasError());
