@@ -81,7 +81,7 @@ void HandleAssertionFailure(const char* file,
 #if defined(DAWN_ABORT_ON_ASSERT)
     abort();
 #else
-    BreakPoint();
+    // BreakPoint();
 #endif
 }
 
