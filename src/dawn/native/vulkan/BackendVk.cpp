@@ -43,6 +43,9 @@
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
 
+#include "renderdoc_app.h"
+#include <iostream>
+
 // TODO(crbug.com/dawn/283): Link against the Vulkan Loader and remove this.
 #if defined(DAWN_ENABLE_SWIFTSHADER)
 #if DAWN_PLATFORM_IS(LINUX) || DAWN_PLATFORM_IS(FUCHSIA)
@@ -383,7 +386,12 @@ MaybeError VulkanInstance::Initialize(const InstanceBase* instance, ICD icd) {
         }
         case ICD::SwiftShader: {
 #if defined(DAWN_ENABLE_SWIFTSHADER)
-            DAWN_TRY(LoadVulkan(kSwiftshaderLibName));
+            if (GetModuleHandleA("renderdoc.dll")) {
+                DAWN_TRY(LoadVulkan(kVulkanLibName));
+            }
+            else {
+                DAWN_TRY(LoadVulkan(kSwiftshaderLibName));
+            }
             break;
 #endif  // defined(DAWN_ENABLE_SWIFTSHADER)
         // ICD::SwiftShader should not be passed if SwiftShader is not enabled.
