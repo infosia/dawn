@@ -67,6 +67,9 @@
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
 
+#include "renderdoc_app.h"
+#include <iostream>
+
 namespace dawn::native::vulkan {
 namespace {
 
@@ -79,6 +82,30 @@ struct NoopDrawFunction<R(VKAPI_PTR*)(Args...)> {
 };
 
 }  // namespace
+
+namespace {
+
+RENDERDOC_API_1_1_2* GetRenderDocAPI()
+{
+    static RENDERDOC_API_1_1_2 *rdoc_api = NULL;
+    if (rdoc_api) {
+        return rdoc_api;
+    }
+
+    // At init, on windows
+    if(HMODULE mod = GetModuleHandleA("renderdoc.dll"))
+    {
+        pRENDERDOC_GetAPI RENDERDOC_GetAPI =
+            (pRENDERDOC_GetAPI)GetProcAddress(mod, "RENDERDOC_GetAPI");
+        int ret = RENDERDOC_GetAPI(eRENDERDOC_API_Version_1_1_2, (void **)&rdoc_api);
+        assert(ret == 1);
+        (void)ret;
+    }
+
+    return rdoc_api;
+}
+
+}
 
 // static
 ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
@@ -188,6 +215,13 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     }
 
     SetLabelImpl();
+
+    auto rdoc = GetRenderDocAPI();
+    if (rdoc) {
+        std::cerr << "Starting frame capture" << std::endl;
+        auto instance = ToBackend(GetPhysicalDevice())->GetVulkanInstance()->GetVkInstance();
+        rdoc->StartFrameCapture(RENDERDOC_DEVICEPOINTER_FROM_VKINSTANCE(instance), nullptr);
+    }
 
     ToBackend(GetPhysicalDevice())->GetVulkanInstance()->StartListeningForDeviceMessages(this);
 
@@ -896,6 +930,12 @@ void Device::CheckDebugMessagesAfterDestruction() const {
 }
 
 void Device::DestroyImpl() {
+    auto rdoc = GetRenderDocAPI();
+    if (rdoc) {
+        std::cerr << "Ending frame capture" << std::endl;
+        rdoc->EndFrameCapture(mD3d11Device.Get(), nullptr);
+    }
+
     DAWN_ASSERT(GetState() == State::Disconnected);
 
     // We failed during initialization so early that we don't even have a VkDevice. There is
