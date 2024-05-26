@@ -304,6 +304,9 @@ crbug.com/367513506 [ android ] webgpu:api,validation,error_scope:current_scope:
 # maxBufferSize test causing instability
 crbug.com/407109048 [ arm ] webgpu:api,validation,capability_checks,limits,maxBufferSize:* [ Skip ]
 
+# Compressed 3D textures with BC formats
+crbug.com/342840940 webgpu:api,validation,createTexture:dimension_type_and_format_compatibility:dimension="3d";format="bc*" [ Failure ]
+
 ################################################################################
 # Triaged or Manually-Added Flakes and Failures
 ################################################################################
