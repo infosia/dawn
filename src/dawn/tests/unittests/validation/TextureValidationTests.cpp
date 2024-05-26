@@ -802,6 +802,36 @@ TEST_F(CompressedTextureFormatsValidationTests, 2DArrayTexture) {
     }
 }
 
+// Test that it is not allowed to create a 3D texture with BC format without the BCSliced3D feature.
+TEST_F(CompressedTextureFormatsValidationTests, BCSliced3DTexture) {
+  for (wgpu::TextureFormat format : utils::kBCFormats) {
+    wgpu::TextureDescriptor descriptor = CreateDefaultTextureDescriptor();
+    descriptor.format = format;
+    descriptor.size.depthOrArrayLayers = 4;
+    descriptor.dimension = wgpu::TextureDimension::e3D;
+    ASSERT_DEVICE_ERROR(device.CreateTexture(&descriptor));
+  }
+}
+
+class BCSliced3DTextureValidationTests : public TextureValidationTest {
+ protected:
+  std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+    // Sliced 3D for BC requires both BC and BCSliced3D features.
+    return {wgpu::FeatureName::TextureCompressionBC, wgpu::FeatureName::TextureCompressionBCSliced3D};
+  }
+};
+
+// Test that 3D textures with BC formats can be created when the BCSliced3D feature is enabled.
+TEST_F(BCSliced3DTextureValidationTests, BCSliced3DTextureFeature) {
+  for (wgpu::TextureFormat format : utils::kBCFormats) {
+    wgpu::TextureDescriptor descriptor = CreateDefaultTextureDescriptor();
+    descriptor.format = format;
+    descriptor.size.depthOrArrayLayers = 4;
+    descriptor.dimension = wgpu::TextureDimension::e3D;
+    device.CreateTexture(&descriptor);
+  }
+}
+
 // Test that it is not allowed to create a 1D texture in compressed formats.
 TEST_F(CompressedTextureFormatsValidationTests, 1DTexture) {
     for (wgpu::TextureFormat format : utils::kCompressedFormats) {
@@ -817,17 +847,6 @@ TEST_F(CompressedTextureFormatsValidationTests, 1DTexture) {
             device.CreateTexture(&descriptor),
             testing::HasSubstr(
                 "The dimension (TextureDimension::e1D) of a texture with a compressed format"));
-    }
-}
-
-// Test that it is not allowed to create a 3D texture in compressed formats.
-TEST_F(CompressedTextureFormatsValidationTests, 3DTexture) {
-    for (wgpu::TextureFormat format : utils::kCompressedFormats) {
-        wgpu::TextureDescriptor descriptor = CreateDefaultTextureDescriptor();
-        descriptor.format = format;
-        descriptor.size.depthOrArrayLayers = 4;
-        descriptor.dimension = wgpu::TextureDimension::e3D;
-        ASSERT_DEVICE_ERROR(device.CreateTexture(&descriptor));
     }
 }
 
