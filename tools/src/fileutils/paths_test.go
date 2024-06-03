@@ -33,12 +33,13 @@ import (
 	"testing"
 
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"github.com/google/go-cmp/cmp"
 )
 
 func TestThisLine(t *testing.T) {
 	td := fileutils.ThisLine()
-	if !strings.HasSuffix(td, "paths_test.go:40") {
+	if !strings.HasSuffix(td, "paths_test.go:41") {
 		t.Errorf("TestThisLine() returned %v", td)
 	}
 }
@@ -51,7 +52,8 @@ func TestThisDir(t *testing.T) {
 }
 
 func TestDawnRoot(t *testing.T) {
-	dr := fileutils.DawnRoot()
+	// TODO: Switch to fake implementation.
+	dr := fileutils.DawnRoot(oswrapper.GetRealOSWrapper())
 	rel, err := filepath.Rel(dr, fileutils.ThisDir())
 	if err != nil {
 		t.Fatalf("%v", err)

@@ -32,6 +32,7 @@ import (
 	"strings"
 	"testing"
 
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/tint/intrinsic/parser"
 	"dawn.googlesource.com/dawn/tools/src/tint/intrinsic/resolver"
 )
@@ -579,7 +580,8 @@ First declared here: file.txt:1:10`,
 		},
 	} {
 
-		ast, err := parser.Parse(strings.TrimSpace(string(test.src)), "file.txt")
+		// TODO: Switch to fake wrapper.
+		ast, err := parser.Parse(strings.TrimSpace(string(test.src)), "file.txt", oswrapper.GetRealOSWrapper())
 		if err != nil {
 			t.Errorf("While parsing:\n%s\nUnexpected parser error: %v", test.src, err)
 			continue

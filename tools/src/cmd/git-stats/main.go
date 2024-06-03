@@ -43,6 +43,7 @@ import (
 
 	"dawn.googlesource.com/dawn/tools/src/container"
 	"dawn.googlesource.com/dawn/tools/src/git"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 )
 
 // Flags
@@ -56,7 +57,7 @@ var (
 // main entry point
 func main() {
 	flag.Parse()
-	if err := run(); err != nil {
+	if err := run(oswrapper.GetRealOSWrapper()); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
@@ -109,7 +110,7 @@ func shouldConsiderLinesOfCommit(hash string) bool {
 // ____________^^^^^^^^^^^^^^^_
 var reEmail = regexp.MustCompile(`<([^>]+)>`)
 
-func run() error {
+func run(osWrapper oswrapper.OSWrapper) error {
 	// Parse the --after and --before flags
 	var after, before time.Time
 	var err error
@@ -137,13 +138,13 @@ func run() error {
 	}
 
 	// Create the git.Git wrapper
-	g, err := git.New(gitExe)
+	g, err := git.New(gitExe, osWrapper)
 	if err != nil {
 		return err
 	}
 
 	// Open the repo
-	r, err := g.Open(*repo)
+	r, err := g.Open(*repo, osWrapper)
 	if err != nil {
 		return err
 	}
@@ -163,7 +164,7 @@ func run() error {
 	// gathered.
 	commits := make(chan git.CommitInfo, 256)
 	go func() {
-		log, err := r.LogBetween(after, before, &git.LogBetweenOptions{})
+		log, err := r.LogBetween(after, before, &git.LogBetweenOptions{}, osWrapper)
 		if err != nil {
 			panic(fmt.Errorf("failed to gather commits: %w", err))
 		}
@@ -186,7 +187,7 @@ func run() error {
 			for commit := range commits {
 				commit := commit
 				email := reEmail.FindStringSubmatch(commit.Author)[1]
-				stats, err := r.Stats(commit, nil)
+				stats, err := r.Stats(commit, nil, osWrapper)
 				if err != nil {
 					panic(fmt.Errorf("failed to get stats for commit '%v': %w", commit.Hash, err))
 				}

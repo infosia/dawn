@@ -32,7 +32,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -40,11 +39,12 @@ import (
 	"strconv"
 	"strings"
 
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/substr"
 )
 
 func main() {
-	if err := run(); err != nil {
+	if err := run(oswrapper.GetRealOSWrapper()); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -67,7 +67,7 @@ Usage:
 	os.Exit(1)
 }
 
-func run() error {
+func run(fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	flag.Parse()
 	args := flag.Args()
 	if len(args) < 1 {
@@ -78,14 +78,14 @@ func run() error {
 	wd := filepath.Dir(exe) // The directory holding the test exe
 
 	// Create a temporary directory to hold the 'test-results.json' file
-	tmpDir, err := ioutil.TempDir("", "fix-tests")
+	tmpDir, err := fsReaderWriter.MkdirTemp("", "fix-tests")
 	if err != nil {
 		return err
 	}
-	if err := os.MkdirAll(tmpDir, 0666); err != nil {
+	if err := fsReaderWriter.MkdirAll(tmpDir, 0666); err != nil {
 		return fmt.Errorf("Failed to create temporary directory: %w", err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer fsReaderWriter.RemoveAll(tmpDir)
 
 	// Full path to the 'test-results.json' in the temporary directory
 	testResultsPath := filepath.Join(tmpDir, "test-results.json")
@@ -104,7 +104,7 @@ func run() error {
 	}
 
 	// Read the 'test-results.json' file
-	testResultsFile, err := os.Open(testResultsPath)
+	testResultsFile, err := fsReaderWriter.Open(testResultsPath)
 	if err != nil {
 		return err
 	}
@@ -127,7 +127,7 @@ func run() error {
 				}
 				seen[test] = true
 
-				if err := processFailure(test, wd, failure.Failure); err != nil {
+				if err := processFailure(test, wd, failure.Failure, fsReaderWriter); err != nil {
 					fmt.Println(fmt.Errorf("%v: %w", test, err))
 					numFailed++
 				} else {
@@ -225,7 +225,7 @@ func longestSubstringMatch(search_str string, doc_string string) MatchRange {
 	return MatchRange{best_idx_start, best_idx_end}
 }
 
-func processFailure(test, wd, failure string) error {
+func processFailure(test, wd, failure string, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	// Start by un-escaping newlines in the failure message
 	failure = strings.ReplaceAll(failure, "\\n", "\n")
 	// Matched regex strings will also need to be un-escaped, but do this after
@@ -338,7 +338,7 @@ func processFailure(test, wd, failure string) error {
 	}
 
 	// Parse the source file, split into tests
-	sourceFile, err := parseSourceFile(sourcePath)
+	sourceFile, err := parseSourceFile(sourcePath, fsReaderWriter)
 	if err != nil {
 		return fmt.Errorf("Couldn't parse tests from file '%v': %w", file, err)
 	}
@@ -360,13 +360,13 @@ func processFailure(test, wd, failure string) error {
 	sourceFile.parts[testIdx] = testSource
 
 	// Write out the source file
-	return writeSourceFile(sourcePath, sourceFile)
+	return writeSourceFile(sourcePath, sourceFile, fsReaderWriter)
 }
 
 // parseSourceFile() reads the file at path, splitting the content into chunks
 // for each TEST.
-func parseSourceFile(path string) (sourceFile, error) {
-	fileBytes, err := ioutil.ReadFile(path)
+func parseSourceFile(path string, fsReader oswrapper.FilesystemReader) (sourceFile, error) {
+	fileBytes, err := fsReader.ReadFile(path)
 	if err != nil {
 		return sourceFile{}, err
 	}
@@ -393,9 +393,9 @@ func parseSourceFile(path string) (sourceFile, error) {
 
 // writeSourceFile() joins the chunks of the file, and writes the content out to
 // path.
-func writeSourceFile(path string, file sourceFile) error {
+func writeSourceFile(path string, file sourceFile, fsWriter oswrapper.FilesystemWriter) error {
 	body := strings.Join(file.parts, "")
-	return ioutil.WriteFile(path, []byte(body), 0666)
+	return fsWriter.WriteFile(path, []byte(body), 0666)
 }
 
 type sourceFile struct {

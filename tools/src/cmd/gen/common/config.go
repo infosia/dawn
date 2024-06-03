@@ -27,7 +27,11 @@
 
 package common
 
-import "flag"
+import (
+	"flag"
+
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
+)
 
 // Config hold the common configuration between sub-commands
 type Config struct {
@@ -38,6 +42,9 @@ type Config struct {
 		// Don't emit anything, just check that files are up to date
 		CheckStale bool
 	}
+	// Largely used for testing purposes. Should be set to oswrapper.GetRealOSWrapper()
+	// not running tests.
+	OSWrapper oswrapper.OSWrapper
 }
 
 func (c *Config) RegisterFlags() {

@@ -30,16 +30,17 @@ package common
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 	"sort"
+
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 )
 
 // Expectations is a map of test to status
 type Expectations map[TestCase]Status
 
 // Load loads the results from path
-func (e *Expectations) Load(path string) error {
-	f, err := os.Open(path)
+func (e *Expectations) Load(path string, fsReader oswrapper.FilesystemReader) error {
+	f, err := fsReader.Open(path)
 	if err != nil {
 		return fmt.Errorf("failed to open expectations file: %w", err)
 	}
@@ -58,8 +59,8 @@ func (e *Expectations) Load(path string) error {
 }
 
 // Save saves the results to path
-func (e Expectations) Save(path string) error {
-	f, err := os.Create(path)
+func (e Expectations) Save(path string, fsWriter oswrapper.FilesystemWriter) error {
+	f, err := fsWriter.Create(path)
 	if err != nil {
 		return fmt.Errorf("failed to create expectations file: %w", err)
 	}

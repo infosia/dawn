@@ -31,6 +31,7 @@ import (
 	"io"
 	"os"
 
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
 )
@@ -54,8 +55,8 @@ const (
 
 // CanUseAnsiEscapeSequences looks at the process's environment to determine
 // whether its sensible to emit ansi-escape sequences.
-func CanUseAnsiEscapeSequences() bool {
-	if os.Getenv("TERM") != "dumb" &&
+func CanUseAnsiEscapeSequences(envProvider oswrapper.EnvironProvider) bool {
+	if envProvider.Getenv("TERM") != "dumb" &&
 		((isatty.IsTerminal(os.Stdout.Fd()) && isatty.IsTerminal(os.Stderr.Fd())) ||
 			(isatty.IsCygwinTerminal(os.Stdout.Fd()) && isatty.IsCygwinTerminal(os.Stderr.Fd()))) {
 		if _, disable := os.LookupEnv("NO_COLOR"); !disable {

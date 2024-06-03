@@ -34,6 +34,8 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 )
 
 type CTS struct {
@@ -103,7 +105,7 @@ func (c *CTS) QueryTestCases(verbose bool, query string) ([]TestCase, error) {
 
 // scanSourceTimestamps scans all the .js and .ts files in all subdirectories of
 // dir, and returns the file with the most recent timestamp.
-func scanSourceTimestamps(dir string, verbose bool) (time.Time, error) {
+func scanSourceTimestamps(dir string, verbose bool, fsReader oswrapper.FilesystemReader) (time.Time, error) {
 	if verbose {
 		start := time.Now()
 		fmt.Println("Scanning .js / .ts files for changes...")
@@ -113,7 +115,7 @@ func scanSourceTimestamps(dir string, verbose bool) (time.Time, error) {
 	}
 
 	mostRecentChange := time.Time{}
-	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+	err := fsReader.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		switch filepath.Ext(path) {
 		case ".ts", ".js":
 			if info.ModTime().After(mostRecentChange) {

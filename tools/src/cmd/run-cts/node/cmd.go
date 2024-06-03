@@ -31,7 +31,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
@@ -40,6 +39,7 @@ import (
 	"dawn.googlesource.com/dawn/tools/src/cov"
 	"dawn.googlesource.com/dawn/tools/src/dawn/node"
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 )
 
 type flags struct {
@@ -87,12 +87,12 @@ func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, e
 	unrollConstEvalLoopsDefault := runtime.GOOS != "windows"
 
 	backendDefault := "default"
-	if vkIcdFilenames := os.Getenv("VK_ICD_FILENAMES"); vkIcdFilenames != "" {
+	if vkIcdFilenames := cfg.OSWrapper.Getenv("VK_ICD_FILENAMES"); vkIcdFilenames != "" {
 		backendDefault = "vulkan"
 	}
 
 	c.flags.Flags.Register()
-	flag.StringVar(&c.flags.bin, "bin", fileutils.BuildPath(), "path to the directory holding cts.js and dawn.node")
+	flag.StringVar(&c.flags.bin, "bin", fileutils.BuildPath(cfg.OSWrapper), "path to the directory holding cts.js and dawn.node")
 	flag.BoolVar(&c.flags.isolated, "isolate", false, "run each test in an isolated process")
 	flag.BoolVar(&c.flags.build, "build", true, "attempt to build the CTS before running")
 	flag.BoolVar(&c.flags.validate, "validate", false, "enable backend validation")
@@ -115,15 +115,15 @@ func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, e
 
 func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 	// Process the command line flags
-	if err := c.processFlags(); err != nil {
+	if err := c.processFlags(cfg.OSWrapper); err != nil {
 		return err
 	}
 
-	if err := c.maybeInitCoverage(); err != nil {
+	if err := c.maybeInitCoverage(cfg.OSWrapper); err != nil {
 		return err
 	}
 
-	if err := c.state.CTS.Node.BuildIfRequired(c.flags.Verbose); err != nil {
+	if err := c.state.CTS.Node.BuildIfRequired(c.flags.Verbose, cfg.OSWrapper); err != nil {
 		return err
 	}
 
@@ -134,7 +134,7 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 	}
 	fmt.Printf("Testing %d test cases...\n", len(testCases))
 
-	var runner func(ctx context.Context, testCases []common.TestCase, results chan<- common.Result)
+	var runner func(ctx context.Context, testCases []common.TestCase, results chan<- common.Result, fsReaderWriter oswrapper.FilesystemReaderWriter)
 	if c.flags.isolated {
 		fmt.Println("Running in parallel isolated...")
 		runner = c.runTestCasesWithCmdline
@@ -145,7 +145,7 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 
 	resultStream := make(chan common.Result, 256)
 	go func() {
-		runner(ctx, testCases, resultStream)
+		runner(ctx, testCases, resultStream, cfg.OSWrapper)
 		close(resultStream)
 	}()
 
@@ -155,28 +155,29 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 		c.flags.Verbose,
 		c.coverage,
 		len(testCases),
-		resultStream)
+		resultStream,
+		cfg.OSWrapper)
 	if err != nil {
 		return err
 	}
 
-	if err := c.state.Close(results); err != nil {
+	if err := c.state.Close(results, cfg.OSWrapper); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (c *cmd) processFlags() error {
+func (c *cmd) processFlags(fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	// Check mandatory arguments
 	if c.flags.bin == "" {
-		return fmt.Errorf("-bin is not set. It defaults to <dawn>/out/active (%v) which does not exist", filepath.Join(fileutils.DawnRoot(), "out/active"))
+		return fmt.Errorf("-bin is not set. It defaults to <dawn>/out/active (%v) which does not exist", filepath.Join(fileutils.DawnRoot(fsReaderWriter), "out/active"))
 	}
-	if !fileutils.IsDir(c.flags.bin) {
+	if !fileutils.IsDir(c.flags.bin, fsReaderWriter) {
 		return fmt.Errorf("'%v' is not a directory", c.flags.bin)
 	}
 	for _, file := range []string{"cts.js", "dawn.node"} {
-		if !fileutils.IsFile(filepath.Join(c.flags.bin, file)) {
+		if !fileutils.IsFile(filepath.Join(c.flags.bin, file), fsReaderWriter) {
 			return fmt.Errorf("'%v' does not contain '%v'", c.flags.bin, file)
 		}
 	}
@@ -217,7 +218,7 @@ func (c *cmd) processFlags() error {
 		c.flags.Verbose = true
 	}
 
-	state, err := c.flags.Process()
+	state, err := c.flags.Process(fsReaderWriter)
 	if err != nil {
 		return err
 	}
@@ -226,7 +227,7 @@ func (c *cmd) processFlags() error {
 	return nil
 }
 
-func (c *cmd) maybeInitCoverage() error {
+func (c *cmd) maybeInitCoverage(fsReader oswrapper.FilesystemReader) error {
 	if !c.flags.genCoverage && c.flags.coverageFile == "" {
 		return nil
 	}
@@ -236,7 +237,7 @@ func (c *cmd) maybeInitCoverage() error {
 		profdata = ""
 		if runtime.GOOS == "darwin" {
 			profdata = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-profdata"
-			if !fileutils.IsExe(profdata) {
+			if !fileutils.IsExe(profdata, fsReader) {
 				profdata = ""
 			}
 		}
@@ -247,7 +248,7 @@ func (c *cmd) maybeInitCoverage() error {
 
 	llvmCov := ""
 	turboCov := filepath.Join(c.flags.bin, "turbo-cov"+fileutils.ExeExt)
-	if !fileutils.IsExe(turboCov) {
+	if !fileutils.IsExe(turboCov, fsReader) {
 		turboCov = ""
 		if path, err := exec.LookPath("llvm-cov"); err == nil {
 			llvmCov = path

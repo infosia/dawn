@@ -38,6 +38,7 @@ import (
 
 	"dawn.googlesource.com/dawn/tools/src/cmd/cts/common"
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/subcmd"
 
 	// Register sub-commands
@@ -56,7 +57,7 @@ import (
 func main() {
 	ctx := context.Background()
 
-	cfg, err := common.LoadConfig(filepath.Join(fileutils.ThisDir(), "config.json"))
+	cfg, err := common.LoadConfig(filepath.Join(fileutils.ThisDir(), "config.json"), oswrapper.GetRealOSWrapper())
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)

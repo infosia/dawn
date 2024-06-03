@@ -34,12 +34,13 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
+
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 )
 
 // Hash is a 20 byte, git object hash.
@@ -76,7 +77,7 @@ type Git struct {
 }
 
 // New returns a new Git instance
-func New(exe string) (*Git, error) {
+func New(exe string, fsReader oswrapper.FilesystemReader) (*Git, error) {
 	if exe == "" {
 		g, err := exec.LookPath("git")
 		if err != nil {
@@ -84,7 +85,7 @@ func New(exe string) (*Git, error) {
 		}
 		exe = g
 	}
-	if _, err := os.Stat(exe); err != nil {
+	if _, err := fsReader.Stat(exe); err != nil {
 		return nil, err
 	}
 	return &Git{exe: exe}, nil
@@ -119,8 +120,8 @@ var ErrRepositoryDoesNotExist = errors.New("repository does not exist")
 
 // Open opens an existing git repo at path. If the repository does not exist at
 // path then ErrRepositoryDoesNotExist is returned.
-func (g Git) Open(path string) (*Repository, error) {
-	info, err := os.Stat(filepath.Join(path, ".git"))
+func (g Git) Open(path string, fsReader oswrapper.FilesystemReader) (*Repository, error) {
+	info, err := fsReader.Stat(filepath.Join(path, ".git"))
 	if err != nil || !info.IsDir() {
 		return nil, ErrRepositoryDoesNotExist
 	}
@@ -138,8 +139,8 @@ type CloneOptions struct {
 }
 
 // Clone performs a clone of the repository at url to path.
-func (g Git) Clone(path, url string, opt *CloneOptions) (*Repository, error) {
-	if err := os.MkdirAll(path, 0777); err != nil {
+func (g Git) Clone(path, url string, opt *CloneOptions, osWrapper oswrapper.OSWrapper) (*Repository, error) {
+	if err := osWrapper.MkdirAll(path, 0777); err != nil {
 		return nil, err
 	}
 	if opt == nil {
@@ -154,7 +155,7 @@ func (g Git) Clone(path, url string, opt *CloneOptions) (*Repository, error) {
 	if opt.Branch != "" {
 		args = append(args, "--branch", opt.Branch)
 	}
-	if _, err := r.run(nil, opt.Timeout, args...); err != nil {
+	if _, err := r.run(nil, opt.Timeout, osWrapper, args...); err != nil {
 		return nil, err
 	}
 	return r, nil
@@ -180,17 +181,17 @@ type FetchOptions struct {
 
 // Fetch performs a fetch of a reference from the remote, returning the Hash of
 // the fetched reference.
-func (r Repository) Fetch(ref string, opt *FetchOptions) (Hash, error) {
+func (r Repository) Fetch(ref string, opt *FetchOptions, environProvider oswrapper.EnvironProvider) (Hash, error) {
 	if opt == nil {
 		opt = &FetchOptions{}
 	}
 	if opt.Remote == "" {
 		opt.Remote = "origin"
 	}
-	if _, err := r.run(nil, opt.Timeout, "fetch", opt.Remote, ref); err != nil {
+	if _, err := r.run(nil, opt.Timeout, environProvider, "fetch", opt.Remote, ref); err != nil {
 		return Hash{}, err
 	}
-	out, err := r.run(nil, 0, "rev-parse", "FETCH_HEAD")
+	out, err := r.run(nil, 0, environProvider, "rev-parse", "FETCH_HEAD")
 	if err != nil {
 		return Hash{}, err
 	}
@@ -208,14 +209,14 @@ type PushOptions struct {
 }
 
 // Push performs a push of the local reference to the remote reference.
-func (r Repository) Push(localRef, remoteRef string, opt *PushOptions) error {
+func (r Repository) Push(localRef, remoteRef string, opt *PushOptions, environProvider oswrapper.EnvironProvider) error {
 	if opt == nil {
 		opt = &PushOptions{}
 	}
 	if opt.Remote == "" {
 		opt.Remote = "origin"
 	}
-	url, err := r.run(nil, opt.Timeout, "remote", "get-url", opt.Remote)
+	url, err := r.run(nil, opt.Timeout, environProvider, "remote", "get-url", opt.Remote)
 	if err != nil {
 		return err
 	}
@@ -223,7 +224,7 @@ func (r Repository) Push(localRef, remoteRef string, opt *PushOptions) error {
 	if err != nil {
 		return err
 	}
-	if _, err := r.run(nil, opt.Timeout, "push", url, localRef+":"+remoteRef); err != nil {
+	if _, err := r.run(nil, opt.Timeout, environProvider, "push", url, localRef+":"+remoteRef); err != nil {
 		return err
 	}
 	return nil
@@ -238,11 +239,11 @@ type AddOptions struct {
 }
 
 // Add stages the listed files
-func (r Repository) Add(path string, opt *AddOptions) error {
+func (r Repository) Add(path string, opt *AddOptions, environProvider oswrapper.EnvironProvider) error {
 	if opt == nil {
 		opt = &AddOptions{}
 	}
-	if _, err := r.run(nil, opt.Timeout, "add", path); err != nil {
+	if _, err := r.run(nil, opt.Timeout, environProvider, "add", path); err != nil {
 		return err
 	}
 	return nil
@@ -262,7 +263,7 @@ type CommitOptions struct {
 
 // Commit commits the staged files with the given message, returning the hash of
 // commit
-func (r Repository) Commit(msg string, opt *CommitOptions) (Hash, error) {
+func (r Repository) Commit(msg string, opt *CommitOptions, environProvider oswrapper.EnvironProvider) (Hash, error) {
 	if opt == nil {
 		opt = &CommitOptions{}
 	}
@@ -283,10 +284,10 @@ func (r Repository) Commit(msg string, opt *CommitOptions) (Hash, error) {
 			fmt.Sprintf("GIT_COMMITTER_EMAIL=%v", opt.AuthorEmail),
 		}
 	}
-	if _, err := r.run(env, opt.Timeout, "commit", "-m", msg); err != nil {
+	if _, err := r.run(env, opt.Timeout, environProvider, "commit", "-m", msg); err != nil {
 		return Hash{}, err
 	}
-	out, err := r.run(nil, 0, "rev-parse", "HEAD")
+	out, err := r.run(nil, 0, environProvider, "rev-parse", "HEAD")
 	if err != nil {
 		return Hash{}, err
 	}
@@ -300,11 +301,11 @@ type CleanOptions struct {
 }
 
 // Clean deletes all the untracked files in the repo
-func (r Repository) Clean(opt *CleanOptions) error {
+func (r Repository) Clean(opt *CleanOptions, environProvider oswrapper.EnvironProvider) error {
 	if opt == nil {
 		opt = &CleanOptions{}
 	}
-	if _, err := r.run(nil, opt.Timeout, "clean", "-fd"); err != nil {
+	if _, err := r.run(nil, opt.Timeout, environProvider, "clean", "-fd"); err != nil {
 		return err
 	}
 	return nil
@@ -317,11 +318,11 @@ type CheckoutOptions struct {
 }
 
 // Checkout performs a checkout of a reference.
-func (r Repository) Checkout(ref string, opt *CheckoutOptions) error {
+func (r Repository) Checkout(ref string, opt *CheckoutOptions, environProvider oswrapper.EnvironProvider) error {
 	if opt == nil {
 		opt = &CheckoutOptions{}
 	}
-	if _, err := r.run(nil, opt.Timeout, "checkout", ref); err != nil {
+	if _, err := r.run(nil, opt.Timeout, environProvider, "checkout", ref); err != nil {
 		return err
 	}
 	return nil
@@ -341,7 +342,7 @@ const logPrettyFormatArg = "--pretty=format:ǁ%Hǀ%cIǀ%an <%ae>ǀ%sǀ%b"
 
 // Log returns the list of commits between two references (inclusive).
 // The first returned commit is the most recent.
-func (r Repository) Log(opt *LogOptions) ([]CommitInfo, error) {
+func (r Repository) Log(opt *LogOptions, environProvider oswrapper.EnvironProvider) ([]CommitInfo, error) {
 	if opt == nil {
 		opt = &LogOptions{}
 	}
@@ -354,7 +355,7 @@ func (r Repository) Log(opt *LogOptions) ([]CommitInfo, error) {
 		rng = opt.From + "^.." + rng
 	}
 	args = append(args, rng, logPrettyFormatArg)
-	out, err := r.run(nil, opt.Timeout, args...)
+	out, err := r.run(nil, opt.Timeout, environProvider, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -369,7 +370,7 @@ type LogBetweenOptions struct {
 
 // LogBetween returns the list of commits between two timestamps
 // The first returned commit is the most recent.
-func (r Repository) LogBetween(since, until time.Time, opt *LogBetweenOptions) ([]CommitInfo, error) {
+func (r Repository) LogBetween(since, until time.Time, opt *LogBetweenOptions, environProvider oswrapper.EnvironProvider) ([]CommitInfo, error) {
 	if opt == nil {
 		opt = &LogBetweenOptions{}
 	}
@@ -378,7 +379,7 @@ func (r Repository) LogBetween(since, until time.Time, opt *LogBetweenOptions) (
 		"--until", until.Format(time.RFC3339),
 		logPrettyFormatArg,
 	}
-	out, err := r.run(nil, opt.Timeout, args...)
+	out, err := r.run(nil, opt.Timeout, environProvider, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -401,14 +402,14 @@ type StatsOptions struct {
 }
 
 // StatsOptions returns the statistics for a given change
-func (r Repository) Stats(commit CommitInfo, opt *StatsOptions) (CommitStats, error) {
+func (r Repository) Stats(commit CommitInfo, opt *StatsOptions, environProvider oswrapper.EnvironProvider) (CommitStats, error) {
 	if opt == nil {
 		opt = &StatsOptions{}
 	}
 
 	hash := commit.Hash.String()
 	args := []string{"diff", "--numstat", hash, hash + "^"}
-	out, err := r.run(nil, opt.Timeout, args...)
+	out, err := r.run(nil, opt.Timeout, environProvider, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -456,11 +457,11 @@ type ConfigOptions struct {
 }
 
 // Config returns the git configuration values for the repo
-func (r Repository) Config(opt *ConfigOptions) (map[string]string, error) {
+func (r Repository) Config(opt *ConfigOptions, environProvider oswrapper.EnvironProvider) (map[string]string, error) {
 	if opt == nil {
 		opt = &ConfigOptions{}
 	}
-	text, err := r.run(nil, opt.Timeout, "config", "-l")
+	text, err := r.run(nil, opt.Timeout, environProvider, "config", "-l")
 	if err != nil {
 		return nil, err
 	}
@@ -476,11 +477,11 @@ func (r Repository) Config(opt *ConfigOptions) (map[string]string, error) {
 	return out, nil
 }
 
-func (r Repository) run(env []string, timeout time.Duration, args ...string) (string, error) {
-	return r.Git.run(r.Path, env, timeout, args...)
+func (r Repository) run(env []string, timeout time.Duration, environProvider oswrapper.EnvironProvider, args ...string) (string, error) {
+	return r.Git.run(r.Path, env, timeout, environProvider, args...)
 }
 
-func (g Git) run(dir string, env []string, timeout time.Duration, args ...string) (string, error) {
+func (g Git) run(dir string, env []string, timeout time.Duration, environProvider oswrapper.EnvironProvider, args ...string) (string, error) {
 	if timeout == 0 {
 		timeout = DefaultTimeout
 	}
@@ -492,7 +493,7 @@ func (g Git) run(dir string, env []string, timeout time.Duration, args ...string
 		// Godocs for exec.Cmd.Env:
 		// "If Env contains duplicate environment keys, only the last value in
 		// the slice for each duplicate key is used.
-		cmd.Env = append(os.Environ(), env...)
+		cmd.Env = append(environProvider.Environ(), env...)
 	}
 	if g.LogAllActions {
 		fmt.Printf("%v> %v %v\n", dir, g.exe, strings.Join(args, " "))

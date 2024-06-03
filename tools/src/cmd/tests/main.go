@@ -50,6 +50,7 @@ import (
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
 	"dawn.googlesource.com/dawn/tools/src/glob"
 	"dawn.googlesource.com/dawn/tools/src/match"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/transform"
 	"github.com/fatih/color"
 	"github.com/sergi/go-diff/diffmatchpatch"
@@ -76,7 +77,7 @@ const (
 var allOutputFormats = []outputFormat{wgsl, spvasm, msl, mslIR, hlslDXC, hlslDXCIR, hlslFXC, hlslFXCIR, glsl}
 
 // The root directory of the dawn project
-var dawnRoot = fileutils.DawnRoot()
+var dawnRoot = fileutils.DawnRoot(oswrapper.GetRealOSWrapper())
 
 // The default non-flag arguments to the command
 var defaultArgs = []string{"test/tint"}
@@ -99,7 +100,7 @@ var dirsWithNoPassExpectations = []string{
 }
 
 func main() {
-	if err := run(); err != nil {
+	if err := run(oswrapper.GetRealOSWrapper()); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -129,7 +130,7 @@ optional flags:`,
 	os.Exit(1)
 }
 
-func run() error {
+func run(fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	terminalWidth, _, err := term.GetSize(int(os.Stdout.Fd()))
 	if err != nil {
 		terminalWidth = 0
@@ -144,7 +145,7 @@ func run() error {
 	flag.StringVar(&ignore, "ignore", "**.expected.*", "files to ignore in globs")
 	flag.StringVar(&dxcPath, "dxcompiler", "", "path to DXC DLL for validating HLSL output")
 	flag.StringVar(&fxcPath, "fxc", "", "path to FXC DLL for validating HLSL output")
-	flag.StringVar(&tintPath, "tint", defaultTintPath(), "path to the tint executable")
+	flag.StringVar(&tintPath, "tint", defaultTintPath(fsReaderWriter), "path to the tint executable")
 	flag.StringVar(&xcrunPath, "xcrun", "", "path to xcrun executable for validating MSL output")
 	flag.BoolVar(&verbose, "verbose", false, "print all run tests, including rows that all pass")
 	flag.BoolVar(&generateExpected, "generate-expected", false, "create or update all expected outputs")
@@ -156,7 +157,7 @@ func run() error {
 	flag.Parse()
 
 	// Check the executable can be found and actually is executable
-	if !fileutils.IsExe(tintPath) {
+	if !fileutils.IsExe(tintPath, fsReaderWriter) {
 		fmt.Fprintln(os.Stderr, "tint executable not found, please specify with --tint")
 		showUsage()
 	}
@@ -189,12 +190,12 @@ func run() error {
 		}
 
 		switch {
-		case fileutils.IsDir(arg):
+		case fileutils.IsDir(arg, fsReaderWriter):
 			// Argument is to a directory, expand out to N globs
 			for _, glob := range directoryGlobs {
 				globs = append(globs, path.Join(arg, glob))
 			}
-		case fileutils.IsFile(arg):
+		case fileutils.IsFile(arg, fsReaderWriter):
 			// Argument is a file, append to absFiles
 			absFiles = append(absFiles, arg)
 		default:
@@ -213,7 +214,7 @@ func run() error {
 
 	// Glob the absFiles to test
 	for _, g := range globs {
-		globFiles, err := glob.Glob(g)
+		globFiles, err := glob.Glob(g, fsReaderWriter)
 		if err != nil {
 			return fmt.Errorf("Failed to glob files: %w", err)
 		}
@@ -267,16 +268,16 @@ func run() error {
 		if *tool.path == "" {
 			// Look first in the directory of the tint executable
 			p, err := exec.LookPath(filepath.Join(filepath.Dir(tintPath), tool.name))
-			if err == nil && fileutils.IsExe(p) {
+			if err == nil && fileutils.IsExe(p, fsReaderWriter) {
 				*tool.path = p
 			} else {
 				// Look in PATH
 				p, err := exec.LookPath(tool.name)
-				if err == nil && fileutils.IsExe(p) {
+				if err == nil && fileutils.IsExe(p, fsReaderWriter) {
 					*tool.path = p
 				}
 			}
-		} else if !fileutils.IsExe(*tool.path) {
+		} else if !fileutils.IsExe(*tool.path, fsReaderWriter) {
 			return fmt.Errorf("%v not found at '%v'", tool.name, *tool.path)
 		}
 
@@ -294,15 +295,15 @@ func run() error {
 		fmt.Println()
 
 		toolchainHash.Write([]byte(tool.name))
-		if s, err := os.Stat(*tool.path); err == nil {
+		if s, err := fsReaderWriter.Stat(*tool.path); err == nil {
 			toolchainHash.Write([]byte(s.ModTime().String()))
 			toolchainHash.Write([]byte(fmt.Sprint(s.Size())))
 		}
 	}
 	fmt.Println()
 
-	validationCache := loadValidationCache(fmt.Sprintf("%x", toolchainHash.Sum(nil)), verbose)
-	defer saveValidationCache(validationCache)
+	validationCache := loadValidationCache(fmt.Sprintf("%x", toolchainHash.Sum(nil)), verbose, fsReaderWriter)
+	defer saveValidationCache(validationCache, fsReaderWriter)
 
 	// Build the list of results.
 	// These hold the chans used to report the job results.
@@ -331,7 +332,7 @@ func run() error {
 	for cpu := 0; cpu < numCPU; cpu++ {
 		go func() {
 			for job := range pendingJobs {
-				job.run(runCfg)
+				job.run(runCfg, fsReaderWriter)
 			}
 		}()
 	}
@@ -339,7 +340,7 @@ func run() error {
 	// Issue the jobs...
 	go func() {
 		for i, file := range absFiles { // For each test file...
-			flags, err := parseFlags(file)
+			flags, err := parseFlags(file, fsReaderWriter)
 			if err != nil {
 				fmt.Println(file+" error:", err)
 				continue
@@ -672,7 +673,7 @@ type runConfig struct {
 // We use this to scrub the path to avoid generating needless diffs.
 var reFXCErrorStringHash = regexp.MustCompile(`(?:.*?)(\(.*?\): (?:warning|error).*)`)
 
-func (j job) run(cfg runConfig) {
+func (j job) run(cfg runConfig, fsReaderWriter oswrapper.FilesystemReaderWriter) {
 	j.result <- func() status {
 		// expectedFilePath is the path to the expected output file for the given test
 		expectedFilePath := j.file + ".expected."
@@ -696,7 +697,7 @@ func (j job) run(cfg runConfig) {
 
 		// Is there an expected output file? If so, load it.
 		expected, expectedFileExists := "", false
-		if content, err := os.ReadFile(expectedFilePath); err == nil {
+		if content, err := fsReaderWriter.ReadFile(expectedFilePath); err == nil {
 			expected = string(content)
 			expectedFileExists = true
 		}
@@ -795,20 +796,20 @@ func (j job) run(cfg runConfig) {
 			}
 		}
 
-		saveExpectedFile := func(path string, content string) error {
-			return os.WriteFile(path, []byte(content), 0666)
+		saveExpectedFile := func(path string, content string, fsReaderWriter oswrapper.FilesystemWriter) error {
+			return fsReaderWriter.WriteFile(path, []byte(content), 0666)
 		}
 
 		// Do not update expected if test is marked as SKIP: TIMEOUT
 		if ok && cfg.generateExpected && !isSkipTimeoutTest && (validate || !isSkipTest) {
 			// User requested to update PASS expectations, and test passed.
 			if canEmitPassExpectationFile {
-				saveExpectedFile(expectedFilePath, out)
+				saveExpectedFile(expectedFilePath, out, fsReaderWriter)
 			} else if expectedFileExists {
 				// Test lives in a directory where we do not want to save PASS
 				// files, and there already exists an expectation file. Test has
 				// likely started passing. Delete the old expectation.
-				os.Remove(expectedFilePath)
+				fsReaderWriter.Remove(expectedFilePath)
 			}
 			matched = true // test passed and matched expectations
 		}
@@ -838,7 +839,7 @@ func (j job) run(cfg runConfig) {
 		case isSkipTest:
 			// Do not update expected if timeout test actually timed out.
 			if cfg.generateSkip && !(isSkipTimeoutTest && timedOut) {
-				saveExpectedFile(expectedFilePath, "SKIP: "+skip_str+"\n\n"+out)
+				saveExpectedFile(expectedFilePath, "SKIP: "+skip_str+"\n\n"+out, fsReaderWriter)
 			}
 			if isSkipInvalidTest {
 				return status{code: invalid, timeTaken: timeTaken}
@@ -849,7 +850,7 @@ func (j job) run(cfg runConfig) {
 		case !ok:
 			// Compiler returned non-zero exit code
 			if cfg.generateSkip {
-				saveExpectedFile(expectedFilePath, "SKIP: "+skip_str+"\n\n"+out)
+				saveExpectedFile(expectedFilePath, "SKIP: "+skip_str+"\n\n"+out, fsReaderWriter)
 			}
 			err := fmt.Errorf("%s", out)
 			return status{code: fail, err: err, timeTaken: timeTaken}
@@ -857,7 +858,7 @@ func (j job) run(cfg runConfig) {
 		default:
 			// Compiler returned zero exit code, or output was not as expected
 			if cfg.generateSkip {
-				saveExpectedFile(expectedFilePath, "SKIP: "+skip_str+"\n\n"+out)
+				saveExpectedFile(expectedFilePath, "SKIP: "+skip_str+"\n\n"+out, fsReaderWriter)
 			}
 
 			// Expected output did not match
@@ -1004,8 +1005,8 @@ type cmdLineFlags struct {
 
 // parseFlags looks for a `// flags:` or `// [format] flags:` header at the start of the file with
 // the given path, returning each of the parsed flags
-func parseFlags(path string) ([]cmdLineFlags, error) {
-	inputFile, err := os.Open(path)
+func parseFlags(path string, fsReader oswrapper.FilesystemReader) ([]cmdLineFlags, error) {
+	inputFile, err := fsReader.Open(path)
 	if err != nil {
 		return nil, err
 	}
@@ -1127,19 +1128,19 @@ type ValidationCacheFileKnownGood struct {
 	Hashes []string
 }
 
-func validationCachePath() string {
-	return filepath.Join(fileutils.DawnRoot(), "test", "tint", "validation.cache")
+func validationCachePath(fsReader oswrapper.FilesystemReader) string {
+	return filepath.Join(fileutils.DawnRoot(fsReader), "test", "tint", "validation.cache")
 }
 
 // loadValidationCache attempts to load the validation cache.
 // Returns an empty cache if the file could not be loaded, or if toolchains have changed.
-func loadValidationCache(toolchainHash string, verbose bool) validationCache {
+func loadValidationCache(toolchainHash string, verbose bool, fsReader oswrapper.FilesystemReader) validationCache {
 	out := validationCache{
 		toolchainHash: toolchainHash,
 		knownGood:     knownGoodHashes{},
 	}
 
-	file, err := os.Open(validationCachePath())
+	file, err := fsReader.Open(validationCachePath(fsReader))
 	if err != nil {
 		if verbose {
 			fmt.Println(err)
@@ -1171,7 +1172,7 @@ func loadValidationCache(toolchainHash string, verbose bool) validationCache {
 }
 
 // saveValidationCache saves the validation cache file.
-func saveValidationCache(vc validationCache) {
+func saveValidationCache(vc validationCache, fsReaderWriter oswrapper.FilesystemReaderWriter) {
 	out := ValidationCacheFile{
 		ToolchainHash: vc.toolchainHash,
 		KnownGood:     make([]ValidationCacheFileKnownGood, 0, len(vc.knownGood)),
@@ -1199,7 +1200,7 @@ func saveValidationCache(vc validationCache) {
 		return false
 	})
 
-	file, err := os.Create(validationCachePath())
+	file, err := fsReaderWriter.Create(validationCachePath(fsReaderWriter))
 	if err != nil {
 		fmt.Printf("WARNING: failed to save the validation cache file: %v\n", err)
 	}
@@ -1213,6 +1214,6 @@ func saveValidationCache(vc validationCache) {
 }
 
 // defaultTintPath returns the default path to the tint executable
-func defaultTintPath() string {
-	return filepath.Join(fileutils.DawnRoot(), "out", "active", "tint"+fileutils.ExeExt)
+func defaultTintPath(fsReader oswrapper.FilesystemReader) string {
+	return filepath.Join(fileutils.DawnRoot(fsReader), "out", "active", "tint"+fileutils.ExeExt)
 }

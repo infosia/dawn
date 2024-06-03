@@ -32,8 +32,6 @@ package template
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
-	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -41,6 +39,7 @@ import (
 
 	"dawn.googlesource.com/dawn/tools/src/container"
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/text"
 	"dawn.googlesource.com/dawn/tools/src/transform"
 )
@@ -55,8 +54,8 @@ type Template struct {
 
 // FromFile loads the template file at path and builds and returns a Template
 // using the file content
-func FromFile(path string) (*Template, error) {
-	content, err := os.ReadFile(path)
+func FromFile(path string, fsReader oswrapper.FilesystemReader) (*Template, error) {
+	content, err := fsReader.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
@@ -172,12 +171,12 @@ func (g *generator) eval(template string, args ...any) (string, error) {
 // importTmpl parses the template at the given project-relative path, merging
 // the template definitions into the global namespace.
 // Note: The body of the template is not executed.
-func (g *generator) importTmpl(path string) (string, error) {
+func (g *generator) importTmpl(path string, fsReader oswrapper.FilesystemReader) (string, error) {
 	if strings.Contains(path, "..") {
 		return "", fmt.Errorf("import path must not contain '..'")
 	}
-	path = filepath.Join(fileutils.DawnRoot(), path)
-	data, err := ioutil.ReadFile(path)
+	path = filepath.Join(fileutils.DawnRoot(fsReader), path)
+	data, err := fsReader.ReadFile(path)
 	if err != nil {
 		return "", fmt.Errorf("failed to open '%v': %w", path, err)
 	}
@@ -185,7 +184,7 @@ func (g *generator) importTmpl(path string) (string, error) {
 	if err := g.bindAndParse(t, string(data)); err != nil {
 		return "", fmt.Errorf("failed to parse '%v': %w", path, err)
 	}
-	if err := t.Execute(ioutil.Discard, nil); err != nil {
+	if err := t.Execute(io.Discard, nil); err != nil {
 		return "", fmt.Errorf("failed to execute '%v': %w", path, err)
 	}
 	return "", nil

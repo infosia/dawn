@@ -27,7 +27,13 @@
 
 package common
 
+import (
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
+)
+
 // Config holds common command information
 type Config struct {
-	// Currently empty
+	// Largely used for testing purposes. Should be set to oswrapper.GetRealOSWrapper()
+	// not running tests.
+	OSWrapper oswrapper.OSWrapper
 }

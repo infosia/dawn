@@ -31,31 +31,31 @@ package parser
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/tint/intrinsic/ast"
 	"dawn.googlesource.com/dawn/tools/src/tint/intrinsic/lexer"
 	"dawn.googlesource.com/dawn/tools/src/tint/intrinsic/tok"
 )
 
 // Parse produces a list of tokens for the given source code
-func Parse(source, filepath string) (*ast.AST, error) {
+func Parse(source, filepath string, fsReader oswrapper.FilesystemReader) (*ast.AST, error) {
 	out := &ast.AST{}
-	if err := parse(source, filepath, out); err != nil {
+	if err := parse(source, filepath, out, fsReader); err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func parse(source, filepath string, out *ast.AST) error {
+func parse(source, filepath string, out *ast.AST, fsReader oswrapper.FilesystemReader) error {
 	runes := []rune(source)
 	tokens, err := lexer.Lex(runes, filepath)
 	if err != nil {
 		return err
 	}
 	p := parser{tokens: tokens}
-	return p.parse(out)
+	return p.parse(out, fsReader)
 }
 
 type parser struct {
@@ -63,7 +63,7 @@ type parser struct {
 	err    error
 }
 
-func (p *parser) parse(out *ast.AST) error {
+func (p *parser) parse(out *ast.AST, fsReader oswrapper.FilesystemReader) error {
 	var attributes ast.Attributes
 	var implicitParams []ast.TemplateParam
 	for p.err == nil {
@@ -97,7 +97,7 @@ func (p *parser) parse(out *ast.AST) error {
 			if len(implicitParams) > 0 {
 				p.err = fmt.Errorf("%v unexpected implicitParams", implicitParams[0].Source)
 			}
-			p.importDecl(out)
+			p.importDecl(out, fsReader)
 		case tok.Type:
 			if len(implicitParams) > 0 {
 				p.err = fmt.Errorf("%v unexpected implicitParams", implicitParams[0].Source)
@@ -178,18 +178,18 @@ func (p *parser) matcherDecl() ast.MatcherDecl {
 	return m
 }
 
-func (p *parser) importDecl(out *ast.AST) {
+func (p *parser) importDecl(out *ast.AST, fsReader oswrapper.FilesystemReader) {
 	p.expect(tok.Import, "import declaration")
 	path := p.string()
 
-	content, err := os.ReadFile(path)
+	content, err := fsReader.ReadFile(path)
 	if err != nil {
 		p.err = fmt.Errorf("%v failed to load '%v': %w",
 			p.tokens[0].Source, path, err)
 		return
 	}
 
-	p.err = parse(string(content), path, out)
+	p.err = parse(string(content), path, out, fsReader)
 }
 
 func (p *parser) typeDecl(decos ast.Attributes) ast.TypeDecl {

@@ -34,11 +34,11 @@ package expectations
 import (
 	"fmt"
 	"io"
-	"os"
 	"sort"
 	"strings"
 
 	"dawn.googlesource.com/dawn/tools/src/cts/result"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 )
 
 // Content holds the full content of an expectations file.
@@ -69,8 +69,8 @@ type Expectation struct {
 type Expectations []Expectation
 
 // Load loads the expectation file at 'path', returning a Content.
-func Load(path string) (Content, error) {
-	content, err := os.ReadFile(path)
+func Load(path string, fsReader oswrapper.FilesystemReader) (Content, error) {
+	content, err := fsReader.ReadFile(path)
 	if err != nil {
 		return Content{}, err
 	}
@@ -82,8 +82,8 @@ func Load(path string) (Content, error) {
 }
 
 // Save saves the Content file to 'path'.
-func (c Content) Save(path string) error {
-	f, err := os.Create(path)
+func (c Content) Save(path string, fsWriter oswrapper.FilesystemWriter) error {
+	f, err := fsWriter.Create(path)
 	if err != nil {
 		return err
 	}

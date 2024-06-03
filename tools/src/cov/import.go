@@ -38,6 +38,7 @@ import (
 	"strings"
 
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 )
 
 // File describes the coverage spans in a single source file.
@@ -64,19 +65,19 @@ type Env struct {
 // AllSourceFiles returns a *Coverage containing all the source files without
 // coverage data. This populates the coverage view with files even if they
 // didn't get compiled.
-func (e Env) AllSourceFiles() *Coverage {
+func (e Env) AllSourceFiles(fsReader oswrapper.FilesystemReader) *Coverage {
 	var ignorePaths = map[string]bool{
 		//
 	}
 
-	projectRoot := fileutils.DawnRoot()
+	projectRoot := fileutils.DawnRoot(fsReader)
 
 	// Gather all the source files to include them even if there is no coverage
 	// information produced for these files. This highlights files that aren't
 	// even compiled.
 	cov := Coverage{}
 	allFiles := map[string]struct{}{}
-	filepath.Walk(filepath.Join(projectRoot, "src"), func(path string, info os.FileInfo, err error) error {
+	fsReader.Walk(filepath.Join(projectRoot, "src"), func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -99,9 +100,9 @@ func (e Env) AllSourceFiles() *Coverage {
 
 // Import uses the llvm-profdata and llvm-cov tools to import the coverage
 // information from a .profraw file.
-func (e Env) Import(profrawPath string) (*Coverage, error) {
+func (e Env) Import(profrawPath string, fsReaderWriter oswrapper.FilesystemReaderWriter) (*Coverage, error) {
 	profdata := profrawPath + ".profdata"
-	defer os.Remove(profdata)
+	defer fsReaderWriter.Remove(profdata)
 
 	if e.Profdata == "" {
 		return nil, fmt.Errorf("cov.Env.Profdata must be specified")
@@ -132,7 +133,7 @@ func (e Env) Import(profrawPath string) (*Coverage, error) {
 		if err != nil {
 			return nil, fmt.Errorf("llvm-cov errored: %v\n%v", string(data), err)
 		}
-		cov, err := e.parseCov(data)
+		cov, err := e.parseCov(data, fsReaderWriter)
 		if err != nil {
 			return nil, fmt.Errorf("failed to parse coverage json data: %w", err)
 		}
@@ -143,7 +144,7 @@ func (e Env) Import(profrawPath string) (*Coverage, error) {
 	if err != nil {
 		return nil, fmt.Errorf("turbo-cov errored: %v\n%v", string(data), err)
 	}
-	cov, err := e.parseTurboCov(data)
+	cov, err := e.parseTurboCov(data, fsReaderWriter)
 	if err != nil {
 		return nil, fmt.Errorf("failed to process turbo-cov output: %w", err)
 	}
@@ -162,7 +163,7 @@ func appendSpan(spans []Span, span Span) []Span {
 
 // https://clang.llvm.org/docs/SourceBasedCodeCoverage.html
 // https://stackoverflow.com/a/56792192
-func (e Env) parseCov(raw []byte) (*Coverage, error) {
+func (e Env) parseCov(raw []byte, fsReader oswrapper.FilesystemReader) (*Coverage, error) {
 	// line int, col int, count int64, hasCount bool, isRegionEntry bool
 	type segment []interface{}
 
@@ -185,7 +186,7 @@ func (e Env) parseCov(raw []byte) (*Coverage, error) {
 		return nil, err
 	}
 
-	projectRoot := fileutils.DawnRoot()
+	projectRoot := fileutils.DawnRoot(fsReader)
 
 	c := &Coverage{Files: make([]File, 0, len(root.Data[0].Files))}
 	for _, f := range root.Data[0].Files {
@@ -216,7 +217,7 @@ func (e Env) parseCov(raw []byte) (*Coverage, error) {
 
 // parseTurboCov parses coverage information from a `turbo-cov` file.
 // See tools/src/cmd/turbo-cov/README.md for more information
-func (e Env) parseTurboCov(data []byte) (*Coverage, error) {
+func (e Env) parseTurboCov(data []byte, fsReader oswrapper.FilesystemReader) (*Coverage, error) {
 	u32 := func() uint32 {
 		out := binary.LittleEndian.Uint32(data)
 		data = data[4:]
@@ -234,7 +235,7 @@ func (e Env) parseTurboCov(data []byte) (*Coverage, error) {
 		return string(out)
 	}
 
-	projectRoot := fileutils.DawnRoot()
+	projectRoot := fileutils.DawnRoot(fsReader)
 
 	numFiles := u32()
 	c := &Coverage{Files: make([]File, 0, numFiles)}

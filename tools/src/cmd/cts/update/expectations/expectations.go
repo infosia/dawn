@@ -40,6 +40,7 @@ import (
 	"dawn.googlesource.com/dawn/tools/src/cts/expectations"
 	"dawn.googlesource.com/dawn/tools/src/cts/query"
 	"dawn.googlesource.com/dawn/tools/src/cts/result"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"go.chromium.org/luci/auth/client/authcli"
 )
 
@@ -78,14 +79,14 @@ func (cmd) Desc() string {
 
 func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, error) {
 	c.flags.results.RegisterFlags(cfg)
-	c.flags.auth.Register(flag.CommandLine, auth.DefaultAuthOptions())
+	c.flags.auth.Register(flag.CommandLine, auth.DefaultAuthOptions(cfg.OSWrapper))
 	flag.BoolVar(&c.flags.verbose, "verbose", false, "emit additional logging")
 	flag.Var(&c.flags.expectations, "expectations", "path to CTS expectations file(s) to update")
 	return nil, nil
 }
 
-func loadTestList(path string) ([]query.Query, error) {
-	data, err := os.ReadFile(path)
+func loadTestList(path string, fsReader oswrapper.FilesystemReader) ([]query.Query, error) {
+	data, err := fsReader.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load test list: %w", err)
 	}
@@ -99,7 +100,7 @@ func loadTestList(path string) ([]query.Query, error) {
 
 func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 	if len(c.flags.expectations) == 0 {
-		c.flags.expectations = common.DefaultExpectationsPaths()
+		c.flags.expectations = common.DefaultExpectationsPaths(cfg.OSWrapper)
 	}
 
 	// Validate command line arguments
@@ -122,7 +123,7 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 	}
 
 	log.Println("loading test list...")
-	testlist, err := loadTestList(common.DefaultTestListPath())
+	testlist, err := loadTestList(common.DefaultTestListPath(cfg.OSWrapper), cfg.OSWrapper)
 	if err != nil {
 		return err
 	}
@@ -130,7 +131,7 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 	for _, expectationsFilename := range c.flags.expectations {
 		// Load the expectations file
 		log.Printf("loading expectations %s...\n", expectationsFilename)
-		ex, err := expectations.Load(expectationsFilename)
+		ex, err := expectations.Load(expectationsFilename, cfg.OSWrapper)
 		if err != nil {
 			return err
 		}
@@ -159,7 +160,7 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 		diag.Print(os.Stdout, expectationsFilename)
 
 		// Save the updated expectations file
-		err = ex.Save(expectationsFilename)
+		err = ex.Save(expectationsFilename, cfg.OSWrapper)
 		if err != nil {
 			break
 		}

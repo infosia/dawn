@@ -32,23 +32,25 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 )
 
 // CopyFile copies the file from 'src' to 'dst' replacing the existing file at 'dst' if it already
 // exists.
-func CopyFile(dst, src string) error {
-	if !IsFile(src) {
+func CopyFile(dst, src string, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
+	if !IsFile(src, fsReaderWriter) {
 		return fmt.Errorf("'%v' is not a file", src)
 	}
 
 	dstDir := filepath.Dir(dst)
-	if !IsDir(dstDir) {
-		if err := os.MkdirAll(dstDir, 0777); err != nil {
+	if !IsDir(dstDir, fsReaderWriter) {
+		if err := fsReaderWriter.MkdirAll(dstDir, 0777); err != nil {
 			return err
 		}
 	}
 
-	s, err := os.Open(src)
+	s, err := fsReaderWriter.Open(src)
 	if err != nil {
 		return err
 	}
@@ -59,7 +61,7 @@ func CopyFile(dst, src string) error {
 		return err
 	}
 
-	d, err := os.OpenFile(dst, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0666|info.Mode()&0777)
+	d, err := fsReaderWriter.OpenFile(dst, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0666|info.Mode()&0777)
 	if err != nil {
 		return err
 	}
@@ -71,21 +73,21 @@ func CopyFile(dst, src string) error {
 
 // CopyDir copies the directory and all its content from 'src' to 'dst' replacing the existing
 // directory at 'dst' if it already exists.
-func CopyDir(dst, src string) error {
-	if !IsDir(src) {
+func CopyDir(dst, src string, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
+	if !IsDir(src, fsReaderWriter) {
 		return fmt.Errorf("'%v' is not a directory", src)
 	}
-	if IsFile(dst) {
+	if IsFile(dst, fsReaderWriter) {
 		return fmt.Errorf("'%v' is a file", dst)
 	}
 
-	if IsDir(dst) {
-		if err := os.RemoveAll(dst); err != nil {
+	if IsDir(dst, fsReaderWriter) {
+		if err := fsReaderWriter.RemoveAll(dst); err != nil {
 			return err
 		}
 	}
 
-	return filepath.Walk(src, func(path string, info os.FileInfo, err error) error {
+	return fsReaderWriter.Walk(src, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -96,7 +98,7 @@ func CopyDir(dst, src string) error {
 		}
 
 		if !info.IsDir() {
-			if err := CopyFile(filepath.Join(dst, rel), path); err != nil {
+			if err := CopyFile(filepath.Join(dst, rel), path, fsReaderWriter); err != nil {
 				return err
 			}
 		}

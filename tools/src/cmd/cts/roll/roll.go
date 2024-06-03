@@ -32,7 +32,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -56,6 +56,7 @@ import (
 	"dawn.googlesource.com/dawn/tools/src/git"
 	"dawn.googlesource.com/dawn/tools/src/gitiles"
 	"dawn.googlesource.com/dawn/tools/src/glob"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/resultsdb"
 	"go.chromium.org/luci/auth"
 	"go.chromium.org/luci/auth/client/authcli"
@@ -109,10 +110,10 @@ func (cmd) Desc() string {
 func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, error) {
 	gitPath, _ := exec.LookPath("git")
 	npmPath, _ := exec.LookPath("npm")
-	c.flags.auth.Register(flag.CommandLine, commonAuth.DefaultAuthOptions(sheets.SpreadsheetsScope))
+	c.flags.auth.Register(flag.CommandLine, commonAuth.DefaultAuthOptions(cfg.OSWrapper, sheets.SpreadsheetsScope))
 	flag.StringVar(&c.flags.gitPath, "git", gitPath, "path to git")
 	flag.StringVar(&c.flags.npmPath, "npm", npmPath, "path to npm")
-	flag.StringVar(&c.flags.nodePath, "node", fileutils.NodePath(), "path to node")
+	flag.StringVar(&c.flags.nodePath, "node", fileutils.NodePath(cfg.OSWrapper), "path to node")
 	flag.StringVar(&c.flags.cacheDir, "cache", common.DefaultCacheDir, "path to the results cache")
 	flag.StringVar(&c.flags.ctsGitURL, "repo", cfg.Git.CTS.HttpsURL(), "the CTS source repo")
 	flag.StringVar(&c.flags.ctsRevision, "revision", refMain, "revision of the CTS to roll")
@@ -141,21 +142,21 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 		{name: "npm", path: c.flags.npmPath},
 		{name: "node", path: c.flags.nodePath},
 	} {
-		if _, err := os.Stat(tool.path); err != nil {
+		if _, err := cfg.OSWrapper.Stat(tool.path); err != nil {
 			return fmt.Errorf("failed to find path to %v: %v. %v", tool.name, err, tool.hint)
 		}
 	}
 
 	// Create a temporary directory for local checkouts
-	tmpDir, err := os.MkdirTemp("", "dawn-cts-roll")
+	tmpDir, err := cfg.OSWrapper.MkdirTemp("", "dawn-cts-roll")
 	if err != nil {
 		return err
 	}
-	defer os.RemoveAll(tmpDir)
+	defer cfg.OSWrapper.RemoveAll(tmpDir)
 	ctsDir := filepath.Join(tmpDir, "cts")
 
 	// Create the various service clients
-	git, err := git.New(c.flags.gitPath)
+	git, err := git.New(c.flags.gitPath, cfg.OSWrapper)
 	if err != nil {
 		return fmt.Errorf("failed to obtain authentication options: %w", err)
 	}
@@ -189,7 +190,7 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 		gitiles:             gitilesRepos{dawn: dawn},
 		ctsDir:              ctsDir,
 	}
-	return r.roll(ctx)
+	return r.roll(ctx, cfg.OSWrapper)
 }
 
 type gitilesRepos struct {
@@ -209,7 +210,7 @@ type roller struct {
 	ctsDir              string
 }
 
-func (r *roller) roll(ctx context.Context) error {
+func (r *roller) roll(ctx context.Context, osWrapper oswrapper.OSWrapper) error {
 	// Fetch the latest Dawn main revision
 	dawnHash, err := r.gitiles.dawn.Hash(ctx, refMain)
 	if err != nil {
@@ -217,13 +218,13 @@ func (r *roller) roll(ctx context.Context) error {
 	}
 
 	// Checkout the CTS at the latest revision
-	ctsRepo, err := r.checkout("cts", r.ctsDir, r.flags.ctsGitURL, r.flags.ctsRevision)
+	ctsRepo, err := r.checkout("cts", r.ctsDir, r.flags.ctsGitURL, r.flags.ctsRevision, osWrapper)
 	if err != nil {
 		return err
 	}
 
 	// Obtain the target CTS revision hash
-	ctsRevisionLog, err := ctsRepo.Log(&git.LogOptions{From: r.flags.ctsRevision + "^", To: r.flags.ctsRevision})
+	ctsRevisionLog, err := ctsRepo.Log(&git.LogOptions{From: r.flags.ctsRevision + "^", To: r.flags.ctsRevision}, osWrapper)
 	if err != nil {
 		return err
 	}
@@ -243,7 +244,7 @@ func (r *roller) roll(ctx context.Context) error {
 	log.Printf("starting CTS roll from %v to %v...", oldCTSHash[:8], newCTSHash[:8])
 
 	// Fetch the log of changes between last roll and now
-	ctsLog, err := ctsRepo.Log(&git.LogOptions{From: oldCTSHash, To: newCTSHash})
+	ctsLog, err := ctsRepo.Log(&git.LogOptions{From: oldCTSHash, To: newCTSHash}, osWrapper)
 	if err != nil {
 		return err
 	}
@@ -297,7 +298,7 @@ func (r *roller) roll(ctx context.Context) error {
 		exInfo.expectations = ex
 	}
 
-	generatedFiles, err := r.generateFiles(ctx)
+	generatedFiles, err := r.generateFiles(ctx, osWrapper)
 	if err != nil {
 		return err
 	}
@@ -464,7 +465,7 @@ func (r *roller) roll(ctx context.Context) error {
 		}
 		defer resp.Body.Close()
 
-		jsonResponse, err := ioutil.ReadAll(resp.Body)
+		jsonResponse, err := io.ReadAll(resp.Body)
 		if err != nil {
 			return err
 		}
@@ -622,18 +623,18 @@ func (r *roller) findExistingRolls() ([]gerrit.ChangeInfo, error) {
 }
 
 // checkout performs a git checkout of the repo at host to dir at the given hash
-func (r *roller) checkout(project, dir, host, hash string) (*git.Repository, error) {
+func (r *roller) checkout(project, dir, host, hash string, osWrapper oswrapper.OSWrapper) (*git.Repository, error) {
 	log.Printf("cloning %v to '%v'...", project, dir)
-	repo, err := r.git.Clone(dir, host, &git.CloneOptions{Timeout: time.Minute * 10})
+	repo, err := r.git.Clone(dir, host, &git.CloneOptions{Timeout: time.Minute * 10}, osWrapper)
 	if err != nil {
 		return nil, fmt.Errorf("failed to clone %v: %v", project, err)
 	}
 	log.Printf("checking out %v @ '%v'...", project, hash)
-	if _, err := repo.Fetch(hash, nil); err != nil {
+	if _, err := repo.Fetch(hash, nil, osWrapper); err != nil {
 		return nil, fmt.Errorf("failed to fetch project %v @ %v: %v",
 			project, hash, err)
 	}
-	if err := repo.Checkout(hash, nil); err != nil {
+	if err := repo.Checkout(hash, nil, osWrapper); err != nil {
 		return nil, fmt.Errorf("failed to checkout project %v @ %v: %v",
 			project, hash, err)
 	}
@@ -646,7 +647,7 @@ func (r *roller) checkout(project, dir, host, hash string) (*git.Repository, err
 // * CTS test list
 // * resource file list
 // * webtest file sources
-func (r *roller) generateFiles(ctx context.Context) (map[string]string, error) {
+func (r *roller) generateFiles(ctx context.Context, fsReader oswrapper.FilesystemReader) (map[string]string, error) {
 	// Run 'npm ci' to fetch modules and tsc
 	if err := common.InstallCTSDeps(ctx, r.ctsDir, r.flags.npmPath); err != nil {
 		return nil, err
@@ -665,7 +666,7 @@ func (r *roller) generateFiles(ctx context.Context) (map[string]string, error) {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		if out, err := r.genWebTestSources(ctx); err == nil {
+		if out, err := r.genWebTestSources(ctx, fsReader); err == nil {
 			mutex.Lock()
 			defer mutex.Unlock()
 			for file, content := range out {
@@ -677,7 +678,7 @@ func (r *roller) generateFiles(ctx context.Context) (map[string]string, error) {
 	}()
 
 	// Generate typescript sources list, test list, resources file list.
-	for relPath, generator := range map[string]func(context.Context) (string, error){
+	for relPath, generator := range map[string]func(context.Context, oswrapper.FilesystemReader) (string, error){
 		common.TsSourcesRelPath:     r.genTSDepList,
 		common.TestListRelPath:      r.genTestList,
 		common.ResourceFilesRelPath: r.genResourceFilesList,
@@ -686,7 +687,7 @@ func (r *roller) generateFiles(ctx context.Context) (map[string]string, error) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			if out, err := generator(ctx); err == nil {
+			if out, err := generator(ctx, fsReader); err == nil {
 				mutex.Lock()
 				defer mutex.Unlock()
 				files[relPath] = out
@@ -726,9 +727,9 @@ func (r *roller) updateDEPS(ctx context.Context, dawnRef, newCTSHash string) (ne
 // This list can be used to populate the ts_sources.txt file.
 // Requires tsc to be found at './node_modules/.bin/tsc' in the CTS directory
 // (e.g. must be called post 'npm ci')
-func (r *roller) genTSDepList(ctx context.Context) (string, error) {
+func (r *roller) genTSDepList(ctx context.Context, fsReader oswrapper.FilesystemReader) (string, error) {
 	tscPath := filepath.Join(r.ctsDir, "node_modules/.bin/tsc")
-	if !fileutils.IsExe(tscPath) {
+	if !fileutils.IsExe(tscPath, fsReader) {
 		return "", fmt.Errorf("tsc not found at '%v'", tscPath)
 	}
 
@@ -757,15 +758,15 @@ func (r *roller) genTSDepList(ctx context.Context) (string, error) {
 }
 
 // genTestList returns the newline delimited list of test names, for the CTS checkout at r.ctsDir
-func (r *roller) genTestList(ctx context.Context) (string, error) {
+func (r *roller) genTestList(ctx context.Context, fsReader oswrapper.FilesystemReader) (string, error) {
 	return common.GenTestList(ctx, r.ctsDir, r.flags.nodePath)
 }
 
 // genResourceFilesList returns a list of resource files, for the CTS checkout at r.ctsDir
 // This list can be used to populate the resource_files.txt file.
-func (r *roller) genResourceFilesList(ctx context.Context) (string, error) {
+func (r *roller) genResourceFilesList(ctx context.Context, fsReader oswrapper.FilesystemReader) (string, error) {
 	dir := filepath.Join(r.ctsDir, "src", "resources")
-	files, err := glob.Glob(filepath.Join(dir, "**"))
+	files, err := glob.Glob(filepath.Join(dir, "**"), fsReader)
 	if err != nil {
 		return "", err
 	}
@@ -780,10 +781,10 @@ func (r *roller) genResourceFilesList(ctx context.Context) (string, error) {
 }
 
 // genWebTestSources returns a map of generated webtest file names to contents, for the CTS checkout at r.ctsDir
-func (r *roller) genWebTestSources(ctx context.Context) (map[string]string, error) {
+func (r *roller) genWebTestSources(ctx context.Context, fsReader oswrapper.FilesystemReader) (map[string]string, error) {
 	generatedFiles := map[string]string{}
 	htmlSearchDir := filepath.Join(r.ctsDir, "src", "webgpu")
-	err := filepath.Walk(htmlSearchDir,
+	err := fsReader.Walk(htmlSearchDir,
 		func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err
@@ -796,7 +797,7 @@ func (r *roller) genWebTestSources(ctx context.Context) (map[string]string, erro
 				return err
 			}
 
-			data, err := os.ReadFile(path)
+			data, err := fsReader.ReadFile(path)
 			if err != nil {
 				return err
 			}

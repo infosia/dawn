@@ -32,7 +32,6 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"os"
 	"os/exec"
 	"path/filepath"
 
@@ -67,11 +66,11 @@ func (cmd) Desc() string {
 }
 
 func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, error) {
-	c.flags.auth.Register(flag.CommandLine, auth.DefaultAuthOptions(sheets.SpreadsheetsScope))
+	c.flags.auth.Register(flag.CommandLine, auth.DefaultAuthOptions(cfg.OSWrapper, sheets.SpreadsheetsScope))
 	c.flags.results.RegisterFlags(cfg)
 	npmPath, _ := exec.LookPath("npm")
 	flag.StringVar(&c.flags.npmPath, "npm", npmPath, "path to npm")
-	flag.StringVar(&c.flags.nodePath, "node", fileutils.NodePath(), "path to node")
+	flag.StringVar(&c.flags.nodePath, "node", fileutils.NodePath(cfg.OSWrapper), "path to node")
 	return nil, nil
 }
 
@@ -110,11 +109,11 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 
 	log.Printf("checking out cts @ '%v'...", ctsHash)
 
-	tmpDir, err := os.MkdirTemp("", "dawn-cts-export")
+	tmpDir, err := cfg.OSWrapper.MkdirTemp("", "dawn-cts-export")
 	if err != nil {
 		return err
 	}
-	defer os.RemoveAll(tmpDir)
+	defer cfg.OSWrapper.RemoveAll(tmpDir)
 
 	ctsDir := filepath.Join(tmpDir, "cts")
 
@@ -123,21 +122,21 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 		return fmt.Errorf("failed to find git on PATH: %w", err)
 	}
 
-	git, err := git.New(gitExe)
+	git, err := git.New(gitExe, cfg.OSWrapper)
 	if err != nil {
 		return err
 	}
 
 	log.Printf("cloning cts to '%v'...", ctsDir)
-	repo, err := git.Clone(ctsDir, cfg.Git.CTS.HttpsURL(), nil)
+	repo, err := git.Clone(ctsDir, cfg.Git.CTS.HttpsURL(), nil, cfg.OSWrapper)
 	if err != nil {
 		return fmt.Errorf("failed to clone cts: %v", err)
 	}
 
-	if _, err := repo.Fetch(ctsHash, nil); err != nil {
+	if _, err := repo.Fetch(ctsHash, nil, cfg.OSWrapper); err != nil {
 		return fmt.Errorf("failed to fetch cts: %v", err)
 	}
-	if err := repo.Checkout(ctsHash, nil); err != nil {
+	if err := repo.Checkout(ctsHash, nil, cfg.OSWrapper); err != nil {
 		return fmt.Errorf("failed to clone cts: %v", err)
 	}
 

@@ -35,7 +35,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -46,6 +45,7 @@ import (
 	"dawn.googlesource.com/dawn/tools/src/container"
 	"dawn.googlesource.com/dawn/tools/src/cts/query"
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/subcmd"
 	luciauth "go.chromium.org/luci/auth"
 	"go.chromium.org/luci/auth/client/authcli"
@@ -82,7 +82,7 @@ mode:
 
 func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, error) {
 	c.flags.source.RegisterFlags(cfg)
-	c.flags.auth.Register(flag.CommandLine, auth.DefaultAuthOptions())
+	c.flags.auth.Register(flag.CommandLine, auth.DefaultAuthOptions(cfg.OSWrapper))
 	flag.BoolVar(&c.flags.keepAlive, "keep-alive", false, "keep the server alive after the page has been closed")
 	return []string{"[cases | timing]"}, nil
 }
@@ -96,7 +96,7 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 	var err error
 	switch flag.Arg(0) {
 	case "case", "cases":
-		data, err = loadCasesData()
+		data, err = loadCasesData(cfg.OSWrapper)
 
 	case "time", "times", "timing":
 		// Validate command line arguments
@@ -117,7 +117,7 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 	// Kick the server
 	handler := http.NewServeMux()
 	handler.HandleFunc("/index.html", func(w http.ResponseWriter, r *http.Request) {
-		f, err := os.Open(filepath.Join(fileutils.ThisDir(), "treemap.html"))
+		f, err := cfg.OSWrapper.Open(filepath.Join(fileutils.ThisDir(), "treemap.html"))
 		if err != nil {
 			fmt.Fprint(w, "file not found")
 			w.WriteHeader(http.StatusNotFound)
@@ -154,8 +154,8 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 }
 
 // loadCasesData creates the JSON payload for a cases visualization
-func loadCasesData() (string, error) {
-	testlist, err := common.GenTestList(context.Background(), common.DefaultCTSPath(), fileutils.NodePath())
+func loadCasesData(fsReader oswrapper.FilesystemReader) (string, error) {
+	testlist, err := common.GenTestList(context.Background(), common.DefaultCTSPath(fsReader), fileutils.NodePath(fsReader))
 	if err != nil {
 		return "", err
 	}

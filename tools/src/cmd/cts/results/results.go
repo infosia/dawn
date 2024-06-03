@@ -64,7 +64,7 @@ func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, e
 	flag.StringVar(&c.flags.output, "o", "results.txt", "output file. '-' writes to stdout")
 	flag.BoolVar(&c.flags.unsuppressedFailuresOnly, "unsuppressed-failures-only", false, "only pull results for unsuppressed failures")
 	c.flags.source.RegisterFlags(cfg)
-	c.flags.auth.Register(flag.CommandLine, auth.DefaultAuthOptions())
+	c.flags.auth.Register(flag.CommandLine, auth.DefaultAuthOptions(cfg.OSWrapper))
 	return nil, nil
 }
 
@@ -89,7 +89,7 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 	// Open output file
 	output := os.Stdout
 	if c.flags.output != "-" {
-		output, err = os.Create(c.flags.output)
+		output, err = cfg.OSWrapper.Create(c.flags.output)
 		if err != nil {
 			return fmt.Errorf("failed to open output file '%v': %w", c.flags.output, err)
 		}

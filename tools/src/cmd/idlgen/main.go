@@ -32,7 +32,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -40,12 +39,13 @@ import (
 	"text/template"
 	"unicode"
 
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"github.com/ben-clayton/webidlparser/ast"
 	"github.com/ben-clayton/webidlparser/parser"
 )
 
 func main() {
-	if err := run(); err != nil {
+	if err := run(oswrapper.GetRealOSWrapper()); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -61,7 +61,7 @@ Usage:
 	os.Exit(1)
 }
 
-func run() error {
+func run(fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	var templatePath string
 	var outputPath string
 	flag.StringVar(&templatePath, "template", "", "the template file run with the parsed WebIDL files")
@@ -79,10 +79,10 @@ func run() error {
 	out := os.Stdout
 	if outputPath != "" {
 		dir := filepath.Dir(outputPath)
-		if err := os.MkdirAll(dir, 0777); err != nil {
+		if err := fsReaderWriter.MkdirAll(dir, 0777); err != nil {
 			return fmt.Errorf("failed to create output directory '%v'", dir)
 		}
-		file, err := os.Create(outputPath)
+		file, err := fsReaderWriter.Create(outputPath)
 		if err != nil {
 			return fmt.Errorf("failed to open output file '%v'", outputPath)
 		}
@@ -91,7 +91,7 @@ func run() error {
 	}
 
 	// Read the template file
-	tmpl, err := ioutil.ReadFile(templatePath)
+	tmpl, err := fsReaderWriter.ReadFile(templatePath)
 	if err != nil {
 		return fmt.Errorf("failed to open template file '%v'", templatePath)
 	}
@@ -101,7 +101,7 @@ func run() error {
 
 	// Parse each of the WebIDL files and add the declarations to idl
 	for _, path := range idlFiles {
-		content, err := ioutil.ReadFile(path)
+		content, err := fsReaderWriter.ReadFile(path)
 		if err != nil {
 			return fmt.Errorf("failed to open file '%v'", path)
 		}

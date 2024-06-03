@@ -43,6 +43,7 @@ import (
 	"dawn.googlesource.com/dawn/tools/src/dawn"
 	"dawn.googlesource.com/dawn/tools/src/gerrit"
 	"dawn.googlesource.com/dawn/tools/src/git"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"go.chromium.org/luci/auth/client/authcli"
 )
 
@@ -53,7 +54,7 @@ const (
 
 var (
 	repoFlag    = flag.String("repo", "dawn", "the project (tint or dawn)")
-	userFlag    = flag.String("user", defaultUser(), "user name / email")
+	userFlag    = flag.String("user", defaultUser(oswrapper.GetRealOSWrapper()), "user name / email")
 	afterFlag   = flag.String("after", "", "start date")
 	beforeFlag  = flag.String("before", "", "end date")
 	daysFlag    = flag.Int("days", 30, "interval in days (used if --after is not specified)")
@@ -62,12 +63,12 @@ var (
 	authFlags   = authcli.Flags{}
 )
 
-func defaultUser() string {
+func defaultUser(osWrapper oswrapper.OSWrapper) string {
 	if gitExe, err := exec.LookPath("git"); err == nil {
-		if g, err := git.New(gitExe); err == nil {
-			if cwd, err := os.Getwd(); err == nil {
-				if r, err := g.Open(cwd); err == nil {
-					if cfg, err := r.Config(nil); err == nil {
+		if g, err := git.New(gitExe, osWrapper); err == nil {
+			if cwd, err := osWrapper.Getwd(); err == nil {
+				if r, err := g.Open(cwd, osWrapper); err == nil {
+					if cfg, err := r.Config(nil, osWrapper); err == nil {
 						return cfg["user.email"]
 					}
 				}
@@ -78,7 +79,7 @@ func defaultUser() string {
 }
 
 func main() {
-	authFlags.Register(flag.CommandLine, auth.DefaultAuthOptions())
+	authFlags.Register(flag.CommandLine, auth.DefaultAuthOptions(oswrapper.GetRealOSWrapper()))
 
 	flag.Usage = func() {
 		out := flag.CommandLine.Output()

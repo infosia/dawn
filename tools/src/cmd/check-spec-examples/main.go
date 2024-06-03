@@ -43,7 +43,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -51,6 +50,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"golang.org/x/net/html"
 )
 
@@ -78,7 +78,7 @@ func main() {
 		flag.PrintDefaults()
 	}
 
-	err := run()
+	err := run(oswrapper.GetRealOSWrapper())
 	switch err {
 	case nil:
 		return
@@ -91,7 +91,7 @@ func main() {
 	os.Exit(1)
 }
 
-func run() error {
+func run(fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	// Parse flags
 	compilerPath := flag.String("compiler", "tint", "path to compiler executable")
 	verbose := flag.Bool("verbose", false, "print examples that pass")
@@ -144,7 +144,7 @@ func run() error {
 			return fmt.Errorf("Failed to load the WGSL spec from '%v': %w", specURL, err)
 		}
 
-		file, err := os.Open(specURL.Path)
+		file, err := fsReaderWriter.Open(specURL.Path)
 		if err != nil {
 			return fmt.Errorf("Failed to load the WGSL spec from '%v': %w", specURL, err)
 		}
@@ -171,20 +171,20 @@ func run() error {
 	}
 
 	// Create a temporary directory to hold the examples as separate files
-	tmpDir, err := ioutil.TempDir("", "wgsl-spec-examples")
+	tmpDir, err := fsReaderWriter.MkdirTemp("", "wgsl-spec-examples")
 	if err != nil {
 		return err
 	}
-	if err := os.MkdirAll(tmpDir, 0666); err != nil {
+	if err := fsReaderWriter.MkdirAll(tmpDir, 0666); err != nil {
 		return fmt.Errorf("Failed to create temporary directory: %w", err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer fsReaderWriter.RemoveAll(tmpDir)
 
 	// For each compilable WGSL example...
 	for _, e := range examples {
 		exampleURL := specURL.String() + "#" + e.name
 
-		if err := tryCompile(compiler, tmpDir, e); err != nil {
+		if err := tryCompile(compiler, tmpDir, e, fsReaderWriter); err != nil {
 			if !e.expectError {
 				fmt.Printf("✘ %v ✘\n%v\n", exampleURL, err)
 				continue
@@ -214,7 +214,7 @@ type example struct {
 // If the first compile fails then a placeholder vertex-state-entry
 // function is appended to the source, and another attempt to compile
 // the shader is made.
-func tryCompile(compiler, wd string, e example) error {
+func tryCompile(compiler, wd string, e example, fsWriter oswrapper.FilesystemWriter) error {
 	code := e.code
 	if e.functionScope {
 		code = "\n@vertex fn main() -> @builtin(position) vec4<f32> {\n" + code + " return vec4<f32>();}\n"
@@ -222,7 +222,7 @@ func tryCompile(compiler, wd string, e example) error {
 
 	addedStubFunction := false
 	for {
-		err := compile(compiler, wd, e.name, code)
+		err := compile(compiler, wd, e.name, code, fsWriter)
 		if err == nil {
 			return nil
 		}
@@ -238,10 +238,10 @@ func tryCompile(compiler, wd string, e example) error {
 }
 
 // compile creates a file in wd and uses the compiler to attempt to compile it.
-func compile(compiler, wd, name, code string) error {
+func compile(compiler, wd, name, code string, fsWriter oswrapper.FilesystemWriter) error {
 	filename := name + ".wgsl"
 	path := filepath.Join(wd, filename)
-	if err := ioutil.WriteFile(path, []byte(code), 0666); err != nil {
+	if err := fsWriter.WriteFile(path, []byte(code), 0666); err != nil {
 		return fmt.Errorf("Failed to write example file '%v'", path)
 	}
 	cmd := exec.Command(compiler, filename)

@@ -39,11 +39,12 @@ import (
 	"time"
 
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/template"
 )
 
 func main() {
-	if err := run(); err != nil {
+	if err := run(oswrapper.GetRealOSWrapper()); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -55,7 +56,7 @@ type Range struct {
 	to   int
 }
 
-func run() error {
+func run(fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	alphaRange := Range{}
 
 	iterations := 0
@@ -83,12 +84,12 @@ Searches in order: absolute, relative to CWD, then relative to `+fileutils.ThisD
 		return fmt.Errorf("missing template path")
 	}
 
-	tmpl, err := template.FromFile(tmplPath)
+	tmpl, err := template.FromFile(tmplPath, fsReaderWriter)
 	if err != nil {
 		if !filepath.IsAbs(tmplPath) {
 			// Try relative to this .go file
 			tmplPath = filepath.Join(fileutils.ThisDir(), tmplPath)
-			tmpl, err = template.FromFile(tmplPath)
+			tmpl, err = template.FromFile(tmplPath, fsReaderWriter)
 		}
 	}
 	if err != nil {
@@ -109,7 +110,7 @@ Searches in order: absolute, relative to CWD, then relative to `+fileutils.ThisD
 		funcs := template.Functions{
 			"Alpha": func() int { return alpha },
 		}
-		wgslPath, err := writeWGSLFile(tmpl, funcs)
+		wgslPath, err := writeWGSLFile(tmpl, funcs, fsReaderWriter)
 		if err != nil {
 			return err
 		}
@@ -135,9 +136,9 @@ Searches in order: absolute, relative to CWD, then relative to `+fileutils.ThisD
 	return nil
 }
 
-func writeWGSLFile(tmpl *template.Template, funcs template.Functions) (string, error) {
+func writeWGSLFile(tmpl *template.Template, funcs template.Functions, fsWriter oswrapper.FilesystemWriter) (string, error) {
 	const path = "tint-bench.wgsl"
-	wgslFile, err := os.Create(path)
+	wgslFile, err := fsWriter.Create(path)
 	if err != nil {
 		return "", fmt.Errorf("failed to create benchmark WGSL test file: %w", err)
 	}

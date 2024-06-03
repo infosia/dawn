@@ -32,7 +32,6 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"os"
 	"path/filepath"
 	"sort"
 	"strconv"
@@ -41,6 +40,7 @@ import (
 
 	"dawn.googlesource.com/dawn/tools/src/container"
 	"dawn.googlesource.com/dawn/tools/src/cts/query"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 )
 
 // Result holds the result of a CTS test
@@ -338,8 +338,8 @@ func (l List) Statuses() Statuses {
 }
 
 // Load loads the result list from the file with the given path
-func Load(path string) (ResultsByExecutionMode, error) {
-	file, err := os.Open(path)
+func Load(path string, fsReader oswrapper.FilesystemReader) (ResultsByExecutionMode, error) {
+	file, err := fsReader.Open(path)
 	if err != nil {
 		return nil, err
 	}
@@ -353,12 +353,12 @@ func Load(path string) (ResultsByExecutionMode, error) {
 }
 
 // Save saves the result list to the file with the given path
-func Save(path string, results ResultsByExecutionMode) error {
+func Save(path string, results ResultsByExecutionMode, fsWriter oswrapper.FilesystemWriter) error {
 	dir := filepath.Dir(path)
-	if err := os.MkdirAll(dir, 0777); err != nil {
+	if err := fsWriter.MkdirAll(dir, 0777); err != nil {
 		return err
 	}
-	file, err := os.Create(path)
+	file, err := fsWriter.Create(path)
 	if err != nil {
 		return err
 	}

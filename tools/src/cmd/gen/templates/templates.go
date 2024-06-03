@@ -32,7 +32,6 @@ import (
 	"flag"
 	"fmt"
 	"math/rand"
-	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -41,6 +40,7 @@ import (
 	"dawn.googlesource.com/dawn/tools/src/container"
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
 	"dawn.googlesource.com/dawn/tools/src/glob"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/template"
 	"dawn.googlesource.com/dawn/tools/src/tint/intrinsic/gen"
 	"dawn.googlesource.com/dawn/tools/src/tint/intrinsic/parser"
@@ -69,7 +69,7 @@ func (c *Cmd) RegisterFlags(ctx context.Context, cfg *common.Config) ([]string, 
 
 func (c Cmd) Run(ctx context.Context, cfg *common.Config) error {
 	staleFiles := common.StaleFiles{}
-	projectRoot := fileutils.DawnRoot()
+	projectRoot := fileutils.DawnRoot(cfg.OSWrapper)
 
 	files := flag.Args()
 	if len(files) == 0 {
@@ -81,7 +81,7 @@ func (c Cmd) Run(ctx context.Context, cfg *common.Config) error {
 				"src/tint/**.tmpl",
 				"test/tint/**.tmpl"
 			]}]
-		}`))
+		}`), cfg.OSWrapper)
 		if err != nil {
 			return err
 		}
@@ -128,14 +128,14 @@ func (c Cmd) Run(ctx context.Context, cfg *common.Config) error {
 			switch filepath.Ext(relPath) {
 			case ".cc", ".h", ".inl":
 				var err error
-				body, err = common.ClangFormat(body)
+				body, err = common.ClangFormat(body, cfg.OSWrapper)
 				if err != nil {
 					return err
 				}
 			}
 
 			// Load the old file
-			existing, err := os.ReadFile(outPath)
+			existing, err := cfg.OSWrapper.ReadFile(outPath)
 			if err != nil {
 				existing = nil
 			}
@@ -154,10 +154,10 @@ func (c Cmd) Run(ctx context.Context, cfg *common.Config) error {
 				if cfg.Flags.CheckStale {
 					staleFiles = append(staleFiles, outPath)
 				} else {
-					if err := os.MkdirAll(filepath.Dir(outPath), 0777); err != nil {
+					if err := cfg.OSWrapper.MkdirAll(filepath.Dir(outPath), 0777); err != nil {
 						return fmt.Errorf("failed to create directory for '%v': %w", outPath, err)
 					}
-					if err := os.WriteFile(outPath, []byte(newContent), 0666); err != nil {
+					if err := cfg.OSWrapper.WriteFile(outPath, []byte(newContent), 0666); err != nil {
 						return fmt.Errorf("failed to write file '%v': %w", outPath, err)
 					}
 				}
@@ -169,7 +169,7 @@ func (c Cmd) Run(ctx context.Context, cfg *common.Config) error {
 		// Write the content generated using the template and semantic info
 		_, tmplFileName := filepath.Split(tmplPath)
 		outPath := strings.TrimSuffix(tmplFileName, ".tmpl")
-		if err := generate(tmplPath, outPath, cache, writeFile); err != nil {
+		if err := generate(tmplPath, outPath, cache, writeFile, cfg.OSWrapper); err != nil {
 			return fmt.Errorf("while processing '%v': %w", tmplPath, err)
 		}
 	}
@@ -188,19 +188,20 @@ type intrinsicCache struct {
 	cachedPermuter *gen.Permutator     // lazily built by permute()
 }
 
+// TODO: Figure out how to make this work with tools/golang/bin/go run tools/src/cmd/gen/main.go --check-stale
 // Sem lazily parses and resolves the intrinsic.def file, returning the semantic info.
-func (i *intrinsicCache) Sem() (*sem.Sem, error) {
+func (i *intrinsicCache) Sem(fsReader oswrapper.FilesystemReader) (*sem.Sem, error) {
 	if i.cachedSem == nil {
 		// Load the intrinsic definition file
-		defPath := filepath.Join(fileutils.DawnRoot(), i.path)
+		defPath := filepath.Join(fileutils.DawnRoot(fsReader), i.path)
 
-		defSource, err := os.ReadFile(defPath)
+		defSource, err := fsReader.ReadFile(defPath)
 		if err != nil {
 			return nil, err
 		}
 
 		// Parse the definition file to produce an AST
-		ast, err := parser.Parse(string(defSource), i.path)
+		ast, err := parser.Parse(string(defSource), i.path, fsReader)
 		if err != nil {
 			return nil, err
 		}
@@ -218,9 +219,9 @@ func (i *intrinsicCache) Sem() (*sem.Sem, error) {
 
 // Table lazily calls and returns the result of BuildIntrinsicTable(),
 // caching the result for repeated calls.
-func (i *intrinsicCache) Table() (*gen.IntrinsicTable, error) {
+func (i *intrinsicCache) Table(fsReader oswrapper.FilesystemReader) (*gen.IntrinsicTable, error) {
 	if i.cachedTable == nil {
-		sem, err := i.Sem()
+		sem, err := i.Sem(fsReader)
 		if err != nil {
 			return nil, err
 		}
@@ -234,9 +235,9 @@ func (i *intrinsicCache) Table() (*gen.IntrinsicTable, error) {
 
 // Permute lazily calls NewPermuter(), caching the result for repeated calls,
 // then passes the argument to Permutator.Permute()
-func (i *intrinsicCache) Permute(overload *sem.Overload) ([]gen.Permutation, error) {
+func (i *intrinsicCache) Permute(overload *sem.Overload, fsReader oswrapper.FilesystemReader) ([]gen.Permutation, error) {
 	if i.cachedPermuter == nil {
-		sem, err := i.Sem()
+		sem, err := i.Sem(fsReader)
 		if err != nil {
 			return nil, err
 		}
@@ -292,7 +293,7 @@ type WriteFile func(relPath, content, comment string) error
 // generate executes the template tmpl, calling writeFile with the output.
 // See https://golang.org/pkg/text/template/ for documentation on the template
 // syntax.
-func generate(tmplPath, outPath string, cache *genCache, writeFile WriteFile) error {
+func generate(tmplPath, outPath string, cache *genCache, writeFile WriteFile, fsReader oswrapper.FilesystemReader) error {
 	g := generator{
 		cache:         cache,
 		writeFile:     writeFile,
@@ -327,7 +328,7 @@ func generate(tmplPath, outPath string, cache *genCache, writeFile WriteFile) er
 			return "", g.writeFile(relPath, content, g.commentPrefix)
 		},
 	}
-	t, err := template.FromFile(tmplPath)
+	t, err := template.FromFile(tmplPath, fsReader)
 	if err != nil {
 		return err
 	}

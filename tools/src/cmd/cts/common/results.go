@@ -33,7 +33,6 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"os"
 	"path/filepath"
 	"sort"
 	"strconv"
@@ -113,7 +112,7 @@ func (r *ResultSource) getResultsImpl(ctx context.Context, cfg Config, auth auth
 
 	// If a file was specified, then load that.
 	if r.File != "" {
-		return result.Load(r.File)
+		return result.Load(r.File, cfg.OSWrapper)
 	}
 
 	// Initialize the buildbucket and resultdb clients
@@ -225,11 +224,11 @@ func cacheResultsImpl(
 
 	var cachePath string
 	if cacheDir != "" {
-		dir := fileutils.ExpandHome(cacheDir)
+		dir := fileutils.ExpandHome(cacheDir, cfg.OSWrapper)
 		path := filepath.Join(dir, strconv.Itoa(ps.Change), fmt.Sprintf("ps-%v%v.txt", ps.Patchset, fileSuffix))
-		if _, err := os.Stat(path); err == nil {
+		if _, err := cfg.OSWrapper.Stat(path); err == nil {
 			log.Printf("loading cached results from cl %v ps %v...", ps.Change, ps.Patchset)
-			return result.Load(path)
+			return result.Load(path, cfg.OSWrapper)
 		}
 		cachePath = path
 	}
@@ -240,7 +239,7 @@ func cacheResultsImpl(
 		return nil, err
 	}
 
-	if err := result.Save(cachePath, resultsByExecutionMode); err != nil {
+	if err := result.Save(cachePath, resultsByExecutionMode, cfg.OSWrapper); err != nil {
 		log.Println("failed to save results to cache: %w", err)
 	}
 

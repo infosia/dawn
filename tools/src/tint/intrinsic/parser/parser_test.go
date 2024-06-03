@@ -31,6 +31,7 @@ import (
 	"testing"
 
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/tint/intrinsic/ast"
 	"dawn.googlesource.com/dawn/tools/src/tint/intrinsic/parser"
 	"github.com/google/go-cmp/cmp"
@@ -845,7 +846,8 @@ func TestParser(t *testing.T) {
 				}},
 			}},
 	} {
-		got, err := parser.Parse(test.src, "file.txt")
+		// TODO: Switch to fake wrapper.
+		got, err := parser.Parse(test.src, "file.txt", oswrapper.GetRealOSWrapper())
 		if err != nil {
 			t.Errorf("\n%v\nWhile parsing:\n%s\nParse() returned error: %v",
 				test.location, test.src, err)
@@ -879,7 +881,8 @@ func TestErrors(t *testing.T) {
 			"test.txt:1:2 expected 'ident' for attribute name, got 'integer'",
 		},
 	} {
-		got, err := parser.Parse(test.src, "test.txt")
+		// TODO: Switch to fake wrapper.
+		got, err := parser.Parse(test.src, "test.txt", oswrapper.GetRealOSWrapper())
 		gotErr := ""
 		if err != nil {
 			gotErr = err.Error()

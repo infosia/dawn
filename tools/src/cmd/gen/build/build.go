@@ -37,7 +37,6 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"os"
 	"os/exec"
 	"path"
 	"path/filepath"
@@ -50,6 +49,7 @@ import (
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
 	"dawn.googlesource.com/dawn/tools/src/glob"
 	"dawn.googlesource.com/dawn/tools/src/match"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/template"
 	"dawn.googlesource.com/dawn/tools/src/transform"
 	"github.com/mzohreva/gographviz/graphviz"
@@ -82,11 +82,11 @@ func (c *Cmd) RegisterFlags(ctx context.Context, cfg *common.Config) ([]string, 
 }
 
 func (c Cmd) Run(ctx context.Context, cfg *common.Config) error {
-	p := NewProject(CanonicalizePath(path.Join(fileutils.DawnRoot(), srcTint)), cfg)
+	p := NewProject(CanonicalizePath(path.Join(fileutils.DawnRoot(cfg.OSWrapper), srcTint)), cfg)
 
 	for _, stage := range []struct {
 		desc string
-		fn   func(p *Project) error
+		fn   func(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter) error
 	}{
 		{"loading 'externals.json'", loadExternals},
 		{"populating source files", populateSourceFiles},
@@ -99,14 +99,14 @@ func (c Cmd) Run(ctx context.Context, cfg *common.Config) error {
 		if cfg.Flags.Verbose {
 			log.Printf("%v...\n", stage.desc)
 		}
-		if err := stage.fn(p); err != nil {
+		if err := stage.fn(p, cfg.OSWrapper); err != nil {
 			return err
 		}
 	}
 
 	if c.flags.dot {
 		for _, kind := range AllTargetKinds {
-			if err := emitDotFile(p, kind); err != nil {
+			if err := emitDotFile(p, kind, cfg.OSWrapper); err != nil {
 				return err
 			}
 		}
@@ -119,8 +119,8 @@ func (c Cmd) Run(ctx context.Context, cfg *common.Config) error {
 }
 
 // loadExternals loads the 'externals.json' file in this directory.
-func loadExternals(p *Project) error {
-	content, err := os.ReadFile(p.externalsJsonPath)
+func loadExternals(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
+	content, err := fsReaderWriter.ReadFile(p.externalsJsonPath)
 	if err != nil {
 		return err
 	}
@@ -175,7 +175,7 @@ func loadExternals(p *Project) error {
 
 // Globs all the source files, and creates populates the Project with Directory, Target and File.
 // File name patterns are used to bin each file into a target for the directory.
-func populateSourceFiles(p *Project) error {
+func populateSourceFiles(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	paths, err := glob.Scan(p.Root, glob.MustParseConfig(`{
 		"paths": [
 			{
@@ -192,7 +192,7 @@ func populateSourceFiles(p *Project) error {
 					"fuzzers/**"
 				]
 			}]
-	}`))
+	}`), fsReaderWriter)
 	if err != nil {
 		return err
 	}
@@ -219,7 +219,7 @@ func populateSourceFiles(p *Project) error {
 // scanSourceFiles scans all the source files for:
 // * #includes to build a dependencies between targets
 // * 'GEN_BUILD:' directives
-func scanSourceFiles(p *Project) error {
+func scanSourceFiles(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	// ParsedFile describes all the includes and conditions found in a source file
 	type ParsedFile struct {
 		removeFromProject bool
@@ -234,7 +234,7 @@ func scanSourceFiles(p *Project) error {
 			return "", nil, nil
 		}
 
-		body, err := os.ReadFile(file.AbsPath())
+		body, err := fsReaderWriter.ReadFile(file.AbsPath())
 		if err != nil {
 			return path, nil, err
 		}
@@ -349,11 +349,11 @@ func scanSourceFiles(p *Project) error {
 
 // applyDirectoryConfigs loads a 'BUILD.cfg' file in each source directory (if found), and
 // applies the config to the Directory and/or Targets.
-func applyDirectoryConfigs(p *Project) error {
+func applyDirectoryConfigs(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	// For each directory in the project...
 	for _, dir := range p.Directories.Values() {
 		path := path.Join(dir.AbsPath(), "BUILD.cfg")
-		content, err := os.ReadFile(path)
+		content, err := fsReaderWriter.ReadFile(path)
 		if err != nil {
 			continue
 		}
@@ -471,7 +471,7 @@ func checkInclude(file *File, include Include, includeCondition Condition) error
 
 // buildDependencies walks all the #includes in all files, building the dependency information for
 // all targets and files in the project. Errors if any cyclic includes are found.
-func buildDependencies(p *Project) error {
+func buildDependencies(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	type state int
 	const (
 		unvisited state = iota
@@ -577,7 +577,7 @@ func buildDependencies(p *Project) error {
 }
 
 // checkForCycles ensures that the graph of target dependencies are acyclic (a DAG)
-func checkForCycles(p *Project) error {
+func checkForCycles(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	type state int
 	const (
 		unvisited state = iota
@@ -620,9 +620,9 @@ func checkForCycles(p *Project) error {
 
 // emitBuildFiles emits a 'BUILD.*' file in each source directory for each
 // 'BUILD.*.tmpl' found in this directory.
-func emitBuildFiles(p *Project) error {
+func emitBuildFiles(p *Project, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	// Glob all the template files
-	templatePaths, err := glob.Glob(path.Join(fileutils.ThisDir(), "*.tmpl"))
+	templatePaths, err := glob.Glob(path.Join(fileutils.ThisDir(), "*.tmpl"), fsReaderWriter)
 	if err != nil {
 		return err
 	}
@@ -633,7 +633,7 @@ func emitBuildFiles(p *Project) error {
 	// Load the templates
 	templates := container.NewMap[string, *template.Template]()
 	for _, path := range templatePaths {
-		tmpl, err := template.FromFile(path)
+		tmpl, err := template.FromFile(path, fsReaderWriter)
 		if err != nil {
 			return err
 		}
@@ -652,7 +652,7 @@ func emitBuildFiles(p *Project) error {
 			outputPath := path.Join(dir.AbsPath(), outputName)
 
 			// Attempt to read the existing output file
-			existing, err := os.ReadFile(outputPath)
+			existing, err := fsReaderWriter.ReadFile(outputPath)
 			if err != nil {
 				existing = nil
 			}
@@ -664,7 +664,7 @@ func emitBuildFiles(p *Project) error {
 			w := &bytes.Buffer{}
 
 			// Write the header
-			relTmplPath, err := filepath.Rel(fileutils.DawnRoot(), tmplPath)
+			relTmplPath, err := filepath.Rel(fileutils.DawnRoot(fsReaderWriter), tmplPath)
 			if err != nil {
 				return nil, err
 			}
@@ -691,7 +691,7 @@ func emitBuildFiles(p *Project) error {
 
 			if string(existing) != w.String() {
 				if !p.cfg.Flags.CheckStale {
-					if err := os.WriteFile(outputPath, w.Bytes(), 0666); err != nil {
+					if err := fsReaderWriter.WriteFile(outputPath, w.Bytes(), 0666); err != nil {
 						return nil, err
 					}
 				}
@@ -725,7 +725,7 @@ func emitBuildFiles(p *Project) error {
 }
 
 // emitDotFile writes a GraphViz DOT file visualizing the target dependency graph
-func emitDotFile(p *Project, kind TargetKind) error {
+func emitDotFile(p *Project, kind TargetKind, fsWriter oswrapper.FilesystemWriter) error {
 	g := graphviz.Graph{}
 	nodes := container.NewMap[TargetName, int]()
 	targets := []*Target{}
@@ -754,7 +754,7 @@ func emitDotFile(p *Project, kind TargetKind) error {
 	g.DefaultEdgeAttribute(graphviz.FontName, "Courier")
 	g.DefaultEdgeAttribute(graphviz.FontSize, "12")
 
-	file, err := os.Create(path.Join(p.Root, fmt.Sprintf("%v.dot", kind)))
+	file, err := fsWriter.Create(path.Join(p.Root, fmt.Sprintf("%v.dot", kind)))
 	if err != nil {
 		return err
 	}

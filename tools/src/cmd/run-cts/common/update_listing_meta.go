@@ -29,7 +29,6 @@ package common
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
@@ -37,14 +36,15 @@ import (
 
 	"dawn.googlesource.com/dawn/tools/src/container"
 	"dawn.googlesource.com/dawn/tools/src/cts/query"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 )
 
 // AddToListingMeta will add new entries to listing_meta.json for new tests, using
 // the timings in results
-func AddToListingMeta(ctsDir string, results Results) error {
+func AddToListingMeta(ctsDir string, results Results, fsReaderWriter oswrapper.FilesystemReaderWriter) error {
 	path := filepath.Join(ctsDir, "src/webgpu/listing_meta.json")
 
-	bytes, err := os.ReadFile(path)
+	bytes, err := fsReaderWriter.ReadFile(path)
 	if err != nil {
 		return fmt.Errorf("failed to read '%v': %w", path, err)
 	}
@@ -83,7 +83,7 @@ func AddToListingMeta(ctsDir string, results Results) error {
 		}
 	}
 
-	out, err := os.Create(path)
+	out, err := fsReaderWriter.Create(path)
 	if err != nil {
 		return fmt.Errorf("failed to open '%v' for writing: %w", path, err)
 	}

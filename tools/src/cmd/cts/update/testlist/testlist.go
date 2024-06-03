@@ -30,7 +30,6 @@ package testlist
 import (
 	"context"
 	"flag"
-	"os"
 	"strings"
 
 	"dawn.googlesource.com/dawn/tools/src/cmd/cts/common"
@@ -69,9 +68,9 @@ func (cmd) Desc() string {
 }
 
 func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, error) {
-	flag.StringVar(&c.flags.ctsDir, "cts", common.DefaultCTSPath(), "path to the CTS")
-	flag.StringVar(&c.flags.nodePath, "node", fileutils.NodePath(), "path to node")
-	flag.StringVar(&c.flags.output, "out", common.DefaultTestListPath(), "output testlist path")
+	flag.StringVar(&c.flags.ctsDir, "cts", common.DefaultCTSPath(cfg.OSWrapper), "path to the CTS")
+	flag.StringVar(&c.flags.nodePath, "node", fileutils.NodePath(cfg.OSWrapper), "path to node")
+	flag.StringVar(&c.flags.output, "out", common.DefaultTestListPath(cfg.OSWrapper), "output testlist path")
 	return nil, nil
 }
 
@@ -81,5 +80,5 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 		return err
 	}
 
-	return os.WriteFile(c.flags.output, []byte(list), 0666)
+	return cfg.OSWrapper.WriteFile(c.flags.output, []byte(list), 0666)
 }

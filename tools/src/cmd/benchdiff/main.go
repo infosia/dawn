@@ -33,12 +33,12 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
 
 	"dawn.googlesource.com/dawn/tools/src/bench"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 )
 
 var (
@@ -62,14 +62,14 @@ func main() {
 
 	pathA, pathB := args[0], args[1]
 
-	if err := run(pathA, pathB); err != nil {
+	if err := run(pathA, pathB, oswrapper.GetRealOSWrapper()); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(-1)
 	}
 }
 
-func run(pathA, pathB string) error {
-	fileA, err := ioutil.ReadFile(pathA)
+func run(pathA, pathB string, fsReader oswrapper.FilesystemReader) error {
+	fileA, err := fsReader.ReadFile(pathA)
 	if err != nil {
 		return err
 	}
@@ -78,7 +78,7 @@ func run(pathA, pathB string) error {
 		return err
 	}
 
-	fileB, err := ioutil.ReadFile(pathB)
+	fileB, err := fsReader.ReadFile(pathB)
 	if err != nil {
 		return err
 	}
