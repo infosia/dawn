@@ -335,7 +335,7 @@ if (DAWN_ENABLE_D3D11 OR DAWN_ENABLE_D3D12)
         "d3d/TextureD3D.cpp"
         "d3d/UtilsD3D.cpp"
     )
-    list(APPEND conditional_private_platform_depends dxguid.lib)
+    list(APPEND conditional_private_platform_depends dxguid.lib dcomp.lib)
 endif()
 
 if (DAWN_ENABLE_D3D11)
