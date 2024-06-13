@@ -213,7 +213,6 @@
             "AdapterCreateDevice",
             "AdapterGetFormatCapabilities",
             "AdapterGetInfo",
-            "AdapterGetProperties",
             "AdapterGetLimits",
             "AdapterHasFeature",
             "AdapterEnumerateFeatures",
