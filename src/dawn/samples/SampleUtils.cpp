@@ -193,6 +193,7 @@ int SampleBase::Run(unsigned int delay) {
     sample->adapter.GetInfo(&info);
     dawn::InfoLog() << "Using adapter \"" << info.device << "\"";
 
+<<<<<<< HEAD
     // Set device callbacks
     wgpu::DeviceDescriptor deviceDesc = {};
     deviceDesc.SetDeviceLostCallback(
@@ -202,6 +203,80 @@ int SampleBase::Run(unsigned int delay) {
             switch (reason) {
                 case wgpu::DeviceLostReason::Unknown:
                     reasonName = "Unknown";
+=======
+    wgpu::AdapterInfo info;
+    adapter.GetInfo(&info);
+    dawn::InfoLog() << "Using adapter \"" << info.device << "\"";
+
+    // Synchronously request the device.
+    wgpu::DeviceDescriptor deviceDesc;
+    deviceDesc.uncapturedErrorCallbackInfo = {nullptr, PrintDeviceError, nullptr};
+    deviceDesc.deviceLostCallbackInfo = {nullptr, wgpu::CallbackMode::AllowSpontaneous,
+                                         PrintDeviceLoss, nullptr};
+
+    wgpu::Device device;
+    instance.WaitAny(
+        adapter.RequestDevice(&deviceDesc, {nullptr, wgpu::CallbackMode::WaitAnyOnly,
+                                            [](WGPURequestDeviceStatus status, WGPUDevice device,
+                                               const char* message, void* userdata) {
+                                                if (status != WGPURequestDeviceStatus_Success) {
+                                                    dawn::ErrorLog()
+                                                        << "Failed to get an device:" << message;
+                                                    return;
+                                                }
+                                                *static_cast<wgpu::Device*>(userdata) =
+                                                    wgpu::Device::Acquire(device);
+                                            },
+                                            &device}),
+        UINT64_MAX);
+
+    if (device == nullptr) {
+        return wgpu::Device();
+    }
+
+    // Create the swapchain
+    surface = wgpu::glfw::CreateSurfaceForWindow(instance, window);
+
+    wgpu::SwapChainDescriptor swapChainDesc = {};
+    swapChainDesc.usage = wgpu::TextureUsage::RenderAttachment;
+    swapChainDesc.format = GetPreferredSwapChainTextureFormat();
+    swapChainDesc.width = kWidth;
+    swapChainDesc.height = kHeight;
+    swapChainDesc.presentMode = wgpu::PresentMode::Mailbox;
+    swapChain = device.CreateSwapChain(surface, &swapChainDesc);
+
+    return device;
+}
+
+wgpu::TextureFormat GetPreferredSwapChainTextureFormat() {
+    // TODO(dawn:1362): Return the adapter's preferred format when implemented.
+    return wgpu::TextureFormat::BGRA8Unorm;
+}
+
+wgpu::SwapChain GetSwapChain() {
+    return swapChain;
+}
+
+bool InitSample(int argc, const char** argv) {
+    for (int i = 1; i < argc; i++) {
+        std::string_view arg(argv[i]);
+        std::string_view opt, value;
+
+        static constexpr struct Option {
+            const char* shortOpt;
+            const char* longOpt;
+            bool hasValue;
+        } options[] = {
+            {"-b", "--backend=", true},       {"-c", "--cmd-buf=", true},
+            {"-e", "--enable-toggle=", true}, {"-d", "--disable-toggle=", true},
+            {"-a", "--adapter-type=", true},  {"-h", "--help", false},
+        };
+
+        for (const Option& option : options) {
+            if (!option.hasValue) {
+                if (arg == option.shortOpt || arg == option.longOpt) {
+                    opt = option.shortOpt;
+>>>>>>> 3d942f2f44 (Replace GPUAdapter::GetProperties() with GPUAdapter::GetInfo())
                     break;
                 case wgpu::DeviceLostReason::Destroyed:
                     reasonName = "Destroyed";

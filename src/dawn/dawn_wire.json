@@ -219,7 +219,6 @@
             "AdapterGetFormatCapabilities",
             "AdapterGetInfo",
             "AdapterGetInstance",
-            "AdapterGetProperties",
             "AdapterGetLimits",
             "AdapterHasFeature",
             "AdapterEnumerateFeatures",
