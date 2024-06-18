@@ -146,6 +146,7 @@ func (r *ResultSource) GetResults(ctx context.Context, cfg Config, auth auth.Opt
 	}
 
 	resultsByExecutionMode, err := CacheResults(ctx, cfg, *ps, r.CacheDir, client, builds)
+	//fmt.Printf("%v", resultsByExecutionMode["compat"])
 	if err != nil {
 		return nil, err
 	}
@@ -186,6 +187,8 @@ func CacheResults(
 	if err := result.Save(cachePath, resultsByExecutionMode); err != nil {
 		log.Println("failed to save results to cache: %w", err)
 	}
+
+	fmt.Println("Done saving results to disk")
 
 	// Expand aliased tags, remove specific tags
 	for i, results := range resultsByExecutionMode {
@@ -308,6 +311,13 @@ func GetRawResults(
 
 	fmt.Println(" done")
 
+	/*for t := range resultsByExecutionMode {
+		relevantResults := resultsByExecutionMode[t].FilterByQuery(query.Parse("webgpu:shader,execution,limits:struct_members:"))
+		fmt.Printf("Relevant raw results immediately after querying:\n")
+		for _, r := range relevantResults {
+			fmt.Printf("  %v\n", r)
+		}
+	}*/
 	return resultsByExecutionMode, nil
 }
 
@@ -411,4 +421,27 @@ func CleanResults(cfg Config, results *result.List) {
 		}
 		return result.Failure
 	})
+}
+
+// TrimVariants returns a copy of the given variants that are limited to the
+// known tags. As a result, the length of the returned slice may be shorter than
+// the input if two variants become identical after trimming.
+func TrimVariants(untrimmedVariants []result.Tags, knownTags result.Tags) []result.Tags {
+	trimmedVariants := make([]result.Tags, 0)
+	for _, variant := range untrimmedVariants {
+		intersection := variant.Intersection(knownTags)
+		if !variantListContainsVariant(trimmedVariants, intersection) {
+			trimmedVariants = append(trimmedVariants, intersection)
+		}
+	}
+	return trimmedVariants
+}
+
+func variantListContainsVariant(variantList []result.Tags, variant result.Tags) bool {
+	for _, v := range variantList {
+		if variant.Equal(v) {
+			return true
+		}
+	}
+	return false
 }
