@@ -390,6 +390,42 @@ func (r *roller) roll(ctx context.Context) error {
 		}
 	}()
 
+	// Retrieve the known variants.
+	// TODO: Move into helper?
+	variantsByPath := make(map[string][]result.Tags)
+	for _, exInfo := range exInfos {
+		numMatches := 0
+		var prefixes []string
+		for _, test := range r.cfg.Tests {
+			if test.ExecutionMode == exInfo.executionMode {
+				numMatches += 1
+				prefixes = test.Prefixes
+			}
+		}
+		if numMatches == 0 {
+			return fmt.Errorf("failed to find prefixes for execution mode '%v'", exInfo.executionMode)
+		}
+		if numMatches > 1 {
+			return fmt.Errorf("found multiple sets of prefixes for execution mode '%v'", exInfo.executionMode)
+		}
+		path := exInfo.path
+		variantsByPath[path] = make([]result.Tags, 0)
+		for _, p := range prefixes {
+			// fmt.Printf("Querying variants for path %v and  prefix %v\n", path, p)
+			v, err := r.client.QueryVariants(ctx, p)
+			if err != nil {
+				return err
+			}
+			// fmt.Printf("Got variants for path %v and prefix %v:\n", path, p)
+			// for _, tags := range v {
+			// 	fmt.Printf("%v\n", tags)
+			// }
+			variantsByPath[path] = append(variantsByPath[path], v...)
+		}
+	}
+
+	// return fmt.Errorf("Exiting early")
+
 	// Begin main roll loop
 	for attempt := 0; ; attempt++ {
 		// Kick builds
@@ -431,7 +467,9 @@ func (r *roller) roll(ctx context.Context) error {
 			exInfo.results = result.Merge(exInfo.results, psResultsByExecutionMode[exInfo.executionMode])
 
 			exInfo.newExpectations = exInfo.expectations.Clone()
-			diags, err := exInfo.newExpectations.Update(exInfo.results, testlist, r.flags.verbose)
+			trimmedVariants := common.TrimVariants(variantsByPath[exInfo.path], exInfo.newExpectations.Tags.GetKnownTags())
+			fmt.Printf("Updating expectations for path %v\n", exInfo.path)
+			diags, err := exInfo.newExpectations.Update(exInfo.results, testlist, trimmedVariants, r.flags.verbose)
 			if err != nil {
 				return err
 			}
