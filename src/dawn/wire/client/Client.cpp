@@ -130,6 +130,17 @@ ReservedSwapChain Client::ReserveSwapChain(WGPUDevice device,
     return result;
 }
 
+ReservedSurface Client::ReserveSurface(WGPUInstance instance,
+                                       const WGPUSurfaceCapabilities* capabilities) {
+    Ref<Surface> surface = Make<Surface>(capabilities);
+
+    ReservedSurface result;
+    result.handle = surface->GetWireHandle();
+    result.instanceHandle = FromAPI(instance)->GetWireHandle();
+    result.surface = ReturnToAPI(surface);
+    return result;
+}
+
 ReservedInstance Client::ReserveInstance(const WGPUInstanceDescriptor* descriptor) {
     Ref<Instance> instance = Make<Instance>();
 
@@ -158,8 +169,8 @@ void Client::ReclaimSwapChainReservation(const ReservedSwapChain& reservation) {
     Free(FromAPI(reservation.swapchain));
 }
 
-void Client::ReclaimDeviceReservation(const ReservedDevice& reservation) {
-    Free(FromAPI(reservation.device));
+void Client::ReclaimSurfaceReservation(const ReservedSurface& reservation) {
+    Free(FromAPI(reservation.surface));
 }
 
 void Client::ReclaimInstanceReservation(const ReservedInstance& reservation) {
