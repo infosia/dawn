@@ -43,6 +43,7 @@
 
 namespace dawn::native {
 
+class BufferBase;
 struct BeginRenderPassCmd;
 struct CopyTextureToBufferCmd;
 struct BufferCopy;
@@ -68,6 +69,9 @@ class CommandBufferBase : public ApiObjectBase {
 
     CommandIterator* GetCommandIteratorForTesting();
 
+    std::vector<Ref<BufferBase>> TakeTempGPUBuffers();
+    void SetTemGPUBuffers(std::vector<Ref<BufferBase>> buffers);
+
   protected:
     void DestroyImpl() override;
 
@@ -79,6 +83,8 @@ class CommandBufferBase : public ApiObjectBase {
     CommandBufferResourceUsage mResourceUsages;
     std::vector<IndirectDrawMetadata> mIndirectDrawMetadata;
     std::string mEncoderLabel;
+
+    std::vector<Ref<BufferBase>> mTempGPUBuffers;
 };
 
 bool IsCompleteSubresourceCopiedTo(const TextureBase* texture,

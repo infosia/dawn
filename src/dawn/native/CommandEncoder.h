@@ -43,6 +43,8 @@
 
 namespace dawn::native {
 
+class BufferBase;
+
 enum class UsageValidationMode;
 
 Color ClampClearColorValueToLegalRange(const Color& originalColor, const Format& format);
@@ -132,6 +134,8 @@ class CommandEncoder final : public ApiObjectBase {
 
     [[nodiscard]] InternalUsageScope MakeInternalUsageScope();
 
+    void AddTempGPUBuffer(Ref<BufferBase> buffer);
+
   private:
     CommandEncoder(DeviceBase* device, const UnpackedPtr<CommandEncoderDescriptor>& descriptor);
     CommandEncoder(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
@@ -146,6 +150,8 @@ class CommandEncoder final : public ApiObjectBase {
     absl::flat_hash_set<QuerySetBase*> mUsedQuerySets;
 
     uint64_t mDebugGroupStackSize = 0;
+
+    std::vector<Ref<BufferBase>> mTempGPUBuffers;
 
     UsageValidationMode mUsageValidationMode;
 };

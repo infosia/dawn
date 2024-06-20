@@ -2107,7 +2107,10 @@ ResultOrError<Ref<CommandBufferBase>> CommandEncoder::Finish(
         descriptor = &defaultDescriptor;
     }
 
-    return device->CreateCommandBuffer(this, descriptor);
+    Ref<CommandBufferBase> commandBuffer;
+    DAWN_TRY_ASSIGN(commandBuffer, device->CreateCommandBuffer(this, descriptor));
+    commandBuffer->SetTemGPUBuffers(std::move(mTempGPUBuffers));
+    return commandBuffer;
 }
 
 // Implementation of the command buffer validation that can be precomputed before submit
@@ -2134,6 +2137,10 @@ MaybeError CommandEncoder::ValidateFinish() const {
         mDebugGroupStackSize);
 
     return {};
+}
+
+void CommandEncoder::AddTempGPUBuffer(Ref<BufferBase> buffer) {
+    mTempGPUBuffers.push_back(std::move(buffer));
 }
 
 CommandEncoder::InternalUsageScope CommandEncoder::MakeInternalUsageScope() {

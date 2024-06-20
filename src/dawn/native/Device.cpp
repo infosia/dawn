@@ -75,6 +75,7 @@
 #include "dawn/native/SharedTextureMemory.h"
 #include "dawn/native/Surface.h"
 #include "dawn/native/SwapChain.h"
+#include "dawn/native/TempGPUBufferManager.h"
 #include "dawn/native/Texture.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/native/utils/WGPUHelpers.h"
@@ -425,6 +426,8 @@ MaybeError DeviceBase::Initialize(Ref<QueueBase> defaultQueue) {
     mCaches = std::make_unique<DeviceBase::Caches>();
     mErrorScopeStack = std::make_unique<ErrorScopeStack>();
     mDynamicUploader = std::make_unique<DynamicUploader>(this);
+    mTempGPUBufferManager = std::make_unique<TempGPUBufferManager>(
+        this, wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Storage);
     mCallbackTaskManager = AcquireRef(new CallbackTaskManager());
     mInternalPipelineStore = std::make_unique<InternalPipelineStore>(this);
 
@@ -638,11 +641,12 @@ void DeviceBase::Destroy() {
     mState = State::Disconnected;
 
     mDynamicUploader = nullptr;
+    mTempGPUBufferManager = nullptr;
     mEmptyBindGroupLayout = nullptr;
     mEmptyPipelineLayout = nullptr;
     mInternalPipelineStore = nullptr;
     mExternalTexturePlaceholderView = nullptr;
-    mTemporaryUniformBuffer = nullptr;
+    mTemporaryUniformBuffer.clear();
 
     // Note: mQueue is not released here since the application may still get it after calling
     // Destroy() via APIGetQueue.
@@ -1531,6 +1535,7 @@ MaybeError DeviceBase::Tick() {
     // tick the dynamic uploader before the backend resource allocators. This would allow
     // reclaiming resources one tick earlier.
     mDynamicUploader->Deallocate(mQueue->GetCompletedCommandSerial());
+    mTempGPUBufferManager->Deallocate(mQueue->GetCompletedCommandSerial());
     mQueue->Tick(mQueue->GetCompletedCommandSerial());
 
     return {};
@@ -2220,6 +2225,10 @@ DynamicUploader* DeviceBase::GetDynamicUploader() const {
     return mDynamicUploader.get();
 }
 
+TempGPUBufferManager* DeviceBase::GetTempGPUBufferManager() const {
+    return mTempGPUBufferManager.get();
+}
+
 // The Toggle device facility
 
 std::vector<const char*> DeviceBase::GetTogglesUsed() const {
@@ -2412,7 +2421,7 @@ void DeviceBase::ReduceMemoryUsage() {
     }
     GetDynamicUploader()->Deallocate(GetQueue()->GetCompletedCommandSerial(), /*freeAll=*/true);
     mInternalPipelineStore->ResetScratchBuffers();
-    mTemporaryUniformBuffer = nullptr;
+    mTemporaryUniformBuffer.clear();
 }
 
 void DeviceBase::PerformIdleTasks() {
@@ -2421,15 +2430,16 @@ void DeviceBase::PerformIdleTasks() {
 }
 
 ResultOrError<Ref<BufferBase>> DeviceBase::GetOrCreateTemporaryUniformBuffer(size_t size) {
-    if (!mTemporaryUniformBuffer || mTemporaryUniformBuffer->GetSize() != size) {
+    auto& buffer = mTemporaryUniformBuffer[size];
+    if (!buffer) {
         BufferDescriptor desc;
         desc.label = "Internal_TemporaryUniform";
         desc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
         desc.size = size;
-        DAWN_TRY_ASSIGN(mTemporaryUniformBuffer, CreateBuffer(&desc));
+        DAWN_TRY_ASSIGN(buffer, CreateBuffer(&desc));
     }
 
-    return mTemporaryUniformBuffer;
+    return buffer;
 }
 
 bool DeviceBase::HasFlexibleTextureViews() const {

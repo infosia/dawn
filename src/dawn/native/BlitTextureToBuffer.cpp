@@ -45,6 +45,7 @@
 #include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/Sampler.h"
+#include "dawn/native/TempGPUBufferManager.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 
 namespace dawn::native {
@@ -1167,12 +1168,10 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
         // usage.
         offsetInOriginalBuf = shaderBindingOffset;
         shaderBindingOffset = 0;
+        DAWN_TRY_ASSIGN(destinationBuffer,
+                        device->GetTempGPUBufferManager()->Allocate(shaderBindingSize));
 
-        BufferDescriptor descriptor = {};
-        descriptor.size = shaderBindingSize;
-        // TODO(dawn:1485): adding CopyDst usage to add kInternalStorageBuffer usage internally.
-        descriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
-        DAWN_TRY_ASSIGN(destinationBuffer, device->CreateBuffer(&descriptor));
+        commandEncoder->AddTempGPUBuffer(destinationBuffer);
 
         const uint64_t paddingSize = shaderBindingSize - shaderEndOffset;
         // Don't clear the temp buffer. Its bytes are either written in shader or copied from
@@ -1182,8 +1181,8 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
             DAWN_ASSERT(paddingSize < 4);
             // We only need to initialize the last 4 bytes in the temp buffer.
             std::array<uint8_t, 4> clearData = {};
-            commandEncoder->APIWriteBuffer(destinationBuffer.Get(),
-                                           destinationBuffer->GetSize() - 4, clearData.data(), 4);
+            commandEncoder->APIWriteBuffer(destinationBuffer.Get(), shaderBindingSize - 4,
+                                           clearData.data(), 4);
         }
 
         // Copy the bytes that we won't write in the shader (those before offset, padding bytes,
@@ -1219,19 +1218,15 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
 
     Ref<BufferBase> uniformBuffer;
     {
-        BufferDescriptor bufferDesc = {};
         // Uniform buffer size needs to be multiple of 16 bytes
-        bufferDesc.size = sizeof(uint32_t) * 20;
-        bufferDesc.usage = wgpu::BufferUsage::Uniform;
-        bufferDesc.mappedAtCreation = true;
+        uint32_t params[20];
 
         {
             IgnoreLazyClearCountScope ignoreClearScope(device);
-            DAWN_TRY_ASSIGN(uniformBuffer, device->CreateBuffer(&bufferDesc));
+            DAWN_TRY_ASSIGN(uniformBuffer,
+                            device->GetOrCreateTemporaryUniformBuffer(/*size=*/sizeof(params)));
         }
 
-        uint32_t* params =
-            static_cast<uint32_t*>(uniformBuffer->GetMappedRange(0, bufferDesc.size));
         // srcOrigin: vec3u
         params[0] = src.origin.x;
         params[1] = src.origin.y;
@@ -1268,7 +1263,8 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
             params[14] = levelSize.depthOrArrayLayers;
         }
 
-        DAWN_TRY(uniformBuffer->Unmap());
+        commandEncoder->APIWriteBuffer(
+            uniformBuffer.Get(), 0, reinterpret_cast<const uint8_t*>(&params[0]), sizeof(params));
     }
 
     TextureViewDescriptor viewDesc = {};
@@ -1303,15 +1299,14 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
     Ref<BindGroupLayoutBase> bindGroupLayout0;
     DAWN_TRY_ASSIGN(bindGroupLayout0, pipeline->GetBindGroupLayout(0));
     Ref<BindGroupBase> bindGroup0;
-    DAWN_TRY_ASSIGN(
-        bindGroup0,
-        utils::MakeBindGroup(device, bindGroupLayout0,
-                             {
-                                 {0, srcView},
-                                 {1, destinationBuffer, shaderBindingOffset, shaderBindingSize},
-                                 {2, uniformBuffer},
-                             },
-                             UsageValidationMode::Internal));
+    DAWN_TRY_ASSIGN(bindGroup0,
+                    utils::MakeBindGroup(device, bindGroupLayout0,
+                                         {
+                                             {0, srcView},
+                                             {1, destinationBuffer, 0, shaderBindingSize},
+                                             {2, uniformBuffer},
+                                         },
+                                         UsageValidationMode::Internal));
 
     Ref<BindGroupLayoutBase> bindGroupLayout1;
     Ref<BindGroupBase> bindGroup1;
@@ -1340,7 +1335,7 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
     pass->APIEnd();
 
     if (useIntermediateCopyBuffer) {
-        DAWN_ASSERT(destinationBuffer->GetSize() <= dst.buffer->GetAllocatedSize());
+        DAWN_ASSERT(shaderBindingSize <= dst.buffer->GetAllocatedSize());
         commandEncoder->InternalCopyBufferToBufferWithAllocatedSize(
             destinationBuffer.Get(), /*srcOffset=*/0, dst.buffer.Get(),
             /*dstOffset=*/offsetInOriginalBuf, shaderBindingSize);

@@ -56,6 +56,7 @@
 #include "dawn/native/RenderPassEncoder.h"
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/SystemEvent.h"
+#include "dawn/native/TempGPUBufferManager.h"
 #include "dawn/native/Texture.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
@@ -584,6 +585,15 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
         DAWN_TRY(ValidateSubmit(commandCount, commands));
     }
     DAWN_ASSERT(!IsError());
+
+    // Return all temp buffers to the buffer manager.
+    const auto pendingSerial = GetPendingCommandSerial();
+    for (uint32_t i = 0; i < commandCount; ++i) {
+        auto tempBuffers = commands[i]->TakeTempGPUBuffers();
+        for (auto& buffer : tempBuffers) {
+            device->GetTempGPUBufferManager()->ReturnBuffer(std::move(buffer), pendingSerial);
+        }
+    }
 
     DAWN_TRY(SubmitImpl(commandCount, commands));
 

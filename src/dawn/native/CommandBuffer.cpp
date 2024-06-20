@@ -110,6 +110,14 @@ CommandIterator* CommandBufferBase::GetCommandIteratorForTesting() {
     return &mCommands;
 }
 
+std::vector<Ref<BufferBase>> CommandBufferBase::TakeTempGPUBuffers() {
+    return std::move(mTempGPUBuffers);
+}
+
+void CommandBufferBase::SetTemGPUBuffers(std::vector<Ref<BufferBase>> buffers) {
+    mTempGPUBuffers = std::move(buffers);
+}
+
 bool IsCompleteSubresourceCopiedTo(const TextureBase* texture,
                                    const Extent3D& copySize,
                                    const uint32_t mipLevel,
