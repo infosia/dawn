@@ -142,6 +142,8 @@ set(private_headers
     "SwapChain.h"
     "SystemEvent.h"
     "SystemHandle.h"
+    "TempGPUBufferManager.cpp"
+    "TempGPUBufferManager.h"
     "Texture.h"
     "TintUtils.h"
     "ToBackend.h"
