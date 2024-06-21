@@ -746,7 +746,7 @@ DawnTestBase::DawnTestBase(const AdapterTestParam& param) : mParam(param) {
         const auto& it =
             std::find_if(adapters.begin(), adapters.end(), [&](const native::Adapter& candidate) {
                 wgpu::AdapterProperties properties;
-                candidate.GetProperties(&properties);
+                EXPECT_DEPRECATION_WARNING(candidate.GetProperties(&properties));
 
                 const auto& param = gCurrentTest->mParam;
                 return (param.adapterProperties.selected &&
