@@ -1491,6 +1491,8 @@ class Printer : public tint::TextGenerator {
                 modifiers += "sample ";
                 break;
             case core::InterpolationSampling::kCenter:
+            case core::InterpolationSampling::kFirst:
+            case core::InterpolationSampling::kEither:
             case core::InterpolationSampling::kUndefined:
                 break;
         }
