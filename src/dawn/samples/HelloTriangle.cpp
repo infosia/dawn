@@ -49,7 +49,7 @@ void init() {
         0.0f, 0.5f, 0.0f, 1.0f, -0.5f, -0.5f, 0.0f, 1.0f, 0.5f, -0.5f, 0.0f, 1.0f,
     };
     vertexBuffer = dawn::utils::CreateBufferFromData(device, vertexData, sizeof(vertexData),
-                                                     wgpu::BufferUsage::Vertex);
+                                                     wgpu::BufferUsage::Vertex | wgpu::BufferUsage::Indirect);
 
     wgpu::ShaderModule module = dawn::utils::CreateShaderModule(device, R"(
         @vertex fn vs(@location(0) pos : vec4f) -> @builtin(position) vec4f {
@@ -83,7 +83,7 @@ void frame() {
         wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
         pass.SetPipeline(pipeline);
         pass.SetVertexBuffer(0, vertexBuffer);
-        pass.Draw(3);
+        pass.MultiDrawIndirect(vertexBuffer, 0, 1, vertexBuffer);
         pass.End();
     }
 

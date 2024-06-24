@@ -68,7 +68,10 @@ class CommandBufferStateTracker {
                       BindGroupBase* bindgroup,
                       uint32_t dynamicOffsetCount,
                       const uint32_t* dynamicOffsets);
-    void SetIndexBuffer(wgpu::IndexFormat format, uint64_t offset, uint64_t size);
+    void SetIndexBuffer(BufferBase* buffer,
+                        wgpu::IndexFormat format,
+                        uint64_t offset,
+                        uint64_t size);
     void UnsetVertexBuffer(VertexBufferSlot slot);
     void SetVertexBuffer(VertexBufferSlot slot, uint64_t size);
     void End();
@@ -82,6 +85,7 @@ class CommandBufferStateTracker {
     RenderPipelineBase* GetRenderPipeline() const;
     ComputePipelineBase* GetComputePipeline() const;
     PipelineLayoutBase* GetPipelineLayout() const;
+    BufferBase* GetIndexBuffer() const;
     wgpu::IndexFormat GetIndexFormat() const;
     uint64_t GetIndexBufferSize() const;
     uint64_t GetIndexBufferOffset() const;
@@ -99,6 +103,7 @@ class CommandBufferStateTracker {
     PerVertexBuffer<uint64_t> mVertexBufferSizes = {};
 
     bool mIndexBufferSet = false;
+    BufferBase* mIndexBuffer;
     wgpu::IndexFormat mIndexFormat;
     uint64_t mIndexBufferSize = 0;
     uint64_t mIndexBufferOffset = 0;

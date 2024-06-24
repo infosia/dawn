@@ -754,10 +754,12 @@ void CommandBufferStateTracker::SetBindGroup(BindGroupIndex index,
     mAspects.reset(VALIDATION_ASPECT_BIND_GROUPS);
 }
 
-void CommandBufferStateTracker::SetIndexBuffer(wgpu::IndexFormat format,
+void CommandBufferStateTracker::SetIndexBuffer(BufferBase* buffer,
+                                               wgpu::IndexFormat format,
                                                uint64_t offset,
                                                uint64_t size) {
     mIndexBufferSet = true;
+    mIndexBuffer = buffer;
     mIndexFormat = format;
     mIndexBufferSize = size;
     mIndexBufferOffset = offset;
@@ -810,6 +812,10 @@ ComputePipelineBase* CommandBufferStateTracker::GetComputePipeline() const {
 
 PipelineLayoutBase* CommandBufferStateTracker::GetPipelineLayout() const {
     return mLastPipelineLayout;
+}
+
+BufferBase* CommandBufferStateTracker::GetIndexBuffer() const {
+    return mIndexBuffer;
 }
 
 wgpu::IndexFormat CommandBufferStateTracker::GetIndexFormat() const {

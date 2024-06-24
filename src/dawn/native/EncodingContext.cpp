@@ -164,6 +164,8 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
         CommitCommands(std::move(renderCommands));
     }
 
+    commandEncoder->AddIndirectDrawMetadata(indirectDrawMetadata);
+
     mRenderPassUsages.push_back(usageTracker.AcquireResourceUsage());
     return {};
 }

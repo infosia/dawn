@@ -75,6 +75,9 @@ struct InternalPipelineStore {
     Ref<ShaderModuleBase> renderValidationShader;
     Ref<ComputePipelineBase> dispatchIndirectValidationPipeline;
 
+    // This is only for the metal backend
+    Ref<ObjectBase> multidrawICBConverterPipeline;
+
     Ref<RenderPipelineBase> blitRG8ToDepth16UnormPipeline;
 
     using TextureFormatAndViewDimensionKeyType =
