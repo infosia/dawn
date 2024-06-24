@@ -29,12 +29,14 @@
 #define SRC_DAWN_NATIVE_COMMANDBUFFER_H_
 
 #include <string>
+#include <vector>
 
 #include "dawn/native/dawn_platform.h"
 
 #include "dawn/native/CommandAllocator.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
+#include "dawn/native/IndirectDrawMetadata.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/PassResourceUsage.h"
 #include "dawn/native/Texture.h"
@@ -64,10 +66,14 @@ class CommandBufferBase : public ApiObjectBase {
 
     CommandIterator* GetCommandIteratorForTesting();
 
+    void SetIndirectDrawMetadatas(std::vector<IndirectDrawMetadata>&& metadatas);
+
   protected:
     void DestroyImpl() override;
 
     CommandIterator mCommands;
+
+    std::vector<IndirectDrawMetadata> mIndirectDrawMetadatas;
 
   private:
     CommandBufferBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);

@@ -382,6 +382,11 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
      {"Supports the \"enable subgroups_f16;\" directive in WGSL.",
       "https://github.com/gpuweb/gpuweb/blob/main/proposals/subgroups.md",
       FeatureInfo::FeatureState::Stable}},
+    {Feature::MultiDrawIndirect,
+     {"Support MultiDrawIndirect and MultiDrawIndexedIndirect. Allows multiple indirect drawcalls "
+      "with only 1 indirect call.",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/",
+      FeatureInfo::FeatureState::Experimental}},
 };
 
 }  // anonymous namespace
