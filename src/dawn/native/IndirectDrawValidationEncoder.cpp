@@ -60,6 +60,7 @@ constexpr uint32_t kIndexedDraw = 2;
 constexpr uint32_t kValidationEnabled = 4;
 constexpr uint32_t kIndirectFirstInstanceEnabled = 8;
 constexpr uint32_t kUseFirstIndexToEmulateIndexBufferOffset = 16;
+constexpr uint32_t kIndirectDrawCountBuffer = 32;
 
 // Equivalent to the IndirectDraw struct defined in the shader below.
 struct IndirectDraw {
@@ -82,7 +83,7 @@ constexpr uint32_t kIndirectDrawByteSize = sizeof(uint32_t) * 4;
 
 // TODO(https://crbug.com/dawn/1108): Propagate validation feedback from this shader in
 // various failure modes.
-static const char sRenderValidationShaderSource[] = R"(
+static const char sIndirectDrawValidationShaderSource[] = R"(
 
             const kNumDrawIndirectParams = 4u;
 
@@ -224,10 +225,101 @@ static const char sRenderValidationShaderSource[] = R"(
             }
         )";
 
-ResultOrError<ComputePipelineBase*> GetOrCreateRenderValidationPipeline(DeviceBase* device) {
+static const char* sIndirectMultiDrawValidationShaderSource = R"(
+        const kNumDrawIndexedIndirectParams = 5u;
+
+        const kIndexCountEntry = 0u;
+        const kFirstIndexEntry = 2u;
+
+        // Bitmasks for DrawConstants.flags
+        const kValidationEnabled = 4u;
+        const kIndirectDrawCountBuffer = 32u; // if set, drawCount is read from a buffer
+        const kWorkgroupSize = 64u;
+
+        struct DrawConstants {
+            maxDrawCount: u32,
+            numIndexBufferElementsLow: u32,
+            numIndexBufferElementsHigh: u32,
+            flags : u32,
+        }
+
+
+
+        struct IndirectParams {
+            data: array<u32>,
+        }
+
+        @group(0) @binding(0) var<storage, read> drawConstants: DrawConstants;
+        @group(0) @binding(1) var<storage, read_write> inputDraws : IndirectParams;
+        @group(0) @binding(2) var<storage, read_write> outputParams: IndirectParams;
+        @group(0) @binding(3) var<storage, read_write> indirectDrawCount : u32;
+
+        fn set_pass(drawIndex: u32) {
+            let index = drawIndex * kNumDrawIndexedIndirectParams;
+            for(var i = 0u; i < kNumDrawIndexedIndirectParams; i = i + 1u) {
+                outputParams.data[index + i] = inputDraws.data[index + i];
+            }
+        }
+
+        fn fail(drawIndex: u32) {
+            let index = drawIndex * kNumDrawIndexedIndirectParams;
+            for(var i = 0u; i < kNumDrawIndexedIndirectParams; i = i + 1u) {
+                outputParams.data[index + i] = 0u;
+            }
+        }
+
+        // Only Indexed multi draws need validation, because non-indexed draws do not need to be validated due to robust
+        // buffer access if any offsets are out of bounds.
+        @compute @workgroup_size(kWorkgroupSize, 1, 1)
+        fn main(@builtin(global_invocation_id) id : vec3u)
+        {
+            var drawIndex = id.x;
+            var drawCount = drawConstants.maxDrawCount;
+
+            if(bool(drawConstants.flags & kIndirectDrawCountBuffer) && indirectDrawCount <= drawConstants.maxDrawCount) {
+                drawCount = indirectDrawCount;
+            }
+
+            while (drawIndex < drawCount)
+            {
+
+                let numIndexBufferElementsHigh = drawConstants.numIndexBufferElementsHigh;
+
+                if (numIndexBufferElementsHigh >= 2u) {
+                    // firstIndex and indexCount are both u32. The maximum possible sum of these
+                    // values is 0x1fffffffe, which is less than 0x200000000. Nothing to validate.
+                    set_pass(drawIndex);
+                    return;
+                }
+
+                let numIndexBufferElementsLow = drawConstants.numIndexBufferElementsLow;
+                let firstIndex = inputDraws.data[drawIndex * kNumDrawIndexedIndirectParams + kFirstIndexEntry];
+                if (numIndexBufferElementsHigh == 0u &&
+                    numIndexBufferElementsLow < firstIndex) {
+                    fail(drawIndex);
+                    return;
+                }
+
+                // Note that this subtraction may underflow, but only when
+                // numIndexBufferElementsHigh is 1u. The result is still correct in that case.
+                let maxIndexCount = numIndexBufferElementsLow - firstIndex;
+                let indexCount = inputDraws.data[drawIndex * kNumDrawIndexedIndirectParams + kIndexCountEntry];
+                if (indexCount > maxIndexCount) {
+                    fail(drawIndex);
+                    return;
+                }
+
+                set_pass(drawIndex);
+
+                drawIndex += kWorkgroupSize;
+            }
+        }
+)";
+
+ResultOrError<ComputePipelineBase*> GetOrCreateIndirectDrawValidationPipeline(DeviceBase* device) {
     InternalPipelineStore* store = device->GetInternalPipelineStore();
 
-    if (store->renderValidationPipeline == nullptr) {
+    if (store->indirectDrawValidationPipeline == nullptr) {
         // If we need to apply the index buffer offset to the first index then
         // we can't handle buffers larger than 4gig otherwise we'll overflow first_index
         // which is a 32bit value.
@@ -246,9 +338,9 @@ ResultOrError<ComputePipelineBase*> GetOrCreateRenderValidationPipeline(DeviceBa
                     device->GetLimits().v1.maxBufferSize < 0x100000000u);
 
         // Create compute shader module if not cached before.
-        if (store->renderValidationShader == nullptr) {
-            DAWN_TRY_ASSIGN(store->renderValidationShader,
-                            utils::CreateShaderModule(device, sRenderValidationShaderSource));
+        if (store->indirectDrawValidationShader == nullptr) {
+            DAWN_TRY_ASSIGN(store->indirectDrawValidationShader,
+                            utils::CreateShaderModule(device, sIndirectDrawValidationShaderSource));
         }
 
         Ref<BindGroupLayoutBase> bindGroupLayout;
@@ -268,14 +360,54 @@ ResultOrError<ComputePipelineBase*> GetOrCreateRenderValidationPipeline(DeviceBa
 
         ComputePipelineDescriptor computePipelineDescriptor = {};
         computePipelineDescriptor.layout = pipelineLayout.Get();
-        computePipelineDescriptor.compute.module = store->renderValidationShader.Get();
+        computePipelineDescriptor.compute.module = store->indirectDrawValidationShader.Get();
         computePipelineDescriptor.compute.entryPoint = "main";
 
-        DAWN_TRY_ASSIGN(store->renderValidationPipeline,
+        DAWN_TRY_ASSIGN(store->indirectDrawValidationPipeline,
                         device->CreateComputePipeline(&computePipelineDescriptor));
     }
 
-    return store->renderValidationPipeline.Get();
+    return store->indirectDrawValidationPipeline.Get();
+}
+
+ResultOrError<ComputePipelineBase*> GetOrCreateIndirectMultiDrawValidationPipeline(
+    DeviceBase* device) {
+    InternalPipelineStore* store = device->GetInternalPipelineStore();
+
+    if (store->multiDrawValidationPipeline == nullptr) {
+        DAWN_ASSERT(device->GetLimits().v1.maxBufferSize < 0x100000000u);
+
+        // Create compute shader module if not cached before.
+        if (store->multiDrawValidationShader == nullptr) {
+            DAWN_TRY_ASSIGN(
+                store->multiDrawValidationShader,
+                utils::CreateShaderModule(device, sIndirectMultiDrawValidationShaderSource));
+        }
+        Ref<BindGroupLayoutBase> bindGroupLayout;
+        DAWN_TRY_ASSIGN(
+            bindGroupLayout,
+            utils::MakeBindGroupLayout(
+                device,
+                {
+                    {0, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::ReadOnlyStorage},
+                    {1, wgpu::ShaderStage::Compute, kInternalStorageBufferBinding},
+                    {2, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Storage},
+                    {3, wgpu::ShaderStage::Compute, kInternalStorageBufferBinding},
+                },
+                /* allowInternalBinding */ true));
+
+        Ref<PipelineLayoutBase> pipelineLayout;
+        DAWN_TRY_ASSIGN(pipelineLayout, utils::MakeBasicPipelineLayout(device, bindGroupLayout));
+
+        ComputePipelineDescriptor computePipelineDescriptor = {};
+        computePipelineDescriptor.layout = pipelineLayout.Get();
+        computePipelineDescriptor.compute.module = store->multiDrawValidationShader.Get();
+        computePipelineDescriptor.compute.entryPoint = "main";
+
+        DAWN_TRY_ASSIGN(store->multiDrawValidationPipeline,
+                        device->CreateComputePipeline(&computePipelineDescriptor));
+    }
+    return store->multiDrawValidationPipeline.Get();
 }
 
 size_t GetBatchDataSize(uint32_t numDraws) {
@@ -480,7 +612,7 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
     }
 
     ComputePipelineBase* pipeline;
-    DAWN_TRY_ASSIGN(pipeline, GetOrCreateRenderValidationPipeline(device));
+    DAWN_TRY_ASSIGN(pipeline, GetOrCreateIndirectDrawValidationPipeline(device));
 
     Ref<BindGroupLayoutBase> layout;
     DAWN_TRY_ASSIGN(layout, pipeline->GetBindGroupLayout(0));
@@ -539,4 +671,141 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
     return {};
 }
 
+MaybeError EncodeIndirectMultiDrawValidationCommands(DeviceBase* device,
+                                                     CommandEncoder* commandEncoder,
+                                                     RenderPassResourceUsageTracker* usageTracker,
+                                                     IndirectDrawMetadata* indirectDrawMetadata) {
+    // AAPLE: Indirect draw validation is done when constructing the indirect command
+    // buffer.
+#if DAWN_PLATFORM_IS(AAPLE)
+    return {};
+#endif
+
+    if (!device->IsValidationEnabled()) {
+        return {};
+    }
+
+    InternalPipelineStore* store = device->GetInternalPipelineStore();
+
+    ScratchBuffer& outputParamsBuffer = store->scratchMultiDrawStorage;
+    ScratchBuffer& drawConstantsBuffer = store->scratchStorage;
+
+    std::vector<IndirectDrawMetadata::IndirectMultiDraw> multiDraws =
+        indirectDrawMetadata->GetIndirectMultiDraws();
+
+    struct DrawConstants {
+        uint32_t maxDrawCount;
+        uint32_t numIndexBufferElementsLow;
+        uint32_t numIndexBufferElementsHigh;
+        uint32_t flags;
+    };
+
+    // Calculate size of output params for multi draws
+    uint64_t outputParamsSize = 0;
+    for (auto& draw : multiDraws) {
+        // Don't need to validate non-indexed draws.
+        if (draw.type == IndirectDrawMetadata::DrawType::NonIndexed) {
+            continue;
+        }
+        outputParamsSize += draw.cmd->maxDrawCount * kDrawIndexedIndirectSize;
+    }
+
+    // Safe to write to the scratch buffer as the previous commands for indirect draw validation
+    // will have finished.
+    DAWN_TRY(outputParamsBuffer.EnsureCapacity(outputParamsSize));
+    DAWN_TRY(drawConstantsBuffer.EnsureCapacity(sizeof(DrawConstants)));
+
+    usageTracker->BufferUsedAs(outputParamsBuffer.GetBuffer(), wgpu::BufferUsage::Indirect);
+
+    ComputePipelineBase* pipeline;
+    DAWN_TRY_ASSIGN(pipeline, GetOrCreateIndirectMultiDrawValidationPipeline(device));
+
+    Ref<BindGroupLayoutBase> layout;
+    DAWN_TRY_ASSIGN(layout, pipeline->GetBindGroupLayout(0));
+
+    BindGroupEntry bindings[4];
+
+    BindGroupEntry& drawConstantsBinding = bindings[0];
+    drawConstantsBinding.binding = 0;
+    drawConstantsBinding.buffer = drawConstantsBuffer.GetBuffer();
+
+    BindGroupEntry& inputIndirectBinding = bindings[1];
+    inputIndirectBinding.binding = 1;
+
+    BindGroupEntry& outputParamsBinding = bindings[2];
+    outputParamsBinding.binding = 2;
+    outputParamsBinding.buffer = outputParamsBuffer.GetBuffer();
+
+    BindGroupEntry& drawCountBinding = bindings[3];
+    drawCountBinding.binding = 3;
+
+    BindGroupDescriptor bindGroupDescriptor = {};
+    bindGroupDescriptor.layout = layout.Get();
+    bindGroupDescriptor.entryCount = 4;
+    bindGroupDescriptor.entries = bindings;
+
+    uint64_t outputOffset = 0;
+
+    for (auto& draw : multiDraws) {
+        if (draw.type == IndirectDrawMetadata::DrawType::NonIndexed) {
+            continue;
+        }
+
+        uint64_t numIndexBufferElements = 0;
+
+        switch (draw.indexFormat) {
+            case wgpu::IndexFormat::Uint16:
+                numIndexBufferElements = draw.indexBufferSize / 2;
+                break;
+            case wgpu::IndexFormat::Uint32:
+                numIndexBufferElements = draw.indexBufferSize / 4;
+                break;
+            default:
+                DAWN_UNREACHABLE();
+        }
+
+        // This is a indexed draw even though the type says otherwise.
+        // Same struct for both indexed and non-indexed draws.
+        MultiDrawIndirectCmd* cmd = draw.cmd;
+
+        DrawConstants drawConstants;
+        drawConstants.maxDrawCount = draw.cmd->maxDrawCount;
+        drawConstants.numIndexBufferElementsLow =
+            static_cast<uint32_t>(numIndexBufferElements & 0xFFFFFFFF);
+        drawConstants.numIndexBufferElementsHigh =
+            static_cast<uint32_t>((numIndexBufferElements >> 32) & 0xFFFFFFFF);
+        drawConstants.flags = cmd->drawCountBuffer == nullptr ? 0 : kIndirectDrawCountBuffer;
+
+        inputIndirectBinding.buffer = cmd->indirectBuffer.Get();
+        inputIndirectBinding.offset = cmd->indirectOffset;
+
+        outputParamsBinding.buffer = outputParamsBuffer.GetBuffer();
+        outputParamsBinding.offset = outputOffset;
+
+        drawCountBinding.buffer = cmd->drawCountBuffer.Get();
+        drawCountBinding.offset = cmd->drawCountOffset;
+
+        Ref<BindGroupBase> bindGroup;
+        DAWN_TRY_ASSIGN(bindGroup, device->CreateBindGroup(&bindGroupDescriptor));
+
+        commandEncoder->APIWriteBuffer(drawConstantsBuffer.GetBuffer(), 0,
+                                       reinterpret_cast<const uint8_t*>(&drawConstants),
+                                       sizeof(DrawConstants));
+
+        Ref<ComputePassEncoder> passEncoder = commandEncoder->BeginComputePass();
+        passEncoder->APISetPipeline(pipeline);
+        passEncoder->APISetBindGroup(0, bindGroup.Get());
+        passEncoder->APIDispatchWorkgroups(64);
+        passEncoder->APIEnd();
+
+        // update the draw command to use the validated indirect buffer
+        // drawCountBuffer doesn't need to be updated because if it exceeds the maxDrawCount
+        // it will be clamped to maxDrawCount.
+        cmd->indirectBuffer = outputParamsBuffer.GetBuffer();
+        cmd->indirectOffset = outputOffset;
+
+        outputOffset += cmd->maxDrawCount * kDrawIndexedIndirectSize;
+    }
+    return {};
+}
 }  // namespace dawn::native

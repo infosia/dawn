@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_COMMANDENCODER_H_
 
 #include <string>
+#include <vector>
 
 #include "absl/container/flat_hash_set.h"
 #include "dawn/common/NonMovable.h"
@@ -63,6 +64,8 @@ class CommandEncoder final : public ApiObjectBase {
 
     void TrackUsedQuerySet(QuerySetBase* querySet);
     void TrackQueryAvailability(QuerySetBase* querySet, uint32_t queryIndex);
+
+    void AddIndirectDrawMetadata(IndirectDrawMetadata& metadata);
 
     // Dawn API
     ComputePassEncoder* APIBeginComputePass(const ComputePassDescriptor* descriptor);
@@ -150,6 +153,9 @@ class CommandEncoder final : public ApiObjectBase {
     uint64_t mDebugGroupStackSize = 0;
 
     UsageValidationMode mUsageValidationMode;
+
+    // One for each render pass
+    std::vector<IndirectDrawMetadata> mIndirectDrawMetadatas;
 };
 
 }  // namespace dawn::native

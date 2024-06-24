@@ -1098,6 +1098,10 @@ void CommandEncoder::TrackQueryAvailability(QuerySetBase* querySet, uint32_t que
     querySet->SetQueryAvailability(queryIndex, true);
 }
 
+void CommandEncoder::AddIndirectDrawMetadata(IndirectDrawMetadata& metadata) {
+    mIndirectDrawMetadatas.emplace_back(std::move(metadata));
+}
+
 // Implementation of the API's command recording methods
 
 ComputePassEncoder* CommandEncoder::APIBeginComputePass(const ComputePassDescriptor* descriptor) {
@@ -2044,6 +2048,9 @@ CommandBufferBase* CommandEncoder::APIFinish(const CommandBufferDescriptor* desc
         errorCommandBuffer->SetEncoderLabel(this->GetLabel());
         return ReturnToAPI(std::move(errorCommandBuffer));
     }
+
+    commandBuffer->SetIndirectDrawMetadatas(mIndirectDrawMetadatas);
+
     DAWN_ASSERT(!IsError());
     return ReturnToAPI(std::move(commandBuffer));
 }
