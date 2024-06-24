@@ -36,6 +36,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/EnumMaskIterator.h"
+#include "dawn/native/InternalPipelineStore.h"
 #include "dawn/native/RenderBundle.h"
 #include "dawn/native/vulkan/BindGroupVk.h"
 #include "dawn/native/vulkan/BufferVk.h"
@@ -1244,6 +1245,57 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 device->fn.CmdDrawIndexedIndirect(commands, buffer->GetHandle(),
                                                   static_cast<VkDeviceSize>(draw->indirectOffset),
                                                   1, 0);
+                break;
+            }
+
+            case Command::MultiDrawIndirect: {
+                MultiDrawIndirectCmd* cmd = iter->NextCommand<MultiDrawIndirectCmd>();
+
+                Buffer* indirectBuffer = ToBackend(cmd->indirectBuffer.Get());
+                DAWN_ASSERT(indirectBuffer != nullptr);
+
+                // Count buffer is optional
+                Buffer* countBuffer = ToBackend(cmd->drawCountBuffer.Get());
+
+                if (countBuffer == nullptr) {
+                    InternalPipelineStore* store = device->GetInternalPipelineStore();
+                    countBuffer = ToBackend(store->multiDrawCountBuffer.Get());
+                }
+
+                // Vulkan requires the count buffer to be valid
+                DAWN_ASSERT(countBuffer != nullptr);
+
+                descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_GRAPHICS);
+                device->fn.CmdDrawIndirectCount(commands, indirectBuffer->GetHandle(),
+                                                static_cast<VkDeviceSize>(cmd->indirectOffset),
+                                                countBuffer->GetHandle(),
+                                                static_cast<VkDeviceSize>(cmd->drawCountOffset),
+                                                cmd->maxDrawCount, sizeof(VkDrawIndirectCommand));
+
+                break;
+            }
+            case Command::MultiDrawIndexedIndirect: {
+                MultiDrawIndexedIndirectCmd* cmd = iter->NextCommand<MultiDrawIndexedIndirectCmd>();
+
+                Buffer* indirectBuffer = ToBackend(cmd->indirectBuffer.Get());
+                DAWN_ASSERT(indirectBuffer != nullptr);
+
+                // Count buffer is optional
+                Buffer* countBuffer = ToBackend(cmd->drawCountBuffer.Get());
+
+                if (countBuffer == nullptr) {
+                    InternalPipelineStore* store = device->GetInternalPipelineStore();
+                    countBuffer = ToBackend(store->multiDrawCountBuffer.Get());
+                }
+                // Vulkan requires the count buffer to be valid
+                DAWN_ASSERT(countBuffer != nullptr);
+
+                descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_GRAPHICS);
+                device->fn.CmdDrawIndexedIndirectCount(
+                    commands, indirectBuffer->GetHandle(),
+                    static_cast<VkDeviceSize>(cmd->indirectOffset), countBuffer->GetHandle(),
+                    static_cast<VkDeviceSize>(cmd->drawCountOffset), cmd->maxDrawCount,
+                    sizeof(VkDrawIndexedIndirectCommand));
                 break;
             }
 

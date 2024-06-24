@@ -147,6 +147,9 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
         //       so swap back the renderCommands to ensure that they are not leaked.
         CommandAllocator renderCommands = std::move(mPendingCommands);
 
+        DAWN_TRY_WITH_CLEANUP(EncodeMultiDrawPreperationCommands(mDevice, commandEncoder),
+                              { mPendingCommands = std::move(renderCommands); });
+
         // The below function might create new resources. Device must already be locked via
         // renderpassEncoder's APIEnd().
         // TODO(crbug.com/dawn/1618): In future, all temp resources should be created at
@@ -158,11 +161,21 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
                 EncodeIndirectDrawValidationCommands(mDevice, commandEncoder, &usageTracker,
                                                      &indirectDrawMetadata),
                 { mPendingCommands = std::move(renderCommands); });
+
+            DAWN_TRY_WITH_CLEANUP(
+                EncodeIndirectMultiDrawValidationCommands(mDevice, commandEncoder, &usageTracker,
+                                                          &indirectDrawMetadata),
+                { mPendingCommands = std::move(renderCommands); });
         }
 
         CommitCommands(std::move(mPendingCommands));
         CommitCommands(std::move(renderCommands));
     }
+
+    // Only apple needs this, avoid allocating a vector of metadatas on other platforms
+#if DAWN_PLATFORM_IS(AAPLE)
+    commandEncoder->AddIndirectDrawMetadata(indirectDrawMetadata);
+#endif
 
     mRenderPassUsages.push_back(usageTracker.AcquireResourceUsage());
     return {};
