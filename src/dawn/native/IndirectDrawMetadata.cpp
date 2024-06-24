@@ -154,6 +154,11 @@ IndirectDrawMetadata::GetIndexedIndirectBufferValidationInfo() {
     return &mIndexedIndirectBufferValidationInfo;
 }
 
+std::vector<IndirectDrawMetadata::IndirectMultiDraw>&
+IndirectDrawMetadata::GetIndirectMultiDraws() {
+    return mMultiDraws;
+}
+
 void IndirectDrawMetadata::AddBundle(RenderBundleBase* bundle) {
     auto [_, inserted] = mAddedBundles.insert(bundle);
     if (!inserted) {
@@ -235,6 +240,32 @@ void IndirectDrawMetadata::AddIndirectDraw(BufferBase* indirectBuffer,
 
 void IndirectDrawMetadata::ClearIndexedIndirectBufferValidationInfo() {
     mIndexedIndirectBufferValidationInfo.clear();
+}
+
+void IndirectDrawMetadata::AddIndirectMultiDraw(MultiDrawIndirectCmd* cmd) {
+    IndirectMultiDraw multiDraw;
+    multiDraw.type = DrawType::NonIndexed;
+    multiDraw.cmd = cmd;
+    multiDraw.indexBuffer = nullptr;
+    multiDraw.indexBufferOffsetInBytes = 0;
+
+    mMultiDraws.push_back(multiDraw);
+}
+
+void IndirectDrawMetadata::AddIndirectIndexedMultiDraw(BufferBase* indexBuffer,
+                                                       wgpu::IndexFormat indexFormat,
+                                                       uint64_t indexBufferSize,
+                                                       uint64_t indexBufferOffset,
+                                                       MultiDrawIndexedIndirectCmd* cmd) {
+    IndirectMultiDraw multiDraw;
+    multiDraw.type = DrawType::Indexed;
+    multiDraw.cmd = cmd;
+    multiDraw.indexBuffer = indexBuffer;
+    multiDraw.indexBufferSize = indexBufferSize;
+    multiDraw.indexBufferOffsetInBytes = indexBufferOffset;
+    multiDraw.indexFormat = indexFormat;
+
+    mMultiDraws.push_back(multiDraw);
 }
 
 bool IndirectDrawMetadata::IndexedIndirectConfig::operator<(

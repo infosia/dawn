@@ -71,9 +71,18 @@ struct InternalPipelineStore {
     // buffer for indirect dispatch or draw calls.
     ScratchBuffer scratchIndirectStorage;
 
-    Ref<ComputePipelineBase> renderValidationPipeline;
-    Ref<ShaderModuleBase> renderValidationShader;
+    // A render pass can have both DrawIndirect and MultiDrawIndirect calls.
+    // We need a separate buffer to store the validated multiDrawCommands.
+    ScratchBuffer scratchMultiDrawStorage;
+
+    Ref<ComputePipelineBase> indirectDrawValidationPipeline;
+    Ref<ShaderModuleBase> indirectDrawValidationShader;
+    Ref<ComputePipelineBase> multiDrawValidationPipeline;
+    Ref<ShaderModuleBase> multiDrawValidationShader;
     Ref<ComputePipelineBase> dispatchIndirectValidationPipeline;
+
+    // This is only for the metal backend
+    Ref<ObjectBase> multidrawICBConverterPipeline;
 
     Ref<RenderPipelineBase> blitRG8ToDepth16UnormPipeline;
 
