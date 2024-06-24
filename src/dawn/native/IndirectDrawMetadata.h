@@ -56,6 +56,11 @@ uint64_t ComputeMaxIndirectValidationBatchOffsetRange(const CombinedLimits& limi
 // commands.
 class IndirectDrawMetadata : public NonCopyable {
   public:
+    enum class DrawType {
+        NonIndexed,
+        Indexed,
+    };
+
     struct IndirectDraw {
         uint64_t inputBufferOffset;
         uint64_t numIndexBufferElements;
@@ -70,6 +75,15 @@ class IndirectDrawMetadata : public NonCopyable {
         uint64_t minOffset;
         uint64_t maxOffset;
         std::vector<IndirectDraw> draws;
+    };
+
+    struct IndirectMultiDraw {
+        DrawType type;
+        uint64_t indexBufferSize;           // size after offset
+        uint64_t indexBufferOffsetInBytes;  // For Metal
+        wgpu::IndexFormat indexFormat;
+        BufferBase* indexBuffer;  // For Metal
+        raw_ptr<MultiDrawIndirectCmd> cmd;
     };
 
     // Tracks information about every draw call in this render pass which uses the same indirect
@@ -111,10 +125,6 @@ class IndirectDrawMetadata : public NonCopyable {
         std::vector<IndirectValidationBatch> mBatches;
     };
 
-    enum class DrawType {
-        NonIndexed,
-        Indexed,
-    };
     struct IndexedIndirectConfig {
         uintptr_t inputIndirectBufferPtr;
         bool duplicateBaseVertexInstance;
@@ -149,11 +159,23 @@ class IndirectDrawMetadata : public NonCopyable {
                          bool duplicateBaseVertexInstance,
                          DrawIndirectCmd* cmd);
 
+    void AddIndirectMultiDraw(MultiDrawIndirectCmd* cmd);
+
+    void AddIndirectIndexedMultiDraw(BufferBase* indexBuffer,
+                                     wgpu::IndexFormat indexFormat,
+                                     uint64_t indexBufferSize,
+                                     uint64_t indexBufferOffset,
+                                     MultiDrawIndexedIndirectCmd* cmd);
+
     void ClearIndexedIndirectBufferValidationInfo();
+
+    std::vector<IndirectMultiDraw>& GetIndirectMultiDraws();
 
   private:
     IndexedIndirectBufferValidationInfoMap mIndexedIndirectBufferValidationInfo;
     absl::flat_hash_set<RenderBundleBase*> mAddedBundles;
+
+    std::vector<IndirectMultiDraw> mMultiDraws;
 
     uint64_t mMaxBatchOffsetRange;
     uint32_t mMaxDrawCallsPerBatch;

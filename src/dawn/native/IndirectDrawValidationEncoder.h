@@ -48,6 +48,11 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
                                                 RenderPassResourceUsageTracker* usageTracker,
                                                 IndirectDrawMetadata* indirectDrawMetadata);
 
+MaybeError EncodeIndirectMultiDrawValidationCommands(DeviceBase* device,
+                                                     CommandEncoder* commandEncoder,
+                                                     RenderPassResourceUsageTracker* usageTracker,
+                                                     IndirectDrawMetadata* indirectDrawMetadata);
+
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_INDIRECTDRAWVALIDATIONENCODER_H_

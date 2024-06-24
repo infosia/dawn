@@ -158,11 +158,20 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
                 EncodeIndirectDrawValidationCommands(mDevice, commandEncoder, &usageTracker,
                                                      &indirectDrawMetadata),
                 { mPendingCommands = std::move(renderCommands); });
+
+            if (mDevice->IsValidationEnabled()) {
+                DAWN_TRY_WITH_CLEANUP(
+                    EncodeIndirectMultiDrawValidationCommands(mDevice, commandEncoder,
+                                                              &usageTracker, &indirectDrawMetadata),
+                    { mPendingCommands = std::move(renderCommands); });
+            }
         }
 
         CommitCommands(std::move(mPendingCommands));
         CommitCommands(std::move(renderCommands));
     }
+
+    commandEncoder->AddIndirectDrawMetadata(indirectDrawMetadata);
 
     mRenderPassUsages.push_back(usageTracker.AcquireResourceUsage());
     return {};
