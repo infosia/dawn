@@ -232,6 +232,11 @@ class DawnTestEnvironment : public testing::Environment {
 
     ToggleParser mToggleParser;
 
+    // Keep references to enumerated adapters so that Dawn does not clean up their corresponding
+    // PhysicalDevice. This prevents the PhysicalDevice from being re-created for each individual
+    // test, which may take a significant amount of time on certain platforms such as D3D.
+    std::vector<wgpu::Adapter> mAdapters;
+
     std::vector<wgpu::AdapterType> mDevicePreferences;
     std::vector<TestAdapterProperties> mAdapterProperties;
 

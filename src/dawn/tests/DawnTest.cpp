@@ -458,13 +458,13 @@ void DawnTestEnvironment::SelectPreferredAdapterProperties(const native::Instanc
                 adapterOptions.compatibilityMode = compatibilityMode;
                 for (const native::Adapter& adapter :
                      instance->EnumerateAdapters(&adapterOptions)) {
+                    mAdapters.push_back(adapter.Get());
                     wgpu::AdapterInfo info;
                     adapter.GetInfo(&info);
 
-                    if (info.adapterType == devicePreference) {
+                    if (info.adapterType == devicePreference && !preferredDeviceType) {
                         // Found a matching preferred device type. Return to break out of all loops.
                         preferredDeviceType = devicePreference;
-                        return;
                     }
                 }
             }
@@ -655,6 +655,8 @@ void DawnTestEnvironment::SetUp() {
 }
 
 void DawnTestEnvironment::TearDown() {
+    mAdapters.clear();
+
     // When Vulkan validation layers are enabled, it's unsafe to call Vulkan APIs in the destructor
     // of a static/global variable, so the instance must be manually released beforehand.
     mInstance.reset();
