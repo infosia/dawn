@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f22b6286_f2760a03",
+        "filename": "src/dawn/native/BlitBufferToDepthStencil.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-01T21:24:53Z",
+      "side": 1,
+      "message": "This textureView actually contradicts with the [6. new texture view base array layer restriction in compat mode](https://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md#6-array-texture-views-used-in-bind-groups-must-consist-of-the-entire-array-that-is-basearraylayer-must-be-zero-and-arraylayercount-must-be-equal-to-the-size-of-the-texture-array)\n\nBut `dstView` is used as render target and the arrayLayer essentially is passed to `gl.FramebufferTextureLayer` which is valid. [code](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/TextureGL.cpp;l\u003d615;drc\u003d5da3e004cb817f22367e498c16e317b9b6c0e62a)\n\nWe may need to mark this as internal to still make it work, if we implement the new compat validation rule",
+      "revId": "e1922a21f12283a41150c7cff3ab305c816ea113",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
