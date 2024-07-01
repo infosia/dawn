@@ -33,6 +33,23 @@
       "message": "Corentin is on vacation. Added Alex as reviewer.",
       "revId": "d7f8d4c29485394b60f099873340610c0c7ab572",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b09b3f6_63a27a93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-01T13:14:28Z",
+      "side": 1,
+      "message": "I verified that I could repro the error you were seeing, then I patched this CL locally.  The previous error was resolved, but now I\u0027m seeing:\n\nld: error: undefined symbol: __android_log_print\n\u003e\u003e\u003e referenced by Log.cpp:111 (/usr/local/google/home/bentonian/Documents/dev/dawn/src/dawn/common/Log.cpp:111)\n\u003e\u003e\u003e               dawn/src/dawn/common/CMakeFiles/dawn_common.dir/Log.cpp.o:(dawn::LogMessage::~LogMessage())\n\n...in linker step :webgpu:buildCMakeDebug[x86]",
+      "revId": "d7f8d4c29485394b60f099873340610c0c7ab572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
