@@ -104,6 +104,24 @@
       "parentUuid": "abecad78_91c3e0e4",
       "revId": "7056f5eb819d2c71c303edd145d370894a46f1fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3cddc2d_a3192c76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 33
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-01T12:48:44Z",
+      "side": 1,
+      "message": "Yep, that\u0027s the reason. Since `libwebgpu_dawn` is on it\u0027s way to become the defacto bundled library for all platforms (except android). I\u0027m trying to make `webgpu_c_bundled` not link with webgpu_dawn anymore.",
+      "parentUuid": "75531b78_a3e2d4b9",
+      "revId": "7056f5eb819d2c71c303edd145d370894a46f1fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
