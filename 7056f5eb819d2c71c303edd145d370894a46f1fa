@@ -86,6 +86,24 @@
       "message": "It might be significant that libwegpu_dawn is now a shared library; previously it was static.",
       "revId": "7056f5eb819d2c71c303edd145d370894a46f1fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adbcdf9c_4e599e89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 33
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-01T12:35:53Z",
+      "side": 1,
+      "message": "Found a way to fix  the undefined reference to `log` error. There are a couple more undefined reference errors. Fixing them too. I\u0027ll make a CL once I\u0027m able to successfully complete the `buildCMakeDebug` task in android studio.",
+      "parentUuid": "abecad78_91c3e0e4",
+      "revId": "7056f5eb819d2c71c303edd145d370894a46f1fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
