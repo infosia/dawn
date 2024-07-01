@@ -34,6 +34,24 @@
       "parentUuid": "3edc7e6b_76ddf81b",
       "revId": "f8441fa39965379cfe1a1adfef549f2d7b9e1167",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "490723a8_dce38f14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-01T12:59:39Z",
+      "side": 1,
+      "message": "Thanks! I do vaguely remember that discussion. I think that the issue at that time was that it was not feasible to create an AHB for testing that had *only* external format. That\u0027s still the case, but I think that now we could create such tests just using a normal AHB (which will have a Vk format and an external format) because we can instruct the STM that we want to use the [external format](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/SharedTextureMemoryVk.cpp;l\u003d542;drc\u003d7b232da0f22e8cdf555d43c52b6491baeb87f729;bpv\u003d1;bpt\u003d1)\n\nThat said, it doesn\u0027t look from my manual testing like such tests would surface this issue via validation, unfortunately.",
+      "parentUuid": "79009c21_7845a09b",
+      "revId": "f8441fa39965379cfe1a1adfef549f2d7b9e1167",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
