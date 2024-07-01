@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e570a6cc_15049f1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-01T21:49:22Z",
+      "side": 1,
+      "message": "dsinclair: owners-PTAL at BUILD.gn, build_overrides/, scripts/. The rest should become owned by me after the previous two CLs and I don\u0027t think you need to review it.",
+      "revId": "a9170d00f3021c8c2cd0ca378ec6e366c63c339a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
