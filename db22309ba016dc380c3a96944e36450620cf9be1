@@ -33,6 +33,23 @@
       "message": "Thanks for the prompt assistance.",
       "revId": "db22309ba016dc380c3a96944e36450620cf9be1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dfef894_4c24ca82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-01T16:10:23Z",
+      "side": 1,
+      "message": "@jimblackler@google.com\n\nwould it be possible for someone to setup a new step in the dawn/cmake.py recipe for android cmake?",
+      "revId": "db22309ba016dc380c3a96944e36450620cf9be1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
