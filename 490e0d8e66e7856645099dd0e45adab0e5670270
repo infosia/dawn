@@ -22,6 +22,30 @@
       },
       "revId": "490e0d8e66e7856645099dd0e45adab0e5670270",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fa2eeb6_e544ad79",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4124,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-01T21:00:22Z",
+      "side": 1,
+      "message": "No, that one is not going to be removed because there are several places where it\u0027s valid/meaningful to pass \"undefined\":\nGPUTextureViewDescriptor.format\nGPURenderPassLayout.depthStencilFormat",
+      "parentUuid": "832bb530_26d6dba2",
+      "range": {
+        "startLine": 4124,
+        "startChar": 0,
+        "endLine": 4124,
+        "endChar": 85
+      },
+      "revId": "490e0d8e66e7856645099dd0e45adab0e5670270",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
