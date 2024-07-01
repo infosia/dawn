@@ -16,6 +16,23 @@
       "message": "LGTM.",
       "revId": "d7f8d4c29485394b60f099873340610c0c7ab572",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e2f4bc5_c1dc89c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-01T12:25:04Z",
+      "side": 1,
+      "message": "Corentin is on vacation. Added Alex as reviewer.",
+      "revId": "d7f8d4c29485394b60f099873340610c0c7ab572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
