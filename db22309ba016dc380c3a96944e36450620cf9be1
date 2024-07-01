@@ -16,6 +16,23 @@
       "message": "I\u0027ve checked out locally and confirm that this resolves my issue",
       "revId": "db22309ba016dc380c3a96944e36450620cf9be1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c1af11f_61064059",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-01T15:09:09Z",
+      "side": 1,
+      "message": "Thanks for the prompt assistance.",
+      "revId": "db22309ba016dc380c3a96944e36450620cf9be1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
