@@ -69,6 +69,23 @@
       "parentUuid": "4f2e114b_95b18f71",
       "revId": "7056f5eb819d2c71c303edd145d370894a46f1fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75531b78_a3e2d4b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 33
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-01T12:35:41Z",
+      "side": 1,
+      "message": "It might be significant that libwegpu_dawn is now a shared library; previously it was static.",
+      "revId": "7056f5eb819d2c71c303edd145d370894a46f1fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
