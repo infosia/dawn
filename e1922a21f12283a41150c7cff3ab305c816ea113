@@ -51,6 +51,24 @@
       "parentUuid": "f22b6286_f2760a03",
       "revId": "e1922a21f12283a41150c7cff3ab305c816ea113",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba9b98aa_b7f73f10",
+        "filename": "src/dawn/native/BlitBufferToDepthStencil.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-01T21:55:19Z",
+      "side": 1,
+      "message": "Oh right. Your interpretation is correct (\"in bind groups\"). Then there\u0027s no problem here.",
+      "parentUuid": "fe204a09_93b0ba54",
+      "revId": "e1922a21f12283a41150c7cff3ab305c816ea113",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
