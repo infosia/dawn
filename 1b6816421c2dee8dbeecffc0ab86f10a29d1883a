@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "189284c1_997494ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-02T15:58:48Z",
+      "side": 1,
+      "message": "Loko: for review\nSaif: FYI\n\nThanks!",
+      "revId": "1b6816421c2dee8dbeecffc0ab86f10a29d1883a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
