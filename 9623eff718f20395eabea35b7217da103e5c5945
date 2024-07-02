@@ -50,6 +50,23 @@
       "message": "It looks like only your @chromium.org account is listed as an owner.",
       "revId": "9623eff718f20395eabea35b7217da103e5c5945",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bc69aed_fb42b053",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-07-02T18:04:10Z",
+      "side": 1,
+      "message": "Can I get a stamp with your chromium account since that\u0027s what\u0027s listed in the OWNERS file?",
+      "revId": "9623eff718f20395eabea35b7217da103e5c5945",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
