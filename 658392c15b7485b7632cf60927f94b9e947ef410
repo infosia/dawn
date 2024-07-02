@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59d6e408_19defcc2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T16:52:07Z",
+      "side": 1,
+      "message": "übernit: Just `ByteAddressBuffer` now",
+      "revId": "658392c15b7485b7632cf60927f94b9e947ef410",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37816c2a_57417a3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T16:52:07Z",
+      "side": 1,
+      "message": "LGTM, nits not important",
+      "revId": "658392c15b7485b7632cf60927f94b9e947ef410",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d32c9e9b_d1496a1a",
+        "filename": "src/tint/lang/hlsl/type/byte_address_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T16:52:07Z",
+      "side": 1,
+      "message": "Nit: not a pointer type any more",
+      "revId": "658392c15b7485b7632cf60927f94b9e947ef410",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
