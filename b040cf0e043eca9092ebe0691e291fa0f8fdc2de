@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31a504d1_d2a0b9f8",
+        "filename": "src/tint/lang/hlsl/hlsl.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-02T16:47:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da14748_e1d2a2b1",
+      "revId": "b040cf0e043eca9092ebe0691e291fa0f8fdc2de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "130abe5d_6213e842",
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "As discussed offline, you can still validate the Load/Store functions against the access mode with a single `ByteAddressBuffer` parameterized by the access mode, the same as we do for `textureLoad` and `textureStore` with storage textures.\n\nWill leave up to you if you want to do this now or consider as a follow up.",
       "parentUuid": "9957f677_48abd26e",
+      "revId": "b040cf0e043eca9092ebe0691e291fa0f8fdc2de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "947db97f_524c8d2b",
+        "filename": "src/tint/lang/hlsl/type/byte_address_buffer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-02T16:47:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5a68689_04bc2742",
       "revId": "b040cf0e043eca9092ebe0691e291fa0f8fdc2de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
