@@ -1007,6 +1007,11 @@ class State {
     }
 
     ast::Type Struct(const core::type::Struct* s) {
+        // Skip builtin structures.
+        if (tint::HasPrefix(s->Name().NameView(), "__")) {
+            return ast::Type{};
+        }
+
         auto n = structs_.GetOrAdd(s, [&] {
             auto members = tint::Transform<8>(s->Members(), [&](const core::type::StructMember* m) {
                 auto ty = Type(m->Type());
