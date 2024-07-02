@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e678b6ff_b8aa02ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-02T17:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d6e408_19defcc2",
+      "revId": "658392c15b7485b7632cf60927f94b9e947ef410",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "37816c2a_57417a3a",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "writtenOn": "2024-07-02T16:52:07Z",
       "side": 1,
       "message": "Nit: not a pointer type any more",
+      "revId": "658392c15b7485b7632cf60927f94b9e947ef410",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02e881ff_4ee2aecc",
+        "filename": "src/tint/lang/hlsl/type/byte_address_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-02T17:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d32c9e9b_d1496a1a",
       "revId": "658392c15b7485b7632cf60927f94b9e947ef410",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
