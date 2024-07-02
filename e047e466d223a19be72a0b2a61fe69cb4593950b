@@ -34,6 +34,24 @@
       "parentUuid": "c2c0df0d_73bea6e7",
       "revId": "e047e466d223a19be72a0b2a61fe69cb4593950b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3ff31f1_576d17c8",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 28
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-02T19:32:03Z",
+      "side": 1,
+      "message": "Done in separate CL",
+      "parentUuid": "60749572_33254f3c",
+      "revId": "e047e466d223a19be72a0b2a61fe69cb4593950b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
