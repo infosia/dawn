@@ -93,7 +93,7 @@ $B1: {  # root
   }
 }
 )";
-    EXPECT_EQ(src, str());
+    ASSERT_EQ(src, str());
 
     auto* expect = R"(
 $B1: {  # root
@@ -125,8 +125,8 @@ $B1: {  # root
 
 TEST_F(HlslWriterDecomposeMemoryAccessTest, VectorStore) {
     auto* var = b.Var<storage, vec4<f32>, core::Access::kReadWrite>("v");
-
     b.ir.root_block->Append(var);
+
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
     b.Append(func->Block(), [&] {
         b.StoreVectorElement(var, 0_u, 2_f);
@@ -151,7 +151,7 @@ $B1: {  # root
   }
 }
 )";
-    EXPECT_EQ(src, str());
+    ASSERT_EQ(src, str());
 
     auto* expect = R"(
 $B1: {  # root
@@ -168,6 +168,120 @@ $B1: {  # root
     %8:void = %v.Store 8u, %7
     %9:u32 = bitcast 16.0f
     %10:void = %v.Store 12u, %9
+    ret
+  }
+}
+)";
+
+    Run(DecomposeMemoryAccess);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriterDecomposeMemoryAccessTest, AccessRwByteAddressBuffer) {
+    auto* sb = ty.Struct(mod.symbols.New("SB"),
+                         {
+                             {mod.symbols.New("a"), ty.i32(), core::type::StructMemberAttributes{}},
+                         });
+    auto* var = b.Var("v", storage, sb, core::Access::kReadWrite);
+    b.ir.root_block->Append(var);
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Let("a", b.Load(b.Access(ty.ptr(storage, ty.i32(), core::Access::kReadWrite), var, 0_u)));
+        b.Return(func);
+    });
+
+    auto* src = R"(
+SB = struct @align(4) {
+  a:i32 @offset(0)
+}
+
+$B1: {  # root
+  %v:ptr<storage, SB, read_write> = var
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %3:ptr<storage, i32, read_write> = access %v, 0u
+    %4:i32 = load %3
+    %a:i32 = let %4
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+SB = struct @align(4) {
+  a:i32 @offset(0)
+}
+
+$B1: {  # root
+  %v:hlsl.rw_byte_address_buffer<storage, SB, read_write> = var
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %1:u32 = hlsl.Load %v, 0u
+    %2:f32 = bitcast %1
+    %a:f32 = let %2
+    ret
+  }
+}
+)";
+
+    Run(DecomposeMemoryAccess);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriterDecomposeMemoryAccessTest, AccessByteAddressBuffer) {
+    auto* sb = ty.Struct(mod.symbols.New("SB"),
+                         {
+                             {mod.symbols.New("a"), ty.i32(), core::type::StructMemberAttributes{}},
+                         });
+    auto* var = b.Var("v", storage, sb, core::Access::kRead);
+    b.ir.root_block->Append(var);
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Let("a", b.Load(b.Access(ty.ptr(storage, ty.i32(), core::Access::kRead), var, 0_u)));
+        b.Return(func);
+    });
+
+    auto* src = R"(
+SB = struct @align(4) {
+  a:i32 @offset(0)
+}
+
+$B1: {  # root
+  %v:ptr<storage, SB, read> = var
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %3:ptr<storage, i32, read> = access %v, 0u
+    %4:i32 = load %3
+    %a:i32 = let %4
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+SB = struct @align(4) {
+  a:i32 @offset(0)
+}
+
+$B1: {  # root
+  %v:hlsl.byte_address_buffer<storage, SB, read> = var
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %1:u32 = hlsl.Load %v, 0u
+    %2:f32 = bitcast %1
+    %a:f32 = let %2
     ret
   }
 }
