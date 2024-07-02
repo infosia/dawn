@@ -94,6 +94,11 @@ fn f16tof32[N: num](vec<N, u32>) -> vec<N, f32>
 @member_function fn Load3[T](byte_address_buffer<T, readable>, offset: u32) -> vec3<u32>
 @member_function fn Load4[T](byte_address_buffer<T, readable>, offset: u32) -> vec4<u32>
 
+@member_function fn LoadF16[T](byte_address_buffer<T, readable>, offset: u32) -> f16
+@member_function fn Load2F16[T](byte_address_buffer<T, readable>, offset: u32) -> vec2<f16>
+@member_function fn Load3F16[T](byte_address_buffer<T, readable>, offset: u32) -> vec3<f16>
+@member_function fn Load4F16[T](byte_address_buffer<T, readable>, offset: u32) -> vec4<f16>
+
 @member_function fn Store[T](byte_address_buffer<T, writable>, offset: u32, value: u32)
 @member_function fn Store2[T](byte_address_buffer<T, writable>, offset: u32, value: vec2<u32>)
 @member_function fn Store3[T](byte_address_buffer<T, writable>, offset: u32, value: vec3<u32>)
