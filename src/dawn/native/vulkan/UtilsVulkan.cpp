@@ -28,6 +28,7 @@
 #include "dawn/native/vulkan/UtilsVulkan.h"
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/EnumMaskIterator.h"
 #include "dawn/native/Format.h"
 #include "dawn/native/Pipeline.h"
@@ -357,8 +358,10 @@ ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversionCreateInfo(
     vulkanYCbCrCreateInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_CREATE_INFO;
     vulkanYCbCrCreateInfo.pNext = nullptr;
     vulkanYCbCrCreateInfo.format = vulkanFormat;
+    //vulkanYCbCrCreateInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
     vulkanYCbCrCreateInfo.ycbcrModel =
         static_cast<VkSamplerYcbcrModelConversion>(yCbCrDescriptor.vkYCbCrModel);
+    //ErrorLog() << "blundell: Setting model to " << vulkanYCbCrCreateInfo.ycbcrModel;
     vulkanYCbCrCreateInfo.ycbcrRange =
         static_cast<VkSamplerYcbcrRange>(yCbCrDescriptor.vkYCbCrRange);
     vulkanYCbCrCreateInfo.components = vulkanComponent;
@@ -374,6 +377,7 @@ ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversionCreateInfo(
     VkExternalFormatANDROID vulkanExternalFormat;
     // Chain VkExternalFormatANDROID only if needed.
     if (externalFormat != 0) {
+        //ErrorLog() << "blundell: Setting external format to " << externalFormat;
         vulkanExternalFormat.sType = VK_STRUCTURE_TYPE_EXTERNAL_FORMAT_ANDROID;
         vulkanExternalFormat.pNext = nullptr;
         vulkanExternalFormat.externalFormat = externalFormat;
