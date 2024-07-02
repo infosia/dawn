@@ -88,6 +88,24 @@
       "parentUuid": "94a7de0d_28f1d6b1",
       "revId": "4167597573982ad58204f638fcd42d7a3ddb6395",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "543e04a5_51e8c8c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-07-02T21:13:23Z",
+      "side": 1,
+      "message": "I must have a bad memory. More issues. ... fixed\n\nThis one was FirstIndexOffsetTests. For now just skipped them in compat. We could refactor them to test provoking vertex instead of \"first\" or we could write new tests for that. Skip okay for now and file an issue if we want more?",
+      "parentUuid": "94a7de0d_28f1d6b1",
+      "revId": "4167597573982ad58204f638fcd42d7a3ddb6395",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
