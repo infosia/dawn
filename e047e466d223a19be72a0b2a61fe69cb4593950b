@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2c0df0d_73bea6e7",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 28
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-02T19:13:27Z",
+      "side": 1,
+      "message": "@dsinclair@google.com should I remove this `todo` and disable compiler extensions project wide?",
+      "revId": "e047e466d223a19be72a0b2a61fe69cb4593950b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
