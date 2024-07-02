@@ -16,6 +16,24 @@
       "message": "@dsinclair@google.com should I remove this `todo` and disable compiler extensions project wide?",
       "revId": "e047e466d223a19be72a0b2a61fe69cb4593950b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60749572_33254f3c",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 28
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-02T19:16:32Z",
+      "side": 1,
+      "message": "I\u0027d suggest doing it as its own CL that just flips that one flag. Makes it easier to revert in case something else happens to go wrong.",
+      "parentUuid": "c2c0df0d_73bea6e7",
+      "revId": "e047e466d223a19be72a0b2a61fe69cb4593950b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
