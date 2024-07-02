@@ -52,6 +52,24 @@
       "parentUuid": "1149c1f8_2b6efc00",
       "revId": "4167597573982ad58204f638fcd42d7a3ddb6395",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3b91874_62663dfe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T21:05:00Z",
+      "side": 1,
+      "message": "`in_var4` is using the experimental framebuffer fetch extension which adds a `@color` attribute to be used instead of `@location`. The default interpolation is a little odd for that case, but not especially broken.",
+      "parentUuid": "94a7de0d_28f1d6b1",
+      "revId": "4167597573982ad58204f638fcd42d7a3ddb6395",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
