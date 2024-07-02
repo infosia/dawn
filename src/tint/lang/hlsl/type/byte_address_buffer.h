@@ -30,13 +30,13 @@
 
 #include <string>
 
+#include "src/tint/lang/core/type/memory_view.h"
 #include "src/tint/lang/core/type/pointer.h"
-#include "src/tint/lang/core/type/type.h"
 
 namespace tint::hlsl::type {
 
 /// ByteAddressBuffer represents a read-only byte buffer
-class ByteAddressBuffer final : public Castable<ByteAddressBuffer, core::type::Type> {
+class ByteAddressBuffer final : public Castable<ByteAddressBuffer, core::type::MemoryView> {
   public:
     /// Constructor
     /// @param src the source buffer pointer type
@@ -52,12 +52,6 @@ class ByteAddressBuffer final : public Castable<ByteAddressBuffer, core::type::T
     /// @param ctx the clone context
     /// @returns a clone of this type
     ByteAddressBuffer* Clone(core::type::CloneContext& ctx) const override;
-
-    /// @returns the source type
-    const core::type::Pointer* Source() const { return src_; }
-
-  private:
-    const core::type::Pointer* src_;
 };
 
 }  // namespace tint::hlsl::type

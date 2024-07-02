@@ -472,10 +472,10 @@ class Printer : public tint::TextGenerator {
         Switch(
             var->Result(0)->Type(),  //
             [&](const hlsl::type::ByteAddressBuffer* buf) {
-                EmitStorageVariable(var, buf->Source());
+                EmitStorageVariable(var, buf->Access());
             },
             [&](const hlsl::type::RwByteAddressBuffer* buf) {
-                EmitStorageVariable(var, buf->Source());
+                EmitStorageVariable(var, buf->Access());
             },
             [&](const core::type::Pointer* ptr) {
                 auto space = ptr->AddressSpace();
@@ -530,16 +530,15 @@ class Printer : public tint::TextGenerator {
         Line() << "};";
     }
 
-    void EmitStorageVariable(const core::ir::Var* var, const core::type::Pointer* ptr) {
+    void EmitStorageVariable(const core::ir::Var* var, core::Access access) {
         auto out = Line();
-        EmitTypeAndName(out, var->Result(0)->Type(), core::AddressSpace::kStorage, ptr->Access(),
+        EmitTypeAndName(out, var->Result(0)->Type(), core::AddressSpace::kStorage, access,
                         NameOf(var->Result(0)));
 
         auto bp = var->BindingPoint();
         TINT_ASSERT(bp.has_value());
 
-        out << RegisterAndSpace(ptr->Access() == core::Access::kRead ? 't' : 'u', bp.value())
-            << ";";
+        out << RegisterAndSpace(access == core::Access::kRead ? 't' : 'u', bp.value()) << ";";
     }
 
     void EmitHandleVariable(const core::ir::Var* var) {
@@ -662,8 +661,25 @@ class Printer : public tint::TextGenerator {
     }
 
     void EmitHlslMemberBuiltinCall(StringStream& out, const hlsl::ir::MemberBuiltinCall* c) {
+        BuiltinFn fn = c->Func();
+        std::string suffix = "";
+        if (fn == BuiltinFn::kLoadF16) {
+            fn = BuiltinFn::kLoad;
+            suffix = "<float16_t>";
+        } else if (fn == BuiltinFn::kLoad2F16) {
+            fn = BuiltinFn::kLoad2;
+            suffix = "<vector<float16_t, 2>>";
+        } else if (fn == BuiltinFn::kLoad3F16) {
+            fn = BuiltinFn::kLoad3;
+            suffix = "<vector<float16_t, 3>>";
+        } else if (fn == BuiltinFn::kLoad4F16) {
+            fn = BuiltinFn::kLoad4;
+            suffix = "<vector<float16_t, 4>>";
+        }
+
         EmitValue(out, c->Object());
-        out << "." << c->Func() << "(";
+        out << "." << fn << suffix << "(";
+
         bool needs_comma = false;
         for (const auto* arg : c->Args()) {
             if (needs_comma) {

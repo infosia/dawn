@@ -30,17 +30,17 @@
 
 #include <string>
 
+#include "src/tint/lang/core/type/memory_view.h"
 #include "src/tint/lang/core/type/pointer.h"
-#include "src/tint/lang/core/type/type.h"
 
 namespace tint::hlsl::type {
 
 /// RwByteAddressBuffer represents a read-write byte buffer
-class RwByteAddressBuffer final : public Castable<RwByteAddressBuffer, core::type::Type> {
+class RwByteAddressBuffer final : public Castable<RwByteAddressBuffer, core::type::MemoryView> {
   public:
     /// Constructor
-    /// @param src the source buffer pointer type
-    explicit RwByteAddressBuffer(const core::type::Type* src);
+    /// @param store_type the source buffer pointer type
+    explicit RwByteAddressBuffer(const core::type::Type* store_type);
 
     /// @param other the other node to compare against
     /// @returns true if the this type is equal to @p other
@@ -52,12 +52,6 @@ class RwByteAddressBuffer final : public Castable<RwByteAddressBuffer, core::typ
     /// @param ctx the clone context
     /// @returns a clone of this type
     RwByteAddressBuffer* Clone(core::type::CloneContext& ctx) const override;
-
-    /// @returns the source type
-    const core::type::Pointer* Source() const { return src_; }
-
-  private:
-    const core::type::Pointer* src_;
 };
 
 }  // namespace tint::hlsl::type

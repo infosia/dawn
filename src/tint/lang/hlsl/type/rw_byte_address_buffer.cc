@@ -40,33 +40,27 @@ TINT_INSTANTIATE_TYPEINFO(tint::hlsl::type::RwByteAddressBuffer);
 
 namespace tint::hlsl::type {
 
-RwByteAddressBuffer::RwByteAddressBuffer(const core::type::Type* src)
+RwByteAddressBuffer::RwByteAddressBuffer(const core::type::Type* store_type)
     : Base(static_cast<size_t>(Hash(tint::TypeCode::Of<RwByteAddressBuffer>().bits)),
-           core::type::Flags{}) {
-    TINT_ASSERT(src->Is<core::type::Pointer>());
-    src_ = src->As<core::type::Pointer>();
-}
+           core::AddressSpace::kStorage,
+           store_type,
+           core::Access::kReadWrite) {}
 
 bool RwByteAddressBuffer::Equals(const UniqueNode& other) const {
     if (auto* o = other.As<RwByteAddressBuffer>()) {
-        return o->Source()->Equals(*src_);
+        return o->StoreType() == StoreType();
     }
     return false;
 }
 
 std::string RwByteAddressBuffer::FriendlyName() const {
     StringStream out;
-    out << "hlsl.rw_byte_address_buffer<";
-    if (src_->AddressSpace() != core::AddressSpace::kUndefined) {
-        out << src_->AddressSpace() << ", ";
-    }
-    out << src_->StoreType()->FriendlyName() << ", " << src_->Access();
-    out << ">";
+    out << "hlsl.rw_byte_address_buffer<" << StoreType()->FriendlyName() << ">";
     return out.str();
 }
 
 RwByteAddressBuffer* RwByteAddressBuffer::Clone(core::type::CloneContext& ctx) const {
-    auto* ty = src_->Clone(ctx);
+    auto* ty = StoreType()->Clone(ctx);
     return ctx.dst.mgr->Get<RwByteAddressBuffer>(ty);
 }
 

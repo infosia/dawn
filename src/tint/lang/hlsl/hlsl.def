@@ -90,17 +90,27 @@ fn f32tof16[N: num](vec<N, f32>) -> vec<N, u32>
 fn f16tof32(u32) -> f32
 fn f16tof32[N: num](vec<N, u32>) -> vec<N, f32>
 
-@member_function fn Load[K, T: ptr<storage, K, readable>](byte_address_buffer<T>, offset: u32) -> u32
-@member_function fn Load2[K, T: ptr<storage, K, readable>](byte_address_buffer<T>, offset: u32) -> vec2<u32>
-@member_function fn Load3[K, T: ptr<storage, K, readable>](byte_address_buffer<T>, offset: u32) -> vec3<u32>
-@member_function fn Load4[K, T: ptr<storage, K, readable>](byte_address_buffer<T>, offset: u32) -> vec4<u32>
+@member_function fn Load[T](byte_address_buffer<T>, offset: u32) -> u32
+@member_function fn Load2[T](byte_address_buffer<T>, offset: u32) -> vec2<u32>
+@member_function fn Load3[T](byte_address_buffer<T>, offset: u32) -> vec3<u32>
+@member_function fn Load4[T](byte_address_buffer<T>, offset: u32) -> vec4<u32>
 
-@member_function fn Load[K, T: ptr<storage, K, readable>](rw_byte_address_buffer<T>, offset: u32) -> u32
-@member_function fn Load2[K, T: ptr<storage, K, readable>](rw_byte_address_buffer<T>, offset: u32) -> vec2<u32>
-@member_function fn Load3[K, T: ptr<storage, K, readable>](rw_byte_address_buffer<T>, offset: u32) -> vec3<u32>
-@member_function fn Load4[K, T: ptr<storage, K, readable>](rw_byte_address_buffer<T>, offset: u32) -> vec4<u32>
+@member_function fn LoadF16[T](byte_address_buffer<T>, offset: u32) -> f16
+@member_function fn Load2F16[T](byte_address_buffer<T>, offset: u32) -> vec2<f16>
+@member_function fn Load3F16[T](byte_address_buffer<T>, offset: u32) -> vec3<f16>
+@member_function fn Load4F16[T](byte_address_buffer<T>, offset: u32) -> vec4<f16>
 
-@member_function fn Store[K, T: ptr<storage, K, writable>](rw_byte_address_buffer<T>, offset: u32, value: u32)
-@member_function fn Store2[K, T: ptr<storage, K, writable>](rw_byte_address_buffer<T>, offset: u32, value: vec2<u32>)
-@member_function fn Store3[K, T: ptr<storage, K, writable>](rw_byte_address_buffer<T>, offset: u32, value: vec3<u32>)
-@member_function fn Store4[K, T: ptr<storage, K, writable>](rw_byte_address_buffer<T>, offset: u32, value: vec4<u32>)
+@member_function fn Load[T](rw_byte_address_buffer<T>, offset: u32) -> u32
+@member_function fn Load2[T](rw_byte_address_buffer<T>, offset: u32) -> vec2<u32>
+@member_function fn Load3[T](rw_byte_address_buffer<T>, offset: u32) -> vec3<u32>
+@member_function fn Load4[T](rw_byte_address_buffer<T>, offset: u32) -> vec4<u32>
+
+@member_function fn LoadF16[T](rw_byte_address_buffer<T>, offset: u32) -> f16
+@member_function fn Load2F16[T](rw_byte_address_buffer<T>, offset: u32) -> vec2<f16>
+@member_function fn Load3F16[T](rw_byte_address_buffer<T>, offset: u32) -> vec3<f16>
+@member_function fn Load4F16[T](rw_byte_address_buffer<T>, offset: u32) -> vec4<f16>
+
+@member_function fn Store[T](rw_byte_address_buffer<T>, offset: u32, value: u32)
+@member_function fn Store2[T](rw_byte_address_buffer<T>, offset: u32, value: vec2<u32>)
+@member_function fn Store3[T](rw_byte_address_buffer<T>, offset: u32, value: vec3<u32>)
+@member_function fn Store4[T](rw_byte_address_buffer<T>, offset: u32, value: vec4<u32>)
