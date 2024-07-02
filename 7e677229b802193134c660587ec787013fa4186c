@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59b8cf0a_67789ad3",
+        "filename": "src/tint/lang/hlsl/ir/member_builtin_call_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T16:35:16Z",
+      "side": 1,
+      "message": "Nit: The intent of this test in the MSL version was to make sure you can\u0027t use a non-member builtin function with `MemberCall`. You\u0027re still using a member function here, but not matching for a different reason (types). That might also be a useful test, but it\u0027s not the same.",
+      "revId": "7e677229b802193134c660587ec787013fa4186c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01ea241e_f11a9dae",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T16:35:16Z",
+      "side": 1,
+      "message": "Do the address space and access mode actually get used anywhere after this change? AFAICT they\u0027re now just ignored by `EmitTypeAndName` and all of the functions that it calls.",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 73
+      },
+      "revId": "7e677229b802193134c660587ec787013fa4186c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a253c30_f32e5628",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T16:35:16Z",
+      "side": 1,
+      "message": "Nit: Used %1 for two different things?",
+      "revId": "7e677229b802193134c660587ec787013fa4186c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
