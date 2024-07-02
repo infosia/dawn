@@ -50,6 +50,24 @@
       "message": "@jimblackler@google.com\n\nwould it be possible for someone to setup a new step in the dawn/cmake.py recipe for android cmake?",
       "revId": "db22309ba016dc380c3a96944e36450620cf9be1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93150cd2_553976e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-02T10:29:34Z",
+      "side": 1,
+      "message": "That is the plan yes. The difficulty is that Android apps or libraries can only be fully built with Gradle.",
+      "parentUuid": "3dfef894_4c24ca82",
+      "revId": "db22309ba016dc380c3a96944e36450620cf9be1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
