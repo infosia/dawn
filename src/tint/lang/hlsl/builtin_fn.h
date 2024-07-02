@@ -52,6 +52,14 @@ enum class BuiltinFn : uint8_t {
     kAsfloat,
     kF32Tof16,
     kF16Tof32,
+    kLoad,
+    kLoad2,
+    kLoad3,
+    kLoad4,
+    kStore,
+    kStore2,
+    kStore3,
+    kStore4,
     kNone,
 };
 
