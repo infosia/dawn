@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6276c09b_b3601baa",
+        "filename": "src/tint/lang/hlsl/ir/member_builtin_call_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-02T17:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59b8cf0a_67789ad3",
+      "revId": "7e677229b802193134c660587ec787013fa4186c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01ea241e_f11a9dae",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dac8a61_f205a6bd",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-02T17:33:53Z",
+      "side": 1,
+      "message": "This is still emitting the uniform type and the ByteAddressBuffer bits.",
+      "parentUuid": "01ea241e_f11a9dae",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 73
+      },
+      "revId": "7e677229b802193134c660587ec787013fa4186c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a253c30_f32e5628",
@@ -54,6 +96,24 @@
       "writtenOn": "2024-07-02T16:35:16Z",
       "side": 1,
       "message": "Nit: Used %1 for two different things?",
+      "revId": "7e677229b802193134c660587ec787013fa4186c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b42d64f_4a24d6e4",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-02T17:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a253c30_f32e5628",
       "revId": "7e677229b802193134c660587ec787013fa4186c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
