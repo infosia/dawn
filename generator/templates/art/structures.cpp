@@ -24,6 +24,8 @@
 //* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+{% from 'art/api_jni_types.kt' import jni_signature with context %}
+
 #include <jni.h>
 #include "dawn/webgpu.h"
 #include "structures.h"
@@ -34,6 +36,53 @@
 namespace dawn::kotlin_api {
 
 {% for structure in by_category['structure'] %}
+    jobject Convert(JNIEnv *env, const {{ as_cType(structure.name) }}* input) {
+        jclass clz = env->FindClass("{{ jni_name(structure) }}");
+        jmethodID ctor = env->GetMethodID(clz, "<init>", "(
+        {%- for member in structure.members if include_structure_member(structure, member) %}
+            {{- jni_signature(member) -}}
+        {%- endfor %})V");
+
+        {% for member in structure.members if include_structure_member(structure, member) %}
+            //* TODO: generalize native -> Kotlin logic
+            {% set v = "input->" + member.name.camelCase() %}
+            {% if member.length %}
+                jobjectArray {{ member.name.camelCase() }} = nullptr; /* length-based */
+            {% elif member.type.category == 'object' %}
+                jobject {{ member.name.camelCase() }} =
+                        env->NewObject(env->FindClass("{{ jni_name(member.type) }}"),
+                                env->GetMethodID(env->FindClass("{{ jni_name(member.type) }}"),
+                                        "<init>", "(J)V"),
+                            reinterpret_cast<jlong>({{ v }}));
+            {% elif member.type.category == 'structure' %}
+                jobject {{ member.name.camelCase() }} = Convert(env, &{{ v }});
+            {% elif member.type.name.get() in ['int64_t', 'uint64_t', 'size_t'] %}
+                jlong {{ member.name.camelCase() }} = static_cast<jint>({{ v }});
+            {% elif member.type.name.get() in ['int', 'int32_t', 'uint32_t']
+                            or member.type.category in ['bitmask', 'enum'] %}
+                jint {{ member.name.camelCase() }} = static_cast<jint>({{ v }});
+            {% elif member.type.name.get() in ['int16_t', 'uint16_t'] %}
+                jshort {{ member.name.camelCase() }} = {{ v }};
+            {% elif member.type.name.get() == 'double' %}
+                jdouble {{ member.name.camelCase() }} = {{ v }};
+            {% elif member.type.name.get() == 'float' %}
+                jfloat {{ member.name.camelCase() }} = {{ v }};
+            {% elif member.type.name.get() == 'char' %}
+                jstring {{ member.name.camelCase() }} = env->NewStringUTF({{ v }});
+            {% elif member.type.name.get() == 'bool' %}
+                bool {{ member.name.camelCase() }} = {{ v }};
+            {% else %}
+                // No conversion for {{ member.type.name.get() }}
+            {% endif %}
+        {% endfor %}
+        jobject converted = env->NewObject(clz, ctor
+        {%- for member in structure.members if include_structure_member(structure, member) %}
+            ,{{ member.name.camelCase() }}
+        {% endfor %}
+        );
+        return converted;
+    }
+
     void Convert(JNIEnv *env, jobject obj, {{ as_cType(structure.name) }}* converted) {
         jclass clz = env->FindClass("{{ jni_name(structure) }}");
 
@@ -136,37 +185,35 @@ namespace dawn::kotlin_api {
                                     env->CallLongMethod(mObj, getHandle));
                 }
             }
-            {% elif member.type.category == 'structure' or member.type.category == 'callback info' %}
-                //* Mandatory structure.
-                Convert(env, env->CallObjectMethod(obj,
-                        env->GetMethodID(clz, "get{{ member.name.CamelCase() }}",
-                                "()L{{ jni_name(member.type) }};")),
-                                &converted->{{ member.name.camelCase() }});
-            {% elif member.type.name.get() == 'bool' %}
-                converted->{{ member.name.camelCase() }} = env->CallBooleanMethod(obj,
-                        env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()Z"));
-            {% elif member.type.name.get() == 'uint16_t' %}
-                converted->{{ member.name.camelCase() }} =
-                        static_cast<{{ as_cType(member.type.name) }}>(env->CallShortMethod(obj,
-                                env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()S")));
-            {% elif member.type.name.get() in ['int', 'int32_t', 'uint32_t']
-                    or member.type.category in ['bitmask', 'enum'] %}
-                converted->{{ member.name.camelCase() }} =
-                        static_cast<{{ as_cType(member.type.name) }}>(env->CallIntMethod(obj,
-                                env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()I")));
-            {% elif member.type.name.get() == 'float' %}
-                converted->{{ member.name.camelCase() }} = env->CallFloatMethod(obj,
-                        env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()F"));
-            {% elif member.type.name.get() in ['size_t', 'uint64_t'] %}
-                converted->{{ member.name.camelCase() }} =
-                        static_cast<{{ as_cType(member.type.name) }}>(env->CallLongMethod(obj,
-                                env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()J")));
-            {% elif member.type.name.get() == 'double' %}
-                converted->{{ member.name.camelCase() }} = env->CallDoubleMethod(obj,
-                        env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()D"));
-            {% else %}
-                {{ unreachable_code() }}
-            {% endif %}
+            {% else %} {
+                jmethodID method = env->GetMethodID(clz, "get{{ member.name.CamelCase() }}",
+                        "(){{ jni_signature(member) }}");
+                {% if member.type.category == 'structure' or member.type.category == 'callback info' %}
+                    //* Mandatory structure.
+                    Convert(env, env->CallObjectMethod(obj, method),
+                            &converted->{{ member.name.camelCase() }});
+                {% else %}
+                    converted->{{ member.name.camelCase() }} =
+                            static_cast<{{ as_cType(member.type.name) }}>(env->
+                    {% if member.type.name.get() == 'bool' %}
+                        CallBooleanMethod
+                    {% elif member.type.name.get() == 'uint16_t' %}
+                        CallShortMethod
+                    {% elif member.type.name.get() in ['int', 'int32_t', 'uint32_t']
+                            or member.type.category in ['bitmask', 'enum'] %}
+                        CallIntMethod
+                    {% elif member.type.name.get() == 'float' %}
+                        CallFloatMethod
+                    {% elif member.type.name.get() in ['size_t', 'uint64_t'] %}
+                        CallLongMethod
+                    {% elif member.type.name.get() == 'double' %}
+                        CallDoubleMethod
+                    {% else %}
+                        {{ unreachable_code() }}
+                    {% endif %}
+                    (obj, method));
+                {% endif %}
+            } {% endif %}
         {% endfor %}
 
         //* Set up the chain type and links for child objects.

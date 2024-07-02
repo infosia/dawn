@@ -28,7 +28,7 @@
 {% macro arg_to_jni_type(arg) %}
     {% if arg.length == 'strlen' %}
         jstring
-    {% elif arg.length and arg.json_data.get('constant_length') != 1 %}
+    {% elif arg.length and arg.length != 'constant' %}
         {% if arg.type.category in ['bitmask', 'enum', 'function pointer', 'object', 'structure'] %}
             jobjectArray
         {% elif arg.type.name.get() == 'void' %}
@@ -52,3 +52,26 @@
         {{ jni_primitives[type.name.get()] }}
     {% endif %}
 {% endmacro %}
+
+{% macro jni_signature(member) %}
+    {%- if member.type.name.get() in ['int', 'int64_t', 'uint64_t', 'size_t', 'void'] -%}
+        J
+    {%- elif member.type.name.get() in ['int', 'int32_t', 'uint32_t'] or member.type.category in ['bitmask', 'enum'] -%}
+        I
+    {%- elif member.type.name.get() in ['int16_t', 'uint16_t'] -%}
+        S
+    {%- elif member.type.name.get() == 'double' -%}
+        D
+    {%- elif member.type.name.get() == 'float' -%}
+        F
+    {%- elif member.type.name.get() == 'bool' -%}
+        Z
+    {%- elif member.type.category in ['object', 'structure'] -%}
+        L{{ jni_name(member.type) }};
+    {%- elif member.type.name.get() == 'char' -%}
+        Ljava/lang/String;
+    {%- else -%}
+        {{ unreachable_code }}
+    {%- endif -%}
+{% endmacro %}
+
