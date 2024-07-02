@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ff8015f_b7c4768e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-02T21:39:18Z",
+      "side": 1,
+      "message": "Oops, forgot to update CMake rules. PTAL again sorry!",
+      "revId": "7b00f38ba0c525ef2ca04ad0354098cda4457138",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
