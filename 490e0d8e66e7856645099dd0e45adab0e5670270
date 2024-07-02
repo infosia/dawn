@@ -70,6 +70,30 @@
       },
       "revId": "490e0d8e66e7856645099dd0e45adab0e5670270",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0d293ab_a7244c80",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4124,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-02T22:11:45Z",
+      "side": 1,
+      "message": "Sort of... the notion of \"valid\" values for enums is not really well-defined. There are some places where undefined is valid and others where it\u0027s not. We use them in Dawn\u0027s validation in whatever way gives the correct validation result but AFAIK it\u0027s pretty much ad hoc.",
+      "parentUuid": "5bc208fc_a3c81052",
+      "range": {
+        "startLine": 4124,
+        "startChar": 0,
+        "endLine": 4124,
+        "endChar": 85
+      },
+      "revId": "490e0d8e66e7856645099dd0e45adab0e5670270",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
