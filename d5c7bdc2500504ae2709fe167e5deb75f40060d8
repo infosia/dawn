@@ -16,6 +16,184 @@
       "message": "PTAL.",
       "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5af15fd_b45cfb22",
+        "filename": "src/tint/lang/hlsl/hlsl.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T21:03:37Z",
+      "side": 1,
+      "message": "Just noticed that it seems like you don\u0027t actually need the `T` parameter here, since `ByteAddressBuffer` is opaque. Doesn\u0027t have to be addressed in this CL if so.",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a64ededf_7bab24f7",
+        "filename": "src/tint/lang/hlsl/type/rw_byte_address_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T21:03:37Z",
+      "side": 1,
+      "message": "Looks like you accidentally added this back?",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5511017_f091683b",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T21:03:37Z",
+      "side": 1,
+      "message": "LVE indices don\u0027t have to be constant now I come to think of it.",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d5ab56c_299b754c",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T21:03:37Z",
+      "side": 1,
+      "message": "FYI we have a `Builder::LoopRange()` helper for this sort of thing, and there\u0027s a similar example of using it here:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/core/ir/transform/preserve_padding.cc;l\u003d137?q\u003dpreserve_padding.cc\u0026ss\u003dchromium",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3c8a713_f0843b5e",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T21:03:37Z",
+      "side": 1,
+      "message": "The object should always be a view, so maybe just assert?",
+      "fixSuggestions": [
+        {
+          "fixId": "6554cd40_bd1033a2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+              "range": {
+                "startLine": 323,
+                "startChar": 0,
+                "endLine": 326,
+                "endChar": 0
+              },
+              "replacement": "        auto* view \u003d obj-\u003eAs\u003ccore::type::MemoryView\u003e();\n        TINT_ASSERT(view);\n        obj \u003d view-\u003eStoreType();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19275051_4172392f",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T21:03:37Z",
+      "side": 1,
+      "message": "Why assuming constant here? For non-struct, the indices can be dynamic, so the offsets will have to be determined dynamically.",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "109f2802_8ce0b75e",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T21:03:37Z",
+      "side": 1,
+      "message": "Nit: `UnwrapPtr()` should be unnecessary.",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dac4e36a_acf15b97",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T21:03:37Z",
+      "side": 1,
+      "message": "Nit: It\u0027s hard to tell the difference between \"nothing to do\" and \"not yet implemented\", so suggest adding `TINT_UNIMPLEMENTED` or something to indicate things that are yet to come, and \"no action needed because \u003creason\u003e\" otherwise?",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45490ffc_9419efd8",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T21:03:37Z",
+      "side": 1,
+      "message": "\u003e \"Acess\" is a possible misspelling of \"Access\".\n\nPlease fix, and also \"Robustness and DirectVariableAccess\"?",
+      "parentUuid": "eeeb4a64_7ff80033",
+      "range": {
+        "startLine": 158,
+        "startChar": 22,
+        "endLine": 158,
+        "endChar": 27
+      },
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
