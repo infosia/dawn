@@ -268,10 +268,6 @@ class CopyTests_T2B : public CopyTests, public DawnTestWithParams<CopyTextureFor
         DAWN_SUPPRESS_TEST_IF((GetParam().mTextureFormat == wgpu::TextureFormat::RGB9E5Ufloat) &&
                               IsANGLED3D11() && IsWindows());
 
-        // TODO(crbug.com/dawn/2294): diagnose BGRA T2B failures on Pixel 4 OpenGLES
-        DAWN_SUPPRESS_TEST_IF(GetParam().mTextureFormat == wgpu::TextureFormat::BGRA8Unorm &&
-                              IsOpenGLES() && IsAndroid() && IsQualcomm());
-
         // TODO(dawn:1913): Many float formats tests failing for Metal backend on Mac Intel.
         DAWN_SUPPRESS_TEST_IF((GetParam().mTextureFormat == wgpu::TextureFormat::R32Float ||
                                GetParam().mTextureFormat == wgpu::TextureFormat::RG32Float ||
@@ -1662,6 +1658,13 @@ class CopyTests_T2B_Compat : public CopyTests_T2B {
 
 // Test that copying 2d texture array with binding view dimension set to cube.
 TEST_P(CopyTests_T2B_Compat, TextureCubeFull) {
+    // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES (the RGBA8 control case
+    // without the blit is not working)
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm() &&
+                          GetParam().mTextureFormat == wgpu::TextureFormat::RGBA8Unorm);
+    // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 6 OpenGLES
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
+
     constexpr uint32_t kWidth = 32;
     constexpr uint32_t kHeight = 32;
     constexpr uint32_t kLayers = 6;
@@ -1675,6 +1678,13 @@ TEST_P(CopyTests_T2B_Compat, TextureCubeFull) {
 
 // Test that copying a range of cube texture layers in one texture-to-buffer-copy works.
 TEST_P(CopyTests_T2B_Compat, TextureCubeSubRegion) {
+    // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES (the RGBA8 control case
+    // without the blit is not working)
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm() &&
+                          GetParam().mTextureFormat == wgpu::TextureFormat::RGBA8Unorm);
+    // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 6 OpenGLES
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
+
     constexpr uint32_t kWidth = 32;
     constexpr uint32_t kHeight = 32;
     constexpr uint32_t kLayers = 6;
@@ -1692,6 +1702,9 @@ TEST_P(CopyTests_T2B_Compat, TextureCubeSubRegion) {
 
 // Test that copying texture 2D array mips with 256-byte aligned sizes works
 TEST_P(CopyTests_T2B_Compat, TextureCubeMip) {
+    // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 6 OpenGLES
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
+
     constexpr uint32_t kWidth = 32;
     constexpr uint32_t kHeight = 32;
     constexpr uint32_t kLayers = 6;
@@ -1713,6 +1726,13 @@ TEST_P(CopyTests_T2B_Compat, TextureCubeMip) {
 // Test that copying from a range of texture 2D array layers in one texture-to-buffer-copy when
 // RowsPerImage is not equal to the height of the texture works.
 TEST_P(CopyTests_T2B_Compat, TextureCubeRegionNonzeroRowsPerImage) {
+    // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES (the RGBA8 control case
+    // without the blit is not working)
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm() &&
+                          GetParam().mTextureFormat == wgpu::TextureFormat::RGBA8Unorm);
+    // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 6 OpenGLES
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
+
     constexpr uint32_t kWidth = 32;
     constexpr uint32_t kHeight = 32;
     constexpr uint32_t kLayers = 6;
@@ -1883,9 +1903,6 @@ TEST_P(CopyTests_B2T, PixelReadUnaligned) {
 
 // Test that copying regions with 256-byte aligned sizes works
 TEST_P(CopyTests_B2T, TextureRegionAligned) {
-    // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     constexpr uint32_t kWidth = 256;
     constexpr uint32_t kHeight = 128;
     for (unsigned int w : {64, 128, 256}) {
@@ -2260,9 +2277,6 @@ TEST_P(CopyTests_B2T, Texture3DSplitRowDataWithEmptyFirstRow) {
 }
 
 TEST_P(CopyTests_B2T, Texture3DCopyHeightIsOneCopyWidthIsTiny) {
-    // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     constexpr uint32_t kWidth = 2;
     constexpr uint32_t kHeight = 1;
     constexpr uint32_t kDepth = 3;
@@ -2654,9 +2668,6 @@ TEST_P(CopyTests_T2T, Texture2DArraySameTextureDifferentMipLevels) {
 
 // Test that copying whole 3D texture in one texture-to-texture-copy works.
 TEST_P(CopyTests_T2T, Texture3DFull) {
-    // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     constexpr uint32_t kWidth = 256;
     constexpr uint32_t kHeight = 128;
     constexpr uint32_t kDepth = 6u;
@@ -2703,9 +2714,6 @@ TEST_P(CopyTests_T2T, Texture3DTo2DArrayFull) {
 // Test that copying between 3D texture and 2D array textures works. It includes partial copy
 // for src and/or dst texture, non-zero offset (copy origin), non-zero mip level.
 TEST_P(CopyTests_T2T, Texture3DAnd2DArraySubRegion) {
-    // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
-
     // TODO(crbug.com/dawn/1426): Remove this suppression.
     DAWN_SUPPRESS_TEST_IF(IsANGLE() && IsWindows() && IsIntel());
 

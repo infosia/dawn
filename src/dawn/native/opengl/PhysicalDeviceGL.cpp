@@ -348,8 +348,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         gl.IsAtLeastGL(3, 0) || gl.IsGLExtensionSupported("GL_NV_read_depth_stencil");
 
     // Desktop GL supports BGRA textures via swizzling in the driver; ES requires an extension.
+    // Since Pixel 4 (Qualcomm) OpenGLES seems to have issue using the GL_EXT_read_format_bgra
+    // extension, disable the BGRARead on it and use the UseBlitForBGRA8UnormTextureToBufferCopy
+    // workaround.
     bool supportsBGRARead =
-        gl.GetVersion().IsDesktop() || gl.IsGLExtensionSupported("GL_EXT_read_format_bgra");
+        gl.GetVersion().IsDesktop() || (gl.IsGLExtensionSupported("GL_EXT_read_format_bgra") &&
+                                        gpu_info::kVendorID_Qualcomm != mVendorId);
 
     bool supportsSampleVariables = gl.IsAtLeastGL(4, 0) || gl.IsAtLeastGLES(3, 2) ||
                                    gl.IsGLExtensionSupported("GL_OES_sample_variables");
