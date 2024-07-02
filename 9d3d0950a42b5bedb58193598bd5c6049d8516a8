@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2861672c_4751a465",
+        "filename": "src/tint/lang/wgsl/writer/ir_to_program/ir_to_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-02T20:06:25Z",
+      "side": 1,
+      "message": "This seems ... error prone in the future? Maybe file a bug so we mark the type itself as `internal` and then this becomes `s-\u003eIsInternal()` or something?",
+      "revId": "9d3d0950a42b5bedb58193598bd5c6049d8516a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
