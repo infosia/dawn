@@ -112,9 +112,9 @@ struct State {
                     inst,
                     [&](core::ir::LoadVectorElement* l) { LoadVectorElement(l, var, var_ty); },
                     [&](core::ir::StoreVectorElement* s) { StoreVectorElement(s, var, var_ty); },
-                    [&](core::ir::Store* s) { Store(s); },                 //
-                    [&](core::ir::Load* l) { Load(l, var); },              //
-                    [&](core::ir::Access* a) { Access(a, var, var_ty); },  //
+                    [&](core::ir::Store* s) { Store(s); },                                  //
+                    [&](core::ir::Load* l) { Load(l, var); },                               //
+                    [&](core::ir::Access* a) { Access(a, var, a->Object()->Type(), 0u); },  //
                     TINT_ICE_ON_NO_MATCH);
             }
         }
@@ -318,13 +318,14 @@ struct State {
         });
     }
 
-    void Access(core::ir::Access* a, core::ir::Var* var, const core::type::Pointer*) {
-        const core::type::Type* obj = a->Object()->Type();
+    void Access(core::ir::Access* a,
+                core::ir::Var* var,
+                const core::type::Type* obj,
+                uint32_t byte_offset) {
         if (auto* view = obj->As<core::type::MemoryView>()) {
             obj = view->StoreType();
         }
 
-        uint32_t byte_offset = 0;
         for (auto* idx_value : a->Indices()) {
             auto* cnst = idx_value->As<core::ir::Constant>();
             TINT_ASSERT(cnst);
@@ -368,7 +369,11 @@ struct State {
                 usage.instruction,     //
                 [&](core::ir::Let*) {  //
                 },
-                [&](core::ir::Access*) {  //
+                [&](core::ir::Access* sub_access) {
+                    // Treat an access chain of the access chain as a continuation of the outer
+                    // chain. Pass through the object we stopped at and the current byte_offset and
+                    // then restart the access chain replacement for the new access chain.
+                    Access(sub_access, var, obj, byte_offset);
                 },
 
                 [&](core::ir::LoadVectorElement* lve) {
