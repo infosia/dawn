@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "a1e490f8864da20fe7ee089af1f806f9728918db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b38ccc03_4312eb5d",
+        "filename": "src/tint/lang/hlsl/writer/function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-02T21:11:07Z",
+      "side": 1,
+      "message": "Nit: there\u0027s a mismatch between the comment and the test here (comment says you\u0027re accessing the second member).",
+      "revId": "a1e490f8864da20fe7ee089af1f806f9728918db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
