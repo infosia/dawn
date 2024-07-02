@@ -34,6 +34,23 @@
       "parentUuid": "928661dd_f8767392",
       "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15034020_029e20d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-02T20:18:24Z",
+      "side": 1,
+      "message": "General question, it looks like the extra descriptor is pretty Vulkan specific. Would it be reasonable to instead override `ComputeContentHash()` in `SamplerVk.cpp` to call the parent version and also do the additional hashing for the descriptor there?",
+      "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
