@@ -132,8 +132,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     RUN_TRANSFORM(core::ir::transform::AddEmptyEntryPoint);
 
-    RUN_TRANSFORM(raise::DecomposeMemoryAccess);
-
     if (options.compiler == Options::Compiler::kFXC) {
         RUN_TRANSFORM(raise::FxcPolyfill);
     }
@@ -153,6 +151,10 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
         RUN_TRANSFORM(core::ir::transform::Robustness, config);
     }
+
+    // Must come after Robustness
+    RUN_TRANSFORM(raise::DecomposeMemoryAccess);
+
     if (!options.disable_workgroup_init) {
         RUN_TRANSFORM(core::ir::transform::ZeroInitWorkgroupMemory);
     }

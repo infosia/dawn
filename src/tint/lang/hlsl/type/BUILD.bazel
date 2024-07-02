@@ -43,6 +43,7 @@ cc_library(
   ],
   hdrs = [
     "byte_address_buffer.h",
+    "rw_byte_address_buffer.h",
   ],
   deps = [
     "//src/tint/lang/core",
