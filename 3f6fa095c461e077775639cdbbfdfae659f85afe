@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "addeee26_d5c0691c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-03T14:45:01Z",
+      "side": 1,
+      "message": "LGTM with one required change",
+      "revId": "3f6fa095c461e077775639cdbbfdfae659f85afe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2383dcaf_ce4c6d97",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-03T14:45:01Z",
+      "side": 1,
+      "message": "Replace `5` with the actual size of the array.",
+      "range": {
+        "startLine": 295,
+        "startChar": 37,
+        "endLine": 295,
+        "endChar": 40
+      },
+      "revId": "3f6fa095c461e077775639cdbbfdfae659f85afe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
