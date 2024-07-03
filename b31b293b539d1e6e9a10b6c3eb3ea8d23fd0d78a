@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f492dde7_cf8fe1b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-03T19:55:49Z",
+      "side": 1,
+      "message": "Please tell me if you don\u0027t think this will work.",
+      "revId": "b31b293b539d1e6e9a10b6c3eb3ea8d23fd0d78a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
