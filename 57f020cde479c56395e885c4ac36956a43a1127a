@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c54c0fe_b91aaf7d",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2024-07-03T13:01:43Z",
+      "side": 1,
+      "message": "A good question. Perhaps we should consider enabling it automatically where possible? Or maybe we should add a requirement to the proposal that workgroup size x is multiple of max subgroup size.",
+      "revId": "57f020cde479c56395e885c4ac36956a43a1127a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "720eef34_0a69c6b3",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2024-07-03T13:01:43Z",
+      "side": 1,
+      "message": "For the origin trial, we\u0027d plan to rollout the other intrinsics over time. To do that more easily it might make sense to check all the eventually required bits now.\n\nStages: compute and fragment.\nOperations: basic, vote, ballot, shuffle, shuffle relative, arithmetic, and quad\n\nI wonder if it\u0027s worth keeping the experimental feature with lower requirements around or just changing both? @cwallez@chromium.org @jrprice@google.com thoughts?",
+      "revId": "57f020cde479c56395e885c4ac36956a43a1127a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27335d26_74ce7700",
+        "filename": "src/dawn/node/interop/DawnExtensions.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2024-07-03T13:01:43Z",
+      "side": 1,
+      "message": "Should the size limits not be exposed this way too?",
+      "revId": "57f020cde479c56395e885c4ac36956a43a1127a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
