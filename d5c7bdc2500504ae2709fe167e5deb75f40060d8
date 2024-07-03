@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34bc414e_f07b7f49",
+        "filename": "src/tint/lang/hlsl/hlsl.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T03:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5af15fd_b45cfb22",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a64ededf_7bab24f7",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-07-02T21:03:37Z",
       "side": 1,
       "message": "Looks like you accidentally added this back?",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a661f18_63f3182e",
+        "filename": "src/tint/lang/hlsl/type/rw_byte_address_buffer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T03:19:02Z",
+      "side": 1,
+      "message": "Done. It was a .... unfun merge, heh.",
+      "parentUuid": "a64ededf_7bab24f7",
       "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0165b65e_d366dd86",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T03:19:02Z",
+      "side": 1,
+      "message": "Plan to do this as a followup. Added a TODO.",
+      "parentUuid": "f5511017_f091683b",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d5ab56c_299b754c",
@@ -82,6 +136,24 @@
       "writtenOn": "2024-07-02T21:03:37Z",
       "side": 1,
       "message": "FYI we have a `Builder::LoopRange()` helper for this sort of thing, and there\u0027s a similar example of using it here:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/core/ir/transform/preserve_padding.cc;l\u003d137?q\u003dpreserve_padding.cc\u0026ss\u003dchromium",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8285b7d8_50781b2d",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T03:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d5ab56c_299b754c",
       "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -121,6 +193,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97767329_3a1fe49f",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T03:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3c8a713_f0843b5e",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19275051_4172392f",
@@ -134,6 +224,24 @@
       "writtenOn": "2024-07-02T21:03:37Z",
       "side": 1,
       "message": "Why assuming constant here? For non-struct, the indices can be dynamic, so the offsets will have to be determined dynamically.",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f17311bc_4d87283f",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T03:19:02Z",
+      "side": 1,
+      "message": "Not supported yet, added a TODO.",
+      "parentUuid": "19275051_4172392f",
       "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -155,6 +263,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f1b691e_074d12a2",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T03:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "109f2802_8ce0b75e",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dac4e36a_acf15b97",
@@ -168,6 +294,24 @@
       "writtenOn": "2024-07-02T21:03:37Z",
       "side": 1,
       "message": "Nit: It\u0027s hard to tell the difference between \"nothing to do\" and \"not yet implemented\", so suggest adding `TINT_UNIMPLEMENTED` or something to indicate things that are yet to come, and \"no action needed because \u003creason\u003e\" otherwise?",
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8f13d08_44471175",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T03:19:02Z",
+      "side": 1,
+      "message": "Added todo comments. Not using UNIMPLEMENTED so I can keep using `--gtest_also_run_disabled_tests`",
+      "parentUuid": "dac4e36a_acf15b97",
       "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -186,6 +330,30 @@
       "side": 1,
       "message": "\u003e \"Acess\" is a possible misspelling of \"Access\".\n\nPlease fix, and also \"Robustness and DirectVariableAccess\"?",
       "parentUuid": "eeeb4a64_7ff80033",
+      "range": {
+        "startLine": 158,
+        "startChar": 22,
+        "endLine": 158,
+        "endChar": 27
+      },
+      "revId": "d5c7bdc2500504ae2709fe167e5deb75f40060d8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a42c144_d34f88a8",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T03:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45490ffc_9419efd8",
       "range": {
         "startLine": 158,
         "startChar": 22,
