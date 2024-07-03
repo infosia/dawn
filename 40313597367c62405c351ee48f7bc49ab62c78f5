@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "40313597367c62405c351ee48f7bc49ab62c78f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30b63eb5_43a653d1",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-03T15:11:05Z",
+      "side": 1,
+      "message": "Arguably this one could still use `EmitTypeAndName`, since presumably the `DecomposeMemoryAccess` transform will generate `array\u003cvec4u, size\u003e`.",
+      "revId": "40313597367c62405c351ee48f7bc49ab62c78f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
