@@ -16,6 +16,23 @@
       "message": "lgtm",
       "revId": "6e12fce575f6bb83a116dec996a5ca1c238a9bda",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08fda61f_1942bb27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-03T00:55:18Z",
+      "side": 1,
+      "message": "CCing myself so I can see when this roll lands - I want to land https://github.com/gpuweb/cts/pull/3835 after a roll so that it will be easier to get that rolled in (I can\u0027t think of a way to do a staged change, so I will need to change `third_party/gn/webgpu-cts/BUILD.gn` along with the roll)",
+      "revId": "6e12fce575f6bb83a116dec996a5ca1c238a9bda",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
