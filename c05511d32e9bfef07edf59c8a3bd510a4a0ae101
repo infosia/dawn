@@ -51,6 +51,24 @@
       "message": "General question, it looks like the extra descriptor is pretty Vulkan specific. Would it be reasonable to instead override `ComputeContentHash()` in `SamplerVk.cpp` to call the parent version and also do the additional hashing for the descriptor there?",
       "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bb4f0ae_be5340ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-03T11:55:28Z",
+      "side": 1,
+      "message": "This is a really good question! I think that that is pretty compelling. It\u0027s a little ambiguous from my POV though because we do have the general concept of whether a sampler is a YCbCr sampler as part of SamplerBase. We should definitely add hashing of `mIsYCbCr` at the SamplerBase level in any case.\n\nLower-level question: How were you envisioning this working on a technical level? The current code structure of ComputeContentHash (taking in an arbitrary sequence of arbritrarily-typed arguments and computing/storing the hash once on all those arguments) would need extension in one way or another, unless there\u0027s something that I\u0027m missing.",
+      "parentUuid": "15034020_029e20d3",
+      "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
