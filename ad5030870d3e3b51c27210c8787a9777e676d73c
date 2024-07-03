@@ -51,6 +51,24 @@
       ],
       "revId": "ad5030870d3e3b51c27210c8787a9777e676d73c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff638ed3_eaf186a8",
+        "filename": "src/tint/lang/hlsl/writer/raise/binary_polyfill_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T20:43:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8c7170d_16a99caa",
+      "revId": "ad5030870d3e3b51c27210c8787a9777e676d73c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
