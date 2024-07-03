@@ -69,6 +69,24 @@
       "parentUuid": "15034020_029e20d3",
       "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "989db68b_95ee3c23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-03T18:55:07Z",
+      "side": 1,
+      "message": "Yea, so we already have something similar to this via `Pipeline.h` and `RenderPipeline.h`: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/RenderPipeline.cpp;l\u003d1251;drc\u003d67d0441446c6264c2921cf5c41098e6b4db467d3;bpv\u003d1;bpt\u003d1\n\nLooks like we re-record the has with the parent classes hash.",
+      "parentUuid": "4bb4f0ae_be5340ee",
+      "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
