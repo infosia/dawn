@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "2a3137d531582191b10c8e7176262f4400d6d80c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f70b845_cf0e9166",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-03T15:38:46Z",
+      "side": 1,
+      "message": "Result type needs to handle the vector case. Please add test coverage.",
+      "revId": "2a3137d531582191b10c8e7176262f4400d6d80c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
