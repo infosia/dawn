@@ -226,8 +226,7 @@ struct State {
                 }
             } else {
                 // Check if the parameter is the local invocation index.
-                if (param->Builtin() &&
-                    param->Builtin().value() == BuiltinValue::kLocalInvocationIndex) {
+                if (param->Attributes().builtin == BuiltinValue::kLocalInvocationIndex) {
                     return param;
                 }
             }
@@ -236,7 +235,7 @@ struct State {
         // No local invocation index was found, so add one to the parameter list and use that.
         auto* param = b.FunctionParam("tint_local_index", ty.u32());
         func->AppendParam(param);
-        param->SetBuiltin(BuiltinValue::kLocalInvocationIndex);
+        param->Attributes().builtin = BuiltinValue::kLocalInvocationIndex;
         return param;
     }
 

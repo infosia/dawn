@@ -212,7 +212,7 @@ class State {
             Bind(param, name);
 
             // Emit parameter attributes.
-            if (auto builtin = param->Builtin()) {
+            if (auto builtin = param->Attributes().builtin) {
                 switch (builtin.value()) {
                     case core::BuiltinValue::kVertexIndex:
                         attrs.Push(b.Builtin(core::BuiltinValue::kVertexIndex));
@@ -259,13 +259,13 @@ class State {
                         TINT_UNIMPLEMENTED() << builtin.value();
                 }
             }
-            if (auto loc = param->Location()) {
-                attrs.Push(b.Location(u32(loc->value)));
-                if (auto interp = loc->interpolation) {
+            if (auto loc = param->Attributes().location) {
+                attrs.Push(b.Location(u32(loc.value())));
+                if (auto interp = param->Attributes().interpolation) {
                     attrs.Push(b.Interpolate(interp->type, interp->sampling));
                 }
             }
-            if (param->Invariant()) {
+            if (param->Attributes().invariant) {
                 attrs.Push(b.Invariant());
             }
 

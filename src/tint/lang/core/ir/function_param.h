@@ -85,57 +85,9 @@ class FunctionParam : public Castable<FunctionParam, Value> {
     /// @param attrs the attributes
     void SetAttributes(const IOAttributes& attrs) { attributes_ = attrs; }
     /// @returns the IO attributes
+    IOAttributes& Attributes() { return attributes_; }
+    /// @returns the IO attributes
     const IOAttributes& Attributes() const { return attributes_; }
-
-    /// Sets the builtin information. Note, it is currently an error if the builtin is already set.
-    /// @param val the builtin to set
-    void SetBuiltin(core::BuiltinValue val) {
-        TINT_ASSERT(!attributes_.builtin.has_value());
-        attributes_.builtin = val;
-    }
-    /// @returns the builtin set for the parameter
-    std::optional<core::BuiltinValue> Builtin() const { return attributes_.builtin; }
-
-    /// Clears the builtin attribute.
-    void ClearBuiltin() { attributes_.builtin = {}; }
-
-    /// Sets the parameter as invariant
-    /// @param val the value to set for invariant
-    void SetInvariant(bool val) { attributes_.invariant = val; }
-
-    /// @returns true if parameter is invariant
-    bool Invariant() const { return attributes_.invariant; }
-
-    /// Sets the location
-    /// @param location the location
-    void SetLocation(ir::Location location) {
-        // TODO(340196362): Remove this overload.
-        attributes_.location = location.value;
-        attributes_.interpolation = location.interpolation;
-    }
-
-    /// Sets the location
-    /// @param loc the location value
-    /// @param interpolation the location interpolation settings
-    void SetLocation(uint32_t loc, std::optional<core::Interpolation> interpolation) {
-        attributes_.location = loc;
-        attributes_.interpolation = interpolation;
-    }
-
-    /// @returns the location if `Attributes` contains `kLocation`
-    std::optional<ir::Location> Location() const {
-        // TODO(340196362): Remove this overload.
-        if (attributes_.location.has_value()) {
-            return ir::Location{attributes_.location.value(), attributes_.interpolation};
-        }
-        return {};
-    }
-
-    /// Clears the location attribute.
-    void ClearLocation() {
-        attributes_.location = {};
-        attributes_.interpolation = {};
-    }
 
     /// Sets the binding point
     /// @param group the group
