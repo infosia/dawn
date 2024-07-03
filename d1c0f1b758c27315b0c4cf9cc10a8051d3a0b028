@@ -16,6 +16,61 @@
       "message": "PTAL.",
       "revId": "d1c0f1b758c27315b0c4cf9cc10a8051d3a0b028",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d61e1db_4f143c3c",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-03T15:05:42Z",
+      "side": 1,
+      "message": "Nit",
+      "fixSuggestions": [
+        {
+          "fixId": "8fa8fd1b_3017c061",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+              "range": {
+                "startLine": 322,
+                "startChar": 0,
+                "endLine": 323,
+                "endChar": 0
+              },
+              "replacement": "    void InsertLoad(core::ir::Var* var, core::ir::Instruction* inst, uint32_t offset) {\n"
+            },
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+              "range": {
+                "startLine": 397,
+                "startChar": 0,
+                "endLine": 398,
+                "endChar": 0
+              },
+              "replacement": "                    InsertLoad(var, lve, byte_offset);\n"
+            },
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+              "range": {
+                "startLine": 401,
+                "startChar": 0,
+                "endLine": 402,
+                "endChar": 0
+              },
+              "replacement": "                    InsertLoad(var, ld, byte_offset);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d1c0f1b758c27315b0c4cf9cc10a8051d3a0b028",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
