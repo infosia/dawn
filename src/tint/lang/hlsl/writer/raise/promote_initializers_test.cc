@@ -65,10 +65,9 @@ TEST_F(HlslWriterPromoteInitializersTest, NoStructInitializers) {
 
 TEST_F(HlslWriterPromoteInitializersTest, StructInVarNoChange) {
     auto* str_ty =
-        ty.Struct(mod.symbols.New("S"),
-                  {
-                      {mod.symbols.New("a"), ty.i32(), core::type::StructMemberAttributes{}},
-                  });
+        ty.Struct(mod.symbols.New("S"), {
+                                            {mod.symbols.New("a"), ty.i32(), core::IOAttributes{}},
+                                        });
 
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
     b.Append(func->Block(), [&] {
@@ -121,10 +120,9 @@ TEST_F(HlslWriterPromoteInitializersTest, ArrayInVarNoChange) {
 
 TEST_F(HlslWriterPromoteInitializersTest, StructInLetNoChange) {
     auto* str_ty =
-        ty.Struct(mod.symbols.New("S"),
-                  {
-                      {mod.symbols.New("a"), ty.i32(), core::type::StructMemberAttributes{}},
-                  });
+        ty.Struct(mod.symbols.New("S"), {
+                                            {mod.symbols.New("a"), ty.i32(), core::IOAttributes{}},
+                                        });
 
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
     b.Append(func->Block(), [&] {
@@ -177,10 +175,9 @@ TEST_F(HlslWriterPromoteInitializersTest, ArrayInLetNoChange) {
 
 TEST_F(HlslWriterPromoteInitializersTest, StructInCall) {
     auto* str_ty =
-        ty.Struct(mod.symbols.New("S"),
-                  {
-                      {mod.symbols.New("a"), ty.i32(), core::type::StructMemberAttributes{}},
-                  });
+        ty.Struct(mod.symbols.New("S"), {
+                                            {mod.symbols.New("a"), ty.i32(), core::IOAttributes{}},
+                                        });
 
     auto* p = b.FunctionParam("p", str_ty);
     auto* dst = b.Function("dst", ty.void_());
@@ -285,10 +282,9 @@ TEST_F(HlslWriterPromoteInitializersTest, ModuleScopedStruct) {
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowModuleScopeLets};
 
     auto* str_ty =
-        ty.Struct(mod.symbols.New("S"),
-                  {
-                      {mod.symbols.New("a"), ty.i32(), core::type::StructMemberAttributes{}},
-                  });
+        ty.Struct(mod.symbols.New("S"), {
+                                            {mod.symbols.New("a"), ty.i32(), core::IOAttributes{}},
+                                        });
 
     b.ir.root_block->Append(b.Var<private_>("a", b.Composite(str_ty, 1_i)));
 
@@ -350,22 +346,20 @@ TEST_F(HlslWriterPromoteInitializersTest, ModuleScopedStructNested) {
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowModuleScopeLets};
 
     auto* b_ty =
-        ty.Struct(mod.symbols.New("B"),
-                  {
-                      {mod.symbols.New("c"), ty.f32(), core::type::StructMemberAttributes{}},
-                  });
+        ty.Struct(mod.symbols.New("B"), {
+                                            {mod.symbols.New("c"), ty.f32(), core::IOAttributes{}},
+                                        });
 
     auto* a_ty =
-        ty.Struct(mod.symbols.New("A"),
-                  {
-                      {mod.symbols.New("z"), ty.i32(), core::type::StructMemberAttributes{}},
-                      {mod.symbols.New("b"), b_ty, core::type::StructMemberAttributes{}},
-                  });
+        ty.Struct(mod.symbols.New("A"), {
+                                            {mod.symbols.New("z"), ty.i32(), core::IOAttributes{}},
+                                            {mod.symbols.New("b"), b_ty, core::IOAttributes{}},
+                                        });
 
-    auto* str_ty = ty.Struct(mod.symbols.New("S"),
-                             {
-                                 {mod.symbols.New("a"), a_ty, core::type::StructMemberAttributes{}},
-                             });
+    auto* str_ty =
+        ty.Struct(mod.symbols.New("S"), {
+                                            {mod.symbols.New("a"), a_ty, core::IOAttributes{}},
+                                        });
 
     b.ir.root_block->Append(
         b.Var<private_>("a", b.Composite(str_ty, b.Composite(a_ty, 1_i, b.Composite(b_ty, 1_f)))));
@@ -424,10 +418,10 @@ $B1: {  # root
 TEST_F(HlslWriterPromoteInitializersTest, ModuleScopedArrayNestedInStruct) {
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowModuleScopeLets};
 
-    auto* str_ty = ty.Struct(mod.symbols.New("S"), {
-                                                       {mod.symbols.New("a"), ty.array<i32, 3>(),
-                                                        core::type::StructMemberAttributes{}},
-                                                   });
+    auto* str_ty = ty.Struct(mod.symbols.New("S"),
+                             {
+                                 {mod.symbols.New("a"), ty.array<i32, 3>(), core::IOAttributes{}},
+                             });
 
     b.ir.root_block->Append(b.Var<private_>("a", b.Composite(str_ty, b.Zero(ty.array<i32, 3>()))));
 
@@ -463,19 +457,19 @@ $B1: {  # root
 TEST_F(HlslWriterPromoteInitializersTest, Many) {
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowModuleScopeLets};
 
-    auto* a_ty = ty.Struct(mod.symbols.New("A"), {
-                                                     {mod.symbols.New("a"), ty.array<i32, 2>(),
-                                                      core::type::StructMemberAttributes{}},
-                                                 });
-    auto* b_ty =
-        ty.Struct(mod.symbols.New("B"), {
-                                            {mod.symbols.New("b"), ty.array<array<i32, 4>, 1>(),
-                                             core::type::StructMemberAttributes{}},
-                                        });
-    auto* c_ty = ty.Struct(mod.symbols.New("C"),
+    auto* a_ty = ty.Struct(mod.symbols.New("A"),
                            {
-                               {mod.symbols.New("a"), a_ty, core::type::StructMemberAttributes{}},
+                               {mod.symbols.New("a"), ty.array<i32, 2>(), core::IOAttributes{}},
                            });
+    auto* b_ty =
+        ty.Struct(mod.symbols.New("B"),
+                  {
+                      {mod.symbols.New("b"), ty.array<array<i32, 4>, 1>(), core::IOAttributes{}},
+                  });
+    auto* c_ty =
+        ty.Struct(mod.symbols.New("C"), {
+                                            {mod.symbols.New("a"), a_ty, core::IOAttributes{}},
+                                        });
 
     b.Append(b.ir.root_block, [&] {
         b.Var<private_>("a", b.Composite(a_ty, b.Composite(ty.array<i32, 2>(), 9_i, 10_i)));
@@ -606,10 +600,9 @@ TEST_F(HlslWriterPromoteInitializersTest, DuplicateConstantInBlock) {
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowModuleScopeLets};
 
     auto* a_ty =
-        ty.Struct(mod.symbols.New("A"),
-                  {
-                      {mod.symbols.New("a"), ty.i32(), core::type::StructMemberAttributes{}},
-                  });
+        ty.Struct(mod.symbols.New("A"), {
+                                            {mod.symbols.New("a"), ty.i32(), core::IOAttributes{}},
+                                        });
 
     auto* param = b.FunctionParam("a", a_ty);
     auto* bar = b.Function("bar", ty.void_());

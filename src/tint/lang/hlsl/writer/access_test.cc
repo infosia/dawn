@@ -57,9 +57,9 @@ void a() {
 TEST_F(HlslWriterTest, AccessStruct) {
     Vector members{
         ty.Get<core::type::StructMember>(b.ir.symbols.New("a"), ty.i32(), 0u, 0u, 4u, 4u,
-                                         core::type::StructMemberAttributes{}),
+                                         core::IOAttributes{}),
         ty.Get<core::type::StructMember>(b.ir.symbols.New("b"), ty.f32(), 1u, 4u, 4u, 4u,
-                                         core::type::StructMemberAttributes{}),
+                                         core::IOAttributes{}),
     };
     auto* strct = ty.Struct(b.ir.symbols.New("S"), std::move(members));
 
@@ -180,19 +180,19 @@ void unused_entry_point() {
 TEST_F(HlslWriterTest, AccessNested) {
     Vector members_a{
         ty.Get<core::type::StructMember>(b.ir.symbols.New("d"), ty.i32(), 0u, 0u, 4u, 4u,
-                                         core::type::StructMemberAttributes{}),
+                                         core::IOAttributes{}),
         ty.Get<core::type::StructMember>(b.ir.symbols.New("e"), ty.array<f32, 3>(), 1u, 4u, 4u, 4u,
-                                         core::type::StructMemberAttributes{}),
+                                         core::IOAttributes{}),
     };
     auto* a_strct = ty.Struct(b.ir.symbols.New("A"), std::move(members_a));
 
     Vector members_s{
         ty.Get<core::type::StructMember>(b.ir.symbols.New("a"), ty.i32(), 0u, 0u, 4u, 4u,
-                                         core::type::StructMemberAttributes{}),
+                                         core::IOAttributes{}),
         ty.Get<core::type::StructMember>(b.ir.symbols.New("b"), ty.f32(), 1u, 4u, 4u, 4u,
-                                         core::type::StructMemberAttributes{}),
+                                         core::IOAttributes{}),
         ty.Get<core::type::StructMember>(b.ir.symbols.New("c"), a_strct, 2u, 8u, 8u, 8u,
-                                         core::type::StructMemberAttributes{}),
+                                         core::IOAttributes{}),
     };
     auto* s_strct = ty.Struct(b.ir.symbols.New("S"), std::move(members_s));
 
