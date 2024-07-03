@@ -71,6 +71,24 @@
       ],
       "revId": "d1c0f1b758c27315b0c4cf9cc10a8051d3a0b028",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f4f98bb_9a9cbcfb",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T20:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d61e1db_4f143c3c",
+      "revId": "d1c0f1b758c27315b0c4cf9cc10a8051d3a0b028",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
