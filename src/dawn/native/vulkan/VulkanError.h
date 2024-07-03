@@ -37,7 +37,7 @@ constexpr VkResult VK_FAKE_DEVICE_OOM_FOR_TESTING = static_cast<VkResult>(VK_RES
 namespace dawn::native::vulkan {
 
 // Returns a string version of the result.
-const char* VkResultAsString(::VkResult result);
+std::string VkResultAsString(::VkResult result);
 
 MaybeError CheckVkSuccessImpl(VkResult result, const char* context);
 MaybeError CheckVkOOMThenSuccessImpl(VkResult result, const char* context);
