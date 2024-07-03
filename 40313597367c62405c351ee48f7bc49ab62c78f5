@@ -33,6 +33,24 @@
       "message": "Arguably this one could still use `EmitTypeAndName`, since presumably the `DecomposeMemoryAccess` transform will generate `array\u003cvec4u, size\u003e`.",
       "revId": "40313597367c62405c351ee48f7bc49ab62c78f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6fec664_fe1c918c",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T20:46:15Z",
+      "side": 1,
+      "message": "Ack. Will revisit when Decompose handles uniforms.",
+      "parentUuid": "30b63eb5_43a653d1",
+      "revId": "40313597367c62405c351ee48f7bc49ab62c78f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
