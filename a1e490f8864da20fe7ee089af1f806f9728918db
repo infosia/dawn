@@ -33,6 +33,24 @@
       "message": "Nit: there\u0027s a mismatch between the comment and the test here (comment says you\u0027re accessing the second member).",
       "revId": "a1e490f8864da20fe7ee089af1f806f9728918db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b799728a_82bf1e27",
+        "filename": "src/tint/lang/hlsl/writer/function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T03:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b38ccc03_4312eb5d",
+      "revId": "a1e490f8864da20fe7ee089af1f806f9728918db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
