@@ -91,6 +91,7 @@ var directoryGlobs = []string{
 // These paths use unix-style slashes and do not contain the '/test/tint' prefix.
 var dirsWithNoPassExpectations = []string{
 	filepath.ToSlash(dawnRoot) + "/test/tint/benchmark/",
+	filepath.ToSlash(dawnRoot) + "/test/tint/bug/fuzz/",
 	filepath.ToSlash(dawnRoot) + "/test/tint/unittest/",
 	filepath.ToSlash(dawnRoot) + "/test/tint/vk-gl-cts/",
 }
