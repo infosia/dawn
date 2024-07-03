@@ -39,6 +39,30 @@
       },
       "revId": "3f6fa095c461e077775639cdbbfdfae659f85afe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb60d68f_5683cab4",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-03T19:21:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2383dcaf_ce4c6d97",
+      "range": {
+        "startLine": 295,
+        "startChar": 37,
+        "endLine": 295,
+        "endChar": 40
+      },
+      "revId": "3f6fa095c461e077775639cdbbfdfae659f85afe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
