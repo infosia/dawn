@@ -60,6 +60,7 @@ enum class BuiltinFn : uint8_t {
     kStore2,
     kStore3,
     kStore4,
+    kMul,
     kNone,
 };
 
