@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc681e1e_63458007",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-04T20:12:44Z",
+      "side": 1,
+      "message": "It\u0027s probably fine for now, but if we have a generated corpus, I don\u0027t think we want to be renumbering things. We\u0027d have to add this at the end to not break serialized protos (I think?)",
+      "revId": "ae1901f83531d01c430f74a99d93ee9dc5d82527",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
