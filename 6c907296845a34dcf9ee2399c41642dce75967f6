@@ -34,6 +34,23 @@
       "parentUuid": "93bc5308_f14e232e",
       "revId": "6c907296845a34dcf9ee2399c41642dce75967f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ec5557f_747a4771",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-04T12:07:30Z",
+      "side": 1,
+      "message": "Why are these moved here instead of in their original source folder cmake files? Is it because the `dawn_add_library` requires sources?",
+      "revId": "6c907296845a34dcf9ee2399c41642dce75967f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
