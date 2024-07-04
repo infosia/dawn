@@ -87,6 +87,24 @@
       "parentUuid": "4bb4f0ae_be5340ee",
       "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa8da666_608c65b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-04T11:43:06Z",
+      "side": 1,
+      "message": "Ah, got it! We can just keep hashing new state with the previously-computed hash. I will go in this direction - will keep this CL open until I have the new direction confirmed and then abandon it.",
+      "parentUuid": "989db68b_95ee3c23",
+      "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
