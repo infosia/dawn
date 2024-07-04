@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <string>
 #include <vector>
 
 #include "dawn/common/Math.h"
@@ -44,6 +45,33 @@ class ExperimentalSubgroupsTests : public DawnTest {
         }
 
         return {};
+    }
+
+    void TestSubgroupBroadcast(uint32_t workgroupSize, std::string broadcastType) {
+        DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsFeatureRequired());
+
+        std::stringstream shaderCode;
+        shaderCode << R"(
+enable chromium_experimental_subgroups;
+
+const workgroupSize = )"
+                   << workgroupSize << R"(u;
+
+@group(0) @binding(0) var<storage, read_write> output : array<u32, workgroupSize>;
+
+@compute @workgroup_size(workgroupSize, 1, 1)
+fn main(@builtin(local_invocation_id) local_id : vec3u) {
+    output[local_id.x] = u32(subgroupBroadcast()"
+                   << broadcastType << R"((1), 0u));
+}
+)";
+
+        auto shaderModule = utils::CreateShaderModule(device, shaderCode.str().c_str());
+
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = shaderModule;
+
+        device.CreateComputePipeline(&csDesc);
     }
 
     // Helper function that create shader module with subgroups extension required and a empty
@@ -127,6 +155,198 @@ class ExperimentalSubgroupsTests : public DawnTest {
   private:
     bool mRequiredSubgroupsFeature = false;
 };
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize16) {
+    TestSubgroupBroadcast(16, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize16) {
+    TestSubgroupBroadcast(16, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize16) {
+    TestSubgroupBroadcast(16, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize15) {
+    TestSubgroupBroadcast(15, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize15) {
+    TestSubgroupBroadcast(15, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize15) {
+    TestSubgroupBroadcast(15, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize14) {
+    TestSubgroupBroadcast(14, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize14) {
+    TestSubgroupBroadcast(14, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize14) {
+    TestSubgroupBroadcast(14, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize13) {
+    TestSubgroupBroadcast(13, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize13) {
+    TestSubgroupBroadcast(13, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize13) {
+    TestSubgroupBroadcast(13, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize12) {
+    TestSubgroupBroadcast(12, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize12) {
+    TestSubgroupBroadcast(12, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize12) {
+    TestSubgroupBroadcast(12, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize11) {
+    TestSubgroupBroadcast(11, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize11) {
+    TestSubgroupBroadcast(11, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize11) {
+    TestSubgroupBroadcast(11, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize10) {
+    TestSubgroupBroadcast(10, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize10) {
+    TestSubgroupBroadcast(10, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize10) {
+    TestSubgroupBroadcast(10, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize9) {
+    TestSubgroupBroadcast(9, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize9) {
+    TestSubgroupBroadcast(9, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize9) {
+    TestSubgroupBroadcast(9, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize8) {
+    TestSubgroupBroadcast(8, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize8) {
+    TestSubgroupBroadcast(8, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize8) {
+    TestSubgroupBroadcast(8, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize7) {
+    TestSubgroupBroadcast(7, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize7) {
+    TestSubgroupBroadcast(7, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize7) {
+    TestSubgroupBroadcast(7, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize6) {
+    TestSubgroupBroadcast(6, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize6) {
+    TestSubgroupBroadcast(6, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize6) {
+    TestSubgroupBroadcast(6, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize5) {
+    TestSubgroupBroadcast(5, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize5) {
+    TestSubgroupBroadcast(5, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize5) {
+    TestSubgroupBroadcast(5, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize4) {
+    TestSubgroupBroadcast(4, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize4) {
+    TestSubgroupBroadcast(4, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize4) {
+    TestSubgroupBroadcast(4, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize3) {
+    TestSubgroupBroadcast(3, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize3) {
+    TestSubgroupBroadcast(3, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize3) {
+    TestSubgroupBroadcast(3, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize2) {
+    TestSubgroupBroadcast(2, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize2) {
+    TestSubgroupBroadcast(2, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize2) {
+    TestSubgroupBroadcast(2, "f32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize1) {
+    TestSubgroupBroadcast(1, "i32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize1) {
+    TestSubgroupBroadcast(1, "u32");
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize1) {
+    TestSubgroupBroadcast(1, "f32");
+}
 
 // Test that creating compute pipeline with full subgroups required will validate the workgroup size
 // as expected, when using compute shader with literal workgroup size.
