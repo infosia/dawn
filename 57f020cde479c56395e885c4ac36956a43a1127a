@@ -50,6 +50,24 @@
       "message": "Should the size limits not be exposed this way too?",
       "revId": "57f020cde479c56395e885c4ac36956a43a1127a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bed29b2b_73ec02d6",
+        "filename": "src/dawn/node/interop/DawnExtensions.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-07-04T10:27:09Z",
+      "side": 1,
+      "message": "I thought we can handle the Node binding in a following CL. Not very familiar with Node binding, might need some time to figure out...",
+      "parentUuid": "27335d26_74ce7700",
+      "revId": "57f020cde479c56395e885c4ac36956a43a1127a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
