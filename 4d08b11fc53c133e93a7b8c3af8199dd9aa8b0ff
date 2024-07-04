@@ -16,6 +16,24 @@
       "message": "Running the added subgroups E2E test on trybots, I found that on `android-dawn-arm-rel` trybot (Backend device `Vulkan_Adreno__TM__640` on Android device Pixel 4), **using `subgroupBroadcast` with `i32` and `u32` types in a workgroup of size 1 will result in Vulkan `CreateComputePipelines` fails** with code VkUnknown. (Please refers to the [testing CL](https://dawn-review.googlesource.com/c/dawn/+/196854) and the [corresponding error results](https://ci.chromium.org/ui/p/chromium/builders/try/android-dawn-arm-rel/13225/overview) ) This trybot pass all tests on other workgroup sizes, including 2,3,4, ..., 255, and 256, and using type `f32` can also pass. Other trybots including `android-dawn-arm64-rel` can pass all tests. I thought this might be an device-specific issue, and I am going to file a bug about this.\n\nFor current CL, what shall we do to make progress? Is it sufficient to just suppress this exact case (Type `i32`/`u32`, workgroup size `1`) on ARM and get the CL land?",
       "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e36193f_f60d6e35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-07-04T11:04:43Z",
+      "side": 1,
+      "message": "Minimum cases: https://dawn-review.googlesource.com/c/dawn/+/196934?tab\u003dchecks\nOops it seems the `android-dawn-arm-rel` trybot also fails on more cases (`f/i/u32` + workgroup size 2) than I thought...",
+      "parentUuid": "aaf12223_b42559af",
+      "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
