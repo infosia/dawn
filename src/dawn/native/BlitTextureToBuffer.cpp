@@ -27,6 +27,7 @@
 
 #include "dawn/native/BlitTextureToBuffer.h"
 
+#include <algorithm>
 #include <array>
 #include <string>
 #include <string_view>
@@ -166,6 +167,12 @@ fn encodeVectorInU32General(v: vec4f) -> u32 {
 }
 )";
 
+constexpr std::string_view kEncodeRG16FloatInU32 = R"(
+fn encodeVectorInU32General(v: vec2f) -> u32 {
+    return pack2x16float(v);
+}
+)";
+
 // Each thread is responsible for reading (packTexelCount) texel and packing them into a 4-byte u32.
 constexpr std::string_view kCommonHead = R"(
 struct Params {
@@ -194,6 +201,9 @@ struct Params {
 override workgroupSizeX: u32;
 override workgroupSizeY: u32;
 
+// Size of one element in the destination buffer this thread will write to.
+override gOutputUnitSize: u32;
+
 @compute @workgroup_size(workgroupSizeX, workgroupSizeY, 1) fn main
 (@builtin(global_invocation_id) id : vec3u) {
 )";
@@ -205,8 +215,8 @@ if (any(coord0 >= srcBoundary)) {
     return;
 }
 
-let indicesPerRow = params.bytesPerRow / 4;
-let indicesOffset = params.offset / 4;
+let indicesPerRow = params.bytesPerRow / gOutputUnitSize;
+let indicesOffset = params.offset / gOutputUnitSize;
 let dstOffset = indicesOffset + id.x + id.y * indicesPerRow + id.z * indicesPerRow * params.rowsPerImage;
 )";
 
@@ -265,10 +275,10 @@ if (any(id >= idBoundary)) {
     return;
 }
 
-let byteOffset = params.offset + id.x * 4
+let byteOffset = params.offset + id.x * gOutputUnitSize
     + id.y * params.bytesPerRow
     + id.z * params.bytesPerRow * params.rowsPerImage;
-let dstOffset = byteOffset / 4;
+let dstOffset = byteOffset / gOutputUnitSize;
 let srcBoundary = params.srcOrigin + params.srcExtent;
 
 // Start coord, End coord
@@ -516,6 +526,54 @@ if (readDstBufAtStart || readDstBufAtEnd) {
 }
 )";
 
+// R16: texelByte = 2; each thread reads 1 ~ 2 texels.
+// General packing algorithm is similar to kPackRG8ToU32.
+constexpr std::string_view kPackR16ToU32 = R"(
+// Result bits to store into dst_buf
+var result: u32 = 0u;
+// Storing half texel values
+// later called by pack2x16unorm to convert to u32.
+var v: vec2f;
+
+// dstBuf value is used for starting part.
+var mask: u32 = 0xffffffffu;
+if (!readDstBufAtStart) {
+    // coordS is used
+    mask &= 0xffff0000u;
+    let texel0 = textureLoadGeneral(src_tex, coordS, params.mipLevel).r;
+    v[0] = texel0;
+}
+
+if (coordE.x < srcBoundary.x) {
+    // coordE is used
+    mask &= 0x0000ffffu;
+    let texel1 = textureLoadGeneral(src_tex, coordE, params.mipLevel).r;
+    v[1] = texel1;
+}
+
+if (readDstBufAtStart || readDstBufAtEnd) {
+    let original: u32 = dst_buf[dstOffset];
+    result = (original & mask) | (encodeVectorInU32General(v) & ~mask);
+} else {
+    result = encodeVectorInU32General(v);
+}
+)";
+
+constexpr std::string_view kPackRG16ToU32 = R"(
+    let v: vec2f = textureLoadGeneral(src_tex, coord0, params.mipLevel).rg;
+    let result = encodeVectorInU32General(v);
+)";
+
+// Load RGBA16 and pack to 2 uint4_t
+constexpr std::string_view kLoadRGBA16ToU32 = R"(
+    let v: vec4f = textureLoadGeneral(src_tex, coord0, params.mipLevel);
+    // dstOffset is based on 8 bytes so we need to multiply by 2 to get uint32 offset.
+    let uintOffset = dstOffset << 1;
+    dst_buf[uintOffset] = encodeVectorInU32General(v.rg);
+    dst_buf[uintOffset + 1] = encodeVectorInU32General(v.ba);
+}
+)";
+
 // ShaderF16 extension is only enabled by GL_AMD_gpu_shader_half_float for GL
 // so we should not use it generally for the emulation.
 // As a result we are using f32 and array<u32> to do all the math and byte manipulation.
@@ -597,9 +655,9 @@ fn encodeVectorInU32General(v: vec4f) -> u32 {
 }
 )";
 
-// Directly loading depth32float values into dst_buf
+// Directly loading R32Float values into dst_buf
 // No bit manipulation and packing is needed.
-constexpr std::string_view kLoadDepth32Float = R"(
+constexpr std::string_view kLoadR32Float = R"(
     dst_buf[dstOffset] = textureLoadGeneral(src_tex, coord0, params.mipLevel).r;
 }
 )";
@@ -718,6 +776,31 @@ ResultOrError<Ref<ComputePipelineBase>> GetOrCreateTextureToBufferPipeline(
             shader += kCommonEnd;
             textureSampleType = wgpu::TextureSampleType::Float;
             break;
+        case wgpu::TextureFormat::R16Float:
+        case wgpu::TextureFormat::RG16Float:
+            AppendFloatTextureHead();
+            shader += kDstBufferU32;
+            shader += kEncodeRG16FloatInU32;
+            shader += kCommonHead;
+            if (format.format == wgpu::TextureFormat::R16Float) {
+                shader += kNonMultipleOf4OffsetStart;
+                shader += kPackR16ToU32;
+            } else {
+                shader += kCommonStart;
+                shader += kPackRG16ToU32;
+            }
+            shader += kCommonEnd;
+            textureSampleType = wgpu::TextureSampleType::UnfilterableFloat;
+            break;
+        case wgpu::TextureFormat::RGBA16Float:
+            AppendFloatTextureHead();
+            shader += kDstBufferU32;
+            shader += kEncodeRG16FloatInU32;
+            shader += kCommonHead;
+            shader += kCommonStart;
+            shader += kLoadRGBA16ToU32;
+            textureSampleType = wgpu::TextureSampleType::UnfilterableFloat;
+            break;
         case wgpu::TextureFormat::Depth16Unorm:
             AppendFloatTextureHead();
             shader += kDstBufferU32;
@@ -728,11 +811,12 @@ ResultOrError<Ref<ComputePipelineBase>> GetOrCreateTextureToBufferPipeline(
             textureSampleType = wgpu::TextureSampleType::UnfilterableFloat;
             break;
         case wgpu::TextureFormat::Depth32Float:
+        case wgpu::TextureFormat::R32Float:
             AppendFloatTextureHead();
             shader += kDstBufferF32;
             shader += kCommonHead;
             shader += kCommonStart;
-            shader += kLoadDepth32Float;
+            shader += kLoadR32Float;
             textureSampleType = wgpu::TextureSampleType::UnfilterableFloat;
             break;
         case wgpu::TextureFormat::Stencil8:
@@ -756,7 +840,7 @@ ResultOrError<Ref<ComputePipelineBase>> GetOrCreateTextureToBufferPipeline(
                     shader += kDstBufferF32;
                     shader += kCommonHead;
                     shader += kCommonStart;
-                    shader += kLoadDepth32Float;
+                    shader += kLoadR32Float;
                     textureSampleType = wgpu::TextureSampleType::UnfilterableFloat;
                     break;
                 case Aspect::Stencil:
@@ -821,11 +905,16 @@ ResultOrError<Ref<ComputePipelineBase>> GetOrCreateTextureToBufferPipeline(
     computePipelineDescriptor.compute.module = shaderModule.Get();
     computePipelineDescriptor.compute.entryPoint = "main";
 
+    const uint32_t bytesPerTexel = format.GetAspectInfo(src.aspect).block.byteSize;
+    // Size of one unit for a thread to write to. For format < 4 bytes, we always write 4 bytes at a
+    // time.
+    const uint32_t ouputUnitSize = std::max(bytesPerTexel, 4u);
     const uint32_t adjustedWorkGroupSizeY =
         (viewDimension == wgpu::TextureViewDimension::e1D) ? 1 : kWorkgroupSizeY;
-    const std::array<ConstantEntry, 2> constants = {{
+    const std::array<ConstantEntry, 3> constants = {{
         {nullptr, "workgroupSizeX", kWorkgroupSizeX},
         {nullptr, "workgroupSizeY", static_cast<double>(adjustedWorkGroupSizeY)},
+        {nullptr, "gOutputUnitSize", static_cast<double>(ouputUnitSize)},
     }};
     computePipelineDescriptor.compute.constantCount = constants.size();
     computePipelineDescriptor.compute.constants = constants.data();
@@ -851,6 +940,10 @@ bool IsFormatSupportedByTextureToBufferBlit(wgpu::TextureFormat format) {
         case wgpu::TextureFormat::RGBA8Unorm:
         case wgpu::TextureFormat::BGRA8Unorm:
         case wgpu::TextureFormat::RGB9E5Ufloat:
+        case wgpu::TextureFormat::R16Float:
+        case wgpu::TextureFormat::RG16Float:
+        case wgpu::TextureFormat::RGBA16Float:
+        case wgpu::TextureFormat::R32Float:
         case wgpu::TextureFormat::Depth16Unorm:
         case wgpu::TextureFormat::Depth32Float:
         case wgpu::TextureFormat::Stencil8:
@@ -910,9 +1003,15 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
     uint32_t workgroupCountZ = copyExtent.depthOrArrayLayers;
 
     uint32_t numU32PerRowNeedsWriting = 0;
+    const auto ssboAlignment = device->GetLimits().v1.minStorageBufferOffsetAlignment;
+    // shaderStartOffset is the offset to start writing in shader.
+    const uint64_t shaderStartOffset = dst.offset % ssboAlignment;
+    // shaderBindingOffset is the aligned offset we will bind the buffer. Note: this value could
+    // change if we use an intermediate buffer.
+    uint64_t shaderBindingOffset = dst.offset - shaderStartOffset;
     bool readPreviousRow = false;
     if (bytesPerTexel < 4 && !format.HasDepthOrStencil()) {
-        uint32_t extraBytes = dst.offset % 4;
+        uint32_t extraBytes = shaderStartOffset % 4;
 
         // Between rows and image (whether thread at end of each row needs read start of next
         // row)
@@ -940,6 +1039,7 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
                     Align(copyExtent.width, 2 * kWorkgroupSizeX) / (2 * kWorkgroupSizeX);
                 break;
             case 4:
+            case 8:
                 workgroupCountX = Align(copyExtent.width, kWorkgroupSizeX) / kWorkgroupSizeX;
                 break;
             default:
@@ -955,13 +1055,25 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
     // Skip clearing the buffer if this is full size copy.
     dst.buffer->SetInitialized(fullSizeCopy || dst.buffer->IsInitialized());
 
-    Ref<BufferBase> destinationBuffer = dst.buffer;
-    bool useIntermediateCopyBuffer = false;
+    Ref<BufferBase> destinationBuffer = dst.buffer.Get();
+    const uint32_t bytesPerRow = dst.bytesPerRow == wgpu::kCopyStrideUndefined
+                                     ? (copyExtent.width * bytesPerTexel)
+                                     : dst.bytesPerRow;
+    const uint32_t rowsPerImage =
+        dst.rowsPerImage == wgpu::kCopyStrideUndefined ? copyExtent.height : dst.rowsPerImage;
+    const uint64_t numBytesToCopy =
+        ComputeRequiredBytesInCopy(blockInfo, copyExtent, bytesPerRow, rowsPerImage)
+            .AcquireSuccess();
+    const uint64_t shaderEndOffset = shaderStartOffset + numBytesToCopy;
+    const uint64_t shaderBindingSize = Align(shaderEndOffset, 4);
     const bool needsTempForOOBU32Write =
-        dst.buffer->GetSize() % 4 != 0 && (copyExtent.width * bytesPerTexel) % 4 != 0;
+        shaderBindingOffset + shaderBindingSize > dst.buffer->GetSize();
     const bool needsTempForStorageUsage =
         !(dst.buffer->GetUsage() & (kInternalStorageBuffer | wgpu::BufferUsage::Storage));
-    if (needsTempForOOBU32Write || needsTempForStorageUsage) {
+    const bool useIntermediateCopyBuffer = needsTempForOOBU32Write || needsTempForStorageUsage;
+    // Offset to copy to original buffer. Only relevant if useIntermediateCopyBuffer is true.
+    uint64_t offsetInOriginalBuf = 0;
+    if (useIntermediateCopyBuffer) {
         // If we copy from a texture with (width * texelByteSize) % 4 != 0, to a compact buffer,
         // when we copy the last texel, we inevitably need to access an out of bounds location given
         // by dst.buffer.size as we use array<u32> in the shader for the storage buffer. Although
@@ -972,14 +1084,16 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
         //
         // We also allocate an intermediate buffer if the destination buffer doesn't have Storage
         // usage.
-        useIntermediateCopyBuffer = true;
+        offsetInOriginalBuf = shaderBindingOffset;
+        shaderBindingOffset = 0;
+
         BufferDescriptor descriptor = {};
-        descriptor.size = Align(dst.buffer->GetSize(), 4);
+        descriptor.size = shaderBindingSize;
         // TODO(dawn:1485): adding CopyDst usage to add kInternalStorageBuffer usage internally.
         descriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
         DAWN_TRY_ASSIGN(destinationBuffer, device->CreateBuffer(&descriptor));
 
-        const uint64_t paddingSize = descriptor.size - dst.buffer->GetSize();
+        const uint64_t paddingSize = shaderBindingSize - shaderEndOffset;
         // Don't clear the temp buffer. Its bytes are either written in shader or copied from
         // the original buffer.
         destinationBuffer->SetInitialized(true);
@@ -994,35 +1108,30 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
         // Copy the bytes that we won't write in the shader (those before offset, padding bytes,
         // etc).
         if (!fullSizeCopy) {
-            const uint32_t bytesPerRow = dst.bytesPerRow == wgpu::kCopyStrideUndefined
-                                             ? (copyExtent.width * bytesPerTexel)
-                                             : dst.bytesPerRow;
-            const uint32_t rowsPerImage = dst.rowsPerImage == wgpu::kCopyStrideUndefined
-                                              ? copyExtent.height
-                                              : dst.rowsPerImage;
             if (bytesPerRow == copyExtent.width * bytesPerTexel &&
                 rowsPerImage == copyExtent.height) {
                 // If the copy is compact, we only need to copy from the original buffer:
                 // - the first bytes before offset.
                 // - the last bytes past the desired copy region.
-                if (dst.offset > 0) {
+                if (shaderStartOffset > 0) {
                     commandEncoder->InternalCopyBufferToBufferWithAllocatedSize(
-                        dst.buffer.Get(), 0, destinationBuffer.Get(), 0, Align(dst.offset, 4));
+                        dst.buffer.Get(), /*srcOffset=*/offsetInOriginalBuf,
+                        destinationBuffer.Get(),
+                        /*dstOffset=*/0, /*size=*/Align(shaderStartOffset, 4));
                 }
-                const uint64_t numBytesToCopy =
-                    ComputeRequiredBytesInCopy(blockInfo, copyExtent, bytesPerRow, rowsPerImage)
-                        .AcquireSuccess();
-                const auto pastCopyOffset = dst.offset + numBytesToCopy;
-                const auto mod = pastCopyOffset % 4;
-                const auto lastU32Offset = pastCopyOffset - mod;
-                if (destinationBuffer->GetSize() > lastU32Offset) {
+                if (shaderEndOffset != shaderBindingSize) {
+                    const auto mod = shaderEndOffset % 4;
+                    const auto lastShaderU32Offset = shaderEndOffset - mod;
                     commandEncoder->InternalCopyBufferToBufferWithAllocatedSize(
-                        dst.buffer.Get(), lastU32Offset, destinationBuffer.Get(), lastU32Offset,
-                        destinationBuffer->GetSize() - lastU32Offset);
+                        dst.buffer.Get(),
+                        /*srcOffset=*/offsetInOriginalBuf + lastShaderU32Offset,
+                        destinationBuffer.Get(), /*dstOffset=*/lastShaderU32Offset,
+                        /*size=*/shaderBindingSize - lastShaderU32Offset);
                 }
             } else {
                 commandEncoder->InternalCopyBufferToBufferWithAllocatedSize(
-                    dst.buffer.Get(), 0, destinationBuffer.Get(), 0, destinationBuffer->GetSize());
+                    dst.buffer.Get(), /*srcOffset=*/offsetInOriginalBuf, destinationBuffer.Get(),
+                    /*dstOffset=*/0, shaderBindingSize);
             }
         }
     }
@@ -1049,7 +1158,7 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
 
         // packTexelCount: number of texel values (1, 2, or 4) one thread packs into the dst
         // buffer
-        params[3] = 4 / bytesPerTexel;
+        params[3] = std::max(1u, 4 / bytesPerTexel);
         // srcExtent: vec3u
         params[4] = copyExtent.width;
         params[5] = copyExtent.height;
@@ -1057,17 +1166,17 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
 
         params[7] = src.mipLevel;
 
-        params[8] = dst.bytesPerRow;
-        params[9] = dst.rowsPerImage;
-        params[10] = dst.offset;
+        params[8] = bytesPerRow;
+        params[9] = rowsPerImage;
+        params[10] = shaderStartOffset;
 
-        // These params are only used for R8Snorm and R8Snorm
-        params[11] = (dst.offset % 4) / bytesPerTexel;  // shift
+        // These params are only used for formats smaller than 4 bytes
+        params[11] = (shaderStartOffset % 4) / bytesPerTexel;  // shift
 
         params[16] = bytesPerTexel;
         params[17] = numU32PerRowNeedsWriting;
         params[18] = readPreviousRow ? 1 : 0;
-        params[19] = dst.rowsPerImage == copyExtent.height ? 1 : 0;  // isCompactImage
+        params[19] = rowsPerImage == copyExtent.height ? 1 : 0;  // isCompactImage
 
         if (textureViewDimension == wgpu::TextureViewDimension::Cube) {
             // cube need texture size to convert texel coord to sample location
@@ -1113,13 +1222,15 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
     Ref<BindGroupLayoutBase> bindGroupLayout0;
     DAWN_TRY_ASSIGN(bindGroupLayout0, pipeline->GetBindGroupLayout(0));
     Ref<BindGroupBase> bindGroup0;
-    DAWN_TRY_ASSIGN(bindGroup0, utils::MakeBindGroup(device, bindGroupLayout0,
-                                                     {
-                                                         {0, srcView},
-                                                         {1, destinationBuffer},
-                                                         {2, uniformBuffer},
-                                                     },
-                                                     UsageValidationMode::Internal));
+    DAWN_TRY_ASSIGN(
+        bindGroup0,
+        utils::MakeBindGroup(device, bindGroupLayout0,
+                             {
+                                 {0, srcView},
+                                 {1, destinationBuffer, shaderBindingOffset, shaderBindingSize},
+                                 {2, uniformBuffer},
+                             },
+                             UsageValidationMode::Internal));
 
     Ref<BindGroupLayoutBase> bindGroupLayout1;
     Ref<BindGroupBase> bindGroup1;
@@ -1150,7 +1261,8 @@ MaybeError BlitTextureToBuffer(DeviceBase* device,
     if (useIntermediateCopyBuffer) {
         DAWN_ASSERT(destinationBuffer->GetSize() <= dst.buffer->GetAllocatedSize());
         commandEncoder->InternalCopyBufferToBufferWithAllocatedSize(
-            destinationBuffer.Get(), 0, dst.buffer.Get(), 0, destinationBuffer->GetSize());
+            destinationBuffer.Get(), /*srcOffset=*/0, dst.buffer.Get(),
+            /*dstOffset=*/offsetInOriginalBuf, shaderBindingSize);
     }
 
     return {};
