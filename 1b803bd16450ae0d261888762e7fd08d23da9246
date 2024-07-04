@@ -16,6 +16,23 @@
       "message": "Loko: This CL takes the existing bit in SamplerBase into account to fill that gap. Once we decide which way we\u0027re going to go wrt checking all of the YCbCr state, I\u0027ll do that checking and testing in a followup. In the meantime, landing this will be nice because it concretely helps for testing of Graphite-Dawn YCbCr sampling bringup. Does that make sense to you? Thanks!",
       "revId": "1b803bd16450ae0d261888762e7fd08d23da9246",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41480f72_b17e688f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-04T07:20:31Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "1b803bd16450ae0d261888762e7fd08d23da9246",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
