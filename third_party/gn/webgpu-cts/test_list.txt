@@ -54698,6 +54698,18 @@ webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:cas
 webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"1u","rhs":"-1","pass":false};vectorize=2
 webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"1u","rhs":"-1","pass":false};vectorize=3
 webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"1u","rhs":"-1","pass":false};vectorize=4
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"1","rhs":"63","pass":false};vectorize="_undef_"
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"1","rhs":"63","pass":false};vectorize=2
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"1","rhs":"63","pass":false};vectorize=3
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"1","rhs":"63","pass":false};vectorize=4
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"2","rhs":"62","pass":false};vectorize="_undef_"
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"2","rhs":"62","pass":false};vectorize=2
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"2","rhs":"62","pass":false};vectorize=3
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"2","rhs":"62","pass":false};vectorize=4
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"4611686018427388000","rhs":"1u","pass":false};vectorize="_undef_"
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"4611686018427388000","rhs":"1u","pass":false};vectorize=2
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"4611686018427388000","rhs":"1u","pass":false};vectorize=3
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_concrete:case={"lhs":"4611686018427388000","rhs":"1u","pass":false};vectorize=4
 webgpu:shader,validation,expression,binary,bitwise_shift:shift_right_concrete:case={"lhs":"0u","rhs":"31u","pass":true};vectorize="_undef_"
 webgpu:shader,validation,expression,binary,bitwise_shift:shift_right_concrete:case={"lhs":"0u","rhs":"31u","pass":true};vectorize=2
 webgpu:shader,validation,expression,binary,bitwise_shift:shift_right_concrete:case={"lhs":"0u","rhs":"31u","pass":true};vectorize=3
@@ -54750,6 +54762,8 @@ webgpu:shader,validation,expression,binary,bitwise_shift:shift_right_concrete:ca
 webgpu:shader,validation,expression,binary,bitwise_shift:shift_right_concrete:case={"lhs":"1u","rhs":"-1","pass":false};vectorize=2
 webgpu:shader,validation,expression,binary,bitwise_shift:shift_right_concrete:case={"lhs":"1u","rhs":"-1","pass":false};vectorize=3
 webgpu:shader,validation,expression,binary,bitwise_shift:shift_right_concrete:case={"lhs":"1u","rhs":"-1","pass":false};vectorize=4
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_left_abstract:
+webgpu:shader,validation,expression,binary,bitwise_shift:shift_right_abstract:
 webgpu:shader,validation,expression,binary,bitwise_shift:partial_eval_errors:op="%3C%3C";type="i32"
 webgpu:shader,validation,expression,binary,bitwise_shift:partial_eval_errors:op="%3C%3C";type="u32"
 webgpu:shader,validation,expression,binary,bitwise_shift:partial_eval_errors:op="%3E%3E";type="i32"
