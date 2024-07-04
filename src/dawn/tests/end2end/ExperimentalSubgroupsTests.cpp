@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <string>
 #include <vector>
 
 #include "dawn/common/Math.h"
@@ -127,6 +128,168 @@ class ExperimentalSubgroupsTests : public DawnTest {
   private:
     bool mRequiredSubgroupsFeature = false;
 };
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize1) {
+    DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsFeatureRequired());
+
+    std::string shaderCode = R"(
+enable chromium_experimental_subgroups;
+
+const workgroupSize = 1u;
+
+@group(0) @binding(0) var<storage, read_write> output : array<u32, workgroupSize>;
+
+@compute @workgroup_size(workgroupSize, 1, 1)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u,
+    @builtin(subgroup_size) sg_size : u32
+) {
+    output[local_id.x] = u32(subgroupBroadcast(1i, 0u));
+}
+)";
+
+    auto shaderModule = utils::CreateShaderModule(device, shaderCode.c_str());
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+
+    device.CreateComputePipeline(&csDesc);
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize1) {
+    DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsFeatureRequired());
+
+    std::string shaderCode = R"(
+enable chromium_experimental_subgroups;
+
+const workgroupSize = 1u;
+
+@group(0) @binding(0) var<storage, read_write> output : array<u32, workgroupSize>;
+
+@compute @workgroup_size(workgroupSize, 1, 1)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u,
+    @builtin(subgroup_size) sg_size : u32
+) {
+    output[local_id.x] = u32(subgroupBroadcast(1u, 0u));
+}
+)";
+
+    auto shaderModule = utils::CreateShaderModule(device, shaderCode.c_str());
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+
+    device.CreateComputePipeline(&csDesc);
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize1) {
+    DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsFeatureRequired());
+
+    std::string shaderCode = R"(
+enable chromium_experimental_subgroups;
+
+const workgroupSize = 1u;
+
+@group(0) @binding(0) var<storage, read_write> output : array<u32, workgroupSize>;
+
+@compute @workgroup_size(workgroupSize, 1, 1)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u,
+    @builtin(subgroup_size) sg_size : u32
+) {
+    output[local_id.x] = u32(subgroupBroadcast(1.0f, 0u));
+}
+)";
+
+    auto shaderModule = utils::CreateShaderModule(device, shaderCode.c_str());
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+
+    device.CreateComputePipeline(&csDesc);
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstI32WithWorkgroupSize2) {
+    DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsFeatureRequired());
+
+    std::string shaderCode = R"(
+enable chromium_experimental_subgroups;
+
+const workgroupSize = 2u;
+
+@group(0) @binding(0) var<storage, read_write> output : array<u32, workgroupSize>;
+
+@compute @workgroup_size(workgroupSize, 1, 1)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u,
+    @builtin(subgroup_size) sg_size : u32
+) {
+    output[local_id.x] = u32(subgroupBroadcast(1i, 0u));
+}
+)";
+
+    auto shaderModule = utils::CreateShaderModule(device, shaderCode.c_str());
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+
+    device.CreateComputePipeline(&csDesc);
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstU32WithWorkgroupSize2) {
+    DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsFeatureRequired());
+
+    std::string shaderCode = R"(
+enable chromium_experimental_subgroups;
+
+const workgroupSize = 2u;
+
+@group(0) @binding(0) var<storage, read_write> output : array<u32, workgroupSize>;
+
+@compute @workgroup_size(workgroupSize, 1, 1)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u,
+    @builtin(subgroup_size) sg_size : u32
+) {
+    output[local_id.x] = u32(subgroupBroadcast(1u, 0u));
+}
+)";
+
+    auto shaderModule = utils::CreateShaderModule(device, shaderCode.c_str());
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+
+    device.CreateComputePipeline(&csDesc);
+}
+
+TEST_P(ExperimentalSubgroupsTests, CreatePipelineSubgroupBroadcastConstF32WithWorkgroupSize2) {
+    DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsFeatureRequired());
+
+    std::string shaderCode = R"(
+enable chromium_experimental_subgroups;
+
+const workgroupSize = 2u;
+
+@group(0) @binding(0) var<storage, read_write> output : array<u32, workgroupSize>;
+
+@compute @workgroup_size(workgroupSize, 1, 1)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u,
+    @builtin(subgroup_size) sg_size : u32
+) {
+    output[local_id.x] = u32(subgroupBroadcast(1.0f, 0u));
+}
+)";
+
+    auto shaderModule = utils::CreateShaderModule(device, shaderCode.c_str());
+
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = shaderModule;
+
+    device.CreateComputePipeline(&csDesc);
+}
 
 // Test that creating compute pipeline with full subgroups required will validate the workgroup size
 // as expected, when using compute shader with literal workgroup size.
