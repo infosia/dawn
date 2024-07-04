@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "127edaa3_3ef5700e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-07-04T08:08:23Z",
+      "side": 1,
+      "message": "Please have an early look at this CL. I won\u0027t land it until we gave enough time to developers to update their code.",
+      "revId": "b5a4d7a5c027c58394330dd62f4081fff21969f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
