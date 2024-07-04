@@ -33,6 +33,24 @@
       "message": "side note: Now that WGPUAdapterPropertiesMemoryHeaps is a chain off WGPUAdapterInfo, I think adapterInfoFreeMembers(info) is supposed traverse the chain and free chained members too.\n(I don\u0027t think we officially decided this in webgpu.h because there are no cases of this, but we briefly discussed it and leaned this way.)",
       "revId": "dd4ab85172d0e0f7aa7ef8561be2b207d9e65e6b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31909308_5a9fe7ef",
+        "filename": "src/dawn/wire/server/ServerInstance.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-07-04T06:54:09Z",
+      "side": 1,
+      "message": "Thanks for the warning Kai!\nIs there a bug/issue for this?",
+      "parentUuid": "8307ff5b_82f93d85",
+      "revId": "dd4ab85172d0e0f7aa7ef8561be2b207d9e65e6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
