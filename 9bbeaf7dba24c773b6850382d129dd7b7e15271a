@@ -16,6 +16,24 @@
       "message": "If you\u0027re planning on working on Dawn specifically, I think we should be promoting `gclient` and `depot_tools` here, it\u0027s how you\u0027ll interact with Dawn and it means you always get the right deps and compilers.",
       "revId": "9bbeaf7dba24c773b6850382d129dd7b7e15271a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d68085b_c75d903e",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-04T18:49:45Z",
+      "side": 1,
+      "message": "Noted. I\u0027ve rephrased the first paragraph to emphasize `gclient` for doing Dawn development.",
+      "parentUuid": "4f22582e_4c569745",
+      "revId": "9bbeaf7dba24c773b6850382d129dd7b7e15271a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
