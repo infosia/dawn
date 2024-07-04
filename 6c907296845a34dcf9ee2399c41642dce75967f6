@@ -51,6 +51,24 @@
       "message": "Why are these moved here instead of in their original source folder cmake files? Is it because the `dawn_add_library` requires sources?",
       "revId": "6c907296845a34dcf9ee2399c41642dce75967f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7670379_2c1e55f5",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-04T12:16:02Z",
+      "side": 1,
+      "message": "These component sources get compiled with different DLL export macros for dawn_native(can be static or shared) vs webgpu_dawn (always shared as of now)",
+      "parentUuid": "8ec5557f_747a4771",
+      "revId": "6c907296845a34dcf9ee2399c41642dce75967f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
