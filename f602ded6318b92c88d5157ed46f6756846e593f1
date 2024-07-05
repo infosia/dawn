@@ -1,0 +1,75 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14062479_4630ecb4",
+        "filename": "tools/android/webgpu/src/test/java/android/dawn/RoundingTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-05T14:59:49Z",
+      "side": 1,
+      "message": "Out of interest are the brackets needed or there for clarity?",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 38
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ace69f9f_46e54605",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/test/java/android/dawn/RoundingTest.kt",
+              "range": {
+                "startLine": 12,
+                "startChar": 0,
+                "endLine": 14,
+                "endChar": 0
+              },
+              "replacement": "    Assert.assertEquals(1000, 1234.roundDownToNearestMultipleOf(1000))\n    Assert.assertEquals(2000, 1234.roundUpToNearestMultipleOf(1000))\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/test/java/android/dawn/RoundingTest.kt",
+              "range": {
+                "startLine": 15,
+                "startChar": 0,
+                "endLine": 17,
+                "endChar": 0
+              },
+              "replacement": "    Assert.assertEquals(-2000, (-1234).roundDownToNearestMultipleOf(1000))\n    Assert.assertEquals(-1000, (-1234).roundUpToNearestMultipleOf(1000))\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/test/java/android/dawn/RoundingTest.kt",
+              "range": {
+                "startLine": 19,
+                "startChar": 0,
+                "endLine": 21,
+                "endChar": 0
+              },
+              "replacement": "    Assert.assertEquals(2_147_483_000L, 2_147_483_648L.roundDownToNearestMultipleOf(1000))\n    Assert.assertEquals(2_147_484_000L, 2_147_483_648L.roundUpToNearestMultipleOf(1000))\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/test/java/android/dawn/RoundingTest.kt",
+              "range": {
+                "startLine": 22,
+                "startChar": 0,
+                "endLine": 26,
+                "endChar": 0
+              },
+              "replacement": "    Assert.assertEquals(1000, 1000.roundDownToNearestMultipleOf(1000))\n    Assert.assertEquals(1000, 1000.roundUpToNearestMultipleOf(1000))\n    Assert.assertEquals(-1000, (-1000).roundDownToNearestMultipleOf(1000))\n    Assert.assertEquals(-1000, (-1000).roundUpToNearestMultipleOf(1000))\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f602ded6318b92c88d5157ed46f6756846e593f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
