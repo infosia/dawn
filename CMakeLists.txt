@@ -462,4 +462,10 @@ if (DAWN_BUILD_MONOLITHIC_LIBRARY AND DAWN_ENABLE_INSTALL)
     "${CMAKE_CURRENT_BINARY_DIR}/DawnConfigVersion.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/Dawn"
   )
+
+  # This will use the configure_file command to create CPackConfig.cmake and
+  # CPackSourceConfig.cmake in the binary tree of the project.
+  # These files contain a series of set commands that set variables for use
+  # when CPack is run during the packaging step.
+  include(CPack)
 endif ()
