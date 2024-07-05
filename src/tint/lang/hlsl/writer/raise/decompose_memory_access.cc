@@ -93,7 +93,12 @@ struct State {
                     [&](core::ir::Store* st) { usage_worklist.Push(st); },
                     [&](core::ir::Load* ld) { usage_worklist.Push(ld); },
                     [&](core::ir::Access* a) { usage_worklist.Push(a); },
-                    [&](core::ir::Let* l) { usage_worklist.Push(l); },  //
+                    [&](core::ir::Let* l) { usage_worklist.Push(l); },
+                    [&](core::ir::CoreBuiltinCall* call) {
+                        TINT_ASSERT(call->Func() == core::BuiltinFn::kArrayLength);
+                        usage_worklist.Push(call);
+                    },
+                    //
                     TINT_ICE_ON_NO_MATCH);
             }
 
@@ -125,12 +130,41 @@ struct State {
                         let->Result(0)->ReplaceAllUsesWith(result);
                         let->Destroy();
                     },
+                    [&](core::ir::CoreBuiltinCall* call) {
+                        ArrayLength(var, call, var_ty->StoreType(), 0);
+                    },  //
                     TINT_ICE_ON_NO_MATCH);
             }
 
             // Swap the result type of the `var` to the new HLSL result type
             result->SetType(ty.Get<hlsl::type::ByteAddressBuffer>(var_ty->Access()));
         }
+    }
+
+    void ArrayLength(core::ir::Var* var,
+                     core::ir::CoreBuiltinCall* call,
+                     const core::type::Type* type,
+                     uint32_t offset) {
+        auto* arr_ty = type->As<core::type::Array>();
+        // If the `arrayLength` was called directly on the storage buffer then
+        // it _must_ be a runtime array.
+        TINT_ASSERT(arr_ty && arr_ty->Count()->As<core::type::RuntimeArrayCount>());
+
+        b.InsertBefore(call, [&] {
+            auto* val = b.Let(ty.u32());
+            val->SetValue(b.Zero<u32>());
+
+            b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), BuiltinFn::kGetDimensions, var,
+                                                      val);
+
+            core::ir::Instruction* inst = val;
+            if (offset > 0) {
+                inst = b.Subtract(ty.u32(), inst, u32(offset));
+            }
+            auto* div = b.Divide(ty.u32(), inst, u32(arr_ty->Stride()));
+            call->Result(0)->ReplaceAllUsesWith(div->Result(0));
+        });
+        call->Destroy();
     }
 
     struct OffsetData {
@@ -472,22 +506,8 @@ struct State {
                     // we _must_ have set `last_member` to the array member which is a runtime
                     // array.
                     TINT_ASSERT(last_member);
-                    auto* arr_ty = last_member->Type()->As<core::type::Array>();
-                    TINT_ASSERT(arr_ty && arr_ty->Count()->Is<core::type::RuntimeArrayCount>());
 
-                    b.InsertBefore(a, [&] {
-                        auto* val = b.Let(ty.u32());
-                        val->SetValue(b.Zero<u32>());
-
-                        b.MemberCall<hlsl::ir::MemberBuiltinCall>(
-                            ty.void_(), BuiltinFn::kGetDimensions, var, val);
-
-                        auto* div = b.Divide(ty.u32(),
-                                             b.Subtract(ty.u32(), val, u32(last_member->Offset())),
-                                             u32(arr_ty->Stride()));
-                        call->Result(0)->ReplaceAllUsesWith(div->Result(0));
-                    });
-                    call->Destroy();
+                    ArrayLength(var, call, last_member->Type(), last_member->Offset());
                 },  //
                 TINT_ICE_ON_NO_MATCH);
         }
