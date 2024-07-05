@@ -93,7 +93,12 @@ struct State {
                     [&](core::ir::Store* st) { usage_worklist.Push(st); },
                     [&](core::ir::Load* ld) { usage_worklist.Push(ld); },
                     [&](core::ir::Access* a) { usage_worklist.Push(a); },
-                    [&](core::ir::Let* l) { usage_worklist.Push(l); },  //
+                    [&](core::ir::Let* l) { usage_worklist.Push(l); },
+                    [&](core::ir::CoreBuiltinCall* call) {
+                        TINT_ASSERT(call->Func() == core::BuiltinFn::kArrayLength);
+                        usage_worklist.Push(call);
+                    },
+                    //
                     TINT_ICE_ON_NO_MATCH);
             }
 
@@ -125,6 +130,25 @@ struct State {
                         let->Result(0)->ReplaceAllUsesWith(result);
                         let->Destroy();
                     },
+                    [&](core::ir::CoreBuiltinCall* call) {
+                        b.InsertBefore(call, [&] {
+                            auto* val = b.Let(ty.u32());
+                            val->SetValue(b.Zero<u32>());
+
+                            b.MemberCall<hlsl::ir::MemberBuiltinCall>(
+                                ty.void_(), BuiltinFn::kGetDimensions, var, val);
+
+                            auto* arr_ty = var_ty->StoreType()->As<core::type::Array>();
+                            // If the `arrayLength` was called directly on the storage buffer then
+                            // it _must_ be a runtime array.
+                            TINT_ASSERT(arr_ty &&
+                                        arr_ty->Count()->As<core::type::RuntimeArrayCount>());
+
+                            auto* div = b.Divide(ty.u32(), val, u32(arr_ty->Stride()));
+                            call->Result(0)->ReplaceAllUsesWith(div->Result(0));
+                        });
+                        call->Destroy();
+                    },  //
                     TINT_ICE_ON_NO_MATCH);
             }
 
