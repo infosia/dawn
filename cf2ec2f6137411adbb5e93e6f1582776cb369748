@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bed9276_ff56aa3f",
+        "filename": "src/tint/lang/hlsl/writer/access_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-05T03:28:34Z",
+      "side": 1,
+      "message": "I didn\u0027t run `robustness` when I generated the example output. Robustness adds an `arrayLength` and a bunch of clamping.",
+      "revId": "cf2ec2f6137411adbb5e93e6f1582776cb369748",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
