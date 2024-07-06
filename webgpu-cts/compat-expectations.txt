@@ -74,7 +74,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-07-03 12:35:47PM
+# Last rolled: 2024-07-06 07:22:41AM
 
 # Flaky on all platforms
 # KEEP
@@ -142,7 +142,6 @@ crbug.com/dawn/2502 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:api,operation,sto
 crbug.com/dawn/2502 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:api,operation,storage_texture,read_write:basic:format="r32uint";shaderStage="fragment";textureDimension="3d";depthOrArrayLayers=1 [ Failure ]
 crbug.com/dawn/2502 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:api,operation,storage_texture,read_write:basic:format="r32uint";shaderStage="fragment";textureDimension="3d";depthOrArrayLayers=2 [ Failure ]
 crbug.com/dawn/2502 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:shader,execution,memory_model,atomicity:atomicity:memType="atomic_storage";testType="inter_workgroup" [ Failure ]
-
 
 ################################################################################
 # validation of shader_io location type
@@ -623,6 +622,14 @@ crbug.com/dawn/0000 webgpu:api,validation,render_pipeline,inter_stage:type:* [ F
 crbug.com/dawn/0000 webgpu:api,validation,render_pipeline,misc:no_attachment:* [ Failure ]
 crbug.com/dawn/0000 webgpu:compat,api,validation,shader_module,shader_module:interpolate:success=false;interpolate="%40interpolate(flat)" [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,binary,bitwise_shift:shift_right_abstract:* [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,binary,bool_logical:and_compound:inputSource="storage_rw";vectorize="_undef_" [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,binary,bool_logical:and_compound:inputSource="storage_rw";vectorize=2 [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,binary,bool_logical:and_compound:inputSource="storage_rw";vectorize=3 [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,binary,bool_logical:and_compound:inputSource="storage_rw";vectorize=4 [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,binary,bool_logical:or_compound:inputSource="storage_rw";vectorize="_undef_" [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,binary,bool_logical:or_compound:inputSource="storage_rw";vectorize=2 [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,binary,bool_logical:or_compound:inputSource="storage_rw";vectorize=3 [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,binary,bool_logical:or_compound:inputSource="storage_rw";vectorize=4 [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,determinant:f32:inputSource="const";dim=2 [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,fwidth:* [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,fwidthCoarse:* [ Failure ]
@@ -720,7 +727,6 @@ crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:api,operation,memory_sync,buffer,mul
 crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:wr:boundary="queue-op";readOp="input-vertex";readContext="render-pass-encoder";writeOp="t2b-copy";writeContext="command-encoder" [ Failure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:wr:boundary="queue-op";readOp="input-vertex";readContext="render-pass-encoder";writeOp="write-buffer";writeContext="queue" [ Failure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,fwidthFine:* [ Failure ]
-crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,inversesqrt:f16:inputSource="storage_rw";vectorize=4 [ Failure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureStore:out_of_bounds_array:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,validation,expression,binary,div_rem:scalar_vector:* [ Failure ]
 crbug.com/dawn/0000 [ nvidia-0x2184 ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:wr:* [ Failure ]
@@ -730,4 +736,3 @@ crbug.com/dawn/0000 [ nvidia-0x2184 ] webgpu:shader,execution,limits:const_array
 crbug.com/dawn/0000 [ nvidia-0x2184 ] webgpu:shader,execution,limits:function_variable_combined_byte_size:* [ Failure ]
 crbug.com/dawn/0000 [ nvidia-0x2184 ] webgpu:shader,execution,limits:private_array_combined_byte_size:* [ Failure ]
 crbug.com/dawn/0000 [ nvidia-0x2184 ] webgpu:shader,validation,expression,binary,div_rem:scalar_vector:* [ Failure ]
-
