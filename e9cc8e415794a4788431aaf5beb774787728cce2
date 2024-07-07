@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7a51abd_3d5cc809",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T19:09:28Z",
+      "side": 1,
+      "message": "Left some comments on how to maybe avoid duplicating the generator call.",
+      "revId": "e9cc8e415794a4788431aaf5beb774787728cce2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3455e0f9_4e582d0f",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T19:09:28Z",
+      "side": 1,
+      "message": "IIUC this library would still be useful to folks looking to use Dawn on Android without Kotlin.",
+      "revId": "e9cc8e415794a4788431aaf5beb774787728cce2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5f58109_c4ec8a66",
+        "filename": "tools/android/webgpu/src/main/cpp/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T19:09:28Z",
+      "side": 1,
+      "message": "These is kind of unfortunate. Would a fix be to make bundle_libraries take into account `SHARED_LIBS`? Alternatively would it work to make `dawn_native_with_procs` in `src/dawn/native`, bundle it once for `webgpu_dawn` and make `bundle_libraries(webgpu_c_bundled dawn_native_with_procs)`?",
+      "revId": "e9cc8e415794a4788431aaf5beb774787728cce2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dd870e1_e510182c",
+        "filename": "tools/android/webgpu/src/main/cpp/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T19:09:28Z",
+      "side": 1,
+      "message": "Is this one still needed now that we link against log-lib in src/dawn/common/CMakelists.txt?",
+      "range": {
+        "startLine": 62,
+        "startChar": 39,
+        "endLine": 62,
+        "endChar": 49
+      },
+      "revId": "e9cc8e415794a4788431aaf5beb774787728cce2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09b459ae_e06ddbfc",
+        "filename": "tools/android/webgpu/src/main/cpp/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T19:09:28Z",
+      "side": 1,
+      "message": "dawn::cpp_headers instead of dawn_public_config maybe? I\u0027m not sure if it would work.",
+      "range": {
+        "startLine": 62,
+        "startChar": 58,
+        "endLine": 62,
+        "endChar": 76
+      },
+      "revId": "e9cc8e415794a4788431aaf5beb774787728cce2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
