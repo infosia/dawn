@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb31d3f0_460cecb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-07T20:22:29Z",
+      "side": 1,
+      "message": "I\u0027ll check on whether removing log-lib and dawn_cpp_headers instead of public config works when i get a chance.",
+      "revId": "e9cc8e415794a4788431aaf5beb774787728cce2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3455e0f9_4e582d0f",
@@ -35,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a92046e6_3e407ebd",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-07T20:22:29Z",
+      "side": 1,
+      "message": "Right. https://dawn-review.googlesource.com/c/dawn/+/195996 removes it and allows using this lib on android.",
+      "parentUuid": "3455e0f9_4e582d0f",
+      "revId": "e9cc8e415794a4788431aaf5beb774787728cce2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5f58109_c4ec8a66",
@@ -48,6 +83,24 @@
       "writtenOn": "2024-07-07T19:09:28Z",
       "side": 1,
       "message": "These is kind of unfortunate. Would a fix be to make bundle_libraries take into account `SHARED_LIBS`? Alternatively would it work to make `dawn_native_with_procs` in `src/dawn/native`, bundle it once for `webgpu_dawn` and make `bundle_libraries(webgpu_c_bundled dawn_native_with_procs)`?",
+      "revId": "e9cc8e415794a4788431aaf5beb774787728cce2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9de735c2_4e4a0a1c",
+        "filename": "tools/android/webgpu/src/main/cpp/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-07T20:22:29Z",
+      "side": 1,
+      "message": "yup, i don\u0027t like duplicating the generator call here either. I\u0027ll give that a try.",
+      "parentUuid": "c5f58109_c4ec8a66",
       "revId": "e9cc8e415794a4788431aaf5beb774787728cce2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
