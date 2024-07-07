@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b4383e9_6f0160a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T18:40:10Z",
+      "side": 1,
+      "message": "Nice! (catching up on emails and saw this in reviews)",
+      "revId": "11784009dbbfcbca5f321e2c7ce28b15eabcb151",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddd857d7_d7a0d45c",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 31
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T18:40:10Z",
+      "side": 1,
+      "message": "It seems like this could almost be in a macro somewhere in the templates. We successfully added support for macros and template includes for the Kotlin templates.",
+      "revId": "11784009dbbfcbca5f321e2c7ce28b15eabcb151",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b82cfca_2be2c5b9",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 31
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T18:40:10Z",
+      "side": 1,
+      "message": "Could we have documentation for this in codegen.md? Also I wonder if we should have a new dawn_emscripten.json to gather emscripten data.",
+      "revId": "11784009dbbfcbca5f321e2c7ce28b15eabcb151",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
