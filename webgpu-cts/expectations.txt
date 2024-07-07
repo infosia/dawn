@@ -83,7 +83,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-07-03 12:35:47PM
+# Last rolled: 2024-07-07 05:06:29AM
 
 ################################################################################
 # SharedImage interop failures on Linux
@@ -2207,7 +2207,6 @@ crbug.com/351338448 webgpu:shader,execution,shader_io,fragment_builtins:inputs,f
 crbug.com/351338448 webgpu:shader,execution,shader_io,fragment_builtins:inputs,front_facing:nearFar=[0.25,0.75];sampleCount=4;frontFace="cw";interpolation={"type":"flat","sampling":"either"} [ Failure ]
 crbug.com/351338448 webgpu:shader,execution,shader_io,fragment_builtins:inputs,front_facing:nearFar=[0.25,0.75];sampleCount=4;frontFace="cw";interpolation={"type":"flat","sampling":"first"} [ Failure ]
 
-
 ################################################################################
 # crbug.com/bug/349425541: validation matrix add_sub underflow_f16
 ################################################################################
@@ -3172,4 +3171,3 @@ crbug.com/dawn/0000 [ android-t arm dawn-no-backend-validation target-cpu-64 web
 crbug.com/dawn/0000 [ android-t arm dawn-no-backend-validation target-cpu-64 webgpu-adapter-default webgpu-no-worker ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"linear","sampling":"sample"} [ Failure ]
 crbug.com/dawn/0000 [ android-t arm dawn-no-backend-validation target-cpu-64 webgpu-adapter-default webgpu-no-worker ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"perspective","sampling":"sample"} [ Failure ]
 crbug.com/dawn/0000 [ nvidia-0x2184 ubuntu ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:* [ Failure ]
-
