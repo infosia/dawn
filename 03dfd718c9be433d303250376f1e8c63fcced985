@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac94cae7_0b0ea57e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 41
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T16:02:07Z",
+      "side": 1,
+      "message": "Nice work with all the iterations and getting this landed!",
+      "revId": "03dfd718c9be433d303250376f1e8c63fcced985",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "310cbe99_677a4661",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T16:02:07Z",
+      "side": 1,
+      "message": "nit: DAWN_ASSERT always marks the expression as \"used\", so the `[[maybe_unused]]` is no longer necessary.",
+      "revId": "03dfd718c9be433d303250376f1e8c63fcced985",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

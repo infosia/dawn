@@ -366,6 +366,24 @@
       "parentUuid": "8ba47a2e_44545227",
       "revId": "4779ceb25ec1a4ef606df54747d32facb780d9f4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f07d8742_8a075a7e",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T16:02:07Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b2f1d57f_a598822a",
+      "revId": "4779ceb25ec1a4ef606df54747d32facb780d9f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
