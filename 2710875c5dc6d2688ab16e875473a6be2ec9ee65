@@ -123,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dccaaa92_a40a3353",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "Ah yes, that makes sense, ok!",
+      "parentUuid": "d2372edd_828924bd",
+      "revId": "2710875c5dc6d2688ab16e875473a6be2ec9ee65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c731774e_c106e53d",

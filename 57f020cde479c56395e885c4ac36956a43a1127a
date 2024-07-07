@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "50a19f55_5afd3235",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "The experimental feature is already being used internally in Chromium so we should make sure that if we add more constraints it doesn\u0027t reduce reach too much.\n\nWe could keep the experimental extension with just what it has right now, and duplicate the check for the extensions added in this CL, with the extra stage and operations.",
+      "parentUuid": "720eef34_0a69c6b3",
+      "revId": "57f020cde479c56395e885c4ac36956a43a1127a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "27335d26_74ce7700",
         "filename": "src/dawn/node/interop/DawnExtensions.idl",
         "patchSetId": 4

@@ -34,6 +34,215 @@
       "parentUuid": "aaf12223_b42559af",
       "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "831b8cf7_9b67a0c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de88a90f_7eb520c5",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "\u003e \"overriden\" is a possible misspelling of \"overridden\".\n\nPlease fix.",
+      "parentUuid": "3ccf7660_c8ec0d2c",
+      "range": {
+        "startLine": 310,
+        "startChar": 73,
+        "endLine": 310,
+        "endChar": 82
+      },
+      "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddddb353_3a7a2f42",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "\u003e \"convinience\" is a possible misspelling of \"convenience\".\n\nPlease fix.",
+      "parentUuid": "dcd26268_66d366d0",
+      "range": {
+        "startLine": 312,
+        "startChar": 83,
+        "endLine": 312,
+        "endChar": 94
+      },
+      "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29ccc7dc_75cb5348",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "\u003e \"deivce\" is a possible misspelling of \"device\".\n\nPlease fix.",
+      "parentUuid": "a655f7ca_c5066184",
+      "range": {
+        "startLine": 313,
+        "startChar": 18,
+        "endLine": 313,
+        "endChar": 24
+      },
+      "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "163b8508_76971520",
+        "filename": "src/dawn/tests/end2end/ExperimentalSubgroupsTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "nit: SupportsFeature.",
+      "range": {
+        "startLine": 45,
+        "startChar": 67,
+        "endLine": 45,
+        "endChar": 85
+      },
+      "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44088548_334bde95",
+        "filename": "src/dawn/tests/end2end/ExperimentalSubgroupsTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "The double inheritance works, or we could make `ExperimentalSubgroupsTestsFixture` be a templated `ExperimentalSubgroupsTestsBase`. We do that in several other tests.",
+      "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4f1ab78_326cb7c3",
+        "filename": "src/dawn/tests/end2end/ExperimentalSubgroupsTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "nit: Constant and SubgroupSize",
+      "range": {
+        "startLine": 286,
+        "startChar": 4,
+        "endLine": 286,
+        "endChar": 12
+      },
+      "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4bcb514_3cf5de92",
+        "filename": "src/dawn/tests/end2end/ExperimentalSubgroupsTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "wut? the values are written explicitly just above so what\u0027s the purpose of the static_assert?",
+      "range": {
+        "startLine": 314,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 0
+      },
+      "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9c66f99_f4d93c54",
+        "filename": "src/dawn/tests/end2end/ExperimentalSubgroupsTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "```suggestion\n    class ExpectBroadcastSubgroupSizeOutput : public dawn::detail::Expectation {\n```",
+      "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "936b7fbd_e1be0a63",
+        "filename": "src/dawn/tests/end2end/ExperimentalSubgroupsTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T20:18:54Z",
+      "side": 1,
+      "message": "To limit test explosions and runtime increases, this dimension could be kept inside the test themselves. Do you know how long the tests take to run?",
+      "revId": "4d08b11fc53c133e93a7b8c3af8199dd9aa8b0ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
