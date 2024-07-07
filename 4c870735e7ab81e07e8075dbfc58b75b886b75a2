@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8cea17f_6d881d01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T19:29:13Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "4c870735e7ab81e07e8075dbfc58b75b886b75a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "525b033d_57f79073",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T19:29:13Z",
+      "side": 1,
+      "message": "nit: this could be a `DAWN_TRY_ASSIGN`, and also done inside the if since `numBytesToCopy` is only used inside it.",
+      "revId": "4c870735e7ab81e07e8075dbfc58b75b886b75a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de617bbb_095d4402",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-07T19:29:13Z",
+      "side": 1,
+      "message": "Would this work?\n\n```suggestion\n                const copyEnd \u003d dst.offset + copyByteSize;\n                const alignedCopyEnd \u003d Align(copyEnd, 4);\n                if (copyEnd !\u003d alignedCopyEnd) {\n                   // copy from alignedCopyEnd - 4 to alignedCopyEnd.\n```",
+      "range": {
+        "startLine": 995,
+        "startChar": 9,
+        "endLine": 998,
+        "endChar": 19
+      },
+      "revId": "4c870735e7ab81e07e8075dbfc58b75b886b75a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
