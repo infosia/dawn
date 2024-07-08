@@ -730,12 +730,13 @@ void foo() {
   int k = 2;
   int v_2 = k;
   uint v_3 = 0u;
-  sb.GetDimensions(v_3);
-  uint v_4 = min(uint(v), (((v_3 - 16u) / 128u) - 1u));
-  uint v_5 = min(v_1, 2u);
-  uint v_6 = (128u * uint(v_4));
-  uint v_7 = (32u * uint(v_5));
-  float x = asfloat(sb.Load((((48u + v_6) + v_7) + (uint(min(uint(v_2), 2u)) * 4u))));
+  uint v_4 = v_3;
+  sb.GetDimensions(v_4);
+  uint v_5 = min(uint(v), (((v_4 - 16u) / 128u) - 1u));
+  uint v_6 = min(v_1, 2u);
+  uint v_7 = (128u * uint(v_5));
+  uint v_8 = (32u * uint(v_6));
+  float x = asfloat(sb.Load((((48u + v_7) + v_8) + (uint(min(uint(v_2), 2u)) * 4u))));
 }
 
 )");
@@ -778,11 +779,12 @@ void foo() {
   uint j = 1u;
   uint v = j;
   uint v_1 = 0u;
-  sb.GetDimensions(v_1);
-  uint v_2 = min(4u, (((v_1 - 16u) / 128u) - 1u));
-  uint v_3 = min(v, 2u);
-  uint v_4 = (128u * uint(v_2));
-  float x = asfloat(sb.Load(((56u + v_4) + (32u * uint(v_3)))));
+  uint v_2 = v_1;
+  sb.GetDimensions(v_2);
+  uint v_3 = min(4u, (((v_2 - 16u) / 128u) - 1u));
+  uint v_4 = min(v, 2u);
+  uint v_5 = (128u * uint(v_3));
+  float x = asfloat(sb.Load(((56u + v_5) + (32u * uint(v_4)))));
 }
 
 )");
