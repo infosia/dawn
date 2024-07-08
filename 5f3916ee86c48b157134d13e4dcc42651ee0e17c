@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a81e2a5_2af26212",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 67
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:26:06Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "5f3916ee86c48b157134d13e4dcc42651ee0e17c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a739446e_f0d25be0",
+        "filename": "src/cmake/DawnLibrary.cmake",
+        "patchSetId": 67
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:26:06Z",
+      "side": 1,
+      "message": "nit: `OBJECT_TARGETS` seems unused.",
+      "revId": "5f3916ee86c48b157134d13e4dcc42651ee0e17c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbe57475_966d8a7a",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 67
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:26:06Z",
+      "side": 1,
+      "message": "```suggestion\nfunction (dawn_add_sample name)\n  dawn_add_executable(\n    ${name}\n```",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 1
+      },
+      "revId": "5f3916ee86c48b157134d13e4dcc42651ee0e17c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
