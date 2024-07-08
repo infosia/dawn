@@ -16,6 +16,91 @@
       "message": "PTAL.",
       "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7f8f781_e5f94bad",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T19:11:37Z",
+      "side": 1,
+      "message": "Don\u0027t really need this.",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78fad244_a0a46e34",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T19:11:37Z",
+      "side": 1,
+      "message": "As with the storage transform, suggest merging these two switches.",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fec6b3b8_a28d9eca",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T19:11:37Z",
+      "side": 1,
+      "message": "uint4?",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "927c3654_279bc93c",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T19:11:37Z",
+      "side": 1,
+      "message": "A vec2 has an alignment of 8 bytes, but vec3 and vec4 have a 16-byte alignment. So not quite sure what you\u0027re trying to describe here.",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abac3a01_02354a44",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T19:11:37Z",
+      "side": 1,
+      "message": "Nit: These columns don\u0027t line up.",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

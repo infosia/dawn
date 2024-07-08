@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f737895_aab2aad3",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T19:11:37Z",
+      "side": 1,
+      "message": "Is `scalar_address` the same as `scalar_idx` in the code? And is that the same thing as the \"scalar offset\" describe in the sentence above. I\u0027m getting a little confused by the mixing of terms here, but maybe these are all the same thing.\n\nAnd is `scalar_address / 4` the same as `array_idx`, which is pre-computed as `byte_address / 16` outside of this function?",
+      "revId": "187788fc8f7e62311946f10c54d9a30d65eb862b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbb65bd1_f64216ce",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T19:11:37Z",
+      "side": 1,
+      "message": "If you used the vector offset instead of `scalar_idx`, I think you should be able to just to `vec_offset \u003d\u003d 2`.\n\nThen maybe you could get rid of `OffsetValueToScalarIndex` completely and just do `byte_offset % 16 / 4` in `CalculateVectorOffset()`.",
+      "revId": "187788fc8f7e62311946f10c54d9a30d65eb862b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
