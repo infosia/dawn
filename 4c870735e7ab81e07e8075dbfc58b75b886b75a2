@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c2a59df_32cdc947",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-08T17:09:50Z",
+      "side": 1,
+      "message": "Done. Moved into if. However, I think DAWN_TRY_ASSIGN is not necessary, since the validations should already be done before this function.",
+      "parentUuid": "525b033d_57f79073",
+      "revId": "4c870735e7ab81e07e8075dbfc58b75b886b75a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de617bbb_095d4402",
@@ -48,6 +66,30 @@
       "writtenOn": "2024-07-07T19:29:13Z",
       "side": 1,
       "message": "Would this work?\n\n```suggestion\n                const copyEnd \u003d dst.offset + copyByteSize;\n                const alignedCopyEnd \u003d Align(copyEnd, 4);\n                if (copyEnd !\u003d alignedCopyEnd) {\n                   // copy from alignedCopyEnd - 4 to alignedCopyEnd.\n```",
+      "range": {
+        "startLine": 995,
+        "startChar": 9,
+        "endLine": 998,
+        "endChar": 19
+      },
+      "revId": "4c870735e7ab81e07e8075dbfc58b75b886b75a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f61b01e_5e9ddac2",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-08T17:09:50Z",
+      "side": 1,
+      "message": "I think this doesn\u0027t work because we still need to copy the bytes after alignedCopyEnd. It\u0027s because at the end of this function, we copy the whole temp buffer to the original buffer.\n\nIt would be improved by allocating the temp buffer only small enough for the copy. It will be done in another CL.",
+      "parentUuid": "de617bbb_095d4402",
       "range": {
         "startLine": 995,
         "startChar": 9,
