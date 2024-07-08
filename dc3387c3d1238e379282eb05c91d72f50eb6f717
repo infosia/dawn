@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fe8962c4_08475df1",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T18:03:59Z",
+      "side": 1,
+      "message": "Yea, this is only supporting scalar at this point. A more complicated load method is coming, teh f16 support will always have to be separate as it does a lot of magic around `f16tof32` and various other thigns. Matrix, array and struct loading are followup Cls.",
+      "parentUuid": "b09fa466_3e2198dd",
+      "revId": "dc3387c3d1238e379282eb05c91d72f50eb6f717",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1260bbda_280efbb3",
         "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
         "patchSetId": 1
