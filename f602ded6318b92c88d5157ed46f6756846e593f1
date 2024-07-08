@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83668ec5_e75cf80b",
+        "filename": "tools/android/webgpu/src/main/java/android/dawn/helper/Rounding.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-08T15:50:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c78332b_8c44722a",
+      "revId": "f602ded6318b92c88d5157ed46f6756846e593f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb80d442_3edd05e5",
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "It does say round *down* to nearest. I would say -1000 would be rounding up.",
       "parentUuid": "fb80d442_3edd05e5",
+      "revId": "f602ded6318b92c88d5157ed46f6756846e593f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50fe177c_ede87474",
+        "filename": "tools/android/webgpu/src/test/java/android/dawn/RoundingTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-08T15:50:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42868150_be2af21f",
       "revId": "f602ded6318b92c88d5157ed46f6756846e593f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -137,6 +173,30 @@
           ]
         }
       ],
+      "revId": "f602ded6318b92c88d5157ed46f6756846e593f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0366c6be_dbe5c82f",
+        "filename": "tools/android/webgpu/src/test/java/android/dawn/RoundingTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-08T15:50:36Z",
+      "side": 1,
+      "message": "They\u0027re needed!  (I was also surprised.)  The negative unary operator does not have precedence over the method calls on the Int class.",
+      "parentUuid": "14062479_4630ecb4",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 38
+      },
       "revId": "f602ded6318b92c88d5157ed46f6756846e593f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
