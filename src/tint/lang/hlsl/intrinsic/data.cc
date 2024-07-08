@@ -812,7 +812,7 @@ constexpr ParameterInfo kParameters[] = {
   },
   {
     /* [21] */
-    /* usage */ core::ParameterUsage::kNone,
+    /* usage */ core::ParameterUsage::kWidth,
     /* matcher_indices */ MatcherIndicesIndex(24),
   },
   {
@@ -832,6 +832,11 @@ constexpr ParameterInfo kParameters[] = {
   },
   {
     /* [25] */
+    /* usage */ core::ParameterUsage::kNone,
+    /* matcher_indices */ MatcherIndicesIndex(24),
+  },
+  {
+    /* [26] */
     /* usage */ core::ParameterUsage::kNone,
     /* matcher_indices */ MatcherIndicesIndex(28),
   },
@@ -1059,7 +1064,7 @@ constexpr OverloadInfo kOverloads[] = {
     /* num_explicit_templates */ 0,
     /* num_templates   */ 0,
     /* templates */ TemplateIndex(/* invalid */),
-    /* parameters */ ParameterIndex(21),
+    /* parameters */ ParameterIndex(25),
     /* return_matcher_indices */ MatcherIndicesIndex(27),
     /* const_eval_fn */ ConstEvalFunctionIndex(/* invalid */),
   },
@@ -1070,7 +1075,7 @@ constexpr OverloadInfo kOverloads[] = {
     /* num_explicit_templates */ 0,
     /* num_templates   */ 1,
     /* templates */ TemplateIndex(8),
-    /* parameters */ ParameterIndex(25),
+    /* parameters */ ParameterIndex(26),
     /* return_matcher_indices */ MatcherIndicesIndex(31),
     /* const_eval_fn */ ConstEvalFunctionIndex(/* invalid */),
   },
@@ -1340,7 +1345,7 @@ constexpr IntrinsicInfo kBuiltins[] = {
   },
   {
     /* [18] */
-    /* fn GetDimensions[A : access](byte_address_buffer<A>, u32) */
+    /* fn GetDimensions[A : access](byte_address_buffer<A>, width: u32) */
     /* num overloads */ 1,
     /* overloads */ OverloadIndex(25),
   },
