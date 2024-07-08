@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "560d78a5_735c8c99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-08T09:27:33Z",
+      "side": 1,
+      "message": "Nice, I haven\u0027t used \u0027spy\u0027 before, looks powerful.",
+      "revId": "5c9afc03aaed13bddb7d1620d8a63449d8e062e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0072ab5_8ba264a8",
+        "filename": "tools/android/webgpu/src/test/java/android/dawn/TexturesTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-08T09:27:33Z",
+      "side": 1,
+      "message": "I guess zero is not a valid width. Could you add a comment to that effect?",
+      "revId": "5c9afc03aaed13bddb7d1620d8a63449d8e062e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
