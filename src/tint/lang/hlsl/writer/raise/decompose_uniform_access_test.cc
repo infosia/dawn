@@ -421,40 +421,39 @@ $B1: {  # root
 }
 %4 = func(%start_byte_offset:u32):mat4x4<f32> {
   $B3: {
-    %15:u32 = add 0u, %start_byte_offset
-    %16:u32 = div %15, 16u
-    %17:u32 = div %15, 4u
-    %18:u32 = mul 4u, %16
-    %19:u32 = sub %17, %18
-    %20:ptr<uniform, vec4<u32>, read> = access %v, %16
-    %21:vec4<u32> = load %20
-    %22:vec4<f32> = bitcast %21
-    %23:u32 = add 16u, %start_byte_offset
-    %24:u32 = div %23, 16u
-    %25:u32 = div %23, 4u
-    %26:u32 = mul 4u, %24
-    %27:u32 = sub %25, %26
-    %28:ptr<uniform, vec4<u32>, read> = access %v, %24
-    %29:vec4<u32> = load %28
-    %30:vec4<f32> = bitcast %29
-    %31:u32 = add 32u, %start_byte_offset
-    %32:u32 = div %31, 16u
-    %33:u32 = div %31, 4u
-    %34:u32 = mul 4u, %32
-    %35:u32 = sub %33, %34
-    %36:ptr<uniform, vec4<u32>, read> = access %v, %32
-    %37:vec4<u32> = load %36
-    %38:vec4<f32> = bitcast %37
-    %39:u32 = add 48u, %start_byte_offset
-    %40:u32 = div %39, 16u
-    %41:u32 = div %39, 4u
-    %42:u32 = mul 4u, %40
-    %43:u32 = sub %41, %42
-    %44:ptr<uniform, vec4<u32>, read> = access %v, %40
-    %45:vec4<u32> = load %44
-    %46:vec4<f32> = bitcast %45
-    %47:mat4x4<f32> = construct %22, %30, %38, %46
-    ret %47
+    %15:u32 = div %start_byte_offset, 16u
+    %16:u32 = div %start_byte_offset, 4u
+    %17:u32 = mul 4u, %15
+    %18:u32 = sub %16, %17
+    %19:ptr<uniform, vec4<u32>, read> = access %v, %15
+    %20:vec4<u32> = load %19
+    %21:vec4<f32> = bitcast %20
+    %22:u32 = add 16u, %start_byte_offset
+    %23:u32 = div %22, 16u
+    %24:u32 = div %22, 4u
+    %25:u32 = mul 4u, %23
+    %26:u32 = sub %24, %25
+    %27:ptr<uniform, vec4<u32>, read> = access %v, %23
+    %28:vec4<u32> = load %27
+    %29:vec4<f32> = bitcast %28
+    %30:u32 = add 32u, %start_byte_offset
+    %31:u32 = div %30, 16u
+    %32:u32 = div %30, 4u
+    %33:u32 = mul 4u, %31
+    %34:u32 = sub %32, %33
+    %35:ptr<uniform, vec4<u32>, read> = access %v, %31
+    %36:vec4<u32> = load %35
+    %37:vec4<f32> = bitcast %36
+    %38:u32 = add 48u, %start_byte_offset
+    %39:u32 = div %38, 16u
+    %40:u32 = div %38, 4u
+    %41:u32 = mul 4u, %39
+    %42:u32 = sub %40, %41
+    %43:ptr<uniform, vec4<u32>, read> = access %v, %39
+    %44:vec4<u32> = load %43
+    %45:vec4<f32> = bitcast %44
+    %46:mat4x4<f32> = construct %21, %29, %37, %45
+    ret %46
   }
 }
 )";
@@ -462,7 +461,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(HlslWriterDecomposeUniformAccessTest, DISABLED_UniformAccessArray) {
+TEST_F(HlslWriterDecomposeUniformAccessTest, UniformAccessArray) {
     auto* var = b.Var<uniform, array<vec3<f32>, 5>, core::Access::kRead>("v");
     var->SetBindingPoint(0, 0);
 
@@ -494,20 +493,22 @@ $B1: {  # root
 
     auto* expect = R"(
 $B1: {  # root
-  %v:hlsl.byte_address_buffer<read> = var @binding_point(0, 0)
+  %v:ptr<uniform, array<vec4<u32>, 5>, read> = var @binding_point(0, 0)
 }
 
 %foo = @fragment func():void {
   $B2: {
     %3:array<vec3<f32>, 5> = call %4, 0u
     %a:array<vec3<f32>, 5> = let %3
-    %6:vec3<u32> = %v.Load3 48u
-    %7:vec3<f32> = bitcast %6
-    %b:vec3<f32> = let %7
+    %6:ptr<uniform, vec4<u32>, read> = access %v, 3u
+    %7:vec4<u32> = load %6
+    %8:vec3<u32> = swizzle %7, xyz
+    %9:vec3<f32> = bitcast %8
+    %b:vec3<f32> = let %9
     ret
   }
 }
-%4 = func(%offset:u32):array<vec3<f32>, 5> {
+%4 = func(%start_byte_offset:u32):array<vec3<f32>, 5> {
   $B3: {
     %a_1:ptr<function, array<vec3<f32>, 5>, read_write> = var, array<vec3<f32>, 5>(vec3<f32>(0.0f))  # %a_1: 'a'
     loop [i: $B4, b: $B5, c: $B6] {  # loop_1
@@ -515,27 +516,33 @@ $B1: {  # root
         next_iteration 0u  # -> $B5
       }
       $B5 (%idx:u32): {  # body
-        %12:bool = gte %idx, 5u
-        if %12 [t: $B7] {  # if_1
+        %14:bool = gte %idx, 5u
+        if %14 [t: $B7] {  # if_1
           $B7: {  # true
             exit_loop  # loop_1
           }
         }
-        %13:ptr<function, vec3<f32>, read_write> = access %a_1, %idx
-        %14:u32 = mul %idx, 16u
-        %15:u32 = add %offset, %14
-        %16:vec3<u32> = %v.Load3 %15
-        %17:vec3<f32> = bitcast %16
-        store %13, %17
+        %15:u32 = mul %idx, 16u
+        %16:u32 = add %start_byte_offset, %15
+        %17:u32 = div %16, 16u
+        %18:u32 = div %16, 4u
+        %19:u32 = mul 4u, %17
+        %20:u32 = sub %18, %19
+        %21:ptr<function, vec3<f32>, read_write> = access %a_1, %idx
+        %22:ptr<uniform, vec4<u32>, read> = access %v, %17
+        %23:vec4<u32> = load %22
+        %24:vec3<u32> = swizzle %23, xyz
+        %25:vec3<f32> = bitcast %24
+        store %21, %25
         continue  # -> $B6
       }
       $B6: {  # continuing
-        %18:u32 = add %idx, 1u
-        next_iteration %18  # -> $B5
+        %26:u32 = add %idx, 1u
+        next_iteration %26  # -> $B5
       }
     }
-    %19:array<vec3<f32>, 5> = load %a_1
-    ret %19
+    %27:array<vec3<f32>, 5> = load %a_1
+    ret %27
   }
 }
 )";
@@ -543,8 +550,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(HlslWriterDecomposeUniformAccessTest,
-       DISABLED_UniformAccessArrayWhichCanHaveSizesOtherThenFive) {
+TEST_F(HlslWriterDecomposeUniformAccessTest, UniformAccessArrayWhichCanHaveSizesOtherThenFive) {
     auto* var = b.Var<uniform, array<vec3<f32>, 42>, core::Access::kRead>("v");
     var->SetBindingPoint(0, 0);
 
@@ -576,20 +582,22 @@ $B1: {  # root
 
     auto* expect = R"(
 $B1: {  # root
-  %v:hlsl.byte_address_buffer<read> = var @binding_point(0, 0)
+  %v:ptr<uniform, array<vec4<u32>, 42>, read> = var @binding_point(0, 0)
 }
 
 %foo = @fragment func():void {
   $B2: {
     %3:array<vec3<f32>, 42> = call %4, 0u
     %a:array<vec3<f32>, 42> = let %3
-    %6:vec3<u32> = %v.Load3 48u
-    %7:vec3<f32> = bitcast %6
-    %b:vec3<f32> = let %7
+    %6:ptr<uniform, vec4<u32>, read> = access %v, 3u
+    %7:vec4<u32> = load %6
+    %8:vec3<u32> = swizzle %7, xyz
+    %9:vec3<f32> = bitcast %8
+    %b:vec3<f32> = let %9
     ret
   }
 }
-%4 = func(%offset:u32):array<vec3<f32>, 42> {
+%4 = func(%start_byte_offset:u32):array<vec3<f32>, 42> {
   $B3: {
     %a_1:ptr<function, array<vec3<f32>, 42>, read_write> = var, array<vec3<f32>, 42>(vec3<f32>(0.0f))  # %a_1: 'a'
     loop [i: $B4, b: $B5, c: $B6] {  # loop_1
@@ -597,27 +605,33 @@ $B1: {  # root
         next_iteration 0u  # -> $B5
       }
       $B5 (%idx:u32): {  # body
-        %12:bool = gte %idx, 42u
-        if %12 [t: $B7] {  # if_1
+        %14:bool = gte %idx, 42u
+        if %14 [t: $B7] {  # if_1
           $B7: {  # true
             exit_loop  # loop_1
           }
         }
-        %13:ptr<function, vec3<f32>, read_write> = access %a_1, %idx
-        %14:u32 = mul %idx, 16u
-        %15:u32 = add %offset, %14
-        %16:vec3<u32> = %v.Load3 %15
-        %17:vec3<f32> = bitcast %16
-        store %13, %17
+        %15:u32 = mul %idx, 16u
+        %16:u32 = add %start_byte_offset, %15
+        %17:u32 = div %16, 16u
+        %18:u32 = div %16, 4u
+        %19:u32 = mul 4u, %17
+        %20:u32 = sub %18, %19
+        %21:ptr<function, vec3<f32>, read_write> = access %a_1, %idx
+        %22:ptr<uniform, vec4<u32>, read> = access %v, %17
+        %23:vec4<u32> = load %22
+        %24:vec3<u32> = swizzle %23, xyz
+        %25:vec3<f32> = bitcast %24
+        store %21, %25
         continue  # -> $B6
       }
       $B6: {  # continuing
-        %18:u32 = add %idx, 1u
-        next_iteration %18  # -> $B5
+        %26:u32 = add %idx, 1u
+        next_iteration %26  # -> $B5
       }
     }
-    %19:array<vec3<f32>, 42> = load %a_1
-    ret %19
+    %27:array<vec3<f32>, 42> = load %a_1
+    ret %27
   }
 }
 )";
