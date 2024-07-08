@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "061dde0a_d06bb7c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-07-08T17:49:07Z",
+      "side": 1,
+      "message": "FYI. Motivated by failure to roll: https://ci.chromium.org/ui/p/chromium/builders/try/linux-dawn-rel/35960/overview",
+      "revId": "0c5333ac16be8f1e37a4e2708a9e2e29544869de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
