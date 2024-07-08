@@ -16,6 +16,57 @@
       "message": "PTAL.",
       "revId": "dc3387c3d1238e379282eb05c91d72f50eb6f717",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b736f208_b9b2792d",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T16:27:22Z",
+      "side": 1,
+      "message": "This `access` seems unnecessary if the index is always constant zero?",
+      "revId": "dc3387c3d1238e379282eb05c91d72f50eb6f717",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b09fa466_3e2198dd",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T16:27:22Z",
+      "side": 1,
+      "message": "This would only work if the original store type is exactly 16 bytes? What about smaller and larger types?",
+      "revId": "dc3387c3d1238e379282eb05c91d72f50eb6f717",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1260bbda_280efbb3",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T16:27:22Z",
+      "side": 1,
+      "message": "The `access` is unnecessary if the index is always constant zero?",
+      "revId": "dc3387c3d1238e379282eb05c91d72f50eb6f717",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
