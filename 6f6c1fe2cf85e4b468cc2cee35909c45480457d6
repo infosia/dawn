@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cf68ce8_581922e5",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T18:01:47Z",
+      "side": 1,
+      "message": "This looks almost identical to `CalculateVectorIndex()`, can we not use that here too? I think you\u0027d only need to change it to pass in the element size.",
+      "revId": "6f6c1fe2cf85e4b468cc2cee35909c45480457d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc2888ec_492aac61",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T18:01:47Z",
+      "side": 1,
+      "message": "What does the \"Split\" mean here? I was expecting to see a chain of separate `access` instructions (which is something we should definitely test).",
+      "revId": "6f6c1fe2cf85e4b468cc2cee35909c45480457d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
