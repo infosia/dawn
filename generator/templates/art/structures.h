@@ -32,6 +32,7 @@ namespace dawn::kotlin_api {
 // into the native Dawn API.
 
 {% for structure in by_category['structure'] %}
+    jobject Convert(JNIEnv *env, const {{ as_cType(structure.name) }}* input);
     void Convert(JNIEnv *env, jobject obj, {{ as_cType(structure.name) }}* converted);
 {% endfor %}
 

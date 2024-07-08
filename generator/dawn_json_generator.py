@@ -28,6 +28,7 @@
 
 import json, os, sys
 from collections import namedtuple, defaultdict
+from copy import deepcopy
 
 from generator_lib import Generator, run_generator, FileRender
 
@@ -854,8 +855,13 @@ def compute_kotlin_params(loaded_json, kotlin_json):
             if argument.annotation == '*':
                 # TODO(b/352048981): Use handwritten methods for container returns to avoid the need
                 # for special casing logic.
-                if method.return_type.name.get() == 'size_t':
+                if method.return_type.name.get() == 'status' and argument.type.category == 'structure':
                     return argument
+                if method.return_type.name.get() == 'size_t':
+                    # Convert the output parameter to a Kotlin return container.
+                    container_type = deepcopy(argument)
+                    container_type.length = 'size_t'
+                    return container_type
 
         return {"type": method.return_type}
 
@@ -864,11 +870,6 @@ def compute_kotlin_params(loaded_json, kotlin_json):
             # Kotlin doesn't support returning functions.
             return False
         for argument in method.arguments:
-            if (argument.annotation == '*'
-                    and method.return_type.name.get() != 'size_t'):
-                # Dawn uses 'annotation = *' for output parameters, for example to return arrays.
-                # Kotlin doesn't support that at the moment, unless a container is returned.
-                return False
             if argument.type.category == 'callback info':
                 # We don't handle this yet.
                 return False
