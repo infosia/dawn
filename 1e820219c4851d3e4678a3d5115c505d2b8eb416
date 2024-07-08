@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2234a96_4af3e002",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T21:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7f8f781_e5f94bad",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78fad244_a0a46e34",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-07-08T19:11:37Z",
       "side": 1,
       "message": "As with the storage transform, suggest merging these two switches.",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d5fec92_52772dff",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T21:32:52Z",
+      "side": 1,
+      "message": "Done. Note, this one is very different from the `CalculateVectorOffset` so am using a lambda.",
+      "parentUuid": "78fad244_a0a46e34",
       "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7e37560_aacca1e5",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T21:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec6b3b8_a28d9eca",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "927c3654_279bc93c",
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4938eb5_af69ef3a",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T21:32:52Z",
+      "side": 1,
+      "message": "Fixed, was missing `a multiple of`",
+      "parentUuid": "927c3654_279bc93c",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abac3a01_02354a44",
@@ -99,6 +171,24 @@
       "writtenOn": "2024-07-08T19:11:37Z",
       "side": 1,
       "message": "Nit: These columns don\u0027t line up.",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9be06984_ba4082ef",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T21:32:52Z",
+      "side": 1,
+      "message": "I did that on purpose as it make sense to me, I was delineating that the given value `starts` on the byte index being pointed too, if that makes sense? If not, I can fix the alignment.",
+      "parentUuid": "abac3a01_02354a44",
       "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

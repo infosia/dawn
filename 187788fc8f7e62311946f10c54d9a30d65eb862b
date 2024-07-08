@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fff782a7_07b34d49",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T21:32:52Z",
+      "side": 1,
+      "message": "Fixed the comment to be `scalar_idx`. These names changed a bunch of times while trying to figure out how to get it to work.\n\nThere are the indices here:\n\n* byte_address is the byte location of the thing\n* scalar_idx \u003d\u003d byte_address / 4 \u003d\u003d the u32 index of the thing\n* array_idx \u003d\u003d byte_addess / 16 \u003d\u003d scalar_idx / 4 \u003d\u003d array index to find the uint4 which is the start of the thing.",
+      "parentUuid": "6f737895_aab2aad3",
+      "revId": "187788fc8f7e62311946f10c54d9a30d65eb862b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbb65bd1_f64216ce",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-07-08T19:11:37Z",
       "side": 1,
       "message": "If you used the vector offset instead of `scalar_idx`, I think you should be able to just to `vec_offset \u003d\u003d 2`.\n\nThen maybe you could get rid of `OffsetValueToScalarIndex` completely and just do `byte_offset % 16 / 4` in `CalculateVectorOffset()`.",
+      "revId": "187788fc8f7e62311946f10c54d9a30d65eb862b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "135458d6_0087d800",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T21:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb65bd1_f64216ce",
       "revId": "187788fc8f7e62311946f10c54d9a30d65eb862b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
