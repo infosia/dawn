@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39104dbb_aeb905d1",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T18:17:22Z",
+      "side": 1,
+      "message": "This is still a little off (even though it generates correct HLSL), because you\u0027re reusing the load and therefore it gets hoisted into a `let`.\n\nCan you not just make the parameter a pointer and pass the var result directly? IIUC this would be consistent with how you\u0027ve implemented `inout` for user functions, and avoids the need for all of this hackery.",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 0
+      },
+      "revId": "900ef98c9b269aa23bc821e35dde30115d107d6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
