@@ -33,6 +33,24 @@
       "message": "nit: I think this should be `${DAWN_THIRD_PARTY_DIR}/protobuf`",
       "revId": "18ad7d4f9989536b9d832341dc30f82a8cac3351",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a958a7d_e743aed5",
+        "filename": "src/tint/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-08T20:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d00de5c0_f0abba1e",
+      "revId": "18ad7d4f9989536b9d832341dc30f82a8cac3351",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
