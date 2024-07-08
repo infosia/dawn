@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75059623_ea855a02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:02:45Z",
+      "side": 1,
+      "message": "Context that it is for Kotlin would be useful in the commit message. My suggestion is to always prefix with `Kotlin:` or `[Kotlin]`",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b5f2705_281434ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:02:45Z",
+      "side": 1,
+      "message": "LGTM though for something complex like this it would be ideal to have a second reviewer.",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ceb91f7_b784c418",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:02:45Z",
+      "side": 1,
+      "message": "I have concerns about adding more and more special handling in the template like this because it means that when we update Dawn to have new kinds of method shapes, we\u0027ll have to update complicated templates instead of adding a special case here and there.",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af03dbcc_6bd76977",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:02:45Z",
+      "side": 1,
+      "message": "```suggestion\n            if argument.annotation \u003d\u003d \u0027*\u0027 and method.return_type.name.get() !\u003d \u0027size_t\u0027:\n                # Dawn uses \u0027annotation \u003d *\u0027 for output parameters, for example to return arrays.\n```",
+      "range": {
+        "startLine": 864,
+        "startChar": 1,
+        "endLine": 866,
+        "endChar": 1
+      },
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30c2b942_c5703290",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:02:45Z",
+      "side": 1,
+      "message": "```suggestion\n        {%- if arg.length and arg.constant_length !\u003d 1 -%}  {# void with length is binary data #}\n```",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00b4f8d5_0c648fff",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:02:45Z",
+      "side": 1,
+      "message": "When does that happen?",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a7002f6_b49ce5ba",
+        "filename": "generator/templates/art/methods.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:02:45Z",
+      "side": 1,
+      "message": "That\u0027s a lot of magic depending on how _kotlin return an actual abject or a fake new one :/",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5eec4cb_cc3d90aa",
+        "filename": "generator/templates/art/methods.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:02:45Z",
+      "side": 1,
+      "message": "We should use an RAII container here otherwise the free() will not happen when an exception is raised. I suggest using `std::make_unique\u003cT[]\u003e`.",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c9912ae_d7501a60",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T14:02:45Z",
+      "side": 1,
+      "message": "Is it guaranteed that these features are supported on all the devices that will run these tests?",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
