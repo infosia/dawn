@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5023f1c4_4f0a6bf9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T13:38:28Z",
+      "side": 1,
+      "message": "It looks fine to me, but TBH I don\u0027t think I\u0027m the best reviewer for code that\u0027s purely on the Kotlin side.",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "581dca99_454f7158",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T13:38:28Z",
+      "side": 1,
+      "message": "Note that this will certainly not be the best practice as it keeps the device busy-looping, which would be unfortunate if the screen gets locked or some other sleep mechanism is happening.",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
