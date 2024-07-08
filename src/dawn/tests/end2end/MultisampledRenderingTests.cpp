@@ -335,7 +335,7 @@ class MultisampledRenderingTest : public DawnTest {
         if (hasDepthStencilAttachment) {
             wgpu::DepthStencilState* depthStencil =
                 pipelineDescriptor.EnableDepthStencil(kDepthStencilFormat);
-            depthStencil->depthWriteEnabled = true;
+            depthStencil->depthWriteEnabled = wgpu::OptionalBool::True;
             depthStencil->depthCompare = wgpu::CompareFunction::Less;
         }
 
