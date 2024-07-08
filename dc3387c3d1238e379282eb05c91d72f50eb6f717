@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f21af0f9_5b6c36a1",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T18:19:29Z",
+      "side": 1,
+      "message": "Ack. This is an example of one of those places where a TODO would\u0027ve stopped me from thinking about a case that is not expected to work yet :-)",
+      "parentUuid": "fe8962c4_08475df1",
+      "revId": "dc3387c3d1238e379282eb05c91d72f50eb6f717",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1260bbda_280efbb3",
