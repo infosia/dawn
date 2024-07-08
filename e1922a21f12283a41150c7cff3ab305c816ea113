@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a1f5f86_7b97339c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-08T17:39:29Z",
+      "side": 1,
+      "message": "Oops missing owner for BlitBufferToDepthSTencil.cpp. Looking at Brandon to give an approve. thanks!",
+      "revId": "e1922a21f12283a41150c7cff3ab305c816ea113",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f22b6286_f2760a03",
