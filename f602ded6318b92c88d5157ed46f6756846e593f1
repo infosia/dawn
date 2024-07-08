@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "42868150_be2af21f",
+        "filename": "tools/android/webgpu/src/test/java/android/dawn/RoundingTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-08T09:45:51Z",
+      "side": 1,
+      "message": "It does say round *down* to nearest. I would say -1000 would be rounding up.",
+      "parentUuid": "fb80d442_3edd05e5",
+      "revId": "f602ded6318b92c88d5157ed46f6756846e593f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "14062479_4630ecb4",
         "filename": "tools/android/webgpu/src/test/java/android/dawn/RoundingTest.kt",
         "patchSetId": 2
