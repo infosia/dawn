@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69e04171_ddc24e77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T17:55:10Z",
+      "side": 1,
+      "message": "Ack. I was trying to break them into smaller review chunks, the disabled tests were to give an idea of what is coming in future CLs. This CL is a bit of a special case in that it was a direct fork of the storage one as I thought I needed a bunch of the storage code. It also seemed a bit easier given you\u0027d just see the differences from storage.\n\nWill try to figure out a different way to break things apart in the future.",
+      "parentUuid": "75f21f95_48f77853",
+      "revId": "3f1a5d5c8a782e4201b77ba0debcc5c893a15081",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b5b46f0_4ead12e6",
@@ -58,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5ce22e6_ce6459ed",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T17:55:10Z",
+      "side": 1,
+      "message": "Done. MemberBuiltinCall is still referenced below.",
+      "parentUuid": "1b5b46f0_4ead12e6",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 56
+      },
+      "revId": "3f1a5d5c8a782e4201b77ba0debcc5c893a15081",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4314d170_b1ad23c3",
@@ -71,6 +113,24 @@
       "writtenOn": "2024-07-08T16:22:40Z",
       "side": 1,
       "message": "Nit: no stores.",
+      "revId": "3f1a5d5c8a782e4201b77ba0debcc5c893a15081",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb26011c_029b9916",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T17:55:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4314d170_b1ad23c3",
       "revId": "3f1a5d5c8a782e4201b77ba0debcc5c893a15081",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
