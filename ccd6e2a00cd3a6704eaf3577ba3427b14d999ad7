@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6bd3d87_e5ebde7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-07-08T09:51:23Z",
+      "side": 1,
+      "message": "Thanks for reviewing!\n\nI file [an issue](https://issues.chromium.org/issues/351745820) for Qualcomm Adreno 640 (`android-dawn-arm-rel` trybot) crashing on using the `subgroupBroadcast`. Shall we just suppress the tests for QualcommAdreno6xx devices, or just disable the (chromium experimental) subgroups feature on these devices?",
+      "revId": "ccd6e2a00cd3a6704eaf3577ba3427b14d999ad7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
