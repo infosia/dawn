@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1a4cdbb1_1da2fc1f",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T15:49:34Z",
+      "side": 1,
+      "message": "`val` is an out param, so it has to exist so we can write into it. `GetDimensions` works on out params, there is no return value.",
+      "parentUuid": "13c0cdf0_c2b876c2",
+      "revId": "16713936d352ed98ff9a05dbd622fd4dc713bab2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1c0523a7_ca81be27",
         "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2024-07-08T15:44:54Z",
       "side": 1,
       "message": "Should be using the result of the member call, not `val`.",
+      "revId": "16713936d352ed98ff9a05dbd622fd4dc713bab2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b3179fd_788d4b01",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T15:49:34Z",
+      "side": 1,
+      "message": "`GetDimensions` doesn\u0027t return anything. The `return` is an out parameter which is what `val` is.",
+      "parentUuid": "1c0523a7_ca81be27",
       "revId": "16713936d352ed98ff9a05dbd622fd4dc713bab2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
