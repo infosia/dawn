@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42d5a55e_3c8f4753",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T07:07:22Z",
+      "side": 1,
+      "message": "Thank you for the review! I rebased due to SwapChainEGL conflicts and am submitting the CL now.",
+      "revId": "616f17db80fd4fbb454b20659b2e7aac8a6af880",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
