@@ -16,6 +16,47 @@
       "message": "I\u0027ve been trying to keep everything to a maximum of 100 columns wherever possible.\n\nAre you suggesting we don\u0027t have a column limit?",
       "revId": "46676dd130472cd220baedfce2332a23a9e2fff7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32defa5b_9c4c8fea",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-08T18:38:03Z",
+      "side": 1,
+      "message": "I would always keep the \u0027endfor\u0027 tag in the same indentation as the opening \u0027for\u0027 tag.",
+      "range": {
+        "startLine": 39,
+        "startChar": 71,
+        "endLine": 39,
+        "endChar": 85
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c6c982e9_559cf433",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_kotlin_object.kt",
+              "range": {
+                "startLine": 39,
+                "startChar": 0,
+                "endLine": 40,
+                "endChar": 0
+              },
+              "replacement": "            {{- as_varName(arg.name) }}: {{ kotlin_definition(arg) }}, {% endfor %}\n        ): {{ kotlin_type_declaration(method.return_type) }}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "46676dd130472cd220baedfce2332a23a9e2fff7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
