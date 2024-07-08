@@ -62,7 +62,7 @@ WGPUTexture SwapChain::GetCurrentTexture() {
     cmd.result = texture->GetWireHandle();
     wireClient->SerializeCommand(cmd);
 
-    return ReturnToAPI(texture);
+    return ReturnToAPI(std::move(texture));
 }
 
 }  // namespace dawn::wire::client
