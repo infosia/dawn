@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73c0dce6_b3025382",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-08T18:36:35Z",
+      "side": 1,
+      "message": "I\u0027ve been trying to keep everything to a maximum of 100 columns wherever possible.\n\nAre you suggesting we don\u0027t have a column limit?",
+      "revId": "46676dd130472cd220baedfce2332a23a9e2fff7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
