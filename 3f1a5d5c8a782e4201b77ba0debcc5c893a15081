@@ -16,6 +16,63 @@
       "message": "PTAL.",
       "revId": "3f1a5d5c8a782e4201b77ba0debcc5c893a15081",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75f21f95_48f77853",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T16:22:40Z",
+      "side": 1,
+      "message": "FYI I\u0027m finding it quite difficult to review these sorts of CLs where there\u0027s lots of code with disabled tests and everything is about to be reworked and fixed up in later CLs. I\u0027ll +2 this now and try to re-review all of this code as part of another CL in the chain, but it does make things harder as a reviewer.",
+      "revId": "3f1a5d5c8a782e4201b77ba0debcc5c893a15081",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b5b46f0_4ead12e6",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T16:22:40Z",
+      "side": 1,
+      "message": "Nit: these two are unneeded",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 56
+      },
+      "revId": "3f1a5d5c8a782e4201b77ba0debcc5c893a15081",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4314d170_b1ad23c3",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T16:22:40Z",
+      "side": 1,
+      "message": "Nit: no stores.",
+      "revId": "3f1a5d5c8a782e4201b77ba0debcc5c893a15081",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
