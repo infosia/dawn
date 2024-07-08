@@ -16,6 +16,24 @@
       "message": "LGTM. Good catch!\n\nI wonder if other uses of glFramebufferTextureLayer() might be incorrect. In particular, I\u0027m looking at Texture::ClearTexture().",
       "revId": "64f4dfb800d02ddaceb624de638bfaec34807e75",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da2f08ed_fd6895e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-07-08T16:23:59Z",
+      "side": 1,
+      "message": "(Also, I\u0027m wondering why these end2end tests only failed on Android. Strange..)",
+      "parentUuid": "4bf56883_dd07471b",
+      "revId": "64f4dfb800d02ddaceb624de638bfaec34807e75",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
