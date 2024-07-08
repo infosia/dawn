@@ -146,9 +146,10 @@ WGPUWGSLFeatureName ToWGPUFeature(tint::wgsl::LanguageFeature f) {
 
 // Instance
 
-Instance::Instance(const ObjectBaseParams& params) : ObjectWithEventsBase(params, params.handle) {}
+Instance::Instance(const ObjectBaseParams& params)
+    : RefCountedWithExternalCount<ObjectWithEventsBase>(params, params.handle) {}
 
-Instance::~Instance() {
+void Instance::WillDropLastExternalRef() {
     GetEventManager().TransitionTo(EventManager::State::InstanceDropped);
 }
 
