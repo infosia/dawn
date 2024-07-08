@@ -33,6 +33,24 @@
       "message": "It might be useful to point people at how to include Dawn as a subdirectory as well if they are looking to do integrated builds.",
       "revId": "1f40216892f01ebfdd1ade1247d9d978005e944c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95ccb99e_5d73f4fe",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-08T20:21:34Z",
+      "side": 1,
+      "message": "Indeed, that\u0027d be good to document as well. Thanks for the review! I\u0027ll write up another CL which explains how to do those kind of builds.",
+      "parentUuid": "1bf090aa_bda6ecb3",
+      "revId": "1f40216892f01ebfdd1ade1247d9d978005e944c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
