@@ -135,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4235f4e_bf4f16a6",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-08T20:06:44Z",
+      "side": 1,
+      "message": "Correction; it was done like this because `git format` broke the line like that, and as you can see from https://ci.chromium.org/ui/p/dawn/builders/try/presubmit/b8742952536734343569/overview we can\u0027t submit it in the form you suggested. I have applied a different formatting, LMK if that\u0027s acceptable.",
+      "parentUuid": "36458772_973f6b92",
+      "range": {
+        "startLine": 864,
+        "startChar": 1,
+        "endLine": 866,
+        "endChar": 1
+      },
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "30c2b942_c5703290",
