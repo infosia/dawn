@@ -103,6 +103,24 @@
       "parentUuid": "e0072ab5_8ba264a8",
       "revId": "5c9afc03aaed13bddb7d1620d8a63449d8e062e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2053ee4b_6b1f8985",
+        "filename": "tools/android/webgpu/src/test/java/android/dawn/TexturesTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-08T15:51:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d1e00fc_13838cb6",
+      "revId": "5c9afc03aaed13bddb7d1620d8a63449d8e062e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
