@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc90c494_dcec2031",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T20:30:38Z",
+      "side": 1,
+      "message": "lgtm, will wait for Alan to take a look before +2ing",
+      "revId": "18ad7d4f9989536b9d832341dc30f82a8cac3351",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d00de5c0_f0abba1e",
+        "filename": "src/tint/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T20:30:38Z",
+      "side": 1,
+      "message": "nit: I think this should be `${DAWN_THIRD_PARTY_DIR}/protobuf`",
+      "revId": "18ad7d4f9989536b9d832341dc30f82a8cac3351",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
