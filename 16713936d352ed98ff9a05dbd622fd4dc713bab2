@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bed0c65e_ce3f7bfc",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T15:58:31Z",
+      "side": 1,
+      "message": "Ohhh, that\u0027s definitely in need of a comment because there\u0027s nothing else in this code that signifies \"out param\".\n\nAlso using a `let` for an out param is a little weird, since `let` is an immutable thing. It\u0027d stop us from adding `const` to all `let` declarations in the future, for example.\n\nThis is an annoying case where we don\u0027t have a good representation for what you actually want without adding `ref` types, which I\u0027m still reluctant to do. For this same thing in MSL I used a `var` followed by a `load` which the printer does The Right Thing with, but that\u0027s also not great.\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/msl/writer/raise/builtin_polyfill.cc;l\u003d390?q\u003dbuiltin_polyfill.cc\u0026ss\u003dchromium",
+      "parentUuid": "1a4cdbb1_1da2fc1f",
+      "revId": "16713936d352ed98ff9a05dbd622fd4dc713bab2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1c0523a7_ca81be27",
         "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
         "patchSetId": 2
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "`GetDimensions` doesn\u0027t return anything. The `return` is an out parameter which is what `val` is.",
       "parentUuid": "1c0523a7_ca81be27",
+      "revId": "16713936d352ed98ff9a05dbd622fd4dc713bab2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5084a7f9_653a542f",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T15:58:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2b3179fd_788d4b01",
       "revId": "16713936d352ed98ff9a05dbd622fd4dc713bab2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
