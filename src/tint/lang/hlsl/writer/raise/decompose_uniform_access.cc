@@ -25,7 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/tint/lang/hlsl/writer/raise/decompose_memory_access.h"
+#include "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.h"
 
 #include <utility>
 
@@ -33,7 +33,6 @@
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/hlsl/builtin_fn.h"
 #include "src/tint/lang/hlsl/ir/member_builtin_call.h"
-#include "src/tint/lang/hlsl/type/byte_address_buffer.h"
 #include "src/tint/utils/result/result.h"
 
 namespace tint::hlsl::writer::raise {
@@ -68,12 +67,16 @@ struct State {
                 continue;
             }
 
-            // Var must be a pointer
+            // DecomposeStorageAccess maybe have converte the var pointers into ByteAddressBuffer
+            // objects. Since they've been changed, then they're Storage buffers and we don't care
+            // about them here.
             auto* var_ty = var->Result(0)->Type()->As<core::type::Pointer>();
-            TINT_ASSERT(var_ty);
+            if (!var_ty) {
+                continue;
+            }
 
-            // Only care about storage address space variables.
-            if (var_ty->AddressSpace() != core::AddressSpace::kStorage) {
+            // Only care about uniform address space variables.
+            if (var_ty->AddressSpace() != core::AddressSpace::kUniform) {
                 continue;
             }
 
@@ -83,22 +86,15 @@ struct State {
         for (auto* var : var_worklist) {
             auto* result = var->Result(0);
 
-            // Find all the usages of the `var` which is loading or storing.
+            // Find all the usages of the `var` which is loading.
             Vector<core::ir::Instruction*, 4> usage_worklist;
             for (auto& usage : result->Usages()) {
                 Switch(
                     usage->instruction,
                     [&](core::ir::LoadVectorElement* lve) { usage_worklist.Push(lve); },
-                    [&](core::ir::StoreVectorElement* sve) { usage_worklist.Push(sve); },
-                    [&](core::ir::Store* st) { usage_worklist.Push(st); },
                     [&](core::ir::Load* ld) { usage_worklist.Push(ld); },
                     [&](core::ir::Access* a) { usage_worklist.Push(a); },
-                    [&](core::ir::Let* l) { usage_worklist.Push(l); },
-                    [&](core::ir::CoreBuiltinCall* call) {
-                        TINT_ASSERT(call->Func() == core::BuiltinFn::kArrayLength);
-                        usage_worklist.Push(call);
-                    },
-                    //
+                    [&](core::ir::Let* l) { usage_worklist.Push(l); },  //
                     TINT_ICE_ON_NO_MATCH);
             }
 
@@ -113,8 +109,6 @@ struct State {
                 Switch(
                     inst,
                     [&](core::ir::LoadVectorElement* l) { LoadVectorElement(l, var, var_ty); },
-                    [&](core::ir::StoreVectorElement* s) { StoreVectorElement(s, var, var_ty); },
-                    [&](core::ir::Store* s) { Store(s); },     //
                     [&](core::ir::Load* l) { Load(l, var); },  //
                     [&](core::ir::Access* a) {
                         OffsetData offset;
@@ -130,45 +124,14 @@ struct State {
                         let->Result(0)->ReplaceAllUsesWith(result);
                         let->Destroy();
                     },
-                    [&](core::ir::CoreBuiltinCall* call) {
-                        ArrayLength(var, call, var_ty->StoreType(), 0);
-                    },  //
                     TINT_ICE_ON_NO_MATCH);
             }
 
             // Swap the result type of the `var` to the new HLSL result type
-            result->SetType(ty.Get<hlsl::type::ByteAddressBuffer>(var_ty->Access()));
+            auto array_length = (var_ty->StoreType()->Size() + 15) / 16;
+            result->SetType(ty.ptr(var_ty->AddressSpace(), ty.array(ty.vec4<u32>(), array_length),
+                                   var_ty->Access()));
         }
-    }
-
-    void ArrayLength(core::ir::Var* var,
-                     core::ir::CoreBuiltinCall* call,
-                     const core::type::Type* type,
-                     uint32_t offset) {
-        auto* arr_ty = type->As<core::type::Array>();
-        // If the `arrayLength` was called directly on the storage buffer then
-        // it _must_ be a runtime array.
-        TINT_ASSERT(arr_ty && arr_ty->Count()->As<core::type::RuntimeArrayCount>());
-
-        b.InsertBefore(call, [&] {
-            // The `GetDimensions` call uses out parameters for all return values, there is no
-            // return value. This ends up being the result value we care about.
-            //
-            // This creates a var with an access which means that when we emit the HLSL we'll emit
-            // the correct `var` name.
-            auto* out_val = b.Var(ty.ptr(function, ty.u32()));
-            core::ir::Instruction* inst = b.Load(b.Access(ty.ptr(function, ty.u32()), out_val));
-
-            b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), BuiltinFn::kGetDimensions, var,
-                                                      inst->Result(0));
-
-            if (offset > 0) {
-                inst = b.Subtract(ty.u32(), inst, u32(offset));
-            }
-            auto* div = b.Divide(ty.u32(), inst, u32(arr_ty->Stride()));
-            call->Result(0)->ReplaceAllUsesWith(div->Result(0));
-        });
-        call->Destroy();
     }
 
     struct OffsetData {
@@ -407,35 +370,22 @@ struct State {
             obj = view->StoreType();
         }
 
-        auto update_offset = [&](uint32_t size, core::ir::Value* idx_value) {
-            tint::Switch(
-                idx_value,  //
-                [&](core::ir::Constant* cnst) {
-                    uint32_t idx = cnst->Value()->ValueAs<uint32_t>();
-                    offset->byte_offset += size * idx;
-                },
-                [&](core::ir::Value* val) {
-                    b.InsertBefore(a, [&] {
-                        offset->expr.Push(
-                            b.Multiply(ty.u32(), u32(size), b.Convert(ty.u32(), val))->Result(0));
-                    });
-                },  //
-                TINT_ICE_ON_NO_MATCH);
-        };
-
+        const core::type::StructMember* last_member = nullptr;
         for (auto* idx_value : a->Indices()) {
+            uint32_t size = 0;
+            auto* cur_obj = obj;
             tint::Switch(
                 obj,  //
                 [&](const core::type::Vector* v) {
-                    update_offset(v->type()->Size(), idx_value);
+                    size = v->type()->Size();
                     obj = v->type();
                 },
                 [&](const core::type::Matrix* m) {
-                    update_offset(m->ColumnStride(), idx_value);
+                    size = m->type()->Size() * m->rows();
                     obj = m->ColumnType();
                 },
                 [&](const core::type::Array* ary) {
-                    update_offset(ary->Stride(), idx_value);
+                    size = ary->Stride();
                     obj = ary->ElemType();
                 },
                 [&](const core::type::Struct* s) {
@@ -445,10 +395,32 @@ struct State {
                     TINT_ASSERT(cnst);
 
                     uint32_t idx = cnst->Value()->ValueAs<uint32_t>();
-                    auto* mem = s->Members()[idx];
-                    offset->byte_offset += mem->Offset();
-                    obj = mem->Type();
+                    last_member = s->Members()[idx];
+                    obj = last_member->Type();
                 },
+                TINT_ICE_ON_NO_MATCH);
+
+            tint::Switch(
+                idx_value,  //
+                [&](core::ir::Constant* cnst) {
+                    uint32_t idx = cnst->Value()->ValueAs<uint32_t>();
+                    tint::Switch(
+                        cur_obj,  //
+                        [&](const core::type::Vector*) { offset->byte_offset += size * idx; },
+                        [&](const core::type::Matrix*) { offset->byte_offset += size * idx; },
+                        [&](const core::type::Array*) { offset->byte_offset += size * idx; },
+                        [&](const core::type::Struct* s) {
+                            auto* mem = s->Members()[idx];
+                            offset->byte_offset += mem->Offset();
+                        },
+                        TINT_ICE_ON_NO_MATCH);
+                },
+                [&](core::ir::Value* val) {
+                    b.InsertBefore(a, [&] {
+                        offset->expr.Push(
+                            b.Multiply(ty.u32(), u32(size), b.Convert(ty.u32(), val))->Result(0));
+                    });
+                },  //
                 TINT_ICE_ON_NO_MATCH);
         }
 
@@ -485,30 +457,10 @@ struct State {
                     a->Result(0)->RemoveUsage(usage);
                     InsertLoad(var, ld, *offset);
                 },
-
-                [&](core::ir::StoreVectorElement*) {
-                    // TODO(dsinclair): Handle store vector elements
-                },  //
-                [&](core::ir::Store*) {
-                    // TODO(dsinclair): Handle store
-                },  //
-                [&](core::ir::CoreBuiltinCall* call) {
-                    // Array length calls require the access
-                    TINT_ASSERT(call->Func() == core::BuiltinFn::kArrayLength);
-
-                    // If this access chain is being used in an `arrayLength` call then the access
-                    // chain _must_ have resolved to the runtime array member of the structure. So,
-                    // we _must_ have set `obj` to the array member which is a runtime array.
-                    ArrayLength(var, call, obj, offset->byte_offset);
-                },  //
                 TINT_ICE_ON_NO_MATCH);
         }
 
         a->Destroy();
-    }
-
-    void Store(core::ir::Store*) {
-        // TODO(dsinclair): Handle store
     }
 
     // This should _only_ be handling a `var` parameter as any `access` parameters would have
@@ -547,31 +499,12 @@ struct State {
 
         lve->Destroy();
     }
-
-    // Converts to:
-    //
-    // %1 = <sve->Value()>
-    // %2:u32 = bitcast %1
-    // %3:void = v.Store 0u, %2
-    void StoreVectorElement(core::ir::StoreVectorElement* sve,
-                            core::ir::Var* var,
-                            const core::type::Pointer* var_ty) {
-        b.InsertBefore(sve, [&] {
-            OffsetData offset{};
-            CalculateVectorIndex(sve->Index(), var_ty->StoreType(), &offset);
-
-            auto* cast = b.Bitcast(ty.u32(), sve->Value());
-            b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), BuiltinFn::kStore, var,
-                                                      OffsetToValue(offset), cast);
-        });
-        sve->Destroy();
-    }
 };
 
 }  // namespace
 
-Result<SuccessType> DecomposeMemoryAccess(core::ir::Module& ir) {
-    auto result = ValidateAndDumpIfNeeded(ir, "DecomposeMemoryAccess transform");
+Result<SuccessType> DecomposeUniformAccess(core::ir::Module& ir) {
+    auto result = ValidateAndDumpIfNeeded(ir, "DecomposeUniformAccess transform");
     if (result != Success) {
         return result.Failure();
     }
