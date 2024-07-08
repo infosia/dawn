@@ -303,7 +303,54 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(HlslWriterDecomposeUniformAccessTest, DISABLED_UniformAccessVectorF16) {
+TEST_F(HlslWriterDecomposeUniformAccessTest, UniformAccessScalarF16) {
+    auto* var = b.Var<uniform, f16, core::Access::kRead>("v");
+    var->SetBindingPoint(0, 0);
+
+    b.ir.root_block->Append(var);
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Let("a", b.Load(var));
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<uniform, f16, read> = var @binding_point(0, 0)
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %3:f16 = load %v
+    %a:f16 = let %3
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<uniform, array<vec4<u32>, 1>, read> = var @binding_point(0, 0)
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %3:ptr<uniform, vec4<u32>, read> = access %v, 0u
+    %4:u32 = load_vector_element %3, 0u
+    %5:u32 = and %4, 65535u
+    %6:f32 = hlsl.f16tof32 %5
+    %7:f16 = bitcast %6
+    %a:f16 = let %7
+    ret
+  }
+}
+)";
+    Run(DecomposeUniformAccess);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriterDecomposeUniformAccessTest, UniformAccessVectorF16) {
     auto* var = b.Var<uniform, vec4<f16>, core::Access::kRead>("v");
     var->SetBindingPoint(0, 0);
 
@@ -321,6 +368,89 @@ TEST_F(HlslWriterDecomposeUniformAccessTest, DISABLED_UniformAccessVectorF16) {
     auto* src = R"(
 $B1: {  # root
   %v:ptr<uniform, vec4<f16>, read> = var @binding_point(0, 0)
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %3:vec4<f16> = load %v
+    %a:vec4<f16> = let %3
+    %5:f16 = load_vector_element %v, 0u
+    %b:f16 = let %5
+    %7:f16 = load_vector_element %v, 1u
+    %c:f16 = let %7
+    %9:f16 = load_vector_element %v, 2u
+    %d:f16 = let %9
+    %11:f16 = load_vector_element %v, 3u
+    %e:f16 = let %11
+    ret
+  }
+}
+)";
+    ASSERT_EQ(src, str());
+
+    auto* expect = R"(
+$B1: {  # root
+  %v:ptr<uniform, array<vec4<u32>, 1>, read> = var @binding_point(0, 0)
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %3:ptr<uniform, vec4<u32>, read> = access %v, 0u
+    %4:vec4<u32> = load %3
+    %5:vec4<f16> = bitcast %4
+    %a:vec4<f16> = let %5
+    %7:ptr<uniform, vec4<u32>, read> = access %v, 0u
+    %8:u32 = load_vector_element %7, 0u
+    %9:u32 = and %8, 65535u
+    %10:f32 = hlsl.f16tof32 %9
+    %11:f16 = bitcast %10
+    %b:f16 = let %11
+    %13:ptr<uniform, vec4<u32>, read> = access %v, 0u
+    %14:u32 = load_vector_element %13, 0u
+    %15:u32 = shr %14, 16u
+    %16:u32 = and %15, 65535u
+    %17:f32 = hlsl.f16tof32 %16
+    %18:f16 = bitcast %17
+    %c:f16 = let %18
+    %20:ptr<uniform, vec4<u32>, read> = access %v, 0u
+    %21:u32 = load_vector_element %20, 1u
+    %22:u32 = and %21, 65535u
+    %23:f32 = hlsl.f16tof32 %22
+    %24:f16 = bitcast %23
+    %d:f16 = let %24
+    %26:ptr<uniform, vec4<u32>, read> = access %v, 0u
+    %27:u32 = load_vector_element %26, 1u
+    %28:u32 = shr %27, 16u
+    %29:u32 = and %28, 65535u
+    %30:f32 = hlsl.f16tof32 %29
+    %31:f16 = bitcast %30
+    %e:f16 = let %31
+    ret
+  }
+}
+)";
+    Run(DecomposeUniformAccess);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriterDecomposeUniformAccessTest, DISABLED_UniformAccessMat2x3F16) {
+    auto* var = b.Var<uniform, mat2x3<f16>, core::Access::kRead>("v");
+    var->SetBindingPoint(0, 0);
+
+    b.ir.root_block->Append(var);
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Let("a", b.Load(var));
+        b.Let("b", b.LoadVectorElement(var, 0_u));
+        b.Let("c", b.LoadVectorElement(var, 1_u));
+        b.Let("d", b.LoadVectorElement(var, 2_u));
+        b.Let("e", b.LoadVectorElement(var, 3_u));
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %v:ptr<uniform, mat2x3<f16>, read> = var @binding_point(0, 0)
 }
 
 %foo = @fragment func():void {

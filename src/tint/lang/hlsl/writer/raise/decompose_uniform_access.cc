@@ -32,6 +32,7 @@
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/hlsl/builtin_fn.h"
+#include "src/tint/lang/hlsl/ir/builtin_call.h"
 #include "src/tint/lang/hlsl/ir/ternary.h"
 #include "src/tint/utils/result/result.h"
 
@@ -331,7 +332,7 @@ struct State {
                              core::ir::Value* array_idx,
                              core::ir::Value* vec_idx) {
         if (result_ty->is_float_scalar() || result_ty->is_integer_scalar()) {
-            return MakeScalarLoad(var, result_ty, array_idx, vec_idx);
+            return MakeScalarLoad(var, result_ty, array_idx, vec_idx, byte_offset);
         }
         if (result_ty->is_scalar_vector()) {
             return MakeVectorLoad(var, result_ty->As<core::type::Vector>(), array_idx, scalar_idx);
@@ -357,9 +358,31 @@ struct State {
     core::ir::Call* MakeScalarLoad(core::ir::Var* var,
                                    const core::type::Type* result_ty,
                                    core::ir::Value* array_idx,
-                                   core::ir::Value* vec_idx) {
+                                   core::ir::Value* vec_idx,
+                                   core::ir::Value* byte_offset) {
         auto* access = b.Access(ty.ptr(uniform, ty.vec4<u32>()), var, array_idx);
+
         core::ir::Instruction* load = b.LoadVectorElement(access, vec_idx);
+        if (result_ty->Is<core::type::F16>()) {
+            if (auto* cnst = byte_offset->As<core::ir::Constant>()) {
+                if (cnst->Value()->ValueAs<uint32_t>() % 4 != 0) {
+                    load = b.ShiftRight(ty.u32(), load, 16_u);
+                }
+            } else {
+                auto* false_ = b.Value(16_u);
+                auto* true_ = b.Value(0_u);
+                auto* cond = b.Equal(ty.bool_(), b.Modulo(ty.u32(), byte_offset, 4_u), 0_u);
+
+                Vector<core::ir::Value*, 3> args{false_, true_, cond->Result(0)};
+                auto* shift_amt = b.ir.allocators.instructions.Create<hlsl::ir::Ternary>(
+                    b.InstructionResult(ty.vec2<u32>()), args);
+                b.Append(shift_amt);
+
+                load = b.ShiftRight(ty.u32(), load, shift_amt);
+            }
+            load = b.Call<hlsl::ir::BuiltinCall>(ty.f32(), hlsl::BuiltinFn::kF16Tof32,
+                                                 b.And(ty.u32(), load, 0xffff_u));
+        }
         return b.Bitcast(result_ty, load);
     }
 
