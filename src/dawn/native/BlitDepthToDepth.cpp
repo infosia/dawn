@@ -88,6 +88,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateDepthBlitPipeline(DeviceBase* 
     DepthStencilState dsState = {};
     dsState.format = format;
     dsState.depthWriteEnabled = true;
+    dsState.depthWriteEnabledOptional = wgpu::OptionalBool::True;
     dsState.depthCompare = wgpu::CompareFunction::Always;
 
     RenderPipelineDescriptor renderPipelineDesc = {};

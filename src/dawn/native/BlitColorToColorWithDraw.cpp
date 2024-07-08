@@ -152,6 +152,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateColorBlitPipeline(
     if (pipelineKey.depthStencilFormat != wgpu::TextureFormat::Undefined) {
         depthStencilState.format = pipelineKey.depthStencilFormat;
         depthStencilState.depthWriteEnabled = false;
+        depthStencilState.depthWriteEnabledOptional = wgpu::OptionalBool::False;
         depthStencilState.depthCompare = wgpu::CompareFunction::Always;
 
         renderPipelineDesc.depthStencil = &depthStencilState;

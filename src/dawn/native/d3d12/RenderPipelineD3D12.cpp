@@ -552,14 +552,14 @@ D3D12_INPUT_LAYOUT_DESC RenderPipeline::ComputeInputLayout(
 D3D12_DEPTH_STENCIL_DESC RenderPipeline::ComputeDepthStencilDesc() {
     const DepthStencilState* descriptor = GetDepthStencilState();
 
+    bool depthWriteEnabled = descriptor->depthWriteEnabled ||
+                             descriptor->depthWriteEnabledOptional == wgpu::OptionalBool::True;
     D3D12_DEPTH_STENCIL_DESC depthStencilDescriptor = {};
     depthStencilDescriptor.DepthEnable =
-        (descriptor->depthCompare == wgpu::CompareFunction::Always &&
-         !descriptor->depthWriteEnabled)
-            ? FALSE
-            : TRUE;
+        (descriptor->depthCompare == wgpu::CompareFunction::Always && !depthWriteEnabled) ? FALSE
+                                                                                          : TRUE;
     depthStencilDescriptor.DepthWriteMask =
-        descriptor->depthWriteEnabled ? D3D12_DEPTH_WRITE_MASK_ALL : D3D12_DEPTH_WRITE_MASK_ZERO;
+        depthWriteEnabled ? D3D12_DEPTH_WRITE_MASK_ALL : D3D12_DEPTH_WRITE_MASK_ZERO;
     depthStencilDescriptor.DepthFunc = ToD3D12ComparisonFunc(descriptor->depthCompare);
 
     depthStencilDescriptor.StencilEnable = UsesStencil() ? TRUE : FALSE;

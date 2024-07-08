@@ -105,6 +105,7 @@ ComboRenderPipelineDescriptor::ComboRenderPipelineDescriptor() {
 
         cDepthStencil.format = wgpu::TextureFormat::Depth24PlusStencil8;
         cDepthStencil.depthWriteEnabled = false;
+        cDepthStencil.depthWriteEnabledOptional = wgpu::OptionalBool::Undefined;
         cDepthStencil.depthCompare = wgpu::CompareFunction::Always;
         cDepthStencil.stencilBack = stencilFace;
         cDepthStencil.stencilFront = stencilFace;

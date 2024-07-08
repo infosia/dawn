@@ -343,6 +343,17 @@ MaybeError ValidateDepthStencilState(const DeviceBase* device,
         descriptor->format, wgpu::CompareFunction::Undefined, descriptor->depthWriteEnabled,
         descriptor->stencilFront.depthFailOp, descriptor->stencilBack.depthFailOp);
 
+    DAWN_INVALID_IF(
+        format->HasDepth() && descriptor->depthCompare == wgpu::CompareFunction::Undefined &&
+            (descriptor->depthWriteEnabledOptional == wgpu::OptionalBool::True ||
+             descriptor->stencilFront.depthFailOp != wgpu::StencilOperation::Keep ||
+             descriptor->stencilBack.depthFailOp != wgpu::StencilOperation::Keep),
+        "Depth stencil format (%s) has a depth aspect and depthCompare is %s while it's actually "
+        "used by depthWriteEnabledOptional (%s), or stencil front depth fail operation (%s), or "
+        "stencil back depth fail operation (%s).",
+        descriptor->format, wgpu::CompareFunction::Undefined, descriptor->depthWriteEnabledOptional,
+        descriptor->stencilFront.depthFailOp, descriptor->stencilBack.depthFailOp);
+
     UnpackedPtr<DepthStencilState> unpacked;
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(descriptor));
     if (const auto* depthWriteDefined = unpacked.Get<DepthStencilStateDepthWriteDefinedDawn>()) {
@@ -364,6 +375,12 @@ MaybeError ValidateDepthStencilState(const DeviceBase* device,
         !format->HasDepth() && descriptor->depthWriteEnabled,
         "Depth stencil format (%s) doesn't have depth aspect while depthWriteEnabled (%u) is true.",
         descriptor->format, descriptor->depthWriteEnabled);
+
+    DAWN_INVALID_IF(
+        !format->HasDepth() && descriptor->depthWriteEnabledOptional == wgpu::OptionalBool::True,
+        "Depth stencil format (%s) doesn't have depth aspect while depthWriteEnabledOptional (%s) "
+        "is true.",
+        descriptor->format, descriptor->depthWriteEnabledOptional);
 
     if (!format->HasStencil()) {
         DAWN_TRY_CONTEXT(ValidateStencilFaceUnused(descriptor->stencilFront),
@@ -975,15 +992,18 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
         const Format& format = device->GetValidInternalFormat(mDepthStencil.format);
         if (!format.HasDepth()) {
             mDepthStencil.depthWriteEnabled = false;
+            mDepthStencil.depthWriteEnabledOptional = wgpu::OptionalBool::Undefined;
             mDepthStencil.depthCompare = wgpu::CompareFunction::Always;
         }
         if (format.HasDepth() && mDepthStencil.depthCompare == wgpu::CompareFunction::Undefined &&
             !mDepthStencil.depthWriteEnabled &&
+            mDepthStencil.depthWriteEnabledOptional != wgpu::OptionalBool::True &&
             mDepthStencil.stencilFront.depthFailOp == wgpu::StencilOperation::Keep &&
             mDepthStencil.stencilBack.depthFailOp == wgpu::StencilOperation::Keep) {
             mDepthStencil.depthCompare = wgpu::CompareFunction::Always;
         }
-        mWritesDepth = mDepthStencil.depthWriteEnabled;
+        mWritesDepth = mDepthStencil.depthWriteEnabled ||
+                       mDepthStencil.depthWriteEnabledOptional == wgpu::OptionalBool::True;
         if (mDepthStencil.stencilWriteMask) {
             if ((mPrimitive.cullMode != wgpu::CullMode::Front &&
                  (mDepthStencil.stencilFront.failOp != wgpu::StencilOperation::Keep ||
@@ -1268,7 +1288,9 @@ size_t RenderPipelineBase::ComputeContentHash() {
 
     if (mAttachmentState->HasDepthStencilAttachment()) {
         const DepthStencilState& desc = mDepthStencil;
-        recorder.Record(desc.depthWriteEnabled, desc.depthCompare);
+        bool depthWriteEnabled =
+            desc.depthWriteEnabled || desc.depthWriteEnabledOptional == wgpu::OptionalBool::True;
+        recorder.Record(depthWriteEnabled, desc.depthCompare);
         recorder.Record(desc.stencilReadMask, desc.stencilWriteMask);
         recorder.Record(desc.stencilFront.compare, desc.stencilFront.failOp,
                         desc.stencilFront.depthFailOp, desc.stencilFront.passOp);
@@ -1349,6 +1371,7 @@ bool RenderPipelineBase::EqualityFunc::operator()(const RenderPipelineBase* a,
             DAWN_ASSERT(!std::isnan(stateB.depthBiasClamp));
 
             if (stateA.depthWriteEnabled != stateB.depthWriteEnabled ||
+                stateA.depthWriteEnabledOptional != stateB.depthWriteEnabledOptional ||
                 stateA.depthCompare != stateB.depthCompare ||
                 stateA.depthBias != stateB.depthBias ||
                 stateA.depthBiasSlopeScale != stateB.depthBiasSlopeScale ||

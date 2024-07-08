@@ -904,6 +904,7 @@ bool Converter::Convert(wgpu::DepthStencilState& out, const interop::GPUDepthSte
     out.nextInChain = depthWriteDefined;
 
     return Convert(out.format, in.format) && Convert(out.depthWriteEnabled, in.depthWriteEnabled) &&
+           Convert(out.depthWriteEnabledOptional, in.depthWriteEnabledOptional) &&
            Convert(out.depthCompare, in.depthCompare) &&
            Convert(out.stencilFront, in.stencilFront) && Convert(out.stencilBack, in.stencilBack) &&
            Convert(out.stencilReadMask, in.stencilReadMask) &&
