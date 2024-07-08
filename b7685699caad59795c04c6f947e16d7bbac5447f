@@ -33,6 +33,24 @@
       "message": "Note that this will certainly not be the best practice as it keeps the device busy-looping, which would be unfortunate if the screen gets locked or some other sleep mechanism is happening.",
       "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c3c999d_2ad1c7e2",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-08T18:41:24Z",
+      "side": 1,
+      "message": "Noted, currently this is for tests only, the polling method will need something specific to the type of app I think.",
+      "parentUuid": "581dca99_454f7158",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
