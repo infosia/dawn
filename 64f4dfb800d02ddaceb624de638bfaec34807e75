@@ -34,6 +34,24 @@
       "parentUuid": "4bf56883_dd07471b",
       "revId": "64f4dfb800d02ddaceb624de638bfaec34807e75",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f6dc72a_ea7d641f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-08T17:40:16Z",
+      "side": 1,
+      "message": "My interpretation is that desktop GL driver implementation somehow allows passing cube target to glFramebufferTextureLayer",
+      "parentUuid": "da2f08ed_fd6895e3",
+      "revId": "64f4dfb800d02ddaceb624de638bfaec34807e75",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
