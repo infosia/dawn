@@ -378,6 +378,8 @@ WGPUFuture Adapter::RequestDeviceF(const WGPUDeviceDescriptor* descriptor,
     cmd.userdataCount = 1;
 
     client->SerializeCommand(cmd);
+
+    device->Initialize();
     return {futureIDInternal};
 }
 
@@ -414,6 +416,8 @@ WGPUFuture Adapter::RequestDevice2(const WGPUDeviceDescriptor* descriptor,
     cmd.userdataCount = 2;
 
     client->SerializeCommand(cmd);
+
+    device->Initialize();
     return {futureIDInternal};
 }
 

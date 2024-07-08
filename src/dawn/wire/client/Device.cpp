@@ -250,9 +250,7 @@ class Device::DeviceLostEvent : public TrackedEvent {
     Ref<Device> mDevice;
 };
 
-Device::Device(const ObjectBaseParams& params,
-               const ObjectHandle& eventManagerHandle,
-               const WGPUDeviceDescriptor* descriptor)
+Device::Device(const ObjectBaseParams& params, const ObjectHandle& eventManagerHandle, const WGPUDeviceDescriptor* descriptor)
     : ObjectWithEventsBase(params, eventManagerHandle), mIsAlive(std::make_shared<bool>(true)) {
 #if defined(DAWN_ENABLE_ASSERTS)
     static constexpr WGPUDeviceLostCallbackInfo2 kDefaultDeviceLostCallbackInfo = {
@@ -302,8 +300,6 @@ Device::Device(const ObjectBaseParams& params,
                                       descriptor->deviceLostUserdata};
         }
     }
-    mDeviceLostInfo.event = std::make_unique<DeviceLostEvent>(deviceLostCallbackInfo, this);
-
     mUncapturedErrorCallbackInfo = kDefaultUncapturedErrorCallbackInfo;
     if (descriptor != nullptr) {
         if (descriptor->uncapturedErrorCallbackInfo2.callback != nullptr) {
@@ -315,6 +311,23 @@ Device::Device(const ObjectBaseParams& params,
                 reinterpret_cast<void*>(callbackInfo.callback), callbackInfo.userdata};
         }
     }
+
+    auto [deviceLostFutureIDInternal, tracked] =
+        GetEventManager().TrackEvent(std::make_unique<DeviceLostEvent>(deviceLostCallbackInfo, this));
+    if (tracked) {
+        mDeviceLostInfo.futureID = deviceLostFutureIDInternal;
+    }
+}
+
+void Device::Initialize() {
+    // Get the default queue for this device.
+    Client* client = GetClient();
+    mQueue = client->Make<Queue>(GetEventManagerHandle());
+
+    DeviceGetQueueCmd cmd;
+    cmd.self = ToAPI(this);
+    cmd.result = mQueue->GetWireHandle();
+    client->SerializeCommand(cmd);
 }
 
 ObjectType Device::GetObjectType() const {
@@ -369,22 +382,11 @@ void Device::HandleLogging(WGPULoggingType loggingType, const char* message) {
 }
 
 void Device::HandleDeviceLost(WGPUDeviceLostReason reason, const char* message) {
-    FutureID futureID = GetDeviceLostFuture().id;
-    if (futureID != kNullFutureID) {
-        DAWN_CHECK(GetEventManager().SetFutureReady<DeviceLostEvent>(futureID, reason, message) ==
-                   WireResult::Success);
-    }
+    DAWN_CHECK(GetEventManager().SetFutureReady<DeviceLostEvent>(mDeviceLostInfo.futureID, reason, message) ==
+               WireResult::Success);
 }
 
 WGPUFuture Device::GetDeviceLostFuture() {
-    // Lazily track the device lost event so that event ordering w.r.t RequestDevice is correct.
-    if (mDeviceLostInfo.event != nullptr) {
-        auto [deviceLostFutureIDInternal, tracked] =
-            GetEventManager().TrackEvent(std::move(mDeviceLostInfo.event));
-        if (tracked) {
-            mDeviceLostInfo.futureID = deviceLostFutureIDInternal;
-        }
-    }
     return {mDeviceLostInfo.futureID};
 }
 
@@ -479,23 +481,7 @@ WGPUBuffer Device::CreateBuffer(const WGPUBufferDescriptor* descriptor) {
     return Buffer::Create(this, descriptor);
 }
 
-WGPUQueue Device::GetQueue() {
-    // The queue is lazily created because if a Device is created by
-    // Reserve/Inject, we cannot send the GetQueue message until
-    // it has been injected on the Server. It cannot happen immediately
-    // on construction.
-    if (mQueue == nullptr) {
-        // Get the primary queue for this device.
-        Client* client = GetClient();
-        mQueue = client->Make<Queue>(GetEventManagerHandle());
-
-        DeviceGetQueueCmd cmd;
-        cmd.self = ToAPI(this);
-        cmd.result = mQueue->GetWireHandle();
-
-        client->SerializeCommand(cmd);
-    }
-
+WGPUQueue Device::GetQueue() const {
     Ref<Queue> queue = mQueue;
     return ReturnToAPI(std::move(queue));
 }

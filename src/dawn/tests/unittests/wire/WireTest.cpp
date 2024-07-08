@@ -132,6 +132,7 @@ void WireTest::SetUp() {
 
     // Create the device for testing.
     apiDevice = api.GetNewDevice();
+    apiQueue = api.GetNewQueue();
     WGPUDeviceDescriptor deviceDesc = {};
     deviceDesc.deviceLostCallbackInfo2 = {nullptr, WGPUCallbackMode_AllowSpontaneous,
                                           deviceLostCallback.Callback(), nullptr,
@@ -170,6 +171,8 @@ void WireTest::SetUp() {
                 .WillOnce(Return(0))
                 .WillOnce(Return(0));
 
+            EXPECT_CALL(api, DeviceGetQueue(apiDevice)).WillOnce(Return(apiQueue));
+
             api.CallAdapterRequestDevice2Callback(apiAdapter, WGPURequestDeviceStatus_Success,
                                                   apiDevice, nullptr);
         }));
@@ -177,13 +180,9 @@ void WireTest::SetUp() {
     EXPECT_CALL(deviceCb, Call(WGPURequestDeviceStatus_Success, NotNull(), nullptr, nullptr, this))
         .WillOnce(SaveArg<1>(&device));
     FlushServer();
-    EXPECT_NE(device, nullptr);
 
-    // The GetQueue is done on WireClient startup so we expect it now.
+    EXPECT_NE(device, nullptr);
     queue = wgpuDeviceGetQueue(device);
-    apiQueue = api.GetNewQueue();
-    EXPECT_CALL(api, DeviceGetQueue(apiDevice)).WillOnce(Return(apiQueue));
-    FlushClient();
 }
 
 void WireTest::TearDown() {

@@ -45,9 +45,10 @@ class Queue;
 
 class Device final : public ObjectWithEventsBase {
   public:
-    explicit Device(const ObjectBaseParams& params,
-                    const ObjectHandle& eventManagerHandle,
-                    const WGPUDeviceDescriptor* descriptor);
+    Device(const ObjectBaseParams& params, const ObjectHandle& eventManagerHandle, const WGPUDeviceDescriptor* descriptor);
+
+    // Perform initialization after the device has been registered in the wire.
+    void Initialize();
 
     ObjectType GetObjectType() const override;
 
@@ -91,7 +92,7 @@ class Device final : public ObjectWithEventsBase {
     void SetLimits(const WGPUSupportedLimits* limits);
     void SetFeatures(const WGPUFeatureName* features, uint32_t featuresCount);
 
-    WGPUQueue GetQueue();
+    WGPUQueue GetQueue() const;
     WGPUFuture GetDeviceLostFuture();
 
     std::weak_ptr<bool> GetAliveWeakPtr();
@@ -111,7 +112,6 @@ class Device final : public ObjectWithEventsBase {
     // is deprecated, and the callback and userdata moved into the DeviceLostEvent.
     struct DeviceLostInfo {
         FutureID futureID = kNullFutureID;
-        std::unique_ptr<TrackedEvent> event = nullptr;
         WGPUDeviceLostCallback2 callback = nullptr;
         raw_ptr<void> userdata1 = nullptr;
         raw_ptr<void> userdata2 = nullptr;
