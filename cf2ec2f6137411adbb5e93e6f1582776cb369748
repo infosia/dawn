@@ -34,6 +34,24 @@
       "parentUuid": "6bed9276_ff56aa3f",
       "revId": "cf2ec2f6137411adbb5e93e6f1582776cb369748",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "593a8aa6_c0fe9c58",
+        "filename": "src/tint/lang/hlsl/writer/access_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T17:02:31Z",
+      "side": 1,
+      "message": "I know, but having it do robustness pointed out an issue I would have had otherwise, so I prefer to keep it on, even though this becomes longer.",
+      "parentUuid": "c6967707_c09a6294",
+      "revId": "cf2ec2f6137411adbb5e93e6f1582776cb369748",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

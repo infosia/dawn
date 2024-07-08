@@ -59,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d19b61ae_00155b00",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T17:02:31Z",
+      "side": 1,
+      "message": "Fix applied. I\u0027d fixed this in the next CL, forgot to bring it back to this one as well.",
+      "parentUuid": "204dc2b5_d902be24",
+      "range": {
+        "startLine": 383,
+        "startChar": 27,
+        "endLine": 383,
+        "endChar": 57
+      },
+      "revId": "efc0291a025698d95f49997e871e4763c652c6a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed6004ef_9dbb6432",
@@ -76,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97d45a1b_775557c6",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T17:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed6004ef_9dbb6432",
+      "revId": "efc0291a025698d95f49997e871e4763c652c6a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d7a0982_b3ed1707",
@@ -89,6 +131,24 @@
       "writtenOn": "2024-07-08T15:37:18Z",
       "side": 1,
       "message": "You\u0027ve already got `last_member` which is exactly this (though `last_member` is misleading, see above).\n\nIn fact, resolving the constant value in two different places is also a little confusing. I\u0027m wondering you could fold these two switches together, maybe with a helper lambda to handle the const and non-const offset cases for the non-struct scenario. In fact, `CalculateVectorIndex` is pretty much that helper function, and it\u0027s not really specific to vectors, so maybe just use that?\n\nAlternatively you could just always use a dynamic `mul` instruction and rely on constant folding to clean stuff up the indexing logic later, which would further simplify this code, though I appreciate that it\u0027d make the unit test outputs a little noisier.",
+      "revId": "efc0291a025698d95f49997e871e4763c652c6a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5ec3e4a_6b88b385",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T17:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d7a0982_b3ed1707",
       "revId": "efc0291a025698d95f49997e871e4763c652c6a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -124,6 +184,24 @@
       "side": 1,
       "message": "I see that the next CL does this, as well as adding tests.\n\nSuggest dropping the arrayLength stuff from this CL in that case.",
       "parentUuid": "b8e317dd_84d61b23",
+      "revId": "efc0291a025698d95f49997e871e4763c652c6a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d7822f9_15fcb4dc",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T17:02:31Z",
+      "side": 1,
+      "message": "Ack, going to leave the array length comment in here as it doesn\u0027t really hurt anything and it will get fixed up with the next CL.",
+      "parentUuid": "850eb2d0_db248194",
       "revId": "efc0291a025698d95f49997e871e4763c652c6a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
