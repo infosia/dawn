@@ -406,10 +406,9 @@ MaybeError RenderPipeline::InitializeDepthStencilState() {
 
     D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
     depthStencilDesc.DepthEnable =
-        (state->depthCompare == wgpu::CompareFunction::Always && !state->depthWriteEnabled) ? FALSE
-                                                                                            : TRUE;
+        (state->depthCompare == wgpu::CompareFunction::Always && state->depthWriteEnabled != wgpu::OptionalBool::True) ? FALSE : TRUE;
     depthStencilDesc.DepthWriteMask =
-        state->depthWriteEnabled ? D3D11_DEPTH_WRITE_MASK_ALL : D3D11_DEPTH_WRITE_MASK_ZERO;
+        state->depthWriteEnabled == wgpu::OptionalBool::True ? D3D11_DEPTH_WRITE_MASK_ALL : D3D11_DEPTH_WRITE_MASK_ZERO;
     depthStencilDesc.DepthFunc = ToD3D11ComparisonFunc(state->depthCompare);
 
     depthStencilDesc.StencilEnable = UsesStencil() ? TRUE : FALSE;

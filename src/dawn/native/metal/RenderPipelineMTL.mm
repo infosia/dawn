@@ -546,7 +546,7 @@ NSRef<MTLDepthStencilDescriptor> RenderPipeline::MakeDepthStencilDesc() {
 
     mtlDepthStencilDescriptor.depthCompareFunction =
         ToMetalCompareFunction(descriptor->depthCompare);
-    mtlDepthStencilDescriptor.depthWriteEnabled = descriptor->depthWriteEnabled;
+    mtlDepthStencilDescriptor.depthWriteEnabled = descriptor->depthWriteEnabled == wgpu::OptionalBool::True;
 
     if (UsesStencil()) {
         NSRef<MTLStencilDescriptor> backFaceStencilRef = AcquireNSRef([MTLStencilDescriptor new]);

@@ -247,6 +247,44 @@ TEST_F(RenderPipelineValidationTest, DepthStencilAspectRequirement) {
         depthStencil->depthWriteEnabled = true;
         ASSERT_DEVICE_ERROR(device.CreateRenderPipeline(&descriptor));
     }
+
+    // Control case, depth aspect is required if depth test or depth write optional is enabled
+    {
+        utils::ComboRenderPipelineDescriptor descriptor;
+        descriptor.vertex.module = vsModule;
+        descriptor.cFragment.module = fsModule;
+        wgpu::DepthStencilState* depthStencil =
+            descriptor.EnableDepthStencil(wgpu::TextureFormat::Depth24PlusStencil8);
+        depthStencil->depthCompare = wgpu::CompareFunction::LessEqual;
+        depthStencil->depthWriteEnabledOptional = wgpu::OptionalBool::True;
+        device.CreateRenderPipeline(&descriptor);
+    }
+
+    // It is invalid if the texture format doesn't have depth aspect while depth test is
+    // enabled.
+    {
+        utils::ComboRenderPipelineDescriptor descriptor;
+        descriptor.vertex.module = vsModule;
+        descriptor.cFragment.module = fsModule;
+        wgpu::DepthStencilState* depthStencil =
+            descriptor.EnableDepthStencil(wgpu::TextureFormat::Stencil8);
+        depthStencil->depthCompare = wgpu::CompareFunction::LessEqual;
+        depthStencil->depthWriteEnabledOptional = wgpu::OptionalBool::False;
+        ASSERT_DEVICE_ERROR(device.CreateRenderPipeline(&descriptor));
+    }
+
+    // It is invalid if the texture format doesn't have depth aspect while depth write optional is
+    // enabled.
+    {
+        utils::ComboRenderPipelineDescriptor descriptor;
+        descriptor.vertex.module = vsModule;
+        descriptor.cFragment.module = fsModule;
+        wgpu::DepthStencilState* depthStencil =
+            descriptor.EnableDepthStencil(wgpu::TextureFormat::Stencil8);
+        depthStencil->depthCompare = wgpu::CompareFunction::Undefined;
+        depthStencil->depthWriteEnabledOptional = wgpu::OptionalBool::True;
+        ASSERT_DEVICE_ERROR(device.CreateRenderPipeline(&descriptor));
+    }
 }
 
 // Tests that depth attachment is required when frag_depth is written in fragment stage.
