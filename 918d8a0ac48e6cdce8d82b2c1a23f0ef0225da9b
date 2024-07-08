@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21615061_346d8409",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T15:39:45Z",
+      "side": 1,
+      "message": "Forgot to remove an unnecessary declaration. CQing with that trivial change.",
+      "revId": "918d8a0ac48e6cdce8d82b2c1a23f0ef0225da9b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
