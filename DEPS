@@ -372,6 +372,16 @@ deps = {
     'url': '{github_git}/gpuweb/gpuweb.git@002b4939ba7ad3db1f83470e7c6a0a488fc548a6',
     'condition': 'dawn_node',
   },
+  'third_party/jdk': {
+      'packages': [
+          {
+              'package': 'chromium/third_party/jdk',
+              'version': 'tUJrCBvDNDE9jFvgkuOwX8tU6oCWT8CtI2_JxpGlTJIC',
+          },
+      ],
+      'dep_type': 'cipd',
+  },
+
 
   'tools/golang': {
     'packages': [{
