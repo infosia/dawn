@@ -108,6 +108,24 @@
       "message": "I\u0027m not entirely sure what the comment means, but you don\u0027t always have an access since you can have a runtime array which is not inside a struct, so in any case this code needs to be refactored out to a helper. Please add tests for the non-struct runtime array case.",
       "revId": "efc0291a025698d95f49997e871e4763c652c6a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "850eb2d0_db248194",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-08T15:41:09Z",
+      "side": 1,
+      "message": "I see that the next CL does this, as well as adding tests.\n\nSuggest dropping the arrayLength stuff from this CL in that case.",
+      "parentUuid": "b8e317dd_84d61b23",
+      "revId": "efc0291a025698d95f49997e871e4763c652c6a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
