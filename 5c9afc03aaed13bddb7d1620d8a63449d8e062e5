@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3419461_86a9dce1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T13:39:33Z",
+      "side": 1,
+      "message": "Can we have something that says `Kotlin:` or `[Kotlin]` so that it\u0027s clear what the commit is about when looking at the commit log?",
+      "revId": "5c9afc03aaed13bddb7d1620d8a63449d8e062e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "560d78a5_735c8c99",
@@ -14,6 +31,23 @@
       "writtenOn": "2024-07-08T09:27:33Z",
       "side": 1,
       "message": "Nice, I haven\u0027t used \u0027spy\u0027 before, looks powerful.",
+      "revId": "5c9afc03aaed13bddb7d1620d8a63449d8e062e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ec5b626_59549628",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-08T13:39:33Z",
+      "side": 1,
+      "message": "TBH I don\u0027t think that I\u0027m the best reviewer for things purely on the Kotlin side. So I\u0027d like to pass reviewing this.",
       "revId": "5c9afc03aaed13bddb7d1620d8a63449d8e062e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
