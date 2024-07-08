@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eafa351_f2844a78",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T18:23:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cf68ce8_581922e5",
+      "revId": "6f6c1fe2cf85e4b468cc2cee35909c45480457d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc2888ec_492aac61",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-07-08T18:01:47Z",
       "side": 1,
       "message": "What does the \"Split\" mean here? I was expecting to see a chain of separate `access` instructions (which is something we should definitely test).",
+      "revId": "6f6c1fe2cf85e4b468cc2cee35909c45480457d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20c8e5d9_d5fc364a",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_memory_access_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-08T18:23:25Z",
+      "side": 1,
+      "message": "Ah, it\u0027s splitting the access chain with a dynamic access in the middle. The previous example used a bunch of dynamics for each array index, this jus has the one, so it split the chain in two. I\u0027ll rename.",
+      "parentUuid": "bc2888ec_492aac61",
       "revId": "6f6c1fe2cf85e4b468cc2cee35909c45480457d6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
