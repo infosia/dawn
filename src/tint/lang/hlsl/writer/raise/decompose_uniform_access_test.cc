@@ -364,7 +364,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(HlslWriterDecomposeUniformAccessTest, DISABLED_UniformAccessMatrix) {
+TEST_F(HlslWriterDecomposeUniformAccessTest, UniformAccessMatrix) {
     auto* var = b.Var<uniform, mat4x4<f32>, core::Access::kRead>("v");
     var->SetBindingPoint(0, 0);
 
@@ -401,38 +401,60 @@ $B1: {  # root
 
     auto* expect = R"(
 $B1: {  # root
-  %v:hlsl.byte_address_buffer<read> = var @binding_point(0, 0)
+  %v:ptr<uniform, array<vec4<u32>, 4>, read> = var @binding_point(0, 0)
 }
 
 %foo = @fragment func():void {
   $B2: {
     %3:mat4x4<f32> = call %4, 0u
     %a:mat4x4<f32> = let %3
-    %6:vec4<u32> = %v.Load4 48u
-    %7:vec4<f32> = bitcast %6
-    %b:vec4<f32> = let %7
-    %9:u32 = %v.Load 24u
-    %10:f32 = bitcast %9
-    %c:f32 = let %10
+    %6:ptr<uniform, vec4<u32>, read> = access %v, 3u
+    %7:vec4<u32> = load %6
+    %8:vec4<f32> = bitcast %7
+    %b:vec4<f32> = let %8
+    %10:ptr<uniform, vec4<u32>, read> = access %v, 1u
+    %11:u32 = load_vector_element %10, 2u
+    %12:f32 = bitcast %11
+    %c:f32 = let %12
     ret
   }
 }
-%4 = func(%offset:u32):mat4x4<f32> {
+%4 = func(%start_byte_offset:u32):mat4x4<f32> {
   $B3: {
-    %13:u32 = add %offset, 0u
-    %14:vec4<u32> = %v.Load4 %13
-    %15:vec4<f32> = bitcast %14
-    %16:u32 = add %offset, 16u
-    %17:vec4<u32> = %v.Load4 %16
-    %18:vec4<f32> = bitcast %17
-    %19:u32 = add %offset, 32u
-    %20:vec4<u32> = %v.Load4 %19
-    %21:vec4<f32> = bitcast %20
-    %22:u32 = add %offset, 48u
-    %23:vec4<u32> = %v.Load4 %22
-    %24:vec4<f32> = bitcast %23
-    %25:mat4x4<f32> = construct %15, %18, %21, %24
-    ret %25
+    %15:u32 = add 0u, %start_byte_offset
+    %16:u32 = div %15, 16u
+    %17:u32 = div %15, 4u
+    %18:u32 = mul 4u, %16
+    %19:u32 = sub %17, %18
+    %20:ptr<uniform, vec4<u32>, read> = access %v, %16
+    %21:vec4<u32> = load %20
+    %22:vec4<f32> = bitcast %21
+    %23:u32 = add 16u, %start_byte_offset
+    %24:u32 = div %23, 16u
+    %25:u32 = div %23, 4u
+    %26:u32 = mul 4u, %24
+    %27:u32 = sub %25, %26
+    %28:ptr<uniform, vec4<u32>, read> = access %v, %24
+    %29:vec4<u32> = load %28
+    %30:vec4<f32> = bitcast %29
+    %31:u32 = add 32u, %start_byte_offset
+    %32:u32 = div %31, 16u
+    %33:u32 = div %31, 4u
+    %34:u32 = mul 4u, %32
+    %35:u32 = sub %33, %34
+    %36:ptr<uniform, vec4<u32>, read> = access %v, %32
+    %37:vec4<u32> = load %36
+    %38:vec4<f32> = bitcast %37
+    %39:u32 = add 48u, %start_byte_offset
+    %40:u32 = div %39, 16u
+    %41:u32 = div %39, 4u
+    %42:u32 = mul 4u, %40
+    %43:u32 = sub %41, %42
+    %44:ptr<uniform, vec4<u32>, read> = access %v, %40
+    %45:vec4<u32> = load %44
+    %46:vec4<f32> = bitcast %45
+    %47:mat4x4<f32> = construct %22, %30, %38, %46
+    ret %47
   }
 }
 )";
