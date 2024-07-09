@@ -246,7 +246,7 @@ TEST_P(BuiltinTest, Attribute_Builtin) {
     ASSERT_TRUE(var_attr->Is<ast::BuiltinAttribute>());
 
     auto* builtin = var_attr->As<ast::BuiltinAttribute>();
-    ast::CheckIdentifier(builtin->builtin, str);
+    ast::CheckIdentifier(builtin->builtin->name, str);
 }
 TEST_P(BuiltinTest, Attribute_Builtin_TrailingComma) {
     auto str = tint::ToString(GetParam());
@@ -262,7 +262,7 @@ TEST_P(BuiltinTest, Attribute_Builtin_TrailingComma) {
     ASSERT_TRUE(var_attr->Is<ast::BuiltinAttribute>());
 
     auto* builtin = var_attr->As<ast::BuiltinAttribute>();
-    ast::CheckIdentifier(builtin->builtin, str);
+    ast::CheckIdentifier(builtin->builtin->name, str);
 }
 INSTANTIATE_TEST_SUITE_P(WGSLParserTest,
                          BuiltinTest,

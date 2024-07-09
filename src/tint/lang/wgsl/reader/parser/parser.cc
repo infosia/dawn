@@ -3038,7 +3038,7 @@ Maybe<const ast::Attribute*> Parser::attribute() {
             break;
     }
 
-    Vector<const ast::Expression*, 2> args;
+    Vector<const ast::Node*, 3> args;
 
     // Handle no parameter items which should have no parens
     if (min == 0) {
@@ -3053,11 +3053,19 @@ Maybe<const ast::Attribute*> Parser::attribute() {
                     break;
                 }
 
-                auto expr = expect_expression(t.to_str());
-                if (expr.errored) {
-                    return Failure::kErrored;
+                if (attr.value == core::Attribute::kBuiltin) {
+                    auto name = expect_builtin_value_name();
+                    if (name.errored) {
+                        return Failure::kErrored;
+                    }
+                    args.Push(name.value);
+                } else {
+                    auto expr = expect_expression(t.to_str());
+                    if (expr.errored) {
+                        return Failure::kErrored;
+                    }
+                    args.Push(expr.value);
                 }
-                args.Push(expr.value);
 
                 if (!match(Token::Type::kComma)) {
                     break;
@@ -3082,44 +3090,45 @@ Maybe<const ast::Attribute*> Parser::attribute() {
         }
     }
 
+    auto* arg0 = args.Length() > 0 ? args[0]->As<ast::Expression>() : nullptr;
+    auto* arg1 = args.Length() > 1 ? args[1]->As<ast::Expression>() : nullptr;
+    auto* arg2 = args.Length() > 2 ? args[2]->As<ast::Expression>() : nullptr;
+
     switch (attr.value) {
         case core::Attribute::kAlign:
-            return create<ast::StructMemberAlignAttribute>(t.source(), args[0]);
+            return create<ast::StructMemberAlignAttribute>(t.source(), arg0);
         case core::Attribute::kBinding:
-            return create<ast::BindingAttribute>(t.source(), args[0]);
+            return create<ast::BindingAttribute>(t.source(), arg0);
         case core::Attribute::kBlendSrc:
-            return create<ast::BlendSrcAttribute>(t.source(), args[0]);
+            return create<ast::BlendSrcAttribute>(t.source(), arg0);
         case core::Attribute::kBuiltin:
-            return create<ast::BuiltinAttribute>(t.source(), args[0]);
+            return create<ast::BuiltinAttribute>(t.source(), args[0]->As<ast::BuiltinValueName>());
         case core::Attribute::kColor:
-            return create<ast::ColorAttribute>(t.source(), args[0]);
+            return create<ast::ColorAttribute>(t.source(), arg0);
         case core::Attribute::kCompute:
             return create<ast::StageAttribute>(t.source(), ast::PipelineStage::kCompute);
         case core::Attribute::kFragment:
             return create<ast::StageAttribute>(t.source(), ast::PipelineStage::kFragment);
         case core::Attribute::kGroup:
-            return create<ast::GroupAttribute>(t.source(), args[0]);
+            return create<ast::GroupAttribute>(t.source(), arg0);
         case core::Attribute::kId:
-            return create<ast::IdAttribute>(t.source(), args[0]);
+            return create<ast::IdAttribute>(t.source(), arg0);
         case core::Attribute::kInputAttachmentIndex:
-            return create<ast::InputAttachmentIndexAttribute>(t.source(), args[0]);
+            return create<ast::InputAttachmentIndexAttribute>(t.source(), arg0);
         case core::Attribute::kInterpolate:
-            return create<ast::InterpolateAttribute>(t.source(), args[0],
-                                                     args.Length() == 2 ? args[1] : nullptr);
+            return create<ast::InterpolateAttribute>(t.source(), arg0, arg1);
         case core::Attribute::kInvariant:
             return create<ast::InvariantAttribute>(t.source());
         case core::Attribute::kLocation:
-            return builder_.Location(t.source(), args[0]);
+            return builder_.Location(t.source(), arg0);
         case core::Attribute::kMustUse:
             return create<ast::MustUseAttribute>(t.source());
         case core::Attribute::kSize:
-            return builder_.MemberSize(t.source(), args[0]);
+            return builder_.MemberSize(t.source(), arg0);
         case core::Attribute::kVertex:
             return create<ast::StageAttribute>(t.source(), ast::PipelineStage::kVertex);
         case core::Attribute::kWorkgroupSize:
-            return create<ast::WorkgroupAttribute>(t.source(), args[0],
-                                                   args.Length() > 1 ? args[1] : nullptr,
-                                                   args.Length() > 2 ? args[2] : nullptr);
+            return create<ast::WorkgroupAttribute>(t.source(), arg0, arg1, arg2);
         default:
             return Failure::kNoMatch;
     }
@@ -3187,6 +3196,17 @@ Expect<Void> Parser::expect_not_templated_ident_expr(const ast::Expression* expr
 Expect<wgsl::DiagnosticSeverity> Parser::expect_severity_control_name() {
     return expect_enum("severity control", wgsl::ParseDiagnosticSeverity,
                        wgsl::kDiagnosticSeverityStrings);
+}
+
+// builtin_value_name :
+// | ident_pattern_token
+Expect<const ast::BuiltinValueName*> Parser::expect_builtin_value_name() {
+    auto name = expect_ident("", "builtin value name");
+    if (name.errored) {
+        return Failure::kErrored;
+    }
+
+    return builder_.BuiltinValueName(name.value);
 }
 
 // diagnostic_control
