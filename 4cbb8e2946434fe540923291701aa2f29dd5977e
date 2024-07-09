@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1cc396b_8255ee5a",
+        "filename": "generator/templates/art/api_kotlin_enum.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T10:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50eac604_2dd9e8c1",
+      "revId": "4cbb8e2946434fe540923291701aa2f29dd5977e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b59738e_927cf641",
@@ -67,6 +85,24 @@
           ]
         }
       ],
+      "revId": "4cbb8e2946434fe540923291701aa2f29dd5977e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fcc30fd_1346b283",
+        "filename": "generator/templates/art/api_kotlin_functions.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T10:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b59738e_927cf641",
       "revId": "4cbb8e2946434fe540923291701aa2f29dd5977e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
