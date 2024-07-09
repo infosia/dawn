@@ -38,6 +38,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d7ec1f50_02ede3fb",
+        "filename": "src/dawn/common/SerialQueue.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T15:24:44Z",
+      "side": 1,
+      "message": "std::dequeue used to have a terribly inefficient implementation in the STL. Is it better now?",
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9f00e2b_f22f1fcb",
+        "filename": "src/dawn/common/SerialQueue.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T15:24:44Z",
+      "side": 1,
+      "message": "Could we have a unittest added for this? This class has 100% coverage already in unittests.",
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "793d51cb_c9026da8",
         "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
         "patchSetId": 17
@@ -165,6 +199,23 @@
         "endLine": 609,
         "endChar": 0
       },
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "202ab32e_0016cb14",
+        "filename": "src/dawn/native/TempGPUBufferManager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T15:24:44Z",
+      "side": 1,
+      "message": "While this is something we\u0027d like to have at some point, I don\u0027t know that it is a good time to do it yet, however it will be increasingly useful in the future.\n\nAt the moment we create resources during encoding. This means that we don\u0027t know when the buffer will be used and when it can be returned for reuse so this is basically a proxy in front of the backend\u0027s general purpose buffer allocators that tries to cache allocations. It seems like it should be the job of the backend allocators (or the D3D11 driver) because we don\u0027t have a lot more information than they do.\n\nIn the future when we allocate only during submission and not during encoding then we\u0027ll be able to do better than the drivers as we\u0027ll have more semantic information. We\u0027ll be able to use one or several buffers that we allocate temporary scratch space (a buffer + offset pair) out of that it returned immediately. The allocation is very short-lived so management should be simpler and result in less peak memory used.\n\nDo we have performance data that shows that this is already necessary vs. when allocation is done only during submission?",
       "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
