@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a267d7f9_0847bdf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-09T16:52:45Z",
+      "side": 1,
+      "message": "I think(?) this caused fuzzers to fail to build: https://ci.chromium.org/ui/p/chromium/builders/try/linux-libfuzzer-asan-rel/1894943/overview",
+      "revId": "200877c7ebe16cb12661b8124ab2cb1671e87761",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
