@@ -38,6 +38,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/ValidationUtils_autogen.h"
+#include "dawn/native/utils/WGPUHelpers.h"
 
 namespace dawn::native {
 
@@ -67,16 +68,20 @@ MaybeError ProgrammableEncoder::ValidateProgrammableEncoderEnd() const {
     return {};
 }
 
-void ProgrammableEncoder::APIInsertDebugMarker(const char* groupLabel) {
+void ProgrammableEncoder::APIInsertDebugMarker2(std::string_view groupLabel) {
+    groupLabel = utils::NormalizeLabel(groupLabel);
     mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
             InsertDebugMarkerCmd* cmd =
                 allocator->Allocate<InsertDebugMarkerCmd>(Command::InsertDebugMarker);
-            cmd->length = strlen(groupLabel);
+            cmd->length = groupLabel.length();
 
+            // Include extra null-terminator character. The string_view may not be
+            // null-terminated. The backends expect it to be.
             char* label = allocator->AllocateData<char>(cmd->length + 1);
-            memcpy(label, groupLabel, cmd->length + 1);
+            memcpy(label, groupLabel.data(), cmd->length + 1);
+            label[cmd->length] = '\0';
 
             return {};
         },
@@ -100,16 +105,20 @@ void ProgrammableEncoder::APIPopDebugGroup() {
         "encoding %s.PopDebugGroup().", this);
 }
 
-void ProgrammableEncoder::APIPushDebugGroup(const char* groupLabel) {
+void ProgrammableEncoder::APIPushDebugGroup2(std::string_view groupLabel) {
+    groupLabel = utils::NormalizeLabel(groupLabel);
     mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
             PushDebugGroupCmd* cmd =
                 allocator->Allocate<PushDebugGroupCmd>(Command::PushDebugGroup);
-            cmd->length = strlen(groupLabel);
+            cmd->length = groupLabel.length();
 
+            // Include extra null-terminator character. The string_view may not be
+            // null-terminated. The backends expect it to be.
             char* label = allocator->AllocateData<char>(cmd->length + 1);
-            memcpy(label, groupLabel, cmd->length + 1);
+            memcpy(label, groupLabel.data(), cmd->length + 1);
+            label[cmd->length] = '\0';
 
             mDebugGroupStackSize++;
             mEncodingContext->PushDebugGroupLabel(groupLabel);

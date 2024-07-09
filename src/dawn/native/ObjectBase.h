@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_OBJECTBASE_H_
 
 #include <mutex>
+#include <optional>
 #include <string>
 
 #include "absl/strings/str_format.h"
@@ -140,6 +141,7 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
 
     // Dawn API
     void APISetLabel(const char* label);
+    void APISetLabel2(std::optional<std::string_view> label);
 
   protected:
     // Overriding of the RefCounted's DeleteThis function ensures that instances of objects
