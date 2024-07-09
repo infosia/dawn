@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b669831b_81864652",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-09T11:54:47Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "1bc3f708707352e5eb95b0c00a60a05e0265d578",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
