@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60cd2885_12f54f15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-09T03:43:04Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "3ce7246677bf05d5562b5319395a50d60ce1e39b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "703b72c7_c87486e4",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-09T03:43:04Z",
+      "side": 1,
+      "message": "The AST code allowed a 2DArray here as well, but `samples` only works on multisampled textures of which they aren\u0027t array\u0027d. So that was dropped.",
+      "revId": "3ce7246677bf05d5562b5319395a50d60ce1e39b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
