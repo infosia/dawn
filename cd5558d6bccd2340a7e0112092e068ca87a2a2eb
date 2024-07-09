@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47c44e1e_3e48e774",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-09T21:19:33Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "cd5558d6bccd2340a7e0112092e068ca87a2a2eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7ef659e_c6d64b78",
+        "filename": "src/tint/lang/hlsl/writer/builtin_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-09T21:19:33Z",
+      "side": 1,
+      "message": "This one differs from the AST backend. See https://issues.chromium.org/issues/352085711 for context.",
+      "revId": "cd5558d6bccd2340a7e0112092e068ca87a2a2eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
