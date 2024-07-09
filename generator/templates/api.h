@@ -72,9 +72,12 @@
 #define {{API}}_NULLABLE
 #endif
 
+<<<<<<< PATCH SET (c366b2 [webgpu-headers] Clean depthWriteEnabled WGPUOptionalBool le)
+=======
 #define WGPU_BREAKING_CHANGE_DEPTH_CLIP_CONTROL
 #define WGPU_BREAKING_CHANGE_DEPTH_WRITE_ENABLED
 
+>>>>>>> BASE      (1b6402 Compat CTS: more Android failures from the bots.)
 #include <stdint.h>
 #include <stddef.h>
 
