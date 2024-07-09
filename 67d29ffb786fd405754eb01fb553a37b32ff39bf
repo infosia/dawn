@@ -355,6 +355,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cca27ea9_8458a9e4",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T09:16:01Z",
+      "side": 1,
+      "message": "Can you comment what this test is checking, please?  Is the goal to establish that the features are present on all test devices, or is it to establish that the Launcher\u0027s Device instance is correctly configured?",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "462afa14_dbe1fe63",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T09:16:01Z",
+      "side": 1,
+      "message": "Doesn\u0027t this line duplicate the same assert() checks in the DawnLauncher constructor?",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c9912ae_d7501a60",
         "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
         "patchSetId": 5
@@ -402,6 +436,24 @@
       "side": 1,
       "message": "Acknowledged",
       "parentUuid": "e3f76b50_a2cf533b",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac1d8415_1ec958ac",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T09:16:01Z",
+      "side": 1,
+      "message": "\u003e present on all Android devices that I\u0027m aware of\n\nDoes this include emulators?",
+      "parentUuid": "bcdd11f0_8a80d4ca",
       "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
