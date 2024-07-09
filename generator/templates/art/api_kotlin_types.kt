@@ -111,7 +111,7 @@
     {%- elif type.name.get() in ['void *', 'void const *'] %}
         ByteBuffer
     {%- else -%}
-        {{ unreachable_code() }}
+        {{ unreachable_code('Unsupported type: ' + type.name.get()) }}
     {%- endif %}
 {% endmacro %}
 
