@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6cbba3c9_5c8c2378",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T09:21:20Z",
+      "side": 1,
+      "message": "Please name this method and class \"dawnTestLauncher\"?  It\u0027s not obvious from the filename that this is strictly a test support class.",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "581dca99_454f7158",
         "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
         "patchSetId": 3
@@ -49,6 +66,58 @@
       "side": 1,
       "message": "Noted, currently this is for tests only, the polling method will need something specific to the type of app I think.",
       "parentUuid": "581dca99_454f7158",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8ee6572_8859c23b",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T09:21:20Z",
+      "side": 1,
+      "message": "@Corentin, what could best practice look like?",
+      "parentUuid": "6c3c999d_2ad1c7e2",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e878f609_92fe6317",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T09:21:20Z",
+      "side": 1,
+      "message": "Minor nit but why 200 and not 1?  200 implies that we do actually need to wait a small interval before processing events?",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "014761ff_28e9c090",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T09:21:20Z",
+      "side": 1,
+      "message": "Out of curiosity, we need to both close() and destroy() the Device, but we only need to close() the Adapter?  Is this by API design, or is it an artifact of the Kotlin bindings?  This seems like the kind of thing a developer could easily miss.",
       "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
