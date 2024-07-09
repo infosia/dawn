@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b6f19a4_006be463",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-09T01:09:49Z",
+      "side": 1,
+      "message": "could you explain the motivation and impact of this change? I fully believe that creating buffers over and over for the blit is expensive. It would be useful to know what the cost is, and if it\u0027s particularly bad on some APIs/OSes, etc.",
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "793d51cb_c9026da8",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-09T01:09:49Z",
+      "side": 1,
+      "message": "using the pendingSerial here isn\u0027t going to be safe because there is no guaranatee the command encoder you\u0027re recording will be submitted in that serial. You could submit another one ahead of it in which case the serial will advance and the buffer could get recycled.\n\ninstead you need to track the buffer only after the command buffer is submitted.",
+      "range": {
+        "startLine": 957,
+        "startChar": 0,
+        "endLine": 957,
+        "endChar": 81
+      },
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "206bd438_a4f4e6b8",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-09T01:09:49Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6f611c3_e95ba80c",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-09T01:09:49Z",
+      "side": 1,
+      "message": "I would have expected that instead of hardcoding the temp buffers all to be the same usage, you could request a particular usage - or even a whole buffer descriptor. And the buffer manager would try to find a suitable buffer for you. If the whole descriptor, we could support the `mappedAtCreation` case at [1] better.",
+      "range": {
+        "startLine": 473,
+        "startChar": 14,
+        "endLine": 473,
+        "endChar": 98
+      },
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20c11045_0bf53c5c",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 2433,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-09T01:09:49Z",
+      "side": 1,
+      "message": "probably we should return a MutexProtected\u003cTempGPUBufferManager\u003e\u0026 to be safe for multiple encoding threads.\n\nThen, we should make it safer against re-entrancy since currently TempGPUBufferManager stores the Device and uses it to create buffers. That\u0027s a little scary because it\u0027s feasible that some workaround may need buffer creation to make another temp buffer. Then there\u0027s a deadlock.\n\nIt might make more sense to have the interface be:\n - Buffer TakeTemporaryBuffer(..., ExecutionSerial); // try to get a tmp buffer from the LRU cache. Update its serial.\n - void RecycleBuffer(Buffer, ExecutionSerial); // push a tmp buffer for future recycling.\n - void Trim(ExecutionSerial);  // trim the LRU cache\n \nThen, the LRU doesn\u0027t do any allocations. It only tracks existing buffers and trims itself.",
+      "range": {
+        "startLine": 2433,
+        "startChar": 0,
+        "endLine": 2433,
+        "endChar": 22
+      },
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef856382_091eae2a",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-09T01:09:49Z",
+      "side": 1,
+      "message": "what if the buffer manager returns to you a pair of Buffer, and the size is actually created it as. (you can also just use GetSize(), but returning the size makes it a bit more obvious you might get something not equal to what you asked for).\n\nThen, the calling code can make sure to size it as a full-size write based on the returned size.\n\nmaybe the LRU can have a parameter for maxBufferSize so it doesn\u0027t give you something too large.",
+      "range": {
+        "startLine": 607,
+        "startChar": 0,
+        "endLine": 609,
+        "endChar": 0
+      },
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
