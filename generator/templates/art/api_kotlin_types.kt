@@ -29,7 +29,7 @@
     {%- set type = arg.type %}
     {%- set optional = arg.optional %}
     {%- set default_value = arg.default_value %}
-    {%- if arg.length == 'strlen' -%}
+    {%- if arg.length == 'strlen' or type.name.get() == 'string' -%}
         String{{ '?' if optional or default_value == 'nullptr' }}
         {%- if emit_defaults and (default_value or optional) -%}
             = null
@@ -111,7 +111,7 @@
     {%- elif type.name.get() in ['void *', 'void const *'] %}
         ByteBuffer
     {%- else -%}
-        {{ unreachable_code() }}
+        {{ unreachable_code('Unsupported type: ' + type.name.get()) }}
     {%- endif %}
 {% endmacro %}
 
