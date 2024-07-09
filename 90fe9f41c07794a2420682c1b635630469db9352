@@ -22,6 +22,30 @@
       },
       "revId": "90fe9f41c07794a2420682c1b635630469db9352",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd2625c6_3755f864",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-09T20:14:46Z",
+      "side": 1,
+      "message": "make a small IgnoreLazyClearCountScope here is probably the simplest thing",
+      "parentUuid": "fc0c1b6b_404ab2e9",
+      "range": {
+        "startLine": 1037,
+        "startChar": 47,
+        "endLine": 1037,
+        "endChar": 59
+      },
+      "revId": "90fe9f41c07794a2420682c1b635630469db9352",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
