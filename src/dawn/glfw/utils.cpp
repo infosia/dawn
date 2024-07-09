@@ -69,7 +69,7 @@ SetupWindowAndGetSurfaceDescriptor(GLFWwindow* window) {
         return {nullptr, [](wgpu::ChainedStruct*) {}};
     }
 #if DAWN_PLATFORM_IS(WINDOWS)
-    wgpu::SurfaceDescriptorFromWindowsHWND* desc = new wgpu::SurfaceDescriptorFromWindowsHWND();
+    wgpu::SurfaceSourceWindowsHWND* desc = new wgpu::SurfaceSourceWindowsHWND();
     desc->hwnd = glfwGetWin32Window(window);
     desc->hinstance = GetModuleHandle(nullptr);
     return {desc, [](wgpu::ChainedStruct* desc) {
@@ -80,8 +80,8 @@ SetupWindowAndGetSurfaceDescriptor(GLFWwindow* window) {
 #elif defined(DAWN_USE_WAYLAND) || defined(DAWN_USE_X11)
 #if defined(GLFW_PLATFORM_WAYLAND) && defined(DAWN_USE_WAYLAND)
     if (glfwGetPlatform() == GLFW_PLATFORM_WAYLAND) {
-        wgpu::SurfaceDescriptorFromWaylandSurface* desc =
-            new wgpu::SurfaceDescriptorFromWaylandSurface();
+        wgpu::SurfaceSourceWaylandSurface* desc =
+            new wgpu::SurfaceSourceWaylandSurface();
         desc->display = glfwGetWaylandDisplay();
         desc->surface = glfwGetWaylandWindow(window);
         return {desc, [](wgpu::ChainedStruct* desc) {
@@ -91,7 +91,7 @@ SetupWindowAndGetSurfaceDescriptor(GLFWwindow* window) {
 #endif
 #if defined(DAWN_USE_X11)
     {
-        wgpu::SurfaceDescriptorFromXlibWindow* desc = new wgpu::SurfaceDescriptorFromXlibWindow();
+        wgpu::SurfaceSourceXlibWindow* desc = new wgpu::SurfaceSourceXlibWindow();
         desc->display = glfwGetX11Display();
         desc->window = glfwGetX11Window(window);
         return {desc, [](wgpu::ChainedStruct* desc) {
