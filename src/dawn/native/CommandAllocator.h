@@ -206,6 +206,8 @@ class CommandAllocator : public NonCopyable {
         return result;
     }
 
+    char* CopyAsNullTerminatedString(std::string_view string);
+
   private:
     // This is used for some internal computations and can be any power of two as long as code
     // using the CommandAllocator passes the static_asserts.
