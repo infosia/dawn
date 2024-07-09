@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc0c1b6b_404ab2e9",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-09T20:09:08Z",
+      "side": 1,
+      "message": "This buffer creation doesn\u0027t reuse any buffer and it uses mappedAtCreation, hence the internal code will increase the lazy clear count by one. This causes resource init tests, where number of lazy clears are checked, to fail.\n\nWdyt could be the best way to workaround this?",
+      "range": {
+        "startLine": 1037,
+        "startChar": 47,
+        "endLine": 1037,
+        "endChar": 59
+      },
+      "revId": "90fe9f41c07794a2420682c1b635630469db9352",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
