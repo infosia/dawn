@@ -16,6 +16,24 @@
       "message": "Missed a free here.",
       "revId": "c013a9a452f11ee05de246e1e3ae297e7c086382",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2617a441_cfd594c9",
+        "filename": "generator/templates/art/methods.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T12:40:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59838029_77e5e3b0",
+      "revId": "c013a9a452f11ee05de246e1e3ae297e7c086382",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

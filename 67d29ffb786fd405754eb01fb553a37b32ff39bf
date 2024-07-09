@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a0fcdde3_62145f02",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T12:40:08Z",
+      "side": 1,
+      "message": "I\u0027m referring to concepts like returning-by-value, returning containers or multiple return types, all of which are treated differently in C to managed languages. In any case the dawn.json should specify the definition in a way that did not require too much mangling to adapt it for whatever language. Possibly an extra stage is the way to go here.",
+      "parentUuid": "be785dab_0654baf2",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af03dbcc_6bd76977",
         "filename": "generator/dawn_json_generator.py",
         "patchSetId": 5
@@ -353,6 +371,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e940006f_d5603686",
+        "filename": "generator/templates/art/methods.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T12:40:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b768b8d_4543c337",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cca27ea9_8458a9e4",
@@ -370,6 +406,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c7cc087_b0573487",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T12:40:08Z",
+      "side": 1,
+      "message": "It\u0027s to ensure the device-defined features match the ones requested on the adapter.",
+      "parentUuid": "cca27ea9_8458a9e4",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "462afa14_dbe1fe63",
@@ -383,6 +437,24 @@
       "writtenOn": "2024-07-09T09:16:01Z",
       "side": 1,
       "message": "Doesn\u0027t this line duplicate the same assert() checks in the DawnLauncher constructor?",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90b323fc_531d5041",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T12:40:08Z",
+      "side": 1,
+      "message": "No because it\u0027s checking the device, not the adapter. It checks the device and adapter features match.",
+      "parentUuid": "462afa14_dbe1fe63",
       "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -454,6 +526,24 @@
       "side": 1,
       "message": "\u003e present on all Android devices that I\u0027m aware of\n\nDoes this include emulators?",
       "parentUuid": "bcdd11f0_8a80d4ca",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22f5194a_8f7ab22f",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T12:40:08Z",
+      "side": 1,
+      "message": "I just tried it on generic Small Phone emulator image and it worked.",
+      "parentUuid": "ac1d8415_1ec958ac",
       "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
