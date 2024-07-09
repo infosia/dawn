@@ -264,10 +264,11 @@ crbug.com/tint/2129 [ intel-0x9bc5 win10 ] webgpu:shader,execution,expression,ca
 [ apple-angle-metal-renderer:-apple-m2 dawn-backend-validation mac ] webgpu:api,operation,compute_pipeline,overrides:workgroup_size:* [ RetryOnFailure ]
 crbug.com/338471695 [ android ] webgpu:api,validation,shader_module,entry_point:vertex:isAsync=true;shaderModuleStage="vertex" [ RetryOnFailure ]
 crbug.com/dawn/2331 [ dawn-backend-validation intel-0x9bc5 ubuntu ] webgpu:api,validation,render_pipeline,fragment_state:* [ RetryOnFailure ]
-crbug.com/dawn/2331 [ dawn-backend-validation intel-0x9bc5 ubuntu ] webgpu:api,validation,render_pipeline,inter_stage:* [ RetryOnFailure ]
 crbug.com/dawn/2331 [ dawn-backend-validation intel-0x9bc5 ubuntu ] webgpu:api,validation,render_pipeline,overrides:* [ RetryOnFailure ]
 crbug.com/dawn/2331 [ dawn-backend-validation intel-0x9bc5 ubuntu ] webgpu:api,validation,render_pipeline,primitive_state:strip_index_format:* [ RetryOnFailure ]
 crbug.com/dawn/2332 [ dawn-backend-validation intel-0x9bc5 ubuntu ] webgpu:api,operation,command_buffer,image_copy:origins_and_extents:initMethod="WriteTexture";checkMethod="FullCopyT2B";* [ RetryOnFailure ]
+# Uncomment this after crbug.com/351338448 expectations are removed
+#crbug.com/dawn/2331 [ dawn-backend-validation intel-0x9bc5 ubuntu ] webgpu:api,validation,render_pipeline,inter_stage:* [ RetryOnFailure ]
 
 ################################################################################
 # Miscellaneous flakes that are too flaky for retry
@@ -2124,6 +2125,12 @@ crbug.com/351338448 [ dawn-no-backend-validation intel-0x4680 ubuntu webgpu-adap
 crbug.com/351338448 [ dawn-no-backend-validation intel-0x4680 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_type:isAsync=false;output="%40interpolate(linear)";input="%40interpolate(flat,%20either)" [ Failure ]
 crbug.com/351338448 [ dawn-no-backend-validation intel-0x4680 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_type:isAsync=true;output="%40interpolate(flat,%20either)";input="%40interpolate(perspective)" [ Failure ]
 crbug.com/351338448 [ dawn-no-backend-validation intel-0x4680 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_type:isAsync=true;output="%40interpolate(linear)";input="%40interpolate(flat,%20either)" [ Failure ]
+crbug.com/351338448 [ dawn-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_sampling:isAsync=false;output="%40interpolate(flat,%20either)";input="%40interpolate(flat,%20either)" [ Failure ]
+crbug.com/351338448 [ dawn-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_sampling:isAsync=true;output="%40interpolate(flat,%20either)";input="%40interpolate(flat,%20either)" [ Failure ]
+crbug.com/351338448 [ dawn-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_type:isAsync=false;output="%40interpolate(flat,%20either)";input="%40interpolate(perspective)" [ Failure ]
+crbug.com/351338448 [ dawn-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_type:isAsync=false;output="%40interpolate(linear)";input="%40interpolate(flat,%20either)" [ Failure ]
+crbug.com/351338448 [ dawn-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_type:isAsync=true;output="%40interpolate(flat,%20either)";input="%40interpolate(perspective)" [ Failure ]
+crbug.com/351338448 [ dawn-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_type:isAsync=true;output="%40interpolate(linear)";input="%40interpolate(flat,%20either)" [ Failure ]
 crbug.com/351338448 [ dawn-no-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_sampling:isAsync=false;output="%40interpolate(flat,%20either)";input="%40interpolate(flat,%20either)" [ Failure ]
 crbug.com/351338448 [ dawn-no-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_sampling:isAsync=true;output="%40interpolate(flat,%20either)";input="%40interpolate(flat,%20either)" [ Failure ]
 crbug.com/351338448 [ dawn-no-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:interpolation_type:isAsync=false;output="%40interpolate(flat,%20either)";input="%40interpolate(perspective)" [ Failure ]
@@ -3056,7 +3063,7 @@ crbug.com/dawn/0000 [ dawn-no-backend-validation intel-0x9bc5 ubuntu webgpu-adap
 crbug.com/dawn/0000 [ dawn-no-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,operation,rendering,draw:vertex_attributes,basic:* [ Failure ]
 crbug.com/dawn/0000 [ dawn-no-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,operation,storage_texture,read_only:* [ Failure ]
 crbug.com/dawn/0000 [ dawn-no-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,operation,vertex_state,correctness:* [ Failure ]
-crbug.com/dawn/0000 [ dawn-no-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:type:* [ Failure ]
+crbug.com/351338448 [ intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,inter_stage:type:* [ Failure ]
 crbug.com/dawn/0000 [ dawn-no-backend-validation intel-0x9bc5 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:api,validation,render_pipeline,misc:no_attachment:* [ Failure ]
 crbug.com/dawn/0000 [ dawn-no-backend-validation intel-0x9bc5 webgpu-adapter-default webgpu-no-worker win10 ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:rw:* [ Failure ]
 crbug.com/dawn/0000 [ dawn-no-backend-validation intel-0x9bc5 webgpu-adapter-default webgpu-no-worker win10 ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:wr:* [ Failure ]
