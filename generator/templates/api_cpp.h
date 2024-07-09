@@ -42,6 +42,7 @@
 #include <cstdint>
 #include <memory>
 #include <functional>
+#include <string_view>
 
 #include "{{c_header}}"
 #include "{{api}}/{{api}}_cpp_chained_struct.h"
@@ -73,6 +74,8 @@ static T& AsNonConstReference(const T& value) {
             {{as_varName(arg.name)}}.Get()
         {%- elif arg.type.category == "enum" or arg.type.category == "bitmask" -%}
             static_cast<{{as_cType(arg.type.name)}}>({{as_varName(arg.name)}})
+        {%- elif arg.type.name.get() == "string" and not arg.optional -%}
+            WGPUString({{as_varName(arg.name)}}.data(), {{as_varName(arg.name)}}.length())
         {%- elif arg.type.category == "structure" -%}
             *reinterpret_cast<{{as_cType(arg.type.name)}} const*>(&{{as_varName(arg.name)}})
         {%- elif arg.type.category in ["function pointer", "native"] -%}
@@ -322,13 +325,15 @@ class ObjectBase {
 {% macro render_cpp_method_declaration(type, method, dfn=False) %}
     {% set CppType = as_cppType(type.name) %}
     {% set OriginalMethodName = method.name.CamelCase() %}
-    {% set MethodName = OriginalMethodName[:-1] if method.name.chunks[-1] == "f" else OriginalMethodName %}
+    {% set MethodName = OriginalMethodName[:-1] if method.name.chunks[-1] == "f" or method.name.chunks[-1] == "2" else OriginalMethodName %}
     {% set MethodName = CppType + "::" + MethodName if dfn else MethodName %}
     {{"ConvertibleStatus" if method.return_type.name.get() == "status" else as_cppType(method.return_type.name)}} {{MethodName}}(
         {%- for arg in method.arguments -%}
             {%- if not loop.first %}, {% endif -%}
             {%- if arg.type.category == "object" and arg.annotation == "value" -%}
                 {{as_cppType(arg.type.name)}} const& {{as_varName(arg.name)}}
+            {%- elif arg.type.name.get() == "string" and arg.annotation == "value" and not arg.optional -%}
+                std::string_view {{as_varName(arg.name)}}
             {%- else -%}
                 {{as_annotated_cppType(arg)}}
             {%- endif -%}
@@ -535,6 +540,30 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
             inline {{as_cppType(type.name)}}& operator=({{as_cppType(type.name)}}&&);
         {% endif %}
         inline operator const {{as_cType(type.name)}}&() const noexcept;
+
+        //* Custom string constructors.
+        {% if type.name.get() == "string" %}
+            inline constexpr {{as_cppType(type.name)}}() noexcept = default;
+            // NOLINTNEXTLINE(runtime/explicit) allow implicit construction
+            inline constexpr {{as_cppType(type.name)}}(const std::string_view& sv) noexcept {
+                this->data = sv.data();
+                this->length = sv.length();
+            }
+            // NOLINTNEXTLINE(runtime/explicit) allow implicit construction
+            inline constexpr {{as_cppType(type.name)}}(const char* s) {
+                this->data = s;
+                this->length = SIZE_MAX;  // use strlen
+            }
+            inline constexpr {{as_cppType(type.name)}}(const char* data, size_t length) {
+                this->data = data;
+                this->length = length;
+            }
+            // NOLINTNEXTLINE(runtime/explicit) allow implicit construction
+            inline constexpr {{as_cppType(type.name)}}(std::nullptr_t) {
+                this->data = nullptr;
+                this->length = SIZE_MAX;
+            }
+        {% endif %}
 
         {% if type.extensible %}
             ChainedStruct{{Out}} {{const}} * nextInChain = nullptr;
