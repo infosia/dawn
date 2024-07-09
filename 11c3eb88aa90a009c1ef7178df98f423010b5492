@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9f0b25e_bf1ce66b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T16:06:25Z",
+      "side": 1,
+      "message": "Per our meeting I have created two bugs b/352047733 and b/352047733 and added TODOs referencing them. The best solution for allowing all Dawn team members to adapt the Kotlin wrappers following future changes can be investigated when this tranche of changes has landed, and it and its tests can be used as a baseline for improvements.\n\nPTAL.",
+      "revId": "11c3eb88aa90a009c1ef7178df98f423010b5492",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
