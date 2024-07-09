@@ -160,7 +160,7 @@ class EncodingContext {
     RenderPassUsages AcquireRenderPassUsages();
     ComputePassUsages AcquireComputePassUsages();
 
-    void PushDebugGroupLabel(const char* groupLabel);
+    void PushDebugGroupLabel(std::string_view groupLabel);
     void PopDebugGroupLabel();
 
   private:

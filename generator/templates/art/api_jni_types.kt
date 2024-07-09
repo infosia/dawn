@@ -54,7 +54,7 @@
 {% endmacro %}
 
 {% macro jni_signature(member) %}
-    {%- if member.length == 'strlen' -%}
+    {%- if member.length == 'strlen' or member.type.name.get() == 'string' -%}
         Ljava/lang/String;
     {%- elif member.length and member.length != 'constant' -%}
         {%- if member.type.category in ['bitmask', 'enum', 'function pointer', 'object', 'structure'] -%}
@@ -81,6 +81,6 @@
     {%- elif member.type.name.get() == 'bool' -%}
         Z
     {%- else -%}
-        {{ unreachable_code() }}
+        {{ unreachable_code('Unsupported type: ' + member.type.name.get()) }}
     {%- endif -%}
 {% endmacro %}
