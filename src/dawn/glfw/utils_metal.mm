@@ -54,8 +54,8 @@ std::unique_ptr<wgpu::ChainedStruct> SetupWindowAndGetSurfaceDescriptorCocoa(GLF
         // Use retina if the window was created with retina support.
         [[view layer] setContentsScale:[nsWindow backingScaleFactor]];
 
-        std::unique_ptr<wgpu::SurfaceDescriptorFromMetalLayer> desc =
-            std::make_unique<wgpu::SurfaceDescriptorFromMetalLayer>();
+        std::unique_ptr<wgpu::SurfaceFromMetalLayer> desc =
+            std::make_unique<wgpu::SurfaceFromMetalLayer>();
         desc->layer = [view layer];
         return std::move(desc);
     }

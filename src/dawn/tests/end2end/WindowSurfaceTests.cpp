@@ -129,7 +129,7 @@ TEST_F(WindowSurfaceInstanceTests, BadChainedDescriptors) {
 
 // Test that a chained descriptor with HTMLCanvas produces an error.
 TEST_F(WindowSurfaceInstanceTests, HTMLCanvasDescriptor) {
-    wgpu::SurfaceDescriptorFromCanvasHTMLSelector chainedDescriptor;
+    wgpu::SurfaceFromCanvasHTMLSelector chainedDescriptor;
     chainedDescriptor.selector = "#myCanvas";
 
     wgpu::SurfaceDescriptor descriptor;
@@ -160,12 +160,12 @@ TEST_F(WindowSurfaceInstanceTests, CorrectSTypeHWND) {
     GLFWwindow* window = CreateWindow();
     std::unique_ptr<wgpu::ChainedStruct> chainedDescriptor =
         wgpu::glfw::SetupWindowAndGetSurfaceDescriptor(window);
-    ASSERT_EQ(chainedDescriptor->sType, wgpu::SType::SurfaceDescriptorFromWindowsHWND);
+    ASSERT_EQ(chainedDescriptor->sType, wgpu::SType::SurfaceFromWindowsHWND);
 }
 
 // Test with setting an invalid hwnd
 TEST_F(WindowSurfaceInstanceTests, InvalidHWND) {
-    wgpu::SurfaceDescriptorFromWindowsHWND chainedDescriptor;
+    wgpu::SurfaceFromWindowsHWND chainedDescriptor;
     chainedDescriptor.hinstance = GetModuleHandle(nullptr);
     chainedDescriptor.hwnd = 0;  // This always is an invalid HWND value.
 
@@ -178,7 +178,7 @@ TEST_F(WindowSurfaceInstanceTests, InvalidHWND) {
 
 // Test using HWND when it is not supported
 TEST_F(WindowSurfaceInstanceTests, HWNDSurfacesAreInvalid) {
-    wgpu::SurfaceDescriptorFromWindowsHWND chainedDescriptor;
+    wgpu::SurfaceFromWindowsHWND chainedDescriptor;
     chainedDescriptor.hinstance = nullptr;
     chainedDescriptor.hwnd = 0;
 
@@ -196,12 +196,12 @@ TEST_F(WindowSurfaceInstanceTests, CorrectSTypeXlib) {
     GLFWwindow* window = CreateWindow();
     std::unique_ptr<wgpu::ChainedStruct> chainedDescriptor =
         wgpu::glfw::SetupWindowAndGetSurfaceDescriptor(window);
-    ASSERT_EQ(chainedDescriptor->sType, wgpu::SType::SurfaceDescriptorFromXlibWindow);
+    ASSERT_EQ(chainedDescriptor->sType, wgpu::SType::SurfaceFromXlibWindow);
 }
 
 // Test with setting an invalid window
 TEST_F(WindowSurfaceInstanceTests, InvalidXWindow) {
-    wgpu::SurfaceDescriptorFromXlibWindow chainedDescriptor;
+    wgpu::SurfaceFromXlibWindow chainedDescriptor;
     chainedDescriptor.display = XOpenDisplay(nullptr);
     // From the "X Window System Protocol" "X Version 11, Release 6.8" page 2 at
     // https://www.x.org/releases/X11R7.5/doc/x11proto/proto.pdf
@@ -218,7 +218,7 @@ TEST_F(WindowSurfaceInstanceTests, InvalidXWindow) {
 
 // Test using Xlib when it is not supported
 TEST_F(WindowSurfaceInstanceTests, XlibSurfacesAreInvalid) {
-    wgpu::SurfaceDescriptorFromXlibWindow chainedDescriptor;
+    wgpu::SurfaceFromXlibWindow chainedDescriptor;
     chainedDescriptor.display = nullptr;
     chainedDescriptor.window = 0;
 
@@ -236,14 +236,14 @@ TEST_F(WindowSurfaceInstanceTests, CorrectSTypeMetal) {
     GLFWwindow* window = CreateWindow();
     std::unique_ptr<wgpu::ChainedStruct> chainedDescriptor =
         wgpu::glfw::SetupWindowAndGetSurfaceDescriptor(window);
-    ASSERT_EQ(chainedDescriptor->sType, wgpu::SType::SurfaceDescriptorFromMetalLayer);
+    ASSERT_EQ(chainedDescriptor->sType, wgpu::SType::SurfaceFromMetalLayer);
 }
 
 // Test with setting an invalid layer
 TEST_F(WindowSurfaceInstanceTests, InvalidMetalLayer) {
     auto caLayer = utils::CreatePlaceholderCALayer();
 
-    wgpu::SurfaceDescriptorFromMetalLayer chainedDescriptor;
+    wgpu::SurfaceFromMetalLayer chainedDescriptor;
     chainedDescriptor.layer = caLayer.layer;
 
     wgpu::SurfaceDescriptor descriptor;
@@ -255,7 +255,7 @@ TEST_F(WindowSurfaceInstanceTests, InvalidMetalLayer) {
 
 // Test using Metal when it is not supported
 TEST_F(WindowSurfaceInstanceTests, MetalSurfacesAreInvalid) {
-    wgpu::SurfaceDescriptorFromMetalLayer chainedDescriptor;
+    wgpu::SurfaceFromMetalLayer chainedDescriptor;
     chainedDescriptor.layer = nullptr;
 
     wgpu::SurfaceDescriptor descriptor;

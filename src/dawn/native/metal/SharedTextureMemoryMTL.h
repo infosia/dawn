@@ -46,10 +46,8 @@ class CommandRecordingContext;
 
 class SharedTextureMemory final : public SharedTextureMemoryBase {
   public:
-    static ResultOrError<Ref<SharedTextureMemory>> Create(
-        Device* device,
-        const char* label,
-        const SharedTextureMemoryIOSurfaceDescriptor* descriptor);
+    static ResultOrError<Ref<SharedTextureMemory>>
+    Create(Device* device, const char* label, const SharedTextureMemoryIOSurface* descriptor);
 
     IOSurfaceRef GetIOSurface() const;
     const absl::InlinedVector<NSPRef<id<MTLTexture>>, kMaxPlanesPerFormat>& GetMtlPlaneTextures()

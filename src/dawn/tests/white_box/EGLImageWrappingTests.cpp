@@ -225,7 +225,7 @@ TEST_P(EGLImageValidationTests, InvalidTextureDescriptor) {
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
 
     wgpu::ChainedStruct chainedDescriptor;
-    chainedDescriptor.sType = wgpu::SType::SurfaceDescriptorFromWindowsSwapChainPanel;
+    chainedDescriptor.sType = wgpu::SType::SurfaceFromWindowsSwapChainPanel;
     descriptor.nextInChain = &chainedDescriptor;
 
     ScopedEGLImage image = CreateDefaultEGLImage();

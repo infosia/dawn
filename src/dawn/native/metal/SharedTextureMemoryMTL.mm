@@ -95,7 +95,7 @@ ResultOrError<wgpu::TextureFormat> GetFormatEquivalentToIOSurfaceFormat(uint32_t
 ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     Device* device,
     const char* label,
-    const SharedTextureMemoryIOSurfaceDescriptor* descriptor) {
+    const SharedTextureMemoryIOSurface* descriptor) {
     DAWN_INVALID_IF(descriptor->ioSurface == nullptr, "IOSurface is missing.");
 
     IOSurfaceRef ioSurface = static_cast<IOSurfaceRef>(descriptor->ioSurface);

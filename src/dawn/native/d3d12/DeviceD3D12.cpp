@@ -471,15 +471,14 @@ ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(descriptor));
 
     wgpu::SType type;
-    DAWN_TRY_ASSIGN(type,
-                    (unpacked.ValidateBranches<Branch<SharedFenceDXGISharedHandleDescriptor>>()));
+    DAWN_TRY_ASSIGN(type, (unpacked.ValidateBranches<Branch<SharedFenceDXGISharedHandle>>()));
 
     switch (type) {
-        case wgpu::SType::SharedFenceDXGISharedHandleDescriptor:
+        case wgpu::SType::SharedFenceDXGISharedHandle:
             DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceDXGISharedHandle), "%s is not enabled.",
                             wgpu::FeatureName::SharedFenceDXGISharedHandle);
             return SharedFence::Create(this, descriptor->label,
-                                       unpacked.Get<SharedFenceDXGISharedHandleDescriptor>());
+                                       unpacked.Get<SharedFenceDXGISharedHandle>());
         default:
             DAWN_UNREACHABLE();
     }

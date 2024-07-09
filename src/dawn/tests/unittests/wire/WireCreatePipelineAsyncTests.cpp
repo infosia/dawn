@@ -336,8 +336,8 @@ TEST(WireCreatePipelineAsyncTestNullBackend, ServerDeletedBeforeCallback) {
     ASSERT_TRUE(c2sBuf->Flush());
     ASSERT_TRUE(s2cBuf->Flush());
 
-    WGPUShaderModuleWGSLDescriptor wgslDesc = {};
-    wgslDesc.chain.sType = WGPUSType_ShaderModuleWGSLDescriptor;
+    WGPUShaderModuleWGSL wgslDesc = {};
+    wgslDesc.chain.sType = WGPUSType_ShaderModuleWGSL;
     wgslDesc.code = "@compute @workgroup_size(64) fn main() {}";
 
     WGPUShaderModuleDescriptor smDesc = {};

@@ -105,7 +105,7 @@ class Backend : public SharedTextureMemoryTestVulkanBackend {
             return decltype(createFn(desc)){};
         }
 
-        wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
+        wgpu::SharedTextureMemoryAHardwareBuffer stmAHardwareBufferDesc;
         stmAHardwareBufferDesc.handle = aHardwareBuffer;
 
         std::string label = MakeLabel(aHardwareBufferDesc);
@@ -194,7 +194,7 @@ TEST_P(SharedTextureMemoryTests, GPUWriteThenCPURead) {
     // Get actual desc for allocated buffer so we know the stride for cpu data.
     AHardwareBuffer_describe(aHardwareBuffer, &aHardwareBufferDesc);
 
-    wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
+    wgpu::SharedTextureMemoryAHardwareBuffer stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
 
     wgpu::SharedTextureMemoryDescriptor desc;
@@ -265,7 +265,7 @@ TEST_P(SharedTextureMemoryTests, CPUWriteThenGPURead) {
     // Get actual desc for allocated buffer so we know the stride for cpu data.
     AHardwareBuffer_describe(aHardwareBuffer, &aHardwareBufferDesc);
 
-    wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
+    wgpu::SharedTextureMemoryAHardwareBuffer stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
 
     wgpu::SharedTextureMemoryDescriptor desc;
@@ -331,7 +331,7 @@ TEST_P(SharedTextureMemoryTests, InvalidSharedTextureMemoryAHardwareBufferProper
     AHardwareBuffer* aHardwareBuffer;
     EXPECT_EQ(AHardwareBuffer_allocate(&aHardwareBufferDesc, &aHardwareBuffer), 0);
 
-    wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
+    wgpu::SharedTextureMemoryAHardwareBuffer stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
 
     wgpu::SharedTextureMemoryDescriptor desc;
@@ -442,7 +442,7 @@ TEST_P(SharedTextureMemoryTests, QueryYCbCrInfoWithoutExternalFormat) {
 
     // Query the YCbCr properties of a SharedTextureMemory created from this
     // AHB.
-    wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
+    wgpu::SharedTextureMemoryAHardwareBuffer stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
     stmAHardwareBufferDesc.useExternalFormat = false;
 
@@ -517,7 +517,7 @@ TEST_P(SharedTextureMemoryTests, QueryYCbCrInfoWithExternalFormat) {
 
     // Query the YCbCr properties of a SharedTextureMemory created from this
     // AHB.
-    wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
+    wgpu::SharedTextureMemoryAHardwareBuffer stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
     stmAHardwareBufferDesc.useExternalFormat = true;
 
@@ -573,7 +573,7 @@ TEST_P(SharedTextureMemoryTests, GPUReadForUninitializedTextureWithExternalForma
     AHardwareBuffer* aHardwareBuffer;
     EXPECT_EQ(AHardwareBuffer_allocate(&aHardwareBufferDesc, &aHardwareBuffer), 0);
 
-    wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
+    wgpu::SharedTextureMemoryAHardwareBuffer stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
     stmAHardwareBufferDesc.useExternalFormat = true;
 

@@ -43,10 +43,9 @@
 
 namespace dawn::utils {
 #if TINT_BUILD_SPV_READER
-wgpu::ShaderModule CreateShaderModuleFromASM(
-    const wgpu::Device& device,
-    const char* source,
-    wgpu::DawnShaderModuleSPIRVOptionsDescriptor* spirv_options) {
+wgpu::ShaderModule CreateShaderModuleFromASM(const wgpu::Device& device,
+                                             const char* source,
+                                             wgpu::DawnShaderModuleSPIRVOptions* spirv_options) {
     // Use SPIRV-Tools's C API to assemble the SPIR-V assembly text to binary. Because the types
     // aren't RAII, we don't return directly on success and instead always go through the code
     // path that destroys the SPIRV-Tools objects.
@@ -61,7 +60,7 @@ wgpu::ShaderModule CreateShaderModuleFromASM(
         DAWN_ASSERT(spirv != nullptr);
         DAWN_ASSERT(spirv->wordCount <= std::numeric_limits<uint32_t>::max());
 
-        wgpu::ShaderModuleSPIRVDescriptor spirvDesc;
+        wgpu::ShaderModuleSPIRV spirvDesc;
         spirvDesc.codeSize = static_cast<uint32_t>(spirv->wordCount);
         spirvDesc.code = spirv->code;
         spirvDesc.nextInChain = spirv_options;
@@ -85,7 +84,7 @@ wgpu::ShaderModule CreateShaderModuleFromASM(
 #endif
 
 wgpu::ShaderModule CreateShaderModule(const wgpu::Device& device, const char* source) {
-    wgpu::ShaderModuleWGSLDescriptor wgslDesc;
+    wgpu::ShaderModuleWGSL wgslDesc;
     wgslDesc.code = source;
     wgpu::ShaderModuleDescriptor descriptor;
     descriptor.nextInChain = &wgslDesc;

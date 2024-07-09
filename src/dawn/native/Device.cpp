@@ -490,7 +490,7 @@ MaybeError DeviceBase::Initialize(Ref<QueueBase> defaultQueue) {
                 @fragment fn fs_empty_main() {}
             )";
         ShaderModuleDescriptor descriptor;
-        ShaderModuleWGSLDescriptor wgslDesc;
+        ShaderModuleWGSL wgslDesc;
         wgslDesc.code = kEmptyFragmentShader;
         descriptor.nextInChain = &wgslDesc;
 
@@ -1667,7 +1667,7 @@ BufferBase* DeviceBase::APICreateErrorBuffer(const BufferDescriptor* desc) {
     if (!ConsumedError(ValidateBufferDescriptor(this, desc), &unpacked,
                        InternalErrorType::OutOfMemory, "calling %s.CreateBuffer(%s).", this,
                        desc)) {
-        auto* clientErrorInfo = unpacked.Get<DawnBufferDescriptorErrorInfoFromWireClient>();
+        auto* clientErrorInfo = unpacked.Get<DawnBufferErrorInfoFromWireClient>();
         if (clientErrorInfo != nullptr && clientErrorInfo->outOfMemory) {
             HandleError(DAWN_OUT_OF_MEMORY_ERROR("Failed to allocate memory for buffer mapping"),
                         InternalErrorType::OutOfMemory);

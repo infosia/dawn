@@ -495,7 +495,7 @@ wgpu::TextureViewDimension ResolveDefaultCompatiblityTextureBindingViewDimension
     }
 
     auto textureBindingViewDimension = wgpu::TextureViewDimension::Undefined;
-    if (auto* subDesc = descriptor.Get<TextureBindingViewDimensionDescriptor>()) {
+    if (auto* subDesc = descriptor.Get<TextureBindingViewDimension>()) {
         textureBindingViewDimension = subDesc->textureBindingViewDimension;
     }
     if (textureBindingViewDimension != wgpu::TextureViewDimension::Undefined) {

@@ -234,7 +234,7 @@ interop::Interface<interop::GPUTexture> GPUDevice::createTexture(
         return {};
     }
 
-    wgpu::TextureBindingViewDimensionDescriptor texture_binding_view_dimension_desc{};
+    wgpu::TextureBindingViewDimension texture_binding_view_dimension_desc{};
     wgpu::TextureViewDimension texture_binding_view_dimension;
     if (descriptor.textureBindingViewDimension.has_value() &&
         conv(texture_binding_view_dimension, descriptor.textureBindingViewDimension)) {
@@ -325,7 +325,7 @@ interop::Interface<interop::GPUShaderModule> GPUDevice::createShaderModule(
     interop::GPUShaderModuleDescriptor descriptor) {
     Converter conv(env);
 
-    wgpu::ShaderModuleWGSLDescriptor wgsl_desc{};
+    wgpu::ShaderModuleWGSL wgsl_desc{};
     wgpu::ShaderModuleDescriptor sm_desc{};
     if (!conv(wgsl_desc.code, descriptor.code) || !conv(sm_desc.label, descriptor.label)) {
         return {};

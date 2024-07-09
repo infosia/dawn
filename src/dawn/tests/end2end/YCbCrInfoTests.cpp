@@ -59,7 +59,7 @@ wgpu::Texture Create2DTexture(wgpu::Device& device,
     // Get actual desc for allocated buffer so we know the stride for cpu data.
     AHardwareBuffer_describe(aHardwareBuffer, &aHardwareBufferDesc);
 
-    wgpu::SharedTextureMemoryAHardwareBufferDescriptor stmAHardwareBufferDesc;
+    wgpu::SharedTextureMemoryAHardwareBuffer stmAHardwareBufferDesc;
     stmAHardwareBufferDesc.handle = aHardwareBuffer;
     stmAHardwareBufferDesc.useExternalFormat = true;
 

@@ -203,7 +203,7 @@ ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence() {
     if (mSharedFence) {
         return mSharedFence;
     }
-    SharedFenceMTLSharedEventDescriptor desc;
+    SharedFenceMTLSharedEvent desc;
     desc.sharedEvent = mMtlSharedEvent.Get();
     return SharedFence::Create(ToBackend(GetDevice()), "Internal MTLSharedEvent", &desc);
 }

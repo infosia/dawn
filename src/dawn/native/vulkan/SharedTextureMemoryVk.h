@@ -39,20 +39,14 @@ class Device;
 
 class SharedTextureMemory final : public SharedTextureMemoryBase {
   public:
-    static ResultOrError<Ref<SharedTextureMemory>> Create(
-        Device* device,
-        const char* label,
-        const SharedTextureMemoryDmaBufDescriptor* descriptor);
+    static ResultOrError<Ref<SharedTextureMemory>>
+    Create(Device* device, const char* label, const SharedTextureMemoryDmaBuf* descriptor);
 
-    static ResultOrError<Ref<SharedTextureMemory>> Create(
-        Device* device,
-        const char* label,
-        const SharedTextureMemoryAHardwareBufferDescriptor* descriptor);
+    static ResultOrError<Ref<SharedTextureMemory>>
+    Create(Device* device, const char* label, const SharedTextureMemoryAHardwareBuffer* descriptor);
 
-    static ResultOrError<Ref<SharedTextureMemory>> Create(
-        Device* device,
-        const char* label,
-        const SharedTextureMemoryOpaqueFDDescriptor* descriptor);
+    static ResultOrError<Ref<SharedTextureMemory>>
+    Create(Device* device, const char* label, const SharedTextureMemoryOpaqueFD* descriptor);
 
     RefCountedVkHandle<VkDeviceMemory>* GetVkDeviceMemory() const;
     RefCountedVkHandle<VkImage>* GetVkImage() const;

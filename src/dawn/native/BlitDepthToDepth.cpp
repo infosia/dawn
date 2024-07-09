@@ -73,7 +73,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateDepthBlitPipeline(DeviceBase* 
         }
     }
 
-    ShaderModuleWGSLDescriptor wgslDesc = {};
+    ShaderModuleWGSL wgslDesc = {};
     ShaderModuleDescriptor shaderModuleDesc = {};
     shaderModuleDesc.nextInChain = &wgslDesc;
     wgslDesc.code = kBlitToDepthShaders;

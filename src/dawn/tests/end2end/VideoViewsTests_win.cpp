@@ -213,7 +213,7 @@ class VideoViewsTestBackendWin : public VideoViewsTestBackend {
         // Handle is no longer needed once resources are created.
         ::CloseHandle(sharedHandle);
 
-        wgpu::SharedFenceDXGISharedHandleDescriptor dxgiFenceDesc{};
+        wgpu::SharedFenceDXGISharedHandle dxgiFenceDesc{};
         dxgiFenceDesc.handle = fenceSharedHandle;
         wgpu::SharedFenceDescriptor fenceDesc{};
         fenceDesc.nextInChain = &dxgiFenceDesc;
