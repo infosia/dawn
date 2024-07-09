@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "afed76f2_f4e06d47",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 27
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T18:38:14Z",
+      "side": 1,
+      "message": "nit: extra whitespace.",
+      "revId": "c997162802cbf37190dfa1f0fd7f1cecb48cf1e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "a1bb5d90_78396530",
