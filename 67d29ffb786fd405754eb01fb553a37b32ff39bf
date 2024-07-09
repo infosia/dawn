@@ -461,6 +461,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "91f33f05_415207f3",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T12:55:28Z",
+      "side": 1,
+      "message": "I think what\u0027s confusing me a bit here is that you\u0027re looping over the features doing an assert check in the dawnTestLauncher, and you\u0027re doing a very similiar loop over features here, albeit on a different class.  I would suggest that you move the loop of feature validation from the launcher to here: it\u0027ll improve clarity and robustness.\n\nI\u0027m reasoning that if we have an assert() baked into the root setup of all our AndroidTests, then we\u0027re counting on that assert() to never fire because it would break all tests.  Therefore you don\u0027t need that assert() in the setup: it\u0027s sufficient to have it tested once, here in featuresTest().  \n\nAlso, while you have the assert()s in dawnTestLauncher, you run the risk you might accidentally hide real test failures specific to the tests being set up, rather than the setup code itself.",
+      "parentUuid": "90b323fc_531d5041",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c9912ae_d7501a60",
         "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
         "patchSetId": 5
@@ -544,6 +562,24 @@
       "side": 1,
       "message": "I just tried it on generic Small Phone emulator image and it worked.",
       "parentUuid": "ac1d8415_1ec958ac",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3834b909_b6d1ca8e",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T12:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22f5194a_8f7ab22f",
       "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
