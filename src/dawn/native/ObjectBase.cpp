@@ -105,7 +105,11 @@ ApiObjectBase::~ApiObjectBase() {
 }
 
 void ApiObjectBase::APISetLabel(const char* label) {
-    SetLabel(label);
+    SetLabel(std::string(label ? label : ""));
+}
+
+void ApiObjectBase::APISetLabel2(std::optional<std::string_view> label) {
+    SetLabel(std::string(label.value_or("")));
 }
 
 void ApiObjectBase::SetLabel(std::string label) {

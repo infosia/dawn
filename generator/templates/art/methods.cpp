@@ -162,7 +162,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
         {% elif arg.type.name.get() in ['int32_t', 'size_t', 'uint32_t', 'uint64_t'] or arg.type.category in ['bitmask', 'enum'] %}
             {{ as_varName(arg.name) }} =
                     static_cast<{{ as_cType(arg.type.name) }}>(_{{ as_varName(arg.name) }});
-        {% elif arg.type.name.get() in ['float', 'int'] %}
+        {% elif arg.type.name.get() in ['float', 'int', 'string'] %}
             {{ as_varName(arg.name) }} = _{{ as_varName(arg.name) }};
 
         {% elif arg.type.category == 'function pointer' %} {
