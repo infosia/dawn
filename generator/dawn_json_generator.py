@@ -802,8 +802,8 @@ def as_protobufMemberNameLPM(*names):
     return ''.join([name.concatcase().lower() for name in names])
 
 
-def unreachable_code():
-    assert False
+def unreachable_code(msg="unreachable_code"):
+    assert False, msg
 
 
 ############################################################
@@ -1588,13 +1588,14 @@ class MultiGeneratorFromDawnJSON(Generator):
             jni_name = params_kotlin['jni_name']
             by_category = params_kotlin['by_category']
             for structure in by_category['structure']:
-                renders.append(
-                    FileRender('art/api_kotlin_structure.kt',
-                               'java/' + jni_name(structure) + '.kt', [
-                                   RENDER_PARAMS_BASE, params_kotlin, {
-                                       'structure': structure
-                                   }
-                               ]))
+                if structure.name.get() != "string":
+                    renders.append(
+                        FileRender('art/api_kotlin_structure.kt',
+                                   'java/' + jni_name(structure) + '.kt', [
+                                       RENDER_PARAMS_BASE, params_kotlin, {
+                                           'structure': structure
+                                       }
+                                   ]))
             for obj in by_category['object']:
                 renders.append(
                     FileRender(

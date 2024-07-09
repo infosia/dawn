@@ -202,29 +202,26 @@
                 {% continue %}
             {% endif %}
             //* Normal handling for pointer members and structs.
-            {% if member.annotation != "value" or member.type.category == "structure" %}
+            {% if member.annotation != "value" %}
                 {% if member.type.category != "object" and member.optional %}
-                    if (record.{{as_varName(member.name)}} != nullptr) {
-                {% else %}
-                    {
+                    if (record.{{as_varName(member.name)}} != nullptr)
                 {% endif %}
-                {% if member.annotation != "value" %}
-                        {% do assert(member.annotation != "const*const*", "const*const* not valid here") %}
-                        auto memberLength = {{member_length(member, "record.")}};
-                        auto size = WireAlignSizeofN<{{member_transfer_type(member)}}>(memberLength);
-                        DAWN_ASSERT(size);
-                        result += *size;
-                        //* Structures might contain more pointers so we need to add their extra size as well.
-                        {% if member.type.category == "structure" %}
-                            for (decltype(memberLength) i = 0; i < memberLength; ++i) {
-                                {% do assert(member.annotation == "const*" or member.annotation == "*", "unhandled annotation: " + member.annotation)%}
-                                result += {{as_cType(member.type.name)}}GetExtraRequiredSize(record.{{as_varName(member.name)}}[i]);
-                            }
-                        {% endif %}
-                    {% elif member.type.category == "structure" %}
-                        result += {{as_cType(member.type.name)}}GetExtraRequiredSize(record.{{as_varName(member.name)}});
+                {
+                    {% do assert(member.annotation != "const*const*", "const*const* not valid here") %}
+                    auto memberLength = {{member_length(member, "record.")}};
+                    auto size = WireAlignSizeofN<{{member_transfer_type(member)}}>(memberLength);
+                    DAWN_ASSERT(size);
+                    result += *size;
+                    //* Structures might contain more pointers so we need to add their extra size as well.
+                    {% if member.type.category == "structure" %}
+                        for (decltype(memberLength) i = 0; i < memberLength; ++i) {
+                            {% do assert(member.annotation == "const*" or member.annotation == "*", "unhandled annotation: " + member.annotation)%}
+                            result += {{as_cType(member.type.name)}}GetExtraRequiredSize(record.{{as_varName(member.name)}}[i]);
+                        }
                     {% endif %}
                 }
+            {% elif member.type.category == "structure" %}
+                result += {{as_cType(member.type.name)}}GetExtraRequiredSize(record.{{as_varName(member.name)}});
             {% endif %}
         {% endfor %}
         return result;
@@ -740,10 +737,87 @@ WireResult DeserializeChainedStruct(WGPUChainedStructOut** outChainNext,
 //* Output structure [de]serialization first because it is used by commands.
 {% for type in by_category["structure"] %}
     {%- set name = as_cType(type.name) -%}
-    {% if type.name.CamelCase() not in client_side_structures -%}
+    {% if type.name.CamelCase() not in client_side_structures and name != "WGPUString" -%}
         {{write_record_serialization_helpers(type, name, type.members, is_cmd=False)}}
     {% endif %}
 {% endfor %}
+
+struct WGPUStringTransfer {
+    bool has_data;
+    uint64_t length;
+};
+
+DAWN_DECLARE_UNUSED size_t WGPUStringGetExtraRequiredSize([[maybe_unused]] const WGPUString& record) {
+    size_t result = 0;
+    if (!(record.data == nullptr && record.length == SIZE_MAX)) {
+        if (record.length == SIZE_MAX) {
+            DAWN_ASSERT(record.data != nullptr);
+            result += Align(std::strlen(record.data), kWireBufferAlignment);
+        } else {
+            result += Align(record.length, kWireBufferAlignment);
+        }
+    }
+    return result;
+}
+DAWN_UNUSED_FUNC(WGPUStringGetExtraRequiredSize);
+
+DAWN_DECLARE_UNUSED WireResult WGPUStringSerialize(
+    const WGPUString& record,
+    WGPUStringTransfer* transfer,
+    [[maybe_unused]] SerializeBuffer* buffer) {
+
+    bool has_data = record.data != nullptr;
+    uint64_t length = record.length;
+    transfer->has_data = has_data;
+    transfer->length = length;
+    if (has_data) {
+        if (length == SIZE_MAX) {
+            length = std::strlen(record.data);
+        }
+        transfer->length = length;
+        if (length > 0) {
+            char* memberBuffer;
+            WIRE_TRY(buffer->NextN(length, &memberBuffer));
+            memcpy(memberBuffer, record.data, length);
+        }
+    }
+    return WireResult::Success;
+}
+DAWN_UNUSED_FUNC(WGPUStringSerialize);
+
+DAWN_DECLARE_UNUSED WireResult WGPUStringDeserialize(
+    WGPUString* record,
+    const volatile WGPUStringTransfer* transfer,
+    DeserializeBuffer* deserializeBuffer,
+    [[maybe_unused]] DeserializeAllocator* allocator) {
+
+    bool has_data = transfer->has_data;
+    uint64_t length = transfer->length;
+
+    record->length = length;
+    if (!has_data) {
+        record->data = nullptr;
+    } else {
+        if (length > SIZE_MAX) {
+            return WireResult::FatalError;
+        }
+        size_t stringLength = static_cast<size_t>(length);
+        record->length = stringLength;
+        if (stringLength > 0) {
+            const volatile char* stringInBuffer;
+            WIRE_TRY(deserializeBuffer->ReadN(stringLength, &stringInBuffer));
+
+            char* copiedString;
+            WIRE_TRY(GetSpace(allocator, stringLength, &copiedString));
+            memcpy(copiedString, const_cast<const char*>(stringInBuffer), stringLength);
+            record->data = copiedString;
+        } else {
+            record->data = "";
+        }
+    }
+    return WireResult::Success;
+}
+DAWN_UNUSED_FUNC(WGPUStringDeserialize);
 
 {{make_chained_struct_serialization_helpers(out=False)}}
 {{make_chained_struct_serialization_helpers(out=True)}}

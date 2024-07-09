@@ -97,6 +97,7 @@ typedef uint32_t {{API}}Bool;
 {% endfor %}
 
 // Structure forward declarations
+struct WGPUString;
 {% for type in by_category["structure"] %}
     struct {{as_cType(type.name)}};
 {% endfor %}
@@ -196,6 +197,7 @@ typedef struct {{API}}ChainedStructOut {
     })
 
 {% endfor %}
+
 {% for type in by_category["structure"] %}
     {% for root in type.chain_roots %}
         // Can be chained in {{as_cType(root.name)}}
@@ -258,7 +260,7 @@ extern "C" {
             {{-as_cType(type.name)}} {{as_varName(type.name)}}
             {%- for arg in method.arguments -%}
                 ,{{" "}}
-                {%- if arg.optional %}{{API}}_NULLABLE {% endif -%}
+                {%- if arg.optional and arg.type.name.get() != "string" %}{{API}}_NULLABLE {% endif -%}
                 {{as_annotated_cType(arg)}}
             {%- endfor -%}
         ) {{API}}_FUNCTION_ATTRIBUTE;
@@ -274,7 +276,7 @@ extern "C" {
     {{API}}_EXPORT {{as_cType(function.return_type.name)}} {{as_cMethod(None, function.name)}}(
             {%- for arg in function.arguments -%}
                 {% if not loop.first %}, {% endif -%}
-                {%- if arg.optional %}{{API}}_NULLABLE {% endif -%}
+                {%- if arg.optional and arg.type.name.get() != "string" %}{{API}}_NULLABLE {% endif -%}
                 {{as_annotated_cType(arg)}}
             {%- endfor -%}
         ) {{API}}_FUNCTION_ATTRIBUTE;
@@ -287,7 +289,7 @@ extern "C" {
             {{-as_cType(type.name)}} {{as_varName(type.name)}}
             {%- for arg in method.arguments -%}
                 ,{{" "}}
-                {%- if arg.optional %}{{API}}_NULLABLE {% endif -%}
+                {%- if arg.optional and arg.type.name.get() != "string" %}{{API}}_NULLABLE {% endif -%}
                 {{as_annotated_cType(arg)}}
             {%- endfor -%}
         ) {{API}}_FUNCTION_ATTRIBUTE;
