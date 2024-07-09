@@ -166,6 +166,8 @@ class Token {
         kAlias,
         /// A 'break'
         kBreak,
+        /// A 'builtin'
+        kBuiltin,
         /// A 'case'
         kCase,
         /// A 'const'

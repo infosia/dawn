@@ -154,6 +154,8 @@ std::string_view Token::TypeToName(Type type) {
             return "alias";
         case Token::Type::kBreak:
             return "break";
+        case Token::Type::kBuiltin:
+            return "builtin";
         case Token::Type::kCase:
             return "case";
         case Token::Type::kConst:
