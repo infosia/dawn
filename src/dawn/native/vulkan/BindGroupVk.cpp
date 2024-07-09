@@ -28,6 +28,7 @@
 #include "dawn/native/vulkan/BindGroupVk.h"
 
 #include "dawn/common/BitSetIterator.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/ityp_stack_vec.h"
 #include "dawn/native/ExternalTexture.h"
@@ -64,6 +65,8 @@ BindGroup::BindGroup(Device* device,
         bindingCount);
 
     uint32_t numWrites = 0;
+    bool prevWasYCbCrSampler = false;
+    uint32_t yCbCrBinding = 0;
     for (const auto& bindingItem : GetLayout()->GetBindingMap()) {
         // We cannot use structured binding here because lambda expressions can only capture
         // variables, while structured binding doesn't introduce variables.
@@ -105,12 +108,20 @@ BindGroup::BindGroup(Device* device,
                 return true;
             },
             [&](const StaticSamplerBindingInfo& layout) -> bool {
+                if (layout.sampler->IsYCbCr()) {
+                    ErrorLog() << "blundell: Found YCbCr when creating BindGroup";
+                    prevWasYCbCrSampler = true;
+                    yCbCrBinding = write.dstBinding;
+                }
                 // Static samplers are bound into the Vulkan layout as immutable
                 // samplers at BindGroupLayout creation time. There is no work
                 // to be done at BindGroup creation time.
                 return false;
             },
             [&](const TextureBindingInfo&) -> bool {
+                if (prevWasYCbCrSampler) {
+                    ErrorLog() << "blundell: Prev was YCbCr";
+                }
                 TextureView* view = ToBackend(GetBindingAsTextureView(bindingIndex));
 
                 VkImageView handle = view->GetHandle();
@@ -122,11 +133,21 @@ BindGroup::BindGroup(Device* device,
                     // resources.
                     return false;
                 }
+
+                if (prevWasYCbCrSampler) {
+                    ErrorLog() << "blundell: Handling prev YCbCr";
+                    // Write the info of the texture at the binding index for the
+                    // YCbCr sampler.
+                    write.dstBinding = yCbCrBinding;
+                    write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+                }
+
                 writeImageInfo[numWrites].imageView = handle;
                 writeImageInfo[numWrites].imageLayout = VulkanImageLayout(
                     view->GetTexture()->GetFormat(), wgpu::TextureUsage::TextureBinding);
 
                 write.pImageInfo = &writeImageInfo[numWrites];
+                prevWasYCbCrSampler = false;
                 return true;
             },
             [&](const StorageTextureBindingInfo&) -> bool {

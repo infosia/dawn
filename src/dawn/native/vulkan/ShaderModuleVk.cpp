@@ -34,6 +34,7 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/HashUtils.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/CacheRequest.h"
 #include "dawn/native/PhysicalDevice.h"
@@ -235,6 +236,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     if (handleAndSpirv.has_value()) {
         return std::move(*handleAndSpirv);
     }
+
+    // ErrorLog() << "blundell: Computing handle and SPIRV";
 
 #if TINT_BUILD_SPV_WRITER
     // Creation of module and spirv is deferred to this point when using tint generator
