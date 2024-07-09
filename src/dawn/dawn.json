@@ -3457,7 +3457,7 @@
             {"name": "timestamp writes", "type": "render pass timestamp writes", "annotation": "const*", "optional": true}
         ]
     },
-    "render pass descriptor max draw count": {
+    "render pass max draw count": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["render pass descriptor"],
@@ -3992,7 +3992,7 @@
             {"name": "layout", "type": "pipeline layout"}
         ]
     },
-    "shader module SPIRV descriptor": {
+    "shader source SPIRV": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shader module descriptor"],
@@ -4001,7 +4001,7 @@
             {"name": "code", "type": "uint32_t", "annotation": "const*", "length": "code size"}
         ]
     },
-    "shader module WGSL descriptor": {
+    "shader source WGSL": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shader module descriptor"],
@@ -4126,7 +4126,7 @@
             {"name": "label", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
         ]
     },
-    "surface descriptor from android native window": {
+    "surface source android native window": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -4135,7 +4135,7 @@
             {"name": "window", "type": "void *"}
         ]
     },
-    "surface descriptor from canvas HTML selector": {
+    "surface source canvas HTML selector _Emscripten": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -4144,7 +4144,7 @@
             {"name": "selector", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
-    "surface descriptor from metal layer": {
+    "surface source metal layer": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -4153,7 +4153,7 @@
             {"name": "layer", "type": "void", "annotation": "*"}
         ]
     },
-    "surface descriptor from windows HWND": {
+    "surface source windows HWND": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -4163,7 +4163,7 @@
             {"name": "hwnd", "type": "void", "annotation": "*"}
         ]
     },
-    "surface descriptor from xcb window": {
+    "surface source XCB window": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -4173,7 +4173,7 @@
             {"name": "window", "type": "uint32_t"}
         ]
     },
-    "surface descriptor from xlib window": {
+    "surface source xlib window": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -4183,7 +4183,7 @@
             {"name": "window", "type": "uint64_t"}
         ]
     },
-    "surface descriptor from wayland surface": {
+    "surface source wayland surface": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -4245,22 +4245,22 @@
         "category": "enum",
         "emscripten_no_enum_table": true,
         "values": [
-            {"value": 1, "name": "shader module SPIRV descriptor"},
-            {"value": 2, "name": "shader module WGSL descriptor"},
+            {"value": 1, "name": "shader source SPIRV"},
+            {"value": 2, "name": "shader source WGSL"},
             {"value": 3, "name": "primitive depth clip control"},
-            {"value": 4, "name": "render pass descriptor max draw count"},
+            {"value": 4, "name": "render pass max draw count"},
             {"value": 5, "name": "render pass descriptor expand resolve rect"},
 
             {"value": 0, "name": "texture binding view dimension descriptor", "tags": ["compat"]},
 
-            {"value": 0, "name": "surface descriptor from canvas HTML selector", "tags": ["emscripten"]},
+            {"value": 0, "name": "surface source canvas HTML selector _Emscripten", "tags": ["emscripten"]},
 
-            {"value": 0, "name": "surface descriptor from metal layer", "tags": ["native"]},
-            {"value": 1, "name": "surface descriptor from windows HWND", "tags": ["native"]},
-            {"value": 2, "name": "surface descriptor from xlib window", "tags": ["native"]},
-            {"value": 3, "name": "surface descriptor from wayland surface", "tags": ["native"]},
-            {"value": 4, "name": "surface descriptor from android native window", "tags": ["native"]},
-            {"value": 5, "name": "surface descriptor from xcb window", "tags": ["native"]},
+            {"value": 0, "name": "surface source metal layer", "tags": ["native"]},
+            {"value": 1, "name": "surface source windows HWND", "tags": ["native"]},
+            {"value": 2, "name": "surface source xlib window", "tags": ["native"]},
+            {"value": 3, "name": "surface source wayland surface", "tags": ["native"]},
+            {"value": 4, "name": "surface source android native window", "tags": ["native"]},
+            {"value": 5, "name": "surface source XCB window", "tags": ["native"]},
 
             {"value": 0, "name": "surface descriptor from windows core window", "tags": ["dawn"]},
             {"value": 1, "name": "external texture binding entry", "tags": ["dawn"]},
