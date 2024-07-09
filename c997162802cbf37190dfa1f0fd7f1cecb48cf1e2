@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1bb5d90_78396530",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-09T18:34:02Z",
+      "side": 1,
+      "message": "LGTM\n\ncorentin can give the final approval when the last comment on github is addressed.",
+      "revId": "c997162802cbf37190dfa1f0fd7f1cecb48cf1e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
