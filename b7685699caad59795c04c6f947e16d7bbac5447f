@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "db0d9e00_7178a3d4",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T12:39:23Z",
+      "side": 1,
+      "message": "I will do but I have ambitions that it should become a general utility class in future. We do need a scalable solution for proessEvents first though.",
+      "parentUuid": "6cbba3c9_5c8c2378",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "581dca99_454f7158",
         "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
         "patchSetId": 3
@@ -90,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2e63d627_81200df3",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T12:39:23Z",
+      "side": 1,
+      "message": "Note I don\u0027t really want to pass \u0027instance\u0027 everywhere that calls async methods; they should only require the systems they are calling (e.g. device or surface) in my opinion.",
+      "parentUuid": "d8ee6572_8859c23b",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e878f609_92fe6317",
         "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
         "patchSetId": 3
@@ -107,6 +143,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b264a9b_68746950",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T12:39:23Z",
+      "side": 1,
+      "message": "Just a compromise between risking starving the main thread of cycles vs making the tests longer to complete. Lots of values would work, I don\u0027t mind much.",
+      "parentUuid": "e878f609_92fe6317",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "014761ff_28e9c090",
         "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
         "patchSetId": 3
@@ -118,6 +172,24 @@
       "writtenOn": "2024-07-09T09:21:20Z",
       "side": 1,
       "message": "Out of curiosity, we need to both close() and destroy() the Device, but we only need to close() the Adapter?  Is this by API design, or is it an artifact of the Kotlin bindings?  This seems like the kind of thing a developer could easily miss.",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bafbdbdf_5a3ea67d",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T12:39:23Z",
+      "side": 1,
+      "message": "I asked the Dawn folks about this (as I don\u0027t like it either). Unfortunately I can\u0027t locate the conversation, but the gist of it is that close() is about releasing the handles and destroy() is only present on things that allocate external resources and might take longer to tear everything down.",
+      "parentUuid": "014761ff_28e9c090",
       "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
