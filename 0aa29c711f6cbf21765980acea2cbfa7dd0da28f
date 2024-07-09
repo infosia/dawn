@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e92b84fe_547f6d3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-07-09T07:59:58Z",
+      "side": 1,
+      "message": "More details in https://issues.chromium.org/issues/351953347\nPTAL, thanks!",
+      "revId": "0aa29c711f6cbf21765980acea2cbfa7dd0da28f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
