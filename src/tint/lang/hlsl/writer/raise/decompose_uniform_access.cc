@@ -302,10 +302,10 @@ struct State {
 
         return tint::Switch(
             result_ty,
-            //            [&](const core::type::Struct* s) {
-            //                auto* fn = GetLoadFunctionFor(inst, var, s);
-            //                return b.Call(fn, vec_idx);
-            //            },
+            [&](const core::type::Struct* s) {
+                auto* fn = GetLoadFunctionFor(inst, var, s);
+                return b.Call(fn, byte_offset);
+            },
             [&](const core::type::Matrix* m) {
                 auto* fn = GetLoadFunctionFor(inst, var, m);
                 return b.Call(fn, byte_offset);
@@ -468,6 +468,44 @@ struct State {
                 });
 
                 b.Return(fn, b.Load(result_arr));
+            });
+
+            return fn;
+        });
+    }
+
+    // Creates a load function for the given `var` and `struct` combination. Essentially creates
+    // a function similar to:
+    //
+    // fn custom_load_S(start_offset: u32) {
+    //   let a = load object at (start_offset + member_offset)
+    //   let b = load object at (start_offset + member 1 offset);
+    //   ...
+    //   return S(a, b, ..., z);
+    // }
+    core::ir::Function* GetLoadFunctionFor(core::ir::Instruction* inst,
+                                           core::ir::Var* var,
+                                           const core::type::Struct* s) {
+        return var_and_type_to_load_fn_.GetOrAdd(VarTypePair{var, s}, [&] {
+            auto* start_byte_offset = b.FunctionParam("start_byte_offset", ty.u32());
+            auto* fn = b.Function(s);
+            fn->SetParams({start_byte_offset});
+
+            b.Append(fn->Block(), [&] {
+                Vector<core::ir::Value*, 4> values;
+                for (const auto* mem : s->Members()) {
+                    uint32_t stride = static_cast<uint32_t>(mem->Offset());
+
+                    OffsetData od{stride, {start_byte_offset}};
+                    auto* byte_idx = OffsetToValue(od);
+                    auto* array_idx = OffsetValueToArrayIndex(byte_idx);
+                    auto* vec_offset = CalculateVectorOffset(byte_idx);
+
+                    values.Push(MakeLoad(inst, var, mem->Type(), byte_idx, array_idx, vec_offset)
+                                    ->Result(0));
+                }
+
+                b.Return(fn, b.Construct(s, values));
             });
 
             return fn;
