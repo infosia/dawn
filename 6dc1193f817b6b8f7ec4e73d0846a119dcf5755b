@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f84566ed_71f434b3",
+        "filename": "src/dawn/common/SerialQueue.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-09T16:17:10Z",
+      "side": 1,
+      "message": "https://baptiste-wicht.com/posts/2012/12/cpp-benchmark-vector-list-deque.html.\n\nstd::deque is much faster than std::vector in push_front benchmark. I think pop_front would be similar. Though, the number of buckets in serial queue might not that high.",
+      "parentUuid": "d7ec1f50_02ede3fb",
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c9f00e2b_f22f1fcb",
         "filename": "src/dawn/common/SerialQueue.h",
         "patchSetId": 17
@@ -216,6 +234,24 @@
       "writtenOn": "2024-07-09T15:24:44Z",
       "side": 1,
       "message": "While this is something we\u0027d like to have at some point, I don\u0027t know that it is a good time to do it yet, however it will be increasingly useful in the future.\n\nAt the moment we create resources during encoding. This means that we don\u0027t know when the buffer will be used and when it can be returned for reuse so this is basically a proxy in front of the backend\u0027s general purpose buffer allocators that tries to cache allocations. It seems like it should be the job of the backend allocators (or the D3D11 driver) because we don\u0027t have a lot more information than they do.\n\nIn the future when we allocate only during submission and not during encoding then we\u0027ll be able to do better than the drivers as we\u0027ll have more semantic information. We\u0027ll be able to use one or several buffers that we allocate temporary scratch space (a buffer + offset pair) out of that it returned immediately. The allocation is very short-lived so management should be simpler and result in less peak memory used.\n\nDo we have performance data that shows that this is already necessary vs. when allocation is done only during submission?",
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "620ab564_e5ed3eac",
+        "filename": "src/dawn/native/TempGPUBufferManager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-09T16:17:10Z",
+      "side": 1,
+      "message": "There is one thing our allocator could be better than Driver. I think driver doesn\u0027t reuse allocations, when we release a buffer, its allocation is deleted immediately. However, our allocator could keep the allocations alive for some submissions, so that the number of allocations/deallocations are greatly reduced. That in turns would reduce kernel/driver calls.\n\nAlternatively, I can put this buffers reuse on hold. Instead we would never create temp buffers for D3D11, D3D11 backend already has an ability to allocate d3d11::Buffer capable of Storage + MapRead. It just needs double memory for that. And the memory used for Storage wouldn\u0027t be reused for other d3d11::Buffer. I guess it would be good enough for now.",
+      "parentUuid": "202ab32e_0016cb14",
       "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
