@@ -98,6 +98,30 @@
       },
       "revId": "4c870735e7ab81e07e8075dbfc58b75b886b75a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c09f2f0d_2dac604c",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T08:48:08Z",
+      "side": 1,
+      "message": "Acknowledged, can we simplify the logic a bit then?",
+      "parentUuid": "9f61b01e_5e9ddac2",
+      "range": {
+        "startLine": 995,
+        "startChar": 9,
+        "endLine": 998,
+        "endChar": 19
+      },
+      "revId": "4c870735e7ab81e07e8075dbfc58b75b886b75a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
