@@ -267,24 +267,36 @@ MaybeError Texture::ClearTexture(const SubresourceRange& range,
                 switch (GetDimension()) {
                     case wgpu::TextureDimension::e1D:
                     case wgpu::TextureDimension::e2D:
-                        if (GetArrayLayers() == 1) {
-                            Aspect aspectsToClear = Aspect::None;
-                            for (Aspect aspect : IterateEnumMask(range.aspects)) {
-                                if (clearValue == TextureBase::ClearValue::Zero &&
-                                    IsSubresourceContentInitialized(
-                                        SubresourceRange::SingleMipAndLayer(level, 0, aspect))) {
-                                    // Skip lazy clears if already initialized.
+                        if (mTarget == GL_TEXTURE_2D || mTarget == GL_TEXTURE_CUBE_MAP) {
+                            const uint32_t layers = GetArrayLayers();
+                            DAWN_ASSERT(layers == 1 || layers == 6);
+                            DAWN_ASSERT(layers >= range.baseArrayLayer + range.layerCount);
+                            for (uint32_t layer = range.baseArrayLayer;
+                                 layer < range.baseArrayLayer + range.layerCount; ++layer) {
+                                Aspect aspectsToClear = Aspect::None;
+                                for (Aspect aspect : IterateEnumMask(range.aspects)) {
+                                    if (clearValue == TextureBase::ClearValue::Zero &&
+                                        IsSubresourceContentInitialized(
+                                            SubresourceRange::SingleMipAndLayer(level, layer,
+                                                                                aspect))) {
+                                        // Skip lazy clears if already initialized.
+                                        continue;
+                                    }
+                                    aspectsToClear |= aspect;
+                                }
+
+                                if (aspectsToClear == Aspect::None) {
                                     continue;
                                 }
-                                aspectsToClear |= aspect;
+                                const GLenum framebufferTarget =
+                                    mTarget == GL_TEXTURE_CUBE_MAP
+                                        ? GL_TEXTURE_CUBE_MAP_POSITIVE_X + layer
+                                        : GL_TEXTURE_2D;
+                                gl.FramebufferTexture2D(GL_DRAW_FRAMEBUFFER, attachment,
+                                                        framebufferTarget, GetHandle(),
+                                                        static_cast<GLint>(level));
+                                DoClear(aspectsToClear);
                             }
-
-                            if (aspectsToClear == Aspect::None) {
-                                continue;
-                            }
-                            gl.FramebufferTexture2D(GL_DRAW_FRAMEBUFFER, attachment, GetGLTarget(),
-                                                    GetHandle(), static_cast<GLint>(level));
-                            DoClear(aspectsToClear);
                         } else {
                             for (uint32_t layer = range.baseArrayLayer;
                                  layer < range.baseArrayLayer + range.layerCount; ++layer) {
@@ -407,33 +419,36 @@ MaybeError Texture::ClearTexture(const SubresourceRange& range,
                         }
                     };
 
-                    if (GetArrayLayers() == 1) {
-                        switch (GetDimension()) {
-                            case wgpu::TextureDimension::Undefined:
-                                DAWN_UNREACHABLE();
-                            case wgpu::TextureDimension::e1D:
-                            case wgpu::TextureDimension::e2D:
+                    switch (GetDimension()) {
+                        case wgpu::TextureDimension::Undefined:
+                            DAWN_UNREACHABLE();
+                        case wgpu::TextureDimension::e1D:
+                        case wgpu::TextureDimension::e2D:
+                            if (mTarget == GL_TEXTURE_2D) {
+                                DAWN_ASSERT(GetArrayLayers() == 1);
                                 gl.FramebufferTexture2D(GL_DRAW_FRAMEBUFFER, attachment,
                                                         GetGLTarget(), GetHandle(), level);
+                            } else if (mTarget == GL_TEXTURE_CUBE_MAP) {
+                                DAWN_ASSERT(GetArrayLayers() == 6);
+                                GLenum cubeMapTarget = GL_TEXTURE_CUBE_MAP_POSITIVE_X + layer;
+                                gl.FramebufferTexture2D(GL_DRAW_FRAMEBUFFER, attachment,
+                                                        cubeMapTarget, GetHandle(), level);
+                            } else {
+                                gl.FramebufferTextureLayer(GL_DRAW_FRAMEBUFFER, attachment,
+                                                           GetHandle(), level, layer);
+                            }
+                            DoClear();
+                            break;
+                        case wgpu::TextureDimension::e3D:
+                            uint32_t depth =
+                                GetMipLevelSingleSubresourceVirtualSize(level, Aspect::Color)
+                                    .depthOrArrayLayers;
+                            for (GLint z = 0; z < static_cast<GLint>(depth); ++z) {
+                                gl.FramebufferTextureLayer(GL_DRAW_FRAMEBUFFER, attachment,
+                                                           GetHandle(), level, z);
                                 DoClear();
-                                break;
-                            case wgpu::TextureDimension::e3D:
-                                uint32_t depth =
-                                    GetMipLevelSingleSubresourceVirtualSize(level, Aspect::Color)
-                                        .depthOrArrayLayers;
-                                for (GLint z = 0; z < static_cast<GLint>(depth); ++z) {
-                                    gl.FramebufferTextureLayer(GL_DRAW_FRAMEBUFFER, attachment,
-                                                               GetHandle(), level, z);
-                                    DoClear();
-                                }
-                                break;
-                        }
-
-                    } else {
-                        DAWN_ASSERT(GetDimension() == wgpu::TextureDimension::e2D);
-                        gl.FramebufferTextureLayer(GL_DRAW_FRAMEBUFFER, attachment, GetHandle(),
-                                                   level, layer);
-                        DoClear();
+                            }
+                            break;
                     }
 
                     gl.Enable(GL_SCISSOR_TEST);
