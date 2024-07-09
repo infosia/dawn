@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d7c7c22e_c21b3ec6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-09T05:24:20Z",
+      "side": 1,
+      "message": "Reusing buffers is always better than repeatedly creating buffers, right? The latter is what we are doing in the blit.\n\nDo you mean it should be mentioned in the commit message or there should be a proof that repeatedly creating buffers are bad?",
+      "parentUuid": "3b6f19a4_006be463",
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "793d51cb_c9026da8",
         "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
         "patchSetId": 17
@@ -71,6 +89,30 @@
       "writtenOn": "2024-07-09T01:09:49Z",
       "side": 1,
       "message": "I would have expected that instead of hardcoding the temp buffers all to be the same usage, you could request a particular usage - or even a whole buffer descriptor. And the buffer manager would try to find a suitable buffer for you. If the whole descriptor, we could support the `mappedAtCreation` case at [1] better.",
+      "range": {
+        "startLine": 473,
+        "startChar": 14,
+        "endLine": 473,
+        "endChar": 98
+      },
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cbbf5ab_55260a89",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-09T05:24:20Z",
+      "side": 1,
+      "message": "I think having buffer manager managing arbitrary usage could make it more complicated and have unnecessary overhead. We would have to have another layer of usage keying in the table, we would need another algorithm to find best fit usage, etc.\n\nCurrently there are only 3 usages needing temp buffer:\n1. For pure GPU purposes (copies, compute).\n  - Copies and compute don\u0027t necessarily need the same usage but hardcoding the aggregated usage for them could maximize the buffer reuses.\n  - We shouldn\u0027t reuse the buffers immediately after their commands has been submitted, because it would add inter command buffers\u0027 dependencies and prevent overlapping in GPU.\n2. uniform buffers.\n  - Need exact size in D3D11, and we don\u0027t need to wait until the buffers are done on GPU because D3D11\u0027s `WriteBuffer` can discard the old buffer\u0027s content and avoid command buffers\u0027 dependencies. This is particular useful opportunity for optimization because we don\u0027t need to allocate too many buffers.\n3. upload buffers.\n  - Need mappedAtCreation. I\u0027m not fully familiar with DynamicUploader class but maybe in future we could reuse the buffer manager class for allocating these buffers.",
+      "parentUuid": "e6f611c3_e95ba80c",
       "range": {
         "startLine": 473,
         "startChar": 14,
