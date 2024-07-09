@@ -33,6 +33,24 @@
       "message": "nit: the device does Unregister. should this one too? maybe it can\u0027t because we still need the ObjectHandle to be valid for futures ?\n\ncomment why not otherwise",
       "revId": "dc5b934f4d22c4d9f49eb534c096cbf199f93aba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98d9e0c7_66cf2195",
+        "filename": "src/dawn/wire/client/Instance.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T18:20:00Z",
+      "side": 1,
+      "message": "That\u0027s an oversight. Fixed.",
+      "parentUuid": "2322f656_cc8169b6",
+      "revId": "dc5b934f4d22c4d9f49eb534c096cbf199f93aba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
