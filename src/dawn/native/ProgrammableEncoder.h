@@ -48,9 +48,11 @@ class ProgrammableEncoder : public ApiObjectBase {
   public:
     ProgrammableEncoder(DeviceBase* device, const char* label, EncodingContext* encodingContext);
 
-    void APIInsertDebugMarker(const char* groupLabel);
+    void APIInsertDebugMarker(const char* groupLabel) { APIInsertDebugMarker2(groupLabel); }
+    void APIInsertDebugMarker2(std::string_view groupLabel);
     void APIPopDebugGroup();
-    void APIPushDebugGroup(const char* groupLabel);
+    void APIPushDebugGroup(const char* groupLabel) { APIPushDebugGroup2(groupLabel); }
+    void APIPushDebugGroup2(std::string_view groupLabel);
 
   protected:
     bool IsValidationEnabled() const;

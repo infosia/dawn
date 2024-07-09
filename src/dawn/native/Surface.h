@@ -129,6 +129,7 @@ class Surface final : public ErrorMonad {
     void APIPresent();
     void APIUnconfigure();
     void APISetLabel(const char* label);
+    void APISetLabel2(std::optional<std::string_view> label);
 
   private:
     Surface(InstanceBase* instance, ErrorMonad::ErrorTag tag);
