@@ -191,6 +191,24 @@
       "parentUuid": "abac3a01_02354a44",
       "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "667f0aa1_a326f3a1",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-09T03:04:48Z",
+      "side": 1,
+      "message": "Hmm, that wasn\u0027t clear to me and now you\u0027ve explained it it raises the question of why the end of `v1` is pointing to `4`, when it should stop at `3`. I think it\u0027d be clearer with it aligned, but doesn\u0027t really matter much.",
+      "parentUuid": "9be06984_ba4082ef",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

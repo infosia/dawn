@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5350bd3f_4aab0abd",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-09T03:04:48Z",
+      "side": 1,
+      "message": "Nit: I notice that every callsite of this function computes the array_idx and vec_idx the same way, so might be simpler to just do that inside this function instead since you have the `byte_offset`?",
+      "revId": "fb499f2daee4cf7a9d2014b7b5dd44dc5c401e1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
