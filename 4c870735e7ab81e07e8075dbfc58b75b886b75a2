@@ -122,6 +122,30 @@
       },
       "revId": "4c870735e7ab81e07e8075dbfc58b75b886b75a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91887e1b_6edb6483",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-09T11:58:19Z",
+      "side": 1,
+      "message": "Do you have any suggestion for further simplification? I think using `Align(copyEnd, 4) - 4` might be overflowed if copyEnd is zero.\n\nBtw, I have another CL that only allocates temp buffer big enough for the copy, and the check there was simpler and similar to your suggestion above https://dawn-review.googlesource.com/c/dawn/+/195403/20/src/dawn/native/BlitTextureToBuffer.cpp#1023\n\nSo IMO I think it\u0027s not worth to further tinker the code here which would eventually be replaced very soon.",
+      "parentUuid": "c09f2f0d_2dac604c",
+      "range": {
+        "startLine": 995,
+        "startChar": 9,
+        "endLine": 998,
+        "endChar": 19
+      },
+      "revId": "4c870735e7ab81e07e8075dbfc58b75b886b75a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
