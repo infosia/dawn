@@ -228,4 +228,13 @@ void CommandAllocator::ResetPointers() {
     mEndPtr = reinterpret_cast<char*>(&mPlaceholderSpace[1]);
 }
 
+const char* CommandAllocator::CopyAsNullTerminatedString(std::string_view in) {
+    // Include extra null-terminator character. The string_view may not be
+    // null-terminated.
+    char* out = AllocateData<char>(in.length() + 1);
+    memcpy(out, in.data(), in.length());
+    out[in.length()] = '\0';
+    return out;
+}
+
 }  // namespace dawn::native
