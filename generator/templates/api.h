@@ -70,8 +70,6 @@
 #define {{API}}_NULLABLE
 #endif
 
-#define WGPU_BREAKING_CHANGE_DEPTH_WRITE_ENABLED
-
 #include <stdint.h>
 #include <stddef.h>
 
