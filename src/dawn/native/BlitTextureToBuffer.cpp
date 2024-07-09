@@ -606,7 +606,7 @@ ResultOrError<Ref<ComputePipelineBase>> GetOrCreateTextureToBufferPipeline(
         return iter->second;
     }
 
-    ShaderModuleWGSLDescriptor wgslDesc = {};
+    ShaderModuleWGSL wgslDesc = {};
     ShaderModuleDescriptor shaderModuleDesc = {};
     shaderModuleDesc.nextInChain = &wgslDesc;
 

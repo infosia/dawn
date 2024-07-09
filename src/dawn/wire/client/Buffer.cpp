@@ -46,8 +46,8 @@ WGPUBuffer CreateErrorBufferOOMAtClient(Device* device, const WGPUBufferDescript
         return nullptr;
     }
     WGPUBufferDescriptor errorBufferDescriptor = *descriptor;
-    WGPUDawnBufferDescriptorErrorInfoFromWireClient errorInfo = {};
-    errorInfo.chain.sType = WGPUSType_DawnBufferDescriptorErrorInfoFromWireClient;
+    WGPUDawnBufferErrorInfoFromWireClient errorInfo = {};
+    errorInfo.chain.sType = WGPUSType_DawnBufferErrorInfoFromWireClient;
     errorInfo.outOfMemory = true;
     errorBufferDescriptor.nextInChain = &errorInfo.chain;
     return GetProcs().deviceCreateErrorBuffer(ToAPI(device), &errorBufferDescriptor);

@@ -626,7 +626,7 @@ TEST_F(LabelTest, ShaderModule) {
     @compute @workgroup_size(1) fn main() {
     })";
 
-    wgpu::ShaderModuleWGSLDescriptor wgslDesc;
+    wgpu::ShaderModuleWGSL wgslDesc;
     wgslDesc.code = source;
     wgpu::ShaderModuleDescriptor descriptor;
     descriptor.nextInChain = &wgslDesc;

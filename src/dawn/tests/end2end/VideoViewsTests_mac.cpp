@@ -104,7 +104,7 @@ class VideoViewsTestBackendIOSurface : public VideoViewsTestBackend {
         internalDesc.internalUsage = wgpu::TextureUsage::CopySrc;
         textureDesc.nextInChain = &internalDesc;
 
-        wgpu::SharedTextureMemoryIOSurfaceDescriptor ioSurfaceDesc;
+        wgpu::SharedTextureMemoryIOSurface ioSurfaceDesc;
         ioSurfaceDesc.ioSurface = surface;
         wgpu::SharedTextureMemoryDescriptor desc;
         desc.nextInChain = &ioSurfaceDesc;

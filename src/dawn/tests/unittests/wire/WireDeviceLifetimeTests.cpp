@@ -153,7 +153,7 @@ TEST_F(WireDeviceLifetimeTests, DeviceDroppedFromWireThenLoggingCallback) {
     ASSERT_NE(device, nullptr);
 
     wgpu::ShaderModuleDescriptor shaderModuleDesc = {};
-    wgpu::ShaderModuleWGSLDescriptor wgslDesc = {};
+    wgpu::ShaderModuleWGSL wgslDesc = {};
     shaderModuleDesc.nextInChain = &wgslDesc;
     wgslDesc.code = "@compute @workgroup_size(64) fn main() {}";
 

@@ -329,7 +329,7 @@ TEST_P(SharedTextureMemoryNoFeatureTests, SharedFenceImportWithoutFeature) {
     hr = d3d11Fence->CreateSharedHandle(nullptr, GENERIC_ALL, nullptr, &fenceSharedHandle);
     ASSERT_EQ(hr, S_OK);
 
-    wgpu::SharedFenceDXGISharedHandleDescriptor sharedHandleDesc;
+    wgpu::SharedFenceDXGISharedHandle sharedHandleDesc;
     sharedHandleDesc.handle = fenceSharedHandle;
 
     wgpu::SharedFenceDescriptor fenceDesc;
@@ -356,7 +356,7 @@ TEST_P(SharedTextureMemoryTests, SharedFenceSuccessfulImportExport) {
     hr = d3d11Fence->CreateSharedHandle(nullptr, GENERIC_ALL, nullptr, &fenceSharedHandle);
     ASSERT_EQ(hr, S_OK);
 
-    wgpu::SharedFenceDXGISharedHandleDescriptor sharedHandleDesc;
+    wgpu::SharedFenceDXGISharedHandle sharedHandleDesc;
     sharedHandleDesc.handle = fenceSharedHandle;
 
     wgpu::SharedFenceDescriptor fenceDesc;
@@ -413,7 +413,7 @@ TEST_P(SharedTextureMemoryTests, SharedFenceSuccessfulImportExport) {
 
 // Test that it is an error to import a shared fence with a null DXGISharedHandle
 TEST_P(SharedTextureMemoryTests, SharedFenceImportDXGISharedHandleMissing) {
-    wgpu::SharedFenceDXGISharedHandleDescriptor sharedHandleDesc;
+    wgpu::SharedFenceDXGISharedHandle sharedHandleDesc;
     sharedHandleDesc.handle = nullptr;
 
     wgpu::SharedFenceDescriptor fenceDesc;
@@ -440,7 +440,7 @@ TEST_P(SharedTextureMemoryTests, SharedFenceExportInfoNoChainedStruct) {
     hr = d3d11Fence->CreateSharedHandle(nullptr, GENERIC_ALL, nullptr, &fenceSharedHandle);
     ASSERT_EQ(hr, S_OK);
 
-    wgpu::SharedFenceDXGISharedHandleDescriptor sharedHandleDesc;
+    wgpu::SharedFenceDXGISharedHandle sharedHandleDesc;
     sharedHandleDesc.handle = fenceSharedHandle;
 
     wgpu::SharedFenceDescriptor fenceDesc;
@@ -474,7 +474,7 @@ TEST_P(SharedTextureMemoryTests, SharedFenceExportInfoInvalidChainedStruct) {
     hr = d3d11Fence->CreateSharedHandle(nullptr, GENERIC_ALL, nullptr, &fenceSharedHandle);
     ASSERT_EQ(hr, S_OK);
 
-    wgpu::SharedFenceDXGISharedHandleDescriptor sharedHandleDesc;
+    wgpu::SharedFenceDXGISharedHandle sharedHandleDesc;
     sharedHandleDesc.handle = fenceSharedHandle;
 
     wgpu::SharedFenceDescriptor fenceDesc;

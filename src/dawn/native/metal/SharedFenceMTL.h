@@ -43,10 +43,9 @@ class Device;
 
 class SharedFence final : public SharedFenceBase {
   public:
-    static ResultOrError<Ref<SharedFence>> Create(
-        Device* device,
-        const char* label,
-        const SharedFenceMTLSharedEventDescriptor* descriptor);
+    static ResultOrError<Ref<SharedFence>> Create(Device* device,
+                                                  const char* label,
+                                                  const SharedFenceMTLSharedEvent* descriptor);
 
     id<MTLSharedEvent> GetMTLSharedEvent() const API_AVAILABLE(macos(10.14), ios(12.0));
 

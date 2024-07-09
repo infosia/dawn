@@ -371,7 +371,7 @@ ResultOrError<tint::Program> ParseWGSL(const tint::Source::File* file,
 ResultOrError<tint::Program> ParseSPIRV(const std::vector<uint32_t>& spirv,
                                         const tint::wgsl::AllowedFeatures& allowedFeatures,
                                         OwnedCompilationMessages* outMessages,
-                                        const DawnShaderModuleSPIRVOptionsDescriptor* optionsDesc) {
+                                        const DawnShaderModuleSPIRVOptions* optionsDesc) {
     tint::spirv::reader::Options options;
     if (optionsDesc) {
         options.allow_non_uniform_derivatives = optionsDesc->allowNonUniformDerivatives;
@@ -1083,34 +1083,34 @@ MaybeError ValidateAndParseShaderModule(
     // A WGSL (or SPIR-V, if enabled) subdescriptor is required, and a Dawn-specific SPIR-V options
 // descriptor is allowed when using SPIR-V.
 #if TINT_BUILD_SPV_READER
-    DAWN_TRY_ASSIGN(moduleType,
-                    (descriptor.ValidateBranches<
-                        Branch<ShaderModuleWGSLDescriptor, ShaderModuleCompilationOptions>,
-                        Branch<ShaderModuleSPIRVDescriptor, DawnShaderModuleSPIRVOptionsDescriptor,
-                               ShaderModuleCompilationOptions>>()));
+    DAWN_TRY_ASSIGN(
+        moduleType,
+        (descriptor.ValidateBranches<Branch<ShaderModuleWGSL, ShaderModuleCompilationOptions>,
+                                     Branch<ShaderModuleSPIRV, DawnShaderModuleSPIRVOptions,
+                                            ShaderModuleCompilationOptions>>()));
 #else
-    DAWN_TRY_ASSIGN(moduleType,
-                    (descriptor.ValidateBranches<
-                        Branch<ShaderModuleWGSLDescriptor, ShaderModuleCompilationOptions>>()));
+    DAWN_TRY_ASSIGN(
+        moduleType,
+        (descriptor.ValidateBranches<Branch<ShaderModuleWGSL, ShaderModuleCompilationOptions>>()));
 #endif
     DAWN_ASSERT(moduleType != wgpu::SType(0u));
 
     ScopedTintICEHandler scopedICEHandler(device);
 
     // Multiple paths may use a WGSL descriptor so declare it here now.
-    const ShaderModuleWGSLDescriptor* wgslDesc = nullptr;
+    const ShaderModuleWGSL* wgslDesc = nullptr;
 #if TINT_BUILD_WGSL_WRITER
-    ShaderModuleWGSLDescriptor newWgslDesc = {};
+    ShaderModuleWGSL newWgslDesc = {};
     std::string newWgslCode;
 #endif  // TINT_BUILD_WGSL_WRITER
 
     switch (moduleType) {
 #if TINT_BUILD_SPV_READER
-        case wgpu::SType::ShaderModuleSPIRVDescriptor: {
+        case wgpu::SType::ShaderModuleSPIRV: {
             DAWN_INVALID_IF(device->IsToggleEnabled(Toggle::DisallowSpirv),
                             "SPIR-V is disallowed.");
-            const auto* spirvDesc = descriptor.Get<ShaderModuleSPIRVDescriptor>();
-            const auto* spirvOptions = descriptor.Get<DawnShaderModuleSPIRVOptionsDescriptor>();
+            const auto* spirvDesc = descriptor.Get<ShaderModuleSPIRV>();
+            const auto* spirvOptions = descriptor.Get<DawnShaderModuleSPIRVOptions>();
 
             // TODO(dawn:2033): Avoid unnecessary copies of the SPIR-V code.
             std::vector<uint32_t> spirv(spirvDesc->code, spirvDesc->code + spirvDesc->codeSize);
@@ -1127,8 +1127,8 @@ MaybeError ValidateAndParseShaderModule(
             return {};
         }
 #endif  // TINT_BUILD_SPV_READER
-        case wgpu::SType::ShaderModuleWGSLDescriptor: {
-            wgslDesc = descriptor.Get<ShaderModuleWGSLDescriptor>();
+        case wgpu::SType::ShaderModuleWGSL: {
+            wgslDesc = descriptor.Get<ShaderModuleWGSL>();
             break;
         }
         default:
@@ -1314,10 +1314,10 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
     : Base(device, descriptor->label),
       mType(Type::Undefined),
       mInternalExtensions(std::move(internalExtensions)) {
-    if (auto* spirvDesc = descriptor.Get<ShaderModuleSPIRVDescriptor>()) {
+    if (auto* spirvDesc = descriptor.Get<ShaderModuleSPIRV>()) {
         mType = Type::Spirv;
         mOriginalSpirv.assign(spirvDesc->code, spirvDesc->code + spirvDesc->codeSize);
-    } else if (auto* wgslDesc = descriptor.Get<ShaderModuleWGSLDescriptor>()) {
+    } else if (auto* wgslDesc = descriptor.Get<ShaderModuleWGSL>()) {
         mType = Type::Wgsl;
         mWgsl = std::string(wgslDesc->code);
     } else {
@@ -1409,8 +1409,8 @@ ShaderModuleBase::ScopedUseTintProgram ShaderModuleBase::UseTintProgram() {
         // recreate mTintProgram, when the mTintProgram is required for initializing new
         // pipelines.
         ShaderModuleDescriptor descriptor;
-        ShaderModuleWGSLDescriptor wgslDescriptor;
-        ShaderModuleSPIRVDescriptor sprivDescriptor;
+        ShaderModuleWGSL wgslDescriptor;
+        ShaderModuleSPIRV sprivDescriptor;
 
         switch (mType) {
             case Type::Spirv:
