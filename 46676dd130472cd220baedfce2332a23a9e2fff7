@@ -57,6 +57,30 @@
       ],
       "revId": "46676dd130472cd220baedfce2332a23a9e2fff7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef5da6f1_25a7e2ef",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-09T09:31:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32defa5b_9c4c8fea",
+      "range": {
+        "startLine": 39,
+        "startChar": 71,
+        "endLine": 39,
+        "endChar": 85
+      },
+      "revId": "46676dd130472cd220baedfce2332a23a9e2fff7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
