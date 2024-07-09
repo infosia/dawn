@@ -68,8 +68,8 @@ std::unique_ptr<wgpu::ChainedStruct> SetupWindowAndGetSurfaceDescriptor(GLFWwind
         return nullptr;
     }
 #if DAWN_PLATFORM_IS(WINDOWS)
-    std::unique_ptr<wgpu::SurfaceDescriptorFromWindowsHWND> desc =
-        std::make_unique<wgpu::SurfaceDescriptorFromWindowsHWND>();
+    std::unique_ptr<wgpu::SurfaceSourceWindowsHWND> desc =
+        std::make_unique<wgpu::SurfaceSourceWindowsHWND>();
     desc->hwnd = glfwGetWin32Window(window);
     desc->hinstance = GetModuleHandle(nullptr);
     return std::move(desc);
@@ -78,8 +78,8 @@ std::unique_ptr<wgpu::ChainedStruct> SetupWindowAndGetSurfaceDescriptor(GLFWwind
 #elif defined(DAWN_USE_WAYLAND) || defined(DAWN_USE_X11)
 #if defined(GLFW_PLATFORM_WAYLAND) && defined(DAWN_USE_WAYLAND)
     if (glfwGetPlatform() == GLFW_PLATFORM_WAYLAND) {
-        std::unique_ptr<wgpu::SurfaceDescriptorFromWaylandSurface> desc =
-            std::make_unique<wgpu::SurfaceDescriptorFromWaylandSurface>();
+        std::unique_ptr<wgpu::SurfaceSourceWaylandSurface> desc =
+            std::make_unique<wgpu::SurfaceSourceWaylandSurface>();
         desc->display = glfwGetWaylandDisplay();
         desc->surface = glfwGetWaylandWindow(window);
         return std::move(desc);
@@ -87,8 +87,8 @@ std::unique_ptr<wgpu::ChainedStruct> SetupWindowAndGetSurfaceDescriptor(GLFWwind
 #endif
 #if defined(DAWN_USE_X11)
     {
-        std::unique_ptr<wgpu::SurfaceDescriptorFromXlibWindow> desc =
-            std::make_unique<wgpu::SurfaceDescriptorFromXlibWindow>();
+        std::unique_ptr<wgpu::SurfaceSourceXlibWindow> desc =
+            std::make_unique<wgpu::SurfaceSourceXlibWindow>();
         desc->display = glfwGetX11Display();
         desc->window = glfwGetX11Window(window);
         return std::move(desc);
