@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25e0980d_25fefcb5",
+        "filename": "src/dawn/common/SerialQueue.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T16:43:55Z",
+      "side": 1,
+      "message": "For sure the algorithm complexity is better, but I seem to remember that some std::dequeue implementation used a linked list of chunks of 4 entries (!!!) which is quite bad. But I must be mistaken 😊 Anyways, we\u0027ll see soon enough if perf sucks.",
+      "parentUuid": "f84566ed_71f434b3",
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9f00e2b_f22f1fcb",
@@ -252,6 +270,24 @@
       "side": 1,
       "message": "There is one thing our allocator could be better than Driver. I think driver doesn\u0027t reuse allocations, when we release a buffer, its allocation is deleted immediately. However, our allocator could keep the allocations alive for some submissions, so that the number of allocations/deallocations are greatly reduced. That in turns would reduce kernel/driver calls.\n\nAlternatively, I can put this buffers reuse on hold. Instead we would never create temp buffers for D3D11, D3D11 backend already has an ability to allocate d3d11::Buffer capable of Storage + MapRead. It just needs double memory for that. And the memory used for Storage wouldn\u0027t be reused for other d3d11::Buffer. I guess it would be good enough for now.",
       "parentUuid": "202ab32e_0016cb14",
+      "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45e46a9f_8acffebd",
+        "filename": "src/dawn/native/TempGPUBufferManager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T16:43:55Z",
+      "side": 1,
+      "message": "Drivers should reuse allocations of GPU memory across allocations for sure. They do recreate CPU-side objects, but otherwise keep the reserved memory around. IMHO it would be nice to put this on hold and revisit with submission-time allocations.",
+      "parentUuid": "620ab564_e5ed3eac",
       "revId": "6dc1193f817b6b8f7ec4e73d0846a119dcf5755b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
