@@ -209,6 +209,24 @@
       "parentUuid": "9be06984_ba4082ef",
       "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20369a8d_0c725c4a",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-09T14:28:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "667f0aa1_a326f3a1",
+      "revId": "1e820219c4851d3e4678a3d5115c505d2b8eb416",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
