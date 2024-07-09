@@ -164,10 +164,6 @@ class DepthBiasTests : public DawnTest {
 
 // Test adding positive bias to output
 TEST_P(DepthBiasTests, PositiveBiasOnFloat) {
-    // TODO(crbug.com/dawn/667): Work around the fact that some platforms do not support reading
-    // depth.
-    DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("disable_depth_read"));
-
     // NVIDIA GPUs under Vulkan seem to be using a different scale than everyone else.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
 
@@ -207,10 +203,6 @@ TEST_P(DepthBiasTests, PositiveBiasOnFloatWithClamp) {
 
 // Test adding negative bias to output
 TEST_P(DepthBiasTests, NegativeBiasOnFloat) {
-    // TODO(crbug.com/dawn/667): Work around the fact that some platforms do not support reading
-    // depth.
-    DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("disable_depth_read"));
-
     // NVIDIA GPUs seems to be using a different scale than everyone else
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
 
@@ -250,10 +242,6 @@ TEST_P(DepthBiasTests, NegativeBiasOnFloatWithClamp) {
 
 // Test adding positive infinite slope bias to output
 TEST_P(DepthBiasTests, PositiveInfinitySlopeBiasOnFloat) {
-    // TODO(crbug.com/dawn/667): Work around the fact that some platforms do not support reading
-    // depth.
-    DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("disable_depth_read"));
-
     // NVIDIA GPUs do not clamp values to 1 when using Inf slope bias.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
 
@@ -273,10 +261,6 @@ TEST_P(DepthBiasTests, PositiveInfinitySlopeBiasOnFloat) {
 
 // Test adding positive infinite slope bias to output
 TEST_P(DepthBiasTests, NegativeInfinityBiasOnFloat) {
-    // TODO(crbug.com/dawn/667): Work around the fact that some platforms do not support reading
-    // depth.
-    DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("disable_depth_read"));
-
     // NVIDIA GPUs do not clamp values to 0 when using -Inf slope bias.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
 
@@ -296,10 +280,6 @@ TEST_P(DepthBiasTests, NegativeInfinityBiasOnFloat) {
 
 // Test tiledX quad with no bias
 TEST_P(DepthBiasTests, NoBiasTiltedXOnFloat) {
-    // TODO(crbug.com/dawn/667): Work around the fact that some platforms do not support reading
-    // depth.
-    DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("disable_depth_read"));
-
     // Draw quad with z from 0 to 0.5 with no bias
     RunDepthBiasTest(wgpu::TextureFormat::Depth32Float, 0, QuadAngle::TiltedX, 0, 0, 0);
 
@@ -315,10 +295,6 @@ TEST_P(DepthBiasTests, NoBiasTiltedXOnFloat) {
 
 // Test adding positive slope bias to output
 TEST_P(DepthBiasTests, PositiveSlopeBiasOnFloat) {
-    // TODO(crbug.com/dawn/667): Work around the fact that some platforms do not support reading
-    // depth.
-    DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("disable_depth_read"));
-
     // Draw quad with z from 0 to 0.5 with a slope bias of 1
     RunDepthBiasTest(wgpu::TextureFormat::Depth32Float, 0, QuadAngle::TiltedX, 0, 1, 0);
 
@@ -334,10 +310,6 @@ TEST_P(DepthBiasTests, PositiveSlopeBiasOnFloat) {
 
 // Test adding negative half slope bias to output
 TEST_P(DepthBiasTests, NegativeHalfSlopeBiasOnFloat) {
-    // TODO(crbug.com/dawn/667): Work around the fact that some platforms do not support reading
-    // depth.
-    DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("disable_depth_read"));
-
     // Draw quad with z from 0 to 0.5 with a slope bias of -0.5
     RunDepthBiasTest(wgpu::TextureFormat::Depth32Float, 0, QuadAngle::TiltedX, 0, -0.5, 0);
 
