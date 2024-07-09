@@ -48,6 +48,7 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
   public:
     explicit Device(const ObjectBaseParams& params,
                     const ObjectHandle& eventManagerHandle,
+                    Adapter* adapter,
                     const WGPUDeviceDescriptor* descriptor);
 
     ObjectType GetObjectType() const override;
@@ -95,6 +96,7 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     WGPUStatus GetLimits(WGPUSupportedLimits* limits) const;
     bool HasFeature(WGPUFeatureName feature) const;
     size_t EnumerateFeatures(WGPUFeatureName* features) const;
+    WGPUAdapter GetAdapter() const;
     WGPUQueue GetQueue();
 
     void Destroy();
@@ -125,6 +127,7 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     WGPULoggingCallback mLoggingCallback = nullptr;
     raw_ptr<void> mLoggingUserdata = nullptr;
 
+    Ref<Adapter> mAdapter;
     Ref<Queue> mQueue;
     bool mIsAlive = true;
 };
