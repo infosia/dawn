@@ -114,7 +114,21 @@ MaybeError BindGroupLayout::Initialize() {
     ityp::vector<BindingIndex, VkDescriptorSetLayoutBinding> bindings;
     bindings.reserve(GetBindingCount());
 
+    bool prevEntryWasYCbCrSampler = false;
     for (const auto& [_, bindingIndex] : GetBindingMap()) {
+        // Do not enter entries following YCbCr sampler entries into the
+        // VkDescriptorSet, as such entries are for textures that are part of
+        // the YCbCr sampler entry itself at the Vulkan level (due to YCbCr
+        // samplers being combined image samplers).
+        // NOTE: This assumes that the client is placing the texture to be
+        // sampled by a YCbCr sampler immediately after the YCbCr sampler itself
+        // in the layout, which matches what Skia is currently doing but we
+        // might need to generalize.
+        if (prevEntryWasYCbCrSampler) {
+            // TODO(blundell): Verify that this entry is for a texture.
+            prevEntryWasYCbCrSampler = false;
+            continue;
+        }
         const BindingInfo& bindingInfo = GetBindingInfo(bindingIndex);
 
         VkDescriptorSetLayoutBinding vkBinding;
@@ -126,6 +140,7 @@ MaybeError BindGroupLayout::Initialize() {
         if (std::holds_alternative<StaticSamplerBindingInfo>(bindingInfo.bindingLayout)) {
             auto samplerLayout = std::get<StaticSamplerBindingInfo>(bindingInfo.bindingLayout);
             auto sampler = ToBackend(samplerLayout.sampler);
+            prevEntryWasYCbCrSampler = sampler->IsYCbCr();
             vkBinding.pImmutableSamplers = &sampler->GetHandle().GetHandle();
         } else {
             vkBinding.pImmutableSamplers = nullptr;
@@ -152,8 +167,20 @@ MaybeError BindGroupLayout::Initialize() {
     // Compute the size of descriptor pools used for this layout.
     absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType;
 
+    prevEntryWasYCbCrSampler = false;
     for (BindingIndex bindingIndex{0}; bindingIndex < GetBindingCount(); ++bindingIndex) {
+        if (prevEntryWasYCbCrSampler) {
+          // Texture binding entries following YCbCr sampler entries are not
+          // written into the VkDescriptorSetLayout, and hence they should not
+          // get entries in the descriptor pools.
+          prevEntryWasYCbCrSampler = false;
+          continue;
+        }
+
         VkDescriptorType vulkanType = VulkanDescriptorType(GetBindingInfo(bindingIndex));
+        if (vulkanType == VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER) {
+          prevEntryWasYCbCrSampler = true;
+        }
 
         // absl:flat_hash_map::operator[] will return 0 if the key doesn't exist.
         descriptorCountPerType[vulkanType]++;
