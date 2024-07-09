@@ -43,7 +43,7 @@ std::unique_ptr<ErrorData> ErrorData::Create(InternalErrorType type,
                                              const char* file,
                                              const char* function,
                                              int line) {
-    std::unique_ptr<ErrorData> error = std::make_unique<ErrorData>(type, message);
+    std::unique_ptr<ErrorData> error = std::make_unique<ErrorData>(type, std::move(message));
     error->AppendBacktrace(file, function, line);
 
     auto [var, present] = GetEnvironmentVar("DAWN_DEBUG_BREAK_ON_ERROR");
