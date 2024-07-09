@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "be785dab_0654baf2",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T08:56:22Z",
+      "side": 1,
+      "message": "For some things like callback that seems to be present many times that can make sense, but there\u0027s a number of more bespoke functions. Inventing a semantic for each of them individually is not practical, only when there starts to be a bunch of them does the complexity of adding a semantic make sense. Otherwise a semantic is just a more complex way to just do manually written code.",
+      "parentUuid": "d2dc6bce_8315b392",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af03dbcc_6bd76977",
         "filename": "generator/dawn_json_generator.py",
         "patchSetId": 5
@@ -231,6 +249,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "9bea4bf8_407f208a",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T08:56:22Z",
+      "side": 1,
+      "message": "Ack, we can figure out what to do with surface creation later. It might make sense to live in the C++ helper files.",
+      "parentUuid": "0559449f_a86ae9f0",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "8a7002f6_b49ce5ba",
         "filename": "generator/templates/art/methods.cpp",
         "patchSetId": 5
@@ -301,6 +337,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5b768b8d_4543c337",
+        "filename": "generator/templates/art/methods.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T08:56:22Z",
+      "side": 1,
+      "message": "Sounds good, but let\u0027s add a TODO then so we don\u0027t forget to do it. Note also that here the resource management that we need to do is simpler, because memory only needs to live during the execution of the function (compared to outliving it like in other places we added a TODO for the issue)",
+      "parentUuid": "8069ce6e_93a8c789",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c9912ae_d7501a60",
         "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
         "patchSetId": 5
@@ -330,6 +384,24 @@
       "side": 1,
       "message": "I deliberately chose features that are present on all Android devices that I\u0027m aware of. Ideally we would use mocks, that\u0027s on the roadmap.",
       "parentUuid": "7c9912ae_d7501a60",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcdd11f0_8a80d4ca",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-09T08:56:22Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e3f76b50_a2cf533b",
       "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
