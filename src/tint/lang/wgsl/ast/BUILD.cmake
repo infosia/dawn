@@ -67,6 +67,8 @@ tint_add_target(tint_lang_wgsl_ast lib
   lang/wgsl/ast/builder.h
   lang/wgsl/ast/builtin_attribute.cc
   lang/wgsl/ast/builtin_attribute.h
+  lang/wgsl/ast/builtin_value_name.cc
+  lang/wgsl/ast/builtin_value_name.h
   lang/wgsl/ast/call_expression.cc
   lang/wgsl/ast/call_expression.h
   lang/wgsl/ast/call_statement.cc

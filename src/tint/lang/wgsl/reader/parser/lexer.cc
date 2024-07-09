@@ -1216,6 +1216,9 @@ std::optional<Token::Type> Lexer::parse_keyword(std::string_view str) {
     if (str == "break") {
         return Token::Type::kBreak;
     }
+    if (str == "builtin") {
+        return Token::Type::kBuiltin;
+    }
     if (str == "case") {
         return Token::Type::kCase;
     }

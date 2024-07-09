@@ -70,6 +70,8 @@ libtint_source_set("ast") {
     "builder.h",
     "builtin_attribute.cc",
     "builtin_attribute.h",
+    "builtin_value_name.cc",
+    "builtin_value_name.h",
     "call_expression.cc",
     "call_expression.h",
     "call_statement.cc",
