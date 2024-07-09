@@ -121,7 +121,7 @@ auto CreateSharedTextureMemoryHelperImpl(native::vulkan::Device* deviceVk,
     deviceVk->fn.GetMemoryFdKHR(deviceVk->GetVkDevice(), &getFdInfo, &memoryFD);
     EXPECT_GE(memoryFD, 0) << "Failed to get file descriptor for external memory";
 
-    wgpu::SharedTextureMemoryOpaqueFDDescriptor opaqueFDDesc;
+    wgpu::SharedTextureMemoryOpaqueFD opaqueFDDesc;
     opaqueFDDesc.vkImageCreateInfo = &createInfo;
     opaqueFDDesc.memoryFD = memoryFD;
     opaqueFDDesc.memoryTypeIndex = allocateInfo.memoryTypeIndex;

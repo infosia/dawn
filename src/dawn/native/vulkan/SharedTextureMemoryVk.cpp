@@ -215,7 +215,7 @@ ResultOrError<VkDeviceMemory> AllocateDeviceMemory(Device* device,
 ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     Device* device,
     const char* label,
-    const SharedTextureMemoryDmaBufDescriptor* descriptor) {
+    const SharedTextureMemoryDmaBuf* descriptor) {
 #if DAWN_PLATFORM_IS(LINUX)
     VkDevice vkDevice = device->GetVkDevice();
     VkPhysicalDevice vkPhysicalDevice =
@@ -478,7 +478,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
 ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     Device* device,
     const char* label,
-    const SharedTextureMemoryAHardwareBufferDescriptor* descriptor) {
+    const SharedTextureMemoryAHardwareBuffer* descriptor) {
 #if DAWN_PLATFORM_IS(ANDROID)
     const auto* ahbFunctions =
         ToBackend(device->GetAdapter()->GetPhysicalDevice())->GetOrLoadAHBFunctions();
@@ -744,7 +744,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
 ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     Device* device,
     const char* label,
-    const SharedTextureMemoryOpaqueFDDescriptor* descriptor) {
+    const SharedTextureMemoryOpaqueFD* descriptor) {
 #if DAWN_PLATFORM_IS(POSIX)
     VkDevice vkDevice = device->GetVkDevice();
 
@@ -1073,20 +1073,20 @@ ResultOrError<FenceAndSignalValue> SharedTextureMemory::EndAccessImpl(
     Ref<SharedFence> fence;
 
 #if DAWN_PLATFORM_IS(FUCHSIA)
-    SharedFenceVkSemaphoreZirconHandleDescriptor desc;
+    SharedFenceVkSemaphoreZirconHandle desc;
     desc.handle = handle.Get();
 
     DAWN_TRY_ASSIGN(fence,
                     SharedFence::Create(ToBackend(GetDevice()), "Internal VkSemaphore", &desc));
 #elif DAWN_PLATFORM_IS(LINUX)
     if (GetDevice()->HasFeature(Feature::SharedFenceVkSemaphoreSyncFD)) {
-        SharedFenceVkSemaphoreSyncFDDescriptor desc;
+        SharedFenceVkSemaphoreSyncFD desc;
         desc.handle = handle.Get();
 
         DAWN_TRY_ASSIGN(fence,
                         SharedFence::Create(ToBackend(GetDevice()), "Internal VkSemaphore", &desc));
     } else {
-        SharedFenceVkSemaphoreOpaqueFDDescriptor desc;
+        SharedFenceVkSemaphoreOpaqueFD desc;
         desc.handle = handle.Get();
 
         DAWN_TRY_ASSIGN(fence,

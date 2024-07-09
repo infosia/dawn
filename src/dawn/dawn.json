@@ -2158,7 +2158,7 @@
             {"name": "signaled values", "type": "uint64_t", "annotation": "const*", "length": "fence count"}
         ]
     },
-    "shared texture memory vk dedicated allocation descriptor": {
+    "shared texture memory vk dedicated allocation": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared texture memory descriptor"],
@@ -2167,7 +2167,7 @@
             {"name": "dedicated allocation", "type": "bool"}
         ]
     },
-    "shared texture memory a hardware buffer descriptor": {
+    "shared texture memory a hardware buffer": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared texture memory descriptor"],
@@ -2186,7 +2186,7 @@
             {"name": "stride", "type": "uint32_t"}
         ]
     },
-    "shared texture memory dma buf descriptor": {
+    "shared texture memory dma buf": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared texture memory descriptor"],
@@ -2199,7 +2199,7 @@
             {"name": "planes", "type": "shared texture memory dma buf plane", "annotation": "const*", "length": "plane count"}
         ]
     },
-    "shared texture memory opaque FD descriptor": {
+    "shared texture memory opaque FD": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared texture memory descriptor"],
@@ -2212,7 +2212,7 @@
             {"name": "dedicated allocation", "type": "bool"}
         ]
     },
-    "shared texture memory zircon handle descriptor": {
+    "shared texture memory zircon handle": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared texture memory descriptor"],
@@ -2222,7 +2222,7 @@
             {"name": "allocation size", "type": "uint64_t"}
         ]
     },
-    "shared texture memory DXGI shared handle descriptor": {
+    "shared texture memory DXGI shared handle": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared texture memory descriptor"],
@@ -2233,7 +2233,7 @@
             {"name": "use keyed mutex", "type": "bool"}
         ]
     },
-    "shared texture memory IO surface descriptor": {
+    "shared texture memory IO surface": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared texture memory descriptor"],
@@ -2243,7 +2243,7 @@
             {"name": "io surface", "type": "void *"}
         ]
     },
-    "shared texture memory EGL image descriptor": {
+    "shared texture memory EGL image": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared texture memory descriptor"],
@@ -2328,7 +2328,7 @@
             {"name": "label", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
         ]
     },
-    "shared fence vk semaphore opaque FD descriptor": {
+    "shared fence vk semaphore opaque FD": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared fence descriptor"],
@@ -2337,7 +2337,7 @@
             {"name": "handle", "type": "int"}
         ]
     },
-    "shared fence vk semaphore sync FD descriptor": {
+    "shared fence vk semaphore sync FD": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared fence descriptor"],
@@ -2346,7 +2346,7 @@
             {"name": "handle", "type": "int"}
         ]
     },
-    "shared fence vk semaphore zircon handle descriptor": {
+    "shared fence vk semaphore zircon handle": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared fence descriptor"],
@@ -2355,7 +2355,7 @@
             {"name": "handle", "type": "uint32_t"}
         ]
     },
-    "shared fence DXGI shared handle descriptor": {
+    "shared fence DXGI shared handle": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared fence descriptor"],
@@ -2364,7 +2364,7 @@
             {"name": "handle", "type": "void *"}
         ]
     },
-    "shared fence MTL shared event descriptor": {
+    "shared fence MTL shared event": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shared fence descriptor"],
@@ -3241,7 +3241,7 @@
             {"name": "timestamp writes", "type": "render pass timestamp writes", "annotation": "const*", "optional": true}
         ]
     },
-    "render pass descriptor max draw count": {
+    "render pass max draw count": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["render pass descriptor"],
@@ -3713,7 +3713,7 @@
             {"name": "layout", "type": "pipeline layout"}
         ]
     },
-    "shader module SPIRV descriptor": {
+    "shader module SPIRV": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shader module descriptor"],
@@ -3722,7 +3722,7 @@
             {"name": "code", "type": "uint32_t", "annotation": "const*", "length": "code size"}
         ]
     },
-    "shader module WGSL descriptor": {
+    "shader module WGSL": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shader module descriptor"],
@@ -3730,7 +3730,7 @@
             {"name": "code", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
-    "dawn shader module SPIRV options descriptor": {
+    "dawn shader module SPIRV options": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shader module descriptor"],
@@ -3841,7 +3841,7 @@
             {"name": "label", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
         ]
     },
-    "surface descriptor from android native window": {
+    "surface from android native window": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -3850,7 +3850,7 @@
             {"name": "window", "type": "void", "annotation": "*"}
         ]
     },
-    "surface descriptor from canvas HTML selector": {
+    "surface from canvas HTML selector": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -3859,7 +3859,7 @@
             {"name": "selector", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
-    "surface descriptor from metal layer": {
+    "surface from metal layer": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -3868,7 +3868,7 @@
             {"name": "layer", "type": "void", "annotation": "*"}
         ]
     },
-    "surface descriptor from windows HWND": {
+    "surface from windows HWND": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -3878,7 +3878,7 @@
             {"name": "hwnd", "type": "void", "annotation": "*"}
         ]
     },
-    "surface descriptor from xcb window": {
+    "surface from xcb window": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -3888,7 +3888,7 @@
             {"name": "window", "type": "uint32_t"}
         ]
     },
-    "surface descriptor from xlib window": {
+    "surface from xlib window": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -3898,7 +3898,7 @@
             {"name": "window", "type": "uint64_t"}
         ]
     },
-    "surface descriptor from wayland surface": {
+    "surface from wayland surface": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -3908,7 +3908,7 @@
             {"name": "surface", "type": "void", "annotation": "*"}
         ]
     },
-    "surface descriptor from windows core window": {
+    "surface from windows core window": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -3917,7 +3917,7 @@
             {"name": "core window", "type": "void", "annotation": "*"}
         ]
     },
-    "surface descriptor from windows swap chain panel": {
+    "surface from windows swap chain panel": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -3960,35 +3960,35 @@
         "category": "enum",
         "emscripten_no_enum_table": true,
         "values": [
-            {"value": 1, "name": "shader module SPIRV descriptor"},
-            {"value": 2, "name": "shader module WGSL descriptor"},
+            {"value": 1, "name": "shader module SPIRV"},
+            {"value": 2, "name": "shader module WGSL"},
             {"value": 3, "name": "primitive depth clip control"},
-            {"value": 4, "name": "render pass descriptor max draw count"},
+            {"value": 4, "name": "render pass max draw count"},
 
-            {"value": 0, "name": "texture binding view dimension descriptor", "tags": ["compat"]},
+            {"value": 0, "name": "texture binding view dimension", "tags": ["compat"]},
 
-            {"value": 0, "name": "surface descriptor from canvas HTML selector", "tags": ["emscripten"]},
+            {"value": 0, "name": "surface from canvas HTML selector", "tags": ["emscripten"]},
 
-            {"value": 0, "name": "surface descriptor from metal layer", "tags": ["native"]},
-            {"value": 1, "name": "surface descriptor from windows HWND", "tags": ["native"]},
-            {"value": 2, "name": "surface descriptor from xlib window", "tags": ["native"]},
-            {"value": 3, "name": "surface descriptor from wayland surface", "tags": ["native"]},
-            {"value": 4, "name": "surface descriptor from android native window", "tags": ["native"]},
-            {"value": 5, "name": "surface descriptor from xcb window", "tags": ["native"]},
+            {"value": 0, "name": "surface from metal layer", "tags": ["native"]},
+            {"value": 1, "name": "surface from windows HWND", "tags": ["native"]},
+            {"value": 2, "name": "surface from xlib window", "tags": ["native"]},
+            {"value": 3, "name": "surface from wayland surface", "tags": ["native"]},
+            {"value": 4, "name": "surface from android native window", "tags": ["native"]},
+            {"value": 5, "name": "surface from xcb window", "tags": ["native"]},
 
-            {"value": 0, "name": "surface descriptor from windows core window", "tags": ["dawn"]},
+            {"value": 0, "name": "surface from windows core window", "tags": ["dawn"]},
             {"value": 1, "name": "external texture binding entry", "tags": ["dawn"]},
             {"value": 2, "name": "external texture binding layout", "tags": ["dawn"]},
-            {"value": 3, "name": "surface descriptor from windows swap chain panel", "tags": ["dawn"]},
+            {"value": 3, "name": "surface from windows swap chain panel", "tags": ["dawn"]},
             {"value": 4, "name": "depth stencil state depth write defined dawn", "tags": ["dawn"]},
             {"value": 5, "name": "dawn texture internal usage descriptor", "tags": ["dawn"]},
             {"value": 6, "name": "dawn encoder internal usage descriptor", "tags": ["dawn"]},
             {"value": 7, "name": "dawn instance descriptor", "tags": ["dawn", "native"]},
             {"value": 8, "name": "dawn cache device descriptor", "tags": ["dawn", "native"]},
             {"value": 9, "name": "dawn adapter properties power preference", "tags": ["dawn", "native"]},
-            {"value": 10, "name": "dawn buffer descriptor error info from wire client", "tags": ["dawn"]},
+            {"value": 10, "name": "dawn buffer error info from wire client", "tags": ["dawn"]},
             {"value": 11, "name": "dawn toggles descriptor", "tags": ["dawn", "native"]},
-            {"value": 12, "name": "dawn shader module SPIRV options descriptor", "tags": ["dawn"]},
+            {"value": 12, "name": "dawn shader module SPIRV options", "tags": ["dawn"]},
             {"value": 13, "name": "request adapter options LUID", "tags": ["dawn", "native"]},
             {"value": 14, "name": "request adapter options get GL proc", "tags": ["dawn", "native"]},
             {"value": 15, "name": "request adapter options D3D11 device", "tags": ["dawn", "native"]},
@@ -4007,31 +4007,31 @@
             {"value": 28, "name": "shader module compilation options", "tags": ["dawn"]},
             {"value": 29, "name": "color target state expand resolve texture dawn", "tags": ["dawn"]},
 
-            {"value": 30, "name": "shared texture memory vk dedicated allocation descriptor", "tags": ["dawn", "native"]},
-            {"value": 31, "name": "shared texture memory a hardware buffer descriptor", "tags": ["dawn", "native"]},
-            {"value": 32, "name": "shared texture memory dma buf descriptor", "tags": ["dawn", "native"]},
-            {"value": 33, "name": "shared texture memory opaque FD descriptor", "tags": ["dawn", "native"]},
-            {"value": 34, "name": "shared texture memory zircon handle descriptor", "tags": ["dawn", "native"]},
-            {"value": 35, "name": "shared texture memory DXGI shared handle descriptor", "tags": ["dawn", "native"]},
-            {"value": 36, "name": "shared texture memory D3D11 texture 2D descriptor", "tags": ["dawn", "native"]},
-            {"value": 37, "name": "shared texture memory IO surface descriptor", "tags": ["dawn", "native"]},
-            {"value": 38, "name": "shared texture memory EGL image descriptor", "tags": ["dawn", "native"]},
+            {"value": 30, "name": "shared texture memory vk dedicated allocation", "tags": ["dawn", "native"]},
+            {"value": 31, "name": "shared texture memory a hardware buffer", "tags": ["dawn", "native"]},
+            {"value": 32, "name": "shared texture memory dma buf", "tags": ["dawn", "native"]},
+            {"value": 33, "name": "shared texture memory opaque FD", "tags": ["dawn", "native"]},
+            {"value": 34, "name": "shared texture memory zircon handle", "tags": ["dawn", "native"]},
+            {"value": 35, "name": "shared texture memory DXGI shared handle", "tags": ["dawn", "native"]},
+            {"value": 36, "name": "shared texture memory D3D11 texture 2D", "tags": ["dawn", "native"]},
+            {"value": 37, "name": "shared texture memory IO surface", "tags": ["dawn", "native"]},
+            {"value": 38, "name": "shared texture memory EGL image", "tags": ["dawn", "native"]},
             {"value": 39, "name": "shared texture memory initialized begin state", "tags": ["dawn", "native"]},
             {"value": 40, "name": "shared texture memory initialized end state", "tags": ["dawn", "native"]},
             {"value": 41, "name": "shared texture memory vk image layout begin state", "tags": ["dawn", "native"]},
             {"value": 42, "name": "shared texture memory vk image layout end state", "tags": ["dawn", "native"]},
             {"value": 43, "name": "shared texture memory D3D swapchain begin state", "tags": ["dawn", "native"]},
-            {"value": 44, "name": "shared fence vk semaphore opaque FD descriptor", "tags": ["dawn", "native"]},
+            {"value": 44, "name": "shared fence vk semaphore opaque FD", "tags": ["dawn", "native"]},
             {"value": 45, "name": "shared fence vk semaphore opaque FD export info", "tags": ["dawn", "native"]},
-            {"value": 46, "name": "shared fence vk semaphore sync FD descriptor", "tags": ["dawn", "native"]},
+            {"value": 46, "name": "shared fence vk semaphore sync FD", "tags": ["dawn", "native"]},
             {"value": 47, "name": "shared fence vk semaphore sync FD export info", "tags": ["dawn", "native"]},
-            {"value": 48, "name": "shared fence vk semaphore zircon handle descriptor", "tags": ["dawn", "native"]},
+            {"value": 48, "name": "shared fence vk semaphore zircon handle", "tags": ["dawn", "native"]},
             {"value": 49, "name": "shared fence vk semaphore zircon handle export info", "tags": ["dawn", "native"]},
-            {"value": 50, "name": "shared fence DXGI shared handle descriptor", "tags": ["dawn", "native"]},
+            {"value": 50, "name": "shared fence DXGI shared handle", "tags": ["dawn", "native"]},
             {"value": 51, "name": "shared fence DXGI shared handle export info", "tags": ["dawn", "native"]},
-            {"value": 52, "name": "shared fence MTL shared event descriptor", "tags": ["dawn", "native"]},
+            {"value": 52, "name": "shared fence MTL shared event", "tags": ["dawn", "native"]},
             {"value": 53, "name": "shared fence MTL shared event export info", "tags": ["dawn", "native"]},
-            {"value": 54, "name": "shared buffer memory D3D12 resource descriptor", "tags": ["dawn", "native"]},
+            {"value": 54, "name": "shared buffer memory D3D12 resource", "tags": ["dawn", "native"]},
             {"value": 55, "name": "static sampler binding layout", "tags": ["dawn"]},
             {"value": 56, "name": "y cb cr vk descriptor", "tags": ["dawn"]},
             {"value": 57, "name": "shared texture memory a hardware buffer properties", "tags": ["dawn", "native"]},
@@ -4148,7 +4148,7 @@
             {"name": "view formats", "type": "texture format", "annotation": "const*", "length": "view format count"}
         ]
     },
-    "texture binding view dimension descriptor": {
+    "texture binding view dimension": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["texture descriptor"],
@@ -4583,7 +4583,7 @@
           {"name": "driver version", "type": "uint32_t"}
       ]
     },
-    "dawn buffer descriptor error info from wire client": {
+    "dawn buffer error info from wire client": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["buffer descriptor"],

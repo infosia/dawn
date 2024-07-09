@@ -94,7 +94,7 @@ class Backend : public SharedTextureMemoryTestBackend {
         AddIntegerValue(dict.Get(), kIOSurfacePixelFormat, kCVPixelFormatType_32RGBA);
         AddIntegerValue(dict.Get(), kIOSurfaceBytesPerElement, 4);
 
-        wgpu::SharedTextureMemoryIOSurfaceDescriptor ioSurfaceDesc;
+        wgpu::SharedTextureMemoryIOSurface ioSurfaceDesc;
         ioSurfaceDesc.ioSurface = IOSurfaceCreate(dict.Get());
 
         wgpu::SharedTextureMemoryDescriptor desc;
@@ -149,7 +149,7 @@ class Backend : public SharedTextureMemoryTestBackend {
                 AddIntegerValue(dict.Get(), kIOSurfacePixelFormat, f.format);
                 AddIntegerValue(dict.Get(), kIOSurfaceBytesPerElement, f.bytesPerElement);
 
-                wgpu::SharedTextureMemoryIOSurfaceDescriptor ioSurfaceDesc;
+                wgpu::SharedTextureMemoryIOSurface ioSurfaceDesc;
                 ioSurfaceDesc.ioSurface = IOSurfaceCreate(dict.Get());
 
                 // Internally, the CV enums are defined as their fourcc values. Cast to that and use
@@ -186,7 +186,7 @@ TEST_P(SharedTextureMemoryTests, SharedFenceSuccessfulImportExport) {
     auto mtlDevice = AcquireNSPRef(MTLCreateSystemDefaultDevice());
     auto sharedEvent = AcquireNSPRef([*mtlDevice newSharedEvent]);
 
-    wgpu::SharedFenceMTLSharedEventDescriptor sharedEventDesc;
+    wgpu::SharedFenceMTLSharedEvent sharedEventDesc;
     sharedEventDesc.sharedEvent = static_cast<void*>(*sharedEvent);
 
     wgpu::SharedFenceDescriptor fenceDesc;
@@ -213,7 +213,7 @@ TEST_P(SharedTextureMemoryNoFeatureTests, SharedFenceImportWithoutFeature) {
     auto mtlDevice = AcquireNSPRef(MTLCreateSystemDefaultDevice());
     auto sharedEvent = AcquireNSPRef([*mtlDevice newSharedEvent]);
 
-    wgpu::SharedFenceMTLSharedEventDescriptor sharedEventDesc;
+    wgpu::SharedFenceMTLSharedEvent sharedEventDesc;
     sharedEventDesc.sharedEvent = static_cast<void*>(*sharedEvent);
 
     wgpu::SharedFenceDescriptor fenceDesc;
@@ -225,7 +225,7 @@ TEST_P(SharedTextureMemoryNoFeatureTests, SharedFenceImportWithoutFeature) {
 
 // Test that it is an error to import a shared fence with a null MTLSharedEvent
 TEST_P(SharedTextureMemoryTests, SharedFenceImportMTLSharedEventMissing) {
-    wgpu::SharedFenceMTLSharedEventDescriptor sharedEventDesc;
+    wgpu::SharedFenceMTLSharedEvent sharedEventDesc;
     sharedEventDesc.sharedEvent = nullptr;
 
     wgpu::SharedFenceDescriptor fenceDesc;
@@ -241,7 +241,7 @@ TEST_P(SharedTextureMemoryTests, SharedFenceExportInfoNoChainedStruct) {
     auto mtlDevice = AcquireNSPRef(MTLCreateSystemDefaultDevice());
     auto sharedEvent = AcquireNSPRef([*mtlDevice newSharedEvent]);
 
-    wgpu::SharedFenceMTLSharedEventDescriptor sharedEventDesc;
+    wgpu::SharedFenceMTLSharedEvent sharedEventDesc;
     sharedEventDesc.sharedEvent = static_cast<void*>(*sharedEvent);
 
     wgpu::SharedFenceDescriptor fenceDesc;
@@ -263,7 +263,7 @@ TEST_P(SharedTextureMemoryTests, SharedFenceExportInfoInvalidChainedStruct) {
     auto mtlDevice = AcquireNSPRef(MTLCreateSystemDefaultDevice());
     auto sharedEvent = AcquireNSPRef([*mtlDevice newSharedEvent]);
 
-    wgpu::SharedFenceMTLSharedEventDescriptor sharedEventDesc;
+    wgpu::SharedFenceMTLSharedEvent sharedEventDesc;
     sharedEventDesc.sharedEvent = static_cast<void*>(*sharedEvent);
 
     wgpu::SharedFenceDescriptor fenceDesc;

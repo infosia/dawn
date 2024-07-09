@@ -64,7 +64,7 @@ class Backend : public SharedTextureMemoryTestVulkanBackend {
                 wgpu::FeatureName::DawnMultiPlanarFormats, FenceFeature};
     }
 
-    static std::string MakeLabel(const wgpu::SharedTextureMemoryDmaBufDescriptor& desc) {
+    static std::string MakeLabel(const wgpu::SharedTextureMemoryDmaBuf& desc) {
         // Internally, the GBM enums are defined as their fourcc values. Cast to that and use
         // it as the label. The fourcc value is a four-character name that can be
         // interpreted as a 32-bit integer enum ('ABGR', 'r011', etc.)
@@ -81,7 +81,7 @@ class Backend : public SharedTextureMemoryTestVulkanBackend {
         gbm_bo* bo = gbm_bo_create(mGbmDevice, size, size, format, usage);
         EXPECT_NE(bo, nullptr) << "Failed to create GBM buffer object";
 
-        wgpu::SharedTextureMemoryDmaBufDescriptor dmaBufDesc;
+        wgpu::SharedTextureMemoryDmaBuf dmaBufDesc;
         dmaBufDesc.size = {size, size};
         dmaBufDesc.drmFormat = format;
         dmaBufDesc.drmModifier = gbm_bo_get_modifier(bo);

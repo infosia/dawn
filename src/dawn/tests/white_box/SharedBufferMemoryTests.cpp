@@ -77,7 +77,7 @@ wgpu::SharedFence SharedBufferMemoryTestBackend::ImportFenceTo(const wgpu::Devic
             exportInfo.nextInChain = &dxgiExportInfo;
             fence.ExportInfo(&exportInfo);
 
-            wgpu::SharedFenceDXGISharedHandleDescriptor dxgiDesc;
+            wgpu::SharedFenceDXGISharedHandle dxgiDesc;
             dxgiDesc.handle = dxgiExportInfo.handle;
 
             wgpu::SharedFenceDescriptor fenceDesc;

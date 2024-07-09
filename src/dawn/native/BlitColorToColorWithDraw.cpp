@@ -100,7 +100,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateColorBlitPipeline(
     }
 
     // vertex shader's source.
-    ShaderModuleWGSLDescriptor wgslDesc = {};
+    ShaderModuleWGSL wgslDesc = {};
     ShaderModuleDescriptor shaderModuleDesc = {};
     shaderModuleDesc.nextInChain = &wgslDesc;
     wgslDesc.code = kBlitToColorVS;

@@ -143,7 +143,7 @@ wgpu::SharedFence SharedTextureMemoryTestBackend::ImportFenceTo(const wgpu::Devi
             exportInfo.nextInChain = &vkExportInfo;
             fence.ExportInfo(&exportInfo);
 
-            wgpu::SharedFenceVkSemaphoreOpaqueFDDescriptor vkDesc;
+            wgpu::SharedFenceVkSemaphoreOpaqueFD vkDesc;
             vkDesc.handle = vkExportInfo.handle;
 
             wgpu::SharedFenceDescriptor fenceDesc;
@@ -155,7 +155,7 @@ wgpu::SharedFence SharedTextureMemoryTestBackend::ImportFenceTo(const wgpu::Devi
             exportInfo.nextInChain = &vkExportInfo;
             fence.ExportInfo(&exportInfo);
 
-            wgpu::SharedFenceVkSemaphoreSyncFDDescriptor vkDesc;
+            wgpu::SharedFenceVkSemaphoreSyncFD vkDesc;
             vkDesc.handle = vkExportInfo.handle;
 
             wgpu::SharedFenceDescriptor fenceDesc;
@@ -167,7 +167,7 @@ wgpu::SharedFence SharedTextureMemoryTestBackend::ImportFenceTo(const wgpu::Devi
             exportInfo.nextInChain = &vkExportInfo;
             fence.ExportInfo(&exportInfo);
 
-            wgpu::SharedFenceVkSemaphoreZirconHandleDescriptor vkDesc;
+            wgpu::SharedFenceVkSemaphoreZirconHandle vkDesc;
             vkDesc.handle = vkExportInfo.handle;
 
             wgpu::SharedFenceDescriptor fenceDesc;
@@ -179,7 +179,7 @@ wgpu::SharedFence SharedTextureMemoryTestBackend::ImportFenceTo(const wgpu::Devi
             exportInfo.nextInChain = &dxgiExportInfo;
             fence.ExportInfo(&exportInfo);
 
-            wgpu::SharedFenceDXGISharedHandleDescriptor dxgiDesc;
+            wgpu::SharedFenceDXGISharedHandle dxgiDesc;
             dxgiDesc.handle = dxgiExportInfo.handle;
 
             wgpu::SharedFenceDescriptor fenceDesc;
@@ -192,7 +192,7 @@ wgpu::SharedFence SharedTextureMemoryTestBackend::ImportFenceTo(const wgpu::Devi
 
             fence.ExportInfo(&exportInfo);
 
-            wgpu::SharedFenceMTLSharedEventDescriptor sharedEventDesc;
+            wgpu::SharedFenceMTLSharedEvent sharedEventDesc;
             sharedEventDesc.sharedEvent = sharedEventInfo.sharedEvent;
 
             wgpu::SharedFenceDescriptor fenceDesc;

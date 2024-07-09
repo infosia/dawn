@@ -248,29 +248,27 @@ ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImp
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(descriptor));
 
     wgpu::SType type;
-    DAWN_TRY_ASSIGN(type,
-                    (unpacked.ValidateBranches<Branch<SharedTextureMemoryDmaBufDescriptor>,
-                                               Branch<SharedTextureMemoryAHardwareBufferDescriptor>,
-                                               Branch<SharedTextureMemoryOpaqueFDDescriptor>>()));
+    DAWN_TRY_ASSIGN(type, (unpacked.ValidateBranches<Branch<SharedTextureMemoryDmaBuf>,
+                                                     Branch<SharedTextureMemoryAHardwareBuffer>,
+                                                     Branch<SharedTextureMemoryOpaqueFD>>()));
 
     switch (type) {
-        case wgpu::SType::SharedTextureMemoryDmaBufDescriptor:
+        case wgpu::SType::SharedTextureMemoryDmaBuf:
             DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryDmaBuf), "%s is not enabled.",
                             wgpu::FeatureName::SharedTextureMemoryDmaBuf);
             return SharedTextureMemory::Create(this, descriptor->label,
-                                               unpacked.Get<SharedTextureMemoryDmaBufDescriptor>());
-        case wgpu::SType::SharedTextureMemoryAHardwareBufferDescriptor:
+                                               unpacked.Get<SharedTextureMemoryDmaBuf>());
+        case wgpu::SType::SharedTextureMemoryAHardwareBuffer:
             DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryAHardwareBuffer),
                             "%s is not enabled.",
                             wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer);
-            return SharedTextureMemory::Create(
-                this, descriptor->label,
-                unpacked.Get<SharedTextureMemoryAHardwareBufferDescriptor>());
-        case wgpu::SType::SharedTextureMemoryOpaqueFDDescriptor:
+            return SharedTextureMemory::Create(this, descriptor->label,
+                                               unpacked.Get<SharedTextureMemoryAHardwareBuffer>());
+        case wgpu::SType::SharedTextureMemoryOpaqueFD:
             DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryOpaqueFD), "%s is not enabled.",
                             wgpu::FeatureName::SharedTextureMemoryOpaqueFD);
-            return SharedTextureMemory::Create(
-                this, descriptor->label, unpacked.Get<SharedTextureMemoryOpaqueFDDescriptor>());
+            return SharedTextureMemory::Create(this, descriptor->label,
+                                               unpacked.Get<SharedTextureMemoryOpaqueFD>());
         default:
             DAWN_UNREACHABLE();
     }
@@ -282,30 +280,28 @@ ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(descriptor));
 
     wgpu::SType type;
-    DAWN_TRY_ASSIGN(
-        type, (unpacked.ValidateBranches<Branch<SharedFenceVkSemaphoreZirconHandleDescriptor>,
-                                         Branch<SharedFenceVkSemaphoreSyncFDDescriptor>,
-                                         Branch<SharedFenceVkSemaphoreOpaqueFDDescriptor>>()));
+    DAWN_TRY_ASSIGN(type, (unpacked.ValidateBranches<Branch<SharedFenceVkSemaphoreZirconHandle>,
+                                                     Branch<SharedFenceVkSemaphoreSyncFD>,
+                                                     Branch<SharedFenceVkSemaphoreOpaqueFD>>()));
 
     switch (type) {
-        case wgpu::SType::SharedFenceVkSemaphoreZirconHandleDescriptor:
+        case wgpu::SType::SharedFenceVkSemaphoreZirconHandle:
             DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceVkSemaphoreZirconHandle),
                             "%s is not enabled.",
                             wgpu::FeatureName::SharedFenceVkSemaphoreZirconHandle);
-            return SharedFence::Create(
-                this, descriptor->label,
-                unpacked.Get<SharedFenceVkSemaphoreZirconHandleDescriptor>());
-        case wgpu::SType::SharedFenceVkSemaphoreSyncFDDescriptor:
+            return SharedFence::Create(this, descriptor->label,
+                                       unpacked.Get<SharedFenceVkSemaphoreZirconHandle>());
+        case wgpu::SType::SharedFenceVkSemaphoreSyncFD:
             DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceVkSemaphoreSyncFD),
                             "%s is not enabled.", wgpu::FeatureName::SharedFenceVkSemaphoreSyncFD);
             return SharedFence::Create(this, descriptor->label,
-                                       unpacked.Get<SharedFenceVkSemaphoreSyncFDDescriptor>());
-        case wgpu::SType::SharedFenceVkSemaphoreOpaqueFDDescriptor:
+                                       unpacked.Get<SharedFenceVkSemaphoreSyncFD>());
+        case wgpu::SType::SharedFenceVkSemaphoreOpaqueFD:
             DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceVkSemaphoreOpaqueFD),
                             "%s is not enabled.",
                             wgpu::FeatureName::SharedFenceVkSemaphoreOpaqueFD);
             return SharedFence::Create(this, descriptor->label,
-                                       unpacked.Get<SharedFenceVkSemaphoreOpaqueFDDescriptor>());
+                                       unpacked.Get<SharedFenceVkSemaphoreOpaqueFD>());
         default:
             DAWN_UNREACHABLE();
     }
