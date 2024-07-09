@@ -1,0 +1,74 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50eac604_2dd9e8c1",
+        "filename": "generator/templates/art/api_kotlin_enum.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T09:40:27Z",
+      "side": 1,
+      "message": "Could you do this one too please?",
+      "fixSuggestions": [
+        {
+          "fixId": "0fad7b1f_9868fc97",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_kotlin_enum.kt",
+              "range": {
+                "startLine": 36,
+                "startChar": 0,
+                "endLine": 37,
+                "endChar": 0
+              },
+              "replacement": "            val {{ as_ktName(value.name.CamelCase()) }} \u003d {{ enum.name.CamelCase() }}({{ \u0027{:#010x}\u0027.format(value.value) }}) // {{ value.name }}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4cbb8e2946434fe540923291701aa2f29dd5977e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b59738e_927cf641",
+        "filename": "generator/templates/art/api_kotlin_functions.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-09T09:40:27Z",
+      "side": 1,
+      "message": "And this one?",
+      "fixSuggestions": [
+        {
+          "fixId": "d8ee79d9_57249523",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_kotlin_functions.kt",
+              "range": {
+                "startLine": 32,
+                "startChar": 0,
+                "endLine": 33,
+                "endChar": 0
+              },
+              "replacement": "        {%- for arg in function.arguments %}{{- as_varName(arg.name) }}: {{ kotlin_definition(arg) }}, {% endfor -%}): {{ kotlin_type_declaration(function.return_type) }}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4cbb8e2946434fe540923291701aa2f29dd5977e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
