@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78de9058_5604d635",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-07-09T07:31:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abf944dc_816d1028",
+      "revId": "57f020cde479c56395e885c4ac36956a43a1127a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27335d26_74ce7700",
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "Please add a TODO somewhere, but yeah let\u0027s do it in a follow-up.",
       "parentUuid": "bed29b2b_73ec02d6",
+      "revId": "57f020cde479c56395e885c4ac36956a43a1127a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e67ea21_f5eaf43b",
+        "filename": "src/dawn/node/interop/DawnExtensions.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-07-09T07:31:15Z",
+      "side": 1,
+      "message": "Added TODOs in Dawn native and Node binding to deprecate the current `DawnExperimentalSubgroupLimits` and expose the subgroups limits in Node binding as a follow up. Currently in Dawn and Blink these limits would be just undefined limit value for devices not supporting subgroups feature.",
+      "parentUuid": "8ed50291_64458838",
       "revId": "57f020cde479c56395e885c4ac36956a43a1127a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
