@@ -35,8 +35,17 @@ namespace dawn::wire {
 namespace {
 
 using testing::_;
+using testing::AllOf;
+using testing::Eq;
+using testing::Field;
 using testing::Return;
 using testing::Sequence;
+
+MATCHER_P2(EqBytes, bytes, size, "") {
+    const char* dataToCheck = arg;
+    bool isMatch = (memcmp(dataToCheck, bytes, size) == 0);
+    return isMatch;
+}
 
 class WireArgumentTests : public WireTest {
   public:
@@ -161,6 +170,56 @@ TEST_F(WireArgumentTests, CStringArgument) {
                     })))
         .WillOnce(Return(apiPlaceholderPipeline));
 
+    FlushClient();
+}
+
+// Test that the wire is able to send WGPUStrings
+TEST_F(WireArgumentTests, WGPUString) {
+    // Create shader module
+    wgpu::ShaderModuleDescriptor vertexDescriptor = {};
+    wgpu::ShaderModule vsModule = device.CreateShaderModule(&vertexDescriptor);
+    WGPUShaderModule apiVsModule = api.GetNewShaderModule();
+    EXPECT_CALL(api, DeviceCreateShaderModule(apiDevice, _)).WillOnce(Return(apiVsModule));
+
+    const char* label = "null-terminated label\0more string";
+    vsModule.SetLabel(std::string_view(label));
+    EXPECT_CALL(
+        api, ShaderModuleSetLabel2(apiVsModule, AllOf(Field(&WGPUString::data, EqBytes(label, 21u)),
+                                                      Field(&WGPUString::length, Eq(21u)))));
+    FlushClient();
+
+    // Give it a longer, explicit length that contains the null-terminator.
+    vsModule.SetLabel(std::string_view(label, 34));
+    EXPECT_CALL(
+        api, ShaderModuleSetLabel2(apiVsModule, AllOf(Field(&WGPUString::data, EqBytes(label, 34u)),
+                                                      Field(&WGPUString::length, Eq(34u)))));
+    FlushClient();
+
+    // Give it a shorder, explicit length.
+    vsModule.SetLabel(std::string_view(label, 2));
+    EXPECT_CALL(
+        api, ShaderModuleSetLabel2(apiVsModule, AllOf(Field(&WGPUString::data, EqBytes(label, 2u)),
+                                                      Field(&WGPUString::length, Eq(2u)))));
+    FlushClient();
+
+    // Give it a zero length.
+    vsModule.SetLabel(std::string_view(label, 0));
+    EXPECT_CALL(api,
+                ShaderModuleSetLabel2(apiVsModule, AllOf(Field(&WGPUString::data, EqBytes("", 1u)),
+                                                         Field(&WGPUString::length, Eq(0u)))));
+    FlushClient();
+
+    // Give it zero length and data.
+    vsModule.SetLabel(std::string_view(nullptr, 0));
+    EXPECT_CALL(api, ShaderModuleSetLabel2(apiVsModule, AllOf(Field(&WGPUString::data, nullptr),
+                                                              Field(&WGPUString::length, Eq(0u)))));
+    FlushClient();
+
+    // Give it the nil string.
+    vsModule.SetLabel(std::nullopt);
+    EXPECT_CALL(
+        api, ShaderModuleSetLabel2(apiVsModule, AllOf(Field(&WGPUString::data, nullptr),
+                                                      Field(&WGPUString::length, Eq(SIZE_MAX)))));
     FlushClient();
 }
 
