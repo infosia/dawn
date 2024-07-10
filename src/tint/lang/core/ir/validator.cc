@@ -1595,7 +1595,14 @@ void Validator::CheckStore(const Store* s) {
             }
             auto* value_type = from->Type();
             auto* store_type = mv->StoreType();
-            if (value_type != store_type) {
+
+            if (!store_type) {
+                AddError(s, Store::kToOperandOffset) << "store type must not be null";
+            }
+            if (!value_type) {
+                AddError(s, Store::kFromOperandOffset) << "value type must not be null";
+            }
+            if (store_type && value_type && value_type != store_type) {
                 AddError(s, Store::kFromOperandOffset)
                     << "value type " << style::Type(value_type->FriendlyName())
                     << " does not match store type " << style::Type(store_type->FriendlyName());
