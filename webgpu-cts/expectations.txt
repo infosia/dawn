@@ -424,6 +424,7 @@ crbug.com/dawn/2500 [ intel linux mesa_ge_23.2 ] webgpu:shader,execution,shader_
 crbug.com/dawn/2500 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:shader,execution,expression,binary,f16_matrix_vector_multiplication:vector_matrix:inputSource="uniform";cols=4;rows=3 [ Failure ]
 crbug.com/dawn/2501 [ dawn-backend-validation intel linux mesa_ge_23.2 ] webgpu:api,validation,texture,bgra8unorm_storage:configure_storage_usage_on_canvas_context_with_bgra8unorm_storage:canvasType="offscreen" [ Failure ]
 crbug.com/dawn/2501 [ dawn-backend-validation intel linux mesa_ge_23.2 ] webgpu:api,validation,texture,bgra8unorm_storage:configure_storage_usage_on_canvas_context_with_bgra8unorm_storage:canvasType="onscreen" [ Failure ]
+crbug.com/dawn/0000 [ linux intel-0x9bc5 mesa_ge_23.2 ] webgpu:shader,execution,memory_model,atomicity:atomicity:memType="atomic_storage";testType="inter_workgroup" [ Failure ]
 
 ################################################################################
 # Intel failures for robust access on Windows
