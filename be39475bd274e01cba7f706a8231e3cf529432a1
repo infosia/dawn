@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc2a375a_588c29e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-10T20:30:22Z",
+      "side": 1,
+      "message": "PTAL. (Any DISABLED test can be ignored, it will be fixed and enabled in a future CL)",
+      "revId": "be39475bd274e01cba7f706a8231e3cf529432a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
