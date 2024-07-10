@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b057b695_faa82f6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-07-10T08:59:52Z",
+      "side": 1,
+      "message": "Not sure whether this plan works to resolve https://issues.chromium.org/issues/42240537\n\nThe idea is that PipelineLayout doesn\u0027t hold native layout anymore. Native Pipeline instead holding native layout.",
+      "revId": "652e2dbdb8410642a46ca9524f8861a66a1a6569",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
