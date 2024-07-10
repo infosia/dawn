@@ -16,6 +16,23 @@
       "message": "Thanks!",
       "revId": "26f36bbd3ab5beadea76abaf98281c623fe8b990",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73927c06_2399a17e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-10T18:02:47Z",
+      "side": 1,
+      "message": "Austin PTAL again, I had to modify android/BUILD.gn to fix the build in Chromium and that file hasn\u0027t been reviewed yet.",
+      "revId": "26f36bbd3ab5beadea76abaf98281c623fe8b990",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
