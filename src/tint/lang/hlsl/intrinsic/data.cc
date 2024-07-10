@@ -830,7 +830,7 @@ constexpr ParameterInfo kParameters[] = {
   },
   {
     /* [21] */
-    /* usage */ core::ParameterUsage::kNone,
+    /* usage */ core::ParameterUsage::kWidth,
     /* matcher_indices */ MatcherIndicesIndex(16),
   },
   {
@@ -1363,7 +1363,7 @@ constexpr IntrinsicInfo kBuiltins[] = {
   },
   {
     /* [18] */
-    /* fn GetDimensions[A : access](byte_address_buffer<A>, ptr<function, u32, writable>) */
+    /* fn GetDimensions[A : access](byte_address_buffer<A>, width: ptr<function, u32, writable>) */
     /* num overloads */ 1,
     /* overloads */ OverloadIndex(25),
   },
