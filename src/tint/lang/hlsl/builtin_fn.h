@@ -66,6 +66,7 @@ enum class BuiltinFn : uint8_t {
     kStore3,
     kStore4,
     kGetDimensions,
+    kTextureStore,
     kNone,
 };
 
