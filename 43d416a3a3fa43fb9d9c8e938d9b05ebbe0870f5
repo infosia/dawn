@@ -104,6 +104,23 @@
       "parentUuid": "7a563234_8d94ef78",
       "revId": "43d416a3a3fa43fb9d9c8e938d9b05ebbe0870f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0ee2b19_407df821",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-10T17:14:20Z",
+      "side": 1,
+      "message": "I disabled the glsl validator on platforms where dawn opengl backend is not enabled. clang-15 in macos was having trouble compiling glslang. I\u0027ve a feeling that is causing tint glsl tests to fail.",
+      "revId": "43d416a3a3fa43fb9d9c8e938d9b05ebbe0870f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
