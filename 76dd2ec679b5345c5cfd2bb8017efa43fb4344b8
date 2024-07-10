@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc2a63a1_9dc9be95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-10T11:25:28Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "76dd2ec679b5345c5cfd2bb8017efa43fb4344b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "702d8467_380f4ed1",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-10T11:25:28Z",
+      "side": 1,
+      "message": "```suggestion\n        // These params are only used for formats smaller than 4 bytes\n```",
+      "revId": "76dd2ec679b5345c5cfd2bb8017efa43fb4344b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
