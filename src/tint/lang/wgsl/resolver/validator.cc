@@ -1142,36 +1142,35 @@ bool Validator::InterpolateAttribute(const ast::InterpolateAttribute* attr,
 
     auto* type = storage_ty->UnwrapRef();
 
-    auto i_type = sem_.AsInterpolationType(sem_.Get(attr->type));
-    if (TINT_UNLIKELY(!i_type)) {
+    auto i_type = attr->interpolation.type;
+    auto i_sampling = attr->interpolation.sampling;
+    if (TINT_UNLIKELY(i_type == core::InterpolationType::kUndefined)) {
         return false;
     }
 
-    if (type->is_integer_scalar_or_vector() && i_type->Value() != core::InterpolationType::kFlat) {
+    if (type->is_integer_scalar_or_vector() && i_type != core::InterpolationType::kFlat) {
         AddError(attr->source) << "interpolation type must be " << style::Enum("flat")
                                << " for integral user-defined IO types";
         return false;
     }
 
-    if (attr->sampling && i_type->Value() == core::InterpolationType::kFlat) {
+    if (i_sampling != core::InterpolationSampling::kUndefined &&
+        i_type == core::InterpolationType::kFlat) {
         AddError(attr->source) << "flat interpolation attribute must not have a sampling parameter";
         return false;
     }
 
     if (mode_ == wgsl::ValidationMode::kCompat) {
-        if (i_type->Value() == core::InterpolationType::kLinear) {
+        if (i_type == core::InterpolationType::kLinear) {
             AddError(attr->source)
                 << "use of '@interpolate(linear)' is not allowed in compatibility mode";
             return false;
         }
 
-        if (attr->sampling) {
-            auto s_type = sem_.AsInterpolationSampling(sem_.Get(attr->sampling));
-            if (s_type->Value() == core::InterpolationSampling::kSample) {
-                AddError(attr->source)
-                    << "use of '@interpolate(..., sample)' is not allowed in compatibility mode";
-                return false;
-            }
+        if (i_sampling == core::InterpolationSampling::kSample) {
+            AddError(attr->source)
+                << "use of '@interpolate(..., sample)' is not allowed in compatibility mode";
+            return false;
         }
     }
     return true;
