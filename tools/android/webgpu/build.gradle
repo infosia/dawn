@@ -105,6 +105,7 @@ project.afterEvaluate {
 tasks.register('generateBindings', Exec) {
     workingDir('../../..')
     commandLine 'python3', 'generator/dawn_json_generator.py',
+    '--jinja2-path', "third_party/jinja2",
     '--template-dir', 'generator/templates',
     '--output-dir', "$project.projectDir/../../../out/Debug/gen",
     '--dawn-json', 'src/dawn/dawn.json',
