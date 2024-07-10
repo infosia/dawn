@@ -175,6 +175,24 @@
       "parentUuid": "678d73e2_a0fdd112",
       "revId": "43d416a3a3fa43fb9d9c8e938d9b05ebbe0870f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da8a5bc4_5a6409d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-10T21:31:04Z",
+      "side": 1,
+      "message": "Re-enabled glslangValidator. @dsinclair@chromium.org can you please submit to CQ?",
+      "parentUuid": "d0ee2b19_407df821",
+      "revId": "43d416a3a3fa43fb9d9c8e938d9b05ebbe0870f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
