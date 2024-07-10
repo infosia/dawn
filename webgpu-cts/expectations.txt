@@ -83,7 +83,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-07-03 12:35:47PM
+# Last rolled: 2024-07-10 01:33:26PM
 
 ################################################################################
 # SharedImage interop failures on Linux
@@ -2287,4 +2287,3 @@ crbug.com/dawn/0000 [ android-t arm dawn-no-backend-validation target-cpu-64 web
 crbug.com/dawn/0000 [ android-t arm dawn-no-backend-validation target-cpu-64 webgpu-adapter-default webgpu-no-worker ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"perspective","sampling":"sample"} [ Failure ]
 crbug.com/dawn/0000 [ nvidia-0x2184 ubuntu ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:* [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,validation,decl,context_dependent_resolution:attribute_names:case="interpolate" [ Failure ]
-
