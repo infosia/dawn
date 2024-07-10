@@ -31,6 +31,11 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+// DO NOT COMMIT
+android { defaultConfig { ndk {
+    abiFilters 'arm64-v8a'
+}}}
+
 android {
     namespace 'net.android.webgpu'
     defaultConfig {
