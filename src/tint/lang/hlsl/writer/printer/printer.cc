@@ -154,7 +154,10 @@ class Printer : public tint::TextGenerator {
 
     /// @returns the generated HLSL shader
     tint::Result<PrintResult> Generate() {
-        core::ir::Capabilities capabilities{core::ir::Capability::kAllowModuleScopeLets};
+        core::ir::Capabilities capabilities{
+            core::ir::Capability::kAllowModuleScopeLets,
+            core::ir::Capability::kAllowVectorElementPointer,
+        };
         auto valid = core::ir::ValidateAndDumpIfNeeded(ir_, "HLSL writer", capabilities);
         if (valid != Success) {
             return std::move(valid.Failure());
@@ -657,6 +660,7 @@ class Printer : public tint::TextGenerator {
                     [&](const core::ir::UserCall* c) { EmitUserCall(out, c); },        //
                     [&](const core::ir::Swizzle* s) { EmitSwizzle(out, s); },          //
                     [&](const core::ir::Var* var) { out << NameOf(var->Result(0)); },  //
+                    [&](const core::ir::Bitcast* b) { EmitBitcast(out, b); },          //
 
                     [&](const hlsl::ir::BuiltinCall* c) { EmitHlslBuiltinCall(out, c); },  //
                     [&](const hlsl::ir::Ternary* t) { EmitTernary(out, t); },
@@ -667,6 +671,17 @@ class Printer : public tint::TextGenerator {
             },
             [&](const core::ir::FunctionParam* p) { out << NameOf(p); },  //
             TINT_ICE_ON_NO_MATCH);
+    }
+
+    // Limited bitcast to handle casting F32 -> F16
+    void EmitBitcast(StringStream& out, const core::ir::Bitcast* b) {
+        TINT_ASSERT(b->Val()->Type()->Is<core::type::F32>() &&
+                    b->Result(0)->Type()->Is<core::type::F16>());
+
+        EmitType(out, b->Result(0)->Type());
+        out << "(";
+        EmitValue(out, b->Val());
+        out << ")";
     }
 
     void EmitHlslMemberBuiltinCall(StringStream& out, const hlsl::ir::MemberBuiltinCall* c) {
@@ -715,6 +730,11 @@ class Printer : public tint::TextGenerator {
     }
 
     void EmitHlslBuiltinCall(StringStream& out, const hlsl::ir::BuiltinCall* c) {
+        if (c->Func() == hlsl::BuiltinFn::kTextureStore) {
+            EmitTextureStore(out, c);
+            return;
+        }
+
         out << c->Func() << "(";
         bool needs_comma = false;
         for (const auto* arg : c->Args()) {
@@ -725,6 +745,15 @@ class Printer : public tint::TextGenerator {
             needs_comma = true;
         }
         out << ")";
+    }
+
+    void EmitTextureStore(StringStream& out, const hlsl::ir::BuiltinCall* c) {
+        auto args = c->Args();
+        EmitValue(out, args[0]);
+        out << "[";
+        EmitValue(out, args[1]);
+        out << "] = ";
+        EmitValue(out, args[2]);
     }
 
     /// Emit a convert instruction
@@ -967,6 +996,15 @@ class Printer : public tint::TextGenerator {
                 break;
             case core::BuiltinFn::kSubgroupBroadcast:
                 out << "WaveReadLaneAt";
+                break;
+            case core::BuiltinFn::kWorkgroupBarrier:
+                out << "GroupMemoryBarrierWithGroupSync";
+                break;
+            case core::BuiltinFn::kStorageBarrier:
+                out << "DeviceMemoryBarrierWithGroupSync";
+                break;
+            case core::BuiltinFn::kTextureBarrier:
+                out << "DeviceMemoryBarrierWithGroupSync";
                 break;
 
             default:
