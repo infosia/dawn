@@ -477,6 +477,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "21eef0e0_e551d3d2",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/FeaturesTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-10T01:07:37Z",
+      "side": 1,
+      "message": "I have removed the asserts from DawnTestLauncher. The adapter checks can\u0027t be done here as the test doesn\u0027t have access to the adapter (by design).",
+      "parentUuid": "91f33f05_415207f3",
+      "revId": "67d29ffb786fd405754eb01fb553a37b32ff39bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c9912ae_d7501a60",
