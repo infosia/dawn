@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef686695_cbe58234",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-10T10:56:50Z",
+      "side": 1,
+      "message": "-\u003e Alex for consideration of the Kotlin",
+      "revId": "adabcd44da3ebdba11f200c69cc85a60240f9e2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
