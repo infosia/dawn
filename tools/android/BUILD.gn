@@ -26,6 +26,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import("../../scripts/dawn_overrides_with_defaults.gni")
+
 import("${dawn_root}/generator/dawn_generator.gni")
 
 dawn_json_generator("kotlin_gen") {
