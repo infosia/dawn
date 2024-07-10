@@ -16,6 +16,23 @@
       "message": "-\u003e Alex for consideration of the Kotlin",
       "revId": "adabcd44da3ebdba11f200c69cc85a60240f9e2b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfcb50bd_8000627f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-10T11:05:30Z",
+      "side": 1,
+      "message": "Corentin are you able to +2 this? Neither Alex or I can for whatever reason.",
+      "revId": "adabcd44da3ebdba11f200c69cc85a60240f9e2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
