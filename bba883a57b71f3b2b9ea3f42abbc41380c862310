@@ -82,6 +82,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0944dc4_c707a519",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-10T19:31:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b816199f_ea3a1fb9",
+      "range": {
+        "startLine": 915,
+        "startChar": 19,
+        "endLine": 915,
+        "endChar": 36
+      },
+      "revId": "bba883a57b71f3b2b9ea3f42abbc41380c862310",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90158dd2_1487dca7",
@@ -166,6 +190,30 @@
       "side": 1,
       "message": "Changed to `shaderEndOffset`. I think `endInShaderBinding` seems like it is equal to `shaderBindingSize`.",
       "parentUuid": "acbb38c9_53db1c2e",
+      "range": {
+        "startLine": 972,
+        "startChar": 19,
+        "endLine": 972,
+        "endChar": 39
+      },
+      "revId": "bba883a57b71f3b2b9ea3f42abbc41380c862310",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25765a76_26733007",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-10T19:31:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2c07c792_eab01511",
       "range": {
         "startLine": 972,
         "startChar": 19,
