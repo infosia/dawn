@@ -16,6 +16,23 @@
       "message": "@cwallez@chromium.org, this is ready to land.",
       "revId": "43d416a3a3fa43fb9d9c8e938d9b05ebbe0870f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbc7ff7d_2728d072",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-10T06:04:03Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "43d416a3a3fa43fb9d9c8e938d9b05ebbe0870f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
