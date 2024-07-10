@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d22b751_42e75f39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-10T19:35:30Z",
+      "side": 1,
+      "message": "I accidentally messed up the CL by including the code from the next CL after doing local rebase. The CL is back to normal now. Could you re-review and +2 if possible? thanks",
+      "revId": "6a72f3d8cf413016030cd4ab56c0f5127f2fc110",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
