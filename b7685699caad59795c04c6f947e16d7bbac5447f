@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "561bb3e5_b48bb2fa",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-10T13:21:18Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "db0d9e00_7178a3d4",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "581dca99_454f7158",
@@ -124,6 +142,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe6b15a8_df006e2a",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-10T13:21:18Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "2e63d627_81200df3",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e878f609_92fe6317",
@@ -159,6 +195,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68a4fa4e_bd985b56",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-10T13:21:18Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "7b264a9b_68746950",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "014761ff_28e9c090",
@@ -190,6 +244,24 @@
       "side": 1,
       "message": "I asked the Dawn folks about this (as I don\u0027t like it either). Unfortunately I can\u0027t locate the conversation, but the gist of it is that close() is about releasing the handles and destroy() is only present on things that allocate external resources and might take longer to tear everything down.",
       "parentUuid": "014761ff_28e9c090",
+      "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5928c065_e9ff8af7",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnLauncher.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-10T13:21:18Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "bafbdbdf_5a3ea67d",
       "revId": "b7685699caad59795c04c6f947e16d7bbac5447f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
