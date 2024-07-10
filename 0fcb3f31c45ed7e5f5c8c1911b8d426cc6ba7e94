@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de8d30ff_28a1902b",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-10T17:37:17Z",
+      "side": 1,
+      "message": "kToOperandOffset",
+      "fixSuggestions": [
+        {
+          "fixId": "1629f8e2_8cfc2d72",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 1600,
+                "startChar": 0,
+                "endLine": 1601,
+                "endChar": 0
+              },
+              "replacement": "                AddError(s, Store::kToOperandOffset) \u003c\u003c \"store type must not be null\";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0fcb3f31c45ed7e5f5c8c1911b8d426cc6ba7e94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

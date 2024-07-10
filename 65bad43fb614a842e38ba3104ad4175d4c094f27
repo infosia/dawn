@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90c03016_c5d11fff",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-10T17:37:17Z",
+      "side": 0,
+      "message": "Revert this.",
+      "fixSuggestions": [
+        {
+          "fixId": "1aa534f8_28a6758a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 97,
+                "startChar": 0,
+                "endLine": 98,
+                "endChar": 0
+              },
+              "replacement": "#define TINT_DUMP_IR_WHEN_VALIDATING 0\n"
+            }
+          ]
+        }
+      ],
+      "revId": "65bad43fb614a842e38ba3104ad4175d4c094f27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
