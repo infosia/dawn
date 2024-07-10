@@ -16,6 +16,23 @@
       "message": "Not sure whether this plan works to resolve https://issues.chromium.org/issues/42240537\n\nThe idea is that PipelineLayout doesn\u0027t hold native layout anymore. Native Pipeline instead holding native layout.",
       "revId": "652e2dbdb8410642a46ca9524f8861a66a1a6569",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60a2ac10_589e88bd",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-10T18:34:51Z",
+      "side": 1,
+      "message": "do we need this in the pipeline if the pipeline layout also stores it?",
+      "revId": "652e2dbdb8410642a46ca9524f8861a66a1a6569",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
