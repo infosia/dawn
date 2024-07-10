@@ -34,6 +34,72 @@
 namespace dawn::kotlin_api {
 
 {% for structure in by_category['structure'] %}
+    jobject Convert(JNIEnv *env, const {{ as_cType(structure.name) }}* input) {
+        jclass clz = env->FindClass("{{ jni_name(structure) }}");
+        jmethodID ctor = env->GetMethodID(clz, "<init>", "(
+        {%- for member in structure.members if include_structure_member(structure, member) %}
+            {%- if member.type.name.get() in ['int', 'int64_t', 'uint64_t', 'size_t', 'void'] -%}
+                J
+            {%- elif member.type.name.get() in ['int', 'int32_t', 'uint32_t']
+                    or member.type.category in ['bitmask', 'enum'] -%}
+                I
+            {%- elif member.type.name.get() in ['int16_t', 'uint16_t'] -%}
+                S
+            {%- elif member.type.name.get() == 'double' -%}
+                D
+            {%- elif member.type.name.get() == 'float' -%}
+                F
+            {%- elif member.type.name.get() == 'bool' -%}
+                Z
+            {%- elif member.type.category in ['object', 'structure'] -%}
+                L{{ jni_name(member.type) }};
+            {%- elif member.type.name.get() == 'char' -%}
+                Ljava/lang/String;
+            {%- else -%}
+                {{ unreachable_code }}
+            {%- endif -%}
+        {%- endfor %})V");
+
+        {% for member in structure.members if include_structure_member(structure, member) %}
+            //* TODO: generalize native -> Kotlin logic
+            {% set v = "input->" + member.name.camelCase() %}
+            {% if member.length %}
+                jobjectArray {{ member.name.camelCase() }} = nullptr; /* length-based */
+            {% elif member.type.category == 'object' %}
+                jobject {{ member.name.camelCase() }} =
+                        env->NewObject(env->FindClass("{{ jni_name(member.type) }}"),
+                                env->GetMethodID(env->FindClass("{{ jni_name(member.type) }}"),
+                                        "<init>", "(J)V"),
+                            reinterpret_cast<jlong>({{ v }}));
+            {% elif member.type.category == 'structure' %}
+                jobject {{ member.name.camelCase() }} = Convert(env, &{{ v }});
+            {% elif member.type.name.get() in ['int64_t', 'uint64_t', 'size_t'] %}
+                jlong {{ member.name.camelCase() }} = static_cast<jint>({{ v }});
+            {% elif member.type.name.get() in ['int', 'int32_t', 'uint32_t']
+                            or member.type.category in ['bitmask', 'enum'] %}
+                jint {{ member.name.camelCase() }} = static_cast<jint>({{ v }});
+            {% elif member.type.name.get() in ['int16_t', 'uint16_t'] %}
+                jshort {{ member.name.camelCase() }} = {{ v }};
+            {% elif member.type.name.get() == 'double' %}
+                jdouble {{ member.name.camelCase() }} = {{ v }};
+            {% elif member.type.name.get() == 'float' %}
+                jfloat {{ member.name.camelCase() }} = {{ v }};
+            {% elif member.type.name.get() == 'char' %}
+                jstring {{ member.name.camelCase() }} = env->NewStringUTF({{ v }});
+            {% elif member.type.name.get() == 'bool' %}
+                bool {{ member.name.camelCase() }} = {{ v }};
+            {% else %}
+                // No conversion for {{ member.type.name.get() }}
+            {% endif %}
+        {% endfor %}
+        jobject converted = env->NewObject(clz, ctor
+        {%- for member in structure.members if include_structure_member(structure, member) %}
+            ,{{ member.name.camelCase() }}
+        {% endfor %}
+        );
+        return converted;
+    }
+
     void Convert(JNIEnv *env, jobject obj, {{ as_cType(structure.name) }}* converted) {
         jclass clz = env->FindClass("{{ jni_name(structure) }}");
 
