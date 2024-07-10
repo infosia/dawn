@@ -110,6 +110,9 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
 
     Ref<PipelineLayoutBase> mLayout;
     RequiredBufferSizes mMinBufferSizes;
+
+    // Record Dawn internal immediate data usage range.
+    uint32_t mInternalImmediateDataRangeByteSize = 0;
 };
 
 }  // namespace dawn::native

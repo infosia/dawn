@@ -322,6 +322,8 @@ size_t PipelineBase::ComputeContentHash() {
         recorder.Record(mStages[stage].constants);
     }
 
+    recorder.Record(mInternalImmediateDataRangeByteSize);
+
     return recorder.GetContentHash();
 }
 
@@ -345,6 +347,11 @@ bool PipelineBase::EqualForCache(const PipelineBase* a, const PipelineBase* b) {
                         b->mStages[stage].constants.begin())) {
             return false;
         }
+    }
+
+    // Check pipeline internal immediate data range
+    if (a->mInternalImmediateDataRangeByteSize != b->mInternalImmediateDataRangeByteSize) {
+        return false;
     }
 
     return true;

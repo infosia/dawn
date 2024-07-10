@@ -467,6 +467,9 @@ size_t PipelineLayoutBase::ComputeContentHash() {
         recorder.Record(slotFormat);
     }
 
+    // Hash the immediate data range byte size
+    recorder.Record(mImmediateDataRangeByteSize);
+
     return recorder.GetContentHash();
 }
 
@@ -493,6 +496,11 @@ bool PipelineLayoutBase::EqualityFunc::operator()(const PipelineLayoutBase* a,
         if (a->mStorageAttachmentSlots[i] != b->mStorageAttachmentSlots[i]) {
             return false;
         }
+    }
+
+    // Check immediate data range
+    if (a->mImmediateDataRangeByteSize != b->mImmediateDataRangeByteSize) {
+        return false;
     }
 
     return true;
