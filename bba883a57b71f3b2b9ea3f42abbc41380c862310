@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d3d51ce_d957155f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-10T11:12:33Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "bba883a57b71f3b2b9ea3f42abbc41380c862310",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "721ab846_39d69655",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-10T11:12:33Z",
+      "side": 1,
+      "message": "nit: offsetInShaderBinding?",
+      "range": {
+        "startLine": 915,
+        "startChar": 19,
+        "endLine": 915,
+        "endChar": 36
+      },
+      "revId": "bba883a57b71f3b2b9ea3f42abbc41380c862310",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90158dd2_1487dca7",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-10T11:12:33Z",
+      "side": 1,
+      "message": "nit: shaderBindingOffset? This way it\u0027s clear that shaderBindingOffset \u003d offsetInShaderBinding \u003d dst.offset maybe? There\u0027s a lot of local variables and I\u0027m trying to make it a bit easier to follow things.",
+      "range": {
+        "startLine": 917,
+        "startChar": 19,
+        "endLine": 917,
+        "endChar": 32
+      },
+      "revId": "bba883a57b71f3b2b9ea3f42abbc41380c862310",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acbb38c9_53db1c2e",
+        "filename": "src/dawn/native/BlitTextureToBuffer.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-10T11:12:33Z",
+      "side": 1,
+      "message": "nit: endInShaderBinding?",
+      "range": {
+        "startLine": 972,
+        "startChar": 19,
+        "endLine": 972,
+        "endChar": 39
+      },
+      "revId": "bba883a57b71f3b2b9ea3f42abbc41380c862310",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
