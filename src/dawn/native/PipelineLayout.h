@@ -120,6 +120,7 @@ class PipelineLayoutBase : public ApiObjectBase,
     BindGroupMask mMask;
     bool mHasPLS = false;
     std::vector<wgpu::TextureFormat> mStorageAttachmentSlots;
+    uint32_t mImmediateDataRangeByteSize = 0;
 };
 
 }  // namespace dawn::native
