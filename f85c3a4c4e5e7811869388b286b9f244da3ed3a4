@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84123bec_7f055c7f",
+        "filename": "src/tint/cmd/fuzz/ir/dis/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-10T19:13:48Z",
+      "side": 1,
+      "message": "\u003e \"useable\" is a possible misspelling of \"usable\".\n\nPlease fix.",
+      "parentUuid": "a8acaefb_e6471476",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 11
+      },
+      "revId": "f85c3a4c4e5e7811869388b286b9f244da3ed3a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f13c854_a7b3c7ae",
+        "filename": "src/tint/cmd/fuzz/ir/dis/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-10T19:13:48Z",
+      "side": 1,
+      "message": "nit:\n```\nif (!options.dump_wgsl \u0026\u0026 options.format !\u003d Format::kWgsl) {\n  return;\n}\n```",
+      "revId": "f85c3a4c4e5e7811869388b286b9f244da3ed3a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
