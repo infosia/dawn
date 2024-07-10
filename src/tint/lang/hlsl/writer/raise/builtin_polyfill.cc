@@ -34,9 +34,18 @@
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
+#include "src/tint/lang/core/type/depth_multisampled_texture.h"
+#include "src/tint/lang/core/type/depth_texture.h"
 #include "src/tint/lang/core/type/manager.h"
+#include "src/tint/lang/core/type/multisampled_texture.h"
+#include "src/tint/lang/core/type/sampled_texture.h"
+#include "src/tint/lang/core/type/storage_texture.h"
+#include "src/tint/lang/core/type/texture.h"
+#include "src/tint/lang/core/type/u32.h"
+#include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/hlsl/builtin_fn.h"
 #include "src/tint/lang/hlsl/ir/builtin_call.h"
+#include "src/tint/lang/hlsl/ir/member_builtin_call.h"
 #include "src/tint/lang/hlsl/ir/ternary.h"
 #include "src/tint/utils/containers/hashmap.h"
 #include "src/tint/utils/math/hash.h"
@@ -77,8 +86,12 @@ struct State {
             if (auto* call = inst->As<core::ir::CoreBuiltinCall>()) {
                 switch (call->Func()) {
                     case core::BuiltinFn::kSelect:
-                        call_worklist.Push(call);
-                        break;
+                    case core::BuiltinFn::kSign:
+                    case core::BuiltinFn::kTextureDimensions:
+                    case core::BuiltinFn::kTextureLoad:
+                    case core::BuiltinFn::kTextureNumLayers:
+                    case core::BuiltinFn::kTextureNumLevels:
+                    case core::BuiltinFn::kTextureNumSamples:
                     case core::BuiltinFn::kTrunc:
                         call_worklist.Push(call);
                         break;
@@ -94,6 +107,11 @@ struct State {
             auto* src_type = bitcast->Val()->Type();
             auto* dst_type = bitcast->Result(0)->Type();
             auto* dst_deepest = dst_type->DeepestElement();
+
+            // Leave f32 -> f16 conversions alone
+            if (src_type->Is<core::type::F32>() && dst_type->Is<core::type::F16>()) {
+                continue;
+            }
 
             if (src_type == dst_type) {
                 ReplaceBitcastWithValue(bitcast);
@@ -111,6 +129,24 @@ struct State {
             switch (call->Func()) {
                 case core::BuiltinFn::kSelect:
                     Select(call);
+                    break;
+                case core::BuiltinFn::kSign:
+                    Sign(call);
+                    break;
+                case core::BuiltinFn::kTextureDimensions:
+                    TextureDimensions(call);
+                    break;
+                case core::BuiltinFn::kTextureLoad:
+                    TextureLoad(call);
+                    break;
+                case core::BuiltinFn::kTextureNumLayers:
+                    TextureNumLayers(call);
+                    break;
+                case core::BuiltinFn::kTextureNumLevels:
+                    TextureNumLevels(call);
+                    break;
+                case core::BuiltinFn::kTextureNumSamples:
+                    TextureNumSamples(call);
                     break;
                 case core::BuiltinFn::kTrunc:
                     Trunc(call);
@@ -348,6 +384,24 @@ struct State {
             });
     }
 
+    // The HLSL `sign` method always returns an `int` result (scalar or vector). In WGSL the result
+    // is expected to be the same type as the argument. This injects a cast to the expected WGSL
+    // result type after the call to `hlsl.sign`.
+    void Sign(core::ir::BuiltinCall* call) {
+        b.InsertBefore(call, [&] {
+            const core::type::Type* result_ty = ty.i32();
+            if (auto* vec = call->Result(0)->Type()->As<core::type::Vector>()) {
+                result_ty = ty.vec(result_ty, vec->Width());
+            }
+
+            auto* sign =
+                b.Call<hlsl::ir::BuiltinCall>(result_ty, hlsl::BuiltinFn::kSign, call->Args()[0]);
+
+            b.ConvertWithResult(call->DetachResult(), sign);
+        });
+        call->Destroy();
+    }
+
     /// Replaces a bitcast with a call to the ToF16 polyfill for the given types
     void ReplaceBitcastWithToF16Polyfill(core::ir::Bitcast* bitcast) {
         auto* src_type = bitcast->Val()->Type();
@@ -357,6 +411,262 @@ struct State {
         b.InsertBefore(bitcast,
                        [&] { b.CallWithResult(bitcast->DetachResult(), f, bitcast->Args()[0]); });
         bitcast->Destroy();
+    }
+
+    void TextureNumLayers(core::ir::CoreBuiltinCall* call) {
+        auto* tex = call->Args()[0];
+        auto* tex_type = tex->Type()->As<core::type::Texture>();
+
+        TINT_ASSERT(tex_type->dim() == core::type::TextureDimension::k2dArray ||
+                    tex_type->dim() == core::type::TextureDimension::kCubeArray);
+
+        const core::type::Type* query_ty = ty.vec(ty.u32(), 3);
+        b.InsertBefore(call, [&] {
+            core::ir::Instruction* out = b.Var(ty.ptr(function, query_ty));
+
+            b.MemberCall<hlsl::ir::MemberBuiltinCall>(
+                ty.void_(), hlsl::BuiltinFn::kGetDimensions, tex,
+                Vector<core::ir::Value*, 3>{
+                    b.Swizzle(ty.ptr<function, u32>(), out, {0_u})->Result(0),
+                    b.Swizzle(ty.ptr<function, u32>(), out, {1_u})->Result(0),
+                    b.Swizzle(ty.ptr<function, u32>(), out, {2_u})->Result(0)});
+
+            out = b.Swizzle(ty.u32(), out, {2_u});
+            call->Result(0)->ReplaceAllUsesWith(out->Result(0));
+        });
+        call->Destroy();
+    }
+
+    void TextureNumLevels(core::ir::CoreBuiltinCall* call) {
+        auto* tex = call->Args()[0];
+        auto* tex_type = tex->Type()->As<core::type::Texture>();
+
+        Vector<uint32_t, 2> swizzle{};
+        uint32_t query_size = 0;
+        switch (tex_type->dim()) {
+            case core::type::TextureDimension::kNone:
+                TINT_ICE() << "texture dimension is kNone";
+            case core::type::TextureDimension::k1d:
+                query_size = 2;
+                swizzle = {1_u};
+                break;
+            case core::type::TextureDimension::k2d:
+            case core::type::TextureDimension::kCube:
+                query_size = 3;
+                swizzle = {2_u};
+                break;
+            case core::type::TextureDimension::k2dArray:
+            case core::type::TextureDimension::k3d:
+            case core::type::TextureDimension::kCubeArray:
+                query_size = 4;
+                swizzle = {3_u};
+                break;
+        }
+
+        const core::type::Type* query_ty = ty.vec(ty.u32(), query_size);
+        b.InsertBefore(call, [&] {
+            Vector<core::ir::Value*, 5> args;
+            // Pass the `level` parameter so the `num_levels` overload is used.
+            args.Push(b.Value(0_u));
+
+            core::ir::Instruction* out = b.Var(ty.ptr(function, query_ty));
+            for (uint32_t i = 0; i < query_size; ++i) {
+                args.Push(b.Swizzle(ty.ptr<function, u32>(), out, {i})->Result(0));
+            }
+
+            b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), hlsl::BuiltinFn::kGetDimensions,
+                                                      tex, args);
+
+            out = b.Swizzle(ty.u32(), out, swizzle);
+            call->Result(0)->ReplaceAllUsesWith(out->Result(0));
+        });
+        call->Destroy();
+    }
+
+    void TextureDimensions(core::ir::CoreBuiltinCall* call) {
+        auto* tex = call->Args()[0];
+        auto* tex_type = tex->Type()->As<core::type::Texture>();
+        bool has_level = call->Args().Length() > 1;
+        bool is_ms =
+            tex_type
+                ->IsAnyOf<core::type::MultisampledTexture, core::type::DepthMultisampledTexture>();
+
+        Vector<uint32_t, 2> swizzle{};
+        uint32_t query_size = 0;
+        switch (tex_type->dim()) {
+            case core::type::TextureDimension::kNone:
+                TINT_ICE() << "texture dimension is kNone";
+            case core::type::TextureDimension::k1d:
+                query_size = 1;
+                break;
+            case core::type::TextureDimension::k2d:
+                if (is_ms) {
+                    query_size = 3;
+                    swizzle = {0_u, 1_u};
+                } else {
+                    query_size = 2;
+                }
+                break;
+            case core::type::TextureDimension::k2dArray:
+                query_size = is_ms ? 4 : 3;
+                swizzle = {0_u, 1_u};
+                break;
+            case core::type::TextureDimension::k3d:
+                query_size = 3;
+                break;
+            case core::type::TextureDimension::kCube:
+                query_size = 2;
+                break;
+            case core::type::TextureDimension::kCubeArray:
+                query_size = 3;
+                swizzle = {0_u, 1_u};
+                break;
+        }
+
+        // Query with a `level` adds a `number_of_levels` output parameter
+        if (has_level) {
+            // If there was no swizzle, we will need to swizzle out the required query parameters as
+            // the query will increase by one item.
+            if (swizzle.IsEmpty()) {
+                for (uint32_t i = 0; i < query_size; ++i) {
+                    swizzle.Push(i);
+                }
+            }
+            query_size += 1;
+        }
+
+        const core::type::Type* query_ty = ty.u32();
+        if (query_size > 1) {
+            query_ty = ty.vec(query_ty, query_size);
+        }
+
+        b.InsertBefore(call, [&] {
+            Vector<core::ir::Value*, 5> args;
+
+            // Push the level if needed
+            if (has_level) {
+                args.Push(b.Convert(ty.u32(), call->Args()[1])->Result(0));
+            }
+
+            core::ir::Instruction* query = b.Var(ty.ptr(function, query_ty));
+            if (query_size == 1) {
+                args.Push(query->Result(0));
+            } else {
+                for (uint32_t i = 0; i < query_size; ++i) {
+                    args.Push(b.Swizzle(ty.ptr<function, u32>(), query, {i})->Result(0));
+                }
+            }
+
+            b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), hlsl::BuiltinFn::kGetDimensions,
+                                                      tex, args);
+            query = b.Load(query);
+            if (!swizzle.IsEmpty()) {
+                query = b.Swizzle(ty.vec2<u32>(), query, swizzle);
+            }
+            call->Result(0)->ReplaceAllUsesWith(query->Result(0));
+        });
+        call->Destroy();
+    }
+
+    void TextureNumSamples(core::ir::CoreBuiltinCall* call) {
+        auto* tex = call->Args()[0];
+        auto* tex_type = tex->Type()->As<core::type::Texture>();
+
+        TINT_ASSERT(tex_type->dim() == core::type::TextureDimension::k2d);
+        TINT_ASSERT((tex_type->IsAnyOf<core::type::DepthMultisampledTexture,
+                                       core::type::MultisampledTexture>()));
+
+        const core::type::Type* query_ty = ty.vec(ty.u32(), 3);
+        b.InsertBefore(call, [&] {
+            core::ir::Instruction* out = b.Var(ty.ptr(function, query_ty));
+
+            b.MemberCall<hlsl::ir::MemberBuiltinCall>(
+                ty.void_(), hlsl::BuiltinFn::kGetDimensions, tex,
+                Vector<core::ir::Value*, 3>{
+                    b.Swizzle(ty.ptr<function, u32>(), out, {0_u})->Result(0),
+                    b.Swizzle(ty.ptr<function, u32>(), out, {1_u})->Result(0),
+                    b.Swizzle(ty.ptr<function, u32>(), out, {2_u})->Result(0)});
+
+            out = b.Swizzle(ty.u32(), out, {2_u});
+            call->Result(0)->ReplaceAllUsesWith(out->Result(0));
+        });
+        call->Destroy();
+    }
+
+    void TextureLoad(core::ir::CoreBuiltinCall* call) {
+        auto args = call->Args();
+        auto* tex = args[0];
+        auto* tex_type = tex->Type()->As<core::type::Texture>();
+
+        Vector<uint32_t, 2> swizzle;
+        const core::type::Type* ret_ty = tint::Switch(
+            tex_type,  //
+            [&](const core::type::SampledTexture* sampled) { return sampled->type(); },
+            [&](const core::type::StorageTexture* storage) { return storage->type(); },
+            [&](const core::type::MultisampledTexture* ms) { return ms->type(); },
+            [&](const core::type::DepthTexture*) {
+                swizzle.Push(0u);
+                return ty.f32();
+            },
+            [&](const core::type::DepthMultisampledTexture*) {
+                swizzle.Push(0);
+                return ty.f32();
+            },
+            TINT_ICE_ON_NO_MATCH);
+
+        bool is_ms = tex_type->Is<core::type::MultisampledTexture>() ||
+                     tex_type->Is<core::type::DepthMultisampledTexture>();
+        b.InsertBefore(call, [&] {
+            Vector<core::ir::Value*, 2> call_args;
+            switch (tex_type->dim()) {
+                case core::type::TextureDimension::k1d: {
+                    // Pack the coords with the level
+                    auto* coord = b.Convert(ty.i32(), args[1]);
+                    auto* lvl = b.Convert(ty.i32(), args[2]);
+                    call_args.Push(b.Construct(ty.vec2<i32>(), coord, lvl)->Result(0));
+                    break;
+                }
+                case core::type::TextureDimension::k2d: {
+                    if (is_ms) {
+                        // Pass coords and samples as separate parameters
+                        call_args.Push(b.Convert(ty.vec2<i32>(), args[1])->Result(0));
+                        call_args.Push(b.Convert(ty.i32(), args[2])->Result(0));
+                    } else {
+                        // Pack coords with the level
+                        auto* coord = b.Convert(ty.vec2<i32>(), args[1]);
+                        auto* lvl = b.Convert(ty.i32(), args[2]);
+                        call_args.Push(b.Construct(ty.vec3<i32>(), coord, lvl)->Result(0));
+                    }
+                    break;
+                }
+                case core::type::TextureDimension::k2dArray: {
+                    auto* coord = b.Convert(ty.vec2<i32>(), args[1]);
+                    auto* ary_idx = b.Convert(ty.i32(), args[2]);
+                    auto* lvl = b.Convert(ty.i32(), args[3]);
+                    call_args.Push(b.Construct(ty.vec4<i32>(), coord, ary_idx, lvl)->Result(0));
+                    break;
+                }
+                case core::type::TextureDimension::k3d: {
+                    auto* coord = b.Convert(ty.vec3<i32>(), args[1]);
+                    auto* lvl = b.Convert(ty.i32(), args[2]);
+                    call_args.Push(b.Construct(ty.vec4<i32>(), coord, lvl)->Result(0));
+                    break;
+                }
+                default:
+                    TINT_UNREACHABLE();
+            }
+
+            core::ir::Instruction* builtin = b.MemberCall<hlsl::ir::MemberBuiltinCall>(
+                ty.vec4(ret_ty), hlsl::BuiltinFn::kLoad, tex, call_args);
+            if (!swizzle.IsEmpty()) {
+                builtin = b.Swizzle(ty.f32(), builtin, swizzle);
+            } else {
+                builtin = b.Convert(call->Result(0)->Type(), builtin);
+            }
+            call->Result(0)->ReplaceAllUsesWith(builtin->Result(0));
+        });
+
+        call->Destroy();
     }
 };
 
