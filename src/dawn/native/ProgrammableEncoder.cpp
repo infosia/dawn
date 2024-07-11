@@ -175,25 +175,27 @@ MaybeError ProgrammableEncoder::ValidateSetBindGroup(BindGroupIndex index,
 
         // During BindGroup creation, validation ensures binding offset + binding size
         // <= buffer size.
-        DAWN_ASSERT(bufferBinding.buffer->GetSize() >= bufferBinding.size);
-        DAWN_ASSERT(bufferBinding.buffer->GetSize() - bufferBinding.size >= bufferBinding.offset);
+        DAWN_ASSERT(bufferBinding.buffer->GetSize() >= bufferBinding.originalSize);
+        DAWN_ASSERT(bufferBinding.buffer->GetSize() - bufferBinding.originalSize >=
+                    bufferBinding.offset);
 
         if ((dynamicOffsets[i] >
-             bufferBinding.buffer->GetSize() - bufferBinding.offset - bufferBinding.size)) {
+             bufferBinding.buffer->GetSize() - bufferBinding.offset - bufferBinding.originalSize)) {
             DAWN_INVALID_IF(
-                (bufferBinding.buffer->GetSize() - bufferBinding.offset) == bufferBinding.size,
+                (bufferBinding.buffer->GetSize() - bufferBinding.offset) ==
+                    bufferBinding.originalSize,
                 "Dynamic Offset[%u] (%u) is out of bounds of %s with a size of %u and a bound "
                 "range of (offset: %u, size: %u). The binding goes to the end of the buffer "
                 "even with a dynamic offset of 0. Did you forget to specify "
                 "the binding's size?",
                 i, dynamicOffsets[i], bufferBinding.buffer, bufferBinding.buffer->GetSize(),
-                bufferBinding.offset, bufferBinding.size);
+                bufferBinding.offset, bufferBinding.originalSize);
 
             return DAWN_VALIDATION_ERROR(
                 "Dynamic Offset[%u] (%u) is out of bounds of "
                 "%s with a size of %u and a bound range of (offset: %u, size: %u).",
                 i, dynamicOffsets[i], bufferBinding.buffer, bufferBinding.buffer->GetSize(),
-                bufferBinding.offset, bufferBinding.size);
+                bufferBinding.offset, bufferBinding.originalSize);
         }
     }
 
