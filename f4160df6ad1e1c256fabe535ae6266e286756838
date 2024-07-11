@@ -16,6 +16,24 @@
       "message": "This should be `Access` not `Swizzle`. I guess we\u0027re missing validation that `swizzle` should only operate on values.",
       "revId": "f4160df6ad1e1c256fabe535ae6266e286756838",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6de3be6f_dd8deec8",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-11T20:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8056395f_35637c0a",
+      "revId": "f4160df6ad1e1c256fabe535ae6266e286756838",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
