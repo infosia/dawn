@@ -16,6 +16,24 @@
       "message": "so overall, the thing I\u0027m concerned about is that the code that does the key generation, is quite far from the code that produces the value. And other bits of state can leak in that get forgotten in the key. For example, the vertex buffer slots and attributes come from the pipeline, and impact the MSL when we have vertex pulling enabled. This could lead to incorrect lookups since that state is not part of the key. I feel like we need to unpack values more, so that what we create the Key with, and what we produce the Value with are the same simple objects, so things don\u0027t get lost - like what DAWN_TRY_LOAD_OR_RUN does.\n\nCould we reuse DAWN_TRY_LOAD_OR_RUN ? One problem with using it is that it serializes keys and values for the blob cache. We don\u0027t want to do serialization for the in-memory cache. I think we can:\n - instead of using the blob cache from the device always, pass in the cache you want to LOAD_OR_RUN. Then, based on the types, we can have an overload which does key lookup via serialization, or uses the request struct w/ normal hash/eq for lookup.\n - make LOAD_OR_RUN make it so a single thread performs the run step if two of them race. or make a slightly different version of it called LOAD_OR_CREATE that does that",
       "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2cf0fe6_22f4f229",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-11T18:46:31Z",
+      "side": 1,
+      "message": "apology, I don\u0027t fully understand your suggestion.\n- Are you saying that we should use the same `MslCompilationRequest` as the key for the in-memory cache and the blob cache? And pass it to the DAWN_TRY_LOAD_OR_RUN (with overloads for in-memory cache \u0026 blob cache)?\n- IIRC what we discussed in the chat group was that we should be able to use a smaller key for the in-memory cache:\n\u003e since the ShaderModule is the same and thus the bindings are the same, the only things that actually can impact MSL output given the shader module is identical are:\n - sampleMask\n - pipeline layout\n - attachment state\n - primitive topology\n - entry point\n - constant overrides\n\u003e it\u0027s much cheaper key using just those bits without full key serialization.\n- If we simply pass full `MslCompilationRequest` key to DAWN_TRY_LOAD_OR_RUN and just compute the hash with subset of the key\u0027s bits for the in-memory cache, then I don\u0027t see any difference from what the current patchset is doing.\n\nAlso the things being done in this CL is a bit similar to vulkan backend\u0027s `ConcurrentTransformedShaderModuleCache` where it only needs a subset of `MslCompilationRequest`\u0027s bits.",
+      "parentUuid": "820f3350_6ba7888b",
+      "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
