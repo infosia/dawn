@@ -301,13 +301,26 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                 bindingInfo.bindingLayout,
                 [&](const BufferBindingInfo& layout) {
                     BufferBinding binding = group->GetBindingAsBufferBinding(bindingIndex);
-                    GLuint buffer = ToBackend(binding.buffer)->GetHandle();
+                    const Buffer* buffer = ToBackend(binding.buffer);
+                    GLuint bufferHandle = buffer->GetHandle();
                     GLuint index = indices[bindingIndex];
                     GLuint offset = binding.offset;
+                    GLuint bindingSize = binding.size;
 
                     if (layout.hasDynamicOffset) {
                         // Dynamic buffers are packed at the front of BindingIndices.
                         offset += dynamicOffsets[bindingIndex];
+                    }
+
+                    if (buffer->GetDevice()->IsToggleEnabled(
+                            Toggle::GLAlignBufferSizeWithSizeofVec4) &&
+                        buffer->GetSize() == offset + bindingSize &&
+                        buffer->GetAllocatedSize() > offset + bindingSize) {
+                        // Allocated buffer size are aligned with 16u.
+                        // When binding reaches the whole buffer size, it needs to be aligned as
+                        // well.
+                        bindingSize = Align(bindingSize, uint64_t(16u));
+                        DAWN_ASSERT(buffer->GetAllocatedSize() >= offset + bindingSize);
                     }
 
                     GLenum target;
@@ -324,7 +337,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                             DAWN_UNREACHABLE();
                     }
 
-                    gl.BindBufferRange(target, index, buffer, offset, binding.size);
+                    gl.BindBufferRange(target, index, bufferHandle, offset, bindingSize);
                 },
                 [&](const StaticSamplerBindingInfo& layout) {
                     BindSamplerAtIndex(gl, layout.sampler.Get(), indices[bindingIndex]);
