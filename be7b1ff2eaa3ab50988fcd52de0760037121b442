@@ -16,6 +16,24 @@
       "message": "I didn\u0027t see a way of achieving this, please let me know if there is a better way.",
       "revId": "be7b1ff2eaa3ab50988fcd52de0760037121b442",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c3e3663_fa8111a7",
+        "filename": "src/tint/lang/core/ir/operand_instruction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-11T19:49:53Z",
+      "side": 1,
+      "message": "oh, just realized that SetResults takes in a C++ vector ref not something like a WGSL vec2/3/4, so I can just pass that in",
+      "parentUuid": "2b04ad45_632350e4",
+      "revId": "be7b1ff2eaa3ab50988fcd52de0760037121b442",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
