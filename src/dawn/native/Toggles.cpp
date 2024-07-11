@@ -552,6 +552,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Force a replicate swizzle for the stencil component i.e. (ssss) instead of (s001) to "
       "workaround issues on certain Nvidia drivers on D3D12 with depth24_unorm_stencil8 format.",
       "https://crbug.com/341254292", ToggleStage::Device}},
+    {Toggle::GLAlignBufferSizeWithSizeofVec4,
+     {"gl_align_buffer_size_with_sizeof_vec4",
+      "GLSL buffer block can do tail padding which enlarges buffer size and leads to shader block "
+      "not backed by a sufficiently large buffer object. Align GL buffer sizes to sizeof(vec4) to "
+      "work around.",
+      "https://crbug.com/353807786", ToggleStage::Device}},
     {Toggle::NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
      {"no_workaround_sample_mask_becomes_zero_for_all_but_last_color_target",
       "MacOS 12.0+ Intel has a bug where the sample mask is only applied for the last color "

@@ -294,20 +294,35 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                         BindGroupBase* group,
                         const ityp::vector<BindingIndex, uint64_t>& dynamicOffsets) {
         const auto& indices = ToBackend(mPipelineLayout)->GetBindingIndexInfo()[groupIndex];
-
+        const auto& bindingPointWithRuntimeSizedArray =
+            mPipeline->GetBindingPointWithRuntimeSizedArray();
         for (BindingIndex bindingIndex : Range(group->GetLayout()->GetBindingCount())) {
             const BindingInfo& bindingInfo = group->GetLayout()->GetBindingInfo(bindingIndex);
             MatchVariant(
                 bindingInfo.bindingLayout,
                 [&](const BufferBindingInfo& layout) {
                     BufferBinding binding = group->GetBindingAsBufferBinding(bindingIndex);
-                    GLuint buffer = ToBackend(binding.buffer)->GetHandle();
+                    const Buffer* buffer = ToBackend(binding.buffer);
+                    GLuint bufferHandle = buffer->GetHandle();
                     GLuint index = indices[bindingIndex];
                     GLuint offset = binding.offset;
+                    GLuint bindingSize = binding.size;
 
                     if (layout.hasDynamicOffset) {
                         // Dynamic buffers are packed at the front of BindingIndices.
                         offset += dynamicOffsets[bindingIndex];
+                    }
+
+                    if (buffer->GetDevice()->IsToggleEnabled(
+                            Toggle::GLAlignBufferSizeWithSizeofVec4)) {
+                        if (!bindingPointWithRuntimeSizedArray.contains(
+                                tint::BindingPoint{static_cast<uint32_t>(groupIndex),
+                                                   static_cast<uint32_t>(bindingIndex)})) {
+                            // If binding has no runtime sized array, then align binding size with
+                            // 16u to make sure sufficient block size after potential padding.
+                            bindingSize = Align(bindingSize, uint64_t(16u));
+                            DAWN_ASSERT(buffer->GetAllocatedSize() >= offset + bindingSize);
+                        }
                     }
 
                     GLenum target;
@@ -324,7 +339,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                             DAWN_UNREACHABLE();
                     }
 
-                    gl.BindBufferRange(target, index, buffer, offset, binding.size);
+                    gl.BindBufferRange(target, index, bufferHandle, offset, bindingSize);
                 },
                 [&](const StaticSamplerBindingInfo& layout) {
                     BindSamplerAtIndex(gl, layout.sampler.Get(), indices[bindingIndex]);

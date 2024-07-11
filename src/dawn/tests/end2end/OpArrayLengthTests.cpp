@@ -95,7 +95,8 @@ class OpArrayLengthTest : public DawnTest {
         )";
 
         // See comments in the shader for an explanation of these values
-        mExpectedLengths = {1, 64, 56};
+        mExpectedLengths = {// GL backend will align to 16 bytes
+                            IsOpenGL() || IsOpenGLES() ? 4u : 1u, 64, 56};
     }
 
     wgpu::Buffer mStorageBuffer4;

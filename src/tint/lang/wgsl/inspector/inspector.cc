@@ -690,6 +690,49 @@ bool Inspector::ContainsBuiltin(core::BuiltinValue builtin,
     return builtin_declaration->builtin == builtin;
 }
 
+std::vector<ResourceBinding> Inspector::GetRuntimeArrayBindings(const std::string& entry_point) {
+    auto* func = FindEntryPointByName(entry_point);
+    if (!func) {
+        return {};
+    }
+
+    auto* func_sem = program_.Sem().Get(func);
+    std::vector<ResourceBinding> result;
+    for (auto& rsv : func_sem->TransitivelyReferencedStorageBufferVariables()) {
+        auto* var = rsv.first;
+        auto binding_info = rsv.second;
+
+        auto* unwrapped_type = var->Type()->UnwrapRef();
+
+        auto* array_ty = unwrapped_type->As<core::type::Array>();
+        if (!array_ty) {
+            continue;
+        }
+
+        if (!(array_ty->Count()->Is<core::type::RuntimeArrayCount>())) {
+            continue;
+        }
+
+        ResourceBinding entry;
+        entry.resource_type = (var->Access() == core::Access::kRead)
+                                  ? ResourceBinding::ResourceType::kReadOnlyStorageBuffer
+                                  : ResourceBinding::ResourceType::kStorageBuffer;
+        entry.bind_group = binding_info.group;
+        entry.binding = binding_info.binding;
+        entry.size = unwrapped_type->Size();
+        if (auto* str = unwrapped_type->As<sem::Struct>()) {
+            entry.size_no_padding = str->SizeNoPadding();
+        } else {
+            entry.size_no_padding = entry.size;
+        }
+        entry.variable_name = var->Declaration()->name->symbol.Name();
+
+        result.push_back(entry);
+    }
+
+    return result;
+}
+
 std::vector<ResourceBinding> Inspector::GetStorageBufferResourceBindingsImpl(
     const std::string& entry_point,
     bool read_only) {
