@@ -33,6 +33,24 @@
       "message": "Should this return `void` too, if no callsites need the call?",
       "revId": "b7de2725dc26bec11b7828ce74c853dd1c12309e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62b3a8bd_c19e5742",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-11T21:12:53Z",
+      "side": 1,
+      "message": "Good catch, thought I\u0027d changed that one already.",
+      "parentUuid": "3b6ee84e_468ec5e5",
+      "revId": "b7de2725dc26bec11b7828ce74c853dd1c12309e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
