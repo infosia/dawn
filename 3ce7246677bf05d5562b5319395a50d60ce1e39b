@@ -33,6 +33,24 @@
       "message": "The AST code allowed a 2DArray here as well, but `samples` only works on multisampled textures of which they aren\u0027t array\u0027d. So that was dropped.",
       "revId": "3ce7246677bf05d5562b5319395a50d60ce1e39b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eeaa7e2_123a48ca",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T19:13:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "703b72c7_c87486e4",
+      "revId": "3ce7246677bf05d5562b5319395a50d60ce1e39b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
