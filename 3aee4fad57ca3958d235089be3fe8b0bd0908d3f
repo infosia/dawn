@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ff1b6f4_40595b30",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T19:12:25Z",
+      "side": 1,
+      "message": "Should be `Access` not `Swizzle`.",
+      "revId": "3aee4fad57ca3958d235089be3fe8b0bd0908d3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

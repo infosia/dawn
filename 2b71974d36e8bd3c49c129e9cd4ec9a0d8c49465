@@ -16,6 +16,24 @@
       "message": "The AST printer has support for multisample in the 2d array code, but there is no multisampled array and you can\u0027t call num layers with a multisample texture.",
       "revId": "2b71974d36e8bd3c49c129e9cd4ec9a0d8c49465",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c7f8a12_725a69bf",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T19:12:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cd726255_5061d47f",
+      "revId": "2b71974d36e8bd3c49c129e9cd4ec9a0d8c49465",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
