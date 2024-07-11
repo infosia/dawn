@@ -27,6 +27,7 @@
 
 #include "dawn/native/metal/ShaderModuleMTL.h"
 
+#include "dawn/common/ConcurrentHashMap.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/CacheRequest.h"
@@ -83,10 +84,88 @@ using WorkgroupAllocations = std::vector<uint32_t>;
 DAWN_SERIALIZABLE(struct, MslCompilation, MSL_COMPILATION_MEMBERS){};
 #undef MSL_COMPILATION_MEMBERS
 
+struct MTLFunctionCacheKey {
+    MTLFunctionCacheKey(uint32_t sampleMask,
+                        const PipelineLayout* layout,
+                        const RenderPipeline* renderPipeline,
+                        std::string entryName,
+                        std::optional<uint32_t> maxSubgroupSizeForFullSubgroups,
+                        PipelineConstantEntries constants)
+        : sampleMask(sampleMask),
+          layout(layout),
+          entryName(std::move(entryName)),
+          maxSubgroupSizeForFullSubgroups(std::move(maxSubgroupSizeForFullSubgroups)),
+          constants(std::move(constants)) {
+        if (renderPipeline) {
+            attachmentState = renderPipeline->GetAttachmentState();
+            primitiveTopology = renderPipeline->GetPrimitiveTopology();
+        }
+    }
+
+    bool operator==(const MTLFunctionCacheKey& other) const {
+        if (sampleMask != other.sampleMask) {
+            return false;
+        }
+
+        if (layout != other.layout) {
+            return false;
+        }
+
+        if (attachmentState != other.attachmentState) {
+            return false;
+        }
+
+        if (primitiveTopology != other.primitiveTopology) {
+            return false;
+        }
+
+        if (entryName != other.entryName) {
+            return false;
+        }
+
+        if (maxSubgroupSizeForFullSubgroups != other.maxSubgroupSizeForFullSubgroups) {
+            return false;
+        }
+
+        if (constants.size() != other.constants.size()) {
+            return false;
+        }
+
+        if (!std::equal(constants.begin(), constants.end(), other.constants.begin())) {
+            return false;
+        }
+        return true;
+    }
+
+    template <typename H>
+    friend H AbslHashValue(H h, const MTLFunctionCacheKey& key) {
+        h = H::combine(std::move(h), key.sampleMask, key.layout, key.attachmentState,
+                       key.primitiveTopology, key.entryName);
+        if (key.maxSubgroupSizeForFullSubgroups) {
+            h = H::combine(std::move(h), key.maxSubgroupSizeForFullSubgroups.value());
+        }
+        for (const auto& entry : key.constants) {
+            h = H::combine(std::move(h), entry.first, entry.second);
+        }
+        return h;
+    }
+
+    uint32_t sampleMask = 0;
+    const PipelineLayout* layout = nullptr;
+    const AttachmentState* attachmentState = nullptr;
+    wgpu::PrimitiveTopology primitiveTopology = wgpu::PrimitiveTopology::Undefined;
+    std::string entryName;
+    std::optional<uint32_t> maxSubgroupSizeForFullSubgroups;
+    PipelineConstantEntries constants;
+};
+
 }  // namespace
 }  // namespace dawn::native::metal
 
 namespace dawn::native::metal {
+
+class ShaderModule::MTLFunctionCache
+    : public ConcurrentHashMap<MTLFunctionCacheKey, ShaderModule::MetalFunctionData> {};
 
 // static
 ResultOrError<Ref<ShaderModule>> ShaderModule::Create(
@@ -107,9 +186,16 @@ ShaderModule::ShaderModule(Device* device,
 
 ShaderModule::~ShaderModule() = default;
 
+void ShaderModule::DestroyImpl() {
+    ShaderModuleBase::DestroyImpl();
+    // Remove reference to internal cache to trigger cleanup.
+    mMTLFunctionCache = nullptr;
+}
+
 MaybeError ShaderModule::Initialize(ShaderModuleParseResult* parseResult,
                                     OwnedCompilationMessages* compilationMessages) {
     ScopedTintICEHandler scopedICEHandler(GetDevice());
+    mMTLFunctionCache = std::make_unique<MTLFunctionCache>();
     return InitializeBase(parseResult, compilationMessages);
 }
 
@@ -120,7 +206,6 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     const ProgrammableStage& programmableStage,
     SingleShaderStage stage,
     const PipelineLayout* layout,
-    ShaderModule::MetalFunctionData* out,
     uint32_t sampleMask,
     const RenderPipeline* renderPipeline,
     const BindingInfoArray& moduleBindingInfo,
@@ -404,19 +489,13 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
 
 }  // namespace
 
-MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
-                                        const ProgrammableStage& programmableStage,
-                                        const PipelineLayout* layout,
-                                        ShaderModule::MetalFunctionData* out,
-                                        uint32_t sampleMask,
-                                        const RenderPipeline* renderPipeline,
-                                        std::optional<uint32_t> maxSubgroupSizeForFullSubgroups) {
-    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "metal::ShaderModule::CreateFunction",
-                 "label", utils::GetLabelForTrace(GetLabel().c_str()));
-
-    DAWN_ASSERT(!IsError());
-    DAWN_ASSERT(out);
-
+ResultOrError<ShaderModule::MetalFunctionData> ShaderModule::DoCreateFunctionInternal(
+    SingleShaderStage stage,
+    const ProgrammableStage& programmableStage,
+    const PipelineLayout* layout,
+    uint32_t sampleMask,
+    const RenderPipeline* renderPipeline,
+    std::optional<uint32_t> maxSubgroupSizeForFullSubgroups) {
     const char* entryPointName = programmableStage.entryPoint.c_str();
 
     // Vertex stages must specify a renderPipeline
@@ -425,16 +504,17 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     }
 
     CacheResult<MslCompilation> mslCompilation;
-    DAWN_TRY_ASSIGN(mslCompilation,
-                    TranslateToMSL(GetDevice(), programmableStage, stage, layout, out, sampleMask,
-                                   renderPipeline, GetEntryPoint(entryPointName).bindings,
-                                   maxSubgroupSizeForFullSubgroups));
+    DAWN_TRY_ASSIGN(
+        mslCompilation,
+        TranslateToMSL(GetDevice(), programmableStage, stage, layout, sampleMask, renderPipeline,
+                       GetEntryPoint(entryPointName).bindings, maxSubgroupSizeForFullSubgroups));
 
-    out->needsStorageBufferLength = mslCompilation->needsStorageBufferLength;
-    out->workgroupAllocations = std::move(mslCompilation->workgroupAllocations);
-    out->localWorkgroupSize = MTLSizeMake(mslCompilation->localWorkgroupSize.width,
-                                          mslCompilation->localWorkgroupSize.height,
-                                          mslCompilation->localWorkgroupSize.depthOrArrayLayers);
+    MetalFunctionData out;
+    out.needsStorageBufferLength = mslCompilation->needsStorageBufferLength;
+    out.workgroupAllocations = std::move(mslCompilation->workgroupAllocations);
+    out.localWorkgroupSize = MTLSizeMake(mslCompilation->localWorkgroupSize.width,
+                                         mslCompilation->localWorkgroupSize.height,
+                                         mslCompilation->localWorkgroupSize.depthOrArrayLayers);
 
     NSRef<NSString> mslSource =
         AcquireNSRef([[NSString alloc] initWithUTF8String:mslCompilation->msl.c_str()]);
@@ -473,19 +553,46 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
 
     {
         TRACE_EVENT0(GetDevice()->GetPlatform(), General, "MTLLibrary::newFunctionWithName");
-        out->function = AcquireNSPRef([*library newFunctionWithName:name.Get()]);
+        out.function = AcquireNSPRef([*library newFunctionWithName:name.Get()]);
     }
 
     std::ostringstream labelStream;
     labelStream << GetLabel() << "::" << entryPointName;
-    SetDebugName(GetDevice(), out->function.Get(), "Dawn_ShaderModule", labelStream.str());
+    SetDebugName(GetDevice(), out.function.Get(), "Dawn_ShaderModule", labelStream.str());
     GetDevice()->GetBlobCache()->EnsureStored(mslCompilation);
 
     if (GetDevice()->IsToggleEnabled(Toggle::MetalEnableVertexPulling) &&
         GetEntryPoint(entryPointName).usedVertexInputs.any()) {
-        out->needsStorageBufferLength = true;
+        out.needsStorageBufferLength = true;
     }
+
+    return out;
+}
+
+MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
+                                        const ProgrammableStage& programmableStage,
+                                        const PipelineLayout* layout,
+                                        ShaderModule::MetalFunctionData* out,
+                                        uint32_t sampleMask,
+                                        const RenderPipeline* renderPipeline,
+                                        std::optional<uint32_t> maxSubgroupSizeForFullSubgroups) {
+    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "metal::ShaderModule::CreateFunction",
+                 "label", utils::GetLabelForTrace(GetLabel().c_str()));
+
+    DAWN_ASSERT(!IsError());
+    DAWN_ASSERT(out);
+
+    MTLFunctionCacheKey cacheKey(sampleMask, layout, renderPipeline, programmableStage.entryPoint,
+                                 maxSubgroupSizeForFullSubgroups, programmableStage.constants);
+    DAWN_TRY_ASSIGN(*out, mMTLFunctionCache->GetOrAdd<ErrorData>(
+                              cacheKey, /*initializer=*/
+                              [&](const MTLFunctionCacheKey&) -> ResultOrError<MetalFunctionData> {
+                                  return DoCreateFunctionInternal(stage, programmableStage, layout,
+                                                                  sampleMask, renderPipeline,
+                                                                  maxSubgroupSizeForFullSubgroups);
+                              }));
 
     return {};
 }
+
 }  // namespace dawn::native::metal
