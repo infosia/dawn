@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_METAL_SHADERMODULEMTL_H_
 #define SRC_DAWN_NATIVE_METAL_SHADERMODULEMTL_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -78,8 +79,20 @@ class ShaderModule final : public ShaderModuleBase {
                  const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
                  std::vector<tint::wgsl::Extension> internalExtensions);
     ~ShaderModule() override;
+    void DestroyImpl() override;
     MaybeError Initialize(ShaderModuleParseResult* parseResult,
                           OwnedCompilationMessages* compilationMessages);
+
+    ResultOrError<MetalFunctionData> DoCreateFunctionInternal(
+        SingleShaderStage stage,
+        const ProgrammableStage& programmableStage,
+        const PipelineLayout* layout,
+        uint32_t sampleMask,
+        const RenderPipeline* renderPipeline,
+        std::optional<uint32_t> maxSubgroupSizeForFullSubgroups);
+
+    class MTLFunctionCache;
+    std::unique_ptr<MTLFunctionCache> mMTLFunctionCache;
 };
 
 }  // namespace dawn::native::metal
