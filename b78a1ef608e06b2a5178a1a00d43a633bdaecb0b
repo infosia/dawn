@@ -16,6 +16,24 @@
       "message": "Similar to the last CL, can BUILTIN be the enum and we remove the forwarding?",
       "revId": "b78a1ef608e06b2a5178a1a00d43a633bdaecb0b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "193b0307_432e74a3",
+        "filename": "src/tint/lang/wgsl/ast/builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 3063,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-07-11T20:37:33Z",
+      "side": 1,
+      "message": "Follow-up here: https://dawn-review.googlesource.com/c/dawn/+/198114/",
+      "parentUuid": "22ac1250_fbe4c21e",
+      "revId": "b78a1ef608e06b2a5178a1a00d43a633bdaecb0b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
