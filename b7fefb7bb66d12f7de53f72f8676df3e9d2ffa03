@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "820f3350_6ba7888b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-11T18:23:33Z",
+      "side": 1,
+      "message": "so overall, the thing I\u0027m concerned about is that the code that does the key generation, is quite far from the code that produces the value. And other bits of state can leak in that get forgotten in the key. For example, the vertex buffer slots and attributes come from the pipeline, and impact the MSL when we have vertex pulling enabled. This could lead to incorrect lookups since that state is not part of the key. I feel like we need to unpack values more, so that what we create the Key with, and what we produce the Value with are the same simple objects, so things don\u0027t get lost - like what DAWN_TRY_LOAD_OR_RUN does.\n\nCould we reuse DAWN_TRY_LOAD_OR_RUN ? One problem with using it is that it serializes keys and values for the blob cache. We don\u0027t want to do serialization for the in-memory cache. I think we can:\n - instead of using the blob cache from the device always, pass in the cache you want to LOAD_OR_RUN. Then, based on the types, we can have an overload which does key lookup via serialization, or uses the request struct w/ normal hash/eq for lookup.\n - make LOAD_OR_RUN make it so a single thread performs the run step if two of them race. or make a slightly different version of it called LOAD_OR_CREATE that does that",
+      "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
