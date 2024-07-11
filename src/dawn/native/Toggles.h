@@ -133,6 +133,7 @@ enum class Toggle {
     D3D12DontUseShaderModel66OrHigher,
     UsePackedDepth24UnormStencil8Format,
     D3D12ForceStencilComponentReplicateSwizzle,
+    GLAlignBufferSizeWithSizeofVec4,
 
     // Unresolved issues.
     NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
