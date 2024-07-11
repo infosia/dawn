@@ -31,6 +31,7 @@
 #include <string>
 #include <vector>
 
+#include "absl/container/flat_hash_set.h"
 #include "dawn/native/Serializable.h"
 #include "dawn/native/ShaderModule.h"
 #include "dawn/native/opengl/BindingPoint.h"
@@ -87,17 +88,19 @@ class ShaderModule final : public ShaderModuleBase {
         ShaderModuleParseResult* parseResult,
         OwnedCompilationMessages* compilationMessages);
 
-    ResultOrError<GLuint> CompileShader(const OpenGLFunctions& gl,
-                                        const ProgrammableStage& programmableStage,
-                                        SingleShaderStage stage,
-                                        bool usesVertexIndex,
-                                        bool usesInstanceIndex,
-                                        bool usesFragDepth,
-                                        CombinedSamplerInfo* combinedSamplers,
-                                        const PipelineLayout* layout,
-                                        bool* needsPlaceholderSampler,
-                                        bool* needsTextureBuiltinUniformBuffer,
-                                        BindingPointToFunctionAndOffset* bindingPointToData) const;
+    ResultOrError<GLuint> CompileShader(
+        const OpenGLFunctions& gl,
+        const ProgrammableStage& programmableStage,
+        SingleShaderStage stage,
+        bool usesVertexIndex,
+        bool usesInstanceIndex,
+        bool usesFragDepth,
+        CombinedSamplerInfo* combinedSamplers,
+        const PipelineLayout* layout,
+        bool* needsPlaceholderSampler,
+        bool* needsTextureBuiltinUniformBuffer,
+        BindingPointToFunctionAndOffset* bindingPointToData,
+        absl::flat_hash_set<tint::BindingPoint>* bindingPointWithRuntimeSizedArray) const;
 
   private:
     ShaderModule(Device* device,

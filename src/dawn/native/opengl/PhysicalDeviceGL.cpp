@@ -399,6 +399,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
 
     // Use T2B and B2T copies to emulate a T2T copy between sRGB and non-sRGB textures.
     deviceToggles->Default(Toggle::UseT2B2TForSRGBTextureCopy, true);
+
+    // For GLSL, align the buffer size to sizeof(vec4).
+    deviceToggles->Default(Toggle::GLAlignBufferSizeWithSizeofVec4, true);
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(

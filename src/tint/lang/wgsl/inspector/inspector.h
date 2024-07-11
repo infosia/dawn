@@ -97,6 +97,10 @@ class Inspector {
         const std::string& entry_point);
 
     /// @param entry_point name of the entry point to get information about.
+    /// @returns vector of all of the bindings containing runtime-sized array.
+    std::vector<ResourceBinding> GetRuntimeArrayBindings(const std::string& entry_point);
+
+    /// @param entry_point name of the entry point to get information about.
     /// @returns vector of all of the bindings for regular samplers.
     std::vector<ResourceBinding> GetSamplerResourceBindings(const std::string& entry_point);
 
