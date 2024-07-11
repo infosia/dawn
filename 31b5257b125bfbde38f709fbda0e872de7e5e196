@@ -51,6 +51,24 @@
       "message": "LG for this part,",
       "revId": "31b5257b125bfbde38f709fbda0e872de7e5e196",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54db17fa_ee2e87ec",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1004081
+      },
+      "writtenOn": "2024-07-11T14:39:35Z",
+      "side": 1,
+      "message": "Can you please give a +2? Thanks",
+      "parentUuid": "d797f122_02c17e50",
+      "revId": "31b5257b125bfbde38f709fbda0e872de7e5e196",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
