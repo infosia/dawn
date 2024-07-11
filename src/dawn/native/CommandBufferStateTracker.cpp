@@ -147,11 +147,10 @@ Return FindStorageBufferBindingAliasing(const PipelineLayoutBase* pipelineLayout
                 adjustedOffset += dynamicOffsets[groupIndex][static_cast<uint32_t>(bindingIndex)];
             }
 
-            storageBufferBindingsToCheck.push_back(BufferBinding{
-                bufferBinding.buffer,
-                adjustedOffset,
-                bufferBinding.size,
-            });
+            // Don't need to align binding size here since this is copying an existing
+            // BufferBinding.
+            storageBufferBindingsToCheck.push_back(BufferBinding::CreateBufferBinding(
+                bufferBinding.buffer, adjustedOffset, bufferBinding.size));
 
             if constexpr (kProduceDetails) {
                 bufferBindingIndices.emplace_back(groupIndex, bindingIndex);

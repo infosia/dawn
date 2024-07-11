@@ -305,6 +305,27 @@ void ForEachUnverifiedBufferBindingIndexImpl(const BindGroupLayoutInternalBase* 
 
 }  // anonymous namespace
 
+BufferBinding::BufferBinding(BufferBase* buffer_,
+                             uint64_t offset_,
+                             uint64_t size_,
+                             uint64_t originalSize_)
+    : buffer(buffer_), offset(offset_), size(size_), originalSize(originalSize_) {}
+
+BufferBinding BufferBinding::CreateBufferBinding(BufferBase* buffer,
+                                                 uint64_t offset,
+                                                 uint64_t size,
+                                                 bool needAlignBindingSize) {
+    uint64_t adjustedSize = size;
+    if (needAlignBindingSize && buffer->GetSize() == size + offset &&
+        buffer->GetAllocatedSize() > size + offset) {
+        // When needAlignBindingSize is true, allocated buffer size are be aligned with 16u.
+        // When binding reaches the whole buffer size, it needs to be aligned as well.
+        adjustedSize = Align(adjustedSize, uint64_t(16u));
+        DAWN_ASSERT(buffer->GetAllocatedSize() >= adjustedSize + offset);
+    }
+    return BufferBinding(buffer, offset, adjustedSize, size);
+}
+
 MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
                                        const BindGroupDescriptor* descriptor,
                                        UsageValidationMode mode) {
@@ -584,8 +605,10 @@ BufferBinding BindGroupBase::GetBindingAsBufferBinding(BindingIndex bindingIndex
     DAWN_ASSERT(std::holds_alternative<BufferBindingInfo>(
         layout->GetBindingInfo(bindingIndex).bindingLayout));
     BufferBase* buffer = static_cast<BufferBase*>(mBindingData.bindings[bindingIndex].Get());
-    return {buffer, mBindingData.bufferData[bindingIndex].offset,
-            mBindingData.bufferData[bindingIndex].size};
+    return BufferBinding::CreateBufferBinding(
+        buffer, mBindingData.bufferData[bindingIndex].offset,
+        mBindingData.bufferData[bindingIndex].size,
+        GetDevice()->IsToggleEnabled(Toggle::GLAlignBufferSizeWithSizeofVec4));
 }
 
 SamplerBase* BindGroupBase::GetBindingAsSampler(BindingIndex bindingIndex) const {

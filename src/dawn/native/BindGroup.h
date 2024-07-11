@@ -52,7 +52,19 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
 struct BufferBinding {
     BufferBase* buffer;
     uint64_t offset;
+    // This binding size could possibly be aligned.
     uint64_t size;
+    // This stores the original binding size.
+    uint64_t originalSize;
+
+    BufferBinding() = delete;
+    static BufferBinding CreateBufferBinding(BufferBase* buffer,
+                                             uint64_t offset,
+                                             uint64_t size,
+                                             bool needAlignBindingSize = false);
+
+  private:
+    BufferBinding(BufferBase* buffer, uint64_t offset, uint64_t size, uint64_t originalSize);
 };
 
 class BindGroupBase : public ApiObjectBase {
