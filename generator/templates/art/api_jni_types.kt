@@ -28,7 +28,7 @@
 {% macro arg_to_jni_type(arg) %}
     {% if arg.length == 'strlen' %}
         jstring
-    {% elif arg.length and arg.json_data.get('constant_length') != 1 %}
+    {% elif arg.length and arg.length != 'constant' %}
         {% if arg.type.category in ['bitmask', 'enum', 'function pointer', 'object', 'structure'] %}
             jobjectArray
         {% elif arg.type.name.get() == 'void' %}
