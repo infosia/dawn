@@ -24,9 +24,12 @@
 //* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#include <jni.h>
-#include "dawn/webgpu.h"
 #include "structures.h"
+
+#include <jni.h>
+
+#include "dawn/webgpu.h"
+#include "JNIContext.h"
 
 // Converts Kotlin objects representing Dawn structures into native structures that can be passed
 // into the native Dawn API.
@@ -34,7 +37,7 @@
 namespace dawn::kotlin_api {
 
 {% for structure in by_category['structure'] %}
-    void Convert(JNIEnv *env, jobject obj, {{ as_cType(structure.name) }}* converted) {
+    void Convert(JNIContext* c, JNIEnv *env, jobject obj, {{ as_cType(structure.name) }}* converted) {
         jclass clz = env->FindClass("{{ jni_name(structure) }}");
 
         //* Convert each member in turn from corresponding members of the Kotlin object obtained via
@@ -45,9 +48,8 @@ namespace dawn::kotlin_api {
                         env->GetMethodID(clz, "get{{ member.name.CamelCase() }}",
                                 "()Ljava/lang/String;"));
                 if (mObj) {
-                    //* TODO(b/330293719): free associated resources.
                     converted->{{ member.name.camelCase() }} =
-                            env->GetStringUTFChars(reinterpret_cast<jstring>(mObj), 0);
+                            c->GetStringUTFChars(reinterpret_cast<jstring>(mObj));
                 }
             }
             {% elif member.constant_length == 1 %} {
@@ -59,7 +61,7 @@ namespace dawn::kotlin_api {
                     if (mObj) {
                         //* TODO(b/330293719): free associated resources.
                         auto convertedMember = new {{ as_cType(member.type.name) }}();
-                        Convert(env, mObj, convertedMember);
+                        Convert(c, env, mObj, convertedMember);
                         converted->{{ member.name.camelCase() }} = convertedMember;
                     }
                 {% elif member.type.name.get() == 'void' %}
@@ -80,10 +82,9 @@ namespace dawn::kotlin_api {
                     //* This container type is represented in Kotlin as a primitive array.
                     jintArray array = static_cast<jintArray>(env->CallObjectMethod(obj,
                             env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()[I")));
-                    //* TODO(b/330293719): free associated resources.
                     converted->{{ member.name.camelCase() }} =
-                            reinterpret_cast<{{ as_cType(member.type.name) }}*>(
-                                   env->GetIntArrayElements(array, 0));
+                            reinterpret_cast<const {{ as_cType(member.type.name) }}*>(
+                                   c->GetIntArrayElements(array));
                     converted->{{ member.length.name.camelCase() }} = env->GetArrayLength(array);
                 }
                 {% else %} {
@@ -114,7 +115,7 @@ namespace dawn::kotlin_api {
                     }
                     {% elif member.type.category == 'structure' %}
                         for (int idx = 0; idx != length; idx++) {
-                            Convert(env, env->GetObjectArrayElement(in, idx), out + idx);
+                            Convert(c, env, env->GetObjectArrayElement(in, idx), out + idx);
                         }
                     {% else %}
                         {{ unreachable_code() }}
@@ -138,7 +139,7 @@ namespace dawn::kotlin_api {
             }
             {% elif member.type.category == 'structure' or member.type.category == 'callback info' %}
                 //* Mandatory structure.
-                Convert(env, env->CallObjectMethod(obj,
+                Convert(c, env, env->CallObjectMethod(obj,
                         env->GetMethodID(clz, "get{{ member.name.CamelCase() }}",
                                 "()L{{ jni_name(member.type) }};")),
                                 &converted->{{ member.name.camelCase() }});
@@ -181,7 +182,7 @@ namespace dawn::kotlin_api {
             if (child) {
                 //* TODO(b/330293719): free associated resources.
                 auto out = new {{ as_cType(child.name) }}();
-                Convert(env, child, out);
+                Convert(c, env, child, out);
                 out->chain.next = converted->nextInChain;
                 converted->nextInChain = &out->chain;
             }
