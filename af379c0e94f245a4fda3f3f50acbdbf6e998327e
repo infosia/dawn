@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e992f920_17ff5957",
+        "filename": "generator/templates/art/api_kotlin_functions.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-11T14:16:47Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "45258643_893f9e7d",
+      "revId": "af379c0e94f245a4fda3f3f50acbdbf6e998327e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b36107d_2fc7dc3c",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-07-11T13:25:52Z",
       "side": 1,
       "message": "```suggestion\n        @JvmName(\"{{ method.name.camelCase() }}\")\n```",
+      "revId": "af379c0e94f245a4fda3f3f50acbdbf6e998327e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "927432a0_49adffce",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-11T14:16:47Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "4b36107d_2fc7dc3c",
       "revId": "af379c0e94f245a4fda3f3f50acbdbf6e998327e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
