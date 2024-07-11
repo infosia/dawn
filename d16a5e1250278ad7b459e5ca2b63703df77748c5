@@ -34,6 +34,24 @@
       ],
       "revId": "d16a5e1250278ad7b459e5ca2b63703df77748c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b2b5252_91cbba27",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-11T18:47:58Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "d94e9708_a686d8b5",
+      "revId": "d16a5e1250278ad7b459e5ca2b63703df77748c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
