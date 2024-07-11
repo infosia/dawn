@@ -32,6 +32,7 @@
 #include "src/tint/lang/core/ir/transform/helper_test.h"
 #include "src/tint/lang/core/number.h"
 #include "src/tint/lang/core/type/builtin_structs.h"
+#include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/storage_texture.h"
 
 using namespace tint::core::fluent_types;     // NOLINT
@@ -62,6 +63,35 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastIdentity) {
 %foo = func(%a:i32):i32 {
   $B1: {
     ret %a
+  }
+}
+)";
+
+    Run(BuiltinPolyfill);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, F32ToF16) {
+    auto* a = b.FunctionParam<f32>("a");
+    auto* func = b.Function("foo", ty.f16());
+    func->SetParams({a});
+    b.Append(func->Block(), [&] { b.Return(func, b.Bitcast<f16>(a)); });
+
+    auto* src = R"(
+%foo = func(%a:f32):f16 {
+  $B1: {
+    %3:f16 = bitcast %a
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%a:f32):f16 {
+  $B1: {
+    %3:f16 = bitcast %a
+    ret %3
   }
 }
 )";
@@ -450,6 +480,43 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, SignVec) {
     %3:vec3<i32> = convert %2
     %a:vec3<i32> = let %3
     ret
+  }
+}
+)";
+
+    Run(BuiltinPolyfill);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(HlslWriter_BuiltinPolyfillTest, TextureNumLevels) {
+    auto* t = b.FunctionParam(
+        "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k1d, ty.f32()));
+    auto* func = b.Function("foo", ty.u32());
+    func->SetParams({t});
+    b.Append(func->Block(), [&] {
+        auto* result = b.Call<u32>(core::BuiltinFn::kTextureNumLevels, t);
+        b.Return(func, result);
+    });
+
+    auto* src = R"(
+%foo = func(%t:texture_1d<f32>):u32 {
+  $B1: {
+    %3:u32 = textureNumLevels %t
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%t:texture_1d<f32>):u32 {
+  $B1: {
+    %3:ptr<function, vec2<u32>, read_write> = var
+    %4:ptr<function, u32, read_write> = swizzle %3, x
+    %5:ptr<function, u32, read_write> = swizzle %3, y
+    %6:void = %t.GetDimensions 0u, %4, %5
+    %7:u32 = swizzle %3, y
+    ret %7
   }
 }
 )";
