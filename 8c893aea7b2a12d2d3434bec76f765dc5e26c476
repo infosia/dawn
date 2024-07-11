@@ -16,6 +16,24 @@
       "message": "Should be restricted to `readable`.",
       "revId": "8c893aea7b2a12d2d3434bec76f765dc5e26c476",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9823d1a_b9d7a8f0",
+        "filename": "src/tint/lang/hlsl/hlsl.def",
+        "patchSetId": 6
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-11T21:00:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e395b14_0e170372",
+      "revId": "8c893aea7b2a12d2d3434bec76f765dc5e26c476",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
