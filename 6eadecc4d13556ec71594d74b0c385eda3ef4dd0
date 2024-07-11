@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80d7800d_aaf3a993",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-11T11:09:39Z",
+      "side": 0,
+      "message": "To make sure I\u0027m understanding: This call will no longer happen because `apiDevice` is holding a ref to `apiAdapter`? and by removing this expectation, we\u0027re now implicitly verifying that the client-side device does keep the adapter live in this case?",
+      "revId": "6eadecc4d13556ec71594d74b0c385eda3ef4dd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
