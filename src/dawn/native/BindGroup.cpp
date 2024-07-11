@@ -584,8 +584,13 @@ BufferBinding BindGroupBase::GetBindingAsBufferBinding(BindingIndex bindingIndex
     DAWN_ASSERT(std::holds_alternative<BufferBindingInfo>(
         layout->GetBindingInfo(bindingIndex).bindingLayout));
     BufferBase* buffer = static_cast<BufferBase*>(mBindingData.bindings[bindingIndex].Get());
-    return {buffer, mBindingData.bufferData[bindingIndex].offset,
-            mBindingData.bufferData[bindingIndex].size};
+    uint64_t bindingSize = mBindingData.bufferData[bindingIndex].size;
+    if (GetDevice()->IsCompatibilityMode()) {
+        // Align with 16-byte to avoid vec3 padding leads to buffer size and binding size being
+        // insufficient.
+        bindingSize = Align(bindingSize, uint64_t(16u));
+    }
+    return {buffer, mBindingData.bufferData[bindingIndex].offset, bindingSize};
 }
 
 SamplerBase* BindGroupBase::GetBindingAsSampler(BindingIndex bindingIndex) const {
