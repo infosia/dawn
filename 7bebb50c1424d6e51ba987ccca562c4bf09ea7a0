@@ -16,6 +16,23 @@
       "message": "PTAL this and the next two commits.",
       "revId": "7bebb50c1424d6e51ba987ccca562c4bf09ea7a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67edb24e_d3064e6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-11T17:22:51Z",
+      "side": 1,
+      "message": "My only issue is that \u0027context\u0027 is a vague term and invites bundling of misc functionality. (I\u0027ve seen context classes become junkstores that pollute attempts to reduce scope of functions). I think I would prefer \u0027allocator\u0027. But I won\u0027t block on that.",
+      "revId": "7bebb50c1424d6e51ba987ccca562c4bf09ea7a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
