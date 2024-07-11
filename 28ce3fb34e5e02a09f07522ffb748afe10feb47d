@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a95bb77c_805c0c4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-11T16:08:49Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "28ce3fb34e5e02a09f07522ffb748afe10feb47d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d61841fa_29fd64f0",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-11T16:08:49Z",
+      "side": 1,
+      "message": "We could maybe handle the arrayness here as well with the `[`",
+      "revId": "28ce3fb34e5e02a09f07522ffb748afe10feb47d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
