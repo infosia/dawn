@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0da227e_bedc0b3e",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-11T10:18:28Z",
+      "side": 1,
+      "message": "Is this intentionally in this CL?",
+      "revId": "31b5257b125bfbde38f709fbda0e872de7e5e196",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d797f122_02c17e50",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-11T10:18:28Z",
+      "side": 1,
+      "message": "LG for this part,",
+      "revId": "31b5257b125bfbde38f709fbda0e872de7e5e196",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
