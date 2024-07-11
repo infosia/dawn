@@ -16,6 +16,24 @@
       "message": "Should be `Access` not `Swizzle`.",
       "revId": "3aee4fad57ca3958d235089be3fe8b0bd0908d3f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c04b9a37_40f527cc",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-11T20:36:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ff1b6f4_40595b30",
+      "revId": "3aee4fad57ca3958d235089be3fe8b0bd0908d3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
