@@ -107,6 +107,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef272d30_89f91c94",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-11T19:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ca2ff3_83de5a3b",
+      "revId": "b14d9fae6d50841091c54a42e62131f3bd7f8133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb1b7ee5_4f8c4ee8",
@@ -120,6 +138,24 @@
       "writtenOn": "2024-07-11T18:31:21Z",
       "side": 1,
       "message": "Maybe worth testing that a store with results set on it fails too?",
+      "revId": "b14d9fae6d50841091c54a42e62131f3bd7f8133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd91a87a_28436c21",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4773,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-11T19:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb1b7ee5_4f8c4ee8",
       "revId": "b14d9fae6d50841091c54a42e62131f3bd7f8133",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
