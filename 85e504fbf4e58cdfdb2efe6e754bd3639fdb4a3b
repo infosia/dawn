@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "85e504fbf4e58cdfdb2efe6e754bd3639fdb4a3b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc6ad12c_a322f51d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-11T16:51:14Z",
+      "side": 1,
+      "message": "forget to upload new patchset? commit message says you\u0027re destroying buffers, but the only actual change seems to be marking the device as not alive anymore",
+      "revId": "85e504fbf4e58cdfdb2efe6e754bd3639fdb4a3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
