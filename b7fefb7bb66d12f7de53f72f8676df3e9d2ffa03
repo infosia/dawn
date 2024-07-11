@@ -34,6 +34,24 @@
       "parentUuid": "820f3350_6ba7888b",
       "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7851457_59c921a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-11T21:18:17Z",
+      "side": 1,
+      "message": "I have similar concerns with the Vulkan one. It has the same risk of forgetting something in the key that impacts the output.\n\nI\u0027m suggesting that we use a similar request struct, but smaller. Not the full MslCompilationRequest struct. And, in this struct, we can put things like pointers, etc. because we\u0027re just hashing it and not serializing to disk. So it\u0027s for sure a smaller key and cheaper to compare.\n\nThe difference is that the Request struct makes it so that the things in the key are exactly the same things passed to the function that generates the value - so it\u0027s a lot harder to forget something in the key. This CL doesn\u0027t include all the information from the pipeline, and the request struct would structurally prevent that.",
+      "parentUuid": "f2cf0fe6_22f4f229",
+      "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
