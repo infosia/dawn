@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df840307_6b2a7ed4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-11T13:25:52Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "af379c0e94f245a4fda3f3f50acbdbf6e998327e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45258643_893f9e7d",
+        "filename": "generator/templates/art/api_kotlin_functions.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-11T13:25:52Z",
+      "side": 1,
+      "message": "```suggestion\n    @FastNative\n```",
+      "revId": "af379c0e94f245a4fda3f3f50acbdbf6e998327e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b36107d_2fc7dc3c",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-11T13:25:52Z",
+      "side": 1,
+      "message": "```suggestion\n        @JvmName(\"{{ method.name.camelCase() }}\")\n```",
+      "revId": "af379c0e94f245a4fda3f3f50acbdbf6e998327e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
