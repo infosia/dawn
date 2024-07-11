@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc61d3d0_2d8fae4e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-07-11T18:30:34Z",
+      "side": 1,
+      "message": "Just realized I should probably ask for a Tint reviewer.\n\nDan: PTAL. Thanks!",
+      "revId": "c522854fb509e9683e20672e157da0db6b76cfa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
