@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67febc48_156c7997",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4781,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T19:56:14Z",
+      "side": 1,
+      "message": "FWIW you can just do `Vector{b.InstructionResult(ty.i32())}`.",
+      "revId": "a5b3fe61c28ca1d6d10bac5fb961f9c1ea569705",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
