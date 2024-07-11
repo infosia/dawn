@@ -16,6 +16,24 @@
       "message": "FWIW you can just do `Vector{b.InstructionResult(ty.i32())}`.",
       "revId": "a5b3fe61c28ca1d6d10bac5fb961f9c1ea569705",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37229ebf_fe2a62f6",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4781,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-11T20:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67febc48_156c7997",
+      "revId": "a5b3fe61c28ca1d6d10bac5fb961f9c1ea569705",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
