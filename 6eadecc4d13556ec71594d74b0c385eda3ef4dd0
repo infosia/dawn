@@ -16,6 +16,24 @@
       "message": "To make sure I\u0027m understanding: This call will no longer happen because `apiDevice` is holding a ref to `apiAdapter`? and by removing this expectation, we\u0027re now implicitly verifying that the client-side device does keep the adapter live in this case?",
       "revId": "6eadecc4d13556ec71594d74b0c385eda3ef4dd0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4ebccd7_603daac2",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-11T12:00:52Z",
+      "side": 0,
+      "message": "Exactly, though the process was backwards where I saw this test fail and realized that it was because the device in WireTest is keeping a reference to that same adapter alive.\n\nThe wire tests are slightly change-detecting but on purpose.",
+      "parentUuid": "80d7800d_aaf3a993",
+      "revId": "6eadecc4d13556ec71594d74b0c385eda3ef4dd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
