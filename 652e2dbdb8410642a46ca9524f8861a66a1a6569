@@ -33,6 +33,24 @@
       "message": "do we need this in the pipeline if the pipeline layout also stores it?",
       "revId": "652e2dbdb8410642a46ca9524f8861a66a1a6569",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27f6d1ef_66bbed2d",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-07-11T00:28:46Z",
+      "side": 1,
+      "message": "They\u0027re different immediateData. For pipelineLayout, it stores user provided immeidate data range.\nFor Pipeline, it stores dawn internal used immediateData size, or current called push constant range.\n\nThere is another design:\nPipelineLayout host all internal + external push constant range, but defer initialization to pipeline creation. And it holds native pipelineLayout. In this design GPUPipelineLayout might have 1-N mapping with native pipelineLayout due to dawn internal push constant (Decided by shader side.).",
+      "parentUuid": "60a2ac10_589e88bd",
+      "revId": "652e2dbdb8410642a46ca9524f8861a66a1a6569",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
