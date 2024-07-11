@@ -16,6 +16,24 @@
       "message": "Nit: Should be able to do `b.CallWithResult\u003chlsl::ir::BuiltinCall\u003e()` here.",
       "revId": "dd9583aff66a2abed9f338a06d9f8538eb71f796",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bb8907d_d3ddd3a2",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-11T21:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1133939_eb9e4b2c",
+      "revId": "dd9583aff66a2abed9f338a06d9f8538eb71f796",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
