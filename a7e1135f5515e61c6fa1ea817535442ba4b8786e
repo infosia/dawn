@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b35f13dc_50214ba6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-11T14:52:04Z",
+      "side": 1,
+      "message": "I don\u0027t see any changes in spirv-tools that changed include files? I don\u0027t think we want to change the include from `third_party/spirv-tools/src/include/spirv-tools/libspirv.hpp` as we shouldnt\u0027 be adding the third-party include folder to our include path should we?",
+      "revId": "a7e1135f5515e61c6fa1ea817535442ba4b8786e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
