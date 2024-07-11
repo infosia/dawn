@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ea3063a_920f5bf1",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T18:39:11Z",
+      "side": 1,
+      "message": "I could go either way here. Arguably `CheckResultsAndOperands(inst, 0, 2)` suffers from the \"magic constants\" problem, whereas `kNumResults` and `kNumOperands` at least attaches names to the things.\n\nThat said, we can\u0027t use the named constant approach for all instructions (e.g. those with variable numbers of operands/results), so maybe it is indeed better to be consistent and always pass in the values.",
+      "parentUuid": "f53bd7ee_08454fb5",
+      "revId": "b14d9fae6d50841091c54a42e62131f3bd7f8133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eb1b7ee5_4f8c4ee8",
         "filename": "src/tint/lang/core/ir/validator_test.cc",
         "patchSetId": 1
