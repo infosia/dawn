@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b04ad45_632350e4",
+        "filename": "src/tint/lang/core/ir/operand_instruction.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-11T19:44:55Z",
+      "side": 1,
+      "message": "I didn\u0027t see a way of achieving this, please let me know if there is a better way.",
+      "revId": "be7b1ff2eaa3ab50988fcd52de0760037121b442",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
