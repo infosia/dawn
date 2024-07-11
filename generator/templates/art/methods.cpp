@@ -188,6 +188,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
                 //* Call the callback with all converted parameters.
                 env->CallVoidMethod(userData1->callback, callbackMethod
                 {%- for callbackArg in filter_arguments(arg.type.arguments) %}
+                    {# TODO: generalize native -> Kotlin logic #}
                     ,
                     {%- if callbackArg.type.category == 'object' %}
                         env->NewObject(env->FindClass("{{ jni_name(callbackArg.type) }}"),
@@ -221,7 +222,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     {% endif %}
 
     //* Actually invoke the native version of the method.
-    {% if _kotlin_return.annotation == '*' %}
+    {% if _kotlin_return.annotation == '*' and _kotlin_return.length == 'size_t' %}
         //* Methods that return containers are converted from two-call to single call, and the
         //* return type is switched to a Kotlin container.
         size_t size = wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
@@ -260,6 +261,9 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
         }
         free({{ _kotlin_return.name.get() }});
     {% else %}
+        {% if _kotlin_return.annotation == '*' %}
+            {{ _kotlin_return.name.get() }} = new {{ as_cType(_kotlin_return.type.name) }}();
+        {% endif %}
         {{ 'auto result =' if method.return_type.name.get() != 'void' }}
         {% if object %}
             wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
@@ -276,13 +280,15 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     {% endif %}
 
     //* We only handle objects and primitives to be returned.
-    {% if method.return_type.category == 'object' %}
+    {% if _kotlin_return.type.category == 'object' %}
         jclass returnClass = env->FindClass("{{ jni_name(method.return_type) }}");
         auto constructor = env->GetMethodID(returnClass, "<init>", "(J)V");
         return env->NewObject(returnClass, constructor, reinterpret_cast<jlong>(result));
-    {% elif method.return_type.name.get() in ['void const *', 'void *'] %}
+    {% elif _kotlin_return.type.category == 'structure' %}
+        return Convert(env, {{ _kotlin_return.name.camelCase() }});
+    {% elif _kotlin_return.type.name.get() in ['void const *', 'void *'] %}
         return toByteBuffer(env, result, size);
-    {% elif method.return_type.name.get() != 'void' %}
+    {% elif _kotlin_return.type.name.get() != 'void' %}
         return result;  //* Primitives are implicitly converted by JNI.
     {% endif %}
 } {% endmacro %}
