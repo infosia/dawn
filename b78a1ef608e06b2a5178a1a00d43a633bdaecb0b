@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22ac1250_fbe4c21e",
+        "filename": "src/tint/lang/wgsl/ast/builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 3063,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-11T19:35:15Z",
+      "side": 1,
+      "message": "Similar to the last CL, can BUILTIN be the enum and we remove the forwarding?",
+      "revId": "b78a1ef608e06b2a5178a1a00d43a633bdaecb0b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
