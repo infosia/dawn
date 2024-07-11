@@ -87,6 +87,24 @@
       "parentUuid": "163e95d8_3992134a",
       "revId": "652e2dbdb8410642a46ca9524f8861a66a1a6569",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b504d393_49d3596e",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-11T01:01:29Z",
+      "side": 1,
+      "message": "ohh ok got it, makes sense. Probably we\u0027ll want to have some cache of the backend pipeline layouts too, but that can come later.\n\nLGTM",
+      "parentUuid": "cca18a9e_84e3dd6c",
+      "revId": "652e2dbdb8410642a46ca9524f8861a66a1a6569",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
