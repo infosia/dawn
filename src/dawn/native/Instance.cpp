@@ -110,6 +110,7 @@ wgpu::WGSLFeatureName ToWGPUFeature(tint::wgsl::LanguageFeature f) {
         DAWN_FOREACH_WGSL_FEATURE(CASE)
 #undef CASE
     }
+    DAWN_UNREACHABLE();
 }
 
 }  // anonymous namespace
