@@ -31,9 +31,13 @@
 #include <string>
 #include <vector>
 
+#include "dawn/common/ityp_array.h"
+#include "dawn/common/ityp_vector.h"
+#include "dawn/native/IntegerTypes.h"
 #include "dawn/native/Serializable.h"
 #include "dawn/native/ShaderModule.h"
 #include "dawn/native/opengl/BindingPoint.h"
+#include "dawn/native/opengl/PipelineGL.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native {
@@ -87,17 +91,19 @@ class ShaderModule final : public ShaderModuleBase {
         ShaderModuleParseResult* parseResult,
         OwnedCompilationMessages* compilationMessages);
 
-    ResultOrError<GLuint> CompileShader(const OpenGLFunctions& gl,
-                                        const ProgrammableStage& programmableStage,
-                                        SingleShaderStage stage,
-                                        bool usesVertexIndex,
-                                        bool usesInstanceIndex,
-                                        bool usesFragDepth,
-                                        CombinedSamplerInfo* combinedSamplers,
-                                        const PipelineLayout* layout,
-                                        bool* needsPlaceholderSampler,
-                                        bool* needsTextureBuiltinUniformBuffer,
-                                        BindingPointToFunctionAndOffset* bindingPointToData) const;
+    ResultOrError<GLuint> CompileShader(
+        const OpenGLFunctions& gl,
+        const ProgrammableStage& programmableStage,
+        SingleShaderStage stage,
+        bool usesVertexIndex,
+        bool usesInstanceIndex,
+        bool usesFragDepth,
+        CombinedSamplerInfo* combinedSamplers,
+        const PipelineLayout* layout,
+        bool* needsPlaceholderSampler,
+        bool* needsTextureBuiltinUniformBuffer,
+        BindingPointToFunctionAndOffset* bindingPointToData,
+        BindingIndexHasRuntimeSizedArrayInfo* bindingPointHasRuntimeSizedArray) const;
 
   private:
     ShaderModule(Device* device,
