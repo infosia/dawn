@@ -174,26 +174,28 @@ MaybeError ProgrammableEncoder::ValidateSetBindGroup(BindGroupIndex index,
         BufferBinding bufferBinding = group->GetBindingAsBufferBinding(i);
 
         // During BindGroup creation, validation ensures binding offset + binding size
-        // <= buffer size.
-        DAWN_ASSERT(bufferBinding.buffer->GetSize() >= bufferBinding.size);
-        DAWN_ASSERT(bufferBinding.buffer->GetSize() - bufferBinding.size >= bufferBinding.offset);
+        // <= buffer allocated size.
+        DAWN_ASSERT(bufferBinding.buffer->GetAllocatedSize() >= bufferBinding.size);
+        DAWN_ASSERT(bufferBinding.buffer->GetAllocatedSize() - bufferBinding.size >=
+                    bufferBinding.offset);
 
-        if ((dynamicOffsets[i] >
-             bufferBinding.buffer->GetSize() - bufferBinding.offset - bufferBinding.size)) {
+        if ((dynamicOffsets[i] > bufferBinding.buffer->GetAllocatedSize() - bufferBinding.offset -
+                                     bufferBinding.size)) {
             DAWN_INVALID_IF(
-                (bufferBinding.buffer->GetSize() - bufferBinding.offset) == bufferBinding.size,
+                (bufferBinding.buffer->GetAllocatedSize() - bufferBinding.offset) ==
+                    bufferBinding.size,
                 "Dynamic Offset[%u] (%u) is out of bounds of %s with a size of %u and a bound "
                 "range of (offset: %u, size: %u). The binding goes to the end of the buffer "
                 "even with a dynamic offset of 0. Did you forget to specify "
                 "the binding's size?",
-                i, dynamicOffsets[i], bufferBinding.buffer, bufferBinding.buffer->GetSize(),
-                bufferBinding.offset, bufferBinding.size);
+                i, dynamicOffsets[i], bufferBinding.buffer,
+                bufferBinding.buffer->GetAllocatedSize(), bufferBinding.offset, bufferBinding.size);
 
             return DAWN_VALIDATION_ERROR(
                 "Dynamic Offset[%u] (%u) is out of bounds of "
                 "%s with a size of %u and a bound range of (offset: %u, size: %u).",
-                i, dynamicOffsets[i], bufferBinding.buffer, bufferBinding.buffer->GetSize(),
-                bufferBinding.offset, bufferBinding.size);
+                i, dynamicOffsets[i], bufferBinding.buffer,
+                bufferBinding.buffer->GetAllocatedSize(), bufferBinding.offset, bufferBinding.size);
         }
     }
 
