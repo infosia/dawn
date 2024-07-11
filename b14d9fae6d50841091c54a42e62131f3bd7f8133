@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16445f06_1e9294e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T18:31:21Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "b14d9fae6d50841091c54a42e62131f3bd7f8133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f53bd7ee_08454fb5",
@@ -14,6 +31,23 @@
       "writtenOn": "2024-07-11T18:25:43Z",
       "side": 1,
       "message": "Curious what James thinks, but my preference would be to drop the magic version which pulls the `kNumOperands` and `kNumResults` from teh instruction and just change the call site to be `CheckResultsAndOperands(inst, 0, 2);` in `CheckStore`. A lot less magic that way.",
+      "revId": "b14d9fae6d50841091c54a42e62131f3bd7f8133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb1b7ee5_4f8c4ee8",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4773,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T18:31:21Z",
+      "side": 1,
+      "message": "Maybe worth testing that a store with results set on it fails too?",
       "revId": "b14d9fae6d50841091c54a42e62131f3bd7f8133",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
