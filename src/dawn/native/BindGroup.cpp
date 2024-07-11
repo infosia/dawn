@@ -305,6 +305,21 @@ void ForEachUnverifiedBufferBindingIndexImpl(const BindGroupLayoutInternalBase* 
 
 }  // anonymous namespace
 
+BufferBinding::BufferBinding(BufferBase* buffer_, uint64_t offset_, uint64_t size_)
+    : buffer(buffer_), offset(offset_), size(size_) {}
+
+BufferBinding BufferBinding::CreateBufferBinding(BufferBase* buffer,
+                                                 uint64_t offset,
+                                                 uint64_t size,
+                                                 bool needAlignBindingSize) {
+    return BufferBinding(
+        buffer, offset,
+        // Only align binding size to allocated size when it is mapping the whole buffer.
+        needAlignBindingSize && buffer->GetSize() == size && buffer->GetAllocatedSize() > size
+            ? buffer->GetAllocatedSize()
+            : size);
+}
+
 MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
                                        const BindGroupDescriptor* descriptor,
                                        UsageValidationMode mode) {
@@ -584,8 +599,10 @@ BufferBinding BindGroupBase::GetBindingAsBufferBinding(BindingIndex bindingIndex
     DAWN_ASSERT(std::holds_alternative<BufferBindingInfo>(
         layout->GetBindingInfo(bindingIndex).bindingLayout));
     BufferBase* buffer = static_cast<BufferBase*>(mBindingData.bindings[bindingIndex].Get());
-    return {buffer, mBindingData.bufferData[bindingIndex].offset,
-            mBindingData.bufferData[bindingIndex].size};
+    return BufferBinding::CreateBufferBinding(
+        buffer, mBindingData.bufferData[bindingIndex].offset,
+        mBindingData.bufferData[bindingIndex].size,
+        GetDevice()->IsToggleEnabled(Toggle::GLAlignBufferSizeWithSizeofVec4));
 }
 
 SamplerBase* BindGroupBase::GetBindingAsSampler(BindingIndex bindingIndex) const {

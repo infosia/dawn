@@ -53,6 +53,15 @@ struct BufferBinding {
     BufferBase* buffer;
     uint64_t offset;
     uint64_t size;
+
+    BufferBinding() = delete;
+    static BufferBinding CreateBufferBinding(BufferBase* buffer,
+                                             uint64_t offset,
+                                             uint64_t size,
+                                             bool needAlignBindingSize = false);
+
+  private:
+    BufferBinding(BufferBase* buffer, uint64_t offset, uint64_t size);
 };
 
 class BindGroupBase : public ApiObjectBase {
