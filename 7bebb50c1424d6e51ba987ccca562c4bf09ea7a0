@@ -33,6 +33,24 @@
       "message": "My only issue is that \u0027context\u0027 is a vague term and invites bundling of misc functionality. (I\u0027ve seen context classes become junkstores that pollute attempts to reduce scope of functions). I think I would prefer \u0027allocator\u0027. But I won\u0027t block on that.",
       "revId": "7bebb50c1424d6e51ba987ccca562c4bf09ea7a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebb87b23_d2c8894b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-11T18:15:49Z",
+      "side": 1,
+      "message": "Exactly, it is meant to grow a bunch more stuff like pointers to caches for classes and method lookups etc. This is to avoid passing N arguments for these around.",
+      "parentUuid": "67edb24e_d3064e6d",
+      "revId": "7bebb50c1424d6e51ba987ccca562c4bf09ea7a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
