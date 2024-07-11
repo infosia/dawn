@@ -77,7 +77,8 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
             shader, module->CompileShader(
                         gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex, usesFragDepth,
                         &combinedSamplers[stage], layout, &needsPlaceholderSampler,
-                        &mNeedsTextureBuiltinUniformBuffer, &mBindingPointEmulatedBuiltins));
+                        &mNeedsTextureBuiltinUniformBuffer, &mBindingPointEmulatedBuiltins,
+                        &mBindingPointHasRuntimeSizedArray));
         gl.AttachShader(mProgram, shader);
         glShaders.push_back(shader);
     }
@@ -178,6 +179,13 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
 
     mInternalUniformBufferBinding = layout->GetInternalUniformBinding();
 
+    for (BindGroupIndex group : IterateBitSet(layout->GetBindGroupLayoutsMask())) {
+        const BindGroupLayoutInternalBase* bgl = layout->GetBindGroupLayout(group);
+        mBindingPointHasRuntimeSizedArray[group].resize(bgl->GetBindingCount());
+        std::fill(mBindingPointHasRuntimeSizedArray[group].begin(),
+                  mBindingPointHasRuntimeSizedArray[group].end(), false);
+    }
+
     return {};
 }
 
@@ -219,6 +227,11 @@ const Buffer* PipelineGL::GetInternalUniformBuffer() const {
 
 const BindingPointToFunctionAndOffset& PipelineGL::GetBindingPointBuiltinDataInfo() const {
     return mBindingPointEmulatedBuiltins;
+}
+
+const BindingIndexHasRuntimeSizedArrayInfo& PipelineGL::GetBindingPointHasRuntimeSizedArray()
+    const {
+    return mBindingPointHasRuntimeSizedArray;
 }
 
 }  // namespace dawn::native::opengl

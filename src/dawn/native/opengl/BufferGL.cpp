@@ -55,9 +55,10 @@ Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor)
     : BufferBase(device, descriptor) {
     const OpenGLFunctions& gl = device->GetGL();
     // Allocate at least 4 bytes so clamped accesses are always in bounds.
-    // Align with 4 byte to avoid out-of-bounds access issue in compute emulation for 2 byte
+    // Align with 4-byte to avoid out-of-bounds access issue in compute emulation for 2 byte
     // element.
-    mAllocatedSize = Align(std::max(GetSize(), uint64_t(4u)), uint64_t(4u));
+    // Align with 16-byte to avoid vec3 padding leads to buffer size being insufficient.
+    mAllocatedSize = Align(std::max(GetSize(), uint64_t(4u)), uint64_t(16u));
 
     gl.GenBuffers(1, &mBuffer);
     gl.BindBuffer(GL_ARRAY_BUFFER, mBuffer);

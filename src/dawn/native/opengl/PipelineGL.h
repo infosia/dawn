@@ -35,6 +35,9 @@
 
 #include "include/tint/tint.h"
 
+#include "dawn/common/ityp_array.h"
+#include "dawn/common/ityp_vector.h"
+#include "dawn/native/IntegerTypes.h"
 #include "dawn/native/PerStage.h"
 #include "dawn/native/opengl/BindingPoint.h"
 #include "dawn/native/opengl/opengl_platform.h"
@@ -50,6 +53,8 @@ class PipelineLayout;
 class Sampler;
 class Buffer;
 class TextureView;
+
+using BindingIndexHasRuntimeSizedArrayInfo = PerBindGroup<ityp::vector<BindingIndex, uint32_t>>;
 
 class PipelineGL {
   public:
@@ -68,6 +73,8 @@ class PipelineGL {
 
     const Buffer* GetInternalUniformBuffer() const;
     const BindingPointToFunctionAndOffset& GetBindingPointBuiltinDataInfo() const;
+
+    const BindingIndexHasRuntimeSizedArrayInfo& GetBindingPointHasRuntimeSizedArray() const;
 
   protected:
     void ApplyNow(const OpenGLFunctions& gl);
@@ -96,6 +103,10 @@ class PipelineGL {
     // Reflect info from tint: a map from texture binding point to extra data need to push into the
     // internal uniform buffer.
     BindingPointToFunctionAndOffset mBindingPointEmulatedBuiltins;
+
+    // Reflect info from tint: bindings with runtime-sized array. Used to avoid extra binding size
+    // alignment.
+    BindingIndexHasRuntimeSizedArrayInfo mBindingPointHasRuntimeSizedArray;
 };
 
 }  // namespace dawn::native::opengl

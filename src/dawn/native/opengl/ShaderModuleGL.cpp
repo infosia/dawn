@@ -403,7 +403,8 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     const PipelineLayout* layout,
     bool* needsPlaceholderSampler,
     bool* needsTextureBuiltinUniformBuffer,
-    BindingPointToFunctionAndOffset* bindingPointToData) const {
+    BindingPointToFunctionAndOffset* bindingPointToData,
+    BindingIndexHasRuntimeSizedArrayInfo* bindingPointHasRuntimeSizedArray) const {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "TranslateToGLSL");
 
     const OpenGLVersion& version = ToBackend(GetDevice())->GetGL().GetVersion();
@@ -491,6 +492,14 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     req.tintOptions.bindings = std::move(bindings);
     req.tintOptions.disable_polyfill_integer_div_mod =
         GetDevice()->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
+
+    auto runtimeSizedArrayBindings = inspector.GetRuntimeArrayBindings(req.entryPointName);
+    for (const auto& b : runtimeSizedArrayBindings) {
+        const BindGroupLayoutInternalBase* bgl =
+            layout->GetBindGroupLayout(BindGroupIndex{b.bind_group});
+        (*bindingPointHasRuntimeSizedArray)[BindGroupIndex(b.bind_group)]
+                                           [bgl->GetBindingIndex(BindingNumber{b.binding})] = true;
+    }
 
     CacheResult<GLSLCompilation> compilationResult;
     DAWN_TRY_LOAD_OR_RUN(
