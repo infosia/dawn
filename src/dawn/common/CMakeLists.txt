@@ -50,6 +50,7 @@ set(private_headers
     "Assert.h"
     "BitSetIterator.h"
     "Compiler.h"
+    "ConcurrentHashMapTests.h"
     "Constants.h"
     "ContentLessObjectCache.h"
     "ContentLessObjectCacheable.h"
