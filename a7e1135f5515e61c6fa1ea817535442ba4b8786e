@@ -34,6 +34,24 @@
       "parentUuid": "b35f13dc_50214ba6",
       "revId": "a7e1135f5515e61c6fa1ea817535442ba4b8786e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0816dd97_2e7ed24b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-11T16:39:15Z",
+      "side": 1,
+      "message": "Discussed this OOB,\n\nIt looks like we use \"spirv-tools/libspirv.hpp\" or \u003cspirv-tools/libspirv.hpp\u003e everywhere else in the code base, and not the third_party/spirv-tools/... form, so I assume there is something special about how spirv-tools is setup.",
+      "parentUuid": "364fc515_8685194f",
+      "revId": "a7e1135f5515e61c6fa1ea817535442ba4b8786e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
