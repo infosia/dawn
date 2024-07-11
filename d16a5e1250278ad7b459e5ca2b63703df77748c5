@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d94e9708_a686d8b5",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T16:56:13Z",
+      "side": 1,
+      "message": "Nit: `UnwrapPtr()` is unnecessary here.",
+      "fixSuggestions": [
+        {
+          "fixId": "fdb2f0cd_0b625444",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+              "range": {
+                "startLine": 549,
+                "startChar": 0,
+                "endLine": 550,
+                "endChar": 0
+              },
+              "replacement": "            auto* call \u003d MakeLoad(inst, var, inst-\u003eResult(0)-\u003eType(), off);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d16a5e1250278ad7b459e5ca2b63703df77748c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
