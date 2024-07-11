@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "b7de2725dc26bec11b7828ce74c853dd1c12309e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b6ee84e_468ec5e5",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T20:09:30Z",
+      "side": 1,
+      "message": "Should this return `void` too, if no callsites need the call?",
+      "revId": "b7de2725dc26bec11b7828ce74c853dd1c12309e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
