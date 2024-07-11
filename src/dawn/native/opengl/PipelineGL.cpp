@@ -77,7 +77,8 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
             shader, module->CompileShader(
                         gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex, usesFragDepth,
                         &combinedSamplers[stage], layout, &needsPlaceholderSampler,
-                        &mNeedsTextureBuiltinUniformBuffer, &mBindingPointEmulatedBuiltins));
+                        &mNeedsTextureBuiltinUniformBuffer, &mBindingPointEmulatedBuiltins,
+                        &mBindingPointWithRuntimeSizedArray));
         gl.AttachShader(mProgram, shader);
         glShaders.push_back(shader);
     }
@@ -219,6 +220,11 @@ const Buffer* PipelineGL::GetInternalUniformBuffer() const {
 
 const BindingPointToFunctionAndOffset& PipelineGL::GetBindingPointBuiltinDataInfo() const {
     return mBindingPointEmulatedBuiltins;
+}
+
+const absl::flat_hash_set<tint::BindingPoint>& PipelineGL::GetBindingPointWithRuntimeSizedArray()
+    const {
+    return mBindingPointWithRuntimeSizedArray;
 }
 
 }  // namespace dawn::native::opengl
