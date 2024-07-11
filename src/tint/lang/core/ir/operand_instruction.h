@@ -109,6 +109,13 @@ class OperandInstruction : public Castable<OperandInstruction<N, R>, Instruction
         SetResults(Vector{std::forward<ARGS>(values)...});
     }
 
+    /// Replaces the results of the instruction with a single result value
+    /// @param value the new result value
+    void SetResult(InstructionResult* value) {
+        ClearResults();
+        AddResult(value);
+    }
+
     /// Removes all results from the instruction.
     void ClearResults() {
         for (auto* result : results_) {
