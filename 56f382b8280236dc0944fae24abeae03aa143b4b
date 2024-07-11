@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fab3dacc_3bed72a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T16:23:55Z",
+      "side": 1,
+      "message": "I don\u0027t really like the use of bitcast here, otherwise LGTM.",
+      "revId": "56f382b8280236dc0944fae24abeae03aa143b4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68f2024b_c45d5904",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T16:23:55Z",
+      "side": 1,
+      "message": "You *could* do this as `((byte_idx % 4u) * 8u)` instead doing a comparison and using a ternary, but maybe that\u0027s a bit too magic.",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 63
+      },
+      "revId": "56f382b8280236dc0944fae24abeae03aa143b4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "176e4f57_3b492ce2",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T16:23:55Z",
+      "side": 1,
+      "message": "Can you do a return `b.Convert(result_ty, load)` here instead of falling through to the bitcast below?\n\nThis would remove the need for the special casing of bitcase in the various other places that you had to add it.",
+      "revId": "56f382b8280236dc0944fae24abeae03aa143b4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd756f76_f975d2d7",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T16:23:55Z",
+      "side": 1,
+      "message": "Is the `And` necessary here? The definition of `f16tof32` sounds like it always uses only the lower half of the uint.",
+      "revId": "56f382b8280236dc0944fae24abeae03aa143b4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99811cff_6f8bbebc",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-11T16:23:55Z",
+      "side": 1,
+      "message": "Can you add a test case for vectors with dynamic indices too, so that we can see the modulo+ternary path? Or just add it to the test case above.",
+      "revId": "56f382b8280236dc0944fae24abeae03aa143b4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
