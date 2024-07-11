@@ -16,6 +16,23 @@
       "message": "Some infra failures, but I think these are ready for review",
       "revId": "77ba7f0c7eb739f24fd6a65b0dd12f23e7302075",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38d3ac85_b4f24eb6",
+        "filename": "src/tint/lang/wgsl/ast/builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 3142,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-11T19:16:53Z",
+      "side": 1,
+      "message": "Maybe as a followup, but can these just be the InterpolateType and InterpolateSampling types now? They\u0027re just enums so we can just pass them throught without the perfect forwarding?",
+      "revId": "77ba7f0c7eb739f24fd6a65b0dd12f23e7302075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
