@@ -24,7 +24,7 @@
 //* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-{% from 'art/api_jni_types.kt' import jni_signature with context %}
+{% from 'art/api_jni_types.kt' import jni_convert, jni_signature with context %}
 
 #include <jni.h>
 #include "dawn/webgpu.h"
@@ -36,6 +36,26 @@
 namespace dawn::kotlin_api {
 
 {% for structure in by_category['structure'] %}
+    {% if true or structure.extensible != 'in' %}
+        jobject Convert(JNIEnv *env, const {{ as_cType(structure.name) }}* input) {
+            jclass clz = env->FindClass("{{ jni_name(structure) }}");
+            jmethodID ctor = env->GetMethodID(clz, "<init>", "(
+            {%- for member in structure.members if include_structure_member(structure, member) %}
+                {{- jni_signature(member) -}}
+            {%- endfor %})V");
+
+            {% for member in structure.members if include_structure_member(structure, member) %}
+                {{ jni_convert(member.name.camelCase(), 'input->' + member.name.camelCase(), 'input->' + member.length.name.camelCase() if member.length.name, member) }}
+            {% endfor %}
+            jobject converted = env->NewObject(clz, ctor
+            {%- for member in structure.members if include_structure_member(structure, member) %}
+                ,{{ member.name.camelCase() }}
+            {% endfor %}
+            );
+            return converted;
+        }
+    {% endif %}
+
     void Convert(JNIEnv *env, jobject obj, {{ as_cType(structure.name) }}* converted) {
         jclass clz = env->FindClass("{{ jni_name(structure) }}");
 

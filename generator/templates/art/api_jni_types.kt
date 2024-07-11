@@ -28,7 +28,7 @@
 {% macro arg_to_jni_type(arg) %}
     {% if arg.length == 'strlen' %}
         jstring
-    {% elif arg.length and arg.json_data.get('constant_length') != 1 %}
+    {% elif arg.length and arg.length != 'constant' %}
         {% if arg.type.category in ['bitmask', 'enum', 'function pointer', 'object', 'structure'] %}
             jobjectArray
         {% elif arg.type.name.get() == 'void' %}
@@ -84,3 +84,62 @@
         {{ unreachable_code() }}
     {%- endif -%}
 {% endmacro %}
+
+{% macro jni_convert(name, v, size, member) %}
+    {% if member.type.name.get() in ['void const *', 'void *'] %}
+        auto {{ name }} = toByteBuffer(env, {{ v }}, {{ size }});
+    {% elif size %}
+        //* Native container converted to a Kotlin container.
+        jobjectArray {{ name }};
+        {
+            jclass clz2 = env->FindClass("{{ jni_name(member.type) }}");
+            {{ name }} = env->NewObjectArray({{ size }}, clz2, 0);
+            {% if member.type.category == 'object' %}
+                jmethodID constructor = env->GetMethodID(clz2, "<init>", "(I)V");
+            {% endif %}
+            for (int idx = 0; idx != {{ size }}; idx++) {
+                jobject element;
+                {% if member.type.category == 'object' %}
+                    element = env->NewObject(clz2, constructor, {{ v }}[idx]);
+                {% else %}
+                    // should do structure
+                {% endif %}
+                env->SetObjectArrayElement({{ name }}, idx, element);
+            }
+        }
+    {% elif member.type.category == 'object' %}
+        jobject {{ name }} =
+                env->NewObject(env->FindClass("{{ jni_name(member.type) }}"),
+                        env->GetMethodID(env->FindClass("{{ jni_name(member.type) }}"),
+                                "<init>", "(J)V"),
+                    reinterpret_cast<jlong>({{ v }}));
+    {% elif member.type.category == 'structure' %}
+        jobject {{ name }} =
+        {% if member.annotation in ['*', 'const*'] %}
+            Convert(env, {{ v }});
+        {% else %}
+            Convert(env, &{{ v }});
+        {% endif %}
+    {% elif member.type.name.get() in ['int64_t', 'uint64_t', 'size_t'] %}
+        jlong {{ name }} = static_cast<jint>({{ v }});
+    {% elif member.type.name.get() in ['int', 'int32_t', 'uint32_t'] or member.type.category in ['bitmask', 'enum'] %}
+        jint {{ name }} = static_cast<jint>({{ v }});
+    {% elif member.type.name.get() in ['int16_t', 'uint16_t'] %}
+        jshort {{ name }} = {{ v }};
+    {% elif member.type.name.get() == 'double' %}
+        jdouble {{ name }} = {{ v }};
+    {% elif member.type.name.get() == 'float' %}
+        jfloat {{ name }} = {{ v }};
+    {% elif member.type.name.get() == 'bool' %}
+        bool {{ name }} = {{ v }};
+    {% elif member.type.name.get() == 'char' %}
+        jstring {{ name }} = env->NewStringUTF({{ v }});
+    {% elif member.type.category == 'object' %}
+        jclass returnClass = env->FindClass("{{ jni_name(member.type) }}");
+        auto constructor = env->GetMethodID(returnClass, "<init>", "(J)V");
+        auto {{ name }} = env->NewObject(returnClass, constructor, reinterpret_cast<jlong>({{ v }}));
+    {% else %}
+        auto {{ name }} = {{ v }};
+    {% endif %}
+{% endmacro %}
+
