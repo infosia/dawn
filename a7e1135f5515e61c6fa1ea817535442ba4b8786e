@@ -16,6 +16,24 @@
       "message": "I don\u0027t see any changes in spirv-tools that changed include files? I don\u0027t think we want to change the include from `third_party/spirv-tools/src/include/spirv-tools/libspirv.hpp` as we shouldnt\u0027 be adding the third-party include folder to our include path should we?",
       "revId": "a7e1135f5515e61c6fa1ea817535442ba4b8786e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "364fc515_8685194f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-11T16:31:19Z",
+      "side": 1,
+      "message": "I just assumed that there was one, since I sync\u0027d and ir_fuzz_dis broke, then I looked at what tint/main.cc did, and saw it was using \u0027#include \"spirv-tools/libspirv.hpp\"\u0027 and assumed that had been updated.\n\nBut now looking at git blame, I can see that the include in tint/main.cc has been in there since 2020, so yeah that didn\u0027t change.\n\nI will go take a look and figure out what is going on here.",
+      "parentUuid": "b35f13dc_50214ba6",
+      "revId": "a7e1135f5515e61c6fa1ea817535442ba4b8786e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
