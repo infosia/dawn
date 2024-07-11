@@ -69,6 +69,24 @@
       "parentUuid": "27f6d1ef_66bbed2d",
       "revId": "652e2dbdb8410642a46ca9524f8861a66a1a6569",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cca18a9e_84e3dd6c",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-07-11T00:57:24Z",
+      "side": 1,
+      "message": "\u003ePatchset 2\n8:54 AM\nthere\u0027s not enough code for me to have a clear picture of what you plan to do, but the thing that immediately I\u0027m confused about is what immediate data size you use to make the backend pipeline layout.\n\nI think that\u0027s the point. I\u0027ll upload the follow-up draft soon.\n\n\u003eIf it is, how is the layout to backend layout 1:1 since there could be multiple pipelines which share the same layout?\n\nYes, it is. And I plan to make backend pipeline holds the backend pipelineLayout. And GPUPipelineLayout doesn\u0027t hold backend pipeline layout anymore.",
+      "parentUuid": "163e95d8_3992134a",
+      "revId": "652e2dbdb8410642a46ca9524f8861a66a1a6569",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
