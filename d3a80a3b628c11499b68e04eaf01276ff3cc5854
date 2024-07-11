@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "778bc558_b35c6871",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-07-11T17:13:55Z",
+      "side": 1,
+      "message": "Austin: PTAL. Thanks!",
+      "revId": "d3a80a3b628c11499b68e04eaf01276ff3cc5854",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
