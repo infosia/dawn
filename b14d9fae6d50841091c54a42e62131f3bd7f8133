@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "52ca2ff3_83de5a3b",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-11T18:46:25Z",
+      "side": 1,
+      "message": "I think I lean towards the always pass in option (the magical version is from the original reference CL, and it works, but I generally prefer more explicit code).\n\nTo avoid the magic constants problem, `kNumResults` and `kNumOperands` could be statics on `Store`.\n\nSo the call would be `CheckResultsAndOperands(inst, Store::kNumberResults, Store::kNumOperands)`",
+      "parentUuid": "f53bd7ee_08454fb5",
+      "revId": "b14d9fae6d50841091c54a42e62131f3bd7f8133",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eb1b7ee5_4f8c4ee8",
         "filename": "src/tint/lang/core/ir/validator_test.cc",
         "patchSetId": 1
