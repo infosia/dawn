@@ -35,6 +35,7 @@
 
 #include "include/tint/tint.h"
 
+#include "absl/container/flat_hash_set.h"
 #include "dawn/native/PerStage.h"
 #include "dawn/native/opengl/BindingPoint.h"
 #include "dawn/native/opengl/opengl_platform.h"
@@ -68,6 +69,7 @@ class PipelineGL {
 
     const Buffer* GetInternalUniformBuffer() const;
     const BindingPointToFunctionAndOffset& GetBindingPointBuiltinDataInfo() const;
+    const absl::flat_hash_set<tint::BindingPoint>& GetBindingPointWithRuntimeSizedArray() const;
 
   protected:
     void ApplyNow(const OpenGLFunctions& gl);
@@ -96,6 +98,10 @@ class PipelineGL {
     // Reflect info from tint: a map from texture binding point to extra data need to push into the
     // internal uniform buffer.
     BindingPointToFunctionAndOffset mBindingPointEmulatedBuiltins;
+
+    // Reflect info from tint: bindings with runtime-sized array. Used to avoid extra binding size
+    // alignment.
+    absl::flat_hash_set<tint::BindingPoint> mBindingPointWithRuntimeSizedArray;
 };
 
 }  // namespace dawn::native::opengl
