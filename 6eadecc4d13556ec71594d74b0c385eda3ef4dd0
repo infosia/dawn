@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "6eadecc4d13556ec71594d74b0c385eda3ef4dd0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f772200_46830668",
+        "filename": "src/dawn/wire/client/ObjectStore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-11T16:48:53Z",
+      "side": 1,
+      "message": "hmmm.. why remove the linked list versus this vector? with the linked list we inline some prev/next ptrs into the object allocations.\nWith this vector, we have a separate allocation for the tracking.\n\nIn native we track the list of objects via linked-list.\n\nI feel like this vector of objects was useful in the wire when (_really_ long ago, I think) we didn\u0027t want to make a separate allocation per-object - and we kept the allocations in this list. that is - when the (id, generation) actually indexed the data directly arena-style.\n\nTBH I forget exactly why we moved away from that approach but IMO: \n - this vector makes sense if we do arena-style allocation\n - otherwise linked-list may be better so we don\u0027t have a separate allocation. The separate allocation here can become fragmented with holes - so there\u0027s a bit of wasted space.\n\nOh, I remember. We can\u0027t do arena because right now we rely on the object returned to the application to be a stable pointer. So we can do object-\u003eclient-\u003eDoThing when they call a method on it. We can\u0027t use an arena unless we make it global.",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 46
+      },
+      "revId": "6eadecc4d13556ec71594d74b0c385eda3ef4dd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
