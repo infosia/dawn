@@ -28,7 +28,7 @@
 {% macro arg_to_jni_type(arg) %}
     {% if arg.length == 'strlen' %}
         jstring
-    {% elif arg.length and arg.json_data.get('constant_length') != 1 %}
+    {% elif arg.length and arg.length != 'constant' %}
         {% if arg.type.category in ['bitmask', 'enum', 'function pointer', 'object', 'structure'] %}
             jobjectArray
         {% elif arg.type.name.get() == 'void' %}
@@ -84,3 +84,66 @@
         {{ unreachable_code() }}
     {%- endif -%}
 {% endmacro %}
+
+{% macro jni_convert(name, v, size, member, for_array) %}
+    {% if member.type.name.get() in ['void const *', 'void *'] %}
+        auto {{ name }} = toByteBuffer(env, {{ v }}, {{ size }});
+    {% elif size %}
+        //* Native container converted to a Kotlin container.
+        {% if member.type.category in ['bitmask', 'enum', 'object', 'structure'] %}
+            jobjectArray {{ name }};
+            {
+                jclass clz2 = env->FindClass("{{ jni_name(member.type) }}");
+                {{ name }} = env->NewObjectArray({{ size }}, clz2, 0);
+                for (int idx = 0; idx != {{ size }}; idx++) {
+                    {{ jni_convert('element', v + '[idx]', None, {'type': member.type}, True) }}
+                    env->SetObjectArrayElement({{ name }}, idx, element);
+                }
+            }
+        {% elif member.type.name.get() in ['int', 'int32_t', 'uint32_t'] %}
+            jintArray {{ name }} = nullptr;  // missing int array
+        {% else %}
+            // missing {{ member.type.category }}
+        {% endif %}
+
+    {% elif member.type.category == 'object' or (for_array and member.type.category in ['bitmask', 'enum']) %}
+        jobject {{ name }} =
+                env->NewObject(env->FindClass("{{ jni_name(member.type) }}"),
+                        env->GetMethodID(env->FindClass("{{ jni_name(member.type) }}"),
+                                "<init>", "({{ 'J' if member.type.category == 'object' else 'I'}})V"),
+        {% if member.type.category == 'object' %}
+            reinterpret_cast<jlong>
+        {% else %}
+            static_cast<jint>
+        {% endif %}
+            ({{ v }}));
+    {% elif member.type.category == 'structure' %}
+        jobject {{ name }} =
+        {% if member.annotation in ['*', 'const*'] %}
+            Convert(env, {{ v }});
+        {% else %}
+            Convert(env, &{{ v }});
+        {% endif %}
+    {% elif member.type.name.get() in ['int64_t', 'uint64_t', 'size_t'] %}
+        jlong {{ name }} = static_cast<jint>({{ v }});
+    {% elif member.type.name.get() in ['int', 'int32_t', 'uint32_t'] or member.type.category in ['bitmask', 'enum'] %}
+        jint {{ name }} = static_cast<jint>({{ v }});
+    {% elif member.type.name.get() in ['int16_t', 'uint16_t'] %}
+        jshort {{ name }} = {{ v }};
+    {% elif member.type.name.get() == 'double' %}
+        jdouble {{ name }} = {{ v }};
+    {% elif member.type.name.get() == 'float' %}
+        jfloat {{ name }} = {{ v }};
+    {% elif member.type.name.get() == 'bool' %}
+        bool {{ name }} = {{ v }};
+    {% elif member.type.name.get() == 'char' %}
+        jstring {{ name }} = {{ v }} ? env->NewStringUTF({{ v }}) : nullptr;
+    {% elif member.type.category == 'object' %}
+        jclass returnClass = env->FindClass("{{ jni_name(member.type) }}");
+        auto constructor = env->GetMethodID(returnClass, "<init>", "(J)V");
+        auto {{ name }} = env->NewObject(returnClass, constructor, reinterpret_cast<jlong>({{ v }}));
+    {% else %}
+        auto {{ name }} = {{ v }};
+    {% endif %}
+{% endmacro %}
+
