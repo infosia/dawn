@@ -4735,6 +4735,42 @@ note: # Disassembly
 )");
 }
 
+TEST_F(IR_ValidatorTest, Store_NullToAndFrom) {
+    auto* f = b.Function("my_func", ty.void_());
+
+    b.Append(f->Block(), [&] {
+        b.Append(mod.allocators.instructions.Create<ir::Store>(nullptr, nullptr));
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(), R"(:3:11 error: store: operand is undefined
+    store undef, undef
+          ^^^^^
+
+:2:3 note: in block
+  $B1: {
+  ^^^
+
+:3:18 error: store: operand is undefined
+    store undef, undef
+                 ^^^^^
+
+:2:3 note: in block
+  $B1: {
+  ^^^
+
+note: # Disassembly
+%my_func = func():void {
+  $B1: {
+    store undef, undef
+    ret
+  }
+}
+)");
+}
+
 TEST_F(IR_ValidatorTest, Store_TargetNotMemoryView) {
     auto* f = b.Function("my_func", ty.void_());
 
