@@ -16,6 +16,24 @@
       "message": "Access not Swizzle.",
       "revId": "202d972aaf393508239839792daa85de2ff975fe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98dfc765_94fb6602",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-11T20:54:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a41c1c8_599d0ca0",
+      "revId": "202d972aaf393508239839792daa85de2ff975fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
