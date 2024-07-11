@@ -16,6 +16,23 @@
       "message": "Please have an early look at this CL. I won\u0027t land it until we gave enough time to developers to update their code.",
       "revId": "b5a4d7a5c027c58394330dd62f4081fff21969f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db4c0328_39458135",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-11T23:55:23Z",
+      "side": 1,
+      "message": "Could you split this into two CLs, one to change usages from GetProperties to GetInfo, and one to remove GetProperties?\n\nOtherwise LGTM when it\u0027s time to land this.",
+      "revId": "b5a4d7a5c027c58394330dd62f4081fff21969f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
