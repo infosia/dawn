@@ -33,6 +33,24 @@
       "message": "We could maybe handle the arrayness here as well with the `[`",
       "revId": "28ce3fb34e5e02a09f07522ffb748afe10feb47d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7d0dd63_1434e3f7",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-12T14:45:57Z",
+      "side": 1,
+      "message": "Done! Led to generalizing a bunch more handling, PTAL.",
+      "parentUuid": "d61841fa_29fd64f0",
+      "revId": "28ce3fb34e5e02a09f07522ffb748afe10feb47d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
