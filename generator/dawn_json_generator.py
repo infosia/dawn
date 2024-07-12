@@ -846,7 +846,7 @@ def compute_kotlin_params(loaded_json, kotlin_json):
                 if method.return_type.name.get() == 'size_t':
                     return argument
 
-        return {"type": method.return_type}
+        return {"type": method.return_type, "name": None}
 
     # TODO(b/352047733): Replace methods that require special handling with an exceptions list.
     def include_method(method):
