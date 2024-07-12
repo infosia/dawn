@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30271271_783b469f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-12T00:25:17Z",
+      "side": 1,
+      "message": "LGTM, let\u0027s update that comment too though",
+      "revId": "f0e40e70ef8de0d004bd39286b591a179315dd14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "439c7b5f_fd3a789b",
+        "filename": "generator/templates/emdawnwebgpu/struct_info_webgpu.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-12T00:25:17Z",
+      "side": 1,
+      "message": "This note should be updated to match upstream too",
+      "revId": "f0e40e70ef8de0d004bd39286b591a179315dd14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
