@@ -1595,8 +1595,6 @@ crbug.com/331237795 [ dawn-backend-validation graphite-enabled nvidia webgpu-ada
 ################################################################################
 crbug.com/350775869 webgpu:shader,validation,expression,binary,div_rem:scalar_vector:* [ Failure ]
 crbug.com/42251274 webgpu:shader,validation,expression,binary,div_rem:scalar_vector_out_of_range:* [ Failure ]
-crbug.com/tint/2219 webgpu:shader,validation,decl,context_dependent_resolution:interpolation_sampling_names:* [ Failure ]
-crbug.com/tint/2219 webgpu:shader,validation,decl,context_dependent_resolution:interpolation_type_names:* [ Failure ]
 crbug.com/tint/2225 webgpu:shader,execution,expression,unary,i32_conversion:abstract_float:* [ Failure ]
 crbug.com/tint/2225 webgpu:shader,execution,expression,unary,u32_conversion:abstract_float:* [ Failure ]
 
@@ -1901,6 +1899,7 @@ crbug.com/351338448 webgpu:shader,execution,shader_io,fragment_builtins:inputs,s
 crbug.com/351338448 webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"flat","sampling":"either"} [ Failure ]
 crbug.com/351338448 webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"flat","sampling":"first"} [ Failure ]
 crbug.com/351338448 webgpu:shader,execution,shader_io,user_io:passthrough:* [ Failure ]
+crbug.com/351338448 webgpu:shader,validation,decl,context_dependent_resolution:attribute_names:case="interpolate" [ Failure ]
 crbug.com/351338448 webgpu:shader,validation,decl,context_dependent_resolution:interpolation_flat_names:* [ Failure ]
 crbug.com/351338448 webgpu:shader,validation,shader_io,locations:type:* [ Failure ]
 
@@ -2125,7 +2124,6 @@ crbug.com/dawn/0000 [ dawn-no-backend-validation intel-0x9bc5 ubuntu webgpu-adap
 ################################################################################
 # New failures. Please triage:
 ################################################################################
-crbug.com/dawn/0000 webgpu:shader,validation,decl,context_dependent_resolution:attribute_names:case="interpolate" [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,validation,decl,var:address_space_access_mode:address_space="function";access_mode="";trailing_comma=true [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,validation,decl,var:address_space_access_mode:address_space="private";access_mode="";trailing_comma=true [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,validation,decl,var:address_space_access_mode:address_space="storage";access_mode="";trailing_comma=true [ Failure ]

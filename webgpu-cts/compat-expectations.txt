@@ -216,13 +216,6 @@ crbug.com/tint/2225 [ nvidia-0x2184 ] webgpu:shader,execution,expression,unary,i
 crbug.com/tint/2218 [ intel-0x9bc5 ] webgpu:shader,validation,expression,binary,div_rem:scalar_vector_out_of_range:* [ Failure ]
 crbug.com/tint/2218 [ nvidia-0x2184 ] webgpu:shader,validation,expression,binary,div_rem:scalar_vector_out_of_range:* [ Failure ]
 
-# Implement "context dependent names do not use name resolution"
-# Also failing in core WebGPU
-crbug.com/tint/2219 webgpu:shader,validation,decl,context_dependent_resolution:interpolation_sampling_names:* [ Failure ]
-crbug.com/tint/2219 webgpu:shader,validation,decl,context_dependent_resolution:interpolation_type_names:* [ Failure ]
-crbug.com/tint/2219 [ intel-0x9bc5 ] webgpu:shader,validation,decl,context_dependent_resolution:builtin_value_names:* [ Failure ]
-crbug.com/tint/2219 [ nvidia-0x2184 ] webgpu:shader,validation,decl,context_dependent_resolution:builtin_value_names:* [ Failure ]
-
 ### This section represents issues that are likely bugs in ANGLE
 
 # failures with 1-bit LSB errors on shader expression tests
@@ -506,6 +499,8 @@ crbug.com/351338448 webgpu:shader,execution,shader_io,fragment_builtins:inputs,p
 crbug.com/351338448 webgpu:shader,execution,shader_io,fragment_builtins:inputs,position:nearFar=[0.25,0.75];sampleCount=1;interpolation={"type":"flat","sampling":"either"} [ Failure ]
 crbug.com/351338448 webgpu:shader,execution,shader_io,fragment_builtins:inputs,position:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"flat","sampling":"either"} [ Failure ]
 crbug.com/351338448 webgpu:shader,validation,decl,context_dependent_resolution:attribute_names:case="interpolate" [ Failure ]
+crbug.com/351338448 webgpu:shader,validation,decl,context_dependent_resolution:interpolation_flat_names:case="either" [ Failure ]
+crbug.com/351338448 webgpu:shader,validation,decl,context_dependent_resolution:interpolation_type_names:case="linear" [ Failure ]
 
 # Fine derivative tests don't work on compat (and in core)
 crbug.com/42251283 webgpu:shader,execution,expression,call,builtin,dpdx:* [ Failure ]
@@ -611,7 +606,6 @@ crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,determinant:
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,fwidth:* [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,fwidthCoarse:* [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,shader_io,user_io:* [ Failure ]
-crbug.com/dawn/0000 webgpu:shader,validation,decl,context_dependent_resolution:interpolation_flat_names:case="either" [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,validation,decl,var:address_space_access_mode:address_space="function";access_mode="";trailing_comma=true [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,validation,decl,var:address_space_access_mode:address_space="private";access_mode="";trailing_comma=true [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,validation,decl,var:address_space_access_mode:address_space="storage";access_mode="";trailing_comma=true [ Failure ]
