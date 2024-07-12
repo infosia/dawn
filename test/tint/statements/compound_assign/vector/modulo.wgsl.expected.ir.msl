@@ -10,7 +10,7 @@ struct tint_module_vars_struct {
 };
 
 int4 tint_mod_v4i32(int4 lhs, int4 rhs) {
-  int4 const v_1 = select(rhs, int4(1), ((rhs == int4(0)) | ((lhs == int4((-2147483647 - 1))) & (rhs == int4(-1)))));
+  int4 const v_1 = select(rhs, int4(1), bool4(((rhs == int4(0)) | bool4(((lhs == int4((-2147483647 - 1))) & (rhs == int4(-1)))))));
   return (lhs - ((lhs / v_1) * v_1));
 }
 

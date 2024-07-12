@@ -28,7 +28,7 @@ struct tint_symbol_inputs {
 };
 
 int4 tint_div_v4i32(int4 lhs, int4 rhs) {
-  return (lhs / select(rhs, int4(1), ((rhs == int4(0)) | ((lhs == int4((-2147483647 - 1))) & (rhs == int4(-1))))));
+  return (lhs / select(rhs, int4(1), bool4(((rhs == int4(0)) | bool4(((lhs == int4((-2147483647 - 1))) & (rhs == int4(-1))))))));
 }
 
 int tint_f32_to_i32(float value) {

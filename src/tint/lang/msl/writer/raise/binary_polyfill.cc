@@ -51,18 +51,26 @@ struct State {
     void Process() {
         // Find the binary operators that need replacing.
         Vector<core::ir::CoreBinary*, 4> fmod_worklist;
+        Vector<core::ir::CoreBinary*, 4> logical_bool_worklist;
         for (auto* inst : ir.Instructions()) {
             if (auto* binary = inst->As<core::ir::CoreBinary>()) {
                 if (binary->Op() == core::BinaryOp::kModulo &&
                     binary->LHS()->Type()->is_float_scalar_or_vector()) {
                     fmod_worklist.Push(binary);
+                } else if ((binary->Op() == core::BinaryOp::kAnd ||
+                            binary->Op() == core::BinaryOp::kOr) &&
+                           binary->LHS()->Type()->is_bool_scalar_or_vector()) {
+                    logical_bool_worklist.Push(binary);
                 }
             }
         }
 
-        // Replace the fmod instructions that we found.
+        // Replace the instructions that we found.
         for (auto* fmod : fmod_worklist) {
             FMod(fmod);
+        }
+        for (auto* logical_bool : logical_bool_worklist) {
+            LogicalBool(logical_bool);
         }
     }
 
@@ -73,6 +81,17 @@ struct State {
             binary->DetachResult(), msl::BuiltinFn::kFmod, binary->Operands());
         call->InsertBefore(binary);
         binary->Destroy();
+    }
+
+    /// Replace a logical boolean binary instruction.
+    /// @param binary the logical boolean binary instruction
+    void LogicalBool(core::ir::CoreBinary* binary) {
+        // MSL does not have boolean overloads for `&` and `|`, so it promotes the operands to
+        // integers. Convert the result of the binary instruction back to the boolean result type.
+        auto* result = b.InstructionResult(binary->Result(0)->Type());
+        binary->Result(0)->ReplaceAllUsesWith(result);
+        auto* convert = b.ConvertWithResult(result, binary);
+        convert->InsertAfter(binary);
     }
 };
 

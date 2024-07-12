@@ -7,12 +7,12 @@ struct tint_module_vars_struct {
 };
 
 int tint_mod_i32(int lhs, int rhs) {
-  int const v = select(rhs, 1, ((rhs == 0) | ((lhs == (-2147483647 - 1)) & (rhs == -1))));
+  int const v = select(rhs, 1, bool(((rhs == 0) | bool(((lhs == (-2147483647 - 1)) & (rhs == -1))))));
   return (lhs - ((lhs / v) * v));
 }
 
 int tint_div_i32(int lhs, int rhs) {
-  return (lhs / select(rhs, 1, ((rhs == 0) | ((lhs == (-2147483647 - 1)) & (rhs == -1)))));
+  return (lhs / select(rhs, 1, bool(((rhs == 0) | bool(((lhs == (-2147483647 - 1)) & (rhs == -1)))))));
 }
 
 void foo(int maybe_zero, tint_module_vars_struct tint_module_vars) {
