@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a50525b_338517c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-07-12T17:00:56Z",
+      "side": 1,
+      "message": "Had to fix up merge conflicts following: https://dawn-review.googlesource.com/c/dawn/+/195234\n\nRemoved my manual CTS expectations file changes since I think some of the compat ones are now waiting on upstream fixes related to flat/either and rebasing them is getting to be a blocker.",
+      "revId": "363c1bb6731b6deb7306b6cdb4f62cfe3017ada6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
