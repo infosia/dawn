@@ -42,7 +42,9 @@
             auto& in = inStruct.{{member.name.camelCase()}};
             auto& out = outStruct->{{member.name.camelCase()}};
             {% if member.length == 'strlen' %}
-                out = c->GetStringUTFChars(in);
+                if (in != nullptr) {
+                    out = c->GetStringUTFChars(in);
+                }
 
             {% elif member.constant_length == 1 %}
                 {% if member.type.category == 'structure' %}
@@ -69,6 +71,10 @@
                     //* This container type is represented in Kotlin as a primitive array.
                     out = reinterpret_cast<const uint32_t*>(c->GetIntArrayElements(in));
                     outLength = env->GetArrayLength(in);
+
+                {% elif member.type.name.get() == 'void' %}
+                    out = env->GetDirectBufferAddress(in);
+                    outLength = env->GetDirectBufferCapacity(in);
 
                 {% else %}
                     //* These container types are represented in Kotlin as arrays of objects.
@@ -114,6 +120,60 @@
                 Convert(c, env, in, &out);
             {% elif member.type.category in ["native", "enum", "bitmask"] %}
                 out = static_cast<{{as_cType(member.type.name)}}>(in);
+
+
+            {% elif member.type.category == 'function pointer' %}
+                //* Function pointers themselves require each argument converting.
+                //* A custom native callback is generated to wrap the Kotlin callback.
+                out = [](
+                    {%- for callbackArg in member.type.arguments %}
+                        {{ as_annotated_cType(callbackArg) }}{{ ',' if not loop.last }}
+                    {%- endfor %}) {
+                    UserData* userData1 = static_cast<UserData *>(userdata);
+                    JNIEnv *env = userData1->env;
+                    if (env->ExceptionCheck()) {
+                        return;
+                    }
+
+                    //* Get the client (Kotlin) callback so we can call it.
+                    jmethodID callbackMethod = env->GetMethodID(
+                            env->FindClass("{{ jni_name(member.type) }}"), "callback", "(
+                        {%- for callbackArg in kotlin_record_members(member.type.arguments) -%}
+                            {%- if callbackArg.type.category in ['bitmask', 'enum'] -%}
+                                I
+                            {%- elif callbackArg.type.category in ['object', 'structure'] -%}
+                                L{{ jni_name(callbackArg.type) }};
+                            {%- elif callbackArg.type.name.get() == 'char' -%}
+                                Ljava/lang/String;
+                            {%- else -%}
+                                {{ unreachable_code() }}
+                            {%- endif -%}
+                        {%- endfor %})V");
+
+                    //* Call the callback with all converted parameters.
+                    env->CallVoidMethod(userData1->callback, callbackMethod
+                    {%- for callbackArg in kotlin_record_members(member.type.arguments) %}
+                        ,
+                        {%- if callbackArg.type.category == 'object' %}
+                            env->NewObject(env->FindClass("{{ jni_name(callbackArg.type) }}"),
+                                    env->GetMethodID(env->FindClass("{{ jni_name(callbackArg.type) }}"),
+                                            "<init>", "(J)V"),
+                                    reinterpret_cast<jlong>({{ callbackArg.name.camelCase() }}))
+                        {%- elif callbackArg.type.category in ['bitmask', 'enum'] %}
+                            static_cast<jint>({{ callbackArg.name.camelCase() }})
+                        {%- elif callbackArg.type.category == 'structure' %}
+                            {{ unreachable_code () }}  //* We don't yet handle structures in callbacks.
+                        {%- elif callbackArg.type.name.get() == 'char' %}
+                            env->NewStringUTF({{ callbackArg.name.camelCase() }})
+                        {%- else %}
+                            {{ callbackArg.name.camelCase() }}
+                        {%- endif %}
+                    {%- endfor %});
+                };
+                //* TODO(b/330293719): free associated resources.
+                outStruct->userdata = new UserData(
+                        {.env = env, .callback = env->NewGlobalRef(in)});
+
             {% else %}
                 {{ unreachable_code() }}
             {% endif %}
