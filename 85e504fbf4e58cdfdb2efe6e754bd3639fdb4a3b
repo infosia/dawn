@@ -33,6 +33,24 @@
       "message": "forget to upload new patchset? commit message says you\u0027re destroying buffers, but the only actual change seems to be marking the device as not alive anymore",
       "revId": "85e504fbf4e58cdfdb2efe6e754bd3639fdb4a3b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3fe1c5e_48f9c7e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-12T16:30:45Z",
+      "side": 1,
+      "message": "The commit message was bad, fixed. This is to implement the logic that mapping should be cancelled on Device::Destroy, which could sometimes not happen in the wire. (see the newly added test)",
+      "parentUuid": "fc6ad12c_a322f51d",
+      "revId": "85e504fbf4e58cdfdb2efe6e754bd3639fdb4a3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
