@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd7056d8_72021476",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-07-12T23:13:16Z",
+      "side": 1,
+      "message": "Dawn portion of the new validation. This doesn\u0027t include a deprecation period on the Dawn side because my recollection was that we weren\u0027t too concerned about that in the past, but I\u0027m happy to modify to allow for that if desired.",
+      "revId": "0ee6737d249611b886b669b7ebe408f002f6eeec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
