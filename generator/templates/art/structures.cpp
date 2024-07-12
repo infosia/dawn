@@ -24,6 +24,8 @@
 //* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+{% from 'art/kotlin_record_conversion.cpp' import define_kotlin_record_structure, define_kotlin_to_struct_conversion with context %}
+{% from 'art/api_jni_types.kt' import jni_signature with context %}
 #include "structures.h"
 
 #include <jni.h>
@@ -36,6 +38,35 @@
 
 namespace dawn::kotlin_api {
 
+void CallGetter(JNIEnv* env, jmethodID getter, jobject obj, jboolean* result) {
+    *result = env->CallBooleanMethod(obj, getter);
+}
+void CallGetter(JNIEnv* env, jmethodID getter, jobject obj, jbyte* result) {
+    *result = env->CallByteMethod(obj, getter);
+}
+void CallGetter(JNIEnv* env, jmethodID getter, jobject obj, jchar* result) {
+    *result = env->CallCharMethod(obj, getter);
+}
+void CallGetter(JNIEnv* env, jmethodID getter, jobject obj, jshort* result) {
+    *result = env->CallShortMethod(obj, getter);
+}
+void CallGetter(JNIEnv* env, jmethodID getter, jobject obj, jint* result) {
+    *result = env->CallIntMethod(obj, getter);
+}
+void CallGetter(JNIEnv* env, jmethodID getter, jobject obj, jlong* result) {
+    *result = env->CallLongMethod(obj, getter);
+}
+void CallGetter(JNIEnv* env, jmethodID getter, jobject obj, jfloat* result) {
+    *result = env->CallFloatMethod(obj, getter);
+}
+void CallGetter(JNIEnv* env, jmethodID getter, jobject obj, jdouble* result) {
+    *result = env->CallDoubleMethod(obj, getter);
+}
+template <typename T>
+void CallGetter(JNIEnv* env, jmethodID getter, jobject obj, T** result) {
+    *result = reinterpret_cast<T*>(env->CallObjectMethod(obj, getter));
+}
+
 // Special-case noop handling of the two callback info that are part of other structures.
 // TODO(352710628) support converting callback info.
 void Convert(JNIContext* c, JNIEnv* env, jobject obj, WGPUDeviceLostCallbackInfo* info) {
@@ -46,136 +77,25 @@ void Convert(JNIContext* c, JNIEnv* env, jobject obj, WGPUUncapturedErrorCallbac
 }
 
 {% for structure in by_category['structure'] if include_structure(structure) %}
+    {% set Struct = as_cType(structure.name) %}
+    {% set KotlinRecord = "KotlinRecord" + structure.name.CamelCase() %}
+    {{ define_kotlin_record_structure(KotlinRecord, structure.members)}}
+    {{ define_kotlin_to_struct_conversion("ConvertInternal", KotlinRecord, Struct, structure.members)}}
+
     void Convert(JNIContext* c, JNIEnv* env, jobject obj, {{ as_cType(structure.name) }}* converted) {
         jclass clz = env->FindClass("{{ jni_name(structure) }}");
 
-        //* Convert each member in turn from corresponding members of the Kotlin object obtained via
-        //* JNI calls
-        {% for member in kotlin_record_members(structure.members) %}
-            {% if member.length == 'strlen' %} {
-                jobject mObj = env->CallObjectMethod(obj,
-                        env->GetMethodID(clz, "get{{ member.name.CamelCase() }}",
-                                "()Ljava/lang/String;"));
-                if (mObj) {
-                    converted->{{ member.name.camelCase() }} =
-                            c->GetStringUTFChars(reinterpret_cast<jstring>(mObj));
-                }
-            }
-            {% elif member.constant_length == 1 %} {
-                {% if member.type.category == 'structure' %}
-                    //* Convert optional structure if present.
-                    jobject mObj = env->CallObjectMethod(obj,
-                            env->GetMethodID(clz, "get{{ member.name.CamelCase() }}",
-                                    "()L{{ jni_name(member.type) }};"));
-                    if (mObj) {
-                        auto convertedMember = c->Alloc<{{ as_cType(member.type.name) }}>();
-                        Convert(c, env, mObj, convertedMember);
-                        converted->{{ member.name.camelCase() }} = convertedMember;
-                    }
-                {% elif member.type.name.get() == 'void' %}
-                    converted->{{ member.name.camelCase() }} = reinterpret_cast<void*>(
-                            env->CallLongMethod(obj, env->GetMethodID(
-                                    clz, "get{{ member.name.CamelCase() }}", "()J")));
-                {% else %}
-                    {{ unreachable_code() }}
-                {% endif %}
-            }
+        //* Use getters to fill in the Kotlin record that will get converted to our struct.
+        {{KotlinRecord}} kotlinRecord;
+        {% for member in kotlin_record_members(structure.members) %} {
+            jmethodID getter = env->GetMethodID(clz,
+                                                "get{{member.name.CamelCase()}}",
+                                                "(){{jni_signature(member)}}");
+            CallGetter(env, getter, obj, &kotlinRecord.{{as_varName(member.name)}});
+        } {% endfor %}
 
-            {% elif member.length %}
-                {% if member.constant_length %}
-                    {{ unreachable_code() }}
-                {% endif %}
-                //* Convert container, including the length field.
-                {% if member.type.name.get() == 'uint32_t' %} {
-                    //* This container type is represented in Kotlin as a primitive array.
-                    jintArray array = static_cast<jintArray>(env->CallObjectMethod(obj,
-                            env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()[I")));
-                    converted->{{ member.name.camelCase() }} =
-                            reinterpret_cast<const {{ as_cType(member.type.name) }}*>(
-                                   c->GetIntArrayElements(array));
-                    converted->{{ member.length.name.camelCase() }} = env->GetArrayLength(array);
-                }
-                {% else %} {
-                    //* These container types are represented in Kotlin as arrays of objects.
-                    jmethodID getMethod = env->GetMethodID(clz,
-                            "get{{ member.name.CamelCase() }}", "()[L{{ jni_name(member.type) }};");
-                    auto in = static_cast<jobjectArray>(env->CallObjectMethod(obj, getMethod));
-                    size_t length = env->GetArrayLength(in);
-                    auto out = c->AllocArray<{{ as_cType(member.type.name) }}>(length);
-                    {% if member.type.category in ['bitmask', 'enum'] %} {
-                        jclass memberClass = env->FindClass("{{ jni_name(member.type) }}");
-                        jmethodID getValue = env->GetMethodID(memberClass, "getValue", "()I");
-                        for (int idx = 0; idx != length; idx++) {
-                            jobject element = env->GetObjectArrayElement(in, idx);
-                            out[idx] = static_cast<{{ as_cType(member.type.name) }}>(
-                                    env->CallIntMethod(element, getValue));
-                        }
-                    }
-                    {% elif member.type.category == 'object' %} {
-                        jclass memberClass = env->FindClass("{{ jni_name(member.type) }}");
-                        jmethodID getHandle = env->GetMethodID(memberClass, "getHandle", "()J");
-                        for (int idx = 0; idx != length; idx++) {
-                            jobject element = env->GetObjectArrayElement(in, idx);
-                            out[idx] = reinterpret_cast<{{ as_cType(member.type.name) }}>(
-                                    env->CallLongMethod(element, getHandle));
-                        }
-                    }
-                    {% elif member.type.category == 'structure' %}
-                        for (int idx = 0; idx != length; idx++) {
-                            Convert(c, env, env->GetObjectArrayElement(in, idx), out + idx);
-                        }
-                    {% else %}
-                        {{ unreachable_code() }}
-                    {% endif %}
-                    converted->{{ member.name.camelCase() }} = out;
-                    converted->{{ member.length.name.camelCase() }} = length;
-                }
-                {% endif %}
-
-            //* From here members are single values.
-            {% elif member.type.category == 'object' %} {
-                jobject mObj = env->CallObjectMethod(obj, env->GetMethodID(clz,
-                        "get{{ member.name.CamelCase() }}", "()L{{ jni_name(member.type) }};"));
-                if (mObj) {
-                    jclass memberClass = env->FindClass("{{ jni_name(member.type) }}");
-                    jmethodID getHandle = env->GetMethodID(memberClass, "getHandle", "()J");
-                    converted->{{ member.name.camelCase() }} =
-                            reinterpret_cast<{{ as_cType(member.type.name) }}>(
-                                    env->CallLongMethod(mObj, getHandle));
-                }
-            }
-            {% elif member.type.category == 'structure' or member.type.category == 'callback info' %}
-                //* Mandatory structure.
-                Convert(c, env, env->CallObjectMethod(obj,
-                        env->GetMethodID(clz, "get{{ member.name.CamelCase() }}",
-                                "()L{{ jni_name(member.type) }};")),
-                                &converted->{{ member.name.camelCase() }});
-            {% elif member.type.name.get() == 'bool' %}
-                converted->{{ member.name.camelCase() }} = env->CallBooleanMethod(obj,
-                        env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()Z"));
-            {% elif member.type.name.get() == 'uint16_t' %}
-                converted->{{ member.name.camelCase() }} =
-                        static_cast<{{ as_cType(member.type.name) }}>(env->CallShortMethod(obj,
-                                env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()S")));
-            {% elif member.type.name.get() in ['int', 'int32_t', 'uint32_t']
-                    or member.type.category in ['bitmask', 'enum'] %}
-                converted->{{ member.name.camelCase() }} =
-                        static_cast<{{ as_cType(member.type.name) }}>(env->CallIntMethod(obj,
-                                env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()I")));
-            {% elif member.type.name.get() == 'float' %}
-                converted->{{ member.name.camelCase() }} = env->CallFloatMethod(obj,
-                        env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()F"));
-            {% elif member.type.name.get() in ['size_t', 'uint64_t'] %}
-                converted->{{ member.name.camelCase() }} =
-                        static_cast<{{ as_cType(member.type.name) }}>(env->CallLongMethod(obj,
-                                env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()J")));
-            {% elif member.type.name.get() == 'double' %}
-                converted->{{ member.name.camelCase() }} = env->CallDoubleMethod(obj,
-                        env->GetMethodID(clz, "get{{ member.name.CamelCase() }}", "()D"));
-            {% else %}
-                {{ unreachable_code() }}
-            {% endif %}
-        {% endfor %}
+        //* Fill all struct members from the Kotlin record.
+        ConvertInternal(c, kotlinRecord, converted);
 
         //* Set up the chain type and links for child objects.
         {% if structure.chained %}
@@ -192,8 +112,7 @@ void Convert(JNIContext* c, JNIEnv* env, jobject obj, WGPUUncapturedErrorCallbac
                 out->chain.next = converted->nextInChain;
                 converted->nextInChain = &out->chain;
             }
-        }
-        {% endfor %}
+        }{% endfor %}
     }
 {% endfor %}
 
