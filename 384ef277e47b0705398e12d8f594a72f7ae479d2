@@ -16,6 +16,24 @@
       "message": "Hm, should this be changed to be `%4:int` to better model  what MSL will do here? (Which probably means this ends up being an msl.and and msl.or instruction?)\n\nOtherwise, I\u0027d be concerned this could get dropped in a later transform as the `convert` looks like it\u0027s going from bool to bool.",
       "revId": "384ef277e47b0705398e12d8f594a72f7ae479d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8ca0b7d_c324c041",
+        "filename": "src/tint/lang/msl/writer/raise/binary_polyfill_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-12T21:45:48Z",
+      "side": 1,
+      "message": "Yeah that\u0027s a fair concern. I\u0027ve made the integer promotion explicit, which means we don\u0027t need a special instruction here.",
+      "parentUuid": "23c00fb7_07eda5a1",
+      "revId": "384ef277e47b0705398e12d8f594a72f7ae479d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
