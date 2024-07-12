@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7321aa4_4b2a6686",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-12T17:14:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9bd9b87e_eda285b3",
+      "revId": "eb4897c401e3c1b613db596114dc7832746f8c30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87564aa7_95194aca",
@@ -48,6 +66,30 @@
       "writtenOn": "2024-07-12T15:18:43Z",
       "side": 1,
       "message": "bitmask and enums are `I` when alone but `[L...` when in an array. Is that expected? I would have thought that maybe the `@JvmInline` would have made them `[I` so that with arrayness would could have just added the `[`. Could we have a comment somewhere about that?",
+      "range": {
+        "startLine": 71,
+        "startChar": 97,
+        "endLine": 71,
+        "endChar": 116
+      },
+      "revId": "eb4897c401e3c1b613db596114dc7832746f8c30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9a94fec_4bbf6c10",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-12T17:14:26Z",
+      "side": 1,
+      "message": "Yes it\u0027s to do with @JvmInline. It seems that arrays are not inlined (e.g. to intArray), so their JNI signature is different. Added a comment.",
+      "parentUuid": "87564aa7_95194aca",
       "range": {
         "startLine": 71,
         "startChar": 97,
