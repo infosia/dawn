@@ -39,6 +39,30 @@
       },
       "revId": "6eadecc4d13556ec71594d74b0c385eda3ef4dd0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b13ef7e_e90490ec",
+        "filename": "src/dawn/wire/client/ObjectStore.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-12T14:23:58Z",
+      "side": 1,
+      "message": "although! thinking about it again this morning, the object vector may be better than the linked list because:\n - total memory consumption is less. It is 1 ptr per object vs 2 (prev+next). There is a separate allocation per object type, but perhaps this is not so bad\n - can eventually better support concurrent insertion + deletion if we have some fancy containers for the free id list and object list. would work so long we have some atomics that incr/decr within the resize capacity of the vector. Then, creation/deletion locks only when a resize of the vector(s) is necessary.",
+      "parentUuid": "1f772200_46830668",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 46
+      },
+      "revId": "6eadecc4d13556ec71594d74b0c385eda3ef4dd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
