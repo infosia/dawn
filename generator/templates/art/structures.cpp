@@ -36,13 +36,22 @@
 
 namespace dawn::kotlin_api {
 
-{% for structure in by_category['structure'] %}
-    void Convert(JNIContext* c, JNIEnv *env, jobject obj, {{ as_cType(structure.name) }}* converted) {
+// Special-case noop handling of the two callback info that are part of other structures.
+// TODO(352710628) support converting callback info.
+void Convert(JNIContext* c, JNIEnv* env, jobject obj, WGPUDeviceLostCallbackInfo* info) {
+    *info = {};
+}
+void Convert(JNIContext* c, JNIEnv* env, jobject obj, WGPUUncapturedErrorCallbackInfo* info) {
+    *info = {};
+}
+
+{% for structure in by_category['structure'] if include_structure(structure) %}
+    void Convert(JNIContext* c, JNIEnv* env, jobject obj, {{ as_cType(structure.name) }}* converted) {
         jclass clz = env->FindClass("{{ jni_name(structure) }}");
 
         //* Convert each member in turn from corresponding members of the Kotlin object obtained via
         //* JNI calls
-        {% for member in structure.members if include_structure_member(structure, member) %}
+        {% for member in kotlin_record_members(structure.members) %}
             {% if member.length == 'strlen' %} {
                 jobject mObj = env->CallObjectMethod(obj,
                         env->GetMethodID(clz, "get{{ member.name.CamelCase() }}",

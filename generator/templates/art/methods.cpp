@@ -75,7 +75,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
                     {{ ', jobject obj' if object else ', jclass clazz' -}}
 
     //* Make the signature for each argument in turn.
-    {% for arg in filter_arguments(method.arguments) %},
+    {% for arg in kotlin_record_members(method.arguments) %},
         {{ arg_to_jni_type(arg) }} _{{ as_varName(arg.name) }}
     {% endfor %}) {
 
@@ -89,7 +89,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
 
     //* Each parameter is converted from the JNI parameter to the expected form of the native
     //* parameter.
-    {% for arg in filter_arguments(method.arguments) %}
+    {% for arg in kotlin_record_members(method.arguments) %}
         {% if arg.length == 'strlen' %}
             if (_{{ as_varName(arg.name) }}) {  //* Don't convert null strings.
                 {{ as_varName(arg.name) }} = c.GetStringUTFChars(_{{ as_varName(arg.name) }});
@@ -183,7 +183,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
                 //* Get the client (Kotlin) callback so we can call it.
                 jmethodID callbackMethod = env->GetMethodID(
                         env->FindClass("{{ jni_name(arg.type) }}"), "callback", "(
-                    {%- for callbackArg in filter_arguments(arg.type.arguments) -%}
+                    {%- for callbackArg in kotlin_record_members(arg.type.arguments) -%}
                         {%- if callbackArg.type.category in ['bitmask', 'enum'] -%}
                             I
                         {%- elif callbackArg.type.category in ['object', 'structure'] -%}
@@ -197,7 +197,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
 
                 //* Call the callback with all converted parameters.
                 env->CallVoidMethod(userData1->callback, callbackMethod
-                {%- for callbackArg in filter_arguments(arg.type.arguments) %}
+                {%- for callbackArg in kotlin_record_members(arg.type.arguments) %}
                     ,
                     {%- if callbackArg.type.category == 'object' %}
                         env->NewObject(env->FindClass("{{ jni_name(callbackArg.type) }}"),
