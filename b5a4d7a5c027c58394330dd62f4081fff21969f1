@@ -33,6 +33,24 @@
       "message": "Could you split this into two CLs, one to change usages from GetProperties to GetInfo, and one to remove GetProperties?\n\nOtherwise LGTM when it\u0027s time to land this.",
       "revId": "b5a4d7a5c027c58394330dd62f4081fff21969f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2e612ca_fb5df458",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-07-12T09:12:42Z",
+      "side": 1,
+      "message": "I tried to split them in the first place but didn\u0027t succeed because I had to duplicate AdapterPropertiesMemoryHeaps and others to make it work.\n \nWhen do you think is a good time to remove GetProperties? For info, the deprecation warning landed July 4th: https://chromiumdash.appspot.com/commit/320554e0a5c30ee17276c3898e5f344f1ad74df6",
+      "parentUuid": "db4c0328_39458135",
+      "revId": "b5a4d7a5c027c58394330dd62f4081fff21969f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
