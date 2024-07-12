@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca095044_831e98c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-12T15:18:43Z",
+      "side": 1,
+      "message": "Still LGTM, some comments but that don\u0027t block merging and could be follow-ups",
+      "revId": "eb4897c401e3c1b613db596114dc7832746f8c30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bd9b87e_eda285b3",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-12T15:18:43Z",
+      "side": 1,
+      "message": "nit: Maybe we could take this branch for all `category \u003d\u003d \"native\"` types and call jni_name recursively as well.",
+      "revId": "eb4897c401e3c1b613db596114dc7832746f8c30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87564aa7_95194aca",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-12T15:18:43Z",
+      "side": 1,
+      "message": "bitmask and enums are `I` when alone but `[L...` when in an array. Is that expected? I would have thought that maybe the `@JvmInline` would have made them `[I` so that with arrayness would could have just added the `[`. Could we have a comment somewhere about that?",
+      "range": {
+        "startLine": 71,
+        "startChar": 97,
+        "endLine": 71,
+        "endChar": 116
+      },
+      "revId": "eb4897c401e3c1b613db596114dc7832746f8c30",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
