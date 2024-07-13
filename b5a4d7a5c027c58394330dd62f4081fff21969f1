@@ -69,6 +69,24 @@
       "parentUuid": "b2e612ca_fb5df458",
       "revId": "b5a4d7a5c027c58394330dd62f4081fff21969f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c066e8c7_5bcfb376",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-13T00:04:39Z",
+      "side": 1,
+      "message": "Wait, I\u0027m realizing that this CL switches over from chaining off WGPUAdapterProperties to WGPUAdapterInfo without a transitional period where both are supported.\nI don\u0027t think it\u0027s very practical to do that - migrations will _have_ to happen during rolls. We want to be able to do migrations before rolls so that rolls can happen cleanly, it\u0027s much easier to manage.\n\nCLs would be:\n1. support chain in both WGPUAdapterInfo and WGPUAdapterProperties, change all usages to use WGPUAdapterInfo\n2. Remove WGPUAdapterProperties\n\nOR, if we wanted to a rename while we\u0027re at it:\n1. Add WGPUAdapterInfo{MemoryHeaps, ...}, change all usages to use WGPUAdapterInfo and its extensions\n2. Remove WGPUAdapterProperties and all its extensions",
+      "parentUuid": "6661139b_0f54b0c7",
+      "revId": "b5a4d7a5c027c58394330dd62f4081fff21969f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
