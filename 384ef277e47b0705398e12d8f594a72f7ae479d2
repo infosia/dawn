@@ -34,6 +34,24 @@
       "parentUuid": "23c00fb7_07eda5a1",
       "revId": "384ef277e47b0705398e12d8f594a72f7ae479d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "291d6498_5fee1405",
+        "filename": "src/tint/lang/msl/writer/raise/binary_polyfill_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-13T02:04:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8ca0b7d_c324c041",
+      "revId": "384ef277e47b0705398e12d8f594a72f7ae479d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
