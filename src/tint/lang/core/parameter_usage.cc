@@ -70,6 +70,8 @@ std::string_view ToString(ParameterUsage usage) {
             return "num_levels";
         case ParameterUsage::kOffset:
             return "offset";
+        case ParameterUsage::kOriginalValue:
+            return "original_value";
         case ParameterUsage::kSampleIndex:
             return "sample_index";
         case ParameterUsage::kSampler:
