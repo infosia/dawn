@@ -1448,7 +1448,7 @@ void foo() {
 )");
 }
 
-TEST_F(HlslWriterTest, DISABLED_AccessStoreArrayElement) {
+TEST_F(HlslWriterTest, AccessStoreArrayElement) {
     auto* var = b.Var<storage, array<f32, 5>, core::Access::kReadWrite>("v");
     var->SetBindingPoint(0, 0);
 
@@ -1465,11 +1465,12 @@ RWByteAddressBuffer v : register(u0);
 void foo() {
   v.Store(12u, asuint(1.0f));
 }
+
 )");
 }
 
-TEST_F(HlslWriterTest, DISABLED_AccessStoreArray) {
-    auto* var = b.Var<storage, array<vec3<f32>, 5>, core::Access::kRead>("v");
+TEST_F(HlslWriterTest, AccessStoreArray) {
+    auto* var = b.Var<storage, array<vec3<f32>, 5>, core::Access::kReadWrite>("v");
     var->SetBindingPoint(0, 0);
 
     b.ir.root_block->Append(var);
@@ -1483,18 +1484,31 @@ TEST_F(HlslWriterTest, DISABLED_AccessStoreArray) {
     ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 RWByteAddressBuffer v : register(u0);
-void v_1(uint offset, float value[5]) {
-  float array_1[5] = value;
+void v_1(uint offset, float3 obj[5]) {
+  float3 v_2[5] = obj;
+  float3 v_3[5] = v_2;
   {
-    for(uint i = 0u; (i < 5u); i = (i + 1u)) {
-      v.Store((offset + (i * 4u)), asuint(array_1[i]));
+    uint v_4 = 0u;
+    v_4 = 0u;
+    while(true) {
+      uint v_5 = v_4;
+      if ((v_5 >= 5u)) {
+        break;
+      }
+      float3 v_6[5] = v_3;
+      v.Store3((offset + (v_5 * 16u)), asuint(v_6[v_5]));
+      {
+        v_4 = (v_5 + 1u);
+      }
+      continue;
     }
   }
 }
 
 void foo() {
-  float tint_symbol[5] = (float[5])0;
-  v_1(0u, tint_symbol);
+  float3 v_7[5] = (float3[5])0;
+  float3 ary[5] = v_7;
+  v_1(0u, ary);
 }
 
 )");
@@ -1632,7 +1646,7 @@ void foo() {
 )");
 }
 
-TEST_F(HlslWriterTest, DISABLED_AccessStoreStructComplex) {
+TEST_F(HlslWriterTest, AccessStoreStructComplex) {
     auto* Inner =
         ty.Struct(mod.symbols.New("Inner"), {
                                                 {mod.symbols.New("s"), ty.mat3x3<f32>()},
@@ -1660,54 +1674,72 @@ TEST_F(HlslWriterTest, DISABLED_AccessStoreStructComplex) {
     });
 
     ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
-    EXPECT_EQ(output_.hlsl, R"(
-struct Inner {
+    EXPECT_EQ(output_.hlsl, R"(struct Inner {
   float3x3 s;
   float3 t[5];
 };
+
 struct Outer {
   float x;
   Inner y;
 };
-struct SB2 {
+
+struct SB {
   int a;
   Outer b;
 };
 
-RWByteAddressBuffer v : register(u0);
-void v_5(uint offset, float3x3 value) {
-  v.Store3((offset + 0u), asuint(value[0u]));
-  v.Store3((offset + 16u), asuint(value[1u]));
-  v.Store3((offset + 32u), asuint(value[2u]));
-}
 
-void v_4(uint offset, float3 value[5]) {
-  float3 array_2[5] = value;
+RWByteAddressBuffer v : register(u0);
+void v_1(uint offset, float3 obj[5]) {
+  float3 v_2[5] = obj;
+  float3 v_3[5] = v_2;
   {
-    for(uint i_1 = 0u; (i_1 < 5u); i_1 = (i_1 + 1u)) {
-      v.Store3((offset + (i_1 * 16u)), asuint(array_2[i_1]));
+    uint v_4 = 0u;
+    v_4 = 0u;
+    while(true) {
+      uint v_5 = v_4;
+      if ((v_5 >= 5u)) {
+        break;
+      }
+      float3 v_6[5] = v_3;
+      v.Store3((offset + (v_5 * 16u)), asuint(v_6[v_5]));
+      {
+        v_4 = (v_5 + 1u);
+      }
+      continue;
     }
   }
 }
 
-void v_3(uint offset, Inner value) {
-  v_5((offset + 0u), value.s);
-  v_4((offset + 48u), value.t);
+void v_7(uint offset, float3x3 obj) {
+  v.Store3((offset + 0u), asuint(obj[0u]));
+  v.Store3((offset + 16u), asuint(obj[1u]));
+  v.Store3((offset + 32u), asuint(obj[2u]));
 }
 
-void v_2(uint offset, Outer value) {
-  v.Store((offset + 0u), asuint(value.x));
-  v_3((offset + 16u), value.y);
+void v_8(uint offset, Inner obj) {
+  v_7((offset + 0u), obj.s);
+  float3 v_9[5] = obj.t;
+  v_1((offset + 48u), v_9);
 }
 
-void v_1(uint offset, SB2 value) {
-  v.Store((offset + 0u), asuint(value.a));
-  v_2((offset + 16u), value.b);
+void v_10(uint offset, Outer obj) {
+  v.Store((offset + 0u), asuint(obj.x));
+  Inner v_11 = obj.y;
+  v_8((offset + 16u), v_11);
+}
+
+void v_12(uint offset, SB obj) {
+  v.Store((offset + 0u), asuint(obj.a));
+  Outer v_13 = obj.b;
+  v_10((offset + 16u), v_13);
 }
 
 void foo() {
-  SB2 tint_symbol_1 = (SB2)0;
-  v_1(0u, tint_symbol_1);
+  SB v_14 = (SB)0;
+  SB s = v_14;
+  v_12(0u, s);
 }
 
 )");
