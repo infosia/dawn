@@ -82,6 +82,22 @@ const char* str(BuiltinFn i) {
             return "Store4";
         case BuiltinFn::kGetDimensions:
             return "GetDimensions";
+        case BuiltinFn::kInterlockedCompareExchange:
+            return "InterlockedCompareExchange";
+        case BuiltinFn::kInterlockedExchange:
+            return "InterlockedExchange";
+        case BuiltinFn::kInterlockedAdd:
+            return "InterlockedAdd";
+        case BuiltinFn::kInterlockedMax:
+            return "InterlockedMax";
+        case BuiltinFn::kInterlockedMin:
+            return "InterlockedMin";
+        case BuiltinFn::kInterlockedAnd:
+            return "InterlockedAnd";
+        case BuiltinFn::kInterlockedOr:
+            return "InterlockedOr";
+        case BuiltinFn::kInterlockedXor:
+            return "InterlockedXor";
     }
     return "<unknown>";
 }

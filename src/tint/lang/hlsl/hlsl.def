@@ -104,6 +104,8 @@ match readable
 match writable
   : access.write
   | access.read_write
+match read_write
+  : access.read_write
 
 ////////////////////////////////////////////////////////////////////////////////
 // Builtin Functions                                                          //
@@ -259,3 +261,36 @@ fn sign[N: num, T: fi32_f16](vec<N, T>) -> vec<N, i32>
                                    height: ptr<function, u32, writable>,
                                   samples: ptr<function, u32, writable>)
 
+@member_function fn InterlockedCompareExchange(byte_address_buffer<read_write>,
+                                    offset: i32,
+                             compare_value: i32,
+                                     value: i32,
+                            original_value: ptr<function, i32, read_write>)
+@member_function fn InterlockedExchange(byte_address_buffer<readable>,
+                                    offset: i32,
+                                     value: i32,
+                            original_value: ptr<function, i32, read_write>)
+@member_function fn InterlockedAdd(byte_address_buffer<readable>,
+                                    offset: i32,
+                                     value: i32,
+                            original_value: ptr<function, i32, read_write>)
+@member_function fn InterlockedMax(byte_address_buffer<readable>,
+                                    offset: i32,
+                                     value: i32,
+                            original_value: ptr<function, i32, read_write>)
+@member_function fn InterlockedMin(byte_address_buffer<readable>,
+                                    offset: i32,
+                                     value: i32,
+                            original_value: ptr<function, i32, read_write>)
+@member_function fn InterlockedAnd(byte_address_buffer<readable>,
+                                    offset: i32,
+                                     value: i32,
+                            original_value: ptr<function, i32, read_write>)
+@member_function fn InterlockedOr(byte_address_buffer<readable>,
+                                    offset: i32,
+                                     value: i32,
+                            original_value: ptr<function, i32, read_write>)
+@member_function fn InterlockedXor(byte_address_buffer<readable>,
+                                    offset: i32,
+                                     value: i32,
+                            original_value: ptr<function, i32, read_write>)
