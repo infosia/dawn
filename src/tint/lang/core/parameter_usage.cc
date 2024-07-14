@@ -46,6 +46,8 @@ std::string_view ToString(ParameterUsage usage) {
             return "array_index";
         case ParameterUsage::kBias:
             return "bias";
+        case ParameterUsage::kCompareValue:
+            return "compare_value";
         case ParameterUsage::kComponent:
             return "component";
         case ParameterUsage::kCoords:
@@ -70,6 +72,8 @@ std::string_view ToString(ParameterUsage usage) {
             return "num_levels";
         case ParameterUsage::kOffset:
             return "offset";
+        case ParameterUsage::kOriginalValue:
+            return "original_value";
         case ParameterUsage::kSampleIndex:
             return "sample_index";
         case ParameterUsage::kSampler:
