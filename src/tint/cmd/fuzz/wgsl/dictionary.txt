@@ -296,6 +296,7 @@
 "num_levels"
 "num_workgroups"
 "off"
+"original_value"
 "override"
 "pack2x16float"
 "pack2x16snorm"
