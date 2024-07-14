@@ -690,6 +690,21 @@ class Printer : public tint::TextGenerator {
             fn = BuiltinFn::kLoad;
             // Note space between '> >' is required for DXC
             suffix = "<vector<float16_t, 4> >";
+        } else if (fn == BuiltinFn::kStoreF16) {
+            fn = BuiltinFn::kStore;
+            suffix = "<float16_t>";
+        } else if (fn == BuiltinFn::kStore2F16) {
+            fn = BuiltinFn::kStore;
+            // Note space between '> >' is required for DXC
+            suffix = "<vector<float16_t, 2> >";
+        } else if (fn == BuiltinFn::kStore3F16) {
+            fn = BuiltinFn::kStore;
+            // Note space between '> >' is required for DXC
+            suffix = "<vector<float16_t, 3> >";
+        } else if (fn == BuiltinFn::kStore4F16) {
+            fn = BuiltinFn::kStore;
+            // Note space between '> >' is required for DXC
+            suffix = "<vector<float16_t, 4> >";
         }
 
         EmitValue(out, c->Object());
