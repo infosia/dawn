@@ -101,6 +101,11 @@ struct State {
             auto* dst_type = bitcast->Result(0)->Type();
             auto* dst_deepest = dst_type->DeepestElement();
 
+            // Leave f32 -> f16 conversions alone
+            if (src_type->Is<core::type::F32>() && dst_type->Is<core::type::F16>()) {
+                continue;
+            }
+
             if (src_type == dst_type) {
                 ReplaceBitcastWithValue(bitcast);
             } else if (src_type->DeepestElement()->Is<core::type::F16>()) {

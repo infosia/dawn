@@ -660,6 +660,7 @@ class Printer : public tint::TextGenerator {
                     [&](const core::ir::UserCall* c) { EmitUserCall(out, c); },        //
                     [&](const core::ir::Swizzle* s) { EmitSwizzle(out, s); },          //
                     [&](const core::ir::Var* var) { out << NameOf(var->Result(0)); },  //
+                    [&](const core::ir::Bitcast* b) { EmitBitcast(out, b); },          //
 
                     [&](const hlsl::ir::BuiltinCall* c) { EmitHlslBuiltinCall(out, c); },  //
                     [&](const hlsl::ir::Ternary* t) { EmitTernary(out, t); },
@@ -670,6 +671,17 @@ class Printer : public tint::TextGenerator {
             },
             [&](const core::ir::FunctionParam* p) { out << NameOf(p); },  //
             TINT_ICE_ON_NO_MATCH);
+    }
+
+    // Limited bitcast to handle casting F32 -> F16
+    void EmitBitcast(StringStream& out, const core::ir::Bitcast* b) {
+        TINT_ASSERT(b->Val()->Type()->Is<core::type::F32>() &&
+                    b->Result(0)->Type()->Is<core::type::F16>());
+
+        EmitType(out, b->Result(0)->Type());
+        out << "(";
+        EmitValue(out, b->Val());
+        out << ")";
     }
 
     void EmitHlslMemberBuiltinCall(StringStream& out, const hlsl::ir::MemberBuiltinCall* c) {

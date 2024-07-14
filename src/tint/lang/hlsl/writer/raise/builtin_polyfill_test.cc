@@ -72,6 +72,35 @@ TEST_F(HlslWriter_BuiltinPolyfillTest, BitcastIdentity) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(HlslWriter_BuiltinPolyfillTest, F32ToF16) {
+    auto* a = b.FunctionParam<f32>("a");
+    auto* func = b.Function("foo", ty.f16());
+    func->SetParams({a});
+    b.Append(func->Block(), [&] { b.Return(func, b.Bitcast<f16>(a)); });
+
+    auto* src = R"(
+%foo = func(%a:f32):f16 {
+  $B1: {
+    %3:f16 = bitcast %a
+    ret %3
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%a:f32):f16 {
+  $B1: {
+    %3:f16 = bitcast %a
+    ret %3
+  }
+}
+)";
+
+    Run(BuiltinPolyfill);
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(HlslWriter_BuiltinPolyfillTest, Asuint) {
     auto* a = b.FunctionParam<i32>("a");
     auto* func = b.Function("foo", ty.u32());
