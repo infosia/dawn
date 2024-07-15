@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d781889d_7365f1a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-15T14:44:30Z",
+      "side": 1,
+      "message": "PTAL, the CMake build is down to 1 minute locally, Dawn from 2.5 previously.",
+      "revId": "d356c23f875d8014c954463e328022104dc52b2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
