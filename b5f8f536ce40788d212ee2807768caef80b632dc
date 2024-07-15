@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c43bee5a_9fe31580",
+        "filename": "src/tint/lang/core/type/manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-15T12:29:37Z",
+      "side": 1,
+      "message": "The `match_width` name better matches the names in the type manager like `pack_vec` and `runtime_array`.",
+      "revId": "b5f8f536ce40788d212ee2807768caef80b632dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
