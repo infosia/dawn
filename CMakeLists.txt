@@ -208,6 +208,7 @@ set_if_not_defined(DAWN_KHRONOS_DIR "${DAWN_THIRD_PARTY_DIR}/khronos" "Directory
 set_if_not_defined(DAWN_SWIFTSHADER_DIR "${DAWN_THIRD_PARTY_DIR}/swiftshader" "Directory in which to find swiftshader")
 set_if_not_defined(DAWN_PROTOBUF_DIR "${DAWN_THIRD_PARTY_DIR}/protobuf" "Directory in which to find protobuf")
 set_if_not_defined(DAWN_LPM_DIR "${DAWN_THIRD_PARTY_DIR}/libprotobuf-mutator/src" "Directory in which to find libprotobuf")
+set_if_not_defined(DAWN_EMDAWNWEBGPU_DIR "${DAWN_THIRD_PARTY_DIR}/emdawnwebgpu" "Directory in which to find Dawn specific Emscripten bindings")
 
 set_if_not_defined(DAWN_SPIRV_TOOLS_DIR "${DAWN_THIRD_PARTY_DIR}/spirv-tools/src" "Directory in which to find SPIRV-Tools")
 set_if_not_defined(DAWN_SPIRV_HEADERS_DIR "${DAWN_THIRD_PARTY_DIR}/spirv-headers/src" "Directory in which to find SPIRV-Headers")
@@ -224,6 +225,13 @@ set_if_not_defined(GO_EXECUTABLE "go" "Golang executable for running the IDL gen
 option(DAWN_FETCH_DEPENDENCIES "Use fetch_dawn_dependencies.py as an alternative to using depot_tools" OFF)
 
 option(DAWN_BUILD_MONOLITHIC_LIBRARY "Bundle all dawn components into a single shared library." ON)
+
+# Optional path to Emscripten toolchain to allow for building WASM.
+set_if_not_defined(DAWN_EMSCRIPTEN_TOOLCHAIN "" "Directory in which to find Emscripten toolchain")
+set(DAWN_ENABLE_EMSCRIPTEN OFF)
+if (NOT ${DAWN_EMSCRIPTEN_TOOLCHAIN} STREQUAL "" AND CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
+    set(DAWN_ENABLE_EMSCRIPTEN ON)
+endif()
 
 # Much of the backend code is shared among desktop OpenGL and OpenGL ES
 if (${DAWN_ENABLE_DESKTOP_GL} OR ${DAWN_ENABLE_OPENGLES})
@@ -401,6 +409,7 @@ set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_SAVED})
 if (DAWN_ENABLE_D3D11 OR DAWN_ENABLE_D3D12 OR DAWN_ENABLE_METAL OR DAWN_ENABLE_NULL OR DAWN_ENABLE_DESKTOP_GL OR DAWN_ENABLE_OPENGLES OR DAWN_ENABLE_VULKAN)
     add_subdirectory(generator)
     add_subdirectory(src/dawn)
+    add_subdirectory(src/emdawnwebgpu)
 endif()
 
 ################################################################################
