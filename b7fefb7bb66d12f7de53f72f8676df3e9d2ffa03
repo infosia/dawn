@@ -52,6 +52,24 @@
       "parentUuid": "f2cf0fe6_22f4f229",
       "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfc6c454_17f0b40d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-15T11:42:08Z",
+      "side": 1,
+      "message": "\u003e And, in this struct, we can put things like pointers, etc. because we\u0027re just hashing it and not serializing to disk. So it\u0027s for sure a smaller key and cheaper to compare.\n\nNote that this is technically incorrect and something we need to fix in the Vulkan backend as well. Two equal pointers to a pipeline layout don\u0027t mean that they are equal because the PL could have been freed and a new one created in the same spot. If we want to do something like this, we\u0027ll need to store a cryptographic hash of the PL in the key.",
+      "parentUuid": "f7851457_59c921a6",
+      "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
