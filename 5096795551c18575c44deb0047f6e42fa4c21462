@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbcb8296_d344d7cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-15T19:11:17Z",
+      "side": 1,
+      "message": "Would you welcome a contribution that adds a `CMakeLists.txt` file for `emdawnwebgpu`? It would greatly simplify our workflow which uses CMake.",
+      "revId": "5096795551c18575c44deb0047f6e42fa4c21462",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
