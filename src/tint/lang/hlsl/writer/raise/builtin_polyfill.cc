@@ -369,13 +369,26 @@ struct State {
                     auto* t_high = b.Let(
                         "t_high", b.Call<hlsl::ir::BuiltinCall>(float_ty, BuiltinFn::kF16Tof32, h));
 
-                    auto* x = b.Swizzle(ty.f16(), t_low, {0_u});
-                    auto* y = b.Swizzle(ty.f16(), t_high, {0_u});
+                    core::ir::Instruction* x = nullptr;
+                    core::ir::Instruction* y = nullptr;
+                    if (src_vec) {
+                        x = b.Swizzle(ty.f32(), t_low, {0_u});
+                        y = b.Swizzle(ty.f32(), t_high, {0_u});
+                    } else {
+                        x = t_low;
+                        y = t_high;
+                    }
+                    x = b.Convert(ty.f16(), x);
+                    y = b.Convert(ty.f16(), y);
+
                     if (dst_type->As<core::type::Vector>()->Width() == 2) {
                         b.Return(f, b.Construct(dst_type, x, y));
+                    } else if (dst_type->As<core::type::Vector>()->Width() == 3) {
+                        auto* z = b.Convert(ty.f16(), b.Swizzle(ty.f32(), t_low, {1_u}));
+                        b.Return(f, b.Construct(dst_type, x, y, z));
                     } else {
-                        auto* z = b.Swizzle(ty.f16(), t_low, {1_u});
-                        auto* w = b.Swizzle(ty.f16(), t_high, {1_u});
+                        auto* z = b.Convert(ty.f16(), b.Swizzle(ty.f32(), t_low, {1_u}));
+                        auto* w = b.Convert(ty.f16(), b.Swizzle(ty.f32(), t_high, {1_u}));
                         b.Return(f, b.Construct(dst_type, x, y, z, w));
                     }
                 });
