@@ -34,6 +34,7 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/HashUtils.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/CacheRequest.h"
 #include "dawn/native/PhysicalDevice.h"
@@ -244,8 +245,12 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const BindingInfoArray& moduleBindingInfo =
         GetEntryPoint(programmableStage.entryPoint.c_str()).bindings;
 
+    // TODO(blundell): Even for the POC, does this need to be per-BGL rather
+    // than global?
+    bool use_ycbcr_sampling = false;
     for (BindGroupIndex group : IterateBitSet(layout->GetBindGroupLayoutsMask())) {
         const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
+        use_ycbcr_sampling = use_ycbcr_sampling || bgl->GetStaticSamplerCount();
 
         for (const auto& currentModuleBindingInfo : moduleBindingInfo[group]) {
             // We cannot use structured binding here because lambda expressions can only capture
@@ -335,6 +340,10 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     SpirvCompilationRequest req = {};
     req.stage = stage;
     auto tintProgram = GetTintProgram();
+    if (use_ycbcr_sampling) {
+        auto program_str = tint::Program::printer(tintProgram->program);
+        // GetDevice()->EmitLog(WGPULoggingType_Error, program_str.c_str());
+    }
     req.inputProgram = &(tintProgram->program);
     req.entryPointName = programmableStage.entryPoint;
     req.disableSymbolRenaming = GetDevice()->IsToggleEnabled(Toggle::DisableSymbolRenaming);
@@ -342,6 +351,11 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.substituteOverrideConfig = std::move(substituteOverrideConfig);
     req.maxSubgroupSizeForFullSubgroups = maxSubgroupSizeForFullSubgroups;
 
+    // NOTE: This is a hack for POC on multiple levels:
+    // * We assume that all static samplers are YCbCr samplers
+    // * We pass single bool and hardcode the knowledge of which index the
+    //   YCbCr sampler and sampled texture live at within Tint
+    req.tintOptions.use_ycbcr_sampling = use_ycbcr_sampling;
     req.tintOptions.clamp_frag_depth = clampFragDepth;
     req.tintOptions.disable_robustness = !GetDevice()->IsRobustnessEnabled();
     req.tintOptions.emit_vertex_point_size = emitPointSize;
@@ -461,6 +475,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
             return result;
         },
         "Vulkan.CompileShaderToSPIRV");
+#if 0
+    }
+#endif
 
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
     DAWN_TRY(ValidateSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size(),

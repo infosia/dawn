@@ -30,6 +30,7 @@
 #include <memory>
 #include <utility>
 
+#include "src/dawn/common/Log.h"
 #include "src/tint/lang/spirv/writer/ast_printer/ast_printer.h"
 #include "src/tint/lang/spirv/writer/common/option_helpers.h"
 #include "src/tint/lang/spirv/writer/printer/printer.h"

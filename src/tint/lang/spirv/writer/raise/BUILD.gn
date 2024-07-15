@@ -60,6 +60,8 @@ if (tint_build_spv_writer) {
       "shader_io.h",
       "var_for_dynamic_index.cc",
       "var_for_dynamic_index.h",
+      "ycbcr.cc",
+      "ycbcr.h",
     ]
     deps = [
       "${tint_src_dir}/api/common",
