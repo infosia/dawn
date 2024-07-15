@@ -86,6 +86,24 @@
       "parentUuid": "9d6a527a_878a10c0",
       "revId": "35e928609ef18d8aa528d8816b8475eb1263c7f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00137b47_899852b5",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-15T21:03:05Z",
+      "side": 1,
+      "message": "I don\u0027t usually add it, outside of some kind of perf proof that it\u0027s actually useful. I find it adds a lot of visual noise but I don\u0027t know how beneficial it actually is.",
+      "parentUuid": "de9d2ba4_20c1db7c",
+      "revId": "35e928609ef18d8aa528d8816b8475eb1263c7f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
