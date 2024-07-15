@@ -16,6 +16,24 @@
       "message": "Would you welcome a contribution that adds a `CMakeLists.txt` file for `emdawnwebgpu`? It would greatly simplify our workflow which uses CMake.",
       "revId": "5096795551c18575c44deb0047f6e42fa4c21462",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaa750fc_a2681c37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-15T20:54:30Z",
+      "side": 1,
+      "message": "I\u0027m actually already working on a CMakeList version for this! I\u0027m in the process of trying to get the samples to build as a part of cmake which is why it\u0027s taking a bit longer. I can try to split out the relevant targets and land them in cmake earlier if that would help? Otherwise, if it\u0027s not too much of a rush, I would like to make it work with the samples first so that I\u0027m confident that they are usable!",
+      "parentUuid": "dbcb8296_d344d7cb",
+      "revId": "5096795551c18575c44deb0047f6e42fa4c21462",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
