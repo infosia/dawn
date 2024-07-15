@@ -25,55 +25,76 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Base set of headers/sources/dependencies only include utilities needed
+# for samples when building with Emscripten. If we are not building with
+# Emscripten, additional headers/sources/dependencies are added.
 set(private_headers
-    "BinarySemaphore.h"
     "ComboRenderBundleEncoderDescriptor.h"
     "ComboRenderPipelineDescriptor.h"
-    "PlatformDebugLogger.h"
     "SystemUtils.h"
+    "WGPUHelpers.h"
+)
+set(sources
+    "ComboRenderBundleEncoderDescriptor.cpp"
+    "ComboRenderPipelineDescriptor.cpp"
+    "SystemUtils.cpp"
+    "WGPUHelpers.cpp"
+)
+set(depends
+    webgpu_cpp
+)
+
+set(conditional_private_depends)
+
+if (NOT ${DAWN_ENABLE_EMSCRIPTEN})
+  list(APPEND private_headers
+    "BinarySemaphore.h"
+    "PlatformDebugLogger.h"
     "TerribleCommandBuffer.h"
     "TestUtils.h"
     "TextureUtils.h"
     "Timer.h"
-    "WGPUHelpers.h"
-    "WireHelper.h"
-)
-set(sources
+    "WireHelper.cpp"
+  )
+  list(APPEND source
     "BinarySemaphore.cpp"
-    "ComboRenderBundleEncoderDescriptor.cpp"
-    "ComboRenderPipelineDescriptor.cpp"
-    "SystemUtils.cpp"
     "TerribleCommandBuffer.cpp"
     "TestUtils.cpp"
     "TextureUtils.cpp"
-    "WGPUHelpers.cpp"
     "WireHelper.cpp"
-)
-set(conditional_private_depends)
-if(WIN32 AND NOT WINDOWS_STORE)
-  list(APPEND sources "WindowsDebugLogger.cpp")
-else()
-  list(APPEND sources "EmptyDebugLogger.cpp")
+  )
+  list(APPEND depends
+    dawn::dawn_wire
+    dawn::partition_alloc
+  )
+
+  if (WIN32 AND NOT WINDOWS_STORE)
+    list(APPEND sources "WindowsDebugLogger.cpp")
+  else()
+    list(APPEND sources "EmptyDebugLogger.cpp")
+  endif()
+
+  if (WIN32)
+    list(APPEND sources "WindowsTimer.cpp")
+  elseif(APPLE)
+      list(APPEND private_headers
+          "ObjCUtils.h"
+      )
+      list(APPEND sources
+          "ObjCUtils.mm"
+          "OSXTimer.cpp"
+      )
+      list(APPEND conditional_private_depends "-framework QuartzCore")
+  elseif(UNIX)
+      list(APPEND sources "PosixTimer.cpp")
+  endif()
+
+  if (TINT_BUILD_SPV_READER)
+      list(APPEND conditional_private_depends SPIRV-Tools-opt)
+  endif()
 endif()
 
-if(WIN32)
-  list(APPEND sources "WindowsTimer.cpp")
-elseif(APPLE)
-    list(APPEND private_headers
-        "ObjCUtils.h"
-    )
-    list(APPEND sources
-        "ObjCUtils.mm"
-        "OSXTimer.cpp"
-    )
-    list(APPEND conditional_private_depends "-framework QuartzCore")
-elseif(UNIX)
-    list(APPEND sources "PosixTimer.cpp")
-endif()
-
-if (TINT_BUILD_SPV_READER)
-    list(APPEND conditional_private_depends SPIRV-Tools-opt)
-endif ()
+# Util library that just contains all existing utils
 dawn_add_library(
   dawn_utils
   UTILITY_TARGET dawn_internal_config
@@ -82,9 +103,7 @@ dawn_add_library(
   SOURCES
     ${sources}
   DEPENDS
-    dawn::dawn_wire
-    dawn::dawncpp_headers
-    dawn::partition_alloc
+    ${depends}
   PRIVATE_DEPENDS
     ${conditional_private_depends}
 )
