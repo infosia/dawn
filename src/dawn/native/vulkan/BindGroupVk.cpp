@@ -28,6 +28,7 @@
 #include "dawn/native/vulkan/BindGroupVk.h"
 
 #include "dawn/common/BitSetIterator.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/ityp_stack_vec.h"
 #include "dawn/native/ExternalTexture.h"
@@ -62,6 +63,33 @@ BindGroup::BindGroup(Device* device,
         bindingCount);
     ityp::stack_vec<uint32_t, VkDescriptorImageInfo, kMaxOptimalBindingsPerGroup> writeImageInfo(
         bindingCount);
+
+    std::map<BindingIndex, BindingIndex> bindingIndicesToRemap{};
+    for (const auto& [bindingNumber, bindingIndex] : GetLayout()->GetBindingMap()) {
+        if (bindingNumber == BindingNumber{0u}) {
+            // This entry is first in client-specified order.
+            continue;
+        }
+
+        auto indexOfPrevBindingInfo =
+            GetLayout()->GetBindingIndex(bindingNumber - BindingNumber{1u});
+        const BindingInfo& prevBindingInfo = GetLayout()->GetBindingInfo(indexOfPrevBindingInfo);
+        if (!std::holds_alternative<StaticSamplerBindingInfo>(prevBindingInfo.bindingLayout)) {
+            // This entry is not after a static sampler in client-specified order.
+            continue;
+        }
+
+        auto samplerLayout = std::get<StaticSamplerBindingInfo>(prevBindingInfo.bindingLayout);
+        auto sampler = ToBackend(samplerLayout.sampler);
+        if (!sampler->IsYCbCr()) {
+            // This entry is not after a YCbCr sampler in client-specified order.
+            continue;
+        }
+
+        // This entry is after a YCbCr sampler in client-specified order:
+        // we will need to remap it in the VkDescriptorSet.
+        bindingIndicesToRemap[bindingIndex] = indexOfPrevBindingInfo;
+    }
 
     uint32_t numWrites = 0;
     for (const auto& bindingItem : GetLayout()->GetBindingMap()) {
@@ -122,6 +150,14 @@ BindGroup::BindGroup(Device* device,
                     // resources.
                     return false;
                 }
+
+                if (bindingIndicesToRemap.contains(bindingIndex)) {
+                    // Write the info of the texture at the binding index for the
+                    // YCbCr sampler.
+                    write.dstBinding = static_cast<uint32_t>(bindingIndicesToRemap[bindingIndex]);
+                    write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+                }
+
                 writeImageInfo[numWrites].imageView = handle;
                 writeImageInfo[numWrites].imageLayout = VulkanImageLayout(
                     view->GetTexture()->GetFormat(), wgpu::TextureUsage::TextureBinding);

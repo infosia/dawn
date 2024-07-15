@@ -700,6 +700,7 @@ bool GenerateSpirv(const tint::Program& program, const Options& options) {
     gen_options.disable_robustness = !options.enable_robustness;
     gen_options.disable_workgroup_init = options.disable_workgroup_init;
     gen_options.use_storage_input_output_16 = options.use_storage_input_output_16;
+    gen_options.use_ycbcr_sampling = true;
     gen_options.bindings = tint::spirv::writer::GenerateBindings(program);
 
     tint::Result<tint::spirv::writer::Output> result;
