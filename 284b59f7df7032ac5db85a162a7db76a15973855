@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eff346b0_ba86fba2",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-07-15T21:08:09Z",
+      "side": 1,
+      "message": "This loop and the one for the 2D array case below now look pretty similar. Could you factor the loop out, and just handle the glFramebufferTexture2D / glFramebufferTextureLayer() difference below it?\n\nIn fact, could you factor the switch out of TextureView::BindToFramebuffer():\n\n```\n   switch (textarget) {\n        case GL_TEXTURE_2D_ARRAY:\n        case GL_TEXTURE_CUBE_MAP_ARRAY:\n        case GL_TEXTURE_3D:\n            gl.FramebufferTextureLayer(target, attachment, handle, mipLevel, arrayLayer);\n            break;\n        case GL_TEXTURE_CUBE_MAP: {\n            GLenum cubeTexTarget \u003d GL_TEXTURE_CUBE_MAP_POSITIVE_X + arrayLayer;\n            gl.FramebufferTexture2D(target, attachment, cubeTexTarget, handle, mipLevel);\n            break;\n        }\n        default:\n            gl.FramebufferTexture2D(target, attachment, textarget, handle, mipLevel);\n            break;\n```\n\ninto a helper function? It could be on Texture itself, then Texture::ClearTexture() (both renderable and non-renderable cases) and TextureView::BindToFramebuffer() could call that. Then I don\u0027t think you\u0027d need any of the switches in Texture::ClearTexture() at all.",
+      "revId": "284b59f7df7032ac5db85a162a7db76a15973855",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5c17a7d_6681408b",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-07-15T21:08:09Z",
+      "side": 1,
+      "message": "Not new to this CL, but it seems a little odd that we loop over both the array layers and then here iterate over the depthOrArrayLayers of the mip level as well. Is this correct?",
+      "revId": "284b59f7df7032ac5db85a162a7db76a15973855",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
