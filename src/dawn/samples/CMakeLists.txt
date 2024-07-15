@@ -26,39 +26,72 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 add_library(dawn_sample_utils STATIC)
-common_compile_options(dawn_sample_utils)
+if (${DAWN_ENABLE_EMSCRIPTEN})
+    target_link_libraries(dawn_sample_utils PUBLIC
+        webgpu_cpp
+        dawn_internal_config
+        dawn_common
+        dawn_utils
+    )
+else()
+    common_compile_options(dawn_sample_utils)
+    target_link_libraries(dawn_sample_utils PUBLIC
+        webgpu_cpp
+        dawn_internal_config
+        dawn_proc
+        dawn_common
+        dawn_glfw
+        dawn_native
+        dawn_utils
+        glfw
+    )
+endif()
 target_sources(dawn_sample_utils PRIVATE
     "SampleUtils.cpp"
     "SampleUtils.h"
 )
-target_link_libraries(dawn_sample_utils PUBLIC
-    dawn_internal_config
-    dawncpp
-    dawn_proc
-    dawn_common
-    dawn_glfw
-    dawn_native
-    dawn_wire
-    dawn_utils
-    glfw
+
+function(Sample)
+    cmake_parse_arguments(PARSE_ARGV 0 arg
+        ""
+        "NAME;SOURCES"
+        ""
+    )
+
+    add_executable(${arg_NAME} ${arg_SOURCES})
+    if (${DAWN_ENABLE_EMSCRIPTEN})
+    set_target_properties(${arg_NAME} PROPERTIES
+        SUFFIX ".html")
+    else()
+        common_compile_options(${arg_NAME})
+    endif()
+    target_link_libraries(${arg_NAME} dawn_sample_utils)
+endfunction()
+
+Sample(
+    NAME HelloTriangle
+    SOURCES
+        "HelloTriangle.cpp"
 )
 
-add_executable(HelloTriangle "HelloTriangle.cpp")
-common_compile_options(HelloTriangle)
-target_link_libraries(HelloTriangle dawn_sample_utils)
+Sample(
+    NAME ComputeBoids
+    SOURCES
+        "ComputeBoids.cpp"
+)
 
-add_executable(ComputeBoids "ComputeBoids.cpp")
-common_compile_options(ComputeBoids)
-target_link_libraries(ComputeBoids dawn_sample_utils)
+Sample(
+    NAME Animometer
+    SOURCES
+        "Animometer.cpp"
+)
 
-add_executable(Animometer "Animometer.cpp")
-common_compile_options(Animometer)
-target_link_libraries(Animometer dawn_sample_utils)
+if (NOT ${DAWN_ENABLE_EMSCRIPTEN})
+    add_executable(DawnInfo "DawnInfo.cpp")
+    common_compile_options(DawnInfo)
+    target_link_libraries(DawnInfo dawn_sample_utils)
 
-add_executable(DawnInfo "DawnInfo.cpp")
-common_compile_options(DawnInfo)
-target_link_libraries(DawnInfo dawn_sample_utils)
-
-add_executable(ManualSurfaceTest "ManualSurfaceTest.cpp")
-common_compile_options(ManualSurfaceTest)
-target_link_libraries(ManualSurfaceTest dawn_sample_utils)
+    add_executable(ManualSurfaceTest "ManualSurfaceTest.cpp")
+    common_compile_options(ManualSurfaceTest)
+    target_link_libraries(ManualSurfaceTest dawn_sample_utils)
+endif()

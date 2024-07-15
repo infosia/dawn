@@ -158,8 +158,8 @@ dawn_add_library(
     SOURCES
         ${sources}
     DEPENDS
-        dawn::dawn_headers
-        dawn::dawncpp_headers
+        webgpu_c
+        webgpu_cpp
     PRIVATE_DEPENDS
         absl::inlined_vector
         dawn::partition_alloc
