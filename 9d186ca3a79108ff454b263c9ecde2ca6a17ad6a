@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "107f4b6c_b3ea2792",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-15T17:18:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf2807ba_cb875e53",
+      "revId": "9d186ca3a79108ff454b263c9ecde2ca6a17ad6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06e0a3c6_6b88a9cd",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca10ed02_6f1a4dd2",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-15T17:18:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06e0a3c6_6b88a9cd",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 13
+      },
+      "revId": "9d186ca3a79108ff454b263c9ecde2ca6a17ad6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6d41e24_fe961944",
@@ -54,6 +96,24 @@
       "writtenOn": "2024-07-15T14:55:43Z",
       "side": 1,
       "message": "Should be able to remove these tests now.",
+      "revId": "9d186ca3a79108ff454b263c9ecde2ca6a17ad6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc5d2c85_82aaee53",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-15T17:18:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6d41e24_fe961944",
       "revId": "9d186ca3a79108ff454b263c9ecde2ca6a17ad6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
