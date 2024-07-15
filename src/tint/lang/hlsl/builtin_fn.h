@@ -68,6 +68,14 @@ enum class BuiltinFn : uint8_t {
     kStore4,
     kGetDimensions,
     kTextureStore,
+    kInterlockedCompareExchange,
+    kInterlockedExchange,
+    kInterlockedAdd,
+    kInterlockedMax,
+    kInterlockedMin,
+    kInterlockedAnd,
+    kInterlockedOr,
+    kInterlockedXor,
     kNone,
 };
 

@@ -62,6 +62,7 @@ type mat4x2<T>
 type mat4x3<T>
 type mat4x4<T>
 @display("mat{N}x{M}<{T}>") type mat<N: num, M: num, T>
+type atomic<T>
 
 type byte_address_buffer<A: access>
 
@@ -97,7 +98,9 @@ match fi32_f16: f32 | i32 | f16
 
 match storage: address_space.storage
 match function: address_space.function
+match workgroup: address_space.workgroup
 
+match read_write: access.read_write
 match readable
   : access.read
   | access.read_write
@@ -362,4 +365,28 @@ fn textureStore[C: iu32](texture: texture_storage_3d<u32_texel_format, writable>
                           coords: vec3<C>,
                            value: vec4<u32>)
 
-
+fn InterlockedCompareExchange[T: iu32](ptr<workgroup, atomic<T>, read_write>,
+                                compare_value: iu32,
+                                        value: iu32,
+                               original_value: ptr<function, iu32, read_write>)
+fn InterlockedExchange[T: iu32](ptr<workgroup, atomic<T>, read_write>,
+                                 value: iu32,
+                        original_value: ptr<function, iu32, read_write>)
+fn InterlockedAdd[T: iu32](ptr<workgroup, atomic<T>, read_write>,
+                            value: iu32,
+                   original_value: ptr<function, iu32, read_write>)
+fn InterlockedMax[T: iu32](ptr<workgroup, atomic<T>, read_write>,
+                            value: iu32,
+                   original_value: ptr<function, iu32, read_write>)
+fn InterlockedMin[T: iu32](ptr<workgroup, atomic<T>, read_write>,
+                            value: iu32,
+                   original_value: ptr<function, iu32, read_write>)
+fn InterlockedAnd[T: iu32](ptr<workgroup, atomic<T>, read_write>,
+                            value: iu32,
+                   original_value: ptr<function, iu32, read_write>)
+fn InterlockedOr[T: iu32](ptr<workgroup, atomic<T>, read_write>,
+                           value: iu32,
+                  original_value: ptr<function, iu32, read_write>)
+fn InterlockedXor[T: iu32](ptr<workgroup, atomic<T>, read_write>,
+                            value: iu32,
+                   original_value: ptr<function, iu32, read_write>)
