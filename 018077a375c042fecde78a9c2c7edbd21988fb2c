@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25ff4985_f3e93791",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-15T14:43:49Z",
+      "side": 1,
+      "message": "PTAL! I\u0027m not sure about the names but couldn\u0027t find better ones.",
+      "revId": "018077a375c042fecde78a9c2c7edbd21988fb2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
