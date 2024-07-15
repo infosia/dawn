@@ -54,6 +54,7 @@ enum class BuiltinFn : uint8_t {
     kF16Tof32,
     kMul,
     kSign,
+    kTextureStore,
     kLoad,
     kLoad2,
     kLoad3,
@@ -67,7 +68,14 @@ enum class BuiltinFn : uint8_t {
     kStore3,
     kStore4,
     kGetDimensions,
-    kTextureStore,
+    kInterlockedCompareExchange,
+    kInterlockedExchange,
+    kInterlockedAdd,
+    kInterlockedMax,
+    kInterlockedMin,
+    kInterlockedAnd,
+    kInterlockedOr,
+    kInterlockedXor,
     kNone,
 };
 
