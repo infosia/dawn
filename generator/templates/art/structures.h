@@ -35,7 +35,8 @@ class JNIContext;
 // Converts Kotlin objects representing Dawn structures into native structures that can be passed
 // into the native Dawn API.
 {% for structure in by_category['structure'] %}
-    void Convert(JNIContext* c, JNIEnv* env, jobject obj, {{ as_cType(structure.name) }}* converted);
+    jobject Convert(JNIEnv *env, const {{ as_cType(structure.name) }}* input);
+    void Convert(JNIContext* c, JNIEnv *env, jobject obj, {{ as_cType(structure.name) }}* converted);
 {% endfor %}
 
 }  // namespace dawn::kotlin_api

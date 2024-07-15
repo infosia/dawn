@@ -24,7 +24,7 @@
 //* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-{% from 'art/api_jni_types.kt' import arg_to_jni_type, jni_signature, to_jni_type with context %}
+{% from 'art/api_jni_types.kt' import arg_to_jni_type, jni_convert, jni_signature, to_jni_type with context %}
 #include <jni.h>
 #include <stdlib.h>
 
@@ -190,6 +190,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
                 //* Call the callback with all converted parameters.
                 env->CallVoidMethod(userData1->callback, callbackMethod
                 {%- for callbackArg in filter_arguments(arg.type.arguments) %}
+                    {# TODO: generalize native -> Kotlin logic #}
                     ,
                     {%- if callbackArg.type.category == 'object' %}
                         env->NewObject(env->FindClass("{{ jni_name(callbackArg.type) }}"),
@@ -199,7 +200,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
                     {%- elif callbackArg.type.category in ['bitmask', 'enum'] %}
                         static_cast<jint>({{ callbackArg.name.camelCase() }})
                     {%- elif callbackArg.type.category == 'structure' %}
-                        {{ unreachable_code () }}  //* We don't yet handle structures in callbacks.
+                        Convert(env, {{ callbackArg.name.camelCase() }})
                     {%- elif callbackArg.type.name.get() == 'char' %}
                         env->NewStringUTF({{ callbackArg.name.camelCase() }})
                     {%- else %}
@@ -223,13 +224,13 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     {% endif %}
 
     //* Actually invoke the native version of the method.
-    {% if _kotlin_return.annotation == '*' %}
+    {% if _kotlin_return.annotation == '*' and _kotlin_return.length == 'size_t' %}
         //* Methods that return containers are converted from two-call to single call, and the
         //* return type is switched to a Kotlin container.
         size_t size = wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
             {% for arg in method.arguments -%},
                 //* The replaced output parameter is set to nullptr on the first call.
-                {{ 'nullptr' if arg == _kotlin_return else as_varName(arg.name) -}}
+                {{ 'nullptr' if arg.annotation == '*' else as_varName(arg.name) -}}
             {% endfor %}
         );
         //* Allocate the native container
@@ -257,7 +258,10 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
             env->SetObjectArrayElement(result, idx, element);
         }
     {% else %}
-        {{ 'auto result =' if method.return_type.name.get() != 'void' }}
+        {% if _kotlin_return.annotation == '*' %}
+            {{ _kotlin_return.name.get() }} = new {{ as_cType(_kotlin_return.type.name) }}();
+        {% endif %}
+        {{ 'auto result =' if _kotlin_return.type.name.get() != 'void' }}
         {% if object %}
             wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
         {% else %}
@@ -271,16 +275,11 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
             return {{ '0' if method.return_type.name.get() != 'void' }};
         }
     {% endif %}
-
-    //* We only handle objects and primitives to be returned.
-    {% if method.return_type.category == 'object' %}
-        jclass returnClass = env->FindClass("{{ jni_name(method.return_type) }}");
-        auto constructor = env->GetMethodID(returnClass, "<init>", "(J)V");
-        return env->NewObject(returnClass, constructor, reinterpret_cast<jlong>(result));
-    {% elif method.return_type.name.get() in ['void const *', 'void *'] %}
-        return toByteBuffer(env, result, size);
-    {% elif method.return_type.name.get() != 'void' %}
-        return result;  //* Primitives are implicitly converted by JNI.
+    {% if _kotlin_return.type.name.get() != 'void' %}
+        {{ jni_convert(_kotlin_return.name.get() if _kotlin_return.annotation == '*' else 'result', 'result2', 'size' if _kotlin_return.type.name.get() in ['void const *', 'void *'] or (_kotlin_return.annotation == '*' and _kotlin_return.length == 'size_t'), _kotlin_return) }}
+    {% endif %}
+    {% if _kotlin_return.type.name.get() != 'void' %}
+        return result2;
     {% endif %}
 } {% endmacro %}
 

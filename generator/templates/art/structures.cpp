@@ -24,7 +24,7 @@
 //* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-{% from 'art/api_jni_types.kt' import jni_signature with context %}
+{% from 'art/api_jni_types.kt' import jni_convert, jni_signature with context %}
 
 #include "structures.h"
 
@@ -39,6 +39,52 @@
 namespace dawn::kotlin_api {
 
 {% for structure in by_category['structure'] %}
+    {% if true or structure.extensible != 'in' %}
+        jobject Convert(JNIEnv *env, const {{ as_cType(structure.name) }}* input) {
+            if (!input) {
+                return nullptr;
+            }
+            jclass clz = env->FindClass("{{ jni_name(structure) }}");
+            jmethodID ctor = env->GetMethodID(clz, "<init>", "(
+            {%- for member in structure.members if include_structure_member(structure, member) %}
+                {{- jni_signature(member) -}}
+            {%- endfor -%}
+
+            {%- for structure in chain_children[structure.name.get()] -%}
+                {{- jni_signature({'type': structure}) -}}
+            {%- endfor %})V");
+
+            {% for member in structure.members if include_structure_member(structure, member) %}
+                {{ jni_convert('input->' + member.name.camelCase(), member.name.camelCase(), 'input->' + member.length.name.camelCase() if member.length.name, member) }}
+            {% endfor %}
+
+            {% for structure in chain_children[structure.name.get()] %}
+                jobject {{ structure.name.camelCase() }} = nullptr;
+            {% endfor %}
+
+            {% if chain_children[structure.name.get()] %}
+                for (const WGPUChainedStruct* child = input->nextInChain; child != nullptr; child = child->next) {
+                    switch (child->sType) {
+                        {% for structure in chain_children[structure.name.get()] %}
+                            case WGPUSType_{{ structure.name.CamelCase() }}:
+                                {{ structure.name.camelCase() }} = Convert(env, reinterpret_cast<const {{ as_cType(structure.name) }}*>(child));
+                                break;
+                        {% endfor %}
+                    }
+                }
+            {% endif %}
+
+            jobject converted = env->NewObject(clz, ctor
+            {%- for member in structure.members if include_structure_member(structure, member) %}
+                ,{{ member.name.camelCase() }}
+            {% endfor %}
+            {%- for structure in chain_children[structure.name.get()] -%}
+                , {{ structure.name.camelCase() }}
+            {%- endfor %});
+            return converted;
+        }
+    {% endif %}
+
     void Convert(JNIContext* c, JNIEnv *env, jobject obj, {{ as_cType(structure.name) }}* converted) {
         jclass clz = env->FindClass("{{ jni_name(structure) }}");
 
