@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28ebdc7e_69d3679c",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-15T23:22:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eff346b0_ba86fba2",
+      "revId": "284b59f7df7032ac5db85a162a7db76a15973855",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5c17a7d_6681408b",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-07-15T21:08:09Z",
       "side": 1,
       "message": "Not new to this CL, but it seems a little odd that we loop over both the array layers and then here iterate over the depthOrArrayLayers of the mip level as well. Is this correct?",
+      "revId": "284b59f7df7032ac5db85a162a7db76a15973855",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4880373_b917de7f",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-15T23:22:15Z",
+      "side": 1,
+      "message": "Tried to factor this out. Triggered some failure on Subresource initalized.\n```\n[ RUN      ] CopyTests_B2T.Texture3DSubRegion/OpenGLES_ANGLE__Google__Vulkan_1_3_0__SwiftShader_Device__Subzero___0x0000C0DE____SwiftShader_driver_5_0_0__compat\nError: Assertion failure at ..\\..\\src\\dawn\\native\\Texture.cpp:1046 (IsSubresourceContentInitialized): subresourceIndex \u003c mIsSubresourceContentInitializedAtIndex.size()\n```\nhttps://logs.chromium.org/logs/dawn/buildbucket/cr-buildbucket/8742307726295742833/+/u/Run_the_Dawn_end2end_tests_with_ANGLE_SwiftShader/stdout\nNot sure what this part is doing. Revert as is for now. Revist in a later CL",
+      "parentUuid": "e5c17a7d_6681408b",
       "revId": "284b59f7df7032ac5db85a162a7db76a15973855",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
