@@ -128,8 +128,7 @@ class Surface final : public ErrorMonad {
     wgpu::TextureFormat APIGetPreferredFormat(AdapterBase* adapter) const;
     void APIPresent();
     void APIUnconfigure();
-    void APISetLabel(const char* label);
-    void APISetLabel2(std::optional<std::string_view> label);
+    void APISetLabel(std::optional<std::string_view> label);
 
   private:
     Surface(InstanceBase* instance, ErrorMonad::ErrorTag tag);

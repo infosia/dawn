@@ -279,7 +279,6 @@
             "DeviceGetAdapter",
             "DeviceGetQueue",
             "DeviceGetSupportedSurfaceUsage",
-            "DeviceInjectError",
             "InstanceProcessEvents",
             "InstanceWaitAny",
             "SurfaceConfigure",

@@ -186,51 +186,51 @@ TEST_F(WireArgumentTests, WGPUString) {
 
     // Send a null-terminated string.
     s.data = "null-terminated label\0more string";
-    wgpuShaderModuleSetLabel2(vsModule, s);
-    EXPECT_CALL(api, ShaderModuleSetLabel2(apiVsModule,
-                                           AllOf(Field(&WGPUString::data, EqBytes(s.data, 21u)),
-                                                 Field(&WGPUString::length, Eq(21u)))));
+    wgpuShaderModuleSetLabel(vsModule, s);
+    EXPECT_CALL(
+        api, ShaderModuleSetLabel(apiVsModule, AllOf(Field(&WGPUString::data, EqBytes(s.data, 21u)),
+                                                     Field(&WGPUString::length, Eq(21u)))));
     FlushClient();
 
     // Give it a longer, explicit length that contains the null-terminator.
     s.length = 34u;
-    wgpuShaderModuleSetLabel2(vsModule, s);
-    EXPECT_CALL(api, ShaderModuleSetLabel2(apiVsModule,
-                                           AllOf(Field(&WGPUString::data, EqBytes(s.data, 34u)),
-                                                 Field(&WGPUString::length, Eq(34u)))));
+    wgpuShaderModuleSetLabel(vsModule, s);
+    EXPECT_CALL(
+        api, ShaderModuleSetLabel(apiVsModule, AllOf(Field(&WGPUString::data, EqBytes(s.data, 34u)),
+                                                     Field(&WGPUString::length, Eq(34u)))));
     FlushClient();
 
     // Give it a shorder, explicit length.
     s.length = 2;
-    wgpuShaderModuleSetLabel2(vsModule, s);
+    wgpuShaderModuleSetLabel(vsModule, s);
     EXPECT_CALL(
-        api, ShaderModuleSetLabel2(apiVsModule, AllOf(Field(&WGPUString::data, EqBytes(s.data, 2u)),
-                                                      Field(&WGPUString::length, Eq(2u)))));
+        api, ShaderModuleSetLabel(apiVsModule, AllOf(Field(&WGPUString::data, EqBytes(s.data, 2u)),
+                                                     Field(&WGPUString::length, Eq(2u)))));
     FlushClient();
 
     // Give it a zero length.
     s.length = 0;
-    wgpuShaderModuleSetLabel2(vsModule, s);
+    wgpuShaderModuleSetLabel(vsModule, s);
     EXPECT_CALL(api,
-                ShaderModuleSetLabel2(apiVsModule, AllOf(Field(&WGPUString::data, EqBytes("", 1u)),
-                                                         Field(&WGPUString::length, Eq(0u)))));
+                ShaderModuleSetLabel(apiVsModule, AllOf(Field(&WGPUString::data, EqBytes("", 1u)),
+                                                        Field(&WGPUString::length, Eq(0u)))));
     FlushClient();
 
     // Give it zero length and data.
     s.data = nullptr;
     s.length = 0;
-    wgpuShaderModuleSetLabel2(vsModule, s);
-    EXPECT_CALL(api, ShaderModuleSetLabel2(apiVsModule, AllOf(Field(&WGPUString::data, nullptr),
-                                                              Field(&WGPUString::length, Eq(0u)))));
+    wgpuShaderModuleSetLabel(vsModule, s);
+    EXPECT_CALL(api, ShaderModuleSetLabel(apiVsModule, AllOf(Field(&WGPUString::data, nullptr),
+                                                             Field(&WGPUString::length, Eq(0u)))));
     FlushClient();
 
     // Give it SIZE_MAX length and no data (nil/undefined).
     s.data = nullptr;
     s.length = SIZE_MAX;
-    wgpuShaderModuleSetLabel2(vsModule, s);
-    EXPECT_CALL(
-        api, ShaderModuleSetLabel2(apiVsModule, AllOf(Field(&WGPUString::data, nullptr),
-                                                      Field(&WGPUString::length, Eq(SIZE_MAX)))));
+    wgpuShaderModuleSetLabel(vsModule, s);
+    EXPECT_CALL(api,
+                ShaderModuleSetLabel(apiVsModule, AllOf(Field(&WGPUString::data, nullptr),
+                                                        Field(&WGPUString::length, Eq(SIZE_MAX)))));
     FlushClient();
 }
 
