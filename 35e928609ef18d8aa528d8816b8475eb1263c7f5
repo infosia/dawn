@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bebc438_989f04b7",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-15T20:58:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "838c86fd_536d48e0",
+      "revId": "35e928609ef18d8aa528d8816b8475eb1263c7f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d6a527a_878a10c0",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-07-15T20:41:20Z",
       "side": 1,
       "message": "Can we drop the `TINT_UNLIKEY` here as it makes this really hard to understand with the negation.",
+      "revId": "35e928609ef18d8aa528d8816b8475eb1263c7f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de9d2ba4_20c1db7c",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-15T20:58:35Z",
+      "side": 1,
+      "message": "I meant for the ! to be on the inside there. Is moving that sufficient, or would you prefer to remove the unlikely pattern in general?\n\n(I don\u0027t feel strongly about using TINT_UNLIKELY, it is used throughout this file, though not consistently, so I was mostly following the local style).",
+      "parentUuid": "9d6a527a_878a10c0",
       "revId": "35e928609ef18d8aa528d8816b8475eb1263c7f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
