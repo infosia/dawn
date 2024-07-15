@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf2807ba_cb875e53",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-15T14:55:43Z",
+      "side": 1,
+      "message": "Should be able to get rid of this now.",
+      "revId": "9d186ca3a79108ff454b263c9ecde2ca6a17ad6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06e0a3c6_6b88a9cd",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-15T14:55:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need this anymore.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 13
+      },
+      "revId": "9d186ca3a79108ff454b263c9ecde2ca6a17ad6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6d41e24_fe961944",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-15T14:55:43Z",
+      "side": 1,
+      "message": "Should be able to remove these tests now.",
+      "revId": "9d186ca3a79108ff454b263c9ecde2ca6a17ad6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
