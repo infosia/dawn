@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfce26c0_57ead7ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-15T16:11:24Z",
+      "side": 1,
+      "message": "@fbeaufort@google.com can you please verify this patch works for you?",
+      "revId": "5d8fc2183af6b98ef4b31c0748087e558c77c6ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
