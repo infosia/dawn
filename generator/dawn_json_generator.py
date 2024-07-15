@@ -875,11 +875,6 @@ def compute_kotlin_params(loaded_json, kotlin_json):
             if argument.annotation == 'value' and argument.type.category == 'structure':
                 # Passing structures by value is not supported at the moment.
                 return False
-            if argument.type.category == 'function pointer':
-                # Currently returning structures in callbacks is not supported.
-                for callback_arg in argument.type.arguments:
-                    if callback_arg.type.category == 'structure':
-                        return False
         return True
 
     def jni_name(type):
@@ -888,7 +883,7 @@ def compute_kotlin_params(loaded_json, kotlin_json):
     # We assume that if the final two parameters are named 'userdata' and 'callback' respectively
     # that this is an async method that uses function pointer based callbacks.
     def is_async_method(method):
-        if len(method.arguments) < 3:
+        if len(method.arguments) < 2:
             return False  # Not enough parameters to be an async method.
         if method.arguments[-1].name.get() != 'userdata':
             return False

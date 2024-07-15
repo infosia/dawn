@@ -197,7 +197,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
                     {%- elif callbackArg.type.category in ['bitmask', 'enum'] %}
                         static_cast<jint>({{ callbackArg.name.camelCase() }})
                     {%- elif callbackArg.type.category == 'structure' %}
-                        {{ unreachable_code () }}  //* We don't yet handle structures in callbacks.
+                        Convert(env, {{ callbackArg.name.camelCase() }})
                     {%- elif callbackArg.type.name.get() == 'char' %}
                         env->NewStringUTF({{ callbackArg.name.camelCase() }})
                     {%- else %}
