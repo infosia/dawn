@@ -51,6 +51,24 @@
       "parentUuid": "085a9c75_381b1c7d",
       "revId": "8285e653643c98729ac3541435161efac4236156",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b381ff09_51b8cbd8",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-15T23:19:00Z",
+      "side": 1,
+      "message": "Well turns out on my local Pixel 8 the `minStorageBufferOffsetAlignment` is 256.\nSo I still don\u0027t know the exact reason why making the storage buffer size from 12 -\u003e 16 bytes make it pass on android ARM",
+      "parentUuid": "df388396_36c2a759",
+      "revId": "8285e653643c98729ac3541435161efac4236156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
