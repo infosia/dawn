@@ -33,6 +33,24 @@
       "message": "Not sure I understand. If the buffer alignment is a problem, shouldn\u0027t it be caught at validation time and fail on all GLES devices? It seems odd that we have to change a test to satisfy only one device.",
       "revId": "8285e653643c98729ac3541435161efac4236156",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df388396_36c2a759",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-15T21:28:03Z",
+      "side": 1,
+      "message": "I think the problem is dawn only validates the `minStorageBufferOffsetAlignment` against offset: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BindGroup.cpp;l\u003d114?q\u003dbindgroup.cpp\u0026ss\u003dchromium\n\nGL language indicates this required alignment also applies to buffer size:\n*\"GL_SHADER_STORAGE_BUFFER_OFFSET_ALIGNMENT\ndata returns a single value, the minimum required alignment for shader storage buffer sizes and offset.\"*\nhttps://registry.khronos.org/OpenGL-Refpages/es3/html/glGet.xhtml\n\nDo we need to propose a new limit like `minStorageBufferSizeAlignment` for compat then?",
+      "parentUuid": "085a9c75_381b1c7d",
+      "revId": "8285e653643c98729ac3541435161efac4236156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
