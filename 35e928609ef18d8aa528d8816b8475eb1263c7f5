@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "047b587e_c87442a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-15T20:30:09Z",
+      "side": 1,
+      "message": "PTAL\n\nI have split the exact operands case and the variable operands cases into two different paths for two reasons:\n\n1) It made writting appropriate error message easier, I didn\u0027t want to have the messages saying \"expecting between N and N operands\" or something like that. \n\n2) I  wasn\u0027t sure on the most ergonomic way to have a function where you may have 1 param, or 2 params, or 1 param + an empty optional param as a single function signature, without it being a bit error prone. As-is I think it is pretty clear that you either provide 1 exact param or you provide 2 and second one can be optional. (This will hit a bit of a combinatorial problem if there are instructions with variable number of results that need to be handled)\n\nIf you have a good solution for 2), I think 1) can be handled in a merge implementation, since it is mostly just a bit more switching logic on the error path.",
+      "revId": "35e928609ef18d8aa528d8816b8475eb1263c7f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
