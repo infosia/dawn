@@ -33,6 +33,24 @@
       "message": "This note should be updated to match upstream too",
       "revId": "f0e40e70ef8de0d004bd39286b591a179315dd14",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d36cf0ec_78592c2b",
+        "filename": "generator/templates/emdawnwebgpu/struct_info_webgpu.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-15T21:29:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "439c7b5f_fd3a789b",
+      "revId": "f0e40e70ef8de0d004bd39286b591a179315dd14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
