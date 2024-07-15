@@ -16,6 +16,23 @@
       "message": "(This should be a rather trivial one, Sorry if it\u0027s too many reivews at a time -_-)",
       "revId": "8285e653643c98729ac3541435161efac4236156",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "085a9c75_381b1c7d",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-07-15T21:11:47Z",
+      "side": 1,
+      "message": "Not sure I understand. If the buffer alignment is a problem, shouldn\u0027t it be caught at validation time and fail on all GLES devices? It seems odd that we have to change a test to satisfy only one device.",
+      "revId": "8285e653643c98729ac3541435161efac4236156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
