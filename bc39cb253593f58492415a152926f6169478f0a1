@@ -67,6 +67,24 @@
       "message": "nit while you\u0027re here: remove explicit",
       "revId": "bc39cb253593f58492415a152926f6169478f0a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "726ca281_a019133a",
+        "filename": "src/dawn/wire/client/Device.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-15T14:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebbfc3df_71e7dd40",
+      "revId": "bc39cb253593f58492415a152926f6169478f0a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
