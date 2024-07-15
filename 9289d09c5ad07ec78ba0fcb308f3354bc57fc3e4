@@ -16,6 +16,23 @@
       "message": "(This should be a trivial one, Sorry if it\u0027s too many reivews at a time -_-)",
       "revId": "9289d09c5ad07ec78ba0fcb308f3354bc57fc3e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5fdbefc_99b4be7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-07-15T21:09:17Z",
+      "side": 1,
+      "message": "LGTM2",
+      "revId": "9289d09c5ad07ec78ba0fcb308f3354bc57fc3e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
