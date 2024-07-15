@@ -25,34 +25,59 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+include(DawnEmscriptenPlatformFlags)
+
 add_library(dawn_sample_utils STATIC)
-common_compile_options(dawn_sample_utils)
+if (${DAWN_ENABLE_EMSCRIPTEN})
+    target_link_libraries(dawn_sample_utils PUBLIC
+        webgpu_cpp
+        dawn_internal_config
+        dawn_common
+        dawn_wgpu_utils
+    )
+else()
+    common_compile_options(dawn_sample_utils)
+    target_link_libraries(dawn_sample_utils PUBLIC
+        webgpu_cpp
+        dawn_internal_config
+        dawn_proc
+        dawn_common
+        dawn_glfw
+        dawn_native
+        dawn_utils
+        glfw
+    )
+endif()
 target_sources(dawn_sample_utils PRIVATE
     "SampleUtils.cpp"
     "SampleUtils.h"
 )
-target_link_libraries(dawn_sample_utils PUBLIC
-    dawn_internal_config
-    dawncpp
-    dawn_proc
-    dawn_common
-    dawn_glfw
-    dawn_native
-    dawn_wire
-    dawn_utils
-    glfw
-)
 
 add_executable(HelloTriangle "HelloTriangle.cpp")
-common_compile_options(HelloTriangle)
+if (${DAWN_ENABLE_EMSCRIPTEN})
+    set_target_properties(HelloTriangle PROPERTIES
+        SUFFIX ".html")
+else()
+    common_compile_options(HelloTriangle)
+endif()
 target_link_libraries(HelloTriangle dawn_sample_utils)
 
 add_executable(ComputeBoids "ComputeBoids.cpp")
-common_compile_options(ComputeBoids)
+if (${DAWN_ENABLE_EMSCRIPTEN})
+    set_target_properties(ComputeBoids PROPERTIES
+        SUFFIX ".html")
+else()
+    common_compile_options(ComputeBoids)
+endif()
 target_link_libraries(ComputeBoids dawn_sample_utils)
 
 add_executable(Animometer "Animometer.cpp")
-common_compile_options(Animometer)
+if (${DAWN_ENABLE_EMSCRIPTEN})
+    set_target_properties(Animometer PROPERTIES
+        SUFFIX ".html")
+else()
+    common_compile_options(Animometer)
+endif()
 target_link_libraries(Animometer dawn_sample_utils)
 
 add_executable(DawnInfo "DawnInfo.cpp")

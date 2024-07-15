@@ -25,6 +25,30 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Util library that contains only wgpu utilities needed for samples
+dawn_add_library(
+  dawn_wgpu_utils
+  UTILITY_TARGET dawn_internal_config
+  PRIVATE_HEADERS
+    "ComboRenderBundleEncoderDescriptor.h"
+    "ComboRenderPipelineDescriptor.h"
+    "SystemUtils.h"
+    "Timer.h"
+    "WGPUHelpers.h"
+  SOURCES
+    "ComboRenderBundleEncoderDescriptor.cpp"
+    "ComboRenderPipelineDescriptor.cpp"
+    "SystemUtils.cpp"
+    "WGPUHelpers.cpp"
+  DEPENDS
+    webgpu_cpp
+    dawn::partition_alloc
+)
+# Needed by WGPUHelpers
+target_compile_definitions(dawn_wgpu_utils
+  PUBLIC
+    "-DTINT_BUILD_SPV_READER=$<BOOL:${TINT_BUILD_SPV_READER}>")
+
 set(private_headers
     "BinarySemaphore.h"
     "ComboRenderBundleEncoderDescriptor.h"
@@ -74,6 +98,8 @@ endif()
 if (TINT_BUILD_SPV_READER)
     list(APPEND conditional_private_depends SPIRV-Tools-opt)
 endif ()
+
+# Util library that just contains all existing utils
 dawn_add_library(
   dawn_utils
   UTILITY_TARGET dawn_internal_config

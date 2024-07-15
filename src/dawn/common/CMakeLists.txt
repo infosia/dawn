@@ -150,6 +150,16 @@ if (DAWN_ENABLE_VULKAN)
         Vulkan-Headers)
 endif ()
 
+set(depends)
+if (DAWN_ENABLE_EMSCRIPTEN)
+    list(APPEND depends
+        dawn::emdawnwebgpu)
+else()
+    list(APPEND depends
+        dawn::dawn_headers
+        dawn::dawncpp_headers)
+endif()
+
 dawn_add_library(
     dawn_common
     UTILITY_TARGET dawn_internal_config
@@ -158,8 +168,7 @@ dawn_add_library(
     SOURCES
         ${sources}
     DEPENDS
-        dawn::dawn_headers
-        dawn::dawncpp_headers
+        ${depends}
     PRIVATE_DEPENDS
         absl::inlined_vector
         dawn::partition_alloc

@@ -45,6 +45,13 @@ dawn_add_library(
     DEPENDS
         dawn_public_config
 )
+
+if (${DAWN_ENABLE_EMSCRIPTEN})
+  add_library(webgpu ALIAS emdawnwebgpu)
+else()
+  add_library(webgpu ALIAS dawn_headers)
+endif()
+
 ###############################################################################
 # Dawn C++ headers
 ###############################################################################
@@ -65,8 +72,13 @@ dawn_add_library(
     DEPENDS
         dawn::dawn_headers
 )
+
 add_library(dawncpp ALIAS dawncpp_headers)
-add_library(webgpu_cpp ALIAS dawncpp_headers)
+if (${DAWN_ENABLE_EMSCRIPTEN})
+  add_library(webgpu_cpp ALIAS emdawnwebgpu_cpp)
+else()
+  add_library(webgpu_cpp ALIAS dawncpp_headers)
+endif()
 
 ###############################################################################
 # Dawn projects
