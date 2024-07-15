@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e6a43f3_ccab61a7",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-15T12:30:14Z",
+      "side": 1,
+      "message": "Going to skip the super magic for now, we can revist if this is deemed too slow in the future.",
+      "parentUuid": "68f2024b_c45d5904",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 63
+      },
+      "revId": "56f382b8280236dc0944fae24abeae03aa143b4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "176e4f57_3b492ce2",
@@ -75,6 +99,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ce88aea_83e6bfbf",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-15T12:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "176e4f57_3b492ce2",
+      "revId": "56f382b8280236dc0944fae24abeae03aa143b4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2989e5f2_5a02539e",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-15T12:30:14Z",
+      "side": 1,
+      "message": "Removed, had copied this from the original ast_printer.",
+      "parentUuid": "bd756f76_f975d2d7",
+      "revId": "56f382b8280236dc0944fae24abeae03aa143b4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99811cff_6f8bbebc",
@@ -88,6 +148,24 @@
       "writtenOn": "2024-07-11T16:23:55Z",
       "side": 1,
       "message": "Can you add a test case for vectors with dynamic indices too, so that we can see the modulo+ternary path? Or just add it to the test case above.",
+      "revId": "56f382b8280236dc0944fae24abeae03aa143b4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba54fd26_aca58202",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-15T12:30:14Z",
+      "side": 1,
+      "message": "Done, added to the above.",
+      "parentUuid": "99811cff_6f8bbebc",
       "revId": "56f382b8280236dc0944fae24abeae03aa143b4b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

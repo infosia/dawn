@@ -16,6 +16,24 @@
       "message": "Note, this handles scalar and vector. Matrix is not supported yet.",
       "revId": "b3e5aa07bc20f01ddb758f25377a653d672aaaad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d018f730_08af858e",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-15T12:30:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e3560256_95a3b65c",
+      "revId": "b3e5aa07bc20f01ddb758f25377a653d672aaaad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
