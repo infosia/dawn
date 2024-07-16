@@ -30,10 +30,10 @@
 using ::testing::Invoke;
 
 CachingInterfaceMock::CachingInterfaceMock() {
-    ON_CALL(*this, LoadData).WillByDefault(Invoke([=](auto&&... args) {
+    ON_CALL(*this, LoadData).WillByDefault(Invoke([this, args...](auto&&... args) {
         return LoadDataDefault(args...);
     }));
-    ON_CALL(*this, StoreData).WillByDefault(Invoke([=](auto&&... args) {
+    ON_CALL(*this, StoreData).WillByDefault(Invoke([this, args...](auto&&... args) {
         return StoreDataDefault(args...);
     }));
 }
