@@ -88,6 +88,24 @@
       "parentUuid": "dfc6c454_17f0b40d",
       "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daf23f2f_77e7d789",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-16T14:52:25Z",
+      "side": 1,
+      "message": "actually, we can also just store the hash in PL to avoid re-calculation every time. From the look at the code, my understanding is that we don\u0027t currently cache the hash in the object?",
+      "parentUuid": "f9c52958_4ad3d6c3",
+      "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
