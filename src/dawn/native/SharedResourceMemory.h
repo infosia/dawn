@@ -101,7 +101,9 @@ class SharedResourceMemory : public ApiObjectBase, public WeakRefSupport<SharedR
     MaybeError ValidateResourceCreatedFromSelf(SharedResource* resource);
 
   protected:
-    SharedResourceMemory(DeviceBase* device, ObjectBase::ErrorTag, const char* label);
+    SharedResourceMemory(DeviceBase* device,
+                         ObjectBase::ErrorTag,
+                         std::optional<std::string_view> label);
     using ApiObjectBase::ApiObjectBase;
 
   private:

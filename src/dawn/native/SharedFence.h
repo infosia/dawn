@@ -48,7 +48,7 @@ class SharedFenceBase : public ApiObjectBase {
     MaybeError ExportInfo(SharedFenceExportInfo* info) const;
 
   protected:
-    SharedFenceBase(DeviceBase* device, const char* label);
+    SharedFenceBase(DeviceBase* device, std::optional<std::string_view> label);
     SharedFenceBase(DeviceBase* device,
                     const SharedFenceDescriptor* descriptor,
                     ObjectBase::ErrorTag tag);

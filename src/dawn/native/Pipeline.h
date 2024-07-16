@@ -46,13 +46,14 @@
 
 namespace dawn::native {
 
-ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* device,
-                                                                const ShaderModuleBase* module,
-                                                                const char* entryPointName,
-                                                                uint32_t constantCount,
-                                                                const ConstantEntry* constants,
-                                                                const PipelineLayoutBase* layout,
-                                                                SingleShaderStage stage);
+ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(
+    DeviceBase* device,
+    const ShaderModuleBase* module,
+    std::optional<std::string_view> entryPointName,
+    uint32_t constantCount,
+    const ConstantEntry* constants,
+    const PipelineLayoutBase* layout,
+    SingleShaderStage stage);
 
 WGPUCreatePipelineAsyncStatus CreatePipelineAsyncStatusFromErrorType(InternalErrorType error);
 
@@ -96,9 +97,11 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
   protected:
     PipelineBase(DeviceBase* device,
                  PipelineLayoutBase* layout,
-                 const char* label,
+                 std::optional<std::string_view> label,
                  std::vector<StageAndDescriptor> stages);
-    PipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
+    PipelineBase(DeviceBase* device,
+                 ObjectBase::ErrorTag tag,
+                 std::optional<std::string_view> label);
 
   private:
     MaybeError ValidateGetBindGroupLayout(BindGroupIndex group);
