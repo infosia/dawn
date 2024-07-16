@@ -87,6 +87,24 @@
       "parentUuid": "b381ff09_51b8cbd8",
       "revId": "8285e653643c98729ac3541435161efac4236156",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "629b9e9d_4e7e57a4",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-16T22:15:48Z",
+      "side": 1,
+      "message": "I suspect the failure is due to std430 vec3 layout issue, it is same as vec4. But our buffer is still size of 3*sizeof(uint32_t)\u003d12.\n```\n/* Dumped generated GLSL */\n#version 320 es\nlayout(binding \u003d 0, std430) buffer tint_symbol_block_ssbo {\n   uvec3 inner;\n   uint pad;\n} tint_symbol;\n```\n\n*If any active shader storage block is not\nbacked by a sufficiently large buffer object, the results of shader execution may be\nundefined or modified, as described in section 6.4*",
+      "parentUuid": "f5364ffe_71910e21",
+      "revId": "8285e653643c98729ac3541435161efac4236156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
