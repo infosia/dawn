@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8437cf0b_44280826",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-16T16:27:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "190d1fc0_4fcd8b66",
+      "revId": "54cfe82a520a103983af2cc26d1860b11c1d6853",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a168bf9_5f84ef69",
@@ -167,6 +185,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c0f6de8_082dc4e9",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-16T16:27:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a168bf9_5f84ef69",
+      "revId": "54cfe82a520a103983af2cc26d1860b11c1d6853",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0d26abf_618d825d",
@@ -180,6 +216,24 @@
       "writtenOn": "2024-07-16T02:44:12Z",
       "side": 1,
       "message": "Stephen mentioned this when the existing code was written (I didn\u0027t change it then) but, the defaults are such that for the cases below, IIRC, you only need\n\n```cpp\nif (descriptor.dimension \u003d\u003d wepu::TextureDimension::e2d \u0026\u0026 \n    descriptor.size.depthOrArrayLayers \u003d\u003d 6) {\n  // Testing cube texture copy for compat.\n  textureBindingViewDimensionDesc.textureBindingViewDimension \u003d\n    wgpu::TextureViewDimension::Cube;\n}\n```\n\nAll of the other cases are the the default and so don\u0027t need to be set explicitly.",
+      "revId": "54cfe82a520a103983af2cc26d1860b11c1d6853",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cd431ba_ee64707d",
+        "filename": "src/dawn/tests/end2end/NonzeroTextureCreationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-16T16:27:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0d26abf_618d825d",
       "revId": "54cfe82a520a103983af2cc26d1860b11c1d6853",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
