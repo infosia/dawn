@@ -57,7 +57,8 @@ class RenderBundleBase final : public ApiObjectBase {
                      RenderPassResourceUsage resourceUsage,
                      IndirectDrawMetadata indirectDrawMetadata);
 
-    static Ref<RenderBundleBase> MakeError(DeviceBase* device, const char* label);
+    static Ref<RenderBundleBase> MakeError(DeviceBase* device,
+                                           std::optional<std::string_view> label);
 
     ObjectType GetType() const override;
     void FormatLabel(absl::FormatSink* s) const override;
@@ -75,7 +76,7 @@ class RenderBundleBase final : public ApiObjectBase {
     const IndirectDrawMetadata& GetIndirectDrawMetadata();
 
   private:
-    RenderBundleBase(DeviceBase* device, ErrorTag errorTag, const char* label);
+    RenderBundleBase(DeviceBase* device, ErrorTag errorTag, std::optional<std::string_view> label);
 
     void DestroyImpl() override;
 
