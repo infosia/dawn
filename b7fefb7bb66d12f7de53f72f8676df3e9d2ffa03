@@ -142,6 +142,24 @@
       "parentUuid": "9e09daa7_5463215b",
       "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4589e17_32cefc40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-16T18:40:46Z",
+      "side": 1,
+      "message": "ah you\u0027re right that hash is not secure enough. purging seems a bit annoying too if we use serials since it\u0027s not clear when to purge - though it could work.\nWhat if we store a WeakRef\u003cPipelineLayout\u003e ? this is how ContentLessObjectCache works.",
+      "parentUuid": "4d0ee35c_a665d4ff",
+      "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
