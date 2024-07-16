@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb1eff98_c7347f38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-16T20:50:27Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "884c17608a78d951d9c45c5606be2c9b4fc8f4a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a1229a8_7091d57e",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1141,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-16T20:50:27Z",
+      "side": 1,
+      "message": "The test for `var-\u003eResult(0)` wasn\u0027t needed, because `CheckResults` above guarantees that there is a single non-null result.",
+      "revId": "884c17608a78d951d9c45c5606be2c9b4fc8f4a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
