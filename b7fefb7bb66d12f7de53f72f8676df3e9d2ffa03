@@ -124,6 +124,24 @@
       "parentUuid": "daf23f2f_77e7d789",
       "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d0ee35c_a665d4ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-16T18:22:43Z",
+      "side": 1,
+      "message": "Actually content hash is not cryptographic hash. So it\u0027s possible that 2 PLs would have the same hash and the same pointer value (allocated at different time), but have different contents. We also couldn\u0027t deref the PLs to compare the contents because the PLs might not be alive at that point.\n\nIt\u0027s probably better to use monotonic serial value to hash the PLs. It\u0027s easier and faster than cryptographic hashing.\nThe only problem is that a duplicated MTLFunction might be stored in future due to having different serial value but with the same content. In that case, we probably need to make the memory cache a MRU cache to purge old MTLFunctions.",
+      "parentUuid": "9e09daa7_5463215b",
+      "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
