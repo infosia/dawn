@@ -16,6 +16,24 @@
       "message": "Can you also add tests for the case where the attribute is attached to a member inside a returned struct?",
       "revId": "cb740a530ddb4957eff25e22d3c32a317c897f72",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91a309f2_91523f9b",
+        "filename": "src/tint/lang/wgsl/resolver/subgroups_extension_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-07-16T13:29:04Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "3e4a5dd5_f9e10113",
+      "revId": "cb740a530ddb4957eff25e22d3c32a317c897f72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
