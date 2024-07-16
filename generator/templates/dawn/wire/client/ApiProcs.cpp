@@ -27,7 +27,7 @@
 
 #include <algorithm>
 #include <cstring>
-#include <string>
+#include <string_view>
 #include <type_traits>
 #include <vector>
 #include <utility>
@@ -124,7 +124,7 @@ namespace dawn::wire::client {
 namespace {
     struct ProcEntry {
         WGPUProc proc;
-        const char* name;
+        std::string_view name;
     };
     static const ProcEntry sProcMap[] = {
         {% for (type, method) in c_methods_sorted_by_name %}
@@ -134,25 +134,29 @@ namespace {
     static constexpr size_t sProcMapSize = sizeof(sProcMap) / sizeof(sProcMap[0]);
 }  // anonymous namespace
 
-DAWN_WIRE_EXPORT WGPUProc {{as_cMethodNamespaced(None, Name('get proc address'), Name('dawn wire client'))}}(WGPUDevice, const char* procName) {
-    if (procName == nullptr) {
+DAWN_WIRE_EXPORT WGPUProc {{as_cMethodNamespaced(None, Name('get proc address'), Name('dawn wire client'))}}(WGPUDevice, WGPUString procName) {
+    if (procName.data == nullptr) {
         return nullptr;
     }
 
     const ProcEntry* entry = std::lower_bound(&sProcMap[0], &sProcMap[sProcMapSize], procName,
-        [](const ProcEntry &a, const char *b) -> bool {
-            return strcmp(a.name, b) < 0;
+        [](const ProcEntry &a, const WGPUString& b) -> bool {
+            int cmp = strncmp(a.name.data(), b.data, b.length);
+            if (cmp == 0 && b.length != SIZE_MAX) {
+                return a.name.length() < b.length;
+            }
+            return cmp < 0;
         }
     );
 
-    if (entry != &sProcMap[sProcMapSize] && strcmp(entry->name, procName) == 0) {
+    if (entry != &sProcMap[sProcMapSize] && strncmp(entry->name.data(), procName.data, procName.length) == 0 && (entry->name.length() == procName.length || procName.length == SIZE_MAX)) {
         return entry->proc;
     }
 
     // Special case the free-standing functions of the API.
     // TODO(dawn:1238) Checking string one by one is slow, it needs to be optimized.
     {% for function in by_category["function"] %}
-        if (strcmp(procName, "{{as_cMethod(None, function.name)}}") == 0) {
+        if (strncmp(procName.data, "{{as_cMethod(None, function.name)}}", procName.length) == 0) {
             return reinterpret_cast<WGPUProc>({{as_cMethodNamespaced(None, function.name, Name('dawn wire client'))}});
         }
 
@@ -166,7 +170,7 @@ namespace dawn::wire::client {
         std::vector<const char*> result;
         result.reserve(sProcMapSize);
         for (const ProcEntry& entry : sProcMap) {
-            result.push_back(entry.name);
+            result.push_back(entry.name.data());
         }
         return result;
     }
