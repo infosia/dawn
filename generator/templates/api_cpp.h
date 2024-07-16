@@ -248,6 +248,8 @@ class ObjectBase {
         {{" "}}= {{member.default_value}}
     {%- elif member.default_value != None -%}
         {{" "}}= {{member.default_value}}
+    {%- elif member.type.category == "structure" and member.annotation == "value" -%}
+        {{" "}}= {}
     {%- else -%}
         {{assert(member.default_value == None)}}
         {%- if force_default -%}
@@ -337,7 +339,7 @@ class ObjectBase {
             {%- else -%}
                 {{as_annotated_cppType(arg)}}
             {%- endif -%}
-            {% if not dfn %}{{render_cpp_default_value(arg, False)}}{% endif %}
+            {% if not dfn and (arg.optional or arg.default_value != None) %}{{render_cpp_default_value(arg, False)}}{% endif %}
         {%- endfor -%}
     ) const
 {%- endmacro %}
