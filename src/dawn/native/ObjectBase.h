@@ -122,8 +122,8 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     static constexpr UntrackedByDeviceTag kUntrackedByDevice = {};
 
     ApiObjectBase(DeviceBase* device, LabelNotImplementedTag tag);
-    ApiObjectBase(DeviceBase* device, const char* label);
-    ApiObjectBase(DeviceBase* device, ErrorTag tag, const char* label = nullptr);
+    ApiObjectBase(DeviceBase* device, std::optional<std::string_view> label);
+    ApiObjectBase(DeviceBase* device, ErrorTag tag, std::optional<std::string_view> label = "");
     ~ApiObjectBase() override;
 
     virtual ObjectType GetType() const = 0;

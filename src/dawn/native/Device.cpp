@@ -429,9 +429,7 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
 
     mFormatTable = BuildFormatTable(this);
 
-    if (descriptor->label != nullptr && strlen(descriptor->label) != 0) {
-        mLabel = descriptor->label;
-    }
+    mLabel = utils::NormalizeLabel(descriptor->label);
 
     mIsImmediateErrorHandlingEnabled = IsToggleEnabled(Toggle::EnableImmediateErrorHandling);
 

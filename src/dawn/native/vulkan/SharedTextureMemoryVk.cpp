@@ -214,7 +214,7 @@ ResultOrError<VkDeviceMemory> AllocateDeviceMemory(Device* device,
 // static
 ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     Device* device,
-    const char* label,
+    std::optional<std::string_view> label,
     const SharedTextureMemoryDmaBufDescriptor* descriptor) {
 #if DAWN_PLATFORM_IS(LINUX)
     VkDevice vkDevice = device->GetVkDevice();
@@ -477,7 +477,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
 // static
 ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     Device* device,
-    const char* label,
+    std::optional<std::string_view> label,
     const SharedTextureMemoryAHardwareBufferDescriptor* descriptor) {
 #if DAWN_PLATFORM_IS(ANDROID)
     const auto* ahbFunctions =
@@ -743,7 +743,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
 // static
 ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     Device* device,
-    const char* label,
+    std::optional<std::string_view> label,
     const SharedTextureMemoryOpaqueFDDescriptor* descriptor) {
 #if DAWN_PLATFORM_IS(POSIX)
     VkDevice vkDevice = device->GetVkDevice();
@@ -961,7 +961,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
 // static
 Ref<SharedTextureMemory> SharedTextureMemory::Create(
     Device* device,
-    const char* label,
+    std::optional<std::string_view> label,
     const SharedTextureMemoryProperties& properties,
     uint32_t queueFamilyIndex) {
     Ref<SharedTextureMemory> sharedTextureMemory =
@@ -971,7 +971,7 @@ Ref<SharedTextureMemory> SharedTextureMemory::Create(
 }
 
 SharedTextureMemory::SharedTextureMemory(Device* device,
-                                         const char* label,
+                                         std::optional<std::string_view> label,
                                          const SharedTextureMemoryProperties& properties,
                                          uint32_t queueFamilyIndex)
     : SharedTextureMemoryBase(device, label, properties), mQueueFamilyIndex(queueFamilyIndex) {}

@@ -91,7 +91,8 @@ class RenderPipelineBase : public PipelineBase,
     RenderPipelineBase(DeviceBase* device, const UnpackedPtr<RenderPipelineDescriptor>& descriptor);
     ~RenderPipelineBase() override;
 
-    static Ref<RenderPipelineBase> MakeError(DeviceBase* device, const char* label);
+    static Ref<RenderPipelineBase> MakeError(DeviceBase* device,
+                                             std::optional<std::string_view> label);
 
     ObjectType GetType() const override;
 
@@ -153,7 +154,9 @@ class RenderPipelineBase : public PipelineBase,
     void DestroyImpl() override;
 
   private:
-    RenderPipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
+    RenderPipelineBase(DeviceBase* device,
+                       ObjectBase::ErrorTag tag,
+                       std::optional<std::string_view> label);
 
     // Vertex state
     uint32_t mVertexBufferCount;
