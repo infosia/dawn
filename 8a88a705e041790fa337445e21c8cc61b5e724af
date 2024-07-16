@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3805caab_0afb64be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-16T14:38:37Z",
+      "side": 1,
+      "message": "PTAL these CLs. I\u0027ll rebase once all the other already approved CLs are landed. Jim if architecturally this looks good to you, I\u0027ll iterate with Sonakshi while you\u0027re away to land these.",
+      "revId": "8a88a705e041790fa337445e21c8cc61b5e724af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
