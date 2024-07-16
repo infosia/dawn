@@ -986,7 +986,7 @@ class Builder {
     /// @returns the instruction
     template <typename... ARGS>
     ir::UserCall* Call(ir::Function* func, ARGS&&... args) {
-        return Call(func->ReturnType(), func, std::forward<ARGS>(args)...);
+        return Call(func ? func->ReturnType() : nullptr, func, std::forward<ARGS>(args)...);
     }
 
     /// Creates a user function call instruction
