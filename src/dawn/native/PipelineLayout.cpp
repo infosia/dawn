@@ -100,7 +100,7 @@ ResultOrError<UnpackedPtr<PipelineLayoutDescriptor>> ValidatePipelineLayoutDescr
 
 StageAndDescriptor::StageAndDescriptor(SingleShaderStage shaderStage,
                                        ShaderModuleBase* module,
-                                       const char* entryPoint,
+                                       std::optional<std::string_view> entryPoint,
                                        size_t constantCount,
                                        ConstantEntry const* constants)
     : shaderStage(shaderStage),
@@ -144,7 +144,7 @@ PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
 
 PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
                                        ObjectBase::ErrorTag tag,
-                                       const char* label)
+                                       std::optional<std::string_view> label)
     : ApiObjectBase(device, tag, label) {}
 
 PipelineLayoutBase::~PipelineLayoutBase() = default;
@@ -154,7 +154,8 @@ void PipelineLayoutBase::DestroyImpl() {
 }
 
 // static
-Ref<PipelineLayoutBase> PipelineLayoutBase::MakeError(DeviceBase* device, const char* label) {
+Ref<PipelineLayoutBase> PipelineLayoutBase::MakeError(DeviceBase* device,
+                                                      std::optional<std::string_view> label) {
     return AcquireRef(new PipelineLayoutBase(device, ObjectBase::kError, label));
 }
 
