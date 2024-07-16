@@ -54,7 +54,7 @@ class RenderPassEncoder final : public RenderEncoderBase {
     static Ref<RenderPassEncoder> MakeError(DeviceBase* device,
                                             CommandEncoder* commandEncoder,
                                             EncodingContext* encodingContext,
-                                            const char* label);
+                                            std::optional<std::string_view> label);
 
     ~RenderPassEncoder() override;
 
@@ -102,7 +102,7 @@ class RenderPassEncoder final : public RenderEncoderBase {
                       CommandEncoder* commandEncoder,
                       EncodingContext* encodingContext,
                       ErrorTag errorTag,
-                      const char* label);
+                      std::optional<std::string_view> label);
 
   private:
     void DestroyImpl() override;

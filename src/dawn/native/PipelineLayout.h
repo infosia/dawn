@@ -56,7 +56,7 @@ ResultOrError<UnpackedPtr<PipelineLayoutDescriptor>> ValidatePipelineLayoutDescr
 struct StageAndDescriptor {
     StageAndDescriptor(SingleShaderStage shaderStage,
                        ShaderModuleBase* module,
-                       const char* entryPoint,
+                       std::optional<std::string_view> entryPoint,
                        size_t constantCount,
                        ConstantEntry const* constants);
 
@@ -80,7 +80,8 @@ class PipelineLayoutBase : public ApiObjectBase,
     PipelineLayoutBase(DeviceBase* device, const UnpackedPtr<PipelineLayoutDescriptor>& descriptor);
     ~PipelineLayoutBase() override;
 
-    static Ref<PipelineLayoutBase> MakeError(DeviceBase* device, const char* label);
+    static Ref<PipelineLayoutBase> MakeError(DeviceBase* device,
+                                             std::optional<std::string_view> label);
     static ResultOrError<Ref<PipelineLayoutBase>> CreateDefault(
         DeviceBase* device,
         std::vector<StageAndDescriptor> stages,
@@ -113,7 +114,9 @@ class PipelineLayoutBase : public ApiObjectBase,
     };
 
   protected:
-    PipelineLayoutBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
+    PipelineLayoutBase(DeviceBase* device,
+                       ObjectBase::ErrorTag tag,
+                       std::optional<std::string_view> label);
     void DestroyImpl() override;
 
     PerBindGroup<Ref<BindGroupLayoutBase>> mBindGroupLayouts;
