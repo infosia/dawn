@@ -940,7 +940,15 @@ void {{CppType}}::SetUncapturedErrorCallback(L callback) {
     static inline {{as_cppType(function.return_type.name)}} {{as_cppType(function.name)}}(
         {%- for arg in function.arguments -%}
             {%- if not loop.first %}, {% endif -%}
-            {{as_annotated_cppType(arg)}}{{render_cpp_default_value(arg, False)}}
+            {%- if arg.type.name.get() == "string" and arg.annotation == "value" -%}
+                {%- if arg.optional -%}
+                    std::optional<std::string_view> {{as_varName(arg.name)}}{{render_cpp_default_value(arg, False)}}
+                {%- else -%}
+                    std::string_view {{as_varName(arg.name)}}{{render_cpp_default_value(arg, False)}}
+                {%- endif -%}
+            {%- else -%}
+                {{as_annotated_cppType(arg)}}{{render_cpp_default_value(arg, False)}}
+            {%- endif -%}
         {%- endfor -%}
     ) {
         {% if function.return_type.name.concatcase() == "void" %}
