@@ -16,6 +16,40 @@
       "message": "PTAL",
       "revId": "f441612d03cd1ccde91dc99646a1029ca9ba55ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "700c4a2e_09308aad",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-16T18:35:07Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to do this here, the builder shouldn\u0027t allow building invalid IR.",
+      "revId": "f441612d03cd1ccde91dc99646a1029ca9ba55ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a038952_19fdc003",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-16T18:35:07Z",
+      "side": 1,
+      "message": "Instead of passing `nullptr`, maybe clear the operand afterwards.",
+      "revId": "f441612d03cd1ccde91dc99646a1029ca9ba55ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
