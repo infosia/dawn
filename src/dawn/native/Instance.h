@@ -32,6 +32,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <string_view>
 #include <vector>
 
 #include "absl/container/flat_hash_set.h"
@@ -109,8 +110,8 @@ class InstanceBase final : public ErrorSink, public RefCountedWithExternalCount<
 
     // Used to query the details of a toggle. Return nullptr if toggleName is not a valid name
     // of a toggle supported in Dawn.
-    const ToggleInfo* GetToggleInfo(const char* toggleName);
-    Toggle ToggleNameToEnum(const char* toggleName);
+    const ToggleInfo* GetToggleInfo(std::string_view toggleName);
+    Toggle ToggleNameToEnum(std::string_view toggleName);
 
     // TODO(dawn:2166): Move this method to PhysicalDevice to better detect that the backend
     // validation is actually enabled or not when a physical device is created. Sometimes it is

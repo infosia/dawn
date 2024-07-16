@@ -81,19 +81,19 @@ using InstanceToggleTest = ToggleTest;
 // Test that instance toggles are set by requirement or default as expected.
 TEST_F(InstanceToggleTest, InstanceTogglesSet) {
     auto validateInstanceToggles = [](const native::Instance* nativeInstance,
-                                      std::initializer_list<const char*> enableToggles,
-                                      std::initializer_list<const char*> disableToggles) {
+                                      std::initializer_list<wgpu::StringView> enableToggles,
+                                      std::initializer_list<wgpu::StringView> disableToggles) {
         const native::InstanceBase* instance = native::FromAPI(nativeInstance->Get());
         const native::TogglesState& instanceTogglesState = instance->GetTogglesState();
         std::vector<const char*> enabledToggles = instanceTogglesState.GetEnabledToggleNames();
         std::vector<const char*> disabledToggles = instanceTogglesState.GetDisabledToggleNames();
         EXPECT_EQ(disabledToggles.size(), disableToggles.size());
         EXPECT_EQ(enabledToggles.size(), enableToggles.size());
-        for (auto* enableToggle : enableToggles) {
-            EXPECT_THAT(enabledToggles, Contains(StrEq(enableToggle)));
+        for (wgpu::StringView enableToggle : enableToggles) {
+            EXPECT_THAT(enabledToggles, Contains(StrEq(enableToggle.data)));
         }
-        for (auto* disableToggle : disableToggles) {
-            EXPECT_THAT(disabledToggles, Contains(StrEq(disableToggle)));
+        for (wgpu::StringView disableToggle : disableToggles) {
+            EXPECT_THAT(disabledToggles, Contains(StrEq(disableToggle.data)));
         }
     };
 
@@ -127,11 +127,12 @@ TEST_F(InstanceToggleTest, InstanceTogglesSet) {
     {
         std::unique_ptr<native::Instance> instance;
 
-        const char* allowUnsafeApisToggle = "allow_unsafe_apis";
+        wgpu::StringView allowUnsafeApisToggle = "allow_unsafe_apis";
         WGPUDawnTogglesDescriptor instanceTogglesDesc = {};
         instanceTogglesDesc.chain.sType = WGPUSType::WGPUSType_DawnTogglesDescriptor;
         instanceTogglesDesc.enabledToggleCount = 1;
-        instanceTogglesDesc.enabledToggles = &allowUnsafeApisToggle;
+        instanceTogglesDesc.enabledToggles =
+            &static_cast<const WGPUStringView&>(allowUnsafeApisToggle);
 
         WGPUInstanceDescriptor instanceDesc = {};
         instanceDesc.nextInChain = &instanceTogglesDesc.chain;
@@ -145,11 +146,12 @@ TEST_F(InstanceToggleTest, InstanceTogglesSet) {
     {
         std::unique_ptr<native::Instance> instance;
 
-        const char* allowUnsafeApisToggle = "allow_unsafe_apis";
+        wgpu::StringView allowUnsafeApisToggle = "allow_unsafe_apis";
         WGPUDawnTogglesDescriptor instanceTogglesDesc = {};
         instanceTogglesDesc.chain.sType = WGPUSType::WGPUSType_DawnTogglesDescriptor;
         instanceTogglesDesc.disabledToggleCount = 1;
-        instanceTogglesDesc.disabledToggles = &allowUnsafeApisToggle;
+        instanceTogglesDesc.disabledToggles =
+            &static_cast<const WGPUStringView&>(allowUnsafeApisToggle);
 
         WGPUInstanceDescriptor instanceDesc = {};
         instanceDesc.nextInChain = &instanceTogglesDesc.chain;
@@ -196,11 +198,12 @@ TEST_F(InstanceToggleTest, InstanceTogglesInheritToAdapterAndDevice) {
     {
         std::unique_ptr<native::Instance> instance;
 
-        const char* allowUnsafeApisToggle = "allow_unsafe_apis";
+        wgpu::StringView allowUnsafeApisToggle = "allow_unsafe_apis";
         WGPUDawnTogglesDescriptor instanceTogglesDesc = {};
         instanceTogglesDesc.chain.sType = WGPUSType::WGPUSType_DawnTogglesDescriptor;
         instanceTogglesDesc.enabledToggleCount = 1;
-        instanceTogglesDesc.enabledToggles = &allowUnsafeApisToggle;
+        instanceTogglesDesc.enabledToggles =
+            &static_cast<const WGPUStringView&>(allowUnsafeApisToggle);
 
         WGPUInstanceDescriptor instanceDesc = {};
         instanceDesc.nextInChain = &instanceTogglesDesc.chain;
@@ -214,11 +217,12 @@ TEST_F(InstanceToggleTest, InstanceTogglesInheritToAdapterAndDevice) {
     {
         std::unique_ptr<native::Instance> instance;
 
-        const char* allowUnsafeApisToggle = "allow_unsafe_apis";
+        wgpu::StringView allowUnsafeApisToggle = "allow_unsafe_apis";
         WGPUDawnTogglesDescriptor instanceTogglesDesc = {};
         instanceTogglesDesc.chain.sType = WGPUSType::WGPUSType_DawnTogglesDescriptor;
         instanceTogglesDesc.disabledToggleCount = 1;
-        instanceTogglesDesc.disabledToggles = &allowUnsafeApisToggle;
+        instanceTogglesDesc.disabledToggles =
+            &static_cast<const WGPUStringView&>(allowUnsafeApisToggle);
 
         WGPUInstanceDescriptor instanceDesc = {};
         instanceDesc.nextInChain = &instanceTogglesDesc.chain;
@@ -243,18 +247,18 @@ TEST_F(AdapterToggleTest, AdapterTogglesSetAndInheritToDevice) {
 
     // Validate an adapter has expected toggles state.
     auto ValidateAdapterToggles = [](const native::AdapterBase* adapterBase,
-                                     std::initializer_list<const char*> enableToggles,
-                                     std::initializer_list<const char*> disableToggles) {
+                                     std::initializer_list<wgpu::StringView> enableToggles,
+                                     std::initializer_list<wgpu::StringView> disableToggles) {
         const native::TogglesState& adapterTogglesState = adapterBase->GetTogglesState();
         std::vector<const char*> enabledToggles = adapterTogglesState.GetEnabledToggleNames();
         std::vector<const char*> disabledToggles = adapterTogglesState.GetDisabledToggleNames();
         EXPECT_EQ(disabledToggles.size(), disableToggles.size());
         EXPECT_EQ(enabledToggles.size(), enableToggles.size());
-        for (auto* enableToggle : enableToggles) {
-            EXPECT_THAT(enabledToggles, Contains(StrEq(enableToggle)));
+        for (wgpu::StringView enableToggle : enableToggles) {
+            EXPECT_THAT(enabledToggles, Contains(StrEq(enableToggle.data)));
         }
-        for (auto* disableToggle : disableToggles) {
-            EXPECT_THAT(disabledToggles, Contains(StrEq(disableToggle)));
+        for (wgpu::StringView disableToggle : disableToggles) {
+            EXPECT_THAT(disabledToggles, Contains(StrEq(disableToggle.data)));
         }
     };
 
@@ -282,16 +286,16 @@ TEST_F(AdapterToggleTest, AdapterTogglesSetAndInheritToDevice) {
     auto CreateAdapterAndValidateToggles =
         [this, &instance, ValidateAdapterToggles, ValidateAdapterTogglesInheritedToDevice](
             const wgpu::DawnTogglesDescriptor* requiredAdapterToggles,
-            std::initializer_list<const char*> expectedEnabledToggles,
-            std::initializer_list<const char*> expectedDisabledToggles) {
+            std::initializer_list<wgpu::StringView> expectedEnabledToggles,
+            std::initializer_list<wgpu::StringView> expectedDisabledToggles) {
             native::Adapter adapter = CreateNullAdapter(instance.get(), requiredAdapterToggles);
             ValidateAdapterToggles(native::FromAPI(adapter.Get()), expectedEnabledToggles,
                                    expectedDisabledToggles);
             ValidateAdapterTogglesInheritedToDevice(native::FromAPI(adapter.Get()));
         };
 
-    const char* allowUnsafeApisToggle = "allow_unsafe_apis";
-    const char* useDXCToggle = "use_dxc";
+    wgpu::StringView allowUnsafeApisToggle = "allow_unsafe_apis";
+    wgpu::StringView useDXCToggle = "use_dxc";
 
     // Create adapter with no toggles descriptor
     {
@@ -332,7 +336,7 @@ TEST_F(AdapterToggleTest, AdapterTogglesSetAndInheritToDevice) {
     // Create adapter with UseDXC enabled and explicitly overriding AllowUnsafeAPIs in toggles
     // descriptor
     {
-        std::vector<const char*> enableAdapterToggles = {useDXCToggle, allowUnsafeApisToggle};
+        std::vector<wgpu::StringView> enableAdapterToggles = {useDXCToggle, allowUnsafeApisToggle};
         wgpu::DawnTogglesDescriptor adapterTogglesDesc = {};
         adapterTogglesDesc.enabledToggleCount = enableAdapterToggles.size();
         adapterTogglesDesc.enabledToggles = enableAdapterToggles.data();
@@ -350,8 +354,8 @@ class DeviceToggleTest : public ToggleTest {
     void CreateDeviceAndValidateToggles(
         native::AdapterBase* adapter,
         const wgpu::DawnTogglesDescriptor* requiredDeviceToggles,
-        std::initializer_list<const char*> expectedEnabledToggles,
-        std::initializer_list<const char*> expectedDisabledToggles) {
+        std::initializer_list<wgpu::StringView> expectedEnabledToggles,
+        std::initializer_list<wgpu::StringView> expectedDisabledToggles) {
         native::DeviceDescriptor desc{};
         desc.nextInChain = requiredDeviceToggles;
 
@@ -361,15 +365,15 @@ class DeviceToggleTest : public ToggleTest {
         // Check device toggles state is as expected.
         native::TogglesInfo togglesInfo;
         auto deviceEnabledToggles = device->GetTogglesUsed();
-        for (auto* enableToggle : expectedEnabledToggles) {
-            EXPECT_THAT(deviceEnabledToggles, Contains(StrEq(enableToggle)));
-            native::Toggle toggle = togglesInfo.ToggleNameToEnum(enableToggle);
+        for (wgpu::StringView enableToggle : expectedEnabledToggles) {
+            EXPECT_THAT(deviceEnabledToggles, Contains(StrEq(enableToggle.data)));
+            native::Toggle toggle = togglesInfo.ToggleNameToEnum(enableToggle.data);
             DAWN_ASSERT(toggle != native::Toggle::InvalidEnum);
             EXPECT_TRUE(device->IsToggleEnabled(toggle));
         }
-        for (auto* enableToggle : expectedDisabledToggles) {
-            EXPECT_THAT(deviceEnabledToggles, Not(Contains(StrEq(enableToggle))));
-            native::Toggle toggle = togglesInfo.ToggleNameToEnum(enableToggle);
+        for (wgpu::StringView enableToggle : expectedDisabledToggles) {
+            EXPECT_THAT(deviceEnabledToggles, Not(Contains(StrEq(enableToggle.data))));
+            native::Toggle toggle = togglesInfo.ToggleNameToEnum(enableToggle.data);
             DAWN_ASSERT(toggle != native::Toggle::InvalidEnum);
             EXPECT_FALSE(device->IsToggleEnabled(toggle));
         }
@@ -387,7 +391,7 @@ TEST_F(DeviceToggleTest, DeviceSetToggles) {
     Ref<native::AdapterBase> adapter = native::FromAPI(nullAdapter.Get());
 
     // DumpShader is a device toggle.
-    const char* dumpShaderToggle = "dump_shaders";
+    wgpu::StringView dumpShaderToggle = "dump_shaders";
 
     // Create device with no toggles descriptor.
     {
@@ -464,7 +468,7 @@ TEST_F(DeviceToggleTest, DeviceOverridingInstanceToggle) {
         CreateAdapterWithAllowUnsafeAPIsToggle(false, true);
 
     // AllowUnsafeAPIs is an instance toggle, and can be overridden by device.
-    const char* allowUnsafeApisToggle = "allow_unsafe_apis";
+    wgpu::StringView allowUnsafeApisToggle = "allow_unsafe_apis";
 
     // Create device with no toggles descriptor will inherite the adapter toggle.
     {
@@ -586,7 +590,7 @@ TEST_F(DeviceToggleTest, DeviceOverridingAdapterToggle) {
     Ref<native::AdapterBase> adapterForcedDisableDXC = CreateAdapterWithDXCToggle(false, true);
 
     // UseDXC is an adapter toggle, and can be overridden by device.
-    const char* useDXCToggle = "use_dxc";
+    wgpu::StringView useDXCToggle = "use_dxc";
 
     // Create device with no toggles descriptor.
     {

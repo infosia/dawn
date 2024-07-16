@@ -45,14 +45,15 @@ class SharedFence final : public SharedFenceBase {
   public:
     static ResultOrError<Ref<SharedFence>> Create(
         Device* device,
-        const char* label,
+        std::optional<std::string_view> label,
         const SharedFenceMTLSharedEventDescriptor* descriptor);
 
     id<MTLSharedEvent> GetMTLSharedEvent() const API_AVAILABLE(macos(10.14), ios(12.0));
 
   private:
-    SharedFence(Device* device, const char* label, id<MTLSharedEvent> sharedEvent)
-        API_AVAILABLE(macos(10.14), ios(12.0));
+    SharedFence(Device* device,
+                std::optional<std::string_view> label,
+                id<MTLSharedEvent> sharedEvent) API_AVAILABLE(macos(10.14), ios(12.0));
 
     MaybeError ExportInfoImpl(UnpackedPtr<SharedFenceExportInfo>& info) const override;
 

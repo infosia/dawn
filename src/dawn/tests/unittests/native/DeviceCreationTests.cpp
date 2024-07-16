@@ -66,7 +66,7 @@ class DeviceCreationTest : public testing::Test {
 
         // Create an instance with toggle AllowUnsafeAPIs enabled, and create an unsafe adapter
         // from it.
-        const char* allowUnsafeApisToggle = "allow_unsafe_apis";
+        WGPUStringView allowUnsafeApisToggle = {"allow_unsafe_apis", SIZE_MAX};
         WGPUDawnTogglesDescriptor unsafeInstanceTogglesDesc = {};
         unsafeInstanceTogglesDesc.chain.sType = WGPUSType::WGPUSType_DawnTogglesDescriptor;
         unsafeInstanceTogglesDesc.enabledToggleCount = 1;
@@ -116,7 +116,7 @@ TEST_F(DeviceCreationTest, CreateDeviceWithTogglesSuccess) {
     wgpu::DawnTogglesDescriptor deviceTogglesDesc = {};
     desc.nextInChain = &deviceTogglesDesc;
 
-    const char* toggle = "skip_validation";
+    wgpu::StringView toggle = "skip_validation";
     deviceTogglesDesc.enabledToggles = &toggle;
     deviceTogglesDesc.enabledToggleCount = 1;
 
@@ -124,7 +124,7 @@ TEST_F(DeviceCreationTest, CreateDeviceWithTogglesSuccess) {
     EXPECT_NE(device, nullptr);
 
     auto toggles = GetTogglesUsed(device.Get());
-    EXPECT_THAT(toggles, Contains(StrEq(toggle)));
+    EXPECT_THAT(toggles, Contains(StrEq(toggle.data)));
 }
 
 // Test experimental features are guarded by DisallowUnsafeApis adapter toggle, it is inherited from
@@ -170,7 +170,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
         // Test creating device with AllowUnsafeApis enabled in device toggle descriptor will
         // success on both adapter, as device toggles will override the inherited adapter toggles.
         {
-            const char* const enableToggles[] = {"allow_unsafe_apis"};
+            wgpu::StringView enableToggles[] = {"allow_unsafe_apis"};
             wgpu::DawnTogglesDescriptor deviceTogglesDesc;
             deviceTogglesDesc.enabledToggles = enableToggles;
             deviceTogglesDesc.enabledToggleCount = 1;
@@ -202,7 +202,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
         // Test creating device with AllowUnsafeApis disabled in device toggle descriptor will fail
         // on both adapter, as device toggles will override the inherited adapter toggles.
         {
-            const char* const disableToggles[] = {"allow_unsafe_apis"};
+            wgpu::StringView disableToggles[] = {"allow_unsafe_apis"};
             wgpu::DawnTogglesDescriptor deviceToggleDesc;
             deviceToggleDesc.disabledToggles = disableToggles;
             deviceToggleDesc.disabledToggleCount = 1;

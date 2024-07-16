@@ -357,7 +357,7 @@ WGPUFuture Adapter::RequestDeviceF(const WGPUDeviceDescriptor* descriptor,
 
     // Ensure callbacks are not serialized as part of the command, as they cannot be passed between
     // processes.
-    WGPUDeviceDescriptor wireDescriptor = {};
+    WGPUDeviceDescriptor wireDescriptor = WGPU_DEVICE_DESCRIPTOR_INIT;
     if (descriptor) {
         wireDescriptor = *descriptor;
         wireDescriptor.deviceLostCallback = nullptr;
@@ -393,7 +393,7 @@ WGPUFuture Adapter::RequestDevice2(const WGPUDeviceDescriptor* descriptor,
 
     // Ensure callbacks are not serialized as part of the command, as they cannot be passed between
     // processes.
-    WGPUDeviceDescriptor wireDescriptor = {};
+    WGPUDeviceDescriptor wireDescriptor = WGPU_DEVICE_DESCRIPTOR_INIT;
     if (descriptor) {
         wireDescriptor = *descriptor;
         wireDescriptor.deviceLostCallback = nullptr;

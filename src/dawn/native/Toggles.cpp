@@ -786,9 +786,7 @@ TogglesInfo::TogglesInfo() = default;
 
 TogglesInfo::~TogglesInfo() = default;
 
-const ToggleInfo* TogglesInfo::GetToggleInfo(const char* toggleName) {
-    DAWN_ASSERT(toggleName);
-
+const ToggleInfo* TogglesInfo::GetToggleInfo(std::string_view toggleName) {
     EnsureToggleNameToEnumMapInitialized();
 
     const auto& iter = mToggleNameToEnumMap.find(toggleName);
@@ -804,9 +802,7 @@ const ToggleInfo* TogglesInfo::GetToggleInfo(Toggle toggle) {
     return &kToggleNameAndInfoList[static_cast<size_t>(toggle)].info;
 }
 
-Toggle TogglesInfo::ToggleNameToEnum(const char* toggleName) {
-    DAWN_ASSERT(toggleName);
-
+Toggle TogglesInfo::ToggleNameToEnum(std::string_view toggleName) {
     EnsureToggleNameToEnumMapInitialized();
 
     const auto& iter = mToggleNameToEnumMap.find(toggleName);
