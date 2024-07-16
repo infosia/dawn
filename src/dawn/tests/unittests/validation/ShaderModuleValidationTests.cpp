@@ -33,6 +33,7 @@
 #include "dawn/native/ShaderModule.h"
 #include "dawn/tests/unittests/validation/ValidationTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
+#include "dawn/utils/TestUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
 
 namespace dawn {
@@ -290,25 +291,25 @@ TEST_F(ShaderModuleValidationTest, GetCompilationMessages) {
             ASSERT_EQ(4u, info->messageCount);
 
             const wgpu::CompilationMessage* message = &info->messages[0];
-            ASSERT_STREQ("Info Message", message->message);
+            ExpectStrEq(message->message, "Info Message");
             ASSERT_EQ(wgpu::CompilationMessageType::Info, message->type);
             ASSERT_EQ(0u, message->lineNum);
             ASSERT_EQ(0u, message->linePos);
 
             message = &info->messages[1];
-            ASSERT_STREQ("Warning Message", message->message);
+            ExpectStrEq(message->message, "Warning Message");
             ASSERT_EQ(wgpu::CompilationMessageType::Warning, message->type);
             ASSERT_EQ(0u, message->lineNum);
             ASSERT_EQ(0u, message->linePos);
 
             message = &info->messages[2];
-            ASSERT_STREQ("Error Message", message->message);
+            ExpectStrEq(message->message, "Error Message");
             ASSERT_EQ(wgpu::CompilationMessageType::Error, message->type);
             ASSERT_EQ(3u, message->lineNum);
             ASSERT_EQ(4u, message->linePos);
 
             message = &info->messages[3];
-            ASSERT_STREQ("Complete Message", message->message);
+            ExpectStrEq(message->message, "Complete Message");
             ASSERT_EQ(wgpu::CompilationMessageType::Info, message->type);
             ASSERT_EQ(3u, message->lineNum);
             ASSERT_EQ(4u, message->linePos);
@@ -744,7 +745,7 @@ TEST_F(ShaderModuleValidationTest, CreateErrorShaderModule) {
             ASSERT_EQ(1u, info->messageCount);
 
             const wgpu::CompilationMessage* message = &info->messages[0];
-            ASSERT_STREQ("Shader compilation error", message->message);
+            ExpectStrEq(message->message, "Shader compilation error");
             ASSERT_EQ(wgpu::CompilationMessageType::Error, message->type);
             ASSERT_EQ(0u, message->lineNum);
             ASSERT_EQ(0u, message->linePos);

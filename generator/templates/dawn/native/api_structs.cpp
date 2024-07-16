@@ -34,6 +34,8 @@
 
 #include <tuple>
 
+#include "dawn/common/StringUtils.h"
+
 #if defined(__GNUC__) || defined(__clang__)
 // error: 'offsetof' within non-standard-layout type '{{namespace}}::XXX' is conditionally-supported
 #pragma GCC diagnostic ignored "-Winvalid-offsetof"
@@ -52,7 +54,7 @@ namespace {{native_namespace}} {
             "offsetof mismatch for ChainedStruct::sType");
 
     {% for type in by_category["structure"] %}
-        {% set CppType = as_cppType(type.name) %}
+        {% set CppType = as_cppType(type.name) + ("Base" if type.name.get() == "string" else "") %}
         {% set CType = as_cType(type.name) %}
 
         static_assert(sizeof({{CppType}}) == sizeof({{CType}}), "sizeof mismatch for {{CppType}}");
@@ -104,7 +106,7 @@ namespace {{native_namespace}} {
                 return copy;
             }
         {% endif %}
-        bool {{CppType}}::operator==(const {{as_cppType(type.name)}}& rhs) const {
+        bool {{CppType}}::operator==(const {{CppType}}& rhs) const {
             return {% if type.extensible or type.chained -%}
                 (nextInChain == rhs.nextInChain) &&
             {%- endif %} std::tie(
@@ -165,5 +167,13 @@ namespace {{native_namespace}} {
         }
 
     {% endfor %}
+
+    String::operator std::string_view() const {
+        return FromWGPUString(*reinterpret_cast<const WGPUString*>(this));
+    }
+
+    OptionalString::operator std::optional<std::string_view>() const {
+        return FromOptionalWGPUString(*reinterpret_cast<const WGPUString*>(this));
+    }
 
 } // namespace {{native_namespace}}

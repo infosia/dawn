@@ -73,4 +73,9 @@ void Stream<std::wstring_view>::Write(Sink* s, const std::wstring_view& t) {
     }
 }
 
+template <>
+void Stream<String>::Write(Sink* s, const String& t) {
+    StreamIn(s, std::string_view(t));
+}
+
 }  // namespace dawn::native::stream

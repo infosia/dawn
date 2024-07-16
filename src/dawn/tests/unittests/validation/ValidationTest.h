@@ -124,6 +124,9 @@ class WireHelper;
 
 void InitDawnValidationTestEnvironment(int argc, char** argv);
 
+bool ExpectStrEq(const WGPUString& in, std::string_view expected);
+bool ExpectStrEq(const WGPUString& in, const WGPUString& expected);
+
 class ValidationTest : public testing::Test {
   public:
     ValidationTest();

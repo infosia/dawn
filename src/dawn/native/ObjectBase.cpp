@@ -85,17 +85,16 @@ void ApiObjectList::Destroy() {
     }
 }
 
-ApiObjectBase::ApiObjectBase(DeviceBase* device, const char* label) : ObjectBase(device) {
-    if (label) {
-        mLabel = label;
-    }
+ApiObjectBase::ApiObjectBase(DeviceBase* device, std::optional<std::string_view> label)
+    : ObjectBase(device) {
+    mLabel = label.value_or("");
 }
 
-ApiObjectBase::ApiObjectBase(DeviceBase* device, ErrorTag tag, const char* label)
+ApiObjectBase::ApiObjectBase(DeviceBase* device,
+                             ErrorTag tag,
+                             std::optional<std::string_view> label)
     : ObjectBase(device, tag) {
-    if (label) {
-        mLabel = label;
-    }
+    mLabel = label.value_or("");
 }
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, LabelNotImplementedTag tag) : ObjectBase(device) {}

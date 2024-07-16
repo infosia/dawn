@@ -272,9 +272,7 @@ Surface::Surface(InstanceBase* instance, const UnpackedPtr<SurfaceDescriptor>& d
     : ErrorMonad(),
       mInstance(instance),
       mCapabilityCache(std::make_unique<AdapterSurfaceCapCache>()) {
-    if (descriptor->label != nullptr && strlen(descriptor->label) != 0) {
-        mLabel = descriptor->label;
-    }
+    mLabel = std::optional<std::string_view>(descriptor->label).value_or("");
 
     // Type is validated in validation, otherwise this may crash with an assert failure.
     wgpu::SType type = descriptor

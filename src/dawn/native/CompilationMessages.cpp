@@ -92,8 +92,8 @@ OwnedCompilationMessages::~OwnedCompilationMessages() = default;
 
 void OwnedCompilationMessages::AddUnanchoredMessage(std::string_view message,
                                                     wgpu::CompilationMessageType type) {
-    AddMessage(message, {nullptr, nullptr, static_cast<WGPUCompilationMessageType>(type), 0, 0, 0,
-                         0, 0, 0, 0});
+    AddMessage(message, {nullptr, WGPU_STRING_INIT, static_cast<WGPUCompilationMessageType>(type),
+                         0, 0, 0, 0, 0, 0, 0});
 }
 
 void OwnedCompilationMessages::AddMessageForTesting(std::string_view message,
@@ -102,8 +102,8 @@ void OwnedCompilationMessages::AddMessageForTesting(std::string_view message,
                                                     uint64_t linePos,
                                                     uint64_t offset,
                                                     uint64_t length) {
-    AddMessage(message, {nullptr, nullptr, static_cast<WGPUCompilationMessageType>(type), lineNum,
-                         linePos, offset, length, linePos, offset, length});
+    AddMessage(message, {nullptr, WGPU_STRING_INIT, static_cast<WGPUCompilationMessageType>(type),
+                         lineNum, linePos, offset, length, linePos, offset, length});
 }
 
 MaybeError OwnedCompilationMessages::AddMessage(const tint::diag::Diagnostic& diagnostic) {
@@ -160,10 +160,10 @@ MaybeError OwnedCompilationMessages::AddMessage(const tint::diag::Diagnostic& di
                                            fileStart + offsetInBytes, lengthInBytes)));
     }
 
-    AddMessage(
-        diagnostic.message.Plain(),
-        {nullptr, nullptr, tintSeverityToMessageType(diagnostic.severity), lineNum, linePosInBytes,
-         offsetInBytes, lengthInBytes, linePosInUTF16, offsetInUTF16, lengthInUTF16});
+    AddMessage(diagnostic.message.Plain(),
+               {nullptr, WGPU_STRING_INIT, tintSeverityToMessageType(diagnostic.severity), lineNum,
+                linePosInBytes, offsetInBytes, lengthInBytes, linePosInUTF16, offsetInUTF16,
+                lengthInUTF16});
 
     return {};
 }
@@ -175,7 +175,7 @@ void OwnedCompilationMessages::AddMessage(std::string_view messageString,
 
     DAWN_ASSERT(message.nextInChain == nullptr);
     // The message string won't be populated until GetCompilationInfo.
-    DAWN_ASSERT(message.message == nullptr);
+    DAWN_ASSERT(message.message.data == nullptr);
 
     mMessageStrings.push_back(std::string(messageString));
     mMessages.push_back(message);
@@ -211,7 +211,8 @@ const WGPUCompilationInfo* OwnedCompilationMessages::GetCompilationInfo() {
     for (size_t i = 0; i < mCompilationInfo.messageCount; ++i) {
         WGPUCompilationMessage& message = mMessages[i];
         std::string& messageString = mMessageStrings[i];
-        message.message = messageString.c_str();
+        message.message.data = messageString.data();
+        message.message.length = messageString.length();
     }
 
     return &mCompilationInfo;
