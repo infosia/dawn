@@ -62,11 +62,9 @@ class ShaderModule::CompilationInfoEvent final : public TrackedEvent {
         }
 
         mStatus = status;
-        mShader->mMessageStrings.reserve(info->messageCount);
-        mShader->mMessages.reserve(info->messageCount);
+        mShader->mMessageStrings.resize(info->messageCount);
+        mShader->mMessages = {info->messages, info->messages + info->messageCount};
         for (size_t i = 0; i < info->messageCount; i++) {
-            mShader->mMessageStrings.push_back(info->messages[i].message);
-            mShader->mMessages.push_back(info->messages[i]);
             mShader->mMessages[i].message = mShader->mMessageStrings[i].c_str();
         }
         mShader->mCompilationInfo = {nullptr, mShader->mMessages.size(), mShader->mMessages.data()};

@@ -30,6 +30,7 @@
 
 #include <bitset>
 #include <string>
+#include <string_view>
 #include <vector>
 
 #include "absl/container/flat_hash_map.h"
@@ -230,17 +231,17 @@ class TogglesInfo {
 
     // Used to query the details of a toggle. Return nullptr if toggleName is not a valid name
     // of a toggle supported in Dawn.
-    const ToggleInfo* GetToggleInfo(const char* toggleName);
+    const ToggleInfo* GetToggleInfo(std::string_view toggleName);
     // Used to query the details of a toggle enum. The enum value must not be Toggle::InvalidEnum,
     // as Toggle::InvalidEnum doesn't has corresponding ToggleInfo.
     static const ToggleInfo* GetToggleInfo(Toggle toggle);
-    Toggle ToggleNameToEnum(const char* toggleName);
+    Toggle ToggleNameToEnum(std::string_view toggleName);
 
   private:
     void EnsureToggleNameToEnumMapInitialized();
 
     bool mToggleNameToEnumMapInitialized = false;
-    absl::flat_hash_map<std::string, Toggle> mToggleNameToEnumMap;
+    absl::flat_hash_map<std::string_view, Toggle> mToggleNameToEnumMap;
 };
 
 }  // namespace dawn::native

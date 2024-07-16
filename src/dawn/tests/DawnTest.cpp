@@ -92,8 +92,8 @@ void printBuffer(testing::AssertionResult& result, const T* buffer, const size_t
 
 // A helper class to create DawnTogglesDescriptor from test params
 struct ParamTogglesHelper {
-    std::vector<const char*> enabledToggles;
-    std::vector<const char*> disabledToggles;
+    std::vector<wgpu::StringView> enabledToggles;
+    std::vector<wgpu::StringView> disabledToggles;
     wgpu::DawnTogglesDescriptor togglesDesc;
 
     // Create toggles descriptor for a given stage from test param and global test env
@@ -409,7 +409,7 @@ std::unique_ptr<native::Instance> DawnTestEnvironment::CreateInstance(
     // Create an instance with toggle AllowUnsafeAPIs enabled, which would be inherited to
     // adapter and device toggles and allow us to test unsafe apis (including experimental
     // features).
-    const char* allowUnsafeApisToggle = "allow_unsafe_apis";
+    wgpu::StringView allowUnsafeApisToggle = "allow_unsafe_apis";
     wgpu::DawnTogglesDescriptor instanceToggles;
     instanceToggles.enabledToggleCount = 1;
     instanceToggles.enabledToggles = &allowUnsafeApisToggle;
@@ -727,8 +727,12 @@ DawnTestBase::DawnTestBase(const AdapterTestParam& param) : mParam(param) {
         DAWN_ASSERT(callbackInfo.mode == WGPUCallbackMode_AllowSpontaneous);
 
         // Use the required toggles of test case when creating adapter.
-        const auto& enabledToggles = gCurrentTest->mParam.forceEnabledWorkarounds;
-        const auto& disabledToggles = gCurrentTest->mParam.forceDisabledWorkarounds;
+        std::vector<wgpu::StringView> enabledToggles(
+            gCurrentTest->mParam.forceEnabledWorkarounds.begin(),
+            gCurrentTest->mParam.forceEnabledWorkarounds.end());
+        std::vector<wgpu::StringView> disabledToggles(
+            gCurrentTest->mParam.forceDisabledWorkarounds.begin(),
+            gCurrentTest->mParam.forceDisabledWorkarounds.end());
         wgpu::DawnTogglesDescriptor adapterToggles;
         adapterToggles.enabledToggleCount = enabledToggles.size();
         adapterToggles.enabledToggles = enabledToggles.data();

@@ -53,8 +53,9 @@ namespace {{native_namespace}} {
                         return {true};
                     }
                     s->Append("[{{as_cppType(type.name)}}");
-                    if (value->label != nullptr) {
-                        s->Append(absl::StrFormat(" \"%s\"", value->label));
+                    std::optional<std::string_view> label = value->label;
+                    if (label) {
+                        s->Append(absl::StrFormat(" \"%s\"", *label));
                     }
                     s->Append("]");
                     return {true};

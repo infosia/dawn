@@ -1145,11 +1145,12 @@ MaybeError ValidateAndParseShaderModule(
                     "Shader module compilation options used without %s enabled.",
                     wgpu::FeatureName::ShaderModuleCompilationOptions);
 
-    auto tintFile = std::make_unique<tint::Source::File>("", wgslDesc->code);
+    std::string_view code = wgslDesc->code;
+    auto tintFile = std::make_unique<tint::Source::File>("", code);
 
     if (device->IsToggleEnabled(Toggle::DumpShaders)) {
         std::ostringstream dumpedMsg;
-        dumpedMsg << "// Dumped WGSL:\n" << wgslDesc->code << "\n";
+        dumpedMsg << "// Dumped WGSL:\n" << code << "\n";
         device->EmitLog(WGPULoggingType_Info, dumpedMsg.str().c_str());
     }
 
@@ -1340,7 +1341,9 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
     GetObjectTrackingList()->Track(this);
 }
 
-ShaderModuleBase::ShaderModuleBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label)
+ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
+                                   ObjectBase::ErrorTag tag,
+                                   std::optional<std::string_view> label)
     : Base(device, tag, label), mType(Type::Undefined) {}
 
 ShaderModuleBase::~ShaderModuleBase() = default;
@@ -1350,7 +1353,8 @@ void ShaderModuleBase::DestroyImpl() {
 }
 
 // static
-Ref<ShaderModuleBase> ShaderModuleBase::MakeError(DeviceBase* device, const char* label) {
+Ref<ShaderModuleBase> ShaderModuleBase::MakeError(DeviceBase* device,
+                                                  std::optional<std::string_view> label) {
     return AcquireRef(new ShaderModuleBase(device, ObjectBase::kError, label));
 }
 
@@ -1358,16 +1362,17 @@ ObjectType ShaderModuleBase::GetType() const {
     return ObjectType::ShaderModule;
 }
 
-bool ShaderModuleBase::HasEntryPoint(const std::string& entryPoint) const {
+bool ShaderModuleBase::HasEntryPoint(std::string_view entryPoint) const {
     return mEntryPoints.contains(entryPoint);
 }
 
-ShaderModuleEntryPoint ShaderModuleBase::ReifyEntryPointName(const char* entryPointName,
-                                                             SingleShaderStage stage) const {
+ShaderModuleEntryPoint ShaderModuleBase::ReifyEntryPointName(
+    std::optional<std::string_view> entryPointName,
+    SingleShaderStage stage) const {
     ShaderModuleEntryPoint entryPoint;
     if (entryPointName) {
         entryPoint.defaulted = false;
-        entryPoint.name = entryPointName;
+        entryPoint.name = *entryPointName;
     } else {
         entryPoint.defaulted = true;
         entryPoint.name = mDefaultEntryPointNames[stage];

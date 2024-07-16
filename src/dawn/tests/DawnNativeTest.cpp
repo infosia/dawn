@@ -61,7 +61,7 @@ void DawnNativeTest::SetUp() {
     // Create an instance with toggle AllowUnsafeAPIs enabled, which would be inherited to
     // adapter and device toggles and allow us to test unsafe apis (including experimental
     // features).
-    const char* allowUnsafeApisToggle = "allow_unsafe_apis";
+    wgpu::StringView allowUnsafeApisToggle = "allow_unsafe_apis";
     wgpu::DawnTogglesDescriptor instanceToggles;
     instanceToggles.enabledToggleCount = 1;
     instanceToggles.enabledToggles = &allowUnsafeApisToggle;
