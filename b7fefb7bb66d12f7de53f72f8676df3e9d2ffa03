@@ -106,6 +106,24 @@
       "parentUuid": "f9c52958_4ad3d6c3",
       "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e09daa7_5463215b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-16T16:46:18Z",
+      "side": 1,
+      "message": "The hash should be stored - PipelineLayout-\u003eGetContentHash() should give it to you.\nSo yea I believe we can use that instead",
+      "parentUuid": "daf23f2f_77e7d789",
+      "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
