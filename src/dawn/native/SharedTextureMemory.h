@@ -65,7 +65,7 @@ class SharedTextureMemoryBase : public SharedResourceMemory {
 
   protected:
     SharedTextureMemoryBase(DeviceBase* device,
-                            const char* label,
+                            std::optional<std::string_view> label,
                             const SharedTextureMemoryProperties& properties);
     SharedTextureMemoryBase(DeviceBase* device,
                             const SharedTextureMemoryDescriptor* descriptor,

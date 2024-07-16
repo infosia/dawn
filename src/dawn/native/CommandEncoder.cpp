@@ -1039,7 +1039,8 @@ Ref<CommandEncoder> CommandEncoder::Create(
 }
 
 // static
-Ref<CommandEncoder> CommandEncoder::MakeError(DeviceBase* device, const char* label) {
+Ref<CommandEncoder> CommandEncoder::MakeError(DeviceBase* device,
+                                              std::optional<std::string_view> label) {
     return AcquireRef(new CommandEncoder(device, ObjectBase::kError, label));
 }
 
@@ -1056,7 +1057,9 @@ CommandEncoder::CommandEncoder(DeviceBase* device,
     }
 }
 
-CommandEncoder::CommandEncoder(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label)
+CommandEncoder::CommandEncoder(DeviceBase* device,
+                               ObjectBase::ErrorTag tag,
+                               std::optional<std::string_view> label)
     : ApiObjectBase(device, tag, label),
       mEncodingContext(device, this),
       mUsageValidationMode(UsageValidationMode::Default) {
@@ -1122,7 +1125,7 @@ Ref<ComputePassEncoder> CommandEncoder::BeginComputePass(const ComputePassDescri
             if (descriptor == nullptr) {
                 return {};
             }
-            cmd->label = std::string(descriptor->label ? descriptor->label : "");
+            cmd->label = utils::NormalizeLabel(descriptor->label);
 
             if (descriptor->timestampWrites != nullptr) {
                 QuerySetBase* querySet = descriptor->timestampWrites->querySet;
@@ -1157,7 +1160,7 @@ Ref<ComputePassEncoder> CommandEncoder::BeginComputePass(const ComputePassDescri
     }
 
     return ComputePassEncoder::MakeError(device, this, &mEncodingContext,
-                                         descriptor ? descriptor->label : nullptr);
+                                         descriptor ? descriptor->label : NullableStringView());
 }
 
 RenderPassEncoder* CommandEncoder::APIBeginRenderPass(const RenderPassDescriptor* descriptor) {
@@ -1182,8 +1185,9 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
     // Lazy make error function to be called if we error and need to return an error encoder.
     auto MakeError = [&]() {
-        return RenderPassEncoder::MakeError(device, this, &mEncodingContext,
-                                            rawDescriptor ? rawDescriptor->label : nullptr);
+        return RenderPassEncoder::MakeError(
+            device, this, &mEncodingContext,
+            rawDescriptor ? rawDescriptor->label : NullableStringView());
     };
 
     UnpackedPtr<RenderPassDescriptor> descriptor;
@@ -1207,7 +1211,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             mEncodingContext.WillBeginRenderPass();
             BeginRenderPassCmd* cmd =
                 allocator->Allocate<BeginRenderPassCmd>(Command::BeginRenderPass);
-            cmd->label = std::string(descriptor->label ? descriptor->label : "");
+            cmd->label = utils::NormalizeLabel(descriptor->label);
 
             cmd->attachmentState = device->GetOrCreateAttachmentState(descriptor);
             attachmentState = cmd->attachmentState;
@@ -2039,8 +2043,8 @@ CommandBufferBase* CommandEncoder::APIFinish(const CommandBufferDescriptor* desc
 
     Ref<CommandBufferBase> commandBuffer;
     if (GetDevice()->ConsumedError(Finish(descriptor), &commandBuffer, "finishing %s.", this)) {
-        Ref<CommandBufferBase> errorCommandBuffer =
-            CommandBufferBase::MakeError(GetDevice(), descriptor ? descriptor->label : nullptr);
+        Ref<CommandBufferBase> errorCommandBuffer = CommandBufferBase::MakeError(
+            GetDevice(), descriptor ? descriptor->label : NullableStringView());
         errorCommandBuffer->SetEncoderLabel(this->GetLabel());
         return ReturnToAPI(std::move(errorCommandBuffer));
     }

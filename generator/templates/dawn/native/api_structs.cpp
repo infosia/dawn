@@ -54,7 +54,7 @@ namespace {{native_namespace}} {
             "offsetof mismatch for ChainedStruct::sType");
 
     {% for type in by_category["structure"] %}
-        {% set CppType = as_cppType(type.name) %}
+        {% set CppType = as_cppType(type.name) + ("Base" if type.name.get() == "string" else "") %}
         {% set CType = as_cType(type.name) %}
 
         static_assert(sizeof({{CppType}}) == sizeof({{CType}}), "sizeof mismatch for {{CppType}}");
