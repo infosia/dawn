@@ -24,6 +24,8 @@
 // CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+{% from 'dawn/cpp_macros.tmpl' import wgpu_string_constructors with context %}
+
 {% set API = metadata.api.upper() %}
 {% set api = API.lower() %}
 {% set CAPI = metadata.c_prefix %}
@@ -147,6 +149,20 @@ class {{BoolCppType}} {
     friend struct std::hash<{{BoolCppType}}>;
     // Default to false.
     {{BoolCType}} mValue = static_cast<{{BoolCType}}>(false);
+};
+
+{% set StringCppType = as_cppType(types["string"].name) %}
+{% set StringCType = as_cType(types["string"].name) %}
+struct String {
+    inline operator const {{StringCType}}&() const noexcept {
+        return *reinterpret_cast<const WGPUString*>(this);
+    }
+
+    //* Custom string constructors.
+    {{wgpu_string_constructors(StringCppType) | indent(4)}}
+
+    char const * data = nullptr;
+    size_t length = SIZE_MAX;
 };
 
 // Helper class to wrap Status which allows implicit conversion to bool.
@@ -523,7 +539,7 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
     "offsetof mismatch for ChainedStruct::sType");
 
 //* Special structures that require some custom code generation.
-{% set SpecialStructures = ["device descriptor"] %}
+{% set SpecialStructures = ["device descriptor", "string"] %}
 
 {% for type in by_category["structure"] if type.name.get() not in SpecialStructures %}
     {% set Out = "Out" if type.output else "" %}

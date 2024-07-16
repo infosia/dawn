@@ -31,6 +31,7 @@
 #include <vector>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/StringUtils.h"
 #include "dawn/common/SystemUtils.h"
 #include "dawn/dawn_proc.h"
 #include "dawn/native/Adapter.h"

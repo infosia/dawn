@@ -66,7 +66,7 @@ class QueueBase : public ApiObjectBase, public ExecutionQueueBase {
   public:
     ~QueueBase() override;
 
-    static Ref<QueueBase> MakeError(DeviceBase* device, const char* label);
+    static Ref<QueueBase> MakeError(DeviceBase* device, std::optional<std::string_view> label);
 
     ObjectType GetType() const override;
     void FormatLabel(absl::FormatSink* s) const override;
@@ -112,7 +112,7 @@ class QueueBase : public ApiObjectBase, public ExecutionQueueBase {
 
   protected:
     QueueBase(DeviceBase* device, const QueueDescriptor* descriptor);
-    QueueBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
+    QueueBase(DeviceBase* device, ObjectBase::ErrorTag tag, std::optional<std::string_view> label);
 
     void DestroyImpl() override;
 

@@ -37,6 +37,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "dawn/common/StringUtils.h"
 {% for type in by_category["object"] %}
     {% if type.name.canonical_case() not in ["texture view"] %}
         #include "{{native_dir}}/{{type.name.CamelCase()}}.h"
@@ -63,14 +64,10 @@ namespace {{native_namespace}} {
                     {% if arg.type.category in ["enum", "bitmask"] and arg.annotation == "value" %}
                         auto {{varName}}_ = static_cast<{{as_frontendType(arg.type)}}>({{varName}});
                     {% elif arg.type.name.get() == "string" and arg.annotation == "value" %}
-                        const bool {{varName}}_isNull = {{varName}}.data == nullptr;
-                        const bool {{varName}}_useStrlen = {{varName}}.length == SIZE_MAX;
                         {% if arg.optional %}
-                            std::optional<std::string_view> {{varName}}_ =
-                                {{varName}}_isNull && {{varName}}_useStrlen ? std::optional<std::string_view>{std::nullopt} :
-                                std::string_view({{varName}}.data, {{varName}}_isNull ? 0 : {{varName}}_useStrlen ? strlen({{varName}}.data) : {{varName}}.length);
+                            std::optional<std::string_view> {{varName}}_ = FromOptionalWGPUString({{varName}});
                         {% else %}
-                            auto {{varName}}_ = std::string_view({{varName}}.data, {{varName}}_isNull ? 0 : {{varName}}_useStrlen ? strlen({{varName}}.data) : {{varName}}.length);
+                            auto {{varName}}_ = FromWGPUString({{varName}});
                         {% endif %}
                     {% elif arg.type.category == "structure" and arg.annotation == "value" %}
                         auto {{varName}}_ = *reinterpret_cast<{{as_frontendType(arg.type)}}*>(&{{varName}});

@@ -85,6 +85,8 @@
 #  define {{API}}_MAKE_INIT_STRUCT(type, value) value
 #endif
 
+#define WGPU_BREAKING_CHANGE_STRING
+
 {% for constant in by_category["constant"] %}
     #define {{API}}_{{constant.name.SNAKE_CASE()}} {{constant.value}}
 {% endfor %}
