@@ -41,11 +41,12 @@ namespace dawn::native {
 class BindGroupLayoutBase final : public ApiObjectBase {
   public:
     BindGroupLayoutBase(DeviceBase* device,
-                        const char* label,
+                        std::optional<std::string_view> label,
                         Ref<BindGroupLayoutInternalBase> internal,
                         PipelineCompatibilityToken pipelineCompatibilityToken);
 
-    static Ref<BindGroupLayoutBase> MakeError(DeviceBase* device, const char* label = nullptr);
+    static Ref<BindGroupLayoutBase> MakeError(DeviceBase* device,
+                                              std::optional<std::string_view> label = std::nullopt);
 
     ObjectType GetType() const override;
 
@@ -61,7 +62,9 @@ class BindGroupLayoutBase final : public ApiObjectBase {
     void DestroyImpl() override;
 
   private:
-    BindGroupLayoutBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
+    BindGroupLayoutBase(DeviceBase* device,
+                        ObjectBase::ErrorTag tag,
+                        std::optional<std::string_view> label);
 
     const Ref<BindGroupLayoutInternalBase> mInternalLayout;
 

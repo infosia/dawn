@@ -31,6 +31,7 @@
 #include <vector>
 
 #include "dawn/common/MatchVariant.h"
+#include "dawn/common/StringUtils.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/AttachmentState.h"
 #include "dawn/native/BindingInfo.h"
@@ -689,6 +690,19 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
         case PixelLocalMemberType::F32:
             s->Append("f32");
             break;
+    }
+    return {true};
+}
+
+absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
+    const OptionalString& value,
+    const absl::FormatConversionSpec& spec,
+    absl::FormatSink* s) {
+    std::optional<std::string_view> sv = value;
+    if (sv) {
+        s->Append(*sv);
+    } else {
+        s->Append("undefined");
     }
     return {true};
 }
