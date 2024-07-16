@@ -70,6 +70,24 @@
       "parentUuid": "f7851457_59c921a6",
       "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9c52958_4ad3d6c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-16T14:47:39Z",
+      "side": 1,
+      "message": "Can we just assign a serial number to a PL and use it in the shader cache\u0027s hash computation? Frontend already guarantees that two alive PLs that are the same should point to the same underlying object. Serial guarantees that the deallocated PL and alive PL won\u0027t ever have the same assigned number.",
+      "parentUuid": "dfc6c454_17f0b40d",
+      "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
