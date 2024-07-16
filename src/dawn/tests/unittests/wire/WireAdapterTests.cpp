@@ -74,7 +74,8 @@ TEST_P(WireAdapterTests, RequestDeviceEmptyDescriptor) {
 
     EXPECT_CALL(api, OnAdapterRequestDevice(apiAdapter, NotNull(), _))
         .WillOnce(WithArg<1>(Invoke([&](const WGPUDeviceDescriptor* apiDesc) {
-            EXPECT_EQ(apiDesc->label, nullptr);
+            EXPECT_EQ(apiDesc->label.data, nullptr);
+            EXPECT_EQ(apiDesc->label.length, SIZE_MAX);
             EXPECT_EQ(apiDesc->requiredFeatureCount, 0u);
             EXPECT_EQ(apiDesc->requiredLimits, nullptr);
 
@@ -97,7 +98,8 @@ TEST_P(WireAdapterTests, RequestDeviceNullDescriptor) {
 
     EXPECT_CALL(api, OnAdapterRequestDevice(apiAdapter, NotNull(), _))
         .WillOnce(WithArg<1>(Invoke([&](const WGPUDeviceDescriptor* apiDesc) {
-            EXPECT_EQ(apiDesc->label, nullptr);
+            EXPECT_EQ(apiDesc->label.data, nullptr);
+            EXPECT_EQ(apiDesc->label.length, SIZE_MAX);
             EXPECT_EQ(apiDesc->requiredFeatureCount, 0u);
             EXPECT_EQ(apiDesc->requiredLimits, nullptr);
 
@@ -128,7 +130,7 @@ TEST_P(WireAdapterTests, RequestDeviceAssertsOnLostCallbackPointer) {
 
     EXPECT_CALL(api, OnAdapterRequestDevice(apiAdapter, NotNull(), _))
         .WillOnce(WithArg<1>(Invoke([&](const WGPUDeviceDescriptor* apiDesc) {
-            EXPECT_STREQ(apiDesc->label, desc.label);
+            EXPECT_STREQ(apiDesc->label.data, desc.label.data);
 
             // The callback should not be passed through to the server, and it should be overridden.
             WGPUDeviceDescriptor& inputDesc = *reinterpret_cast<WGPUDeviceDescriptor*>(&desc);

@@ -49,11 +49,12 @@ CommandBufferBase::CommandBufferBase(CommandEncoder* encoder,
 
 CommandBufferBase::CommandBufferBase(DeviceBase* device,
                                      ObjectBase::ErrorTag tag,
-                                     const char* label)
+                                     std::optional<std::string_view> label)
     : ApiObjectBase(device, tag, label) {}
 
 // static
-Ref<CommandBufferBase> CommandBufferBase::MakeError(DeviceBase* device, const char* label) {
+Ref<CommandBufferBase> CommandBufferBase::MakeError(DeviceBase* device,
+                                                    std::optional<std::string_view> label) {
     return AcquireRef(new CommandBufferBase(device, ObjectBase::kError, label));
 }
 

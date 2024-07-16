@@ -350,11 +350,11 @@ const TogglesState& InstanceBase::GetTogglesState() const {
     return mToggles;
 }
 
-const ToggleInfo* InstanceBase::GetToggleInfo(const char* toggleName) {
+const ToggleInfo* InstanceBase::GetToggleInfo(std::string_view toggleName) {
     return mTogglesInfo.GetToggleInfo(toggleName);
 }
 
-Toggle InstanceBase::ToggleNameToEnum(const char* toggleName) {
+Toggle InstanceBase::ToggleNameToEnum(std::string_view toggleName) {
     return mTogglesInfo.ToggleNameToEnum(toggleName);
 }
 
@@ -671,7 +671,7 @@ void InstanceBase::GatherWGSLFeatures(const DawnWGSLBlocklist* wgslBlocklist) {
     // Remove blocklisted features.
     if (wgslBlocklist != nullptr) {
         for (size_t i = 0; i < wgslBlocklist->blocklistedFeatureCount; i++) {
-            const char* name = wgslBlocklist->blocklistedFeatures[i];
+            std::string_view name = wgslBlocklist->blocklistedFeatures[i];
             tint::wgsl::LanguageFeature tintFeature = tint::wgsl::ParseLanguageFeature(name);
             if (tintFeature == tint::wgsl::LanguageFeature::kUndefined) {
                 // Ignore unknown features in the blocklist.

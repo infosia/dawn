@@ -63,7 +63,7 @@ TEST_F(ToggleValidationTest, QueryToggleInfo) {
 TEST_F(ToggleValidationTest, OverrideToggleUsage) {
     // Create device with a valid name of a toggle
     {
-        const char* kValidToggleName = "emulate_store_and_msaa_resolve";
+        wgpu::StringView kValidToggleName = "emulate_store_and_msaa_resolve";
         wgpu::DeviceDescriptor descriptor;
         wgpu::DawnTogglesDescriptor deviceTogglesDesc;
         descriptor.nextInChain = &deviceTogglesDesc;
@@ -75,7 +75,7 @@ TEST_F(ToggleValidationTest, OverrideToggleUsage) {
         std::vector<const char*> toggleNames = native::GetTogglesUsed(deviceWithToggle.Get());
         bool validToggleExists = false;
         for (const char* toggle : toggleNames) {
-            if (strcmp(toggle, kValidToggleName) == 0) {
+            if (strcmp(toggle, kValidToggleName.data) == 0) {
                 validToggleExists = true;
             }
         }
@@ -84,7 +84,7 @@ TEST_F(ToggleValidationTest, OverrideToggleUsage) {
 
     // Create device with an invalid toggle name
     {
-        const char* kInvalidToggleName = "!@#$%^&*";
+        wgpu::StringView kInvalidToggleName = "!@#$%^&*";
         wgpu::DeviceDescriptor descriptor;
         wgpu::DawnTogglesDescriptor deviceTogglesDesc;
         descriptor.nextInChain = &deviceTogglesDesc;
@@ -96,7 +96,7 @@ TEST_F(ToggleValidationTest, OverrideToggleUsage) {
         std::vector<const char*> toggleNames = native::GetTogglesUsed(deviceWithToggle.Get());
         bool InvalidToggleExists = false;
         for (const char* toggle : toggleNames) {
-            if (strcmp(toggle, kInvalidToggleName) == 0) {
+            if (strcmp(toggle, kInvalidToggleName.data) == 0) {
                 InvalidToggleExists = true;
             }
         }
@@ -105,7 +105,7 @@ TEST_F(ToggleValidationTest, OverrideToggleUsage) {
 }
 
 TEST_F(ToggleValidationTest, TurnOffVsyncWithToggle) {
-    const char* kValidToggleName = "turn_off_vsync";
+    wgpu::StringView kValidToggleName = "turn_off_vsync";
     wgpu::DeviceDescriptor descriptor;
     wgpu::DawnTogglesDescriptor deviceTogglesDesc;
     descriptor.nextInChain = &deviceTogglesDesc;
@@ -117,7 +117,7 @@ TEST_F(ToggleValidationTest, TurnOffVsyncWithToggle) {
     std::vector<const char*> toggleNames = native::GetTogglesUsed(deviceWithToggle.Get());
     bool validToggleExists = false;
     for (const char* toggle : toggleNames) {
-        if (strcmp(toggle, kValidToggleName) == 0) {
+        if (strcmp(toggle, kValidToggleName.data) == 0) {
             validToggleExists = true;
         }
     }

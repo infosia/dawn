@@ -41,7 +41,7 @@ class WGSLFeatureValidationTest : public ValidationTest {
         bool useTestingFeatures = true;
         bool allowUnsafeAPIs = false;
         bool exposeExperimental = false;
-        std::vector<const char*> blocklist = {};
+        std::vector<wgpu::StringView> blocklist = {};
     };
 
     // Override the default SetUp to do nothing since the tests will call SetUp(InstanceSpec)
@@ -54,7 +54,7 @@ class WGSLFeatureValidationTest : public ValidationTest {
         blocklist.blocklistedFeatures = spec.blocklist.data();
 
         // Build the native instance descriptor.
-        std::vector<const char*> enabledToggles;
+        std::vector<wgpu::StringView> enabledToggles;
         if (spec.useTestingFeatures) {
             enabledToggles.push_back("expose_wgsl_testing_features");
         }

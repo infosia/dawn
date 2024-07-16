@@ -509,8 +509,8 @@ class ComputeLayoutMemoryBufferTests
         if (!IsD3D12()) {
             mUseDxcEnabledOrNonD3D12 = true;
         } else {
-            for (auto* enabledToggle : GetParam().forceEnabledWorkarounds) {
-                if (strncmp(enabledToggle, "use_dxc", 7) == 0) {
+            for (wgpu::StringView enabledToggle : GetParam().forceEnabledWorkarounds) {
+                if (strncmp(enabledToggle.data, "use_dxc", 7) == 0) {
                     mUseDxcEnabledOrNonD3D12 = true;
                     break;
                 }
