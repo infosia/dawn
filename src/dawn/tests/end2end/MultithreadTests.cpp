@@ -259,7 +259,7 @@ TEST_P(MultithreadTests, CreateShaderModuleInParallel) {
                           const wgpu::CompilationInfo* info) {
                 ASSERT_EQ(wgpu::CompilationInfoRequestStatus::Success, status);
                 for (size_t i = 0; i < info->messageCount; ++i) {
-                    EXPECT_THAT(info->messages[i].message, testing::HasSubstr("unreachable"));
+                    EXPECT_THAT(info->messages[i].message.data, testing::HasSubstr("unreachable"));
                     EXPECT_EQ(info->messages[i].lineNum, 5u + sourceIndex);
                 }
             });

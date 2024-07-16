@@ -207,8 +207,19 @@ ResultOrError<Ref<BindGroupBase>> MakeBindGroup(
     return device->CreateBindGroup(&descriptor, mode);
 }
 
-const char* GetLabelForTrace(const char* label) {
-    return (label == nullptr || strlen(label) == 0) ? "None" : label;
+const char* GetLabelForTrace(const std::string& label) {
+    if (label.length() == 0) {
+        return "None";
+    }
+    return label.c_str();
+}
+
+const char* GetLabelForTrace(std::optional<std::string_view> label) {
+    if (!label || label->length() == 0) {
+        return "None";
+    }
+    // FIXME: null-terminator.
+    return label->data();
 }
 
 }  // namespace dawn::native::utils

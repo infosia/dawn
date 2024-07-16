@@ -66,9 +66,19 @@ class WireShaderModuleTests : public WireShaderModuleTestBase {
     WGPUShaderModule apiShaderModule;
 
     // Default responses.
-    WGPUCompilationMessage mMessage = {
-        nullptr, "Test Message", WGPUCompilationMessageType_Info, 2, 4, 6, 8, 4, 6, 8};
-    WGPUCompilationInfo mCompilationInfo = {nullptr, 1, &mMessage};
+    WGPUCompilationMessage mMessages[2] = {
+        {nullptr, {"Test Message", SIZE_MAX}, WGPUCompilationMessageType_Info, 2, 4, 6, 8, 4, 6, 8},
+        {nullptr,
+         {"Test\0\0Message", 15},
+         WGPUCompilationMessageType_Info,
+         20,
+         40,
+         60,
+         80,
+         40,
+         60,
+         80}};
+    WGPUCompilationInfo mCompilationInfo = {nullptr, 2, mMessages};
 };
 
 DAWN_INSTANTIATE_WIRE_FUTURE_TEST_P(WireShaderModuleTests);
@@ -91,14 +101,34 @@ TEST_P(WireShaderModuleTests, GetCompilationInfo) {
                                      if (info->messageCount != mCompilationInfo.messageCount) {
                                          return false;
                                      }
-                                     const WGPUCompilationMessage* infoMessage = &info->messages[0];
-                                     return strcmp(infoMessage->message, mMessage.message) == 0 &&
-                                            infoMessage->nextInChain == mMessage.nextInChain &&
-                                            infoMessage->type == mMessage.type &&
-                                            infoMessage->lineNum == mMessage.lineNum &&
-                                            infoMessage->linePos == mMessage.linePos &&
-                                            infoMessage->offset == mMessage.offset &&
-                                            infoMessage->length == mMessage.length;
+                                     const WGPUCompilationMessage* infoMessage0 =
+                                         &info->messages[0];
+                                     const WGPUCompilationMessage* infoMessage1 =
+                                         &info->messages[1];
+
+                                     return infoMessage0->message.length ==
+                                                strlen(mMessages[0].message.data) &&
+                                            memcmp(infoMessage0->message.data,
+                                                   mMessages[0].message.data,
+                                                   strlen(mMessages[0].message.data)) == 0 &&
+                                            infoMessage0->nextInChain == mMessages[0].nextInChain &&
+                                            infoMessage0->type == mMessages[0].type &&
+                                            infoMessage0->lineNum == mMessages[0].lineNum &&
+                                            infoMessage0->linePos == mMessages[0].linePos &&
+                                            infoMessage0->offset == mMessages[0].offset &&
+                                            infoMessage0->length == mMessages[0].length &&
+
+                                            infoMessage1->message.length ==
+                                                mMessages[1].message.length &&
+                                            memcmp(infoMessage1->message.data,
+                                                   mMessages[1].message.data,
+                                                   mMessages[1].message.length) == 0 &&
+                                            infoMessage1->nextInChain == mMessages[1].nextInChain &&
+                                            infoMessage1->type == mMessages[1].type &&
+                                            infoMessage1->lineNum == mMessages[1].lineNum &&
+                                            infoMessage1->linePos == mMessages[1].linePos &&
+                                            infoMessage1->offset == mMessages[1].offset &&
+                                            infoMessage1->length == mMessages[1].length;
                                  }),
                                  nullptr))
             .Times(1);

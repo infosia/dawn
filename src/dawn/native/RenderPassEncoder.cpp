@@ -115,7 +115,7 @@ RenderPassEncoder::RenderPassEncoder(DeviceBase* device,
                                      CommandEncoder* commandEncoder,
                                      EncodingContext* encodingContext,
                                      ErrorTag errorTag,
-                                     const char* label)
+                                     std::optional<std::string_view> label)
     : RenderEncoderBase(device, encodingContext, errorTag, label),
       mCommandEncoder(commandEncoder) {}
 
@@ -123,7 +123,7 @@ RenderPassEncoder::RenderPassEncoder(DeviceBase* device,
 Ref<RenderPassEncoder> RenderPassEncoder::MakeError(DeviceBase* device,
                                                     CommandEncoder* commandEncoder,
                                                     EncodingContext* encodingContext,
-                                                    const char* label) {
+                                                    std::optional<std::string_view> label) {
     return AcquireRef(
         new RenderPassEncoder(device, commandEncoder, encodingContext, ObjectBase::kError, label));
 }

@@ -24,6 +24,7 @@
 //* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+{% from 'dawn/cpp_macros.tmpl' import wgpu_string_constructors with context %}
 
 {% set namespace_name = Name(metadata.native_namespace) %}
 {% set DIR = namespace_name.concatcase().upper() %}
@@ -64,24 +65,25 @@ namespace {{native_namespace}} {
     using {{namespace}}::ChainedStructOut;
 
     {% for type in by_category["structure"] %}
+        {% set CppType = as_cppType(type.name) + ("Base" if type.name.get() == "string" else "") %}
         {% if type.chained %}
             {% set chainedStructType = "ChainedStructOut" if type.chained == "out" else "ChainedStruct" %}
-            struct {{as_cppType(type.name)}} : {{chainedStructType}} {
-                {{as_cppType(type.name)}}() {
+            struct {{CppType}} : {{chainedStructType}} {
+                {{CppType}}() {
                     sType = {{namespace}}::SType::{{type.name.CamelCase()}};
                 }
         {% else %}
-            struct {{as_cppType(type.name)}} {
+            struct {{CppType}} {
                 {% if type.has_free_members_function %}
-                    {{as_cppType(type.name)}}() = default;
+                    {{CppType}}() = default;
                 {% endif %}
         {% endif %}
             {% if type.has_free_members_function %}
-                ~{{as_cppType(type.name)}}();
-                {{as_cppType(type.name)}}(const {{as_cppType(type.name)}}&) = delete;
-                {{as_cppType(type.name)}}& operator=(const {{as_cppType(type.name)}}&) = delete;
-                {{as_cppType(type.name)}}({{as_cppType(type.name)}}&&);
-                {{as_cppType(type.name)}}& operator=({{as_cppType(type.name)}}&&);
+                ~{{CppType}}();
+                {{CppType}}(const {{CppType}}&) = delete;
+                {{CppType}}& operator=(const {{CppType}}&) = delete;
+                {{CppType}}({{CppType}}&&);
+                {{CppType}}& operator=({{CppType}}&&);
 
             {% endif %}
             {% if type.extensible %}
@@ -89,15 +91,24 @@ namespace {{native_namespace}} {
                 {{chainedStructType}} * nextInChain = nullptr;
             {% endif %}
             {% for member in type.members %}
-                {% set member_declaration = as_annotated_frontendType(member) + render_cpp_default_value(member) %}
+                {% if member.optional and member.type.name.get() == "string" and member.annotation == "value" %}
+                    {% set member_declaration = "OptionalString " + as_varName(member.name) + render_cpp_default_value(member) %}
+                {% else %}
+                    {% set member_declaration = as_annotated_frontendType(member) + render_cpp_default_value(member) %}
+                {% endif %}
                 {% if type.chained and loop.first %}
                     //* Align the first member after ChainedStruct to match the C struct layout.
                     //* It has to be aligned both to its natural and ChainedStruct's alignment.
-                    alignas({{namespace}}::{{as_cppType(type.name)}}::kFirstMemberAlignment) {{member_declaration}};
+                    alignas({{namespace}}::{{CppType}}::kFirstMemberAlignment) {{member_declaration}};
                 {% else %}
                     {{member_declaration}};
                 {% endif %}
             {% endfor %}
+
+            //* Custom string constructors.
+            {% if type.name.get() == "string" %}
+                {{wgpu_string_constructors(CppType) | indent(8)}}
+            {% endif %}
 
             {% if type.any_member_requires_struct_defaulting %}
                 // This method makes a copy of the struct, then, for any enum members with trivial
@@ -105,17 +116,29 @@ namespace {{native_namespace}} {
                 // all of the defaults for the struct, and recursively its by-value substructs (but
                 // NOT by-pointer substructs since they are const*). It must be called in an
                 // appropriate place in Dawn.
-                [[nodiscard]] {{as_cppType(type.name)}} WithTrivialFrontendDefaults() const;
+                [[nodiscard]] {{CppType}} WithTrivialFrontendDefaults() const;
             {% endif %}
             // Equality operators, mostly for testing. Note that this tests
             // strict pointer-pointer equality if the struct contains member pointers.
-            bool operator==(const {{as_cppType(type.name)}}& rhs) const;
+            bool operator==(const {{CppType}}& rhs) const;
 
             {% if type.has_free_members_function %}
               private:
                 inline void FreeMembers();
             {% endif %}
         };
+        {% if type.name.get() == "string" %}
+
+            struct String : StringBase {
+                using StringBase::StringBase;
+                operator std::string_view() const;
+            };
+
+            struct OptionalString : StringBase {
+                using StringBase::StringBase;
+                operator std::optional<std::string_view>() const;
+            };
+        {% endif %}
 
     {% endfor %}
 

@@ -141,7 +141,8 @@ ResultOrError<Ref<BindGroupBase>> MakeBindGroup(
     std::initializer_list<BindingInitializationHelper> entriesInitializer,
     UsageValidationMode mode);
 
-const char* GetLabelForTrace(const char* label);
+const char* GetLabelForTrace(const std::string& label);
+const char* GetLabelForTrace(std::optional<std::string_view> label);
 
 // Given a std vector, allocate an equivalent array that can be returned in an API's foos/fooCount
 // pair of fields. The apiData must eventually be freed using FreeApiSeq.

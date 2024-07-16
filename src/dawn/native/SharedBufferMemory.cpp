@@ -76,7 +76,7 @@ SharedBufferMemoryBase::SharedBufferMemoryBase(DeviceBase* device,
       mProperties{nullptr, wgpu::BufferUsage::None, 0} {}
 
 SharedBufferMemoryBase::SharedBufferMemoryBase(DeviceBase* device,
-                                               const char* label,
+                                               std::optional<std::string_view> label,
                                                const SharedBufferMemoryProperties& properties)
     : SharedResourceMemory(device, label), mProperties(properties) {
     GetObjectTrackingList()->Track(this);

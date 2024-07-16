@@ -47,7 +47,7 @@ ObjectType Surface::GetObjectType() const {
 }
 
 void Surface::Configure(WGPUSurfaceConfiguration const* config) {
-    mTextureDescriptor = {};
+    mTextureDescriptor = WGPU_TEXTURE_DESCRIPTOR_INIT;
     mTextureDescriptor.size = {config->width, config->height, 1};
     mTextureDescriptor.format = config->format;
     mTextureDescriptor.usage = config->usage;

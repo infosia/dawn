@@ -31,6 +31,7 @@
 #include <vector>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/StringUtils.h"
 #include "dawn/common/SystemUtils.h"
 #include "dawn/dawn_proc.h"
 #include "dawn/native/Adapter.h"
@@ -50,6 +51,34 @@ std::unique_ptr<ToggleParser> gToggleParser = nullptr;
 static ValidationTest* gCurrentTest = nullptr;
 
 }  // namespace
+
+bool ExpectStrEq(const WGPUString& in, std::string_view expected) {
+    auto stringViewIn = dawn::FromOptionalWGPUString(in);
+    bool success = false;
+    [&]() {
+        ASSERT_NE(stringViewIn, std::nullopt);
+        ASSERT_EQ(stringViewIn->length(), expected.length());
+        ASSERT_TRUE(memcmp(stringViewIn->data(), expected.data(), expected.length()) == 0);
+        success = true;
+    }();
+    return success;
+}
+
+bool ExpectStrEq(const WGPUString& in, const WGPUString& expected) {
+    auto stringViewIn = dawn::FromOptionalWGPUString(in);
+    auto stringViewExpected = dawn::FromOptionalWGPUString(expected);
+    bool success = false;
+    [&]() {
+        ASSERT_EQ(stringViewIn != std::nullopt, stringViewExpected != std::nullopt);
+        if (stringViewIn != std::nullopt) {
+            ASSERT_EQ(stringViewIn->length(), stringViewExpected->length());
+            ASSERT_TRUE(memcmp(stringViewIn->data(), stringViewExpected->data(),
+                               stringViewExpected->length()) == 0);
+        }
+        success = true;
+    }();
+    return success;
+}
 
 void InitDawnValidationTestEnvironment(int argc, char** argv) {
     dawn::InitializePartitionAllocForTesting();

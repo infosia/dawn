@@ -46,7 +46,9 @@ class DeviceBase;
 // Base class for shared functionality between programmable encoders.
 class ProgrammableEncoder : public ApiObjectBase {
   public:
-    ProgrammableEncoder(DeviceBase* device, const char* label, EncodingContext* encodingContext);
+    ProgrammableEncoder(DeviceBase* device,
+                        std::optional<std::string_view> label,
+                        EncodingContext* encodingContext);
 
     void APIInsertDebugMarker(std::string_view groupLabel);
     void APIPopDebugGroup();
@@ -72,7 +74,7 @@ class ProgrammableEncoder : public ApiObjectBase {
     ProgrammableEncoder(DeviceBase* device,
                         EncodingContext* encodingContext,
                         ErrorTag errorTag,
-                        const char* label);
+                        std::optional<std::string_view> label);
 
     raw_ptr<EncodingContext> mEncodingContext = nullptr;
 
