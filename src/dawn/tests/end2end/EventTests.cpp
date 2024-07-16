@@ -45,9 +45,9 @@ wgpu::Device CreateExtraDevice(wgpu::Instance instance) {
     // IMPORTANT: DawnTest overrides RequestAdapter and RequestDevice and mixes
     // up the two instances. We use these to bypass the override.
     auto* requestAdapter = reinterpret_cast<WGPUProcInstanceRequestAdapter>(
-        wgpuGetProcAddress(nullptr, "wgpuInstanceRequestAdapter"));
+        wgpuGetProcAddress(nullptr, {"wgpuInstanceRequestAdapter", SIZE_MAX}));
     auto* requestDevice = reinterpret_cast<WGPUProcAdapterRequestDevice>(
-        wgpuGetProcAddress(nullptr, "wgpuAdapterRequestDevice"));
+        wgpuGetProcAddress(nullptr, {"wgpuAdapterRequestDevice", SIZE_MAX}));
 
     wgpu::Adapter adapter2;
     requestAdapter(
