@@ -1038,7 +1038,7 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
 
 RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
                                        ObjectBase::ErrorTag tag,
-                                       const char* label)
+                                       std::optional<std::string_view> label)
     : PipelineBase(device, tag, label) {}
 
 RenderPipelineBase::~RenderPipelineBase() = default;
@@ -1052,10 +1052,11 @@ void RenderPipelineBase::DestroyImpl() {
 }
 
 // static
-Ref<RenderPipelineBase> RenderPipelineBase::MakeError(DeviceBase* device, const char* label) {
+Ref<RenderPipelineBase> RenderPipelineBase::MakeError(DeviceBase* device,
+                                                      std::optional<std::string_view> label) {
     class ErrorRenderPipeline final : public RenderPipelineBase {
       public:
-        explicit ErrorRenderPipeline(DeviceBase* device, const char* label)
+        explicit ErrorRenderPipeline(DeviceBase* device, std::optional<std::string_view> label)
             : RenderPipelineBase(device, ObjectBase::kError, label) {}
 
         MaybeError InitializeImpl() override {

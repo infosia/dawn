@@ -275,6 +275,11 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
     return {true};
 }
 
+absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
+    const OptionalString& value,
+    const absl::FormatConversionSpec& spec,
+    absl::FormatSink* s);
+
 template <typename Tag, typename T>
 absl::FormatConvertResult<absl::FormatConversionCharSet::kNumeric> AbslFormatConvert(
     const dawn::detail::TypedIntegerImpl<Tag, T>& value,

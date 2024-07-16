@@ -54,7 +54,7 @@ class CommandEncoder final : public ApiObjectBase {
   public:
     static Ref<CommandEncoder> Create(DeviceBase* device,
                                       const UnpackedPtr<CommandEncoderDescriptor>& descriptor);
-    static Ref<CommandEncoder> MakeError(DeviceBase* device, const char* label);
+    static Ref<CommandEncoder> MakeError(DeviceBase* device, std::optional<std::string_view> label);
 
     ObjectType GetType() const override;
 
@@ -135,7 +135,9 @@ class CommandEncoder final : public ApiObjectBase {
 
   private:
     CommandEncoder(DeviceBase* device, const UnpackedPtr<CommandEncoderDescriptor>& descriptor);
-    CommandEncoder(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
+    CommandEncoder(DeviceBase* device,
+                   ObjectBase::ErrorTag tag,
+                   std::optional<std::string_view> label);
 
     void DestroyImpl() override;
 
