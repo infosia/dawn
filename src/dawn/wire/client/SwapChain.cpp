@@ -39,7 +39,7 @@ SwapChain::SwapChain(const ObjectBaseParams& params,
                      WGPUSurface,
                      const WGPUSwapChainDescriptor* descriptor)
     : ObjectBase(params) {
-    mTextureDescriptor = {};
+    mTextureDescriptor = WGPU_TEXTURE_DESCRIPTOR_INIT;
     mTextureDescriptor.size = {descriptor->width, descriptor->height, 1};
     mTextureDescriptor.format = descriptor->format;
     mTextureDescriptor.usage = descriptor->usage;

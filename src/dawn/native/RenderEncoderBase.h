@@ -40,7 +40,7 @@ namespace dawn::native {
 class RenderEncoderBase : public ProgrammableEncoder {
   public:
     RenderEncoderBase(DeviceBase* device,
-                      const char* label,
+                      std::optional<std::string_view> label,
                       EncodingContext* encodingContext,
                       Ref<AttachmentState> attachmentState,
                       bool depthReadOnly,
@@ -83,7 +83,7 @@ class RenderEncoderBase : public ProgrammableEncoder {
     RenderEncoderBase(DeviceBase* device,
                       EncodingContext* encodingContext,
                       ErrorTag errorTag,
-                      const char* label);
+                      std::optional<std::string_view> label);
 
     void DestroyImpl() override;
 
