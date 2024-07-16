@@ -294,18 +294,19 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
                      std::vector<tint::wgsl::Extension> internalExtensions);
     ~ShaderModuleBase() override;
 
-    static Ref<ShaderModuleBase> MakeError(DeviceBase* device, const char* label);
+    static Ref<ShaderModuleBase> MakeError(DeviceBase* device,
+                                           std::optional<std::string_view> label);
 
     ObjectType GetType() const override;
 
     // Return true iff the program has an entrypoint called `entryPoint`.
-    bool HasEntryPoint(const std::string& entryPoint) const;
+    bool HasEntryPoint(std::string_view entryPoint) const;
 
     // Return the number of entry points for a stage.
     size_t GetEntryPointCount(SingleShaderStage stage) const { return mEntryPointCounts[stage]; }
 
     // Return the entry point for a stage. If no entry point name, returns the default one.
-    ShaderModuleEntryPoint ReifyEntryPointName(const char* entryPointName,
+    ShaderModuleEntryPoint ReifyEntryPointName(std::optional<std::string_view> entryPointName,
                                                SingleShaderStage stage) const;
 
     // Return the metadata for the given `entryPoint`. HasEntryPoint with the same argument
@@ -342,7 +343,9 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
                               OwnedCompilationMessages* compilationMessages);
 
   private:
-    ShaderModuleBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
+    ShaderModuleBase(DeviceBase* device,
+                     ObjectBase::ErrorTag tag,
+                     std::optional<std::string_view> label);
 
     void WillDropLastExternalRef() override;
 
