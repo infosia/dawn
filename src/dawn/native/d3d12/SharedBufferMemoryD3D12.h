@@ -40,14 +40,14 @@ class SharedBufferMemory final : public SharedBufferMemoryBase {
   public:
     static ResultOrError<Ref<SharedBufferMemory>> Create(
         Device* device,
-        const char* label,
+        std::optional<std::string_view> label,
         const SharedBufferMemoryD3D12ResourceDescriptor* descriptor);
 
     ID3D12Resource* GetD3DResource() const;
 
   private:
     SharedBufferMemory(Device* device,
-                       const char* label,
+                       std::optional<std::string_view> label,
                        SharedBufferMemoryProperties properties,
                        ComPtr<ID3D12Resource> resource);
 

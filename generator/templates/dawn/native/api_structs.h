@@ -95,6 +95,9 @@ namespace {{native_namespace}} {
             {% endif %}
             {% for member in type.members %}
                 {% set member_declaration = as_annotated_frontendType(member) + render_cpp_default_value(member) %}
+                {% if member.optional and member.type.name.get() == "string" and member.annotation == "value" %}
+                    {% set member_declaration = "Optional" + member_declaration %}
+                {% endif %}
                 {% if type.chained and loop.first %}
                     //* Align the first member after ChainedStruct to match the C struct layout.
                     //* It has to be aligned both to its natural and ChainedStruct's alignment.

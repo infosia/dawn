@@ -34,7 +34,9 @@
 
 namespace dawn::native::d3d {
 
-SharedFence::SharedFence(Device* device, const char* label, SystemHandle ownedHandle)
+SharedFence::SharedFence(Device* device,
+                         std::optional<std::string_view> label,
+                         SystemHandle ownedHandle)
     : SharedFenceBase(device, label), mHandle(std::move(ownedHandle)) {}
 
 HANDLE SharedFence::GetFenceHandle() const {

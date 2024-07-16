@@ -43,7 +43,8 @@ class RenderBundleEncoder final : public RenderEncoderBase {
   public:
     static Ref<RenderBundleEncoder> Create(DeviceBase* device,
                                            const RenderBundleEncoderDescriptor* descriptor);
-    static Ref<RenderBundleEncoder> MakeError(DeviceBase* device, const char* label);
+    static Ref<RenderBundleEncoder> MakeError(DeviceBase* device,
+                                              std::optional<std::string_view> label);
 
     ~RenderBundleEncoder() override;
 
@@ -55,7 +56,9 @@ class RenderBundleEncoder final : public RenderEncoderBase {
 
   private:
     RenderBundleEncoder(DeviceBase* device, const RenderBundleEncoderDescriptor* descriptor);
-    RenderBundleEncoder(DeviceBase* device, ErrorTag errorTag, const char* label);
+    RenderBundleEncoder(DeviceBase* device,
+                        ErrorTag errorTag,
+                        std::optional<std::string_view> label);
 
     void DestroyImpl() override;
 
