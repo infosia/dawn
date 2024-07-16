@@ -52,7 +52,7 @@ class SamplerBase : public ApiObjectBase,
     SamplerBase(DeviceBase* device, const SamplerDescriptor* descriptor);
     ~SamplerBase() override;
 
-    static Ref<SamplerBase> MakeError(DeviceBase* device, const char* label);
+    static Ref<SamplerBase> MakeError(DeviceBase* device, std::optional<std::string_view> label);
 
     ObjectType GetType() const override;
 
@@ -79,7 +79,9 @@ class SamplerBase : public ApiObjectBase,
     }
 
   private:
-    SamplerBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
+    SamplerBase(DeviceBase* device,
+                ObjectBase::ErrorTag tag,
+                std::optional<std::string_view> label);
 
     // TODO(cwallez@chromium.org): Store a crypto hash of the items instead?
     wgpu::AddressMode mAddressModeU;

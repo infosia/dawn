@@ -39,7 +39,7 @@
 namespace dawn::native::d3d {
 
 SharedTextureMemory::SharedTextureMemory(d3d::Device* device,
-                                         const char* label,
+                                         std::optional<std::string_view> label,
                                          SharedTextureMemoryProperties properties)
     : SharedTextureMemoryBase(device, label, properties) {}
 

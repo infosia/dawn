@@ -48,7 +48,7 @@ class SharedTextureMemory final : public SharedTextureMemoryBase {
   public:
     static ResultOrError<Ref<SharedTextureMemory>> Create(
         Device* device,
-        const char* label,
+        std::optional<std::string_view> label,
         const SharedTextureMemoryIOSurfaceDescriptor* descriptor);
 
     IOSurfaceRef GetIOSurface() const;
@@ -59,7 +59,7 @@ class SharedTextureMemory final : public SharedTextureMemoryBase {
 
   private:
     SharedTextureMemory(Device* device,
-                        const char* label,
+                        std::optional<std::string_view> label,
                         const SharedTextureMemoryProperties& properties,
                         IOSurfaceRef ioSurface);
     // Performs initialization of the base class followed by Metal-specific

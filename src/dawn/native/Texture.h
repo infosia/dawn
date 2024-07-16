@@ -223,7 +223,8 @@ class TextureViewBase : public ApiObjectBase {
     TextureViewBase(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor);
     ~TextureViewBase() override;
 
-    static Ref<TextureViewBase> MakeError(DeviceBase* device, const char* label = nullptr);
+    static Ref<TextureViewBase> MakeError(DeviceBase* device,
+                                          std::optional<std::string_view> label = std::nullopt);
 
     ObjectType GetType() const override;
     void FormatLabel(absl::FormatSink* s) const override;
@@ -247,7 +248,9 @@ class TextureViewBase : public ApiObjectBase {
     void DestroyImpl() override;
 
   private:
-    TextureViewBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
+    TextureViewBase(DeviceBase* device,
+                    ObjectBase::ErrorTag tag,
+                    std::optional<std::string_view> label);
 
     ApiObjectList* GetObjectTrackingList() override;
 

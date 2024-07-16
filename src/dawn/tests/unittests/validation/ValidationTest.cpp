@@ -145,14 +145,18 @@ ValidationTest::ValidationTest() {
         deviceTogglesDesc.nextInChain = deviceDesc.nextInChain;
         deviceDesc.nextInChain = &deviceTogglesDesc;
 
-        auto enabledToggles = gCurrentTest->GetEnabledToggles();
-        auto disabledToggles = gCurrentTest->GetDisabledToggles();
-        for (const std::string& toggle : gToggleParser->GetEnabledToggles()) {
-            enabledToggles.push_back(toggle.c_str());
-        }
-        for (const std::string& toggle : gToggleParser->GetDisabledToggles()) {
-            disabledToggles.push_back(toggle.c_str());
-        }
+        std::vector<wgpu::StringView> enabledToggles;
+        enabledToggles.insert(enabledToggles.end(), gCurrentTest->GetEnabledToggles().begin(),
+                              gCurrentTest->GetEnabledToggles().end());
+        enabledToggles.insert(enabledToggles.end(), gToggleParser->GetEnabledToggles().begin(),
+                              gToggleParser->GetEnabledToggles().end());
+
+        std::vector<wgpu::StringView> disabledToggles;
+        disabledToggles.insert(disabledToggles.end(), gCurrentTest->GetDisabledToggles().begin(),
+                               gCurrentTest->GetDisabledToggles().end());
+        disabledToggles.insert(disabledToggles.end(), gToggleParser->GetDisabledToggles().begin(),
+                               gToggleParser->GetDisabledToggles().end());
+
         deviceTogglesDesc.enabledToggles = enabledToggles.data();
         deviceTogglesDesc.enabledToggleCount = enabledToggles.size();
         deviceTogglesDesc.disabledToggles = disabledToggles.data();
@@ -183,7 +187,7 @@ void ValidationTest::SetUp() {
     // querying for features via the adapter, i.e. prior to device creation.
     wgpu::DawnTogglesDescriptor instanceToggles = {};
     if (AllowUnsafeAPIs()) {
-        static const char* allowUnsafeApisToggle = "allow_unsafe_apis";
+        static wgpu::StringView allowUnsafeApisToggle = "allow_unsafe_apis";
         instanceToggles.enabledToggleCount = 1;
         instanceToggles.enabledToggles = &allowUnsafeApisToggle;
     }

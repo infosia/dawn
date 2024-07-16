@@ -324,7 +324,8 @@ void Instance::GatherWGSLFeatures(const WGPUDawnWireWGSLControl* wgslControl,
     // Remove blocklisted features.
     if (wgslBlocklist != nullptr) {
         for (size_t i = 0; i < wgslBlocklist->blocklistedFeatureCount; i++) {
-            const char* name = wgslBlocklist->blocklistedFeatures[i];
+            std::string_view name(wgslBlocklist->blocklistedFeatures[i].data,
+                                  wgslBlocklist->blocklistedFeatures[i].length);
             tint::wgsl::LanguageFeature tintFeature = tint::wgsl::ParseLanguageFeature(name);
             if (tintFeature == tint::wgsl::LanguageFeature::kUndefined) {
                 // Ignore unknown features in the blocklist.
