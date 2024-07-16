@@ -41,17 +41,17 @@ class SharedTextureMemory final : public SharedTextureMemoryBase {
   public:
     static ResultOrError<Ref<SharedTextureMemory>> Create(
         Device* device,
-        const char* label,
+        std::optional<std::string_view> label,
         const SharedTextureMemoryDmaBufDescriptor* descriptor);
 
     static ResultOrError<Ref<SharedTextureMemory>> Create(
         Device* device,
-        const char* label,
+        std::optional<std::string_view> label,
         const SharedTextureMemoryAHardwareBufferDescriptor* descriptor);
 
     static ResultOrError<Ref<SharedTextureMemory>> Create(
         Device* device,
-        const char* label,
+        std::optional<std::string_view> label,
         const SharedTextureMemoryOpaqueFDDescriptor* descriptor);
 
     RefCountedVkHandle<VkDeviceMemory>* GetVkDeviceMemory() const;
@@ -60,12 +60,12 @@ class SharedTextureMemory final : public SharedTextureMemoryBase {
 
   private:
     static Ref<SharedTextureMemory> Create(Device* device,
-                                           const char* label,
+                                           std::optional<std::string_view> label,
                                            const SharedTextureMemoryProperties& properties,
                                            uint32_t queueFamilyIndex);
 
     SharedTextureMemory(Device* device,
-                        const char* label,
+                        std::optional<std::string_view> label,
                         const SharedTextureMemoryProperties& properties,
                         uint32_t queueFamilyIndex);
     void DestroyImpl() override;

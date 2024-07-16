@@ -39,11 +39,11 @@ class SharedFence : public d3d::SharedFence {
   public:
     static ResultOrError<Ref<SharedFence>> Create(
         Device* device,
-        const char* label,
+        std::optional<std::string_view> label,
         const SharedFenceDXGISharedHandleDescriptor* descriptor);
 
     static ResultOrError<Ref<SharedFence>> Create(Device* device,
-                                                  const char* label,
+                                                  std::optional<std::string_view> label,
                                                   ComPtr<ID3D11Fence> d3d11Fence);
 
     ID3D11Fence* GetD3DFence() const;

@@ -525,7 +525,7 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
     "offsetof mismatch for ChainedStruct::sType");
 
 //* Special structures that require some custom code generation.
-{% set SpecialStructures = ["device descriptor"] %}
+{% set SpecialStructures = ["device descriptor", "string"] %}
 
 {% for type in by_category["structure"] if type.name.get() not in SpecialStructures %}
     {% set Out = "Out" if type.output else "" %}
