@@ -63,7 +63,7 @@
         "returns": "proc",
         "args": [
             {"name": "device", "type": "device", "optional": true},
-            {"name": "proc name", "type": "char", "annotation": "const*"}
+            {"name": "proc name", "type": "string"}
         ]
     },
 
