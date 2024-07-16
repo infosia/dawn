@@ -90,6 +90,8 @@ set(private_headers
     "SerialStorage.h"
     "SlabAllocator.h"
     "StackAllocated.h"
+    "StringUtils.cpp"
+    "StringUtils.h"
     "SystemUtils.h"
     "TypedInteger.h"
     "TypeTraits.h"

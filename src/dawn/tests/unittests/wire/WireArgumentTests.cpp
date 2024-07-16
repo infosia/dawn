@@ -113,8 +113,8 @@ TEST_F(WireArgumentTests, ValueArrayArgument) {
     FlushClient();
 }
 
-// Test that the wire is able to send C strings
-TEST_F(WireArgumentTests, CStringArgument) {
+// Test that the wire is able to send WGPUStrings in descriptors
+TEST_F(WireArgumentTests, WGPUStringInDescriptor) {
     // Create shader module
     WGPUShaderModuleDescriptor vertexDescriptor = WGPU_SHADER_MODULE_DESCRIPTOR_INIT;
     WGPUShaderModule vsModule = wgpuDeviceCreateShaderModule(device, &vertexDescriptor);
@@ -149,11 +149,12 @@ TEST_F(WireArgumentTests, CStringArgument) {
     WGPURenderPipelineDescriptor pipelineDescriptor = WGPU_RENDER_PIPELINE_DESCRIPTOR_INIT;
 
     pipelineDescriptor.vertex.module = vsModule;
-    pipelineDescriptor.vertex.entryPoint = "main";
+    pipelineDescriptor.vertex.entryPoint.data = "mai\0n";
+    pipelineDescriptor.vertex.entryPoint.length = 5;
 
     WGPUFragmentState fragment = WGPU_FRAGMENT_STATE_INIT;
     fragment.module = vsModule;
-    fragment.entryPoint = "main";
+    fragment.entryPoint.data = "main";
     fragment.targetCount = 1;
     fragment.targets = &colorTargetState;
     pipelineDescriptor.fragment = &fragment;
@@ -167,7 +168,8 @@ TEST_F(WireArgumentTests, CStringArgument) {
     EXPECT_CALL(api,
                 DeviceCreateRenderPipeline(
                     apiDevice, MatchesLambda([](const WGPURenderPipelineDescriptor* desc) -> bool {
-                        return desc->vertex.entryPoint == std::string("main");
+                        return desc->vertex.entryPoint.length == 5 &&
+                               memcmp(desc->vertex.entryPoint.data, "mai\0n", 5) == 0;
                     })))
         .WillOnce(Return(apiPlaceholderPipeline));
 
