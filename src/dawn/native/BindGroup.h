@@ -57,7 +57,7 @@ struct BufferBinding {
 
 class BindGroupBase : public ApiObjectBase {
   public:
-    static Ref<BindGroupBase> MakeError(DeviceBase* device, const char* label);
+    static Ref<BindGroupBase> MakeError(DeviceBase* device, std::optional<std::string_view> label);
 
     ObjectType GetType() const override;
 
@@ -101,7 +101,9 @@ class BindGroupBase : public ApiObjectBase {
     ~BindGroupBase() override;
 
   private:
-    BindGroupBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
+    BindGroupBase(DeviceBase* device,
+                  ObjectBase::ErrorTag tag,
+                  std::optional<std::string_view> label);
     void DeleteThis() override;
 
     Ref<BindGroupLayoutBase> mLayout;
