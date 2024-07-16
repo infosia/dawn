@@ -16,6 +16,23 @@
       "message": "Please take a look, thanks! This CL is needed to properly expose the subgroups limits to JS for Blink OT.",
       "revId": "eb80fca8a82b0a7b1ca020c704e5b46c34ff290b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0508e5a_62561413",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-16T12:54:33Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "eb80fca8a82b0a7b1ca020c704e5b46c34ff290b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
