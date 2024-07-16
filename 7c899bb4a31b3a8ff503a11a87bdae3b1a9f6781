@@ -33,6 +33,24 @@
       "message": "nit: Could we explicitly add the other primitive topologies to the list so we don\u0027t forget to update this validation when new ones are added in the future? (for example an hypothetical line-loop extension).",
       "revId": "7c899bb4a31b3a8ff503a11a87bdae3b1a9f6781",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1a80c88_d2182c28",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-07-16T14:58:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c33321_915f4fa2",
+      "revId": "7c899bb4a31b3a8ff503a11a87bdae3b1a9f6781",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
