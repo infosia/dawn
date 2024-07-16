@@ -69,6 +69,24 @@
       "parentUuid": "df388396_36c2a759",
       "revId": "8285e653643c98729ac3541435161efac4236156",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5364ffe_71910e21",
+        "filename": "src/dawn/tests/end2end/ComputeDispatchTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-07-16T20:14:35Z",
+      "side": 1,
+      "message": "Recording purpose: as discussed in the meeting, there seems to be no restriction for buffer size. See *\"Table 6.5: Indexed buffer object limits and binding queries\"* in OpenGL ES 3.1 spec: https://registry.khronos.org/OpenGL/specs/es/3.1/es_spec_3.1.withchanges.pdf",
+      "parentUuid": "b381ff09_51b8cbd8",
+      "revId": "8285e653643c98729ac3541435161efac4236156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
