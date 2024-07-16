@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f6a7f30_d09b52f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2024-07-16T02:44:12Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "54cfe82a520a103983af2cc26d1860b11c1d6853",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a168bf9_5f84ef69",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2024-07-16T02:44:12Z",
+      "side": 1,
+      "message": "nit: handle isn\u0027t very descriptive here",
+      "fixSuggestions": [
+        {
+          "fixId": "cf52ee4e_b6e4a933",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/opengl/TextureGL.cpp",
+              "range": {
+                "startLine": 159,
+                "startChar": 0,
+                "endLine": 160,
+                "endChar": 0
+              },
+              "replacement": "                              GLuint textureHandle,\n"
+            },
+            {
+              "path": "src/dawn/native/opengl/TextureGL.cpp",
+              "range": {
+                "startLine": 166,
+                "startChar": 0,
+                "endLine": 167,
+                "endChar": 0
+              },
+              "replacement": "            gl.FramebufferTextureLayer(target, attachment, textureHandle, mipLevel, arrayLayer);\n"
+            },
+            {
+              "path": "src/dawn/native/opengl/TextureGL.cpp",
+              "range": {
+                "startLine": 170,
+                "startChar": 0,
+                "endLine": 171,
+                "endChar": 0
+              },
+              "replacement": "            gl.FramebufferTexture2D(target, attachment, cubeTexTarget, textureHandle, mipLevel);\n"
+            },
+            {
+              "path": "src/dawn/native/opengl/TextureGL.cpp",
+              "range": {
+                "startLine": 175,
+                "startChar": 0,
+                "endLine": 176,
+                "endChar": 0
+              },
+              "replacement": "            gl.FramebufferTexture2D(target, attachment, textarget, textureHandle, mipLevel);\n"
+            },
+            {
+              "path": "src/dawn/native/opengl/TextureGL.cpp",
+              "range": {
+                "startLine": 569,
+                "startChar": 0,
+                "endLine": 570,
+                "endChar": 0
+              },
+              "replacement": "    GLuint textureHandle, mipLevel, arrayLayer;\n"
+            },
+            {
+              "path": "src/dawn/native/opengl/TextureGL.cpp",
+              "range": {
+                "startLine": 573,
+                "startChar": 0,
+                "endLine": 574,
+                "endChar": 0
+              },
+              "replacement": "        textureHandle \u003d GetHandle();\n"
+            },
+            {
+              "path": "src/dawn/native/opengl/TextureGL.cpp",
+              "range": {
+                "startLine": 580,
+                "startChar": 0,
+                "endLine": 581,
+                "endChar": 0
+              },
+              "replacement": "        textureHandle \u003d ToBackend(GetTexture())-\u003eGetHandle();\n"
+            },
+            {
+              "path": "src/dawn/native/opengl/TextureGL.cpp",
+              "range": {
+                "startLine": 590,
+                "startChar": 0,
+                "endLine": 591,
+                "endChar": 0
+              },
+              "replacement": "    DAWN_ASSERT(textureHandle !\u003d 0);\n"
+            },
+            {
+              "path": "src/dawn/native/opengl/TextureGL.cpp",
+              "range": {
+                "startLine": 592,
+                "startChar": 0,
+                "endLine": 593,
+                "endChar": 0
+              },
+              "replacement": "    FrameBufferTextureHelper(gl, textarget, target, attachment, textureHandle, mipLevel,\n                             arrayLayer);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "54cfe82a520a103983af2cc26d1860b11c1d6853",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0d26abf_618d825d",
+        "filename": "src/dawn/tests/end2end/NonzeroTextureCreationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2024-07-16T02:44:12Z",
+      "side": 1,
+      "message": "Stephen mentioned this when the existing code was written (I didn\u0027t change it then) but, the defaults are such that for the cases below, IIRC, you only need\n\n```cpp\nif (descriptor.dimension \u003d\u003d wepu::TextureDimension::e2d \u0026\u0026 \n    descriptor.size.depthOrArrayLayers \u003d\u003d 6) {\n  // Testing cube texture copy for compat.\n  textureBindingViewDimensionDesc.textureBindingViewDimension \u003d\n    wgpu::TextureViewDimension::Cube;\n}\n```\n\nAll of the other cases are the the default and so don\u0027t need to be set explicitly.",
+      "revId": "54cfe82a520a103983af2cc26d1860b11c1d6853",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
