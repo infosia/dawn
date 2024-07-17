@@ -33,6 +33,23 @@
       "message": "Thanks!",
       "revId": "c58ddb75fa8a10076542cc40ca8a113408b945b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "921e6558_d1dec453",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T01:02:54Z",
+      "side": 1,
+      "message": "assuming cwallez meant cq+2 instead of cr+2, submitting for you",
+      "revId": "c58ddb75fa8a10076542cc40ca8a113408b945b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
