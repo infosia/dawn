@@ -75,6 +75,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5065691b_0f47ae96",
+        "filename": "src/dawn/native/opengl/SwapChainEGL.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-07-17T20:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91f87c2a_6edb6ef2",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 223,
+        "endChar": 26
+      },
+      "revId": "6d238a21c8c4e901649e6a30d3594b2aec74b00f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51b6932f_3d9acb0f",
@@ -88,6 +112,30 @@
       "writtenOn": "2024-06-27T22:02:23Z",
       "side": 1,
       "message": "these two cases are supposed to distinguish between \"I tried to create the surface and failed\" and \"not supported at all\".\n\n\nHow about we make a local var `ResultOrError\u003cEGLSurface\u003e eglSurface`.\nIn the switch cases we assign to that.\nAnd in the default case, we assign the error to it. That way there is no early return which makes the later code unreachable.\n\nThen at the end we do:\n\n```\nDAWN_TRY_ASSIGN(mEGLSurface, eglSurface);\nif (mEGLSurface \u003d\u003d EGL_NO_SURFACE) {\n    return DAWN_FORMAT_INTERNAL_ERROR(\"Couldn\u0027t create an EGLSurface for %s.\", surface);\n}\nreturn {};\n```",
+      "range": {
+        "startLine": 220,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 14
+      },
+      "revId": "6d238a21c8c4e901649e6a30d3594b2aec74b00f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "216bd289_c0351dbd",
+        "filename": "src/dawn/native/opengl/SwapChainEGL.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-07-17T20:20:08Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "51b6932f_3d9acb0f",
       "range": {
         "startLine": 220,
         "startChar": 2,
