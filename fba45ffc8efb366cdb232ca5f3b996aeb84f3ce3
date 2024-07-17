@@ -52,6 +52,91 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47118c55_e598718a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T14:10:35Z",
+      "side": 1,
+      "message": "TBH I kinda stopped following the YCbCr discussions as we now know the space fairly well. So we decided to go with the \"following\" approach? It\u0027s a bit weird from a WebGPU sense, but if it\u0027s for Graphite only it\u0027s fine.",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92a90c12_a8cd0a54",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T14:10:35Z",
+      "side": 1,
+      "message": "Maybe we could instead loop over all bindings, find YCbCr samplers and always drop bindingNumber+1? It would avoid the corner-case with BindingNumber(0).",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f232faaf_1b60f1e2",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T14:10:35Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecb3349f_fe3de886",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T14:10:35Z",
+      "side": 1,
+      "message": "Note: That we iterate over the map seems to be a remnant of using the BindingNumber in SPIR-V instead of remapping. Now we should be able to directly loop over bindingIndex from 0 to bgl-\u003eGetBindingCount().",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd677734_7ec3895f",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T14:10:35Z",
+      "side": 1,
+      "message": "IMHO we could precompute the destination bindingIndex for each binding in BindGroupLayoutVk and use this directly here, likewise for VulkanDescriptorType. This would avoid logic in this fairly hot code, with pre-computations moved to cold BGL creation. This would remove the need to edit the code below as well.",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86c7f0fc_3d4422a7",
