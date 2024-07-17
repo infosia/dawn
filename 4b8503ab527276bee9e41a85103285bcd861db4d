@@ -88,6 +88,41 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98973066_51418b60",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T20:27:23Z",
+      "side": 1,
+      "message": "I meant that now that this is a wgpu::String structure we could just always assume that the string is optional for all entrypoints. But maybe that doesn\u0027t work since a bunch of entrypoints would need to add validation for the string being null-ish.",
+      "parentUuid": "409f1b01_670267fc",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a6539d7_e0d3c488",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T20:27:23Z",
+      "side": 1,
+      "message": "we\u0027re missing utility and type_traits for std::move and std::is_convertible_v",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9e950ea_7e99fd4e",
@@ -123,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "790071f5_a8c4330a",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T20:27:23Z",
+      "side": 1,
+      "message": "[1] Gotcha this is for type safety by using types in std:: instead of coming up with our own solution. From a gamedev / hermetic header standpoint it seems better to not use the STL but maybe that ship has sailed.",
+      "parentUuid": "83fce170_f494fd53",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7b2b5beb_97f8ff6d",
@@ -154,6 +207,24 @@
       "side": 1,
       "message": "how might we do this? I\u0027ve wanted to do \u003cfunctional\u003e by splitting things off to a different webgpu_functional.h header or something. Not sure about the other ones though. It\u0027s undefined behavior to forward-declare std:: structs/classes",
       "parentUuid": "7b2b5beb_97f8ff6d",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4295792b_2276c3b2",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T20:27:23Z",
+      "side": 1,
+      "message": "For string_view and optional it could be just the comment at [1] but IDK that functional could be removed.",
+      "parentUuid": "35c7255a_9277a350",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
