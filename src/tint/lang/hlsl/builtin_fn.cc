@@ -60,6 +60,10 @@ const char* str(BuiltinFn i) {
             return "unpack_s8s32";
         case BuiltinFn::kUnpackU8U32:
             return "unpack_u8u32";
+        case BuiltinFn::kDot4AddI8Packed:
+            return "dot4add_i8packed";
+        case BuiltinFn::kDot4AddU8Packed:
+            return "dot4add_u8packed";
         case BuiltinFn::kLoad:
             return "Load";
         case BuiltinFn::kLoad2:

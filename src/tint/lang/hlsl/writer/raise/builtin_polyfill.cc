@@ -90,6 +90,8 @@ struct State {
             }
             if (auto* call = inst->As<core::ir::CoreBuiltinCall>()) {
                 switch (call->Func()) {
+                    case core::BuiltinFn::kDot4I8Packed:
+                    case core::BuiltinFn::kDot4U8Packed:
                     case core::BuiltinFn::kPack2X16Float:
                     case core::BuiltinFn::kPack2X16Snorm:
                     case core::BuiltinFn::kPack2X16Unorm:
@@ -143,6 +145,12 @@ struct State {
         // Replace the builtin calls that we found
         for (auto* call : call_worklist) {
             switch (call->Func()) {
+                case core::BuiltinFn::kDot4I8Packed:
+                    Dot4I8Packed(call);
+                    break;
+                case core::BuiltinFn::kDot4U8Packed:
+                    Dot4U8Packed(call);
+                    break;
                 case core::BuiltinFn::kPack2X16Float:
                     Pack2x16Float(call);
                     break;
@@ -1003,6 +1011,26 @@ struct State {
             auto* conv = b.Convert(ty.u32(), packed);
 
             call->Result(0)->ReplaceAllUsesWith(conv->Result(0));
+        });
+        call->Destroy();
+    }
+
+    void Dot4I8Packed(core::ir::CoreBuiltinCall* call) {
+        auto args = call->Args();
+        b.InsertBefore(call, [&] {
+            auto* acc = b.Var("accumulator", b.Zero(ty.i32()));
+            b.CallWithResult<hlsl::ir::BuiltinCall>(
+                call->DetachResult(), hlsl::BuiltinFn::kDot4AddI8Packed, args[0], args[1], acc);
+        });
+        call->Destroy();
+    }
+
+    void Dot4U8Packed(core::ir::CoreBuiltinCall* call) {
+        auto args = call->Args();
+        b.InsertBefore(call, [&] {
+            auto* acc = b.Var("accumulator", b.Zero(ty.u32()));
+            b.CallWithResult<hlsl::ir::BuiltinCall>(
+                call->DetachResult(), hlsl::BuiltinFn::kDot4AddU8Packed, args[0], args[1], acc);
         });
         call->Destroy();
     }

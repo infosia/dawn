@@ -56,6 +56,8 @@ enum class BuiltinFn : uint8_t {
     kSign,
     kUnpackS8S32,
     kUnpackU8U32,
+    kDot4AddI8Packed,
+    kDot4AddU8Packed,
     kLoad,
     kLoad2,
     kLoad3,

@@ -163,6 +163,9 @@ fn sign[N: num, T: fi32_f16](vec<N, T>) -> vec<N, i32>
 fn unpack_s8s32(int8_t4_packed) -> vec4<i32>
 fn unpack_u8u32(uint8_t4_packed) -> vec4<u32>
 
+fn dot4add_i8packed(u32, u32, ptr<function, i32, writable>) -> i32
+fn dot4add_u8packed(u32, u32, ptr<function, u32, writable>) -> u32
+
 @member_function fn Load(byte_address_buffer<readable>, offset: u32) -> u32
 @member_function fn Load2(byte_address_buffer<readable>, offset: u32) -> vec2<u32>
 @member_function fn Load3(byte_address_buffer<readable>, offset: u32) -> vec3<u32>
