@@ -29,9 +29,54 @@
 
 #include "dawn/samples/SampleUtils.h"
 
+#include "dawn/common/Log.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/SystemUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "dawn/webgpu_cpp_print.h"
+
+namespace wgpu {
+
+using QueueWorkDoneCallback_ = void (*)(wgpu::QueueWorkDoneStatus status, void* userdata);
+
+struct QueueWorkDoneCallbackInfo_ {
+    template <typename F,
+              typename T,
+              typename Cb = void(QueueWorkDoneStatus status, T userdata),
+              typename = std::enable_if_t<std::is_convertible_v<F, Cb*>>>
+    QueueWorkDoneCallbackInfo_(CallbackMode callbackMode, F callback, T userdata)
+        : mode(callbackMode),
+          cCallback([](WGPUQueueWorkDoneStatus status, void* callback, void* userdata) {
+              auto cb = reinterpret_cast<Cb*>(callback);
+              (*cb)(static_cast<QueueWorkDoneStatus>(status), static_cast<T>(userdata));
+          }),
+          callback(reinterpret_cast<void*>(+callback)),
+          userdata(reinterpret_cast<void*>(userdata)) {}
+
+    template <typename L,
+              typename F = void (*)(QueueWorkDoneStatus),
+              typename = std::enable_if_t<std::is_convertible_v<L, F>>>
+    QueueWorkDoneCallbackInfo_(CallbackMode callbackMode, L callbackIn)
+        : mode(callbackMode),
+          cCallback([](WGPUQueueWorkDoneStatus status, void* callback, void*) {
+              auto cb = reinterpret_cast<F>(callback);
+              (*cb)(static_cast<QueueWorkDoneStatus>(status));
+          }),
+          callback(reinterpret_cast<void*>(+callbackIn)),
+          userdata(nullptr) {}
+
+    ChainedStruct const* nextInChain = nullptr;
+    const CallbackMode mode = CallbackMode::WaitAnyOnly;
+    const WGPUQueueWorkDoneCallback2 cCallback =
+        [](WGPUQueueWorkDoneStatus status, void* callback, void* userdata) {
+            auto cb = reinterpret_cast<QueueWorkDoneCallback_>(callback);
+            (*cb)(static_cast<QueueWorkDoneStatus>(status), userdata);
+        };
+    const void* callback = nullptr;
+    const void* userdata = nullptr;
+};
+
+}  // namespace wgpu
 
 wgpu::Device device;
 wgpu::Queue queue;
@@ -39,6 +84,25 @@ wgpu::SwapChain swapchain;
 
 wgpu::Buffer vertexBuffer;
 wgpu::RenderPipeline pipeline;
+
+wgpu::Future FakeQueueOnSubmittedWorkDone(wgpu::QueueWorkDoneCallbackInfo_ info) {
+    static_assert(sizeof(wgpu::QueueWorkDoneCallbackInfo_) ==
+                  sizeof(WGPUQueueWorkDoneCallbackInfo2));
+    static_assert(offsetof(wgpu::QueueWorkDoneCallbackInfo_, nextInChain) ==
+                  offsetof(WGPUQueueWorkDoneCallbackInfo2, nextInChain));
+    static_assert(offsetof(wgpu::QueueWorkDoneCallbackInfo_, mode) ==
+                  offsetof(WGPUQueueWorkDoneCallbackInfo2, mode));
+    static_assert(offsetof(wgpu::QueueWorkDoneCallbackInfo_, cCallback) ==
+                  offsetof(WGPUQueueWorkDoneCallbackInfo2, callback));
+    static_assert(offsetof(wgpu::QueueWorkDoneCallbackInfo_, callback) ==
+                  offsetof(WGPUQueueWorkDoneCallbackInfo2, userdata1));
+    static_assert(offsetof(wgpu::QueueWorkDoneCallbackInfo_, userdata) ==
+                  offsetof(WGPUQueueWorkDoneCallbackInfo2, userdata2));
+
+    WGPUQueueWorkDoneCallbackInfo2 cInfo;
+    memcpy(&cInfo, &info, sizeof(cInfo));
+    return {wgpuQueueOnSubmittedWorkDone2(queue.Get(), cInfo).id};
+}
 
 void init() {
     device = CreateCppDawnDevice();
@@ -74,6 +138,7 @@ void init() {
     pipeline = device.CreateRenderPipeline(&descriptor);
 }
 
+static int sUserdata = 1;
 void frame() {
     wgpu::TextureView backbufferView = swapchain.GetCurrentTextureView();
     dawn::utils::ComboRenderPassDescriptor renderPass({backbufferView});
@@ -90,6 +155,19 @@ void frame() {
     wgpu::CommandBuffer commands = encoder.Finish();
     queue.Submit(1, &commands);
     swapchain.Present();
+
+    FakeQueueOnSubmittedWorkDone(
+        {wgpu::CallbackMode::WaitAnyOnly, [](wgpu::QueueWorkDoneStatus status) {
+             DAWN_DEBUG() << "Worked with lambda " << status;
+         }});
+
+    FakeQueueOnSubmittedWorkDone({wgpu::CallbackMode::WaitAnyOnly,
+                                  [](wgpu::QueueWorkDoneStatus status, int* userdata) {
+                                      DAWN_DEBUG() << "Worked with lambda " << status
+                                                   << " userdata " << *userdata;
+                                  },
+                                  &sUserdata});
+
     DoFlush();
 }
 
