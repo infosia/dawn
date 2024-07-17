@@ -16,6 +16,23 @@
       "message": "Can associate with crbug.com/353636548",
       "revId": "de554a013cabd63182d41d13695a8e56b08c0bb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4b8ef17_da7c1020",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000292
+      },
+      "writtenOn": "2024-07-17T19:14:34Z",
+      "side": 1,
+      "message": "lgtm (but I don\u0027t have +2 power here)",
+      "revId": "de554a013cabd63182d41d13695a8e56b08c0bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
