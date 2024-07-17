@@ -66,6 +66,9 @@ type mat4x4<T>
 type byte_address_buffer<A: access>
 type int8_t4_packed
 type uint8_t4_packed
+type pack_s8
+type pack_u8
+type pack_clamp_s8
 
 type sampler
 type sampler_comparison

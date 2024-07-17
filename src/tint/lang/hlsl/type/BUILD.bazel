@@ -41,11 +41,17 @@ cc_library(
   srcs = [
     "byte_address_buffer.cc",
     "int8_t4_packed.cc",
+    "pack_clamp_s8.cc",
+    "pack_s8.cc",
+    "pack_u8.cc",
     "uint8_t4_packed.cc",
   ],
   hdrs = [
     "byte_address_buffer.h",
     "int8_t4_packed.h",
+    "pack_clamp_s8.h",
+    "pack_s8.h",
+    "pack_u8.h",
     "uint8_t4_packed.h",
   ],
   deps = [
@@ -74,6 +80,9 @@ cc_library(
   srcs = [
     "byte_address_buffer_test.cc",
     "int8_t4_packed_test.cc",
+    "pack_clamp_s8_test.cc",
+    "pack_s8_test.cc",
+    "pack_u8_test.cc",
     "uint8_t4_packed_test.cc",
   ],
   deps = [

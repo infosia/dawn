@@ -108,6 +108,9 @@
 #include "src/tint/lang/hlsl/ir/ternary.h"
 #include "src/tint/lang/hlsl/type/byte_address_buffer.h"
 #include "src/tint/lang/hlsl/type/int8_t4_packed.h"
+#include "src/tint/lang/hlsl/type/pack_clamp_s8.h"
+#include "src/tint/lang/hlsl/type/pack_s8.h"
+#include "src/tint/lang/hlsl/type/pack_u8.h"
 #include "src/tint/lang/hlsl/type/uint8_t4_packed.h"
 #include "src/tint/utils/containers/hashmap.h"
 #include "src/tint/utils/containers/map.h"
@@ -1225,6 +1228,9 @@ class Printer : public tint::TextGenerator {
             },
             [&](const hlsl::type::Int8T4Packed*) { out << "int8_t4_packed"; },
             [&](const hlsl::type::Uint8T4Packed*) { out << "uint8_t4_packed"; },
+            [&](const hlsl::type::PackS8*) { out << "pack_s8"; },
+            [&](const hlsl::type::PackU8*) { out << "pack_u8"; },
+            [&](const hlsl::type::PackClampS8*) { out << "pack_clamp_s8"; },
 
             [&](const core::type::Bool*) { out << "bool"; },      //
             [&](const core::type::F16*) { out << "float16_t"; },  //

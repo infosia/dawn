@@ -32,6 +32,9 @@
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/lang/hlsl/type/byte_address_buffer.h"
 #include "src/tint/lang/hlsl/type/int8_t4_packed.h"
+#include "src/tint/lang/hlsl/type/pack_clamp_s8.h"
+#include "src/tint/lang/hlsl/type/pack_s8.h"
+#include "src/tint/lang/hlsl/type/pack_u8.h"
 #include "src/tint/lang/hlsl/type/uint8_t4_packed.h"
 
 namespace tint::hlsl::intrinsic {
@@ -68,6 +71,33 @@ inline bool MatchUint8T4Packed(core::intrinsic::MatchState&, const core::type::T
 inline const type::Uint8T4Packed* BuildUint8T4Packed(core::intrinsic::MatchState& state,
                                                      const core::type::Type*) {
     return state.types.Get<type::Uint8T4Packed>();
+}
+
+inline bool MatchPackClampS8(core::intrinsic::MatchState&, const core::type::Type* ty) {
+    return ty->Is<type::PackClampS8>();
+}
+
+inline const type::PackClampS8* BuildPackClampS8(core::intrinsic::MatchState& state,
+                                                 const core::type::Type*) {
+    return state.types.Get<type::PackClampS8>();
+}
+
+inline bool MatchPackS8(core::intrinsic::MatchState&, const core::type::Type* ty) {
+    return ty->Is<type::PackS8>();
+}
+
+inline const type::PackS8* BuildPackS8(core::intrinsic::MatchState& state,
+                                       const core::type::Type*) {
+    return state.types.Get<type::PackS8>();
+}
+
+inline bool MatchPackU8(core::intrinsic::MatchState&, const core::type::Type* ty) {
+    return ty->Is<type::PackU8>();
+}
+
+inline const type::PackU8* BuildPackU8(core::intrinsic::MatchState& state,
+                                       const core::type::Type*) {
+    return state.types.Get<type::PackU8>();
 }
 
 }  // namespace tint::hlsl::intrinsic
