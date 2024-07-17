@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce69ca85_bb49e1fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-17T10:15:17Z",
+      "side": 1,
+      "message": "Austin: Given the information from Skia folks that it is a long-term goal for them to generalize their BGL (which would of course necessitate the fully general transform on the Dawn/Tint side), I don\u0027t think that it\u0027s worth the churn to introduce the concept of a \"combined sampler/texture\" entry at the Dawn API level - especially given that the Dawn-level transform is straightforward (I will of course validate that YCbCr sampler entries are followed by texture entries in the BGL). \nHowever, let me know if you think differently. I figure that we can in any case move forward with this implementation to unblock things even if we decide to then follow up immediately by adding that API-level construct and using it in Skia.",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "525a7fde_fc5fbcca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-17T10:15:17Z",
+      "side": 1,
+      "message": "You can look at the discussion in the Graphite chatroom for interesting context here: Greg had suggested that we should be able to just have the spirv sampler and texture shader vars both point at the binding for the combined image sampler and not change *anything* else in the shader, and it does indeed appear to work in my testing.",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e7a30fa_b3564810",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-17T10:15:17Z",
+      "side": 1,
+      "message": "Austin, Corentin: How does this direction look to you for the initial implementation?",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86c7f0fc_3d4422a7",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-17T10:15:17Z",
+      "side": 1,
+      "message": "I\u0027ll make this change within this CL before landing if/once we agree on this overall direction for the initial implementation.",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
