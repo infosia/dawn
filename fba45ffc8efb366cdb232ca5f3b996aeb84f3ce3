@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8396fec8_4ebed144",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T19:13:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand how you arrived at the conclusion. Given it is a goal for Skia to generalize the BGL, shouldn\u0027t we also support the general thing and not rely on a particular ordering of the bindings?\nIMO the semantics based on particular ordering are a bit too magic.",
+      "parentUuid": "ce69ca85_bb49e1fc",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "525a7fde_fc5fbcca",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -31,6 +49,24 @@
       "writtenOn": "2024-07-17T10:15:17Z",
       "side": 1,
       "message": "You can look at the discussion in the Graphite chatroom for interesting context here: Greg had suggested that we should be able to just have the spirv sampler and texture shader vars both point at the binding for the combined image sampler and not change *anything* else in the shader, and it does indeed appear to work in my testing.",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6353ed2_8f651d97",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T19:13:26Z",
+      "side": 1,
+      "message": "my understanding is that this is because the sampler will be decorated with binding annotations in the shader, but the sampler will be entirely unused. That\u0027s because we load the OpSampledImage directly from an OpTypeSampledImage the texture binding instead of making OpSampledImage on the fly from a loaded sampler and loaded texture.",
+      "parentUuid": "525a7fde_fc5fbcca",
       "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
