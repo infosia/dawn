@@ -152,6 +152,23 @@
       "message": "I\u0027ll make this change within this CL before landing if/once we agree on this overall direction for the initial implementation.",
       "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14712101_0c8ffdd8",
+        "filename": "src/tint/lang/spirv/writer/raise/ycbcr.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-17T14:16:23Z",
+      "side": 1,
+      "message": "If the only thing  this is doing is remapping binding points now, could we jsut use the binding remapper to do it instead, and just drop this transform?  Basically in the binding data, just set the destination binding to the value you want?",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
