@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c586825e_e2ca9c6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-17T03:23:53Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "3838119f8d802cb0df393d1ebb5de81403fd7165",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a347a2d_89772dcf",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-17T03:23:53Z",
+      "side": 1,
+      "message": "This one is probably done, just wanted to make sure it was called `ShaderIO` now.",
+      "revId": "3838119f8d802cb0df393d1ebb5de81403fd7165",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
