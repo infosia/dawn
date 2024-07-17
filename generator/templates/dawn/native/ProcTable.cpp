@@ -157,14 +157,7 @@ namespace {{native_namespace}} {
 
     }  // anonymous namespace
 
-    //* TODO(crbug.com/42241188): Remove "2" suffix when WGPUStringView changes complete.
-    WGPUProc NativeGetProcAddress2(WGPUDevice, WGPUStringView procName);
-
-    WGPUProc NativeGetProcAddress(WGPUDevice device, const char* procName) {
-        return NativeGetProcAddress2(device, WGPUStringView{procName, SIZE_MAX});
-    }
-
-    WGPUProc NativeGetProcAddress2(WGPUDevice, WGPUStringView procName) {
+    WGPUProc NativeGetProcAddress(WGPUDevice, WGPUStringView procName) {
         if (procName.data == nullptr) {
             return nullptr;
         }
