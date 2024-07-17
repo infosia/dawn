@@ -244,8 +244,13 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const BindingInfoArray& moduleBindingInfo =
         GetEntryPoint(programmableStage.entryPoint.c_str()).bindings;
 
+    // TODO(blundell): This should be an {old binding -> new binding} map that
+    // specifies which textures need to have their binding indices remapped and
+    // is added to `bindings`.
+    bool use_ycbcr_sampling = false;
     for (BindGroupIndex group : IterateBitSet(layout->GetBindGroupLayoutsMask())) {
         const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
+        use_ycbcr_sampling = use_ycbcr_sampling || bgl->GetStaticSamplerCount();
 
         for (const auto& currentModuleBindingInfo : moduleBindingInfo[group]) {
             // We cannot use structured binding here because lambda expressions can only capture
@@ -342,6 +347,12 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.substituteOverrideConfig = std::move(substituteOverrideConfig);
     req.maxSubgroupSizeForFullSubgroups = maxSubgroupSizeForFullSubgroups;
 
+    // NOTE: This is a hack for POC on multiple levels:
+    // * We assume that all static samplers are YCbCr samplers
+    // * We pass single bool
+    // Before landing, we'll replace this with the map described in the TODO
+    // above.
+    req.tintOptions.use_ycbcr_sampling = use_ycbcr_sampling;
     req.tintOptions.clamp_frag_depth = clampFragDepth;
     req.tintOptions.disable_robustness = !GetDevice()->IsRobustnessEnabled();
     req.tintOptions.emit_vertex_point_size = emitPointSize;
