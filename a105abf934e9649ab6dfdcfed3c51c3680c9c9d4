@@ -70,6 +70,24 @@
       "parentUuid": "86cb467e_a2e009d8",
       "revId": "a105abf934e9649ab6dfdcfed3c51c3680c9c9d4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b5f1556_a5aca386",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-17T21:00:39Z",
+      "side": 1,
+      "message": "So I have actually isolated this time\nUsing the same flags the bot IR_ValidatorTest.Store_NoStoreType segfaults due to running out of memory.\n\nIf I change the flags to be a debug build, it no longer does this...",
+      "parentUuid": "c217d3fd_a9799d13",
+      "revId": "a105abf934e9649ab6dfdcfed3c51c3680c9c9d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
