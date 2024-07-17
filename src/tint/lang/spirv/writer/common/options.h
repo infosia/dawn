@@ -131,6 +131,11 @@ struct Options {
     /// The bindings
     Bindings bindings;
 
+    // NOTE: This is a hack that will need to be replaced by mapping the
+    // necessary info in `bindings` for Tint to know which textures are being
+    // sampled by which YCbCr samplers.
+    bool use_ycbcr_sampling = false;
+
     /// Set to `true` to disable software robustness that prevents out-of-bounds accesses.
     bool disable_robustness = false;
 
@@ -174,6 +179,7 @@ struct Options {
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(Options,
                  bindings,
+                 use_ycbcr_sampling,
                  disable_robustness,
                  disable_image_robustness,
                  disable_runtime_sized_array_index_clamping,
