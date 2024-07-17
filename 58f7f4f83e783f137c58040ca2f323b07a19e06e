@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7fedc71_2ce9b491",
+        "filename": "src/tint/lang/core/constant/eval_conversion_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-07-17T20:22:24Z",
+      "side": 1,
+      "message": "These two are new/changed.",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 83
+      },
+      "revId": "58f7f4f83e783f137c58040ca2f323b07a19e06e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5166f0fb_96db107c",
+        "filename": "src/tint/lang/core/constant/eval_conversion_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-07-17T20:22:24Z",
+      "side": 1,
+      "message": "These two are new/changed",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 84
+      },
+      "revId": "58f7f4f83e783f137c58040ca2f323b07a19e06e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
