@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23cf84b1_69ec6d28",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:06:42Z",
+      "side": 1,
+      "message": "Nit: Could use LoadWithResult",
+      "revId": "f51651f963f58093e6cf244dc137b4a5128d2c2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3be4602c_05a259d0",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:06:42Z",
+      "side": 1,
+      "message": "Nit: as above",
+      "revId": "f51651f963f58093e6cf244dc137b4a5128d2c2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c50db97_de9e838b",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:06:42Z",
+      "side": 1,
+      "message": "Nit: Could use ConstructWithResult",
+      "revId": "f51651f963f58093e6cf244dc137b4a5128d2c2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd7511fa_091d4989",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:06:42Z",
+      "side": 1,
+      "message": "Nit: LoadWithResult",
+      "revId": "f51651f963f58093e6cf244dc137b4a5128d2c2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
