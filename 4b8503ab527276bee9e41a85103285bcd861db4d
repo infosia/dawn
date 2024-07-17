@@ -329,6 +329,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5185741_b8a8e8ff",
+        "filename": "src/dawn/native/EncodingContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T19:20:56Z",
+      "side": 1,
+      "message": "oh, but it could be string_view if we point it at the copy of the string in the encoded command buffer",
+      "parentUuid": "01bfe01f_f01c7baa",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "824ceee9_1aa8b3c2",
