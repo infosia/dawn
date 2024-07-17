@@ -229,6 +229,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d30cb58f_364d8d7d",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-17T22:51:17Z",
+      "side": 1,
+      "message": "I think having a separate wgpu::NullableString is not a bad idea. It will give us a little more flexibility to move constructors to another header in the future because we won\u0027t have to change the arguments from optional\u003cstring_view\u003e to NullableString, just move the NullableString constructors.",
+      "parentUuid": "790071f5_a8c4330a",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7b2b5beb_97f8ff6d",
@@ -314,6 +332,24 @@
       "side": 1,
       "message": "so I think we could do something like this:\nhttps://godbolt.org/z/95enaK4z8\n\nthat at the very least I think lets you separate the header and not #include all the things. if you\u0027re just passing the WGPUString struct around. If you want to actually construct it from string_view, then you need to include the other header as well.\n\nfor \u003cfunctional\u003e I think we can do something similar. you have some template(s) that\u0027s not defined which forwards to the actual templated implementation which you define in another header. if all the things are inline I believe it works OK\n\nthought about this in the past but haven\u0027t given it too much thought yet. hopefully header splitting can happen incrementally later",
       "parentUuid": "4295792b_2276c3b2",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d5675da_16fa9dd9",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-17T22:51:17Z",
+      "side": 1,
+      "message": "That\u0027s clever, hadn\u0027t thought of a way to put some implicit constructors in another file.\n\nIMO as long as we can split it out later if we want to, without totally changing the function signature, having them in the main file for now is fine.",
+      "parentUuid": "e9f10e4f_3b07b331",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

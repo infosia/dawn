@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b70dbd00_0a1d3b48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-17T22:51:17Z",
+      "side": 1,
+      "message": "partial review @ PS4 (up through dawn.json)",
+      "revId": "a93584e956c8d00e200ee763697f4db1c7968c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5aa11f8c_8e779f07",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-17T22:51:17Z",
+      "side": 1,
+      "message": "This assertion is implicitly true from the first condition but it\u0027s hard to tell that. I think just this would work:\n```cpp\nsize_t size \u003d record.length;\nif (size \u003d\u003d SIZE_MAX) {\n  // This is a null-terminated string, or it\u0027s nil.\n  size \u003d record.data ? std::strlen(record.data) : 0;\n}\nreturn Align(size, kWireBufferAlignment);\n```",
+      "revId": "a93584e956c8d00e200ee763697f4db1c7968c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93d727df_6c3fedce",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-17T22:51:17Z",
+      "side": 1,
+      "message": "If length\u003e0 and data\u003dnull, I believe we will still serialize/deserialize it successfully, and rely on the receiving end (dawn native) to discover this (likely by crashing). I don\u0027t think fuzzers will like that, but if it\u0027s intentional, add a comment noting it.",
+      "revId": "a93584e956c8d00e200ee763697f4db1c7968c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08cce467_51f094e4",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-17T22:51:17Z",
+      "side": 1,
+      "message": "nit: could be nullptr, though no strong feeling.",
+      "revId": "a93584e956c8d00e200ee763697f4db1c7968c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ac166ab_b573e3b6",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-17T22:51:17Z",
+      "side": 1,
+      "message": "Yesterday I think you said this would make setLabel2 valid with no args? Not sure if that\u0027s actually the case but ideally that shouldn\u0027t be valid.",
+      "revId": "a93584e956c8d00e200ee763697f4db1c7968c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
