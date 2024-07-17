@@ -38,6 +38,10 @@
 
 namespace dawn::kotlin_api {
 
+void Convert(JNIContext* c, JNIEnv *env, String in, WGPUString* converted) {
+
+}
+
 {% for structure in by_category['structure'] if structure.name.get() != "string" %}
     void Convert(JNIContext* c, JNIEnv *env, jobject obj, {{ as_cType(structure.name) }}* converted) {
         jclass clz = env->FindClass("{{ jni_name(structure) }}");

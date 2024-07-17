@@ -37,6 +37,7 @@
         "float": "jfloat",
         "int32_t": "jint",
         "size_t": "jlong",
+        "string": "jstring",
         "uint32_t": "jint",
         "uint64_t": "jlong",
         "void *": "jobject",
