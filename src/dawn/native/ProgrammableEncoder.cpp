@@ -68,7 +68,7 @@ MaybeError ProgrammableEncoder::ValidateProgrammableEncoderEnd() const {
     return {};
 }
 
-void ProgrammableEncoder::APIInsertDebugMarker2(std::string_view groupLabel) {
+void ProgrammableEncoder::APIInsertDebugMarker(std::string_view groupLabel) {
     groupLabel = utils::NormalizeLabel(groupLabel);
     mEncodingContext->TryEncode(
         this,
@@ -105,7 +105,7 @@ void ProgrammableEncoder::APIPopDebugGroup() {
         "encoding %s.PopDebugGroup().", this);
 }
 
-void ProgrammableEncoder::APIPushDebugGroup2(std::string_view groupLabel) {
+void ProgrammableEncoder::APIPushDebugGroup(std::string_view groupLabel) {
     groupLabel = utils::NormalizeLabel(groupLabel);
     mEncodingContext->TryEncode(
         this,

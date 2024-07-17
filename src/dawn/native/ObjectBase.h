@@ -140,8 +140,7 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     void Destroy();
 
     // Dawn API
-    void APISetLabel(const char* label);
-    void APISetLabel2(std::optional<std::string_view> label);
+    void APISetLabel(std::optional<std::string_view> label);
 
   protected:
     // Overriding of the RefCounted's DeleteThis function ensures that instances of objects
