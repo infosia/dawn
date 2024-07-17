@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ff38bd0_c335a31c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "LGTM overall! How do we plan on removing the previous version in favor of the new one? Just have everyone use the C++ API and things are transparent after they migrated?",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5f1ddf3_3e1ccb1c",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "nit: This seems like it shouldn\u0027t be needed with the toposort in dawn_json_generator.py.",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afda31a5_acea638c",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "Maybe now that all the strings are inside structures we could just assume they are all optional?",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9e950ea_7e99fd4e",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "Why does the public C++ API use std::optional\u003cstd::string_view\u003e instead of a wgpu::String that has an implicit constructor from std::string_view? (and a default constructor being the same as constructing from nullptr)?",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b2b5beb_97f8ff6d",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "It\u0027d be nice to somehow not require that all users of webgpucpp include string_view and optional (and functional? wow that header starts to include a lot).",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4707e4c_cf21d854",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "nit: Add a comment that this is manual seriazliation because the length of WGPUString can be SIZE_MAX which means strlen, and that nullptr size 0 still means \"\".",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29060f4f_fa73b879",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "```suggestion\nDAWN_DECLARE_UNUSED size_t WGPUStringGetExtraRequiredSize(const WGPUString\u0026 record) {\n```",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ffc1322_9c35ff98",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "```suggestion\n    SerializeBuffer* buffer) {\n```",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee12c92e_646b29d6",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "What about instead setting transfer-\u003estuff at the end of the function, just once?",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37cf1fed_832d274d",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "```suggestion\n    DeserializeAllocator* allocator) {\n```",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c9e2b14_8e2dbc72",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "optional-nit: I think I\u0027d use a bunch of early outs to make things simpler: first check length\u003eSIZE_MAX, then !has_data and length \u003d\u003d 0.",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27f517fc_2e6a3f62",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "We know these are used so we can remove the DAWN_UNUSED_FUNC.",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8181ab19_5e82faf6",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "Could we have TODOs in a bunch of places to remove previous code paths once the deprecation is finished?",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c909c63b_b8f689b1",
+        "filename": "src/dawn/native/EncodingContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "I wonder if this could list of string_view in the future.",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "824ceee9_1aa8b3c2",
+        "filename": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T13:54:37Z",
+      "side": 1,
+      "message": "Could the client side use the C API? See my recent CLs.",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
