@@ -26,7 +26,7 @@
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 {% macro arg_to_jni_type(arg) %}
-    {% if arg.length == 'strlen' %}
+    {% if arg.length == 'strlen' or arg.type.name.get() == "string" %}
         jstring
     {% elif arg.length and arg.json_data.get('constant_length') != 1 %}
         {% if arg.type.category in ['bitmask', 'enum', 'function pointer', 'object', 'structure'] %}
@@ -54,7 +54,7 @@
 {% endmacro %}
 
 {% macro jni_signature(member) %}
-    {%- if member.length == 'strlen' -%}
+    {%- if member.length == 'strlen' or member.type.name.get() == 'string' -%}
         Ljava/lang/String;
     {%- elif member.length and member.length != 'constant' -%}
         {%- if member.type.category in ['bitmask', 'enum', 'function pointer', 'object', 'structure'] -%}
