@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "d850c752e14d6e981ebeb4e4577d9164fd818799",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "993c7576_910bceb2",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:18:06Z",
+      "side": 1,
+      "message": "Nit: match_width",
+      "revId": "d850c752e14d6e981ebeb4e4577d9164fd818799",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
