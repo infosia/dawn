@@ -466,14 +466,6 @@ WireResult Client::DoDevicePopErrorScopeCallback(ObjectHandle eventManager,
         .SetFutureReady<PopErrorScopeEvent>(future.id, errorType, message);
 }
 
-void Device::InjectError(WGPUErrorType type, const char* message) {
-    DeviceInjectErrorCmd cmd;
-    cmd.self = ToAPI(this);
-    cmd.type = type;
-    cmd.message = message;
-    GetClient()->SerializeCommand(cmd);
-}
-
 WGPUBuffer Device::CreateBuffer(const WGPUBufferDescriptor* descriptor) {
     return Buffer::Create(this, descriptor);
 }
