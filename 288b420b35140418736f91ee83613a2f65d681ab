@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "288b420b35140418736f91ee83613a2f65d681ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49489f11_4e04c7fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:47:21Z",
+      "side": 1,
+      "message": "Should use functions instead of types.",
+      "revId": "288b420b35140418736f91ee83613a2f65d681ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
