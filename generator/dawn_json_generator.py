@@ -862,8 +862,9 @@ def compute_kotlin_params(loaded_json, kotlin_json):
             if argument.type.category == 'callback info':
                 # We don't handle this yet.
                 return False
-            if argument.annotation == 'value' and argument.type.category == 'structure':
-                # Passing structures by value is not supported at the moment.
+            if argument.annotation == 'value' and argument.type.category == 'structure' and argument.type.name.get(
+            ) != "string":
+                # Passing non-string structures by value is not supported at the moment.
                 return False
             if argument.type.category == 'function pointer':
                 # Currently returning structures in callbacks is not supported.
