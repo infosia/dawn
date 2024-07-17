@@ -166,7 +166,8 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
                     static_cast<{{ as_cType(arg.type.name) }}>(_{{ as_varName(arg.name) }});
         {% elif arg.type.name.get() in ['float', 'int'] %}
             {{ as_varName(arg.name) }} = _{{ as_varName(arg.name) }};
-
+        {% elif arg.annotation == 'value' and arg.type.name.get() == "string" %}
+            Convert(&c, env, _{{ as_varName(arg.name) }}, {{ as_varName(arg.name) }});
         {% elif arg.type.category == 'function pointer' %} {
             //* Function pointers themselves require each argument converting.
             //* A custom native callback is generated to wrap the Kotlin callback.
@@ -211,7 +212,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
             userdata = new UserData(
                     {.env = env, .callback = env->NewGlobalRef(_{{ as_varName(arg.name) }})});
         } {% else %}
-            {{ unreachable_code() }}
+            {{ unreachable_code(arg.type.name.get()) }}
         {% endif %}
     {% endfor %}
 
