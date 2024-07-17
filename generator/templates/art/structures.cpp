@@ -47,6 +47,17 @@ void Convert(JNIContext* c, JNIEnv* env, jobject obj, WGPUUncapturedErrorCallbac
     *info = {};
 }
 
+void Convert(JNIContext* c, JNIEnv *env, jstring string, WGPUStringView* converted) {
+    if (!string) {
+        *converted = WGPU_STRING_INIT;
+        return;
+    }
+    const jsize length = c->GetStringUTFLength(env, string);
+    converted->data = length > 0 ? c->GetStringUTFChars(string) : "";
+    converted->length = length;
+    // TODO: Handle exceptions
+}
+
 {% for structure in by_category['structure'] if include_structure(structure) %}
     void Convert(JNIContext* c, JNIEnv* env, jobject obj, {{ as_cType(structure.name) }}* converted) {
         jclass clz = env->FindClass("{{ jni_name(structure) }}");
