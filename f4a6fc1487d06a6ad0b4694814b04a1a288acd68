@@ -1,0 +1,184 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49db67f4_2002b499",
+        "filename": "src/tint/lang/hlsl/writer/builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:22:29Z",
+      "side": 1,
+      "message": "Nit: No binding point",
+      "range": {
+        "startLine": 435,
+        "startChar": 0,
+        "endLine": 435,
+        "endChar": 31
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "fe9250f1_7630cc39",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/builtin_test.cc",
+              "range": {
+                "startLine": 435,
+                "startChar": 0,
+                "endLine": 436,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af8035a1_daad6559",
+        "filename": "src/tint/lang/hlsl/writer/builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:22:29Z",
+      "side": 1,
+      "message": "Nit: no binding point",
+      "fixSuggestions": [
+        {
+          "fixId": "7c0810ca_b298a520",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/builtin_test.cc",
+              "range": {
+                "startLine": 491,
+                "startChar": 0,
+                "endLine": 492,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "241e7c4d_fbb1a093",
+        "filename": "src/tint/lang/hlsl/writer/builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:22:29Z",
+      "side": 1,
+      "message": "Nit: no binding point",
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85da345f_2b7a3a49",
+        "filename": "src/tint/lang/hlsl/writer/builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:22:29Z",
+      "side": 1,
+      "message": "Nit: no binding point",
+      "fixSuggestions": [
+        {
+          "fixId": "c5062859_58c068b6",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/builtin_test.cc",
+              "range": {
+                "startLine": 491,
+                "startChar": 0,
+                "endLine": 492,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1052b59_485c9be4",
+        "filename": "src/tint/lang/hlsl/writer/builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:22:29Z",
+      "side": 1,
+      "message": "Nit: No binding point",
+      "fixSuggestions": [
+        {
+          "fixId": "bb51a51e_cf2fc05c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/builtin_test.cc",
+              "range": {
+                "startLine": 491,
+                "startChar": 0,
+                "endLine": 492,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13a0460a_0dd9a45d",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:22:29Z",
+      "side": 1,
+      "message": "Nit: LoadWithResult, same to below cases",
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
