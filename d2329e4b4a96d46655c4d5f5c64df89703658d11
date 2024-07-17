@@ -16,6 +16,23 @@
       "message": "PTAL. This matches up to some cleanup in the GL module.",
       "revId": "d2329e4b4a96d46655c4d5f5c64df89703658d11",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47fcba62_3ac87d40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-17T17:55:58Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "d2329e4b4a96d46655c4d5f5c64df89703658d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
