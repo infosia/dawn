@@ -981,7 +981,7 @@ MaybeError DeviceBase::ValidateIsAlive() const {
     return {};
 }
 
-void DeviceBase::APIForceLoss2(wgpu::DeviceLostReason reason, std::string_view message) {
+void DeviceBase::APIForceLoss(wgpu::DeviceLostReason reason, std::string_view message) {
     message = utils::NormalizeLabel(message);
     if (mState != State::Alive) {
         return;
@@ -1603,8 +1603,8 @@ ShaderModuleBase* DeviceBase::APICreateShaderModule(const ShaderModuleDescriptor
     return ReturnToAPI(std::move(result));
 }
 
-ShaderModuleBase* DeviceBase::APICreateErrorShaderModule2(const ShaderModuleDescriptor* descriptor,
-                                                          std::string_view errorMessage) {
+ShaderModuleBase* DeviceBase::APICreateErrorShaderModule(const ShaderModuleDescriptor* descriptor,
+                                                         std::string_view errorMessage) {
     Ref<ShaderModuleBase> result =
         ShaderModuleBase::MakeError(this, descriptor ? descriptor->label : nullptr);
     std::unique_ptr<OwnedCompilationMessages> compilationMessages(
@@ -2013,7 +2013,7 @@ size_t DeviceBase::APIEnumerateFeatures(wgpu::FeatureName* features) const {
     return mEnabledFeatures.EnumerateFeatures(features);
 }
 
-void DeviceBase::APIInjectError2(wgpu::ErrorType type, std::string_view message) {
+void DeviceBase::APIInjectError(wgpu::ErrorType type, std::string_view message) {
     if (ConsumedError(ValidateErrorType(type))) {
         return;
     }
@@ -2504,12 +2504,7 @@ const std::string& DeviceBase::GetLabel() const {
     return mLabel;
 }
 
-void DeviceBase::APISetLabel(const char* label) {
-    mLabel = label ? label : "";
-    SetLabelImpl();
-}
-
-void DeviceBase::APISetLabel2(std::optional<std::string_view> label) {
+void DeviceBase::APISetLabel(std::optional<std::string_view> label) {
     mLabel = utils::NormalizeLabel(label);
     SetLabelImpl();
 }

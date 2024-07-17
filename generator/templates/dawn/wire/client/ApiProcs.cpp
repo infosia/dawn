@@ -134,13 +134,13 @@ namespace {
     static constexpr size_t sProcMapSize = sizeof(sProcMap) / sizeof(sProcMap[0]);
 }  // anonymous namespace
 
-DAWN_WIRE_EXPORT WGPUProc {{as_cMethodNamespaced(None, Name('get proc address'), Name('dawn wire client'))}}(WGPUDevice, WGPUString procName) {
+DAWN_WIRE_EXPORT WGPUProc {{as_cMethodNamespaced(None, Name('get proc address'), Name('dawn wire client'))}}(WGPUDevice, WGPUStringView procName) {
     if (procName.data == nullptr) {
         return nullptr;
     }
 
     const ProcEntry* entry = std::lower_bound(&sProcMap[0], &sProcMap[sProcMapSize], procName,
-        [](const ProcEntry &a, const WGPUString& b) -> bool {
+        [](const ProcEntry &a, const WGPUStringView& b) -> bool {
             int cmp = strncmp(a.name.data(), b.data, b.length);
             if (cmp == 0 && b.length != SIZE_MAX) {
                 return a.name.length() < b.length;
