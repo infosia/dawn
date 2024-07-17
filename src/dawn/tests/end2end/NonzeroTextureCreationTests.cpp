@@ -298,9 +298,6 @@ TEST_P(NonzeroTextureCreationTests, TextureCreationClears) {
 
 // Test that texture clears to a non-zero value because toggle is enabled.
 TEST_P(NonzeroNonrenderableTextureCreationTests, TextureCreationClears) {
-    // TODO(dawn:667): suppress
-    DAWN_SUPPRESS_TEST_IF(GetParam().mFormat == wgpu::TextureFormat::RGBA8Snorm &&
-                          (IsOpenGL() || IsOpenGLES()));
     Run();
 }
 
