@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1746695a_2510a649",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T17:51:45Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "0587c322c6563a4ee9220a8fb87117acced758a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4495a86_3b955eab",
+        "filename": "src/dawn/tests/unittests/wire/WireInjectSurfaceTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T17:51:45Z",
+      "side": 1,
+      "message": "expectation for what texture.suboptimal is? it\u0027s kinda odd that we can never truly know.",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 77
+      },
+      "revId": "0587c322c6563a4ee9220a8fb87117acced758a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f0c0e67_0d122868",
+        "filename": "src/dawn/tests/unittests/wire/WireInjectSurfaceTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T17:51:45Z",
+      "side": 1,
+      "message": "this is also odd..\n\nwould it be appropriate to inject a device error so that it is possible to discover the error on the client before using the texture? \nIt would a slight difference between native/wire. Where native you find out via surface.status, and in wire you can synchronously know some of the errors with surface.status, but to truly know, you need to use the device error callbacks.",
+      "range": {
+        "startLine": 277,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 77
+      },
+      "revId": "0587c322c6563a4ee9220a8fb87117acced758a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
