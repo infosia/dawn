@@ -33,6 +33,24 @@
       "message": "This one is probably done, just wanted to make sure it was called `ShaderIO` now.",
       "revId": "3838119f8d802cb0df393d1ebb5de81403fd7165",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd05decf_54adb37f",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:16:35Z",
+      "side": 1,
+      "message": "Yeah, don\u0027t need this or SimplifyPointers.",
+      "parentUuid": "5a347a2d_89772dcf",
+      "revId": "3838119f8d802cb0df393d1ebb5de81403fd7165",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
