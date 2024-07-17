@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c4e7acb_f3ce6a6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T18:54:39Z",
+      "side": 1,
+      "message": "yes, but there are some other breaking changes in future CLs, so I will bundle the removal of the old version with those other breaking changes behind #define WGPU_BREAKING_CHANGE_STRING",
+      "parentUuid": "7ff38bd0_c335a31c",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5f1ddf3_3e1ccb1c",
@@ -54,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "409f1b01_670267fc",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T18:54:39Z",
+      "side": 1,
+      "message": "sorry, not sure what you mean by this comment",
+      "parentUuid": "afda31a5_acea638c",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e9e950ea_7e99fd4e",
         "filename": "generator/templates/api_cpp.h",
         "patchSetId": 4
@@ -65,6 +101,24 @@
       "writtenOn": "2024-07-17T13:54:37Z",
       "side": 1,
       "message": "Why does the public C++ API use std::optional\u003cstd::string_view\u003e instead of a wgpu::String that has an implicit constructor from std::string_view? (and a default constructor being the same as constructing from nullptr)?",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83fce170_f494fd53",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T18:54:39Z",
+      "side": 1,
+      "message": "well, wgpu::String allows both nil and non-nil strings which is more permissive than only allowing std::string_view. So the goal here was to make the C++ API a bit more typesafe.\n\nAlternatively, we could have two different string types WGPUString and WGPUOptionalString..? but they would be exactly the same struct in C. The only difference is how you can make it in C++. Also possible to only have that differentiation in the C++ header. So C just has WGPUString. C++ has wgpu::String and wgpu::OptionalString (or, NullableString)",
+      "parentUuid": "e9e950ea_7e99fd4e",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -82,6 +136,24 @@
       "writtenOn": "2024-07-17T13:54:37Z",
       "side": 1,
       "message": "It\u0027d be nice to somehow not require that all users of webgpucpp include string_view and optional (and functional? wow that header starts to include a lot).",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35c7255a_9277a350",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T18:54:39Z",
+      "side": 1,
+      "message": "how might we do this? I\u0027ve wanted to do \u003cfunctional\u003e by splitting things off to a different webgpu_functional.h header or something. Not sure about the other ones though. It\u0027s undefined behavior to forward-declare std:: structs/classes",
+      "parentUuid": "7b2b5beb_97f8ff6d",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -239,6 +311,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01bfe01f_f01c7baa",
+        "filename": "src/dawn/native/EncodingContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T18:54:39Z",
+      "side": 1,
+      "message": "I don\u0027t think so because we need to extend the lifetime of the string",
+      "parentUuid": "c909c63b_b8f689b1",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "824ceee9_1aa8b3c2",
@@ -252,6 +342,24 @@
       "writtenOn": "2024-07-17T13:54:37Z",
       "side": 1,
       "message": "Could the client side use the C API? See my recent CLs.",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f41b0a50_81171e7d",
+        "filename": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T18:54:39Z",
+      "side": 1,
+      "message": "Ack. I will have a lot of merge conflicts with that CL soon",
+      "parentUuid": "824ceee9_1aa8b3c2",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
