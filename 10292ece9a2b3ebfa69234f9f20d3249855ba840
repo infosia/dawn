@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35dd1d22_4cfdd88a",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-07-17T14:02:06Z",
+      "side": 1,
+      "message": "Since this is a GLSL issue, not a compatibility mode issue per se, we should probably find a way to scope it to that backend.",
+      "revId": "10292ece9a2b3ebfa69234f9f20d3249855ba840",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
