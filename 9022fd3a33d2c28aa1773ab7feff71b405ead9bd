@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc479310_8a3ffb68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-07-17T15:28:39Z",
+      "side": 1,
+      "message": "Austin: PTAL. Thanks\n\n(This is the last comment referencing bug 667, so I\u0027d like to close it.)",
+      "revId": "9022fd3a33d2c28aa1773ab7feff71b405ead9bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
