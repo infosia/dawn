@@ -114,7 +114,45 @@ MaybeError BindGroupLayout::Initialize() {
     ityp::vector<BindingIndex, VkDescriptorSetLayoutBinding> bindings;
     bindings.reserve(GetBindingCount());
 
+    // Do not enter entries following YCbCr sampler entries ("following" in
+    // the client-specified BGL) into the VkDescriptorSet, as such entries
+    // are for textures that are part of the YCbCr sampler entry itself at
+    // the Vulkan level (due to YCbCr samplers being combined image
+    // samplers).  NOTE: This assumes that the client is placing the
+    // texture to be sampled by a YCbCr sampler immediately after the YCbCr
+    // sampler itself in the layout, which matches what Skia is currently
+    // doing but we might need to generalize.
+    std::set<BindingIndex> bindingIndicesToDrop{};
+    for (const auto& [bindingNumber, bindingIndex] : GetBindingMap()) {
+        if (bindingNumber == BindingNumber{0u}) {
+            // This entry is first in client-specified order.
+            continue;
+        }
+
+        const BindingInfo& prevBindingInfo =
+            GetBindingInfo(GetBindingIndex(bindingNumber - BindingNumber{1u}));
+        if (!std::holds_alternative<StaticSamplerBindingInfo>(prevBindingInfo.bindingLayout)) {
+            // This entry is not after a static sampler in client-specified order.
+            continue;
+        }
+
+        auto samplerLayout = std::get<StaticSamplerBindingInfo>(prevBindingInfo.bindingLayout);
+        auto sampler = ToBackend(samplerLayout.sampler);
+        if (!sampler->IsYCbCr()) {
+            // This entry is not after a YCbCr sampler in client-specified order.
+            continue;
+        }
+
+        // This entry is after a YCbCr sampler in client-specified order:
+        // we should drop it from the VkDescriptorSetLayout.
+        bindingIndicesToDrop.insert(bindingIndex);
+    }
+
     for (const auto& [_, bindingIndex] : GetBindingMap()) {
+        if (bindingIndicesToDrop.contains(bindingIndex)) {
+            continue;
+        }
+
         const BindingInfo& bindingInfo = GetBindingInfo(bindingIndex);
 
         VkDescriptorSetLayoutBinding vkBinding;
@@ -153,6 +191,13 @@ MaybeError BindGroupLayout::Initialize() {
     absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType;
 
     for (BindingIndex bindingIndex{0}; bindingIndex < GetBindingCount(); ++bindingIndex) {
+        if (bindingIndicesToDrop.contains(bindingIndex)) {
+            // Texture binding entries following YCbCr sampler entries are not
+            // written into the VkDescriptorSetLayout, and hence they should not
+            // get entries in the descriptor pools.
+            continue;
+        }
+
         VkDescriptorType vulkanType = VulkanDescriptorType(GetBindingInfo(bindingIndex));
 
         // absl:flat_hash_map::operator[] will return 0 if the key doesn't exist.
