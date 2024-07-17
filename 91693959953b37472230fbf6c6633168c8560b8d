@@ -16,6 +16,24 @@
       "message": "PTAL - I\u0027m on the fence about whether it\u0027ll be a problem to remove the comments that explain each block. On the one hand it\u0027s useful for understanding the expectations, on the other hand they\u0027re sometimes wrong because the roller added expectations to a block (but then again so are the crbugs - they\u0027re just as likely to be wrong, I think).\n\nThe formatter will also sort this block - I split that into a separate CL for review but will squash it before landing.",
       "revId": "91693959953b37472230fbf6c6633168c8560b8d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "203cfb92_debeddf5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-17T00:43:05Z",
+      "side": 1,
+      "message": "Not going to do quite this - will try again tomorrow and make fewer of the expectations MUTABLE",
+      "parentUuid": "a8b76b5b_b5a08a8f",
+      "revId": "91693959953b37472230fbf6c6633168c8560b8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
