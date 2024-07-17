@@ -157,13 +157,13 @@ namespace {{native_namespace}} {
 
     }  // anonymous namespace
 
-    WGPUProc NativeGetProcAddress(WGPUDevice, WGPUString procName) {
+    WGPUProc NativeGetProcAddress(WGPUDevice, WGPUStringView procName) {
         if (procName.data == nullptr) {
             return nullptr;
         }
 
         const ProcEntry* entry = std::lower_bound(&sProcMap[0], &sProcMap[sProcMapSize], procName,
-            [](const ProcEntry &a, const WGPUString& b) -> bool {
+            [](const ProcEntry &a, const WGPUStringView& b) -> bool {
                 int cmp = strncmp(a.name.data(), b.data, b.length);
                 if (cmp == 0 && b.length != SIZE_MAX) {
                     return a.name.length() < b.length;
