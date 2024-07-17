@@ -36,6 +36,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c912f8a0_a2b2f285",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "(untested partial update, to reply to one of the threads)",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5f1ddf3_3e1ccb1c",
@@ -49,6 +66,24 @@
       "writtenOn": "2024-07-17T13:54:37Z",
       "side": 1,
       "message": "nit: This seems like it shouldn\u0027t be needed with the toposort in dawn_json_generator.py.",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc9d5c42_de32aa8b",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5f1ddf3_3e1ccb1c",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -119,6 +154,24 @@
       "writtenOn": "2024-07-17T20:27:23Z",
       "side": 1,
       "message": "we\u0027re missing utility and type_traits for std::move and std::is_convertible_v",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c5789ad_ce2d9c06",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a6539d7_e0d3c488",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -231,6 +284,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "68dbec77_e74ded66",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "so",
+      "parentUuid": "4295792b_2276c3b2",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9f10e4f_3b07b331",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "so I think we could do something like this:\nhttps://godbolt.org/z/95enaK4z8\n\nthat at the very least I think lets you separate the header and not #include all the things. if you\u0027re just passing the WGPUString struct around. If you want to actually construct it from string_view, then you need to include the other header as well.\n\nfor \u003cfunctional\u003e I think we can do something similar. you have some template(s) that\u0027s not defined which forwards to the actual templated implementation which you define in another header. if all the things are inline I believe it works OK\n\nthought about this in the past but haven\u0027t given it too much thought yet. hopefully header splitting can happen incrementally later",
+      "parentUuid": "4295792b_2276c3b2",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d4707e4c_cf21d854",
         "filename": "generator/templates/dawn/wire/WireCmd.cpp",
         "patchSetId": 4
@@ -242,6 +331,24 @@
       "writtenOn": "2024-07-17T13:54:37Z",
       "side": 1,
       "message": "nit: Add a comment that this is manual seriazliation because the length of WGPUString can be SIZE_MAX which means strlen, and that nullptr size 0 still means \"\".",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b821f21_a2ad709b",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4707e4c_cf21d854",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -263,6 +370,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3efdfd1c_1ba79521",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29060f4f_fa73b879",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9ffc1322_9c35ff98",
@@ -276,6 +401,24 @@
       "writtenOn": "2024-07-17T13:54:37Z",
       "side": 1,
       "message": "```suggestion\n    SerializeBuffer* buffer) {\n```",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "381467a0_a3a49c33",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ffc1322_9c35ff98",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -297,6 +440,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5750d86_60d309a3",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee12c92e_646b29d6",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37cf1fed_832d274d",
@@ -310,6 +471,24 @@
       "writtenOn": "2024-07-17T13:54:37Z",
       "side": 1,
       "message": "```suggestion\n    DeserializeAllocator* allocator) {\n```",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0b2565f_a6e9b5f2",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37cf1fed_832d274d",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -331,6 +510,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a42091c_9842ca90",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c9e2b14_8e2dbc72",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27f517fc_2e6a3f62",
@@ -344,6 +541,24 @@
       "writtenOn": "2024-07-17T13:54:37Z",
       "side": 1,
       "message": "We know these are used so we can remove the DAWN_UNUSED_FUNC.",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c13cca9b_5d729da6",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-17T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27f517fc_2e6a3f62",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
