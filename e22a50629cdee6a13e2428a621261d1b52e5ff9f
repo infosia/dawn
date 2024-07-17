@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b01044ac_9dcb4cb3",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-17T15:33:28Z",
+      "side": 1,
+      "message": "Maybe just bitcast to vec4\u003cf16\u003e then swizzle out `xyz`, then you don\u0027t need the special casing for vec3 bitcasts.",
+      "fixSuggestions": [
+        {
+          "fixId": "37aed3da_137ffaab",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+              "range": {
+                "startLine": 430,
+                "startChar": 0,
+                "endLine": 431,
+                "endChar": 0
+              },
+              "replacement": "            return b.Swizzle(ty.vec3\u003cf16\u003e(), b.Bitcast(ty.vec4\u003cf16\u003e(), b.Load(access)),\n                             {0, 1, 2});\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e22a50629cdee6a13e2428a621261d1b52e5ff9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
