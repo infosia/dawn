@@ -167,6 +167,16 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         RUN_TRANSFORM(core::ir::transform::ZeroInitWorkgroupMemory, module);
     }
 
+    // TODO(dsinclair): SimplifyPointers
+    // TODO(dsinclair): LocalizeStructArrayAssignment
+    // TODO(dsinclair): PixelLocal transform
+    // TODO(dsinclair): TruncateInterstageVariables
+    // TODO(dsinclair): NumWorkgroupsFromUniform
+    // TODO(dsinclair): CalculateArrayLength
+    // TODO(dsinclair): RemoveContinueInSwitch
+    // TODO(dsinclair): CanonicalizeEntryPointIO
+    //
+
     RUN_TRANSFORM(raise::ShaderIO, module);
     RUN_TRANSFORM(raise::BinaryPolyfill, module);
     // BuiltinPolyfill must come after BinaryPolyfill and DecomposeStorageAccess as they add
