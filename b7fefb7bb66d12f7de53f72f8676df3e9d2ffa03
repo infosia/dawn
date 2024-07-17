@@ -160,6 +160,24 @@
       "parentUuid": "4d0ee35c_a665d4ff",
       "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed30a354_91e64b25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-17T13:48:38Z",
+      "side": 1,
+      "message": "IIUC, WeakRef has the same problem with the Serial. That is once the PL is destroyed, its WeakRef will become null. and future queries won\u0027t hit its entry again due to `nullptr!\u003dother.layout` comparison. So there would be leaks in the cache unless we purge the entries using LRU style or manually deleting the entry whenever the PL is destroyed (similar to ContentLessObjectCache).\n\nThere seems to be many approaches to this problem (including what we should include in the key). I have listed them here and would like to get some more inputs before continuing this CL: https://docs.google.com/document/d/16s21Ifye8-AXaU94g7zySjA1vkP-YH3pPRXI-WGM8rM/edit?resourcekey\u003d0-6ku_d2qV5IKOFTiMDlFITA\u0026tab\u003dt.0#heading\u003dh.jwt9a7jc9067",
+      "parentUuid": "c4589e17_32cefc40",
+      "revId": "b7fefb7bb66d12f7de53f72f8676df3e9d2ffa03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
