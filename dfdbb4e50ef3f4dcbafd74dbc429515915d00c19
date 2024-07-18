@@ -16,6 +16,24 @@
       "message": "Unsure exactly what we\u0027re trying to workaround here.",
       "revId": "dfdbb4e50ef3f4dcbafd74dbc429515915d00c19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd7eed88_44d407fb",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T02:52:46Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "8631d486_7e190b0a",
+      "revId": "dfdbb4e50ef3f4dcbafd74dbc429515915d00c19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
