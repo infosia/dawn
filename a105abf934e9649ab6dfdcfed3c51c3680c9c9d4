@@ -88,6 +88,24 @@
       "parentUuid": "c217d3fd_a9799d13",
       "revId": "a105abf934e9649ab6dfdcfed3c51c3680c9c9d4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f606eda8_e5586acc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-18T16:17:34Z",
+      "side": 1,
+      "message": "In conclusion, the issue was that in my new code I wasn\u0027t checking that the result type for null. Why this was such a PITA to debug/reproduce, I am unsure.",
+      "parentUuid": "3b5f1556_a5aca386",
+      "revId": "a105abf934e9649ab6dfdcfed3c51c3680c9c9d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
