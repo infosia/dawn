@@ -16,6 +16,24 @@
       "message": "This causes dawn.node to fail compilation.\nSee crbug.com/353951069",
       "revId": "a5e4715134f7b4c4ab20ec87cef81b6fcd8840ec",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "613ef0d4_79a69043",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-18T14:18:09Z",
+      "side": 1,
+      "message": "I reverted this because https://dawn-review.googlesource.com/c/dawn/+/196315 made the tint file to not use a GCC extension. Seems like there are more. Is it possible to get the compiler and version the reporter used?",
+      "parentUuid": "3ee837f5_0474e240",
+      "revId": "a5e4715134f7b4c4ab20ec87cef81b6fcd8840ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
