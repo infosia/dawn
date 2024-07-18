@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97cd1586_c1752830",
+        "filename": "src/tint/lang/core/intrinsic/table.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T13:39:00Z",
+      "side": 1,
+      "message": "This was incorrect. In the case of InterlockExchange I have a non-member and member version. So, it would find the non-member version first, skip it, and then find the member version. It would push the member version and set the index to _1_ instead of the position in the condidates array.",
+      "revId": "bae6a1d47a8a777ea08c22371d2c5c3002d17b68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

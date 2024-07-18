@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d18901b8_923f7d49",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T13:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23cf84b1_69ec6d28",
+      "revId": "f51651f963f58093e6cf244dc137b4a5128d2c2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3be4602c_05a259d0",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-07-17T15:06:42Z",
       "side": 1,
       "message": "Nit: as above",
+      "revId": "f51651f963f58093e6cf244dc137b4a5128d2c2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "347c6d1d_ef9b1a63",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T13:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3be4602c_05a259d0",
       "revId": "f51651f963f58093e6cf244dc137b4a5128d2c2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f382cbfc_93085e99",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T13:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c50db97_de9e838b",
+      "revId": "f51651f963f58093e6cf244dc137b4a5128d2c2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd7511fa_091d4989",
@@ -65,6 +119,24 @@
       "writtenOn": "2024-07-17T15:06:42Z",
       "side": 1,
       "message": "Nit: LoadWithResult",
+      "revId": "f51651f963f58093e6cf244dc137b4a5128d2c2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2460bfb_7a4f8713",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_storage_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T13:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd7511fa_091d4989",
       "revId": "f51651f963f58093e6cf244dc137b4a5128d2c2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
