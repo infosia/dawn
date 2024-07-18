@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ee837f5_0474e240",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-07-18T14:09:23Z",
+      "side": 1,
+      "message": "This causes dawn.node to fail compilation.\nSee crbug.com/353951069",
+      "revId": "a5e4715134f7b4c4ab20ec87cef81b6fcd8840ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
