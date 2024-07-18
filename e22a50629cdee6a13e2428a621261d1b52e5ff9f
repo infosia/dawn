@@ -34,6 +34,24 @@
       ],
       "revId": "e22a50629cdee6a13e2428a621261d1b52e5ff9f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f9c070e_04acf07f",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T14:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b01044ac_9dcb4cb3",
+      "revId": "e22a50629cdee6a13e2428a621261d1b52e5ff9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
