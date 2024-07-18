@@ -92,7 +92,7 @@ static void PrintTypeList(StyledText& ss, VectorRef<const core::type::Type*> typ
             ss << ", ";
         }
         first = false;
-        ss << style::Type(arg->FriendlyName());
+        ss << style::Type((arg != nullptr) ? arg->FriendlyName() : "undef");
     }
 }
 
@@ -235,6 +235,7 @@ Result<Overload, StyledText> MatchIntrinsic(Context& context,
         }
         // Sort the candidates with the most promising first
         SortCandidates(candidates);
+
         return on_no_match(std::move(candidates));
     }
 
