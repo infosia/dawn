@@ -926,6 +926,9 @@ def as_cType(c_prefix, name):
     # Special case for 'bool' because it has a typedef for compatibility.
     if name.native and name.get() != 'bool':
         return name.concatcase()
+    elif name.get() == 'nullable string view':
+        # nullable string view type doesn't exist in C.
+        return c_prefix + 'StringView'
     else:
         return c_prefix + name.CamelCase()
 
@@ -1271,6 +1274,10 @@ class MultiGeneratorFromDawnJSON(Generator):
                            [RENDER_PARAMS_BASE, params_dawn]))
 
         if 'cpp_headers' in targets:
+            imported_templates += [
+                "dawn/cpp_macros.tmpl",
+            ]
+
             renders.append(
                 FileRender('api_cpp.h', 'include/dawn/' + api + '_cpp.h', [
                     RENDER_PARAMS_BASE, params_all, {
@@ -1389,6 +1396,10 @@ class MultiGeneratorFromDawnJSON(Generator):
                     'as_annotated_frontendType': \
                         lambda arg: annotated(as_frontendType(metadata, arg.type), arg),
                 }
+            ]
+
+            imported_templates += [
+                "dawn/cpp_macros.tmpl",
             ]
 
             impl_dir = metadata.impl_dir + '/' if metadata.impl_dir else ''
@@ -1597,7 +1608,7 @@ class MultiGeneratorFromDawnJSON(Generator):
 
             by_category = params_kotlin['by_category']
             for structure in by_category['structure']:
-                if structure.name.get() != "string":
+                if structure.name.get() != "string view":
                     renders.append(
                         FileRender('art/api_kotlin_structure.kt',
                                    'java/' + jni_name(structure) + '.kt', [

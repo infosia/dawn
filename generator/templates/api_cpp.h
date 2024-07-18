@@ -24,6 +24,8 @@
 // CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+{% from 'dawn/cpp_macros.tmpl' import wgpu_string_constructors with context %}
+
 {% set API = metadata.api.upper() %}
 {% set api = API.lower() %}
 {% set CAPI = metadata.c_prefix %}
@@ -77,10 +79,10 @@ static T& AsNonConstReference(const T& value) {
             {{as_varName(arg.name)}}.Get()
         {%- elif arg.type.category == "enum" or arg.type.category == "bitmask" -%}
             static_cast<{{as_cType(arg.type.name)}}>({{as_varName(arg.name)}})
-        {%- elif arg.annotation == "value" and arg.type.name.get() == "string" and not arg.optional -%}
-            WGPUString{ {{as_varName(arg.name)}}.data(), {{as_varName(arg.name)}}.length() }
-        {%- elif arg.annotation == "value" and arg.type.name.get() == "string" and arg.optional -%}
-            {{as_varName(arg.name)}} ? WGPUString{ {{as_varName(arg.name)}}->data(), {{as_varName(arg.name)}}->length() } : WGPUString WGPU_STRING_INIT
+        {%- elif arg.annotation == "value" and arg.type.name.get() == "string view" and not arg.optional -%}
+            WGPUStringView{ {{as_varName(arg.name)}}.data(), {{as_varName(arg.name)}}.length() }
+        {%- elif arg.annotation == "value" and arg.type.name.get() == "string view" and arg.optional -%}
+            {{as_varName(arg.name)}} ? WGPUStringView{ {{as_varName(arg.name)}}->data(), {{as_varName(arg.name)}}->length() } : WGPUStringView WGPU_STRING_VIEW_INIT
         {%- elif arg.type.category == "structure" -%}
             *reinterpret_cast<{{as_cType(arg.type.name)}} const*>(&{{as_varName(arg.name)}})
         {%- elif arg.type.category in ["function pointer", "native"] -%}
@@ -339,7 +341,7 @@ class ObjectBase {
             {%- if not loop.first %}, {% endif -%}
             {%- if arg.type.category == "object" and arg.annotation == "value" -%}
                 {{as_cppType(arg.type.name)}} const& {{as_varName(arg.name)}}
-            {%- elif arg.type.name.get() == "string" and arg.annotation == "value" -%}
+            {%- elif arg.type.name.get() == "string view" and arg.annotation == "value" -%}
                 {%- if arg.optional -%}
                     std::optional<std::string_view> {{as_varName(arg.name)}}
                 {%- else -%}
@@ -552,35 +554,6 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
         {% endif %}
         inline operator const {{as_cType(type.name)}}&() const noexcept;
 
-        //* Custom string constructors.
-        {% if type.name.get() == "string" %}
-            inline constexpr {{as_cppType(type.name)}}() noexcept = default;
-            // NOLINTNEXTLINE(runtime/explicit) allow implicit construction
-            inline constexpr {{as_cppType(type.name)}}(const std::string_view& sv) noexcept {
-                this->data = sv.data();
-                this->length = sv.length();
-            }
-            // NOLINTNEXTLINE(runtime/explicit) allow implicit construction
-            inline constexpr {{as_cppType(type.name)}}(const char* s) {
-                this->data = s;
-                this->length = SIZE_MAX;  // use strlen
-            }
-            inline constexpr {{as_cppType(type.name)}}(const char* data, size_t length) {
-                this->data = data;
-                this->length = length;
-            }
-            // NOLINTNEXTLINE(runtime/explicit) allow implicit construction
-            inline constexpr {{as_cppType(type.name)}}(std::nullptr_t) {
-                this->data = nullptr;
-                this->length = SIZE_MAX;
-            }
-            // NOLINTNEXTLINE(runtime/explicit) allow implicit construction
-            inline constexpr {{as_cppType(type.name)}}(std::nullopt_t) {
-                this->data = nullptr;
-                this->length = SIZE_MAX;
-            }
-        {% endif %}
-
         {% if type.extensible %}
             ChainedStruct{{Out}} {{const}} * nextInChain = nullptr;
         {% endif %}
@@ -595,6 +568,14 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
                 {{member_declaration}};
             {% endif %}
         {% endfor %}
+
+        //* Custom string constructors
+        {% if type.name.get() == "string view" %}
+            {{wgpu_string_constructors(as_cppType(type.name), false) | indent(4)}}
+        {% elif type.name.get() == "nullable string view" %}
+            {{wgpu_string_constructors(as_cppType(type.name), true) | indent(4)}}
+        {% endif %}
+
         {% if type.has_free_members_function %}
 
           private:

@@ -33,25 +33,25 @@
 namespace dawn::native {
 namespace {
 
-// Test that default construction or assignment to wgpu::String produces the nil string.
+// Test that default construction or assignment to wgpu::NullableStringView produces the nil string.
 TEST(CppAPITests, WGPUStringDefault) {
     {
-        wgpu::String s;
+        wgpu::NullableStringView s;
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s{};
+        wgpu::NullableStringView s{};
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s = {};
+        wgpu::NullableStringView s = {};
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s = wgpu::String();
+        wgpu::NullableStringView s = wgpu::NullableStringView();
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
@@ -59,38 +59,38 @@ TEST(CppAPITests, WGPUStringDefault) {
     // Test that resetting the string, clears both data and length.
     std::string_view sv("hello world!");
     {
-        wgpu::String s(sv);
+        wgpu::NullableStringView s(sv);
         s = {};
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s(sv);
-        s = wgpu::String();
+        wgpu::NullableStringView s(sv);
+        s = wgpu::NullableStringView();
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
 }
 
-// Test that construction or assignment to wgpu::String from const char*.
+// Test that construction or assignment to wgpu::NullableStringView from const char*.
 TEST(CppAPITests, WGPUStringFromCstr) {
     {
-        wgpu::String s("hello world!");
+        wgpu::NullableStringView s("hello world!");
         EXPECT_STREQ(s.data, "hello world!");
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s{"hello world!"};
+        wgpu::NullableStringView s{"hello world!"};
         EXPECT_STREQ(s.data, "hello world!");
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s = {"hello world!"};
+        wgpu::NullableStringView s = {"hello world!"};
         EXPECT_STREQ(s.data, "hello world!");
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s = wgpu::String("hello world!");
+        wgpu::NullableStringView s = wgpu::NullableStringView("hello world!");
         EXPECT_STREQ(s.data, "hello world!");
         EXPECT_EQ(s.length, SIZE_MAX);
     }
@@ -98,82 +98,82 @@ TEST(CppAPITests, WGPUStringFromCstr) {
     // Test that setting to a cstr clears the length.
     std::string_view sv("hello world!");
     {
-        wgpu::String s(sv);
+        wgpu::NullableStringView s(sv);
         s = "other str";
         EXPECT_STREQ(s.data, "other str");
         EXPECT_EQ(s.length, SIZE_MAX);
     }
 }
 
-// Test that construction or assignment to wgpu::String from std::string_view
+// Test that construction or assignment to wgpu::NullableStringView from std::string_view
 TEST(CppAPITests, WGPUStringFromStdStringView) {
     std::string_view sv("hello\x00world!");
     {
-        wgpu::String s(sv);
+        wgpu::NullableStringView s(sv);
         EXPECT_EQ(s.data, sv.data());
         EXPECT_EQ(s.length, sv.length());
     }
     {
-        wgpu::String s{sv};
+        wgpu::NullableStringView s{sv};
         EXPECT_EQ(s.data, sv.data());
         EXPECT_EQ(s.length, sv.length());
     }
     {
-        wgpu::String s = {sv};
+        wgpu::NullableStringView s = {sv};
         EXPECT_EQ(s.data, sv.data());
         EXPECT_EQ(s.length, sv.length());
     }
     {
-        wgpu::String s = wgpu::String(sv);
+        wgpu::NullableStringView s = wgpu::NullableStringView(sv);
         EXPECT_EQ(s.data, sv.data());
         EXPECT_EQ(s.length, sv.length());
     }
 }
 
-// Test that construction or assignment to wgpu::String from pointer and length
+// Test that construction or assignment to wgpu::NullableStringView from pointer and length
 TEST(CppAPITests, WGPUStringFromPtrAndLength) {
     std::string_view sv("hello\x00world!");
     {
-        wgpu::String s(sv.data(), sv.length());
+        wgpu::NullableStringView s(sv.data(), sv.length());
         EXPECT_EQ(s.data, sv.data());
         EXPECT_EQ(s.length, sv.length());
     }
     {
-        wgpu::String s{sv.data(), sv.length()};
+        wgpu::NullableStringView s{sv.data(), sv.length()};
         EXPECT_EQ(s.data, sv.data());
         EXPECT_EQ(s.length, sv.length());
     }
     {
-        wgpu::String s = {sv.data(), sv.length()};
+        wgpu::NullableStringView s = {sv.data(), sv.length()};
         EXPECT_EQ(s.data, sv.data());
         EXPECT_EQ(s.length, sv.length());
     }
     {
-        wgpu::String s = wgpu::String(sv.data(), sv.length());
+        wgpu::NullableStringView s = wgpu::NullableStringView(sv.data(), sv.length());
         EXPECT_EQ(s.data, sv.data());
         EXPECT_EQ(s.length, sv.length());
     }
 }
 
-// Test that construction or assignment to wgpu::String from nullptr
+// Test that construction or assignment to wgpu::NullableStringView from nullptr
 TEST(CppAPITests, WGPUStringFromNullptr) {
     {
-        wgpu::String s(nullptr);
+        wgpu::NullableStringView s(nullptr);
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s{nullptr};
+        wgpu::NullableStringView s{nullptr};
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s = {nullptr};
+        wgpu::NullableStringView s = {nullptr};
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s = wgpu::String(nullptr);
+        wgpu::NullableStringView s = wgpu::NullableStringView(nullptr);
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
@@ -181,32 +181,32 @@ TEST(CppAPITests, WGPUStringFromNullptr) {
     // Test that setting to nullptr, clears both data and length.
     std::string_view sv("hello world!");
     {
-        wgpu::String s(sv);
+        wgpu::NullableStringView s(sv);
         s = nullptr;
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
 }
 
-// Test that construction or assignment to wgpu::String from std::nullopt
+// Test that construction or assignment to wgpu::NullableStringView from std::nullopt
 TEST(CppAPITests, WGPUStringFromNullopt) {
     {
-        wgpu::String s(std::nullopt);
+        wgpu::NullableStringView s(std::nullopt);
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s{std::nullopt};
+        wgpu::NullableStringView s{std::nullopt};
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s = {std::nullopt};
+        wgpu::NullableStringView s = {std::nullopt};
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
     {
-        wgpu::String s = wgpu::String(std::nullopt);
+        wgpu::NullableStringView s = wgpu::NullableStringView(std::nullopt);
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);
     }
@@ -214,7 +214,7 @@ TEST(CppAPITests, WGPUStringFromNullopt) {
     // Test that setting to std::nullopt, clears both data and length.
     std::string_view sv("hello world!");
     {
-        wgpu::String s(sv);
+        wgpu::NullableStringView s(sv);
         s = std::nullopt;
         EXPECT_EQ(s.data, nullptr);
         EXPECT_EQ(s.length, SIZE_MAX);

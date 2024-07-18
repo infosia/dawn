@@ -62,7 +62,7 @@ namespace {{native_namespace}} {
                     {% set varName = as_varName(arg.name) %}
                     {% if arg.type.category in ["enum", "bitmask"] and arg.annotation == "value" %}
                         auto {{varName}}_ = static_cast<{{as_frontendType(arg.type)}}>({{varName}});
-                    {% elif arg.type.name.get() == "string" and arg.annotation == "value" %}
+                    {% elif arg.type.name.get() == "string view" and arg.annotation == "value" %}
                         const bool {{varName}}_isNull = {{varName}}.data == nullptr;
                         const bool {{varName}}_useStrlen = {{varName}}.length == SIZE_MAX;
                         {% if arg.optional %}

@@ -72,8 +72,8 @@ void ErrorData::AppendContext(std::string context) {
     mContexts.push_back(std::move(context));
 }
 
-void ErrorData::AppendDebugGroup(std::string label) {
-    mDebugGroups.push_back(std::move(label));
+void ErrorData::AppendDebugGroup(std::string_view label) {
+    mDebugGroups.push_back(std::string(label));
 }
 
 void ErrorData::AppendBackendMessage(std::string message) {

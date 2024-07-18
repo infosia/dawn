@@ -734,18 +734,18 @@ WireResult DeserializeChainedStruct(WGPUChainedStructOut** outChainNext,
                                     DeserializeAllocator* allocator,
                                     const ObjectIdResolver& resolver);
 
-// Manually define serialization and deserialization for WGPUString because
+// Manually define serialization and deserialization for WGPUStringView because
 // it has a special encoding where:
 //  { .data = nullptr, .length = SIZE_MAX }  --> nil
 //  { .data = non-null, .length = SIZE_MAX } --> null-terminated, use strlen
 //  { .data = ..., .length = 0 }             --> ""
 //  { .data = ..., .length > 0 }             --> string of size `length`
-struct WGPUStringTransfer {
+struct WGPUStringViewTransfer {
     bool has_data;
     uint64_t length;
 };
 
-DAWN_DECLARE_UNUSED size_t WGPUStringGetExtraRequiredSize(const WGPUString& record) {
+DAWN_DECLARE_UNUSED size_t WGPUStringViewGetExtraRequiredSize(const WGPUStringView& record) {
     size_t size = record.length;
     if (size == SIZE_MAX) {
         // This is a null-terminated string, or it's nil.
@@ -754,9 +754,9 @@ DAWN_DECLARE_UNUSED size_t WGPUStringGetExtraRequiredSize(const WGPUString& reco
     return Align(size, kWireBufferAlignment);
 }
 
-DAWN_DECLARE_UNUSED WireResult WGPUStringSerialize(
-    const WGPUString& record,
-    WGPUStringTransfer* transfer,
+DAWN_DECLARE_UNUSED WireResult WGPUStringViewSerialize(
+    const WGPUStringView& record,
+    WGPUStringViewTransfer* transfer,
     SerializeBuffer* buffer) {
 
     bool has_data = record.data != nullptr;
@@ -779,9 +779,9 @@ DAWN_DECLARE_UNUSED WireResult WGPUStringSerialize(
     return WireResult::Success;
 }
 
-DAWN_DECLARE_UNUSED WireResult WGPUStringDeserialize(
-    WGPUString* record,
-    const volatile WGPUStringTransfer* transfer,
+DAWN_DECLARE_UNUSED WireResult WGPUStringViewDeserialize(
+    WGPUStringView* record,
+    const volatile WGPUStringViewTransfer* transfer,
     DeserializeBuffer* deserializeBuffer,
     DeserializeAllocator* allocator) {
 
@@ -793,7 +793,7 @@ DAWN_DECLARE_UNUSED WireResult WGPUStringDeserialize(
     }
     if (!has_data) {
         record->data = nullptr;
-        if (length != 0 || length != SIZE_MAX) {
+        if (length != 0 && length != SIZE_MAX) {
             // Invalid string.
             return WireResult::FatalError;
         }
@@ -822,7 +822,7 @@ DAWN_DECLARE_UNUSED WireResult WGPUStringDeserialize(
 //* Output structure [de]serialization first because it is used by commands.
 {% for type in by_category["structure"] %}
     {%- set name = as_cType(type.name) -%}
-    {% if type.name.CamelCase() not in client_side_structures and name != "WGPUString" -%}
+    {% if type.name.CamelCase() not in client_side_structures and name != "WGPUStringView" -%}
         {{write_record_serialization_helpers(type, name, type.members, is_cmd=False)}}
     {% endif %}
 {% endfor %}

@@ -76,12 +76,7 @@ void ProgrammableEncoder::APIInsertDebugMarker2(std::string_view groupLabel) {
             InsertDebugMarkerCmd* cmd =
                 allocator->Allocate<InsertDebugMarkerCmd>(Command::InsertDebugMarker);
             cmd->length = groupLabel.length();
-
-            // Include extra null-terminator character. The string_view may not be
-            // null-terminated. The backends expect it to be.
-            char* label = allocator->AllocateData<char>(cmd->length + 1);
-            memcpy(label, groupLabel.data(), cmd->length + 1);
-            label[cmd->length] = '\0';
+            allocator->CopyAsNullTerminatedString(groupLabel);
 
             return {};
         },
@@ -113,15 +108,10 @@ void ProgrammableEncoder::APIPushDebugGroup2(std::string_view groupLabel) {
             PushDebugGroupCmd* cmd =
                 allocator->Allocate<PushDebugGroupCmd>(Command::PushDebugGroup);
             cmd->length = groupLabel.length();
-
-            // Include extra null-terminator character. The string_view may not be
-            // null-terminated. The backends expect it to be.
-            char* label = allocator->AllocateData<char>(cmd->length + 1);
-            memcpy(label, groupLabel.data(), cmd->length + 1);
-            label[cmd->length] = '\0';
+            char* label = allocator->CopyAsNullTerminatedString(groupLabel);
 
             mDebugGroupStackSize++;
-            mEncodingContext->PushDebugGroupLabel(groupLabel);
+            mEncodingContext->PushDebugGroupLabel(label);
 
             return {};
         },
