@@ -105,6 +105,24 @@
       "parentUuid": "989db68b_95ee3c23",
       "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3993360e_26bc0196",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-18T12:02:45Z",
+      "side": 1,
+      "message": "Loko, returning here after the discussion in the chatroom to outline my concrete question:\n\nIt\u0027s of course not enough for SamplerVk to override ComputeContentHash() but it also needs to ensure that the equality check takes into account the YCbCr state. For that, my plan was to add a virtual SamplerBase::IsImplementationStateEqual(SamplerBase* other) that SamplerBase::EqualityFunc::operator() would invoke and SamplerVk would override. However, that seems awkward enough that Corentin concluded that we might as well just keep the state in the frontend after all. WDYT?",
+      "parentUuid": "fa8da666_608c65b0",
+      "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
