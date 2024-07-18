@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "441221d4_0a14f587",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-07-18T19:22:40Z",
+      "side": 1,
+      "message": "Let me know if deleting `test/tint/vk-gl-cts/graphicsfuzz/cov-fold-shift-gte32/` is not the right thing to do here, because they look like generated tests, but I couldn\u0027t find instructions for how to modify or regenerate them correctly.",
+      "revId": "dfd59f26db574c9ab96605dc6320a0298429d379",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
