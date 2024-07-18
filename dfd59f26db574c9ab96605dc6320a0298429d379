@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4f1fa55_09c6c612",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-07-18T20:30:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "56c31356_9282162e",
+      "revId": "dfd59f26db574c9ab96605dc6320a0298429d379",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbe18b1d_9c2a922e",
@@ -70,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28933d73_2755c9d4",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-07-18T20:30:16Z",
+      "side": 1,
+      "message": "Thanks! Removed the comment.",
+      "parentUuid": "cbe18b1d_9c2a922e",
+      "revId": "dfd59f26db574c9ab96605dc6320a0298429d379",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "461822e6_abc1b929",
@@ -83,6 +119,24 @@
       "writtenOn": "2024-07-18T19:31:00Z",
       "side": 1,
       "message": "Nit: You can just do `ValueAs\u003cuint32_t\u003e()` here.",
+      "revId": "dfd59f26db574c9ab96605dc6320a0298429d379",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d94c4134_57543786",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1688,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-07-18T20:30:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "461822e6_abc1b929",
       "revId": "dfd59f26db574c9ab96605dc6320a0298429d379",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
