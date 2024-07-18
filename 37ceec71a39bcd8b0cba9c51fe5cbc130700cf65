@@ -33,6 +33,24 @@
       "message": "@jaswant.panchumarti@kitware.com \nIs something else need to be done on my side?",
       "revId": "37ceec71a39bcd8b0cba9c51fe5cbc130700cf65",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce000728_6b143194",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-07-18T19:14:32Z",
+      "side": 1,
+      "message": "No, looks like someone with permission should submit it.\n\n@cwallez@chromium.org",
+      "parentUuid": "9ac08fb8_336cfb95",
+      "revId": "37ceec71a39bcd8b0cba9c51fe5cbc130700cf65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
