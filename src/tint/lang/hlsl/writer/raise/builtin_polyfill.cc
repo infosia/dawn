@@ -87,6 +87,7 @@ struct State {
             }
             if (auto* call = inst->As<core::ir::CoreBuiltinCall>()) {
                 switch (call->Func()) {
+                    case core::BuiltinFn::kQuantizeToF16:
                     case core::BuiltinFn::kSelect:
                     case core::BuiltinFn::kSign:
                     case core::BuiltinFn::kTextureDimensions:
@@ -132,6 +133,9 @@ struct State {
         // Replace the builtin calls that we found
         for (auto* call : call_worklist) {
             switch (call->Func()) {
+                case core::BuiltinFn::kQuantizeToF16:
+                    QuantizeToF16(call);
+                    break;
                 case core::BuiltinFn::kSelect:
                     Select(call);
                     break;
@@ -821,6 +825,24 @@ struct State {
 
             b.CallWithResult<hlsl::ir::BuiltinCall>(call->DetachResult(),
                                                     hlsl::BuiltinFn::kUnpackU8U32, conv);
+        });
+        call->Destroy();
+    }
+
+    void QuantizeToF16(core::ir::CoreBuiltinCall* call) {
+        const core::type::Type* u32_type = ty.u32();
+        const core::type::Type* f32_type = ty.f32();
+        if (auto* vec = call->Result(0)->Type()->As<core::type::Vector>()) {
+            u32_type = ty.vec(u32_type, vec->Width());
+            f32_type = ty.vec(f32_type, vec->Width());
+        }
+
+        b.InsertBefore(call, [&] {
+            auto* inner = b.Call<hlsl::ir::BuiltinCall>(u32_type, hlsl::BuiltinFn::kF32Tof16,
+                                                        call->Args()[0]);
+            b.CallWithResult<hlsl::ir::BuiltinCall>(call->DetachResult(),
+                                                    hlsl::BuiltinFn::kF16Tof32, inner);
+            //
         });
         call->Destroy();
     }
