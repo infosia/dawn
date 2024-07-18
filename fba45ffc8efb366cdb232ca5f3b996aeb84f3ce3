@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c62f96f7_789c1337",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-18T16:59:17Z",
+      "side": 1,
+      "message": "Agreed with respect to the magic.\n\nAustin, Vasiliy, and I synced up. Here are our conclusions:\n\n* While Skia might generalize their BGL in the future, it is not a near-term goal, and hence we should build a solution that works for the near-term use case.\n* It\u0027s possible in the near term that Skia will have shaders that have a YCbCr sampler/texture pair + a different texture (e.g., for a mask effect). Hence, the restriction \"BGLs with a YCbCr sampler must have only one other texture\" is too strict.\n* However, it\u0027s fine to require that YCbCr sampler entries be paired with texture entries - the reason is that the texture comes from an AHB and the YCbCr info comes from the same AHB. If the client is sampling two AHBs in the same shader, they wouldn\u0027t in general know that those two AHBs are going to have the same external format.\n* So, what we\u0027re planning to do is add a field to the StaticSamplerBindingLayout that gives the index of the texture that will be sampled by this sampler. The client will need to set that field if the sampler is a YCbCr sampler.",
+      "parentUuid": "8396fec8_4ebed144",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "525a7fde_fc5fbcca",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "my understanding is that this is because the sampler will be decorated with binding annotations in the shader, but the sampler will be entirely unused. That\u0027s because we load the OpSampledImage directly from an OpTypeSampledImage the texture binding instead of making OpSampledImage on the fly from a loaded sampler and loaded texture.",
       "parentUuid": "525a7fde_fc5fbcca",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8733baa0_734b8628",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-18T16:59:17Z",
+      "side": 1,
+      "message": "We discussed offline: this is not the case here as I\u0027m *not* doing any other transformation of the shader. We couldn\u0027t find anything in the spec indicating that this wouldn\u0027t work, so we\u0027re going to go forward with it. If we find out that we need to do the custom Tint transformation, it would just be an extension of the code we land here.",
+      "parentUuid": "b6353ed2_8f651d97",
       "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -105,6 +141,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93558e47_90c443a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-18T16:59:17Z",
+      "side": 1,
+      "message": "Thanks, all!",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92a90c12_a8cd0a54",
@@ -118,6 +171,24 @@
       "writtenOn": "2024-07-17T14:10:35Z",
       "side": 1,
       "message": "Maybe we could instead loop over all bindings, find YCbCr samplers and always drop bindingNumber+1? It would avoid the corner-case with BindingNumber(0).",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "339c6df3_9d7748ba",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-18T16:59:17Z",
+      "side": 1,
+      "message": "With the new approach, this will be looping over all bindings, finding YCbCr samplers and then dropping the entries at the texture indices they\u0027re holding.",
+      "parentUuid": "92a90c12_a8cd0a54",
       "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -158,6 +229,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b535f6dd_d14c7283",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-18T16:59:17Z",
+      "side": 1,
+      "message": "This is the general code for updating the VkDescriptorSet here?",
+      "parentUuid": "ecb3349f_fe3de886",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cd677734_7ec3895f",
         "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
         "patchSetId": 10
@@ -169,6 +258,24 @@
       "writtenOn": "2024-07-17T14:10:35Z",
       "side": 1,
       "message": "IMHO we could precompute the destination bindingIndex for each binding in BindGroupLayoutVk and use this directly here, likewise for VulkanDescriptorType. This would avoid logic in this fairly hot code, with pre-computations moved to cold BGL creation. This would remove the need to edit the code below as well.",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3e9c731_f9c715d0",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-18T16:59:17Z",
+      "side": 1,
+      "message": "I\u0027ll look into this. Naively, I\u0027m a little unsure of what we could save:\n\n* for \"vanilla\" entries we want their index to be the vanilla binding index and their type to be the vanilla type\n* for textures sampled by YCbCr samplers we want their index to to be the index of the sampler and their type to be COMBINED_IMAGE_SAMPLER\n\nGiven that we want different behavior for these two cases, it seems like we would either need to:\n\n1. Explicitly check here for texture entries being for YCbCr-sampled textures as this code is doing\n2. Add an extra level of indirection for *all* entries for obtaining the binding index and descriptor type to use (i.e., build an extra level of mapping at BGL time that gets indexed into here)\n\nIt\u0027s not clear to me that (2) would be a win over (1) from either a code complexity or performance POV? There might well be something I\u0027m missing about your suggestion though - let me know if so.",
+      "parentUuid": "cd677734_7ec3895f",
       "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -203,6 +310,24 @@
       "writtenOn": "2024-07-17T14:16:23Z",
       "side": 1,
       "message": "If the only thing  this is doing is remapping binding points now, could we jsut use the binding remapper to do it instead, and just drop this transform?  Basically in the binding data, just set the destination binding to the value you want?",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85e51bf4_e41f9354",
+        "filename": "src/tint/lang/spirv/writer/raise/ycbcr.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-18T16:59:17Z",
+      "side": 1,
+      "message": "Awesome, thanks! I hadn\u0027t connected the dots that there was a standalone binding remapper transform.",
+      "parentUuid": "14712101_0c8ffdd8",
       "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
