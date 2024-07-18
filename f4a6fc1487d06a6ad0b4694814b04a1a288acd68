@@ -42,6 +42,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3db6e0c9_b8b2b476",
+        "filename": "src/tint/lang/hlsl/writer/builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T02:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49db67f4_2002b499",
+      "range": {
+        "startLine": 435,
+        "startChar": 0,
+        "endLine": 435,
+        "endChar": 31
+      },
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af8035a1_daad6559",
@@ -77,6 +101,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "300943bf_0d7f60e7",
+        "filename": "src/tint/lang/hlsl/writer/builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T02:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af8035a1_daad6559",
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "241e7c4d_fbb1a093",
@@ -90,6 +132,24 @@
       "writtenOn": "2024-07-17T15:22:29Z",
       "side": 1,
       "message": "Nit: no binding point",
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52d5e3c0_cd3a97c5",
+        "filename": "src/tint/lang/hlsl/writer/builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T02:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "241e7c4d_fbb1a093",
       "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -129,6 +189,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11b32b1e_78c800be",
+        "filename": "src/tint/lang/hlsl/writer/builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T02:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85da345f_2b7a3a49",
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a1052b59_485c9be4",
@@ -164,6 +242,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5d89eed_7d466380",
+        "filename": "src/tint/lang/hlsl/writer/builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T02:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1052b59_485c9be4",
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13a0460a_0dd9a45d",
@@ -177,6 +273,24 @@
       "writtenOn": "2024-07-17T15:22:29Z",
       "side": 1,
       "message": "Nit: LoadWithResult, same to below cases",
+      "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5699cdd6_172643ec",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-18T02:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13a0460a_0dd9a45d",
       "revId": "f4a6fc1487d06a6ad0b4694814b04a1a288acd68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
