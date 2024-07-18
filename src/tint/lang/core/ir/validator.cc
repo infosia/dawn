@@ -1148,19 +1148,28 @@ void Validator::CheckVar(const Var* var) {
         }
     }
 
-    // Check that resource variables have @group and @binding set
-    auto* type = var->Result(0)->Type();
-    if (type == nullptr) {
+    auto* result_type = var->Result(0)->Type();
+    if (result_type == nullptr) {
+        AddError(var) << "result result_type is undefined";
         return;
     }
 
-    if (auto* mv = type->As<type::MemoryView>()) {
+    if (auto* mv = result_type->As<type::MemoryView>()) {
         switch (mv->AddressSpace()) {
             case AddressSpace::kHandle:
             case AddressSpace::kStorage:
             case AddressSpace::kUniform:
+                // Check that resource variables have @group and @binding set
                 if (!var->BindingPoint().has_value()) {
                     AddError(var) << "resource variable missing binding points";
+                    return;
+                }
+                break;
+            case AddressSpace::kFunction:
+                // Check that function variables don't have @input_attachment_index set
+                if (var->InputAttachmentIndex().has_value()) {
+                    AddError(var)
+                        << "'@input_attachment_index' is not valid for function-scope var";
                     return;
                 }
                 break;

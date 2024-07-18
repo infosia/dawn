@@ -1990,6 +1990,36 @@ note: # Disassembly
 )");
 }
 
+TEST_F(IR_ValidatorTest, Var_Function_UnexpectedInputAttachmentIndex) {
+    auto* f = b.Function("my_func", ty.void_());
+
+    b.Append(f->Block(), [&] {
+        auto* v = b.Var<function, f32>();
+        v->SetInputAttachmentIndex(0);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:3:41 error: var: '@input_attachment_index' is not valid for function-scope var
+    %2:ptr<function, f32, read_write> = var @input_attachment_index(0)
+                                        ^^^
+
+:2:3 note: in block
+  $B1: {
+  ^^^
+
+note: # Disassembly
+%my_func = func():void {
+  $B1: {
+    %2:ptr<function, f32, read_write> = var @input_attachment_index(0)
+    ret
+  }
+}
+)");
+}
+
 TEST_F(IR_ValidatorTest, Var_Init_WrongType) {
     auto* f = b.Function("my_func", ty.void_());
 
