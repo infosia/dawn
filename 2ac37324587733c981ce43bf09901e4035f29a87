@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2590b690_ee549e45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-19T17:48:03Z",
+      "side": 1,
+      "message": "LGTM - just noticed an existing thing as well, but feel free to do that separately or file a follow-up issue about it",
+      "revId": "2ac37324587733c981ce43bf09901e4035f29a87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15044620_1274b9b4",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-19T17:48:03Z",
+      "side": 1,
+      "message": "nit: do we need this historical comment about the old name ?",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 69
+      },
+      "revId": "2ac37324587733c981ce43bf09901e4035f29a87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfd8e207_542df18b",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-19T17:48:03Z",
+      "side": 1,
+      "message": "existing nit: can be different CLs if you\u0027d like.\n\nIt\u0027s interesting that these use the C API. I think it would be better to use the C++ API `wgpu::AdapterInfo` instead of WGPUAdapterInfo.\n\nI believe use of the C API is actually a memory leak right now.\nYou need to call wgpuAdapterInfoFreeMembers on after populating it because it owns its strings. C++ API takes care of that for you.",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 1
+      },
+      "revId": "2ac37324587733c981ce43bf09901e4035f29a87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
