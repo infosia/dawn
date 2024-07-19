@@ -35,6 +35,7 @@
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/HashUtils.h"
 #include "dawn/native/BindGroup.h"
+#include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/InternalPipelineStore.h"
@@ -192,9 +193,10 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateColorBlitPipeline(
 
 }  // namespace
 
-MaybeError ExpandResolveTextureWithDraw(DeviceBase* device,
-                                        RenderPassEncoder* renderEncoder,
-                                        const RenderPassDescriptor* renderPassDescriptor) {
+MaybeError ExpandResolveTextureWithDraw(
+    DeviceBase* device,
+    RenderPassEncoder* renderEncoder,
+    const UnpackedPtr<RenderPassDescriptor>& renderPassDescriptor) {
     DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
     DAWN_ASSERT(device->CanTextureLoadResolveTargetInTheSameRenderpass());
 
@@ -263,6 +265,11 @@ MaybeError ExpandResolveTextureWithDraw(DeviceBase* device,
     // Draw to perform the blit.
     renderEncoder->APISetBindGroup(0, bindGroup.Get(), 0, nullptr);
     renderEncoder->APISetPipeline(pipeline.Get());
+
+    if (const auto* rect = renderPassDescriptor.Get<RenderPassDescriptorExpandResolveRect>()) {
+        renderEncoder->APISetScissorRect(rect->x, rect->y, rect->width, rect->height);
+    }
+
     renderEncoder->APIDraw(3, 1, 0, 0);
 
     return {};
