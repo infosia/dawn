@@ -74,6 +74,11 @@ class BindGroupLayout final : public BindGroupLayoutInternalBase {
     void DeallocateBindGroup(BindGroup* bindGroup,
                              DescriptorSetAllocation* descriptorSetAllocation);
 
+    // If the texture at `textureBinding` is sampled by a YCbCr sampler, returns
+    // the binding index of the sampler that is sampling this texture.
+    std::optional<BindingIndex> GetSamplerIndexForYCbCrSampledTexture(
+        BindingIndex textureBinding) const;
+
   private:
     ~BindGroupLayout() override;
     MaybeError Initialize();
@@ -81,6 +86,10 @@ class BindGroupLayout final : public BindGroupLayoutInternalBase {
 
     // Dawn API
     void SetLabelImpl() override;
+
+    // Maps from indices of YCbCr-sampled texture entries to indices of the
+    // entries of their respective samplers.
+    std::map<BindingIndex, BindingIndex> mYCbCrSampledTextureToSamplerIndices;
 
     VkDescriptorSetLayout mHandle = VK_NULL_HANDLE;
 

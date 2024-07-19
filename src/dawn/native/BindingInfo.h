@@ -117,6 +117,8 @@ struct StaticSamplerBindingInfo {
 
     // Holds a ref instead of an unowned pointer.
     Ref<SamplerBase> sampler;
+    // Holds the BindingNumber of the texture that this sampler is sampling.
+    uint32_t sampledTextureBinding;
 };
 
 // A mirror of wgpu::ExternalTextureBindingLayout for use inside dawn::native.
