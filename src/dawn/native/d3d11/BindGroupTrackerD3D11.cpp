@@ -32,6 +32,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/MatchVariant.h"
+#include "dawn/common/Range.h"
 #include "dawn/native/Format.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d11/BindGroupD3D11.h"
@@ -169,8 +170,7 @@ MaybeError BindGroupTracker::Apply() {
             BindGroupBase* group = mBindGroups[index];
             const ityp::vector<BindingIndex, uint64_t>& dynamicOffsets = mDynamicOffsets[index];
 
-            for (BindingIndex bindingIndex{0}; bindingIndex < group->GetLayout()->GetBindingCount();
-                 ++bindingIndex) {
+            for (BindingIndex bindingIndex : Range(group->GetLayout()->GetBindingCount())) {
                 const BindingInfo& bindingInfo = group->GetLayout()->GetBindingInfo(bindingIndex);
 
                 DAWN_TRY(MatchVariant(
