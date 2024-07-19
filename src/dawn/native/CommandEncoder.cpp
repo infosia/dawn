@@ -750,6 +750,10 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
     UnpackedPtr<RenderPassDescriptor> descriptor;
     DAWN_TRY_ASSIGN_CONTEXT(descriptor, ValidateAndUnpack(rawDescriptor),
                             "validating chained structs.");
+    DAWN_INVALID_IF(!device->HasFeature(Feature::DawnLoadResolveTexture) &&
+                        device->HasFeature(Feature::DawnPartialLoadResolveTexture),
+                    "%s can't be used without %s.", ToAPI(Feature::DawnPartialLoadResolveTexture),
+                    ToAPI(Feature::DawnLoadResolveTexture));
 
     uint32_t maxColorAttachments = device->GetLimits().v1.maxColorAttachments;
     DAWN_INVALID_IF(
@@ -822,6 +826,24 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
         // TODO(dawn:1704): Consider supporting ExpandResolveTexture + PLS
         DAWN_INVALID_IF(pls != nullptr, "For now pixel local storage is invalid to use with %s.",
                         wgpu::LoadOp::ExpandResolveTexture);
+    }
+
+    if (const auto* rect = descriptor.Get<RenderPassDescriptorExpandResolveRect>()) {
+        DAWN_INVALID_IF(!device->HasFeature(Feature::DawnPartialLoadResolveTexture),
+                        "RenderPassDescriptorExpandResolveRect can't be used without %s.",
+                        ToAPI(Feature::DawnPartialLoadResolveTexture));
+        DAWN_INVALID_IF(
+            !validationState->WillExpandResolveTexture(),
+            "ExpandResolveRect is invalid to use without wgpu::LoadOp::ExpandResolveTexture.");
+
+        DAWN_INVALID_IF(rect->x + rect->width > validationState->GetRenderWidth(),
+                        "The x (%u) and width (%u) of ExpandResolveRect is out of the "
+                        "render area width(% u).",
+                        rect->x, rect->width, validationState->GetRenderWidth());
+        DAWN_INVALID_IF(rect->y + rect->height > validationState->GetRenderHeight(),
+                        "The y (%u) and height (%u) of ExpandResolveRect is out of the "
+                        "render area height(% u).",
+                        rect->y, rect->height, validationState->GetRenderHeight());
     }
 
     return descriptor;
@@ -1202,7 +1224,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             DAWN_ASSERT(validationState.IsValidState());
 
             DAWN_TRY(clearWithDrawHelper.Initialize(this, *descriptor));
-            DAWN_TRY(renderpassWorkaroundsHelper.Initialize(this, *descriptor));
+            DAWN_TRY(renderpassWorkaroundsHelper.Initialize(this, descriptor));
 
             mEncodingContext.WillBeginRenderPass();
             BeginRenderPassCmd* cmd =
@@ -1377,8 +1399,8 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 }
             }
 
-            DAWN_TRY(renderpassWorkaroundsHelper.ApplyOnPostEncoding(this, &usageTracker, cmd,
-                                                                     &passEndCallback));
+            DAWN_TRY(renderpassWorkaroundsHelper.ApplyOnPostEncoding(
+                this, descriptor, &usageTracker, cmd, &passEndCallback));
 
             return {};
         },
@@ -1399,8 +1421,8 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             // TODO(341129591): move inside RenderPassWorkaroundsHelper.
             DAWN_TRY(clearWithDrawHelper.Apply(passEncoder.Get()));
 
-            DAWN_TRY(renderpassWorkaroundsHelper.ApplyOnRenderPassStart(passEncoder.Get(),
-                                                                        rawDescriptor));
+            DAWN_TRY(
+                renderpassWorkaroundsHelper.ApplyOnRenderPassStart(passEncoder.Get(), descriptor));
 
             return {};
         }();
