@@ -16,6 +16,23 @@
       "message": "I tested this on existing and newest SPIRV-Tools",
       "revId": "ea55379af48302432a0ba9d79b6da6a35fec337b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afbd5971_e760dc7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T16:36:48Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "ea55379af48302432a0ba9d79b6da6a35fec337b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
