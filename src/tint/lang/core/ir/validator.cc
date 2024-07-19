@@ -124,40 +124,6 @@ bool TransitivelyHolds(const Block* block, const Instruction* inst) {
     return false;
 }
 
-/// @returns true if the type @p type is of, or indirectly references a type of type `T`.
-template <typename T>
-bool HoldsType(const type::Type* type) {
-    if (!type) {
-        return false;
-    }
-    Vector<const type::Type*, 8> stack{type};
-    Hashset<const type::Type*, 8> seen{type};
-    while (!stack.IsEmpty()) {
-        auto* ty = stack.Pop();
-        if (ty->Is<T>()) {
-            return true;
-        }
-
-        if (auto* view = ty->As<type::MemoryView>(); view && seen.Add(view)) {
-            stack.Push(view);
-            continue;
-        }
-
-        auto type_count = ty->Elements();
-        if (type_count.type && seen.Add(type_count.type)) {
-            stack.Push(type_count.type);
-            continue;
-        }
-
-        for (uint32_t i = 0; i < type_count.count; i++) {
-            if (auto* subtype = ty->Element(i); subtype && seen.Add(subtype)) {
-                stack.Push(subtype);
-            }
-        }
-    }
-    return false;
-}
-
 /// The core IR validator.
 class Validator {
   public:
@@ -371,6 +337,14 @@ class Validator {
     void CheckOperandsNotNull(const ir::Instruction* inst,
                               size_t start_operand,
                               size_t end_operand);
+
+    /// Checks that @p type does not use any types that are prohibited by the target capabilities.
+    /// @param type the type
+    /// @param diag a function that creates an error diagnostic for the source of the type
+    /// @param ignore_caps a set of capabilities to ignore for this check
+    void CheckType(const core::type::Type* type,
+                   std::function<diag::Diagnostic&()> diag,
+                   Capabilities ignore_caps = {});
 
     /// Validates the root block
     /// @param blk the block
@@ -906,6 +880,54 @@ void Validator::CheckOperandsNotNull(const Instruction* inst,
     }
 }
 
+void Validator::CheckType(const core::type::Type* root,
+                          std::function<diag::Diagnostic&()> diag,
+                          Capabilities ignore_caps) {
+    auto visit = [&](const type::Type* type) {
+        return tint::Switch(
+            type,
+            [&](const type::Reference*) {
+                // Reference types are guarded by the AllowRefTypes capability.
+                if (!capabilities_.Contains(Capability::kAllowRefTypes) ||
+                    ignore_caps.Contains(Capability::kAllowRefTypes)) {
+                    diag() << "reference types are not permitted here";
+                    return false;
+                }
+                return true;
+            },
+            [](Default) { return true; });
+    };
+
+    Vector<const type::Type*, 8> stack{root};
+    Hashset<const type::Type*, 8> seen{};
+    while (!stack.IsEmpty()) {
+        auto* ty = stack.Pop();
+        if (!ty) {
+            continue;
+        }
+        if (!visit(ty)) {
+            return;
+        }
+
+        if (auto* view = ty->As<type::MemoryView>(); view && seen.Add(view)) {
+            stack.Push(view);
+            continue;
+        }
+
+        auto type_count = ty->Elements();
+        if (type_count.type && seen.Add(type_count.type)) {
+            stack.Push(type_count.type);
+            continue;
+        }
+
+        for (uint32_t i = 0; i < type_count.count; i++) {
+            if (auto* subtype = ty->Element(i); subtype && seen.Add(subtype)) {
+                stack.Push(subtype);
+            }
+        }
+    }
+}
+
 void Validator::CheckRootBlock(const Block* blk) {
     block_stack_.Push(blk);
     TINT_DEFER(block_stack_.Pop());
@@ -963,10 +985,10 @@ void Validator::CheckFunction(const Function* func) {
             return;
         }
 
-        // References not allowed on function signatures even with Capability::kAllowRefTypes
-        if (HoldsType<type::Reference>(param->Type())) {
-            AddError(param) << "references are not permitted as parameter types";
-        }
+        // References not allowed on function signatures even with Capability::kAllowRefTypes.
+        CheckType(
+            param->Type(), [&]() -> diag::Diagnostic& { return AddError(param); },
+            Capabilities{Capability::kAllowRefTypes});
 
         scope_stack_.Add(param);
     }
@@ -977,9 +999,10 @@ void Validator::CheckFunction(const Function* func) {
         }
     }
 
-    if (HoldsType<type::Reference>(func->ReturnType())) {
-        AddError(func) << "references are not permitted as return types";
-    }
+    // References not allowed on function signatures even with Capability::kAllowRefTypes.
+    CheckType(
+        func->ReturnType(), [&]() -> diag::Diagnostic& { return AddError(func); },
+        Capabilities{Capability::kAllowRefTypes});
 
     QueueBlock(func->Block());
     ProcessTasks();
@@ -1014,6 +1037,12 @@ void Validator::BeginBlock(const Block* blk) {
                 AddNote(param->Block()) << "parent block declared here";
                 return;
             }
+
+            // References not allowed on block parameters even with Capability::kAllowRefTypes.
+            CheckType(
+                param->Type(), [&]() -> diag::Diagnostic& { return AddError(param); },
+                Capabilities{Capability::kAllowRefTypes});
+
             scope_stack_.Add(param);
         }
     }
@@ -1073,11 +1102,7 @@ void Validator::CheckInstruction(const Instruction* inst) {
             AddResultError(inst, i) << "instruction of result is a different instruction";
         }
 
-        if (!capabilities_.Contains(Capability::kAllowRefTypes)) {
-            if (HoldsType<type::Reference>(res->Type())) {
-                AddResultError(inst, i) << "reference type is not permitted";
-            }
-        }
+        CheckType(res->Type(), [&]() -> diag::Diagnostic& { return AddResultError(inst, i); });
     }
 
     auto ops = inst->Operands();
@@ -1100,11 +1125,7 @@ void Validator::CheckInstruction(const Instruction* inst) {
             AddDeclarationNote(op);
         }
 
-        if (!capabilities_.Contains(Capability::kAllowRefTypes)) {
-            if (HoldsType<type::Reference>(op->Type())) {
-                AddError(inst, i) << "reference type is not permitted";
-            }
-        }
+        CheckType(op->Type(), [&]() -> diag::Diagnostic& { return AddError(inst, i); });
     }
 
     tint::Switch(
