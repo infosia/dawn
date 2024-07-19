@@ -53,6 +53,7 @@
 #include "src/tint/lang/spirv/writer/raise/pass_matrix_by_pointer.h"
 #include "src/tint/lang/spirv/writer/raise/shader_io.h"
 #include "src/tint/lang/spirv/writer/raise/var_for_dynamic_index.h"
+#include "src/tint/lang/spirv/writer/raise/ycbcr.h"
 
 namespace tint::spirv::writer {
 
@@ -139,6 +140,9 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(core::ir::transform::DemoteToHelper, module);
 
     RUN_TRANSFORM(raise::BuiltinPolyfill, module);
+    if (options.use_ycbcr_sampling) {
+        // RUN_TRANSFORM(raise::YCbCr, module);
+    }
     RUN_TRANSFORM(raise::ExpandImplicitSplats, module);
     RUN_TRANSFORM(raise::HandleMatrixArithmetic, module);
     RUN_TRANSFORM(raise::MergeReturn, module);

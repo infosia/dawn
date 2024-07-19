@@ -122,6 +122,16 @@ BindGroup::BindGroup(Device* device,
                     // resources.
                     return false;
                 }
+
+                if (auto yCbCrSamplerIndex =
+                        ToBackend(GetLayout())
+                            ->GetBindingIndexForYCbCrSampledTexture(bindingIndex)) {
+                    // Write the info of the texture at the binding index for the
+                    // YCbCr sampler.
+                    write.dstBinding = static_cast<uint32_t>(yCbCrSamplerIndex.value());
+                    write.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+                }
+
                 writeImageInfo[numWrites].imageView = handle;
                 writeImageInfo[numWrites].imageLayout = VulkanImageLayout(
                     view->GetTexture()->GetFormat(), wgpu::TextureUsage::TextureBinding);

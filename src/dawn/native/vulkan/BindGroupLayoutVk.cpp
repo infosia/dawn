@@ -117,6 +117,29 @@ MaybeError BindGroupLayout::Initialize() {
 
     for (const auto& [_, bindingIndex] : GetBindingMap()) {
         const BindingInfo& bindingInfo = GetBindingInfo(bindingIndex);
+        if (!std::holds_alternative<StaticSamplerBindingInfo>(bindingInfo.bindingLayout)) {
+            continue;
+        }
+
+        auto samplerLayout = std::get<StaticSamplerBindingInfo>(bindingInfo.bindingLayout);
+        auto sampler = ToBackend(samplerLayout.sampler);
+        if (!sampler->IsYCbCr()) {
+            continue;
+        }
+
+        mYCbCrSampledTextureToSamplerIndices[GetBindingIndex(
+            BindingNumber{samplerLayout.sampledTextureBinding})] = bindingIndex;
+    }
+
+    for (const auto& [_, bindingIndex] : GetBindingMap()) {
+        if (mYCbCrSampledTextureToSamplerIndices.contains(bindingIndex)) {
+            // This texture will be bound into the VkDescriptorSet at the index
+            // for the sampler itself, since the YCbCr sampler entry is a
+            // combined image sampler entry.
+            continue;
+        }
+
+        const BindingInfo& bindingInfo = GetBindingInfo(bindingIndex);
 
         VkDescriptorSetLayoutBinding vkBinding;
         vkBinding.binding = static_cast<uint32_t>(bindingIndex);
@@ -154,6 +177,13 @@ MaybeError BindGroupLayout::Initialize() {
     absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType;
 
     for (BindingIndex bindingIndex{0}; bindingIndex < GetBindingCount(); ++bindingIndex) {
+        if (mYCbCrSampledTextureToSamplerIndices.contains(bindingIndex)) {
+            // Texture binding entries for YCbCr-sampled textures are not written
+            // into the VkDescriptorSetLayout, and hence they should not get
+            // entries in the descriptor pools.
+            continue;
+        }
+
         VkDescriptorType vulkanType = VulkanDescriptorType(GetBindingInfo(bindingIndex));
 
         // absl:flat_hash_map::operator[] will return 0 if the key doesn't exist.
@@ -211,6 +241,14 @@ void BindGroupLayout::DeallocateBindGroup(BindGroup* bindGroup,
                                           DescriptorSetAllocation* descriptorSetAllocation) {
     mDescriptorSetAllocator->Deallocate(descriptorSetAllocation);
     mBindGroupAllocator->Deallocate(bindGroup);
+}
+
+std::optional<BindingIndex> BindGroupLayout::GetBindingIndexForYCbCrSampledTexture(
+    BindingIndex textureBinding) const {
+    if (mYCbCrSampledTextureToSamplerIndices.contains(textureBinding)) {
+        return mYCbCrSampledTextureToSamplerIndices.at(textureBinding);
+    }
+    return {};
 }
 
 void BindGroupLayout::SetLabelImpl() {

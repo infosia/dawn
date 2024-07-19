@@ -47,6 +47,7 @@ cc_library(
     "raise.cc",
     "shader_io.cc",
     "var_for_dynamic_index.cc",
+    "ycbcr.cc",
   ],
   hdrs = [
     "builtin_polyfill.h",
@@ -57,6 +58,7 @@ cc_library(
     "raise.h",
     "shader_io.h",
     "var_for_dynamic_index.h",
+    "ycbcr.h",
   ],
   deps = [
     "//src/tint/api/common",

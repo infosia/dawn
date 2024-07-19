@@ -34,6 +34,7 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/HashUtils.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/CacheRequest.h"
 #include "dawn/native/PhysicalDevice.h"
@@ -244,8 +245,14 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const BindingInfoArray& moduleBindingInfo =
         GetEntryPoint(programmableStage.entryPoint.c_str()).bindings;
 
+    // TODO(blundell): This should be an {old binding -> new binding} map that
+    // specifies which textures need to have their binding indices remapped and
+    // is added to `bindings`.
+    bool use_ycbcr_sampling = false;
+    bool allow_duplicate_spirv_bindings = false;
     for (BindGroupIndex group : IterateBitSet(layout->GetBindGroupLayoutsMask())) {
         const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
+        use_ycbcr_sampling = use_ycbcr_sampling || bgl->GetStaticSamplerCount();
 
         for (const auto& currentModuleBindingInfo : moduleBindingInfo[group]) {
             // We cannot use structured binding here because lambda expressions can only capture
@@ -288,6 +295,11 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                                                  dstBindingPoint.group, dstBindingPoint.binding});
                 },
                 [&](const TextureBindingInfo& bindingInfo) {
+                    if (auto yCbCrSamplerIndex = bgl->GetBindingIndexForYCbCrSampledTexture(
+                            BindingIndex{dstBindingPoint.binding})) {
+                        allow_duplicate_spirv_bindings = true;
+                        dstBindingPoint.binding = static_cast<uint32_t>(yCbCrSamplerIndex.value());
+                    }
                     bindings.texture.emplace(srcBindingPoint,
                                              tint::spirv::writer::binding::Texture{
                                                  dstBindingPoint.group, dstBindingPoint.binding});
@@ -342,6 +354,13 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.substituteOverrideConfig = std::move(substituteOverrideConfig);
     req.maxSubgroupSizeForFullSubgroups = maxSubgroupSizeForFullSubgroups;
 
+    // NOTE: This is a hack for POC on multiple levels:
+    // * We assume that all static samplers are YCbCr samplers
+    // * We pass single bool
+    // Before landing, we'll replace this with the map described in the TODO
+    // above.
+    req.tintOptions.use_ycbcr_sampling = use_ycbcr_sampling;
+    req.tintOptions.allow_duplicate_spirv_bindings = allow_duplicate_spirv_bindings;
     req.tintOptions.clamp_frag_depth = clampFragDepth;
     req.tintOptions.disable_robustness = !GetDevice()->IsRobustnessEnabled();
     req.tintOptions.emit_vertex_point_size = emitPointSize;

@@ -57,6 +57,8 @@ tint_add_target(tint_lang_spirv_writer_raise lib
   lang/spirv/writer/raise/shader_io.h
   lang/spirv/writer/raise/var_for_dynamic_index.cc
   lang/spirv/writer/raise/var_for_dynamic_index.h
+  lang/spirv/writer/raise/ycbcr.cc
+  lang/spirv/writer/raise/ycbcr.h
 )
 
 tint_target_add_dependencies(tint_lang_spirv_writer_raise lib

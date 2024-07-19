@@ -27,6 +27,7 @@
 
 #include "dawn/native/BindingInfo.h"
 
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Limits.h"
@@ -261,7 +262,7 @@ SamplerBindingInfo::SamplerBindingInfo(const SamplerBindingLayout& apiLayout)
     : type(apiLayout.type) {}
 
 StaticSamplerBindingInfo::StaticSamplerBindingInfo(const StaticSamplerBindingLayout& apiLayout)
-    : sampler(apiLayout.sampler) {}
+    : sampler(apiLayout.sampler), sampledTextureBinding(apiLayout.sampledTextureBinding) {}
 
 InputAttachmentBindingInfo::InputAttachmentBindingInfo() = default;
 InputAttachmentBindingInfo::InputAttachmentBindingInfo(wgpu::TextureSampleType sampleType)
