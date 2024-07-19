@@ -141,6 +141,23 @@
       "parentUuid": "3993360e_26bc0196",
       "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdd9f020_99f70d4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-19T06:16:46Z",
+      "side": 1,
+      "message": "Thanks, Loko!",
+      "revId": "c05511d32e9bfef07edf59c8a3bd510a4a0ae101",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
