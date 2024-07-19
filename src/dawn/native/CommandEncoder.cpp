@@ -217,6 +217,17 @@ class RenderPassValidationState final : public NonMovable {
             DAWN_ASSERT(mAttachmentValidationWidth != 0);
             DAWN_ASSERT(mAttachmentValidationHeight != 0);
             DAWN_ASSERT(mSampleCount != 0);
+
+            if (const auto* rect = ExpandResolveRect()) {
+                DAWN_INVALID_IF(rect->x + rect->width > GetRenderWidth(),
+                                "The x (%u) and width (%u) of ExpandResolveRect is out of the "
+                                "render area width(% u).",
+                                rect->x, rect->width, GetRenderWidth());
+                DAWN_INVALID_IF(rect->y + rect->height > GetRenderHeight(),
+                                "The y (%u) and height (%u) of ExpandResolveRect is out of the "
+                                "render area height(% u).",
+                                rect->y, rect->height, GetRenderHeight());
+            }
         }
 
         RecordedAttachment record;
@@ -264,6 +275,13 @@ class RenderPassValidationState final : public NonMovable {
     bool WillExpandResolveTexture() const { return mWillExpandResolveTexture; }
     void SetWillExpandResolveTexture(bool enabled) { mWillExpandResolveTexture = enabled; }
 
+    void SetExpandResolveRect(const RenderPassDescriptorExpandResolveRect* expandResolveRect) {
+        mExpandResolveRect = expandResolveRect;
+    }
+    const RenderPassDescriptorExpandResolveRect* ExpandResolveRect() const {
+        return mExpandResolveRect;
+    }
+
   private:
     const bool mUnsafeApi;
 
@@ -281,6 +299,7 @@ class RenderPassValidationState final : public NonMovable {
     absl::InlinedVector<RecordedAttachment, kMaxColorAttachments> mRecords;
 
     bool mWillExpandResolveTexture = false;
+    const RenderPassDescriptorExpandResolveRect* mExpandResolveRect = nullptr;
 };
 
 MaybeError ValidateB2BCopyAlignment(uint64_t dataSize, uint64_t srcOffset, uint64_t dstOffset) {
@@ -749,6 +768,17 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
     UnpackedPtr<RenderPassDescriptor> descriptor;
     DAWN_TRY_ASSIGN_CONTEXT(descriptor, ValidateAndUnpack(rawDescriptor),
                             "validating chained structs.");
+    DAWN_INVALID_IF(!device->HasFeature(Feature::DawnLoadResolveTexture) &&
+                        device->HasFeature(Feature::DawnPartialLoadResolveTexture),
+                    "%s can't be used without %s.", ToAPI(Feature::DawnPartialLoadResolveTexture),
+                    ToAPI(Feature::DawnLoadResolveTexture));
+    const auto* expandResolveRect = descriptor.Get<RenderPassDescriptorExpandResolveRect>();
+    DAWN_INVALID_IF(
+        !device->HasFeature(Feature::DawnPartialLoadResolveTexture) && expandResolveRect,
+        "RenderPassDescriptorExpandResolveRect can't be used without %s.",
+        ToAPI(Feature::DawnPartialLoadResolveTexture));
+
+    validationState->SetExpandResolveRect(expandResolveRect);
 
     uint32_t maxColorAttachments = device->GetLimits().v1.maxColorAttachments;
     DAWN_INVALID_IF(
@@ -821,6 +851,10 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
         // TODO(dawn:1704): Consider supporting ExpandResolveTexture + PLS
         DAWN_INVALID_IF(pls != nullptr, "For now pixel local storage is invalid to use with %s.",
                         wgpu::LoadOp::ExpandResolveTexture);
+    } else {
+        DAWN_INVALID_IF(
+            descriptor.Get<RenderPassDescriptorExpandResolveRect>() != nullptr,
+            "ExpandResolveRect is invalid to use without wgpu::LoadOp::ExpandResolveTexture.");
     }
 
     return descriptor;
@@ -1201,7 +1235,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             DAWN_ASSERT(validationState.IsValidState());
 
             DAWN_TRY(clearWithDrawHelper.Initialize(this, *descriptor));
-            DAWN_TRY(renderpassWorkaroundsHelper.Initialize(this, *descriptor));
+            DAWN_TRY(renderpassWorkaroundsHelper.Initialize(this, descriptor));
 
             mEncodingContext.WillBeginRenderPass();
             BeginRenderPassCmd* cmd =
@@ -1376,8 +1410,8 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 }
             }
 
-            DAWN_TRY(renderpassWorkaroundsHelper.ApplyOnPostEncoding(this, &usageTracker, cmd,
-                                                                     &passEndCallback));
+            DAWN_TRY(renderpassWorkaroundsHelper.ApplyOnPostEncoding(
+                this, descriptor, &usageTracker, cmd, &passEndCallback));
 
             return {};
         },
@@ -1398,8 +1432,8 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             // TODO(341129591): move inside RenderPassWorkaroundsHelper.
             DAWN_TRY(clearWithDrawHelper.Apply(passEncoder.Get()));
 
-            DAWN_TRY(renderpassWorkaroundsHelper.ApplyOnRenderPassStart(passEncoder.Get(),
-                                                                        rawDescriptor));
+            DAWN_TRY(
+                renderpassWorkaroundsHelper.ApplyOnRenderPassStart(passEncoder.Get(), descriptor));
 
             return {};
         }();

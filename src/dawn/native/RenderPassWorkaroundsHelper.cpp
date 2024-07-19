@@ -52,11 +52,13 @@ namespace {
 struct TemporaryResolveAttachment {
     TemporaryResolveAttachment(Ref<TextureViewBase> src,
                                Ref<TextureViewBase> dst,
+                               wgpu::LoadOp loadOp = wgpu::LoadOp::Load,
                                wgpu::StoreOp storeOp = wgpu::StoreOp::Store)
         : copySrc(std::move(src)), copyDst(std::move(dst)), storeOp(storeOp) {}
 
     Ref<TextureViewBase> copySrc;
     Ref<TextureViewBase> copyDst;
+    wgpu::LoadOp loadOp;
     wgpu::StoreOp storeOp;
 };
 
@@ -86,7 +88,7 @@ RenderPassWorkaroundsHelper::~RenderPassWorkaroundsHelper() = default;
 
 MaybeError RenderPassWorkaroundsHelper::Initialize(
     CommandEncoder* encoder,
-    const RenderPassDescriptor* renderPassDescriptor) {
+    const UnpackedPtr<RenderPassDescriptor>& renderPassDescriptor) {
     DeviceBase* device = encoder->GetDevice();
 
     // dawn:56, dawn:1569
@@ -150,6 +152,7 @@ MaybeError RenderPassWorkaroundsHelper::Initialize(
 
 MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
     CommandEncoder* encoder,
+    const UnpackedPtr<RenderPassDescriptor>& renderPassDescriptor,
     RenderPassResourceUsageTracker* usageTracker,
     BeginRenderPassCmd* cmd,
     std::function<void()>* passEndCallbackOut) {
@@ -197,10 +200,9 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
     // case then the resolves are deferred by removing the resolve targets and forcing the storeOp
     // to Store. After the pass has ended an new pass is recorded for each resolve target that
     // resolves it separately.
+    bool splitResolvesIntoSeparatePasses = false;
     if (device->IsToggleEnabled(Toggle::ResolveMultipleAttachmentInSeparatePasses) &&
         cmd->attachmentState->GetColorAttachmentsMask().count() > 1) {
-        bool splitResolvesIntoSeparatePasses = false;
-
         // This workaround needs to apply if there are multiple MSAA color targets (checked above)
         // and at least one resolve target.
         for (auto i : IterateBitSet(cmd->attachmentState->GetColorAttachmentsMask())) {
@@ -209,57 +211,88 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
                 break;
             }
         }
-
-        if (splitResolvesIntoSeparatePasses) {
-            std::vector<TemporaryResolveAttachment> temporaryResolveAttachments;
-
-            for (auto i : IterateBitSet(cmd->attachmentState->GetColorAttachmentsMask())) {
-                auto& attachmentInfo = cmd->colorAttachments[i];
-                TextureViewBase* resolveTarget = attachmentInfo.resolveTarget.Get();
-                if (resolveTarget != nullptr) {
-                    // Save the color and resolve targets together for an explicit resolve pass
-                    // after this one ends, then remove the resolve target from this pass and
-                    // force the storeOp to Store.
-                    temporaryResolveAttachments.emplace_back(attachmentInfo.view.Get(),
-                                                             resolveTarget, attachmentInfo.storeOp);
-                    attachmentInfo.storeOp = wgpu::StoreOp::Store;
-                    attachmentInfo.resolveTarget = nullptr;
-                }
-            }
-
-            passEndOperations.emplace_back([encoder, temporaryResolveAttachments = std::move(
-                                                         temporaryResolveAttachments)]() -> void {
-                // Called once the render pass has been ended.
-                // Handles any separate resolve passes needed for the
-                // ResolveMultipleAttachmentInSeparatePasses workaround immediately after the
-                // render pass ends and before any additional commands are recorded.
-                for (auto& deferredResolve : temporaryResolveAttachments) {
-                    RenderPassColorAttachment attachment = {};
-                    attachment.view = deferredResolve.copySrc.Get();
-                    attachment.resolveTarget = deferredResolve.copyDst.Get();
-                    attachment.loadOp = wgpu::LoadOp::Load;
-                    attachment.storeOp = deferredResolve.storeOp;
-
-                    RenderPassDescriptor resolvePass = {};
-                    resolvePass.colorAttachmentCount = 1;
-                    resolvePass.colorAttachments = &attachment;
-
-                    // Begin and end an empty render pass to force the resolve.
-                    Ref<RenderPassEncoder> rpEncoder = encoder->BeginRenderPass(&resolvePass);
-                    rpEncoder->End();
-                }
-            });
-        }
     }
 
     mShouldApplyExpandResolveEmulation =
         cmd->attachmentState->GetExpandResolveInfo().attachmentsToExpandResolve.any() &&
         device->CanTextureLoadResolveTargetInTheSameRenderpass();
 
+    // If partial expand/resolve is needed, we also need to use a separate resolve pass.
+    const bool needsPartialResolve =
+        renderPassDescriptor.Get<RenderPassDescriptorExpandResolveRect>();
+    if (mShouldApplyExpandResolveEmulation && needsPartialResolve) {
+        splitResolvesIntoSeparatePasses = true;
+    }
+
+    if (splitResolvesIntoSeparatePasses) {
+        std::vector<TemporaryResolveAttachment> temporaryResolveAttachments;
+        for (auto i : IterateBitSet(cmd->attachmentState->GetColorAttachmentsMask())) {
+            auto& attachmentInfo = cmd->colorAttachments[i];
+            TextureViewBase* resolveTarget = attachmentInfo.resolveTarget.Get();
+            if (resolveTarget != nullptr) {
+                // Save the color and resolve targets together for an explicit resolve pass
+                // after this one ends, then remove the resolve target from this pass and
+                // force the storeOp to Store.
+                temporaryResolveAttachments.emplace_back(attachmentInfo.view.Get(), resolveTarget,
+                                                         attachmentInfo.loadOp,
+                                                         attachmentInfo.storeOp);
+                attachmentInfo.storeOp = wgpu::StoreOp::Store;
+                attachmentInfo.resolveTarget = nullptr;
+            }
+        }
+
+        for (auto& deferredResolve : temporaryResolveAttachments) {
+            const bool partialResolve =
+                deferredResolve.loadOp == wgpu::LoadOp::ExpandResolveTexture && needsPartialResolve;
+
+            RenderPassColorAttachment msaaStorePassAttachment = {};
+            msaaStorePassAttachment.view = deferredResolve.copySrc.Get();
+            msaaStorePassAttachment.loadOp = wgpu::LoadOp::Load;
+            msaaStorePassAttachment.storeOp = deferredResolve.storeOp;
+
+            if (partialResolve) {
+                ResolveMultisampleCallback resolvePassCallback;
+                DAWN_TRY_ASSIGN(resolvePassCallback,
+                                ResolveMultisampleWithDrawCallback(
+                                    device, encoder, renderPassDescriptor,
+                                    deferredResolve.copySrc.Get(), deferredResolve.copyDst.Get()));
+                passEndOperations.emplace_back([=]() -> void {
+                    // Do partial resolve first in one render pass.
+                    resolvePassCallback();
+
+                    // Then fulfill the original store op for MSAA texture in another render pass.
+                    // Note: no need to fulfill if the storeOp = Store because we already do that in
+                    // the main render pass.
+                    if (deferredResolve.storeOp != wgpu::StoreOp::Store) {
+                        RenderPassDescriptor resolvePass = {};
+                        resolvePass.colorAttachmentCount = 1;
+                        resolvePass.colorAttachments = &msaaStorePassAttachment;
+
+                        Ref<RenderPassEncoder> rpEncoder = encoder->BeginRenderPass(&resolvePass);
+                        rpEncoder->End();
+                    }
+                });
+            } else {
+                passEndOperations.emplace_back([=] {
+                    // Resolve the MSAA texture into the resolve texture in a dedicated pass.
+                    auto attachment = msaaStorePassAttachment;
+                    attachment.resolveTarget = deferredResolve.copyDst.Get();
+                    RenderPassDescriptor resolvePass = {};
+                    resolvePass.colorAttachmentCount = 1;
+                    resolvePass.colorAttachments = &attachment;
+                    Ref<RenderPassEncoder> rpEncoder = encoder->BeginRenderPass(&resolvePass);
+                    rpEncoder->End();
+                });
+            }
+        }
+    }
+
     *passEndCallbackOut = [passEndOperations = std::move(passEndOperations)] {
-        // Apply the operations in reverse order.
-        // We copy the MSAA textures to temp resolve targets, then from temp resolve targets
-        // to actual resolve targets.
+        // Apply the operations in reverse order. Typically they can be:
+        //   1.a) Partial resolve pass, and conditionally followed with a MSAA texture Discard pass.
+        //   Alternatively,
+        //   1.b) Full resolve pass.
+        //   2) Copy from temp resolve to the actual resolve target.
         for (auto opIte = passEndOperations.rbegin(); opIte != passEndOperations.rend(); ++opIte) {
             (*opIte)();
         }
@@ -268,8 +301,9 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
     return {};
 }
 
-MaybeError RenderPassWorkaroundsHelper::ApplyOnRenderPassStart(RenderPassEncoder* rpEncoder,
-                                                               const RenderPassDescriptor* rpDesc) {
+MaybeError RenderPassWorkaroundsHelper::ApplyOnRenderPassStart(
+    RenderPassEncoder* rpEncoder,
+    const UnpackedPtr<RenderPassDescriptor>& rpDesc) {
     DeviceBase* device = rpEncoder->GetDevice();
     if (mShouldApplyExpandResolveEmulation) {
         // Perform ExpandResolveTexture load op's emulation after the render pass starts.
