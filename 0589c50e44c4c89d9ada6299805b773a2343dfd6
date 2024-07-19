@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd4ca57a_b588065f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-19T23:17:07Z",
+      "side": 1,
+      "message": "This is just some reformatting, shouldn\u0027t affect expectations or rollers/UPF at all, but FYI.",
+      "revId": "0589c50e44c4c89d9ada6299805b773a2343dfd6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
