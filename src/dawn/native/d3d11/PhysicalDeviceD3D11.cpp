@@ -151,6 +151,9 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::R8UnormStorage);
     EnableFeature(Feature::ShaderModuleCompilationOptions);
     EnableFeature(Feature::DawnLoadResolveTexture);
+    if (mDeviceInfo.isUMA) {
+        EnableFeature(Feature::DawnPartialLoadResolveTexture);
+    }
     if (mDeviceInfo.isUMA && mDeviceInfo.supportsMapNoOverwriteDynamicBuffers) {
         // With UMA we should allow mapping usages on more type of buffers.
         EnableFeature(Feature::BufferMapExtendedUsages);
