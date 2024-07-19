@@ -202,9 +202,6 @@ class ComputeDispatchTests : public DawnTest {
 
 // Test basic direct
 TEST_P(ComputeDispatchTests, DirectBasic) {
-    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-
     DirectTest(2, 3, 4);
 }
 
