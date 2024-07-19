@@ -68,6 +68,24 @@
       "message": "Amir, I added you to the group cria/project-dawn-tryjob-access which should let you CQ+2 this change now that it has been CR+2ed. Apologies for the delay I didn\u0027t realized we were blocked here.",
       "revId": "37ceec71a39bcd8b0cba9c51fe5cbc130700cf65",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddc815eb_438140fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004896
+      },
+      "writtenOn": "2024-07-19T13:38:42Z",
+      "side": 1,
+      "message": "Oh no problem! Thank you, Corentin 👍\nSubmitted for a dry run, and I\u0027ll CQ+2 afterwards.",
+      "parentUuid": "2fbe8475_5953fc1a",
+      "revId": "37ceec71a39bcd8b0cba9c51fe5cbc130700cf65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
