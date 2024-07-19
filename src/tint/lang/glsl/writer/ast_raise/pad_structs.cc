@@ -33,6 +33,7 @@
 
 #include "src/tint/lang/wgsl/ast/disable_validation_attribute.h"
 #include "src/tint/lang/wgsl/ast/parameter.h"
+#include "src/tint/lang/wgsl/ast/transform/add_block_attribute.h"
 #include "src/tint/lang/wgsl/program/clone_context.h"
 #include "src/tint/lang/wgsl/program/program_builder.h"
 #include "src/tint/lang/wgsl/resolver/resolve.h"
@@ -93,6 +94,8 @@ ast::transform::Transform::ApplyResult PadStructs::Apply(const Program& src,
         }
         uint32_t offset = 0;
         bool has_runtime_sized_array = false;
+        bool is_block = ast::HasAttribute<ast::transform::AddBlockAttribute::BlockAttribute>(
+            ast_str->attributes);
         tint::Vector<const ast::StructMember*, 8> new_members;
         Hashset<std::string, 8> member_names;
         for (auto* mem : str->Members()) {
@@ -131,7 +134,7 @@ ast::transform::Transform::ApplyResult PadStructs::Apply(const Program& src,
         if (str->UsedAs(core::AddressSpace::kUniform)) {
             struct_size = tint::RoundUp(16u, struct_size);
         }
-        if (offset < struct_size && !has_runtime_sized_array) {
+        if (offset < struct_size && !has_runtime_sized_array && !is_block) {
             CreatePadding(&new_members, &padding_members, &member_names, last_padding_index,
                           ctx.dst, struct_size - offset);
         }
