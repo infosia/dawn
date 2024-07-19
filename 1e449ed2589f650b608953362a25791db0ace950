@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "838cacae_a522fb4c",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-19T17:09:56Z",
+      "side": 1,
+      "message": "```suggestion\n        if (!deviceName.empty() \u0026\u0026 info.device \u0026\u0026\n            std::string(info.device).find(deviceName) \u003d\u003d std::string::npos) {\n            continue;\n```\n\nI believe this should fix the compile failure",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 0
+      },
+      "revId": "1e449ed2589f650b608953362a25791db0ace950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
