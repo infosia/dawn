@@ -16,6 +16,23 @@
       "message": "+Corentin for real\n\nCorentin, can you take a look? Thanks!",
       "revId": "6f7941463df743d79536fc70352c2e3e4793bce9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1925e6fd_d1df4448",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T10:19:56Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "6f7941463df743d79536fc70352c2e3e4793bce9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
