@@ -5,12 +5,15 @@ The `dawn-load-resolve-texture` feature allows a render pass to expand a resolve
 Additional functionalities:
  - Adds `wgpu::LoadOp::ExpandResolveTexture` enum value to specify that the MSAA attachment will load the pixels from its corresponding resolve texture. This is cheaper than `wgpu::LoadOp::Load` which will load the existing pixels of the MSAA attachment itself.
  - Adds `wgpu::ColorTargetStateExpandResolveTextureDawn` as chained struct for `wgpu::RenderPipelineDescriptor::FragmentState::ColorTargetState`. It has `enabled` flag to indicate that the render pipeline is going to be used in a render pass with `ExpandResolveTexture` load op in the respective color attachment.
+ - Adds `wgpu::RenderPassDescriptorExpandResolveRect` as chained struct for `wgpu::RenderPipelineDescriptor`. It defines a rect of {`x`, `y`, `width`, `height`} to indicate that expanding and resolving are only performed partially on the texels within this rect region of texture. The texels outside of the rect are not impacted.
 
 Example Usage:
 ```
 // Create MSAA texture
 wgpu::TextureDescriptor desc = ...;
 desc.usage = wgpu::TextureUsage::RenderAttachment;
+// TextureBinding is extra required in case of RenderPassDescriptorExpandResolveRect.
+desc.usage |= wgpu::TextureUsage::TextureBinding;
 desc.sampleCount = 4;
 
 auto msaaTexture = device.CreateTexture(&desc);
@@ -56,6 +59,14 @@ renderPassDesc2.colorAttachments[0].resolveTarget
 renderPassDesc2.colorAttachments[0].loadOp
  = wgpu::LoadOp::ExpandResolveTexture;
 
+// If there is no need to expand and resolve the whole texture,
+// RenderPassDescriptorExpandResolveRect can be used to specify a
+// subregion of texture to be updated only.
+wgpu::RenderPassDescriptorExpandResolveRect rect{};
+rect.x = rect.y = 0;
+rect.width = rect.height = 32;
+renderPassDesc2.nextInChain = &rect;
+
 auto renderPassEncoder2 = encoder.BeginRenderPass(&renderPassDesc2);
 renderPassEncoder2.SetPipeline(pipeline);
 renderPassEncoder2.Draw(3);
@@ -65,6 +76,7 @@ renderPassEncoder2.End();
 
 Notes:
  - If a resolve texture is used in a `wgpu::LoadOp::ExpandResolveTexture` operation, it must have `wgpu::TextureUsage::TextureBinding` usage.
+ - If a multisampled view texture is used in a `wgpu::LoadOp::ExpandResolveTexture` operation, and there is `wgpu::RenderPassDescriptorExpandResolveRect` chained in `wgpu::RenderPassDescriptor`, it must have `wgpu::TextureUsage::TextureBinding` usage.
  - The `wgpu::ColorTargetStateExpandResolveTextureDawn` chained struct controls the compatibility between a render pipeline and a render pass:
   - If the chained struct is not included in any `wgpu::RenderPipelineDescriptor::FragmentState::ColorTargetState` then the render pipeline **can only** be used on any render pass not using any `ExpandResolveTexture` load op. Whether the render pass has any resolve target doesn't matter.
   - If the chained struct is included in some color targets but **none** of their `enabled` boolean flags are true, then it's the same as above case.
