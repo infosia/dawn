@@ -34,6 +34,24 @@
       "parentUuid": "3854a89f_bd8ea00d",
       "revId": "5af9bb9db86ab0c72956aed52fcbabe2e692f8ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cf57ea9_7fb6ad64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003787
+      },
+      "writtenOn": "2024-07-19T08:10:30Z",
+      "side": 1,
+      "message": "Thank you Corentin, apologies for the delay.\n\nAdded keeping a reference to the adapters on DawnTestEnvironment on the initial `EnumerateAdapters` in `SelectPreferredAdapterProperties`. Since this doesn\u0027t specify anything other than the compatibility mode, it should enumerate everything that the individual test cases eventually use.\n\nThis is causing other test failures, looks like different ones depending on the OS. Oddly enough, the Windows one doesn\u0027t repo locally, but that one I think the root cause is just `PhysicalDevice::ResetInternalDeviceForTestingImpl` asserting that the ref count is 0.\n\nGoing to investigating the mac/linux ones, those aren\u0027t as clear from the logs.",
+      "parentUuid": "0b18e0ef_91c8cc88",
+      "revId": "5af9bb9db86ab0c72956aed52fcbabe2e692f8ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
