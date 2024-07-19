@@ -65,6 +65,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "85d41a41_f9d90bd3",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-19T19:33:03Z",
+      "side": 1,
+      "message": "ok sounds fine",
+      "parentUuid": "f7435104_c0366138",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 69
+      },
+      "revId": "2ac37324587733c981ce43bf09901e4035f29a87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfd8e207_542df18b",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "will do in a follouwup",
       "parentUuid": "cfd8e207_542df18b",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 1
+      },
+      "revId": "2ac37324587733c981ce43bf09901e4035f29a87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "933af3fb_add64180",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-19T19:33:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2ae4ab7b_1616ccd3",
       "range": {
         "startLine": 115,
         "startChar": 0,
