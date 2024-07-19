@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39dc4eda_fd0f9845",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T16:24:24Z",
+      "side": 1,
+      "message": "That approach works as well.",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc3c35e8_d7e0e96e",
@@ -31,6 +48,30 @@
       "writtenOn": "2024-07-19T14:58:06Z",
       "side": 1,
       "message": "For simplicity in this POC I just added this entry here. To make it optional, the canonical thing to do would be to have it as a chained struct, correct? We could either do that or just require that all WGPU static samplers set this field. The latter is an overly-tight restriction for non-YCbCr static samplers AFAIK, but we\u0027re not planning on having such, so ... ?",
+      "range": {
+        "startLine": 443,
+        "startChar": 30,
+        "endLine": 443,
+        "endChar": 37
+      },
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f124d15a_2bb8ee56",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T16:24:24Z",
+      "side": 1,
+      "message": "We are implementing non-YCbCr static samplers as well, so we should have a default that\u0027s no sampled texture binding. It could default to U32_MAX for now.",
+      "parentUuid": "cc3c35e8_d7e0e96e",
       "range": {
         "startLine": 443,
         "startChar": 30,
@@ -89,6 +130,57 @@
       "side": 1,
       "message": "It might be simpler to reason (and might be easier to test) if we use combined sampler and the rest of the logic if the StaticSamplerBindingInfo specified TextureBinding regardless of YCbCr. And just require it must be specified for YCbCr sampler.\n\nAnd then if we wanted, we could land this with \"All static samplers must specify texture binding\" first and then in a follow-up relax it to \"only ycbcr static samplers must specify the binding\".",
       "parentUuid": "c137b74d_aa5f128e",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11ac9786_3a4837cb",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T16:24:24Z",
+      "side": 1,
+      "message": "Would it make sense to check for SampleType::External here and below instead since validation will require that External textures are used with YCbCr? This way the map is only used when we need the actual index of the Vulkan YCbCr sampler binding.",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eff1f9bb_45acc69f",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T16:24:24Z",
+      "side": 1,
+      "message": "```suggestion\n    absl::flat_hash_map\u003cBindingIndex, BindingIndex\u003e mYCbCrSampledTextureToSamplerIndices;\n```",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b50517d2_dbb49629",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T16:24:24Z",
+      "side": 1,
+      "message": "It would be still nice to streamline this code to avoid a map lookup even if empty in hot code, but we can see later. Maybe we could have a TODO for later?",
       "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
