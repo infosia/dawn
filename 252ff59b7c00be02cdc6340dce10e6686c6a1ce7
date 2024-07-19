@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fa38e71_2e6c4cee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003787
+      },
+      "writtenOn": "2024-07-19T06:37:20Z",
+      "side": 1,
+      "message": "PS6 contains caching the adapters from the first EnumerateAdapters in DawnTestEnvironment.",
+      "revId": "252ff59b7c00be02cdc6340dce10e6686c6a1ce7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
