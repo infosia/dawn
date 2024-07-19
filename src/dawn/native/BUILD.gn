@@ -347,6 +347,8 @@ source_set("sources") {
     "RenderPassWorkaroundsHelper.h",
     "RenderPipeline.cpp",
     "RenderPipeline.h",
+    "ResolveMultisampleWithDraw.cpp",
+    "ResolveMultisampleWithDraw.h",
     "ResourceHeap.h",
     "ResourceHeapAllocator.h",
     "ResourceMemoryAllocation.cpp",
