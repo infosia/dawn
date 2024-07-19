@@ -72,6 +72,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4ab791a_a3470ec4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-19T14:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10944e30_31774db1",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "525a7fde_fc5fbcca",
@@ -121,6 +139,24 @@
       "side": 1,
       "message": "We discussed offline: this is not the case here as I\u0027m *not* doing any other transformation of the shader. We couldn\u0027t find anything in the spec indicating that this wouldn\u0027t work, so we\u0027re going to go forward with it. If we find out that we need to do the custom Tint transformation, it would just be an extension of the code we land here.",
       "parentUuid": "b6353ed2_8f651d97",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c2e0cba_03ec3def",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-19T14:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8733baa0_734b8628",
       "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -383,6 +419,24 @@
       "writtenOn": "2024-07-17T10:15:17Z",
       "side": 1,
       "message": "I\u0027ll make this change within this CL before landing if/once we agree on this overall direction for the initial implementation.",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "093f9e10_3af4a582",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-19T14:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86c7f0fc_3d4422a7",
       "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

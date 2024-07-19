@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f431d7c_3d1c933b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-19T14:58:06Z",
+      "side": 1,
+      "message": "Austin, Corentin: Here\u0027s the reworked POC to (a) have the client pass the index of the YCbCr-sampled texture entry in the static sampler entry and (b) use Tint\u0027s remapping to do the Tint-level changes. It works in local testing \\o/ (of course with the corresponding trivial Skia-side change).\n\nIn addition to the comments I left on the CL it of course will need validation and testing. Please take a look and give any feedback, and then I\u0027ll work on productionizing it next week!\n\n+Vasiliy: FYI",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc3c35e8_d7e0e96e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-19T14:58:06Z",
+      "side": 1,
+      "message": "For simplicity in this POC I just added this entry here. To make it optional, the canonical thing to do would be to have it as a chained struct, correct? We could either do that or just require that all WGPU static samplers set this field. The latter is an overly-tight restriction for non-YCbCr static samplers AFAIK, but we\u0027re not planning on having such, so ... ?",
+      "range": {
+        "startLine": 443,
+        "startChar": 30,
+        "endLine": 443,
+        "endChar": 37
+      },
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4a667e7_06cc6b02",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-19T14:58:06Z",
+      "side": 1,
+      "message": "I\u0027ll change this to be a BindingNumber.",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c137b74d_aa5f128e",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-19T14:58:06Z",
+      "side": 1,
+      "message": "If we do end up keeping the \"all static sampler entries should pass the entry of the texture they\u0027re sampling\", then we would turn them all into combined image samplers and elide this and other similar checks for YCbCr specifically.",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
