@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d41466bd_6dabf141",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-07-19T19:42:33Z",
+      "side": 1,
+      "message": "+chanli to confirm this looks reasonable from LUCI\u0027s point of view + to answer question\n+enga for Dawn owner",
+      "revId": "15ca5dab54b8b296c8445c8c314967060f8beb37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7df63bd3_0a4c3f52",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-07-19T19:42:33Z",
+      "side": 1,
+      "message": "Should this be removed now?",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 1
+      },
+      "revId": "15ca5dab54b8b296c8445c8c314967060f8beb37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2e90bf6_8c039dda",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-07-19T19:42:33Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "15ca5dab54b8b296c8445c8c314967060f8beb37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54d8f85a_c65ce853",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-07-19T19:42:33Z",
+      "side": 1,
+      "message": "enga@, note that this gives job creation permissions to a larger group than when the old (non-shadow buckets) approach worked. However, it\u0027s the same group that ANGLE and Chromium use, so it seems reasonable to me to have them here.",
+      "range": {
+        "startLine": 146,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 37
+      },
+      "revId": "15ca5dab54b8b296c8445c8c314967060f8beb37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
