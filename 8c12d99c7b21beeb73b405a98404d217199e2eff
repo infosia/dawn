@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0963947b_2290daaa",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T07:29:18Z",
+      "side": 1,
+      "message": "Should we keep the callback infos in C++ but make them C++-ey with something like https://dawn-review.googlesource.com/c/dawn/+/198974 so we can do `deviceDesc.uncapturedCallback \u003d [](){stuff}` and not require setters?",
+      "revId": "8c12d99c7b21beeb73b405a98404d217199e2eff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
