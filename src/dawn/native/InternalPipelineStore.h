@@ -35,6 +35,7 @@
 #include "dawn/native/ApplyClearColorValueWithDrawHelper.h"
 #include "dawn/native/BlitColorToColorWithDraw.h"
 #include "dawn/native/ObjectBase.h"
+#include "dawn/native/ResolveMultisampleWithDraw.h"
 #include "dawn/native/ScratchBuffer.h"
 #include "dawn/native/dawn_platform.h"
 
@@ -104,6 +105,8 @@ struct InternalPipelineStore {
     absl::flat_hash_map<wgpu::TextureFormat, Ref<RenderPipelineBase>> depthBlitPipelines;
 
     BlitColorToColorWithDrawPipelinesCache expandResolveTexturePipelines;
+
+    ResolveMultisampleWithDrawPipelinesCache resolveMultisamplePipelines;
 };
 
 }  // namespace dawn::native
