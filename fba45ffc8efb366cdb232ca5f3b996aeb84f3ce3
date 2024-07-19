@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "10944e30_31774db1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T08:36:42Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "c62f96f7_789c1337",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "525a7fde_fc5fbcca",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -193,6 +211,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3940138b_31bd3385",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T08:36:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "339c6df3_9d7748ba",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f232faaf_1b60f1e2",
@@ -206,6 +242,24 @@
       "writtenOn": "2024-07-17T14:10:35Z",
       "side": 1,
       "message": "ditto",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "340b80f6_0a49ad2f",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T08:36:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f232faaf_1b60f1e2",
       "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -245,6 +299,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8663c50_be08f8ae",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T08:36:42Z",
+      "side": 1,
+      "message": "Yes it is a comment about existing code, I have a WIP CL to fix it.",
+      "parentUuid": "b535f6dd_d14c7283",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd677734_7ec3895f",
@@ -276,6 +348,24 @@
       "side": 1,
       "message": "I\u0027ll look into this. Naively, I\u0027m a little unsure of what we could save:\n\n* for \"vanilla\" entries we want their index to be the vanilla binding index and their type to be the vanilla type\n* for textures sampled by YCbCr samplers we want their index to to be the index of the sampler and their type to be COMBINED_IMAGE_SAMPLER\n\nGiven that we want different behavior for these two cases, it seems like we would either need to:\n\n1. Explicitly check here for texture entries being for YCbCr-sampled textures as this code is doing\n2. Add an extra level of indirection for *all* entries for obtaining the binding index and descriptor type to use (i.e., build an extra level of mapping at BGL time that gets indexed into here)\n\nIt\u0027s not clear to me that (2) would be a win over (1) from either a code complexity or performance POV? There might well be something I\u0027m missing about your suggestion though - let me know if so.",
       "parentUuid": "cd677734_7ec3895f",
+      "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5b4e1d6_51bd4f6a",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-19T08:36:42Z",
+      "side": 1,
+      "message": "WRT to code complexity, the additional indirection do add a bit, but all other backends have these kinds of precomputations. Accessing memory is probably cheap. Though agreed it is premature optimization so let\u0027s drop this comment.",
+      "parentUuid": "f3e9c731_f9c715d0",
       "revId": "fba45ffc8efb366cdb232ca5f3b996aeb84f3ce3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
