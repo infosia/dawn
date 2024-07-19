@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fd09b90_b3a296af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-19T09:44:57Z",
+      "side": 1,
+      "message": "+Corentin for real\n\nCorentin, can you take a look? Thanks!",
+      "revId": "6f7941463df743d79536fc70352c2e3e4793bce9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
