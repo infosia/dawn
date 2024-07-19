@@ -22,6 +22,30 @@
       },
       "revId": "1e449ed2589f650b608953362a25791db0ace950",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc1bac32_82e82cd6",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-07-19T17:29:48Z",
+      "side": 1,
+      "message": "Fix applied.\nWeird. How did I miss that?  I thought I built and tested...",
+      "parentUuid": "838cacae_a522fb4c",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 0
+      },
+      "revId": "1e449ed2589f650b608953362a25791db0ace950",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
