@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97bd45d1_f6c6b2dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-20T03:05:29Z",
+      "side": 1,
+      "message": "Amazing!",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00bec9bb_7d3d30fa",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-20T03:05:29Z",
+      "side": 1,
+      "message": "`TODO(crbug.com/42240181): Make dawn_end2end_tests work too.`",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc4f2c3b_0ef692ae",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-20T03:05:29Z",
+      "side": 1,
+      "message": "This is a little funky - maybe we could have the header selection happen in another header that wraps `dawn/webgpu.h` and `webgpu/emscripten_webgpu.h` (name tbd)? though it\u0027s annoying we have to come up with a new name for the emscripten header to do this.\n\nWe currently already have `webgpu/webgpu.h` which could be responsible for the switching:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/include/webgpu/webgpu.h\n\nI am unsure if anyone is using it currently. (I am also a little confused why this include picks up the Emscripten version and not that one. Include directory precedence?)\n\nA simpler alternative: we could have `dawn/webgpu.h`, `webgpu/webgpu.h` which is the emscripten one (assuming we keep ignoring `dawn/include/webgpu/webgpu.h`), and have the includer do the `#ifdef __EMSCRIPTEN__`. (Or wrap that in a `dawn_or_emscripten_webgpu.h`)",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93488bed_02eeff5b",
+        "filename": "src/dawn/common/Assert.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-20T03:05:29Z",
+      "side": 1,
+      "message": "`EM_ASM(debugger;);` should work (triggers the JS `debugger` statement). That\u0027s Emscripten specific, but I wouldn\u0027t expect to build for any other Wasm platform.",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a88576a2_4860cb8e",
+        "filename": "src/dawn/samples/Animometer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-20T03:05:29Z",
+      "side": 1,
+      "message": "FWIW the PosixTimer _probably_ works on Emscripten. Not important, but would be nice to remove a few conditionals.\n\nAlso would be a nice apples-to-apples performance comparison between dawn and wasm - I manually created a wasm/dawn cross-platform version of Animometer a few months ago because I needed to do that.",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "105e4e9e_3dec2950",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-20T03:05:29Z",
+      "side": 1,
+      "message": "indent",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 23
+      },
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d03fca97_2960964e",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-20T03:05:29Z",
+      "side": 1,
+      "message": "Use the Sample macro for these?",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 62
+      },
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edc90d89_9a96db73",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-20T03:05:29Z",
+      "side": 1,
+      "message": "nit: 2024",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38c068e2_c65a8634",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-20T03:05:29Z",
+      "side": 1,
+      "message": "If at any point it becomes annoying to maintain the GN version of this, I\u0027m happy to delete it. For now we can keep it, just in case we get a chance to make it work with CanvasKit.",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ccce7fa_e1794f77",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-20T03:05:29Z",
+      "side": 1,
+      "message": "I think we could set `cmake_minimum_required(VERSION 3.20)` if helpful.",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bff0a64_050d1473",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-20T03:05:29Z",
+      "side": 1,
+      "message": "nit: Could possibly use `${CMAKE_COMMAND} -E cat` for this (requires 3.18) - especially if we remove the gn build and there\u0027s no need for concat.py anymore.\nhttps://stackoverflow.com/a/62362885\n\nThere\u0027s also a more complicated version earlier on that page that I assume works before 3.18.",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
