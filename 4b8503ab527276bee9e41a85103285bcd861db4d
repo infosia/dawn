@@ -247,6 +247,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "13e6f774_e8a922ab",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "Ok, so I did this. I put it in dawn.json because C++ and other languages will probably want to have the nullable distinction as well. The interesting bit is that it is excluded from the C API",
+      "parentUuid": "d30cb58f_364d8d7d",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7b2b5beb_97f8ff6d",
@@ -618,6 +636,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d710c129_4b695472",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8181ab19_5e82faf6",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c909c63b_b8f689b1",
         "filename": "src/dawn/native/EncodingContext.h",
         "patchSetId": 4
@@ -669,6 +705,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6049a550_a0272f5a",
+        "filename": "src/dawn/native/EncodingContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "Did this",
+      "parentUuid": "f5185741_b8a8e8ff",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "824ceee9_1aa8b3c2",
@@ -700,6 +754,42 @@
       "side": 1,
       "message": "Ack. I will have a lot of merge conflicts with that CL soon",
       "parentUuid": "824ceee9_1aa8b3c2",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "056e7912_3ba70509",
+        "filename": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f41b0a50_81171e7d",
+      "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9c55e23_ccc67fb7",
+        "filename": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f41b0a50_81171e7d",
       "revId": "4b8503ab527276bee9e41a85103285bcd861db4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

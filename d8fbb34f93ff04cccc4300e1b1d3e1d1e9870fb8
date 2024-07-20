@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a676dc2f_0364e005",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f01c45bb_5f519938",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 38
+      },
+      "revId": "d8fbb34f93ff04cccc4300e1b1d3e1d1e9870fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2bc52e5_59784bdb",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79a36443_8fab818a",
+        "filename": "src/dawn/native/utils/WGPUHelpers.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2bc52e5_59784bdb",
+      "revId": "d8fbb34f93ff04cccc4300e1b1d3e1d1e9870fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "918ae68b_69e95c3a",
@@ -54,6 +96,24 @@
       "writtenOn": "2024-07-18T01:15:46Z",
       "side": 1,
       "message": "Coming off looking at a bunch of STL strings, I worry that this looks like it owns the string you pass to it, and will be prone to misuse causing UAF. Should we call it wgpu::StringView or something?\n\n(The C type of course can\u0027t own anything, so it\u0027s less confusing, but we could change the C API too, to match.)",
+      "revId": "d8fbb34f93ff04cccc4300e1b1d3e1d1e9870fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6d3022f_be636bb9",
+        "filename": "src/dawn/tests/unittests/CppAPITests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "918ae68b_69e95c3a",
       "revId": "d8fbb34f93ff04cccc4300e1b1d3e1d1e9870fb8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

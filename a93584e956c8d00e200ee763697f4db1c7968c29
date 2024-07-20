@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecb7e1fd_6db5635f",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aa11f8c_8e779f07",
+      "revId": "a93584e956c8d00e200ee763697f4db1c7968c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93d727df_6c3fedce",
@@ -66,6 +84,24 @@
       "writtenOn": "2024-07-17T22:51:17Z",
       "side": 1,
       "message": "If length\u003e0 and data\u003dnull, I believe we will still serialize/deserialize it successfully, and rely on the receiving end (dawn native) to discover this (likely by crashing). I don\u0027t think fuzzers will like that, but if it\u0027s intentional, add a comment noting it.",
+      "revId": "a93584e956c8d00e200ee763697f4db1c7968c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbbdeaa5_36732541",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "good point. I\u0027ll just return FatalError if length is not zero or SIZE_MAX",
+      "parentUuid": "93d727df_6c3fedce",
       "revId": "a93584e956c8d00e200ee763697f4db1c7968c29",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -87,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25cca090_5d9cb924",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "going to keep as-is since this case is for non-null, zero length; and we deserialize as non-null, zero length to match",
+      "parentUuid": "08cce467_51f094e4",
+      "revId": "a93584e956c8d00e200ee763697f4db1c7968c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ac166ab_b573e3b6",
@@ -100,6 +154,24 @@
       "writtenOn": "2024-07-17T22:51:17Z",
       "side": 1,
       "message": "Yesterday I think you said this would make setLabel2 valid with no args? Not sure if that\u0027s actually the case but ideally that shouldn\u0027t be valid.",
+      "revId": "a93584e956c8d00e200ee763697f4db1c7968c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4429ce27_61c9b260",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T05:16:00Z",
+      "side": 1,
+      "message": "I fixed that problem; I was over-applying defaults to args before",
+      "parentUuid": "1ac166ab_b573e3b6",
       "revId": "a93584e956c8d00e200ee763697f4db1c7968c29",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
