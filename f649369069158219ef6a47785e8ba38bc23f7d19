@@ -101,6 +101,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5d08955_25e3c486",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T00:28:50Z",
+      "side": 1,
+      "message": "```suggestion\n    for (BindingIndex bindingIndex : Range(GetBindingCount())) {\n```\n\nsimilar to Corentin\u0027s changes in https://dawn-review.googlesource.com/c/dawn/+/199334",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 90
+      },
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c137b74d_aa5f128e",
         "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
         "patchSetId": 13
@@ -130,6 +153,24 @@
       "side": 1,
       "message": "It might be simpler to reason (and might be easier to test) if we use combined sampler and the rest of the logic if the StaticSamplerBindingInfo specified TextureBinding regardless of YCbCr. And just require it must be specified for YCbCr sampler.\n\nAnd then if we wanted, we could land this with \"All static samplers must specify texture binding\" first and then in a follow-up relax it to \"only ycbcr static samplers must specify the binding\".",
       "parentUuid": "c137b74d_aa5f128e",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a6264fe_05d6beb3",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-20T00:28:50Z",
+      "side": 1,
+      "message": "I agree about allowing this for non-Ycbcr. Then we can more easily make a static sampler and normal texture without an AHB to go along with it. We\u0027ll still test that the bindings transforms apply correctly",
+      "parentUuid": "14622416_618ee42d",
       "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
