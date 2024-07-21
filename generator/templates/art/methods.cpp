@@ -213,13 +213,13 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     {% endif %}
 
     //* Actually invoke the native version of the method.
-    {% if _kotlin_return.annotation == '*' %}
+    {% if _kotlin_return.length == 'size_t' %}
         //* Methods that return containers are converted from two-call to single call, and the
         //* return type is switched to a Kotlin container.
         size_t size = wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
             {% for arg in method.arguments -%},
                 //* The replaced output parameter is set to nullptr on the first call.
-                {{ 'nullptr' if arg == _kotlin_return else as_varName(arg.name) -}}
+                {{ 'nullptr' if arg.annotation == '*' else as_varName(arg.name) -}}
             {% endfor %}
         );
         //* Allocate the native container
@@ -238,7 +238,11 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
             return nullptr;
         }
     {% else %}
-        {{ 'auto result =' if method.return_type.name.get() != 'void' }}
+        {% if _kotlin_return.annotation == '*' %}
+            //* Make a native containter to accept the data output via parameter.
+            {{ _kotlin_return.name.get() }} = new {{ as_cType(_kotlin_return.type.name) }}();
+        {% endif %}
+        {{ 'auto result =' if _kotlin_return.type.name.get() != 'void' }}
         {% if object %}
             wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
         {% else %}
@@ -254,7 +258,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     {% endif %}
     {% if _kotlin_return.type.name.get() != 'void' %}
         {{ jni_convert(_kotlin_return.name.get() if _kotlin_return.annotation == '*' else 'result',
-                       'result_kt', 'size' if _kotlin_return.type.name.get() in ['void const *', 'void *'] or _kotlin_return.annotation == '*',
+                       'result_kt', 'size' if _kotlin_return.type.name.get() in ['void const *', 'void *'] or _kotlin_return.length == 'size_t',
                        _kotlin_return) }}
         return result_kt;
     {% endif %}
