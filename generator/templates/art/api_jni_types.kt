@@ -84,3 +84,64 @@
         {{ unreachable_code() }}
     {%- endif -%}
 {% endmacro %}
+
+{% macro jni_convert_for_array(input, output, size, member) %}
+    {% if member.type.category in ['bitmask', 'enum'] %}
+        //* Kotlin value classes do not get inlined in arrays, so the creation method is different.
+        jobject {{ output }};
+        {
+            jclass clz = env->FindClass("{{ jni_name(member.type) }}");
+            jmethodID ctor = env->GetMethodID(clz, "<init>", "(I)V");
+            {{ output }} = env->NewObject(clz, ctor, static_cast<jint>({{ input }}));
+        }
+    {% else %}
+        {{ jni_convert(input, output, size, member) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro jni_convert(input, output, size, member) %}
+    {% if member.type.name.get() in ['void const *', 'void *'] %}
+        jobject {{ output }} = toByteBuffer(env, {{ input }}, {{ size }});
+    {% elif size %}
+        //* Native container converted to a Kotlin container.
+        {% if member.type.category in ['bitmask', 'enum', 'object', 'structure'] %}
+            jobjectArray {{ output }};
+            {
+                jclass clz = env->FindClass("{{ jni_name(member.type) }}");
+                {{ output }} = env->NewObjectArray({{ size }}, clz, 0);
+                for (int idx = 0; idx != {{ size }}; idx++) {
+                    {{ jni_convert_for_array(input + '[idx]', 'element', None, {'type': member.type}) }}
+                    env->SetObjectArrayElement({{ output }}, idx, element);
+                }
+            }
+        {% else %}
+            {{ unreachable_code() }}
+        {% endif %}
+    {% elif member.type.category == 'object' %}
+        jobject {{ output }};
+        {
+            jclass clz = env->FindClass("{{ jni_name(member.type) }}");
+            jmethodID ctor = env->GetMethodID(clz, "<init>", "(J)V");
+            {{ output }} = env->NewObject(clz, ctor, reinterpret_cast<jlong>({{ input }}));
+        }
+    {% elif member.type.name.get() == 'void' %}
+        jlong {{ output }} = reinterpret_cast<jlong>({{ input }});
+    {% elif member.type.name.get() in ['int64_t', 'uint64_t', 'size_t'] %}
+        jlong {{ output }} = static_cast<jlong>({{ input }});
+    {% elif member.type.name.get() in ['int', 'int32_t', 'uint32_t'] or member.type.category in ['bitmask', 'enum'] %}
+        //* We use Kotlin value classes for bitmask and enum, and they get inlined as lone values.
+        jint {{ output }} = static_cast<jint>({{ input }});
+    {% elif member.type.name.get() in ['int16_t', 'uint16_t'] %}
+        jshort {{ output }} = {{ input }};
+    {% elif member.type.name.get() == 'double' %}
+        jdouble {{ output }} = {{ input }};
+    {% elif member.type.name.get() == 'float' %}
+        jfloat {{ output }} = {{ input }};
+    {% elif member.type.name.get() == 'bool' %}
+        bool {{ output }} = {{ input }};
+    {% elif member.type.name.get() == 'char' %}
+        jstring {{ output }} = {{ input }} ? env->NewStringUTF({{ input }}) : nullptr;
+    {% else %}
+        {{ unreachable_code() }}
+    {% endif %}
+{% endmacro %}
