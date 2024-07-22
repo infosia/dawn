@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa94b2d1_bfe698b4",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T14:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "987e5eae_70f57291",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6935a4ab_7eb02153",
@@ -54,6 +78,24 @@
       "writtenOn": "2024-07-22T10:16:49Z",
       "side": 1,
       "message": "I think we should move away from these local scope blocks--they reflect that we\u0027re using templates to generate our C++, but aren\u0027t how C++ would normally be written.  You can inline clz and ctor into the third line without loss of clarity, removing the local scope block and making your code more classically readable.",
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd3a7e35_246be8c8",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T14:12:00Z",
+      "side": 1,
+      "message": "Ack. As agreed offline I\u0027ll convert the ones where the block can be avoided by inlining variables that are only used once. In this case \u0027clz\u0027 is used twice (although I did inline ctor).",
+      "parentUuid": "6935a4ab_7eb02153",
       "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3b2e443_42d0a087",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T14:12:00Z",
+      "side": 1,
+      "message": "Fine to use KotlinRecord.\n\nI will rename jni_convert to convert_to_kotlin now.\n\nFine for this method to be moved.",
+      "parentUuid": "01e3d8ca_5fe09033",
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24b89ba5_fcdedaa4",
@@ -88,6 +148,24 @@
       "writtenOn": "2024-07-22T10:14:07Z",
       "side": 1,
       "message": "```suggestion\n    {% elif size !\u003d 0 %}\n```",
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1de3b0ab_106b44fb",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T14:12:00Z",
+      "side": 1,
+      "message": "It\u0027s actually a check for a string (not None). Have ammended.",
+      "parentUuid": "24b89ba5_fcdedaa4",
       "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -109,6 +187,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51e98c2a_4f39bca0",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T14:12:00Z",
+      "side": 1,
+      "message": "Nice idea, saves some lines too.",
+      "parentUuid": "a07971d2_881e1751",
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82d1f383_b5f3ec57",
@@ -122,6 +218,24 @@
       "writtenOn": "2024-07-22T10:14:07Z",
       "side": 1,
       "message": "nit: small preference for having an explicit condition on `_kotlin_return.annotation \u003d\u003d \u0027*\u0027` so that we have to simple calls to `jni_convert` instead of one with a bunch of ternaries included in the call. It\u0027s very hard to read at the moment.",
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0475d3b5_190d04c0",
+        "filename": "generator/templates/art/methods.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T14:12:00Z",
+      "side": 1,
+      "message": "Ack, my WIP CL https://dawn-review.googlesource.com/c/dawn/+/197334 does something related, PTAL.",
+      "parentUuid": "82d1f383_b5f3ec57",
       "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
