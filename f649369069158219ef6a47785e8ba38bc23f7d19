@@ -159,6 +159,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dea12477_57a9c92f",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-22T16:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62250265_6080f282",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5d08955_25e3c486",

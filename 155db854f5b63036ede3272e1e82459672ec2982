@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a344755e_0057af5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-22T16:11:39Z",
+      "side": 1,
+      "message": "Thanks! Response to review is https://dawn-review.googlesource.com/c/dawn/+/197475/17..19\n\n+jrprice@, can you look at tint/ShaderModuleVk.cpp as Dan is OOO this week? I\u0027ll be adding validation/testing in followup, but if possible I\u0027d like to ensure that this gets in so that the support is there before I go OOO for 4 weeks (I\u0027ll be coordinating with others on the team to make sure that validation/testing addition proceeds as necessary if I go OOO before it\u0027s done).",
+      "revId": "155db854f5b63036ede3272e1e82459672ec2982",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
