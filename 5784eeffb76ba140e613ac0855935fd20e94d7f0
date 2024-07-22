@@ -227,6 +227,24 @@
       "parentUuid": "906d36a6_2279993f",
       "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42f1afdf_e923cee6",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T23:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9db36e2e_cedbfdc6",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
