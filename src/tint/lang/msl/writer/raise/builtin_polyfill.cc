@@ -863,7 +863,10 @@ struct State {
 }  // namespace
 
 Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir) {
-    auto result = ValidateAndDumpIfNeeded(ir, "BuiltinPolyfill transform");
+    auto result = ValidateAndDumpIfNeeded(ir, "BuiltinPolyfill transform",
+                                          core::ir::Capabilities{
+                                              core::ir::Capability::kAllowPointersInStructures,
+                                          });
     if (result != Success) {
         return result.Failure();
     }
