@@ -28,7 +28,7 @@
 {% macro arg_to_jni_type(arg) %}
     {% if arg.length == 'strlen' %}
         jstring
-    {% elif arg.length and arg.json_data.get('constant_length') != 1 %}
+    {% elif arg.length and arg.length != 'constant' %}
         {% if arg.type.category in ['bitmask', 'enum', 'function pointer', 'object', 'structure'] %}
             jobjectArray
         {% elif arg.type.name.get() == 'void' %}
@@ -111,6 +111,10 @@
                 {{ convert_array_element_to_kotlin(input + '[idx]', 'element', None, {'type': member.type}) }}
                 env->SetObjectArrayElement({{ output }}, idx, element);
             }
+        {% elif member.type.name.get() in ['int', 'int32_t', 'uint32_t'] %}
+            jintArray {{ output }} = env->NewIntArray({{ size }});
+            env->SetIntArrayRegion({{ output }}, 0, {{ size }},
+                    reinterpret_cast<const jint *>({{ input }}));
         {% else %}
             {{ unreachable_code() }}
         {% endif %}
@@ -121,6 +125,9 @@
             {{ output }} = env->NewObject(clz, env->GetMethodID(clz, "<init>", "(J)V"),
                     reinterpret_cast<jlong>({{ input }}));
         }
+    {% elif member.type.category == 'structure' %}
+        jobject {{ output }} =
+                Convert(env, {{ '&' if member.annotation not in ['*', 'const*'] }}{{ input }});
     {% elif member.type.name.get() == 'void' %}
         jlong {{ output }} = reinterpret_cast<jlong>({{ input }});
     {% elif member.type.name.get() == 'char' %}
