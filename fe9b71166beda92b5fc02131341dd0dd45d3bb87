@@ -129,6 +129,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8250a97d_b0bf52ed",
+        "filename": "src/dawn/tests/unittests/CommandLineParserTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T13:00:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97d5526a_d2234a25",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 23
+      },
+      "revId": "fe9b71166beda92b5fc02131341dd0dd45d3bb87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38590e86_499ce7a7",
@@ -143,6 +167,24 @@
       "side": 1,
       "message": "This one probably is worth fixing",
       "parentUuid": "c0a1df92_1b10a3a0",
+      "revId": "fe9b71166beda92b5fc02131341dd0dd45d3bb87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e6e3cff_8819ee8c",
+        "filename": "src/dawn/tests/unittests/CommandLineParserTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T13:00:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38590e86_499ce7a7",
       "revId": "fe9b71166beda92b5fc02131341dd0dd45d3bb87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
