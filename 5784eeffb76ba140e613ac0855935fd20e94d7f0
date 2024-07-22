@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6293e738_8bbdbd77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T16:40:53Z",
+      "side": 1,
+      "message": "LGTM overall",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f33ef48_692797cb",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T16:40:53Z",
+      "side": 1,
+      "message": "These seem a bit brittle but we\u0027ll see about them in the future when/if we have some manually written code.",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11df2562_dab4ee88",
+        "filename": "generator/templates/art/methods.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T16:40:53Z",
+      "side": 1,
+      "message": "Why note create it on the stack? Right now the allocation would leak.",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c50c353_c7d6d63e",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T16:40:53Z",
+      "side": 1,
+      "message": "```suggestion\n    //* Native -\u003e Kotlin converter.\n    //* TODO(b/354411474): Filter the structures for which to add a ToKotlin conversion.\n```",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52c77de2_5a8540ea",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T16:40:53Z",
+      "side": 1,
+      "message": "We could consider making the name a bit more explicit about the direction that the conversion is done.\n\nAlso this should probably take the JNIContext to allow deallocating objects.",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5544d5f5_8ae47f6b",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T16:40:53Z",
+      "side": 1,
+      "message": "nit: we should default: UNREACHABLE() to not silently drop structures in debug.",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
