@@ -209,6 +209,24 @@
       "parentUuid": "5544d5f5_8ae47f6b",
       "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9db36e2e_cedbfdc6",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T17:37:18Z",
+      "side": 1,
+      "message": "We have access to dawn/common/Assert.h, see how JNIContext adds NonMovable already.",
+      "parentUuid": "906d36a6_2279993f",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
