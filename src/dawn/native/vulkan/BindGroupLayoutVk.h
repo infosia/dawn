@@ -74,6 +74,12 @@ class BindGroupLayout final : public BindGroupLayoutInternalBase {
     void DeallocateBindGroup(BindGroup* bindGroup,
                              DescriptorSetAllocation* descriptorSetAllocation);
 
+    // If client specified that the texture at `textureBinding` should be
+    // combined with a static sampler, returns the binding index of the static
+    // sampler that is sampling this texture.
+    std::optional<BindingIndex> GetCombinedImageSamplerIndexForTexture(
+        BindingIndex textureBinding) const;
+
   private:
     ~BindGroupLayout() override;
     MaybeError Initialize();
@@ -81,6 +87,10 @@ class BindGroupLayout final : public BindGroupLayoutInternalBase {
 
     // Dawn API
     void SetLabelImpl() override;
+
+    // Maps from indices of texture entries that are paired with static samplers
+    // to indices of the entries of their respective samplers.
+    absl::flat_hash_map<BindingIndex, BindingIndex> mTextureToCombinedImageSamplerIndices;
 
     VkDescriptorSetLayout mHandle = VK_NULL_HANDLE;
 

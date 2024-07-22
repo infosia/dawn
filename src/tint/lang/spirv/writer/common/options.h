@@ -131,6 +131,10 @@ struct Options {
     /// The bindings
     Bindings bindings;
 
+    // TODO(blundell): This should be a set of BindingPoints for which duplicate
+    // spir-v entries are allowed.
+    bool allow_duplicate_spirv_bindings = false;
+
     /// Set to `true` to disable software robustness that prevents out-of-bounds accesses.
     bool disable_robustness = false;
 
@@ -174,6 +178,7 @@ struct Options {
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(Options,
                  bindings,
+                 allow_duplicate_spirv_bindings,
                  disable_robustness,
                  disable_image_robustness,
                  disable_runtime_sized_array_index_clamping,
