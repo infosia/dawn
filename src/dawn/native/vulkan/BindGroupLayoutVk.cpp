@@ -88,11 +88,11 @@ VkDescriptorType VulkanDescriptorType(const BindingInfo& bindingInfo) {
         },
         [](const SamplerBindingInfo&) { return VK_DESCRIPTOR_TYPE_SAMPLER; },
         [](const StaticSamplerBindingInfo& layout) {
-            // By the Vulkan spec, YCbCr samplers must have descriptor type
-            // COMBINED_IMAGE_SAMPLER:
-            // https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerYcbcrConversionInfo.html
-            return (layout.sampler->IsYCbCr()) ? VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER
-                                               : VK_DESCRIPTOR_TYPE_SAMPLER;
+            // Make this entry into a combined image sampler iff the client
+            // specified a texture to be paired with it.
+            return (layout.sampledTextureBinding < WGPU_LIMIT_U32_UNDEFINED)
+                       ? VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER
+                       : VK_DESCRIPTOR_TYPE_SAMPLER;
         },
         [](const TextureBindingInfo&) { return VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE; },
         [](const StorageTextureBindingInfo&) { return VK_DESCRIPTOR_TYPE_STORAGE_IMAGE; },
@@ -115,7 +115,32 @@ MaybeError BindGroupLayout::Initialize() {
     ityp::vector<BindingIndex, VkDescriptorSetLayoutBinding> bindings;
     bindings.reserve(GetBindingCount());
 
+    // Build the mapping from the indices of textures that will be paired with
+    // static samplers to their respective sampler indices.
+    for (BindingIndex bindingIndex{0}; bindingIndex < GetBindingCount(); ++bindingIndex) {
+        const BindingInfo& bindingInfo = GetBindingInfo(bindingIndex);
+        if (!std::holds_alternative<StaticSamplerBindingInfo>(bindingInfo.bindingLayout)) {
+            continue;
+        }
+
+        auto samplerLayout = std::get<StaticSamplerBindingInfo>(bindingInfo.bindingLayout);
+        if (samplerLayout.sampledTextureBinding == WGPU_LIMIT_U32_UNDEFINED) {
+            // The client did not specify a texture to be paired with this
+            // sampler.
+            continue;
+        }
+
+        mSampledTextureToSamplerIndices[GetBindingIndex(
+            BindingNumber{samplerLayout.sampledTextureBinding})] = bindingIndex;
+    }
+
     for (const auto& [_, bindingIndex] : GetBindingMap()) {
+        if (mSampledTextureToSamplerIndices.contains(bindingIndex)) {
+            // This texture will be bound into the VkDescriptorSet at the index
+            // for the sampler itself.
+            continue;
+        }
+
         const BindingInfo& bindingInfo = GetBindingInfo(bindingIndex);
 
         VkDescriptorSetLayoutBinding vkBinding;
@@ -154,6 +179,13 @@ MaybeError BindGroupLayout::Initialize() {
     absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType;
 
     for (BindingIndex bindingIndex{0}; bindingIndex < GetBindingCount(); ++bindingIndex) {
+        if (mSampledTextureToSamplerIndices.contains(bindingIndex)) {
+            // Texture binding entries for YCbCr-sampled textures are not written
+            // into the VkDescriptorSetLayout, and hence they should not get
+            // entries in the descriptor pools.
+            continue;
+        }
+
         VkDescriptorType vulkanType = VulkanDescriptorType(GetBindingInfo(bindingIndex));
 
         // absl:flat_hash_map::operator[] will return 0 if the key doesn't exist.
@@ -211,6 +243,14 @@ void BindGroupLayout::DeallocateBindGroup(BindGroup* bindGroup,
                                           DescriptorSetAllocation* descriptorSetAllocation) {
     mDescriptorSetAllocator->Deallocate(descriptorSetAllocation);
     mBindGroupAllocator->Deallocate(bindGroup);
+}
+
+std::optional<BindingIndex> BindGroupLayout::GetSamplerIndexForYCbCrSampledTexture(
+    BindingIndex textureBinding) const {
+    if (mSampledTextureToSamplerIndices.contains(textureBinding)) {
+        return mSampledTextureToSamplerIndices.at(textureBinding);
+    }
+    return {};
 }
 
 void BindGroupLayout::SetLabelImpl() {
