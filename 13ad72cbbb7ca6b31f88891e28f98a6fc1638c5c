@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "363ac7ad_31b63dd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T10:26:02Z",
+      "side": 1,
+      "message": "LGTM, the special casing of strings in directly in templates is a bit awkward, but also strings are special so that\u0027s probably ok.",
+      "revId": "13ad72cbbb7ca6b31f88891e28f98a6fc1638c5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "769b12d9_0015e5dc",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T10:26:02Z",
+      "side": 1,
+      "message": "nit: Still here we can get rid of the DAWN_DECLARE_UNUSED.",
+      "revId": "13ad72cbbb7ca6b31f88891e28f98a6fc1638c5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4724251_dcafd10b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T10:26:02Z",
+      "side": 1,
+      "message": "Did we decide to rename in upstream webgpu.h as well?",
+      "revId": "13ad72cbbb7ca6b31f88891e28f98a6fc1638c5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d8c6ce7_94ba2645",
+        "filename": "src/dawn/native/CommandAllocator.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T10:26:02Z",
+      "side": 1,
+      "message": "Should this return a const char*? Or do we need to modify it after allocation?",
+      "revId": "13ad72cbbb7ca6b31f88891e28f98a6fc1638c5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
