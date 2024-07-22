@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "938552c8_9a101082",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T15:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "769b12d9_0015e5dc",
+      "revId": "13ad72cbbb7ca6b31f88891e28f98a6fc1638c5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4724251_dcafd10b",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "817734e3_9962364f",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T15:20:21Z",
+      "side": 1,
+      "message": "we did! https://github.com/webgpu-native/webgpu-headers/issues/170#issuecomment-2237720101",
+      "parentUuid": "a4724251_dcafd10b",
+      "revId": "13ad72cbbb7ca6b31f88891e28f98a6fc1638c5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d8c6ce7_94ba2645",
@@ -65,6 +101,24 @@
       "writtenOn": "2024-07-22T10:26:02Z",
       "side": 1,
       "message": "Should this return a const char*? Or do we need to modify it after allocation?",
+      "revId": "13ad72cbbb7ca6b31f88891e28f98a6fc1638c5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd7a4d95_c22ff3ce",
+        "filename": "src/dawn/native/CommandAllocator.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T15:20:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d8c6ce7_94ba2645",
       "revId": "13ad72cbbb7ca6b31f88891e28f98a6fc1638c5c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
