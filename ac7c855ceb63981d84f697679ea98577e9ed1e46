@@ -142,6 +142,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "cd466587_ac98d8cc",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T16:31:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ef460524_b9d91708",
+      "revId": "ac7c855ceb63981d84f697679ea98577e9ed1e46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "eb5e864f_66d20e7b",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 17
