@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e4fcbc1_e3b4fd3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-22T21:37:55Z",
+      "side": 1,
+      "message": "LGTM, pretty sure there are no other chrome/google projects that will hit this. If there are we could do this in two stages (add the new field, then remove the extension)",
+      "revId": "bdba7bb4ba0d720cbedbaa452b0385e238e891d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
