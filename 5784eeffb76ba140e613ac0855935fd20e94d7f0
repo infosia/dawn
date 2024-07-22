@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94704e57_87159729",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T17:21:45Z",
+      "side": 1,
+      "message": "Ack. I wasn\u0027t 100% happy having to clone the object but it\u0027s a baseline for a better solution.",
+      "parentUuid": "4f33ef48_692797cb",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11df2562_dab4ee88",
@@ -70,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7b728ad_1d00f06a",
+        "filename": "generator/templates/art/methods.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T17:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "026172f2_b0d7f207",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c50c353_c7d6d63e",
@@ -83,6 +119,24 @@
       "writtenOn": "2024-07-22T16:40:53Z",
       "side": 1,
       "message": "```suggestion\n    //* Native -\u003e Kotlin converter.\n    //* TODO(b/354411474): Filter the structures for which to add a ToKotlin conversion.\n```",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e433dff_b08b8925",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T17:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c50c353_c7d6d63e",
       "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -104,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb3e0c63_f9218db8",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T17:21:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "52c77de2_5a8540ea",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5544d5f5_8ae47f6b",
@@ -117,6 +189,24 @@
       "writtenOn": "2024-07-22T16:40:53Z",
       "side": 1,
       "message": "nit: we should default: UNREACHABLE() to not silently drop structures in debug.",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "906d36a6_2279993f",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T17:21:45Z",
+      "side": 1,
+      "message": "I don\u0027t have access to DAWN_UNREACHABLE since this isn\u0027t part of Dawn, std::unreachable is C++23 only. Are you OK with std::abort()",
+      "parentUuid": "5544d5f5_8ae47f6b",
       "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
