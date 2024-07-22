@@ -45,11 +45,6 @@ llvm_version_minor = 7
 llvm_version_patch = 0
 llvm_version = "$llvm_version_major.$llvm_version_minor.$llvm_version_patch"
 
-declare_args() {
-  # DXC sometimes asserts on valid HLSL. Set this to true to disable assertions in debug builds.
-  dawn_dxc_disable_asserts_debug = false
-}
-
 # Native ARCH values can be found in LLVM's llvm/cmake/config-ix.cmake
 # Components of the triple can be found in LLVM's llvm/TargetParser/Triple.h and it's .cpp
 if (target_cpu == "x86") {
@@ -563,10 +558,10 @@ config("common_config") {
     ]
   }
 
-  defines = []
-  if (is_debug && dawn_dxc_disable_asserts_debug) {
-    defines += [ "NDEBUG" ]
-  }
+  defines = [
+    "LLVM_ENABLE_ASSERT_IN_NDEBUG",
+    "LLVM_ASSERT_TRAPS"
+  ]
 }
 
 #######################################################################
