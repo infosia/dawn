@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "026172f2_b0d7f207",
+        "filename": "generator/templates/art/methods.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T16:41:07Z",
+      "side": 1,
+      "message": "not*",
+      "parentUuid": "11df2562_dab4ee88",
+      "revId": "5784eeffb76ba140e613ac0855935fd20e94d7f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c50c353_c7d6d63e",
         "filename": "generator/templates/art/structures.cpp",
         "patchSetId": 25
