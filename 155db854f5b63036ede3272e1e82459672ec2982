@@ -50,6 +50,76 @@
       "message": "In a follow-up can we have a test in SteamTests?",
       "revId": "155db854f5b63036ede3272e1e82459672ec2982",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c68b84de_a12e65df",
+        "filename": "src/tint/lang/spirv/writer/common/option_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-22T18:52:26Z",
+      "side": 1,
+      "message": "Nit: `const auto\u0026` so that we don\u0027t make an unnecessary copy of the set.",
+      "fixSuggestions": [
+        {
+          "fixId": "591d6331_541dcd19",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/common/option_helper.cc",
+              "range": {
+                "startLine": 59,
+                "startChar": 0,
+                "endLine": 60,
+                "endChar": 0
+              },
+              "replacement": "    const auto\u0026 statically_paired_texture_binding_points \u003d\n"
+            }
+          ]
+        }
+      ],
+      "revId": "155db854f5b63036ede3272e1e82459672ec2982",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97bb31ff_66c2b1b6",
+        "filename": "src/tint/lang/spirv/writer/common/option_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-22T18:52:26Z",
+      "side": 1,
+      "message": "I think you only need the second of these two new checks? (we seem to have `src` and `dst` the wrong way around in this lambda which doesn\u0027t help...)",
+      "fixSuggestions": [
+        {
+          "fixId": "cdb0cacf_a536af9d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/common/option_helper.cc",
+              "range": {
+                "startLine": 65,
+                "startChar": 0,
+                "endLine": 67,
+                "endChar": 0
+              },
+              "replacement": "            if (*binding !\u003d dst \u0026\u0026 !statically_paired_texture_binding_points.contains(dst)) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "155db854f5b63036ede3272e1e82459672ec2982",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
