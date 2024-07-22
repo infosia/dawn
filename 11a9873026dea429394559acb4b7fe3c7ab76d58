@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abcf6f07_3fe0197d",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T21:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25fae789_abbaa022",
+      "revId": "11a9873026dea429394559acb4b7fe3c7ab76d58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15dfb149_abc8598b",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-07-22T21:31:19Z",
       "side": 1,
       "message": "or may even have a null terminator in the middle?",
+      "revId": "11a9873026dea429394559acb4b7fe3c7ab76d58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3607003_18790d7f",
+        "filename": "src/dawn/native/CommandAllocator.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T21:41:37Z",
+      "side": 1,
+      "message": "well, it would be OK if it\u0027s in the middle - just unnecessary that we include the null-terminator. Added a comment about that.",
+      "parentUuid": "15dfb149_abc8598b",
       "revId": "11a9873026dea429394559acb4b7fe3c7ab76d58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
