@@ -1696,6 +1696,19 @@ bool Validator::BinaryExpression(const ast::Node* node,
                 }
             }
             return true;
+        case core::BinaryOp::kDivide:
+        case core::BinaryOp::kModulo:
+            // Integer division by zero should be checkeed for the partial evaluation case (only rhs
+            // is const). FP division by zero is only invalid when the whole expression is
+            // constant-evaluated.
+            if (rhs->Type()->is_integer_scalar_or_vector() &&
+                rhs->Stage() == core::EvaluationStage::kConstant) {
+                if (rhs->ConstantValue()->AnyZero()) {
+                    AddError(node->source) << "integer division by zero is invalid";
+                    return false;
+                }
+            }
+            return true;
         default:
             return true;
     }
@@ -2837,6 +2850,7 @@ bool Validator::Assignment(const ast::Statement* a, const core::type::Type* rhs_
                             << style::Type(sem_.RawTypeNameOf(lhs_ty));
         return false;
     }
+
     return true;
 }
 
