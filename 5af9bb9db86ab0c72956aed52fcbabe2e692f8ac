@@ -52,6 +52,24 @@
       "parentUuid": "0b18e0ef_91c8cc88",
       "revId": "5af9bb9db86ab0c72956aed52fcbabe2e692f8ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71709fd4_d6865be0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T11:38:36Z",
+      "side": 1,
+      "message": "I can\u0027t repro on macOS either :/",
+      "parentUuid": "1cf57ea9_7fb6ad64",
+      "revId": "5af9bb9db86ab0c72956aed52fcbabe2e692f8ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
