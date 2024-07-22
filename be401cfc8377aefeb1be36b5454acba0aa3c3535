@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efe4f42d_41b9e6dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T14:15:45Z",
+      "side": 1,
+      "message": "Still LGTM",
+      "revId": "be401cfc8377aefeb1be36b5454acba0aa3c3535",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21d2af41_ddce33df",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T14:15:45Z",
+      "side": 1,
+      "message": "Can\u0027t this be in the branch above? Then we can check `category in [\"native\", \"enum\", \"bitmask\"]`.",
+      "revId": "be401cfc8377aefeb1be36b5454acba0aa3c3535",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
