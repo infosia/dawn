@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25fae789_abbaa022",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-22T21:31:19Z",
+      "side": 1,
+      "message": "update or move comment - I think now only the callback info part of it will go away",
+      "revId": "11a9873026dea429394559acb4b7fe3c7ab76d58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15dfb149_abc8598b",
+        "filename": "src/dawn/native/CommandAllocator.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-22T21:31:19Z",
+      "side": 1,
+      "message": "or may even have a null terminator in the middle?",
+      "revId": "11a9873026dea429394559acb4b7fe3c7ab76d58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
