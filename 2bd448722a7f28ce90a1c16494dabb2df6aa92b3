@@ -37,6 +37,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f58029b5_0998be4f",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T18:56:22Z",
+      "side": 1,
+      "message": "it\u0027s set to OFF right above. instead, perhaps merge NOT ENABLE_EMSCRIPTEN into the below if condition",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 43
+      },
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cc4f2c3b_0ef692ae",
         "filename": "generator/templates/api.h",
         "patchSetId": 4
@@ -48,6 +71,24 @@
       "writtenOn": "2024-07-20T03:05:29Z",
       "side": 1,
       "message": "This is a little funky - maybe we could have the header selection happen in another header that wraps `dawn/webgpu.h` and `webgpu/emscripten_webgpu.h` (name tbd)? though it\u0027s annoying we have to come up with a new name for the emscripten header to do this.\n\nWe currently already have `webgpu/webgpu.h` which could be responsible for the switching:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/include/webgpu/webgpu.h\n\nI am unsure if anyone is using it currently. (I am also a little confused why this include picks up the Emscripten version and not that one. Include directory precedence?)\n\nA simpler alternative: we could have `dawn/webgpu.h`, `webgpu/webgpu.h` which is the emscripten one (assuming we keep ignoring `dawn/include/webgpu/webgpu.h`), and have the includer do the `#ifdef __EMSCRIPTEN__`. (Or wrap that in a `dawn_or_emscripten_webgpu.h`)",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6b755d8_c4ef4d04",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T18:56:22Z",
+      "side": 1,
+      "message": "Can we have code always reference \"webgpu/webgpu.h\"\n\nand just change whether we build with -Ithird_party/dawn/include/ vs. -Ithird_party/dawn/emdawnwebgpu/.../something/...  ?",
+      "parentUuid": "cc4f2c3b_0ef692ae",
       "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -82,6 +123,52 @@
       "writtenOn": "2024-07-20T03:05:29Z",
       "side": 1,
       "message": "FWIW the PosixTimer _probably_ works on Emscripten. Not important, but would be nice to remove a few conditionals.\n\nAlso would be a nice apples-to-apples performance comparison between dawn and wasm - I manually created a wasm/dawn cross-platform version of Animometer a few months ago because I needed to do that.",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42c4a87a_13bfcd93",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T18:56:22Z",
+      "side": 1,
+      "message": "could we avoid conditionalizing `common_compile_options` and instead put an if $DAWN_ENABLE_EMSCRIPTEN inside `common_compile_options`?",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 45
+      },
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3b0d08d_18b99a25",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T18:56:22Z",
+      "side": 1,
+      "message": "this includes a bunch of the above ones too.\nI think you can unconditionally do the common ones, and then add in glfw, native, dawn_glfw, dawn_proc after",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 5
+      },
       "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -127,6 +214,29 @@
         "startChar": 0,
         "endLine": 96,
         "endChar": 62
+      },
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbdb5b1a_4c11a656",
+        "filename": "src/dawn/utils/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T18:56:22Z",
+      "side": 1,
+      "message": "instead of changing the set of sources and headers, I thought you had intended to split native/wire-specific utils to separate targets",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 3
       },
       "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
