@@ -43,6 +43,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6935a4ab_7eb02153",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-22T10:16:49Z",
+      "side": 1,
+      "message": "I think we should move away from these local scope blocks--they reflect that we\u0027re using templates to generate our C++, but aren\u0027t how C++ would normally be written.  You can inline clz and ctor into the third line without loss of clarity, removing the local scope block and making your code more classically readable.",
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "01e3d8ca_5fe09033",
         "filename": "generator/templates/art/api_jni_types.kt",
         "patchSetId": 1
