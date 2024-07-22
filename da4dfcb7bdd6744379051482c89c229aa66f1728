@@ -16,6 +16,29 @@
       "message": "PTAL that three CLs!",
       "revId": "da4dfcb7bdd6744379051482c89c229aa66f1728",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9116b12e_130e05ee",
+        "filename": "src/dawn/samples/ManualSurfaceTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T19:03:44Z",
+      "side": 1,
+      "message": "nit: I expect everything to have a help arg. Maybe make a convenience method like \n\n```\nauto\u0026 helpOpt \u003d parser.AddHelp();\n...\nif (helpOpt.GetValue()) {\n  parser.PrintHelp();\n  return 0;\n}\n```\n?",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 76
+      },
+      "revId": "da4dfcb7bdd6744379051482c89c229aa66f1728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
