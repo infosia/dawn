@@ -16,6 +16,24 @@
       "message": "LGTM for this specific issue.\n\nJust a heads up that you\u0027ll likely hit this for several other address spaces too (it should only be valid on texture variables in the handle address space).",
       "revId": "f1bef0deb9d37887bc405c3e43bba00d64d8d54a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "094a1898_59dafd95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-22T18:03:48Z",
+      "side": 1,
+      "message": "Done. Made the check more general.",
+      "parentUuid": "100c3c5d_dcd6237d",
+      "revId": "f1bef0deb9d37887bc405c3e43bba00d64d8d54a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
