@@ -1,0 +1,28 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7127cc90_bef31874",
+        "filename": "generator/templates/art/methods.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T14:52:55Z",
+      "side": 1,
+      "message": "\u003e \"containter\" is a possible misspelling of \"container\".\n\nFixed.",
+      "parentUuid": "e159f5f5_fb039106",
+      "range": {
+        "startLine": 245,
+        "startChar": 30,
+        "endLine": 245,
+        "endChar": 40
+      },
+      "revId": "6bd1457f81acbe713f0ff67b4f0197ed372d2269",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
