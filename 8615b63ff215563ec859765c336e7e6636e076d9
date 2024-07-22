@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f46b6a2b_1569e7fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-22T17:51:36Z",
+      "side": 1,
+      "message": "metrics collection causing crashes also disabling in cl/654815211.\n\nLanding this change speculatively, and we can check crash rates on canary channels",
+      "revId": "8615b63ff215563ec859765c336e7e6636e076d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
