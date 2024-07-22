@@ -244,6 +244,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const BindingInfoArray& moduleBindingInfo =
         GetEntryPoint(programmableStage.entryPoint.c_str()).bindings;
 
+    // TODO(blundell): Change this to a set of BindingPoints for which duplicate
+    // spir-v bindings are allowed.
+    bool allow_duplicate_spirv_bindings = false;
     for (BindGroupIndex group : IterateBitSet(layout->GetBindGroupLayoutsMask())) {
         const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
 
@@ -288,6 +291,11 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                                                  dstBindingPoint.group, dstBindingPoint.binding});
                 },
                 [&](const TextureBindingInfo& bindingInfo) {
+                    if (auto samplerIndex = bgl->GetStaticSamplerIndexForTexture(
+                            BindingIndex{dstBindingPoint.binding})) {
+                        allow_duplicate_spirv_bindings = true;
+                        dstBindingPoint.binding = static_cast<uint32_t>(samplerIndex.value());
+                    }
                     bindings.texture.emplace(srcBindingPoint,
                                              tint::spirv::writer::binding::Texture{
                                                  dstBindingPoint.group, dstBindingPoint.binding});
@@ -341,7 +349,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.platform = UnsafeUnkeyedValue(GetDevice()->GetPlatform());
     req.substituteOverrideConfig = std::move(substituteOverrideConfig);
     req.maxSubgroupSizeForFullSubgroups = maxSubgroupSizeForFullSubgroups;
-
+    req.tintOptions.allow_duplicate_spirv_bindings = allow_duplicate_spirv_bindings;
     req.tintOptions.clamp_frag_depth = clampFragDepth;
     req.tintOptions.disable_robustness = !GetDevice()->IsRobustnessEnabled();
     req.tintOptions.emit_vertex_point_size = emitPointSize;
