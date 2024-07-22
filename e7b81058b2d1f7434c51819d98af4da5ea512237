@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3639fca4_668efa93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-07-22T12:15:42Z",
+      "side": 1,
+      "message": "If https://github.com/webgpu-native/webgpu-headers/pull/308 looks good to you, then you can have a look at this CL and https://chromium-review.googlesource.com/c/chromium/src/+/5683307",
+      "revId": "e7b81058b2d1f7434c51819d98af4da5ea512237",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
