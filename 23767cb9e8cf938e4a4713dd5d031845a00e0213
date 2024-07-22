@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c393b143_c15db57b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T10:14:07Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "987e5eae_70f57291",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T10:14:07Z",
+      "side": 1,
+      "message": "```suggestion\n{% macro convert_array_element_to_kotlin(input, output, size, member) %}\n```",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01e3d8ca_5fe09033",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T10:14:07Z",
+      "side": 1,
+      "message": "To avoid scoping issues, and string pasting in arguments (and structs with pointer to structs), I think we could make that direction also use the KotlinRecord concept once it is done for the input. I can take care of this with Sonakshi / Dan during your OOO time if that\u0027s not controversial.\n\nAlso here and in the KotlinRecord CLs we should be clear in which direction the conversion is happening. convert_to_kotlin / convert_from_kotlin?\n\nAlso I\u0027d probably move the helpers to the new macro file.",
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24b89ba5_fcdedaa4",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T10:14:07Z",
+      "side": 1,
+      "message": "```suggestion\n    {% elif size !\u003d 0 %}\n```",
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a07971d2_881e1751",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T10:14:07Z",
+      "side": 1,
+      "message": "nit: a bunch of these could be detect by category and made to use `to_jni_type`.",
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82d1f383_b5f3ec57",
+        "filename": "generator/templates/art/methods.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T10:14:07Z",
+      "side": 1,
+      "message": "nit: small preference for having an explicit condition on `_kotlin_return.annotation \u003d\u003d \u0027*\u0027` so that we have to simple calls to `jni_convert` instead of one with a bunch of ternaries included in the call. It\u0027s very hard to read at the moment.",
+      "revId": "23767cb9e8cf938e4a4713dd5d031845a00e0213",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
