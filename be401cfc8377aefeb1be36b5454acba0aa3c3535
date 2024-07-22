@@ -33,6 +33,24 @@
       "message": "Can\u0027t this be in the branch above? Then we can check `category in [\"native\", \"enum\", \"bitmask\"]`.",
       "revId": "be401cfc8377aefeb1be36b5454acba0aa3c3535",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "108ae0ae_d55efd6b",
+        "filename": "generator/templates/art/api_jni_types.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-22T14:50:40Z",
+      "side": 1,
+      "message": "Sure, the only difference is these types don\u0027t need to be cast.",
+      "parentUuid": "21d2af41_ddce33df",
+      "revId": "be401cfc8377aefeb1be36b5454acba0aa3c3535",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
