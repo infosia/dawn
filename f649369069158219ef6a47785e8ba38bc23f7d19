@@ -82,6 +82,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6a57b3d_731326e9",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-22T10:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f124d15a_2bb8ee56",
+      "range": {
+        "startLine": 443,
+        "startChar": 30,
+        "endLine": 443,
+        "endChar": 37
+      },
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4a667e7_06cc6b02",
@@ -101,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b965dee2_ce2ff216",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-22T10:52:20Z",
+      "side": 1,
+      "message": "Update: This doesn\u0027t really make sense anymore from my POV since I check it directly against the limit in a couple places.",
+      "parentUuid": "e4a667e7_06cc6b02",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b5d08955_25e3c486",
         "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
         "patchSetId": 13
@@ -112,6 +154,30 @@
       "writtenOn": "2024-07-20T00:28:50Z",
       "side": 1,
       "message": "```suggestion\n    for (BindingIndex bindingIndex : Range(GetBindingCount())) {\n```\n\nsimilar to Corentin\u0027s changes in https://dawn-review.googlesource.com/c/dawn/+/199334",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 90
+      },
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a83b547_7b5d2dcd",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-22T10:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5d08955_25e3c486",
       "range": {
         "startLine": 120,
         "startChar": 0,
@@ -175,6 +241,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad4e6b79_6c98c581",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-22T10:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a6264fe_05d6beb3",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11ac9786_3a4837cb",
@@ -188,6 +272,24 @@
       "writtenOn": "2024-07-19T16:24:24Z",
       "side": 1,
       "message": "Would it make sense to check for SampleType::External here and below instead since validation will require that External textures are used with YCbCr? This way the map is only used when we need the actual index of the Vulkan YCbCr sampler binding.",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d232341f_48ec22a2",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-22T10:52:20Z",
+      "side": 1,
+      "message": "This doesn\u0027t make sense now that we\u0027re allowing static samplers to be paired with sampled textures more generally. However, I\u0027ve made a note for the validation that you mention as part of the adding validation step.",
+      "parentUuid": "11ac9786_3a4837cb",
       "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -209,6 +311,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3db93256_42efac1b",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-22T10:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eff1f9bb_45acc69f",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b50517d2_dbb49629",
@@ -222,6 +342,24 @@
       "writtenOn": "2024-07-19T16:24:24Z",
       "side": 1,
       "message": "It would be still nice to streamline this code to avoid a map lookup even if empty in hot code, but we can see later. Maybe we could have a TODO for later?",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cdeda58_9ecfb203",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-22T10:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b50517d2_dbb49629",
       "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

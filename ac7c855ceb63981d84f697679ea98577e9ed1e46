@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f2f2a6a_28153fba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-22T10:52:20Z",
+      "side": 1,
+      "message": "Thanks! I addressed all the feedback. I still need to implement my TODO wrt `allow_duplicate_bindings` at the spir-v level, but I\u0027m sending out my response to feedback in parallel with working on that, since it\u0027s orthogonal. The response to feedback is contained here:\n\nhttps://dawn-review.googlesource.com/c/dawn/+/197475/13..17\n\nIf folks are OK with this, my plan would be to land this CL, scope out all the validation/testing required for followup, and then both push on that the rest of this week but also ensure that Saif/Kyle are looped in to keep going on that after I\u0027m OOO.",
+      "revId": "ac7c855ceb63981d84f697679ea98577e9ed1e46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
