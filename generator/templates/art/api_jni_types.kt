@@ -26,31 +26,31 @@
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 {% macro arg_to_jni_type(arg) %}
-    {% if arg.length == 'strlen' %}
+    {%- if arg.length == 'strlen' -%}
         jstring
-    {% elif arg.length and arg.json_data.get('constant_length') != 1 %}
-        {% if arg.type.category in ['bitmask', 'enum', 'function pointer', 'object', 'structure'] %}
+    {%- elif arg.length and arg.json_data.get('constant_length') != 1 -%}
+        {%- if arg.type.category in ['bitmask', 'enum', 'function pointer', 'object', 'structure'] -%}
             jobjectArray
-        {% elif arg.type.name.get() == 'void' %}
+        {%- elif arg.type.name.get() == 'void' -%}
             jobject
-        {% elif arg.type.name.get() == 'uint32_t' %}
+        {%- elif arg.type.name.get() == 'uint32_t' -%}
             jintArray
-        {% else %}
+        {%- else -%}
             {{ unreachable_code() }}
-        {% endif %}
-    {% else %}
+        {%- endif -%}
+    {%- else -%}
         {{ to_jni_type(arg.type) }}
-    {% endif %}
+    {%- endif -%}
 {% endmacro %}
 
 {% macro to_jni_type(type) %}
-    {% if type.category in ['function pointer', 'object', 'structure'] %}
+    {%- if type.category in ['function pointer', 'object', 'structure'] -%}
         jobject
-    {% elif type.category in ['bitmask', 'enum'] %}
+    {%- elif type.category in ['bitmask', 'enum'] -%}
         jint
-    {% else %}
+    {%- else -%}
         {{ jni_primitives[type.name.get()] }}
-    {% endif %}
+    {%- endif -%}
 {% endmacro %}
 
 {% macro jni_signature(member) %}
