@@ -16,6 +16,91 @@
       "message": "Thanks! I addressed all the feedback. I still need to implement my TODO wrt `allow_duplicate_bindings` at the spir-v level, but I\u0027m sending out my response to feedback in parallel with working on that, since it\u0027s orthogonal. The response to feedback is contained here:\n\nhttps://dawn-review.googlesource.com/c/dawn/+/197475/13..17\n\nIf folks are OK with this, my plan would be to land this CL, scope out all the validation/testing required for followup, and then both push on that the rest of this week but also ensure that Saif/Kyle are looped in to keep going on that after I\u0027m OOO.",
       "revId": "ac7c855ceb63981d84f697679ea98577e9ed1e46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f29d88f_baa8130d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T13:06:23Z",
+      "side": 1,
+      "message": "LGTM with nits. Dan PTAL the Tint / ShaderModule part.",
+      "revId": "ac7c855ceb63981d84f697679ea98577e9ed1e46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c219d84b_a2625603",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T13:06:23Z",
+      "side": 1,
+      "message": "```suggestion\n    // Holds the BindingNumber of the texture that this sampler is sampling, if any.\n```",
+      "revId": "ac7c855ceb63981d84f697679ea98577e9ed1e46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffaea2a0_ad9ccea1",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T13:06:23Z",
+      "side": 1,
+      "message": "[1] nit: We could add a `IsUsedForSingleTextureBinding` on `StaticSamplerBindingInfo` and use that to factor in the logic to check against the limit.",
+      "revId": "ac7c855ceb63981d84f697679ea98577e9ed1e46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05b52cd7_335ad534",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T13:06:23Z",
+      "side": 1,
+      "message": "nit: Associate with a bug instead of a person, it\u0027s a shared artifact 😊",
+      "revId": "ac7c855ceb63981d84f697679ea98577e9ed1e46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb5e864f_66d20e7b",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T13:06:23Z",
+      "side": 1,
+      "message": "I\u0027d like someone from the Tint team, for example Dan, to approve this part which is a bit heavy handed (but has a TODO to improve it soon).",
+      "revId": "ac7c855ceb63981d84f697679ea98577e9ed1e46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

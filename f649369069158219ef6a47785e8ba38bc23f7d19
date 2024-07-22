@@ -143,6 +143,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "62250265_6080f282",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T13:06:23Z",
+      "side": 1,
+      "message": "With [1] I think it might still make sense to make this a `BindingNumber` so there\u0027s a single place where we compare with `BindingNumber(WGPU_LIMIT_U32_UNDEFINED)`",
+      "parentUuid": "b965dee2_ce2ff216",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b5d08955_25e3c486",
         "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
         "patchSetId": 13
@@ -290,6 +308,24 @@
       "side": 1,
       "message": "This doesn\u0027t make sense now that we\u0027re allowing static samplers to be paired with sampled textures more generally. However, I\u0027ve made a note for the validation that you mention as part of the adding validation step.",
       "parentUuid": "11ac9786_3a4837cb",
+      "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1bbccd2_c38acf95",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-22T13:06:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d232341f_48ec22a2",
       "revId": "f649369069158219ef6a47785e8ba38bc23f7d19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
