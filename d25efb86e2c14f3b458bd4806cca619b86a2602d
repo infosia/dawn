@@ -361,6 +361,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dea1f4d4_11ff0b10",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T20:32:18Z",
+      "side": 1,
+      "message": "for general purposes, I think 64 because some AMD GPU warp/simd/wave sizes are 64. You would want larger if you need to communicate between threads with workgroup memory, but we\u0027re not doing that here.",
+      "parentUuid": "18d9d94f_d257885a",
+      "range": {
+        "startLine": 798,
+        "startChar": 0,
+        "endLine": 798,
+        "endChar": 47
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15573553_55720440",
         "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
         "patchSetId": 7
