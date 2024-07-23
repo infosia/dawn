@@ -16,6 +16,23 @@
       "message": "PTAL again, new files are changed after addressing comments.",
       "revId": "bc8c4cf31306cc91da6ede950eab61bd59988bc3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb4087cb_932203f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-23T16:20:56Z",
+      "side": 1,
+      "message": "Thank you!",
+      "revId": "bc8c4cf31306cc91da6ede950eab61bd59988bc3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
