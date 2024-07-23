@@ -30,7 +30,6 @@
 #include "dawn/fuzzers/lpmfuzz/DawnLPMObjectStore.h"
 #include "dawn/fuzzers/lpmfuzz/DawnLPMSerializer_autogen.h"
 #include "dawn/fuzzers/lpmfuzz/DawnLPMSerializerCustom.h"
-#include "dawn/webgpu.h"
 #include "dawn/wire/BufferConsumer_impl.h"
 #include "dawn/wire/ObjectHandle.h"
 #include "dawn/wire/Wire.h"
@@ -38,6 +37,7 @@
 #include "dawn/wire/WireCmd_autogen.h"
 #include "dawn/wire/WireResult.h"
 #include "dawn/wire/client/ApiObjects_autogen.h"
+#include "webgpu/webgpu.h"
 
 namespace dawn::wire {
 
