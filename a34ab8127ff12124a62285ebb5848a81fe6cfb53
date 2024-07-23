@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9efb2e8_9a379821",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-23T11:04:24Z",
+      "side": 1,
+      "message": "(Removing my +2 from the auto-run of submit queue, but I still approve the CL)",
+      "revId": "a34ab8127ff12124a62285ebb5848a81fe6cfb53",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c3a5a08_54ac151c",
