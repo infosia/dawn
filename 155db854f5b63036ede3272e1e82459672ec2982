@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51eedcdb_99807c70",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-23T10:04:05Z",
+      "side": 1,
+      "message": "Yup!",
+      "parentUuid": "8812889b_5b567b4c",
+      "revId": "155db854f5b63036ede3272e1e82459672ec2982",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c68b84de_a12e65df",
@@ -87,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41a16d6c_d752ea24",
+        "filename": "src/tint/lang/spirv/writer/common/option_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-23T10:04:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c68b84de_a12e65df",
+      "revId": "155db854f5b63036ede3272e1e82459672ec2982",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97bb31ff_66c2b1b6",
@@ -118,6 +154,24 @@
           ]
         }
       ],
+      "revId": "155db854f5b63036ede3272e1e82459672ec2982",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9edf86c_69860a38",
+        "filename": "src/tint/lang/spirv/writer/common/option_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-07-23T10:04:05Z",
+      "side": 1,
+      "message": "I also found the usage of `src` and `dst` here confusing :).\n\nI think that I need both checks because this function has no knowledge of whether it\u0027s called with the bindings for the sampler or those for the texture first, so the binding for the texture could be in `binding` at this point and not `dst`. (As the code is currently structured the textures are iterated over first so it would actually only be the first of the two new checks that would be the necessary one I believe). There are other possible ways to structure the checks - my thought was to keep the queries of that set to be dynamically only in the rare case where a duplicate binding was actually seen rather than having it be queried all the time.\n\nNote that I have the set containing the src BindingPoints (what\u0027s confusingly called `dst` here) rather than the dst BindingInfos (what\u0027s confusingly called `src` here) for two reasons:\n\n1. Conceptually, from my POV it\u0027s slightly easier to grasp the semantics of \"BindingPoints that are allowed to map to duplicate spir-v entries\" than \"spir-v entries that are allowed to have multiple BindingPoints pointing to them\"\n2. On a practical level, BindingInfo would need extra work done to allow it to be put into std::unordered_set.",
+      "parentUuid": "97bb31ff_66c2b1b6",
       "revId": "155db854f5b63036ede3272e1e82459672ec2982",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
