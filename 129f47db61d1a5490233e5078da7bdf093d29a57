@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "894611ba_08013335",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-23T05:40:58Z",
+      "side": 1,
+      "message": "@lehoangquyen@chromium.org Please take a look first!\nI haven\u0027t thought about the similar implementation on Vulkan backend too much. If any hard obstacle already known to you, please point them out to me, thanks!",
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
