@@ -1,6 +1,30 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "b58c325e_f6b8f770",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-23T13:35:59Z",
+      "side": 1,
+      "message": "\u003e \"taht\" is a possible misspelling of \"that\".\n\nPlease fix.",
+      "parentUuid": "159cc61e_f8985ac1",
+      "range": {
+        "startLine": 12,
+        "startChar": 61,
+        "endLine": 12,
+        "endChar": 65
+      },
+      "revId": "8a88a705e041790fa337445e21c8cc61b5e724af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "3805caab_0afb64be",
@@ -14,6 +38,40 @@
       "writtenOn": "2024-07-16T14:38:37Z",
       "side": 1,
       "message": "PTAL these CLs. I\u0027ll rebase once all the other already approved CLs are landed. Jim if architecturally this looks good to you, I\u0027ll iterate with Sonakshi while you\u0027re away to land these.",
+      "revId": "8a88a705e041790fa337445e21c8cc61b5e724af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0989754_2c4158b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-23T13:35:59Z",
+      "side": 1,
+      "message": "I\u0027m happy with this approach, the details look right although I haven\u0027t patched it yet myself.",
+      "revId": "8a88a705e041790fa337445e21c8cc61b5e724af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5377949e_58d69cdf",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-23T13:35:59Z",
+      "side": 1,
+      "message": "I really like the template approach as a way to reduce the complexity of templates.",
       "revId": "8a88a705e041790fa337445e21c8cc61b5e724af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
