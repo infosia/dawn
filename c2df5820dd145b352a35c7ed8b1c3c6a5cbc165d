@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c3962d43_8765e763",
+        "filename": "generator/templates/dawn/native/ProcTable.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T03:15:08Z",
+      "side": 1,
+      "message": "I believe it was for having device-specific extensions where the function pointer comes from the device.",
+      "parentUuid": "5a67dde3_3260fc24",
+      "range": {
+        "startLine": 163,
+        "startChar": 45,
+        "endLine": 163,
+        "endChar": 51
+      },
+      "revId": "c2df5820dd145b352a35c7ed8b1c3c6a5cbc165d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc19316f_1acc81c7",
         "filename": "generator/templates/dawn/native/ProcTable.cpp",
         "patchSetId": 16
@@ -37,6 +61,24 @@
       "writtenOn": "2024-07-23T01:40:32Z",
       "side": 1,
       "message": "technically this will not correctly handle if b has a null in the middle - it will cut it off there, then if it matches, return true. Same for the other five `strncmp`s, I think.\n\nMaybe just make make a `std::string_view` from `procName` so you can compare it with `a.name` etc directly?",
+      "revId": "c2df5820dd145b352a35c7ed8b1c3c6a5cbc165d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3a92005_22ae4fa2",
+        "filename": "generator/templates/dawn/native/ProcTable.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T03:15:08Z",
+      "side": 1,
+      "message": "great idea, done.",
+      "parentUuid": "dc19316f_1acc81c7",
       "revId": "c2df5820dd145b352a35c7ed8b1c3c6a5cbc165d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
