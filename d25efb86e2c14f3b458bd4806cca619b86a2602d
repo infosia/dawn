@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "49de8119_c639b5c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-23T19:09:55Z",
+      "side": 1,
+      "message": "I agree, it is a very big change with lots going on right now and very hard to review since it\u0027s unstructured (missing stuff or TODOs). I\u0027ll open a new CL tomorrow for vulkan only changes and the tests. I\u0027ll roll with the plan you outlined. I\u0027ll adress your comments on the separate CLs then :)",
+      "parentUuid": "02863aa4_013df96b",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "68bd10f2_4ec8775e",
         "filename": "src/dawn/native/CommandBuffer.cpp",
         "patchSetId": 7
@@ -167,6 +185,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e260c56_14c6c7c6",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-23T19:09:55Z",
+      "side": 1,
+      "message": "Good point, I\u0027ll do that!",
+      "parentUuid": "4f1d5c78_bfa8ec2f",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "8b06e59e_267978a0",
@@ -301,6 +337,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "18d9d94f_d257885a",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-23T19:09:55Z",
+      "side": 1,
+      "message": "Would 32 threads per workgroup be better in general for GPUs?",
+      "parentUuid": "a243ddbb_890eb555",
+      "range": {
+        "startLine": 798,
+        "startChar": 0,
+        "endLine": 798,
+        "endChar": 47
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15573553_55720440",
         "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
         "patchSetId": 7
@@ -393,6 +453,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "470d7e09_41a76b50",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-23T19:09:55Z",
+      "side": 1,
+      "message": "I copied from Apple\u0027s example, so I\u0027m not 100% sure about this, need to test...",
+      "parentUuid": "da494594_31e001ae",
+      "range": {
+        "startLine": 201,
+        "startChar": 62,
+        "endLine": 201,
+        "endChar": 90
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4db923c7_4cf886a0",
         "filename": "src/dawn/native/metal/RenderPipelineMTL.mm",
         "patchSetId": 7
@@ -427,6 +511,54 @@
       "writtenOn": "2024-07-23T17:36:44Z",
       "side": 1,
       "message": "```suggestion\n// Copyright 2024 The Dawn \u0026 Tint Authors\n```",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcd400d6_e6640d57",
+        "filename": "src/dawn/tests/end2end/MultiDrawIndirectTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-23T19:09:55Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "392af121_b280a987",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f447b34_1d7f3fa5",
+        "filename": "src/dawn/tests/end2end/MultiDrawIndirectTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-23T19:09:55Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "392af121_b280a987",
       "range": {
         "startLine": 1,
         "startChar": 13,
