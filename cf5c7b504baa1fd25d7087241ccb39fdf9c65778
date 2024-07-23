@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39fcd28f_9505095c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T21:26:06Z",
+      "side": 1,
+      "message": "LGTM, one more suggestion",
+      "revId": "cf5c7b504baa1fd25d7087241ccb39fdf9c65778",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0538a4f_dd33eb16",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T21:26:06Z",
+      "side": 1,
+      "message": "looking at third_party/CMakeLists.txt, the abseil stuff adds some compile options and uses DAWN_ABSEIL_DIR.\n\nI think it might be better to put the DAWN_ENABLE_EMSCRIPTEN checks inside third_party/CMakeLists.txt. It also is slightly better in case we add new dependencies. Then we only have the list in one place.\n\nCMake says that `return` can be used at the file level? https://cmake.org/cmake/help/v3.14/command/return.html\n\nso it might work if you put the emscripten deps in the first half of the file, and then if emscripten, return early before the other third_party deps get added.",
+      "range": {
+        "startLine": 422,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 42
+      },
+      "revId": "cf5c7b504baa1fd25d7087241ccb39fdf9c65778",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
