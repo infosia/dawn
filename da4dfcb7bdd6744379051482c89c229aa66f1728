@@ -39,6 +39,30 @@
       },
       "revId": "da4dfcb7bdd6744379051482c89c229aa66f1728",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5406516_23d1d513",
+        "filename": "src/dawn/samples/ManualSurfaceTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-23T16:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9116b12e_130e05ee",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 76
+      },
+      "revId": "da4dfcb7bdd6744379051482c89c229aa66f1728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
