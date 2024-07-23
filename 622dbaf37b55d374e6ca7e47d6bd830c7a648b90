@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92d40dc6_9e41b008",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-07-23T13:57:19Z",
+      "side": 1,
+      "message": "This patch is causing build failures for me locally:\n\n```\ncode/dawn/out/active/gen/src/dawn/native/wgpu_structs_autogen.cpp:4744:59: error: use of undeclared identifier \u0027strlen\u0027\n 4744 |                                             : useStrlen ? strlen(this-\u003edata)\n      |                                                           ^\n```\n\nQuick fix in: https://dawn-review.googlesource.com/c/dawn/+/199854",
+      "revId": "622dbaf37b55d374e6ca7e47d6bd830c7a648b90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
