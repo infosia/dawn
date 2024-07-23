@@ -16,6 +16,24 @@
       "message": "s/build/built",
       "revId": "0b65129303ef980914a210470b2ce595aca3b98e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12ba98ba_e648940f",
+        "filename": "src/cmake/DawnLibrary.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T21:12:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0faf593a_5da9e1cd",
+      "revId": "0b65129303ef980914a210470b2ce595aca3b98e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
