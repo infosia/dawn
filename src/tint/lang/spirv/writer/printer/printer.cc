@@ -881,6 +881,7 @@ class Printer {
     /// Emit all instructions of @p block.
     /// @param block the block's instructions to emit
     void EmitBlockInstructions(core::ir::Block* block) {
+        TINT_ASSERT(!block->IsEmpty());
         for (auto* inst : *block) {
             Switch(
                 inst,                                                                 //
@@ -912,11 +913,6 @@ class Printer {
                     module_.PushDebug(spv::Op::OpName, {Value(inst), Operand(name.Name())});
                 }
             }
-        }
-
-        if (block->IsEmpty()) {
-            // If the last emitted instruction is not a branch, then this should be unreachable.
-            current_function_.push_inst(spv::Op::OpUnreachable, {});
         }
     }
 
