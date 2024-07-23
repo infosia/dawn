@@ -171,6 +171,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03cfbea6_2a8dc557",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T22:32:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fcf96437_eff83569",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93488bed_02eeff5b",
