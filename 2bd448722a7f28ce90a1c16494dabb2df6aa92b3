@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "102a04b8_c718b4f8",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00bec9bb_7d3d30fa",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f58029b5_0998be4f",
@@ -48,6 +66,30 @@
       "writtenOn": "2024-07-22T18:56:22Z",
       "side": 1,
       "message": "it\u0027s set to OFF right above. instead, perhaps merge NOT ENABLE_EMSCRIPTEN into the below if condition",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 43
+      },
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4104f555_a2736ee7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f58029b5_0998be4f",
       "range": {
         "startLine": 119,
         "startChar": 0,
@@ -95,6 +137,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fbfef990_2c8c8fab",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "I think Austin\u0027s suggestion would be the cleanest way to make this work properly, given that we already have a `webgpu/webgpu.h` in Dawn that defers to including the Dawn specific header. I want to do that in a follow up though and land this first since that change will touch a lot more files (essentially just doing the search and replace).",
+      "parentUuid": "f6b755d8_c4ef4d04",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "93488bed_02eeff5b",
         "filename": "src/dawn/common/Assert.cpp",
         "patchSetId": 4
@@ -106,6 +166,24 @@
       "writtenOn": "2024-07-20T03:05:29Z",
       "side": 1,
       "message": "`EM_ASM(debugger;);` should work (triggers the JS `debugger` statement). That\u0027s Emscripten specific, but I wouldn\u0027t expect to build for any other Wasm platform.",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5669cacc_fbd57d01",
+        "filename": "src/dawn/common/Assert.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93488bed_02eeff5b",
       "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -127,6 +205,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49fe20dc_62f0bf06",
+        "filename": "src/dawn/samples/Animometer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a88576a2_4860cb8e",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "42c4a87a_13bfcd93",
@@ -140,6 +236,30 @@
       "writtenOn": "2024-07-22T18:56:22Z",
       "side": 1,
       "message": "could we avoid conditionalizing `common_compile_options` and instead put an if $DAWN_ENABLE_EMSCRIPTEN inside `common_compile_options`?",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 45
+      },
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0353579_de7fc23b",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42c4a87a_13bfcd93",
       "range": {
         "startLine": 37,
         "startChar": 0,
@@ -173,6 +293,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3afff76_093e037f",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3b0d08d_18b99a25",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 5
+      },
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "105e4e9e_3dec2950",
@@ -186,6 +330,30 @@
       "writtenOn": "2024-07-20T03:05:29Z",
       "side": 1,
       "message": "indent",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 23
+      },
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddbba649_e73bfa65",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "105e4e9e_3dec2950",
       "range": {
         "startLine": 63,
         "startChar": 0,
@@ -219,6 +387,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "703a8df9_8658d5c6",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d03fca97_2960964e",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 62
+      },
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbdb5b1a_4c11a656",
@@ -232,6 +424,30 @@
       "writtenOn": "2024-07-22T18:56:22Z",
       "side": 1,
       "message": "instead of changing the set of sources and headers, I thought you had intended to split native/wire-specific utils to separate targets",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 3
+      },
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b28c697_0b702558",
+        "filename": "src/dawn/utils/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbdb5b1a_4c11a656",
       "range": {
         "startLine": 48,
         "startChar": 0,
@@ -259,6 +475,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36ca0c79_127ecabc",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edc90d89_9a96db73",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38c068e2_c65a8634",
@@ -272,6 +506,24 @@
       "writtenOn": "2024-07-20T03:05:29Z",
       "side": 1,
       "message": "If at any point it becomes annoying to maintain the GN version of this, I\u0027m happy to delete it. For now we can keep it, just in case we get a chance to make it work with CanvasKit.",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bb58b18_982c9282",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "38c068e2_c65a8634",
       "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -293,6 +545,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecc0715c_9dfef5c6",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "This kind of block is also littered through our generator CMakefiles and stuff. I can try to remove all of them in a follow up CL. Also see comment below also related to CMake versioning.",
+      "parentUuid": "5ccce7fa_e1794f77",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5bff0a64_050d1473",
@@ -306,6 +576,24 @@
       "writtenOn": "2024-07-20T03:05:29Z",
       "side": 1,
       "message": "nit: Could possibly use `${CMAKE_COMMAND} -E cat` for this (requires 3.18) - especially if we remove the gn build and there\u0027s no need for concat.py anymore.\nhttps://stackoverflow.com/a/62362885\n\nThere\u0027s also a more complicated version earlier on that page that I assume works before 3.18.",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2c83795_0e6282d5",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-23T20:35:30Z",
+      "side": 1,
+      "message": "Added a TODO for this for now! Will handle in the follow up to clean up the GENERATED stuff since both need to bump the Cmake verison requirements. Note that according to https://github.com/google/oss-policies-info/blob/main/foundational-cxx-support-matrix.md which is in our top level `CMakeLists.txt` though, it seems like we can only bump the version up to 3.16 at most which won\u0027t be enough to support either of the changes.",
+      "parentUuid": "5bff0a64_050d1473",
       "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
