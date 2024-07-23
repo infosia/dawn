@@ -1,0 +1,440 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02863aa4_013df96b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "Overall this is looking great! Some initial comments. To make it easier to review and land this, I suggest we split it into multiple changes. I suggest:\n 1. Vulkan only first, with some simple correctness tests and validation tests. This is because for Vulkan, first vertex / first instance already works. You should be able to test correctness, as well as all of the frontend synchronous validation rules.\n 2. Then in separate parallel CLs you can:\n   (a) add support for D3D12, with any changes needed for first vertex/instance\n   (b) add support for Metal. They should be mostly independent.\n   (c) write CTS tests to check the correctness of the GPU-based validation.\n       This will let you further validate the correctness of the GPU validation and Metal-specific validation",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68bd10f2_4ec8775e",
+        "filename": "src/dawn/native/CommandBuffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "nit: should this DAWN_ASSERT the old one is empty? otherwise we may accidentally overwrite it.",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4266a186_f307c328",
+        "filename": "src/dawn/native/CommandBuffer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "nit: probably you want to take an rvalue reference, so it\u0027s clear the old contents are moved-from\n\n\n\n```suggestion\n    void SetIndirectDrawMetadatas(std::vector\u003cIndirectDrawMetadata\u003e\u0026\u0026 metadatas);\n```",
+      "range": {
+        "startLine": 69,
+        "startChar": 34,
+        "endLine": 69,
+        "endChar": 78
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "125241d5_c6773045",
+        "filename": "src/dawn/native/CommandBuffer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "nit: better to make this private, and add a getter (similar to GetResourceUsages())",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 61
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc2e875a_0432bbae",
+        "filename": "src/dawn/native/CommandBufferStateTracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "nit: instead of BufferBase* it should be raw_ptr\u003cBufferBase\u003e. Also, initialize it to null.\n\nBut, for the same reasons as the comment below, you\u0027ll probably want to make this:\n\n`RAW_PTR_EXCLUSION BufferBase* mIndexBuffer \u003d nullptr;`",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 16
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62573ca4_5e4a067b",
+        "filename": "src/dawn/native/CommandEncoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "ditto: \n```suggestion\n    void AddIndirectDrawMetadata(IndirectDrawMetadata\u0026\u0026 metadata);\n```",
+      "range": {
+        "startLine": 68,
+        "startChar": 33,
+        "endLine": 68,
+        "endChar": 63
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d36df18d_e72f005e",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "can we return a const vector and make the method const?\n\nin general, getters should be const",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 60
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f1d5c78_bfa8ec2f",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "this shader appears to have a lot of similarity to the one above. Would it be possible  to share functionality between them? Hopefully the multi-draw case can handle the single-draw case by setting drawCount \u003d 1.\n\nIt would be OK as well to put the sources into the same wgpu::ShaderModule, so you can share helper functions; with two different entrypoints (it doesn\u0027t have to be called \"main\"). You can choose the entrypoint at [1]:\n\n```\n@compute @workgroup_size(kWorkgroupSize, 1, 1)\nfn validate_single_draw(...) {\n}\n\n@compute @workgroup_size(kWorkgroupSize, 1, 1)\nfn validate_multi_draw(...) {\n}\n```",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b06e59e_267978a0",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "[2]",
+      "range": {
+        "startLine": 283,
+        "startChar": 12,
+        "endLine": 284,
+        "endChar": 13
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8b99bea_53bd2c11",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "[1]",
+      "range": {
+        "startLine": 364,
+        "startChar": 54,
+        "endLine": 364,
+        "endChar": 62
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20dd826f_0bc35680",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "this assertion is different from the one above. should it be something like:\n```\nDAWN_ASSERT(!device-\u003eShouldApplyIndexBufferOffsetToFirstIndex() ||\n                    device-\u003eGetLimits().v1.maxBufferSize \u003c 0x100000000u);\n```\nas well?\n\nthe comment is particularly valuable to have to explain things. We should copy it here or see if we can factor the two functions. For example, we can factor out the creation of store-\u003eindirectDrawValidationShader part assuming the wgpu::ShaderModule is the same, and then put the assertion in that creation function with it.",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "245b2f2d_9414bc0e",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "nit: I believe this can be a const\u0026 to avoid copying it.",
+      "range": {
+        "startLine": 693,
+        "startChar": 3,
+        "endLine": 693,
+        "endChar": 56
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d9f88a2_1f716086",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "nit: instead of the default case, prefer to list Undefined, and make that UNREACHABLE.\n\nThat way, if/when new index formats are added in the future, we\u0027ll get a compile error and remember to extend the code here.",
+      "range": {
+        "startLine": 763,
+        "startChar": 12,
+        "endLine": 764,
+        "endChar": 35
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a243ddbb_890eb555",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "shouldn\u0027t we dispatch something like `ceil(cmd-\u003emaxDrawCount / 64)` workgroups?\n\nThat will give us maxDrawCount invocations in the shader, allowing us to validate all the draws in parallel instead of having each invocation loop to validate multiple draws at [2].",
+      "range": {
+        "startLine": 798,
+        "startChar": 0,
+        "endLine": 798,
+        "endChar": 47
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15573553_55720440",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1632,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "nit: you could not name the variable instead of tagging it as unused\n\n\n\n```suggestion\n                iter-\u003eNextCommand\u003cMultiDrawIndirectCmd\u003e();\n```",
+      "range": {
+        "startLine": 1631,
+        "startChar": 16,
+        "endLine": 1632,
+        "endChar": 62
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "709b1d89_81fd8768",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "ditto:\n\n```suggestion\n                iter-\u003eNextCommand\u003cMultiDrawIndexedIndirectCmd\u003e();\n\n```",
+      "range": {
+        "startLine": 1644,
+        "startChar": 0,
+        "endLine": 1646,
+        "endChar": 0
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b1d6812_95ea30fc",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "nit: I think the metadata arg can be const",
+      "range": {
+        "startLine": 165,
+        "startChar": 55,
+        "endLine": 165,
+        "endChar": 85
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da494594_31e001ae",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "does the storage mode need to be Shared? or would Private work better?",
+      "range": {
+        "startLine": 201,
+        "startChar": 62,
+        "endLine": 201,
+        "endChar": 90
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4db923c7_4cf886a0",
+        "filename": "src/dawn/native/metal/RenderPipelineMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "the commented code seems reasonable to have",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 352,
+        "endChar": 0
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "392af121_b280a987",
+        "filename": "src/dawn/tests/end2end/MultiDrawIndirectTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T17:36:44Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2024 The Dawn \u0026 Tint Authors\n```",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
