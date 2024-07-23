@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "30acc067_a9bc212f",
+        "filename": "generator/templates/dawn/native/ProcTable.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-07-23T18:42:58Z",
+      "side": 1,
+      "message": "seems reasonable to me! here\u0027s the history on it https://github.com/webgpu-native/webgpu-headers/pull/3\n\n@cwallez@chromium.org",
+      "parentUuid": "d73ec99d_25687443",
+      "range": {
+        "startLine": 163,
+        "startChar": 45,
+        "endLine": 163,
+        "endChar": 51
+      },
+      "revId": "c2df5820dd145b352a35c7ed8b1c3c6a5cbc165d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc19316f_1acc81c7",
         "filename": "generator/templates/dawn/native/ProcTable.cpp",
         "patchSetId": 16
