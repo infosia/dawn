@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "951f21b8_56826d87",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-07-23T13:36:16Z",
+      "side": 1,
+      "message": "This stuff has all changed as you know, hope the merge is not too difficult.",
+      "revId": "88cb7ae4d44947668083da0fd29ed4bb9101f7e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
