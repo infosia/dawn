@@ -16,6 +16,74 @@
       "message": "Can I get a +2 or would you like another reviewer?",
       "revId": "a34ab8127ff12124a62285ebb5848a81fe6cfb53",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7e3a9cc_92117e45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-23T11:03:30Z",
+      "side": 1,
+      "message": "LGTM, couple of nits about naming and defaults for unhandled paths",
+      "revId": "a34ab8127ff12124a62285ebb5848a81fe6cfb53",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c3a5a08_54ac151c",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-23T11:03:30Z",
+      "side": 1,
+      "message": "Please add \"else\" logic here to assign converted-\u003e{name} to null if mObj was null",
+      "revId": "a34ab8127ff12124a62285ebb5848a81fe6cfb53",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fe13244_a9a2568f",
+        "filename": "generator/templates/art/structures.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-23T11:03:30Z",
+      "side": 1,
+      "message": "Please rename this to \"ToKotlin\"",
+      "revId": "a34ab8127ff12124a62285ebb5848a81fe6cfb53",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0e1416d_af617795",
+        "filename": "generator/templates/art/structures.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-07-23T11:03:30Z",
+      "side": 1,
+      "message": "Please rename this to \"ToNative\"",
+      "revId": "a34ab8127ff12124a62285ebb5848a81fe6cfb53",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
