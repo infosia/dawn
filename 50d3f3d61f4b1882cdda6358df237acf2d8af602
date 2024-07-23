@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b0df32b_525312bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-23T16:56:16Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "50d3f3d61f4b1882cdda6358df237acf2d8af602",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d8b07b2_7178221d",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2874,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-23T16:56:16Z",
+      "side": 1,
+      "message": "These whitespace characters are actually in the error messages, I have filed https://issues.chromium.org/issues/354735929 about cleaning these up.",
+      "revId": "50d3f3d61f4b1882cdda6358df237acf2d8af602",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
