@@ -155,6 +155,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fcf96437_eff83569",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-23T20:55:01Z",
+      "side": 1,
+      "message": "Good suggestion, that makes more sense. Followup is OK with me.",
+      "parentUuid": "fbfef990_2c8c8fab",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "93488bed_02eeff5b",
         "filename": "src/dawn/common/Assert.cpp",
         "patchSetId": 4
@@ -594,6 +612,24 @@
       "side": 1,
       "message": "Added a TODO for this for now! Will handle in the follow up to clean up the GENERATED stuff since both need to bump the Cmake verison requirements. Note that according to https://github.com/google/oss-policies-info/blob/main/foundational-cxx-support-matrix.md which is in our top level `CMakeLists.txt` though, it seems like we can only bump the version up to 3.16 at most which won\u0027t be enough to support either of the changes.",
       "parentUuid": "5bff0a64_050d1473",
+      "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50da509f_8f51ef8b",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-23T20:55:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c2c83795_0e6282d5",
       "revId": "2bd448722a7f28ce90a1c16494dabb2df6aa92b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

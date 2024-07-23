@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0faf593a_5da9e1cd",
+        "filename": "src/cmake/DawnLibrary.cmake",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-23T20:55:01Z",
+      "side": 1,
+      "message": "s/build/built",
+      "revId": "0b65129303ef980914a210470b2ce595aca3b98e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
