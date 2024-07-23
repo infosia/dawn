@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a67dde3_3260fc24",
+        "filename": "generator/templates/dawn/native/ProcTable.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-23T01:40:32Z",
+      "side": 1,
+      "message": "wait, why does GetProcAddress take a device? eglGetProcAddress only takes a string, for example. If anything I\u0027d think we need an instance here but I don\u0027t think we even want that - I\u0027d think you call GetProcAddress first, and use it to get CreateInstance and everything else.\n\n`GetProcAddressTests.cpp` implies that the device is nullable (though we\u0027re missing that annotation in the header), but when _would_ you need a device?",
+      "range": {
+        "startLine": 163,
+        "startChar": 45,
+        "endLine": 163,
+        "endChar": 51
+      },
+      "revId": "c2df5820dd145b352a35c7ed8b1c3c6a5cbc165d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc19316f_1acc81c7",
+        "filename": "generator/templates/dawn/native/ProcTable.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-23T01:40:32Z",
+      "side": 1,
+      "message": "technically this will not correctly handle if b has a null in the middle - it will cut it off there, then if it matches, return true. Same for the other five `strncmp`s, I think.\n\nMaybe just make make a `std::string_view` from `procName` so you can compare it with `a.name` etc directly?",
+      "revId": "c2df5820dd145b352a35c7ed8b1c3c6a5cbc165d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
