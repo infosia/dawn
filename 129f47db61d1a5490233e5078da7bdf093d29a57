@@ -16,6 +16,121 @@
       "message": "@lehoangquyen@chromium.org Please take a look first!\nI haven\u0027t thought about the similar implementation on Vulkan backend too much. If any hard obstacle already known to you, please point them out to me, thanks!",
       "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43a0c19d_b2068d25",
+        "filename": "docs/dawn/features/dawn_load_resolve_texture.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-23T07:44:48Z",
+      "side": 1,
+      "message": "I think this should probably be a separate extension. Because explicit resolve will need a separate render pass and require storing/loading the MSAA texture to/from memory. This is not desired on tiled based GPUs such as Apple Silicon.\n\nBy separating this into its own extension, we can enable it for D3D11 and disable it on Metal if Apple GPU is detected for example, and think about implementation on Metal \u0026 vulkan later. Bonus: We can disable it on Arm Windows as well.\n\nCorentin and Austin might have different opinions. But in general, I think this is not an universal feature that should be enabled to every GPU.",
+      "range": {
+        "startLine": 8,
+        "startChar": 15,
+        "endLine": 8,
+        "endChar": 52
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdd526e4_253fb44d",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-23T07:44:48Z",
+      "side": 1,
+      "message": "Does this mean this currently doesn\u0027t work with ResolveMultipleAttachmentInSeparatePasses workaround?",
+      "range": {
+        "startLine": 267,
+        "startChar": 21,
+        "endLine": 267,
+        "endChar": 62
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19304438_2167b30a",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-23T07:44:48Z",
+      "side": 1,
+      "message": "I think it is not important to fulfill the original storeOp here. There are currently only 2 StoreOp: Store and Discard. In Discard case, it\u0027s OK to let the content intact IMO.",
+      "range": {
+        "startLine": 273,
+        "startChar": 16,
+        "endLine": 273,
+        "endChar": 63
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de8e88d9_a2f4dee1",
+        "filename": "src/dawn/native/ResolveMultisampleWithDraw.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-23T07:44:48Z",
+      "side": 1,
+      "message": "I think this could be included in BlitColorToColorWithDraw.cpp. It does the same color -\u003e color blit anw, just different direction.",
+      "range": {
+        "startLine": 155,
+        "startChar": 42,
+        "endLine": 155,
+        "endChar": 68
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4023bd3c_63b89bc4",
+        "filename": "src/dawn/native/ResolveMultisampleWithDraw.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-23T07:44:48Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed here. `CanTextureLoadResolveTargetInTheSameRenderpass` checks whether textureLoad a resolve target without breaking the render pass is supported.\n\nHowever, in this method, we basically split the original render pass into two in which the second render pass loads the MSAA texture to the original resolve target.",
+      "range": {
+        "startLine": 162,
+        "startChar": 24,
+        "endLine": 162,
+        "endChar": 70
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
