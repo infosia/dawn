@@ -76,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37178851_b87492c8",
+        "filename": "src/dawn/native/CommandBuffer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-24T07:48:56Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "4266a186_f307c328",
+      "range": {
+        "startLine": 69,
+        "startChar": 34,
+        "endLine": 69,
+        "endChar": 78
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "125241d5_c6773045",
@@ -145,6 +169,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dc029a3_a1b5df48",
+        "filename": "src/dawn/native/CommandEncoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-24T07:48:56Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "62573ca4_5e4a067b",
+      "range": {
+        "startLine": 68,
+        "startChar": 33,
+        "endLine": 68,
+        "endChar": 63
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa42618e_a4a62c51",
@@ -192,6 +240,24 @@
       "writtenOn": "2024-07-24T05:27:46Z",
       "side": 1,
       "message": "Also needs a comment about why it will be valid - or maybe this could just be a `MultiDrawIndirectCmd` value instead of a pointer?",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c79ff975_c220ba87",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-24T07:48:56Z",
+      "side": 1,
+      "message": "Probably better to take a value.",
+      "parentUuid": "1463a8e8_9f76b381",
       "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -561,6 +627,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc369176_2e68f40a",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1632,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-24T07:48:56Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "15573553_55720440",
+      "range": {
+        "startLine": 1631,
+        "startChar": 16,
+        "endLine": 1632,
+        "endChar": 62
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "709b1d89_81fd8768",
@@ -574,6 +664,30 @@
       "writtenOn": "2024-07-23T17:36:44Z",
       "side": 1,
       "message": "ditto:\n\n```suggestion\n                iter-\u003eNextCommand\u003cMultiDrawIndexedIndirectCmd\u003e();\n\n```",
+      "range": {
+        "startLine": 1644,
+        "startChar": 0,
+        "endLine": 1646,
+        "endChar": 0
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06b76424_c0f53f9c",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-24T07:48:56Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "709b1d89_81fd8768",
       "range": {
         "startLine": 1644,
         "startChar": 0,
@@ -740,6 +854,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d963c728_69b1c8b3",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-24T07:48:56Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s good for the validation flag because it\u0027s not changed at runtime, for others we should keep the flags because they are dynamic.",
+      "parentUuid": "59479c78_30d2cdc7",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3b1d6812_95ea30fc",
         "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
         "patchSetId": 7
@@ -868,6 +1000,24 @@
       "writtenOn": "2024-07-24T05:27:46Z",
       "side": 1,
       "message": "µNit: this function has an unusually large number of blank lines in it",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c932635_902d5114",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-24T07:48:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3551dcb1_bfa346e8",
       "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
