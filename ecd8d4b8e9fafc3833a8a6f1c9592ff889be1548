@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "921163d6_c3ded0d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3455536
+      },
+      "writtenOn": "2024-07-24T14:13:29Z",
+      "side": 1,
+      "message": "Hi! Thanks so much for working on the fix. I think these variable names need to be updated otherwise the build fails with undeclared identifier \u0027count_\u0027",
+      "revId": "ecd8d4b8e9fafc3833a8a6f1c9592ff889be1548",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "908658d2_8d9c05ab",
+        "filename": "src/dawn/node/binding/AsyncRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3455536
+      },
+      "writtenOn": "2024-07-24T14:13:29Z",
+      "side": 1,
+      "message": "```suggestion\n    assert(tasks_waiting_ !\u003d std::numeric_limits\u003cdecltype(tasks_waiting_)\u003e::max());\n```",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 67
+      },
+      "revId": "ecd8d4b8e9fafc3833a8a6f1c9592ff889be1548",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
