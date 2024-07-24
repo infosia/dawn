@@ -16,6 +16,24 @@
       "message": "I assume you\u0027ve built all the necessary targets locally but just in case you haven\u0027t, see here for how I did it:\nhttps://dawn-review.googlesource.com/c/dawn/+/197794",
       "revId": "6df854bd7d1f1016942a9112051da1895171669d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b2a2fe9_d3a5dc13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-24T21:34:05Z",
+      "side": 1,
+      "message": "I did, but that\u0027s a much fancier way to do it in the future! Thanks!",
+      "parentUuid": "e83baad9_a753c2fc",
+      "revId": "6df854bd7d1f1016942a9112051da1895171669d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
