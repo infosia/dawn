@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27c29abf_00921bd7",
+        "filename": "docs/dawn/features/dawn_partial_load_resolve_texture.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-24T13:44:24Z",
+      "side": 1,
+      "message": "nit: I think we don\u0027t need to require clients to explicitly assign TextureBinding to the MSAA texture. We could just implicitly use `Texture::AddInternalUsage(TextureBinding)` if it is multisampled and DawnPartialLoadResolveTexture is enabled.\n\nThe reason it is needed for expanding is because Vulkan needs it for subpass inputs\u0027 usage and the subpass inputs\u0027 usage might not be optimal. However, for partial resolve, I think we can use Vulkan API\u0027s renderArea option directly (if we want to enable this feature in Vulkan in future), no need for additional usage. For other backends, we can just unconditionally AddInternalUsage(TextureBinding).",
+      "range": {
+        "startLine": 76,
+        "startChar": 232,
+        "endLine": 76,
+        "endChar": 246
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54681ce8_f3005220",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-24T13:44:24Z",
+      "side": 1,
+      "message": "nit: I think there is nothing special about this layout. We could just use default layout (setting `renderPipelineDesc.layout \u003d nullptr;`).",
+      "range": {
+        "startLine": 273,
+        "startChar": 43,
+        "endLine": 273,
+        "endChar": 66
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cbf9a8b_3c74603f",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-24T13:44:24Z",
+      "side": 1,
+      "message": "nit: Maybe rename this to `ResolveMultisampleWithDrawCallback`?",
+      "range": {
+        "startLine": 107,
+        "startChar": 42,
+        "endLine": 107,
+        "endChar": 68
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8642231_f3124fd9",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-24T13:44:24Z",
+      "side": 1,
+      "message": "I think this is a bit hard to read due to many conditions and reverse order of pushing. What do you think we change this to:\n```\nRenderPassColorAttachment msaaStorePassAttachment \u003d {};\nmsaaStorePassAttachment.view \u003d deferredResolve.copySrc.Get();\nmsaaStorePassAttachment.loadOp \u003d wgpu::LoadOp::Load;\nmsaaStorePassAttachment.storeOp \u003d deferredResolve.storeOp;\n\nif (partialResolve) {\n   auto resolvePassCallback \u003d ResolveMultisampleWithDraw(...);\n   \n   passEndOperations.emplace_back([\u003d]{\n      // Do partial resolve first in one render pass.\n      resolvePassCallback();\n      // Then fulfill the original store op for MSAA texture in another render\n      // pass.\n      // Note: no need to fulfill if the storeOp \u003d Store because we already do\n      // that in the main render pass.\n      if (deferredResolve.storeOp !\u003d wgpu::StoreOp::Store) {\n         // Start render pass with msaaStorePassAttachment\n         BeginRenderPass(...);\n         End(...);\n      }\n   });\n}\nelse {\n   passEndOperations.emplace_back([\u003d]{\n     // Resolve the MSAA texture into the resolve texture in a dedicated pass.\n     msaaStorePassAttachment.resolveTarget \u003d deferredResolve.copyDst.Get();\n     BeginRenderPass(...);\n     End(...);\n   });\n}\n```\n\nAlternatively, I think it\u0027s not necessary to fulfill the Discard storeOp by adding another render pass. We could simple call `texture-\u003eSetInitialized(false)`. WDYT Corentin \u0026 Austin?",
+      "range": {
+        "startLine": 251,
+        "startChar": 12,
+        "endLine": 285,
+        "endChar": 13
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7992aefa_e900df57",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-24T13:44:24Z",
+      "side": 1,
+      "message": "It might be good to update this comment to include the partial resolve in the order. Something like:\n- partial resolve.\n- store the MSAA texture.\n- copy from temp resolve to the actual resolve target?",
+      "range": {
+        "startLine": 291,
+        "startChar": 11,
+        "endLine": 291,
+        "endChar": 13
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
