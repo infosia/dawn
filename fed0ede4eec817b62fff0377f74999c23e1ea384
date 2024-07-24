@@ -33,6 +33,23 @@
       "message": "James: PTAL. Thanks!",
       "revId": "fed0ede4eec817b62fff0377f74999c23e1ea384",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0868120e_be66bca2",
+        "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-24T21:57:51Z",
+      "side": 1,
+      "message": "I think all structures that contain runtime sized arrays will also have the block attribute, so you could probably remove the `has_runtime_sized_array` variable and the logic used to set it, since this is the only place that it is used.",
+      "revId": "fed0ede4eec817b62fff0377f74999c23e1ea384",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
