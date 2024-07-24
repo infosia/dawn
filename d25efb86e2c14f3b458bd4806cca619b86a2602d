@@ -147,6 +147,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fa42618e_a4a62c51",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "Technically this is fine because Metal only ever runs on Apple platforms, but it does mean we\u0027ll allocate the extra metadata on Apple even when the backend is _not_ Metal. This can happen if we\u0027re using an OpenGL/ES backend or Vulkan software backend like SwiftShader.\n\nI don\u0027t know how to do `if (backend is metal)` here but I think that would be preferable.",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "501b4310_6037cb24",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "If this can\u0027t be `Ref\u003cBufferBase\u003e`, we should have a comment explaining why, and why the `raw_ptr` will be valid (what guarantees that the BufferBase will stay alive).",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1463a8e8_9f76b381",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "Also needs a comment about why it will be valid - or maybe this could just be a `MultiDrawIndirectCmd` value instead of a pointer?",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d36df18d_e72f005e",
         "filename": "src/dawn/native/IndirectDrawMetadata.h",
         "patchSetId": 7
@@ -262,6 +313,70 @@
       "writtenOn": "2024-07-23T17:36:44Z",
       "side": 1,
       "message": "this assertion is different from the one above. should it be something like:\n```\nDAWN_ASSERT(!device-\u003eShouldApplyIndexBufferOffsetToFirstIndex() ||\n                    device-\u003eGetLimits().v1.maxBufferSize \u003c 0x100000000u);\n```\nas well?\n\nthe comment is particularly valuable to have to explain things. We should copy it here or see if we can factor the two functions. For example, we can factor out the creation of store-\u003eindirectDrawValidationShader part assuming the wgpu::ShaderModule is the same, and then put the assertion in that creation function with it.",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "434f8799_cd63ff6c",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "+1 about the comment, even if you just move the single DAWN_ASSERT call out into its own function, that would be a good place for the comment.",
+      "parentUuid": "20dd826f_0bc35680",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aed7cddd_4e2b531f",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "nit: using digit separators makes this number easier to read: `0x1\u00270000\u00270000u`",
+      "range": {
+        "startLine": 378,
+        "startChar": 59,
+        "endLine": 378,
+        "endChar": 71
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2f8e6ef_9d8d84ff",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "Same here, the backend could actually be opengl or software vulkan.\n\n(also there is a typo: AAPLE -\u003e APPLE)",
+      "range": {
+        "startLine": 678,
+        "startChar": 7,
+        "endLine": 680,
+        "endChar": 26
+      },
       "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -385,6 +500,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "93d3feec_7695ddb8",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "This could overflow because `indirectOffset` could be a really large 64 bit number, and we could then add up to `UINT32_MAX * 16` to that.\n\nOne way to handle this is to first fail if:\n`indirectOffset \u003e indirectBuffer-\u003eGetSize()`\nthen fail if:\n`indirectBuffer-\u003eGetSize() - indirectOffset \u003c maxDrawCount * kDrawIndirectSize`.\n\n(Note: `maxDrawCount * kDrawIndirectSize` can\u0027t overflow, because `maxDrawCount` is 32-bit and `kDrawIndirectSize` is 64-bit so the result will be 64-bit.)",
+      "range": {
+        "startLine": 343,
+        "startChar": 49,
+        "endLine": 343,
+        "endChar": 98
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88e6550f_ad5cf307",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15573553_55720440",
         "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
         "patchSetId": 7
@@ -431,6 +586,160 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5d751904_1fc11cf4",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "I don\u0027t remember Objective-C very well, but I think these are basically raw pointers. Looking at some other Dawn code I think we need `NSPRef\u003cid\u003c...\u003e\u003e` to keep a strong ref.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 44
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b892b57e_10e93030",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "same here, and for raw_ptr too.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 37
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a1e4d09_16134e7b",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "nit: shader has some minor formatting issues, maybe feed it through a C++ autoformatter and then manually fix anything it gets wrong (due to Metal extensions to C++)",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4a28d77_16e28e47",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "Comment that this may be a pointer to either `uint16_t` or `uint32_t`. Maybe even use `void*` here if that\u0027s allowed.",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86e609fe_00d0a203",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "nit: always use braces for if/else. Maybe even use braces for all blocks: since this code doesn\u0027t get autoformatted, it\u0027s easy to get confused by wrong indentation.",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d611b798_49825541",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "I _think_ these while loops are correct, but they\u0027re pretty complicated. Comment how it works? e.g. if I got it right:\n\n```\n\t// There are exactly 64 threads (with automatic threadgroups). Each\n\t// thread i processes the draw calls at indices 0*64+i, 1*64+i, 2*64+i,\n\t// and so on until it passes drawCount (the end of the input).\n\t// The first n%64 threads run one more loop than the rest.\n```\n\nIf you got this pattern from some Metal sample program it would also be handy to leave a link to it in a comment (just in case we ever need to consult it).",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ddb8bfc_412571d6",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "nit: should be on one line, here and elsewhere",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59479c78_30d2cdc7",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "I think we could use a `function_constant` bool to control this instead of a runtime flag, since each device should only need one or the other. Then there would be zero overhead when validation is disabled. Example:\nhttps://developer.apple.com/documentation/metal/using_function_specialization_to_build_pipeline_variants?language\u003dobjc\n\nWe could do this for the other two flags, but it would require building 4 pipelines which I think is probably not a good tradeoff.",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3b1d6812_95ea30fc",
         "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
         "patchSetId": 7
@@ -442,6 +751,30 @@
       "writtenOn": "2024-07-23T17:36:44Z",
       "side": 1,
       "message": "nit: I think the metadata arg can be const",
+      "range": {
+        "startLine": 165,
+        "startChar": 55,
+        "endLine": 165,
+        "endChar": 85
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ba9c782_626b5e33",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "const reference (`const\u0026`) even?",
+      "parentUuid": "3b1d6812_95ea30fc",
       "range": {
         "startLine": 165,
         "startChar": 55,
@@ -501,6 +834,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "80a472dc_6a724fec",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "nit: These lines look the same between the two cases. Factor them out of the switch?",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 89
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3551dcb1_bfa346e8",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "µNit: this function has an unusually large number of blank lines in it",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4db923c7_4cf886a0",
         "filename": "src/dawn/native/metal/RenderPipelineMTL.mm",
         "patchSetId": 7
@@ -512,6 +885,30 @@
       "writtenOn": "2024-07-23T17:36:44Z",
       "side": 1,
       "message": "the commented code seems reasonable to have",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 352,
+        "endChar": 0
+      },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "228f63e5_519c067d",
+        "filename": "src/dawn/native/metal/RenderPipelineMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "Agree, but I\u0027m not sure why Metal provides this control. Why aren\u0027t they just always supported? Maybe there\u0027s some performance cost to them.\n\nInspired me to add a note to the spec: https://github.com/gpuweb/gpuweb/pull/4778",
+      "parentUuid": "4db923c7_4cf886a0",
       "range": {
         "startLine": 349,
         "startChar": 0,
@@ -589,6 +986,40 @@
         "endLine": 1,
         "endChar": 17
       },
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "623f6703_fda0e060",
+        "filename": "src/dawn/tests/end2end/MultiDrawIndirectTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "nit: Move the `useDrawBuffer` condition here instead of below, since we don\u0027t need to create it if it\u0027s not used.",
+      "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3730192c_efb04165",
+        "filename": "src/dawn/tests/end2end/MultiDrawIndirectTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T05:27:46Z",
+      "side": 1,
+      "message": "We should work around this bug in `PhysicalDeviceVk.cpp` (`gpu_info::IsGoogleSwiftshader()`), so that we don\u0027t expose MultiDrawIndirect on SwiftShader at all. Then these suppressions shouldn\u0027t be needed anymore.\n\nIt is possible to enable the SwiftShader backend in Chrome (only behind `chrome://flags/#enable-unsafe-webgpu`, but still), so this would help people who use that configuration, for example for testing.",
       "revId": "d25efb86e2c14f3b458bd4806cca619b86a2602d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
