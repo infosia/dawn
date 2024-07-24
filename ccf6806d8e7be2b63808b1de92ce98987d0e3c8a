@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "35ecd154_c988f623",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T21:37:09Z",
+      "side": 1,
+      "message": "I do think \u003c\u003e makes a bit more sense for samples and maybe tests since we are building them like they\u0027re outside customers of Dawn (and Emscripten) rather than part of Dawn.\n\nIf we follow that reasoning, then consistency seems reasonable. We _could_ make a distinction between internal and external usages, or standard vs dawn-specific clients, but given there\u0027s no split between those things right now we will just have to revisit that later.",
+      "parentUuid": "c341d10a_f6716acf",
+      "revId": "ccf6806d8e7be2b63808b1de92ce98987d0e3c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9dd396c0_2f60ab26",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
