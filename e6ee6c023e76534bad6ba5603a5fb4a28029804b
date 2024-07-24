@@ -34,6 +34,24 @@
       ],
       "revId": "e6ee6c023e76534bad6ba5603a5fb4a28029804b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1b0a9fb_dda5f927",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-24T11:50:02Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "5e24d536_6afc8327",
+      "revId": "e6ee6c023e76534bad6ba5603a5fb4a28029804b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
