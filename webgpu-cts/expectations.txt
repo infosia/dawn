@@ -81,7 +81,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-07-19 11:35:12AM
+# Last rolled: 2024-07-24 08:05:48PM
 
 # SharedImage interop failures on Linux
 # Skipped instead of just Crash because of the number of failures
@@ -1157,7 +1157,7 @@ crbug.com/tint/2171 [ intel-0x9bc5 ubuntu ] webgpu:shader,execution,expression,c
 crbug.com/tint/2205 [ webgpu-dxc-disabled win10 ] webgpu:shader,execution,memory_model,barrier:workgroup_barrier_load_store:accessValueType="u32";memType="non_atomic_texture";accessPair="rw";normalBarrier=true [ Failure ]
 
 # macOS + AMD failures with storage buffer of tightly-packed f16 values
-crbug.com/tint/2211 [ mac amd ] webgpu:shader,execution,expression,call,builtin,tanh:f16:* [ Failure ]
+crbug.com/tint/2211 [ amd mac ] webgpu:shader,execution,expression,call,builtin,tanh:f16:* [ Failure ]
 
 # Flip video tests failing
 # Related PRs:
