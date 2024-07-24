@@ -16,6 +16,23 @@
       "message": "PTAL\n\n(per my OOB comments, making a unittest that exercises this specific behaviour is a bit of a pain, and the general validation error is already being caught, just making sure that the logging doesn\u0027t crash)",
       "revId": "36bcb979b3fe821b18898e5502186fb9ae2eeea4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1df8ac1a_a3fbc717",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-07-24T19:24:38Z",
+      "side": 1,
+      "message": "this is at the edge of complexity before I\u0027d want to see this expression broken up into a few const declarations then the AddError.",
+      "revId": "36bcb979b3fe821b18898e5502186fb9ae2eeea4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
