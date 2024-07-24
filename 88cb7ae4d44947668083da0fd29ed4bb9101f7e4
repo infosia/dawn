@@ -33,6 +33,24 @@
       "message": "This stuff has all changed as you know, hope the merge is not too difficult.",
       "revId": "88cb7ae4d44947668083da0fd29ed4bb9101f7e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdfced14_dc0665a8",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-24T09:19:51Z",
+      "side": 1,
+      "message": "It seems like it went fine.",
+      "parentUuid": "951f21b8_56826d87",
+      "revId": "88cb7ae4d44947668083da0fd29ed4bb9101f7e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
