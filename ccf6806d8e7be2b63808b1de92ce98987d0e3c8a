@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c341d10a_f6716acf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-24T21:30:14Z",
+      "side": 1,
+      "message": "I\u0027m happy with either styles, I had briefly asked Austin before and he said \u003c\u003e was better. We had a mix of both types where some places used \u003c\u003e and others used \"\" so I just wanted to standardize it while I\u0027m doing the change.",
+      "parentUuid": "8a960386_56ca7cc4",
+      "revId": "ccf6806d8e7be2b63808b1de92ce98987d0e3c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9dd396c0_2f60ab26",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -49,6 +67,24 @@
       "writtenOn": "2024-07-24T21:24:07Z",
       "side": 1,
       "message": "No changes needed to the include directories? \"webgpu/webgpu_cpp.h\" already points to the correct one depending on whether it\u0027s an emscripten build?",
+      "revId": "ccf6806d8e7be2b63808b1de92ce98987d0e3c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94f71ba8_7a26a369",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-24T21:30:14Z",
+      "side": 1,
+      "message": "Yup!",
+      "parentUuid": "9dd396c0_2f60ab26",
       "revId": "ccf6806d8e7be2b63808b1de92ce98987d0e3c8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -66,6 +102,24 @@
       "writtenOn": "2024-07-24T08:43:08Z",
       "side": 1,
       "message": "nit: this one doesn\u0027t use \u003c\u003e",
+      "revId": "ccf6806d8e7be2b63808b1de92ce98987d0e3c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c6d8a7b_7679c639",
+        "filename": "generator/templates/dawn/fuzzers/lpmfuzz/DawnLPMSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-24T21:30:14Z",
+      "side": 1,
+      "message": "Oops, good catch!",
+      "parentUuid": "a49ad038_32033de0",
       "revId": "ccf6806d8e7be2b63808b1de92ce98987d0e3c8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
