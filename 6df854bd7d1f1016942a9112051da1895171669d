@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e83baad9_a753c2fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T21:32:09Z",
+      "side": 1,
+      "message": "I assume you\u0027ve built all the necessary targets locally but just in case you haven\u0027t, see here for how I did it:\nhttps://dawn-review.googlesource.com/c/dawn/+/197794",
+      "revId": "6df854bd7d1f1016942a9112051da1895171669d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
