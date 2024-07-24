@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "394f8d5a_f3e4a117",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-24T19:09:57Z",
+      "side": 1,
+      "message": "PTAL\n\n(per my OOB comments, making a unittest that exercises this specific behaviour is a bit of a pain, and the general validation error is already being caught, just making sure that the logging doesn\u0027t crash)",
+      "revId": "36bcb979b3fe821b18898e5502186fb9ae2eeea4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
