@@ -16,6 +16,58 @@
       "message": "PTAL",
       "revId": "b3ca06d8f76ffaa6a030c8f19ec48ddd58568be9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5f69a25_c21e4d0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-24T17:36:00Z",
+      "side": 1,
+      "message": "LGTM with one small change.",
+      "revId": "b3ca06d8f76ffaa6a030c8f19ec48ddd58568be9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbdcdc08_6b2065f9",
+        "filename": "src/tint/lang/wgsl/ir_roundtrip_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-24T17:36:00Z",
+      "side": 1,
+      "message": "Can we drop the `tint_build_ir_binary` requirement now?",
+      "fixSuggestions": [
+        {
+          "fixId": "ae5dade9_19d0d0bc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/ir_roundtrip_fuzz.cc",
+              "range": {
+                "startLine": 28,
+                "startChar": 0,
+                "endLine": 29,
+                "endChar": 0
+              },
+              "replacement": "// GEN_BUILD:CONDITION(tint_build_wgsl_reader \u0026\u0026 tint_build_wgsl_writer)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b3ca06d8f76ffaa6a030c8f19ec48ddd58568be9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
