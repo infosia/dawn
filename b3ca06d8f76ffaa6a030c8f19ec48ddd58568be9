@@ -86,6 +86,24 @@
       "parentUuid": "fbdcdc08_6b2065f9",
       "revId": "b3ca06d8f76ffaa6a030c8f19ec48ddd58568be9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a43ac9e_e88b7075",
+        "filename": "src/tint/lang/wgsl/ir_roundtrip_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-24T17:42:51Z",
+      "side": 1,
+      "message": "Yes, my bad. I was thinking this was a flag for building IR support in general, not the IR binary support.",
+      "parentUuid": "fbdcdc08_6b2065f9",
+      "revId": "b3ca06d8f76ffaa6a030c8f19ec48ddd58568be9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
