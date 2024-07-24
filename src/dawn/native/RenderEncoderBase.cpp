@@ -311,6 +311,133 @@ void RenderEncoderBase::APIDrawIndexedIndirect(BufferBase* indirectBuffer,
         "encoding %s.DrawIndexedIndirect(%s, %u).", this, indirectBuffer, indirectOffset);
 }
 
+void RenderEncoderBase::APIMultiDrawIndirect(BufferBase* indirectBuffer,
+                                             uint64_t indirectOffset,
+                                             uint32_t maxDrawCount,
+                                             BufferBase* drawCountBuffer,
+                                             uint64_t drawCountBufferOffset) {
+    mEncodingContext->TryEncode(
+        this,
+        [&](CommandAllocator* allocator) -> MaybeError {
+            if (IsValidationEnabled()) {
+                DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::MultiDrawIndirect),
+                                "%s is not enabled.", wgpu::FeatureName::MultiDrawIndirect);
+
+                DAWN_TRY(GetDevice()->ValidateObject(indirectBuffer));
+                DAWN_TRY(ValidateCanUseAs(indirectBuffer, wgpu::BufferUsage::Indirect));
+
+                // draw count buffer is optional
+                if (drawCountBuffer != nullptr) {
+                    DAWN_TRY(GetDevice()->ValidateObject(drawCountBuffer));
+                    DAWN_TRY(ValidateCanUseAs(drawCountBuffer, wgpu::BufferUsage::Indirect));
+
+                    DAWN_INVALID_IF(drawCountBufferOffset % 4 != 0,
+                                    "Draw count buffer offset (%u) is not a multiple of 4.",
+                                    drawCountBufferOffset);
+                }
+
+                DAWN_INVALID_IF(indirectOffset % 4 != 0,
+                                "Indirect offset (%u) is not a multiple of 4.", indirectOffset);
+
+                DAWN_INVALID_IF(
+                    indirectOffset > indirectBuffer->GetSize(),
+                    "Indirect offset (%u) is larger than the size (%u) of the indirect buffer.",
+                    indirectOffset, indirectBuffer->GetSize(), indirectBuffer);
+
+                DAWN_INVALID_IF(
+                    indirectBuffer->GetSize() - indirectOffset < maxDrawCount * kDrawIndirectSize,
+                    "Indirect Buffer size out of range");
+
+                DAWN_TRY(mCommandBufferState.ValidateCanDraw());
+
+                if (GetDevice()->IsCompatibilityMode()) {
+                    DAWN_TRY(mCommandBufferState.ValidateNoDifferentTextureViewsOnSameTexture());
+                }
+            }
+
+            MultiDrawIndirectCmd* cmd =
+                allocator->Allocate<MultiDrawIndirectCmd>(Command::MultiDrawIndirect);
+
+            cmd->indirectBuffer = indirectBuffer;
+            cmd->indirectOffset = indirectOffset;
+            cmd->maxDrawCount = maxDrawCount;
+            cmd->drawCountBuffer = drawCountBuffer;
+            cmd->drawCountOffset = drawCountBufferOffset;
+
+            mIndirectDrawMetadata.AddIndirectMultiDraw(cmd);
+
+            mUsageTracker.BufferUsedAs(indirectBuffer, wgpu::BufferUsage::Indirect);
+
+            return {};
+        },
+        "encoding %s.MultiDrawIndirect(%s, %u, %u, %s, %u).", this, indirectBuffer, indirectOffset,
+        maxDrawCount, drawCountBuffer, drawCountBufferOffset);
+}
+
+void RenderEncoderBase::APIMultiDrawIndexedIndirect(BufferBase* indirectBuffer,
+                                                    uint64_t indirectOffset,
+                                                    uint32_t maxDrawCount,
+                                                    BufferBase* drawCountBuffer,
+                                                    uint64_t drawCountBufferOffset) {
+    mEncodingContext->TryEncode(
+        this,
+        [&](CommandAllocator* allocator) -> MaybeError {
+            if (IsValidationEnabled()) {
+                DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::MultiDrawIndirect),
+                                "%s is not enabled.", wgpu::FeatureName::MultiDrawIndirect);
+
+                DAWN_TRY(GetDevice()->ValidateObject(indirectBuffer));
+                DAWN_TRY(ValidateCanUseAs(indirectBuffer, wgpu::BufferUsage::Indirect));
+
+                // draw count buffer is optional
+                if (drawCountBuffer != nullptr) {
+                    DAWN_TRY(GetDevice()->ValidateObject(drawCountBuffer));
+                    DAWN_TRY(ValidateCanUseAs(drawCountBuffer, wgpu::BufferUsage::Indirect));
+
+                    DAWN_INVALID_IF(drawCountBufferOffset % 4 != 0,
+                                    "Draw count buffer offset (%u) is not a multiple of 4.",
+                                    drawCountBufferOffset);
+                }
+
+                DAWN_INVALID_IF(indirectOffset % 4 != 0,
+                                "Indirect offset (%u) is not a multiple of 4.", indirectOffset);
+
+                DAWN_INVALID_IF(
+                    indirectOffset > indirectBuffer->GetSize(),
+                    "Indirect offset (%u) is larger than the size (%u) of the indirect buffer.",
+                    indirectOffset, indirectBuffer->GetSize(), indirectBuffer);
+
+                DAWN_INVALID_IF(indirectBuffer->GetSize() - indirectOffset <
+                                    maxDrawCount * kDrawIndexedIndirectSize,
+                                "Indirect Buffer size out of range");
+
+                DAWN_TRY(mCommandBufferState.ValidateCanDrawIndexed());
+
+                if (GetDevice()->IsCompatibilityMode()) {
+                    DAWN_TRY(mCommandBufferState.ValidateNoDifferentTextureViewsOnSameTexture());
+                }
+            }
+
+            MultiDrawIndexedIndirectCmd* cmd =
+                allocator->Allocate<MultiDrawIndexedIndirectCmd>(Command::MultiDrawIndexedIndirect);
+
+            mIndirectDrawMetadata.AddIndirectIndexedMultiDraw(
+                mCommandBufferState.GetIndexBuffer(), mCommandBufferState.GetIndexFormat(),
+                mCommandBufferState.GetIndexBufferSize(),
+                mCommandBufferState.GetIndexBufferOffset(), cmd);
+
+            cmd->indirectBuffer = indirectBuffer;
+            cmd->indirectOffset = indirectOffset;
+            cmd->maxDrawCount = maxDrawCount;
+            cmd->drawCountBuffer = drawCountBuffer;
+            cmd->drawCountOffset = drawCountBufferOffset;
+
+            return {};
+        },
+        "encoding %s.MultiDrawIndexedIndirect(%s, %u, %u, %s, %u).", this, indirectBuffer,
+        indirectOffset, maxDrawCount, drawCountBuffer, drawCountBufferOffset);
+}
+
 void RenderEncoderBase::APISetPipeline(RenderPipelineBase* pipeline) {
     mEncodingContext->TryEncode(
         this,
@@ -388,7 +515,7 @@ void RenderEncoderBase::APISetIndexBuffer(BufferBase* buffer,
                 }
             }
 
-            mCommandBufferState.SetIndexBuffer(format, offset, size);
+            mCommandBufferState.SetIndexBuffer(buffer, format, offset, size);
 
             SetIndexBufferCmd* cmd =
                 allocator->Allocate<SetIndexBufferCmd>(Command::SetIndexBuffer);

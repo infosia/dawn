@@ -68,7 +68,10 @@ class CommandBufferStateTracker {
                       BindGroupBase* bindgroup,
                       uint32_t dynamicOffsetCount,
                       const uint32_t* dynamicOffsets);
-    void SetIndexBuffer(wgpu::IndexFormat format, uint64_t offset, uint64_t size);
+    void SetIndexBuffer(BufferBase* buffer,
+                        wgpu::IndexFormat format,
+                        uint64_t offset,
+                        uint64_t size);
     void UnsetVertexBuffer(VertexBufferSlot slot);
     void SetVertexBuffer(VertexBufferSlot slot, uint64_t size);
     void End();
@@ -82,6 +85,7 @@ class CommandBufferStateTracker {
     RenderPipelineBase* GetRenderPipeline() const;
     ComputePipelineBase* GetComputePipeline() const;
     PipelineLayoutBase* GetPipelineLayout() const;
+    BufferBase* GetIndexBuffer() const;
     wgpu::IndexFormat GetIndexFormat() const;
     uint64_t GetIndexBufferSize() const;
     uint64_t GetIndexBufferOffset() const;
@@ -112,6 +116,7 @@ class CommandBufferStateTracker {
     RAW_PTR_EXCLUSION PipelineLayoutBase* mLastPipelineLayout = nullptr;
     RAW_PTR_EXCLUSION PipelineBase* mLastPipeline = nullptr;
     RAW_PTR_EXCLUSION const RequiredBufferSizes* mMinBufferSizes = nullptr;
+    RAW_PTR_EXCLUSION BufferBase* mIndexBuffer = nullptr;
 };
 
 }  // namespace dawn::native
