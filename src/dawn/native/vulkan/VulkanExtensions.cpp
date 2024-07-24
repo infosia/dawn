@@ -235,6 +235,7 @@ DeviceExtSet EnsureDependencies(const DeviceExtSet& advertisedExts,
             case DeviceExt::Maintenance2:
             case DeviceExt::ImageFormatList:
             case DeviceExt::StorageBufferStorageClass:
+            case DeviceExt::DrawIndirectCount:
                 hasDependencies = true;
                 break;
 
