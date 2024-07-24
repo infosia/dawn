@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42e74a78_7c00a8b8",
+        "filename": "docs/dawn/features/dawn_load_resolve_texture.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-24T09:18:43Z",
+      "side": 1,
+      "message": "Makes sense to me, thanks!\nA separate feature \u0027dawn-partial-load-resolve-texture\u0027 added!",
+      "parentUuid": "43a0c19d_b2068d25",
+      "range": {
+        "startLine": 8,
+        "startChar": 15,
+        "endLine": 8,
+        "endChar": 52
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fdd526e4_253fb44d",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-07-23T07:44:48Z",
       "side": 1,
       "message": "Does this mean this currently doesn\u0027t work with ResolveMultipleAttachmentInSeparatePasses workaround?",
+      "range": {
+        "startLine": 267,
+        "startChar": 21,
+        "endLine": 267,
+        "endChar": 62
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "181d4605_d3a7bfa2",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-24T09:18:43Z",
+      "side": 1,
+      "message": "You are right.\nIn terms of functionality, they are basically same, respectively partial size and full size. We should only run either one. I managed to merge them under the same `splitResolvesIntoSeparatePasses`.",
+      "parentUuid": "fdd526e4_253fb44d",
       "range": {
         "startLine": 267,
         "startChar": 21,
@@ -89,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "58add398_72f1a504",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-24T09:18:43Z",
+      "side": 1,
+      "message": "The existing ResolveMultipleAttachmentInSeparatePasses does so for Discard as well.\nAccording to the WebGPU spec, Discard requires that it must be cleared before next use. Probably we shouldn\u0027t skip it here.",
+      "parentUuid": "19304438_2167b30a",
+      "range": {
+        "startLine": 273,
+        "startChar": 16,
+        "endLine": 273,
+        "endChar": 63
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "de8e88d9_a2f4dee1",
         "filename": "src/dawn/native/ResolveMultisampleWithDraw.cpp",
         "patchSetId": 6
@@ -100,6 +172,30 @@
       "writtenOn": "2024-07-23T07:44:48Z",
       "side": 1,
       "message": "I think this could be included in BlitColorToColorWithDraw.cpp. It does the same color -\u003e color blit anw, just different direction.",
+      "range": {
+        "startLine": 155,
+        "startChar": 42,
+        "endLine": 155,
+        "endChar": 68
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e47ed6a1_a441cb8d",
+        "filename": "src/dawn/native/ResolveMultisampleWithDraw.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-24T09:18:43Z",
+      "side": 1,
+      "message": "Sounds good, done!",
+      "parentUuid": "de8e88d9_a2f4dee1",
       "range": {
         "startLine": 155,
         "startChar": 42,
@@ -123,6 +219,30 @@
       "writtenOn": "2024-07-23T07:44:48Z",
       "side": 1,
       "message": "I don\u0027t think this is needed here. `CanTextureLoadResolveTargetInTheSameRenderpass` checks whether textureLoad a resolve target without breaking the render pass is supported.\n\nHowever, in this method, we basically split the original render pass into two in which the second render pass loads the MSAA texture to the original resolve target.",
+      "range": {
+        "startLine": 162,
+        "startChar": 24,
+        "endLine": 162,
+        "endChar": 70
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d4ef1bb_d0beaef3",
+        "filename": "src/dawn/native/ResolveMultisampleWithDraw.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-24T09:18:43Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "4023bd3c_63b89bc4",
       "range": {
         "startLine": 162,
         "startChar": 24,
