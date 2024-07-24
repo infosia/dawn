@@ -68,6 +68,24 @@
       ],
       "revId": "b3ca06d8f76ffaa6a030c8f19ec48ddd58568be9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82ee4a43_c58f64cf",
+        "filename": "src/tint/lang/wgsl/ir_roundtrip_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-24T17:36:49Z",
+      "side": 1,
+      "message": "Sorry, misread the diff. Why was the `tint_build_ir_binary` requirement added?",
+      "parentUuid": "fbdcdc08_6b2065f9",
+      "revId": "b3ca06d8f76ffaa6a030c8f19ec48ddd58568be9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
