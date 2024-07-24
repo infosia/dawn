@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc0a97a3_4f36afa5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-24T08:43:08Z",
+      "side": 1,
+      "message": "Can we remove the forwarding headers from dawn/ at some point?\n\nBut also I\u0027m not sure I understand why \u003c\u003e makes it more clear that it is from the include directory. My understanding is that \u003c\u003e is used for system includes, which don\u0027t get warnings applied, but otherwise code should use \"\".",
+      "revId": "ccf6806d8e7be2b63808b1de92ce98987d0e3c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a49ad038_32033de0",
+        "filename": "generator/templates/dawn/fuzzers/lpmfuzz/DawnLPMSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-24T08:43:08Z",
+      "side": 1,
+      "message": "nit: this one doesn\u0027t use \u003c\u003e",
+      "revId": "ccf6806d8e7be2b63808b1de92ce98987d0e3c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
