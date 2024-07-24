@@ -20,6 +20,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8a960386_56ca7cc4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T21:24:07Z",
+      "side": 1,
+      "message": "\u003e Can we remove the forwarding headers from dawn/ at some point?\n\nI think to do that we would move dawn/webgpu.h to webgpu/webgpu.h. However currently there is a lot of dawn-specific stuff in that file so I have been unsure about whether we would want to do that, vs having a \"standard\" webgpu/webgpu.h and a \"dawn-specific\" dawn/webgpu.h, which probably includes webgpu/webgpu.h and then defines extra stuff.\n\nI have no real feelings about \u003c\u003e vs \"\" though we do use \"\" for almost everything in Dawn right now. Really _all_ of our includes are from an include directory, I don\u0027t think we ever use relative includes. The include directory is just the source root in most cases.\n\nI did see here that MSVC at least has options to control warnings by whether \u003c\u003e or \"\" is used: https://stackoverflow.com/questions/3162030/difference-between-angle-bracket-and-double-quotes-while-including-heade#comment106646743_3162067 so that seems like a fine distinction, and the only one really relevant to us (though it doesn\u0027t really answer the question)",
+      "parentUuid": "cc0a97a3_4f36afa5",
+      "revId": "ccf6806d8e7be2b63808b1de92ce98987d0e3c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dd396c0_2f60ab26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-07-24T21:24:07Z",
+      "side": 1,
+      "message": "No changes needed to the include directories? \"webgpu/webgpu_cpp.h\" already points to the correct one depending on whether it\u0027s an emscripten build?",
+      "revId": "ccf6806d8e7be2b63808b1de92ce98987d0e3c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a49ad038_32033de0",
         "filename": "generator/templates/dawn/fuzzers/lpmfuzz/DawnLPMSerializer.cpp",
         "patchSetId": 2
