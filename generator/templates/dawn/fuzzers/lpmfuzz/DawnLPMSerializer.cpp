@@ -58,7 +58,22 @@ namespace dawn::wire {
 
 //* Outputs the conversion code to put `in` in `out`
 {% macro convert_member(member, in, out, in_access="") %}
-    {% if member.type.category == "structure" or member.type.category == "callback info" %}
+    {% if member.type.name.get() == "string view" or member.type.name.get() == "nullable string view" %}
+        //* Custom conversion for string view types.
+        {% set memberName = as_varName(member.name) %}
+        {% set protoMember = as_protobufMemberName(member.name) %}
+        if (proto_record.has_{{protoMember}}()) {
+            auto memberLength = static_cast<unsigned int>({{member_length(member, "proto_record." + protoMember)}});
+            char* memberBuffer;
+            WIRE_TRY(serializeBuffer->NextN(memberLength, &memberBuffer));
+            memset(memberBuffer, 0, memberLength);
+            mutable_record->{{ memberName }}.data = memberBuffer;
+            mutable_record->{{ memberName }}.length = memberLength;
+        } else {
+            mutable_record->{{ memberName }}.data = nullptr;
+            mutable_record->{{ memberName }}.length = SIZE_MAX;
+        }
+    {% elif member.type.category == "structure" or member.type.category == "callback info" %}
         {{ convert_structure(member, in, out, in_access) }}
     {% elif member.type in by_category["bitmask"] %}
         {{ convert_bitmask(member, in, out, in_access) }}
@@ -250,9 +265,11 @@ namespace dawn::wire {
 
 //* Output structure conversion first because it is used by commands.
 {% for type in by_category["callback info"] + by_category["structure"] %}
-    {% set name = as_cType(type.name) %}
-    {% if type.name.CamelCase() not in client_side_structures %}
-        {{ write_record_conversion_helpers(type, name, type.members, False) }}
+    {% if type.name.get() != "string view" and type.name.get() != "nullable string view" %}
+        {% set name = as_cType(type.name) %}
+        {% if type.name.CamelCase() not in client_side_structures %}
+            {{ write_record_conversion_helpers(type, name, type.members, False) }}
+        {% endif %}
     {% endif %}
 {% endfor %}
 
