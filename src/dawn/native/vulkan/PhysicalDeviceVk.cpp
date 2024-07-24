@@ -261,6 +261,13 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         }
     }
 
+    // Swift shader reports that Multi Draw Indirect is not supported when the draw command is
+    // recorded.
+    if (!gpu_info::IsGoogleSwiftshader(mVendorId, mDeviceId) &&
+        mDeviceInfo.HasExt(DeviceExt::DrawIndirectCount)) {
+        EnableFeature(Feature::MultiDrawIndirect);
+    }
+
     // unclippedDepth=true translates to depthClamp=true, which implicitly disables clipping.
     if (mDeviceInfo.features.depthClamp == VK_TRUE) {
         EnableFeature(Feature::DepthClipControl);

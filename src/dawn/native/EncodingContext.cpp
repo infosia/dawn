@@ -158,6 +158,11 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
                 EncodeIndirectDrawValidationCommands(mDevice, commandEncoder, &usageTracker,
                                                      &indirectDrawMetadata),
                 { mPendingCommands = std::move(renderCommands); });
+
+            DAWN_TRY_WITH_CLEANUP(
+                EncodeIndirectMultiDrawValidationCommands(mDevice, commandEncoder, &usageTracker,
+                                                          &indirectDrawMetadata),
+                { mPendingCommands = std::move(renderCommands); });
         }
 
         CommitCommands(std::move(mPendingCommands));
