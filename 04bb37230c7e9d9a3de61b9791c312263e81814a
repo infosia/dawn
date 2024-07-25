@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8da7bf64_c8cc97a1",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6016,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-25T20:19:11Z",
+      "side": 1,
+      "message": "Whitespace is a KI,https://issues.chromium.org/issues/354735929",
+      "revId": "04bb37230c7e9d9a3de61b9791c312263e81814a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
