@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ab7089a_c78b2c49",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 0,
+      "message": "The reason why each code block is in order and separated is so that the logic can be understood for each workaround separately. Can we do the new workaround above and not touch this part? The new workaround for partial resolve would unset the resolveTarget so this workaround would happen to not be triggered.",
+      "revId": "16be0748ef57eb45f9faed5f00ebd0f1200ca297",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

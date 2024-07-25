@@ -191,6 +191,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cd27608d_1560aedc",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "I was confused as well by what\u0027s going on, the current approach is ok if we are very explicit as to what\u0027s happening, or we could add some specific command to mark a texture uninitialized in the command stream.",
+      "parentUuid": "22901210_afeeafc2",
+      "range": {
+        "startLine": 251,
+        "startChar": 12,
+        "endLine": 285,
+        "endChar": 13
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7992aefa_e900df57",
         "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
         "patchSetId": 8

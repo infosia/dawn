@@ -18,6 +18,114 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99cfa23f_c1973683",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "I didn\u0027t review tests just yet.",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaf93b96_01ffa410",
+        "filename": "docs/dawn/features/dawn_partial_load_resolve_texture.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "Can we have a description of 1) why we do this 2) that it is specific to D3D11 and 3) how it is implemented? Right now it will be very hard for someone reading this document to dig inside Dawn to understand what\u0027s going on.",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0a96d23_a28c3cb6",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "I don\u0027t think that we need an explicit cast because \"4\" will be a WGSL abstract int.",
+      "range": {
+        "startLine": 105,
+        "startChar": 44,
+        "endLine": 105,
+        "endChar": 51
+      },
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bbc29a1_419ea2f9",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "```suggestion\n    renderEncoder-\u003eAPISetBindGroup(0, bindGroup.Get());\n```",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4a82aca_395e81b9",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "Could we prevent the scissor to be reset to outside of this region by passing a scissor bounds to the render pass creation? It\u0027s fine to add a TODO and do as a follow-up.",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0508ac3_103d7913",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "```suggestion\n    renderEncoder-\u003eAPIDraw(3);\n```",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2040e94b_aac96404",
@@ -54,6 +162,172 @@
         "endLine": 410,
         "endChar": 54
       },
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "855d6b85_a3fde108",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "We can also use dawn::native::utils::CreateBindGroup to make the code slightly less verbose.",
+      "parentUuid": "196ed438_e7e2954a",
+      "range": {
+        "startLine": 410,
+        "startChar": 39,
+        "endLine": 410,
+        "endChar": 54
+      },
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cea9c3b_a7ea239d",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "That pointer is no longer necessarily valid by the time we get here. Let\u0027s just always do a scissor.",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cd24050_94b8c52a",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "We need to be careful of overflows here. Also this validation only needs to happen once at the end with the size of the render pass, and not for every attachment. So I think that we don\u0027t even need to store the rect in this tracker.",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f3745e1_e63e2daf",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "Can we store this directly as a Rect2D (to be defined somewhere, maybe dawn_platform.h? Not sure) and a boolean, or a std::optional\u003cRect2D\u003e? It would avoid storing a pointer to data that is not trivially staying alive for the whole duration that this object is used (it happens to be the case right now, but is a bit brittle).",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35d822d8_92532c5f",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "All of this validation could be at the end because it is more niche, and be:\n\n```\nif (auto* rect \u003d descriptor.Get\u003cRenderPassDescriptorExpandResolveRect\u003e()) {\n   DAWN_INVALID_IF(!the new extension);\n   DAWN_INVALID_IF(!WillExpandResolveTexture);\n   validation that the rect is in bounds of the render pass.\n   DAWN_INVALID_IF(rect.x \u003e\u003d renderPass.width);\n   DAWN_INVALID_IF(rect.width \u003e renderPass.width - rect.x);\n   // Same for Y.\n}\n```",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5912692_ebc11de3",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "TBH the logic is very difficult to follow here. I\u0027ll try a bunch of suggestions for this function to make it clearer.",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "965f5a2e_cb5d49df",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "Why can\u0027t this be called directly inside the passEndOperation? If it\u0027s because of error handling, let\u0027s do a CL first that adds error handling support to pass end operations, and then do this CL with an immediate call to `ResolveMultisampleWithDraw` in the pass end operation.",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c5a1506_6477b7d6",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "Can we expliclty copy things in the lambda so that we control precisely what\u0027s copied? Otherwise it\u0027s hard to know that everything that is copied is safe to copy (and not a pointer to something that will go out of scope).",
+      "range": {
+        "startLine": 259,
+        "startChar": 48,
+        "endLine": 259,
+        "endChar": 49
+      },
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7926f1b_a976a137",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T14:58:57Z",
+      "side": 1,
+      "message": "This code path seems to only be for discard. Can we have a switch, say that Store is handled, and handle Discard with tagging the subresource as initialized?",
       "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
