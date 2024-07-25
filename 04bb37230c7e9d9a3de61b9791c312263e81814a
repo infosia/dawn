@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "040557d0_77f263e0",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1864,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-25T20:35:02Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to do this anymore because of the previous change?",
+      "revId": "04bb37230c7e9d9a3de61b9791c312263e81814a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8da7bf64_c8cc97a1",
         "filename": "src/tint/lang/core/ir/validator_test.cc",
         "patchSetId": 1
