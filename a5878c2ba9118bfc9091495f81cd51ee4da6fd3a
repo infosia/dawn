@@ -68,6 +68,24 @@
       "message": "LGTM, agree we can add SPIR-V later if needed.",
       "revId": "a5878c2ba9118bfc9091495f81cd51ee4da6fd3a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9bd5653_70c286c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-25T20:44:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8555360c_fed262ab",
+      "revId": "a5878c2ba9118bfc9091495f81cd51ee4da6fd3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
