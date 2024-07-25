@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "422534ec_4e6ea2f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-07-25T19:08:21Z",
+      "side": 1,
+      "message": "Corentin, can you also +2, I think there\u0027s some ownership that Kai\u0027s +2 doesn\u0027t cover.",
+      "revId": "1de806e39ba7a8db1273b7b78bc4039a0d24ece4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
