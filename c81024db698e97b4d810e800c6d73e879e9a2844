@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ce83a01_ad728529",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-25T20:32:00Z",
+      "side": 1,
+      "message": "Nit: Use `operand-\u003eIs\u003cir::Function\u003e()`",
+      "fixSuggestions": [
+        {
+          "fixId": "371fd9d5_b54d7c7f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 836,
+                "startChar": 0,
+                "endLine": 837,
+                "endChar": 0
+              },
+              "replacement": "    if (!operand-\u003eIs\u003cir::Function\u003e() \u0026\u0026 operand-\u003eType() \u003d\u003d nullptr) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c81024db698e97b4d810e800c6d73e879e9a2844",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70b6a3e2_b92ade3a",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-25T20:32:00Z",
+      "side": 0,
+      "message": "Curious why you removed a bunch of these `TINT_UNLIKELY` macros? Not having any errors is generally the most likely scenario.",
+      "revId": "585946e7b811c8630e5015c635b5d54c65a0f594",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "188d6265_7c0449aa",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-25T20:32:00Z",
+      "side": 0,
+      "message": "The initializer is optional and I don\u0027t see any calls to `CheckOperand()`, so will this not crash if the initializer type is nullptr?\n\nMaybe adding that unit test is worth it now if we\u0027re starting to rely on the early exit.",
+      "revId": "585946e7b811c8630e5015c635b5d54c65a0f594",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
