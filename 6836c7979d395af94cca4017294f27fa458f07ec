@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8e63943_95a39d5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-07-25T20:41:39Z",
+      "side": 1,
+      "message": "Looks like I can\u0027t use the rubber stamper for this one due to the CPP change.",
+      "revId": "6836c7979d395af94cca4017294f27fa458f07ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
