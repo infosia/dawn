@@ -22,6 +22,30 @@
       },
       "revId": "60032f11041690047fedb7e14796f4302fc6b409",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59f2fddb_5c74abc0",
+        "filename": "src/dawn/node/binding/AsyncRunner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T19:12:20Z",
+      "side": 1,
+      "message": "We don\u0027t use them in `dawn::native` because we have `RefCounted` that\u0027s intrinsic and more efficient for that reason. Then adding `WeakRef` followed the same path as Chromium.\n\nFrom the [Chromium doc](https://chromium.googlesource.com/chromium/src/+/main/styleguide/c++/c++-features.md#std_shared_ptr-banned):\n\n\u003e Unlike base::RefCounted, uses extrinsic rather than intrinsic reference counting. Could plausibly be used in Chromium, but would require significant migration.\n\nIn dawn.node we only consume Dawn through it\u0027s official API and don\u0027t use any of the utilities in `src/dawn/common` so we need `std::shared_ptr` for refcounting (or we\u0027d need to add it\u0027s own copy of RefCounted, or ...).\n\nBut the TL;DR is that we didn\u0027t care enough, and that dawn.node is not used in Chromium so it\u0027s ok to not care 😊",
+      "parentUuid": "78e54e21_f8a1d7f9",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 26
+      },
+      "revId": "60032f11041690047fedb7e14796f4302fc6b409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
