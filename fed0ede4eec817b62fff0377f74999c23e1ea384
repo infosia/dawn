@@ -68,6 +68,24 @@
       "parentUuid": "0868120e_be66bca2",
       "revId": "fed0ede4eec817b62fff0377f74999c23e1ea384",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75d71bc4_bccbd441",
+        "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-07-25T14:49:51Z",
+      "side": 1,
+      "message": "Thinking about it some more, since the PadStructs transform now depends on knowing about the AddBlockAttribute transform for its implementation, it seems fine for the test to depend on it too. Uploaded a new test that also invokes the AddBlockAttribute transform.",
+      "parentUuid": "6b9144c2_c619f888",
+      "revId": "fed0ede4eec817b62fff0377f74999c23e1ea384",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
