@@ -33,6 +33,8 @@
 #include "src/tint/lang/wgsl/ast/module.h"
 #include "src/tint/lang/wgsl/sem/variable.h"
 
+#include <iostream>
+
 namespace tint::msl::writer {
 namespace {
 
@@ -59,7 +61,11 @@ void ASTFuzzer(const tint::Program& program, const fuzz::wgsl::Context& context,
 
     options.bindings = GenerateBindings(program);
 
-    [[maybe_unused]] auto res = tint::msl::writer::Generate(program, options);
+    auto res = tint::msl::writer::Generate(program, options);
+
+    if (res == Success && context.options.dump) {
+        std::cout << "Dumping generated MSL:\n" << res->msl << std::endl;
+    }
 }
 
 }  // namespace
