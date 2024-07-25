@@ -115,7 +115,7 @@ RenderBundleEncoder::RenderBundleEncoder(DeviceBase* device,
 
 RenderBundleEncoder::RenderBundleEncoder(DeviceBase* device, ErrorTag errorTag, const char* label)
     : RenderEncoderBase(device, &mBundleEncodingContext, errorTag, label),
-      mBundleEncodingContext(device, this) {}
+      mBundleEncodingContext(device, errorTag) {}
 
 RenderBundleEncoder::~RenderBundleEncoder() {
     mEncodingContext = nullptr;
@@ -163,7 +163,6 @@ RenderBundleBase* RenderBundleEncoder::APIFinish(const RenderBundleDescriptor* d
 ResultOrError<Ref<RenderBundleBase>> RenderBundleEncoder::FinishImpl(
     const RenderBundleDescriptor* descriptor) {
     mCommandBufferState.End();
-
     // Even if mBundleEncodingContext.Finish() validation fails, calling it will mutate the
     // internal state of the encoding context. Subsequent calls to encode commands will generate
     // errors.
