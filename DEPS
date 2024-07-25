@@ -43,6 +43,14 @@ vars = {
   # }
   'checkout_rust': False,
 
+  # Fetch the Android toolchain.
+  #
+  # Use a custom_vars section to enable it:
+  # "custom_vars": {
+  #   "checkout_android": True,
+  # }
+  'checkout_android': False,
+
   # Fetch configuration files required for the 'use_remoteexec' gn arg
   'download_remoteexec_cfg': False,
   # RBE instance to use for running remote builds
@@ -233,7 +241,7 @@ deps = {
   },
   # This is a dependency of //testing
   'third_party/catapult': {
-    'url': '{chromium_git}/catapult.git@dd218dfd815774289f8a81015f7a3131f72afbde',
+    'url': '{chromium_git}/catapult.git@1adfb3f1c655a462aeb325225f5693a1a9814b9c',
     'condition': 'dawn_standalone',
   },
   'third_party/google_benchmark/src': {
@@ -414,7 +422,7 @@ deps = {
 
   # Misc dependencies inherited from Tint
   'third_party/protobuf': {
-    'url': '{chromium_git}/chromium/src/third_party/protobuf@41759e11ec427e29e1a72b9401d2af3f6e02d839',
+    'url': '{chromium_git}/chromium/src/third_party/protobuf@da2fe725b80ac0ba646fbf77d0ce5b4ac236f823',
     'condition': 'dawn_standalone',
   },
 
@@ -444,6 +452,155 @@ deps = {
   'third_party/partition_alloc': {
     'url': '{chromium_git}/chromium/src/base/allocator/partition_allocator.git@2e6b2efb6f435aa3dd400cb3bdcead2a601f8f9a',
     'condition': 'dawn_standalone',
+  },
+
+  'third_party/cpu_features/src': {
+    'url': '{chromium_git}/external/github.com/google/cpu_features.git' + '@' + '936b9ab5515dead115606559502e3864958f7f6e',
+    'condition': 'checkout_android',
+  },
+
+  'third_party/libunwind': {
+    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libunwind.git@c8f1d81998280ae2ea0e76ddb60aae6e1b4b860e',
+    'condition': 'checkout_android',
+  },
+
+  'third_party/jdk/current': {
+    'packages': [
+        {
+            'package': 'chromium/third_party/jdk',
+            'version': 'BXZwbslDFpYhPRuG8hBh2z7ApP36ZG-ZfkBWrkpnPl4C',
+        },
+    ],
+    'condition': 'checkout_android',
+    'dep_type': 'cipd',
+  },
+
+ 'third_party/android_sdk/public': {
+      'packages': [
+          {
+              'package': 'chromium/third_party/android_sdk/public/build-tools/34.0.0',
+              'version': 'YK9Rzw3fDzMHVzatNN6VlyoD_81amLZpN1AbmkdOd6AC',
+          },
+          {
+              'package': 'chromium/third_party/android_sdk/public/emulator',
+              'version': '9lGp8nTUCRRWGMnI_96HcKfzjnxEJKUcfvfwmA3wXNkC',
+          },
+          {
+              'package': 'chromium/third_party/android_sdk/public/platform-tools',
+              'version': 'HWVsGs2HCKgSVv41FsOcsfJbNcB0UFiNrF6Tc4yRArYC',
+          },
+          {
+              'package': 'chromium/third_party/android_sdk/public/platforms/android-34',
+              'version': 'u-bhWbTME6u-DjypTgr3ZikCyeAeU6txkR9ET6Uudc8C',
+          },
+          {
+              'package': 'chromium/third_party/android_sdk/public/cmdline-tools',
+              'version': 'mU9jm4LkManzjSzRquV1UIA7fHBZ2pK7NtbCXxoVnVUC',
+          },
+      ],
+      'condition': 'checkout_android',
+      'dep_type': 'cipd',
+  },
+
+  'third_party/android_toolchain/ndk': {
+      'packages': [
+            {
+                'package': 'chromium/third_party/android_toolchain/android_toolchain',
+                'version': 'wpJvg81kuXdMM66r_l9Doa-pLfR6S26Jd1x40LpwWEoC',
+            },
+      ],
+      'condition': 'checkout_android',
+      'dep_type': 'cipd',
+  },
+
+  'third_party/r8': {
+      'packages': [
+          {
+              'package': 'chromium/third_party/r8',
+              'version': 'FkhioB3uZmGFZXh9T_oVHXWyTi8UHB_7BDlrkn8IPpIC',
+          },
+      ],
+      'condition': 'checkout_android',
+      'dep_type': 'cipd',
+  },
+
+  # This duplication is intentional, so we avoid updating the r8.jar used by
+  # dexing unless necessary, since each update invalidates all incremental
+  # dexing and unnecessarily slows down all bots.
+  'third_party/r8/d8': {
+      'packages': [
+          {
+              'package': 'chromium/third_party/r8',
+              'version': 'vw5kLlW3-suSlCKSO9OQpFWpR8oDnvQ8k1RgKNUapQYC',
+          },
+      ],
+      'condition': 'checkout_android',
+      'dep_type': 'cipd',
+  },
+
+  'third_party/android_build_tools': {
+    'url': '{chromium_git}/chromium/src/third_party/android_build_tools@a27b4d3b82ef2b3524b6e5701863524bdba9f794',
+    'condition': 'checkout_android',
+  },
+
+  'third_party/android_build_tools/aapt2': {
+      'packages': [
+          {
+              'package': 'chromium/third_party/android_build_tools/aapt2',
+              'version': 'R2k5wwOlIaS6sjv2TIyHotiPJod-6KqnZO8NH-KFK8sC',
+          },
+      ],
+      'condition': 'checkout_android',
+      'dep_type': 'cipd',
+  },
+
+  'third_party/android_build_tools/art': {
+      'packages': [
+          {
+              'package': 'chromium/third_party/android_build_tools/art',
+              'version': '87169fbc701d244c311e6aa8843591a7f1710bc0',
+          },
+      ],
+      'condition': 'checkout_android',
+      'dep_type': 'cipd',
+  },
+
+  'third_party/android_build_tools/bundletool': {
+      'packages': [
+          {
+               'package': 'chromium/third_party/android_tools_bundletool',
+               'version': 'FIj7ed-law2zMv41QhjEXabkaJ7aN2ztmE0Tv3Z_gFUC',
+          },
+      ],
+      'condition': 'checkout_android',
+      'dep_type': 'cipd',
+  },
+
+ 'third_party/android_build_tools/manifest_merger': {
+      'packages': [
+          {
+               'package': 'chromium/third_party/android_build_tools/manifest_merger',
+               'version': 'GGTpgNcW7W4dG6PH1FlPe3ej4jP6pPRyfFs_0rHBfqkC',
+          },
+      ],
+      'condition': 'checkout_android',
+      'dep_type': 'cipd',
+  },
+
+  'third_party/turbine': {
+      'packages': [
+          {
+              'package': 'chromium/third_party/turbine',
+              'version': 'trOc8ouN-n-XhBQXk58CGsBa_7JlsOD6mv__HNEiiVEC',
+          },
+      ],
+      'condition': 'checkout_android',
+      'dep_type': 'cipd',
+  },
+
+  'third_party/colorama/src': {
+    'url': Var('chromium_git') + '/external/colorama.git@3de9f013df4b470069d03d250224062e8cf15c49',
+    'condition': 'checkout_android',
   },
 }
 

@@ -32,6 +32,7 @@ script_executable = "python3"
 
 default_args = {
   clang_use_chrome_plugins = false
+  enable_js_protobuf = false
 
   angle_enable_abseil = false
   angle_standalone = false

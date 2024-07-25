@@ -61,6 +61,8 @@ static_library("utils") {
     "Timer.h",
     "WGPUHelpers.cpp",
     "WGPUHelpers.h",
+    "Window.cpp",
+    "Window.h",
     "WireHelper.cpp",
     "WireHelper.h",
   ]
@@ -70,6 +72,20 @@ static_library("utils") {
     "${dawn_root}/src/dawn/native:headers",
     "${dawn_root}/src/dawn/wire",
   ]
+  if (is_android) {
+    sources += [
+      "AndroidWindow.cpp",
+      "AndroidWindow.h",
+      "android_native_app_glue.c",
+      "android_native_app_glue.h",
+    ]
+  } else {
+    sources += [
+      "GLFWWindow.cpp",
+      "GLFWWindow.h",
+    ]
+    deps += [ "${dawn_root}/third_party/gn/glfw" ]
+  }
 
   libs = []
   frameworks = []

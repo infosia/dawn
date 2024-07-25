@@ -103,6 +103,21 @@ static_library("glfw") {
     ]
   }
 
+  if (is_android) {
+    defines += [ "_GLFW_EGL_LIBRARY=\"libEGL.so\"" ]
+    sources += [
+      "${glfw_dir}/src/posix_module.c",
+      "${glfw_dir}/src/posix_thread.c",
+      "${glfw_dir}/src/posix_thread.h",
+      "${glfw_dir}/src/posix_time.c",
+      "${glfw_dir}/src/posix_time.h",
+    ]
+    libs += [
+      "m",
+      "dl",
+    ]
+  }
+
   if (is_mac) {
     sources += [
       "${glfw_dir}/src/cocoa_time.c",

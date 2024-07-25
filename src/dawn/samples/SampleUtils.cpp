@@ -43,19 +43,25 @@
 #include "dawn/utils/CommandLineParser.h"
 #include "dawn/utils/SystemUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "dawn/utils/Window.h"
+#ifdef ANDROID
+#include "dawn/utils/AndroidWindow.h"
+#endif
 
 #ifndef __EMSCRIPTEN__
-#include "GLFW/glfw3.h"
 #include "dawn/dawn_proc.h"
 #include "dawn/native/DawnNative.h"
-#include "webgpu/webgpu_glfw.h"
 #else
 #include <emscripten/emscripten.h>
 #endif  // __EMSCRIPTEN__
 
 wgpu::TextureFormat GetPreferredSwapChainTextureFormat() {
     // TODO(dawn:1362): Return the adapter's preferred format when implemented.
+#ifdef ANDROID
+    return wgpu::TextureFormat::RGBA8Unorm;
+#else
     return wgpu::TextureFormat::BGRA8Unorm;
+#endif
 }
 
 // Parsed options.
@@ -64,7 +70,14 @@ static wgpu::AdapterType adapterType = wgpu::AdapterType::Unknown;
 static std::vector<std::string> enableToggles;
 static std::vector<std::string> disableToggles;
 
+#ifdef ANDROID
+bool InitSample(struct android_app* app) {
+    dawn::utils::AndroidWindow::Init(app);
+    int argc = 0;
+    const char** argv = nullptr;
+#else
 bool InitSample(int argc, const char** argv) {
+#endif
     dawn::utils::CommandLineParser opts;
     auto& helpOpt = opts.AddHelp();
     auto& enableTogglesOpt = opts.AddStringList("enable-toggles", "Toggles to enable in Dawn")
@@ -264,10 +277,10 @@ int SampleBase::Run(unsigned int delay) {
         return 1;
     }
 
-    while (!glfwWindowShouldClose(sample->window)) {
+    while (!sample->window->ShouldClose()) {
         sample->FrameImpl();
         sample->surface.Present();
-        glfwPollEvents();
+        sample->window->PollEvents();
         if (delay) {
             dawn::utils::USleep(delay);
         }
@@ -317,23 +330,14 @@ int SampleBase::Run(unsigned int delay) {
 
 bool SampleBase::Setup() {
 #ifndef __EMSCRIPTEN__
-    glfwSetErrorCallback([](int code, const char* message) {
-        dawn::ErrorLog() << "GLFW error: " << code << " - " << message;
-    });
+    window = dawn::utils::Window::Create(width, height, "Dawn window");
 
-    if (!glfwInit()) {
-        return false;
-    }
-
-    // Create the test window with no client API.
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    window = glfwCreateWindow(width, height, "Dawn window", nullptr, nullptr);
     if (!window) {
         return false;
     }
 
-    // Create the surface.
-    surface = wgpu::glfw::CreateSurfaceForWindow(instance, window);
+    // Get the surface.
+    surface = window->CreateSurface(instance);
 #else
     // Create the surface.
     wgpu::SurfaceDescriptorFromCanvasHTMLSelector canvasDesc{};

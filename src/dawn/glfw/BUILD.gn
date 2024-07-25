@@ -37,6 +37,9 @@ import("${dawn_root}/scripts/dawn_features.gni")
 if (dawn_supports_glfw_for_windowing) {
   static_library("glfw") {
     defines = [ "WGPU_GLFW_IMPLEMENTATION" ]
+    if (is_android) {
+      defines += [ "GLFW_INCLUDE_NONE" ]
+    }
 
     sources = [ "utils.cpp" ]
     deps = [

@@ -90,11 +90,7 @@ class HelloTriangleSample : public SampleBase {
     wgpu::RenderPipeline pipeline;
 };
 
-int main(int argc, const char* argv[]) {
-    if (!InitSample(argc, argv)) {
-        return 1;
-    }
-
-    HelloTriangleSample* sample = new HelloTriangleSample();
-    sample->Run(16000);
+SAMPLE_MAIN()
+HelloTriangleSample* sample = new HelloTriangleSample();
+sample->Run(16000);
 }

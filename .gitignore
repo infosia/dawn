@@ -13,11 +13,16 @@
 /buildtools
 /testing
 /third_party/abseil-cpp/
+/third_party/android_build_tools
+/third_party/android_sdk
+/third_party/android_toolchain
 /third_party/angle
 /third_party/binutils
 /third_party/catapult
 /third_party/clang-format
+/third_party/colorama/src
 /third_party/cpplint
+/third_party/cpu_features/src
 /third_party/depot_tools
 /third_party/dxc
 /third_party/dxheaders
@@ -26,6 +31,7 @@
 /third_party/google_benchmark/src
 /third_party/googletest
 /third_party/gpuweb
+/third_party/jdk/current
 /third_party/jinja2
 /third_party/jsoncpp
 /third_party/khronos/EGL-Registry
@@ -33,6 +39,7 @@
 /third_party/libc++/src
 /third_party/libc++abi/src
 /third_party/libprotobuf-mutator/src
+/third_party/libunwind
 /third_party/llvm-build
 /third_party/markupsafe
 /third_party/ninja
@@ -41,11 +48,14 @@
 /third_party/node-api-headers
 /third_party/partition_alloc
 /third_party/protobuf
+/third_party/r8/d8
+/third_party/r8/lib
 /third_party/rust-toolchain
 /third_party/spirv-cross/src/
 /third_party/spirv-headers/src/
 /third_party/spirv-tools/src/
 /third_party/swiftshader
+/third_party/turbine/*.jar
 /third_party/vulkan-deps
 /third_party/vulkan-headers/src/
 /third_party/vulkan-loader/src/

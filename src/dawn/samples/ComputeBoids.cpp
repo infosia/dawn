@@ -318,11 +318,7 @@ class ComputeBoidsSample : public SampleBase {
     size_t pingpong = 0;
 };
 
-int main(int argc, const char* argv[]) {
-    if (!InitSample(argc, argv)) {
-        return 1;
-    }
-
-    ComputeBoidsSample* sample = new ComputeBoidsSample();
-    sample->Run(16000);
+SAMPLE_MAIN()
+ComputeBoidsSample* sample = new ComputeBoidsSample();
+sample->Run(16000);
 }

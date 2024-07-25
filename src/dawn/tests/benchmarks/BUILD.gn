@@ -40,6 +40,11 @@ test("dawn_benchmarks") {
     "//third_party/google_benchmark",
     "//third_party/google_benchmark:benchmark_main",
   ]
+
+  if (is_android) {
+    deps += [ "${dawn_root}/third_party/gn/libunwind:libunwind" ]
+  }
+
   sources = [
     "NullDeviceSetup.cpp",
     "NullDeviceSetup.h",

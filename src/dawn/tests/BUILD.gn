@@ -183,6 +183,13 @@ template("dawn_test") {
 
     configs += [ "${dawn_root}/src/dawn/common:internal_config" ]
 
+    if (is_android) {
+      configs -= [ "//build/config/android:hide_all_but_jni" ]
+      use_default_launcher = false
+      use_raw_android_executable = false
+      generate_final_jni = false
+    }
+
     if (dawn_tests_use_angle && defined(dawn_angle_dir)) {
       if (!defined(data_deps)) {
         data_deps = []
@@ -296,6 +303,10 @@ dawn_test("dawn_unittests") {
     "${dawn_root}/src/dawn/utils",
     "${dawn_root}/src/dawn/wire",
   ]
+
+  if (is_android) {
+    deps += [ "${dawn_root}/third_party/gn/libunwind:libunwind" ]
+  }
 
   # Add internal dawn native config for internal unittests.
   configs = [ "${dawn_root}/src/dawn/native:internal" ]
@@ -718,9 +729,12 @@ source_set("end2end_tests_sources") {
       "end2end/SwapChainValidationTests.cpp",
       "end2end/WindowSurfaceTests.cpp",
     ]
+    if (is_android) {
+      defines = [ "GLFW_INCLUDE_NONE" ]
+    }
   }
 
-  if (dawn_enable_vulkan) {
+  if (dawn_enable_vulkan && !is_android) {
     sources += [ "end2end/YCbCrInfoTests.cpp" ]
   }
 
@@ -754,6 +768,10 @@ source_set("white_box_tests_sources") {
     "${dawn_root}/src/dawn/utils",
     "${dawn_root}/src/dawn/wire",
   ]
+
+  if (is_android) {
+    deps += [ "${dawn_root}/third_party/gn/libunwind:libunwind" ]
+  }
 
   sources = [
     "white_box/ShaderModuleTests.cpp",
@@ -887,6 +905,9 @@ dawn_test("dawn_perf_tests") {
     "${dawn_root}/src/dawn/utils",
     "${dawn_root}/src/dawn/wire",
   ]
+  if (is_android) {
+    deps += [ "${dawn_root}/third_party/gn/libunwind:libunwind" ]
+  }
 
   sources = [
     "perf_tests/BufferUploadPerf.cpp",

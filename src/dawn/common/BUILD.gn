@@ -145,7 +145,6 @@ config("internal_config") {
       "-Wimplicit-fallthrough",
       "-Winconsistent-missing-destructor-override",
       "-Winvalid-offsetof",
-      "-Wmissing-field-initializers",
       "-Wnon-c-typedef-for-linkage",
       "-Wpessimizing-move",
       "-Wrange-loop-analysis",

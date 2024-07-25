@@ -28,14 +28,34 @@
 #ifndef SRC_DAWN_SAMPLES_SAMPLEUTILS_H_
 #define SRC_DAWN_SAMPLES_SAMPLEUTILS_H_
 
-#ifndef __EMSCRIPTEN__
-#include "GLFW/glfw3.h"
-#endif  // __EMSCRIPTEN__
-
 #include "dawn/webgpu_cpp.h"
 
+namespace dawn::utils {
+class Window;
+}
+
+struct android_app;
+
 wgpu::TextureFormat GetPreferredSwapChainTextureFormat();
+#ifdef ANDROID
+bool InitSample(android_app* app);
+#else
 bool InitSample(int argc, const char** argv);
+#endif
+
+#ifdef ANDROID
+#define SAMPLE_MAIN()                                       \
+    extern "C" void android_main(struct android_app* app) { \
+        if (!InitSample(app)) {                             \
+            return;                                         \
+        }
+#else
+#define SAMPLE_MAIN()                        \
+    int main(int argc, const char* argv[]) { \
+        if (!InitSample(argc, argv)) {       \
+            return 1;                        \
+        }
+#endif
 
 class SampleBase {
   public:
@@ -64,7 +84,7 @@ class SampleBase {
     uint32_t height = kHeight;
 
 #ifndef __EMSCRIPTEN__
-    GLFWwindow* window = nullptr;
+    dawn::utils::Window* window = nullptr;
 #endif  // __EMSCRIPTEN__
 };
 

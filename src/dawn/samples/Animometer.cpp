@@ -194,11 +194,7 @@ class AnimometerSample : public SampleBase {
     dawn::utils::Timer* timer = dawn::utils::CreateTimer();
 };
 
-int main(int argc, const char* argv[]) {
-    if (!InitSample(argc, argv)) {
-        return 1;
-    }
-
-    AnimometerSample* sample = new AnimometerSample();
-    sample->Run(0);
+SAMPLE_MAIN()
+AnimometerSample* sample = new AnimometerSample();
+sample->Run(0);
 }
