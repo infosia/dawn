@@ -50,6 +50,24 @@
       "message": "I think all structures that contain runtime sized arrays will also have the block attribute, so you could probably remove the `has_runtime_sized_array` variable and the logic used to set it, since this is the only place that it is used.",
       "revId": "fed0ede4eec817b62fff0377f74999c23e1ea384",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b9144c2_c619f888",
+        "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-07-25T14:31:46Z",
+      "side": 1,
+      "message": "Good catch!\n\nUnfortunately, if I make that change, there\u0027s an existing unit test, PadStructsTest.LastMemberRuntimeSizeArray, that fails. This is because we don\u0027t run the AddBlockAttribute transform before PadStructs, so PadStructs doesn\u0027t know not to pad it.\n\nI tried replacing the test with one that passes a struct with the block attribute set, since that\u0027s a better test now anyway, but I can\u0027t pass @internal(block) as an attribute, since it\u0027s not valid in the input WGSL (only output, I guess).\n\nIs there a way I can force the validator to accept it for the unittest? Failing that, I could run the AddBlockAttribute transform in the test, but that seems to be leaking a bit of implementation. Another option could be to rewrite the test to build the AST in C++ rather than parsing WGSL.\n\nLMK what you think.",
+      "parentUuid": "0868120e_be66bca2",
+      "revId": "fed0ede4eec817b62fff0377f74999c23e1ea384",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
