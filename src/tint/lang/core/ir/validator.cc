@@ -1860,7 +1860,9 @@ void Validator::CheckLoadVectorElement(const LoadVectorElement* l) {
     if (auto* res = l->Result(0)) {
         if (auto* el_ty = GetVectorPtrElementType(l, LoadVectorElement::kFromOperandOffset)) {
             if (res->Type() != el_ty) {
-                AddResultError(l, 0) << "result type " << style::Type(res->Type()->FriendlyName())
+                std::string res_string = res->Type() ? res->Type()->FriendlyName() : "undef";
+                std::string el_string = el_ty ? el_ty->FriendlyName() : "undef";
+                AddResultError(l, 0) << "result type " << style::Type(res_string)
                                      << " does not match vector pointer element type "
                                      << style::Type(el_ty->FriendlyName());
             }
@@ -1869,9 +1871,10 @@ void Validator::CheckLoadVectorElement(const LoadVectorElement* l) {
 }
 
 void Validator::CheckStoreVectorElement(const StoreVectorElement* s) {
-    CheckOperandsNotNull(s,  //
-                         StoreVectorElement::kToOperandOffset,
-                         StoreVectorElement::kValueOperandOffset);
+    if (!CheckResultsAndOperands(s, StoreVectorElement::kNumResults,
+                                 StoreVectorElement::kNumOperands)) {
+        return;
+    }
 
     if (auto* value = s->Value()) {
         if (auto* el_ty = GetVectorPtrElementType(s, StoreVectorElement::kToOperandOffset)) {
