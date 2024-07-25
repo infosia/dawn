@@ -34,6 +34,7 @@
 #include "src/tint/lang/wgsl/inspector/inspector.h"
 #include "src/tint/lang/wgsl/sem/variable.h"
 
+#include <iostream>
 namespace tint::glsl::writer {
 namespace {
 
@@ -84,7 +85,9 @@ bool CanRun(const tint::Program& program, const Options& options) {
     return true;
 }
 
-void ASTFuzzer(const tint::Program& program, const Options& options) {
+void ASTFuzzer(const tint::Program& program,
+               const fuzz::wgsl::Context& context,
+               const Options& options) {
     if (!CanRun(program, options)) {
         return;
     }
@@ -94,7 +97,11 @@ void ASTFuzzer(const tint::Program& program, const Options& options) {
 
     // Test all of the entry points as GLSL requires specifying which one to generate.
     for (const auto& ep : entrypoints) {
-        [[maybe_unused]] auto res = tint::glsl::writer::Generate(program, options, ep.name);
+        auto res = tint::glsl::writer::Generate(program, options, ep.name);
+
+        if (res == Success && context.options.dump) {
+            std::cout << "Dumping generated GLSL:\n" << res->glsl << std::endl;
+        }
     }
 }
 
