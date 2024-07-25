@@ -16,6 +16,24 @@
       "message": "Are there WGSL and SPIR-V call sites that need modification?",
       "revId": "a5878c2ba9118bfc9091495f81cd51ee4da6fd3a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8555360c_fed262ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-07-25T19:14:50Z",
+      "side": 1,
+      "message": "This change dumps the WGSL, so that\u0027s handled. I\u0027m not sure about spir-v, I focused on `writer_ast_fuzz`. We can always add spir-v asm output later.",
+      "parentUuid": "ebc6d24f_42223fbe",
+      "revId": "a5878c2ba9118bfc9091495f81cd51ee4da6fd3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
