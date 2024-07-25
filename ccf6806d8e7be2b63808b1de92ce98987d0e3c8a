@@ -72,6 +72,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "989a3948_53a8b109",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-25T13:18:18Z",
+      "side": 1,
+      "message": "Ok we can keep \u003c\u003e, it feels weird but it\u0027s better to be consistent and we can git grep | sed later if need be.\n\nI don\u0027t know if it will be possible to make dawn/webgpu.h just flavor added on top of a webgpu/webgpu.h though. Maybe for the C API but certainly not for the C++ API so IMHO Dawn should generate its own webgpu/webgpu.h and we can include that everywhere instead of making webgpu/webgpu.h forward to dawn/webgpu.h in native. But it doesn\u0027t need to be in this CL or anytime soon.",
+      "parentUuid": "35ecd154_c988f623",
+      "revId": "ccf6806d8e7be2b63808b1de92ce98987d0e3c8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9dd396c0_2f60ab26",
