@@ -5691,7 +5691,7 @@ TEST_F(IR_ValidatorTest, Store_NoStoreType) {
   $B1: {
   ^^^
 
-:3:11 error: store: store target operand is not a memory view
+:3:11 error: store: operand type is undefined
     store %2, 42u
           ^^
 
@@ -5724,7 +5724,7 @@ TEST_F(IR_ValidatorTest, Store_NoValueType) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:5:15 error: store: value type must not be null
+              R"(:5:15 error: store: operand type is undefined
     store %2, %3
               ^^
 
