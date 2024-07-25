@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "064b8ba7_6778b080",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-25T17:00:07Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "c76439663ccdd5144a14fcc47b3a3940421b0152",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f87ca740_9d1fd224",
+        "filename": "src/tint/lang/core/ir/load_vector_element.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-25T17:00:07Z",
+      "side": 1,
+      "message": "Pretty sure that this was a typo in the original implementation. Looking at the constructor impl, it assigns a Result and two Operands, not zero Results and three Operands.",
+      "revId": "c76439663ccdd5144a14fcc47b3a3940421b0152",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85cf7f27_add29639",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5768,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-25T17:00:07Z",
+      "side": 1,
+      "message": "KI, https://issues.chromium.org/issues/353475590",
+      "revId": "c76439663ccdd5144a14fcc47b3a3940421b0152",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
