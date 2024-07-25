@@ -405,6 +405,72 @@ TEST_P(DualSourceBlendTests, BlendFactorOneMinusSrc1Alpha) {
     RunTest(params);
 }
 
+// Verify when blend factor uses Src1, although there is no @blend_src(1) in the fragment shader
+// (the output of Src1 will be undefined on native APIs) it is still valid when the color write mask
+// is set to None.
+TEST_P(DualSourceBlendTests, UseSrc1NoBlendSrc1ColorWriteMaskNone) {
+    wgpu::ShaderModule fsModule = utils::CreateShaderModule(device, R"(
+            @fragment fn main() -> @location(0) vec4f {
+              return vec4f(1.0, 1.0, 1.0, 1.0);
+            }
+        )");
+
+    wgpu::BlendComponent blendComponent;
+    blendComponent.operation = wgpu::BlendOperation::Add;
+    blendComponent.srcFactor = wgpu::BlendFactor::Src1;
+    blendComponent.dstFactor = wgpu::BlendFactor::Zero;
+
+    wgpu::BlendState blend;
+    blend.color = blendComponent;
+    blend.alpha = blendComponent;
+
+    wgpu::ColorTargetState colorTargetState;
+    colorTargetState.blend = &blend;
+
+    utils::ComboRenderPipelineDescriptor renderPipelineDescriptor;
+    renderPipelineDescriptor.cFragment.targetCount = 1;
+    renderPipelineDescriptor.vertex.module = vsModule;
+    renderPipelineDescriptor.cFragment.module = fsModule;
+    renderPipelineDescriptor.cTargets[0] = colorTargetState;
+    renderPipelineDescriptor.cTargets[0].format = wgpu::TextureFormat::RGBA8Unorm;
+    renderPipelineDescriptor.cTargets[0].writeMask = wgpu::ColorWriteMask::None;
+    wgpu::RenderPipeline renderPipeline = device.CreateRenderPipeline(&renderPipelineDescriptor);
+
+    wgpu::TextureDescriptor descriptor;
+    descriptor.dimension = wgpu::TextureDimension::e2D;
+    descriptor.size.width = 1;
+    descriptor.size.height = 1;
+    descriptor.size.depthOrArrayLayers = 1;
+    descriptor.sampleCount = 1;
+    descriptor.format = wgpu::TextureFormat::RGBA8Unorm;
+    descriptor.mipLevelCount = 1;
+    descriptor.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
+    wgpu::Texture color = device.CreateTexture(&descriptor);
+    wgpu::RenderPassColorAttachment colorAttachment = {};
+    colorAttachment.loadOp = wgpu::LoadOp::Clear;
+    colorAttachment.storeOp = wgpu::StoreOp::Store;
+    colorAttachment.view = color.CreateView();
+    colorAttachment.clearValue.r = 0.0f;
+    colorAttachment.clearValue.g = 0.0f;
+    colorAttachment.clearValue.b = 0.0f;
+    colorAttachment.clearValue.a = 1.0f;
+    wgpu::RenderPassDescriptor renderPass = {};
+    renderPass.colorAttachmentCount = 1;
+    renderPass.colorAttachments = &colorAttachment;
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    {
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+        pass.SetPipeline(renderPipeline);
+        pass.Draw(3);
+        pass.End();
+    }
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(0, 0, 0, 255), color, 0, 0);
+}
+
 DAWN_INSTANTIATE_TEST(DualSourceBlendTests,
                       D3D11Backend(),
                       D3D12Backend(),
