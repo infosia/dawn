@@ -86,6 +86,24 @@
       "parentUuid": "6b9144c2_c619f888",
       "revId": "fed0ede4eec817b62fff0377f74999c23e1ea384",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da7fb396_66cab444",
+        "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-25T15:29:08Z",
+      "side": 1,
+      "message": "Yeah I think that makes sense. LGTM.",
+      "parentUuid": "75d71bc4_bccbd441",
+      "revId": "fed0ede4eec817b62fff0377f74999c23e1ea384",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
