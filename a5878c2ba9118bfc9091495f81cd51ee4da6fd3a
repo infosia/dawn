@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebc6d24f_42223fbe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-25T19:13:05Z",
+      "side": 1,
+      "message": "Are there WGSL and SPIR-V call sites that need modification?",
+      "revId": "a5878c2ba9118bfc9091495f81cd51ee4da6fd3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
