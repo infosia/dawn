@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e6b4aa06_caeac52b",
+        "filename": "src/tint/lang/core/ir/load_vector_element.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-25T17:26:07Z",
+      "side": 1,
+      "message": "Yep, good catch!",
+      "parentUuid": "f87ca740_9d1fd224",
+      "revId": "c76439663ccdd5144a14fcc47b3a3940421b0152",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "85cf7f27_add29639",
         "filename": "src/tint/lang/core/ir/validator_test.cc",
         "patchSetId": 1
