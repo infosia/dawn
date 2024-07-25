@@ -51,6 +51,23 @@
       "message": "overall seems reasonable, will leave to James to +2",
       "revId": "a5878c2ba9118bfc9091495f81cd51ee4da6fd3a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09a34918_f7b81834",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-25T20:38:35Z",
+      "side": 1,
+      "message": "LGTM, agree we can add SPIR-V later if needed.",
+      "revId": "a5878c2ba9118bfc9091495f81cd51ee4da6fd3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
