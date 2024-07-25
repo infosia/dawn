@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78e54e21_f8a1d7f9",
+        "filename": "src/dawn/node/binding/AsyncRunner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-25T16:22:46Z",
+      "side": 1,
+      "message": "Just drive-by. I\u0027m curious why it\u0027s ok to use `shared_ptr` and `weak_ptr` here? I thought it\u0027s banned (based on Chrome\u0027s C++ guidelines) and that\u0027s reason we implemented `WeakRef` class in Dawn.",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 26
+      },
+      "revId": "60032f11041690047fedb7e14796f4302fc6b409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
