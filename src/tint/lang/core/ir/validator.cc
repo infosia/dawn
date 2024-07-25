@@ -297,26 +297,27 @@ class Validator {
     /// @returns the styled  name for the given block
     StyledText NameOf(const Block* block);
 
-    /// Checks the given result is not null
+    /// Checks the given result is not null and its type is not null
     /// @param inst the instruction
     /// @param idx the result index
     /// @returns true if the result is not null
-    bool CheckResultNotNull(const ir::Instruction* inst, size_t idx);
+    bool CheckResult(const Instruction* inst, size_t idx);
 
     /// Checks the number of results for @p inst are exactly equal to @p count and that none of
-    /// them are null.
+    /// them are null. Also checks that the types for the results are not null
     /// @param inst the instruction
     /// @param count the number of results to check
     /// @returns true if the results count is as expected and none are null
     bool CheckResults(const ir::Instruction* inst, size_t count);
 
-    /// Checks the given operand is not null
+    /// Checks the given operand is not null and its type is not null
     /// @param inst the instruction
     /// @param idx the operand index
     /// @returns true if the operand is not null
-    bool CheckOperandNotNull(const ir::Instruction* inst, size_t idx);
+    bool CheckOperand(const Instruction* inst, size_t idx);
 
-    /// Checks the number of operands provided to @p inst and that none of them are null.
+    /// Checks the number of operands provided to @p inst and that none of them are null. Also
+    /// checks that the types for the operands are not null
     /// @param inst the instruction
     /// @param min_count the minimum number of operands to expect
     /// @param max_count the maximum number of operands to expect, if not set, than only the minimum
@@ -327,7 +328,7 @@ class Validator {
                        std::optional<size_t> max_count);
 
     /// Checks the number of operands for @p inst are exactly equal to @p count and that none of
-    /// them are null.
+    /// them are null. Also checks that the types for the operands are not null
     /// @param inst the instruction
     /// @param count the number of operands to check
     /// @returns true if the operands count is as expected and none are null
@@ -791,17 +792,23 @@ StyledText Validator::NameOf(const Block* block) {
                         << Disassemble().NameOf(block);
 }
 
-bool Validator::CheckResultNotNull(const Instruction* inst, size_t idx) {
+bool Validator::CheckResult(const Instruction* inst, size_t idx) {
     auto* result = inst->Result(idx);
-    if (TINT_UNLIKELY(result == nullptr)) {
+    if (result == nullptr) {
         AddResultError(inst, idx) << "result is undefined";
         return false;
     }
+
+    if (result->Type() == nullptr) {
+        AddResultError(inst, idx) << "result type is undefined";
+        return false;
+    }
+
     return true;
 }
 
 bool Validator::CheckResults(const ir::Instruction* inst, size_t count) {
-    if (TINT_UNLIKELY(inst->Results().Length() != count)) {
+    if (inst->Results().Length() != count) {
         AddError(inst) << "expected exactly " << count << " results, got "
                        << inst->Results().Length();
         return false;
@@ -809,26 +816,35 @@ bool Validator::CheckResults(const ir::Instruction* inst, size_t count) {
 
     bool passed = true;
     for (size_t i = 0; i < count; i++) {
-        if (TINT_UNLIKELY(!CheckResultNotNull(inst, i))) {
+        if (!CheckResult(inst, i)) {
             passed = false;
         }
     }
+
     return passed;
 }
 
-bool Validator::CheckOperandNotNull(const Instruction* inst, size_t idx) {
+bool Validator::CheckOperand(const Instruction* inst, size_t idx) {
     auto* operand = inst->Operand(idx);
-    if (TINT_UNLIKELY(operand == nullptr)) {
+    if (operand == nullptr) {
         AddError(inst, idx) << "operand is undefined";
         return false;
     }
+
+    // ir::Function does not have a meaningful type, so does not override the default Type()
+    // behaviour.
+    if (operand->As<ir::Function>() == nullptr && operand->Type() == nullptr) {
+        AddError(inst, idx) << "operand type is undefined";
+        return false;
+    }
+
     return true;
 }
 
 bool Validator::CheckOperands(const ir::Instruction* inst,
                               size_t min_count,
                               std::optional<size_t> max_count) {
-    if (TINT_UNLIKELY(inst->Operands().Length() < min_count)) {
+    if (inst->Operands().Length() < min_count) {
         if (max_count.has_value()) {
             AddError(inst) << "expected between " << min_count << " and " << max_count.value()
                            << " operands, got " << inst->Operands().Length();
@@ -839,7 +855,7 @@ bool Validator::CheckOperands(const ir::Instruction* inst,
         return false;
     }
 
-    if (TINT_UNLIKELY(max_count.has_value() && inst->Operands().Length() > max_count.value())) {
+    if (max_count.has_value() && inst->Operands().Length() > max_count.value()) {
         AddError(inst) << "expected between " << min_count << " and " << max_count.value()
                        << " operands, got " << inst->Operands().Length();
         return false;
@@ -847,15 +863,16 @@ bool Validator::CheckOperands(const ir::Instruction* inst,
 
     bool passed = true;
     for (size_t i = 0; i < inst->Operands().Length(); i++) {
-        if (TINT_UNLIKELY(!CheckOperandNotNull(inst, i))) {
+        if (!CheckOperand(inst, i)) {
             passed = false;
         }
     }
+
     return passed;
 }
 
 bool Validator::CheckOperands(const ir::Instruction* inst, size_t count) {
-    if (TINT_UNLIKELY(inst->Operands().Length() != count)) {
+    if (inst->Operands().Length() != count) {
         AddError(inst) << "expected exactly " << count << " operands, got "
                        << inst->Operands().Length();
         return false;
@@ -863,7 +880,7 @@ bool Validator::CheckOperands(const ir::Instruction* inst, size_t count) {
 
     bool passed = true;
     for (size_t i = 0; i < count; i++) {
-        if (TINT_UNLIKELY(!CheckOperandNotNull(inst, i))) {
+        if (!CheckOperand(inst, i)) {
             passed = false;
         }
     }
@@ -1141,14 +1158,9 @@ void Validator::CheckVar(const Var* var) {
     if (var->Initializer()) {
         if (var->Initializer()->Type() != var->Result(0)->Type()->UnwrapPtrOrRef()) {
             AddError(var) << "initializer type "
-                          << style::Type(var->Initializer()->Type()
-                                             ? var->Initializer()->Type()->FriendlyName()
-                                             : "undef")
+                          << style::Type(var->Initializer()->Type()->FriendlyName())
                           << " does not match store type "
-                          << style::Type(
-                                 var->Result(0)->Type()
-                                     ? var->Result(0)->Type()->UnwrapPtrOrRef()->FriendlyName()
-                                     : "undef");
+                          << style::Type(var->Result(0)->Type()->UnwrapPtrOrRef()->FriendlyName());
             return;
         }
     }
@@ -1830,14 +1842,7 @@ void Validator::CheckStore(const Store* s) {
             }
             auto* value_type = from->Type();
             auto* store_type = mv->StoreType();
-
-            if (!store_type) {
-                AddError(s, Store::kToOperandOffset) << "store type must not be null";
-            }
-            if (!value_type) {
-                AddError(s, Store::kFromOperandOffset) << "value type must not be null";
-            }
-            if (store_type && value_type && value_type != store_type) {
+            if (value_type != store_type) {
                 AddError(s, Store::kFromOperandOffset)
                     << "value type " << style::Type(value_type->FriendlyName())
                     << " does not match store type " << style::Type(store_type->FriendlyName());
