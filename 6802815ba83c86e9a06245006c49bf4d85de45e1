@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09441316_5c9cc487",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-25T07:13:00Z",
+      "side": 1,
+      "message": "lgtm with a few more comments (Sorry I missed them in the previous patchset).\n\n@cwallez@chromium.org PTAL.",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2040e94b_aac96404",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-25T07:13:00Z",
+      "side": 1,
+      "message": "nit: I feel passing RenderPassDescriptor to this function is redundant. Maybe we only need to pass the `RenderPassDescriptorExpandResolveRect`.",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196ed438_e7e2954a",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-25T07:13:00Z",
+      "side": 1,
+      "message": "I thought we need to use `device-\u003eCreateBindGroup(\u0026bgDesc, UsageValidationMode::Internal)`? considering the TextureBinding is InternalUsage.",
+      "range": {
+        "startLine": 410,
+        "startChar": 39,
+        "endLine": 410,
+        "endChar": 54
+      },
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67b6342e_7cca377d",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-25T07:13:00Z",
+      "side": 1,
+      "message": "Maybe enabling this on all GPUs not just UMA?",
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "075a593b_5ef187bc",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2151,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-25T07:13:00Z",
+      "side": 1,
+      "message": "```suggestion\n                                                                /*supportsTextureBinding\u003d*/false);\n```\nSince TextureBinding is automatically added as internal usage.",
+      "range": {
+        "startLine": 2151,
+        "startChar": 91,
+        "endLine": 2151,
+        "endChar": 95
+      },
+      "revId": "6802815ba83c86e9a06245006c49bf4d85de45e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
