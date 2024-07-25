@@ -700,7 +700,7 @@ ResultOrError<ShaderModuleEntryPoint> ValidateFragmentState(DeviceBase* device,
                              "validating targets[%u]'s framebuffer input.", i);
         }
 
-        if (targets[i].blend != nullptr) {
+        if (targets[i].writeMask != wgpu::ColorWriteMask::None && targets[i].blend != nullptr) {
             usesSrc1 |= BlendStateUsesBlendFactorSrc1(*targets[i].blend);
             usesSrc1Alpha |= BlendStateUsesBlendFactorSrc1Alpha(*targets[i].blend);
         }
