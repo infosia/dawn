@@ -112,6 +112,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "565e720e_44e4abd7",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-25T04:48:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "181d4605_d3a7bfa2",
+      "range": {
+        "startLine": 267,
+        "startChar": 21,
+        "endLine": 267,
+        "endChar": 62
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19304438_2167b30a",
@@ -149,6 +173,30 @@
       "side": 1,
       "message": "The existing ResolveMultipleAttachmentInSeparatePasses does so for Discard as well.\nAccording to the WebGPU spec, Discard requires that it must be cleared before next use. Probably we shouldn\u0027t skip it here.",
       "parentUuid": "19304438_2167b30a",
+      "range": {
+        "startLine": 273,
+        "startChar": 16,
+        "endLine": 273,
+        "endChar": 63
+      },
+      "revId": "129f47db61d1a5490233e5078da7bdf093d29a57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "169ea377_6c4c9b8a",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-25T04:48:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "58add398_72f1a504",
       "range": {
         "startLine": 273,
         "startChar": 16,

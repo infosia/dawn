@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c386cf0_7a088e48",
+        "filename": "docs/dawn/features/dawn_partial_load_resolve_texture.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-25T04:48:52Z",
+      "side": 1,
+      "message": "Sounds fair, thanks!",
+      "parentUuid": "27c29abf_00921bd7",
+      "range": {
+        "startLine": 76,
+        "startChar": 232,
+        "endLine": 76,
+        "endChar": 246
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54681ce8_f3005220",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da102576_33c40f11",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-25T04:48:52Z",
+      "side": 1,
+      "message": "Nice, done!",
+      "parentUuid": "54681ce8_f3005220",
+      "range": {
+        "startLine": 273,
+        "startChar": 43,
+        "endLine": 273,
+        "endChar": 66
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0cbf9a8b_3c74603f",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-07-24T13:44:24Z",
       "side": 1,
       "message": "nit: Maybe rename this to `ResolveMultisampleWithDrawCallback`?",
+      "range": {
+        "startLine": 107,
+        "startChar": 42,
+        "endLine": 107,
+        "endChar": 68
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "656ce3a9_35dd273e",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-25T04:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cbf9a8b_3c74603f",
       "range": {
         "startLine": 107,
         "startChar": 42,
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "22901210_afeeafc2",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-25T04:48:52Z",
+      "side": 1,
+      "message": "I am okay either way. It looks in a nutshell the Discard pass is implemented by `view-\u003eGetTexture()-\u003eSetIsSubresourceContentInitialized(false, range);` [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CommandBuffer.cpp;drc\u003d2017cd8a8925f180257662f78eaf9eb93e8e394d;l\u003d186).\nHowever, the timing to call it should be during command buffer execution, whereas we are all about command buffer encoding here.",
+      "parentUuid": "f8642231_f3124fd9",
+      "range": {
+        "startLine": 251,
+        "startChar": 12,
+        "endLine": 285,
+        "endChar": 13
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7992aefa_e900df57",
         "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
         "patchSetId": 8
@@ -106,6 +202,30 @@
       "writtenOn": "2024-07-24T13:44:24Z",
       "side": 1,
       "message": "It might be good to update this comment to include the partial resolve in the order. Something like:\n- partial resolve.\n- store the MSAA texture.\n- copy from temp resolve to the actual resolve target?",
+      "range": {
+        "startLine": 291,
+        "startChar": 11,
+        "endLine": 291,
+        "endChar": 13
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8e3a400_8b2efe96",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-25T04:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7992aefa_e900df57",
       "range": {
         "startLine": 291,
         "startChar": 11,
