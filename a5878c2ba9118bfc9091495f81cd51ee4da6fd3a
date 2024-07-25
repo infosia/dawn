@@ -34,6 +34,23 @@
       "parentUuid": "ebc6d24f_42223fbe",
       "revId": "a5878c2ba9118bfc9091495f81cd51ee4da6fd3a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02739477_e394554a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-25T19:22:38Z",
+      "side": 1,
+      "message": "overall seems reasonable, will leave to James to +2",
+      "revId": "a5878c2ba9118bfc9091495f81cd51ee4da6fd3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
