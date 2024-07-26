@@ -50,6 +50,24 @@
       "message": "Can we have this in the TryEncode so that the error is processed like all others?",
       "revId": "b2303758b50394132d72060193e6f3759d040d99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7bc6ff5_daa28da5",
+        "filename": "src/dawn/native/RenderPassEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-26T13:10:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02915edb_42b9ac1f",
+      "revId": "b2303758b50394132d72060193e6f3759d040d99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
