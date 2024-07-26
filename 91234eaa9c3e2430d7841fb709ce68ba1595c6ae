@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "278bd81a_25509390",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-26T16:02:31Z",
+      "side": 1,
+      "message": "Map lookups at ~ draw time are going to be slow. We can store information per bindingIndex for fast O(1) lookup.",
+      "revId": "91234eaa9c3e2430d7841fb709ce68ba1595c6ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
