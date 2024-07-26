@@ -239,6 +239,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c52a2a8_5bc1cb65",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-26T06:18:09Z",
+      "side": 1,
+      "message": "nvm, I take back \"`ResolveMultipleAttachmentInSeparatePasses` does not fulfill the original storeOp\". It actually does.",
+      "parentUuid": "c276cd19_19d0d93e",
+      "range": {
+        "startLine": 251,
+        "startChar": 12,
+        "endLine": 285,
+        "endChar": 13
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7992aefa_e900df57",
         "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
         "patchSetId": 8
