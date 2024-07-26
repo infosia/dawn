@@ -34,26 +34,54 @@ if (TINT_BUILD_SPV_READER)
       list(APPEND private_wgpu_depends SPIRV-Tools-opt)
 endif()
 
+set(private_headers
+    "ComboRenderBundleEncoderDescriptor.h"
+    "ComboRenderPipelineDescriptor.h"
+    "TextureUtils.h"
+    "WGPUHelpers.h"
+    "Window.h"
+)
+
+set(sources
+    "ComboRenderBundleEncoderDescriptor.cpp"
+    "ComboRenderPipelineDescriptor.cpp"
+    "TextureUtils.cpp"
+    "WGPUHelpers.cpp"
+    "Window.cpp"
+)
+
+if (ANDROID)
+    list(APPEND private_headers
+        "AndroidWindow.h"
+    )
+    list(APPEND sources
+        "AndroidWindow.cpp"
+    )
+else()
+    list(APPEND private_headers
+        "GLFWWindow.h"
+    )
+    list(APPEND sources
+        "GLFWWindow.cpp"
+    )
+endif()
+
 dawn_add_library(
   dawn_wgpu_utils
   ENABLE_EMSCRIPTEN
   UTILITY_TARGET dawn_internal_config
   PRIVATE_HEADERS
-    "ComboRenderBundleEncoderDescriptor.h"
-    "ComboRenderPipelineDescriptor.h"
-    "TextureUtils.h"
-    "WGPUHelpers.h"
+    ${private_headers}
   SOURCES
-    "ComboRenderBundleEncoderDescriptor.cpp"
-    "ComboRenderPipelineDescriptor.cpp"
-    "TextureUtils.cpp"
-    "WGPUHelpers.cpp"
+    ${sources}
   DEPENDS
     webgpu_cpp
     dawn::dawn_common
   PRIVATE_DEPENDS
     ${private_wgpu_depends}
+    glfw
 )
+
 
 # Needed by WGPUHelpers
 target_compile_definitions(dawn_wgpu_utils
