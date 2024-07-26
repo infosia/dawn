@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f94982fe_a7afbb4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-07-26T06:42:42Z",
+      "side": 1,
+      "message": "PTAL\nA small CL according to the [comment](https://dawn-review.googlesource.com/c/dawn/+/199314/comment/965f5a2e_cb5d49df/).",
+      "revId": "b2303758b50394132d72060193e6f3759d040d99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
