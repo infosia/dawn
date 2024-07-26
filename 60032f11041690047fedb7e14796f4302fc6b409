@@ -46,6 +46,30 @@
       },
       "revId": "60032f11041690047fedb7e14796f4302fc6b409",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ffd9bf7_e0cbc603",
+        "filename": "src/dawn/node/binding/AsyncRunner.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-26T06:12:54Z",
+      "side": 1,
+      "message": "Okay, thanks. I was thinking shared_ptr and weak_ptr could be useful for solving some problems in Dawn (both past and present problems).",
+      "parentUuid": "59f2fddb_5c74abc0",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 26
+      },
+      "revId": "60032f11041690047fedb7e14796f4302fc6b409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
