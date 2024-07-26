@@ -215,6 +215,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c276cd19_19d0d93e",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-07-26T06:15:31Z",
+      "side": 1,
+      "message": "Or probably we can just ignore the Discard storeOp for now. And leave it as a TODO. Considering:\n- `ResolveMultipleAttachmentInSeparatePasses` workaround also doesn\u0027t care about fulfilling the original Discard storeOp.\n- `Discard \u003d clear` is only relevant for WebGPU.\n- D3D11 is not enabled for WebGPU yet.",
+      "parentUuid": "cd27608d_1560aedc",
+      "range": {
+        "startLine": 251,
+        "startChar": 12,
+        "endLine": 285,
+        "endChar": 13
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7992aefa_e900df57",
         "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
         "patchSetId": 8
