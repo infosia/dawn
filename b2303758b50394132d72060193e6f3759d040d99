@@ -16,6 +16,40 @@
       "message": "PTAL\nA small CL according to the [comment](https://dawn-review.googlesource.com/c/dawn/+/199314/comment/965f5a2e_cb5d49df/).",
       "revId": "b2303758b50394132d72060193e6f3759d040d99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e42a67c7_8fb1a11a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-26T07:02:17Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "b2303758b50394132d72060193e6f3759d040d99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02915edb_42b9ac1f",
+        "filename": "src/dawn/native/RenderPassEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-26T07:02:17Z",
+      "side": 1,
+      "message": "Can we have this in the TryEncode so that the error is processed like all others?",
+      "revId": "b2303758b50394132d72060193e6f3759d040d99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
