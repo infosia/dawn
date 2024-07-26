@@ -720,7 +720,7 @@ source_set("end2end_tests_sources") {
     ]
   }
 
-  if (dawn_enable_vulkan) {
+  if (dawn_enable_vulkan && !is_android) {
     sources += [ "end2end/YCbCrInfoTests.cpp" ]
   }
 

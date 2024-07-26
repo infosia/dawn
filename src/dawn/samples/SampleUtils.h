@@ -28,11 +28,11 @@
 #ifndef SRC_DAWN_SAMPLES_SAMPLEUTILS_H_
 #define SRC_DAWN_SAMPLES_SAMPLEUTILS_H_
 
-#ifndef __EMSCRIPTEN__
-#include "GLFW/glfw3.h"
-#endif  // __EMSCRIPTEN__
-
 #include "dawn/webgpu_cpp.h"
+
+namespace dawn::utils {
+class Window;
+}
 
 wgpu::TextureFormat GetPreferredSwapChainTextureFormat();
 bool InitSample(int argc, const char** argv);
@@ -64,7 +64,7 @@ class SampleBase {
     uint32_t height = kHeight;
 
 #ifndef __EMSCRIPTEN__
-    GLFWwindow* window = nullptr;
+    dawn::utils::Window* window = nullptr;
 #endif  // __EMSCRIPTEN__
 };
 
