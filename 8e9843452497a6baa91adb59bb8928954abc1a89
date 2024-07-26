@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33d7bfa2_88418494",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-26T20:01:37Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "8e9843452497a6baa91adb59bb8928954abc1a89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8a5d428_46d3b07a",
+        "filename": "generator/templates/dawn/wire/server/ServerDoers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-26T20:01:37Z",
+      "side": 1,
+      "message": "I was hoping that we\u0027d be able to do this inside WireCmd,cpp but it seems that we don\u0027t have the exact information of \"string view\" vs. \"nullable string view\" easily there.",
+      "revId": "8e9843452497a6baa91adb59bb8928954abc1a89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
