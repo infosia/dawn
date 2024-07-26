@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "222ed302_a5a9efa5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-07-26T14:23:46Z",
+      "side": 1,
+      "message": "+1 to what james wrote, plus Clang-tidy.\nOtherwise looks fine.",
+      "revId": "04bb37230c7e9d9a3de61b9791c312263e81814a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "040557d0_77f263e0",
@@ -14,6 +31,24 @@
       "writtenOn": "2024-07-25T20:35:02Z",
       "side": 1,
       "message": "I don\u0027t think we need to do this anymore because of the previous change?",
+      "revId": "04bb37230c7e9d9a3de61b9791c312263e81814a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0438b880_420b05b0",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1864,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-07-26T14:23:46Z",
+      "side": 1,
+      "message": "\u003e unused local variable \u0027el_string\u0027 of type \u0027std::string\u0027 (aka \u0027basic_string\u003cchar\u003e\u0027) (https://clang.llvm.org/extra/clang-tidy/checks/bugprone/unused-local-non-trivial-variable.html)\n\u003e \n\u003e (Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)\n\nPlease fix.",
+      "parentUuid": "9694da02_4ee4d172",
       "revId": "04bb37230c7e9d9a3de61b9791c312263e81814a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
