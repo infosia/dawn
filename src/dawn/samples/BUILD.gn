@@ -26,6 +26,9 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import("../../../scripts/dawn_overrides_with_defaults.gni")
+if (is_android) {
+  import("//build/config/android/rules.gni")
+}
 
 group("samples") {
   deps = [
@@ -33,8 +36,10 @@ group("samples") {
     ":ComputeBoids",
     ":DawnInfo",
     ":HelloTriangle",
-    ":ManualSurfaceTest",
   ]
+  if (!is_android) {
+    deps += [ ":ManualSurfaceTest" ]
+  }
 }
 
 # Static library to contain code and dependencies common to all samples
@@ -54,14 +59,61 @@ static_library("utils") {
   ]
 }
 
+template("android_manifest_gen") {
+  outer_target = target_name
+  forward_variables_from(invoker, "*")
+  action("make_manifest_" + target_name) {
+    script = "${dawn_root}/generator/manifest_generator.py"
+    outfile = "$target_gen_dir/$outer_target/AndroidManifest.xml"
+    args = [
+      "--target-name",
+      outer_target,
+      "--out",
+      rebase_path(outfile, root_build_dir),
+    ]
+    outputs = [ outfile ]
+  }
+}
+
+template("android_main_shared_lib") {
+  shared_library(target_name) {
+    sources = invoker.sources
+    sources += [ "AndroidMain.cpp" ]
+    configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+    deps = [ ":utils" ]
+    libs = [ "android" ]
+  }
+}
+
 # Template for samples to avoid listing utils as a dep every time
 template("sample") {
-  executable(target_name) {
-    deps = [ ":utils" ]
-    forward_variables_from(invoker, "*", [ "deps" ])
+  if (is_android) {
+    manifest_path = "$target_gen_dir/$target_name/AndroidManifest.xml"
+    android_manifest_gen(target_name) {
+    }
+    android_main_shared_lib("_" + target_name) {
+      sources = invoker.sources
+    }
+    android_apk(target_name) {
+      apk_name = target_name
 
-    if (defined(invoker.deps)) {
-      deps += invoker.deps
+      deps = [
+        ":_$target_name",
+        ":make_manifest_$target_name",
+      ]
+
+      android_manifest = manifest_path
+      android_manifest_dep = ":make_manifest_$target_name"
+      shared_libraries = [ ":_$target_name" ]
+    }
+  } else {
+    executable(target_name) {
+      deps = [ ":utils" ]
+      forward_variables_from(invoker, "*", [ "deps" ])
+
+      if (defined(invoker.deps)) {
+        deps += invoker.deps
+      }
     }
   }
 }
