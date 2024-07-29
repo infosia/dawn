@@ -139,6 +139,24 @@
       "parentUuid": "6954604a_bccf5d9b",
       "revId": "47380f19f3be556095cb40616f04c777623ae140",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91f07ade_d0b33991",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-29T21:35:35Z",
+      "side": 1,
+      "message": "Ah I see, thanks.",
+      "parentUuid": "3396d6c0_594c9dc2",
+      "revId": "47380f19f3be556095cb40616f04c777623ae140",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
