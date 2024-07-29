@@ -16,6 +16,41 @@
       "message": "PTAL.",
       "revId": "55feff825a69765b27305a75ea32d44026b7c645",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e1f04f3_c2ba3240",
+        "filename": "src/tint/lang/glsl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-29T17:25:07Z",
+      "side": 1,
+      "message": "Nit: workgroup_uniform_load unnecessary as we polyfill it when converting WGSL to core IR.",
+      "fixSuggestions": [
+        {
+          "fixId": "9aca7968_b52f4cbe",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/raise/raise.cc",
+              "range": {
+                "startLine": 89,
+                "startChar": 0,
+                "endLine": 90,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "55feff825a69765b27305a75ea32d44026b7c645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
