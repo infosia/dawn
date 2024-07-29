@@ -46,7 +46,7 @@ Hashmap<std::string, std::string, 16> kBenchmarkWgslShaders;
 bool Initialize() {
     // Populate the map from benchmark input name to WGSL shader.
     for (auto& benchmark : kBenchmarkInputs) {
-        if (benchmark.wgsl) {
+        if (!benchmark.wgsl.empty()) {
             // If the input is WGSL, we just add it as is.
             kBenchmarkWgslShaders.Add(benchmark.name, benchmark.wgsl);
         } else if (!benchmark.spirv.empty()) {
