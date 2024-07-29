@@ -130,6 +130,7 @@ cc_library(
     "//conditions:default": [],
   }) + select({
     ":tint_build_glsl_writer": [
+      "//src/tint/lang/glsl/writer",
       "//src/tint/lang/glsl/writer/common",
       "//src/tint/lang/glsl/writer/printer",
       "//src/tint/lang/glsl/writer/raise",

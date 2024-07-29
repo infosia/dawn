@@ -37,8 +37,10 @@
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/glsl/validate/validate.h"
 #include "src/tint/lang/glsl/writer/common/version.h"
+#include "src/tint/lang/glsl/writer/output.h"
 #include "src/tint/lang/glsl/writer/printer/printer.h"
 #include "src/tint/lang/glsl/writer/raise/raise.h"
+#include "src/tint/lang/glsl/writer/writer.h"
 #include "src/tint/utils/text/string.h"
 
 namespace tint::glsl::writer {
@@ -61,30 +63,26 @@ class GlslWriterTestHelperBase : public BASE {
     std::string err_;
 
     /// Generated GLSL
-    std::string output_;
+    Output output_;
 
     /// Run the writer on the IR module and validate the result.
     /// @returns true if generation and validation succeeded
-    bool Generate(tint::ast::PipelineStage stage = tint::ast::PipelineStage::kCompute) {
-        if (auto raised = Raise(mod, {}); raised != Success) {
-            err_ = raised.Failure().reason.Str();
-            return false;
-        }
-
-        auto result = Print(mod, version);
+    bool Generate(tint::ast::PipelineStage stage = tint::ast::PipelineStage::kCompute,
+                  Options options = {}) {
+        auto result = writer::Generate(mod, options);
         if (result != Success) {
             err_ = result.Failure().reason.Str();
             return false;
         }
         output_ = result.Get();
 
-        auto validate_res = glsl::validate::Validate(output_, stage);
+        auto validate_res = glsl::validate::Validate(output_.glsl, stage);
         if (validate_res != Success) {
             size_t line_num = 1;
 
             std::stringstream err;
             err << "GLSLang was expected to succeed, but failed:\n\n";
-            for (auto line : Split(output_, "\n")) {
+            for (auto line : Split(output_.glsl, "\n")) {
                 err << line_num++ << ": " << line << "\n";
             }
             err << "\n\n" << validate_res.Failure();
