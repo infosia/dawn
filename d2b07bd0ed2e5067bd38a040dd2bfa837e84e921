@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35b84f8d_83cd51bd",
+        "filename": "src/tint/lang/glsl/writer/call_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-29T18:44:51Z",
+      "side": 1,
+      "message": "That\u0027s only, like, your opinion.",
+      "parentUuid": "59fdc918_f91895f8",
+      "revId": "d2b07bd0ed2e5067bd38a040dd2bfa837e84e921",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca21dfb5_695ab680",
