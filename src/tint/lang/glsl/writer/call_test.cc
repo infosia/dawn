@@ -33,8 +33,7 @@ using namespace tint::core::fluent_types;     // NOLINT
 namespace tint::glsl::writer {
 namespace {
 
-// TODO(dsinclair): Enable when `let` is supported
-TEST_F(GlslWriterTest, DISABLED_CallWithoutParams) {
+TEST_F(GlslWriterTest, CallWithoutParams) {
     auto* f = b.Function("a", ty.bool_());
     f->Block()->Append(b.Return(f, false));
 
@@ -50,12 +49,10 @@ TEST_F(GlslWriterTest, DISABLED_CallWithoutParams) {
 bool a() {
   return false;
 }
-
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-    bool x = a();
+  bool x = a();
 }
-
 )");
 }
 
