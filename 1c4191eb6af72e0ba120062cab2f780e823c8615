@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e56f58ec_967eef51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-29T18:09:29Z",
+      "side": 1,
+      "message": "`arrays in a single`",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "1c4191eb6af72e0ba120062cab2f780e823c8615",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd02acb4_3727862d",
+        "filename": "src/tint/cmd/bench/generate_benchmark_inputs.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-29T18:09:29Z",
+      "side": 1,
+      "message": "```suggestion\nSPIR-V shaders, and declares macros that will be used to register them all with Google Benchmark.\n\nThe SPIR-V shaders are emitted as an array of uint32_t values.\n\nUsage:\n```",
+      "range": {
+        "startLine": 31,
+        "startChar": 97,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "1c4191eb6af72e0ba120062cab2f780e823c8615",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
