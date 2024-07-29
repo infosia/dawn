@@ -568,7 +568,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
                                        /* fullSubgroups */ {}));
             }
 
-            auto result = tint::glsl::writer::Generate(program, r.tintOptions, remappedEntryPoint);
+            auto result = tint::glsl::writer::Generate(program, r.tintOptions);
             DAWN_INVALID_IF(result != tint::Success, "An error occurred while generating GLSL:\n%s",
                             result.Failure().reason.Str());
 
