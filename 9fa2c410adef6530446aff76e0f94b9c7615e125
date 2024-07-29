@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "150210b9_be09df05",
+        "filename": "src/tint/cmd/bench/bench.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-29T18:15:20Z",
+      "side": 1,
+      "message": "```suggestion\n                          \u003c\u003c \"\u0027: \" \u003c\u003c program.Diagnostics() \u003c\u003c \"\\n\";\n```",
+      "revId": "9fa2c410adef6530446aff76e0f94b9c7615e125",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ee5efb5_53ffa334",
+        "filename": "src/tint/cmd/bench/bench.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-29T18:15:20Z",
+      "side": 1,
+      "message": "```suggestion\n                          \u003c\u003c \"\u0027: \" \u003c\u003c result.Failure() \u003c\u003c \"\\n\";\n```",
+      "revId": "9fa2c410adef6530446aff76e0f94b9c7615e125",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
