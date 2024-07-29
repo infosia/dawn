@@ -16,6 +16,58 @@
       "message": "PTAL.",
       "revId": "d2b07bd0ed2e5067bd38a040dd2bfa837e84e921",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59fdc918_f91895f8",
+        "filename": "src/tint/lang/glsl/writer/call_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-29T18:41:23Z",
+      "side": 1,
+      "message": "Nit: 2024",
+      "fixSuggestions": [
+        {
+          "fixId": "f2a5ae04_397532ea",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/call_test.cc",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 2,
+                "endChar": 0
+              },
+              "replacement": "// Copyright 2024 The Dawn \u0026 Tint Authors\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2b07bd0ed2e5067bd38a040dd2bfa837e84e921",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca21dfb5_695ab680",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-29T18:41:23Z",
+      "side": 1,
+      "message": "We\u0027re going to have the same problem as crbug.com/347690530 - please open a bug and mark as blocking for the GLSL backend bug so we don\u0027t forget.",
+      "revId": "d2b07bd0ed2e5067bd38a040dd2bfa837e84e921",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
