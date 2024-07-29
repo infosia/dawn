@@ -39,7 +39,7 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options) {
     Output output;
 
     // Raise from core-dialect to GLSL-dialect.
-    if (auto res = Raise(ir); res != Success) {
+    if (auto res = Raise(ir, options); res != Success) {
         return res.Failure();
     }
 
