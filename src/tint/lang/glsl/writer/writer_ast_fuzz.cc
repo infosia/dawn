@@ -97,8 +97,8 @@ void ASTFuzzer(const tint::Program& program,
     auto entrypoints = inspector.GetEntryPoints();
 
     // Test all of the entry points as GLSL requires specifying which one to generate.
-    for (const auto& ep : entrypoints) {
-        auto res = tint::glsl::writer::Generate(program, options, ep.name);
+    for (const auto& _ : entrypoints) {
+        auto res = tint::glsl::writer::Generate(program, options);
 
         if (res == Success && context.options.dump) {
             std::cout << "Dumping generated GLSL:\n" << res->glsl << std::endl;

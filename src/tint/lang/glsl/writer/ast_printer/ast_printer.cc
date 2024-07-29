@@ -27,11 +27,7 @@
 
 #include "src/tint/lang/glsl/writer/ast_printer/ast_printer.h"
 
-#include <algorithm>
-#include <cmath>
 #include <iomanip>
-#include <limits>
-#include <set>
 #include <utility>
 #include <vector>
 
@@ -54,7 +50,6 @@
 #include "src/tint/lang/glsl/writer/common/options.h"
 #include "src/tint/lang/glsl/writer/common/printer_support.h"
 #include "src/tint/lang/wgsl/ast/call_statement.h"
-#include "src/tint/lang/wgsl/ast/id_attribute.h"
 #include "src/tint/lang/wgsl/ast/internal_attribute.h"
 #include "src/tint/lang/wgsl/ast/interpolate_attribute.h"
 #include "src/tint/lang/wgsl/ast/transform/add_block_attribute.h"
@@ -76,10 +71,8 @@
 #include "src/tint/lang/wgsl/ast/transform/promote_side_effects_to_decl.h"
 #include "src/tint/lang/wgsl/ast/transform/remove_continue_in_switch.h"
 #include "src/tint/lang/wgsl/ast/transform/remove_phonies.h"
-#include "src/tint/lang/wgsl/ast/transform/renamer.h"
 #include "src/tint/lang/wgsl/ast/transform/robustness.h"
 #include "src/tint/lang/wgsl/ast/transform/simplify_pointers.h"
-#include "src/tint/lang/wgsl/ast/transform/single_entry_point.h"
 #include "src/tint/lang/wgsl/ast/transform/std140.h"
 #include "src/tint/lang/wgsl/ast/transform/unshadow.h"
 #include "src/tint/lang/wgsl/ast/transform/zero_init_workgroup_memory.h"
@@ -141,9 +134,7 @@ SanitizedResult::SanitizedResult() = default;
 SanitizedResult::~SanitizedResult() = default;
 SanitizedResult::SanitizedResult(SanitizedResult&&) = default;
 
-SanitizedResult Sanitize(const Program& in,
-                         const Options& options,
-                         const std::string& entry_point) {
+SanitizedResult Sanitize(const Program& in, const Options& options) {
     ast::transform::Manager manager;
     ast::transform::DataMap data;
 
@@ -153,11 +144,6 @@ SanitizedResult Sanitize(const Program& in,
 
     // ExpandCompoundAssignment must come before BuiltinPolyfill
     manager.Add<ast::transform::ExpandCompoundAssignment>();
-
-    if (!entry_point.empty()) {
-        manager.Add<ast::transform::SingleEntryPoint>();
-        data.Add<ast::transform::SingleEntryPoint::Config>(entry_point);
-    }
 
     manager.Add<ast::transform::PreservePadding>();  // Must come before DirectVariableAccess
 

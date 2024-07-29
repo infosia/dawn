@@ -307,7 +307,7 @@ bool GenerateGlsl(const tint::Program& program) {
     tint::glsl::writer::Options gen_options;
     gen_options.bindings = tint::glsl::writer::GenerateBindings(program);
 
-    auto result = tint::glsl::writer::Generate(program, gen_options, "");
+    auto result = tint::glsl::writer::Generate(program, gen_options);
     if (result == tint::Success) {
         tint::cmd::PrintWGSL(std::cerr, program);
         std::cerr << "Failed to generate: " << result.Failure() << "\n";

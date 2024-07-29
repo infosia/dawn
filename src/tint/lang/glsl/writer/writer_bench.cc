@@ -50,8 +50,8 @@ void GenerateGLSL(benchmark::State& state, std::string input_name) {
     }
 
     for (auto _ : state) {
-        for (auto& ep : entry_points) {
-            auto gen_res = Generate(program, {}, ep);
+        for (auto& _ : entry_points) {
+            auto gen_res = Generate(program, {});
             if (gen_res != Success) {
                 state.SkipWithError(gen_res.Failure().reason.Str());
             }
