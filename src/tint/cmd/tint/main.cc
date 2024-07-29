@@ -43,7 +43,6 @@
 #include "src/tint/api/tint.h"
 #include "src/tint/cmd/common/helper.h"
 #include "src/tint/lang/core/ir/disassembler.h"
-#include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/wgsl/ast/module.h"
 #include "src/tint/lang/wgsl/ast/transform/first_index_offset.h"
 #include "src/tint/lang/wgsl/ast/transform/manager.h"
@@ -57,13 +56,10 @@
 #include "src/tint/utils/containers/transform.h"
 #include "src/tint/utils/diagnostic/formatter.h"
 #include "src/tint/utils/macros/defer.h"
-#include "src/tint/utils/system/env.h"
-#include "src/tint/utils/system/terminal.h"
 #include "src/tint/utils/text/string.h"
 #include "src/tint/utils/text/string_stream.h"
 #include "src/tint/utils/text/styled_text.h"
 #include "src/tint/utils/text/styled_text_printer.h"
-#include "src/tint/utils/text/styled_text_theme.h"
 
 #if TINT_BUILD_WGSL_READER
 #include "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.h"
@@ -1074,37 +1070,61 @@ bool GenerateGlsl([[maybe_unused]] const tint::Program& program,
         constexpr uint32_t kMaxBindGroups = 4u;
         gen_options.bindings.texture_builtins_from_uniform.ubo_binding = {kMaxBindGroups, 0u};
 
-        auto textureBuiltinsFromUniformData = inspector.GetTextureQueries(entry_point_name);
-        if (!textureBuiltinsFromUniformData.empty()) {
-            for (size_t i = 0; i < textureBuiltinsFromUniformData.size(); ++i) {
-                const auto& info = textureBuiltinsFromUniformData[i];
+        tint::Result<tint::glsl::writer::Output> result;
+        if (!entry_point_name.empty()) {
+            auto textureBuiltinsFromUniformData = inspector.GetTextureQueries(entry_point_name);
+            if (!textureBuiltinsFromUniformData.empty()) {
+                for (size_t i = 0; i < textureBuiltinsFromUniformData.size(); ++i) {
+                    const auto& info = textureBuiltinsFromUniformData[i];
 
-                // This is the unmodified binding point from the WGSL shader.
-                tint::BindingPoint srcBindingPoint{info.group, info.binding};
-                gen_options.bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering
-                    .emplace_back(srcBindingPoint);
+                    // This is the unmodified binding point from the WGSL shader.
+                    tint::BindingPoint srcBindingPoint{info.group, info.binding};
+                    gen_options.bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering
+                        .emplace_back(srcBindingPoint);
+                }
             }
-        }
 
-        auto entry_point = inspector.GetEntryPoint(entry_point_name);
-        uint32_t offset = entry_point.push_constant_size;
+            auto entry_point = inspector.GetEntryPoint(entry_point_name);
+            uint32_t offset = entry_point.push_constant_size;
 
-        if (entry_point.instance_index_used) {
-            // Place the first_instance push constant member after user-defined push constants (if
-            // any).
-            gen_options.first_instance_offset = offset;
-            offset += 4;
-        }
-        if (entry_point.frag_depth_used) {
-            gen_options.depth_range_offsets = {offset + 0, offset + 4};
-            offset += 8;
-        }
+            if (entry_point.instance_index_used) {
+                // Place the first_instance push constant member after user-defined push constants
+                // (if any).
+                gen_options.first_instance_offset = offset;
+                offset += 4;
+            }
+            if (entry_point.frag_depth_used) {
+                gen_options.depth_range_offsets = {offset + 0, offset + 4};
+                offset += 8;
+            }
 
-        auto result = tint::glsl::writer::Generate(prg, gen_options, entry_point_name);
-        if (result != tint::Success) {
-            tint::cmd::PrintWGSL(std::cerr, prg);
-            std::cerr << "Failed to generate: " << result.Failure() << "\n";
-            return false;
+            tint::ast::transform::Manager transform_manager;
+            tint::ast::transform::DataMap transform_inputs;
+            transform_manager.append(std::make_unique<tint::ast::transform::SingleEntryPoint>());
+            transform_inputs.Add<tint::ast::transform::SingleEntryPoint::Config>(entry_point_name);
+
+            tint::ast::transform::DataMap outputs;
+            auto single_ep_program =
+                transform_manager.Run(prg, std::move(transform_inputs), outputs);
+            if (!single_ep_program.IsValid()) {
+                tint::cmd::PrintWGSL(std::cerr, single_ep_program);
+                std::cerr << single_ep_program.Diagnostics() << "\n";
+                return 1;
+            }
+
+            result = tint::glsl::writer::Generate(single_ep_program, gen_options);
+            if (result != tint::Success) {
+                tint::cmd::PrintWGSL(std::cerr, single_ep_program);
+                std::cerr << "Failed to generate: " << result.Failure() << "\n";
+                return false;
+            }
+        } else {
+            result = tint::glsl::writer::Generate(prg, gen_options);
+            if (result != tint::Success) {
+                tint::cmd::PrintWGSL(std::cerr, prg);
+                std::cerr << "Failed to generate: " << result.Failure() << "\n";
+                return false;
+            }
         }
 
         if (!tint::cmd::WriteFile(options.output_file, "w", result->glsl)) {

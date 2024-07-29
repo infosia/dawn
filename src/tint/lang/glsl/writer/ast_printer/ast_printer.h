@@ -32,12 +32,10 @@
 #include <tuple>
 #include <unordered_map>
 #include <unordered_set>
-#include <utility>
 
 #include "src/tint/lang/core/builtin_value.h"
 #include "src/tint/lang/glsl/writer/common/version.h"
 #include "src/tint/lang/wgsl/program/program_builder.h"
-#include "src/tint/utils/containers/scope_stack.h"
 #include "src/tint/utils/generator/text_generator.h"
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/text/string_stream.h"
@@ -71,11 +69,8 @@ struct SanitizedResult {
 /// Sanitize a program in preparation for generating GLSL.
 /// @param program The program to sanitize
 /// @param options The HLSL generator options.
-/// @param entry_point the entry point to generate GLSL for
 /// @returns the sanitized program and any supplementary information
-SanitizedResult Sanitize(const Program& program,
-                         const Options& options,
-                         const std::string& entry_point);
+SanitizedResult Sanitize(const Program& program, const Options& options);
 
 /// Implementation class for GLSL generator
 class ASTPrinter : public tint::TextGenerator {
