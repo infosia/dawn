@@ -83,7 +83,7 @@ void main() {
 )");
 }
 
-// TODO(dsinclair): Enable when `var` is supported
+// TODO(dsinclair): Enable when `access` is implemented
 TEST_F(GlslWriterTest, DISABLED_CallWithPointerParams) {
     auto* p1 = b.FunctionParam("p1", ty.f32());
     auto* p2 = b.FunctionParam("p2", ty.bool_());
@@ -97,7 +97,7 @@ TEST_F(GlslWriterTest, DISABLED_CallWithPointerParams) {
     ep->SetWorkgroupSize(1, 1, 1);
     b.Append(ep->Block(), [&] {
         auto* y = b.Var("y", 1_i);
-        b.Let("x", b.Call(f, 1.2_f, false, y));
+        b.Let("x", b.Call(f, 1.2_f, false, b.Access(ty.ptr<function, i32>(), y)));
         b.Return(ep);
     });
 
