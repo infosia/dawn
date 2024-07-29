@@ -29,10 +29,6 @@
 #define SRC_TINT_LANG_GLSL_WRITER_OUTPUT_H_
 
 #include <string>
-#include <utility>
-#include <vector>
-
-#include "src/tint/lang/wgsl/ast/pipeline_stage.h"
 
 namespace tint::glsl::writer {
 
@@ -46,6 +42,8 @@ struct Output {
 
     /// Copy constructor
     Output(const Output&);
+
+    Output& operator=(const Output&) = default;
 
     /// The generated GLSL.
     std::string glsl = "";

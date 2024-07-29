@@ -28,7 +28,6 @@
 #include "src/tint/lang/glsl/writer/writer.h"
 
 #include <memory>
-#include <utility>
 
 #include "src/tint/lang/glsl/writer/ast_printer/ast_printer.h"
 #include "src/tint/lang/glsl/writer/printer/printer.h"
@@ -36,7 +35,7 @@
 
 namespace tint::glsl::writer {
 
-Result<Output> Generate(core::ir::Module& ir, const Options& options, const std::string&) {
+Result<Output> Generate(core::ir::Module& ir, const Options& options) {
     Output output;
 
     // Raise from core-dialect to GLSL-dialect.
@@ -54,9 +53,7 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options, const std:
     return output;
 }
 
-Result<Output> Generate(const Program& program,
-                        const Options& options,
-                        const std::string& entry_point) {
+Result<Output> Generate(const Program& program, const Options& options) {
     if (!program.IsValid()) {
         return Failure{program.Diagnostics()};
     }
@@ -64,7 +61,7 @@ Result<Output> Generate(const Program& program,
     Output output;
 
     // Sanitize the program.
-    auto sanitized_result = Sanitize(program, options, entry_point);
+    auto sanitized_result = Sanitize(program, options);
     if (!sanitized_result.program.IsValid()) {
         return Failure{sanitized_result.program.Diagnostics()};
     }

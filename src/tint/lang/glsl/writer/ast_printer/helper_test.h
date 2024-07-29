@@ -29,7 +29,6 @@
 #define SRC_TINT_LANG_GLSL_WRITER_AST_PRINTER_HELPER_TEST_H_
 
 #include <memory>
-#include <string>
 #include <utility>
 
 #include "gtest/gtest.h"
@@ -111,7 +110,7 @@ class TestHelperBase : public BODY, public ProgramBuilder {
         }
         *program = std::move(result);
 
-        auto sanitized_result = Sanitize(*program, options, /* entry_point */ "");
+        auto sanitized_result = Sanitize(*program, options);
         if (!sanitized_result.program.IsValid()) {
             ADD_FAILURE() << sanitized_result.program.Diagnostics();
         }
