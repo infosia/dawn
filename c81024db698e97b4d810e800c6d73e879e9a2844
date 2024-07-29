@@ -34,6 +34,24 @@
       ],
       "revId": "c81024db698e97b4d810e800c6d73e879e9a2844",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8fd7706_57dc7d31",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-29T18:22:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ce83a01_ad728529",
+      "revId": "c81024db698e97b4d810e800c6d73e879e9a2844",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

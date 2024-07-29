@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f319986b_acd16190",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-29T18:22:29Z",
+      "side": 0,
+      "message": "I probably wouldn\u0027t have put them in originally (they came from Ben\u0027s prototype or by me referencing existing code), so I removed them while working on this code. I have reverted this part of the change.\n\n(If I want to change this pattern, I will file an issue/own CL)",
+      "parentUuid": "70b6a3e2_b92ade3a",
+      "revId": "585946e7b811c8630e5015c635b5d54c65a0f594",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "188d6265_7c0449aa",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-07-25T20:32:00Z",
       "side": 0,
       "message": "The initializer is optional and I don\u0027t see any calls to `CheckOperand()`, so will this not crash if the initializer type is nullptr?\n\nMaybe adding that unit test is worth it now if we\u0027re starting to rely on the early exit.",
+      "revId": "585946e7b811c8630e5015c635b5d54c65a0f594",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d33b42b_7c985d47",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-29T18:22:29Z",
+      "side": 0,
+      "message": "Thanks for catching this, I have added in a CheckOperand on the initializer if it it exists and added a unitttest",
+      "parentUuid": "188d6265_7c0449aa",
       "revId": "585946e7b811c8630e5015c635b5d54c65a0f594",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
