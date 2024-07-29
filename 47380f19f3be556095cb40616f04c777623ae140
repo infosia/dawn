@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "47380f19f3be556095cb40616f04c777623ae140",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "441d2187_8922c7de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-29T14:55:45Z",
+      "side": 1,
+      "message": "My gut feel is that this is the wrong direction. We can\u0027t generate valid GLSL without targeting a single entry point, so we always need to run `SingleEntryPoint`, which to me suggests it should be part of the backend.\n\nOther backends have transforms which currently assume `SingleEntryPoint` as well (e.g. PixelLocal transform for MSL and HLSL), so perhaps this is an API change we should make for all backends. Need to think about that a bit more.",
+      "revId": "47380f19f3be556095cb40616f04c777623ae140",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
