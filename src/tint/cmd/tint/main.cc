@@ -1071,6 +1071,27 @@ bool GenerateGlsl([[maybe_unused]] const tint::Program& program,
         gen_options.bindings.texture_builtins_from_uniform.ubo_binding = {kMaxBindGroups, 0u};
 
         tint::Result<tint::glsl::writer::Output> result;
+
+        auto run_gen = [&](const tint::Program& input_program) {
+            if (options.use_ir) {
+                // Convert the AST program to an IR module.
+                auto ir = tint::wgsl::reader::ProgramToLoweredIR(input_program);
+                if (ir != tint::Success) {
+                    std::cerr << "Failed to generate IR: " << ir << "\n";
+                    return false;
+                }
+                result = tint::glsl::writer::Generate(ir.Get(), gen_options);
+            } else {
+                result = tint::glsl::writer::Generate(input_program, gen_options);
+            }
+            if (result != tint::Success) {
+                tint::cmd::PrintWGSL(std::cerr, input_program);
+                std::cerr << "Failed to generate: " << result.Failure() << "\n";
+                return false;
+            }
+            return true;
+        };
+
         if (!entry_point_name.empty()) {
             auto textureBuiltinsFromUniformData = inspector.GetTextureQueries(entry_point_name);
             if (!textureBuiltinsFromUniformData.empty()) {
@@ -1112,17 +1133,11 @@ bool GenerateGlsl([[maybe_unused]] const tint::Program& program,
                 return 1;
             }
 
-            result = tint::glsl::writer::Generate(single_ep_program, gen_options);
-            if (result != tint::Success) {
-                tint::cmd::PrintWGSL(std::cerr, single_ep_program);
-                std::cerr << "Failed to generate: " << result.Failure() << "\n";
+            if (!run_gen(single_ep_program)) {
                 return false;
             }
         } else {
-            result = tint::glsl::writer::Generate(prg, gen_options);
-            if (result != tint::Success) {
-                tint::cmd::PrintWGSL(std::cerr, prg);
-                std::cerr << "Failed to generate: " << result.Failure() << "\n";
+            if (!run_gen(prg)) {
                 return false;
             }
         }
