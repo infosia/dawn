@@ -103,6 +103,24 @@
       "message": "Don\u0027t you need all of the bindings stuff for this code path too? Shouldn\u0027t we just skip the `SingleEntryPoint` transform if `entry_point` is empty, but leave everything else the same?",
       "revId": "47380f19f3be556095cb40616f04c777623ae140",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3396d6c0_594c9dc2",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-29T17:26:14Z",
+      "side": 1,
+      "message": "We do still have the bindings in this path. They\u0027re added before the entry point check. We don\u0027t have any information which requires an entry point to get from the inspector.",
+      "parentUuid": "6954604a_bccf5d9b",
+      "revId": "47380f19f3be556095cb40616f04c777623ae140",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
