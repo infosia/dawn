@@ -25,8 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_TINT_LANG_GLSL_WRITER_PRINTER_HELPER_TEST_H_
-#define SRC_TINT_LANG_GLSL_WRITER_PRINTER_HELPER_TEST_H_
+#ifndef SRC_TINT_LANG_GLSL_WRITER_HELPER_TEST_H_
+#define SRC_TINT_LANG_GLSL_WRITER_HELPER_TEST_H_
 
 #include <string>
 
@@ -41,7 +41,7 @@ namespace tint::glsl::writer {
 
 /// Base helper class for testing the GLSL generator implementation.
 template <typename BASE>
-class GlslPrinterTestHelperBase : public BASE {
+class GlslWriterTestHelperBase : public BASE {
   public:
     /// The test module.
     core::ir::Module mod;
@@ -90,12 +90,12 @@ class GlslPrinterTestHelperBase : public BASE {
 };
 
 /// Test class
-using GlslPrinterTest = GlslPrinterTestHelperBase<testing::Test>;
+using GlslWriterTest = GlslWriterTestHelperBase<testing::Test>;
 
 /// Test param class
 template <typename T>
-using GlslPrinterTestWithParam = GlslPrinterTestHelperBase<testing::TestWithParam<T>>;
+using GlslWriterTestWithParam = GlslWriterTestHelperBase<testing::TestWithParam<T>>;
 
 }  // namespace tint::glsl::writer
 
-#endif  // SRC_TINT_LANG_GLSL_WRITER_PRINTER_HELPER_TEST_H_
+#endif  // SRC_TINT_LANG_GLSL_WRITER_HELPER_TEST_H_
