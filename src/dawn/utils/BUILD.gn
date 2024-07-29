@@ -79,6 +79,15 @@ static_library("utils") {
       "android_native_app_glue.c",
       "android_native_app_glue.h",
     ]
+
+    cflags = [
+      "-Wno-main",
+      "-Wno-format-pedantic",
+    ]
+
+    if (!build_with_chromium) {
+      deps += [ "${dawn_root}/third_party/gn/libunwind:libunwind" ]
+    }
     libs = [ "android" ]
   } else {
     sources += [

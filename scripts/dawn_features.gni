@@ -47,7 +47,8 @@ dawn_is_winuwp = is_win && target_os == "winuwp"
 dawn_use_windows_ui = is_win
 
 declare_args() {
-  dawn_tests_use_angle = true
+  # Dawn standalone Android builds do not build ANGLE correctly.
+  dawn_tests_use_angle = !(is_android && !build_with_chromium)
 
   # Enables SwiftShader as the fallback adapter. Requires dawn_swiftshader_dir
   # to be set to take effect.
