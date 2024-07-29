@@ -51,6 +51,58 @@
       "parentUuid": "441d2187_8922c7de",
       "revId": "47380f19f3be556095cb40616f04c777623ae140",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fb40048_5df58bec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-29T17:21:28Z",
+      "side": 1,
+      "message": "Benchmark code needs updating too.",
+      "revId": "47380f19f3be556095cb40616f04c777623ae140",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d7640cc_962aced7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-29T17:21:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5f41dac9_f19132be",
+      "revId": "47380f19f3be556095cb40616f04c777623ae140",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6954604a_bccf5d9b",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-29T17:21:28Z",
+      "side": 1,
+      "message": "Don\u0027t you need all of the bindings stuff for this code path too? Shouldn\u0027t we just skip the `SingleEntryPoint` transform if `entry_point` is empty, but leave everything else the same?",
+      "revId": "47380f19f3be556095cb40616f04c777623ae140",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
