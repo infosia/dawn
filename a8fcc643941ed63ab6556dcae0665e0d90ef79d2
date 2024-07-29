@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "a8fcc643941ed63ab6556dcae0665e0d90ef79d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16795466_9b5aaa62",
+        "filename": "src/tint/lang/glsl/writer/helper_test.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-29T17:27:42Z",
+      "side": 1,
+      "message": "Nit: Should just call `writer::Generate()` here since that\u0027s what we\u0027re testing now (same as MSL and HLSL).",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 9
+      },
+      "revId": "a8fcc643941ed63ab6556dcae0665e0d90ef79d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
