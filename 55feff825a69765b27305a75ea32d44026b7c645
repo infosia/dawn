@@ -51,6 +51,24 @@
       ],
       "revId": "55feff825a69765b27305a75ea32d44026b7c645",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51ebfd34_797c9682",
+        "filename": "src/tint/lang/glsl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-29T17:33:23Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "1e1f04f3_c2ba3240",
+      "revId": "55feff825a69765b27305a75ea32d44026b7c645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
