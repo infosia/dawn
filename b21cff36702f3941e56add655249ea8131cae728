@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "159a4507_51b1ca9e",
+        "filename": "src/tint/cmd/bench/main_bench.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-29T18:04:43Z",
+      "side": 1,
+      "message": "does the `legacy` here imply that we\u0027re going to have to change this at some point in the near future?",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 66
+      },
+      "revId": "b21cff36702f3941e56add655249ea8131cae728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0712c597_acb34639",
+        "filename": "src/tint/cmd/bench/main_bench.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-29T18:04:43Z",
+      "side": 1,
+      "message": "Thoughts on `[[maybe_unused]]` ?\n\n```suggestion\n    void ReportRunsConfig([[maybe_unused]] double min_time,\n                          [[maybe_unused]] bool has_explicit_iters,\n                          [[maybe_unused]] benchmark::IterationCount iters) override {}\n```",
+      "range": {
+        "startLine": 41,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 61
+      },
+      "revId": "b21cff36702f3941e56add655249ea8131cae728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d245e2a_76bb685c",
+        "filename": "src/tint/cmd/bench/main_bench.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-29T18:04:43Z",
+      "side": 1,
+      "message": "```suggestion\n                std::cout \u003c\u003c \"FAILED \" \u003c\u003c fullname \u003c\u003c \": \" \u003c\u003c run.skip_message \u003c\u003c \"\\n\";\n```",
+      "revId": "b21cff36702f3941e56add655249ea8131cae728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fd170fc_fa6747f6",
+        "filename": "src/tint/cmd/bench/main_bench.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-29T18:04:43Z",
+      "side": 1,
+      "message": "```suggestion\n            std::cout \u003c\u003c \"\\n\";\n```",
+      "revId": "b21cff36702f3941e56add655249ea8131cae728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
