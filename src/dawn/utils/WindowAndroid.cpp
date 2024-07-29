@@ -31,8 +31,6 @@
 
 #include "dawn/utils/android_native_app_glue.h"
 
-#define LOGV(...) ((void)__android_log_print(ANDROID_LOG_VERBOSE, "Dawn Sample", __VA_ARGS__))
-
 namespace dawn::utils {
 
 struct android_app* Window::sApp = nullptr;
