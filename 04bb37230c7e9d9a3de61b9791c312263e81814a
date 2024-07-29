@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3f61935_7c925016",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1864,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-29T18:50:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0438b880_420b05b0",
+      "revId": "04bb37230c7e9d9a3de61b9791c312263e81814a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8da7bf64_c8cc97a1",
@@ -84,6 +102,24 @@
       "writtenOn": "2024-07-25T20:19:11Z",
       "side": 1,
       "message": "Whitespace is a KI,https://issues.chromium.org/issues/354735929",
+      "revId": "04bb37230c7e9d9a3de61b9791c312263e81814a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "631b6aa7_7e76332b",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6016,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-29T18:50:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8da7bf64_c8cc97a1",
       "revId": "04bb37230c7e9d9a3de61b9791c312263e81814a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
