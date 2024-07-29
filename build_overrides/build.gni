@@ -36,6 +36,12 @@ declare_args() {
   # Android 32-bit non-component, non-clang builds cannot have symbol_level=2
   # due to 4GiB file size limit, see https://crbug.com/648948.
   ignore_elf32_limitations = false
+
+  enable_java_templates = true
+
+  enable_errorprone = false
+
+  limit_android_deps = true
 }
 
 # Enables assertions on safety checks in libc++.
