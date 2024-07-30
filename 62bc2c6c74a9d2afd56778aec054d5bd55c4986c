@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e04faf5e_56035519",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-07-30T13:18:53Z",
+      "side": 1,
+      "message": "I realize that my advice to make this a sourceset is outdated. Looking over the gn file, I remember now that I made almost all of them `static_library` to make sure globals are stripped. This is necessary because DXC relies on this mechanism to strip the LLVM globals used to register command-line flags.",
+      "revId": "62bc2c6c74a9d2afd56778aec054d5bd55c4986c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
