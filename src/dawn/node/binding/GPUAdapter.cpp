@@ -100,17 +100,24 @@ interop::Interface<interop::GPUSupportedFeatures> GPUAdapter::getFeatures(Napi::
 
 interop::Interface<interop::GPUSupportedLimits> GPUAdapter::getLimits(Napi::Env env) {
     WGPUSupportedLimits limits{};
+    WGPUDawnExperimentalSubgroupLimits subgroupLimits{};
+    subgroupLimits.chain.sType = WGPUSType_DawnExperimentalSubgroupLimits;
+    limits.nextInChain = &subgroupLimits.chain;
     if (!adapter_.GetLimits(&limits)) {
         Napi::Error::New(env, "failed to get adapter limits").ThrowAsJavaScriptException();
     }
 
     wgpu::SupportedLimits wgpuLimits{};
+    wgpu::DawnExperimentalSubgroupLimits wgpuSubgroupLimits{};
 
 #define COPY_LIMIT(LIMIT) wgpuLimits.limits.LIMIT = limits.limits.LIMIT;
     FOR_EACH_LIMIT(COPY_LIMIT)
 #undef COPY_LIMIT
+    wgpuSubgroupLimits.minSubgroupSize = subgroupLimits.minSubgroupSize;
+    wgpuSubgroupLimits.maxSubgroupSize = subgroupLimits.maxSubgroupSize;
 
-    return interop::GPUSupportedLimits::Create<GPUSupportedLimits>(env, wgpuLimits);
+    return interop::GPUSupportedLimits::Create<GPUSupportedLimits>(env, wgpuLimits,
+                                                                   wgpuSubgroupLimits);
 }
 
 interop::Interface<interop::GPUAdapterInfo> GPUAdapter::getInfo(Napi::Env env) {

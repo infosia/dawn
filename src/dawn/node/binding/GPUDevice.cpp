@@ -184,10 +184,12 @@ interop::Interface<interop::GPUSupportedFeatures> GPUDevice::getFeatures(Napi::E
 
 interop::Interface<interop::GPUSupportedLimits> GPUDevice::getLimits(Napi::Env env) {
     wgpu::SupportedLimits limits{};
+    wgpu::DawnExperimentalSubgroupLimits subgroupLimits{};
+    limits.nextInChain = &subgroupLimits;
     if (!device_.GetLimits(&limits)) {
         Napi::Error::New(env, "failed to get device limits").ThrowAsJavaScriptException();
     }
-    return interop::GPUSupportedLimits::Create<GPUSupportedLimits>(env, limits);
+    return interop::GPUSupportedLimits::Create<GPUSupportedLimits>(env, limits, subgroupLimits);
 }
 
 interop::Interface<interop::GPUQueue> GPUDevice::getQueue(Napi::Env env) {

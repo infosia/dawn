@@ -35,7 +35,12 @@ namespace wgpu::binding {
 // wgpu::bindings::GPUSupportedLimits
 ////////////////////////////////////////////////////////////////////////////////
 
-GPUSupportedLimits::GPUSupportedLimits(wgpu::SupportedLimits limits) : limits_(std::move(limits)) {}
+GPUSupportedLimits::GPUSupportedLimits(wgpu::SupportedLimits limits,
+                                       wgpu::DawnExperimentalSubgroupLimits subgroupLimits)
+    : limits_(std::move(limits)), subgroup_limits_(std::move(subgroupLimits)) {
+    // Reset the pointer of limits_ to prevent using invalid pointer.
+    limits_.nextInChain = nullptr;
+}
 
 uint32_t GPUSupportedLimits::getMaxTextureDimension1D(Napi::Env) {
     return limits_.limits.maxTextureDimension1D;
@@ -163,6 +168,14 @@ uint32_t GPUSupportedLimits::getMaxComputeWorkgroupSizeZ(Napi::Env) {
 
 uint32_t GPUSupportedLimits::getMaxComputeWorkgroupsPerDimension(Napi::Env) {
     return limits_.limits.maxComputeWorkgroupsPerDimension;
+}
+
+uint32_t GPUSupportedLimits::getMinSubgroupSize(Napi::Env) {
+    return subgroup_limits_.minSubgroupSize;
+}
+
+uint32_t GPUSupportedLimits::getMaxSubgroupSize(Napi::Env) {
+    return subgroup_limits_.maxSubgroupSize;
 }
 
 }  // namespace wgpu::binding

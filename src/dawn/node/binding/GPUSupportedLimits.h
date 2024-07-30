@@ -39,7 +39,8 @@ namespace wgpu::binding {
 // GPUSupportedLimits is an implementation of interop::GPUSupportedLimits.
 class GPUSupportedLimits final : public interop::GPUSupportedLimits {
   public:
-    explicit GPUSupportedLimits(wgpu::SupportedLimits);
+    GPUSupportedLimits(wgpu::SupportedLimits limits,
+                       wgpu::DawnExperimentalSubgroupLimits subgroupLimits);
 
     // interop::GPUSupportedLimits interface compliance
     uint32_t getMaxTextureDimension1D(Napi::Env) override;
@@ -74,11 +75,12 @@ class GPUSupportedLimits final : public interop::GPUSupportedLimits {
     uint32_t getMaxComputeWorkgroupSizeY(Napi::Env) override;
     uint32_t getMaxComputeWorkgroupSizeZ(Napi::Env) override;
     uint32_t getMaxComputeWorkgroupsPerDimension(Napi::Env) override;
-    // TODO(349125474): Expose subgroups limits (subgroupMinSize and subgroupMinSize) in Node
-    // binding.
+    uint32_t getMinSubgroupSize(Napi::Env) override;
+    uint32_t getMaxSubgroupSize(Napi::Env) override;
 
   private:
     wgpu::SupportedLimits limits_;
+    wgpu::DawnExperimentalSubgroupLimits subgroup_limits_;
 };
 
 }  // namespace wgpu::binding
