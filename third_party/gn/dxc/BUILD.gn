@@ -46,8 +46,8 @@ llvm_version_patch = 0
 llvm_version = "$llvm_version_major.$llvm_version_minor.$llvm_version_patch"
 
 declare_args() {
-  # DXC sometimes asserts on valid HLSL. Set this to true to disable assertions in debug builds.
-  dawn_dxc_disable_asserts_debug = false
+  # Enable DXC asserts in non-debug builds
+  dawn_dxc_enable_asserts_in_ndebug = true
 }
 
 # Native ARCH values can be found in LLVM's llvm/cmake/config-ix.cmake
@@ -563,9 +563,40 @@ config("common_config") {
     ]
   }
 
-  defines = []
-  if (is_debug && dawn_dxc_disable_asserts_debug) {
-    defines += [ "NDEBUG" ]
+  defines = [
+    "LLVM_ASSERTIONS_TRAP"
+  ]
+}
+
+template("dxc_module") {
+  assert(defined(invoker.target_type), "must set target_type")
+
+  target(invoker.target_type, target_name) {
+    forward_variables_from(invoker, "*")
+    defines = []
+
+    public_configs = [ ":common_config" ]
+    if (dawn_has_build) {
+      configs -= [ "//build/config/compiler:chromium_code" ]
+      configs += [ "//build/config/compiler:no_chromium_code" ]
+    }
+    if (is_win) {
+      # DXC is built with multibyte character set, so it expects Win32 functions to map the ANSI ones, not the UNICODE ones.
+      configs -= [ "//build/config/win:unicode" ]
+    }
+    if (dawn_dxc_enable_asserts_in_ndebug && !is_debug) {
+      # Do as CMake option "LLVM_ENABLE_ASSERTIONS" does: undef NDEBUG and define _DEBUG
+      configs -= [ "//build/config:release" ]
+      if (!is_win) {
+        defines += ["_DEBUG"]
+      }
+      defines += [
+        # Reduce binary size by dropping assertion strings
+        "LLVM_ASSERTIONS_NO_STRINGS",
+        # Always trap on asserts for consistent crash logging
+        "LLVM_ASSERTIONS_TRAP"
+      ]
+    }
   }
 }
 
@@ -574,16 +605,9 @@ config("common_config") {
 #######################################################################
 
 # Target shared by tbl-gen and dxc targets
-static_library("Support") {
+dxc_module("Support") {
+  target_type = "static_library"
   output_name = "LLVMSupport"
-
-  if (dawn_has_build) {
-    configs -= [ "//build/config/compiler:chromium_code" ]
-    configs += [ "//build/config/compiler:no_chromium_code" ]
-  }
-
-  public_configs = [ ":common_config" ]
-
   public_deps = [
     ":AsmParsers-def",
     ":AsmPrinters-def",
@@ -595,7 +619,6 @@ static_library("Support") {
     ":dxc-config-h",
     ":llvm-config-header",
   ]
-
   sources = [
     "$dawn_dxc_dir/lib/MSSupport/MSFileSystemImpl.cpp",
     "$dawn_dxc_dir/lib/Support/APFloat.cpp",
@@ -1146,13 +1169,8 @@ add_hlsl_hctgen("DxilPIXPasses-inc") {
 #######################################################################
 
 # This target contains common code shared by both 'dxc' and 'dxcompiler' targets
-static_library("dxclib") {
-  public_configs = [ ":common_config" ]
-
-  if (dawn_has_build) {
-    configs -= [ "//build/config/compiler:chromium_code" ]
-    configs += [ "//build/config/compiler:no_chromium_code" ]
-  }
+dxc_module("dxclib") {
+  target_type = "static_library"
   public_deps = [
     ":HLSLOptions-inc",
     ":Intrinsics-td",
@@ -1217,10 +1235,19 @@ template("dxcompiler_sourceset") {
     forward_variables_from(invoker, [ "sources" ])
 
     public_configs = [ ":common_config" ]
-
+    if (dawn_has_build) {
+      configs -= [ "//build/config/compiler:chromium_code" ]
+      configs += [ "//build/config/compiler:no_chromium_code" ]
+    }
     if (is_win) {
       # DXC is built with multibyte character set, so it expects Win32 functions to map the ANSI ones, not the UNICODE ones.
       configs -= [ "//build/config/win:unicode" ]
+    }
+    if (dawn_dxc_enable_asserts_in_ndebug && !is_debug) {
+      if (!is_win) {
+        defines += ["_DEBUG"]
+      }
+      configs -= [ "//build/config:release" ] # Don't define NDEBUG
     }
 
     deps = [
@@ -2288,12 +2315,8 @@ source_set("windows_version_resource") {
   sources = [ "$dawn_dxc_dir/resources/windows_version_resource.rc" ]
 }
 
-loadable_module("dxcompiler") {
-  if (dawn_has_build) {
-    configs -= [ "//build/config/compiler:chromium_code" ]
-    configs += [ "//build/config/compiler:no_chromium_code" ]
-  }
-
+dxc_module("dxcompiler") {
+  target_type = "loadable_module"
   deps = [
     ":DxcDisassembler-inc",
     ":clang_lib_analysis",
@@ -2334,27 +2357,16 @@ loadable_module("dxcompiler") {
     ":lib_target",
     ":lib_transforms",
   ]
-
   if (is_win) {
     sources = [ "$dawn_dxc_dir/tools/clang/tools/dxcompiler/DXCompiler.def" ]
-
     deps += [ ":windows_version_resource" ]
   }
 }
 
-executable("dxc") {
-  if (dawn_has_build) {
-    configs -= [ "//build/config/compiler:chromium_code" ]
-    configs += [ "//build/config/compiler:no_chromium_code" ]
-  }
-
-  if (is_win) {
-    # DXC is built with multibyte character set, so it expects Win32 functions to map the ANSI ones, not the UNICODE ones.
-    configs -= [ "//build/config/win:unicode" ]
-  }
+dxc_module("dxc") {
+  target_type = "executable"
 
   deps = [ ":dxclib" ]
-
   data_deps = [ ":dxcompiler" ]
 
   # Set rpath to be able to find the dxcompiler shared library

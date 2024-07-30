@@ -223,10 +223,13 @@ function(AddSubdirectoryDXC)
     # not visible from our build dir. We don't need this validation, so just disable it.
     set(CLANG_FORMAT_EXE "" CACHE STRING "" FORCE)
 
-    if (CMAKE_BUILD_TYPE STREQUAL "Debug" AND NOT DAWN_DXC_DISABLE_ASSERTS_DEBUG)
+    if (DAWN_DXC_ENABLE_ASSERTS_IN_NDEBUG AND (NOT CMAKE_BUILD_TYPE STREQUAL "Debug"))
+        # DXC's CMake build undefs NDEBUG in non-debug builds to enable assertions
         set(LLVM_ENABLE_ASSERTIONS ON CACHE BOOL "" FORCE)
-    else()
-        set(LLVM_ENABLE_ASSERTIONS OFF CACHE BOOL "" FORCE)
+        # Reduce binary size by dropping assertion strings
+        set(LLVM_ASSERTIONS_NO_STRINGS ON CACHE BOOL "" FORCE)
+        # Always trap on asserts for consistent crash logging
+        set(LLVM_ASSERTIONS_TRAP ON CACHE BOOL "" FORCE)
     endif()
 
     # Override RPATH so that it points to current dir (exe path). This allows both executable and
