@@ -39,6 +39,30 @@
       },
       "revId": "a8fcc643941ed63ab6556dcae0665e0d90ef79d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31ed388a_63b7b343",
+        "filename": "src/tint/lang/glsl/writer/helper_test.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-30T19:37:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16795466_9b5aaa62",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 9
+      },
+      "revId": "a8fcc643941ed63ab6556dcae0665e0d90ef79d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
