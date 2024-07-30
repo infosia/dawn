@@ -67,6 +67,24 @@
       "message": "Thanks!\nMost trybots are green, so submitting.",
       "revId": "93cd312db5979714b320359bdd984e4e9e1f6a3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca7be954_4fba01c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000801
+      },
+      "writtenOn": "2024-07-30T06:45:13Z",
+      "side": 1,
+      "message": "I do not understand why third_party/vulkan-deps submodule was not removed in the end.",
+      "parentUuid": "45a20af9_2ef63e5a",
+      "revId": "93cd312db5979714b320359bdd984e4e9e1f6a3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
