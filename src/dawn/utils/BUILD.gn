@@ -77,8 +77,14 @@ static_library("utils") {
       "WindowAndroid.cpp",
       "WindowAndroid.h",
     ]
+
     libs += [ "android" ]
     deps += [ "$dawn_root/third_party/android_native_app_glue" ]
+  } else if (is_win) {
+    sources += [
+      "WindowWin.cpp",
+      "WindowWin.h",
+    ]
   } else {
     sources += [
       "WindowGLFW.cpp",
