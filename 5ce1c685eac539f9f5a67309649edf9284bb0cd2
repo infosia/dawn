@@ -33,6 +33,57 @@
       "message": "Please take a look, thanks",
       "revId": "5ce1c685eac539f9f5a67309649edf9284bb0cd2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9926be96_49582f8c",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-30T10:24:40Z",
+      "side": 1,
+      "message": "Can we use the C++ version here to avoid having to do the sType, likewise we can convert `limits` to be the C++ version. (if it requires adding a DawnNative.h overload that\u0027s fine)",
+      "revId": "5ce1c685eac539f9f5a67309649edf9284bb0cd2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c63ed49e_6eed12e8",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-30T10:24:40Z",
+      "side": 1,
+      "message": "We could just pass the limits, and let `GPUSupportedLimits` unpack the chain.",
+      "revId": "5ce1c685eac539f9f5a67309649edf9284bb0cd2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6dc2436_e3d7b3c9",
+        "filename": "src/dawn/node/interop/DawnExtensions.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-30T10:24:40Z",
+      "side": 1,
+      "message": "This will always expose the limits, when I believe that they should be undefined if the feature is not available. That\u0027s also a problem in Blink that we could fix. (though for OT it\u0027s also ok if the semantics are not exactly right)",
+      "revId": "5ce1c685eac539f9f5a67309649edf9284bb0cd2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
