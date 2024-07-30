@@ -85,6 +85,24 @@
       "parentUuid": "45a20af9_2ef63e5a",
       "revId": "93cd312db5979714b320359bdd984e4e9e1f6a3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e9f7dbc_bb3542bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-07-30T12:42:45Z",
+      "side": 1,
+      "message": "It is still needed to sync the versions of the subrepos in https://chromium.googlesource.com/vulkan-deps/+/refs/heads/main/DEPS.\nAutorollers work based on it, copying changes from https://chromium.googlesource.com/vulkan-deps/+/refs/heads/main/DEPS into https://dawn.googlesource.com/dawn/+/refs/heads/main/DEPS.",
+      "parentUuid": "ca7be954_4fba01c8",
+      "revId": "93cd312db5979714b320359bdd984e4e9e1f6a3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
