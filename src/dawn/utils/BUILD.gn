@@ -80,6 +80,12 @@ static_library("utils") {
       "android_native_app_glue.h",
     ]
     libs = [ "android" ]
+  } else if (is_win) {
+    sources += [
+      "WindowWin.cpp",
+      "WindowWin.h",
+    ]
+    libs = []
   } else {
     sources += [
       "WindowGLFW.cpp",
