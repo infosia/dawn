@@ -99,18 +99,29 @@ interop::Interface<interop::GPUSupportedFeatures> GPUAdapter::getFeatures(Napi::
 }
 
 interop::Interface<interop::GPUSupportedLimits> GPUAdapter::getLimits(Napi::Env env) {
-    WGPUSupportedLimits limits{};
-    if (!adapter_.GetLimits(&limits)) {
+    wgpu::SupportedLimits limits{};
+    wgpu::DawnExperimentalSubgroupLimits subgroupLimits{};
+
+    // Query the subgroup limits only if subgroups feature is available on the adapter.
+    bool subgroupsFeatureAvailable = false;
+    auto features = adapter_.GetSupportedFeatures();
+    for (const char* feature : features) {
+        // TODO(349125474): Remove deprecated ChromiumExperimentalSubgroups.
+        if (std::strncmp(feature, "subgroups", sizeof("subgroups")) == 0 ||
+            std::strncmp(feature, "chromium-experimental-subgroups",
+                         sizeof("chromium-experimental-subgroups")) == 0) {
+            subgroupsFeatureAvailable = true;
+        }
+    }
+    if (subgroupsFeatureAvailable) {
+        limits.nextInChain = &subgroupLimits;
+    }
+
+    if (!adapter_.GetLimits(reinterpret_cast<WGPUSupportedLimits*>(&limits))) {
         Napi::Error::New(env, "failed to get adapter limits").ThrowAsJavaScriptException();
     }
 
-    wgpu::SupportedLimits wgpuLimits{};
-
-#define COPY_LIMIT(LIMIT) wgpuLimits.limits.LIMIT = limits.limits.LIMIT;
-    FOR_EACH_LIMIT(COPY_LIMIT)
-#undef COPY_LIMIT
-
-    return interop::GPUSupportedLimits::Create<GPUSupportedLimits>(env, wgpuLimits);
+    return interop::GPUSupportedLimits::Create<GPUSupportedLimits>(env, limits);
 }
 
 interop::Interface<interop::GPUAdapterInfo> GPUAdapter::getInfo(Napi::Env env) {
