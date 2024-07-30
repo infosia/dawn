@@ -51,6 +51,24 @@
       "message": "Let\u0027s make this a `\"static_library\"` again. Sorry!",
       "revId": "62bc2c6c74a9d2afd56778aec054d5bd55c4986c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e541ab1_cd67e904",
+        "filename": "third_party/gn/dxc/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-07-30T14:46:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "099e72d0_c155d5c8",
+      "revId": "62bc2c6c74a9d2afd56778aec054d5bd55c4986c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
