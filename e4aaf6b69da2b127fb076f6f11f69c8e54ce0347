@@ -33,6 +33,24 @@
       "message": "Could just pass `y` and enable this test now?",
       "revId": "e4aaf6b69da2b127fb076f6f11f69c8e54ce0347",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d15d8e31_f6c6e3fc",
+        "filename": "src/tint/lang/glsl/writer/call_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-30T21:31:12Z",
+      "side": 1,
+      "message": "With a couple small tweeks, yes. Done.",
+      "parentUuid": "f677e671_3fe4d8c6",
+      "revId": "e4aaf6b69da2b127fb076f6f11f69c8e54ce0347",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
