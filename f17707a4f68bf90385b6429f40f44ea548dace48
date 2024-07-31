@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a50a5a3_b62f2586",
+        "filename": ".gitignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-07-31T19:50:44Z",
+      "side": 1,
+      "message": "This is just to make my workflow easier. It should not impact anything.",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 21
+      },
+      "revId": "f17707a4f68bf90385b6429f40f44ea548dace48",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1081b2b_ec3097b8",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2943,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-07-31T19:50:44Z",
+      "side": 1,
+      "message": "Return false for both!",
+      "range": {
+        "startLine": 2943,
+        "startChar": 16,
+        "endLine": 2943,
+        "endChar": 29
+      },
+      "revId": "f17707a4f68bf90385b6429f40f44ea548dace48",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
