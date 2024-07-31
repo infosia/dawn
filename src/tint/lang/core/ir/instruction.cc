@@ -34,7 +34,10 @@ TINT_INSTANTIATE_TYPEINFO(tint::core::ir::Instruction);
 
 namespace tint::core::ir {
 
-Instruction::Instruction() = default;
+Instruction::Instruction() {
+    static uint32_t next_id = 0;
+    id_ = next_id++;
+}
 
 Instruction::~Instruction() = default;
 

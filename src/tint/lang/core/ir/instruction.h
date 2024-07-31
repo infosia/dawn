@@ -50,6 +50,9 @@ class Instruction : public Castable<Instruction> {
     /// Destructor
     ~Instruction() override;
 
+    /// @returns the instruction id
+    uint32_t Id() const { return id_; }
+
     /// Set an operand at a given index.
     /// @param index the operand index
     /// @param value the value to use
@@ -167,6 +170,9 @@ class Instruction : public Castable<Instruction> {
 
     /// Constructor
     Instruction();
+
+    /// The instruction id
+    uint32_t id_;
 
     /// The block that owns this instruction
     ConstPropagatingPtr<ir::Block> block_;
