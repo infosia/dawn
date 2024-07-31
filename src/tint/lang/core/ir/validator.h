@@ -42,6 +42,8 @@ namespace tint::core::ir {
 
 /// Enumerator of optional IR capabilities.
 enum class Capability {
+    /// Allows 8-bit integer types.
+    kAllow8BitIntegers,
     /// Allows access instructions to create pointers to vector elements.
     kAllowVectorElementPointer,
     /// Allows ref types
