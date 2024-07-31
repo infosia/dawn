@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fe5a0fc_db861fce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-31T19:35:25Z",
+      "side": 1,
+      "message": "PTAL. Some results are due to the DecomoseStorageAccess issue, same as other CL.",
+      "revId": "d0fe377b3f4c1b81d1aef9aa6c6d993da1f8580d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
