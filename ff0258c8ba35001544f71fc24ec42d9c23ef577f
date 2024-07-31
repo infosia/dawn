@@ -22,6 +22,23 @@
       },
       "revId": "ff0258c8ba35001544f71fc24ec42d9c23ef577f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4165aff3_8fa1bc91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-31T20:16:40Z",
+      "side": 1,
+      "message": "Can you add a couple unit tests into the src/tint/lang/wgsl/resolver/diagnostic_control_test.cc file?",
+      "revId": "ff0258c8ba35001544f71fc24ec42d9c23ef577f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
