@@ -1141,6 +1141,8 @@ struct Encoder {
                 return pb::BuiltinFn::subgroup_broadcast;
             case core::BuiltinFn::kInputAttachmentLoad:
                 return pb::BuiltinFn::input_attachment_load;
+            case pb::BuiltinFn::subgroup_exclusive_add:
+                return core::BuiltinFn::kSubgroupExclusiveAdd;
             case core::BuiltinFn::kNone:
                 break;
         }

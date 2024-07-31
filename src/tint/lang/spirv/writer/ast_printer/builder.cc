@@ -2565,6 +2565,22 @@ uint32_t Builder::GenerateBuiltinCall(const sem::Call* call, const sem::BuiltinF
             }
             return result_id;
         }
+        case wgsl::BuiltinFn::kSubgroupExclusiveAdd: {
+            module_.PushCapability(SpvCapabilityGroupNonUniformBallot);
+            module_.PushCapability(SpvCapabilityGroupNonUniformArithmetic);
+            op = builtin->ReturnType()->is_integer_scalar_or_vector()
+                     ? spv::Op::OpGroupNonUniformIAdd
+                     : spv::Op::OpGroupNonUniformFAdd;
+            auto first_param_id = get_arg_as_value_id(0);
+            if (!push_function_inst(
+                    op, {Operand(result_type_id), result,
+                         Operand(GenerateConstantIfNeeded(ScalarConstant::U32(SpvScopeSubgroup))),
+                         Operand(static_cast<uint32_t>(spv::GroupOperation::ExclusiveScan)),
+                         Operand(first_param_id)})) {
+                return 0;
+            }
+            return result_id;
+        }
         default: {
             auto inst_id = builtin_to_glsl_method(builtin);
             if (inst_id == 0) {

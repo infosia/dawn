@@ -405,6 +405,9 @@ BuiltinFn ParseBuiltinFn(std::string_view name) {
     if (name == "subgroupBroadcast") {
         return BuiltinFn::kSubgroupBroadcast;
     }
+    if (name == "subgroupExclusiveAdd") {
+        return BuiltinFn::kSubgroupExclusiveAdd;
+    }
     return BuiltinFn::kNone;
 }
 
@@ -656,6 +659,8 @@ const char* str(BuiltinFn i) {
             return "subgroupBallot";
         case BuiltinFn::kSubgroupBroadcast:
             return "subgroupBroadcast";
+        case BuiltinFn::kSubgroupExclusiveAdd:
+            return "subgroupExclusiveAdd";
     }
     return "<unknown>";
 }
@@ -727,7 +732,8 @@ bool IsPacked4x8IntegerDotProductBuiltin(BuiltinFn f) {
 }
 
 bool IsSubgroup(BuiltinFn f) {
-    return f == BuiltinFn::kSubgroupBallot || f == BuiltinFn::kSubgroupBroadcast;
+    return f == BuiltinFn::kSubgroupBallot || f == BuiltinFn::kSubgroupBroadcast ||
+           f == BuiltinFn::kSubgroupExclusiveAdd;
 }
 
 bool HasSideEffects(BuiltinFn f) {

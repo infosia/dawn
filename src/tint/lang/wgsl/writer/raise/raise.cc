@@ -172,6 +172,7 @@ wgsl::BuiltinFn Convert(core::BuiltinFn fn) {
         CASE(kSubgroupBallot)
         CASE(kSubgroupBroadcast)
         CASE(kInputAttachmentLoad)
+        CASE(kSubgroupExclusiveAdd)
         case core::BuiltinFn::kNone:
             break;
     }

@@ -411,6 +411,9 @@ BuiltinFn ParseBuiltinFn(std::string_view name) {
     if (name == "subgroupBroadcast") {
         return BuiltinFn::kSubgroupBroadcast;
     }
+    if (name == "subgroupExclusiveAdd") {
+        return BuiltinFn::kSubgroupExclusiveAdd;
+    }
     if (name == "__tint_materialize") {
         return BuiltinFn::kTintMaterialize;
     }
@@ -669,6 +672,8 @@ const char* str(BuiltinFn i) {
             return "subgroupBallot";
         case BuiltinFn::kSubgroupBroadcast:
             return "subgroupBroadcast";
+        case BuiltinFn::kSubgroupExclusiveAdd:
+            return "subgroupExclusiveAdd";
         case BuiltinFn::kTintMaterialize:
             return "__tint_materialize";
     }
@@ -742,7 +747,8 @@ bool IsPacked4x8IntegerDotProductBuiltin(BuiltinFn f) {
 }
 
 bool IsSubgroup(BuiltinFn f) {
-    return f == BuiltinFn::kSubgroupBallot || f == BuiltinFn::kSubgroupBroadcast;
+    return f == BuiltinFn::kSubgroupBallot || f == BuiltinFn::kSubgroupBroadcast ||
+           f == BuiltinFn::kSubgroupExclusiveAdd;
 }
 
 bool HasSideEffects(BuiltinFn f) {

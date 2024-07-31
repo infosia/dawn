@@ -368,6 +368,7 @@
 "struct"
 "subgroupBallot"
 "subgroupBroadcast"
+"subgroupExclusiveAdd"
 "subgroup_invocation_id"
 "subgroup_size"
 "subgroups"
