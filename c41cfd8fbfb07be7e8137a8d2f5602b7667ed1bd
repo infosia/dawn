@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "c41cfd8fbfb07be7e8137a8d2f5602b7667ed1bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f9ea017_e87bde24",
+        "filename": "test/tint/buffer/uniform/std140/array/mat2x2_f32/dynamic_index_via_ptr.wgsl.expected.ir.dxc.hlsl",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-31T16:55:35Z",
+      "side": 1,
+      "message": "This will need to be investigated as a followup. It seems like linux and windows are generating different values ....",
+      "revId": "c41cfd8fbfb07be7e8137a8d2f5602b7667ed1bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
