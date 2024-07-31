@@ -1,0 +1,635 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05f235d5_ae79477a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Maybe \"Add the MultidrawIndirect feature and frontend validation\"\n\nCommit messages should most often contain a verb that describes what the commit does. Also the suggestion only contains \"frontend\" because it would be nice to land things in chunk and start with no backend, and just the validation tests. We can have a second CL stacked on top of it (see in CONTRIBUTING.md IIRC for how to do this with Gerrit) that adds the Vulkan backend. It would de-risk things even more and get code landed faster. So I skipped reviewing the Vulkan backend and the end2end tests in this first review.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df0656db_61c1a381",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Can you wrap lines a little bit?",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd6fbfb2_d7db16c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "We should have a Bug: some number here to associate the CLs to an issue that will contain all the CLs related to multidrawindirect.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec35e99a_dac55c35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Nice start! I didn\u0027t review everything yet because there\u0027s already a bunch of comments. Missing are the validation shader and tests.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77f10eef_59c3bff9",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "`mIndexBufferSet` should be removed in favor of `mIndexBuffer !\u003d nullptr`. Right now it is redundant.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "326f2eb3_9e2cf9ff",
+        "filename": "src/dawn/native/CommandBufferStateTracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "nit: We could group this with other index buffer related members to make it more clear what does together.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "404fce7d_2b1fc313",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "nit: \"Allows batching multiple indirect calls with one command.\" The current sentence uses indirect call twice and is a bit confusing.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a9f34ab_79aae8ef",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Please point to a markdown file and not just the directory with all the features ^^",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "950cc2f6_772726e4",
+        "filename": "src/dawn/native/IndirectDrawMetadata.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "All the IndirectDraw machinery can be added with the first backend as well.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adbbe922_9a366a13",
+        "filename": "src/dawn/native/IndirectDrawMetadata.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35edd6a0_02bea576",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "995cef48_166387bf",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Can we be a bit more explicit about what Metal uses these members for?",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9ecb425_f481bc24",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "nit: These could have defaults such that they don\u0027t need to be specified at all in [1]",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 50
+      },
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f88cb528_b6c96f55",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Maybe\n\n\"When validation is enabled, the original indirect buffer is validated and copied to a new indirect buffer containing only valid commands. The pointer to the command allocated in the command allocator is used to swap the indirect buffer for the validated one before the backend processes the command.\"\n\nWe could rephrase at [2] similarly.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c76e5fe1_ec4d21c9",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "I didn\u0027t take a look at the shader yet.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98aaddca_b01319c5",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Let\u0027s have these declared next to the shader at the top of the file, and clearly label constants and structures that form the interface with the shader.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "195b6b50_bf970dba",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Why do we need to store the non-indexed draws if they are totally skipped in this function? If it\u0027s for future backend use, let\u0027s split variables, or introduce the second vector in the CL that requires it.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cce936a2_20cbeacf",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Likewise, we should check that outputParamsSize never gets larger than some arbitrary large limit like 4GB and early out if it is the case so that we\u0027re sure there\u0027s no overflow.\n\nThe reason overflows are so important to handle is that we really don\u0027t trust the data coming in, because it could be commands from the evil.com web page that tries to have a privilege escalation in Chromium. Overflows often cause opportunities were validation gets skipped for certain large values, ending up in vulnerable code paths.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bae7005_c0238dfa",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "nit: there is dawn::native::utils::MakeBindGroup to make this slightly less verbose and could use inside the loop directly.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bb6980c_04f2e374",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "```suggestion\n        uint64_t numIndexBufferElements \u003d draw.indexBufferSize / IndexFormatSize(draw.indexFormat);\n```",
+      "range": {
+        "startLine": 725,
+        "startChar": 0,
+        "endLine": 736,
+        "endChar": 9
+      },
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "559f6bf1_39e38ea7",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "nit: slight preference for having a placeholder buffer somewhere that we use for that. It\u0027s a bit confusing to bind a buffer with data here.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffeeadef_d851ac83",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Compute passes can contain multiple dispatches, we could open it before the loop and close it after. (and early out from this function if there is nothing to do).\n\nAh, it\u0027s because we do WriteBuffer in between passes. Can we have a TODO to use a single compute pass once we support push constants? And block it on the push constant issue.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da2a61cb_3f7ef878",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "We should be careful about overflows here as well if maxDrawCount is UINT32_MAX. IMHO we could just device and + 1, with the potential that one workgroup early outs. Or do something slightly more complicated to get the exact number, but without overflows.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a385f084_d9c878df",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "We could bundle all of these in one function, it is the validation for anything indirect. Of course if needed we could split inisde the .cpp file.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e777641_e46b7cc8",
+        "filename": "src/dawn/native/InternalPipelineStore.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Why does the buffer need to be separated? It seems like we could have a single buffer that contains different kinds of data at different offsets.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b34807a4_a4f1f2bf",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Could we copy this comment for other relevant unnecessary transitions?",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c370a0c1_14443462",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Please comment as to why this computation can\u0027t underflow.",
+      "range": {
+        "startLine": 338,
+        "startChar": 36,
+        "endLine": 338,
+        "endChar": 66
+      },
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73faa7c6_49da6e6a",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "nit: Could we have this validation grouped before the validation for drawBuffer since it\u0027s all for just the indirect buffer related arguments?",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33edfbaf_a7cc58ca",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "nit: this could technically overflow, can we have a comment explaining why it doesn\u0027t, or explicit casts to uint64_t to make it clear it can\u0027t overflow?",
+      "range": {
+        "startLine": 354,
+        "startChar": 65,
+        "endLine": 354,
+        "endChar": 97
+      },
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34c0c141_3dc8ae70",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Does ValidateCanDraw always have validation for `ValidateNoDifferentTextureViewsOnSameTexture` afterwards? If that\u0027s the case, could you make a follow-up CL that moves that validation inside ValidateCanDraw?",
+      "range": {
+        "startLine": 361,
+        "startChar": 1,
+        "endLine": 363,
+        "endChar": 17
+      },
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0566c35_a99e1f4c",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Same comments",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b1233a5_b81c77c7",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "Any reason the name isn\u0027t \"AddMultiDrawIndexedIndirect\" so that searching for \"MultiDrawIndexedIndirect\" brings up that function as well?",
+      "range": {
+        "startLine": 441,
+        "startChar": 34,
+        "endLine": 441,
+        "endChar": 61
+      },
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "324fe93d_94eb369d",
+        "filename": "src/dawn/native/RenderEncoderBase.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "nit: Can we also have the defaults set in these methods, in case in the future we call them reentrantly from Dawn?",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59a481a3_5d1d5744",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "This is most likely because it has been promoted to 1.2 but still optional: \n\nhttps://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_draw_indirect_count.html#_promotion_to_vulkan_1_2\n\nSo we need to check for `drawIndirectCount` per this Vulkan validation rule. https://registry.khronos.org/vulkan/specs/1.3-khr-extensions/html/vkspec.html#VUID-vkCmdDrawIndirectCount-None-04445",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7836bc2e_63eac5f1",
+        "filename": "src/dawn/tests/unittests/validation/MultiDrawIndirectValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T13:25:52Z",
+      "side": 1,
+      "message": "I didn\u0027t review this part yet.",
+      "revId": "a50b4fde9029cb1edcaeb940fc273018ff55a394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
