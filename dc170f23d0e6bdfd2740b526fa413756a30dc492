@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c698a4d0_ae6b59ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-07-31T10:07:01Z",
+      "side": 1,
+      "message": "Hi, Kai is OOO, and this change is ready to land, I\u0027ve addressed suggested changes from the previous CL which had the full implementation. The biggest change is the validation shader source which was merged to include both single and multi draw validation.",
+      "revId": "dc170f23d0e6bdfd2740b526fa413756a30dc492",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
