@@ -2940,11 +2940,12 @@ bool Validator::DiagnosticControls(VectorRef<const ast::DiagnosticControl*> cont
                 AddNote(diag_added.value->rule_name->source)
                     << "severity of " << style::Code(dc->rule_name->String()) << " set to "
                     << style::Code(dc->severity) << " here";
-                return false;
+
             } else {
                 AddError(dc->rule_name->source) << "duplicate diagnostic " << use;
                 AddNote(diag_added.value->rule_name->source) << "first attribute declared here";
             }
+            return false;
         }
     }
     return true;
