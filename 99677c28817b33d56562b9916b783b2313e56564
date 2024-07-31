@@ -16,6 +16,24 @@
       "message": "Out of curiosity, is that what the old system would have done? I\u0027m wondering if we should inject the `arrayLength` or bail out with an ICE.",
       "revId": "99677c28817b33d56562b9916b783b2313e56564",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bc5fa56_4d4efb0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-31T23:11:37Z",
+      "side": 1,
+      "message": "Yes:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/wgsl/ast/transform/array_length_from_uniform_test.cc;l\u003d643?q\u003darray_length_from_uniform_test.cc\u0026ss\u003dchromium\n\nFor D3D I believe we sometimes get the length from a uniform and sometimes use a HLSL builtin, which is why we have to handle this possibility and not ICE.",
+      "parentUuid": "30968402_885bca34",
+      "revId": "99677c28817b33d56562b9916b783b2313e56564",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
