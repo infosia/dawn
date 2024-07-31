@@ -1673,6 +1673,14 @@
                 ]
             },
             {
+                "name": "get generation",
+                "returns": "uint32_t"
+            },
+            {
+                "name": "get id",
+                "returns": "uint32_t"
+            },
+            {
                 "name": "get limits",
                 "returns": "status",
                 "args": [
