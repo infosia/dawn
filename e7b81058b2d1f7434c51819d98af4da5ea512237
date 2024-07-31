@@ -33,6 +33,24 @@
       "message": "We will want to make `(WGPU)OptionalBool` a native type like `(WGPU)Bool` so that we can do the same magic to allow implicit conversions from C++ `bool` - see `api.h` and `api_cpp.h` for how it works.\n\nThere are a few differences though:\n- `WGPUBool` is a typedef and not an enum, but I think the same trick will still work with `enum WGPUOptionalBool` and `class wgpu::OptionalBool`.\n- We can have an implicit constructor from `bool` but we can\u0027t have an implicit conversion _to_ `bool` because that doesn\u0027t make sense. We could have one to (and from) `std::optional\u003cbool\u003e` but I\u0027m not sure this would be very useful. We will need to do things like `descriptor-\u003edepthWriteEnabled \u003d\u003d /* true?? */` which could be perhaps best done with `operator\u003d\u003d(bool)`, which allows simply `\u003d\u003d true`. Other alternatives are `\u003d\u003d wgpu::OptionalBool(true)` or define constants so you can do `\u003d\u003d wgpu::OptionalBool::True`.\n\nIt _may_ be fine to do this CL as is for now and then try to solve these problems later, but I think it would be best to try to do it from the beginning. We don\u0027t need to have every convenience override but having it be defined as a class in C++ would help us avoid breaking changes later.\n\n+Loko who set this up for Bool",
       "revId": "e7b81058b2d1f7434c51819d98af4da5ea512237",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9317d46_52ac3559",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 17
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-07-31T07:32:55Z",
+      "side": 1,
+      "message": "Thank you for all the details Kai!\n\nI believe I\u0027ve reached the limit of my C++ abilities sadly. Loko, could you assist me by uploading a CL that implements support for WGPUOptionalBool? Ideally, it would be great if wgpu::OptionalBool::Undefined could still be included so https://chromium-review.googlesource.com/c/chromium/src/+/5683307 still works.",
+      "parentUuid": "2254bdb1_995d8bfc",
+      "revId": "e7b81058b2d1f7434c51819d98af4da5ea512237",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
