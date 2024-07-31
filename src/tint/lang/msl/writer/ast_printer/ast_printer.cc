@@ -805,6 +805,15 @@ bool ASTPrinter::EmitBuiltinCall(StringStream& out,
             return true;
         }
 
+        case wgsl::BuiltinFn::kSubgroupExclusiveAdd: {
+            out << "simd_prefix_exclusive_sum(";
+            if (!EmitExpression(out, expr->args[0])) {
+                return false;
+            }
+            out << ")";
+            return true;
+        }
+
         default:
             break;
     }

@@ -169,6 +169,7 @@ enum class BuiltinFn : uint8_t {
     kAtomicCompareExchangeWeak,
     kSubgroupBallot,
     kSubgroupBroadcast,
+    kSubgroupExclusiveAdd,
     kNone,
 };
 
@@ -313,6 +314,7 @@ constexpr BuiltinFn kBuiltinFns[] = {
     BuiltinFn::kAtomicCompareExchangeWeak,
     BuiltinFn::kSubgroupBallot,
     BuiltinFn::kSubgroupBroadcast,
+    BuiltinFn::kSubgroupExclusiveAdd,
 };
 
 /// All builtin function names
@@ -439,6 +441,7 @@ constexpr const char* kBuiltinFnStrings[] = {
     "atomicCompareExchangeWeak",
     "subgroupBallot",
     "subgroupBroadcast",
+    "subgroupExclusiveAdd",
 };
 
 /// Determines if the given `f` is a coarse derivative.

@@ -646,6 +646,7 @@ class State {
                 switch (c->Func()) {
                     case wgsl::BuiltinFn::kSubgroupBallot:
                     case wgsl::BuiltinFn::kSubgroupBroadcast:
+                    case wgsl::BuiltinFn::kSubgroupExclusiveAdd:
                         Enable(wgsl::Extension::kChromiumExperimentalSubgroups);
                         break;
                     default:

@@ -1005,6 +1005,9 @@ class Printer : public tint::TextGenerator {
             case core::BuiltinFn::kTextureBarrier:
                 out << "DeviceMemoryBarrierWithGroupSync";
                 break;
+            case core::BuiltinFn::kSubgroupExclusiveAdd:
+                out << "WavePrefixSum";
+                break;
 
             default:
                 TINT_UNREACHABLE() << "unhandled: " << func;
