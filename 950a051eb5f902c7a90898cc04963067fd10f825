@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "090d1522_b60b1757",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T12:06:01Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "950a051eb5f902c7a90898cc04963067fd10f825",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac014af0_8b40f236",
@@ -18,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe4cb40b_ab4f40a4",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T12:06:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ac014af0_8b40f236",
+      "revId": "950a051eb5f902c7a90898cc04963067fd10f825",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88b120dc_399d52f7",
@@ -31,6 +66,24 @@
       "writtenOn": "2024-07-31T05:38:51Z",
       "side": 1,
       "message": "[1]",
+      "revId": "950a051eb5f902c7a90898cc04963067fd10f825",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "602b5604_2d6036b2",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T12:06:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "88b120dc_399d52f7",
       "revId": "950a051eb5f902c7a90898cc04963067fd10f825",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
