@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "248cc852_63a41e48",
+        "filename": "src/tint/lang/core/ir/validator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-31T18:18:48Z",
+      "side": 1,
+      "message": "\u003e enum \u0027Capability\u0027 uses a larger base type (\u0027int\u0027, size: 4 bytes) than necessary for its value set, consider using \u0027std::uint8_t\u0027 (1 byte) as the base type to reduce its size (https://clang.llvm.org/extra/clang-tidy/checks/performance/enum-size.html)\n\u003e \n\u003e (Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)\n\nPlease fix.",
+      "parentUuid": "b81da58a_262b69ba",
+      "revId": "113690ab76f6ec86a5f022f4f2673a2913cbdcec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0338a491_9da5ec25",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6415,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-31T18:18:48Z",
+      "side": 1,
+      "message": "Why not nust use a struct and name the params?",
+      "revId": "113690ab76f6ec86a5f022f4f2673a2913cbdcec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
