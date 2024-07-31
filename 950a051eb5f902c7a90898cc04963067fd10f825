@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac014af0_8b40f236",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-07-31T05:38:51Z",
+      "side": 1,
+      "message": "Now we check the use of Src1Alpha by calling this function in [1].",
+      "revId": "950a051eb5f902c7a90898cc04963067fd10f825",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88b120dc_399d52f7",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-07-31T05:38:51Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "950a051eb5f902c7a90898cc04963067fd10f825",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
