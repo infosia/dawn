@@ -87,7 +87,7 @@ ary_ret_1 v_16(uint start_byte_offset) {
 [numthreads(1, 1, 1)]
 void f() {
   Outer l_a[4] = v_16(0u);
-  Outer l_a_3 = v_13(768u);
+  Outer l_a_3 = v_13(904u);
   Inner l_a_3_a[4] = v_8(904u);
   Inner l_a_3_a_2 = v_6(904u);
   matrix<float16_t, 2, 4> l_a_3_a_2_m = v_4(904u);
