@@ -405,6 +405,64 @@ TEST_P(DualSourceBlendTests, BlendFactorOneMinusSrc1Alpha) {
     RunTest(params);
 }
 
+TEST_P(DualSourceBlendTests, UseSrc1AlphaOutputVec2) {
+    wgpu::ShaderModule fsModule = utils::CreateShaderModule(device, R"(
+        enable dual_source_blending;
+        struct FragOut {
+            @location(0) @blend_src(0) color : vec2f,
+            @location(0) @blend_src(1) blend : vec2f,
+        }
+        @fragment fn main() -> FragOut {
+            var output : FragOut;
+            output.color = vec2f(0.0, 1.0);
+            output.blend = vec2f(0.0, 1.0);
+            return output;
+        }
+    )");
+
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vsModule;
+    descriptor.cFragment.module = fsModule;
+    descriptor.cTargets[0].format = wgpu::TextureFormat::RG8Unorm;
+    descriptor.cTargets[0].blend = &descriptor.cBlends[0];
+    descriptor.cBlends[0].alpha.srcFactor = wgpu::BlendFactor::Src1Alpha;
+    descriptor.cBlends[0].alpha.dstFactor = wgpu::BlendFactor::SrcAlpha;
+    descriptor.cBlends[0].alpha.operation = wgpu::BlendOperation::Add;
+    wgpu::RenderPipeline renderPipeline = device.CreateRenderPipeline(&descriptor);
+
+    wgpu::TextureDescriptor descriptor1;
+    descriptor1.dimension = wgpu::TextureDimension::e2D;
+    descriptor1.size.width = 1;
+    descriptor1.size.height = 1;
+    descriptor1.size.depthOrArrayLayers = 1;
+    descriptor1.sampleCount = 1;
+    descriptor1.format = wgpu::TextureFormat::RG8Unorm;
+    descriptor1.mipLevelCount = 1;
+    descriptor1.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
+    wgpu::Texture color = device.CreateTexture(&descriptor1);
+    wgpu::RenderPassColorAttachment colorAttachment = {};
+    colorAttachment.loadOp = wgpu::LoadOp::Clear;
+    colorAttachment.storeOp = wgpu::StoreOp::Store;
+    colorAttachment.view = color.CreateView();
+    colorAttachment.clearValue.r = 0.0f;
+    colorAttachment.clearValue.g = 0.0f;
+    colorAttachment.clearValue.b = 0.0f;
+    colorAttachment.clearValue.a = 1.0f;
+    wgpu::RenderPassDescriptor renderPass = {};
+    renderPass.colorAttachmentCount = 1;
+    renderPass.colorAttachments = &colorAttachment;
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    {
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+        pass.SetPipeline(renderPipeline);
+        pass.Draw(3);
+        pass.End();
+    }
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+}
+
 DAWN_INSTANTIATE_TEST(DualSourceBlendTests,
                       D3D11Backend(),
                       D3D12Backend(),
