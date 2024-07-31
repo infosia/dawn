@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30968402_885bca34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-31T23:03:54Z",
+      "side": 1,
+      "message": "Out of curiosity, is that what the old system would have done? I\u0027m wondering if we should inject the `arrayLength` or bail out with an ICE.",
+      "revId": "99677c28817b33d56562b9916b783b2313e56564",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
