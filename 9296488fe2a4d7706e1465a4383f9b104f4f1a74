@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e615edf4_0726fde9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-31T18:07:00Z",
+      "side": 1,
+      "message": "See next couple of CLs for some use cases that this enables. Hopefully doesn\u0027t make other type validation stuff more difficult...",
+      "revId": "9296488fe2a4d7706e1465a4383f9b104f4f1a74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
