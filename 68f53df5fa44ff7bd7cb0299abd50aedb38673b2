@@ -16,6 +16,24 @@
       "message": "It is unfortune that we don\u0027t have a `dawn::native::Adapter::HasFeature` in `DawnNative.h`.",
       "revId": "68f53df5fa44ff7bd7cb0299abd50aedb38673b2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f3ecc98_32f89ba2",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T11:56:16Z",
+      "side": 1,
+      "message": "The problem is more that we\u0027d like to remove Instance and Adapter from DawnNative.h but there are still backdoor APIs there that we need to use in some cases. Here you could do something like:\n\n```\nwgpu::Adapter wgpuAdapter \u003d adapter_.Get();\nif (wgpuAdapter.HasFeature(X))\n```",
+      "parentUuid": "b20f8521_34950f77",
+      "revId": "68f53df5fa44ff7bd7cb0299abd50aedb38673b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

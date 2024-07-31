@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccf3b664_2a617b34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T11:56:16Z",
+      "side": 1,
+      "message": "LGTM with remaining comments. Alan PTAL",
+      "revId": "39c3afca387e931cc7f2f5c614501ea08eaf0cc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2b2da91_8de23822",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-07-31T11:56:16Z",
+      "side": 1,
+      "message": "ditto this could use wgpuAdapter.",
+      "revId": "39c3afca387e931cc7f2f5c614501ea08eaf0cc8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
