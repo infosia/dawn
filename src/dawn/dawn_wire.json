@@ -242,6 +242,8 @@
             "DeviceCreateRenderPipelineAsyncF",
             "DeviceCreateRenderPipelineAsync2",
             "DeviceGetAdapter",
+            "DeviceGetGeneration",
+            "DeviceGetId",
             "DeviceGetLimits",
             "DeviceHasFeature",
             "DeviceEnumerateFeatures",
