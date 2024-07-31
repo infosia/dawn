@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e04ce749_b9e81d7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-31T21:18:16Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8cfc3ac_1ff60b99",
+        "filename": "src/tint/lang/core/ir/instruction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-31T21:18:16Z",
+      "side": 1,
+      "message": "I think this should be fine, it makes the assumption that a module will be built on a given thread and not multiple threads, but i think that\u0027s fine. As long as the number goes up it doesn\u0027t matter.",
+      "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "931343cc_6f10476e",
+        "filename": "src/tint/lang/core/ir/value.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-07-31T21:18:16Z",
+      "side": 1,
+      "message": "I\u0027m planning on adding a `Usages` call which returns a sorted Vector of usages in a future CL.",
+      "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
