@@ -363,6 +363,34 @@ note: # Disassembly
 )");
 }
 
+TEST_F(IR_ValidatorTest, Function_ExternalTextureReturnType) {
+    auto* f = b.Function(ty.external_texture());
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:1:1 error: external texture cannot be used as function return type
+%1 = func():texture_external {
+^^
+
+:3:5 error: return: expected return value
+    ret
+    ^^^
+
+:2:3 note: in block
+  $B1: {
+  ^^^
+
+note: # Disassembly
+%1 = func():texture_external {
+  $B1: {
+    ret
+  }
+}
+)");
+}
+
 TEST_F(IR_ValidatorTest, CallToFunctionOutsideModule) {
     auto* f = b.Function("f", ty.void_());
     auto* g = b.Function("g", ty.void_());

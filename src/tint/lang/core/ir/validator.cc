@@ -74,6 +74,7 @@
 #include "src/tint/lang/core/ir/user_call.h"
 #include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/bool.h"
+#include "src/tint/lang/core/type/external_texture.h"
 #include "src/tint/lang/core/type/memory_view.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
@@ -981,6 +982,10 @@ void Validator::CheckFunction(const Function* func) {
         if (TINT_UNLIKELY(mod_.NameOf(func).Name().empty())) {
             AddError(func) << "entry points must have names";
         }
+    }
+
+    if (TINT_UNLIKELY(func->ReturnType()->Is<core::type::ExternalTexture>())) {
+        AddError(func) << "external texture cannot be used as function return type";
     }
 
     QueueBlock(func->Block());

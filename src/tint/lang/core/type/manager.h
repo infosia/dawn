@@ -35,6 +35,7 @@
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/number.h"
 #include "src/tint/lang/core/type/atomic.h"
+#include "src/tint/lang/core/type/external_texture.h"
 #include "src/tint/lang/core/type/sampler.h"
 #include "src/tint/lang/core/type/struct.h"
 #include "src/tint/lang/core/type/type.h"
@@ -531,6 +532,11 @@ class Manager final {
     /// @returns the structure type
     core::type::Struct* Struct(Symbol name, std::initializer_list<StructMemberDesc> members) {
         return Struct(name, tint::Vector<StructMemberDesc, 4>(members));
+    }
+
+    /// @returns the external texture type
+    const core::type::ExternalTexture* external_texture() {
+        return Get<core::type::ExternalTexture>();
     }
 
     /// @returns an iterator to the beginning of the types
