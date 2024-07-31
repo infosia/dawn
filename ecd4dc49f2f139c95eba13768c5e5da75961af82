@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "ecd4dc49f2f139c95eba13768c5e5da75961af82",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efce37fd_dc3caae0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-07-31T19:37:21Z",
+      "side": 1,
+      "message": "I am going to change this to cover all texture types, since they should never be a return type",
+      "revId": "ecd4dc49f2f139c95eba13768c5e5da75961af82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
