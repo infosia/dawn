@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7f619fe_900aeff2",
+        "filename": ".gitignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-07-31T20:12:35Z",
+      "side": 1,
+      "message": "For my convenience.",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 21
+      },
+      "revId": "ff0258c8ba35001544f71fc24ec42d9c23ef577f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
