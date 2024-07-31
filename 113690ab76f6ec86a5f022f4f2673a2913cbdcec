@@ -19,6 +19,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6868902_547ab812",
+        "filename": "src/tint/lang/core/ir/validator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-31T18:31:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "248cc852_63a41e48",
+      "revId": "113690ab76f6ec86a5f022f4f2673a2913cbdcec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0338a491_9da5ec25",
@@ -32,6 +50,24 @@
       "writtenOn": "2024-07-31T18:18:48Z",
       "side": 1,
       "message": "Why not nust use a struct and name the params?",
+      "revId": "113690ab76f6ec86a5f022f4f2673a2913cbdcec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58c5958d_1e34ef34",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6415,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-07-31T18:31:06Z",
+      "side": 1,
+      "message": "I believe `testing::Combine()` only generates tuples.",
+      "parentUuid": "0338a491_9da5ec25",
       "revId": "113690ab76f6ec86a5f022f4f2673a2913cbdcec",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
