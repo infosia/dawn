@@ -194,6 +194,24 @@
       "message": "I\u0027m planning on adding a `Usages` call which returns a sorted Vector of usages in a future CL.",
       "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63117760_556bd8aa",
+        "filename": "src/tint/lang/core/ir/value.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-01T20:05:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "931343cc_6f10476e",
+      "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
