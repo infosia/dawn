@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a14306c_37f6982f",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-08-01T18:52:25Z",
+      "side": 1,
+      "message": "I\u0027m preferential to enums for this as it makes the call sites clearer (although, in this case the use of the constexpr bool seems to do that already). My suggestion would have been something like:\n\n```\nenum DiagnosticDuplicates {\n  kAllowed,\n  kDenied,\n}\n```\n\nThen pass that in, thoughts?",
+      "revId": "e56b1846543c10dc0f4188bfe25c51052a3ca889",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
