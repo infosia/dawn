@@ -122,6 +122,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "770a0935_5243faad",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-08-01T14:27:08Z",
+      "side": 1,
+      "message": "Looking at the code again. I think PartialResolve \u0026 ResolveMultipleAttachmentInSeparatePasses\u0027 callbacks are mostly independently. They don\u0027t have to be strictly ordered. So the priority queue might be unnecessary.\n\nFor example:\n- A render pass has:\n  - attachment A:\n    - loadOp\u003dExpandResolveTexture\n    - storeOp\u003dDiscard\n    - resolveTarget\u003dA1.\n  - attachment B:\n    - loadOp\u003dLoad\n    - resolveTarget\u003dB1.\n    \nPartialResolve  splits the render pass into:\n- RP 1:\n  - attachment A:\n    - loadOp\u003dExpandResolveTexture\n    - storeOp\u003dStore\n    - resolveTarget\u003dnull \n  - attachment B:\n    - loadOp\u003dLoad\n    - resolveTarget\u003dB1.\n- RP 2:\n  - attachment A1:\n    - blit A to A1.\n- RP 3:\n  - attachment A:\n    - storeOp\u003ddiscard.\n\nResolveMultipleAttachmentInSeparatePasses splits the RP 1 into:\n- RP 1\u0027:\n  - attachment A:\n    - loadOp\u003dExpandResolveTexture\n    - storeOp\u003dStore.\n    - resolveTarget\u003dnull \n  - attachment B:\n    - loadOp\u003dLoad\n    - resolveTarget\u003dnull.\n- RP 4:\n  - attachment B:\n    - resolveTarget\u003dB1.\n    \nRP2+RP3 vs RP4 can happen in any order: RP4-\u003eRP2-\u003eRP3 or RP2-\u003eRP3-\u003eRP4. So the callbacks don\u0027t have to be strictly prioritised. I think we can keep the old code structure without priority_queue. Just place  PartialResolve above ResolveMultipleAttachmentInSeparatePasses. Its callback will be executed after the latter\u0027s but it\u0027s fine.",
+      "parentUuid": "f471c498_96a18a0a",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5f38b73b_a2412eb5",
         "filename": "src/dawn/native/dawn_platform.h",
         "patchSetId": 12
