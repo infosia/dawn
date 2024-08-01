@@ -1648,6 +1648,15 @@ class Printer {
                     Constant(b_.ConstantValue(u32(spv::MemorySemanticsMask::UniformMemory |
                                                   spv::MemorySemanticsMask::AcquireRelease))));
                 break;
+            case core::BuiltinFn::kSubgroupAdd:
+            case core::BuiltinFn::kSubgroupExclusiveAdd:
+            case core::BuiltinFn::kSubgroupMul:
+            case core::BuiltinFn::kSubgroupExclusiveMul: {
+                // TODO(crbug.com/354738715): Implement more subgroup builtins. Adding this explicit
+                // skip in the intermediary CL to avoid a new ICE that can get caught by the
+                // fuzzers.
+                return;
+            }
             case core::BuiltinFn::kSubgroupBallot:
                 module_.PushCapability(SpvCapabilityGroupNonUniformBallot);
                 op = spv::Op::OpGroupNonUniformBallot;
