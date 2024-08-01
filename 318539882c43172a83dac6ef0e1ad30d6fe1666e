@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7576a67f_480df16e",
+        "filename": "src/tint/lang/core/ir/instruction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-01T16:52:35Z",
+      "side": 1,
+      "message": "I don\u0027t think this is safe in the presence of multi-threading, as the race between two different threads compiling two different modules will break the guarantee that this counter is monotonically increasing.\n\nYou /could/ make it thread local if we think we can guarantee that a module will only ever be handled by a single thread, but I\u0027m not sure we can guarantee that.\n\nI think it would be safer to put the counter on the module, and have all instruction creation go via a helper function on the module, which passes the ID to the constructor.",
+      "parentUuid": "b8cfc3ac_1ff60b99",
+      "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "931343cc_6f10476e",
         "filename": "src/tint/lang/core/ir/value.h",
         "patchSetId": 1
