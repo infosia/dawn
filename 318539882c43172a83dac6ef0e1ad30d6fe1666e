@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "915ad6e3_3441b277",
+        "filename": "src/tint/lang/core/ir/instruction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-01T17:33:33Z",
+      "side": 1,
+      "message": "Right, `std::atomic` would be the way to avoid multiple threads breaking the guarantee that a single module needs, but that has some performance impact.\n\nDan: The issue isn\u0027t that IDs conflict between two modules on two threads, it\u0027s that having two threads concurrently incrementing the same counter (non-atomically) will lead to the IDs not being monotonically increasing within a single module.\n\nI can also imagine a world where we convert from AST-\u003eIR on one thread (shader module creation), and then do backend codegen on a different thread (pipeline creation). I don\u0027t know whether these two operations are already running on different threads in Dawn or not.",
+      "parentUuid": "59315565_2371dec4",
+      "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "931343cc_6f10476e",
         "filename": "src/tint/lang/core/ir/value.h",
         "patchSetId": 1
