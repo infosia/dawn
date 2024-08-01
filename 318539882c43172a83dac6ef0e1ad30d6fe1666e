@@ -145,6 +145,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "56318c7c_afefd6b8",
+        "filename": "src/tint/lang/core/ir/instruction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-01T18:00:29Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s why I suggested `std::atomic`, otherwise it\u0027s UB to increment a shared var on multiple threads.",
+      "parentUuid": "7331a048_0f44af58",
+      "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "931343cc_6f10476e",
         "filename": "src/tint/lang/core/ir/value.h",
         "patchSetId": 1
