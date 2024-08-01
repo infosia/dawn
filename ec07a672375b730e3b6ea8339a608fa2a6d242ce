@@ -16,6 +16,24 @@
       "message": "Would this be correct? We don\u0027t know how many draw calls are issued indirectly but maxDrawCount is always the maximum.",
       "revId": "ec07a672375b730e3b6ea8339a608fa2a6d242ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d47c4bc_56f93956",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T14:05:19Z",
+      "side": 1,
+      "message": "That\u0027s correct, and we should specify it in the gpuweb repo as well.",
+      "parentUuid": "d9843cbb_ca763539",
+      "revId": "ec07a672375b730e3b6ea8339a608fa2a6d242ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
