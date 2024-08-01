@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbe6f57b_f957012b",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-08-01T15:05:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce7a1760_b9c8b366",
+      "revId": "320ad465f4731f9114c3b17462840883002792c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62af57b9_4fae4d6b",
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "I can add it, I\u0027m not usually a fan but it could be useful here to shorten things like the BindingInfo lines.",
       "parentUuid": "62af57b9_4fae4d6b",
+      "revId": "320ad465f4731f9114c3b17462840883002792c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1da15645_74354da0",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-08-01T15:05:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8225b7ea_d4f54de6",
       "revId": "320ad465f4731f9114c3b17462840883002792c2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -158,6 +194,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd1097cb_a7f0966a",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-08-01T15:05:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff09740c_293bcd05",
+      "revId": "320ad465f4731f9114c3b17462840883002792c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d671e3f_496b3ee9",
@@ -175,6 +229,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "beb8bd6f_f44d52f9",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-08-01T15:05:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d671e3f_496b3ee9",
+      "revId": "320ad465f4731f9114c3b17462840883002792c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56b654d1_cd5cdf2c",
@@ -188,6 +260,24 @@
       "writtenOn": "2024-06-06T20:38:32Z",
       "side": 1,
       "message": "```suggestion\n    // Both wgsl_seen and glsl_seen check to see if the pair of [src, dst] are unique. If\n```",
+      "revId": "320ad465f4731f9114c3b17462840883002792c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5a2c98e_56641a9f",
+        "filename": "src/tint/lang/glsl/writer/common/option_helpers.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-08-01T15:05:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56b654d1_cd5cdf2c",
       "revId": "320ad465f4731f9114c3b17462840883002792c2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
