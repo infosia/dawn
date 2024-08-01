@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7331a048_0f44af58",
+        "filename": "src/tint/lang/core/ir/instruction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-01T17:57:17Z",
+      "side": 1,
+      "message": "Ok, chatted with James and he pointed out the flaw in my multi-threaded idea. (That being `i++` is 3 instructions and we can pause the thread in the middle and end up decrementing on the other thread).\n\nGoing to remove this from this CL and make a new as the real fix is going to be a bunch larger.",
+      "parentUuid": "43ea5fe7_4a21d127",
+      "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "931343cc_6f10476e",
         "filename": "src/tint/lang/core/ir/value.h",
         "patchSetId": 1
