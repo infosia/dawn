@@ -161,6 +161,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b59c7637_26f47547",
+        "filename": "src/tint/lang/core/ir/instruction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-01T18:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7331a048_0f44af58",
+      "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "931343cc_6f10476e",
