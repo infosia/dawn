@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c99718f_08bf4b04",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-01T10:39:03Z",
+      "side": 1,
+      "message": "I reverted all the backend and compute validation from this CL. This is a stripped down version with only the frontend bits. When working on the backend I\u0027ll acknowledge your other comments.",
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
