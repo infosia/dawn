@@ -50,6 +50,16 @@ class Instruction : public Castable<Instruction> {
     /// Destructor
     ~Instruction() override;
 
+    /// An equality helper for Instructions.
+    /// @param other the instruction to compare against
+    /// @returns true if the two instructions have matching IDs
+    bool operator==(const Instruction& other) const { return id_ == other.id_; }
+
+    /// A comparison helper for Instruction.
+    /// @param other the instruction to compare against
+    /// @returns true if `this` is less then `other`.
+    bool operator<(const Instruction& other) const { return id_ < other.id_; }
+
     /// @returns the instruction id
     uint32_t Id() const { return id_; }
 
