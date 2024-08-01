@@ -553,9 +553,11 @@ class Validator {
     /// Validates a set of diagnostic controls.
     /// @param controls the diagnostic controls to validate
     /// @param use the place where the controls are being used ("directive" or "attribute")
+    /// @param allow_duplicates if same name same severity diagnostics are allowed
     /// @returns true on success, false otherwise.
     bool DiagnosticControls(VectorRef<const ast::DiagnosticControl*> controls,
-                            const char* use) const;
+                            const char* use,
+                            bool allow_duplicates) const;
 
     /// Validates a address space layout
     /// @param type the type to validate
