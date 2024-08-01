@@ -1648,6 +1648,25 @@ class Printer {
                     Constant(b_.ConstantValue(u32(spv::MemorySemanticsMask::UniformMemory |
                                                   spv::MemorySemanticsMask::AcquireRelease))));
                 break;
+            case core::BuiltinFn::kSubgroupAdd:
+            case core::BuiltinFn::kSubgroupExclusiveAdd:
+            case core::BuiltinFn::kSubgroupMul:
+            case core::BuiltinFn::kSubgroupExclusiveMul: {
+                module_.PushCapability(SpvCapabilityGroupNonUniformArithmetic);
+                bool isAddOp = builtin->Func() == core::BuiltinFn::kSubgroupAdd ||
+                               builtin->Func() == core::BuiltinFn::kSubgroupExclusiveAdd;
+                bool isExclusiveOp = builtin->Func() == core::BuiltinFn::kSubgroupExclusiveAdd ||
+                                     builtin->Func() == core::BuiltinFn::kSubgroupExclusiveMul;
+                bool isInteger = result_ty->is_integer_scalar_or_vector();
+                op = isAddOp ? (isInteger ? spv::Op::OpGroupNonUniformIAdd
+                                          : spv::Op::OpGroupNonUniformFAdd)
+                             : (isInteger ? spv::Op::OpGroupNonUniformIMul
+                                          : spv::Op::OpGroupNonUniformFMul);
+                operands.push_back(Constant(ir_.constant_values.Get(u32(spv::Scope::Subgroup))));
+                operands.push_back(U32Operand(u32(isExclusiveOp ? spv::GroupOperation::ExclusiveScan
+                                                                : spv::GroupOperation::Reduce)));
+                break;
+            }
             case core::BuiltinFn::kSubgroupBallot:
                 module_.PushCapability(SpvCapabilityGroupNonUniformBallot);
                 op = spv::Op::OpGroupNonUniformBallot;
