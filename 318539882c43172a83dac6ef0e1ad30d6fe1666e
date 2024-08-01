@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "43ea5fe7_4a21d127",
+        "filename": "src/tint/lang/core/ir/instruction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-08-01T17:36:53Z",
+      "side": 1,
+      "message": "Monotonic doesn\u0027t matter, as long as they are increasing. We don\u0027t care if a module is {1,2,3} or {1,6,10} as long as they go up.\n\nDawn is currently single threaded, thought they are talking about multi-threading. I\u0027m not sure if that would mean createShaderModule vs createPipeline happening on different threads or not thought.",
+      "parentUuid": "915ad6e3_3441b277",
+      "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "931343cc_6f10476e",
         "filename": "src/tint/lang/core/ir/value.h",
         "patchSetId": 1
