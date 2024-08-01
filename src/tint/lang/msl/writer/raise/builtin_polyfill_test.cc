@@ -1022,6 +1022,212 @@ TEST_F(MslWriter_BuiltinPolyfillTest, Dot_MultipleCalls) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(MslWriter_BuiltinPolyfillTest, Dot4I8Packed) {
+    auto* value0 = b.FunctionParam<i32>("value0");
+    auto* value1 = b.FunctionParam<i32>("value1");
+    auto* func = b.Function("foo", ty.i32());
+    func->SetParams({value0, value1});
+    b.Append(func->Block(), [&] {
+        auto* result = b.Call<i32>(core::BuiltinFn::kDot4I8Packed, value0, value1);
+        b.Return(func, result);
+    });
+
+    auto* src = R"(
+%foo = func(%value0:i32, %value1:i32):i32 {
+  $B1: {
+    %4:i32 = dot4I8Packed %value0, %value1
+    ret %4
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%value0:i32, %value1:i32):i32 {
+  $B1: {
+    %4:i32 = call %tint_packed_8bit_dot, %value0, %value1
+    ret %4
+  }
+}
+%tint_packed_8bit_dot = func(%lhs:i32, %rhs:i32):i32 {
+  $B2: {
+    %8:vec4<i8> = bitcast %lhs
+    %9:vec4<i8> = bitcast %rhs
+    %10:i8 = access %8, 0u
+    %11:i8 = access %9, 0u
+    %12:i8 = mul %10, %11
+    %13:i8 = access %8, 1u
+    %14:i8 = access %9, 1u
+    %15:i8 = mul %13, %14
+    %16:i8 = add %12, %15
+    %17:i8 = access %8, 2u
+    %18:i8 = access %9, 2u
+    %19:i8 = mul %17, %18
+    %20:i8 = add %16, %19
+    %21:i8 = access %8, 3u
+    %22:i8 = access %9, 3u
+    %23:i8 = mul %21, %22
+    %24:i8 = add %20, %23
+    %25:i32 = convert %24
+    ret %25
+  }
+}
+)";
+
+    capabilities.Add(core::ir::Capability::kAllow8BitIntegers);
+    Run(BuiltinPolyfill);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(MslWriter_BuiltinPolyfillTest, Dot4U8Packed) {
+    auto* value0 = b.FunctionParam<u32>("value0");
+    auto* value1 = b.FunctionParam<u32>("value1");
+    auto* func = b.Function("foo", ty.u32());
+    func->SetParams({value0, value1});
+    b.Append(func->Block(), [&] {
+        auto* result = b.Call<u32>(core::BuiltinFn::kDot4U8Packed, value0, value1);
+        b.Return(func, result);
+    });
+
+    auto* src = R"(
+%foo = func(%value0:u32, %value1:u32):u32 {
+  $B1: {
+    %4:u32 = dot4U8Packed %value0, %value1
+    ret %4
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%value0:u32, %value1:u32):u32 {
+  $B1: {
+    %4:u32 = call %tint_packed_8bit_dot, %value0, %value1
+    ret %4
+  }
+}
+%tint_packed_8bit_dot = func(%lhs:u32, %rhs:u32):u32 {
+  $B2: {
+    %8:vec4<u8> = bitcast %lhs
+    %9:vec4<u8> = bitcast %rhs
+    %10:u8 = access %8, 0u
+    %11:u8 = access %9, 0u
+    %12:u8 = mul %10, %11
+    %13:u8 = access %8, 1u
+    %14:u8 = access %9, 1u
+    %15:u8 = mul %13, %14
+    %16:u8 = add %12, %15
+    %17:u8 = access %8, 2u
+    %18:u8 = access %9, 2u
+    %19:u8 = mul %17, %18
+    %20:u8 = add %16, %19
+    %21:u8 = access %8, 3u
+    %22:u8 = access %9, 3u
+    %23:u8 = mul %21, %22
+    %24:u8 = add %20, %23
+    %25:u32 = convert %24
+    ret %25
+  }
+}
+)";
+
+    capabilities.Add(core::ir::Capability::kAllow8BitIntegers);
+    Run(BuiltinPolyfill);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(MslWriter_BuiltinPolyfillTest, Dot4x8Packed_MultipleCalls) {
+    auto* i = b.FunctionParam<i32>("i");
+    auto* u = b.FunctionParam<u32>("u");
+    auto* func = b.Function("foo", ty.void_());
+    func->SetParams({i, u});
+    b.Append(func->Block(), [&] {
+        b.Call<i32>(core::BuiltinFn::kDot4I8Packed, i, i);
+        b.Call<i32>(core::BuiltinFn::kDot4I8Packed, i, i);
+        b.Call<u32>(core::BuiltinFn::kDot4U8Packed, u, u);
+        b.Call<u32>(core::BuiltinFn::kDot4U8Packed, u, u);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%foo = func(%i:i32, %u:u32):void {
+  $B1: {
+    %4:i32 = dot4I8Packed %i, %i
+    %5:i32 = dot4I8Packed %i, %i
+    %6:u32 = dot4U8Packed %u, %u
+    %7:u32 = dot4U8Packed %u, %u
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+%foo = func(%i:i32, %u:u32):void {
+  $B1: {
+    %4:i32 = call %tint_packed_8bit_dot, %i, %i
+    %6:i32 = call %tint_packed_8bit_dot, %i, %i
+    %7:u32 = call %tint_packed_8bit_dot_1, %u, %u
+    %9:u32 = call %tint_packed_8bit_dot_1, %u, %u
+    ret
+  }
+}
+%tint_packed_8bit_dot = func(%lhs:i32, %rhs:i32):i32 {
+  $B2: {
+    %12:vec4<i8> = bitcast %lhs
+    %13:vec4<i8> = bitcast %rhs
+    %14:i8 = access %12, 0u
+    %15:i8 = access %13, 0u
+    %16:i8 = mul %14, %15
+    %17:i8 = access %12, 1u
+    %18:i8 = access %13, 1u
+    %19:i8 = mul %17, %18
+    %20:i8 = add %16, %19
+    %21:i8 = access %12, 2u
+    %22:i8 = access %13, 2u
+    %23:i8 = mul %21, %22
+    %24:i8 = add %20, %23
+    %25:i8 = access %12, 3u
+    %26:i8 = access %13, 3u
+    %27:i8 = mul %25, %26
+    %28:i8 = add %24, %27
+    %29:i32 = convert %28
+    ret %29
+  }
+}
+%tint_packed_8bit_dot_1 = func(%lhs_1:u32, %rhs_1:u32):u32 {  # %tint_packed_8bit_dot_1: 'tint_packed_8bit_dot', %lhs_1: 'lhs', %rhs_1: 'rhs'
+  $B3: {
+    %32:vec4<u8> = bitcast %lhs_1
+    %33:vec4<u8> = bitcast %rhs_1
+    %34:u8 = access %32, 0u
+    %35:u8 = access %33, 0u
+    %36:u8 = mul %34, %35
+    %37:u8 = access %32, 1u
+    %38:u8 = access %33, 1u
+    %39:u8 = mul %37, %38
+    %40:u8 = add %36, %39
+    %41:u8 = access %32, 2u
+    %42:u8 = access %33, 2u
+    %43:u8 = mul %41, %42
+    %44:u8 = add %40, %43
+    %45:u8 = access %32, 3u
+    %46:u8 = access %33, 3u
+    %47:u8 = mul %45, %46
+    %48:u8 = add %44, %47
+    %49:u32 = convert %48
+    ret %49
+  }
+}
+)";
+
+    capabilities.Add(core::ir::Capability::kAllow8BitIntegers);
+    Run(BuiltinPolyfill);
+
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(MslWriter_BuiltinPolyfillTest, Frexp_Scalar) {
     auto* value = b.FunctionParam<f32>("value");
     auto* func = b.Function("foo", ty.f32());
