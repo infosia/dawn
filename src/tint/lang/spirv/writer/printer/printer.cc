@@ -1652,10 +1652,20 @@ class Printer {
             case core::BuiltinFn::kSubgroupExclusiveAdd:
             case core::BuiltinFn::kSubgroupMul:
             case core::BuiltinFn::kSubgroupExclusiveMul: {
-                // TODO(crbug.com/354738715): Implement more subgroup builtins. Adding this explicit
-                // skip in the intermediary CL to avoid a new ICE that can get caught by the
-                // fuzzers.
-                return;
+                module_.PushCapability(SpvCapabilityGroupNonUniformArithmetic);
+                bool isAddOp = builtin->Func() == core::BuiltinFn::kSubgroupAdd ||
+                               builtin->Func() == core::BuiltinFn::kSubgroupExclusiveAdd;
+                bool isExclusiveOp = builtin->Func() == core::BuiltinFn::kSubgroupExclusiveAdd ||
+                                     builtin->Func() == core::BuiltinFn::kSubgroupExclusiveMul;
+                bool isInteger = result_ty->is_integer_scalar_or_vector();
+                op = isAddOp ? (isInteger ? spv::Op::OpGroupNonUniformIAdd
+                                          : spv::Op::OpGroupNonUniformFAdd)
+                             : (isInteger ? spv::Op::OpGroupNonUniformIMul
+                                          : spv::Op::OpGroupNonUniformFMul);
+                operands.push_back(Constant(ir_.constant_values.Get(u32(spv::Scope::Subgroup))));
+                operands.push_back(U32Operand(u32(isExclusiveOp ? spv::GroupOperation::ExclusiveScan
+                                                                : spv::GroupOperation::Reduce)));
+                break;
             }
             case core::BuiltinFn::kSubgroupBallot:
                 module_.PushCapability(SpvCapabilityGroupNonUniformBallot);
