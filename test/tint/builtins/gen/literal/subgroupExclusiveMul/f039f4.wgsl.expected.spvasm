@@ -1,0 +1,9 @@
+SKIP: FAILED
+
+../../src/tint/lang/spirv/writer/ast_printer/builder.cc:2571 internal compiler error: unknown method subgroupExclusiveMul
+********************************************************************
+*  The tint shader compiler has encountered an unexpected error.   *
+*                                                                  *
+*  Please help us fix this issue by submitting a bug report at     *
+*  crbug.com/tint with the source program that triggered the bug.  *
+********************************************************************
