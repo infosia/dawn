@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "99037c4c_729dcfdc",
+        "filename": "src/tint/lang/core/ir/instruction.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-08-01T16:57:17Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter if you compile two modules on two threads and the IDs conflict, you\u0027d never combine them. I don\u0027t see a world where we build half a module on one thread and half on another and somehow combine them. Maybe if you compiled the module on one thread, ran some transforms there, passed to a second thread and ran another bunch of transforms on it? But even that seems unlikely?\n\nEven in the module it isn\u0027t safe to build the module on two threads as it won\u0027t be locked. It would allow passing to another thread to run some transforms if we want.",
+      "parentUuid": "7576a67f_480df16e",
+      "revId": "318539882c43172a83dac6ef0e1ad30d6fe1666e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "931343cc_6f10476e",
         "filename": "src/tint/lang/core/ir/value.h",
         "patchSetId": 1
