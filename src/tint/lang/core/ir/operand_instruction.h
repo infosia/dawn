@@ -42,6 +42,8 @@ namespace tint::core::ir {
 template <unsigned N, unsigned R>
 class OperandInstruction : public Castable<OperandInstruction<N, R>, Instruction> {
   public:
+    explicit OperandInstruction(Instruction::Id id);
+
     /// Destructor
     ~OperandInstruction() override = default;
 
@@ -186,6 +188,9 @@ class OperandInstruction : public Castable<OperandInstruction<N, R>, Instruction
     /// The default number of operands
     static constexpr size_t kDefaultNumOperands = N;
 };
+
+template <unsigned N, unsigned R>
+OperandInstruction<N, R>::OperandInstruction(Instruction::Id id) : Base(id) {}
 
 }  // namespace tint::core::ir
 
