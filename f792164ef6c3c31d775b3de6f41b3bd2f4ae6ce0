@@ -140,6 +140,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8cc664a7_79769b86",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T15:29:10Z",
+      "side": 1,
+      "message": "Thanks for working through the example!",
+      "parentUuid": "770a0935_5243faad",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5f38b73b_a2412eb5",
         "filename": "src/dawn/native/dawn_platform.h",
         "patchSetId": 12
