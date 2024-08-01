@@ -16,6 +16,284 @@
       "message": "Sorry for the slow response. Just back from vacation. Really appreciate your comments. They are very inspiring to me.",
       "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd2e09ef_2240f372",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "LGTM, bunch of nits, and one thing it would be most ideal to simplify in RenderPassWorkaroundsHelper",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b5a5183_2961db47",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "nit: const for by-value arguments does nothing except constrain the the implementation doesn\u0027t change the by-value argument (which doesn\u0027t have side-effects outside the function) so I suggest removing it.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "445360f2_14135ad5",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "AFAIU this should be naturally covered by [1] and isn\u0027t needed.\n\nA real solution would be to add some validation mechanisms for dependent extensions but we don\u0027t have that yet. (but maybe we should add it already for Subgroups / SubgroupsF16?)",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed8be865_3322415b",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e13ba21_6c38bf4d",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "nit: can we ensure no overflows here by converting to uint64_t? Otherwise rect-\u003ex \u003d UINT32_MAX and width \u003d 1 would pass validation.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f471c498_96a18a0a",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "I\u0027m trying to find ways to not have to do a priority queue like this that changes the order of operations a posteriori.\n\nIf the expandResolveRect is just on D3D11, for now the two workaround don\u0027t interact, so maybe things are fine. But otherwise how would things break down if the workaround is used at the same time as the feature (and reordering doesn\u0027t happen)? I\u0027m having trouble figuring out what\u0027s the issue.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f38b73b_a2412eb5",
+        "filename": "src/dawn/native/dawn_platform.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "Uuuh that\u0027s more than a Rect2D because it has sType and nextInChain. Either we define the struct here, or in dawn.json, but let\u0027s not reuse a structure with more semantic as the rect2d. If anything RenderPassDescriptorExpandResolveRect could have a single member that\u0027s `Rect2D expandResolveRect` though that\u0027s a lot of changes so I don\u0027t want to necessarily require that.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1100f14_492bfe17",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "nit: attachment.",
+      "range": {
+        "startLine": 2166,
+        "startChar": 45,
+        "endLine": 2166,
+        "endChar": 56
+      },
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "271bc678_4287702b",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "nit: could we be explicit as to where we check here? Otherwise it looks a bit like we check that the whole target is green.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8792d82a_d918d5e5",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "Both the green and red pipelines look like they are the same. The color is specified in EncodeRenderPassForTest",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6205f31_56962b95",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "This third pass doesn\u0027t seem necessary for the test, only the second one should be with the pixel inside the rect being color, but the pixel outside the rect discarded and cleared.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05a6782a_47c0b00a",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2277,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "```suggestion\n    // The center, inside the rect, must be cleared.\n```",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0335af38_2e201c02",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2278,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2f601d0_d63d80b9",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "nit: unless for very specific cases we don\u0027t need to test the error messages. The cases where we test the error messages are often when it\u0027s very hard to make a test that contains a single error, and the message lets us know that we are testing the correct validation.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11a9e207_2244b88f",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2085,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "nit: Maybe we could test the width and the height separately.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77b36fe8_c74622ca",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:50:35Z",
+      "side": 1,
+      "message": "Could we test that it is ok as well if there is a mix of ExpandResolveTexture and other load ops? (basically a single one is required, but not that all are ExpandResolveTexture)",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
