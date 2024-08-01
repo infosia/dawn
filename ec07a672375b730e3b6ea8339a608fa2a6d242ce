@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9843cbb_ca763539",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-01T13:11:21Z",
+      "side": 1,
+      "message": "Would this be correct? We don\u0027t know how many draw calls are issued indirectly but maxDrawCount is always the maximum.",
+      "revId": "ec07a672375b730e3b6ea8339a608fa2a6d242ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
