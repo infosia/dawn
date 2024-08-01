@@ -34,6 +34,24 @@
       "parentUuid": "b20f8521_34950f77",
       "revId": "68f53df5fa44ff7bd7cb0299abd50aedb38673b2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aead2321_8eba9f9e",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-08-01T07:46:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f3ecc98_32f89ba2",
+      "revId": "68f53df5fa44ff7bd7cb0299abd50aedb38673b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
