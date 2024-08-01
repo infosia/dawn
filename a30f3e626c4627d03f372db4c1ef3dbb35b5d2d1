@@ -16,6 +16,211 @@
       "message": "I reverted all the backend and compute validation from this CL. This is a stripped down version with only the frontend bits. When working on the backend I\u0027ll acknowledge your other comments.",
       "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f4259ea_1ea79389",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:20:58Z",
+      "side": 1,
+      "message": "LGTM! Thank you for splitting. There are mostly nits here so I think we can land the CL after comments are addressed.",
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "079cf8c1_9165ace6",
+        "filename": "docs/dawn/features/multi_draw_indirect.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:20:58Z",
+      "side": 1,
+      "message": "```suggestion\nThe multi-draw-indirect feature allows issuing multiple draws with a single command. This is useful for rendering thousands if not millions of objects in GPU driven rendering.\n```\n\nAnd TBH sending millions of drawcalls like this will cause issues because it will likely stall the frontend of the GPU for a long time.",
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcdb59d2_56b8cdf7",
+        "filename": "docs/dawn/features/multi_draw_indirect.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:20:58Z",
+      "side": 1,
+      "message": "```suggestion\nIt introduces the following new commands:\n\n- `wgpu::CommandEncoder::multiDrawIndirect(wgpu::Buffer indirectBuffer, uint64_t indirectOffset, uint32_t maxDrawCount, wgpu::Buffer countBuffer, uint64_t countOffset)`\n- `wgpu::CommandEncoder::multiDrawIndexedIndirect(wgpu::Buffer indirectBuffer, uint64_t indirectOffset, uint32_t maxDrawCount, wgpu::Buffer countBuffer, uint64_t countOffset)`\n\n```",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ba8dd50_2ec365e2",
+        "filename": "docs/dawn/features/multi_draw_indirect.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:20:58Z",
+      "side": 1,
+      "message": "nit: Maybe add that the alternative is to issue all the maxDrawCount and zero-out the indirect calls that aren\u0027t needed, which is wasteful both on the CPU and the GPU.",
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04270868_01a89c92",
+        "filename": "docs/dawn/features/multi_draw_indirect.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:20:58Z",
+      "side": 1,
+      "message": "```suggestion\n```cpp\n// Create a buffer to store the draw calls, and the number of draw calls which is a uint32_t.\n// Number of draw calls can be stored in another buffer with indirect usage.\n```",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 12
+      },
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3aca817_4c84aaff",
+        "filename": "docs/dawn/features/multi_draw_indirect.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:20:58Z",
+      "side": 1,
+      "message": "```suggestion\n// Fill the buffer with draw calls and the uint32_t specifying the number of draw calls ...\nwgpu::Buffer vertexBuffer \u003d ...;\nwgpu::BindGroup bindGroup \u003d ...;\n```",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98bad21a_4118c95e",
+        "filename": "docs/dawn/features/multi_draw_indirect.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:20:58Z",
+      "side": 1,
+      "message": "We don\u0027t have a limit on maxDrawCount, should we have one?",
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f29e8e29_00eb9529",
+        "filename": "src/dawn/tests/unittests/validation/MultiDrawIndirectValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:20:58Z",
+      "side": 1,
+      "message": "nit: WebGPU supports automatically selecting the correct entrypoint if there is a single one for the stage. Meaning we could create a single module with two entry points \"vs\" and \"fs\" and use it for both .vertex and .cFragment.",
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e690c066_78b389e7",
+        "filename": "src/dawn/tests/unittests/validation/MultiDrawIndirectValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:20:58Z",
+      "side": 1,
+      "message": "nit: This isn\u0027t needed as the defaulted pipeline layout will be exactly that so we can remove it as well as the assignment to descriptor.layout.",
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15a1b900_52e18510",
+        "filename": "src/dawn/tests/unittests/validation/MultiDrawIndirectValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:20:58Z",
+      "side": 1,
+      "message": "Grepping for DrawIndirect I found that we should also test the interaction with maxDrawCount (which is a small wart in the WebGPU API to allow Safari\u0027s implementation strategy). Search for DrawIndirect in `src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp`.\n\nIt could be a follow-up.",
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b354106a_4d9f313d",
+        "filename": "src/dawn/tests/unittests/validation/MultiDrawIndirectValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-01T12:20:58Z",
+      "side": 1,
+      "message": "Maybe we could have a boundary condition for maxDrawCount \u003d 2 with both a 7 element and an 8 element indirect buffer. Just to check the multiply is done correctly.",
+      "revId": "a30f3e626c4627d03f372db4c1ef3dbb35b5d2d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
