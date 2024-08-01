@@ -33,6 +33,24 @@
       "message": "This changed from a value to the limits call.",
       "revId": "2d6225a970d354083a7142215c963f1fba5a8efe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdd538e7_56b4e68e",
+        "filename": "src/tint/lang/glsl/writer/constant_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-01T15:26:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d961224d_22fd1a5d",
+      "revId": "2d6225a970d354083a7142215c963f1fba5a8efe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
