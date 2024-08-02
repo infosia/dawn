@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "1701aecde9f2e4f32dd7ad8e665c508d6cd1755c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c94bda61_fa5af000",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-02T03:02:55Z",
+      "side": 1,
+      "message": "Looks like decode needs an update,",
+      "revId": "1701aecde9f2e4f32dd7ad8e665c508d6cd1755c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e48af554_3f2e5a26",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-02T03:02:55Z",
+      "side": 1,
+      "message": "Are these changes related to the instruction ID somehow?",
+      "revId": "1701aecde9f2e4f32dd7ad8e665c508d6cd1755c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
