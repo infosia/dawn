@@ -382,6 +382,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b90c0db3_4b4f3225",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-02T10:20:44Z",
+      "side": 1,
+      "message": "Maybe rename them to highelight the difference, the color is just random values we use to test expand vs. not.",
+      "parentUuid": "9fce5d3d_51dbeff9",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a6205f31_56962b95",
         "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
         "patchSetId": 12
@@ -411,6 +429,24 @@
       "side": 1,
       "message": "My expectation is that Discard shouldn\u0027t be specific to the rect, so the test case is simply like:\n```\nG -- Green\ng -- multisampled Green\nR -- Red\nr -- Multisampled Red\nc -- Clear\nM -- multisampled texture view\nS -- SingleSampled texture view\n\nRP1:\n M       S\ngGG     gGG\ncgG     cgG\nccg     ccg\n\nRP2:\n M       S\nrRG     rRG\ncrG     crG\nccg     ccg\n\n\nDawn internally clears the whole attachment view before RP3.\n M       S\nccc     rRG\nccc     crG\nccc     ccg\n\n\nRP3:\n M       S\nccc     ccc\nccc     ccc\nccc     ccc\n```",
       "parentUuid": "a6205f31_56962b95",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5a26720_51bea852",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-02T10:20:44Z",
+      "side": 1,
+      "message": "What I\u0027m confused about is that RP3 says discard for the store op, so whatever the state is before RP3, the textures will always be discarded after RP3 and...\n\nOk so if I understand correctly, RP3 is just a resolve so we can check the contents of the multisample via the resolve target, got it. IDK how comments could be more clear but the approach makes sense.",
+      "parentUuid": "ce2c6932_44573b5c",
       "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
