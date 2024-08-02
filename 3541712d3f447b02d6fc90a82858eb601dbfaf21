@@ -261,6 +261,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a67be4e_5f07f1e9",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6c52a2a8_5bc1cb65",
+      "range": {
+        "startLine": 251,
+        "startChar": 12,
+        "endLine": 285,
+        "endChar": 13
+      },
+      "revId": "3541712d3f447b02d6fc90a82858eb601dbfaf21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7992aefa_e900df57",

@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16cc92a4_e18cc61f",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b5a5183_2961db47",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "445360f2_14135ad5",
@@ -65,6 +83,24 @@
       "writtenOn": "2024-08-01T12:50:35Z",
       "side": 1,
       "message": "AFAIU this should be naturally covered by [1] and isn\u0027t needed.\n\nA real solution would be to add some validation mechanisms for dependent extensions but we don\u0027t have that yet. (but maybe we should add it already for Subgroups / SubgroupsF16?)",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7fb763d_6ec06ce8",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "445360f2_14135ad5",
       "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -99,6 +135,24 @@
       "writtenOn": "2024-08-01T12:50:35Z",
       "side": 1,
       "message": "nit: can we ensure no overflows here by converting to uint64_t? Otherwise rect-\u003ex \u003d UINT32_MAX and width \u003d 1 would pass validation.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff267bd7_fd695f6c",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e13ba21_6c38bf4d",
       "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -156,6 +210,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b186641_52eb921d",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Thanks, let\u0027s keep the old one!",
+      "parentUuid": "8cc664a7_79769b86",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f38b73b_a2412eb5",
@@ -169,6 +241,24 @@
       "writtenOn": "2024-08-01T12:50:35Z",
       "side": 1,
       "message": "Uuuh that\u0027s more than a Rect2D because it has sType and nextInChain. Either we define the struct here, or in dawn.json, but let\u0027s not reuse a structure with more semantic as the rect2d. If anything RenderPassDescriptorExpandResolveRect could have a single member that\u0027s `Rect2D expandResolveRect` though that\u0027s a lot of changes so I don\u0027t want to necessarily require that.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "915b16fb_58a95430",
+        "filename": "src/dawn/native/dawn_platform.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Didn\u0027t think it over, thanks for the catching!",
+      "parentUuid": "5f38b73b_a2412eb5",
       "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -196,6 +286,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ab9eade_9ac38ad8",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1100f14_492bfe17",
+      "range": {
+        "startLine": 2166,
+        "startChar": 45,
+        "endLine": 2166,
+        "endChar": 56
+      },
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "271bc678_4287702b",
@@ -209,6 +323,24 @@
       "writtenOn": "2024-08-01T12:50:35Z",
       "side": 1,
       "message": "nit: could we be explicit as to where we check here? Otherwise it looks a bit like we check that the whole target is green.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "678f4530_340795e7",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2198,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "271bc678_4287702b",
       "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -232,6 +364,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9fce5d3d_51dbeff9",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "The green pipeline runs without enableExpandResolveLoadOp enabled, while the red one does.",
+      "parentUuid": "8792d82a_d918d5e5",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a6205f31_56962b95",
         "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
         "patchSetId": 12
@@ -243,6 +393,24 @@
       "writtenOn": "2024-08-01T12:50:35Z",
       "side": 1,
       "message": "This third pass doesn\u0027t seem necessary for the test, only the second one should be with the pixel inside the rect being color, but the pixel outside the rect discarded and cleared.",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce2c6932_44573b5c",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "My expectation is that Discard shouldn\u0027t be specific to the rect, so the test case is simply like:\n```\nG -- Green\ng -- multisampled Green\nR -- Red\nr -- Multisampled Red\nc -- Clear\nM -- multisampled texture view\nS -- SingleSampled texture view\n\nRP1:\n M       S\ngGG     gGG\ncgG     cgG\nccg     ccg\n\nRP2:\n M       S\nrRG     rRG\ncrG     crG\nccg     ccg\n\n\nDawn internally clears the whole attachment view before RP3.\n M       S\nccc     rRG\nccc     crG\nccc     ccg\n\n\nRP3:\n M       S\nccc     ccc\nccc     ccc\nccc     ccc\n```",
+      "parentUuid": "a6205f31_56962b95",
       "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -264,6 +432,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4391886a_81e88361",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2277,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05a6782a_47c0b00a",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0335af38_2e201c02",
@@ -277,6 +463,24 @@
       "writtenOn": "2024-08-01T12:50:35Z",
       "side": 1,
       "message": "ditto",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e957cb50_b811cfe6",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2278,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0335af38_2e201c02",
       "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -298,6 +502,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50d32cc7_95fb4109",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2f601d0_d63d80b9",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11a9e207_2244b88f",
@@ -315,6 +537,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cef5cc82_4d5fcd58",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2085,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a9e207_2244b88f",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77b36fe8_c74622ca",
@@ -328,6 +568,24 @@
       "writtenOn": "2024-08-01T12:50:35Z",
       "side": 1,
       "message": "Could we test that it is ok as well if there is a mix of ExpandResolveTexture and other load ops? (basically a single one is required, but not that all are ExpandResolveTexture)",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f4d452e_39b0a150",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-02T05:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77b36fe8_c74622ca",
       "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
