@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c916ff09_de7afbdf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-02T13:47:15Z",
+      "side": 1,
+      "message": "Could you vote again? CI failed to build dawn bindings for node but it is fixed now.",
+      "revId": "d913dcf3521a060f3f0d23606339c3a7d39e4af1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
