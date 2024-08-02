@@ -26,6 +26,12 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import("../../../scripts/dawn_overrides_with_defaults.gni")
+if (is_android) {
+  import("../../../scripts/dawn_apk.gni")
+  target_type = "dawn_apk"
+} else {
+  target_type = "executable"
+}
 
 group("samples") {
   deps = [
@@ -33,8 +39,10 @@ group("samples") {
     ":ComputeBoids",
     ":DawnInfo",
     ":HelloTriangle",
-    ":ManualSurfaceTest",
   ]
+  if (!is_android) {
+    deps += [ ":ManualSurfaceTest" ]
+  }
 }
 
 # Static library to contain code and dependencies common to all samples
@@ -56,7 +64,7 @@ static_library("utils") {
 
 # Template for samples to avoid listing utils as a dep every time
 template("sample") {
-  executable(target_name) {
+  target(target_type, target_name) {
     deps = [ ":utils" ]
     forward_variables_from(invoker, "*", [ "deps" ])
 
