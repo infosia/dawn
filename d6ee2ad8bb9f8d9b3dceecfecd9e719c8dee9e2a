@@ -54,6 +54,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "364c3d36_42484013",
+        "filename": "scripts/dawn_apk.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-02T18:47:49Z",
+      "side": 1,
+      "message": "Just to be pedantic, it\u0027s not actually an executable. It\u0027s a .so wrapped in an APK. I\u0027d prefer to keep it as is, since all other Chromium build projects use the foo_apk naming.",
+      "parentUuid": "5dd6e00e_bed0cf8a",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ef18a91_54c6e2a0",
+        "filename": "scripts/dawn_apk.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-02T18:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a875969f_edad5c5c",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "44b4c18e_4614bae8",
         "filename": "scripts/dawn_apk.gni",
         "patchSetId": 15
@@ -65,6 +101,24 @@
       "writtenOn": "2024-07-31T13:50:34Z",
       "side": 1,
       "message": "nit: Does this need to be AndroidManifest.xml? It would be nice to use `${target_gen_dir}/${target_name}Manifest.xml` as `manifest_path` to avoid an extra dir.",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0a5baab_a62c2af6",
+        "filename": "scripts/dawn_apk.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-02T18:47:49Z",
+      "side": 1,
+      "message": "\"Every app project must have an AndroidManifest.xml file, with precisely that name, at the root of the project source set.\" https://developer.android.com/guide/topics/manifest/manifest-intro",
+      "parentUuid": "44b4c18e_4614bae8",
       "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36e42834_2ebb5bf2",
+        "filename": "src/dawn/samples/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-02T18:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7a95f69_51a40475",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7b91b6a_c5cbf14b",
@@ -99,6 +171,24 @@
       "writtenOn": "2024-07-31T13:50:34Z",
       "side": 1,
       "message": "IMHO it is very weird that the utility shared library will magically contain the Android entrypoint. IMHO it would be better to move things other than the window to samples/. Is it not the case because `WindowAndroid` uses things from `android_native_app_glue`?\n\nDo you have any idea how to avoid this?",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95fb20f7_6a6f889c",
+        "filename": "src/dawn/utils/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-02T18:47:49Z",
+      "side": 1,
+      "message": "I was thinking that tests might also want to use it in the future. I\u0027ve put it in samples for now, and we can rethink this later. (This was made easier by moving `android_native_app_glue` to `third_party`).",
+      "parentUuid": "d7b91b6a_c5cbf14b",
       "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +210,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c50f4d5d_03580f88",
+        "filename": "src/dawn/utils/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-02T18:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf366e75_6e7281f0",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b9b3154_86d0a2b9",
@@ -133,6 +241,24 @@
       "writtenOn": "2024-07-31T13:50:34Z",
       "side": 1,
       "message": "glfw should be conditionally added to private_wgpu_depends otherwise Android compilation will try to use it.",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62fe400e_49a1d876",
+        "filename": "src/dawn/utils/CMakeLists.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-02T18:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b9b3154_86d0a2b9",
       "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -160,6 +286,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d6f70d3_85492708",
+        "filename": "src/dawn/utils/WindowAndroid.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-02T18:47:49Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "9caadea1_95c7e13c",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3abe8ab9_2e1c3ebb",
@@ -173,6 +323,24 @@
       "writtenOn": "2024-07-31T13:50:34Z",
       "side": 1,
       "message": "This is never set to true, but looking at the native activity glue, there should be signals that the application should be closing. `APP_CMD_STOP/DESTROY`",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f9173fb_3758aef5",
+        "filename": "src/dawn/utils/WindowAndroid.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-02T18:47:49Z",
+      "side": 1,
+      "message": "Thanks; was doing this elsewhere but it got removed. Implemented a proper onAppCmd handler.",
+      "parentUuid": "3abe8ab9_2e1c3ebb",
       "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -194,6 +362,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c9bf0ec_0b9176d4",
+        "filename": "src/dawn/utils/WindowGLFW.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-02T18:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec6be82_becdd200",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c800bbe_579445aa",
@@ -207,6 +393,24 @@
       "writtenOn": "2024-07-31T13:50:34Z",
       "side": 1,
       "message": "Could we move this to third_party/android_native_app_glue and make it have its own BUILD.gn / CMake files? It is third_party code with a different license and adding it in the regular tree causes problems (like when importing in google3)",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65696d96_df729dea",
+        "filename": "src/dawn/utils/android_native_app_glue.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-02T18:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c800bbe_579445aa",
       "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
