@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "392754d3_d0816284",
+        "filename": ".gitignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-02T01:03:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d7f619fe_900aeff2",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 21
+      },
+      "revId": "ff0258c8ba35001544f71fc24ec42d9c23ef577f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4165aff3_8fa1bc91",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -55,6 +79,24 @@
       "side": 1,
       "message": "sg.",
       "parentUuid": "4165aff3_8fa1bc91",
+      "revId": "ff0258c8ba35001544f71fc24ec42d9c23ef577f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e147a84a_599fcb76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-02T01:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6417fcb5_99e01b13",
       "revId": "ff0258c8ba35001544f71fc24ec42d9c23ef577f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
