@@ -61,6 +61,7 @@ static_library("utils") {
     "Timer.h",
     "WGPUHelpers.cpp",
     "WGPUHelpers.h",
+    "Window.h",
     "WireHelper.cpp",
     "WireHelper.h",
   ]
@@ -70,8 +71,23 @@ static_library("utils") {
     "${dawn_root}/src/dawn/native:headers",
     "${dawn_root}/src/dawn/wire",
   ]
-
   libs = []
+  if (is_android) {
+    sources += [
+      "AndroidMain.cpp",
+      "WindowAndroid.cpp",
+      "WindowAndroid.h",
+    ]
+    libs += [ "android" ]
+    deps += [ "$dawn_root/third_party/android_native_app_glue" ]
+  } else {
+    sources += [
+      "WindowGLFW.cpp",
+      "WindowGLFW.h",
+    ]
+    deps += [ "${dawn_root}/third_party/gn/glfw" ]
+  }
+
   frameworks = []
 
   if (tint_build_spv_reader) {

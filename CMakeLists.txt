@@ -119,8 +119,8 @@ if (NOT ENABLE_EMSCRIPTEN AND ((WIN32 AND NOT WINDOWS_STORE) OR (UNIX AND NOT AN
     set(DAWN_SUPPORTS_GLFW_FOR_WINDOWING ON)
 endif()
 
-# Current examples are depend on GLFW
-if (DAWN_SUPPORTS_GLFW_FOR_WINDOWING)
+# Current examples depend on GLFW or Android windowing
+if (DAWN_SUPPORTS_GLFW_FOR_WINDOWING OR ANDROID)
     set(BUILD_SAMPLES ON)
 endif()
 
@@ -177,8 +177,8 @@ option(TINT_ENABLE_INSTALL "Enable install step for Tint libraries" OFF)
 option(TINT_BUILD_CMD_TOOLS "Build the Tint command line tools" ON)
 
 if (DAWN_BUILD_SAMPLES)
-  if (NOT DAWN_USE_GLFW AND NOT DAWN_ENABLE_EMSCRIPTEN)
-    message(SEND_ERROR "Dawn samples require GLFW or Emscripten")
+  if (NOT DAWN_USE_GLFW AND NOT ANDROID AND NOT DAWN_ENABLE_EMSCRIPTEN)
+    message(SEND_ERROR "Dawn samples require GLFW, Android, or Emscripten")
   endif()
 endif()
 
@@ -218,6 +218,7 @@ set_if_not_defined(DAWN_THIRD_PARTY_DIR "${Dawn_SOURCE_DIR}/third_party" "Direct
 
 set_if_not_defined(DAWN_ABSEIL_DIR "${DAWN_THIRD_PARTY_DIR}/abseil-cpp" "Directory in which to find Abseil")
 set_if_not_defined(DAWN_GLFW_DIR "${DAWN_THIRD_PARTY_DIR}/glfw" "Directory in which to find GLFW")
+set_if_not_defined(DAWN_ANDROID_NATIVE_APP_GLUE_DIR "${DAWN_THIRD_PARTY_DIR}/android_native_app_glue" "Directory in which to find android_native_app_glue")
 set_if_not_defined(DAWN_JINJA2_DIR "${DAWN_THIRD_PARTY_DIR}/jinja2" "Directory in which to find Jinja2")
 set_if_not_defined(DAWN_MARKUPSAFE_DIR "${DAWN_THIRD_PARTY_DIR}/markupsafe" "Directory in which to find MarkupSafe")
 set_if_not_defined(DAWN_KHRONOS_DIR "${DAWN_THIRD_PARTY_DIR}/khronos" "Directory in which to find Khronos GL headers")

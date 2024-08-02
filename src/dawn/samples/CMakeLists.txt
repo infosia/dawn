@@ -39,8 +39,13 @@ if (NOT ${DAWN_ENABLE_EMSCRIPTEN})
     list(APPEND sample_util_depends
         dawn::dawn_test_utils
         dawn::dawn_proc
-        dawn::dawn_glfw
         dawn::dawn_native
+    )
+endif ()
+
+if (NOT ANDROID AND NOT ${DAWN_ENABLE_EMSCRIPTEN})
+    list(APPEND sample_util_depends
+        dawn::dawn_glfw
         glfw
     )
 endif ()
@@ -106,7 +111,9 @@ Sample(
     SOURCES "DawnInfo.cpp"
 )
 
-Sample(
-    NAME ManualSurfaceTest
-    SOURCES "ManualSurfaceTest.cpp"
-)
+if (NOT ANDROID)
+    Sample(
+        NAME ManualSurfaceTest
+        SOURCES "ManualSurfaceTest.cpp"
+    )
+endif()
