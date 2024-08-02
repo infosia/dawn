@@ -16,6 +16,23 @@
       "message": "Should fix broken DXC into Dawn roller: https://autoroll.skia.org/r/directx-shader-compiler-dawn",
       "revId": "287b05fdd33d49991fbb7aeb8f6fcd2f4ffa1ebe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fc4ec11_cf71bb34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-08-02T18:44:35Z",
+      "side": 1,
+      "message": "lgtm+2",
+      "revId": "287b05fdd33d49991fbb7aeb8f6fcd2f4ffa1ebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
