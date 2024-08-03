@@ -398,6 +398,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "086114ef_f4d612b7",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-03T04:00:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b90c0db3_4b4f3225",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6205f31_56962b95",
@@ -447,6 +465,24 @@
       "side": 1,
       "message": "What I\u0027m confused about is that RP3 says discard for the store op, so whatever the state is before RP3, the textures will always be discarded after RP3 and...\n\nOk so if I understand correctly, RP3 is just a resolve so we can check the contents of the multisample via the resolve target, got it. IDK how comments could be more clear but the approach makes sense.",
       "parentUuid": "ce2c6932_44573b5c",
+      "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1bf5b41_92217399",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-03T04:00:31Z",
+      "side": 1,
+      "message": "Sorry about the confusion. Further improved the comments to be clearer.",
+      "parentUuid": "a5a26720_51bea852",
       "revId": "f792164ef6c3c31d775b3de6f41b3bd2f4ae6ce0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
