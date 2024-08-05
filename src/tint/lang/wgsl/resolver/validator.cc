@@ -1181,38 +1181,13 @@ bool Validator::InterpolateAttribute(const ast::InterpolateAttribute* attr,
                     << "flat interpolation can only use 'first' and 'either' sampling parameters";
                 return false;
             }
-            if (mode_ == wgsl::ValidationMode::kCompat &&
-                i_sampling == core::InterpolationSampling::kFirst) {
-                AddError(attr->source) << "flat interpolation must use 'either' sampling parameter "
-                                          "in compatibility mode";
-                return false;
-            }
         } else {
             if (is_first_or_either) {
                 AddError(attr->source) << "'first' and 'either' sampling parameters can only be "
                                           "used with flat interpolation";
                 return false;
             }
-
-            if (mode_ == wgsl::ValidationMode::kCompat &&
-                i_sampling == core::InterpolationSampling::kSample) {
-                AddError(attr->source)
-                    << "use of '@interpolate(..., sample)' is not allowed in compatibility mode";
-                return false;
-            }
         }
-    } else {
-        if (mode_ == wgsl::ValidationMode::kCompat && i_type == core::InterpolationType::kFlat) {
-            AddError(attr->source)
-                << "flat interpolation must use 'either' sampling parameter in compatibility mode";
-            return false;
-        }
-    }
-
-    if (mode_ == wgsl::ValidationMode::kCompat && i_type == core::InterpolationType::kLinear) {
-        AddError(attr->source)
-            << "use of '@interpolate(linear)' is not allowed in compatibility mode";
-        return false;
     }
 
     return true;
