@@ -57,6 +57,30 @@
       ],
       "revId": "8e1b92fd83927b83323c6570b65e70b886620ef6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38ca2c7d_42d91a5a",
+        "filename": "src/tint/lang/core/ir/value.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-05T16:08:38Z",
+      "side": 1,
+      "message": "This CL converts all the usages to `Unsorted`.\n\nWe decided to go this route when fixing `Usages`. The unsorted version is faster but it can\u0027t be used everywhere and we want to make it explicit which one you\u0027re doing. Neither works well as the default, so we went with explicit.\n\nI have a feeling a bunch of the current `Unsorted`s will become `Sorted` (HLSL has a similar usage where is causing non-determinisitic output).",
+      "parentUuid": "d8cdbc8f_c15b22eb",
+      "range": {
+        "startLine": 130,
+        "startChar": 9,
+        "endLine": 130,
+        "endChar": 27
+      },
+      "revId": "8e1b92fd83927b83323c6570b65e70b886620ef6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
