@@ -16,6 +16,47 @@
       "message": "PTAL.",
       "revId": "8e1b92fd83927b83323c6570b65e70b886620ef6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8cdbc8f_c15b22eb",
+        "filename": "src/tint/lang/core/ir/value.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-05T16:04:57Z",
+      "side": 1,
+      "message": "Can we leave this as `ForEachUse`? Almost always, when iterating over containers, we assume they are unsorted, so it seems unnecessary to call it out here. If we do so here, then we have probably many other places in the codebase append \"Unsorted\" to.",
+      "range": {
+        "startLine": 130,
+        "startChar": 9,
+        "endLine": 130,
+        "endChar": 27
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "442b0807_998ab0dd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/value.h",
+              "range": {
+                "startLine": 130,
+                "startChar": 0,
+                "endLine": 131,
+                "endChar": 0
+              },
+              "replacement": "    void ForEachUse(std::function\u003cvoid(Usage use)\u003e func) const;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8e1b92fd83927b83323c6570b65e70b886620ef6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
