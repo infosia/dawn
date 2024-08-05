@@ -49,7 +49,6 @@
 #include "src/tint/lang/wgsl/ast/transform/renamer.h"
 #include "src/tint/lang/wgsl/ast/transform/single_entry_point.h"
 #include "src/tint/lang/wgsl/ast/transform/substitute_override.h"
-#include "src/tint/lang/wgsl/common/validation_mode.h"
 #include "src/tint/lang/wgsl/helpers/flatten_bindings.h"
 #include "src/tint/utils/cli/cli.h"
 #include "src/tint/utils/command/command.h"
@@ -1310,8 +1309,6 @@ int main(int argc, const char** argv) {
 
     tint::cmd::LoadProgramOptions opts;
     opts.filename = options.input_filename;
-    opts.mode = options.compatibility_mode ? tint::wgsl::ValidationMode::kCompat
-                                           : tint::wgsl::ValidationMode::kFull;
     opts.printer = options.printer.get();
 #if TINT_BUILD_SPV_READER
     opts.use_ir = options.use_ir_reader;
