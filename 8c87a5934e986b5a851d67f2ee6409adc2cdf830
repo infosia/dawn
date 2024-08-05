@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9af62531_cb00422a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-08-05T22:51:50Z",
+      "side": 1,
+      "message": "tests pass, and local build tested against https://github.com/gpuweb/cts/pull/3894 passed. Won\u0027t be able to commit until that PR rolls.",
+      "revId": "8c87a5934e986b5a851d67f2ee6409adc2cdf830",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
