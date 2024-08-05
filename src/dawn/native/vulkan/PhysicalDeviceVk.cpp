@@ -261,6 +261,15 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         }
     }
 
+    // Extension is promoted to core in Vulkan 1.2, but still optional
+    if (mDeviceInfo.properties.apiVersion >= VK_API_VERSION_1_2) {
+        if (mDeviceInfo.features12.drawIndirectCount) {
+            EnableFeature(Feature::MultiDrawIndirect);
+        }
+    } else if (mDeviceInfo.HasExt(DeviceExt::DrawIndirectCount)) {
+        EnableFeature(Feature::MultiDrawIndirect);
+    }
+
     // unclippedDepth=true translates to depthClamp=true, which implicitly disables clipping.
     if (mDeviceInfo.features.depthClamp == VK_TRUE) {
         EnableFeature(Feature::DepthClipControl);
