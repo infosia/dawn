@@ -25,13 +25,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-dawn_add_library(
-  android_native_app_glue
-  UTILITY_TARGET dawn_internal_config
-  HEADERS
-    "android_native_app_glue.h"
-  SOURCES
-    "android_native_app_glue.c"
+add_library(android_native_app_glue OBJECT)
+target_include_directories(android_native_app_glue PUBLIC .)
+target_sources(android_native_app_glue
+    PRIVATE "android_native_app_glue.c" "android_native_app_glue.h"
 )
-
-target_include_directories(android_native_app_glue INTERFACE .)
