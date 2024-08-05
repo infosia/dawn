@@ -61,6 +61,7 @@ struct VulkanGlobalInfo : VulkanGlobalKnobs {
 // Device information - gathered before the device is created.
 struct VulkanDeviceKnobs {
     VkPhysicalDeviceFeatures features;
+    VkPhysicalDeviceVulkan12Features features12;
     VkPhysicalDeviceShaderFloat16Int8FeaturesKHR shaderFloat16Int8Features;
     VkPhysicalDevice16BitStorageFeaturesKHR _16BitStorageFeatures;
     VkPhysicalDeviceSubgroupSizeControlFeaturesEXT subgroupSizeControlFeatures;
