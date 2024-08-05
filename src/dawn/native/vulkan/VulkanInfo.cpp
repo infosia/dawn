@@ -255,6 +255,11 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
         propertiesChain.Add(&info.propertiesMaintenance3,
                             VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES);
 
+        if (info.properties.apiVersion >= VK_API_VERSION_1_2) {
+            featuresChain.Add(&info.features12,
+                              VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES);
+        }
+
         if (info.extensions[DeviceExt::ShaderFloat16Int8]) {
             featuresChain.Add(&info.shaderFloat16Int8Features,
                               VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES_KHR);

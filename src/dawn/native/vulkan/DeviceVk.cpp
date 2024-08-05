@@ -411,6 +411,11 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         usedKnobs.features.robustBufferAccess = VK_TRUE;
     }
 
+    if (mDeviceInfo.properties.apiVersion >= VK_API_VERSION_1_2) {
+        featuresChain.Add(&usedKnobs.features12,
+                          VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES);
+    }
+
     if (mDeviceInfo.HasExt(DeviceExt::SubgroupSizeControl)) {
         DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::SubgroupSizeControl));
 
@@ -500,6 +505,13 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
             usedKnobs.shaderSubgroupExtendedTypes = mDeviceInfo.shaderSubgroupExtendedTypes;
             featuresChain.Add(&usedKnobs.shaderSubgroupExtendedTypes);
         }
+    }
+
+    // drawIndirectCount is a Vulkan 1.2 optional feature.
+    // If the device is less than Vulkan 1.2, the extension VK_KHR_draw_indirect_count is required.
+    if (mDeviceInfo.properties.apiVersion >= VK_API_VERSION_1_2 &&
+        mDeviceInfo.features12.drawIndirectCount) {
+        usedKnobs.features12.drawIndirectCount = mDeviceInfo.features12.drawIndirectCount;
     }
 
     if (HasFeature(Feature::DualSourceBlending)) {
