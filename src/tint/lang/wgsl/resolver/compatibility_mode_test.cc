@@ -63,188 +63,37 @@ class ResolverCompatibilityModeTestWithParam : public TestHelper, public testing
     }
 };
 
-TEST_F(ResolverCompatibilityModeTest, LinearInterpolation_Parameter) {
-    // @fragment
-    // fn main(@location(1) @interpolate(linear) value : f32) {
-    // }
+using ResolverCompatibilityModeTest_StorageTexture = ResolverCompatibilityModeTestWithParam<
+    std::tuple<core::type::TextureDimension, core::TexelFormat>>;
 
-    Func("main",
-         Vector{Param("value", ty.f32(),
-                      Vector{
-                          Location(1_i),
-                          Interpolate(Source{{12, 34}}, core::InterpolationType::kLinear,
-                                      core::InterpolationSampling::kCenter),
-                      })},
-         ty.void_(), Empty,
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         },
-         Vector{
-             Builtin(core::BuiltinValue::kPosition),
-         });
-
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(r()->error(),
-              R"(12:34 error: use of '@interpolate(linear)' is not allowed in compatibility mode)");
-}
-
-TEST_F(ResolverCompatibilityModeTest, LinearInterpolation_StructMember) {
-    // struct S {
-    //   @location(1) @interpolate(linear) value : f32,
-    // }
-
-    Structure("S", Vector{
-                       Member("value", ty.f32(),
-                              Vector{
-                                  Location(1_i),
-                                  Interpolate(Source{{12, 34}}, core::InterpolationType::kLinear,
-                                              core::InterpolationSampling::kCenter),
-                              }),
-                   });
-
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(r()->error(),
-              R"(12:34 error: use of '@interpolate(linear)' is not allowed in compatibility mode)");
-}
-
-TEST_F(ResolverCompatibilityModeTest, SampleInterpolation_Parameter) {
-    // @fragment
-    // fn main(@location(1) @interpolate(perspective, sample) value : f32) {
-    // }
-
-    Func("main",
-         Vector{Param("value", ty.f32(),
-                      Vector{
-                          Location(1_i),
-                          Interpolate(Source{{12, 34}}, core::InterpolationType::kPerspective,
-                                      core::InterpolationSampling::kSample),
-                      })},
-         ty.void_(), Empty,
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         },
-         Vector{
-             Builtin(core::BuiltinValue::kPosition),
-         });
-
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(12:34 error: use of '@interpolate(..., sample)' is not allowed in compatibility mode)");
-}
-
-TEST_F(ResolverCompatibilityModeTest, SampleInterpolation_StructMember) {
-    // struct S {
-    //   @location(1) @interpolate(perspective, sample) value : f32,
-    // }
-
-    Structure("S",
+TEST_P(ResolverCompatibilityModeTest_StorageTexture, RGStorageTextures) {
+    // @group(2) @binding(1) var tex: texture_storage_xxx<formatxxx, read_write>
+    auto dim = std::get<0>(GetParam());
+    auto fmt = std::get<1>(GetParam());
+    auto t = ty.storage_texture(Source{{12, 34}}, dim, fmt, core::Access::kReadWrite);
+    GlobalVar("tex", t,
               Vector{
-                  Member("value", ty.f32(),
-                         Vector{
-                             Location(1_i),
-                             Interpolate(Source{{12, 34}}, core::InterpolationType::kPerspective,
-                                         core::InterpolationSampling::kSample),
-                         }),
+                  Group(2_a),
+                  Binding(1_a),
               });
 
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(12:34 error: use of '@interpolate(..., sample)' is not allowed in compatibility mode)");
-}
-
-TEST_F(ResolverCompatibilityModeTest, FirstInterpolation_Parameter) {
-    // @fragment
-    // fn main(@location(1) @interpolate(flat, first) value : f32) {
-    // }
-
-    Func("main",
-         Vector{Param("value", ty.f32(),
-                      Vector{
-                          Location(1_i),
-                          Interpolate(Source{{12, 34}}, core::InterpolationType::kFlat,
-                                      core::InterpolationSampling::kFirst),
-                      })},
-         ty.void_(), Empty,
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         },
-         Vector{
-             Builtin(core::BuiltinValue::kPosition),
-         });
+    StringStream err;
+    err << "12:34 error: format " << fmt
+        << " is not supported as a storage texture in compatibility mode";
 
     EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(12:34 error: flat interpolation must use 'either' sampling parameter in compatibility mode)");
+    EXPECT_EQ(r()->error(), err.str());
 }
 
-TEST_F(ResolverCompatibilityModeTest, FirstInterpolation_StructMember) {
-    // struct S {
-    //   @location(1) @interpolate(flat, first) value : f32,
-    // }
-
-    Structure("S", Vector{
-                       Member("value", ty.f32(),
-                              Vector{
-                                  Location(1_i),
-                                  Interpolate(Source{{12, 34}}, core::InterpolationType::kFlat,
-                                              core::InterpolationSampling::kFirst),
-                              }),
-                   });
-
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(12:34 error: flat interpolation must use 'either' sampling parameter in compatibility mode)");
-}
-
-TEST_F(ResolverCompatibilityModeTest, FlatNoneInterpolation_Parameter) {
-    // @fragment
-    // fn main(@location(1) @interpolate(flat) value : f32) {
-    // }
-
-    Func("main",
-         Vector{Param("value", ty.f32(),
-                      Vector{
-                          Location(1_i),
-                          Interpolate(Source{{12, 34}}, core::InterpolationType::kFlat,
-                                      core::InterpolationSampling::kUndefined),
-                      })},
-         ty.void_(), Empty,
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         },
-         Vector{
-             Builtin(core::BuiltinValue::kPosition),
-         });
-
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(12:34 error: flat interpolation must use 'either' sampling parameter in compatibility mode)");
-}
-
-TEST_F(ResolverCompatibilityModeTest, FlatNoneInterpolation_StructMember) {
-    // struct S {
-    //   @location(1) @interpolate(flat) value : f32,
-    // }
-
-    Structure("S", Vector{
-                       Member("value", ty.f32(),
-                              Vector{
-                                  Location(1_i),
-                                  Interpolate(Source{{12, 34}}, core::InterpolationType::kFlat,
-                                              core::InterpolationSampling::kUndefined),
-                              }),
-                   });
-
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(12:34 error: flat interpolation must use 'either' sampling parameter in compatibility mode)");
-}
+INSTANTIATE_TEST_SUITE_P(ResolverCompatibilityModeTest,
+                         ResolverCompatibilityModeTest_StorageTexture,
+                         testing::Combine(testing::Values(core::type::TextureDimension::k1d,
+                                                          core::type::TextureDimension::k2d,
+                                                          core::type::TextureDimension::k2dArray,
+                                                          core::type::TextureDimension::k3d),
+                                          testing::Values(core::TexelFormat::kRg32Float,
+                                                          core::TexelFormat::kRg32Sint,
+                                                          core::TexelFormat::kRg32Uint)));
 
 class ResolverCompatibilityModeTest_TextureLoad : public ResolverCompatibilityModeTest {
   protected:
