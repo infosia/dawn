@@ -33,7 +33,6 @@
 #include <string>
 #include <vector>
 
-#include "src/tint/lang/wgsl/common/validation_mode.h"
 #include "src/tint/lang/wgsl/inspector/inspector.h"
 #include "src/tint/utils/diagnostic/source.h"
 
