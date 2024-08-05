@@ -59,6 +59,11 @@ InternalCompilerError::~InternalCompilerError() {
     debugger::Break();
 
 #if defined(_MSC_VER) && !defined(__clang__)
+#ifdef NDEBUG
+    // Some non-debug CRTs display a message box, which we don't want, especially when running tests.
+    // See: https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/abort?view=msvc-170
+   _set_abort_behavior( 0, _WRITE_ABORT_MSG);
+#endif
     abort();
 #else
     __builtin_trap();
