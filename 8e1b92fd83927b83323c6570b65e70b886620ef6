@@ -81,6 +81,30 @@
       },
       "revId": "8e1b92fd83927b83323c6570b65e70b886620ef6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56433917_7b960e1a",
+        "filename": "src/tint/lang/core/ir/value.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-05T16:11:59Z",
+      "side": 1,
+      "message": "If that\u0027s the case, why not make it so that the list is always sorted? I assume we iterate over uses more than we insert them.",
+      "parentUuid": "38ca2c7d_42d91a5a",
+      "range": {
+        "startLine": 130,
+        "startChar": 9,
+        "endLine": 130,
+        "endChar": 27
+      },
+      "revId": "8e1b92fd83927b83323c6570b65e70b886620ef6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
