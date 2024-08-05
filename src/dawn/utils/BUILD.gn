@@ -78,7 +78,11 @@ static_library("utils") {
       "WindowAndroid.h",
     ]
     libs += [ "android" ]
-    deps += [ "$dawn_root/third_party/android_native_app_glue" ]
+    include_dirs = [ "//third_party/android_native_app_glue" ]
+
+    if (!build_with_chromium) {
+      deps += [ "${dawn_root}/third_party/gn/libunwind:libunwind" ]
+    }
   } else {
     sources += [
       "WindowGLFW.cpp",
