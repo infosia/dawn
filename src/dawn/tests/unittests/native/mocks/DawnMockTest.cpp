@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "dawn/tests/unittests/native/mocks/DawnMockTest.h"
+#include "dawn/native/ChainUtils.h"
 
 #include <utility>
 
@@ -36,7 +37,21 @@ namespace dawn::native {
 DawnMockTest::DawnMockTest() {
     dawnProcSetProcs(&dawn::native::GetProcs());
 
-    auto deviceMock = AcquireRef(new ::testing::NiceMock<DeviceMock>());
+    Ref<InstanceBase> instance = APICreateInstance(nullptr);
+    const auto& adapters = instance->EnumerateAdapters();
+    DAWN_ASSERT(!adapters.empty());
+
+    DeviceDescriptor deviceDescriptor = {};
+    auto result = ValidateAndUnpack(&deviceDescriptor);
+    DAWN_ASSERT(result.IsSuccess());
+    UnpackedPtr<DeviceDescriptor> packedDeviceDescriptor = result.AcquireSuccess();
+
+    Ref<DeviceBase::DeviceLostEvent> lostEvent =
+        DeviceBase::DeviceLostEvent::Create(&deviceDescriptor);
+    TogglesState deviceToggles(ToggleStage::Device);
+
+    auto deviceMock = AcquireRef(new ::testing::NiceMock<DeviceMock>(
+        adapters[0].Get(), packedDeviceDescriptor, deviceToggles, std::move(lostEvent)));
     mDeviceMock = deviceMock.Get();
     device = wgpu::Device::Acquire(ToAPI(ReturnToAPI<DeviceBase>(std::move(deviceMock))));
 }

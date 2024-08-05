@@ -47,9 +47,11 @@ namespace dawn::native {
 using ::testing::NiceMock;
 using ::testing::WithArgs;
 
-DeviceMock::DeviceMock() {
-    mInstance = APICreateInstance(nullptr);
-
+DeviceMock::DeviceMock(AdapterBase* adapter,
+                       const UnpackedPtr<DeviceDescriptor>& descriptor,
+                       const TogglesState& deviceToggles,
+                       Ref<DeviceLostEvent>&& lostEvent)
+    : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)) {
     // Set all default creation functions to return nice mock objects.
     ON_CALL(*this, CreateBindGroupImpl)
         .WillByDefault(WithArgs<0>(
@@ -129,14 +131,6 @@ DeviceMock::DeviceMock() {
 }
 
 DeviceMock::~DeviceMock() = default;
-
-dawn::platform::Platform* DeviceMock::GetPlatform() const {
-    return mInstance->GetPlatform();
-}
-
-dawn::native::InstanceBase* DeviceMock::GetInstance() const {
-    return mInstance.Get();
-}
 
 QueueMock* DeviceMock::GetQueueMock() {
     return reinterpret_cast<QueueMock*>(GetQueue());
