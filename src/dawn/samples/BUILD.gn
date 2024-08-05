@@ -70,6 +70,7 @@ template("sample") {
 
     if (is_android) {
       sources += [ "AndroidMain.cpp" ]
+      cflags = [ "-Wno-main" ]
       deps += [ "$dawn_root/third_party/android_native_app_glue" ]
     }
 
