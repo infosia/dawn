@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aad25747_25a0c047",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-06T20:54:07Z",
+      "side": 1,
+      "message": "Stumbled over these will I was regenerating some hlsl-dxc skips locally",
+      "revId": "7789a6ff93bf536abb3a1019e383cafc7a112137",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
