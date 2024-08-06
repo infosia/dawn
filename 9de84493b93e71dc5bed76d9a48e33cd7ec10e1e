@@ -33,6 +33,24 @@
       "message": "How come sometimes the \"arg\" variable is copied to a local variable, like here, and sometimes not, like above in `test/tint/builtins/gen/literal/textureSampleGrad/21402b.wgsl.expected.ir.fxc.hlsl` ?",
       "revId": "9de84493b93e71dc5bed76d9a48e33cd7ec10e1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "154030d2_e5fc7b83",
+        "filename": "test/tint/builtins/gen/literal/textureSampleGrad/2ecd8f.wgsl.expected.ir.dxc.hlsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-06T20:01:39Z",
+      "side": 1,
+      "message": "It\u0027s something to do with the ValueToLet transform (or one of the other transforms) I believe. It\u0027s decided that doing it would be an access issue so it pulls it out to a local.",
+      "parentUuid": "41273c36_f628eb90",
+      "revId": "9de84493b93e71dc5bed76d9a48e33cd7ec10e1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
