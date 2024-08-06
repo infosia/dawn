@@ -87,7 +87,7 @@ struct State {
 
             // Find all the usages of the `var` which is loading or storing.
             Vector<core::ir::Instruction*, 4> usage_worklist;
-            for (auto& usage : result->UsagesUnsorted()) {
+            for (auto& usage : result->UsagesSorted()) {
                 Switch(
                     usage->instruction,
                     [&](core::ir::LoadVectorElement* lve) { usage_worklist.Push(lve); },
