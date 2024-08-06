@@ -16,6 +16,23 @@
       "message": "@bajones and @dsinclair, PTAL since Austin, Corentin and Kai are all out of office.",
       "revId": "f4824920a2dcc3f35842359a929e5bc6a1455f24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ad785f1_9393856e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-08-06T15:22:45Z",
+      "side": 1,
+      "message": "LGTM as well, thanks!",
+      "revId": "f4824920a2dcc3f35842359a929e5bc6a1455f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
