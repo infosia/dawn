@@ -22,6 +22,30 @@
       },
       "revId": "f0ad743c88a57884aba3df13714795de403d1011",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec755d56_0ae8cf0d",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003361
+      },
+      "writtenOn": "2024-08-06T21:05:42Z",
+      "side": 1,
+      "message": "buildtools/linux64 matches the gn path in chromium/src, would be nice to keep that the same? would also depend on how much of a hassle it is to move `buildtools` to something else. I guess dawn folks would know better",
+      "parentUuid": "54041490_4d7f635b",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 25
+      },
+      "revId": "f0ad743c88a57884aba3df13714795de403d1011",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
