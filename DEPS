@@ -83,7 +83,7 @@ deps = {
       'version': Var('dawn_gn_version'),
     }],
     'dep_type': 'cipd',
-    'condition': 'dawn_standalone and host_os == "linux"',
+    'condition': 'dawn_standalone and host_os == "linux" and non_git_source',
   },
   'buildtools/mac': {
     'packages': [{
@@ -392,7 +392,7 @@ deps = {
     'condition': '(fetch_cmake or dawn_node) and (host_os == "mac" or host_os == "linux")',
     'packages': [{
       'package': 'infra/3pp/tools/cmake/${{platform}}',
-      'version': Var('dawn_cmake_version'),
+      'version': Var('dawn_cmake_version'),linu
     }],
     'dep_type': 'cipd',
   },
