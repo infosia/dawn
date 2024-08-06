@@ -83,7 +83,7 @@ deps = {
       'version': Var('dawn_gn_version'),
     }],
     'dep_type': 'cipd',
-    'condition': 'dawn_standalone and host_os == "linux"',
+    'condition': 'dawn_standalone and host_os == "linux" and non_git_source',
   },
   'buildtools/mac': {
     'packages': [{
