@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16417c13_b2a80c24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-08-06T00:30:34Z",
+      "side": 1,
+      "message": "This CL only removes the shader module creation error. The bindGroupLayout error remains and still triggers. Tested with https://github.com/gpuweb/cts/pull/3894",
+      "revId": "88c368ddbf2f6d70f34c2abf642495ac9fb69b0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
