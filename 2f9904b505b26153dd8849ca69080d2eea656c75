@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ff65fbd_1ad3be6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-06T15:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7df6287_29dd1748",
+      "range": {
+        "startLine": 18,
+        "startChar": 25,
+        "endLine": 18,
+        "endChar": 49
+      },
+      "revId": "2f9904b505b26153dd8849ca69080d2eea656c75",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4520a50f_1f3b3b9b",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-08-06T15:10:13Z",
       "side": 1,
       "message": "```suggestion\n                                                              : spv::Op::OpGroupNonUniformFMul;\n```",
+      "range": {
+        "startLine": 1675,
+        "startChar": 73,
+        "endLine": 1675,
+        "endChar": 94
+      },
+      "revId": "2f9904b505b26153dd8849ca69080d2eea656c75",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cc2aa41_c6d0a362",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1675,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-06T15:49:05Z",
+      "side": 1,
+      "message": "Done, good catch, thanks!",
+      "parentUuid": "4520a50f_1f3b3b9b",
       "range": {
         "startLine": 1675,
         "startChar": 73,
