@@ -51,6 +51,24 @@
       "parentUuid": "41273c36_f628eb90",
       "revId": "9de84493b93e71dc5bed76d9a48e33cd7ec10e1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53fe1129_958c1c79",
+        "filename": "test/tint/builtins/gen/literal/textureSampleGrad/2ecd8f.wgsl.expected.ir.dxc.hlsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-06T20:05:16Z",
+      "side": 1,
+      "message": "Okie dokie.",
+      "parentUuid": "154030d2_e5fc7b83",
+      "revId": "9de84493b93e71dc5bed76d9a48e33cd7ec10e1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
