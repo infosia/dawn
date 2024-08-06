@@ -16,6 +16,24 @@
       "message": "This will also need a change in the IR writer for MSL. I don\u0027t know if any subgroup stuff exists in MSL IR yet.",
       "revId": "366eb9df6742d04b9cc7eb895f667f265e2239cd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6002f1e_51b692ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-06T18:58:31Z",
+      "side": 1,
+      "message": "Done, and added a TODO for the missing existing subgroup builtins for a followup. I checked that the new E2E tests passed with `--format msl --use-ir` with msl validation enabled (not sure if those are actually run on bots yet?)",
+      "parentUuid": "bcb00575_f4d12032",
+      "revId": "366eb9df6742d04b9cc7eb895f667f265e2239cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
