@@ -85,6 +85,8 @@ libtint_source_set("type") {
     "matrix.h",
     "memory_view.cc",
     "memory_view.h",
+    "multi_indexed.cc",
+    "multi_indexed.h",
     "multisampled_texture.cc",
     "multisampled_texture.h",
     "node.cc",
