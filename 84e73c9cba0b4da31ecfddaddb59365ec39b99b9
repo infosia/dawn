@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "54bbd2ab_4b8d2552",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-07T20:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eab68cd3_56226157",
+      "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c773269f_a71b0f40",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6eb761f_46d02207",
+        "filename": "src/tint/lang/core/ir/builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-07T20:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7d6c7df_2248f7e1",
+      "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e12027cd_4a263174",
@@ -71,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "751e3482_3c91d901",
+        "filename": "src/tint/lang/core/ir/unused.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-07T20:03:12Z",
+      "side": 1,
+      "message": "I don\u0027t think it does, since this class is based on Value not Instruction and Value doesn\u0027t appear to take in an ID anywhere.\n\nHave I made a mistake by having Unused inherit from Value?",
+      "parentUuid": "e12027cd_4a263174",
+      "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6fd39dde_fdf59fed",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 4
@@ -82,6 +136,24 @@
       "writtenOn": "2024-08-07T19:38:45Z",
       "side": 1,
       "message": "```suggestion\n    // ir::Unused is a internal value used by some transforms to track unused entries, and is\n```",
+      "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63f5e460_4b0ad5e2",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-07T20:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd39dde_fdf59fed",
       "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -105,6 +177,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0700527c_686d2baa",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-07T20:03:12Z",
+      "side": 1,
+      "message": "It will cause issues in the check below since !operand-\u003eIs\u003cFunction\u003e() will return true, and operand-\u003eType() is a nullptr, so it will hit the \u0027operand type is undefined\u0027 error",
+      "parentUuid": "8c8a1ac1_5b940954",
+      "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "375d65cc_b7cd3458",
         "filename": "src/tint/lang/msl/writer/printer/printer.cc",
         "patchSetId": 4
@@ -122,6 +212,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c0e313c5_76c2e64f",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-07T20:03:12Z",
+      "side": 1,
+      "message": "We should be able to, I will try removing it and confirm that it doesn\u0027t trip anything on the bots.",
+      "parentUuid": "375d65cc_b7cd3458",
+      "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6617dec7_fe920c6e",
         "filename": "src/tint/lang/msl/writer/raise/module_scope_vars_test.cc",
         "patchSetId": 4
@@ -133,6 +241,24 @@
       "writtenOn": "2024-08-07T19:38:45Z",
       "side": 1,
       "message": "This is much nicer, a lot clearer what the intent is.",
+      "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a02fd90_8d9474da",
+        "filename": "src/tint/lang/msl/writer/raise/module_scope_vars_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-07T20:03:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6617dec7_fe920c6e",
       "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
