@@ -123,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2898d189_13c960ea",
+        "filename": "src/tint/lang/core/ir/unused.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-08-07T20:14:54Z",
+      "side": 1,
+      "message": "No, you\u0027re right and I am confused, heh.",
+      "parentUuid": "751e3482_3c91d901",
+      "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fd39dde_fdf59fed",
@@ -189,6 +207,24 @@
       "side": 1,
       "message": "It will cause issues in the check below since !operand-\u003eIs\u003cFunction\u003e() will return true, and operand-\u003eType() is a nullptr, so it will hit the \u0027operand type is undefined\u0027 error",
       "parentUuid": "8c8a1ac1_5b940954",
+      "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc308f41_87ce9408",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-08-07T20:14:54Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0700527c_686d2baa",
       "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
