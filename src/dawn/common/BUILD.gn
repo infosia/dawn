@@ -145,7 +145,6 @@ config("internal_config") {
       "-Wimplicit-fallthrough",
       "-Winconsistent-missing-destructor-override",
       "-Winvalid-offsetof",
-      "-Wmissing-field-initializers",
       "-Wnon-c-typedef-for-linkage",
       "-Wpessimizing-move",
       "-Wrange-loop-analysis",
@@ -159,6 +158,10 @@ config("internal_config") {
       "-Wunused-but-set-variable",
       "-Wunused-macros",
     ]
+
+    if (!is_android) {
+      cflags += [ "-Wmissing-field-initializers" ]
+    }
 
     if (is_win) {
       cflags += [
