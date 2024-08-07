@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dd1ad90_c7890c90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-07T15:03:42Z",
+      "side": 1,
+      "message": "Loko, can you take a look?\n\nAlso LMK if I\u0027ve broken your emscripten build.",
+      "revId": "ebf83d826f60a3b8eca4a35c3a2a0a039f62bba7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
