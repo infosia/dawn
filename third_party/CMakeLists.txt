@@ -124,6 +124,11 @@ if (NOT TARGET glfw AND DAWN_USE_GLFW)
     add_subdirectory(${DAWN_GLFW_DIR} "${CMAKE_CURRENT_BINARY_DIR}/glfw")
 endif()
 
+if (ANDROID)
+    message(STATUS "Dawn: using android_native_app_glue at ${DAWN_ANDROID_NATIVE_APP_GLUE_DIR}")
+    add_subdirectory(${DAWN_ANDROID_NATIVE_APP_GLUE_DIR} "${CMAKE_CURRENT_BINARY_DIR}/android_native_app_glue")
+endif()
+
 if (DAWN_BUILD_PROTOBUF AND NOT TARGET libprotobuf-mutator)
     message(STATUS "Dawn: using LPM at ${DAWN_LPM_DIR}")
     include("libprotobuf-mutator/BUILD.cmake")
