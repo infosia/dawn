@@ -90,6 +90,11 @@ static_library("utils") {
       "WindowMac.h",
       "WindowMac.mm",
     ]
+  } else if (is_linux) {
+    sources += [
+      "WindowX11.cpp",
+      "WindowX11.h",
+    ]
   } else {
     sources += [
       "WindowGLFW.cpp",

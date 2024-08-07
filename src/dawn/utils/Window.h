@@ -34,6 +34,8 @@
 #include "dawn/utils/WindowWin.h"
 #elif defined(MACOS)
 #include "dawn/utils/WindowMac.h"
+#elif defined(__linux__)
+#include "dawn/utils/WindowX11.h"
 #else
 #include "dawn/utils/WindowGLFW.h"
 #endif
