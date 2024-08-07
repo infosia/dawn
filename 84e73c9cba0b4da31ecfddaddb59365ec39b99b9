@@ -264,6 +264,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "273303fd_9907543a",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-07T20:55:13Z",
+      "side": 1,
+      "message": "Looks like this works on the bots, marking resolved.",
+      "parentUuid": "c0e313c5_76c2e64f",
+      "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6617dec7_fe920c6e",
