@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c773269f_a71b0f40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-07T19:09:29Z",
+      "side": 1,
+      "message": "PTAL, this passed on the previous patchset on Mac, so I think it is mostly correct.",
+      "revId": "84e73c9cba0b4da31ecfddaddb59365ec39b99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

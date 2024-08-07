@@ -16,6 +16,24 @@
       "message": "TODO: Add `Construct_UnusedArg` test once I have CL passing on MSL backends.",
       "revId": "a56a542e5e5949630c5a9f907c7b144d08c052a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1f55584_4edbe000",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-07T19:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea2076d8_6c8177f8",
+      "revId": "a56a542e5e5949630c5a9f907c7b144d08c052a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
