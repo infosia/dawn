@@ -85,6 +85,11 @@ static_library("utils") {
       "WindowWin.cpp",
       "WindowWin.h",
     ]
+  } else if (is_mac) {
+    sources += [
+      "WindowMac.h",
+      "WindowMac.mm",
+    ]
   } else {
     sources += [
       "WindowGLFW.cpp",

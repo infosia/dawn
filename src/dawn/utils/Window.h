@@ -30,6 +30,10 @@
 
 #ifdef ANDROID
 #include "dawn/utils/WindowAndroid.h"
+#elif defined(WIN32)
+#include "dawn/utils/WindowWin.h"
+#elif defined(MACOS)
+#include "dawn/utils/WindowMac.h"
 #else
 #include "dawn/utils/WindowGLFW.h"
 #endif
