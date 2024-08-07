@@ -91,7 +91,7 @@ function(DawnAPK TARGET_NAME SOURCES)
     add_custom_command(
         OUTPUT "${APK_FILE}"
         COMMAND "${ANDROID_SDK}/build-tools/latest/aapt" package -f -M "${MANIFEST_FILE}" -I "${ANDROID_SDK}/platforms/android-26/android.jar" -F ${APK_FILE} "${STAGING_DIR}"
-        COMMAND "${ANDROID_SDK}/build-tools/34.0.0/apksigner" sign --ks ${KEYSTORE} --ks-pass pass:webgpu "${APK_FILE}"
+        COMMAND "${ANDROID_SDK}/build-tools/latest/apksigner" sign --ks ${KEYSTORE} --ks-pass pass:webgpu "${APK_FILE}"
         DEPENDS ${MANIFEST_FILE} ${KEYSTORE} "LinkTo${MAIN_LIBRARY}"
     )
 
