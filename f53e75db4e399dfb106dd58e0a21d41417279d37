@@ -50,6 +50,24 @@
       "message": "I\u0027d really like to avoid this complexity, if possible.\n\nCould we try removing all the round-to-16s, and see what breaks? I honestly can\u0027t remember why I added it. I don\u0027t think the interior padding (a struct member embedded in another struct) can actually be different between GLSL and WGSL, since otherwise, the layout provided by the host would have to be different. But if GLSL truly does require tail padding, then it\u0027s different than WGSL and this complexity is justified.",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f640c9f5_26940c23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-07T21:30:19Z",
+      "side": 1,
+      "message": "Here\u0027s the original CL: https://dawn-review.googlesource.com/c/dawn/+/101720\n\nSadly, I didn\u0027t mention why rounding up for struct members was necessary.",
+      "parentUuid": "27f3ec32_148b04ec",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
