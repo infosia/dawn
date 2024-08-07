@@ -47,6 +47,10 @@ template("dawn_apk") {
   shared_library(target_name + "Main") {
     forward_variables_from(invoker, "*")
     configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+
+    if (!build_with_chromium) {
+      ldflags = [ "-static-libstdc++" ]
+    }
   }
   android_apk(target_name) {
     apk_name = target_name
