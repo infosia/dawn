@@ -50,6 +50,30 @@
       ],
       "revId": "89f1d7f10f9095350c5db1782ea3ead3d2cfced7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aff43336_02dca779",
+        "filename": "src/dawn/samples/SampleUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2024-08-08T19:03:20Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "cfed5b21_4e440385",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 88
+      },
+      "revId": "89f1d7f10f9095350c5db1782ea3ead3d2cfced7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
