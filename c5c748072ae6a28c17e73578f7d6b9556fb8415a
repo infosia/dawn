@@ -33,6 +33,24 @@
       "message": "Heh, mind blown.\nThis is pretty cool these facilities exist in CMake, and I\u0027m glad I don\u0027t have to use them often. :-)",
       "revId": "c5c748072ae6a28c17e73578f7d6b9556fb8415a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66637335_1f00c5b1",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-08T17:00:19Z",
+      "side": 1,
+      "message": "I very much wish I didn\u0027t have to use this, hence the todo below:\n\n```\n        # TODO(crbug.com/358169277): Once we move the \u0027dxc\u0027 directory one level deeper,\n        # use add_definitions instead of getting all targets and setting properties on them.\n```",
+      "parentUuid": "f6f01cdb_a4d62d1b",
+      "revId": "c5c748072ae6a28c17e73578f7d6b9556fb8415a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
