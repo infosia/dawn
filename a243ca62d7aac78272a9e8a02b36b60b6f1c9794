@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc45b4ea_c0c00819",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-08T17:08:07Z",
+      "side": 1,
+      "message": "```suggestion\n                b.CallWithResult\u003chlsl::ir::BuiltinCall\u003e(call-\u003eDetachResult(), result_ty, hlsl::BuiltinFn::kAsint, func);\n```",
+      "range": {
+        "startLine": 1724,
+        "startChar": 1,
+        "endLine": 1727,
+        "endChar": 70
+      },
+      "revId": "a243ca62d7aac78272a9e8a02b36b60b6f1c9794",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
