@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b198e72_7ec12362",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-08-08T13:55:27Z",
+      "side": 1,
+      "message": "This looks premature to me.\nOnce we revert https://chrome-internal-review.googlesource.com/c/infradata/config/+/7559701, we\u0027ll be left with 5 machines on this config, which is not enough for CTS rolls.",
+      "revId": "47ff742e83173a461eeefc1ff65f9e3e8a9d1b1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
