@@ -112,22 +112,28 @@ ast::transform::Transform::ApplyResult PadStructs::Apply(const Program& src,
             auto* ty = mem->Type();
             auto type = CreateASTTypeFor(ctx, ty);
 
-            new_members.Push(b.Member(name, type));
-
             uint32_t size = ty->Size();
-            if (ty->Is<core::type::Struct>() && str->UsedAs(core::AddressSpace::kUniform)) {
-                // std140 structs should be padded out to 16 bytes.
+
+            // std140 structs should be padded out to 16 bytes.
+            bool size_round_up =
+                (ty->Is<core::type::Struct>() && str->UsedAs(core::AddressSpace::kUniform));
+
+            auto* new_member = b.Member(
+                name, type,
+                size_round_up ? tint::Vector{b.MemberAlign(core::AInt(16u)),
+                                             b.MemberSize(core::AInt(tint::RoundUp(16u, size)))}
+                              : Empty);
+            new_members.Push(new_member);
+
+            if (size_round_up) {
                 size = tint::RoundUp(16u, size);
             }
             offset += size;
         }
 
-        // Add any required padding after the last member, if it's not a block.
         uint32_t struct_size = str->Size();
-        if (str->UsedAs(core::AddressSpace::kUniform)) {
-            struct_size = tint::RoundUp(16u, struct_size);
-        }
 
+        // Add any required padding after the last member, if it's not a block.
         bool is_block = ast::HasAttribute<ast::transform::AddBlockAttribute::BlockAttribute>(
             ast_str->attributes);
         if (offset < struct_size && !is_block) {
