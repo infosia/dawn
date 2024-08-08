@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfed5b21_4e440385",
+        "filename": "src/dawn/samples/SampleUtils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-08T18:59:33Z",
+      "side": 1,
+      "message": "nit. I think a getter for this, i.e. `GetPreferredSurfaceTextureFormat()` would be nicer.",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 88
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "201b92cb_31bcd540",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/samples/SampleUtils.h",
+              "range": {
+                "startLine": 57,
+                "startChar": 0,
+                "endLine": 58,
+                "endChar": 0
+              },
+              "replacement": "    wgpu::TextureFormat GetPreferredSurfaceTextureFormat() {\n      return preferredSurfaceTextureFormat;\n    }\n"
+            },
+            {
+              "path": "src/dawn/samples/SampleUtils.h",
+              "range": {
+                "startLine": 66,
+                "startChar": 0,
+                "endLine": 66,
+                "endChar": 0
+              },
+              "replacement": "    wgpu::TextureFormat preferredSurfaceTextureFormat \u003d wgpu::TextureFormat::BGRA8Unorm;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "89f1d7f10f9095350c5db1782ea3ead3d2cfced7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
