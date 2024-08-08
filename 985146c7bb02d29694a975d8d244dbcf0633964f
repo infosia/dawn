@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f30aa7d5_81078ae7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-08T13:26:43Z",
+      "side": 1,
+      "message": "```suggestion\nmessage(STATUS \"Dawn build Emscripten: ${DAWN_ENABLE_EMSCRIPTEN}\")\n```",
+      "revId": "985146c7bb02d29694a975d8d244dbcf0633964f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
