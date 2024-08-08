@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f4647e8_9914b803",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-08-08T16:58:25Z",
+      "side": 1,
+      "message": "Nice!  You used some interesting CMake techniques.",
+      "revId": "c5c748072ae6a28c17e73578f7d6b9556fb8415a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6f01cdb_a4d62d1b",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-08-08T16:58:25Z",
+      "side": 1,
+      "message": "Heh, mind blown.\nThis is pretty cool these facilities exist in CMake, and I\u0027m glad I don\u0027t have to use them often. :-)",
+      "revId": "c5c748072ae6a28c17e73578f7d6b9556fb8415a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
