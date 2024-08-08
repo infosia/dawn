@@ -1,3 +1,5 @@
+SKIP: FAILED
+
 RWByteAddressBuffer prevent_dce : register(u0);
 
 int2 subgroupXor_473de8() {
@@ -11,3 +13,6 @@ void compute_main() {
   prevent_dce.Store2(0u, asuint(subgroupXor_473de8()));
   return;
 }
+FXC validation failure:
+C:\src\dawn\Shader@0x000001EB105DF2E0(5,20-53): error X3004: undeclared identifier 'WaveActiveBitXor'
+

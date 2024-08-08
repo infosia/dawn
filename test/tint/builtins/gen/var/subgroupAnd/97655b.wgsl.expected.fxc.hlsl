@@ -1,3 +1,5 @@
+SKIP: FAILED
+
 RWByteAddressBuffer prevent_dce : register(u0);
 
 int4 subgroupAnd_97655b() {
@@ -11,3 +13,6 @@ void compute_main() {
   prevent_dce.Store4(0u, asuint(subgroupAnd_97655b()));
   return;
 }
+FXC validation failure:
+C:\src\dawn\Shader@0x00000147CD86DCC0(5,20-50): error X3004: undeclared identifier 'WaveActiveBitAnd'
+
