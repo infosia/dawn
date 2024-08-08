@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72d4b923_26f73e1e",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-08T13:33:53Z",
+      "side": 1,
+      "message": "This should all be done in one of the HLSL polyfill files (probably builtin_polyfill as these are all builtins). We should generate real IR in the polyfill and then no changes needed in the printer. Essentially the IR should be re-written to be \"correct\" before it ever hits the printer.\n\nMaybe split this out and add a CL before this one which adds the polyfill for `CountOneBits` and `ReverseBits` and then re-base this on top and add the subgroup bits?",
+      "revId": "805ba7d6cc83c7bab9f6e9117e4232c8c82d6eb0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
