@@ -34,7 +34,6 @@
 
 #include <webgpu/webgpu_cpp.h>
 
-wgpu::TextureFormat GetPreferredSwapChainTextureFormat();
 bool InitSample(int argc, const char** argv);
 
 class SampleBase {
@@ -54,6 +53,8 @@ class SampleBase {
     wgpu::Queue queue = nullptr;
 
     wgpu::Surface surface = nullptr;
+
+    wgpu::TextureFormat preferredSurfaceTextureFormat = wgpu::TextureFormat::BGRA8Unorm;
 
   private:
     bool Setup();
