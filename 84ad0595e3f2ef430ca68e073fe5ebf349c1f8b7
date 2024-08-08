@@ -1,0 +1,65 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b222d7aa_35427fd7",
+        "filename": "src/dawn/samples/SampleUtils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-08T19:05:14Z",
+      "side": 1,
+      "message": "nit. Sorry, with the getter I was also implying you could move this into private. I think at the callsites, you might also just be able to call `GetPreferredSurfaceTextureFormat` without the `this` anymore.",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 88
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d31f6dfc_54b5a1d4",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/samples/SampleUtils.h",
+              "range": {
+                "startLine": 46,
+                "startChar": 0,
+                "endLine": 47,
+                "endChar": 0
+              },
+              "replacement": "    wgpu::TextureFormat GetPreferredSurfaceTextureFormat() { return preferredSurfaceTextureFormat_; }\n"
+            },
+            {
+              "path": "src/dawn/samples/SampleUtils.h",
+              "range": {
+                "startLine": 59,
+                "startChar": 0,
+                "endLine": 61,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/dawn/samples/SampleUtils.h",
+              "range": {
+                "startLine": 64,
+                "startChar": 0,
+                "endLine": 64,
+                "endChar": 0
+              },
+              "replacement": "    wgpu::TextureFormat preferredSurfaceTextureFormat_ \u003d wgpu::TextureFormat::BGRA8Unorm;\n\n"
+            }
+          ]
+        }
+      ],
+      "revId": "84ad0595e3f2ef430ca68e073fe5ebf349c1f8b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
