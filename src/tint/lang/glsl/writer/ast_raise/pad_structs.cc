@@ -117,16 +117,19 @@ ast::transform::Transform::ApplyResult PadStructs::Apply(const Program& src,
             uint32_t size = ty->Size();
             if (ty->Is<core::type::Struct>() && str->UsedAs(core::AddressSpace::kUniform)) {
                 // std140 structs should be padded out to 16 bytes.
-                size = tint::RoundUp(16u, size);
+                uint32_t new_size = tint::RoundUp(16u, size);
+                // CreatePadding(&new_members, &padding_members, &member_names, last_padding_index,
+                //               ctx.dst, new_size - size);
+                size = new_size;
             }
             offset += size;
         }
 
         // Add any required padding after the last member, if it's not a block.
         uint32_t struct_size = str->Size();
-        if (str->UsedAs(core::AddressSpace::kUniform)) {
-            struct_size = tint::RoundUp(16u, struct_size);
-        }
+        // if (str->UsedAs(core::AddressSpace::kUniform)) {
+        //     struct_size = tint::RoundUp(16u, struct_size);
+        // }
 
         bool is_block = ast::HasAttribute<ast::transform::AddBlockAttribute::BlockAttribute>(
             ast_str->attributes);
