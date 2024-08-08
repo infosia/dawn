@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "922d325d_c5e66903",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-08T01:29:32Z",
+      "side": 1,
+      "message": "I think if you do make a separate utils target, that target can decide whether it needs these deps and this could just be distilled to replacing `dawn::dawn_glfw` with `dawn::dawn_window_utils` and removing the `glfw` here also.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 8
+      },
+      "revId": "38712e0087cf2ec7f17024a41126468c0807d3b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "967d1fcb_6b7d0617",
+        "filename": "src/dawn/samples/SampleUtils.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-08T01:29:32Z",
+      "side": 1,
+      "message": "This should probably be wrapped in a `#ifndef __EMSCRIPTEN__` otherwise I think the Emscripten build will try to include GLFW stuff.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "262ddd1d_d55c34ed",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/samples/SampleUtils.h",
+              "range": {
+                "startLine": 35,
+                "startChar": 0,
+                "endLine": 35,
+                "endChar": 0
+              },
+              "replacement": "#ifndef __EMSCRIPTEN__\n"
+            },
+            {
+              "path": "src/dawn/samples/SampleUtils.h",
+              "range": {
+                "startLine": 36,
+                "startChar": 0,
+                "endLine": 36,
+                "endChar": 0
+              },
+              "replacement": "#endif  // __EMSCRIPTEN__\n"
+            }
+          ]
+        }
+      ],
+      "revId": "38712e0087cf2ec7f17024a41126468c0807d3b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "094e2e49_c28d44d0",
+        "filename": "src/dawn/utils/CMakeLists.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-08T01:29:32Z",
+      "side": 1,
+      "message": "I think we should split the `Window` related files out into a separate util target. The goal for the `dawn_wgpu_utils` target was to keep it so that it doesn\u0027t include additional dependencies aside from webgpu headers (and unforunately dawn_common atm for ASSERTs) so that it\u0027s more portable.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 7
+      },
+      "revId": "38712e0087cf2ec7f17024a41126468c0807d3b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
