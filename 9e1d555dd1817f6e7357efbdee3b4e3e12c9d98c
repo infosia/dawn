@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7534205_02dcdefc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-08-08T22:03:13Z",
+      "side": 1,
+      "message": "Overall LGTM with one question",
+      "revId": "9e1d555dd1817f6e7357efbdee3b4e3e12c9d98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8de3529_d5e45319",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-08-08T22:03:13Z",
+      "side": 1,
+      "message": "How often is it expected that this will run? If it\u0027s going to be called on a regular basis (like once a frame or every few frames) then it might be better to track an estimatedMemoryUsage member on the DeviceBase that gets updated on resource creation and deletion? (Resources are fixed size after creation.)",
+      "revId": "9e1d555dd1817f6e7357efbdee3b4e3e12c9d98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
