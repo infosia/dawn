@@ -365,6 +365,10 @@ class Validator {
     /// @param call the call to validate
     void CheckCall(const Call* call);
 
+    /// Validates the given bitcast
+    /// @param bitcast the bitcast to validate
+    void CheckBitcast(const Bitcast* bitcast);
+
     /// Validates the given builtin call
     /// @param call the call to validate
     void CheckBuiltinCall(const BuiltinCall* call);
@@ -1277,7 +1281,7 @@ void Validator::CheckLet(const Let* let) {
 void Validator::CheckCall(const Call* call) {
     tint::Switch(
         call,                                                            //
-        [&](const Bitcast*) {},                                          //
+        [&](const Bitcast* b) { CheckBitcast(b); },                      //
         [&](const BuiltinCall* c) { CheckBuiltinCall(c); },              //
         [&](const MemberBuiltinCall* c) { CheckMemberBuiltinCall(c); },  //
         [&](const Construct* c) { CheckConstruct(c); },                  //
@@ -1287,6 +1291,16 @@ void Validator::CheckCall(const Call* call) {
         [&](Default) {
             // Validation of custom IR instructions
         });
+}
+
+void Validator::CheckBitcast(const Bitcast* bitcast) {
+    if (!CheckResultsAndOperands(bitcast, Bitcast::kNumResults, Bitcast::kNumOperands)) {
+        return;
+    }
+
+    if (bitcast->Result(0)->Type()->Size() != bitcast->Val()->Type()->Size()) {
+        AddError(bitcast) << "argument and result need to be the same size";
+    }
 }
 
 void Validator::CheckBuiltinCall(const BuiltinCall* call) {
