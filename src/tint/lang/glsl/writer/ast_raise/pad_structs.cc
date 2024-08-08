@@ -112,10 +112,36 @@ ast::transform::Transform::ApplyResult PadStructs::Apply(const Program& src,
             auto* ty = mem->Type();
             auto type = CreateASTTypeFor(ctx, ty);
 
-            new_members.Push(b.Member(name, type));
+            // new_members.Push(b.Member(name, type));
 
             uint32_t size = ty->Size();
-            if (ty->Is<core::type::Struct>() && str->UsedAs(core::AddressSpace::kUniform)) {
+            // if (ty->Is<core::type::Struct>() && str->UsedAs(core::AddressSpace::kUniform)) {
+            //     // std140 structs should be padded out to 16 bytes.
+            //     size = tint::RoundUp(16u, size);
+            // }
+            // offset += size;
+
+            bool size_round_up =
+                (ty->Is<core::type::Struct>() && str->UsedAs(core::AddressSpace::kUniform));
+
+            auto* new_member =
+                b.Member(name, type,
+                         size_round_up
+                             // ? tint::Vector{b.MemberAlign(core::AInt(16u))}
+                             // ? tint::Vector{b.MemberSize(core::AInt(tint::RoundUp(16u, size)))}
+                             ? tint::Vector{b.MemberAlign(core::AInt(16u)),
+                                            b.MemberSize(core::AInt(tint::RoundUp(16u, size)))}
+                             : Empty);
+
+            new_members.Push(new_member);
+
+            // offset += new_member->type->As<core::type::StructMember>()->Align();
+            // offset += new_member->type->Align();
+            // offset += sem.Get(new_member)->Align();
+            // offset += ty->Size();
+
+            // uint32_t size = ty->Size();
+            if (size_round_up) {
                 // std140 structs should be padded out to 16 bytes.
                 size = tint::RoundUp(16u, size);
             }
@@ -123,17 +149,17 @@ ast::transform::Transform::ApplyResult PadStructs::Apply(const Program& src,
         }
 
         // Add any required padding after the last member, if it's not a block.
-        uint32_t struct_size = str->Size();
-        if (str->UsedAs(core::AddressSpace::kUniform)) {
-            struct_size = tint::RoundUp(16u, struct_size);
-        }
+        // uint32_t struct_size = str->Size();
+        // if (str->UsedAs(core::AddressSpace::kUniform)) {
+        //     struct_size = tint::RoundUp(16u, struct_size);
+        // }
 
-        bool is_block = ast::HasAttribute<ast::transform::AddBlockAttribute::BlockAttribute>(
-            ast_str->attributes);
-        if (offset < struct_size && !is_block) {
-            CreatePadding(&new_members, &padding_members, &member_names, last_padding_index,
-                          ctx.dst, struct_size - offset);
-        }
+        // bool is_block = ast::HasAttribute<ast::transform::AddBlockAttribute::BlockAttribute>(
+        //     ast_str->attributes);
+        // if (offset < struct_size && !is_block) {
+        //     CreatePadding(&new_members, &padding_members, &member_names, last_padding_index,
+        //                   ctx.dst, struct_size - offset);
+        // }
 
         tint::Vector<const ast::Attribute*, 1> struct_attribs = ctx.Clone(ast_str->attributes);
         if (!padding_members.IsEmpty()) {
