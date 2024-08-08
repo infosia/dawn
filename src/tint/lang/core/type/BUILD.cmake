@@ -80,6 +80,8 @@ tint_add_target(tint_lang_core_type lib
   lang/core/type/matrix.h
   lang/core/type/memory_view.cc
   lang/core/type/memory_view.h
+  lang/core/type/multi_indexed.cc
+  lang/core/type/multi_indexed.h
   lang/core/type/multisampled_texture.cc
   lang/core/type/multisampled_texture.h
   lang/core/type/node.cc

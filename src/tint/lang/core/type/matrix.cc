@@ -29,66 +29,20 @@
 
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/lang/core/type/vector.h"
-#include "src/tint/utils/diagnostic/diagnostic.h"
-#include "src/tint/utils/ice/ice.h"
-#include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/text/string_stream.h"
 
 TINT_INSTANTIATE_TYPEINFO(tint::core::type::Matrix);
 
 namespace tint::core::type {
 
-Matrix::Matrix(const Vector* column_type, uint32_t columns)
-    : Base(Hash(tint::TypeCode::Of<Vector>().bits, columns, column_type),
-           core::type::Flags{
-               Flag::kConstructable,
-               Flag::kCreationFixedFootprint,
-               Flag::kFixedFootprint,
-           }),
-      subtype_(column_type->type()),
-      column_type_(column_type),
-      rows_(column_type->Width()),
-      columns_(columns) {
-    TINT_ASSERT(rows_ > 1);
-    TINT_ASSERT(rows_ < 5);
-    TINT_ASSERT(columns_ > 1);
-    TINT_ASSERT(columns_ < 5);
-}
+Matrix::Matrix(const Vector* column_type, uint32_t columns) : Base(column_type, columns) {}
 
 Matrix::~Matrix() = default;
-
-bool Matrix::Equals(const UniqueNode& other) const {
-    if (auto* v = other.As<Matrix>()) {
-        return v->rows_ == rows_ && v->columns_ == columns_ && v->column_type_ == column_type_;
-    }
-    return false;
-}
 
 std::string Matrix::FriendlyName() const {
     StringStream out;
     out << "mat" << columns_ << "x" << rows_ << "<" << subtype_->FriendlyName() << ">";
     return out.str();
-}
-
-uint32_t Matrix::Size() const {
-    return column_type_->Align() * columns();
-}
-
-uint32_t Matrix::Align() const {
-    return column_type_->Align();
-}
-
-uint32_t Matrix::ColumnStride() const {
-    return column_type_->Align();
-}
-
-TypeAndCount Matrix::Elements(const Type* /* type_if_invalid = nullptr */,
-                              uint32_t /* count_if_invalid = 0 */) const {
-    return {column_type_, columns_};
-}
-
-const Vector* Matrix::Element(uint32_t index) const {
-    return index < columns_ ? column_type_ : nullptr;
 }
 
 Matrix* Matrix::Clone(CloneContext& ctx) const {
