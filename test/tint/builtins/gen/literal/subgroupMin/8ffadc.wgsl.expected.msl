@@ -1,0 +1,13 @@
+#include <metal_stdlib>
+
+using namespace metal;
+half subgroupMin_8ffadc() {
+  half res = simd_min(1.0h);
+  return res;
+}
+
+kernel void compute_main(device half* tint_symbol [[buffer(0)]]) {
+  *(tint_symbol) = subgroupMin_8ffadc();
+  return;
+}
+
