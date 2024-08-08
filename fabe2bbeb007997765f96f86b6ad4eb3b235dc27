@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd1883c9_9b3b57ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-08T18:55:47Z",
+      "side": 1,
+      "message": "Aside: This literal vec workaround doesn\u0027t affect existing countbit/reversebit tests because when those are applied to literals they are const-evaled away, so that\u0027s why this bug didn\u0027t come up earlier.",
+      "revId": "fabe2bbeb007997765f96f86b6ad4eb3b235dc27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
