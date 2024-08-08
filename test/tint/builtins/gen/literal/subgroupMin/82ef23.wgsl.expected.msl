@@ -1,0 +1,13 @@
+#include <metal_stdlib>
+
+using namespace metal;
+uint4 subgroupMin_82ef23() {
+  uint4 res = simd_min(uint4(1u));
+  return res;
+}
+
+kernel void compute_main(device uint4* tint_symbol [[buffer(0)]]) {
+  *(tint_symbol) = subgroupMin_82ef23();
+  return;
+}
+
