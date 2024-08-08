@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fe496fa_8ca875b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2024-08-08T22:52:34Z",
+      "side": 1,
+      "message": "+Jiawei for DawnNative.h OWNERS stamp",
+      "revId": "9e1d555dd1817f6e7357efbdee3b4e3e12c9d98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8de3529_d5e45319",
@@ -31,6 +48,24 @@
       "writtenOn": "2024-08-08T22:03:13Z",
       "side": 1,
       "message": "How often is it expected that this will run? If it\u0027s going to be called on a regular basis (like once a frame or every few frames) then it might be better to track an estimatedMemoryUsage member on the DeviceBase that gets updated on resource creation and deletion? (Resources are fixed size after creation.)",
+      "revId": "9e1d555dd1817f6e7357efbdee3b4e3e12c9d98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9928a9bb_933ba7f4",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2024-08-08T22:52:34Z",
+      "side": 1,
+      "message": "Yes, I considered caching the memory usage on the Device, but there wasn\u0027t an existing callback on the Device that notifies it of resource deletion. Another reason is that we would pay the (very small) cost of adding/subtracting memory usage for all buffer/texture creation/deletion even when those don\u0027t end up in UMA.\n\nAlso IIUC the UMA histograms that this will feed into are called on a schedule with a Poisson distribution with a mean of 30 mins. So not very often and definitely not like once a frame. We have precedent for iterating through other allocation types like shared images when producing the UMA dump so doing the same for Dawn wouldn\u0027t be the exception.",
+      "parentUuid": "b8de3529_d5e45319",
       "revId": "9e1d555dd1817f6e7357efbdee3b4e3e12c9d98c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
