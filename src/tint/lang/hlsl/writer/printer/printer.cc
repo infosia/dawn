@@ -888,7 +888,43 @@ class Printer : public tint::TextGenerator {
     }
 
     void EmitCoreBuiltinCall(StringStream& out, const core::ir::CoreBuiltinCall* c) {
-        EmitCoreBuiltinName(out, c->Func());
+        core::BuiltinFn func = c->Func();
+        // Handle single argument builtins that only accept and return uint (not int overload).
+        // For count bits and reverse bits, we need to explicitly cast the return value (we also
+        // cast the arg for good measure). See crbug.com/tint/1550. For the following subgroup
+        // builtins, the lack of support may be a bug in DXC. See
+        // github.com/microsoft/DirectXShaderCompiler/issues/6850.
+        if (func == core::BuiltinFn::kCountOneBits || func == core::BuiltinFn::kReverseBits ||
+            func == core::BuiltinFn::kSubgroupAnd || func == core::BuiltinFn::kSubgroupOr ||
+            func == core::BuiltinFn::kSubgroupXor) {
+            auto* arg = c->Args()[0];
+            auto* argType = arg->Type()->UnwrapRef();
+            if (argType->is_signed_integer_scalar_or_vector()) {
+                // Bitcast of literal int vectors fails in DXC so extract arg to a var. See
+                // github.com/microsoft/DirectXShaderCompiler/issues/6851.
+                if (argType->is_signed_integer_vector() && arg->Is<core::ir::Constant>()) {
+                    auto varName = UniqueIdentifier("arg");
+                    auto pre = Line();
+                    EmitTypeAndName(pre, argType, varName);
+                    pre << " = ";
+                    EmitValue(pre, arg);
+                    pre << ";";
+                    out << "asint(";
+                    EmitCoreBuiltinName(out, func);
+                    out << "(asuint(" << varName << ")))";
+                    return;
+                }
+
+                out << "asint(";
+                EmitCoreBuiltinName(out, func);
+                out << "(asuint(";
+                EmitValue(out, arg);
+                out << ")))";
+                return;
+            }
+        }
+
+        EmitCoreBuiltinName(out, func);
 
         ScopedParen sp(out);
         size_t i = 0;
@@ -1017,7 +1053,15 @@ class Printer : public tint::TextGenerator {
             case core::BuiltinFn::kSubgroupExclusiveMul:
                 out << "WavePrefixProduct";
                 break;
-
+            case core::BuiltinFn::kSubgroupAnd:
+                out << "WaveActiveBitAnd";
+                break;
+            case core::BuiltinFn::kSubgroupOr:
+                out << "WaveActiveBitOr";
+                break;
+            case core::BuiltinFn::kSubgroupXor:
+                out << "WaveActiveBitXor";
+                break;
             default:
                 TINT_UNREACHABLE() << "unhandled: " << func;
         }
