@@ -61,12 +61,8 @@ fn main() {
 }
 )";
     auto* expect = R"(
-@internal(disable_validation__ignore_struct_member)
 struct S {
   x : i32,
-  pad : u32,
-  pad_1 : u32,
-  pad_2 : u32,
 }
 
 @group(0) @binding(0) var<uniform> u : S;
