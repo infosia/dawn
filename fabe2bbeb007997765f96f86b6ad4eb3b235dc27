@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62e170b6_c5539455",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1726,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-08T19:40:02Z",
+      "side": 1,
+      "message": "Oops, thanks!",
+      "parentUuid": "1b073b2d_64ee02cf",
+      "revId": "fabe2bbeb007997765f96f86b6ad4eb3b235dc27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f853d4a_3d19fbe1",
@@ -48,6 +66,30 @@
       "writtenOn": "2024-08-08T19:08:46Z",
       "side": 1,
       "message": "Maybe change the for so it just selects the right `Value` then we don\u0027t need to duplicate the `Call`?\n\nSomething like:\n\n```suggestion\n                core::ir::Value* val \u003d arg;\n                // Bitcast of literal int vectors fails in DXC so extract arg to a var. See\n                // github.com/microsoft/DirectXShaderCompiler/issues/6851.\n                if (arg_type-\u003eis_signed_integer_vector() \u0026\u0026 arg-\u003eIs\u003ccore::ir::Constant\u003e()) {\n                    val \u003d b.Let(\"arg\", arg)-\u003eResult(0);\n                }\n                auto* inner \u003d b.Call\u003chlsl::ir::BuiltinCall\u003e(u32_type, hlsl::BuiltinFn::kAsuint, val);\n```",
+      "range": {
+        "startLine": 1730,
+        "startChar": 0,
+        "endLine": 1738,
+        "endChar": 17
+      },
+      "revId": "fabe2bbeb007997765f96f86b6ad4eb3b235dc27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46372dfb_297ebbd7",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-08T19:40:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f853d4a_3d19fbe1",
       "range": {
         "startLine": 1730,
         "startChar": 0,
