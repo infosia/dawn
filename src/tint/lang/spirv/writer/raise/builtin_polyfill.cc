@@ -88,6 +88,7 @@ struct State {
                     case core::BuiltinFn::kDot4I8Packed:
                     case core::BuiltinFn::kDot4U8Packed:
                     case core::BuiltinFn::kSelect:
+                    case core::BuiltinFn::kSubgroupBroadcast:
                     case core::BuiltinFn::kSubgroupShuffle:
                     case core::BuiltinFn::kTextureDimensions:
                     case core::BuiltinFn::kTextureGather:
@@ -143,6 +144,9 @@ struct State {
                     break;
                 case core::BuiltinFn::kSelect:
                     Select(builtin);
+                    break;
+                case core::BuiltinFn::kSubgroupBroadcast:
+                    SubgroupBroadcast(builtin);
                     break;
                 case core::BuiltinFn::kSubgroupShuffle:
                     SubgroupShuffle(builtin);
@@ -909,6 +913,40 @@ struct State {
                 b.CallWithResult(builtin->DetachResult(), builtin->Func(), std::move(builtin_args));
             });
             builtin->Destroy();
+        }
+    }
+
+    /// Handle a SubgroupBroadcast() builtin.
+    /// @param builtin the builtin call instruction
+    void SubgroupBroadcast(core::ir::CoreBuiltinCall* builtin) {
+        TINT_ASSERT(builtin->Args().Length() == 2);
+        auto* id = builtin->Args()[1];
+
+        // For non-const IDs, fallback to OpGroupNonUniformShuffle. If we update to SPIR-V 1.5 in
+        // future, the const requirement on OpGroupNonUniformBroadcast's Id is lifted, so this
+        // fallback would no longer be necessary.
+        if (!id->Is<core::ir::Constant>()) {
+            auto args = Vector<core::ir::Value*, 2>(builtin->Args());
+            auto* result = b.CallWithResult(builtin->DetachResult(),
+                                            core::BuiltinFn::kSubgroupShuffle, std::move(args));
+            result->InsertBefore(builtin);
+            SubgroupShuffle(result);  // Necessary to handle signed case.
+            builtin->Destroy();
+            return;
+        }
+
+        // For const signed int IDs, compile-time convert to u32 to maintain constness.
+        if (id->Type()->is_signed_integer_scalar()) {
+            b.InsertBefore(builtin, [&] {
+                Vector<core::ir::Value*, 2> args;
+                args.Push(builtin->Args()[0]);
+                args.Push(b.Constant(id->As<core::ir::Constant>()->Value()->ValueAs<u32>()));
+
+                b.CallWithResult(builtin->DetachResult(), core::BuiltinFn::kSubgroupBroadcast,
+                                 std::move(args));
+            });
+            builtin->Destroy();
+            return;
         }
     }
 };

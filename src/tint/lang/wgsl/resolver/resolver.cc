@@ -2462,12 +2462,6 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
             RegisterLoad(args[0]);
             break;
 
-        case wgsl::BuiltinFn::kSubgroupBroadcast:
-            if (!validator_.SubgroupBroadcast(call)) {
-                return nullptr;
-            }
-            break;
-
         case wgsl::BuiltinFn::kAtomicLoad:
             RegisterLoad(args[0]);
             break;

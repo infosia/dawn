@@ -1103,19 +1103,6 @@ TEST_F(ResolverBuiltinValidationTest, SubgroupBroadcastValueU32) {
     EXPECT_TRUE(r()->Resolve());
 }
 
-TEST_F(ResolverBuiltinValidationTest, SubgroupBroadcastLaneArgMustBeConst) {
-    Enable(wgsl::Extension::kSubgroups);
-    Func("func", tint::Empty, ty.void_(),
-         Vector{
-             Decl(Let("lane", Expr(1_u))),
-             Ignore(Call("subgroupBroadcast", 1_f, Ident(Source{{12, 34}}, "lane"))),
-         });
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(12:34 error: the sourceLaneIndex argument of subgroupBroadcast must be a const-expression)");
-}
-
 TEST_F(ResolverBuiltinValidationTest, TextureBarrier) {
     // fn func { textureBarrier(); }
     Func("func", tint::Empty, ty.void_(),
