@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "257e0bbe_8465aa92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-09T14:21:18Z",
+      "side": 1,
+      "message": "suggest: SPIR-V IR backend (not AST)",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "a2e62eb5084fab7bed4dbde3c759f8927a49324a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2642661f_dfb48dfe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-09T14:21:18Z",
+      "side": 1,
+      "message": "Maybe worth mentioning that it\u0027s not implemented at all for the GLSL backend.",
+      "range": {
+        "startLine": 10,
+        "startChar": 71,
+        "endLine": 10,
+        "endChar": 72
+      },
+      "revId": "a2e62eb5084fab7bed4dbde3c759f8927a49324a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "167bafb8_2bffdbe1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-09T14:21:18Z",
+      "side": 1,
+      "message": "Looks great! Just a couple of suggestions on the commit text, but you can ignore.",
+      "revId": "a2e62eb5084fab7bed4dbde3c759f8927a49324a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
