@@ -68,6 +68,29 @@
       "parentUuid": "b8de3529_d5e45319",
       "revId": "9e1d555dd1817f6e7357efbdee3b4e3e12c9d98c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bdfedf3_15cd626a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2626,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-09T01:46:17Z",
+      "side": 1,
+      "message": "Do we need to consider the resource heaps on D3D12 and Vulkan, where to create a small buffer or texture we may need to allocate a whole resource heap with larger size?",
+      "range": {
+        "startLine": 2618,
+        "startChar": 0,
+        "endLine": 2626,
+        "endChar": 0
+      },
+      "revId": "9e1d555dd1817f6e7357efbdee3b4e3e12c9d98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
