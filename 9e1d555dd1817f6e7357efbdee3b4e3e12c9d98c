@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da77ffd4_5c26a041",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-08-09T15:03:56Z",
+      "side": 1,
+      "message": "Doing this once every 30min or so seems perfectly reasonable, thanks!",
+      "parentUuid": "9928a9bb_933ba7f4",
+      "revId": "9e1d555dd1817f6e7357efbdee3b4e3e12c9d98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bdfedf3_15cd626a",
