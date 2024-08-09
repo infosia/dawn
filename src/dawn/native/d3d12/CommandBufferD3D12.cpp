@@ -356,12 +356,20 @@ MaybeError TransitionAndClearForSyncScope(CommandRecordingContext* commandContex
         // TODO(crbug.com/dawn/852): clear storage buffers with ClearUnorderedAccessView*().
         DAWN_TRY(buffer->EnsureDataInitialized(commandContext));
 
+        wgpu::BufferUsage appliedUsage = usages.bufferSyncInfos[i].usage;
+        if (appliedUsage & wgpu::BufferUsage::Indirect &&
+            usages.indirectBuffersOnlyForValidation.contains(usages.buffers[i])) {
+            if (appliedUsage == wgpu::BufferUsage::Indirect) {
+                continue;
+            }
+            appliedUsage &= ~wgpu::BufferUsage::Indirect;
+        }
+
         D3D12_RESOURCE_BARRIER barrier;
-        if (buffer->TrackUsageAndGetResourceBarrier(commandContext, &barrier,
-                                                    usages.bufferSyncInfos[i].usage)) {
+        if (buffer->TrackUsageAndGetResourceBarrier(commandContext, &barrier, appliedUsage)) {
             barriers.push_back(barrier);
         }
-        bufferUsages |= usages.bufferSyncInfos[i].usage;
+        bufferUsages |= appliedUsage;
     }
 
     wgpu::TextureUsage textureUsages = wgpu::TextureUsage::None;

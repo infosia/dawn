@@ -57,7 +57,8 @@ class SyncScopeUsageTracker {
 
     void BufferUsedAs(BufferBase* buffer,
                       wgpu::BufferUsage usage,
-                      wgpu::ShaderStage shaderStages = wgpu::ShaderStage::None);
+                      wgpu::ShaderStage shaderStages = wgpu::ShaderStage::None,
+                      bool indirectUsageOnlyForValidation = false);
     void TextureViewUsedAs(TextureViewBase* texture,
                            wgpu::TextureUsage usage,
                            wgpu::ShaderStage shaderStages = wgpu::ShaderStage::None);
@@ -76,6 +77,7 @@ class SyncScopeUsageTracker {
 
   private:
     absl::flat_hash_map<BufferBase*, BufferSyncInfo> mBufferSyncInfos;
+    absl::flat_hash_set<BufferBase*> mIndirectBuffersOnlyForValidation;
     absl::flat_hash_map<TextureBase*, TextureSubresourceSyncInfo> mTextureSyncInfos;
     absl::flat_hash_set<ExternalTextureBase*> mExternalTextureUsages;
 };

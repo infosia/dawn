@@ -223,6 +223,7 @@ void RenderEncoderBase::APIDrawIndirect(BufferBase* indirectBuffer, uint64_t ind
             bool duplicateBaseVertexInstance =
                 GetDevice()->ShouldDuplicateParametersForDrawIndirect(
                     mCommandBufferState.GetRenderPipeline());
+            bool indirectUsageOnlyForValidation = false;
             if (IsValidationEnabled() || duplicateBaseVertexInstance) {
                 // Later, EncodeIndirectDrawValidationCommands will allocate a scratch storage
                 // buffer which will store the validated or duplicated indirect data. The buffer
@@ -233,15 +234,14 @@ void RenderEncoderBase::APIDrawIndirect(BufferBase* indirectBuffer, uint64_t ind
 
                 mIndirectDrawMetadata.AddIndirectDraw(indirectBuffer, indirectOffset,
                                                       duplicateBaseVertexInstance, cmd);
+                indirectUsageOnlyForValidation = true;
             } else {
                 cmd->indirectBuffer = indirectBuffer;
                 cmd->indirectOffset = indirectOffset;
             }
 
-            // TODO(crbug.com/dawn/1166): Adding the indirectBuffer is needed for correct usage
-            // validation, but it will unnecessarily transition to indirectBuffer usage in the
-            // backend.
-            mUsageTracker.BufferUsedAs(indirectBuffer, wgpu::BufferUsage::Indirect);
+            mUsageTracker.BufferUsedAs(indirectBuffer, wgpu::BufferUsage::Indirect,
+                                       wgpu::ShaderStage::None, indirectUsageOnlyForValidation);
 
             mDrawCount++;
 
@@ -281,6 +281,7 @@ void RenderEncoderBase::APIDrawIndexedIndirect(BufferBase* indirectBuffer,
                     mCommandBufferState.GetRenderPipeline());
             bool applyIndexBufferOffsetToFirstIndex =
                 GetDevice()->ShouldApplyIndexBufferOffsetToFirstIndex();
+            bool indirectUsageOnlyForValidation = false;
             if (IsValidationEnabled() || duplicateBaseVertexInstance ||
                 applyIndexBufferOffsetToFirstIndex) {
                 // Later, EncodeIndirectDrawValidationCommands will allocate a scratch storage
@@ -294,15 +295,14 @@ void RenderEncoderBase::APIDrawIndexedIndirect(BufferBase* indirectBuffer,
                     mCommandBufferState.GetIndexFormat(), mCommandBufferState.GetIndexBufferSize(),
                     mCommandBufferState.GetIndexBufferOffset(), indirectBuffer, indirectOffset,
                     duplicateBaseVertexInstance, cmd);
+                indirectUsageOnlyForValidation = true;
             } else {
                 cmd->indirectBuffer = indirectBuffer;
                 cmd->indirectOffset = indirectOffset;
             }
 
-            // TODO(crbug.com/dawn/1166): Adding the indirectBuffer is needed for correct usage
-            // validation, but it will unecessarily transition to indirectBuffer usage in the
-            // backend.
-            mUsageTracker.BufferUsedAs(indirectBuffer, wgpu::BufferUsage::Indirect);
+            mUsageTracker.BufferUsedAs(indirectBuffer, wgpu::BufferUsage::Indirect,
+                                       wgpu::ShaderStage::None, indirectUsageOnlyForValidation);
 
             mDrawCount++;
 
