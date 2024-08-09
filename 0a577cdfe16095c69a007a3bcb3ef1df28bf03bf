@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "0a577cdfe16095c69a007a3bcb3ef1df28bf03bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bcc7e93_2a6ac716",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-08-09T18:19:23Z",
+      "side": 1,
+      "message": "Swapping out dsinclair@ for dneto@ since the former is OOO",
+      "revId": "0a577cdfe16095c69a007a3bcb3ef1df28bf03bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
