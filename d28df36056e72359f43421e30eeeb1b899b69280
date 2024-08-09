@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b99e2d8_7850d26c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-08-09T18:54:37Z",
+      "side": 1,
+      "message": "tested on dawn-try-mac-amd-exp which has the AMD GPU at issue, and it passes now.",
+      "revId": "d28df36056e72359f43421e30eeeb1b899b69280",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
