@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4616e3f9_eaf4c854",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2024-08-09T17:01:07Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "9e1d555dd1817f6e7357efbdee3b4e3e12c9d98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8de3529_d5e45319",
@@ -101,6 +118,30 @@
       "writtenOn": "2024-08-09T01:46:17Z",
       "side": 1,
       "message": "Do we need to consider the resource heaps on D3D12 and Vulkan, where to create a small buffer or texture we may need to allocate a whole resource heap with larger size?",
+      "range": {
+        "startLine": 2618,
+        "startChar": 0,
+        "endLine": 2626,
+        "endChar": 0
+      },
+      "revId": "9e1d555dd1817f6e7357efbdee3b4e3e12c9d98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa3b21b7_75cb88b3",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2626,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2024-08-09T17:01:07Z",
+      "side": 1,
+      "message": "Yes, eventually we want to report D3D12/Vulkan heaps in addition to the individual textures to get the correct picture. For now, we just want a rough estimate on memory usage for Graphite on Metal and D3D11 so the current approach is sufficient.",
+      "parentUuid": "7bdfedf3_15cd626a",
       "range": {
         "startLine": 2618,
         "startChar": 0,
