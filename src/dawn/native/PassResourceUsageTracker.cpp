@@ -50,13 +50,28 @@ SyncScopeUsageTracker& SyncScopeUsageTracker::operator=(SyncScopeUsageTracker&&)
 
 void SyncScopeUsageTracker::BufferUsedAs(BufferBase* buffer,
                                          wgpu::BufferUsage usage,
-                                         wgpu::ShaderStage shaderStages) {
+                                         wgpu::ShaderStage shaderStages,
+                                         bool indirectUsageOnlyForValidation) {
     // absl::flat_hash_map's operator[] will create a new element using the default constructor
     // if the key didn't exist before.
     BufferSyncInfo& bufferSyncInfo = mBufferSyncInfos[buffer];
 
     bufferSyncInfo.usage |= usage;
     bufferSyncInfo.shaderStages |= shaderStages;
+
+    if (usage == wgpu::BufferUsage::Indirect) {
+        if (indirectUsageOnlyForValidation) {
+            mIndirectBuffersOnlyForValidation.emplace(buffer);
+        } else {
+            // When validation is disabled, `indirectUsageOnlyForValidation` is always false.
+            // When validation is enabled, all user-defined indirect buffers will be put into
+            // `mIndirectBuffersOnlyForValidation`, and all internal-created indirect buffers will
+            // not be in `mIndirectBuffersOnlyForValidation`, so there shouldn't be an indirect
+            // buffer with `indirectUsageOnlyForValidation` to true and false at the same time in
+            // one usage sync scope.
+            DAWN_ASSERT(!mIndirectBuffersOnlyForValidation.contains(buffer));
+        }
+    }
 }
 
 void SyncScopeUsageTracker::TextureViewUsedAs(TextureViewBase* view,
@@ -193,6 +208,8 @@ SyncScopeResourceUsage SyncScopeUsageTracker::AcquireSyncScopeUsage() {
     for (auto* const it : mExternalTextureUsages) {
         result.externalTextures.push_back(it);
     }
+
+    result.indirectBuffersOnlyForValidation.swap(mIndirectBuffersOnlyForValidation);
 
     mBufferSyncInfos.clear();
     mTextureSyncInfos.clear();

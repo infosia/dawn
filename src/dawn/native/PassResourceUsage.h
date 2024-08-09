@@ -74,6 +74,8 @@ struct SyncScopeResourceUsage {
     std::vector<TextureSubresourceSyncInfo> textureSyncInfos;
 
     std::vector<ExternalTextureBase*> externalTextures;
+
+    absl::flat_hash_set<BufferBase*> indirectBuffersOnlyForValidation;
 };
 
 // Contains all the resource usage data for a compute pass.
