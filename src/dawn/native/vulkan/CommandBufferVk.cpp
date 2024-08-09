@@ -209,10 +209,19 @@ MaybeError TransitionAndClearForSyncScope(Device* device,
         VkPipelineStageFlags srcStages = 0;
         VkPipelineStageFlags dstStages = 0;
 
+        wgpu::BufferUsage appliedUsage = scope.bufferSyncInfos[i].usage;
+        const auto& iter = scope.buffersAndUsagesOnlyForValidation.find(scope.buffers[i]);
+        if (iter != scope.buffersAndUsagesOnlyForValidation.end()) {
+            appliedUsage &= ~(iter->second);
+            if (appliedUsage == wgpu::BufferUsage::None) {
+                continue;
+            }
+        }
+
         VkBufferMemoryBarrier bufferBarrier;
-        if (buffer->TrackUsageAndGetResourceBarrier(
-                recordingContext, scope.bufferSyncInfos[i].usage,
-                scope.bufferSyncInfos[i].shaderStages, &bufferBarrier, &srcStages, &dstStages)) {
+        if (buffer->TrackUsageAndGetResourceBarrier(recordingContext, appliedUsage,
+                                                    scope.bufferSyncInfos[i].shaderStages,
+                                                    &bufferBarrier, &srcStages, &dstStages)) {
             MergeBufferBarrier((dstStages & vertexStages) ? &vertexBarriers : &nonVertexBarriers,
                                srcStages, dstStages, bufferBarrier);
         }

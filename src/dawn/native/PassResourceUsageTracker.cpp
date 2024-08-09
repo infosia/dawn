@@ -50,13 +50,18 @@ SyncScopeUsageTracker& SyncScopeUsageTracker::operator=(SyncScopeUsageTracker&&)
 
 void SyncScopeUsageTracker::BufferUsedAs(BufferBase* buffer,
                                          wgpu::BufferUsage usage,
-                                         wgpu::ShaderStage shaderStages) {
+                                         wgpu::ShaderStage shaderStages,
+                                         bool onlyForValidation) {
     // absl::flat_hash_map's operator[] will create a new element using the default constructor
     // if the key didn't exist before.
     BufferSyncInfo& bufferSyncInfo = mBufferSyncInfos[buffer];
 
     bufferSyncInfo.usage |= usage;
     bufferSyncInfo.shaderStages |= shaderStages;
+
+    if (onlyForValidation) {
+        mBufferUsagesOnlyForValidation[buffer] |= usage;
+    }
 }
 
 void SyncScopeUsageTracker::TextureViewUsedAs(TextureViewBase* view,
@@ -193,6 +198,8 @@ SyncScopeResourceUsage SyncScopeUsageTracker::AcquireSyncScopeUsage() {
     for (auto* const it : mExternalTextureUsages) {
         result.externalTextures.push_back(it);
     }
+
+    result.buffersAndUsagesOnlyForValidation.swap(mBufferUsagesOnlyForValidation);
 
     mBufferSyncInfos.clear();
     mTextureSyncInfos.clear();
