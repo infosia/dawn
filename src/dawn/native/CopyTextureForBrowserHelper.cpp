@@ -527,14 +527,25 @@ MaybeError DoCopyForBrowser(DeviceBase* device,
             2.4, 1.0 / 1.055, 0.055 / 1.055, 1.0 / 12.92, 4.045e-02, 0.0, 0.0};
     }
 
+    // Create command encoder.
+    CommandEncoderDescriptor commandEncoderDesc;
+    DawnEncoderInternalUsageDescriptor internalUsageDesc;
+    if (options->internalUsage) {
+        internalUsageDesc.useInternalUsages = true;
+        commandEncoderDesc.nextInChain = &internalUsageDesc;
+    }
+    Ref<CommandEncoder> encoder;
+    DAWN_TRY_ASSIGN(encoder, device->CreateCommandEncoder(&commandEncoderDesc));
+
     // Upload uniform data
     uniformData.stepsMask = stepsMask;
 
     Ref<BufferBase> uniformBuffer;
-    DAWN_TRY_ASSIGN(
-        uniformBuffer,
-        utils::CreateBufferFromData(device, wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform,
-                                    {uniformData}));
+    DAWN_TRY_ASSIGN(uniformBuffer,
+                    encoder->GetDevice()->GetOrCreateTemporaryUniformBuffer(sizeof(uniformData)));
+    uniformBuffer->SetLabel("Internal_UniformValuesForCopyTextureForBrowser");
+    encoder->APIWriteBuffer(uniformBuffer.Get(), 0, reinterpret_cast<uint8_t*>(&uniformData),
+                            sizeof(uniformData));
 
     // Prepare binding 1 resource: sampler
     // Use default configuration, filterMode set to Nearest for min and mag.
@@ -549,16 +560,6 @@ MaybeError DoCopyForBrowser(DeviceBase* device,
     DAWN_TRY_ASSIGN(bindGroup, utils::MakeBindGroup(
                                    device, layout,
                                    {{0, uniformBuffer}, {1, sampler}, {2, sourceResource}}, mode));
-
-    // Create command encoder.
-    CommandEncoderDescriptor commandEncoderDesc;
-    DawnEncoderInternalUsageDescriptor internalUsageDesc;
-    if (options->internalUsage) {
-        internalUsageDesc.useInternalUsages = true;
-        commandEncoderDesc.nextInChain = &internalUsageDesc;
-    }
-    Ref<CommandEncoder> encoder;
-    DAWN_TRY_ASSIGN(encoder, device->CreateCommandEncoder(&commandEncoderDesc));
 
     // Prepare dst texture view as color Attachment.
     TextureViewDescriptor dstTextureViewDesc;
