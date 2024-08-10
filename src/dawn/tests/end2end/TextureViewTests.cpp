@@ -412,6 +412,43 @@ TEST_P(TextureViewSamplingTest, Default2DArrayTexture) {
     Verify(textureView, fragmentShader, expected);
 }
 
+// Test drawing a rect with a 2D array texture.
+TEST_P(TextureViewSamplingTest, Default2DArrayTextureSignedNegative) {
+    // TODO(cwallez@chromium.org) understand what the issue is
+    DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsNvidia());
+
+    for (auto dim : {wgpu::TextureViewDimension::e2DArray, wgpu::TextureViewDimension::CubeArray}) {
+        for (int32_t array_idx = -1; array_idx <= 4; array_idx++) {
+            constexpr uint32_t kLayers = 3;
+            constexpr uint32_t kMipLevels = 1;
+            InitTexture(kLayers, kMipLevels);
+
+            wgpu::TextureViewDescriptor descriptor;
+            // (Off-topic) spot-test for defaulting of .aspect.
+            descriptor.aspect = wgpu::TextureAspect::Undefined;
+            descriptor.dimension = dim;
+            wgpu::TextureView textureView = mTexture.CreateView(&descriptor);
+
+            std::ostringstream fragmentShader;
+            fragmentShader << R"(
+            @group(0) @binding(0) var sampler0 : sampler;
+            @group(0) @binding(1) var texture0 : texture_2d_array<f32>;
+
+            @fragment
+            fn main(@location(0) texCoord : vec2f) -> @location(0) vec4f {
+                let array_idx : i32 =  )"
+                           << array_idx << R"(;
+                return textureSample(texture0, sampler0, texCoord, array_idx);
+            }
+        )";
+
+            const int expected = GenerateTestPixelValue(
+                std::clamp(array_idx, 0, static_cast<int32_t>(kLayers - 1)), 0);
+            Verify(textureView, fragmentShader.str().c_str(), expected);
+        }
+    }
+}
+
 // Test sampling from a 2D texture view created on a 2D array texture.
 TEST_P(TextureViewSamplingTest, Texture2DViewOn2DArrayTexture) {
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
