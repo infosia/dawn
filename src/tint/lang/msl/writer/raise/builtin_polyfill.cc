@@ -696,6 +696,24 @@ struct State {
         builtin->Destroy();
     }
 
+    /// Replace texture call signed integer array argument with clamped code.
+    /// @param builtin the builtin call instruction
+    void TextureSampleClampArrayIndexHelper(core::ir::CoreBuiltinCall* builtin) {
+        // The MSL intrinsic is a member function, so we split the first argument off as the object.
+        auto* tex = builtin->Args()[0];
+        auto* tex_type = tex->Type()->As<core::type::Texture>();
+        if (tex_type->dim() == core::type::TextureDimension::k2dArray ||
+            tex_type->dim() == core::type::TextureDimension::kCubeArray) {
+            constexpr uint32_t kArrayIndex = 3;
+            auto* index_arg = builtin->Args()[kArrayIndex];
+            if (index_arg->Type()->is_signed_integer_scalar()) {
+                builtin->SetArg(
+                    kArrayIndex,
+                    b.Call(ty.i32(), core::BuiltinFn::kMax, index_arg, b.Zero<i32>())->Result(0));
+            }
+        }
+    }
+
     /// Replace a textureNumLayers call with the equivalent MSL intrinsic.
     /// @param builtin the builtin call instruction
     void TextureNumLayers(core::ir::CoreBuiltinCall* builtin) {
@@ -718,10 +736,14 @@ struct State {
     /// @param builtin the builtin call instruction
     void TextureSample(core::ir::CoreBuiltinCall* builtin) {
         // The MSL intrinsic is a member function, so we split the first argument off as the object.
-        auto args = Vector<core::ir::Value*, 4>(builtin->Args().Offset(1));
-        auto* call = b.MemberCallWithResult<msl::ir::MemberBuiltinCall>(
-            builtin->DetachResult(), msl::BuiltinFn::kSample, builtin->Args()[0], std::move(args));
-        call->InsertBefore(builtin);
+        auto* tex = builtin->Args()[0];
+        b.InsertBefore(builtin, [&] {
+            TextureSampleClampArrayIndexHelper(builtin);
+            auto args = Vector<core::ir::Value*, 4>(builtin->Args().Offset(1));
+            // Call the `sample()` member function.
+            b.MemberCallWithResult<msl::ir::MemberBuiltinCall>(
+                builtin->DetachResult(), msl::BuiltinFn::kSample, tex, std::move(args));
+        });
         builtin->Destroy();
     }
 
@@ -734,6 +756,7 @@ struct State {
         auto args = Vector<core::ir::Value*, 4>(builtin->Args().Offset(1));
 
         b.InsertBefore(builtin, [&] {
+            TextureSampleClampArrayIndexHelper(builtin);
             // Wrap the bias argument in a constructor for the MSL `bias` builtin type.
             uint32_t bias_idx = 2;
             if (tex_type->dim() == core::type::TextureDimension::k2dArray ||
@@ -753,11 +776,24 @@ struct State {
     /// @param builtin the builtin call instruction
     void TextureSampleCompare(core::ir::CoreBuiltinCall* builtin) {
         // The MSL intrinsic is a member function, so we split the first argument off as the object.
+        auto* tex = builtin->Args()[0];
+        auto* tex_type = tex->Type()->As<core::type::Texture>();
         auto args = Vector<core::ir::Value*, 4>(builtin->Args().Offset(1));
-        auto* call = b.MemberCallWithResult<msl::ir::MemberBuiltinCall>(
-            builtin->DetachResult(), msl::BuiltinFn::kSampleCompare, builtin->Args()[0],
-            std::move(args));
-        call->InsertBefore(builtin);
+
+        b.InsertBefore(builtin, [&] {
+            TextureSampleClampArrayIndexHelper(builtin);
+            // Wrap the bias argument in a constructor for the MSL `bias` builtin type.
+            uint32_t bias_idx = 2;
+            if (tex_type->dim() == core::type::TextureDimension::k2dArray ||
+                tex_type->dim() == core::type::TextureDimension::kCubeArray) {
+                bias_idx = 3;
+            }
+            args[bias_idx] = b.Construct(ty.Get<msl::type::Bias>(), args[bias_idx])->Result(0);
+
+            // Call the `sample()` member function.
+            b.MemberCallWithResult<msl::ir::MemberBuiltinCall>(
+                builtin->DetachResult(), msl::BuiltinFn::kSampleCompare, tex, std::move(args));
+        });
         builtin->Destroy();
     }
 
@@ -772,6 +808,7 @@ struct State {
         const bool has_offset = !args.Back()->Type()->Is<core::type::F32>();
 
         b.InsertBefore(builtin, [&] {
+            TextureSampleClampArrayIndexHelper(builtin);
             // Insert a constant zero LOD argument.
             // The LOD goes before the offset if there is one, otherwise at the end.
             auto* lod = b.Construct(ty.Get<msl::type::Level>(), u32(0))->Result(0);
@@ -797,6 +834,7 @@ struct State {
         auto args = Vector<core::ir::Value*, 4>(builtin->Args().Offset(1));
 
         b.InsertBefore(builtin, [&] {
+            TextureSampleClampArrayIndexHelper(builtin);
             // Find the ddx and ddy arguments.
             uint32_t grad_idx = 2;
             if (tex_type->dim() == core::type::TextureDimension::k2dArray ||
@@ -846,10 +884,12 @@ struct State {
     void TextureSampleLevel(core::ir::CoreBuiltinCall* builtin) {
         // The MSL intrinsic is a member function, so we split the first argument off as the object.
         auto* tex = builtin->Args()[0];
-        auto* tex_type = tex->Type()->As<core::type::Texture>();
-        auto args = Vector<core::ir::Value*, 4>(builtin->Args().Offset(1));
 
         b.InsertBefore(builtin, [&] {
+            auto* tex_type = tex->Type()->As<core::type::Texture>();
+            auto args = Vector<core::ir::Value*, 4>(builtin->Args().Offset(1));
+
+            TextureSampleClampArrayIndexHelper(builtin);
             // Wrap the LOD argument in a constructor for the MSL `level` builtin type.
             uint32_t lod_idx = 2;
             if (tex_type->dim() == core::type::TextureDimension::k2dArray ||
