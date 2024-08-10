@@ -68,6 +68,24 @@
       "parentUuid": "27f3ec32_148b04ec",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e1798c2_b459d697",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-10T01:40:09Z",
+      "side": 1,
+      "message": "I think this roundding up uniform struct size to 16-byte:https://source.chromium.org/chromium/chromium/src/+/e77f22682b24771fc167d2a03595c2e7db7c54a0:third_party/dawn/src/tint/lang/glsl/writer/ast_raise/pad_structs.cc;l\u003d128\n\nis to satisfy this wgsl validation: https://source.chromium.org/chromium/chromium/src/+/e77f22682b24771fc167d2a03595c2e7db7c54a0:third_party/dawn/src/tint/lang/wgsl/resolver/validator.cc;l\u003d644\n\n\"uniform storage requires that the number of bytes between the start of the \"\n\"previous member of type struct and the current member be a \"\n\"multiple of 16 bytes...\"\n\nexample:\n```\nerror: \u0027uniform\u0027 storage requires that the number of bytes between the start of the previous member of type struct and the current member be a multiple of 16 bytes, but there are currently 12 bytes between \u0027tint_symbol_5\u0027 and \u0027tint_symbol_3\u0027. Consider setting \u0027@align(16)\u0027 on this member\n:8:8 note: see layout of struct:\n/*            align(4) size(44) */ struct tint_symbol_4 {\n/* offset( 0) align(4) size( 4) */   tint_symbol_1 : u32,\n/* offset( 4) align(4) size( 4) */   pad : u32,\n/* offset( 8) align(4) size( 4) */   pad_1 : u32,\n/* offset(12) align(4) size( 4) */   pad_2 : u32,\n/* offset(16) align(4) size(12) */   tint_symbol_5 : tint_symbol,\n/* offset(28) align(4) size( 4) */   tint_symbol_3 : u32,\n/* offset(32) align(4) size( 4) */   pad_3 : u32,\n/* offset(36) align(4) size( 4) */   pad_4 : u32,\n/* offset(40) align(4) size( 4) */   pad_5 : u32,\n/*                              */ };\n```\n\nThis seems to be a wgsl restrction but not a glsl std140 restriction. (size of a struct in glsl doesn\u0027t need to be multiple of 16; offset of a struct member inside a block needs to be multiple of 16)\n\nSo I tried instead of add padding in the wgsl transform, adding @size attribute with a size round up to 16.\n\nThis passed the ComputeLayoutMemoryBufferTests.StructMember tests on android pixel 6.\n\nHopefully this should work. CL: https://dawn-review.googlesource.com/c/dawn/+/201816",
+      "parentUuid": "f640c9f5_26940c23",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
