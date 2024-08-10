@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a48242e_5e4b844d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2024-08-10T08:49:12Z",
+      "side": 1,
+      "message": "I believe d3d_platform.h should only be included if we need it for mCoreWindow/mSwapChainPanel so the #if condition should be the same. This causes issue when building on Windows without any D3D backend activated (dxc headers are not necessarily available in that case).",
+      "revId": "e60726880fb59770d7394cc634a3139da8aff825",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
