@@ -718,10 +718,25 @@ struct State {
     /// @param builtin the builtin call instruction
     void TextureSample(core::ir::CoreBuiltinCall* builtin) {
         // The MSL intrinsic is a member function, so we split the first argument off as the object.
+        auto* tex = builtin->Args()[0];
+        auto* tex_type = tex->Type()->As<core::type::Texture>();
         auto args = Vector<core::ir::Value*, 4>(builtin->Args().Offset(1));
-        auto* call = b.MemberCallWithResult<msl::ir::MemberBuiltinCall>(
-            builtin->DetachResult(), msl::BuiltinFn::kSample, builtin->Args()[0], std::move(args));
-        call->InsertBefore(builtin);
+
+        b.InsertBefore(builtin, [&] {
+            if (tex_type->dim() == core::type::TextureDimension::k2dArray) {
+                uint32_t array_index = 2;
+                if (args[array_index]->Type()->is_signed_integer_scalar()) {
+                    printf("This is ir path!");
+                    // auto* component = args[array_index]->As<core::ir::Constant>();
+                    args[array_index] =
+                        b.Call(ty.i32(), core::BuiltinFn::kMax, args[array_index], b.Zero<i32>())
+                            ->Result(0);
+                }
+            }
+            // Call the `sample()` member function.
+            b.MemberCallWithResult<msl::ir::MemberBuiltinCall>(
+                builtin->DetachResult(), msl::BuiltinFn::kSample, tex, std::move(args));
+        });
         builtin->Destroy();
     }
 
