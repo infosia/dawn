@@ -2782,9 +2782,10 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_2dArray) {
     auto* expect = R"(
 %foo = func(%t:texture_2d_array<f32>, %s:sampler, %coords:vec2<f32>, %index:i32, %ddx:vec2<f32>, %ddy:vec2<f32>):vec4<f32> {
   $B1: {
-    %8:msl.gradient2d = construct %ddx, %ddy
-    %9:vec4<f32> = %t.sample %s, %coords, %index, %8
-    ret %9
+    %8:i32 = max %index, 0i
+    %9:msl.gradient2d = construct %ddx, %ddy
+    %10:vec4<f32> = %t.sample %s, %coords, %8, %9
+    ret %10
   }
 }
 )";
