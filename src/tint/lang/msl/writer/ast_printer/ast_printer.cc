@@ -1298,7 +1298,7 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
                 }
             } else if (usage == Usage::kArrayIndex &&
                        e->Type()->UnwrapRef()->is_signed_integer_scalar()) {
-                out << "max(0,";
+                out << "max(0, ";
                 inside_params = true;
             }
 

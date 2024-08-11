@@ -726,7 +726,8 @@ struct State {
             if (tex_type->dim() == core::type::TextureDimension::k2dArray) {
                 uint32_t array_index = 2;
                 if (args[array_index]->Type()->is_signed_integer_scalar()) {
-                    printf("changing thing");
+                    printf("This is ir path!");
+                    // auto* component = args[array_index]->As<core::ir::Constant>();
                     args[array_index] =
                         b.Call(ty.i32(), core::BuiltinFn::kMax, args[array_index], b.Zero<i32>())
                             ->Result(0);
