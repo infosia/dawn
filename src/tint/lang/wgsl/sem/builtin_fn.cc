@@ -104,6 +104,10 @@ bool BuiltinFn::IsPacked4x8IntegerDotProductBuiltin() const {
     return wgsl::IsPacked4x8IntegerDotProductBuiltin(fn_);
 }
 
+bool BuiltinFn::IsSubgroupMatrix() const {
+    return wgsl::IsSubgroupMatrix(fn_);
+}
+
 bool BuiltinFn::IsSubgroup() const {
     return wgsl::IsSubgroup(fn_);
 }

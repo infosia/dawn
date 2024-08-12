@@ -107,6 +107,16 @@ bool IsPacked4x8IntegerDotProductBuiltin(BuiltinFn f) {
            f == BuiltinFn::kUnpack4XI8 || f == BuiltinFn::kUnpack4XU8;
 }
 
+bool IsSubgroupMatrix(BuiltinFn f) {
+    switch (f) {
+        case BuiltinFn::kSubgroupMatrixLoad:
+        case BuiltinFn::kSubgroupMatrixStore:
+            return true;
+        default:
+            return false;
+    }
+}
+
 bool IsSubgroup(BuiltinFn f) {
     switch (f) {
         case BuiltinFn::kSubgroupBallot:
