@@ -587,6 +587,7 @@ source_set("end2end_tests_sources") {
     "end2end/BufferHostMappedPointerTests.h",
     "end2end/BufferTests.cpp",
     "end2end/BufferZeroInitTests.cpp",
+    "end2end/BuiltinPartialConstArgsErrorTests.cpp",
     "end2end/ClipSpaceTests.cpp",
     "end2end/ColorStateTests.cpp",
     "end2end/CommandEncoderTests.cpp",
