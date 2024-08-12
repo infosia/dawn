@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fef071c_e33b0478",
+        "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-12T18:53:55Z",
+      "side": 1,
+      "message": "This looks really promising. TBH I had thought the PadStructs transform was the last one in the chain that takes offsets \u0026 sizes into account. Could we figure out which transform downstream is inspecting this alignment and size? (Perhaps the Std140 transform?) If there is a dependency there, it\u0027d be nice to document it.\n\nIf it is Std140, we could also consider reordering them. IWBN if PadStructs didn\u0027t have to know the special case, and could be simpler.",
+      "revId": "bd51aa47ed7bf9ef925e1c6f891cae73c4d5b098",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c55d8e51_f05c7e35",
+        "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-12T18:53:55Z",
+      "side": 1,
+      "message": "Nit: putting all of the special case in one clause might make it more tidy:\n\n```suggestion\n            if (ty-\u003eIs\u003ccore::type::Struct\u003e() \u0026\u0026 str-\u003eUsedAs(core::AddressSpace::kUniform)) {\n                size \u003d tint::RoundUp(16u, size);\n                new_members.Push(b.Member(\n                    name, type,\n                    tint::Vector{b.MemberAlign(core::AInt(16u)),\n                                 b.MemberSize(core::AInt(size))});\n            } else {\n                new_members.Push(b.Member(name, type));\n            }\n```",
+      "range": {
+        "startLine": 118,
+        "startChar": 11,
+        "endLine": 130,
+        "endChar": 13
+      },
+      "revId": "bd51aa47ed7bf9ef925e1c6f891cae73c4d5b098",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
