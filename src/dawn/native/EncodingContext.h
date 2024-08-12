@@ -194,8 +194,15 @@ class EncodingContext {
     bool mWereCommandsAcquired = false;
     bool mDestroyed = false;
 
+<<<<<<< HEAD   (9e12a1 [spirv] Fail for functions with >255 parameters)
     std::unique_ptr<ErrorData> mError;
     std::vector<std::string> mDebugGroupLabels;
+=======
+    // Contains pointers to strings allocated inside the command allocators.
+    std::vector<std::string_view> mDebugGroupLabels;
+
+    std::unique_ptr<ErrorData> mError;
+>>>>>>> CHANGE (67b7b9 EncodingContext: Use mDebugGroupLabels before freeing comman)
 };
 
 }  // namespace dawn::native
