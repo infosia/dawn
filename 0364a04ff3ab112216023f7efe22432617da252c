@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "0364a04ff3ab112216023f7efe22432617da252c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d7a3577_1e09908d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-12T18:27:12Z",
+      "side": 1,
+      "message": "LGTM for now, but could we keep one of the TODOs to create an `AdapterMock` and pass that through instead?",
+      "revId": "0364a04ff3ab112216023f7efe22432617da252c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
