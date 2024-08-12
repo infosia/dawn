@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9336900b_12f55bd3",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-08-12T13:42:38Z",
+      "side": 1,
+      "message": "Can replace the argument in the original call instead of creating a new one.",
+      "revId": "73961cef05069586de9be5e21c5031e09f483f4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
