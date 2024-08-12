@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e5e5d3d_f9908534",
+        "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-12T21:20:24Z",
+      "side": 1,
+      "message": "std140 transform doesn\u0027t seem to change anything based on @align or @size. (skipped in the `ComputeLayoutMemoryBufferTests`\n\nThe @align and @size attributes are to satisfy the tint wgsl validation.\n\nglsl doesn\u0027t have the same restriction here for struct. The only glsl restriction on struct alignment I believe is 7.6.2.2  #9 in the spec: https://registry.khronos.org/OpenGL/specs/es/3.1/es_spec_3.1.withchanges.pdf\nwhich is already addressed here\n\nI add a comment stating that the attributes added are to satisfy wgsl restriction.",
+      "parentUuid": "0fef071c_e33b0478",
+      "revId": "bd51aa47ed7bf9ef925e1c6f891cae73c4d5b098",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b660593c_1cd956c7",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe3777ec_9be64ceb",
+        "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-12T21:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b660593c_1cd956c7",
+      "revId": "bd51aa47ed7bf9ef925e1c6f891cae73c4d5b098",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c55d8e51_f05c7e35",
@@ -48,6 +84,30 @@
       "writtenOn": "2024-08-12T18:53:55Z",
       "side": 1,
       "message": "Nit: putting all of the special case in one clause might make it more tidy:\n\n```suggestion\n            if (ty-\u003eIs\u003ccore::type::Struct\u003e() \u0026\u0026 str-\u003eUsedAs(core::AddressSpace::kUniform)) {\n                size \u003d tint::RoundUp(16u, size);\n                new_members.Push(b.Member(\n                    name, type,\n                    tint::Vector{b.MemberAlign(core::AInt(16u)),\n                                 b.MemberSize(core::AInt(size))});\n            } else {\n                new_members.Push(b.Member(name, type));\n            }\n```",
+      "range": {
+        "startLine": 118,
+        "startChar": 11,
+        "endLine": 130,
+        "endChar": 13
+      },
+      "revId": "bd51aa47ed7bf9ef925e1c6f891cae73c4d5b098",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "715f31a9_2c326e2a",
+        "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-12T21:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c55d8e51_f05c7e35",
       "range": {
         "startLine": 118,
         "startChar": 11,
