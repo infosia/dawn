@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc547cdf_f788af85",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-12T13:32:07Z",
+      "side": 1,
+      "message": "This is included on line 121 if `use_test_deps` is enabled in the arguments. If there is something that is failing when tests are disabled, then we should fix that instead to not require googletest.",
+      "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
