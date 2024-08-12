@@ -1983,23 +1983,6 @@ bool Validator::WorkgroupUniformLoad(const sem::Call* call) const {
     return true;
 }
 
-bool Validator::SubgroupBroadcast(const sem::Call* call) const {
-    auto* builtin = call->Target()->As<sem::BuiltinFn>();
-    if (!builtin) {
-        return false;
-    }
-
-    TINT_ASSERT(call->Arguments().Length() == 2);
-    auto* laneArg = call->Arguments()[1];
-    if (!laneArg->ConstantValue()) {
-        AddError(laneArg->Declaration()->source)
-            << "the sourceLaneIndex argument of subgroupBroadcast must be a const-expression";
-        return false;
-    }
-
-    return true;
-}
-
 bool Validator::RequiredFeaturesForBuiltinFn(const sem::Call* call) const {
     const auto* builtin = call->Target()->As<sem::BuiltinFn>();
     if (!builtin) {

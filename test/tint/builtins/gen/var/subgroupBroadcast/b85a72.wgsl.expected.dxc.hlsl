@@ -1,0 +1,19 @@
+RWByteAddressBuffer prevent_dce : register(u0);
+
+float2 subgroupBroadcast_b85a72() {
+  float2 arg_0 = (1.0f).xx;
+  int arg_1 = 1;
+  float2 res = WaveReadLaneAt(arg_0, arg_1);
+  return res;
+}
+
+void fragment_main() {
+  prevent_dce.Store2(0u, asuint(subgroupBroadcast_b85a72()));
+  return;
+}
+
+[numthreads(1, 1, 1)]
+void compute_main() {
+  prevent_dce.Store2(0u, asuint(subgroupBroadcast_b85a72()));
+  return;
+}
