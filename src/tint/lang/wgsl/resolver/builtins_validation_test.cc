@@ -1455,5 +1455,30 @@ INSTANTIATE_TEST_SUITE_P(ResolverBuiltinsValidationTest,
                          DataPacking2x16,
                          ::testing::Values("pack2x16snorm", "pack2x16unorm", "pack2x16float"));
 
+TEST_F(ResolverBuiltinsValidationTest, Clamp_PartialConstLowExceedsHigh_Scalar) {
+    WrapInFunction(Var("s", ty.f32()), Call(Source{{12, 34}}, "clamp", "s", Expr(1_f), Expr(0_f)));
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(), "12:34 error: clamp called with 'low' (1.0) greater than 'high' (0.0)");
+}
+
+TEST_F(ResolverBuiltinsValidationTest, Clamp_PartialConstLowExceedsHigh_Vector) {
+    WrapInFunction(
+        Var("v", ty.vec2<f32>()),
+        Call(Source{{12, 34}}, "clamp", "v", Call<vec2<f32>>(0_f, 4_f), Call<vec2<f32>>(1_f, 3_f)));
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(), "12:34 error: clamp called with 'low' (4.0) greater than 'high' (3.0)");
+}
+
+TEST_F(ResolverBuiltinsValidationTest,
+       Clamp_PartialConstLowExceedsHigh_PartialRuntimeVectorNoError) {
+    WrapInFunction(
+        Var("s", ty.f32()), Var("v", ty.vec2<f32>()),
+        Call(Source{{12, 34}}, "clamp", "v", Call<vec2<f32>>("s", 4_f), Call<vec2<f32>>(1_f, 3_f)));
+
+    EXPECT_TRUE(r()->Resolve());
+}
+
 }  // namespace
 }  // namespace tint::resolver

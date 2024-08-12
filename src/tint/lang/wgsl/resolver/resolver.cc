@@ -2493,6 +2493,30 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
             break;
     }
 
+    // Check for errors when only some arguments are const or override.
+    // Const-eval checks error cases when all arguments are const or override.
+    switch (fn) {
+        case wgsl::BuiltinFn::kClamp:
+            TINT_ASSERT(args.Length() == 3);
+            {
+                auto* lowConst = args[1]->ConstantValue();
+                auto* highConst = args[2]->ConstantValue();
+                if (lowConst && highConst) {
+                    // Delegate error checking to the const-eval function, but use a harmless
+                    // first argument.
+                    auto fakeArgs = Vector{lowConst, lowConst, highConst};
+                    auto res =
+                        const_eval_.clamp(call->Type(), fakeArgs, call->Declaration()->source);
+                    if (res != Success) {
+                        return nullptr;
+                    }
+                }
+            }
+            break;
+        default:
+            break;
+    }
+
     if (!validator_.BuiltinCall(call)) {
         return nullptr;
     }
