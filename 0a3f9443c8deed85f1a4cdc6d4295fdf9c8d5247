@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f2a9af7_cc5787e3",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-12T13:27:27Z",
+      "side": 1,
+      "message": "The IR is mutable, so can just change the argment to the call instead of creating a new one.\n\n```suggestion\n            b.InsertBefore(builtin, [\u0026] {\n                auto* cast \u003d b.Bitcast(ty.u32(), id);\n                builtin-\u003eSetArg(1, cast-\u003eResult(0));\n            });\n```",
+      "range": {
+        "startLine": 902,
+        "startChar": 0,
+        "endLine": 911,
+        "endChar": 31
+      },
+      "revId": "0a3f9443c8deed85f1a4cdc6d4295fdf9c8d5247",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
