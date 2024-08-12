@@ -16,6 +16,23 @@
       "message": "tested on dawn-try-mac-amd-exp which has the AMD GPU at issue, and it passes now.",
       "revId": "d28df36056e72359f43421e30eeeb1b899b69280",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d6d94a1_aa21aaf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-12T18:19:27Z",
+      "side": 1,
+      "message": "LGTM. Will probably take another look when we get to this in the IR version.",
+      "revId": "d28df36056e72359f43421e30eeeb1b899b69280",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
