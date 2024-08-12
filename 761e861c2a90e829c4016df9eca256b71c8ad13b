@@ -16,6 +16,57 @@
       "message": "James: PTAL. Thanks!",
       "revId": "761e861c2a90e829c4016df9eca256b71c8ad13b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c70f844_d731e739",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-12T23:17:42Z",
+      "side": 1,
+      "message": "LGTM with what looks like a couple of unexpected comment changes.",
+      "revId": "761e861c2a90e829c4016df9eca256b71c8ad13b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ace0aae_ed3fc012",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-12T23:17:42Z",
+      "side": 1,
+      "message": "Unexpected character change?",
+      "revId": "761e861c2a90e829c4016df9eca256b71c8ad13b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0adc73bb_00ddc317",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-12T23:17:42Z",
+      "side": 1,
+      "message": "More unexpected changes?",
+      "revId": "761e861c2a90e829c4016df9eca256b71c8ad13b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
