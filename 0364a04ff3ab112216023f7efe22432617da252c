@@ -33,6 +33,23 @@
       "message": "LGTM for now, but could we keep one of the TODOs to create an `AdapterMock` and pass that through instead?",
       "revId": "0364a04ff3ab112216023f7efe22432617da252c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e22eccd8_3fb2e11e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-12T22:05:57Z",
+      "side": 1,
+      "message": "lgtm after Loko\u0027s comment",
+      "revId": "0364a04ff3ab112216023f7efe22432617da252c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
