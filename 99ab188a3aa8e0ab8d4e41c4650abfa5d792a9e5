@@ -16,6 +16,24 @@
       "message": "Note: We should also check that the size of the source and result are the same, but the fuzzer should eventually find that too so fine to defer that until then.",
       "revId": "99ab188a3aa8e0ab8d4e41c4650abfa5d792a9e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23ed9672_ad93b89a",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1297,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-12T17:21:27Z",
+      "side": 1,
+      "message": "Added in the check for matching sizes.",
+      "parentUuid": "8d8155e8_22f06c42",
+      "revId": "99ab188a3aa8e0ab8d4e41c4650abfa5d792a9e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
