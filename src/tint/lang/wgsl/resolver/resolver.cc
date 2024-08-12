@@ -3170,19 +3170,15 @@ void Resolver::CollectTextureSamplerPairs(sem::Function* func,
         if (param->Type()->Is<core::type::Texture>()) {
             auto* user = args[i]->UnwrapLoad()->As<sem::VariableUser>();
             auto* texture = user->Variable();
-            if (!texture_sampler_set.Contains(texture)) {
-                current_function_->AddTextureSamplerPair(texture, nullptr);
-                func->AddTextureSamplerPair(param, nullptr);
-                texture_sampler_set.Add(texture);
-            }
+            current_function_->AddTextureSamplerPair(texture, nullptr);
+            func->AddTextureSamplerPair(param, nullptr);
+            texture_sampler_set.Add(texture);
         } else if (param->Type()->Is<core::type::Sampler>()) {
             auto* user = args[i]->UnwrapLoad()->As<sem::VariableUser>();
             auto* sampler = user->Variable();
-            if (!texture_sampler_set.Contains(sampler)) {
-                current_function_->AddTextureSamplerPair(nullptr, sampler);
-                func->AddTextureSamplerPair(nullptr, param);
-                texture_sampler_set.Add(sampler);
-            }
+            current_function_->AddTextureSamplerPair(nullptr, sampler);
+            func->AddTextureSamplerPair(nullptr, param);
+            texture_sampler_set.Add(sampler);
         }
     }
 }
