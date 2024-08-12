@@ -79,6 +79,9 @@
 #include "src/tint/lang/core/type/memory_view.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
+#include "src/tint/lang/core/type/subgroup_matrix_left.h"
+#include "src/tint/lang/core/type/subgroup_matrix_result.h"
+#include "src/tint/lang/core/type/subgroup_matrix_right.h"
 #include "src/tint/lang/core/type/type.h"
 #include "src/tint/lang/core/type/u8.h"
 #include "src/tint/lang/core/type/vector.h"
@@ -944,6 +947,30 @@ void Validator::CheckType(const core::type::Type* root,
                 // u8 types are guarded by the Allow8BitIntegers capability.
                 if (!capabilities_.Contains(Capability::kAllow8BitIntegers)) {
                     diag() << "8-bit integer types are not permitted";
+                    return false;
+                }
+                return true;
+            },
+            [&](const type::SubgroupMatrixLeft*) {
+                // subgroup types are guarded by the AllowSubgroupMatrices capability.
+                if (!capabilities_.Contains(Capability::kAllowSubgroupMatrices)) {
+                    diag() << "SubgroupMatrix types are not permitted";
+                    return false;
+                }
+                return true;
+            },
+            [&](const type::SubgroupMatrixRight*) {
+                // subgroup types are guarded by the AllowSubgroupMatrices capability.
+                if (!capabilities_.Contains(Capability::kAllowSubgroupMatrices)) {
+                    diag() << "SubgroupMatrix types are not permitted";
+                    return false;
+                }
+                return true;
+            },
+            [&](const type::SubgroupMatrixResult*) {
+                // subgroup types are guarded by the AllowSubgroupMatrices capability.
+                if (!capabilities_.Contains(Capability::kAllowSubgroupMatrices)) {
+                    diag() << "SubgroupMatrix types are not permitted";
                     return false;
                 }
                 return true;

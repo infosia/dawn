@@ -44,6 +44,9 @@
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
 #include "src/tint/lang/core/type/struct.h"
+#include "src/tint/lang/core/type/subgroup_matrix_left.h"
+#include "src/tint/lang/core/type/subgroup_matrix_result.h"
+#include "src/tint/lang/core/type/subgroup_matrix_right.h"
 #include "src/tint/utils/text/string.h"
 
 namespace tint::core::ir {
@@ -6750,6 +6753,43 @@ TEST_F(IR_ValidatorTest, Int8Type_InstructionOperand_Allowed) {
     auto res = ir::Validate(mod, Capabilities{Capability::kAllow8BitIntegers});
     ASSERT_EQ(res, Success) << res.Failure();
 }
+
+using IR_ValidatorSubgroupMatrixTypeTest = IRTestParamHelper<std::tuple<
+    /* int8_allowed */ bool,
+    /* type_builder */ TypeBuilderFn>>;
+
+TEST_P(IR_ValidatorSubgroupMatrixTypeTest, Var) {
+    bool subgroup_matrix_allowed = std::get<0>(GetParam());
+    auto* type = std::get<1>(GetParam())(ty);
+
+    auto* fn = b.Function("my_func", ty.void_());
+    b.Append(fn->Block(), [&] {
+        b.Var(ty.ptr<function>(type));
+        b.Return(fn);
+    });
+
+    Capabilities caps;
+    if (subgroup_matrix_allowed) {
+        caps.Add(Capability::kAllowSubgroupMatrices);
+    }
+    auto res = ir::Validate(mod, caps);
+    if (subgroup_matrix_allowed) {
+        ASSERT_EQ(res, Success) << res.Failure();
+    } else {
+        ASSERT_NE(res, Success);
+        EXPECT_THAT(res.Failure().reason.Str(),
+                    testing::HasSubstr("3:5 error: var: subgroup matrix types are not permitted"));
+    }
+}
+
+INSTANTIATE_TEST_SUITE_P(SubgroupMatrixTypes,
+                         IR_ValidatorSubgroupMatrixTypeTest,
+                         testing::Combine(
+                             /* int8_allowed */ testing::Values(false, true),
+                             /* type_builder */
+                             testing::Values(TypeBuilder<type::SubgroupMatrixLeft>,
+                                             TypeBuilder<type::SubgroupMatrixRight>,
+                                             TypeBuilder<type::SubgroupMatrixResult>)));
 
 TEST_F(IR_ValidatorTest, Switch_NoCondition) {
     auto* f = b.Function("my_func", ty.void_());

@@ -52,6 +52,8 @@ enum class Capability : uint8_t {
     kAllowModuleScopeLets,
     /// Allows pointers inside structures.
     kAllowPointersInStructures,
+    /// Allows subgroup matrices
+    kAllowSubgroupMatrices,
 };
 
 /// Capabilities is a set of Capability
