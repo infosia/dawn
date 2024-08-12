@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b660593c_1cd956c7",
+        "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-12T19:01:29Z",
+      "side": 1,
+      "message": "Can you add one or two unit tests that hit this path so we can see the @size and @align actually be generated?",
+      "revId": "bd51aa47ed7bf9ef925e1c6f891cae73c4d5b098",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c55d8e51_f05c7e35",
         "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
         "patchSetId": 6
