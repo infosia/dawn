@@ -3159,32 +3159,6 @@ void Resolver::CollectTextureSamplerPairs(sem::Function* func,
         }
         current_function_->AddTextureSamplerPair(texture, sampler);
     }
-
-    // Add any possible texture/sampler not essentially passed to builtins from the function param.
-    // This could be unused texture/sampler or texture/sampler passed to builtins that are emulated.
-
-    const auto& signature = func->Signature();
-
-    for (size_t i = 0; i < signature.parameters.Length(); i++) {
-        auto* param = signature.parameters[i];
-        if (param->Type()->Is<core::type::Texture>()) {
-            auto* user = args[i]->UnwrapLoad()->As<sem::VariableUser>();
-            auto* texture = user->Variable();
-            if (!texture_sampler_set.Contains(texture)) {
-                current_function_->AddTextureSamplerPair(texture, nullptr);
-                func->AddTextureSamplerPair(param, nullptr);
-                texture_sampler_set.Add(texture);
-            }
-        } else if (param->Type()->Is<core::type::Sampler>()) {
-            auto* user = args[i]->UnwrapLoad()->As<sem::VariableUser>();
-            auto* sampler = user->Variable();
-            if (!texture_sampler_set.Contains(sampler)) {
-                current_function_->AddTextureSamplerPair(nullptr, sampler);
-                func->AddTextureSamplerPair(nullptr, param);
-                texture_sampler_set.Add(sampler);
-            }
-        }
-    }
 }
 
 sem::ValueExpression* Resolver::Literal(const ast::LiteralExpression* literal) {
