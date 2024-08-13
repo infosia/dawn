@@ -140,6 +140,24 @@
       "parentUuid": "10681f2f_f7e69b27",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd969bc1_a9dc9ede",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-13T20:11:08Z",
+      "side": 1,
+      "message": "I think the @size can be implicit so it could be missing from the original old wgsl and still be valid. Seems in that case we still need to add the new @size",
+      "parentUuid": "ed6e367c_c7c281ae",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
