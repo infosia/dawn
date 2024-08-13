@@ -41,6 +41,8 @@
 #include "src/tint/lang/wgsl/sem/module.h"
 #include "src/tint/lang/wgsl/sem/value_constructor.h"
 
+#include "src/tint/utils/rtti/switch.h"
+
 using namespace tint::core::number_suffixes;  // NOLINT
 
 TINT_INSTANTIATE_TYPEINFO(tint::glsl::writer::PadStructs);
@@ -103,6 +105,7 @@ ast::transform::Transform::ApplyResult PadStructs::Apply(const Program& src,
         for (auto* mem : str->Members()) {
             auto name = mem->Name().Name();
 
+            printf("\n\nxxxxx %s, %u %u\n\n", name.c_str(), offset, mem->Offset());
             if (offset < mem->Offset()) {
                 CreatePadding(&new_members, &padding_members, &member_names, last_padding_index,
                               ctx.dst, mem->Offset() - offset);
@@ -115,22 +118,72 @@ ast::transform::Transform::ApplyResult PadStructs::Apply(const Program& src,
             uint32_t size = ty->Size();
             if (ty->Is<core::type::Struct>() && str->UsedAs(core::AddressSpace::kUniform)) {
                 // std140 structs should be padded out to 16 bytes.
-                size = tint::RoundUp(16u, size);
+                uint32_t rounded_size = tint::RoundUp(16u, size);
                 // Add @size and @align attribute to satisfy WGSL validator rules.
-                new_members.Push(b.Member(
-                    name, type,
-                    tint::Vector{b.MemberAlign(core::AInt(16u)), b.MemberSize(core::AInt(size))}));
+                // tint::Vector<const ast::Attribute*, 4> attributes;
+
+                // uint32_t align_attribute_value = 16u;
+                uint32_t size_attribute_value = 0;
+
+                for (auto* attr : mem->Declaration()->attributes) {
+                    if (auto* size_attr = attr->As<ast::StructMemberSizeAttribute>()) {
+                        size_attribute_value =
+                            sem.GetVal(size_attr->expr)->ConstantValue()->ValueAs<uint32_t>();
+                        break;
+                    }
+                    // tint::Switch(
+                    //     attr,
+                    //     [&](const ast::StructMemberAlignAttribute* align_attr) {
+                    //         align_attribute_value = std::max(
+                    //             align_attribute_value,
+                    //             sem.GetVal(align_attr->expr)->ConstantValue()->ValueAs<uint32_t>());
+                    //     },
+                    //     [&](const ast::StructMemberSizeAttribute* size_attr) {
+                    //         size_attribute_value = std::max(
+                    //             size_attribute_value,
+                    //             sem.GetVal(size_attr->expr)->ConstantValue()->ValueAs<uint32_t>());
+                    //     },
+                    //     [&](const ast::StructMemberOffsetAttribute*) {
+                    //         // @offset cannot be used with @align or @size.
+                    //         // Do not add it.
+                    //     },
+                    //     [&](Default) { attributes.Push(ctx.Clone(attr)); });
+                }
+
+                // attributes.Push(b.MemberAlign(core::AInt(align_attribute_value)));
+                // attributes.Push(b.MemberSize(core::AInt(size_attribute_value)));
+
+                new_members.Push(
+                    b.Member(name, type, tint::Vector{b.MemberSize(core::AInt(rounded_size))}));
+
+                if (size_attribute_value > rounded_size) {
+                    // explicit @size exists
+                    // still need to create padding
+                    size += size_attribute_value - rounded_size;
+                }
+
+                offset += rounded_size;
+
+                printf("\n\nbbbb %s, %u %u %u\n\n", name.c_str(), size_attribute_value,
+                       rounded_size, size);
+
+                // new_offset_delta = size_attribute_value - size;
+
+                // size = size_attribute_value;
             } else {
                 new_members.Push(b.Member(name, type));
+                offset += size;
             }
-            offset += size;
         }
 
-        uint32_t struct_size = str->Size();
+        // uint32_t struct_size = str->Size();
+        uint32_t struct_size = str->SizeNoPadding();
 
         // Add any required padding after the last member, if it's not a block.
         bool is_block = ast::HasAttribute<ast::transform::AddBlockAttribute::BlockAttribute>(
             ast_str->attributes);
+        printf("\n\n!!!! %s: %u %u %u %u\n", str->FriendlyName().c_str(), offset, struct_size,
+               str->SizeNoPadding(), is_block);
         if (offset < struct_size && !is_block) {
             CreatePadding(&new_members, &padding_members, &member_names, last_padding_index,
                           ctx.dst, struct_size - offset);

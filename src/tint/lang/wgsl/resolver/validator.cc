@@ -597,6 +597,15 @@ bool Validator::AddressSpaceLayout(const core::type::Type* store_ty,
 
     if (auto* str = store_ty->As<sem::Struct>()) {
         auto& str_source = str->Declaration()->name->source;
+        bool ignore_struct_member_limit = false;
+        // for (auto* attr : str->Declaration()->attributes) {
+        //     if (auto* dv = attr->As<ast::DisableValidationAttribute>()) {
+        //         if (dv->validation == ast::DisabledValidation::kIgnoreStructMemberLimit) {
+        //             ignore_struct_member_limit = true;
+        //             break;
+        //         }
+        //     }
+        // }
         for (size_t i = 0; i < str->Members().Length(); ++i) {
             auto* const m = str->Members()[i];
             uint32_t required_align = required_alignment_of(m->Type());
@@ -635,30 +644,37 @@ bool Validator::AddressSpaceLayout(const core::type::Type* store_ty,
 
             // For uniform buffers, validate that the number of bytes between the previous member of
             // type struct and the current is a multiple of 16 bytes.
-            auto* const prev_member = (i == 0) ? nullptr : str->Members()[i - 1];
-            if (prev_member && is_uniform_struct(prev_member->Type())) {
-                const uint32_t prev_to_curr_offset = m->Offset() - prev_member->Offset();
-                if (prev_to_curr_offset % 16 != 0 &&
-                    !enabled_extensions_.Contains(
-                        wgsl::Extension::kChromiumInternalRelaxedUniformLayout)) {
-                    AddError(m->Declaration()->source)
-                        << style::Enum("uniform")
-                        << " storage requires that the number of bytes between the start of the "
-                           "previous member of type struct and the current member be a "
-                           "multiple of 16 bytes, but there are currently "
-                        << prev_to_curr_offset << " bytes between "
-                        << style::Variable(member_name_of(prev_member)) << " and "
-                        << style::Variable(member_name_of(m)) << ". Consider setting "
-                        << style::Attribute("@align") << style::Code("(16)") << " on this member";
+            if (!ignore_struct_member_limit) {
+                //
+                auto* const prev_member = (i == 0) ? nullptr : str->Members()[i - 1];
+                if (prev_member && is_uniform_struct(prev_member->Type())) {
+                    const uint32_t prev_to_curr_offset = m->Offset() - prev_member->Offset();
+                    if (prev_to_curr_offset % 16 != 0 &&
+                        !enabled_extensions_.Contains(
+                            wgsl::Extension::kChromiumInternalRelaxedUniformLayout)) {
+                        printf("\n\nvalidator: %u %u\n", m->Offset(), prev_member->Offset());
 
-                    AddNote(str_source) << "see layout of struct:\n" << str->Layout();
+                        AddError(m->Declaration()->source)
+                            << style::Enum("uniform")
+                            << " storage requires that the number of bytes between the start of "
+                               "the "
+                               "previous member of type struct and the current member be a "
+                               "multiple of 16 bytes, but there are currently "
+                            << prev_to_curr_offset << " bytes between "
+                            << style::Variable(member_name_of(prev_member)) << " and "
+                            << style::Variable(member_name_of(m)) << ". Consider setting "
+                            << style::Attribute("@align") << style::Code("(16)")
+                            << " on this member";
 
-                    auto* prev_member_str = prev_member->Type()->As<sem::Struct>();
-                    AddNote(prev_member_str->Declaration()->name->source)
-                        << "and layout of previous member struct:\n"
-                        << prev_member_str->Layout();
-                    note_usage();
-                    return false;
+                        AddNote(str_source) << "see layout of struct:\n" << str->Layout();
+
+                        auto* prev_member_str = prev_member->Type()->As<sem::Struct>();
+                        AddNote(prev_member_str->Declaration()->name->source)
+                            << "and layout of previous member struct:\n"
+                            << prev_member_str->Layout();
+                        note_usage();
+                        return false;
+                    }
                 }
             }
         }
