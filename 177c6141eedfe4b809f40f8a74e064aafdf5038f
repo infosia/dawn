@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "564c3e55_41ff9a4f",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2499,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-08-13T04:41:59Z",
+      "side": 1,
+      "message": "Unfortunately this patch crashes with this WGSL:\n\n```\n const v  \u003d clamp(vec2(1, 1), vec2(0, 0), vec2(2.0, 2.0)); \n```",
+      "revId": "177c6141eedfe4b809f40f8a74e064aafdf5038f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
