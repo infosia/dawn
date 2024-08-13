@@ -16,6 +16,24 @@
       "message": "add some basic tests for this in src/dawn/tests/unittests/MathTests.cpp",
       "revId": "5d787494112d7dc8eeccd47011b225e231361f0a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6aec73cf_eac764b1",
+        "filename": "src/dawn/common/Math.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-13T16:18:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b970dff9_cd986e54",
+      "revId": "5d787494112d7dc8eeccd47011b225e231361f0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
