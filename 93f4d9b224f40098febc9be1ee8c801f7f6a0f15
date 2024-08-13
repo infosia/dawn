@@ -16,6 +16,103 @@
       "message": "PTAL",
       "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3c31481_3edf3b18",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-13T19:46:36Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Also runs any validation that is not dependent on the entire module being\n```",
+      "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff0aeff2_2a7fa943",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-13T19:46:36Z",
+      "side": 1,
+      "message": "```suggestion\n    /// @note Does not validate that the discard is in a fragment shader, that\n```",
+      "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01744995_576e1db9",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-13T19:46:36Z",
+      "side": 1,
+      "message": "I wouldn\u0027t be surprised if the fuzzer blows up on this at some point in the future. A super deeply nested set of function calls will trigger a stack exhaustion .... (not saying to do anything necessarily, we have a few places this can happen, but something to keep in mind. Fuzzers hate recursion, heh)",
+      "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a57575df_47b64cd4",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-13T19:46:36Z",
+      "side": 1,
+      "message": "```suggestion\n    if (diagnostics_.ContainsErrors()) {\n        return;\n    }\n    \n    // Check for orphaned instructions.\n    for (auto* inst : mod_.Instructions()) {\n        if (!visited_instructions_.Contains(inst)) {\n            AddError(inst) \u003c\u003c \"orphaned instruction: \" \u003c\u003c inst-\u003eFriendlyName();\n        }\n    }\n```",
+      "range": {
+        "startLine": 635,
+        "startChar": 0,
+        "endLine": 642,
+        "endChar": 5
+      },
+      "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e29eb02_cf03a1bf",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-13T19:46:36Z",
+      "side": 1,
+      "message": "```suggestion\n    if (diagnostics_.ContainsErrors()) {\n        return;\n    }\n    \n    // Check for discards in non-fragments\n    for (const auto\u0026 d : discards_) {\n        const auto* f \u003d ContainingFunction(d);\n        for (const Function* ep : ContainingEndPoints(f)) {\n            if (ep-\u003eStage() !\u003d Function::PipelineStage::kFragment) {\n                AddError(d) \u003c\u003c \"cannot be called in non-fragment end point\";\n            }\n        }\n    }\n```",
+      "range": {
+        "startLine": 646,
+        "startChar": 0,
+        "endLine": 656,
+        "endChar": 5
+      },
+      "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
