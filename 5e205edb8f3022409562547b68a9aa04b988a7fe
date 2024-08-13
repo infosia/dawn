@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b28ff14c_4bea234b",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T20:30:03Z",
+      "side": 1,
+      "message": "the need to list this is unfortunate\nlooks like issue https://github.com/emscripten-core/emscripten/issues/15746 is the same problem\n\nand it appears to be resolved with https://github.com/emscripten-core/emscripten/pull/19093 though seems like there might be another thing that is broken (https://github.com/emscripten-core/emscripten/issues/20289)\n\nhopefully calling it \"emwgpuWaitAny_async\" makes it so we don\u0027t have to list it explicitly?",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 42
+      },
+      "revId": "5e205edb8f3022409562547b68a9aa04b988a7fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "925d3444_d08563d9",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T20:30:03Z",
+      "side": 1,
+      "message": "nit: you could check if timeoutNS is UINT64_MAX and avoid making a setTimeout.\n\nI expect passing no timeout to be common, so we don\u0027t want to register a bunch of timeouts which won\u0027t fire for.... over 500 years",
+      "revId": "5e205edb8f3022409562547b68a9aa04b988a7fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9a293fa_a42ef27b",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T20:30:03Z",
+      "side": 1,
+      "message": "nit: you could allocate the size of this array upfront since you know futureCount. that would avoid several promises.push operations.\n\n\nanother thing you can do is temporarily store an array at `WebGPU._promisesTempList` which you reuse. That helps avoid re-allocating new lists.\n\nso it can look something like:\n\n```\nvar promises \u003d WebGPU._promisesTempList;\npromises.length \u003d futureCount + (needTimeout ? 1 : 0);\n...\nvar anyPromise \u003d Promise.any(promises);\nreturn Asyncify.handleAsync(() \u003d\u003e anyPromise);\n```",
+      "revId": "5e205edb8f3022409562547b68a9aa04b988a7fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96d62bbc_5976f762",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T20:30:03Z",
+      "side": 1,
+      "message": "I don\u0027t see emwgpuResolveFuture ever called",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 44
+      },
+      "revId": "5e205edb8f3022409562547b68a9aa04b988a7fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaea15dd_8b37c8c6",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T20:30:03Z",
+      "side": 1,
+      "message": "when would completed be null?",
+      "range": {
+        "startLine": 291,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 7
+      },
+      "revId": "5e205edb8f3022409562547b68a9aa04b988a7fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1261405_5889cd3c",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T20:30:03Z",
+      "side": 1,
+      "message": "don\u0027t see kSpontaneousInstance anywhere",
+      "range": {
+        "startLine": 395,
+        "startChar": 57,
+        "endLine": 395,
+        "endChar": 77
+      },
+      "revId": "5e205edb8f3022409562547b68a9aa04b988a7fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9c0a8cb_2c91076d",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T20:30:03Z",
+      "side": 1,
+      "message": "should this be std::string? I think it could be deleted between the call to ReadyHook and Complete",
+      "range": {
+        "startLine": 450,
+        "startChar": 0,
+        "endLine": 450,
+        "endChar": 33
+      },
+      "revId": "5e205edb8f3022409562547b68a9aa04b988a7fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86703c49_668f95da",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T20:30:03Z",
+      "side": 1,
+      "message": "why assert? I believe the other impls in Dawn don\u0027t perform an assert.\n\nI think we only need to do:\n```\nif (tracked) {\n  emwgpuInstanceRequestAdapter(instance, futureId, options);\n}\n```\nso we don\u0027t call request adapter with a null future id",
+      "range": {
+        "startLine": 655,
+        "startChar": 0,
+        "endLine": 655,
+        "endChar": 18
+      },
+      "revId": "5e205edb8f3022409562547b68a9aa04b988a7fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
