@@ -33,6 +33,40 @@
       "message": "Ready for review now.\n\nPasses the fixed conformance tests also.",
       "revId": "b97bc3368d2e48e52ccac35f7bf42a23198f2841",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a02abb1_e711b695",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-13T21:24:11Z",
+      "side": 1,
+      "message": "LGTM with one potential change to the unit tests.",
+      "revId": "b97bc3368d2e48e52ccac35f7bf42a23198f2841",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fed15d1_8f2366c4",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-13T21:24:11Z",
+      "side": 1,
+      "message": "AFAICT every single test case below uses `expectPass \u003d false`, so either you don\u0027t need this parameter or you should probably add some test cases that are expected to pass.",
+      "revId": "b97bc3368d2e48e52ccac35f7bf42a23198f2841",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
