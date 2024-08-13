@@ -41,6 +41,8 @@
 #include "src/tint/lang/wgsl/sem/module.h"
 #include "src/tint/lang/wgsl/sem/value_constructor.h"
 
+#include "src/tint/utils/rtti/switch.h"
+
 using namespace tint::core::number_suffixes;  // NOLINT
 
 TINT_INSTANTIATE_TYPEINFO(tint::glsl::writer::PadStructs);
@@ -115,11 +117,39 @@ ast::transform::Transform::ApplyResult PadStructs::Apply(const Program& src,
             uint32_t size = ty->Size();
             if (ty->Is<core::type::Struct>() && str->UsedAs(core::AddressSpace::kUniform)) {
                 // std140 structs should be padded out to 16 bytes.
-                size = tint::RoundUp(16u, size);
+                uint32_t rounded_size = tint::RoundUp(16u, size);
                 // Add @size and @align attribute to satisfy WGSL validator rules.
-                new_members.Push(b.Member(
-                    name, type,
-                    tint::Vector{b.MemberAlign(core::AInt(16u)), b.MemberSize(core::AInt(size))}));
+                tint::Vector<const ast::Attribute*, 4> attributes;
+
+                uint32_t align_attribute_value = 16u;
+                uint32_t size_attribute_value = rounded_size;
+
+                for (auto* attr : mem->Declaration()->attributes) {
+                    tint::Switch(
+                        attr,
+                        [&](const ast::StructMemberAlignAttribute* align_attr) {
+                            align_attribute_value = std::max(
+                                align_attribute_value,
+                                sem.GetVal(align_attr->expr)->ConstantValue()->ValueAs<uint32_t>());
+                        },
+                        [&](const ast::StructMemberSizeAttribute* size_attr) {
+                            size_attribute_value = std::max(
+                                size_attribute_value,
+                                sem.GetVal(size_attr->expr)->ConstantValue()->ValueAs<uint32_t>());
+                        },
+                        [&](const ast::StructMemberOffsetAttribute*) {
+                            // @offset cannot be used with @align or @size.
+                            // Do not add it.
+                        },
+                        [&](Default) { attributes.Push(ctx.Clone(attr)); });
+                }
+
+                attributes.Push(b.MemberAlign(core::AInt(align_attribute_value)));
+                attributes.Push(b.MemberSize(core::AInt(size_attribute_value)));
+
+                new_members.Push(b.Member(name, type, std::move(attributes)));
+
+                size = size_attribute_value;
             } else {
                 new_members.Push(b.Member(name, type));
             }

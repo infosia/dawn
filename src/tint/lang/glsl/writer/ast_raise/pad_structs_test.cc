@@ -179,6 +179,121 @@ fn main() {
     EXPECT_EQ(expect, str(got));
 }
 
+TEST_F(PadStructsTest, UniformStructPadExistingSize) {
+    auto* src = R"(
+struct N {
+  x : i32,
+  y : i32,
+  z : i32,
+}
+struct S {
+  x : i32,
+  @align(32) @size(32)
+  y : N,
+}
+
+@group(0) @binding(0) var<uniform> u : S;
+
+fn main() {
+  let x = u.x;
+}
+)";
+    auto* expect = R"(
+struct N {
+  x : i32,
+  y : i32,
+  z : i32,
+}
+
+@internal(disable_validation__ignore_struct_member)
+struct S {
+  x : i32,
+  pad : u32,
+  pad_1 : u32,
+  pad_2 : u32,
+  pad_3 : u32,
+  pad_4 : u32,
+  pad_5 : u32,
+  pad_6 : u32,
+  @align(32) @size(32)
+  y : N,
+}
+
+@group(0) @binding(0) var<uniform> u : S;
+
+fn main() {
+  let x = u.x;
+}
+)";
+    ast::transform::DataMap data;
+    auto got = Run<PadStructs>(src, data);
+
+    EXPECT_EQ(expect, str(got));
+}
+
+TEST_F(PadStructsTest, UniformStructPadExistingSizeNested) {
+    auto* src = R"(
+struct A {
+  @size(32i)
+  x : u32,
+}
+
+struct B {
+  @size(64i)
+  x : A,
+  y : u32,
+}
+
+struct U {
+  b : B,
+}
+
+@group(0) @binding(1) var<uniform> u : U;
+
+@compute @workgroup_size(1, 1, 1)
+fn main() {
+  let y = u.b.y;
+}
+)";
+    auto* expect = R"(
+@internal(disable_validation__ignore_struct_member)
+struct A {
+  x : u32,
+  pad : u32,
+  pad_1 : u32,
+  pad_2 : u32,
+  pad_3 : u32,
+  pad_4 : u32,
+  pad_5 : u32,
+  pad_6 : u32,
+}
+
+@internal(disable_validation__ignore_struct_member)
+struct B {
+  @align(16) @size(64)
+  x : A,
+  y : u32,
+}
+
+@internal(disable_validation__ignore_struct_member)
+struct U {
+  @align(16) @size(80)
+  b : B,
+}
+
+@group(0) @binding(1) var<uniform> u : U;
+
+@compute @workgroup_size(1, 1, 1)
+fn main() {
+  let y = u.b.y;
+}
+)";
+    ast::transform::DataMap data;
+    auto got = Run<PadStructs>(src, data);
+
+    EXPECT_EQ(expect, str(got));
+}
+
 TEST_F(PadStructsTest, Size) {
     auto* src = R"(
 struct S {
