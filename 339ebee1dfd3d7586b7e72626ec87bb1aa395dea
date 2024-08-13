@@ -70,6 +70,24 @@
       "parentUuid": "74cc807c_ec17c453",
       "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36a9df66_1e91ade0",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-13T20:58:06Z",
+      "side": 1,
+      "message": "It isn\u0027t debug build that enables tests, it\u0027s `TINT_BUILD_TESTS` so if you set that too `false` or `off` it shouldn\u0027t require googletest.",
+      "parentUuid": "88d32f83_9ab74ed3",
+      "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
