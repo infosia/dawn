@@ -66,6 +66,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d868a656_73bc8de4",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T19:07:41Z",
+      "side": 1,
+      "message": "nvm, I see you use more in a future CL. I think it\u0027s ok then",
+      "parentUuid": "b8fa169a_25beae34",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3d9f004d_4fba0afa",
         "filename": "third_party/emdawnwebgpu/webgpu.cpp",
         "patchSetId": 5
