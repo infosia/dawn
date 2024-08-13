@@ -1324,9 +1324,9 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
             maybe_write_comma();
 
             // Cast the coordinates to unsigned integers if necessary.
-            bool casted = false;
+            bool inside_params = false;
             if (usage == Usage::kCoords && e->Type()->UnwrapRef()->is_integer_scalar_or_vector()) {
-                casted = true;
+                inside_params = true;
                 switch (texture_type->dim()) {
                     case core::type::TextureDimension::k1d:
                         out << "uint(";
@@ -1337,17 +1337,24 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
                         break;
                     case core::type::TextureDimension::k3d:
                         out << "uint3(";
+
                         break;
                     default:
                         TINT_ICE() << "unhandled texture dimensionality";
                 }
+            } else if (usage == Usage::kArrayIndex &&
+                       e->Type()->UnwrapRef()->is_signed_integer_scalar() &&
+                       !(builtin->Fn() == wgsl::BuiltinFn::kTextureLoad ||
+                         builtin->Fn() == wgsl::BuiltinFn::kTextureStore)) {
+                out << "max(0, ";
+                inside_params = true;
             }
 
             if (!EmitExpression(out, e->Declaration())) {
                 return false;
             }
 
-            if (casted) {
+            if (inside_params) {
                 out << ")";
             }
         }
