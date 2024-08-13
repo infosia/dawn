@@ -50,6 +50,24 @@
       "message": "lgtm after Loko\u0027s comment",
       "revId": "0364a04ff3ab112216023f7efe22432617da252c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b29e3e5_a5a621eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-13T01:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d7a3577_1e09908d",
+      "revId": "0364a04ff3ab112216023f7efe22432617da252c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
