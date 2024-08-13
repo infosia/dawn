@@ -86,6 +86,24 @@
       "parentUuid": "f640c9f5_26940c23",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8ee48b9_f5911029",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-13T16:22:17Z",
+      "side": 1,
+      "message": "Thanks for figuring this out!\n\nI wonder if we should just copy the alignment and size from the old struct member when creating the new one? Would that work? Or would it fail on the members that are now \"smaller\" than they used to be, due to padding? (You can go ahead and land your current CL, I\u0027m suggesting this for the future.)",
+      "parentUuid": "7e1798c2_b459d697",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
