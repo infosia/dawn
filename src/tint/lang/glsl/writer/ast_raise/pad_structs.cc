@@ -41,6 +41,8 @@
 #include "src/tint/lang/wgsl/sem/module.h"
 #include "src/tint/lang/wgsl/sem/value_constructor.h"
 
+#include "src/tint/utils/rtti/switch.h"
+
 using namespace tint::core::number_suffixes;  // NOLINT
 
 TINT_INSTANTIATE_TYPEINFO(tint::glsl::writer::PadStructs);
@@ -117,9 +119,42 @@ ast::transform::Transform::ApplyResult PadStructs::Apply(const Program& src,
                 // std140 structs should be padded out to 16 bytes.
                 size = tint::RoundUp(16u, size);
                 // Add @size and @align attribute to satisfy WGSL validator rules.
-                new_members.Push(b.Member(
-                    name, type,
-                    tint::Vector{b.MemberAlign(core::AInt(16u)), b.MemberSize(core::AInt(size))}));
+                tint::Vector<const ast::Attribute*, 4> attributes;
+
+                uint32_t alignAttributeValue = 16u;
+                uint32_t sizeAttributeValue = size;
+                // Flags used to maintain attributes order
+                bool hasAlignAttribute = false;
+                bool hasSizeAttribute = false;
+
+                for (auto* attr : mem->Declaration()->attributes) {
+                    tint::Switch(
+                        attr,
+                        [&](const ast::StructMemberAlignAttribute* align) {
+                            hasAlignAttribute = true;
+                            alignAttributeValue = std::max(
+                                alignAttributeValue,
+                                sem.GetVal(align->expr)->ConstantValue()->ValueAs<uint32_t>());
+                            attributes.Push(b.MemberAlign(core::AInt(alignAttributeValue)));
+                        },
+                        [&](const ast::StructMemberSizeAttribute* size) {
+                            hasSizeAttribute = true;
+                            sizeAttributeValue = std::max(
+                                sizeAttributeValue,
+                                sem.GetVal(size->expr)->ConstantValue()->ValueAs<uint32_t>());
+                            attributes.Push(b.MemberSize(core::AInt(sizeAttributeValue)));
+                        },
+                        [&](Default) { attributes.Push(ctx.Clone(attr)); });
+                }
+
+                if (!hasAlignAttribute) {
+                    attributes.Push(b.MemberAlign(core::AInt(alignAttributeValue)));
+                }
+                if (!hasSizeAttribute) {
+                    attributes.Push(b.MemberSize(core::AInt(sizeAttributeValue)));
+                }
+
+                new_members.Push(b.Member(name, type, std::move(attributes)));
             } else {
                 new_members.Push(b.Member(name, type));
             }
