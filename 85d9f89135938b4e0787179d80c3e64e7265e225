@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2739e46_b9363905",
+        "filename": "src/tint/lang/msl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-13T21:52:42Z",
+      "side": 1,
+      "message": "I actually just cargo-culted this over from the subgroupBroadcast impl and it looks like it\u0027s unnecessary so removed",
+      "parentUuid": "3614d9a8_776903d1",
+      "revId": "85d9f89135938b4e0787179d80c3e64e7265e225",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8be1868_269b0cd6",
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4b928a92_e5b1b624",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-13T21:52:42Z",
+      "side": 1,
+      "message": "Not sure, following up in Tint chat",
+      "parentUuid": "c8be1868_269b0cd6",
+      "revId": "85d9f89135938b4e0787179d80c3e64e7265e225",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e7a85db5_0612a55f",
         "filename": "src/tint/lang/wgsl/resolver/validator.cc",
         "patchSetId": 2
@@ -48,6 +84,24 @@
       "writtenOn": "2024-08-13T19:38:35Z",
       "side": 1,
       "message": "Is this custom validation needed? Doesn\u0027t the intrinsic table already validate this due to the `@const` in the def file?",
+      "revId": "85d9f89135938b4e0787179d80c3e64e7265e225",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc9468a2_7b99f7cb",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2003,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-13T21:52:42Z",
+      "side": 1,
+      "message": "Yeah, I think it is. The `@const` prevents bad e2e tests from being generated, I\u0027m not sure what other effects, but it doesn\u0027t validate. Without this it will ICE at the `TINT_ASSERT(id-\u003eIs\u003ccore::ir::Constant\u003e())` in the polyfill.",
+      "parentUuid": "e7a85db5_0612a55f",
       "revId": "85d9f89135938b4e0787179d80c3e64e7265e225",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
