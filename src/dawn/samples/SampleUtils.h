@@ -28,11 +28,11 @@
 #ifndef SRC_DAWN_SAMPLES_SAMPLEUTILS_H_
 #define SRC_DAWN_SAMPLES_SAMPLEUTILS_H_
 
-#ifndef __EMSCRIPTEN__
-#include "GLFW/glfw3.h"
-#endif  // __EMSCRIPTEN__
-
 #include <webgpu/webgpu_cpp.h>
+
+#include <memory>
+
+#include "dawn/utils/Window.h"
 
 bool InitSample(int argc, const char** argv);
 
@@ -66,7 +66,7 @@ class SampleBase {
     wgpu::TextureFormat preferredSurfaceTextureFormat = wgpu::TextureFormat::BGRA8Unorm;
 
 #ifndef __EMSCRIPTEN__
-    GLFWwindow* window = nullptr;
+    std::unique_ptr<dawn::utils::Window> window;
 #endif  // __EMSCRIPTEN__
 };
 
