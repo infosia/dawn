@@ -220,7 +220,7 @@
       }]
     },
 
-    "Qualcomm": {
+    "Qualcomm_PCI": {
       "id": "0x5143",
 
       "devices": [{
@@ -230,6 +230,17 @@
           "Adreno 5xx": ["0x05000000"],
           "Adreno 6xx": ["0x06000000"],
           "Adreno 7xx": ["0x07000000", "0x43000000"]
+        }
+      }]
+    },
+
+    "Qualcomm_ACPI": {
+      "id": "0x4D4F4351",
+
+      "devices": [{
+        "mask": "0xFF000000",
+        "architecture": {
+          "Adreno X1": ["0x36000000"]
         }
       }]
     },
