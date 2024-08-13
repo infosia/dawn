@@ -381,6 +381,30 @@
       },
       "revId": "994fcb4269a8e994daca2d9c6d6e5b05d745e14f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9612154_88368964",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T15:59:05Z",
+      "side": 1,
+      "message": "oh good catch. could you leave a comment about this?\nit can also have a TODO(crbug.com/356461286) about changing it after the limit is introduced",
+      "parentUuid": "63070f00_22c19282",
+      "range": {
+        "startLine": 774,
+        "startChar": 12,
+        "endLine": 776,
+        "endChar": 78
+      },
+      "revId": "994fcb4269a8e994daca2d9c6d6e5b05d745e14f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
