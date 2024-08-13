@@ -2602,6 +2602,7 @@ bool DeviceBase::IsLockedByCurrentThreadIfNeeded() const {
 }
 
 void DeviceBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump) const {
+    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
     std::string prefix = absl::StrFormat("device_%p", static_cast<const void*>(this));
     GetObjectTrackingList(ObjectType::Texture)->ForEach([&](const ApiObjectBase* texture) {
         static_cast<const TextureBase*>(texture)->DumpMemoryStatistics(dump, prefix.c_str());
@@ -2612,6 +2613,7 @@ void DeviceBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump) const {
 }
 
 uint64_t DeviceBase::ComputeEstimatedMemoryUsage() const {
+    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
     uint64_t size = 0;
     GetObjectTrackingList(ObjectType::Texture)->ForEach([&](const ApiObjectBase* texture) {
         size += static_cast<const TextureBase*>(texture)->ComputeEstimatedByteSize();
@@ -2620,6 +2622,14 @@ uint64_t DeviceBase::ComputeEstimatedMemoryUsage() const {
         size += static_cast<const BufferBase*>(buffer)->GetAllocatedSize();
     });
     return size;
+}
+
+void DeviceBase::ReduceMemoryUsage() {
+    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
+    GetDynamicUploader()->Deallocate(GetQueue()->GetCompletedCommandSerial(), /*freeAll=*/true);
+    mTemporaryUniformBuffer = nullptr;
+    mInternalPipelineStore->scratchStorage.Reset();
+    mInternalPipelineStore->scratchIndirectStorage.Reset();
 }
 
 ResultOrError<Ref<BufferBase>> DeviceBase::GetOrCreateTemporaryUniformBuffer(size_t size) {

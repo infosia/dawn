@@ -458,6 +458,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
 
     void DumpMemoryStatistics(dawn::native::MemoryDump* dump) const;
     uint64_t ComputeEstimatedMemoryUsage() const;
+    void ReduceMemoryUsage();
 
     ResultOrError<Ref<BufferBase>> GetOrCreateTemporaryUniformBuffer(size_t size);
 
