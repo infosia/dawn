@@ -656,8 +656,9 @@ MaybeError ValidateCanUseAs(const BufferBase* buffer, wgpu::BufferUsage usage) {
 }
 
 MaybeError ValidateCanUseAsInternal(const BufferBase* buffer, wgpu::BufferUsage usage) {
-    DAWN_INVALID_IF(!(buffer->GetUsage() & usage), "%s internal usage (%s) doesn't include %s.",
-                    buffer, buffer->GetUsage(), usage);
+    DAWN_INVALID_IF(!(buffer->GetInternalUsage() & usage),
+                    "%s internal usage (%s) doesn't include %s.", buffer,
+                    buffer->GetInternalUsage(), usage);
     return {};
 }
 
