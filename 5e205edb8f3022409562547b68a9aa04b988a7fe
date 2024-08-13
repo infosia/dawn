@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c44ec69b_f0a13ada",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T22:07:47Z",
+      "side": 1,
+      "message": "original comment might be wrong.\n\nother existing async library code seem to do:\n```\n  emscripten_sleep__deps: [\u0027$safeSetTimeout\u0027],\n  emscripten_sleep__async: true,\n  emscripten_sleep: (ms) \u003d\u003e {\n    // emscripten_sleep() does not return a value, but we still need a |return|\n    // here for stack switching support (ASYNCIFY\u003d2). In that mode this function\n    // returns a Promise instead of nothing, and that Promise is what tells the\n    // wasm VM to pause the stack.\n    return Asyncify.handleSleep((wakeUp) \u003d\u003e safeSetTimeout(wakeUp, ms));\n  },\n```",
+      "parentUuid": "b28ff14c_4bea234b",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 42
+      },
+      "revId": "5e205edb8f3022409562547b68a9aa04b988a7fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "925d3444_d08563d9",
         "filename": "third_party/emdawnwebgpu/library_webgpu.js",
         "patchSetId": 1
