@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce77822d_08cc3f15",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3059,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-13T17:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f98329b_58b696ac",
+      "range": {
+        "startLine": 3044,
+        "startChar": 0,
+        "endLine": 3059,
+        "endChar": 0
+      },
+      "revId": "8ebfc67e7887824a0ef9a721654f9f291c95ff5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e4eb10d_118f60cc",
@@ -58,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03802a0a_e616813b",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-13T17:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e4eb10d_118f60cc",
+      "revId": "8ebfc67e7887824a0ef9a721654f9f291c95ff5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20f9a2ee_77f0ea33",
@@ -71,6 +113,24 @@
       "writtenOn": "2024-08-13T16:20:56Z",
       "side": 1,
       "message": "That\u0027s fun, so \"up\" is lower, and \"down\" is higher.",
+      "revId": "8ebfc67e7887824a0ef9a721654f9f291c95ff5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f417bed5_65a1c280",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-13T17:23:16Z",
+      "side": 1,
+      "message": "Yeah, not sure I\u0027ve completely wrapped my brain around it but I was thinking it\u0027s like \"shuffle up [towards me]\"??",
+      "parentUuid": "20f9a2ee_77f0ea33",
       "revId": "8ebfc67e7887824a0ef9a721654f9f291c95ff5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -98,6 +158,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0daca6e_315d101f",
+        "filename": "src/tint/lang/spirv/writer/ast_printer/builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2557,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-13T17:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ae86706_7e217829",
+      "range": {
+        "startLine": 2557,
+        "startChar": 17,
+        "endLine": 2557,
+        "endChar": 31
+      },
+      "revId": "8ebfc67e7887824a0ef9a721654f9f291c95ff5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "196a6107_4891bc0e",
@@ -111,6 +195,24 @@
       "writtenOn": "2024-08-13T16:20:56Z",
       "side": 1,
       "message": "The `.ir.spvasm` files shouldn\u0027t be needed (you may need to rebase on top of James CLs to remove the AST SPV pass)",
+      "revId": "8ebfc67e7887824a0ef9a721654f9f291c95ff5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39346bf0_aa807b18",
+        "filename": "test/tint/builtins/gen/literal/subgroupShuffleDown/10eb45.wgsl.expected.ir.spvasm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-13T17:23:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "196a6107_4891bc0e",
       "revId": "8ebfc67e7887824a0ef9a721654f9f291c95ff5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
