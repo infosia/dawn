@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "868d42a2_0b83b9d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T22:27:05Z",
+      "side": 1,
+      "message": "not sure what is happening with the proc loading. do we need to load with the extension name instead?",
+      "revId": "ef94cc412cbc37d9ebe217a48dcb5ce280cfbd77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "028c41a3_f1d9af74",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T22:27:05Z",
+      "side": 1,
+      "message": "some Vulkan validation layer errors, see https://ci.chromium.org/ui/p/chromium/builders/try/win-dawn-rel/37462/overview\n\nI think we need to say `mUsageTracker.BufferUsedAs(drawCountBuffer, wgpu::BufferUsage::Indirect);`\n\nso the buffer is correctly transitioned to indirect usage",
+      "revId": "ef94cc412cbc37d9ebe217a48dcb5ce280cfbd77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
