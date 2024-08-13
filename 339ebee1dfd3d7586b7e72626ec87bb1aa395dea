@@ -106,6 +106,24 @@
       "parentUuid": "36a9df66_1e91ade0",
       "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5ca5341_c86b2b92",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-13T21:11:28Z",
+      "side": 1,
+      "message": "I don\u0027t think there is anything that needs to change? We can leave fetch deps as is, and lave TINT_BUILD_TESTS as is, you can set build tests as needed in your local environment depending on if you checked out googletest",
+      "parentUuid": "29c911f8_4de97f13",
+      "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
