@@ -122,6 +122,24 @@
       "parentUuid": "f8ee48b9_f5911029",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed6e367c_c7c281ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-13T19:45:14Z",
+      "side": 1,
+      "message": "Actually I wasn\u0027t worried about that, although it can\u0027t hurt to test. Rounding up should have no effect on the @size attribute, if it\u0027s already required to be rounded up to 16 anyway. Rather, I was wondering if copying the old @size and @align attributes from the old member to the new member might be enough to satisfy the WGSL validation instead of using the value computed by the PadStructs transform.",
+      "parentUuid": "10681f2f_f7e69b27",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
