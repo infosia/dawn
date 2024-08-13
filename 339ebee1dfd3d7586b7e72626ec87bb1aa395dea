@@ -124,6 +124,24 @@
       "parentUuid": "29c911f8_4de97f13",
       "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd2e8e4e_8344b6d5",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 3579148
+      },
+      "writtenOn": "2024-08-13T21:15:44Z",
+      "side": 1,
+      "message": "The only obstacle I see in that is that the default path when this is unset in a cmake file requires googletest, which prevents compilation until either TINT_BUILD_TESTS is added or the arg is added to the script. Disabling TINT_BUILD_TESTS by default or removing the arg and simply fetching googletest with the other dependencies, would make builds work by default. Can change either or leave it and close, let me know.",
+      "parentUuid": "f5ca5341_c86b2b92",
+      "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
