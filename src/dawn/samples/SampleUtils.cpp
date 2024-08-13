@@ -45,10 +45,8 @@
 #include "dawn/utils/WGPUHelpers.h"
 
 #ifndef __EMSCRIPTEN__
-#include "GLFW/glfw3.h"
 #include "dawn/dawn_proc.h"
 #include "dawn/native/DawnNative.h"
-#include "webgpu/webgpu_glfw.h"
 #else
 #include <emscripten/emscripten.h>
 #endif  // __EMSCRIPTEN__
@@ -259,10 +257,10 @@ int SampleBase::Run(unsigned int delay) {
         return 1;
     }
 
-    while (!glfwWindowShouldClose(sample->window)) {
+    while (!sample->window->ShouldClose()) {
         sample->FrameImpl();
         sample->surface.Present();
-        glfwPollEvents();
+        sample->window->PollEvents();
         if (delay) {
             dawn::utils::USleep(delay);
         }
@@ -312,23 +310,14 @@ int SampleBase::Run(unsigned int delay) {
 
 bool SampleBase::Setup() {
 #ifndef __EMSCRIPTEN__
-    glfwSetErrorCallback([](int code, const char* message) {
-        dawn::ErrorLog() << "GLFW error: " << code << " - " << message;
-    });
+    window = dawn::utils::Window::Create(width, height, "Dawn window");
 
-    if (!glfwInit()) {
-        return false;
-    }
-
-    // Create the test window with no client API.
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    window = glfwCreateWindow(width, height, "Dawn window", nullptr, nullptr);
     if (!window) {
         return false;
     }
 
-    // Create the surface.
-    surface = wgpu::glfw::CreateSurfaceForWindow(instance, window);
+    // Get the surface.
+    surface = window->CreateSurface(instance);
 #else
     // Create the surface.
     wgpu::SurfaceDescriptorFromCanvasHTMLSelector canvasDesc{};
