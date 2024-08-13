@@ -52,6 +52,24 @@
       "parentUuid": "98bd2aca_9f631884",
       "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88d32f83_9ab74ed3",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 3579148
+      },
+      "writtenOn": "2024-08-13T19:25:21Z",
+      "side": 1,
+      "message": "https://github.com/MichealReed/minigpu/blob/master/minigpu_ffi/src/cmake/dawn.cmake\n\nIf the default path is a debug build would this trigger that the testing flag be enabled by default somewhere? This would error on build until I added the googletest dependency once, then the dependency would initialize and would be hidden from anyone that already has this initialized.",
+      "parentUuid": "74cc807c_ec17c453",
+      "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
