@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c4e8a24_ed39e316",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-08-13T15:40:16Z",
+      "side": 1,
+      "message": "Bravo!\n\nFarewell Aquarius, and we thank you.\n(What the Apollo 13 astronauts said when they jettisoned the lunar module that kept them alive for the return trip home.)",
+      "revId": "9d7c3fc78d19d0c832df171fd175a4f9a6c176b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
