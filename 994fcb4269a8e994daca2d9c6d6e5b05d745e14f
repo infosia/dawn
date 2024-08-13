@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52aa6706_c4687fb6",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-13T15:54:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b0a4a3_0794e94c",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "994fcb4269a8e994daca2d9c6d6e5b05d745e14f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0904ea9f_b2ea91c7",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-08-12T23:54:37Z",
       "side": 1,
       "message": "typo: Equivalent",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 82,
+        "endChar": 14
+      },
+      "revId": "994fcb4269a8e994daca2d9c6d6e5b05d745e14f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3064d70_9c8b5773",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-13T15:54:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0904ea9f_b2ea91c7",
       "range": {
         "startLine": 82,
         "startChar": 3,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9df7816_67134e1a",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-13T15:54:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2983283_0fe0b158",
+      "range": {
+        "startLine": 141,
+        "startChar": 11,
+        "endLine": 142,
+        "endChar": 87
+      },
+      "revId": "994fcb4269a8e994daca2d9c6d6e5b05d745e14f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0364be12_456fc36f",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-08-12T23:54:37Z",
       "side": 1,
       "message": "isn\u0027t `singleDrawOutputParamsOffset` always zero? I don\u0027t think we need the variable if it is always 0",
+      "range": {
+        "startLine": 608,
+        "startChar": 43,
+        "endLine": 608,
+        "endChar": 71
+      },
+      "revId": "994fcb4269a8e994daca2d9c6d6e5b05d745e14f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5543b6e9_34c58392",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-13T15:54:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0364be12_456fc36f",
       "range": {
         "startLine": 608,
         "startChar": 43,
@@ -134,6 +230,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f6b8592_61bb5afd",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-13T15:54:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "746458f1_27d7e9be",
+      "range": {
+        "startLine": 645,
+        "startChar": 93,
+        "endLine": 646,
+        "endChar": 26
+      },
+      "revId": "994fcb4269a8e994daca2d9c6d6e5b05d745e14f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bba898d9_d07c9561",
@@ -147,6 +267,30 @@
       "writtenOn": "2024-08-12T23:54:37Z",
       "side": 1,
       "message": "that seems like it could indeed be a real problem.\n\nCan we make put most of the offset in `inputIndirectBinding.offset` and `drawConstantsBinding.offset`? Then, the remainder offset that doesn\u0027t fulfill the buffer alignment requirement can be passed in the shader",
+      "range": {
+        "startLine": 725,
+        "startChar": 12,
+        "endLine": 730,
+        "endChar": 78
+      },
+      "revId": "994fcb4269a8e994daca2d9c6d6e5b05d745e14f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89e6bb97_cf4b4b80",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-13T15:54:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bba898d9_d07c9561",
       "range": {
         "startLine": 725,
         "startChar": 12,
@@ -174,6 +318,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e68b4025_4b152b91",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-13T15:54:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9bfad43_d15f34e7",
+      "revId": "994fcb4269a8e994daca2d9c6d6e5b05d745e14f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b376e1b4_a15392ff",
@@ -187,6 +349,30 @@
       "writtenOn": "2024-08-12T23:54:37Z",
       "side": 1,
       "message": "typical way to do this is:\n`ceil(a / b) \u003d floor((a + b - 1) / b)`\n\n\n```suggestion\n            uint32_t workgroupCount \u003d (cmd-\u003emaxDrawCount + kWorkgroupSize - 1u) / kWorkgroupSize;\n```",
+      "range": {
+        "startLine": 774,
+        "startChar": 12,
+        "endLine": 776,
+        "endChar": 78
+      },
+      "revId": "994fcb4269a8e994daca2d9c6d6e5b05d745e14f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63070f00_22c19282",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-13T15:54:26Z",
+      "side": 1,
+      "message": "The suggestion causes an overflow when maxDrawCount is UINT32_MAX. However, since we will eventually have a limit that is going to be less than (UINT32_MAX - 64) should I apply your suggestion?",
+      "parentUuid": "b376e1b4_a15392ff",
       "range": {
         "startLine": 774,
         "startChar": 12,
