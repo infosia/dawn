@@ -41,6 +41,8 @@
 #include "src/tint/lang/wgsl/sem/module.h"
 #include "src/tint/lang/wgsl/sem/value_constructor.h"
 
+#include "src/tint/utils/rtti/switch.h"
+
 using namespace tint::core::number_suffixes;  // NOLINT
 
 TINT_INSTANTIATE_TYPEINFO(tint::glsl::writer::PadStructs);
@@ -115,15 +117,33 @@ ast::transform::Transform::ApplyResult PadStructs::Apply(const Program& src,
             uint32_t size = ty->Size();
             if (ty->Is<core::type::Struct>() && str->UsedAs(core::AddressSpace::kUniform)) {
                 // std140 structs should be padded out to 16 bytes.
-                size = tint::RoundUp(16u, size);
-                // Add @size and @align attribute to satisfy WGSL validator rules.
-                new_members.Push(b.Member(
-                    name, type,
-                    tint::Vector{b.MemberAlign(core::AInt(16u)), b.MemberSize(core::AInt(size))}));
+                uint32_t rounded_size = tint::RoundUp(16u, size);
+                // Add a @size attribute to satisfy WGSL validator rules.
+                // But do not add manual padding for the part of (rounded_size - size),
+                // which is implicitly padded by std140.
+                new_members.Push(
+                    b.Member(name, type, tint::Vector{b.MemberSize(core::AInt(rounded_size))}));
+
+                uint32_t size_attribute_value = 0;
+                for (auto* attr : mem->Declaration()->attributes) {
+                    if (auto* size_attr = attr->As<ast::StructMemberSizeAttribute>()) {
+                        size_attribute_value =
+                            sem.GetVal(size_attr->expr)->ConstantValue()->ValueAs<uint32_t>();
+                        break;
+                    }
+                }
+
+                if (size_attribute_value > rounded_size) {
+                    // Explicit @size attribute exists.
+                    // Add manual padding of the amount that is greater than the rounded_size.
+                    size += size_attribute_value - rounded_size;
+                }
+
+                offset += rounded_size;
             } else {
                 new_members.Push(b.Member(name, type));
+                offset += size;
             }
-            offset += size;
         }
 
         uint32_t struct_size = str->Size();
