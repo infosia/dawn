@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61077d28_060cd27b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-13T14:26:36Z",
+      "side": 1,
+      "message": "I think you mean, `So long and Thanks for all the Fish.`",
+      "revId": "afbe20f7f4ebbd7b698c5d0b746f46a7d0747cb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
