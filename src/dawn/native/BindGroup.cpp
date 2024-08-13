@@ -115,7 +115,7 @@ MaybeError ValidateBufferBinding(const DeviceBase* device,
                     "Offset (%u) of %s does not satisfy the minimum %s alignment (%u).",
                     entry.offset, entry.buffer, layout.type, requiredBindingAlignment);
 
-    DAWN_INVALID_IF(!(entry.buffer->GetUsage() & requiredUsage),
+    DAWN_INVALID_IF(!(entry.buffer->GetInternalUsage() & requiredUsage),
                     "Binding usage (%s) of %s doesn't match expected usage (%s).",
                     entry.buffer->GetUsageExternalOnly(), entry.buffer, requiredUsage);
 
