@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e46feb5f_ccbd870e",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T18:55:51Z",
+      "side": 1,
+      "message": "wondering if we really need the wrapper for all the objects.\nseems like it\u0027s actually only relevant for some of the objects like buffers\n\nbetter to have fewer {} objects to have less GC-able objects\n\n_tableGet would return WebGPU._table[ptr] and it\u0027s up to the caller to know if it\u0027s directly the object, or you need to do `tableGet(id).object`",
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e4d7c4b_adcc402e",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T18:55:51Z",
+      "side": 1,
+      "message": "nit\n```suggestion\n    bufferWrapper.object.destroy();\n```",
+      "range": {
+        "startLine": 492,
+        "startChar": 4,
+        "endLine": 492,
+        "endChar": 31
+      },
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8fa169a_25beae34",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T18:55:51Z",
+      "side": 1,
+      "message": "IMO we don\u0027t need the NonCopyable from Dawn, and can just do the `\u003d delete` stuff inside RefCounted directly.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d9f004d_4fba0afa",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T18:55:51Z",
+      "side": 1,
+      "message": "if we\u0027re using atomics, should this be\n\n`mRefCount.fetch_add(1u, std::memory_order_relaxed)` ?\nand `std::memory_order_release` for Release?\n\nor is that not supported in WASM",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "749d56aa_c462120c",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T18:55:51Z",
+      "side": 1,
+      "message": "nit: not sure we need a DeleteThis method.\n\nCouldn\u0027t subclasses override the destructor instead?\nwith comment [2], maybe don\u0027t need any virtual methods at all",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1b362f8_db92770b",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T18:55:51Z",
+      "side": 1,
+      "message": "[2] emwgpuDelete doesn\u0027t care about the type. could we put this in the base class instead?\n\ncould we track the instance in the same way as the other objects for consistency?",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 49
+      },
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
