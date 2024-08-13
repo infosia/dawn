@@ -104,6 +104,24 @@
       "parentUuid": "7e1798c2_b459d697",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10681f2f_f7e69b27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-13T16:30:31Z",
+      "side": 1,
+      "message": "\"old struct member\": does this refer to wgsl struct in the input of PadStruct transform?\n\nYeah, if there\u0027s an existing @size say @size(256), could be problem. Let me add more unittest cases and see if it breaks things.\n\nThanks for pointing this out!",
+      "parentUuid": "f8ee48b9_f5911029",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
