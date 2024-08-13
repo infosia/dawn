@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca9b4285_a4c4dbc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-13T22:03:10Z",
+      "side": 1,
+      "message": "LGTM other than Austin\u0027s comment",
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e46feb5f_ccbd870e",
