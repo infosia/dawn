@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ac9476c_6f63cb81",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-13T20:03:13Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "d3c31481_3edf3b18",
+      "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff0aeff2_2a7fa943",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9182945b_b78ca58a",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-13T20:03:13Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "ff0aeff2_2a7fa943",
+      "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01744995_576e1db9",
@@ -65,6 +101,24 @@
       "writtenOn": "2024-08-13T19:46:36Z",
       "side": 1,
       "message": "I wouldn\u0027t be surprised if the fuzzer blows up on this at some point in the future. A super deeply nested set of function calls will trigger a stack exhaustion .... (not saying to do anything necessarily, we have a few places this can happen, but something to keep in mind. Fuzzers hate recursion, heh)",
+      "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97d87011_46b40104",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-13T20:03:13Z",
+      "side": 1,
+      "message": "Ack, this is the same pattern used elsewhere in the code, so I don\u0027t think I am making it more likely to blow up. but I do agree, at some point the fuzzers will hunt this down.",
+      "parentUuid": "01744995_576e1db9",
       "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +146,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e2ca841_3b8fdebf",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-13T20:03:13Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "a57575df_47b64cd4",
+      "range": {
+        "startLine": 635,
+        "startChar": 0,
+        "endLine": 642,
+        "endChar": 5
+      },
+      "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e29eb02_cf03a1bf",
@@ -105,6 +183,30 @@
       "writtenOn": "2024-08-13T19:46:36Z",
       "side": 1,
       "message": "```suggestion\n    if (diagnostics_.ContainsErrors()) {\n        return;\n    }\n    \n    // Check for discards in non-fragments\n    for (const auto\u0026 d : discards_) {\n        const auto* f \u003d ContainingFunction(d);\n        for (const Function* ep : ContainingEndPoints(f)) {\n            if (ep-\u003eStage() !\u003d Function::PipelineStage::kFragment) {\n                AddError(d) \u003c\u003c \"cannot be called in non-fragment end point\";\n            }\n        }\n    }\n```",
+      "range": {
+        "startLine": 646,
+        "startChar": 0,
+        "endLine": 656,
+        "endChar": 5
+      },
+      "revId": "93f4d9b224f40098febc9be1ee8c801f7f6a0f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3da9ac0c_dee5da28",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-13T20:03:13Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "2e29eb02_cf03a1bf",
       "range": {
         "startLine": 646,
         "startChar": 0,
