@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3614d9a8_776903d1",
+        "filename": "src/tint/lang/msl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-13T19:38:35Z",
+      "side": 1,
+      "message": "The IR backend doesn\u0027t convert to a `ushort` does it need to? (We\u0027d need to add a custom type for u16, similar to what we have for u8)",
+      "revId": "85d9f89135938b4e0787179d80c3e64e7265e225",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8be1868_269b0cd6",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-13T19:38:35Z",
+      "side": 1,
+      "message": "Should we be validating that the value is `\u003e\u003d0` somewhere for this? Otherwise, do we expect really big unsigned numbers to work?",
+      "revId": "85d9f89135938b4e0787179d80c3e64e7265e225",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7a85db5_0612a55f",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2003,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-13T19:38:35Z",
+      "side": 1,
+      "message": "Is this custom validation needed? Doesn\u0027t the intrinsic table already validate this due to the `@const` in the def file?",
+      "revId": "85d9f89135938b4e0787179d80c3e64e7265e225",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
