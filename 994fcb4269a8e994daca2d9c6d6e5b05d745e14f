@@ -95,6 +95,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "746458f1_27d7e9be",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-13T02:17:37Z",
+      "side": 1,
+      "message": "nit. existing typo, but:\n\n\"does a WriteBuffer\"",
+      "range": {
+        "startLine": 645,
+        "startChar": 93,
+        "endLine": 646,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "917b3092_d6c3fdbb",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+              "range": {
+                "startLine": 645,
+                "startChar": 0,
+                "endLine": 649,
+                "endChar": 0
+              },
+              "replacement": "        // Finally, we can now encode our validation and duplication passes. Each pass first does\n        // two WriteBuffer to get batch and pass data over to the GPU, followed by a single\n        // compute pass. The compute pass encodes a separate SetBindGroup and Dispatch command\n        // for each batch.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "994fcb4269a8e994daca2d9c6d6e5b05d745e14f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bba898d9_d07c9561",
         "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
         "patchSetId": 4
