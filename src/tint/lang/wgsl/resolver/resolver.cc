@@ -2513,6 +2513,23 @@ sem::Call* Resolver::BuiltinCall(const ast::CallExpression* expr,
                 }
             }
             break;
+        case wgsl::BuiltinFn::kSmoothstep:
+            TINT_ASSERT(args.Length() == 3);
+            {
+                auto* lowConst = args[0]->ConstantValue();
+                auto* highConst = args[1]->ConstantValue();
+                if (lowConst && highConst) {
+                    // Delegate error checking to the const-eval function, but use a harmless
+                    // last argument.
+                    auto fakeArgs = Vector{lowConst, highConst, lowConst};
+                    auto res =
+                        const_eval_.smoothstep(call->Type(), fakeArgs, call->Declaration()->source);
+                    if (res != Success) {
+                        return nullptr;
+                    }
+                }
+            }
+            break;
         default:
             break;
     }

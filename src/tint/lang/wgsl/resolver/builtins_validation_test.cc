@@ -1480,5 +1480,33 @@ TEST_F(ResolverBuiltinsValidationTest,
     EXPECT_TRUE(r()->Resolve());
 }
 
+TEST_F(ResolverBuiltinsValidationTest, Smoothstep_PartialConstLowNotLessThanHigh_Scalar) {
+    WrapInFunction(Var("s", ty.f32()),
+                   Call(Source{{12, 34}}, "smoothstep", Expr(1_f), Expr(1_f), "s"));
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(),
+              "12:34 error: smoothstep called with 'low' (1.0) not less than 'high' (1.0)");
+}
+
+TEST_F(ResolverBuiltinsValidationTest, Smoothstep_PartialConstLowNotLessThanHigh_Vector) {
+    WrapInFunction(Var("v", ty.vec2<f32>()),
+                   Call(Source{{12, 34}}, "smoothstep", Call<vec2<f32>>(0_f, 4_f),
+                        Call<vec2<f32>>(1_f, 3_f), "v"));
+
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(),
+              "12:34 error: smoothstep called with 'low' (4.0) not less than 'high' (3.0)");
+}
+
+TEST_F(ResolverBuiltinsValidationTest,
+       Smoothstep_PartialConstLowNotLessThanHigh_PartialRuntimeVectorNoError) {
+    WrapInFunction(Var("s", ty.f32()), Var("v", ty.vec2<f32>()),
+                   Call(Source{{12, 34}}, "smoothstep", Call<vec2<f32>>("s", 4_f),
+                        Call<vec2<f32>>(1_f, 3_f), "v"));
+
+    EXPECT_TRUE(r()->Resolve());
+}
+
 }  // namespace
 }  // namespace tint::resolver
