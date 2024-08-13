@@ -16,6 +16,46 @@
       "message": "PTAL, thanks!",
       "revId": "85aabe9c7eba732d4281f38f38f5d54e64ec945c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8737ac25_db2d3378",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T17:58:22Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "85aabe9c7eba732d4281f38f38f5d54e64ec945c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f7d4362_4243abae",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-13T17:58:22Z",
+      "side": 1,
+      "message": "Rename this one to GetUsage to match TextureBase",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 51
+      },
+      "revId": "85aabe9c7eba732d4281f38f38f5d54e64ec945c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
