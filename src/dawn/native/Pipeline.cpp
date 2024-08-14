@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "absl/container/flat_hash_set.h"
+#include "absl/strings/str_join.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/Device.h"
@@ -49,7 +50,7 @@ bool IsDoubleValueRepresentableAsF16(double value) {
 
 namespace dawn::native {
 ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* device,
-                                                                const ShaderModuleBase* module,
+                                                                ShaderModuleBase* module,
                                                                 const char* entryPointName,
                                                                 uint32_t constantCount,
                                                                 const ConstantEntry* constants,
@@ -92,6 +93,24 @@ ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* devi
 
     if (layout != nullptr) {
         DAWN_TRY(ValidateCompatibilityWithPipelineLayout(device, metadata, layout));
+    }
+
+    if (device->IsCompatibilityMode()) {
+        auto tintProgram = module->UseTintProgram();
+        tint::inspector::Inspector inspector(tintProgram->GetTintProgram()->program);
+        auto depthTextureLoads = inspector.GetDepthTextureLoads(entryPoint.name);
+        if (!depthTextureLoads.empty()) {
+            return DAWN_VALIDATION_ERROR(
+                "textureLoad can not be used with depth textures in compatibility mode in "
+                "stage (%s), entry point \"%s\", %s",
+                metadata.stage, entryPoint.name,
+                absl::StrJoin(
+                    depthTextureLoads, ", ",
+                    [](std::string* out, const tint::inspector::Inspector::LoadInfo& info) {
+                        absl::StrAppend(out, absl::StrFormat("@group(%d) @binding(%d)", info.group,
+                                                             info.binding));
+                    }));
+        }
     }
 
     // Validate if overridable constants exist in shader module
