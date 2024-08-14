@@ -158,6 +158,24 @@
       "parentUuid": "ed6e367c_c7c281ae",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "702d39b1_97895d61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-14T14:09:52Z",
+      "side": 1,
+      "message": "Do you have a case in which an implicit @size is valid for the old struct member, but invalid for the new one?",
+      "parentUuid": "dd969bc1_a9dc9ede",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
