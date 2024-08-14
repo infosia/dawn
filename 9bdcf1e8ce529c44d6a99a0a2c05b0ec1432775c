@@ -52,6 +52,24 @@
       "parentUuid": "77db3c54_5cf9f74a",
       "revId": "9bdcf1e8ce529c44d6a99a0a2c05b0ec1432775c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a995711_dda71f8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-14T18:01:20Z",
+      "side": 1,
+      "message": "I can\u0027t infer which one is failing from the logs. I know that it is drawing an extra triangle where it shouldn\u0027t, which could be either of the options you listed.",
+      "parentUuid": "a0978cce_c0971ac8",
+      "revId": "9bdcf1e8ce529c44d6a99a0a2c05b0ec1432775c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
