@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6af7e717_281e50b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-14T01:15:17Z",
+      "side": 1,
+      "message": "Doesn\u0027t make /this/ diff easier, but future CLs like the Unity one are a bit clearer.",
+      "revId": "0e41756d312ba2c8d13db9e4389c3fd3551038f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
