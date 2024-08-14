@@ -67,6 +67,24 @@
       "message": "AFAICT every single test case below uses `expectPass \u003d false`, so either you don\u0027t need this parameter or you should probably add some test cases that are expected to pass.",
       "revId": "b97bc3368d2e48e52ccac35f7bf42a23198f2841",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cb646a5_743e3873",
+        "filename": "src/tint/lang/wgsl/resolver/builtins_validation_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-08-14T14:19:01Z",
+      "side": 1,
+      "message": "yeah, you noticed.\n\nWhen I had passing cases, I got an internal error from the resolver saying the tint::ast::Module* was used twice.\nI\u0027ve now discovered that in the passing cases, my test class runs the resolver twice.\nWill post a patch that fixes it.",
+      "parentUuid": "9fed15d1_8f2366c4",
+      "revId": "b97bc3368d2e48e52ccac35f7bf42a23198f2841",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
