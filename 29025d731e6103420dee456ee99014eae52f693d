@@ -16,6 +16,57 @@
       "message": "ptal",
       "revId": "29025d731e6103420dee456ee99014eae52f693d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "768d7b60_84047998",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-14T01:41:41Z",
+      "side": 1,
+      "message": "LGTM w/ nit and question",
+      "revId": "29025d731e6103420dee456ee99014eae52f693d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8c1f5ac_bcb51b8f",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-14T01:41:41Z",
+      "side": 1,
+      "message": "If there are multiple of them, should we report them all to save the user getting repeated errors?",
+      "revId": "29025d731e6103420dee456ee99014eae52f693d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13335376_ae66db24",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-14T01:41:41Z",
+      "side": 1,
+      "message": "```suggestion\n    /// @param ep the entry point to get the information for\n```",
+      "revId": "29025d731e6103420dee456ee99014eae52f693d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
