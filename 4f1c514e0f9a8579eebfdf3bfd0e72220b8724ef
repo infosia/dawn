@@ -16,6 +16,24 @@
       "message": "Hm, this feels like we should be fixing up the arguments in a polyfill such that the \u0027args_emitted\u0027 isn\u0027t required.\n\n@jrprice@google.com",
       "revId": "4f1c514e0f9a8579eebfdf3bfd0e72220b8724ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c628e0c_8dc53866",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-14T17:03:28Z",
+      "side": 1,
+      "message": "Discussed offline, probably makes sense to apply a more general cleanup so these are all dealt with consistently and it\u0027s not assumed that WGSL builtin args always go at the end. Filed a TODO for follow-up: https://crbug.com/359883869",
+      "parentUuid": "bbf4a935_5af21782",
+      "revId": "4f1c514e0f9a8579eebfdf3bfd0e72220b8724ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
