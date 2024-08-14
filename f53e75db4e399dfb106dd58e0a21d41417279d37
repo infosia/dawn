@@ -194,6 +194,24 @@
       "parentUuid": "702d39b1_97895d61",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c00c4000_4d59627f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-14T18:22:03Z",
+      "side": 1,
+      "message": "And I found 2 bug cases, working on the fix\n\n- explicit: with larger @size at first: @size(32). Should preserve this attribute (pick the max of exiting @size and 16)\n\n- nested: parent struct member has explicit @size, need updating:\n\n```\n// input\nstruct A {\n  x: u32;\n  y: u32;\n  z: u32;\n};\nstruct B {\n  x : u32,\n  @align(16)\n  a : A,\n};\nstruct S {\n  @size(16)  // this needs updating\n  b: B\n}\n```",
+      "parentUuid": "89c7716b_5fa6a056",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
