@@ -781,6 +781,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
             totalInterStageShaderComponents += 1;
         }
         metadata->usesFragDepth = entryPoint.frag_depth_used;
+        metadata->usesTextureLoadWithDepthTexture = entryPoint.has_texture_load_with_depth_texture;
 
         metadata->totalInterStageShaderComponents = totalInterStageShaderComponents;
         DelayedInvalidIf(totalInterStageShaderComponents > maxInterStageShaderComponents,
