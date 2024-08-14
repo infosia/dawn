@@ -212,6 +212,24 @@
       "parentUuid": "89c7716b_5fa6a056",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f631df5_3e026a1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-14T19:19:00Z",
+      "side": 1,
+      "message": "@align(12) seems like it would violate this:\n\nIf align(n) is applied to a member of S with type T, and S is the store type or contained in the store type for a variable in address space C, then n must satisfy: n \u003d k × RequiredAlignOf(T,C) for some positive integer k.\n\n(Where RequiredAlignOf(T, C) is 16 for a struct in a uniform block.)",
+      "parentUuid": "c00c4000_4d59627f",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
