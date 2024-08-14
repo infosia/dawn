@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3605763f_6c395e4f",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-14T21:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e46feb5f_ccbd870e",
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e4d7c4b_adcc402e",
@@ -48,6 +66,30 @@
       "writtenOn": "2024-08-13T18:55:51Z",
       "side": 1,
       "message": "nit\n```suggestion\n    bufferWrapper.object.destroy();\n```",
+      "range": {
+        "startLine": 492,
+        "startChar": 4,
+        "endLine": 492,
+        "endChar": 31
+      },
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08954dca_5f69ea2b",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-14T21:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4d7c4b_adcc402e",
       "range": {
         "startLine": 492,
         "startChar": 4,
@@ -105,6 +147,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a517022_b11ab4ab",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-14T21:35:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d868a656_73bc8de4",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d9f004d_4fba0afa",
@@ -118,6 +184,30 @@
       "writtenOn": "2024-08-13T18:55:51Z",
       "side": 1,
       "message": "if we\u0027re using atomics, should this be\n\n`mRefCount.fetch_add(1u, std::memory_order_relaxed)` ?\nand `std::memory_order_release` for Release?\n\nor is that not supported in WASM",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5a620d6_52bc316c",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-14T21:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d9f004d_4fba0afa",
       "range": {
         "startLine": 46,
         "startChar": 0,
@@ -151,6 +241,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74e6f394_d190a1e8",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-14T21:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "749d56aa_c462120c",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1b362f8_db92770b",
@@ -164,6 +278,30 @@
       "writtenOn": "2024-08-13T18:55:51Z",
       "side": 1,
       "message": "[2] emwgpuDelete doesn\u0027t care about the type. could we put this in the base class instead?\n\ncould we track the instance in the same way as the other objects for consistency?",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 49
+      },
+      "revId": "1731e02a90cc4616567dc60959112daae97a26be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "870876b5_7b853d7e",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-14T21:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1b362f8_db92770b",
       "range": {
         "startLine": 121,
         "startChar": 0,
