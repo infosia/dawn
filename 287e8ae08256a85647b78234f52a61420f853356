@@ -103,6 +103,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "905007b7_23b59ce0",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-14T20:59:52Z",
+      "side": 1,
+      "message": "All of them create a `MemberBuiltinCall` instruction using `b.MemberCallWithResult()`, it\u0027s just that some don\u0027t need to capture the object as they are using the implicit insertion mechanism of `b.InsertBefore()`. So it should be doable in all cases.\n\nIt\u0027s a relatively small simplification so will leave it up to you if you want to try it.",
+      "parentUuid": "9a5c34ac_c8a0b645",
+      "range": {
+        "startLine": 709,
+        "startChar": 0,
+        "endLine": 713,
+        "endChar": 13
+      },
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ef32b402_80566f47",
         "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
         "patchSetId": 5
