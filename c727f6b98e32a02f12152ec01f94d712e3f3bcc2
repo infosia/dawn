@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85724b6f_6c148941",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7479,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-14T20:59:40Z",
+      "side": 1,
+      "message": "Extra whitespace is a KI, https://issues.chromium.org/issues/354735929",
+      "revId": "c727f6b98e32a02f12152ec01f94d712e3f3bcc2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3420a7ea_528eb52a",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7490,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-14T20:59:40Z",
+      "side": 1,
+      "message": "Extra whitespace is a KI, https://issues.chromium.org/issues/354735929",
+      "revId": "c727f6b98e32a02f12152ec01f94d712e3f3bcc2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
