@@ -34,6 +34,24 @@
       "parentUuid": "8349a2f1_34128041",
       "revId": "9bdcf1e8ce529c44d6a99a0a2c05b0ec1432775c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0978cce_c0971ac8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-14T17:15:29Z",
+      "side": 1,
+      "message": "Yes, that would be appropriate to do. Would be ideal as well if you can suppress only what\u0027s failing - i.e. is it when the drawCount in the buffer is smaller, or when maxDrawCount is smaller..?",
+      "parentUuid": "77db3c54_5cf9f74a",
+      "revId": "9bdcf1e8ce529c44d6a99a0a2c05b0ec1432775c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
