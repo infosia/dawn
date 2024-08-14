@@ -16,6 +16,58 @@
       "message": "PTAL, thanks!",
       "revId": "a88f70b2e83930c90d15adea351a7e788d4192f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78da9c5e_3d93231d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-14T16:24:58Z",
+      "side": 1,
+      "message": "LGTM with minor nit",
+      "revId": "a88f70b2e83930c90d15adea351a7e788d4192f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d59f9b6b_d1d27079",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-14T16:24:58Z",
+      "side": 1,
+      "message": "Nit: `UnwrapRef()` should be unnecessary as it is already done above.",
+      "fixSuggestions": [
+        {
+          "fixId": "21c23bb9_f8c32051",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/resolver/validator.cc",
+              "range": {
+                "startLine": 1131,
+                "startChar": 0,
+                "endLine": 1132,
+                "endChar": 0
+              },
+              "replacement": "            auto* arr \u003d type-\u003eAs\u003csem::Array\u003e();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a88f70b2e83930c90d15adea351a7e788d4192f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
