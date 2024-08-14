@@ -142,6 +142,24 @@
       "parentUuid": "f5ca5341_c86b2b92",
       "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17ef90ee_abf5c2fb",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-14T01:29:22Z",
+      "side": 1,
+      "message": "I didn\u0027t write the fetch script, so I don\u0027t know why it\u0027s setup that way. I assume it\u0027s to get a minimum of dependencies as needed. So adding googletest by default would defeat that.\n\nAs to `TINT_BUILD_TESTS`, I\u0027d prefer to keep that on by default as it makes development simpler. When developing tint we always want to be building tests, so this just makes it happen automatically.",
+      "parentUuid": "fd2e8e4e_8344b6d5",
+      "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
