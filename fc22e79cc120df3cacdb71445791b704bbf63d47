@@ -16,6 +16,24 @@
       "message": "I’m confused why webgpu CTS fails: `webgpu:api,operation,memory_sync,buffer,multiple_buffers:wr:boundary\u003d\"pass\";readOp\u003d\"input-indirect-dispatch\";readContext\u003d\"compute-pass-encoder\";writeOp\u003d\"storage\";writeContext\u003d\"render-pass-encoder\"`\n\nIt may be because of the validation indirect scratch buffers, but write-read operations should not interact with the indirect validation though…",
       "revId": "fc22e79cc120df3cacdb71445791b704bbf63d47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "337cd2d5_e6978c05",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-14T21:00:22Z",
+      "side": 1,
+      "message": "It\u0027s crashing, hitting [this ASSERT](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Buffer.cpp;l\u003d640?q\u003dBuffer.cpp:640%20f:dawn%20f:native\u0026sq\u003d)\n \n \nThat probably means somehow we are doing something invalid, generating an error buffer - and then that error buffer is being used in the submit.\n\nStack:\n```\nThread 0 (crashed)\n 0  libc.so.6 + 0x3efb7\n    rax \u003d 0x0000000000000000   rdx \u003d 0x0000000000000000\n    rcx \u003d 0x00007f29628a7fb7   rbx \u003d 0x00007ffcc8d70778\n    rsi \u003d 0x00007ffcc8d70520   rdi \u003d 0x0000000000000002\n    rbp \u003d 0x00007ffcc8d708b0   rsp \u003d 0x00007ffcc8d70520\n     r8 \u003d 0x0000000000000000    r9 \u003d 0x00007ffcc8d70520\n    r10 \u003d 0x0000000000000008   r11 \u003d 0x0000000000000246\n    r12 \u003d 0x0000272c052e1e68   r13 \u003d 0x00007ffcc8d70a10\n    r14 \u003d 0x0000272c0b0a1f80   r15 \u003d 0x0000272c052e1e60\n    rip \u003d 0x00007f29628a7fb7\n    Found by: given as instruction pointer in context\n 1  chrome!ValidateCanUseOnQueueNow [Buffer.cpp : 640 + 0x1f]\n    rbp \u003d 0x00007ffcc8d70940   rsp \u003d 0x00007ffcc8d708c0\n    rip \u003d 0x0000555f4aa0e2ab\n    Found by: previous frame\u0027s frame pointer\n 2  chrome!ValidateSubmit [Queue.cpp : 608 + 0x16]\n    rbx \u003d 0x0000272c0d9db480   rbp \u003d 0x00007ffcc8d70a50\n    rsp \u003d 0x00007ffcc8d70950   r14 \u003d 0x0000000000000000\n    rip \u003d 0x0000555f4aa92e59\n    Found by: call frame info\n 3  chrome!SubmitInternal [Queue.cpp : 699 + 0x17]\n    rbx \u003d 0x0000555f599b16ef   rbp \u003d 0x00007ffcc8d70af0\n    rsp \u003d 0x00007ffcc8d70a60   r12 \u003d 0xaaaaaaaaaaaaaaaa\n    r13 \u003d 0x0000272c052f1b80   r14 \u003d 0x0000272c0535c000\n    r15 \u003d 0x00007ffcc8d70b20   rip \u003d 0x0000555f4aa8fc99\n    Found by: call frame info\n```",
+      "parentUuid": "281789e2_44378dff",
+      "revId": "fc22e79cc120df3cacdb71445791b704bbf63d47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
