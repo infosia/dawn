@@ -4187,6 +4187,51 @@ TEST_F(InspectorGetBlendSrcTest, Basic) {
     EXPECT_EQ(1u, result[0].output_variables[1].attributes.blend_src);
 }
 
+TEST_F(InspectorTextureTest, TextureDepthLoadMultipleEPs) {
+    std::string shader = R"(
+@group(0) @binding(0) var<storage, read_write> dstBuf : array<vec4f>;
+@group(0) @binding(1) var tex1 : texture_2d_array<f32>;
+@group(0) @binding(4) var tex2 : texture_multisampled_2d<f32>;
+@group(1) @binding(3) var tex3 : texture_2d_array<f32>;
+@group(3) @binding(1) var tex4 : texture_depth_2d;
+@group(3) @binding(2) var tex5 : texture_depth_2d_array;
+@group(3) @binding(3) var tex6 : texture_depth_multisampled_2d;
+
+@compute @workgroup_size(1, 1, 1) fn main1() {
+    dstBuf[0] = textureLoad(tex1, vec2(0), 0, 0);
+    dstBuf[1] = textureLoad(tex1, vec2(1), 1, 0);
+    dstBuf[2] = textureLoad(tex2, vec2(0), 0);
+    dstBuf[3] = textureLoad(tex3, vec2(0), 1, 0);
+    dstBuf[4] = vec4f(textureLoad(tex4, vec2(0), 0));
+}
+
+@compute @workgroup_size(1, 1, 1) fn main2() {
+    dstBuf[0] = textureLoad(tex1, vec2(0), 0, 0);
+    dstBuf[1] = textureLoad(tex1, vec2(0), 0, 0);
+    dstBuf[2] = textureLoad(tex2, vec2(0), 0);
+    dstBuf[3] = vec4f(textureLoad(tex5, vec2(0), 0, 0));
+    dstBuf[4] = vec4f(textureLoad(tex6, vec2(0), 0));
+}
+    )";
+    Inspector& inspector = Initialize(shader);
+    {
+        auto info1 = inspector.GetDepthTextureLoads("main1");
+        ASSERT_EQ(1u, info1.size());
+
+        EXPECT_EQ(3u, info1[0].group);
+        EXPECT_EQ(1u, info1[0].binding);
+    }
+    {
+        auto info2 = inspector.GetDepthTextureLoads("main2");
+        ASSERT_EQ(2u, info2.size());
+
+        EXPECT_EQ(3u, info2[0].group);
+        EXPECT_EQ(2u, info2[0].binding);
+        EXPECT_EQ(3u, info2[1].group);
+        EXPECT_EQ(3u, info2[1].binding);
+    }
+}
+
 }  // namespace
 
 static std::ostream& operator<<(std::ostream& out, const Inspector::TextureQueryType& ty) {
