@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c77fbe7c_639501e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-14T21:17:46Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "c727f6b98e32a02f12152ec01f94d712e3f3bcc2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "85724b6f_6c148941",
         "filename": "src/tint/lang/core/ir/validator_test.cc",
         "patchSetId": 1
