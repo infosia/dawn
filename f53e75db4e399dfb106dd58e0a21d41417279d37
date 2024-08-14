@@ -230,6 +230,24 @@
       "parentUuid": "c00c4000_4d59627f",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "063b1540_6bc42c48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-14T19:21:54Z",
+      "side": 1,
+      "message": "But also, wouldn\u0027t the implicit @size of the resulting struct be 16, even after padding, due to use as uniform? Why do we need to be explicit?\n\n(Actually, same for the @align. The padding should already have ensured it\u0027s falling on @align(16).)",
+      "parentUuid": "2f631df5_3e026a1f",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
