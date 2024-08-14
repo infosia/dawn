@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8349a2f1_34128041",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-14T17:05:27Z",
+      "side": 1,
+      "message": "The DrawCount tests are only failing for GTX 1660 GPU on linux. Intel seems to be fine. Perhaps it\u0027s a driver issue? Should we suppress the test for GTX 1660 on linux and file a bug?",
+      "revId": "9bdcf1e8ce529c44d6a99a0a2c05b0ec1432775c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

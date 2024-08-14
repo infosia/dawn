@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eb7ea46_fd8513c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-14T17:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "868d42a2_0b83b9d5",
+      "revId": "ef94cc412cbc37d9ebe217a48dcb5ce280cfbd77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "028c41a3_f1d9af74",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-08-13T22:27:05Z",
       "side": 1,
       "message": "some Vulkan validation layer errors, see https://ci.chromium.org/ui/p/chromium/builders/try/win-dawn-rel/37462/overview\n\nI think we need to say `mUsageTracker.BufferUsedAs(drawCountBuffer, wgpu::BufferUsage::Indirect);`\n\nso the buffer is correctly transitioned to indirect usage",
+      "revId": "ef94cc412cbc37d9ebe217a48dcb5ce280cfbd77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e13f117a_500db76a",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-14T17:05:27Z",
+      "side": 1,
+      "message": "Yup, missed that part.",
+      "parentUuid": "028c41a3_f1d9af74",
       "revId": "ef94cc412cbc37d9ebe217a48dcb5ce280cfbd77",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
