@@ -284,6 +284,24 @@
       "parentUuid": "063b1540_6bc42c48",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa85f8a2_acb5cd60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-14T19:36:55Z",
+      "side": 1,
+      "message": "Sorry I hand typed the test case and may be incorrect.\n\nHere is the example I used in test now\n\n- input:\n\n```\nstruct A {\n  @size(32i)\n  x : u32,\n}\n\nstruct B {\n  @size(64i)\n  x : A,\n  y : u32,\n}\n\nstruct U {\n  @align(16) @size(80)\n  b : B,\n}\n```\n\n- output:\n\n```\n@internal(disable_validation__ignore_struct_member)\nstruct A {\n  x : u32,\n  pad : u32,\n  pad_1 : u32,\n  pad_2 : u32,\n  pad_3 : u32,\n  pad_4 : u32,\n  pad_5 : u32,\n  pad_6 : u32,\n}\n\n@internal(disable_validation__ignore_struct_member)\nstruct B {\n  @align(16) @size(64)\n  x : A,\n  pad : u32,\n  pad_1 : u32,\n  pad_2 : u32,\n  pad_3 : u32,\n  pad_4 : u32,\n  pad_5 : u32,\n  pad_6 : u32,\n  pad_7 : u32,\n  y : u32,\n}\n\n@internal(disable_validation__ignore_struct_member)\nstruct U {\n  @align(16) @size(80)\n  b : B,\n}\n```\n\n\n@size(80) needs updating now (now size B is 112)",
+      "parentUuid": "0c21e2dc_1289daac",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
