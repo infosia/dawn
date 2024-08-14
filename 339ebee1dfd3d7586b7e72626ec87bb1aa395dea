@@ -196,6 +196,24 @@
       "parentUuid": "e59624e0_04013f30",
       "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fd971fb_73af793c",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 3579148
+      },
+      "writtenOn": "2024-08-14T18:35:26Z",
+      "side": 1,
+      "message": "I\u0027ll go ahead and close the PR but please know that builds error currently with the default cmake path unless the consumer manually turns TINT_BUILD_TESTS off or adds --use-test-deps to the python fetch dependencies script.\n\nAnyone checking out the dawn repository must add one of these, or manually checkout google test before they can build error free.",
+      "parentUuid": "81bba2b1_b245395f",
+      "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
