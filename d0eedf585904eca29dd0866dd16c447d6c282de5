@@ -66,6 +66,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0607b87_73d47776",
+        "filename": "src/dawn/tests/end2end/TextureViewTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T20:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "446b621c_d89bfd51",
+      "range": {
+        "startLine": 307,
+        "startChar": 23,
+        "endLine": 307,
+        "endChar": 24
+      },
+      "revId": "d0eedf585904eca29dd0866dd16c447d6c282de5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14e44c34_7ce0baf8",
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Just a brief comment to describe this is happening (and link to the bug) would be fine.",
       "parentUuid": "17023c9e_d9002d29",
+      "range": {
+        "startLine": 1349,
+        "startChar": 14,
+        "endLine": 1350,
+        "endChar": 43
+      },
+      "revId": "d0eedf585904eca29dd0866dd16c447d6c282de5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58556d41_0e850310",
+        "filename": "src/tint/lang/msl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T20:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88951f2a_10a9f316",
       "range": {
         "startLine": 1349,
         "startChar": 14,

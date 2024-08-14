@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "099b11fc_c8d61ec9",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T20:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "589ace0a_f494e6be",
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c651e97b_2b1d7976",
@@ -49,6 +67,30 @@
       "writtenOn": "2024-08-14T19:19:02Z",
       "side": 1,
       "message": "I think you could simplify this if you ran this on the `MemberBuiltinCall` instructions produced by the polyfills, instead of the original `CoreBuiltinCall` instructions. For the `MemberBuiltinCall` instruction, the texture has already been separated out, and I /think/ the array index is always in the same place (component has been moved to the end for gathers).",
+      "range": {
+        "startLine": 709,
+        "startChar": 0,
+        "endLine": 713,
+        "endChar": 13
+      },
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a5c34ac_c8a0b645",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T20:50:19Z",
+      "side": 1,
+      "message": "Several of these polyfills use the \u0027InsertBefore\u0027 rather than creating a call object.",
+      "parentUuid": "c651e97b_2b1d7976",
       "range": {
         "startLine": 709,
         "startChar": 0,
@@ -107,6 +149,24 @@
       "writtenOn": "2024-08-14T19:37:04Z",
       "side": 1,
       "message": "Oh it does, I was conflating the texture type with the texture dimensions. Ignore me.",
+      "parentUuid": "f403baba_53d99e11",
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20160744_c130402e",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T20:50:19Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "f403baba_53d99e11",
       "revId": "287e8ae08256a85647b78234f52a61420f853356",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
