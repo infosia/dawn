@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "589ace0a_f494e6be",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T19:34:13Z",
+      "side": 1,
+      "message": "It might just be missplaced.",
+      "parentUuid": "ae503e66_50ceee96",
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c651e97b_2b1d7976",
         "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
         "patchSetId": 5
@@ -54,6 +72,24 @@
       "writtenOn": "2024-08-14T19:19:02Z",
       "side": 1,
       "message": "I think you need to do depth textures too, unless I missed the reason that doesn\u0027t need it? \n\nYou should be able to do `IsTextureArray(tex_type-\u003edim())` to cover all arrayed texture types.",
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f403baba_53d99e11",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T19:34:13Z",
+      "side": 1,
+      "message": "I remembered you mentioned this before but I was confused as to why 2dArray does not include depth textures.",
+      "parentUuid": "ef32b402_80566f47",
       "revId": "287e8ae08256a85647b78234f52a61420f853356",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
