@@ -176,6 +176,24 @@
       "parentUuid": "dd969bc1_a9dc9ede",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89c7716b_5fa6a056",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-14T18:17:40Z",
+      "side": 1,
+      "message": "- implicit: after pad\n\n```\n// input\nstruct A {\n  x: u32;\n  y: u32;\n  z: u32;\n};\nstruct S {\n  x : u32,\n  @align(16)\n  a : A,\n};\n\n// output: need to add the new size to fit wgsl validation\nstruct A {\n  x: u32;\n  y: u32;\n  z: u32;\n};\nstruct S {\n  x : u32,\n  pad0: u32,\n  pad1: u32,\n  pad2: u32,\n  @align(12), @size(16)\n  a : A,\n};\n```",
+      "parentUuid": "702d39b1_97895d61",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
