@@ -250,6 +250,24 @@
       "parentUuid": "29ea8532_3dd16d58",
       "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dc8d3b9_90443e6b",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-14T18:52:32Z",
+      "side": 1,
+      "message": "I\u0027m not opposed to removing the arg from fetch_deps, but I think we should ask the person who added the script why it\u0027s set that way to begin with before we remove it. Like, they build it as an argument, so my asumption is there was a reason they built it that way.",
+      "parentUuid": "50f20ed5_0d9b8162",
+      "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
