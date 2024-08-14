@@ -338,6 +338,24 @@
       "parentUuid": "aa85f8a2_acb5cd60",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e081854_f25b7737",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-14T20:22:00Z",
+      "side": 1,
+      "message": "\u003e Are there any cases with no explicit @size or @align that fail with the current implementation?\n\nNo. (I finally got your original question.. facepalm)",
+      "parentUuid": "17d148cb_b37dec82",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
