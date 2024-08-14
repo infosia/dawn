@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1069a70_20a0a028",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2024-08-14T19:35:06Z",
+      "side": 1,
+      "message": "Please add multi-sentence description which summarizes your change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "0de0fd450663cb337f448129b16207a81fb6e3b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3699a151_f7bfef21",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2024-08-14T19:35:06Z",
+      "side": 1,
+      "message": "Since you\u0027re fixing an existing bug, please link to it in the change description.  \n\nTo do this, add `Bug:42241431` on its own line right above the \"Change-Id\" line. When you press \"Save\", make sure the resulting link resolves to the bug you expect.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "0de0fd450663cb337f448129b16207a81fb6e3b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0371ab89_ee9d2c19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2024-08-14T19:35:06Z",
+      "side": 1,
+      "message": "Added issues but Austin should review the overall approach. The solution in the CL is what I proposed in https://issues.chromium.org/issues/42241431#comment10.",
+      "revId": "0de0fd450663cb337f448129b16207a81fb6e3b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "672bfb8e_882643eb",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2024-08-14T19:35:06Z",
+      "side": 1,
+      "message": "Per internal e-mail thread, lets see if we can reuse existing names from the previous entry if it makes sense. List doesn\u0027t have to be complete for the first CL. We can improve over time.",
+      "range": {
+        "startLine": 243,
+        "startChar": 18,
+        "endLine": 243,
+        "endChar": 20
+      },
+      "revId": "0de0fd450663cb337f448129b16207a81fb6e3b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
