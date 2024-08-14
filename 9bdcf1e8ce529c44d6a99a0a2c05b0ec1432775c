@@ -88,6 +88,24 @@
       "parentUuid": "8a995711_dda71f8e",
       "revId": "9bdcf1e8ce529c44d6a99a0a2c05b0ec1432775c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8d2b317_aa303a16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-14T20:56:04Z",
+      "side": 1,
+      "message": "Turns out its drawing more than maxDrawCount, so its not clamping the draw count buffer value down.",
+      "parentUuid": "6633ace4_e944b63d",
+      "revId": "9bdcf1e8ce529c44d6a99a0a2c05b0ec1432775c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

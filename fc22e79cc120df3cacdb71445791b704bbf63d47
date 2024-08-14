@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "281789e2_44378dff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-14T20:56:04Z",
+      "side": 1,
+      "message": "I’m confused why webgpu CTS fails: `webgpu:api,operation,memory_sync,buffer,multiple_buffers:wr:boundary\u003d\"pass\";readOp\u003d\"input-indirect-dispatch\";readContext\u003d\"compute-pass-encoder\";writeOp\u003d\"storage\";writeContext\u003d\"render-pass-encoder\"`\n\nIt may be because of the validation indirect scratch buffers, but write-read operations should not interact with the indirect validation though…",
+      "revId": "fc22e79cc120df3cacdb71445791b704bbf63d47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
