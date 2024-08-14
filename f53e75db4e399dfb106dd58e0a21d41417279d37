@@ -320,6 +320,24 @@
       "parentUuid": "aa85f8a2_acb5cd60",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17d148cb_b37dec82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-14T19:49:35Z",
+      "side": 1,
+      "message": "Yeah, that doesn\u0027t seem right. A is now manually padded out to 32 bytes, so it shouldn\u0027t have `@size(64)` on it. That would make B 32 + 32 + 4 \u003d 100 bytes, I think.\n\nI think I understand what\u0027s going wrong, though. If we have an explicit @size in the input on the last member, we\u0027re no longer doing tail-padding, so if we don\u0027t put an explicit @size on it, it will fail validation. Is that the case? If so, can we not just copy the explicit @size from the original struct member to the new one?\n\nAre there any cases with no explicit @size or @align that fail with the current implementation?",
+      "parentUuid": "aa85f8a2_acb5cd60",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
