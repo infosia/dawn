@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "absl/container/flat_hash_set.h"
+#include "absl/strings/str_join.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/Device.h"
@@ -49,7 +50,7 @@ bool IsDoubleValueRepresentableAsF16(double value) {
 
 namespace dawn::native {
 ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* device,
-                                                                const ShaderModuleBase* module,
+                                                                ShaderModuleBase* module,
                                                                 const char* entryPointName,
                                                                 uint32_t constantCount,
                                                                 const ConstantEntry* constants,
@@ -93,6 +94,11 @@ ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* devi
     if (layout != nullptr) {
         DAWN_TRY(ValidateCompatibilityWithPipelineLayout(device, metadata, layout));
     }
+
+    DAWN_INVALID_IF(device->IsCompatibilityMode() && metadata.usesTextureLoadWithDepthTexture,
+                    "textureLoad can not be used with depth textures in compatibility mode in "
+                    "stage (%s), entry point \"%s\"",
+                    metadata.stage, entryPoint.name);
 
     // Validate if overridable constants exist in shader module
     // pipelineBase is not yet constructed at this moment so iterate constants from descriptor
