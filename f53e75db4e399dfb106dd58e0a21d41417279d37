@@ -266,6 +266,24 @@
       "parentUuid": "063b1540_6bc42c48",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c21e2dc_1289daac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-14T19:29:00Z",
+      "side": 1,
+      "message": "```\n// input\nstruct A {\n  x: u32;\n  y: u32;\n  z: u32;\n};\nstruct B {\n  x : u32,\n  @align(16)\n  a : A,\n};\nstruct S {\n  @size(16)  // this needs updating\n  b: B\n}\n```\n\nI\u0027m confused. If this is the input, how does `@size(16)` pass validation *before* the pad_structs transform? `B` must be 32 bytes, no? (Even as a storage buffer, it would be 28, which is \u003e16.)",
+      "parentUuid": "063b1540_6bc42c48",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
