@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a74b0b58_6d3485a5",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-14T18:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d101fb1f_5df62e73",
+      "range": {
+        "startLine": 966,
+        "startChar": 0,
+        "endLine": 972,
+        "endChar": 21
+      },
+      "revId": "c82e16705d08ea5b6e4010eb228dea1143138fec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b4c078a_8346157b",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-08-14T01:27:08Z",
       "side": 1,
       "message": "```suggestion\n                    } else {\n                        Value* lvl \u003d nullptr;\n                        if (is_storage) {\n                            lvl \u003d b.Constant(0_i);\n                        } else {\n                            lvl \u003d b.Convert(ty.i32(), args[2]);\n                        }\n                        // Pack coords with the level\n                        call_args.Push(b.Construct(ty.vec3\u003ci32\u003e(), coord, lvl)-\u003eResult(0));\n                    }\n```",
+      "range": {
+        "startLine": 981,
+        "startChar": 0,
+        "endLine": 987,
+        "endChar": 21
+      },
+      "revId": "c82e16705d08ea5b6e4010eb228dea1143138fec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e42aacb0_06baf4d8",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-14T18:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b4c078a_8346157b",
       "range": {
         "startLine": 981,
         "startChar": 0,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88a89f3e_d096d629",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-14T18:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2db2744_7d217280",
+      "range": {
+        "startLine": 993,
+        "startChar": 0,
+        "endLine": 999,
+        "endChar": 21
+      },
+      "revId": "c82e16705d08ea5b6e4010eb228dea1143138fec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77d1b140_7feb33e9",
@@ -100,6 +172,30 @@
       "writtenOn": "2024-08-14T01:27:08Z",
       "side": 1,
       "message": "```suggestion\n                    Value* lvl \u003d nullptr;\n                    if (is_storage) {\n                        lvl \u003d b.Constant(0_i);\n                    } else {\n                        lvl \u003d b.Convert(ty.i32(), args[2]);\n                    }\n                    call_args.Push(b.Construct(ty.vec4\u003ci32\u003e(), coord, lvl)-\u003eResult(0));\n```",
+      "range": {
+        "startLine": 1004,
+        "startChar": 0,
+        "endLine": 1010,
+        "endChar": 21
+      },
+      "revId": "c82e16705d08ea5b6e4010eb228dea1143138fec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad24e03b_edc002d2",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-14T18:18:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77d1b140_7feb33e9",
       "range": {
         "startLine": 1004,
         "startChar": 0,

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d376764_9b269bed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-14T18:18:09Z",
+      "side": 1,
+      "message": "Manually applied suggested fixes, and regenerated FXC files.",
+      "revId": "c343d8809d6860904f715054e4ed2a27b3096110",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
