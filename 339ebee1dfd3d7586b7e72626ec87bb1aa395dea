@@ -178,6 +178,24 @@
       "parentUuid": "17ef90ee_abf5c2fb",
       "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81bba2b1_b245395f",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-14T18:31:01Z",
+      "side": 1,
+      "message": "It\u0027s needed for tint/dawn development which is why it\u0027s on by default. But the fetch dependency script is to use it as a consumer. So there are different user bases.",
+      "parentUuid": "e59624e0_04013f30",
+      "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
