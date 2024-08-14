@@ -139,6 +139,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a6d5f5c_e3cc9cf3",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T18:04:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53767caa_974be303",
+      "range": {
+        "startLine": 642,
+        "startChar": 8,
+        "endLine": 642,
+        "endChar": 13
+      },
+      "revId": "d0eedf585904eca29dd0866dd16c447d6c282de5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "169d807b_f17b5e94",
@@ -152,6 +176,30 @@
       "writtenOn": "2024-08-14T17:15:38Z",
       "side": 1,
       "message": "Consider a gather test?",
+      "range": {
+        "startLine": 2756,
+        "startChar": 38,
+        "endLine": 2756,
+        "endChar": 63
+      },
+      "revId": "d0eedf585904eca29dd0866dd16c447d6c282de5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ee6caf6_0db79d78",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2756,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T18:04:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "169d807b_f17b5e94",
       "range": {
         "startLine": 2756,
         "startChar": 38,

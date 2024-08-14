@@ -22,6 +22,30 @@
       },
       "revId": "c475d85d2d6df7b9911b150d6f3fc2d7899f71b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "249a4f47_ceb13138",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T18:04:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d98f0b9_bfa0f814",
+      "range": {
+        "startLine": 708,
+        "startChar": 12,
+        "endLine": 708,
+        "endChar": 22
+      },
+      "revId": "c475d85d2d6df7b9911b150d6f3fc2d7899f71b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
