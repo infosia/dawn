@@ -94,6 +94,16 @@ ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* devi
         DAWN_TRY(ValidateCompatibilityWithPipelineLayout(device, metadata, layout));
     }
 
+    if (device->IsCompatibilityMode()) {
+        tint::inspector::Inspector inspector(module->GetTintProgram()->program);
+        auto depthTextureLoads = inspector.GetDepthTextureLoads(entryPoint.name);
+        DAWN_INVALID_IF(!depthTextureLoads.empty(),
+                        "textureLoad can not be used with depth textures in compatibility mode in "
+                        "stage (%s), entry point \"%s\", @group(%d) @binding(%d).",
+                        metadata.stage, entryPoint.name, depthTextureLoads[0].group,
+                        depthTextureLoads[0].binding);
+    }
+
     // Validate if overridable constants exist in shader module
     // pipelineBase is not yet constructed at this moment so iterate constants from descriptor
     size_t numUninitializedConstants = metadata.uninitializedOverrides.size();

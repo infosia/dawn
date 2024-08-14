@@ -43,6 +43,7 @@
 #include "src/tint/lang/wgsl/inspector/resource_binding.h"
 #include "src/tint/lang/wgsl/inspector/scalar.h"
 #include "src/tint/lang/wgsl/program/program.h"
+#include "src/tint/lang/wgsl/sem/call.h"
 #include "src/tint/lang/wgsl/sem/sampler_texture_pair.h"
 #include "src/tint/utils/containers/unique_vector.h"
 
@@ -188,6 +189,18 @@ class Inspector {
     /// `textureNumLevels` so the binding point will always be one or the other.
     std::vector<LevelSampleInfo> GetTextureQueries(const std::string& ep);
 
+    // Which binding points use textureLoad
+    struct LoadInfo {
+        /// The group number
+        uint32_t group = 0;
+        /// The binding number
+        uint32_t binding = 0;
+    };
+
+    /// @param ep the entry point ot get the information for
+    /// @returns a vector of information for textures which call textureLoad with a depth texture.
+    std::vector<LoadInfo> GetDepthTextureLoads(const std::string& ep);
+
   private:
     const Program& program_;
     diag::List diagnostics_;
@@ -296,6 +309,31 @@ class Inspector {
     /// @param func the function of the entry point. Must be non-nullptr and true for IsEntryPoint()
     /// @returns the entry point information
     EntryPoint GetEntryPoint(const tint::ast::Function* func);
+
+    /// The information needed to be supplied.
+    enum class TextureUsageType : uint8_t {
+        /// textureLoad
+        kTextureLoad,
+        /// textureNumLevels
+        kTextureNumLevels,
+        /// textureNumSamples
+        kTextureNumSamples,
+    };
+    /// Information on level and sample calls by a given texture binding point
+    struct TextureUsageInfo {
+        /// The type of function
+        TextureUsageType type = TextureUsageType::kTextureNumLevels;
+        /// The group number
+        uint32_t group = 0;
+        /// The binding number
+        uint32_t binding = 0;
+    };
+
+    std::vector<Inspector::TextureUsageInfo> GetTextureUsages(
+        const std::string& ep_name,
+        std::function<std::optional<TextureUsageType>(const tint::sem::Info& sem,
+                                                      const tint::sem::Call* call,
+                                                      tint::wgsl::BuiltinFn builtin_fn)> filter);
 };
 
 }  // namespace tint::inspector
