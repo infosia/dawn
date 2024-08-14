@@ -100,7 +100,9 @@ static T& AsNonConstReference(const T& value) {
     )
 {%- endmacro -%}
 
-{% for type in by_category["enum"] %}
+//* Although 'optional bool' is defined as an enum value, in C++, we manually implement it to
+//* provide conversion utilites.
+{% for type in by_category["enum"] if type.name.get() != "optional bool" %}
     {% set CppType = as_cppType(type.name) %}
     {% set CType = as_cType(type.name) %}
     enum class {{CppType}} : uint32_t {
@@ -151,6 +153,37 @@ class {{BoolCppType}} {
     friend struct std::hash<{{BoolCppType}}>;
     // Default to false.
     {{BoolCType}} mValue = static_cast<{{BoolCType}}>(false);
+};
+
+// Special class for optional booleans in order to allow conversions.
+{% set OptionalBool = types["optional bool"] %}
+{% set OptionalBoolCppType = as_cppType(OptionalBool.name) %}
+{% set OptionalBoolCType = as_cType(OptionalBool.name) %}
+class {{OptionalBoolCppType}} {
+  public:
+    {% for value in OptionalBool.values %}
+        static constexpr {{OptionalBoolCType}} {{as_cppEnum(value.name)}} = {{as_cEnum(OptionalBool.name, value.name)}};
+    {% endfor %}
+
+    constexpr {{OptionalBoolCppType}}() = default;
+    // NOLINTNEXTLINE(runtime/explicit) allow implicit construction
+    constexpr {{OptionalBoolCppType}}(bool value) : mValue(static_cast<{{OptionalBoolCType}}>(value)) {}
+    // NOLINTNEXTLINE(runtime/explicit) allow implicit construction
+    {{OptionalBoolCppType}}({{OptionalBoolCType}} value): mValue(value) {}
+
+    // Conversion functions.
+    operator {{OptionalBoolCType}}() const { return mValue; }
+    operator std::optional<bool>() const {
+        if (mValue == Undefined) {
+            return std::nullopt;
+        }
+        return static_cast<bool>(mValue);
+    }
+
+  private:
+    friend struct std::hash<{{OptionalBoolCType}}>;
+    // Default to undefined.
+    {{OptionalBoolCType}} mValue = Undefined;
 };
 
 // Helper class to wrap Status which allows implicit conversion to bool.
@@ -950,6 +983,13 @@ struct hash<{{metadata.namespace}}::{{BoolCppType}}> {
   public:
     size_t operator()(const {{metadata.namespace}}::{{BoolCppType}} &v) const {
         return hash<bool>()(v);
+    }
+};
+template <>
+struct hash<{{metadata.namespace}}::{{OptionalBoolCppType}}> {
+  public:
+    size_t operator()(const {{metadata.namespace}}::{{OptionalBoolCppType}} &v) const {
+        return hash<std::optional<bool>>()(v);
     }
 };
 }  // namespace std
