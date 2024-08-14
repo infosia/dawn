@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "392e5e5f_d0d604b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-14T01:27:08Z",
+      "side": 1,
+      "message": "Did the FXC output not change for some reason? There don\u0027t appear to be any FXC expectation changes.",
+      "revId": "c82e16705d08ea5b6e4010eb228dea1143138fec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d101fb1f_5df62e73",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-14T01:27:08Z",
+      "side": 1,
+      "message": "```suggestion\n                    Value* lvl \u003d nullptr\n                    if (is_storage) {\n                        lvl \u003d b.Constant(0_i);\n                    } else {\n                        lvl \u003d b.Convert(ty.i32(), args[2]);\n                    }\n                    // Pack the coords with the level\n                    call_args.Push(b.Construct(ty.vec2\u003ci32\u003e(), coord, lvl)-\u003eResult(0));\n```\n\nJust shuffling some code around so the more complicated `call_pargs.Push` line only happens once.",
+      "range": {
+        "startLine": 966,
+        "startChar": 0,
+        "endLine": 972,
+        "endChar": 21
+      },
+      "revId": "c82e16705d08ea5b6e4010eb228dea1143138fec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b4c078a_8346157b",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-14T01:27:08Z",
+      "side": 1,
+      "message": "```suggestion\n                    } else {\n                        Value* lvl \u003d nullptr;\n                        if (is_storage) {\n                            lvl \u003d b.Constant(0_i);\n                        } else {\n                            lvl \u003d b.Convert(ty.i32(), args[2]);\n                        }\n                        // Pack coords with the level\n                        call_args.Push(b.Construct(ty.vec3\u003ci32\u003e(), coord, lvl)-\u003eResult(0));\n                    }\n```",
+      "range": {
+        "startLine": 981,
+        "startChar": 0,
+        "endLine": 987,
+        "endChar": 21
+      },
+      "revId": "c82e16705d08ea5b6e4010eb228dea1143138fec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2db2744_7d217280",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-14T01:27:08Z",
+      "side": 1,
+      "message": "```suggestion\n                    Value* lvl \u003d nullptr;\n                    if (is_storage) {\n                        lvl \u003d b.Constant(0_i);\n                    } else {\n                        lvl \u003d b.Convert(ty.i32(), args[3]);\n                    }\n                    call_args.Push(b.Construct(ty.vec4\u003ci32\u003e(), coord, ary_idx, lvl)-\u003eResult(0));\n\n```",
+      "range": {
+        "startLine": 993,
+        "startChar": 0,
+        "endLine": 999,
+        "endChar": 21
+      },
+      "revId": "c82e16705d08ea5b6e4010eb228dea1143138fec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77d1b140_7feb33e9",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-14T01:27:08Z",
+      "side": 1,
+      "message": "```suggestion\n                    Value* lvl \u003d nullptr;\n                    if (is_storage) {\n                        lvl \u003d b.Constant(0_i);\n                    } else {\n                        lvl \u003d b.Convert(ty.i32(), args[2]);\n                    }\n                    call_args.Push(b.Construct(ty.vec4\u003ci32\u003e(), coord, lvl)-\u003eResult(0));\n```",
+      "range": {
+        "startLine": 1004,
+        "startChar": 0,
+        "endLine": 1010,
+        "endChar": 21
+      },
+      "revId": "c82e16705d08ea5b6e4010eb228dea1143138fec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
