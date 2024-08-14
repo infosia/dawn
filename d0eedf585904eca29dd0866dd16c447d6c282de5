@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74511ba1_9aa97b79",
+        "filename": "src/dawn/tests/end2end/TextureViewTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T17:15:38Z",
+      "side": 1,
+      "message": "This is unsigned or signed int. Should this be documented or should the T be renamed.",
+      "range": {
+        "startLine": 307,
+        "startChar": 23,
+        "endLine": 307,
+        "endChar": 24
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "94de75f8_975aa5b6",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/TextureViewTests.cpp",
+              "range": {
+                "startLine": 307,
+                "startChar": 0,
+                "endLine": 307,
+                "endChar": 0
+              },
+              "replacement": "    // T is an unsigned or signed integer type.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d0eedf585904eca29dd0866dd16c447d6c282de5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14e44c34_7ce0baf8",
+        "filename": "src/dawn/tests/end2end/TextureViewTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T17:15:38Z",
+      "side": 1,
+      "message": "I verified that these new test fail without the fix in the ast.",
+      "range": {
+        "startLine": 419,
+        "startChar": 32,
+        "endLine": 419,
+        "endChar": 65
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a5f36f7e_9f3f03a5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/TextureViewTests.cpp",
+              "range": {
+                "startLine": 420,
+                "startChar": 0,
+                "endLine": 422,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/dawn/tests/end2end/TextureViewTests.cpp",
+              "range": {
+                "startLine": 456,
+                "startChar": 0,
+                "endLine": 458,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "d0eedf585904eca29dd0866dd16c447d6c282de5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17023c9e_d9002d29",
+        "filename": "src/tint/lang/msl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T17:15:38Z",
+      "side": 1,
+      "message": "This needs to be documented as a platform specific workaround. Do we have a process for that or does a todo comment with bug suffice?",
+      "range": {
+        "startLine": 1349,
+        "startChar": 14,
+        "endLine": 1350,
+        "endChar": 43
+      },
+      "revId": "d0eedf585904eca29dd0866dd16c447d6c282de5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53767caa_974be303",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T17:15:38Z",
+      "side": 1,
+      "message": "move this up one line",
+      "range": {
+        "startLine": 642,
+        "startChar": 8,
+        "endLine": 642,
+        "endChar": 13
+      },
+      "revId": "d0eedf585904eca29dd0866dd16c447d6c282de5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "169d807b_f17b5e94",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2756,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-14T17:15:38Z",
+      "side": 1,
+      "message": "Consider a gather test?",
+      "range": {
+        "startLine": 2756,
+        "startChar": 38,
+        "endLine": 2756,
+        "endChar": 63
+      },
+      "revId": "d0eedf585904eca29dd0866dd16c447d6c282de5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
