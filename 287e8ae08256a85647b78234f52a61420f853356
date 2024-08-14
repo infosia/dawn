@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae503e66_50ceee96",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-14T19:19:02Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think this comment is relevant for this helper.",
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c651e97b_2b1d7976",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-14T19:19:02Z",
+      "side": 1,
+      "message": "I think you could simplify this if you ran this on the `MemberBuiltinCall` instructions produced by the polyfills, instead of the original `CoreBuiltinCall` instructions. For the `MemberBuiltinCall` instruction, the texture has already been separated out, and I /think/ the array index is always in the same place (component has been moved to the end for gathers).",
+      "range": {
+        "startLine": 709,
+        "startChar": 0,
+        "endLine": 713,
+        "endChar": 13
+      },
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef32b402_80566f47",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-14T19:19:02Z",
+      "side": 1,
+      "message": "I think you need to do depth textures too, unless I missed the reason that doesn\u0027t need it? \n\nYou should be able to do `IsTextureArray(tex_type-\u003edim())` to cover all arrayed texture types.",
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
