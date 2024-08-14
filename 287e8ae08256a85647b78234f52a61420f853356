@@ -92,6 +92,24 @@
       "parentUuid": "ef32b402_80566f47",
       "revId": "287e8ae08256a85647b78234f52a61420f853356",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa5b3b69_2bd15180",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-14T19:37:04Z",
+      "side": 1,
+      "message": "Oh it does, I was conflating the texture type with the texture dimensions. Ignore me.",
+      "parentUuid": "f403baba_53d99e11",
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
