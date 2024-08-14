@@ -302,6 +302,24 @@
       "parentUuid": "0c21e2dc_1289daac",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccb9784e_b8a5797d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-14T19:44:48Z",
+      "side": 1,
+      "message": "* Correction note: that @size(80) doesn\u0027t exist in original wgsl input. It\u0027s added in Pad strcut step and needs updating as the nested struct member size is updated.\n\n(I\u0027m also easily confused... Let me get the organized test and fix and show it to you)",
+      "parentUuid": "aa85f8a2_acb5cd60",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
