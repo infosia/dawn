@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03cfbe86_8b500d9e",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-14T14:15:33Z",
+      "side": 1,
+      "message": "Validation added (for subgroupBroadcast too)",
+      "parentUuid": "4b928a92_e5b1b624",
+      "revId": "85d9f89135938b4e0787179d80c3e64e7265e225",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7a85db5_0612a55f",
