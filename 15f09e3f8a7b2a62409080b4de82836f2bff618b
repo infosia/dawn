@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e91b1689_8dbb7215",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-15T18:03:04Z",
+      "side": 1,
+      "message": "nit: can we also add ASSERTs here that the sizes are non-zero?",
+      "range": {
+        "startLine": 579,
+        "startChar": 4,
+        "endLine": 581,
+        "endChar": 66
+      },
+      "revId": "15f09e3f8a7b2a62409080b4de82836f2bff618b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e06e2567_5702d665",
+        "filename": "src/dawn/tests/end2end/MultiDrawIndirectTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-15T18:03:04Z",
+      "side": 1,
+      "message": "still need to add suppressions for this on Vulkan Nvidia",
+      "revId": "15f09e3f8a7b2a62409080b4de82836f2bff618b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
