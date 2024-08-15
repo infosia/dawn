@@ -51,6 +51,24 @@
       "parentUuid": "2254bdb1_995d8bfc",
       "revId": "e7b81058b2d1f7434c51819d98af4da5ea512237",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "515e3bcf_1072e70d",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 17
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-15T23:35:17Z",
+      "side": 1,
+      "message": "Uploaded changes that should address Kai\u0027s comments. I tested the failing CTS tests locally with https://chromium-review.googlesource.com/c/chromium/src/+/5683307 patched in and they seemed to pass fine.",
+      "parentUuid": "e9317d46_52ac3559",
+      "revId": "e7b81058b2d1f7434c51819d98af4da5ea512237",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
