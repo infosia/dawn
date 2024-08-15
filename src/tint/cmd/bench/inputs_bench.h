@@ -31,6 +31,8 @@
 #ifndef SRC_TINT_CMD_BENCH_INPUTS_BENCH_H_
 #define SRC_TINT_CMD_BENCH_INPUTS_BENCH_H_
 
+// manually added line
+
 #include <string>
 #include <unordered_map>
 
