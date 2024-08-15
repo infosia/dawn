@@ -33,6 +33,24 @@
       "message": "Isn\u0027t the `ret-\u003eValue()` check redundant with the `if (!retValue())` above?",
       "revId": "662a856733532e12b8350748db5bb5e85d1c09fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f1ec11e_4d5349ed",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2002,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-08-15T18:49:39Z",
+      "side": 1,
+      "message": "oops, forgot to remove the  ret-\u003eValue() after adding the if (!retValue()) back in",
+      "parentUuid": "70b8e89c_ba3c30d5",
+      "revId": "662a856733532e12b8350748db5bb5e85d1c09fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
