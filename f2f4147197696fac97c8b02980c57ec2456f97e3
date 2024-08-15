@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56a7c1e9_96f60afc",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-15T14:45:59Z",
+      "side": 0,
+      "message": "nit: print a warning to inform that the argument is deprecated and will be removed in a future version?",
+      "revId": "f2f4147197696fac97c8b02980c57ec2456f97e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
