@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f639817_ab97de32",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-15T19:46:09Z",
+      "side": 1,
+      "message": "I put it inside ScratchBuffer in case it the capacity rule is violated in the future. There is a check for outputParamsSize before EnsureCapacity though.",
+      "parentUuid": "c7a22d58_d1147c06",
+      "range": {
+        "startLine": 579,
+        "startChar": 4,
+        "endLine": 581,
+        "endChar": 66
+      },
+      "revId": "15f09e3f8a7b2a62409080b4de82836f2bff618b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e06e2567_5702d665",
