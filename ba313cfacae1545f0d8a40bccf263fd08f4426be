@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bee95252_bf9c43bd",
+        "filename": "src/tint/lang/core/type/subgroup_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-15T19:19:34Z",
+      "side": 1,
+      "message": "I\u0027m on the fence between this and leaving it 0. These types are not storable in any host-visible address space (or `workgroup`), and the reality is that we don\u0027t really know how much space they consume. Is there padding if the dims are 3x3?\n\nIt probably doesn\u0027t matter, but hopefully we don\u0027t end up with code that actually needs to do anything with the size of these things.",
+      "revId": "ba313cfacae1545f0d8a40bccf263fd08f4426be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd7a72ae_9ec281bb",
+        "filename": "src/tint/lang/core/type/subgroup_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-15T19:19:34Z",
+      "side": 1,
+      "message": "We should start using CamelCase here.\n\nYes, I know we don\u0027t for some of the methods in `Vector` and `Matrix`, but AFAIK that isn\u0027t deliberate and we should fix those at some point too (unless there\u0027s a good reason not too). The type manager uses lowercase names specifically to match the casing used in WGSL, but the functions here are not things that exist in WGSL.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 49
+      },
+      "revId": "ba313cfacae1545f0d8a40bccf263fd08f4426be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
