@@ -39,6 +39,30 @@
       },
       "revId": "c5d31cb66ae9684293c4b7f96bde5195649827d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f36a74b3_8e145616",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2629,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2024-08-15T20:35:58Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve added a `store-\u003eResetScratchBuffers()` method. I\u0027ll address the other feedback in a follow-up - I think we can make the `mTemporaryUniformBuffer` just be a `ScratchBuffer` in `InternalPipelineStore`.",
+      "parentUuid": "5f148504_c072db6d",
+      "range": {
+        "startLine": 2627,
+        "startChar": 0,
+        "endLine": 2629,
+        "endChar": 59
+      },
+      "revId": "c5d31cb66ae9684293c4b7f96bde5195649827d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
