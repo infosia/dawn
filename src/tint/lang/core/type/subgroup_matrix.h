@@ -30,6 +30,7 @@
 
 #include <string>
 
+#include "src/tint/lang/core/subgroup_matrix_kind.h"
 #include "src/tint/lang/core/type/clone_context.h"
 #include "src/tint/lang/core/type/type.h"
 
@@ -38,22 +39,12 @@ namespace tint::core::type {
 /// A subgroup_matrix type
 class SubgroupMatrix : public Castable<SubgroupMatrix, Type> {
   public:
-    /// The kind of the subgroup matrix
-    enum class Kind : uint8_t {
-        /// A left matrix
-        kLeft,
-        /// A right matrix
-        kRight,
-        /// A result matrix
-        kResult,
-    };
-
     /// Constructor
     /// @param kind the kind of the matrix
     /// @param subtype the inner type of the matrix
     /// @param rows the number of rows in the matrix
     /// @param columns the number of columns in the matrix
-    SubgroupMatrix(Kind kind, const Type* subtype, uint32_t rows, uint32_t columns);
+    SubgroupMatrix(SubgroupMatrixKind kind, const Type* subtype, uint32_t rows, uint32_t columns);
 
     /// Destructor
     ~SubgroupMatrix() override;
@@ -63,7 +54,7 @@ class SubgroupMatrix : public Castable<SubgroupMatrix, Type> {
     bool Equals(const UniqueNode& other) const override;
 
     /// @returns the kind of the matrix
-    Kind kind() const { return kind_; }
+    SubgroupMatrixKind kind() const { return kind_; }
     /// @returns the type of the matrix
     const Type* type() const { return subtype_; }
     /// @returns the number of rows in the matrix
@@ -87,7 +78,7 @@ class SubgroupMatrix : public Castable<SubgroupMatrix, Type> {
     SubgroupMatrix* Clone(CloneContext& ctx) const override;
 
   private:
-    const Kind kind_;
+    const SubgroupMatrixKind kind_;
     const Type* const subtype_;
     const uint32_t rows_;
     const uint32_t columns_;
