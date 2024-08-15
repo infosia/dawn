@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "c5d31cb66ae9684293c4b7f96bde5195649827d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f148504_c072db6d",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2629,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-15T14:56:35Z",
+      "side": 1,
+      "message": "this is sort of an existing problem but:\n\n - it\u0027s probably better to have a method on the Store to clear out all temporary buffers. otherwise when people add other things to the internal store, they will likely forget to clear the resources here.\n \n - it\u0027s odd that it is called a \"pipeline store\" but it also stores buffers. I believe this is because it was initially only pipelines, and then we added other objects as well. I think it would be appropriate to rename it to \"internal object store\".\n\n - the temporary uniform buffer should probably be in the internal store, instead of on the device.\n \n \nAt the very least, I think we should add something like `store-\u003eDropTemporaryBuffers()` now. The other renames and moving of things can happen if separate CLs if you\u0027d like",
+      "range": {
+        "startLine": 2627,
+        "startChar": 0,
+        "endLine": 2629,
+        "endChar": 59
+      },
+      "revId": "c5d31cb66ae9684293c4b7f96bde5195649827d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
