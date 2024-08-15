@@ -47,6 +47,8 @@ tint_add_target(tint_lang_msl_writer_ast_raise lib
   lang/msl/writer/ast_raise/packed_vec3.h
   lang/msl/writer/ast_raise/pixel_local.cc
   lang/msl/writer/ast_raise/pixel_local.h
+  lang/msl/writer/ast_raise/quad_swap.cc
+  lang/msl/writer/ast_raise/quad_swap.h
   lang/msl/writer/ast_raise/subgroup_ballot.cc
   lang/msl/writer/ast_raise/subgroup_ballot.h
 )
