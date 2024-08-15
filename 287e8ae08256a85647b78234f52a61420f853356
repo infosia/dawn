@@ -149,6 +149,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18521b9d_c7b569cb",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-15T15:00:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92e5908c_071a63ce",
+      "range": {
+        "startLine": 709,
+        "startChar": 0,
+        "endLine": 713,
+        "endChar": 13
+      },
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef32b402_80566f47",
