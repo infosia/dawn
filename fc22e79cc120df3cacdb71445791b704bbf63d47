@@ -34,6 +34,24 @@
       "parentUuid": "281789e2_44378dff",
       "revId": "fc22e79cc120df3cacdb71445791b704bbf63d47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dffd491b_4ca47399",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-15T15:58:21Z",
+      "side": 1,
+      "message": "Yeah, it seems to be a null buffer.\n\nI found the bug: `InternalPipelineStore::scratchIndirectStorage` is used for both dispatch indirect and draw indirect validation. Currently it allocated a scratch buffer of 0 which wasn\u0027t referenced by anything because there were no indirect draws to validate. Then the dispatchIndirect function allocates another bigger buffer to hold all of its params. The old buffer is deleted, but the \"resource tracker\" still holds a reference to it leading to dereferencing deleted memory.",
+      "parentUuid": "337cd2d5_e6978c05",
+      "revId": "fc22e79cc120df3cacdb71445791b704bbf63d47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
