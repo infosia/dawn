@@ -20,6 +20,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c70a9c9_13901fb9",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-15T18:56:30Z",
+      "side": 1,
+      "message": "Nit: missing comma?",
+      "fixSuggestions": [
+        {
+          "fixId": "f2b9729c_0da66e8d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 266,
+                "startChar": 0,
+                "endLine": 267,
+                "endChar": 0
+              },
+              "replacement": "    /// @param decl the type, value, instruction or block\n"
+            }
+          ]
+        }
+      ],
+      "revId": "662a856733532e12b8350748db5bb5e85d1c09fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "70b8e89c_ba3c30d5",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 1
