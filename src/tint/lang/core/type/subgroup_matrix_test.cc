@@ -39,10 +39,10 @@ using SubgroupMatrixTest = TestHelper;
 TEST_F(SubgroupMatrixTest, Creation) {
     auto* f32 = create<F32>();
 
-    auto* l1 = create<SubgroupMatrix>(SubgroupMatrix::Kind::kLeft, f32, 3u, 4u);
+    auto* l1 = create<SubgroupMatrix>(SubgroupMatrixKind::kLeft, f32, 3u, 4u);
 
     EXPECT_EQ(l1->type(), f32);
-    EXPECT_EQ(l1->kind(), SubgroupMatrix::Kind::kLeft);
+    EXPECT_EQ(l1->kind(), SubgroupMatrixKind::kLeft);
     EXPECT_EQ(l1->rows(), 3u);
     EXPECT_EQ(l1->columns(), 4u);
 }
@@ -51,9 +51,9 @@ TEST_F(SubgroupMatrixTest, Creation_TypeManager) {
     core::type::Manager mgr;
 
     {
-        auto* l = mgr.subgroup_matrix(SubgroupMatrix::Kind::kRight, mgr.f32(), 2, 4);
+        auto* l = mgr.subgroup_matrix(SubgroupMatrixKind::kRight, mgr.f32(), 2, 4);
         ASSERT_NE(l, nullptr);
-        EXPECT_EQ(SubgroupMatrix::Kind::kRight, l->kind());
+        EXPECT_EQ(SubgroupMatrixKind::kRight, l->kind());
         EXPECT_EQ(mgr.f32(), l->type());
         EXPECT_EQ(2u, l->rows());
         EXPECT_EQ(4u, l->columns());
@@ -61,21 +61,21 @@ TEST_F(SubgroupMatrixTest, Creation_TypeManager) {
 
     {
         auto* l = mgr.subgroup_matrix_right(mgr.f32(), 2, 4);
-        EXPECT_EQ(SubgroupMatrix::Kind::kRight, l->kind());
+        EXPECT_EQ(SubgroupMatrixKind::kRight, l->kind());
     }
     {
         auto* l = mgr.subgroup_matrix_left(mgr.f32(), 2, 4);
-        EXPECT_EQ(SubgroupMatrix::Kind::kLeft, l->kind());
+        EXPECT_EQ(SubgroupMatrixKind::kLeft, l->kind());
     }
     {
         auto* l = mgr.subgroup_matrix_result(mgr.f32(), 2, 4);
-        EXPECT_EQ(SubgroupMatrix::Kind::kResult, l->kind());
+        EXPECT_EQ(SubgroupMatrixKind::kResult, l->kind());
     }
 }
 
 TEST_F(SubgroupMatrixTest, Hash) {
-    auto* a = create<SubgroupMatrix>(SubgroupMatrix::Kind::kRight, create<I32>(), 3u, 4u);
-    auto* b = create<SubgroupMatrix>(SubgroupMatrix::Kind::kRight, create<I32>(), 3u, 4u);
+    auto* a = create<SubgroupMatrix>(SubgroupMatrixKind::kRight, create<I32>(), 3u, 4u);
+    auto* b = create<SubgroupMatrix>(SubgroupMatrixKind::kRight, create<I32>(), 3u, 4u);
 
     EXPECT_EQ(a->unique_hash, b->unique_hash);
 }
@@ -84,15 +84,15 @@ TEST_F(SubgroupMatrixTest, Equals) {
     auto* f32 = create<F32>();
     auto* i8 = create<I8>();
 
-    auto* l1 = create<SubgroupMatrix>(SubgroupMatrix::Kind::kLeft, f32, 3u, 4u);
-    auto* l2 = create<SubgroupMatrix>(SubgroupMatrix::Kind::kLeft, f32, 3u, 4u);
-    auto* l3 = create<SubgroupMatrix>(SubgroupMatrix::Kind::kLeft, i8, 3u, 4u);
-    auto* l4 = create<SubgroupMatrix>(SubgroupMatrix::Kind::kLeft, f32, 4u, 3u);
+    auto* l1 = create<SubgroupMatrix>(SubgroupMatrixKind::kLeft, f32, 3u, 4u);
+    auto* l2 = create<SubgroupMatrix>(SubgroupMatrixKind::kLeft, f32, 3u, 4u);
+    auto* l3 = create<SubgroupMatrix>(SubgroupMatrixKind::kLeft, i8, 3u, 4u);
+    auto* l4 = create<SubgroupMatrix>(SubgroupMatrixKind::kLeft, f32, 4u, 3u);
 
-    auto* r1 = create<SubgroupMatrix>(SubgroupMatrix::Kind::kRight, f32, 3u, 4u);
-    auto* r2 = create<SubgroupMatrix>(SubgroupMatrix::Kind::kRight, f32, 3u, 4u);
-    auto* res1 = create<SubgroupMatrix>(SubgroupMatrix::Kind::kResult, f32, 3u, 4u);
-    auto* res2 = create<SubgroupMatrix>(SubgroupMatrix::Kind::kResult, f32, 3u, 4u);
+    auto* r1 = create<SubgroupMatrix>(SubgroupMatrixKind::kRight, f32, 3u, 4u);
+    auto* r2 = create<SubgroupMatrix>(SubgroupMatrixKind::kRight, f32, 3u, 4u);
+    auto* res1 = create<SubgroupMatrix>(SubgroupMatrixKind::kResult, f32, 3u, 4u);
+    auto* res2 = create<SubgroupMatrix>(SubgroupMatrixKind::kResult, f32, 3u, 4u);
 
     EXPECT_EQ(l1, l2);
     EXPECT_NE(l1, l3);
@@ -108,30 +108,30 @@ TEST_F(SubgroupMatrixTest, Equals) {
 
 TEST_F(SubgroupMatrixTest, FriendlyName_Left) {
     I8 i8;
-    SubgroupMatrix m{SubgroupMatrix::Kind::kLeft, &i8, 2, 4};
+    SubgroupMatrix m{SubgroupMatrixKind::kLeft, &i8, 2, 4};
     EXPECT_EQ(m.FriendlyName(), "subgroup_matrix_left<i8, 2, 4>");
 }
 
 TEST_F(SubgroupMatrixTest, FriendlyName_Right) {
     F32 f32;
-    SubgroupMatrix m{SubgroupMatrix::Kind::kRight, &f32, 8, 8};
+    SubgroupMatrix m{SubgroupMatrixKind::kRight, &f32, 8, 8};
     EXPECT_EQ(m.FriendlyName(), "subgroup_matrix_right<f32, 8, 8>");
 }
 
 TEST_F(SubgroupMatrixTest, FriendlyName_Result) {
     U32 u32;
-    SubgroupMatrix m{SubgroupMatrix::Kind::kResult, &u32, 32, 32};
+    SubgroupMatrix m{SubgroupMatrixKind::kResult, &u32, 32, 32};
     EXPECT_EQ(m.FriendlyName(), "subgroup_matrix_result<u32, 32, 32>");
 }
 
 TEST_F(SubgroupMatrixTest, Clone) {
-    auto* a = create<SubgroupMatrix>(SubgroupMatrix::Kind::kResult, create<I32>(), 3u, 4u);
+    auto* a = create<SubgroupMatrix>(SubgroupMatrixKind::kResult, create<I32>(), 3u, 4u);
 
     core::type::Manager mgr;
     core::type::CloneContext ctx{{nullptr}, {nullptr, &mgr}};
 
     auto* s = a->Clone(ctx);
-    EXPECT_EQ(SubgroupMatrix::Kind::kResult, s->kind());
+    EXPECT_EQ(SubgroupMatrixKind::kResult, s->kind());
     EXPECT_TRUE(s->type()->Is<I32>());
     EXPECT_EQ(s->rows(), 3u);
     EXPECT_EQ(s->columns(), 4u);
