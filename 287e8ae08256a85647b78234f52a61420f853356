@@ -173,6 +173,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9adc817a_8dc21b64",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-15T15:09:06Z",
+      "side": 1,
+      "message": "\u003e The \u0027InsertBefore\u0027 is a bit tricky because the call wont have an insert location until the scope is closed.\n\nI\u0027m not sure I understand - instructions created inside an `b.InsertBefore()` are inserted immediately, not when the scope is closed. So they should have an insertion location straight away. I tried moving those cases back into their respective `InsertBefore`s and AFAICT it still works and passes tests.\n\nNo need to block submitting this CL, but just FYI for the future I think it should have worked fine (unless there\u0027s something else I\u0027m missing).",
+      "parentUuid": "18521b9d_c7b569cb",
+      "range": {
+        "startLine": 709,
+        "startChar": 0,
+        "endLine": 713,
+        "endChar": 13
+      },
+      "revId": "287e8ae08256a85647b78234f52a61420f853356",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef32b402_80566f47",
