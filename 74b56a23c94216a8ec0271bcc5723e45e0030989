@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59969b5b_c55c67a2",
+        "filename": "tools/src/tint/intrinsic/parser/parser.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-15T19:05:00Z",
+      "side": 1,
+      "message": "This one is a bit strange, because `typeDecl` doesn\u0027t consume the implicit parameters. Shouldn\u0027t this be an error instead (like the `if len(attributes) \u003e 0 {}` ones above)? Likewise `enum`, `match`, and `import` should probably get the same error check.",
+      "revId": "74b56a23c94216a8ec0271bcc5723e45e0030989",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
