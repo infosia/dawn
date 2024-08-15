@@ -33,7 +33,10 @@ TINT_INSTANTIATE_TYPEINFO(tint::core::type::SubgroupMatrix);
 
 namespace tint::core::type {
 
-SubgroupMatrix::SubgroupMatrix(Kind kind, const Type* subtype, uint32_t rows, uint32_t columns)
+SubgroupMatrix::SubgroupMatrix(SubgroupMatrixKind kind,
+                               const Type* subtype,
+                               uint32_t rows,
+                               uint32_t columns)
     : Base(Hash(tint::TypeCode::Of<SubgroupMatrix>().bits, kind, rows, columns, subtype),
            core::type::Flags{
                Flag::kConstructable,
@@ -67,15 +70,17 @@ std::string SubgroupMatrix::FriendlyName() const {
     StringStream out;
     out << "subgroup_matrix_";
     switch (kind_) {
-        case Kind::kLeft:
+        case SubgroupMatrixKind::kLeft:
             out << "left";
             break;
-        case Kind::kRight:
+        case SubgroupMatrixKind::kRight:
             out << "right";
             break;
-        case Kind::kResult:
+        case SubgroupMatrixKind::kResult:
             out << "result";
             break;
+        case SubgroupMatrixKind::kUndefined:
+            TINT_UNREACHABLE();
     }
     out << "<" << subtype_->FriendlyName() << ", " << rows_ << ", " << columns_ << ">";
     return out.str();
