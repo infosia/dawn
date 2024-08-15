@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03fd1257_d17611c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-15T18:43:16Z",
+      "side": 1,
+      "message": "lgtm w/ nit",
+      "revId": "662a856733532e12b8350748db5bb5e85d1c09fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70b8e89c_ba3c30d5",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2002,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-15T18:43:16Z",
+      "side": 1,
+      "message": "Isn\u0027t the `ret-\u003eValue()` check redundant with the `if (!retValue())` above?",
+      "revId": "662a856733532e12b8350748db5bb5e85d1c09fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
