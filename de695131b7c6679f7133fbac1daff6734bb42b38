@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da763fd3_521bfa45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-15T20:27:15Z",
+      "side": 1,
+      "message": "FYI, there are a couple small ways this implementation diverged from the spec proposal that I assumed would be better as follow-ups with Alan next week, so I documented them in a bug: https://crbug.com/360175906",
+      "revId": "de695131b7c6679f7133fbac1daff6734bb42b38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
