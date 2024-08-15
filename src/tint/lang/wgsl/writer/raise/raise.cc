@@ -194,6 +194,9 @@ wgsl::BuiltinFn Convert(core::BuiltinFn fn) {
         CASE(kQuadSwapY)
         CASE(kQuadSwapDiagonal)
         case core::BuiltinFn::kNone:
+        case core::BuiltinFn::kSubgroupMatrixLeft:
+        case core::BuiltinFn::kSubgroupMatrixRight:
+        case core::BuiltinFn::kSubgroupMatrixResult:
             break;
     }
     TINT_ICE() << "unhandled builtin function: " << fn;
