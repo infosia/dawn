@@ -52,6 +52,24 @@
       "parentUuid": "337cd2d5_e6978c05",
       "revId": "fc22e79cc120df3cacdb71445791b704bbf63d47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "148eaa78_6399ce55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-15T17:42:45Z",
+      "side": 1,
+      "message": "That seems to have solved the issue with CTS tests :)",
+      "parentUuid": "dffd491b_4ca47399",
+      "revId": "fc22e79cc120df3cacdb71445791b704bbf63d47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
