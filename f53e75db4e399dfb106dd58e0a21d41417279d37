@@ -374,6 +374,24 @@
       "parentUuid": "3e081854_f25b7737",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e9bfe54_31aa5d41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-15T15:26:25Z",
+      "side": 1,
+      "message": "(My turn for a typo: should say \"That would make B 64 + 32 + 4 \u003d 100 bytes, I think\")",
+      "parentUuid": "b5b10d48_7dadc3f3",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
