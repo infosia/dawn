@@ -16,6 +16,104 @@
       "message": "PTAL.",
       "revId": "fcf686302d33cc1d7fd7930de4f178efcb8642b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4682f8c3_a3a87506",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-15T18:57:01Z",
+      "side": 1,
+      "message": "Okay, looks good. I would have preferred that `main.go` be in a separate change, but okay.",
+      "revId": "fcf686302d33cc1d7fd7930de4f178efcb8642b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d792848c_a5556e28",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-15T18:57:01Z",
+      "side": 1,
+      "message": "Suggest renaming to `skip_reason`",
+      "range": {
+        "startLine": 795,
+        "startChar": 6,
+        "endLine": 795,
+        "endChar": 14
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e3f0cc69_733ae210",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 795,
+                "startChar": 0,
+                "endLine": 796,
+                "endChar": 0
+              },
+              "replacement": "\t\tvar skip_reason string \u003d \"FAILED\"\n"
+            },
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 797,
+                "startChar": 0,
+                "endLine": 798,
+                "endChar": 0
+              },
+              "replacement": "\t\t\tskip_reason \u003d \"INVALID\"\n"
+            },
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 808,
+                "startChar": 0,
+                "endLine": 809,
+                "endChar": 0
+              },
+              "replacement": "\t\t\t\tsaveExpectedFile(expectedFilePath, \"SKIP: \"+skip_reason+\"\\n\\n\"+out)\n"
+            },
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 819,
+                "startChar": 0,
+                "endLine": 820,
+                "endChar": 0
+              },
+              "replacement": "\t\t\t\tsaveExpectedFile(expectedFilePath, \"SKIP: \"+skip_reason+\"\\n\\n\"+out)\n"
+            },
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 827,
+                "startChar": 0,
+                "endLine": 828,
+                "endChar": 0
+              },
+              "replacement": "\t\t\t\tsaveExpectedFile(expectedFilePath, \"SKIP: \"+skip_reason+\"\\n\\n\"+out)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fcf686302d33cc1d7fd7930de4f178efcb8642b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
