@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fb8446f_a45c19e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-16T17:24:59Z",
+      "side": 1,
+      "message": "LGTM, a few more nits",
+      "revId": "4257fbf8bf6040306e516ea72c66ed7293ddb020",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59092af6_abcc4848",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-16T17:24:59Z",
+      "side": 1,
+      "message": "I believe you can use .finally which will run on both success and failure, without catching the exception\n\nusing .then like with the second arg will catch the promise rejection. Not catching it surfaces it to the developer as a console warning. I think you can also globally register a handler for unhandled rejections.\n\nI think perhaps the behavior is subjective - should Emscripten swallow everything entirely and the error is only visible in the message to the C function? maybe some people might want that. but I think seeing the rejections from the actual JS stack is probably nicer.\nAlso, devtools has a \"pause on uncaught exceptions\" feature which is nice to be able to use.",
+      "range": {
+        "startLine": 102,
+        "startChar": 34,
+        "endLine": 105,
+        "endChar": 8
+      },
+      "revId": "4257fbf8bf6040306e516ea72c66ed7293ddb020",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9091ede0_53b05d5c",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-16T17:24:59Z",
+      "side": 1,
+      "message": "nit: probably not necessary to reset the length here\n\nno strong feeling though as it is probably not a huge impact",
+      "range": {
+        "startLine": 514,
+        "startChar": 0,
+        "endLine": 514,
+        "endChar": 43
+      },
+      "revId": "4257fbf8bf6040306e516ea72c66ed7293ddb020",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "462afc80_c8baa2f4",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-16T17:24:59Z",
+      "side": 1,
+      "message": "unit: you probably don\u0027t need hasTimeout.\n\nCan pass nullptr for timeoutNS if it is UINT64_MAX.",
+      "range": {
+        "startLine": 278,
+        "startChar": 47,
+        "endLine": 278,
+        "endChar": 69
+      },
+      "revId": "4257fbf8bf6040306e516ea72c66ed7293ddb020",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
