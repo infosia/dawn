@@ -16,6 +16,24 @@
       "message": "size is not used, Essentially didn\u0027t change...",
       "revId": "91d7eb20aa88fad0581a10ba2cd003eb1bb9887d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c20563fc_84b2e52a",
+        "filename": "src/tint/lang/glsl/writer/ast_raise/pad_structs.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-16T18:29:25Z",
+      "side": 1,
+      "message": "Igonre",
+      "parentUuid": "46a7e92f_b7864941",
+      "revId": "91d7eb20aa88fad0581a10ba2cd003eb1bb9887d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
