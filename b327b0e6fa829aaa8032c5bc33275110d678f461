@@ -16,6 +16,23 @@
       "message": "So because of my misunderstanding of `roundUp` in WGSL spec, test cases I thought where behaviors were wrong are actually correct. So we don\u0027t need to fix anything on main really.\n\ne.g. `@size(20) y : SomeStruct` are rounded up to size of 32. so the padding will be 4 u32 instead of 1 u32.\n\nThis CL now doesn\u0027t really change code logic, just adds some more unit tests, and make it slightly clearer what we are doing with the @size attr and why we are doing (only adding @size, not @align as align logic is already done via padding).",
       "revId": "b327b0e6fa829aaa8032c5bc33275110d678f461",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c654e915_02ea668d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-16T22:56:18Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "b327b0e6fa829aaa8032c5bc33275110d678f461",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
