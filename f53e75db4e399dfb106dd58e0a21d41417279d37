@@ -392,6 +392,24 @@
       "parentUuid": "b5b10d48_7dadc3f3",
       "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06fa880f_68542a7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-16T22:22:44Z",
+      "side": 1,
+      "message": "Turns out because my misunderstanding of `roundUp` in the WGSL spec, test cases I thought were wrong are actually correct with current main impl... So we don\u0027t need to fix anything. See comments on my latest CL (facepalm)",
+      "parentUuid": "8e9bfe54_31aa5d41",
+      "revId": "f53e75db4e399dfb106dd58e0a21d41417279d37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
