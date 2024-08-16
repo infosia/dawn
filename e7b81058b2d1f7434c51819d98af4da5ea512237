@@ -87,6 +87,24 @@
       "parentUuid": "515e3bcf_1072e70d",
       "revId": "e7b81058b2d1f7434c51819d98af4da5ea512237",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52799b1c_016bc45f",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 17
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-16T20:12:16Z",
+      "side": 1,
+      "message": "Yea, it\u0027s used in node. Intuitively though I feel like the name `OptionalBool` lends itself to be convertible to a `std::optional\u003cbool\u003e` and given that we already require `std::optional` to be available for the header, I\u0027m inclined to just keep it.",
+      "parentUuid": "dde3cc17_8e4c4f10",
+      "revId": "e7b81058b2d1f7434c51819d98af4da5ea512237",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
