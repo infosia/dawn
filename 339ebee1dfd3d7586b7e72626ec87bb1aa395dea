@@ -322,6 +322,24 @@
       "parentUuid": "b821b5ee_29089919",
       "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c73107bd_0c5d5ac7",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-16T01:50:40Z",
+      "side": 1,
+      "message": "print is fine IMO; it\u0027s used elsewhere in this script as well.",
+      "parentUuid": "28a27125_b3340f63",
+      "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
