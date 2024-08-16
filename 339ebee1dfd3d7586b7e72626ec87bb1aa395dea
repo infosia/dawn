@@ -340,6 +340,24 @@
       "parentUuid": "28a27125_b3340f63",
       "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b94b6eaa_c8dac98e",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-16T16:38:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73107bd_0c5d5ac7",
+      "revId": "339ebee1dfd3d7586b7e72626ec87bb1aa395dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

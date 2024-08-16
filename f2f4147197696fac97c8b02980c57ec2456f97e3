@@ -16,6 +16,24 @@
       "message": "nit: print a warning to inform that the argument is deprecated and will be removed in a future version?",
       "revId": "f2f4147197696fac97c8b02980c57ec2456f97e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba7fb519_22678fb4",
+        "filename": "tools/fetch_dawn_dependencies.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-16T16:38:56Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "56a7c1e9_96f60afc",
+      "revId": "f2f4147197696fac97c8b02980c57ec2456f97e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
