@@ -43,6 +43,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "3e612292_7c5debc7",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-16T21:47:46Z",
+      "side": 1,
+      "message": "I initially tried to use `.finally`, but according to the docs: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally#onfinally the returned result (the `futureId` in this case, which we need) will be ignored which isn\u0027t what we want.\n\nI did decide to remove the exception handling for now since as you said maybe that\u0027s for the better.",
+      "parentUuid": "59092af6_abcc4848",
+      "range": {
+        "startLine": 102,
+        "startChar": 34,
+        "endLine": 105,
+        "endChar": 8
+      },
+      "revId": "4257fbf8bf6040306e516ea72c66ed7293ddb020",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "9091ede0_53b05d5c",
         "filename": "third_party/emdawnwebgpu/library_webgpu.js",
         "patchSetId": 3
@@ -77,6 +101,30 @@
       "writtenOn": "2024-08-16T17:24:59Z",
       "side": 1,
       "message": "unit: you probably don\u0027t need hasTimeout.\n\nCan pass nullptr for timeoutNS if it is UINT64_MAX.",
+      "range": {
+        "startLine": 278,
+        "startChar": 47,
+        "endLine": 278,
+        "endChar": 69
+      },
+      "revId": "4257fbf8bf6040306e516ea72c66ed7293ddb020",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b686f9ca_8af829e7",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-16T21:47:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "462afc80_c8baa2f4",
       "range": {
         "startLine": 278,
         "startChar": 47,
