@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da4bbe37_cb25bb12",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-16T21:46:34Z",
+      "side": 1,
+      "message": "Yes! Great idea, done.",
+      "parentUuid": "4f80928b_9d3a4ca2",
+      "revId": "644a3f2f371fcc8c3253ca7e14b8db4929ad31e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7eccc293_6c69d443",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d278ecc8_65909e6d",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-16T21:46:34Z",
+      "side": 1,
+      "message": "No longer applicable based on the other comment and fix.",
+      "parentUuid": "7eccc293_6c69d443",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "644a3f2f371fcc8c3253ca7e14b8db4929ad31e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a3d34a5_55d59d05",
@@ -54,6 +96,30 @@
       "writtenOn": "2024-08-16T17:07:36Z",
       "side": 1,
       "message": "```suggestion\n        WebGPU._table[ptr] \u003d object;\n```",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 37
+      },
+      "revId": "644a3f2f371fcc8c3253ca7e14b8db4929ad31e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9cffade_d1fd74d7",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-16T21:46:34Z",
+      "side": 1,
+      "message": "No longer applicable based on the other comment and fix.",
+      "parentUuid": "0a3d34a5_55d59d05",
       "range": {
         "startLine": 87,
         "startChar": 0,
