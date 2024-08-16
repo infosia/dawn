@@ -16,6 +16,24 @@
       "message": "PTAL, thanks!\n\nThe SPIR-V backend is the easiest one. Other backends are far more difficult. For example, to translate `array\u003cf32, 8\u003e clipDistances [[clip_distances]]`:\n1. On HLSL, the output should be:\n   ```\n   float4 clipDistances0 : SV_ClipDistance0;\n   float4 clipDistances1 : SV_ClipDistance1;\n   ```\n2. On MSL, the output should be a C-style array:\n   ```\n   float clipDistances[8] [[ clip_distance]];\n   ```\n  `tint_array\u003cfloat, 1\u003e clipDistance [[clip_distance]]` is not allowed.\n3. On GLSL (ES), the tint end2end test will fail because glslang doesn\u0027t support `GL_EXT_clip_cull_distance` (https://github.com/KhronosGroup/glslang/issues/566)\n\nMaybe I need your help on the above issues 😊",
       "revId": "222f23016ecbc7317860bc99373fee6501fdf40d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e6c234c_732d2550",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-16T19:35:11Z",
+      "side": 1,
+      "message": "LGTM for SPIR-V.\n\nWe can certainly help figure out how best to do this for HLSL and MSL (I agree that it will definitely be a somewhat awkward). Not sure whether we care about this extension for compat or not so we might not need to do GLSL.",
+      "parentUuid": "2830e113_2292947f",
+      "revId": "222f23016ecbc7317860bc99373fee6501fdf40d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
