@@ -53,6 +53,7 @@
 #include "dawn/native/Limits.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/PerStage.h"
+#include "dawn/native/Serializable.h"
 #include "dawn/native/dawn_platform.h"
 #include "tint/tint.h"
 
@@ -101,6 +102,22 @@ enum class PixelLocalMemberType {
     U32,
     F32,
 };
+
+enum class ImmediateDataUsage {
+    ClampFragDepth,
+    ArrayLengthFromUniform,
+    NumWorkgroupsFromUniform,
+    FirstIndexOffset,
+    ImmediateData,
+};
+
+#define IMMEDIATE_DATA_METADATA_MEMBERS(X) \
+    X(uint32_t, startOffset)               \
+    X(uint32_t, rangeSize)
+
+DAWN_SERIALIZABLE(struct, ImmediateDataMetadata, IMMEDIATE_DATA_METADATA_MEMBERS){};
+
+using ImmediateDataMetadataTable = std::unordered_map<ImmediateDataUsage, ImmediateDataMetadata>;
 
 // Use map to make sure constant keys are sorted for creating shader cache keys
 using PipelineConstantEntries = std::map<std::string, double>;

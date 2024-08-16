@@ -33,6 +33,9 @@
 
 #include "dawn/native/d3d12/d3d12_platform.h"
 
+// For quick prototyping.
+#include "dawn/native/d3d12/RenderPipelineD3D12.h"
+
 namespace dawn::native::d3d12 {
 
 class Device;
@@ -53,15 +56,22 @@ class ComputePipeline final : public ComputePipelineBase {
 
     bool UsesNumWorkgroups() const;
 
+    ID3D12RootSignature* GetRootSignature() const;
     ComPtr<ID3D12CommandSignature> GetDispatchIndirectCommandSignature();
+    ImmediateDataManagerD3D12* GetImmediateDataManager();
 
   private:
     ~ComputePipeline() override;
 
     void DestroyImpl() override;
 
+    ID3D12CommandSignature* GetDispatchIndirectCommandSignatureWithNumWorkgroups();
+
     using ComputePipelineBase::ComputePipelineBase;
     ComPtr<ID3D12PipelineState> mPipelineState;
+    ComPtr<ID3D12CommandSignature> mDispatchIndirectCommandSignatureWithNumWorkgroups;
+    ComPtr<ID3D12RootSignature> mRootSignature;
+    std::unique_ptr<ImmediateDataManagerD3D12> mImmediateDataManager;
 };
 
 }  // namespace dawn::native::d3d12

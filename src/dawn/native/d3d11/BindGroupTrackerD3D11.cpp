@@ -141,7 +141,6 @@ BindGroupTracker::BindGroupTracker(
       mVisibleStages(isRenderPass ? wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment
                                   : wgpu::ShaderStage::Compute),
       mPixelLocalStorageUAVs(std::move(pixelLocalStorageUAVs)) {
-    mLastAppliedPipelineLayout = mCommandContext->GetDevice()->GetEmptyPipelineLayout();
 }
 
 BindGroupTracker::~BindGroupTracker() {
@@ -149,12 +148,21 @@ BindGroupTracker::~BindGroupTracker() {
         ResetAllRenderSlots(mCommandContext);
     } else {
         for (BindGroupIndex index :
-             IterateBitSet(mLastAppliedPipelineLayout->GetBindGroupLayoutsMask())) {
+             IterateBitSet(GetLastAppliedLayout()->GetBindGroupLayoutsMask())) {
             UnapplyComputeBindings(index);
         }
     }
     // All slots should be unbound here.
     DAWN_ASSERT(CheckAllSlotsAreEmpty(mCommandContext));
+}
+
+PipelineLayoutBase* BindGroupTracker::GetLastAppliedLayout() {
+    // The initial state
+    if (!mLastAppliedPipeline) {
+        return mCommandContext->GetDevice()->GetEmptyPipelineLayout();
+    }
+
+    return mLastAppliedPipeline->GetLayout();
 }
 
 MaybeError BindGroupTracker::Apply() {
@@ -164,7 +172,7 @@ MaybeError BindGroupTracker::Apply() {
         // As D3d11 requires to bind all UAVs slots at the same time for pixel shaders, we record
         // all UAV slot assignments in the bind groups, and then bind them all together.
         const BindGroupMask uavBindGroups =
-            ToBackend(mPipelineLayout)->GetUAVBindGroupLayoutsMask();
+            ToBackend(mPipeline->GetLayout())->GetUAVBindGroupLayoutsMask();
         std::vector<ComPtr<ID3D11UnorderedAccessView>> uavsInBindGroup;
         for (BindGroupIndex index : IterateBitSet(uavBindGroups)) {
             BindGroupBase* group = mBindGroups[index];
@@ -241,7 +249,7 @@ MaybeError BindGroupTracker::Apply() {
             }
         }
 
-        uint32_t uavSlotCount = ToBackend(mPipelineLayout->GetDevice())->GetUAVSlotCount();
+        uint32_t uavSlotCount = ToBackend(mPipeline->GetDevice())->GetUAVSlotCount();
         std::vector<ID3D11UnorderedAccessView*> views;
         views.reserve(uavsInBindGroup.size() + mPixelLocalStorageUAVs.size());
         for (auto& uav : uavsInBindGroup) {
@@ -258,8 +266,8 @@ MaybeError BindGroupTracker::Apply() {
         }
     } else {
         BindGroupMask inheritedGroups =
-            mPipelineLayout->InheritedGroupsMask(mLastAppliedPipelineLayout);
-        BindGroupMask previousGroups = mLastAppliedPipelineLayout->GetBindGroupLayoutsMask();
+            mPipeline->GetLayout()->InheritedGroupsMask(GetLastAppliedLayout());
+        BindGroupMask previousGroups = GetLastAppliedLayout()->GetBindGroupLayoutsMask();
 
         // To avoid UAV / SRV conflicts with bindings in previously bind groups, we unset the bind
         // groups that aren't reused by the current pipeline.
@@ -288,7 +296,7 @@ MaybeError BindGroupTracker::ApplyBindGroup(BindGroupIndex index) {
     auto* deviceContext = mCommandContext->GetD3D11DeviceContext4();
     BindGroupBase* group = mBindGroups[index];
     const ityp::vector<BindingIndex, uint64_t>& dynamicOffsets = mDynamicOffsets[index];
-    const auto& indices = ToBackend(mPipelineLayout)->GetBindingIndexInfo()[index];
+    const auto& indices = ToBackend(mPipeline->GetLayout())->GetBindingIndexInfo()[index];
 
     for (BindingIndex bindingIndex : Range(group->GetLayout()->GetBindingCount())) {
         const BindingInfo& bindingInfo = group->GetLayout()->GetBindingInfo(bindingIndex);
@@ -459,9 +467,8 @@ MaybeError BindGroupTracker::ApplyBindGroup(BindGroupIndex index) {
 void BindGroupTracker::UnapplyComputeBindings(BindGroupIndex index) {
     DAWN_ASSERT(!mIsRenderPass);
     auto* deviceContext = mCommandContext->GetD3D11DeviceContext4();
-    BindGroupLayoutInternalBase* groupLayout =
-        mLastAppliedPipelineLayout->GetBindGroupLayout(index);
-    const auto& indices = ToBackend(mLastAppliedPipelineLayout)->GetBindingIndexInfo()[index];
+    BindGroupLayoutInternalBase* groupLayout = GetLastAppliedLayout()->GetBindGroupLayout(index);
+    const auto& indices = ToBackend(GetLastAppliedLayout())->GetBindingIndexInfo()[index];
 
     for (BindingIndex bindingIndex : Range(groupLayout->GetBindingCount())) {
         const BindingInfo& bindingInfo = groupLayout->GetBindingInfo(bindingIndex);
