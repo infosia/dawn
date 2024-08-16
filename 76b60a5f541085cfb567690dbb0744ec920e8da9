@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "210e60f1_3c5d405a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-08-16T13:02:17Z",
+      "side": 1,
+      "message": "Austin, PTAL.\nwebgpu_cts_with_validation_tests on Intel GPU on Linux (with patch) on Ubuntu-18.04.6\npassed in\nhttps://ci.chromium.org/ui/p/chromium/builders/try/linux-dawn-rel/37269/overview",
+      "revId": "76b60a5f541085cfb567690dbb0744ec920e8da9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
