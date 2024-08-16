@@ -16,6 +16,46 @@
       "message": "Adding Austin as a reviewer since Kai will be OOO for a while.",
       "revId": "411c280cfb8bd2827f29486fb638d7ff778817c2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a096c494_8870fc2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-16T17:02:31Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "411c280cfb8bd2827f29486fb638d7ff778817c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e4e20eb_d5ab33d8",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-16T17:02:31Z",
+      "side": 1,
+      "message": "nit: could hash the internal enum instead of converting to std::optional",
+      "range": {
+        "startLine": 1022,
+        "startChar": 0,
+        "endLine": 1022,
+        "endChar": 46
+      },
+      "revId": "411c280cfb8bd2827f29486fb638d7ff778817c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

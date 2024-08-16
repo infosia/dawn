@@ -69,6 +69,24 @@
       "parentUuid": "e9317d46_52ac3559",
       "revId": "e7b81058b2d1f7434c51819d98af4da5ea512237",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dde3cc17_8e4c4f10",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 17
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-16T17:02:31Z",
+      "side": 1,
+      "message": "from Kai earlier:\n\u003e We could have one to (and from) std::optional\u003cbool\u003e but I\u0027m not sure this would be very useful\n\nI agree it doesn\u0027t seem all that useful. Do we need it at all?\n\noh - maybe it\u0027s for dawn.node autogen code? we could hardcode some of the conversion like we used to at [1]",
+      "parentUuid": "515e3bcf_1072e70d",
+      "revId": "e7b81058b2d1f7434c51819d98af4da5ea512237",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
