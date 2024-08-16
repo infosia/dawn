@@ -44,6 +44,11 @@
 
 #include "dawn/native/dawn_platform.h"
 
+namespace {
+static constexpr uint32_t kMaxImmediateDataCounts = 32;
+
+}  // anonymous namespace
+
 namespace dawn::native {
 
 ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* device,
@@ -64,6 +69,20 @@ struct ProgrammableStage {
     raw_ptr<const EntryPointMetadata> metadata = nullptr;
 
     PipelineConstantEntries constants;
+};
+
+class ImmediateDataManagerBase {
+  public:
+    uint32_t GetImmediateDataRangeByteSize() const { return mImmediateDataRangeSizes; }
+    void UpdateImmediateDataValue(ImmediateDataUsage usage,
+                                  uint32_t offset,
+                                  uint32_t size,
+                                  const uint32_t* immediateData);
+
+  protected:
+    uint32_t mImmediateDataRangeSizes = 0;
+    ImmediateDataMetadataTable mImmediateDataMetadata = {};
+    std::array<uint32_t, kMaxImmediateDataCounts> mImmediateData = {};
 };
 
 class PipelineBase : public ApiObjectBase, public CachedObject {

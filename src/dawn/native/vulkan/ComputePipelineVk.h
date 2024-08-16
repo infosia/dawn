@@ -46,6 +46,8 @@ class ComputePipeline final : public ComputePipelineBase {
 
     VkPipeline GetHandle() const;
 
+    VkPipelineLayout GetLayoutHandle() const;
+
     MaybeError InitializeImpl() override;
 
     // Dawn API
@@ -57,6 +59,8 @@ class ComputePipeline final : public ComputePipelineBase {
     using ComputePipelineBase::ComputePipelineBase;
 
     VkPipeline mHandle = VK_NULL_HANDLE;
+
+    VkPipelineLayout mLayoutHandle = VK_NULL_HANDLE;
 };
 
 }  // namespace dawn::native::vulkan

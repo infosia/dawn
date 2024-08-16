@@ -52,16 +52,18 @@ Ref<ComputePipeline> ComputePipeline::CreateUninitialized(
 
 MaybeError ComputePipeline::InitializeImpl() {
     Device* device = ToBackend(GetDevice());
-    const PipelineLayout* layout = ToBackend(GetLayout());
+    PipelineLayout* layout = ToBackend(GetLayout());
 
     // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
     StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
 
     VkComputePipelineCreateInfo createInfo;
+    DAWN_TRY_ASSIGN(mLayoutHandle, layout->GetVkPipelineLayout());
+
     createInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
-    createInfo.layout = layout->GetHandle();
+    createInfo.layout = mLayoutHandle;
     createInfo.basePipelineHandle = VkPipeline{};
     createInfo.basePipelineIndex = -1;
 
@@ -155,10 +157,19 @@ void ComputePipeline::DestroyImpl() {
         ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mHandle);
         mHandle = VK_NULL_HANDLE;
     }
+
+    if (mLayoutHandle != VK_NULL_HANDLE) {
+        ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mLayoutHandle);
+        mLayoutHandle = VK_NULL_HANDLE;
+    }
 }
 
 VkPipeline ComputePipeline::GetHandle() const {
     return mHandle;
+}
+
+VkPipelineLayout ComputePipeline::GetLayoutHandle() const {
+    return mLayoutHandle;
 }
 
 }  // namespace dawn::native::vulkan

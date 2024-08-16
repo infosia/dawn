@@ -34,6 +34,7 @@
 
 #include "dawn/native/Blob.h"
 #include "dawn/native/Serializable.h"
+#include "dawn/native/ShaderModule.h"
 #include "dawn/native/d3d/D3DCompilationRequest.h"
 #include "dawn/native/d3d/d3d_platform.h"
 
@@ -45,7 +46,8 @@ class Device;
     X(Blob, shaderBlob)            \
     X(std::string, hlslSource)     \
     X(bool, usesVertexIndex)       \
-    X(bool, usesInstanceIndex)
+    X(bool, usesInstanceIndex)     \
+    X(ImmediateDataMetadataTable, immediateDataMetadataTable)
 
 // `CompiledShader` holds a ref to one of the various representations of shader blobs and
 // information used to emulate vertex/instance index starts. It also holds the `hlslSource` for the

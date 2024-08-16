@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/d3d/BlobD3D.h"
 #include "dawn/native/d3d/D3DError.h"
@@ -81,7 +82,6 @@ MaybeError ComputePipeline::InitializeImpl() {
     }
 
     D3D12_COMPUTE_PIPELINE_STATE_DESC d3dDesc = {};
-    d3dDesc.pRootSignature = ToBackend(GetLayout())->GetRootSignature();
 
     d3d::CompiledShader compiledShader;
     DAWN_TRY_ASSIGN(
@@ -95,7 +95,20 @@ MaybeError ComputePipeline::InitializeImpl() {
                 : std::nullopt));
     d3dDesc.CS = {compiledShader.shaderBlob.Data(), compiledShader.shaderBlob.Size()};
 
-    StreamIn(&mCacheKey, d3dDesc, ToBackend(GetLayout())->GetRootSignatureBlob());
+    mImmediateDataManager = std::make_unique<ImmediateDataManagerD3D12>();
+    mImmediateDataManager->InitializeImmediateDataLayout(compiledShader.immediateDataMetadataTable);
+
+    ComPtr<ID3DBlob> rootSignatureBlob;
+    DAWN_TRY_ASSIGN(rootSignatureBlob,
+                    ToBackend(GetLayout())->GetRootSignatureBlob(mImmediateDataManager.get()));
+
+    DAWN_TRY(CheckHRESULT(device->GetD3D12Device()->CreateRootSignature(
+                              0, rootSignatureBlob->GetBufferPointer(),
+                              rootSignatureBlob->GetBufferSize(), IID_PPV_ARGS(&mRootSignature)),
+                          "D3D12 create root signature"));
+
+    StreamIn(&mCacheKey, d3dDesc, rootSignatureBlob.Get());
+    d3dDesc.pRootSignature = mRootSignature.Get();
 
     // Try to see if we have anything in the blob cache.
     Blob blob = device->LoadCachedBlob(GetCacheKey());
@@ -145,6 +158,11 @@ ComputePipeline::~ComputePipeline() = default;
 void ComputePipeline::DestroyImpl() {
     ComputePipelineBase::DestroyImpl();
     ToBackend(GetDevice())->ReferenceUntilUnused(mPipelineState);
+
+    if (mDispatchIndirectCommandSignatureWithNumWorkgroups.Get()) {
+        ToBackend(GetDevice())
+            ->ReferenceUntilUnused(mDispatchIndirectCommandSignatureWithNumWorkgroups);
+    }
 }
 
 ID3D12PipelineState* ComputePipeline::GetPipelineState() const {
@@ -161,9 +179,60 @@ bool ComputePipeline::UsesNumWorkgroups() const {
 
 ComPtr<ID3D12CommandSignature> ComputePipeline::GetDispatchIndirectCommandSignature() {
     if (UsesNumWorkgroups()) {
-        return ToBackend(GetLayout())->GetDispatchIndirectCommandSignatureWithNumWorkgroups();
+        return GetDispatchIndirectCommandSignatureWithNumWorkgroups();
     }
     return ToBackend(GetDevice())->GetDispatchIndirectSignature();
+}
+
+ID3D12CommandSignature* ComputePipeline::GetDispatchIndirectCommandSignatureWithNumWorkgroups() {
+    // mDispatchIndirectCommandSignatureWithNumWorkgroups won't be created until it is needed.
+    if (mDispatchIndirectCommandSignatureWithNumWorkgroups.Get() != nullptr) {
+        return mDispatchIndirectCommandSignatureWithNumWorkgroups.Get();
+    }
+    ComPtr<ID3D12CommandSignature> commandRootSignature;
+
+    std::vector<D3D12_INDIRECT_ARGUMENT_DESC> argumentDescs;
+    // We could remove DevceD3D12 mDrawIndexedIndirectSignature. ImmediateDataManagerD3D12 brings
+    // enough infos.
+    if (mImmediateDataManager->HasImmediateDataMetaData(
+            ImmediateDataUsage::NumWorkgroupsFromUniform)) {
+        const ImmediateDataMetadata& metadata = mImmediateDataManager->GetImmediateDataMetadata(
+            ImmediateDataUsage::NumWorkgroupsFromUniform);
+        D3D12_INDIRECT_ARGUMENT_DESC argConstantsDesc;
+        argConstantsDesc.Type = D3D12_INDIRECT_ARGUMENT_TYPE_CONSTANT;
+        argConstantsDesc.Constant.RootParameterIndex =
+            mImmediateDataManager->GetImmediateDataRootSignatureIndex();
+        argConstantsDesc.Constant.Num32BitValuesToSet = metadata.rangeSize / sizeof(uint32_t);
+        argConstantsDesc.Constant.DestOffsetIn32BitValues = metadata.startOffset / sizeof(uint32_t);
+        argumentDescs.emplace_back(std::move(argConstantsDesc));
+    }
+
+    // A command signature must contain exactly 1 Draw / Dispatch / DispatchMesh / DispatchRays
+    // command. That command must come last.
+    D3D12_INDIRECT_ARGUMENT_DESC argDesc;
+    argDesc.Type = D3D12_INDIRECT_ARGUMENT_TYPE_DISPATCH;
+    argumentDescs.emplace_back(std::move(argDesc));
+
+    D3D12_COMMAND_SIGNATURE_DESC programDesc = {};
+    programDesc.ByteStride = 6 * sizeof(uint32_t);
+    programDesc.NumArgumentDescs = argumentDescs.size();
+    programDesc.pArgumentDescs = argumentDescs.data();
+
+    // The root signature must be specified if and only if the command signature changes one of
+    // the root arguments.
+    ToBackend(GetDevice())
+        ->GetD3D12Device()
+        ->CreateCommandSignature(&programDesc, GetRootSignature(),
+                                 IID_PPV_ARGS(&mDispatchIndirectCommandSignatureWithNumWorkgroups));
+    return mDispatchIndirectCommandSignatureWithNumWorkgroups.Get();
+}
+
+ID3D12RootSignature* ComputePipeline::GetRootSignature() const {
+    return mRootSignature.Get();
+}
+
+ImmediateDataManagerD3D12* ComputePipeline::GetImmediateDataManager() {
+    return mImmediateDataManager.get();
 }
 
 }  // namespace dawn::native::d3d12

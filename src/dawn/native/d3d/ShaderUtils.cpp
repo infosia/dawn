@@ -47,6 +47,9 @@ namespace dawn::native::d3d {
 
 namespace {
 
+static constexpr uint32_t kFirstIndexOffsetAttributesCount = 2;
+static constexpr uint32_t kNumWorkGroupCount = 3;
+
 // Be careful that the return vector may contain the pointers that point to non-static memory.
 std::vector<const wchar_t*> GetDXCArguments(std::wstring_view entryPointNameW,
                                             const d3d::D3DBytecodeCompilationRequest& r) {
@@ -269,6 +272,48 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
         }
     }
 
+    // Record immediate data layout without register infos.
+    ImmediateDataMetadataTable immediateDataMetadataTable;
+
+    // Record first index offset attributes
+    // TODO: In a case that vertex and fragment shader module live in different source code file,
+    // first index offset transform might generate different results. This breaks unify immediate
+    // data block design. To resolve this :
+    // - Modify first index offset transform to insert attributes in fragment shader to ensure
+    //   identical immediate data layout
+    if (r.stage == SingleShaderStage::Vertex || r.stage == SingleShaderStage::Fragment) {
+        ImmediateDataMetadata metadata;
+        metadata.startOffset = 0;
+        metadata.rangeSize = sizeof(uint32_t) * kFirstIndexOffsetAttributesCount;
+
+        immediateDataMetadataTable.emplace(ImmediateDataUsage::FirstIndexOffset,
+                                           std::move(metadata));
+    }
+
+    // Use numworkgroups attributes
+    if (r.tintOptions.root_constant_binding_point) {
+        ImmediateDataMetadata metadata;
+        metadata.startOffset = 0;
+        metadata.rangeSize = sizeof(uint32_t) * kNumWorkGroupCount;
+
+        immediateDataMetadataTable.emplace(ImmediateDataUsage::NumWorkgroupsFromUniform,
+                                           std::move(metadata));
+    }
+
+    // Record sizes of dynamic storage buffers
+    // According to initialization logic in dawn/native/d3d12/PipelineLayoutD3D12.cpp, dynamic
+    // storage buffer size are stored in a continuous space and start from 0 offset. Hardcoded infos
+    // here.
+    // TODO: Use tint to generate offset according to dynamic storage buffer bindings.
+    if (r.tintOptions.array_length_from_uniform.bindpoint_to_size_index.size()) {
+        ImmediateDataMetadata metadata;
+        metadata.startOffset = 0;
+        metadata.rangeSize = sizeof(uint32_t) *
+                             r.tintOptions.array_length_from_uniform.bindpoint_to_size_index.size();
+        immediateDataMetadataTable.emplace(ImmediateDataUsage::ArrayLengthFromUniform,
+                                           std::move(metadata));
+    }
+
     TRACE_EVENT0(tracePlatform.UnsafeGetValue(), General, "tint::hlsl::writer::Generate");
     tint::Result<tint::hlsl::writer::Output> result;
     if (r.useTintIR) {
@@ -288,6 +333,7 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
     compiledShader->usesVertexIndex = usesVertexIndex;
     compiledShader->usesInstanceIndex = usesInstanceIndex;
     compiledShader->hlslSource = std::move(result->hlsl);
+    compiledShader->immediateDataMetadataTable = std::move(immediateDataMetadataTable);
     return {};
 }
 

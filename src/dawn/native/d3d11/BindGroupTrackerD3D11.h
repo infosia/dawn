@@ -55,6 +55,7 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
   private:
     MaybeError ApplyBindGroup(BindGroupIndex index);
     void UnapplyComputeBindings(BindGroupIndex index);
+    PipelineLayoutBase* GetLastAppliedLayout();
 
     raw_ptr<const ScopedSwapStateCommandRecordingContext> mCommandContext;
     const bool mIsRenderPass;

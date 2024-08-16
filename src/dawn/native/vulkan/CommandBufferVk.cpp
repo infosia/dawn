@@ -154,6 +154,16 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
   public:
     DescriptorSetTracker() = default;
 
+    void OnSetPipeline(RenderPipelineBase* pipeline) override {
+        mPipeline = pipeline;
+        mLayoutHandle = ToBackend(pipeline)->GetLayoutHandle();
+    }
+
+    void OnSetPipeline(ComputePipelineBase* pipeline) override {
+        mPipeline = pipeline;
+        mLayoutHandle = ToBackend(pipeline)->GetLayoutHandle();
+    }
+
     void Apply(Device* device,
                CommandRecordingContext* recordingContext,
                VkPipelineBindPoint bindPoint) {
@@ -163,12 +173,15 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
             uint32_t count = static_cast<uint32_t>(mDynamicOffsets[dirtyIndex].size());
             const uint32_t* dynamicOffset =
                 count > 0 ? mDynamicOffsets[dirtyIndex].data() : nullptr;
-            device->fn.CmdBindDescriptorSets(
-                recordingContext->commandBuffer, bindPoint, ToBackend(mPipelineLayout)->GetHandle(),
-                static_cast<uint32_t>(dirtyIndex), 1, &*set, count, dynamicOffset);
+            device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint,
+                                             mLayoutHandle, static_cast<uint32_t>(dirtyIndex), 1,
+                                             &*set, count, dynamicOffset);
         }
         AfterApply();
     }
+
+  private:
+    VkPipelineLayout mLayoutHandle = VK_NULL_HANDLE;
 };
 
 // Records the necessary barriers for a synchronization scope using the resource usage
@@ -1211,7 +1224,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         if (!clampFragDepthArgsDirty || lastPipeline == nullptr) {
             return;
         }
-        device->fn.CmdPushConstants(commands, ToBackend(lastPipeline->GetLayout())->GetHandle(),
+        device->fn.CmdPushConstants(commands, lastPipeline->GetLayoutHandle(),
                                     VK_SHADER_STAGE_FRAGMENT_BIT, kClampFragDepthArgsOffset,
                                     kClampFragDepthArgsSize, &clampFragDepthArgs);
         clampFragDepthArgsDirty = false;
@@ -1388,9 +1401,9 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
 
                 device->fn.CmdBindPipeline(commands, VK_PIPELINE_BIND_POINT_GRAPHICS,
                                            pipeline->GetHandle());
-                lastPipeline = pipeline;
 
                 descriptorSets.OnSetPipeline(pipeline);
+                lastPipeline = pipeline;
 
                 // Apply the deferred min/maxDepth push constants update if needed.
                 ApplyClampFragDepthArgs();
