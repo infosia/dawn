@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fe2bdb4_1ec9df71",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2024-08-16T17:51:55Z",
+      "side": 1,
+      "message": "PTAL - I actually had fixed this case during local prototyping, but it got lost when I split up the work into multiple CLs and got rediscovered when the corresposnding Chromium CL failed CQ: https://chromium-review.googlesource.com/c/chromium/src/+/5788986",
+      "revId": "ddb998d6bde039b6c9ef60aa6a4c473daaa85b6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
