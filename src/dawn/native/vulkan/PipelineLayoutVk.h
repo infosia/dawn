@@ -54,7 +54,7 @@ class PipelineLayout final : public PipelineLayoutBase {
         Device* device,
         const UnpackedPtr<PipelineLayoutDescriptor>& descriptor);
 
-    VkPipelineLayout GetHandle() const;
+    ResultOrError<VkPipelineLayout> GetVkPipelineLayout();
 
     // Friend definition of StreamIn which can be found by ADL to override stream::StreamIn<T>.
     friend void StreamIn(stream::Sink* sink, const PipelineLayout& obj) {
@@ -68,10 +68,12 @@ class PipelineLayout final : public PipelineLayoutBase {
     using PipelineLayoutBase::PipelineLayoutBase;
     MaybeError Initialize();
 
-    // Dawn API
-    void SetLabelImpl() override;
+    std::array<VkDescriptorSetLayout, kMaxBindGroups> mSetLayouts;
+    std::array<const CachedObject*, kMaxBindGroups> mCachedObjects;
+    VkPushConstantRange mDepthClampArgsRange;
+    uint32_t mNumSetLayouts = 0;
 
-    VkPipelineLayout mHandle = VK_NULL_HANDLE;
+    // VkPipelineLayout mHandle = VK_NULL_HANDLE;
 };
 
 }  // namespace dawn::native::vulkan

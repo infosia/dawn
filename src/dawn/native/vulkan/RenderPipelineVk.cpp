@@ -542,6 +542,8 @@ MaybeError RenderPipeline::InitializeImpl() {
     // The create info chains in a bunch of things created on the stack here or inside state
     // objects.
     VkGraphicsPipelineCreateInfo createInfo;
+    DAWN_TRY_ASSIGN(mLayoutHandle, ToBackend(GetLayout())->GetVkPipelineLayout());
+
     createInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
@@ -557,7 +559,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     createInfo.pColorBlendState =
         (GetStageMask() & wgpu::ShaderStage::Fragment) ? &colorBlend : nullptr;
     createInfo.pDynamicState = &dynamic;
-    createInfo.layout = ToBackend(GetLayout())->GetHandle();
+    createInfo.layout = mLayoutHandle;
     createInfo.renderPass = renderPassInfo.renderPass;
     createInfo.basePipelineHandle = VkPipeline{};
     createInfo.basePipelineIndex = -1;
@@ -699,10 +701,19 @@ void RenderPipeline::DestroyImpl() {
         ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mHandle);
         mHandle = VK_NULL_HANDLE;
     }
+
+    if (mLayoutHandle != VK_NULL_HANDLE) {
+        ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mLayoutHandle);
+        mLayoutHandle = VK_NULL_HANDLE;
+    }
 }
 
 VkPipeline RenderPipeline::GetHandle() const {
     return mHandle;
+}
+
+VkPipelineLayout RenderPipeline::GetLayoutHandle() const {
+    return mLayoutHandle;
 }
 
 }  // namespace dawn::native::vulkan

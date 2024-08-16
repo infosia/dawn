@@ -161,9 +161,9 @@ void RecordFirstIndexOffset(ID3D12GraphicsCommandList* commandList,
         return;
     }
     std::array<uint32_t, 2> offsets{firstVertex, firstInstance};
-    PipelineLayout* layout = ToBackend(pipeline->GetLayout());
-    commandList->SetGraphicsRoot32BitConstants(layout->GetFirstIndexOffsetParameterIndex(),
-                                               offsets.size(), offsets.data(), 0);
+    ImmediateDataManagerD3D12* immediateDataManager = pipeline->GetImmediateDataManager();
+    immediateDataManager->UpdateImmediateDataValue(
+        ImmediateDataUsage::FirstIndexOffset, 0, offsets.size() * sizeof(uint32_t), offsets.data());
 }
 
 bool ShouldCopyUsingTemporaryBuffer(DeviceBase* device,
@@ -333,9 +333,10 @@ void RecordNumWorkgroupsForDispatch(ID3D12GraphicsCommandList* commandList,
         return;
     }
 
-    PipelineLayout* layout = ToBackend(pipeline->GetLayout());
-    commandList->SetComputeRoot32BitConstants(layout->GetNumWorkgroupsParameterIndex(), 3, dispatch,
-                                              0);
+    std::array<uint32_t, 3> numWorkgroups{dispatch->x, dispatch->y, dispatch->z};
+    ImmediateDataManagerD3D12* immediateDataManager = pipeline->GetImmediateDataManager();
+    immediateDataManager->UpdateImmediateDataValue(ImmediateDataUsage::NumWorkgroupsFromUniform, 0,
+                                                   3 * sizeof(uint32_t), numWorkgroups.data());
 }
 
 // Records the necessary barriers for a synchronization scope using the resource usage data
@@ -464,11 +465,15 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
 
         for (BindGroupIndex index : IterateBitSet(mDirtyBindGroupsObjectChangedOrIsDynamic)) {
             BindGroup* group = ToBackend(mBindGroups[index]);
-            ApplyBindGroup(commandList, ToBackend(mPipelineLayout), index, group,
+            ApplyBindGroup(commandList, ToBackend(mPipeline->GetLayout()), index, group,
                            mDynamicOffsets[index]);
         }
 
         AfterApply();
+        mLastAppliedImmediateDataRangeBytes =
+            mImmediateDataManager->GetImmediateDataRangeByteSize();
+        mLastAppliedBufferSizeRangeBytes =
+            mImmediateDataManager->GetDynamicStorageBufferSizesBytes();
 
         return {};
     }
@@ -477,15 +482,29 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
 
     void SetID3D12DescriptorHeaps(ID3D12GraphicsCommandList* commandList);
 
+    void OnSetPipeline(RenderPipelineBase* pipeline) override {
+        mPipeline = pipeline;
+        mRootSignature = ToBackend(pipeline)->GetRootSignature();
+        mImmediateDataManager = ToBackend(pipeline)->GetImmediateDataManager();
+    }
+
+    void OnSetPipeline(ComputePipelineBase* pipeline) override {
+        mPipeline = pipeline;
+        mRootSignature = ToBackend(pipeline)->GetRootSignature();
+        mImmediateDataManager = ToBackend(pipeline)->GetImmediateDataManager();
+    }
+
   private:
     void UpdateRootSignatureIfNecessary(ID3D12GraphicsCommandList* commandList) {
-        if (mLastAppliedPipelineLayout != mPipelineLayout) {
+        if (!mLastAppliedPipeline || mLastAppliedPipeline->GetLayout() != mPipeline->GetLayout() ||
+            mLastAppliedImmediateDataRangeBytes !=
+                mImmediateDataManager->GetImmediateDataRangeByteSize() ||
+            mLastAppliedBufferSizeRangeBytes !=
+                mImmediateDataManager->GetDynamicStorageBufferSizesBytes()) {
             if (mInCompute) {
-                commandList->SetComputeRootSignature(
-                    ToBackend(mPipelineLayout)->GetRootSignature());
+                commandList->SetComputeRootSignature(mRootSignature);
             } else {
-                commandList->SetGraphicsRootSignature(
-                    ToBackend(mPipelineLayout)->GetRootSignature());
+                commandList->SetGraphicsRootSignature(mRootSignature);
             }
             // Invalidate the root sampler tables previously set in the root signature.
             ResetRootSamplerTables();
@@ -596,20 +615,12 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
 
         const auto& dynamicStorageBufferLengths = group->GetDynamicStorageBufferLengths();
         if (dynamicStorageBufferLengths.size() != 0) {
-            uint32_t parameterIndex =
-                pipelineLayout->GetDynamicStorageBufferLengthsParameterIndex();
             uint32_t firstRegisterOffset =
                 pipelineLayout->GetDynamicStorageBufferLengthInfo()[index].firstRegisterOffset;
-
-            if (mInCompute) {
-                commandList->SetComputeRoot32BitConstants(
-                    parameterIndex, dynamicStorageBufferLengths.size(),
-                    dynamicStorageBufferLengths.data(), firstRegisterOffset);
-            } else {
-                commandList->SetGraphicsRoot32BitConstants(
-                    parameterIndex, dynamicStorageBufferLengths.size(),
-                    dynamicStorageBufferLengths.data(), firstRegisterOffset);
-            }
+            mImmediateDataManager->UpdateDynamicStorageBufferSizeValue(
+                ImmediateDataUsage::ArrayLengthFromUniform, firstRegisterOffset,
+                dynamicStorageBufferLengths.size() * sizeof(uint32_t),
+                dynamicStorageBufferLengths.data());
         }
     }
 
@@ -619,6 +630,13 @@ class BindGroupStateTracker : public BindGroupTrackerBase<false, uint64_t> {
     bool mInCompute = false;
 
     PerBindGroup<D3D12_GPU_DESCRIPTOR_HANDLE> mBoundRootSamplerTables = {};
+    ID3D12RootSignature* mRootSignature = nullptr;
+
+    ImmediateDataManagerD3D12* mImmediateDataManager = nullptr;
+    // NOTE: We don't need this after implementing getters in all backend and defines them in base
+    // class.
+    uint32_t mLastAppliedImmediateDataRangeBytes = 0;
+    uint32_t mLastAppliedBufferSizeRangeBytes = 0;
 
     // TODO(https://crbug.com/dawn/2361): Rewrite those members with raw_ref<T>.
     // This is currently failing with MSVC cl.exe compiler.
@@ -1209,6 +1227,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
                 DAWN_TRY(bindingTracker->Apply(commandContext));
 
                 RecordNumWorkgroupsForDispatch(commandList, lastPipeline, dispatch);
+                lastPipeline->GetImmediateDataManager()->Apply(commandList, true);
                 commandList->Dispatch(dispatch->x, dispatch->y, dispatch->z);
                 currentDispatch++;
                 break;
@@ -1223,6 +1242,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* commandCont
 
                 ComPtr<ID3D12CommandSignature> signature =
                     lastPipeline->GetDispatchIndirectCommandSignature();
+                lastPipeline->GetImmediateDataManager()->Apply(commandList, true);
                 commandList->ExecuteIndirect(
                     signature.Get(), 1, ToBackend(dispatch->indirectBuffer)->GetD3D12Resource(),
                     dispatch->indirectOffset, nullptr, 0);
@@ -1546,6 +1566,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 vertexBufferTracker.Apply(commandList, lastPipeline);
                 RecordFirstIndexOffset(commandList, lastPipeline, draw->firstVertex,
                                        draw->firstInstance);
+                lastPipeline->GetImmediateDataManager()->Apply(commandList, false);
                 commandList->DrawInstanced(draw->vertexCount, draw->instanceCount,
                                            draw->firstVertex, draw->firstInstance);
                 break;
@@ -1558,6 +1579,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 vertexBufferTracker.Apply(commandList, lastPipeline);
                 RecordFirstIndexOffset(commandList, lastPipeline, draw->baseVertex,
                                        draw->firstInstance);
+                lastPipeline->GetImmediateDataManager()->Apply(commandList, false);
                 commandList->DrawIndexedInstanced(draw->indexCount, draw->instanceCount,
                                                   draw->firstIndex, draw->baseVertex,
                                                   draw->firstInstance);
@@ -1573,6 +1595,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
                 ComPtr<ID3D12CommandSignature> signature =
                     lastPipeline->GetDrawIndirectCommandSignature();
+
+                lastPipeline->GetImmediateDataManager()->Apply(commandList, false);
                 commandList->ExecuteIndirect(signature.Get(), 1, buffer->GetD3D12Resource(),
                                              draw->indirectOffset, nullptr, 0);
                 break;
@@ -1589,6 +1613,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
 
                 ComPtr<ID3D12CommandSignature> signature =
                     lastPipeline->GetDrawIndexedIndirectCommandSignature();
+                lastPipeline->GetImmediateDataManager()->Apply(commandList, false);
                 commandList->ExecuteIndirect(signature.Get(), 1, buffer->GetD3D12Resource(),
                                              draw->indirectOffset, nullptr, 0);
                 break;
@@ -1610,6 +1635,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 ComPtr<ID3D12CommandSignature> signature =
                     lastPipeline->GetDrawIndirectCommandSignature();
 
+                lastPipeline->GetImmediateDataManager()->Apply(commandList, false);
                 commandList->ExecuteIndirect(
                     signature.Get(), draw->maxDrawCount, indirectBuffer->GetD3D12Resource(),
                     draw->indirectOffset,
@@ -1636,6 +1662,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* commandConte
                 ComPtr<ID3D12CommandSignature> signature =
                     lastPipeline->GetDrawIndexedIndirectCommandSignature();
 
+                lastPipeline->GetImmediateDataManager()->Apply(commandList, false);
                 commandList->ExecuteIndirect(
                     signature.Get(), draw->maxDrawCount, indirectBuffer->GetD3D12Resource(),
                     draw->indirectOffset,

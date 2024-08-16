@@ -100,6 +100,7 @@ void DumpDXCCompiledShader(Device* device,
         device->EmitLog(WGPULoggingType_Info, logMessage.c_str());
     }
 }
+
 }  // namespace
 
 // static

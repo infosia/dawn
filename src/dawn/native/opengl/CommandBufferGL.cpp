@@ -253,15 +253,15 @@ class VertexStateBufferBindingTracker {
 
 class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
   public:
-    void OnSetPipeline(RenderPipeline* pipeline) {
+    void OnSetRenderPipeline(RenderPipeline* pipeline) {
         BindGroupTrackerBase::OnSetPipeline(pipeline);
-        mPipeline = pipeline;
+        mPipelineGL = pipeline;
         ResetInternalUniformDataDirtyRange();
     }
 
-    void OnSetPipeline(ComputePipeline* pipeline) {
+    void OnSetComputePipeline(ComputePipeline* pipeline) {
         BindGroupTrackerBase::OnSetPipeline(pipeline);
-        mPipeline = pipeline;
+        mPipelineGL = pipeline;
         ResetInternalUniformDataDirtyRange();
     }
 
@@ -278,7 +278,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
     void BindSamplerAtIndex(const OpenGLFunctions& gl, SamplerBase* s, GLuint samplerIndex) {
         Sampler* sampler = ToBackend(s);
 
-        for (PipelineGL::SamplerUnit unit : mPipeline->GetTextureUnitsForSampler(samplerIndex)) {
+        for (PipelineGL::SamplerUnit unit : mPipelineGL->GetTextureUnitsForSampler(samplerIndex)) {
             // Only use filtering for certain texture units, because int
             // and uint texture are only complete without filtering
             if (unit.shouldUseFiltering) {
@@ -293,7 +293,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                         BindGroupIndex groupIndex,
                         BindGroupBase* group,
                         const ityp::vector<BindingIndex, uint64_t>& dynamicOffsets) {
-        const auto& indices = ToBackend(mPipelineLayout)->GetBindingIndexInfo()[groupIndex];
+        const auto& indices = ToBackend(mPipeline->GetLayout())->GetBindingIndexInfo()[groupIndex];
 
         for (BindingIndex bindingIndex : Range(group->GetLayout()->GetBindingCount())) {
             const BindingInfo& bindingInfo = group->GetLayout()->GetBindingInfo(bindingIndex);
@@ -339,7 +339,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                     GLenum target = view->GetGLTarget();
                     GLuint viewIndex = indices[bindingIndex];
 
-                    for (auto unit : mPipeline->GetTextureUnitsForTextureView(viewIndex)) {
+                    for (auto unit : mPipelineGL->GetTextureUnitsForTextureView(viewIndex)) {
                         gl.ActiveTexture(GL_TEXTURE0 + unit);
                         gl.BindTexture(target, handle);
                         if (ToBackend(view->GetTexture())->GetGLFormat().format ==
@@ -417,7 +417,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                                           const TextureView* view,
                                           BindGroupIndex groupIndex,
                                           BindingIndex bindingIndex) {
-        const auto& bindingInfo = mPipeline->GetBindingPointBuiltinDataInfo();
+        const auto& bindingInfo = mPipelineGL->GetBindingPointBuiltinDataInfo();
         if (bindingInfo.empty()) {
             return;
         }
@@ -457,7 +457,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
     }
 
     void ApplyInternalUniforms(const OpenGLFunctions& gl) {
-        const Buffer* internalUniformBuffer = mPipeline->GetInternalUniformBuffer();
+        const Buffer* internalUniformBuffer = mPipelineGL->GetInternalUniformBuffer();
         if (!internalUniformBuffer) {
             return;
         }
@@ -477,8 +477,6 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
         ResetInternalUniformDataDirtyRange();
     }
 
-    raw_ptr<PipelineGL> mPipeline = nullptr;
-
     // The data used for mPipeline's internal uniform buffer from current bind group.
     // Expecting no more than 4 texture bindings called as textureNumLevels/textureNumSamples
     // argument in a pipeline. Initialize the vector to this size to avoid frequent resizing.
@@ -486,6 +484,8 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
     // Tracking dirty byte range of the mInternalUniformBufferData that needs to call bufferSubData
     // to update to the internal uniform buffer of mPipeline. Range it represents: [first, second)
     std::pair<size_t, size_t> mDirtyRange;
+
+    raw_ptr<PipelineGL> mPipelineGL = nullptr;
 };
 
 void ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
@@ -948,7 +948,7 @@ MaybeError CommandBuffer::ExecuteComputePass() {
                 lastPipeline = ToBackend(cmd->pipeline).Get();
                 lastPipeline->ApplyNow();
 
-                bindGroupTracker.OnSetPipeline(lastPipeline);
+                bindGroupTracker.OnSetComputePipeline(lastPipeline);
                 break;
             }
 
@@ -1235,7 +1235,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass) {
                 lastPipeline->ApplyNow(persistentPipelineState);
 
                 vertexStateBufferBindingTracker.OnSetPipeline(lastPipeline);
-                bindGroupTracker.OnSetPipeline(lastPipeline);
+                bindGroupTracker.OnSetRenderPipeline(lastPipeline);
                 if (lastPipeline->UsesFragDepth()) {
                     gl.Uniform1f(PipelineLayout::PushConstantLocation::MinDepth, minDepth);
                     gl.Uniform1f(PipelineLayout::PushConstantLocation::MaxDepth, maxDepth);

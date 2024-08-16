@@ -34,8 +34,10 @@
 
 #include "dawn/common/Constants.h"
 #include "dawn/native/BindGroup.h"
+#include "dawn/native/ComputePipeline.h"
 #include "dawn/native/Pipeline.h"
 #include "dawn/native/PipelineLayout.h"
+#include "dawn/native/RenderPipeline.h"
 #include "partition_alloc/pointers/raw_ptr_exclusion.h"
 
 namespace dawn::native {
@@ -74,24 +76,27 @@ class BindGroupTrackerBase {
                   mDynamicOffsets[index].begin());
     }
 
-    void OnSetPipeline(PipelineBase* pipeline) { mPipelineLayout = pipeline->GetLayout(); }
+    virtual void OnSetPipeline(RenderPipelineBase* pipeline) { mPipeline = pipeline; }
+    virtual void OnSetPipeline(ComputePipelineBase* pipeline) { mPipeline = pipeline; }
 
   protected:
     // The Derived class should call this before it applies bind groups.
     void BeforeApply() {
-        if (mLastAppliedPipelineLayout == mPipelineLayout) {
+        if (mLastAppliedPipeline != nullptr &&
+            (mLastAppliedPipeline->GetLayout() == mPipeline->GetLayout())) {
             return;
         }
 
         // Use the bind group layout mask to avoid marking unused bind groups as dirty.
-        mBindGroupLayoutsMask = mPipelineLayout->GetBindGroupLayoutsMask();
+        mBindGroupLayoutsMask = mPipeline->GetLayout()->GetBindGroupLayoutsMask();
 
         // Changing the pipeline layout sets bind groups as dirty. If CanInheritBindGroups,
         // the first |k| matching bind groups may be inherited.
-        if (CanInheritBindGroups && mLastAppliedPipelineLayout != nullptr) {
+        if (CanInheritBindGroups && mLastAppliedPipeline != nullptr &&
+            mLastAppliedPipeline->GetLayout() != nullptr) {
             // Dirty bind groups that cannot be inherited.
             BindGroupMask dirtiedGroups =
-                ~mPipelineLayout->InheritedGroupsMask(mLastAppliedPipelineLayout);
+                ~mPipeline->GetLayout()->InheritedGroupsMask(mLastAppliedPipeline->GetLayout());
 
             mDirtyBindGroups |= dirtiedGroups;
             mDirtyBindGroupsObjectChangedOrIsDynamic |= dirtiedGroups;
@@ -114,7 +119,7 @@ class BindGroupTrackerBase {
         // Keep track of the last applied pipeline layout. This allows us to avoid computing
         // the intersection of the dirty bind groups and bind group layout mask in next Draw
         // or Dispatch (which is very hot code) until the layout is changed again.
-        mLastAppliedPipelineLayout = mPipelineLayout;
+        mLastAppliedPipeline = mPipeline;
     }
 
     BindGroupMask mDirtyBindGroups = 0;
@@ -129,8 +134,8 @@ class BindGroupTrackerBase {
     // RAW_PTR_EXCLUSION: These pointers are very hot in command recording code and point at
     // pipeline layouts referenced by the object graph of the CommandBuffer so they cannot be
     // freed from underneath this class.
-    RAW_PTR_EXCLUSION PipelineLayoutBase* mPipelineLayout = nullptr;
-    RAW_PTR_EXCLUSION PipelineLayoutBase* mLastAppliedPipelineLayout = nullptr;
+    RAW_PTR_EXCLUSION PipelineBase* mPipeline = nullptr;
+    RAW_PTR_EXCLUSION PipelineBase* mLastAppliedPipeline = nullptr;
 };
 
 }  // namespace dawn::native

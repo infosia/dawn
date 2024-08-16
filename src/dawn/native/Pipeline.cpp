@@ -311,6 +311,10 @@ BindGroupLayoutBase* PipelineBase::APIGetBindGroupLayout(uint32_t groupIndexIn) 
     return ReturnToAPI(std::move(result));
 }
 
+// NOTE: we don't need to check immeidate data here because the same shader module and same
+// entry points generate same internal immeidate datas
+// And pipelinelayout equality ensures external immediate data range same.
+// This helps fronted cache.
 size_t PipelineBase::ComputeContentHash() {
     ObjectContentHasher recorder;
     recorder.Record(mLayout->GetContentHash());
@@ -369,6 +373,16 @@ MaybeError PipelineBase::Initialize(std::optional<ScopedUseShaderPrograms> scope
         scopedUsePrograms = UseShaderPrograms();
     }
     return InitializeImpl();
+}
+
+void ImmediateDataManagerBase::UpdateImmediateDataValue(ImmediateDataUsage usage,
+                                                        uint32_t offset,
+                                                        uint32_t size,
+                                                        const uint32_t* immediateData) {
+    const ImmediateDataMetadata& metadata = mImmediateDataMetadata.at(usage);
+    const uint32_t rangeStartOffset = metadata.startOffset + offset;
+    uint32_t counts = size / sizeof(uint32_t);
+    std::copy(immediateData, immediateData + counts, mImmediateData.begin() + rangeStartOffset);
 }
 
 }  // namespace dawn::native

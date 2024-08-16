@@ -27,6 +27,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
+#include "dawn/native/ShaderModule.h"
 #include "dawn/native/d3d12/d3d12_platform.h"
 #include "dawn/native/stream/Stream.h"
 
@@ -130,6 +131,12 @@ void stream::Stream<ID3DBlob>::Write(stream::Sink* sink, const ID3DBlob& t) {
     ID3DBlob* pBlob = const_cast<ID3DBlob*>(&t);
     StreamIn(sink, Iterable(reinterpret_cast<uint8_t*>(pBlob->GetBufferPointer()),
                             pBlob->GetBufferSize()));
+}
+
+template <>
+void stream::Stream<ImmediateDataMetadata>::Write(stream::Sink* sink,
+                                                  const ImmediateDataMetadata& t) {
+    StreamIn(sink, t.startOffset, t.rangeSize);
 }
 
 }  // namespace dawn::native

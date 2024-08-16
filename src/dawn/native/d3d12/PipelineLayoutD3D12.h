@@ -40,6 +40,7 @@
 namespace dawn::native::d3d12 {
 
 class Device;
+class ImmediateDataManagerD3D12;
 
 class PipelineLayout final : public PipelineLayoutBase {
   public:
@@ -55,25 +56,15 @@ class PipelineLayout final : public PipelineLayoutBase {
 
     uint32_t GetFirstIndexOffsetRegisterSpace() const;
     uint32_t GetFirstIndexOffsetShaderRegister() const;
-    uint32_t GetFirstIndexOffsetParameterIndex() const;
 
     uint32_t GetNumWorkgroupsRegisterSpace() const;
     uint32_t GetNumWorkgroupsShaderRegister() const;
-    uint32_t GetNumWorkgroupsParameterIndex() const;
 
     uint32_t GetDynamicStorageBufferLengthsRegisterSpace() const;
     uint32_t GetDynamicStorageBufferLengthsShaderRegister() const;
-    uint32_t GetDynamicStorageBufferLengthsParameterIndex() const;
 
-    ID3D12RootSignature* GetRootSignature() const;
-
-    ID3DBlob* GetRootSignatureBlob() const;
-
-    ID3D12CommandSignature* GetDispatchIndirectCommandSignatureWithNumWorkgroups();
-
-    ID3D12CommandSignature* GetDrawIndirectCommandSignatureWithInstanceVertexOffsets();
-
-    ID3D12CommandSignature* GetDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets();
+    ResultOrError<ComPtr<ID3DBlob>> GetRootSignatureBlob(
+        ImmediateDataManagerD3D12* immediateDataManager);
 
     struct BindGroupDynamicStorageBufferLengthInfo {
         // First register offset for a bind group's dynamic storage buffer lengths.
@@ -107,15 +98,9 @@ class PipelineLayout final : public PipelineLayoutBase {
     PerBindGroup<uint32_t> mSamplerRootParameterInfo;
     PerBindGroup<ityp::vector<BindingIndex, uint32_t>> mDynamicRootParameterIndices;
     DynamicStorageBufferLengthInfo mDynamicStorageBufferLengthInfo;
-    uint32_t mFirstIndexOffsetParameterIndex;
-    uint32_t mNumWorkgroupsParameterIndex;
-    uint32_t mDynamicStorageBufferLengthsParameterIndex;
-    ComPtr<ID3D12RootSignature> mRootSignature;
-    // Store the root signature blob to put in pipeline cachekey
-    ComPtr<ID3DBlob> mRootSignatureBlob;
-    ComPtr<ID3D12CommandSignature> mDispatchIndirectCommandSignatureWithNumWorkgroups;
-    ComPtr<ID3D12CommandSignature> mDrawIndirectCommandSignatureWithInstanceVertexOffsets;
-    ComPtr<ID3D12CommandSignature> mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets;
+    std::vector<D3D12_ROOT_PARAMETER1> mRootParameters;
+    std::vector<D3D12_STATIC_SAMPLER_DESC> mStaticSamplers;
+    std::vector<D3D12_DESCRIPTOR_RANGE1> mRanges;
 };
 
 }  // namespace dawn::native::d3d12
