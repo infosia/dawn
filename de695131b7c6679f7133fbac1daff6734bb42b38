@@ -33,6 +33,24 @@
       "message": "This declaration and the `tint_msl_quad_shuffle` intrinsic need to be guarded in a way that makes sure they only happen once.\n\nPlease add one or two unit tests that would create multiple helper functions (e.g. one shader that calls both `quadSwapX` and `quadSwapY`, or calls one of the builtins multiple times with different types). This should expose the issue.",
       "revId": "de695131b7c6679f7133fbac1daff6734bb42b38",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7672697d_e8510362",
+        "filename": "src/tint/lang/msl/writer/ast_raise/quad_swap.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3460112
+      },
+      "writtenOn": "2024-08-16T14:23:51Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "d6fcc28e_b9dfbea4",
+      "revId": "de695131b7c6679f7133fbac1daff6734bb42b38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
