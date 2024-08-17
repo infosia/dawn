@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70a062a3_d223d559",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-08-17T02:13:18Z",
+      "side": 1,
+      "message": "Thanks Loko for your review. Waiting to see on the parent bug whether this merge-back is approved.\n\nDoes CQ work against Dawn\u0027s branches for earlier Chrome releases?",
+      "revId": "a79571636530ae7969869a466cb79a6bb1b0cf2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
