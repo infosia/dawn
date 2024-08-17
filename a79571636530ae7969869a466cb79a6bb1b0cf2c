@@ -34,6 +34,24 @@
       "parentUuid": "70a062a3_d223d559",
       "revId": "a79571636530ae7969869a466cb79a6bb1b0cf2c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60bf785e_5fe28099",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-17T04:51:39Z",
+      "side": 1,
+      "message": "nevermind; I guess I was wrong. looks like dawn-win11-arm64-deps-rel is configured wrong, but the others seem to be working",
+      "parentUuid": "d630d70a_1ba8c548",
+      "revId": "a79571636530ae7969869a466cb79a6bb1b0cf2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
