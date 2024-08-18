@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "384dba04_f3bec3af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-18T16:52:28Z",
+      "side": 1,
+      "message": "Hm, we\u0027re going to have to do something with validation here. We alreay validate with MSL 2.3 so, this should be supported, but I don\u0027t believe it\u0027s supported on the non-M* macs, so the test fails on the Mac Intel bot ....",
+      "revId": "19623c8c4459423e69a9ad5c134aa648f6aa44c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3b34fe1_241cb2f9",
