@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74bbffdb_8e318cce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-18T16:35:27Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "19623c8c4459423e69a9ad5c134aa648f6aa44c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3b34fe1_241cb2f9",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1631,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-18T16:35:27Z",
+      "side": 1,
+      "message": "I\u0027m putting this here for now, when I add the non-zero value constructor I\u0027m guessing there will be a polyfill needed and I\u0027ll move this out at that point and re-write the IR to an `msl.def` call.",
+      "revId": "19623c8c4459423e69a9ad5c134aa648f6aa44c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
