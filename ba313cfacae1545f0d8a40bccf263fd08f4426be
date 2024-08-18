@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72de6ccf_5d27f5fa",
+        "filename": "src/tint/lang/core/type/subgroup_matrix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-18T15:16:34Z",
+      "side": 1,
+      "message": "Made it `0` we\u0027ll see what happens.",
+      "parentUuid": "bee95252_bf9c43bd",
+      "revId": "ba313cfacae1545f0d8a40bccf263fd08f4426be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd7a72ae_9ec281bb",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-08-15T19:19:34Z",
       "side": 1,
       "message": "We should start using CamelCase here.\n\nYes, I know we don\u0027t for some of the methods in `Vector` and `Matrix`, but AFAIK that isn\u0027t deliberate and we should fix those at some point too (unless there\u0027s a good reason not too). The type manager uses lowercase names specifically to match the casing used in WGSL, but the functions here are not things that exist in WGSL.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 49
+      },
+      "revId": "ba313cfacae1545f0d8a40bccf263fd08f4426be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49d377b6_08d1701b",
+        "filename": "src/tint/lang/core/type/subgroup_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-18T15:16:34Z",
+      "side": 1,
+      "message": "These actually do fit the definition of camelCase (at least according to MDN [https://developer.mozilla.org/en-US/docs/Glossary/Camel_case]) the other way is PascalCase.\n\nKeeping these lower case as the first letter is also nicer in that you don\u0027t have to do `enum Kind` and `type::Type` due to the name clashes.\n\nI\u0027ve switched them to be `PascalCase` to match the rest of the file, but I\u0027m not a huge fan (the style guide allows them to be either way given they\u0027re accessors https://google.github.io/styleguide/cppguide.html#Function_Names)",
+      "parentUuid": "bd7a72ae_9ec281bb",
       "range": {
         "startLine": 65,
         "startChar": 0,
