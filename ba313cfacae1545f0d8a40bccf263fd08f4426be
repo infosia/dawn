@@ -81,6 +81,30 @@
       },
       "revId": "ba313cfacae1545f0d8a40bccf263fd08f4426be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "282f5f76_aad429e2",
+        "filename": "src/tint/lang/core/type/subgroup_matrix.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-19T14:58:09Z",
+      "side": 1,
+      "message": "Sorry, yes, I meant `PascalCase`. Thanks.\n\nI didn\u0027t know about the style guide rule for accessors. Personally I find that kinda strange, and I always reach for things like `mat-\u003eColumns()` and then get confused for a moment.",
+      "parentUuid": "49d377b6_08d1701b",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 49
+      },
+      "revId": "ba313cfacae1545f0d8a40bccf263fd08f4426be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
