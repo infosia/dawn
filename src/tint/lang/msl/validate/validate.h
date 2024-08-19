@@ -70,6 +70,10 @@ Result Validate(const std::string& xcrun_path, const std::string& source, MslVer
 /// @param version the version of MSL to validate against
 /// @return the result of the compile
 Result ValidateUsingMetal(const std::string& source, MslVersion version);
+
+/// @returns true if the OSX version is above 11.0
+bool IsVersion11OrGreater();
+
 #endif  // TINT_BUILD_IS_MAC
 
 }  // namespace tint::msl::validate

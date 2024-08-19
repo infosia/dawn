@@ -62,6 +62,10 @@ Result ValidateUsingMetal(const std::string& src, MslVersion version) {
         case MslVersion::kMsl_2_3:
             if (@available(macOS 11.0, *)) {
                 compileOptions.languageVersion = MTLLanguageVersion2_3;
+            } else {
+                result.output = "cannot request Metal 2.3 on devices below OSX 11.0";
+                result.failed = true;
+                return result;
             }
             break;
     }
@@ -76,6 +80,13 @@ Result ValidateUsingMetal(const std::string& src, MslVersion version) {
     }
 
     return result;
+}
+
+bool IsVersion11OrGreater() {
+    if (@available(macOS 11.0, *)) {
+        return true;
+    }
+    return false;
 }
 
 }  // namespace tint::msl::validate
