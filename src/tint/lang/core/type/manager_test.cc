@@ -152,5 +152,17 @@ TEST_F(ManagerTest, RuntimeSizedArrayImplicitStride) {
     EXPECT_EQ(arr->ImplicitStride(), 64u);
 }
 
+TEST_F(ManagerTest, Contains) {
+    Manager tm;
+    tm.Get<F32>();
+
+    EXPECT_TRUE(tm.Contains<F32>());
+    EXPECT_FALSE(tm.Contains<SubgroupMatrix>());
+
+    tm.subgroup_matrix(SubgroupMatrixKind::kLeft, tm.i8(), 2, 2);
+    EXPECT_TRUE(tm.Contains<I8>());
+    EXPECT_TRUE(tm.Contains<SubgroupMatrix>());
+}
+
 }  // namespace
 }  // namespace tint::core::type
