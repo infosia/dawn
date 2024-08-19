@@ -605,6 +605,17 @@ class Manager final {
     /// @returns an iterator to the end of the types
     TypeIterator end() const { return types_.end(); }
 
+    /// @returns true if the type manager contains the given type
+    template <typename T>
+    bool Contains() const {
+        for (const auto* ty : types_) {
+            if (ty->Is<T>()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
   private:
     /// Unique types owned by the manager
     UniqueAllocator<Type> types_;
