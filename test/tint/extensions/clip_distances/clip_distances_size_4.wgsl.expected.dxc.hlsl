@@ -1,21 +1,9 @@
 SKIP: FAILED
 
-
-enable clip_distances;
-
-struct VertexOutputs {
-  @builtin(position)
-  position : vec4<f32>,
-  @builtin(clip_distances)
-  clipDistance : array<f32, 4>,
-}
-
-@vertex
-fn main() -> VertexOutputs {
-  return VertexOutputs(vec4<f32>(1.0, 2.0, 3.0, 4.0), array<f32, 4>(0.0, 0.0, 0.0, 0.0));
-}
-
-Failed to generate: <dawn>/test/tint/extensions/clip_distances/clip_distances_size_4.wgsl:1:8 error: HLSL backend does not support extension 'clip_distances'
-enable clip_distances;
-       ^^^^^^^^^^^^^^
-
+..\..\src\tint\lang\wgsl\ast\transform\canonicalize_entry_point_io.cc:701 internal compiler error: TINT_ASSERT(clip_distances_size > 0)
+********************************************************************
+*  The tint shader compiler has encountered an unexpected error.   *
+*                                                                  *
+*  Please help us fix this issue by submitting a bug report at     *
+*  crbug.com/tint with the source program that triggered the bug.  *
+********************************************************************
