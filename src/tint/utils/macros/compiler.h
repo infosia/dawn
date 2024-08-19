@@ -282,6 +282,10 @@
 #define TINT_BUILD_IS_GCC 0
 #endif
 
+#ifndef TINT_BUILD_IS_MAC
+#define TINT_BUILD_IS_MAC 0
+#endif
+
 #if TINT_BUILD_IS_MSVC
 #define TINT_MSVC_ONLY(x) x
 #else
