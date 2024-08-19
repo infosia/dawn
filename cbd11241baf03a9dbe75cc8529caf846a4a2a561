@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88ccdcb7_3e545bea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-19T19:39:21Z",
+      "side": 1,
+      "message": "If we use the Vulkan memory model, I believe we also need to add the `NonPrivatePointer` operand to all `OpLoad` and `OpStore` instructions that touch read-write `storage` and `workgroup` memory, and `NonPrivateTexel` to `OpImageRead` and `OpImageWrite` instructions that touch read-write storage images.\n\nIt\u0027d be really nice if we had a good test somewhere that would fail if we forget to emit these operands, but that might be hard...",
+      "revId": "cbd11241baf03a9dbe75cc8529caf846a4a2a561",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
