@@ -52,6 +52,24 @@
       "parentUuid": "aed66f68_39a832aa",
       "revId": "02f7ad765a98e6721660f0484af82e4f5cbf6332",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49e8d87c_790c94e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-08-19T18:21:48Z",
+      "side": 1,
+      "message": "It looks like things are actually happy now? This hasn\u0027t happened on https://ci.chromium.org/ui/p/chromium/builders/ci/Dawn%20Mac%20x64%20Experimental%20Release%20(AMD)?limit\u003d200 since the 16th when before it was happening pretty frequently.",
+      "parentUuid": "ae778867_0020767b",
+      "revId": "02f7ad765a98e6721660f0484af82e4f5cbf6332",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
