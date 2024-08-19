@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c1e78d1_b8ec2cd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-19T12:34:25Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "a6fd448e245d97ccf13766fdbb6c81607165518e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c11c944b_027a6e36",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 26
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-19T12:34:25Z",
+      "side": 1,
+      "message": "Why is this needed? Can we have it by default?",
+      "revId": "a6fd448e245d97ccf13766fdbb6c81607165518e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4c06a56_c615a53d",
+        "filename": "scripts/dawn.keystore",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-19T12:34:25Z",
+      "side": 1,
+      "message": "What is this file used for?",
+      "revId": "a6fd448e245d97ccf13766fdbb6c81607165518e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11cf34b7_15fb2754",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-19T12:34:25Z",
+      "side": 1,
+      "message": "I don\u0027t think that it needs to be conditional on ANDROID if the function is not executed outside of Android.",
+      "revId": "a6fd448e245d97ccf13766fdbb6c81607165518e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

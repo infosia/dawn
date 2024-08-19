@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec282f32_0d25e7ac",
+        "filename": "scripts/dawn_apk.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-19T12:34:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "364c3d36_42484013",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44b4c18e_4614bae8",
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "\"Every app project must have an AndroidManifest.xml file, with precisely that name, at the root of the project source set.\" https://developer.android.com/guide/topics/manifest/manifest-intro",
       "parentUuid": "44b4c18e_4614bae8",
+      "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d5f1cf8_5bf6ff76",
+        "filename": "scripts/dawn_apk.gni",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-19T12:34:25Z",
+      "side": 1,
+      "message": "Thanks for the link.",
+      "parentUuid": "a0a5baab_a62c2af6",
       "revId": "d6ee2ad8bb9f8d9b3dceecfecd9e719c8dee9e2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
