@@ -144,13 +144,17 @@ class Builder {
             /// @param i the instruction to insert
             void operator()(ir::Instruction* i) { block->Prepend(i); }
         };
-        /// Insertion point method that inserts the instruction after #after
+        /// Insertion point method that inserts the instruction after #after and updates the
+        /// insertion point to be after the inserted instruction.
         struct InsertAfter {
             /// The instruction to insert new instructions after
             ir::Instruction* after = nullptr;
             /// The insertion point function
             /// @param i the instruction to insert
-            void operator()(ir::Instruction* i) { i->InsertAfter(after); }
+            void operator()(ir::Instruction* i) {
+                i->InsertAfter(after);
+                after = i;
+            }
         };
         /// Insertion point method that inserts the instruction before #before
         struct InsertBefore {
