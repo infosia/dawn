@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa8e287e_b38ce537",
+        "filename": "src/tint/cmd/bench/generate_benchmark_inputs.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-19T17:50:07Z",
+      "side": 1,
+      "message": "Does `/path/to/tint/exe` mean the path to the folder or the path to the actual executable? Maybe `/path/to/tint.exe` to be a bit clearer?",
+      "revId": "2d5b7e4d2e13c69d9779f96479a7e7a4c1ffd869",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
