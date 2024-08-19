@@ -298,8 +298,17 @@ class Printer {
         }
 
         module_.PushCapability(SpvCapabilityShader);
-        module_.PushMemoryModel(spv::Op::OpMemoryModel, {U32Operand(SpvAddressingModelLogical),
-                                                         U32Operand(SpvMemoryModelGLSL450)});
+
+        // SubgroupMatrix requires the Vulkan memory model instead of the GLSL450 model
+        if (ir_.Types().Contains<core::type::SubgroupMatrix>()) {
+            module_.PushExtension("SPV_KHR_vulkan_memory_model");
+            module_.PushCapability(SpvCapabilityVulkanMemoryModelKHR);
+            module_.PushMemoryModel(spv::Op::OpMemoryModel, {U32Operand(SpvAddressingModelLogical),
+                                                             U32Operand(SpvMemoryModelVulkanKHR)});
+        } else {
+            module_.PushMemoryModel(spv::Op::OpMemoryModel, {U32Operand(SpvAddressingModelLogical),
+                                                             U32Operand(SpvMemoryModelGLSL450)});
+        }
 
         // Emit module-scope declarations.
         EmitRootBlock(ir_.root_block);
