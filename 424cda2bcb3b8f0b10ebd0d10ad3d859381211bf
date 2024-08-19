@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35885448_6b7c25d3",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-19T13:00:09Z",
+      "side": 1,
+      "message": "Don\u0027t we require an acquire barrier here? Technically we don\u0027t have a fetch_sub happens-before delete here. See https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/RefCounted.cpp;drc\u003d4910ae7da973eb10bd45df8a7dd1bd75705a5322;l\u003d98",
+      "revId": "424cda2bcb3b8f0b10ebd0d10ad3d859381211bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
