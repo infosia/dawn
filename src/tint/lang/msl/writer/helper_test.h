@@ -80,8 +80,9 @@ class MslWriterTestHelperBase : public BASE {
     /// Run the writer on the IR module and validate the result.
     /// @param options the writer options
     /// @returns true if generation and validation succeeded
-    bool Generate(Options options = {},
-                  validate::MslVersion msl_version = validate::MslVersion::kMsl_2_2) {
+    bool Generate(
+        Options options = {},
+        [[maybe_unused]] validate::MslVersion msl_version = validate::MslVersion::kMsl_2_2) {
         auto result = writer::Generate(mod, options);
         if (result != Success) {
             err_ = result.Failure().reason.Str();
