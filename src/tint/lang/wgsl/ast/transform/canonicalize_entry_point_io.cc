@@ -165,6 +165,10 @@ struct CanonicalizeEntryPointIO::State {
     Hashmap<const BuiltinAttribute*, core::BuiltinValue, 16> builtin_attrs;
     /// A map of builtin values to HLSL wave intrinsic functions.
     Hashmap<core::BuiltinValue, Symbol, 2> wave_intrinsics;
+    /// The array length of the struct member with builtin attribute `clip_distances`.
+    uint32_t clip_distances_size;
+    /// The shader output struct name.
+    const char* kInnerOutputStructName = "inner_result";
 
     /// Constructor
     /// @param context the clone context
@@ -179,7 +183,8 @@ struct CanonicalizeEntryPointIO::State {
           b(builder),
           cfg(config),
           func_ast(function),
-          func_sem(ctx.src->Sem().Get(function)) {}
+          func_sem(ctx.src->Sem().Get(function)),
+          clip_distances_size(0) {}
 
     /// Clones the attributes from @p in and adds it to @p out. If @p in is a builtin attribute,
     /// then builtin_attrs is updated with the builtin information.
@@ -405,6 +410,14 @@ struct CanonicalizeEntryPointIO::State {
             !HasAttribute<InterpolateAttribute>(attrs)) {
             attrs.Push(b.Interpolate(core::InterpolationType::kFlat,
                                      core::InterpolationSampling::kUndefined));
+        }
+
+        if (cfg.shader_style == ShaderStyle::kMsl &&
+            func_ast->PipelineStage() == PipelineStage::kVertex &&
+            builtin_attr == core::BuiltinValue::kClipDistances) {
+            const auto* arrayType = type->As<core::type::Array>();
+            TINT_ASSERT(arrayType && arrayType->ConstantCount().has_value());
+            clip_distances_size = *arrayType->ConstantCount();
         }
 
         // In GLSL, if it's a builtin, override the name with the
@@ -682,13 +695,33 @@ struct CanonicalizeEntryPointIO::State {
             }
             member_names.insert(name.Name());
 
+            auto* builtin_attribute = GetAttribute<BuiltinAttribute>(outval.attributes);
+            if (builtin_attribute &&
+                builtin_attribute->builtin == core::BuiltinValue::kClipDistances) {
+                TINT_ASSERT(clip_distances_size > 0);
+                for (uint32_t i = 0; i < clip_distances_size; ++i) {
+                    if (i == 0) {
+                        assignments.Push(b.Assign(
+                            b.IndexAccessor(b.MemberAccessor(wrapper_result, name), u32(i)),
+                            b.IndexAccessor(outval.value, u32(i))));
+                    } else {
+                        assignments.Push(b.Assign(
+                            b.IndexAccessor(b.MemberAccessor(wrapper_result, name), u32(i)),
+                            b.IndexAccessor(b.MemberAccessor(
+                                                b.Symbols().Register(kInnerOutputStructName), name),
+                                            u32(i))));
+                    }
+                }
+            } else {
+                assignments.Push(b.Assign(b.MemberAccessor(wrapper_result, name), outval.value));
+            }
+
             wrapper_struct_output_members.Push({
                 /* member */ b.Member(name, outval.type, std::move(outval.attributes)),
                 /* location */ outval.location,
                 /* blend_src */ outval.blend_src,
                 /* color */ std::nullopt,
             });
-            assignments.Push(b.Assign(b.MemberAccessor(wrapper_result, name), outval.value));
         }
 
         // Sort the struct members to satisfy HLSL interfacing matching rules.
@@ -810,7 +843,7 @@ struct CanonicalizeEntryPointIO::State {
             wrapper_body.Push(b.CallStmt(call_inner));
         } else {
             // Capture the result of calling the original function.
-            auto* inner_result = b.Let(b.Symbols().New("inner_result"), call_inner);
+            auto* inner_result = b.Let(b.Symbols().New(kInnerOutputStructName), call_inner);
             wrapper_body.Push(b.Decl(inner_result));
 
             // Process the original return type to determine the outputs that the
