@@ -101,9 +101,6 @@ DAWN_INSTANTIATE_TEST(BufferHostMappedPointerNoFeatureTests,
 TEST_P(BufferHostMappedPointerTests, Alignment) {
     DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("skip_validation"));
 
-    // crbug.com/358296955
-    DAWN_SUPPRESS_TEST_IF(IsMacOS() && IsAMD() && IsMetal());
-
     // Invalid: half required alignment
     ASSERT_DEVICE_ERROR(GetParam().mBackend->CreateHostMappedBuffer(
         device, wgpu::BufferUsage::CopySrc, mRequiredAlignment / 2u));
@@ -197,9 +194,6 @@ TEST_P(BufferHostMappedPointerTests, CopyDst) {
 // Create a host-mapped buffer with Storage usage. Test that writes on the host
 // are visible on the GPU, and writes on the GPU are visible on the host.
 TEST_P(BufferHostMappedPointerTests, Storage) {
-    // crbug.com/358296955
-    DAWN_SUPPRESS_TEST_IF(IsMacOS() && IsAMD() && IsMetal());
-
     // Set up expected data.
     uint32_t bufferSize = mRequiredAlignment;
     std::vector<uint32_t> contents(bufferSize / sizeof(uint32_t));
@@ -286,9 +280,6 @@ TEST_P(BufferHostMappedPointerTests, Mapping) {
 // on multiple threads. The contents should be correct and  GPU-visible
 // immediately after creation.
 TEST_P(BufferHostMappedPointerTests, MultithreadedCreation) {
-    // crbug.com/358296955
-    DAWN_SUPPRESS_TEST_IF(IsMacOS() && IsAMD() && IsMetal());
-
     std::vector<wgpu::Buffer> buffers(20);
 
     uint32_t bufferSize = mRequiredAlignment;
