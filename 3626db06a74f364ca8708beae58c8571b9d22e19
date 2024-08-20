@@ -16,6 +16,70 @@
       "message": "This is the D3D12 implementation its passing the end2end tests on NVIDIA and Microsoft\u0027s software GPU.",
       "revId": "3626db06a74f364ca8708beae58c8571b9d22e19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5201e5ad_b2ab52ae",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-20T19:04:34Z",
+      "side": 1,
+      "message": "Hmm, maybe I\u0027m misunderstanding something, but where is the second WriteBuffer? (I only see one?)",
+      "range": {
+        "startLine": 698,
+        "startChar": 11,
+        "endLine": 698,
+        "endChar": 31
+      },
+      "revId": "3626db06a74f364ca8708beae58c8571b9d22e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3540c79_4f32fbb6",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-20T19:04:34Z",
+      "side": 1,
+      "message": "nit. Leftover debugging?",
+      "range": {
+        "startLine": 856,
+        "startChar": 12,
+        "endLine": 857,
+        "endChar": 30
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9343cacf_9935d99d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+              "range": {
+                "startLine": 854,
+                "startChar": 0,
+                "endLine": 858,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "3626db06a74f364ca8708beae58c8571b9d22e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
