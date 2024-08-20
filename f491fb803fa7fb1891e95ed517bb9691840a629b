@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ed0d61_9fd5ba00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-20T13:13:23Z",
+      "side": 1,
+      "message": "nit: You can add `Fixed: 354482062` to automatically close your issue once this is landed. (in other cases `Bug: N` just posts a message on the issue when the CL lands) You can use the web interface to change the commit message if pushing a new commit is a bit less convenient.",
+      "revId": "f491fb803fa7fb1891e95ed517bb9691840a629b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca6d9633_ca004a6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-20T13:13:23Z",
+      "side": 1,
+      "message": "Thank you for the contribution! It looks good to me with one nitpick. In future CLs you can add reviewers directly (with the suggest owners button).",
+      "revId": "f491fb803fa7fb1891e95ed517bb9691840a629b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
