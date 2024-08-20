@@ -273,6 +273,75 @@ TEST_F(SpirvWriterTest, Function_Parameters) {
 )");
 }
 
+TEST_F(SpirvWriterTest, Function_Parameter_StorageTexture_ReadWrite) {
+    auto format = core::TexelFormat::kRgba8Unorm;
+    auto* p = b.FunctionParam("v", ty.ptr(core::AddressSpace::kHandle,
+                                          ty.Get<core::type::StorageTexture>(
+                                              core::type::TextureDimension::k2d, format, read_write,
+                                              core::type::StorageTexture::SubtypeFor(format, ty)),
+                                          core::Access::kRead));
+    auto* func = b.Function("foo", ty.void_());
+    func->SetParams({p});
+    b.Append(func->Block(), [&] { b.Return(func); });
+
+    ASSERT_TRUE(Generate()) << Error() << output_;
+    EXPECT_INST(R"(
+               OpDecorate %v Coherent
+)");
+
+    EXPECT_INST(R"(
+               ; Function foo
+        %foo = OpFunction %void None %7
+          %v = OpFunctionParameter %_ptr_UniformConstant_4  ; Coherent
+)");
+}
+
+TEST_F(SpirvWriterTest, Function_Parameter_StorageTexture_Read) {
+    auto format = core::TexelFormat::kRgba8Unorm;
+    auto* p = b.FunctionParam("v", ty.ptr(core::AddressSpace::kHandle,
+                                          ty.Get<core::type::StorageTexture>(
+                                              core::type::TextureDimension::k2d, format, read,
+                                              core::type::StorageTexture::SubtypeFor(format, ty)),
+                                          core::Access::kRead));
+    auto* func = b.Function("foo", ty.void_());
+    func->SetParams({p});
+    b.Append(func->Block(), [&] { b.Return(func); });
+
+    ASSERT_TRUE(Generate()) << Error() << output_;
+    EXPECT_INST(R"(
+               OpDecorate %v NonWritable
+)");
+
+    EXPECT_INST(R"(
+               ; Function foo
+        %foo = OpFunction %void None %7
+          %v = OpFunctionParameter %_ptr_UniformConstant_4  ; NonWritable
+)");
+}
+
+TEST_F(SpirvWriterTest, Function_Parameter_StorageTexture_Write) {
+    auto format = core::TexelFormat::kRgba8Unorm;
+    auto* p = b.FunctionParam("v", ty.ptr(core::AddressSpace::kHandle,
+                                          ty.Get<core::type::StorageTexture>(
+                                              core::type::TextureDimension::k2d, format, write,
+                                              core::type::StorageTexture::SubtypeFor(format, ty)),
+                                          core::Access::kRead));
+    auto* func = b.Function("foo", ty.void_());
+    func->SetParams({p});
+    b.Append(func->Block(), [&] { b.Return(func); });
+
+    ASSERT_TRUE(Generate()) << Error() << output_;
+    EXPECT_INST(R"(
+               OpDecorate %v NonReadable
+)");
+
+    EXPECT_INST(R"(
+               ; Function foo
+        %foo = OpFunction %void None %7
+          %v = OpFunctionParameter %_ptr_UniformConstant_4  ; NonReadable
+)");
+}
+
 TEST_F(SpirvWriterTest, Function_Call) {
     auto* i32 = ty.i32();
     auto* x = b.FunctionParam("x", i32);
