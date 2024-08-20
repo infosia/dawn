@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "773b1c21_61f7f215",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-20T17:54:26Z",
+      "side": 1,
+      "message": "This is the D3D12 implementation its passing the end2end tests on NVIDIA and Microsoft\u0027s software GPU.",
+      "revId": "3626db06a74f364ca8708beae58c8571b9d22e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
