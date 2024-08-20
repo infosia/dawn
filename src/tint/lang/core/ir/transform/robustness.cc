@@ -71,7 +71,8 @@ struct State {
                     // Check if accesses into this object should be clamped.
                     auto* ptr = access->Object()->Type()->As<type::Pointer>();
                     if (ptr) {
-                        if (ShouldClamp(ptr->AddressSpace())) {
+                        if (ShouldClamp(ptr->AddressSpace()) &&
+                            !IsRootVarIgnored(access->Object())) {
                             accesses.Push(access);
                         }
                     } else {
@@ -83,14 +84,14 @@ struct State {
                 [&](ir::LoadVectorElement* lve) {
                     // Check if loads from this address space should be clamped.
                     auto* ptr = lve->From()->Type()->As<type::Pointer>();
-                    if (ShouldClamp(ptr->AddressSpace())) {
+                    if (ShouldClamp(ptr->AddressSpace()) && !IsRootVarIgnored(lve->From())) {
                         vector_loads.Push(lve);
                     }
                 },
                 [&](ir::StoreVectorElement* sve) {
                     // Check if stores to this address space should be clamped.
                     auto* ptr = sve->To()->Type()->As<type::Pointer>();
-                    if (ShouldClamp(ptr->AddressSpace())) {
+                    if (ShouldClamp(ptr->AddressSpace()) && !IsRootVarIgnored(sve->To())) {
                         vector_stores.Push(sve);
                     }
                 },
@@ -135,12 +136,6 @@ struct State {
             b.InsertBefore(call, [&] {  //
                 ClampTextureCallArgs(call);
             });
-        }
-
-        // TODO(jrprice): Handle config.bindings_ignored.
-        if (!config.bindings_ignored.empty()) {
-            // Also update robustness_fuzz.cc
-            TINT_UNIMPLEMENTED();
         }
     }
 
@@ -336,6 +331,52 @@ struct State {
             default:
                 break;
         }
+    }
+
+    // Returns the root Var for `value` by walking up the chain of instructions,
+    // or nullptr if none is found.
+    Var* RootVarFor(Value* value) {
+        Var* result = nullptr;
+        while (value) {
+            TINT_ASSERT(value->Alive());
+            value = tint::Switch(
+                value,  //
+                [&](InstructionResult* res) {
+                    // value was emitted by an instruction
+                    auto* inst = res->Instruction();
+                    return tint::Switch(
+                        inst,
+                        [&](Access* access) {  //
+                            return access->Object();
+                        },
+                        [&](Let* let) {  //
+                            return let->Value();
+                        },
+                        [&](Var* var) {
+                            result = var;
+                            return nullptr;  // Done
+                        },
+                        TINT_ICE_ON_NO_MATCH);
+                },
+                [&](FunctionParam*) {
+                    // Cannot follow function params to vars
+                    return nullptr;
+                },  //
+                TINT_ICE_ON_NO_MATCH);
+        }
+        return result;
+    }
+
+    // Returns true if the binding for `value`'s root variable is in config.bindings_ignored.
+    bool IsRootVarIgnored(Value* value) {
+        if (auto* var = RootVarFor(value)) {
+            if (auto bp = var->BindingPoint()) {
+                if (config.bindings_ignored.find(*bp) != config.bindings_ignored.end()) {
+                    return true;  // Ignore this variable
+                }
+            }
+        }
+        return false;
     }
 };
 
