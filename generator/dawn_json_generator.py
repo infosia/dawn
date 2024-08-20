@@ -1191,7 +1191,8 @@ class MultiGeneratorFromDawnJSON(Generator):
     def add_commandline_arguments(self, parser):
         allowed_targets = [
             'dawn_headers', 'cpp_headers', 'cpp', 'proc', 'mock_api', 'wire',
-            'native_utils', 'dawn_lpmfuzz_cpp', 'dawn_lpmfuzz_proto', 'kotlin'
+            'native_utils', 'dawn_lpmfuzz_cpp', 'dawn_lpmfuzz_proto', 'kotlin',
+            'base_cpp_headers',
         ]
 
         parser.add_argument('--dawn-json',
@@ -1294,10 +1295,18 @@ class MultiGeneratorFromDawnJSON(Generator):
                         }
                     ]))
 
+        if 'base_cpp_headers' in targets:
+            imported_templates += [
+                "dawn/cpp_macros.tmpl",
+            ]
+
             renders.append(
-                FileRender('api_cpp_print.h',
-                           'include/dawn/' + api + '_cpp_print.h',
-                           [RENDER_PARAMS_BASE, params_dawn]))
+                FileRender('api_cpp.h', 'include/webgpu/' + api + '_cpp.h', [
+                    RENDER_PARAMS_BASE, parse_json(loaded_json, enabled_tags=['upstream']), {
+                        'c_header': api + '/' + api + '.h',
+                        'c_namespace': None,
+                    }
+                ]))
 
             renders.append(
                 FileRender('api_cpp_chained_struct.h',
