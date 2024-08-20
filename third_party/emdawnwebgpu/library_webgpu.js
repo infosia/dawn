@@ -94,8 +94,17 @@ var LibraryWebGPU = {
     _futureInsert: (futureIdL, futureIdH, promise) => {
 #if ASYNCIFY
       var futureId = futureIdH * 0x100000000 + futureIdL;
-      WebGPU._futures[futureId] =
-        new Promise((resolve) => promise.finally(resolve(futureId)));
+      WebGPU._futures[futureId] = new Promise(async (resolve) => {
+        // Explicit wait for the promise to finish. Otherwise, it's not
+        // guaranteed that the promise is resolved before this one. Note
+        // also that we can't just chain the promise via a .finally on
+        // the outside because the return value of .finally is only
+        // surfaced on errors. This way, we guarantee that the Promises
+        // we await on will return a FutureID regardless of exceptions
+        // without suppressing the exceptions entirely.
+        await promise;
+        resolve(futureId);
+      });
 #endif
     },
     _waitAnyPromisesList: [],
