@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3caf598_337e8f2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-20T17:01:11Z",
+      "side": 1,
+      "message": "Code change LGTM. Can you please also add a unit test to `merge_return_test.cc` to show that an entry point with multiple returns is not transformed?",
+      "revId": "991138a64cba92220f64b0df1629dfb389a84562",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

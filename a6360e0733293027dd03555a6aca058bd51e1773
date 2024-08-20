@@ -42,6 +42,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eedc2de_3813b5b1",
+        "filename": "src/tint/lang/spirv/writer/raise/merge_return.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-20T17:01:11Z",
+      "side": 1,
+      "message": "I think this is fine as is.",
+      "parentUuid": "3f13bfe8_77b83e52",
+      "range": {
+        "startLine": 74,
+        "startChar": 62,
+        "endLine": 74,
+        "endChar": 72
+      },
+      "revId": "a6360e0733293027dd03555a6aca058bd51e1773",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e50de466_512b6fda",
