@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "248c428376701e44e698f5923c0a22e30fb3841a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02a7d5a7_b556ed69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-20T15:54:14Z",
+      "side": 1,
+      "message": "Dropping the default version to 2.2 LGTM. We should be able to remove all the macOS 11.x checking now that our 10.x bots are gone.",
+      "revId": "248c428376701e44e698f5923c0a22e30fb3841a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
