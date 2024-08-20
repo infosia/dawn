@@ -477,6 +477,9 @@ MaybeError CommandBuffer::ExecuteComputePass(
     ComputePipeline* lastPipeline = nullptr;
     BindGroupTracker bindGroupTracker(commandContext, /*isRenderPass=*/false);
 
+    commandContext->GetD3D11DeviceContext4()->OMSetRenderTargetsAndUnorderedAccessViews(
+        0, nullptr, nullptr, 0, 0, nullptr, nullptr);
+
     Command type;
     while (mCommands.NextCommandId(&type)) {
         switch (type) {
@@ -798,7 +801,6 @@ MaybeError CommandBuffer::ExecuteRenderPass(
         switch (type) {
             case Command::EndRenderPass: {
                 mCommands.NextCommand<EndRenderPassCmd>();
-                d3d11DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
 
                 if (renderPass->attachmentState->GetSampleCount() <= 1) {
                     return {};
