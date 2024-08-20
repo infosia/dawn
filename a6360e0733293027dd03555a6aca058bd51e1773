@@ -81,6 +81,30 @@
       ],
       "revId": "a6360e0733293027dd03555a6aca058bd51e1773",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "346fd216_b261cde8",
+        "filename": "src/tint/lang/spirv/writer/raise/merge_return.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-08-20T14:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e50de466_512b6fda",
+      "range": {
+        "startLine": 75,
+        "startChar": 14,
+        "endLine": 75,
+        "endChar": 48
+      },
+      "revId": "a6360e0733293027dd03555a6aca058bd51e1773",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
