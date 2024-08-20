@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "16d1b34d462b7e3ad53ace52f6371c18d0cafebd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "157f1904_7b60b0a0",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-20T19:53:55Z",
+      "side": 1,
+      "message": "We pass textures to functions by value, not pointer.\n\nI guess we\u0027re missing IR validation for this sort of thing at the moment.",
+      "revId": "16d1b34d462b7e3ad53ace52f6371c18d0cafebd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6034b969_f33dca58",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2309,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-20T19:53:55Z",
+      "side": 1,
+      "message": "I think this can just be `access \u003d\u003d core::Access::kReadWrite`? We\u0027d never see `read-write` for `uniform`, or for non-storage textures.",
+      "revId": "16d1b34d462b7e3ad53ace52f6371c18d0cafebd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
