@@ -98,6 +98,7 @@
 #include "src/tint/lang/spirv/writer/common/binary_writer.h"
 #include "src/tint/lang/spirv/writer/common/function.h"
 #include "src/tint/lang/spirv/writer/common/module.h"
+#include "src/tint/lang/spirv/writer/common/options.h"
 #include "src/tint/lang/spirv/writer/raise/builtin_polyfill.h"
 #include "src/tint/utils/containers/hashmap.h"
 #include "src/tint/utils/containers/vector.h"
@@ -183,10 +184,12 @@ class Printer {
   public:
     /// Constructor
     /// @param module the Tint IR module to generate
-    /// @param zero_init_workgroup_memory `true` to initialize all the variables in the Workgroup
-    ///                                   storage class with OpConstantNull
-    Printer(core::ir::Module& module, bool zero_init_workgroup_memory)
-        : ir_(module), b_(module), zero_init_workgroup_memory_(zero_init_workgroup_memory) {}
+    /// @param options the printer options
+    Printer(core::ir::Module& module, const Options& options)
+        : ir_(module), b_(module), options_(options) {
+        zero_init_workgroup_memory_ = !options.disable_workgroup_init &&
+                                      options.use_zero_initialize_workgroup_memory_extension;
+    }
 
     /// @returns the generated SPIR-V code on success, or failure
     Result<std::vector<uint32_t>> Code() {
@@ -218,6 +221,7 @@ class Printer {
   private:
     core::ir::Module& ir_;
     core::ir::Builder b_;
+    Options options_;
     writer::Module module_;
     BinaryWriter writer_;
 
@@ -286,6 +290,8 @@ class Printer {
 
     bool zero_init_workgroup_memory_ = false;
 
+    bool use_vulkan_memory_model_ = false;
+
     /// Builds the SPIR-V from the IR
     Result<SuccessType> Generate() {
         auto valid = core::ir::ValidateAndDumpIfNeeded(ir_, "SPIR-V writer");
@@ -294,8 +300,19 @@ class Printer {
         }
 
         module_.PushCapability(SpvCapabilityShader);
-        module_.PushMemoryModel(spv::Op::OpMemoryModel, {U32Operand(SpvAddressingModelLogical),
-                                                         U32Operand(SpvMemoryModelGLSL450)});
+
+        // Prefer the Vulkan Memory Model if it is available.
+        use_vulkan_memory_model_ = options_.has_vulkan_memory_model;
+
+        if (use_vulkan_memory_model_) {
+            module_.PushExtension("SPV_KHR_vulkan_memory_model");
+            module_.PushCapability(SpvCapabilityVulkanMemoryModelKHR);
+            module_.PushMemoryModel(spv::Op::OpMemoryModel, {U32Operand(SpvAddressingModelLogical),
+                                                             U32Operand(SpvMemoryModelVulkanKHR)});
+        } else {
+            module_.PushMemoryModel(spv::Op::OpMemoryModel, {U32Operand(SpvAddressingModelLogical),
+                                                             U32Operand(SpvMemoryModelGLSL450)});
+        }
 
         // Emit module-scope declarations.
         EmitRootBlock(ir_.root_block);
@@ -2289,7 +2306,7 @@ class Printer {
                                           {id, U32Operand(SpvDecorationNonReadable)});
                     }
                 }
-                if (access == core::Access::kReadWrite) {
+                if (!use_vulkan_memory_model_ && access == core::Access::kReadWrite) {
                     module_.PushAnnot(spv::Op::OpDecorate, {id, U32Operand(SpvDecorationCoherent)});
                 }
 
@@ -2454,13 +2471,12 @@ class Printer {
 
 }  // namespace
 
-tint::Result<std::vector<uint32_t>> Print(core::ir::Module& module,
-                                          bool zero_init_workgroup_memory) {
-    return Printer{module, zero_init_workgroup_memory}.Code();
+tint::Result<std::vector<uint32_t>> Print(core::ir::Module& module, const Options& options) {
+    return Printer{module, options}.Code();
 }
 
-tint::Result<Module> PrintModule(core::ir::Module& module, bool zero_init_workgroup_memory) {
-    return Printer{module, zero_init_workgroup_memory}.Module();
+tint::Result<Module> PrintModule(core::ir::Module& module, const Options& options) {
+    return Printer{module, options}.Module();
 }
 
 }  // namespace tint::spirv::writer
