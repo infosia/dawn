@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cd3b9da_6cffb6b8",
+        "filename": "src/tint/lang/core/ir/builder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-20T20:27:13Z",
+      "side": 1,
+      "message": "Ack, opened crbug.com/361142936 to make this better.",
+      "parentUuid": "9ea7439e_b3321b88",
+      "revId": "d8fe9208c34403132642433dd40a607db264c543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5693033f_61d53f9e",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-08-20T20:14:14Z",
       "side": 1,
       "message": "ditto",
+      "revId": "d8fe9208c34403132642433dd40a607db264c543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62ddce11_dcd777b3",
+        "filename": "src/tint/lang/core/ir/builder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-20T20:27:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5693033f_61d53f9e",
       "revId": "d8fe9208c34403132642433dd40a607db264c543",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
