@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8aee2ec_06796e0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3378882
+      },
+      "writtenOn": "2024-08-20T21:50:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1069a70_20a0a028",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "0de0fd450663cb337f448129b16207a81fb6e3b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3699a151_f7bfef21",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-08-14T19:35:06Z",
       "side": 1,
       "message": "Since you\u0027re fixing an existing bug, please link to it in the change description.  \n\nTo do this, add `Bug:42241431` on its own line right above the \"Change-Id\" line. When you press \"Save\", make sure the resulting link resolves to the bug you expect.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "0de0fd450663cb337f448129b16207a81fb6e3b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9445214_8b79176d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3378882
+      },
+      "writtenOn": "2024-08-20T21:50:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3699a151_f7bfef21",
       "range": {
         "startLine": 9,
         "startChar": 0,
@@ -77,6 +125,30 @@
       "writtenOn": "2024-08-14T19:35:06Z",
       "side": 1,
       "message": "Per internal e-mail thread, lets see if we can reuse existing names from the previous entry if it makes sense. List doesn\u0027t have to be complete for the first CL. We can improve over time.",
+      "range": {
+        "startLine": 243,
+        "startChar": 18,
+        "endLine": 243,
+        "endChar": 20
+      },
+      "revId": "0de0fd450663cb337f448129b16207a81fb6e3b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c57763f8_eb195ef3",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 3378882
+      },
+      "writtenOn": "2024-08-20T21:50:32Z",
+      "side": 1,
+      "message": "There are new replies from QC, there is no mapping pattern from ACPI device id to architecture like what PCI does. The only way is either hardcoding every single device id of the ACPI GPU available on the market, e.g. \"Adreno 7xx\": [\"0x12345678\", \"0x45678901\" ...], or the devs will need to diverge the code path based on the ACPI device id... I will leave the \"architecture\" section blank for now, we can continue the conversation with QC.",
+      "parentUuid": "672bfb8e_882643eb",
       "range": {
         "startLine": 243,
         "startChar": 18,
