@@ -52,6 +52,23 @@
       "parentUuid": "d630d70a_1ba8c548",
       "revId": "a79571636530ae7969869a466cb79a6bb1b0cf2c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "432d4770_926346d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-08-20T17:05:08Z",
+      "side": 1,
+      "message": "Merge approved; submitting manually.",
+      "revId": "a79571636530ae7969869a466cb79a6bb1b0cf2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
