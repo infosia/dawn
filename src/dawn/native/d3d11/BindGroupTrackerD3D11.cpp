@@ -34,11 +34,14 @@
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Range.h"
 #include "dawn/native/Format.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/d3d/D3DError.h"
+#include "dawn/native/d3d11/BackendD3D11.h"
 #include "dawn/native/d3d11/BindGroupD3D11.h"
 #include "dawn/native/d3d11/BufferD3D11.h"
 #include "dawn/native/d3d11/CommandRecordingContextD3D11.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
+#include "dawn/native/d3d11/PhysicalDeviceD3D11.h"
 #include "dawn/native/d3d11/PipelineLayoutD3D11.h"
 #include "dawn/native/d3d11/SamplerD3D11.h"
 #include "dawn/native/d3d11/TextureD3D11.h"
@@ -46,44 +49,53 @@
 namespace dawn::native::d3d11 {
 namespace {
 
+bool IsBackendValidationEnabled(const ScopedSwapStateCommandRecordingContext* commandContext) {
+    return ToBackend(commandContext->GetDevice()->GetPhysicalDevice())
+               ->GetBackend()
+               ->GetInstance()
+               ->GetBackendValidationLevel() != BackendValidationLevel::Disabled;
+}
+
 bool CheckAllSlotsAreEmpty(const ScopedSwapStateCommandRecordingContext* commandContext) {
     auto* deviceContext = commandContext->GetD3D11DeviceContext4();
 
-    // Reserve one slot for builtin constants.
-    constexpr uint32_t kReservedCBVSlots = 1;
+    if (IsBackendValidationEnabled(commandContext)) {
+        // Reserve one slot for builtin constants.
+        constexpr uint32_t kReservedCBVSlots = 1;
 
-    // Check constant buffer slots
-    for (UINT slot = 0;
-         slot < D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - kReservedCBVSlots; ++slot) {
-        ID3D11Buffer* buffer = nullptr;
-        deviceContext->VSGetConstantBuffers1(slot, 1, &buffer, nullptr, nullptr);
-        DAWN_ASSERT(buffer == nullptr);
-        deviceContext->PSGetConstantBuffers1(slot, 1, &buffer, nullptr, nullptr);
-        DAWN_ASSERT(buffer == nullptr);
-        deviceContext->CSGetConstantBuffers1(slot, 1, &buffer, nullptr, nullptr);
-        DAWN_ASSERT(buffer == nullptr);
-    }
+        // Check constant buffer slots
+        for (UINT slot = 0;
+             slot < D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - kReservedCBVSlots; ++slot) {
+            ID3D11Buffer* buffer = nullptr;
+            deviceContext->VSGetConstantBuffers1(slot, 1, &buffer, nullptr, nullptr);
+            DAWN_ASSERT(buffer == nullptr);
+            deviceContext->PSGetConstantBuffers1(slot, 1, &buffer, nullptr, nullptr);
+            DAWN_ASSERT(buffer == nullptr);
+            deviceContext->CSGetConstantBuffers1(slot, 1, &buffer, nullptr, nullptr);
+            DAWN_ASSERT(buffer == nullptr);
+        }
 
-    // Check resource slots
-    for (UINT slot = 0; slot < D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT; ++slot) {
-        ID3D11ShaderResourceView* srv = nullptr;
-        deviceContext->VSGetShaderResources(slot, 1, &srv);
-        DAWN_ASSERT(srv == nullptr);
-        deviceContext->PSGetShaderResources(slot, 1, &srv);
-        DAWN_ASSERT(srv == nullptr);
-        deviceContext->CSGetShaderResources(slot, 1, &srv);
-        DAWN_ASSERT(srv == nullptr);
-    }
+        // Check resource slots
+        for (UINT slot = 0; slot < D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT; ++slot) {
+            ID3D11ShaderResourceView* srv = nullptr;
+            deviceContext->VSGetShaderResources(slot, 1, &srv);
+            DAWN_ASSERT(srv == nullptr);
+            deviceContext->PSGetShaderResources(slot, 1, &srv);
+            DAWN_ASSERT(srv == nullptr);
+            deviceContext->CSGetShaderResources(slot, 1, &srv);
+            DAWN_ASSERT(srv == nullptr);
+        }
 
-    // Check sampler slots
-    for (UINT slot = 0; slot < D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT; ++slot) {
-        ID3D11SamplerState* sampler = nullptr;
-        deviceContext->VSGetSamplers(slot, 1, &sampler);
-        DAWN_ASSERT(sampler == nullptr);
-        deviceContext->PSGetSamplers(slot, 1, &sampler);
-        DAWN_ASSERT(sampler == nullptr);
-        deviceContext->CSGetSamplers(slot, 1, &sampler);
-        DAWN_ASSERT(sampler == nullptr);
+        // Check sampler slots
+        for (UINT slot = 0; slot < D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT; ++slot) {
+            ID3D11SamplerState* sampler = nullptr;
+            deviceContext->VSGetSamplers(slot, 1, &sampler);
+            DAWN_ASSERT(sampler == nullptr);
+            deviceContext->PSGetSamplers(slot, 1, &sampler);
+            DAWN_ASSERT(sampler == nullptr);
+            deviceContext->CSGetSamplers(slot, 1, &sampler);
+            DAWN_ASSERT(sampler == nullptr);
+        }
     }
 
     // Check UAV slots for compute
@@ -106,26 +118,28 @@ bool CheckAllSlotsAreEmpty(const ScopedSwapStateCommandRecordingContext* command
 void ResetAllRenderSlots(const ScopedSwapStateCommandRecordingContext* commandContext) {
     auto* deviceContext = commandContext->GetD3D11DeviceContext4();
 
-    // Reserve one slot for builtin constants.
-    constexpr uint32_t kReservedCBVSlots = 1;
+    if (IsBackendValidationEnabled(commandContext)) {
+        // Reserve one slot for builtin constants.
+        constexpr uint32_t kReservedCBVSlots = 1;
 
-    ID3D11Buffer* d3d11Buffers[D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT] = {};
-    uint32_t num = D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - kReservedCBVSlots;
-    deviceContext->VSSetConstantBuffers1(0, num, d3d11Buffers, nullptr, nullptr);
-    deviceContext->PSSetConstantBuffers1(0, num, d3d11Buffers, nullptr, nullptr);
+        ID3D11Buffer* d3d11Buffers[D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT] = {};
+        uint32_t num = D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT - kReservedCBVSlots;
+        deviceContext->VSSetConstantBuffers1(0, num, d3d11Buffers, nullptr, nullptr);
+        deviceContext->PSSetConstantBuffers1(0, num, d3d11Buffers, nullptr, nullptr);
 
-    ID3D11ShaderResourceView* d3d11SRVs[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT] = {};
-    num = D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT;
-    deviceContext->VSSetShaderResources(0, num, d3d11SRVs);
-    deviceContext->PSSetShaderResources(0, num, d3d11SRVs);
+        ID3D11ShaderResourceView* d3d11SRVs[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT] = {};
+        num = D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT;
+        deviceContext->VSSetShaderResources(0, num, d3d11SRVs);
+        deviceContext->PSSetShaderResources(0, num, d3d11SRVs);
 
-    ID3D11SamplerState* d3d11Samplers[D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT] = {};
-    num = D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT;
-    deviceContext->VSSetSamplers(0, num, d3d11Samplers);
-    deviceContext->PSSetSamplers(0, num, d3d11Samplers);
+        ID3D11SamplerState* d3d11Samplers[D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT] = {};
+        num = D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT;
+        deviceContext->VSSetSamplers(0, num, d3d11Samplers);
+        deviceContext->PSSetSamplers(0, num, d3d11Samplers);
+    }
 
     ID3D11UnorderedAccessView* d3d11UAVs[D3D11_1_UAV_SLOT_COUNT] = {};
-    num = commandContext->GetDevice()->GetUAVSlotCount();
+    uint32_t num = commandContext->GetDevice()->GetUAVSlotCount();
     deviceContext->OMSetRenderTargetsAndUnorderedAccessViews(
         D3D11_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL, nullptr, nullptr, 0, num, d3d11UAVs, nullptr);
 }
