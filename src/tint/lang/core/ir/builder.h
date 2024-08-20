@@ -197,15 +197,6 @@ class Builder {
         cb();
     }
 
-    /// Calls @p cb with the builder prepending to block @p b
-    /// @param b the block to set as the block to prepend to
-    /// @param cb the function to call with the builder prepending to block @p b
-    template <typename FUNCTION>
-    void Prepend(ir::Block* b, FUNCTION&& cb) {
-        TINT_SCOPED_ASSIGNMENT(insertion_point_, InsertionPoints::PrependToBlock{b});
-        cb();
-    }
-
     /// Calls @p cb with the builder inserting after @p ip
     /// @param ip the insertion point for new instructions
     /// @param cb the function to call with the builder inserting new instructions after @p ip
