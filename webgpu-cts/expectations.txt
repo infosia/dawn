@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-08-05 07:59:00AM
+# Last rolled: 2024-08-20 12:42:27AM
 
 # SharedImage interop failures on Linux
 # Skipped instead of just Crash because of the number of failures
@@ -1681,7 +1681,6 @@ crbug.com/351363904 [ nvidia-0x2184 webgpu-dxc-enabled win10 ] webgpu:shader,val
 crbug.com/351363904 [ nvidia-0x2184 webgpu-dxc-enabled win10 ] webgpu:shader,validation,expression,call,builtin,refract:values:stage="override";type="vec3%3Cf16%3E" [ Failure ]
 crbug.com/351363904 [ nvidia-0x2184 webgpu-dxc-enabled win10 ] webgpu:shader,validation,expression,call,builtin,refract:values:stage="override";type="vec4%3Cf16%3E" [ Failure ]
 
-
 crbug.com/341812551 webgpu:api,validation,render_pipeline,misc:no_attachment:* [ Failure ]
 
 crbug.com/331316080 [ dawn-backend-validation intel-0x4680 webgpu-adapter-default webgpu-no-worker win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_canvas:orientation="none";colorSpaceConversion="default";srcFlipYInCopy=false;dstFormat="rg32float";dstPremultiplied=true [ Failure ]
@@ -1717,7 +1716,6 @@ crbug.com/358165874 [ linux nvidia-0x2184 nvidia_ge_535.183.01 ] webgpu:web_plat
 # ... fragment_output_mask:interpolated=true;sampleCount=4;* is very flaky, so mark it Failure
 [ amd-0x67ef mac ] webgpu:api,operation,render_pipeline,sample_mask:fragment_output_mask:interpolated=false;* [ Failure ]
 [ amd-0x67ef mac ] webgpu:api,operation,render_pipeline,sample_mask:fragment_output_mask:interpolated=true;sampleCount=4;* [ Failure ]
-
 
 # external_texture failures
 crbug.com/dawn/0000 [ intel-0x9bc5 linux no-clang-coverage webgpu-adapter-default ] webgpu:web_platform,external_texture,* [ Failure ]
