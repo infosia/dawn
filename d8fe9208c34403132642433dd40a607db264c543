@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ea7439e_b3321b88",
+        "filename": "src/tint/lang/core/ir/builder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-20T20:14:14Z",
+      "side": 1,
+      "message": "Ugh, I think this should be an error, as this doesn\u0027t do what I\u0027d expect. I\u0027d expect it to insert parameters, I think?",
+      "revId": "d8fe9208c34403132642433dd40a607db264c543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5693033f_61d53f9e",
+        "filename": "src/tint/lang/core/ir/builder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-20T20:14:14Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d8fe9208c34403132642433dd40a607db264c543",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
