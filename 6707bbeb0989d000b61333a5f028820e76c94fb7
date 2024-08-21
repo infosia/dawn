@@ -16,6 +16,23 @@
       "message": "Gregg: PTAL. Thanks!",
       "revId": "6707bbeb0989d000b61333a5f028820e76c94fb7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22183e3b_5859c4df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-08-21T19:08:54Z",
+      "side": 1,
+      "message": "lgtm\n\nthose limits tests should be some easy fix. it\u0027s strange they aren\u0027t correct. IIRC the CTS is just checking that the limits required (core/compat) match the limits from the implementation so something simple must be wrong. They\u0027re hard coded in dawn.",
+      "revId": "6707bbeb0989d000b61333a5f028820e76c94fb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
