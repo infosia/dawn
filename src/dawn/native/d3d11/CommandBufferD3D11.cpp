@@ -604,10 +604,27 @@ MaybeError CommandBuffer::ExecuteRenderPass(
             renderPass->depthStencilAttachment.stencilLoadOp == wgpu::LoadOp::Clear) {
             clearFlags |= D3D11_CLEAR_STENCIL;
         }
+        if (clearFlags == D3D11_CLEAR_DEPTH && /*renderPass->damageRect.has_value() &&*/
+            attachmentInfo->depthStoreOp == wgpu::StoreOp::Discard) {
+            // Clear the depth buffer with the clear value in the damage rect.
+            FLOAT clearDepth[4] = {renderPass->depthStencilAttachment.clearDepth, 0, 0, 0};
+            if (renderPass->damageRect.has_value()) {
+                auto damageRect = renderPass->damageRect.value();
+                D3D11_RECT rect;
+                rect.left = damageRect.x;
+                rect.top = damageRect.y;
+                rect.right = damageRect.x + damageRect.width;
+                rect.bottom = damageRect.y + damageRect.height;
+                d3d11DeviceContext->ClearView(d3d11DepthStencilView, clearDepth, &rect, 1);
+            } else {
+                d3d11DeviceContext->ClearView(d3d11DepthStencilView, clearDepth, nullptr, 0);
+            }
 
-        d3d11DeviceContext->ClearDepthStencilView(d3d11DepthStencilView, clearFlags,
-                                                  attachmentInfo->clearDepth,
-                                                  attachmentInfo->clearStencil);
+        } else {
+            d3d11DeviceContext->ClearDepthStencilView(d3d11DepthStencilView, clearFlags,
+                                                      attachmentInfo->clearDepth,
+                                                      attachmentInfo->clearStencil);
+        }
     }
 
     d3d11DeviceContext->OMSetRenderTargets(static_cast<uint8_t>(attachmentCount),

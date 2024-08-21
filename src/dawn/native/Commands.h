@@ -163,6 +163,8 @@ struct BeginRenderPassCmd {
     uint32_t width;
     uint32_t height;
 
+    std::optional<Rect2D> damageRect;
+
     Ref<QuerySetBase> occlusionQuerySet;
     TimestampWrites timestampWrites;
     std::string label;

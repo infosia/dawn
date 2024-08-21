@@ -1355,6 +1355,11 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             cmd->width = validationState.GetRenderWidth();
             cmd->height = validationState.GetRenderHeight();
 
+            if (const auto* rect = descriptor.Get<RenderPassDescriptorExpandResolveRect>()) {
+                Rect2D damageRect = {rect->x, rect->y, rect->width, rect->height};
+                cmd->damageRect = damageRect;
+            }
+
             cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
 
             if (descriptor->timestampWrites != nullptr) {
