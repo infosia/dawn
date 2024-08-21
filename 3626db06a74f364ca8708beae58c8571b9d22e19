@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "229ab6f9_f55edf62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-21T16:50:24Z",
+      "side": 1,
+      "message": "LGTM; were you able to resolve the issue where large maxDrawCount fails on D3D12? or is that still a problem.\n\nWould be helpful to know the specific error you got so we can file a bug and ask microsoft about it.",
+      "revId": "3626db06a74f364ca8708beae58c8571b9d22e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5201e5ad_b2ab52ae",
