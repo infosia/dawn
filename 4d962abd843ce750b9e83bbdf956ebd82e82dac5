@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "042d080c_ad8702bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-21T04:28:17Z",
+      "side": 1,
+      "message": "LGTM. do we have CTS tests for textureGather with linear filtering and integer formats? or is it tested in dawn_end2end_tests?",
+      "revId": "4d962abd843ce750b9e83bbdf956ebd82e82dac5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
