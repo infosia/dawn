@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "c1faf86afe57c8cf79192baf3d5b915f1d9d6ba5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdf8c8e8_6e7df198",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-08-21T17:13:47Z",
+      "side": 1,
+      "message": "For the sake of accurate documentation the patch description should probably say something like \"and add a comment about StorageBinding\", because as-is it sounds like it enable StorageBinding usage when really it just explains why it can\u0027t be used.",
+      "revId": "c1faf86afe57c8cf79192baf3d5b915f1d9d6ba5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
