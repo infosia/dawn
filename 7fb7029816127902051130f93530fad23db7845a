@@ -1,0 +1,120 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e5d2da0_86831742",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-21T13:16:16Z",
+      "side": 1,
+      "message": "I\u0027d suggest moving this into the if statement below (or combining it with the below condition), so that we don\u0027t perform the walk for variables in address spaces that we are never going to clamp.",
+      "fixSuggestions": [
+        {
+          "fixId": "2e2ca28c_62dd984d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/robustness.cc",
+              "range": {
+                "startLine": 74,
+                "startChar": 0,
+                "endLine": 78,
+                "endChar": 0
+              },
+              "replacement": "                        if (ShouldClamp(ptr-\u003eAddressSpace()) \u0026\u0026\n                            !IgnoreBindingForRootVarOf(access-\u003eObject())) {\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/robustness.cc",
+              "range": {
+                "startLine": 87,
+                "startChar": 0,
+                "endLine": 90,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/robustness.cc",
+              "range": {
+                "startLine": 92,
+                "startChar": 0,
+                "endLine": 93,
+                "endChar": 0
+              },
+              "replacement": "                    if (ShouldClamp(ptr-\u003eAddressSpace()) \u0026\u0026\n                        !IgnoreBindingForRootVarOf(lve-\u003eFrom())) {\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/robustness.cc",
+              "range": {
+                "startLine": 97,
+                "startChar": 0,
+                "endLine": 100,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/robustness.cc",
+              "range": {
+                "startLine": 102,
+                "startChar": 0,
+                "endLine": 103,
+                "endChar": 0
+              },
+              "replacement": "                    if (ShouldClamp(ptr-\u003eAddressSpace()) \u0026\u0026\n                        !IgnoreBindingForRootVarOf(sve-\u003eTo())) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7fb7029816127902051130f93530fad23db7845a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a8d08b9_43e449e4",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-21T13:16:16Z",
+      "side": 1,
+      "message": "I don\u0027t think you should ever hit this case when tracing back from a pointer object, do you have a test case that does?",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "40255c1c_fc706e84",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/robustness.cc",
+              "range": {
+                "startLine": 352,
+                "startChar": 0,
+                "endLine": 356,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "7fb7029816127902051130f93530fad23db7845a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
