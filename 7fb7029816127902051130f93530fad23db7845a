@@ -78,6 +78,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "090110cd_ff9098f9",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-21T13:20:23Z",
+      "side": 1,
+      "message": "Another optimization would be to only do that walk if the ptr is in `storage` or `uniform`, so that we don\u0027t walk any `private`, `function`, or `workgroup` chains.",
+      "parentUuid": "9e5d2da0_86831742",
+      "revId": "7fb7029816127902051130f93530fad23db7845a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9a8d08b9_43e449e4",
         "filename": "src/tint/lang/core/ir/transform/robustness.cc",
         "patchSetId": 2
