@@ -16,6 +16,24 @@
       "message": "I also have a slight preference for the approach Kai suggested in the issue that is to have a list of vendor ids instead of two different \"vendors\" for Qualcomm as long as we know that all ACPI vendor IDs are larger than 0xFFFF.\n\nWe could change \"id\" to \"pci id\", and \"devices\" to \"pci devices\" and have the same for ACPI. Are we sure there is zero correlation between ACPI device IDs and architectures? It would be VERY useful for workarounds to be able to check for specific architectures.\n\nWe could handle it as a follow-up if this CL is needed very quickly.",
       "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "567edf24_646e2b9a",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 3378882
+      },
+      "writtenOn": "2024-08-21T15:58:25Z",
+      "side": 1,
+      "message": "We were given a list of ACPI device ids by Qualcomm that are available in the market, and we didn\u0027t see any correlation between ACPI ids and architectures. QC suggested to use hardcoded id instead to diverge code path if needed.\n\nThe approach you mentioned would require me to fill in the acpi vendor id for all vendors and it requires quite a bit of changes to the GPUInfo.cpp/.h template, which I am not confident enough to make those changes since I am not a frequent contributor. Since it is a cross-vendors changes, could we have someone from the Chromium side to take a look? This could be beneficial for future acpi devices of all vendors.\n\nBut yeah we do need this change ASAP to get pass some of the e2e failures.\n\n@rafael.cintron@microsoft.com Thought?",
+      "parentUuid": "d0cbeef4_2be00b4e",
+      "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
