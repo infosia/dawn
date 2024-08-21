@@ -81,7 +81,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-08-05 07:59:00AM
+# Last rolled: 2024-08-21 10:46:20PM
 
 # Flaky on all platforms
 crbug.com/42251085 webgpu:shader,validation,expression,call,builtin,log:values:stage="override";type="f32" [ Failure ]
@@ -1478,3 +1478,19 @@ crbug.com/dawn/0000 [ android ] webgpu:shader,execution,expression,call,builtin,
 crbug.com/dawn/0000 [ android ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="rgba8unorm-srgb";samplePoints="texel-centre" [ Failure ]
 crbug.com/dawn/0000 [ android ] webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:source_canvas,state:state="placeholder-hascontext" [ Failure ]
 crbug.com/dawn/0000 [ android ] webgpu:api,validation,capability_checks,features,texture_formats:check_capability_guarantees: [ Failure ]
+
+################################################################################
+# New failures. Please triage:
+################################################################################
+crbug.com/dawn/0000 webgpu:compat,api,validation,render_pipeline,unsupported_wgsl:* [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_3d_coords:format="depth16unorm";viewDimension="cube" [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_3d_coords:format="depth32float";viewDimension="cube" [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="r16float";samplePoints="texel-centre" [ Failure ]
+crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="rgba16float";samplePoints="spiral" [ Failure ]
+crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="bc5-rg-unorm";viewDimension="cube";samplePoints="spiral" [ Failure ]
+crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="bc7-rgba-unorm";viewDimension="cube";samplePoints="spiral" [ Failure ]
+crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="bc7-rgba-unorm-srgb";viewDimension="cube";samplePoints="texel-centre" [ Failure ]
+crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_2d_coords:format="r8unorm" [ Failure ]
+crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_2d_coords:format="rgb9e5ufloat" [ Failure ]
