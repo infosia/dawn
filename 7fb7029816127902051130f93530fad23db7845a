@@ -135,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc724f13_091d0fb1",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-21T14:34:53Z",
+      "side": 1,
+      "message": "Right, this is a vestige from when I was calling `IgnoreBindingForRootVarOf` for `Access` even when the object type was not a pointer. This is no longer the case. Will remove.",
+      "parentUuid": "9a8d08b9_43e449e4",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 18
+      },
+      "revId": "7fb7029816127902051130f93530fad23db7845a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f7d2dbe_2d33307f",
@@ -152,6 +176,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dd4fa58_0dd096e3",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-21T14:34:53Z",
+      "side": 1,
+      "message": "The AST version did not support tracking back through function calls, no.",
+      "parentUuid": "1f7d2dbe_2d33307f",
+      "revId": "7fb7029816127902051130f93530fad23db7845a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65e61551_4f63232c",
@@ -165,6 +207,24 @@
       "writtenOn": "2024-08-21T14:21:03Z",
       "side": 1,
       "message": "Maybe rename this to `IsRootVarIgnored` the binding is just the proxy we use to identify the variable, we aren\u0027t ignoring the binding itself, but the variable it\u0027s referring too.",
+      "revId": "7fb7029816127902051130f93530fad23db7845a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db52175e_9558957a",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-21T14:34:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65e61551_4f63232c",
       "revId": "7fb7029816127902051130f93530fad23db7845a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
