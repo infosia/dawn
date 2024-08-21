@@ -34,6 +34,24 @@
       "parentUuid": "d0cbeef4_2be00b4e",
       "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe750947_dbb3461c",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2024-08-21T17:34:30Z",
+      "side": 1,
+      "message": "Spoke with Corentin \u0026 Austin offline. \n\n@weibinwu@microsoft.com, we agreed to proceed with the approach you have in the CL where there are two entries for Qualcomm. But, we do need a plan to map device ids to architecture. I\u0027d like for QC to be on equal footing as other IHVs when web developers query the API for the architecture.  \n\nHow are device ids assigned to devices in market? Is it random? If we must list all in-market device ids in code, how many would there be? Can we please have future device id assignment follow a more structured pattern like other IHVs do?",
+      "parentUuid": "567edf24_646e2b9a",
+      "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
