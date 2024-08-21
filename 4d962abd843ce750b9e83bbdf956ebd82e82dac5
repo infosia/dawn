@@ -33,6 +33,24 @@
       "message": "LGTM too",
       "revId": "4d962abd843ce750b9e83bbdf956ebd82e82dac5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be967fc3_cbd2f4f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-08-21T16:33:27Z",
+      "side": 1,
+      "message": "we have CTS tests (not rolled yet). They run locally on canary because this check is compiled out but fail on the bots where these checks are compiled in.",
+      "parentUuid": "042d080c_ad8702bb",
+      "revId": "4d962abd843ce750b9e83bbdf956ebd82e82dac5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
