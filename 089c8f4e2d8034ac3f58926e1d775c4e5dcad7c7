@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2de6a67_2e5b5f71",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-21T12:18:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "06c96177_e0a7319d",
+      "revId": "089c8f4e2d8034ac3f58926e1d775c4e5dcad7c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9a429ef_6df1f0ac",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-08-19T13:26:30Z",
       "side": 1,
       "message": "This would become a GET_DEVICE_PROC_ALLOW_NULL macro that we\u0027d add next to GET_DEVICE_PROC.",
+      "revId": "089c8f4e2d8034ac3f58926e1d775c4e5dcad7c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14eb308f_b6ba5646",
+        "filename": "src/dawn/native/vulkan/VulkanFunctions.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-21T12:18:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f9a429ef_6df1f0ac",
       "revId": "089c8f4e2d8034ac3f58926e1d775c4e5dcad7c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -66,6 +102,24 @@
       "side": 1,
       "message": "The reason I did not take into account the promotion to 1.2 was that numerous existing features were promoted to core in 1.2, and it would throw a this validation error https://docs.vulkan.org/spec/latest/chapters/devsandqueues.html#VUID-VkDeviceCreateInfo-pNext-02830. I thought it would be better off having a separate CL to refactor all the feature enabling for 1.2.",
       "parentUuid": "f8059739_f32a27f8",
+      "revId": "089c8f4e2d8034ac3f58926e1d775c4e5dcad7c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a315807_f2f6b9b6",
+        "filename": "src/dawn/native/vulkan/VulkanFunctions.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-21T12:18:44Z",
+      "side": 1,
+      "message": "Oh wow, that\u0027s quite an annoying constraint. Ack!",
+      "parentUuid": "6ebcb20c_fab6189c",
       "revId": "089c8f4e2d8034ac3f58926e1d775c4e5dcad7c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
