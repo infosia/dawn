@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07adf4e7_6275a6f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-21T18:01:35Z",
+      "side": 1,
+      "message": "I still don\u0027t know the maxDrawCount limit, but when I tried big numbers for maxDrawCount on dawn and not a standalone D3D12 app, buffer size was the limiting factor where it would fail.",
+      "parentUuid": "229ab6f9_f55edf62",
+      "revId": "3626db06a74f364ca8708beae58c8571b9d22e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5201e5ad_b2ab52ae",
@@ -48,6 +66,30 @@
       "writtenOn": "2024-08-20T19:04:34Z",
       "side": 1,
       "message": "Hmm, maybe I\u0027m misunderstanding something, but where is the second WriteBuffer? (I only see one?)",
+      "range": {
+        "startLine": 698,
+        "startChar": 11,
+        "endLine": 698,
+        "endChar": 31
+      },
+      "revId": "3626db06a74f364ca8708beae58c8571b9d22e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f764cf9_41065229",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-21T18:01:35Z",
+      "side": 1,
+      "message": "Seems like my clang format formated this comment…\nThere is only one WriteBuffer here, must be a mistake when someone was writing the comment.",
+      "parentUuid": "5201e5ad_b2ab52ae",
       "range": {
         "startLine": 698,
         "startChar": 11,
@@ -95,6 +137,30 @@
           ]
         }
       ],
+      "revId": "3626db06a74f364ca8708beae58c8571b9d22e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d323bbfd_e58e1978",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-21T18:01:35Z",
+      "side": 1,
+      "message": "Old comment, the code does exactly that already.",
+      "parentUuid": "d3540c79_4f32fbb6",
+      "range": {
+        "startLine": 856,
+        "startChar": 12,
+        "endLine": 857,
+        "endChar": 30
+      },
       "revId": "3626db06a74f364ca8708beae58c8571b9d22e19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
