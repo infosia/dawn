@@ -51,11 +51,6 @@ class SurfaceTests : public DawnTest {
         DawnTest::SetUp();
         DAWN_TEST_UNSUPPORTED_IF(UsesWire());
 
-        // TODO(crbug.com/dawn/2531): Failing on newer Linux/Intel driver version.
-        // However, IsIntel() and IsMesa() don't work with the null backend.
-        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNull());
-        DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsIntel() && IsMesa("23.2"));
-
         glfwSetErrorCallback([](int code, const char* message) {
             ErrorLog() << "GLFW error " << code << " " << message;
         });
@@ -280,17 +275,6 @@ TEST_P(SurfaceTests, UnconfigureAfterGet) {
 }
 // Test switching between surfaces that have different present modes.
 TEST_P(SurfaceTests, SwitchPresentMode) {
-    // Fails with "internal drawable creation failed" on the Windows NVIDIA CQ builders but not
-    // locally.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsVulkan() && IsNvidia());
-
-    // TODO(jiawei.shao@intel.com): find out why this test sometimes hangs on the latest Linux Intel
-    // Vulkan drivers.
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsIntel());
-
-    // crbug.com/358166481
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
     constexpr wgpu::PresentMode kAllPresentModes[] = {
         wgpu::PresentMode::Immediate,
         wgpu::PresentMode::Fifo,
@@ -351,9 +335,6 @@ TEST_P(SurfaceTests, ResizingSurfaceOnly) {
 
 // Test resizing the window but not the surface.
 TEST_P(SurfaceTests, ResizingWindowOnly) {
-    // TODO(crbug.com/1503912): Failing new ValidateImageAcquireWait in Vulkan Validation Layer.
-    DAWN_SUPPRESS_TEST_IF(IsBackendValidationEnabled() && IsWindows() && IsVulkan() && IsIntel());
-
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
     wgpu::SurfaceTexture surfaceTexture;
@@ -372,9 +353,6 @@ TEST_P(SurfaceTests, ResizingWindowOnly) {
 
 // Test resizing both the window and the surface at the same time.
 TEST_P(SurfaceTests, ResizingWindowAndSurface) {
-    // TODO(crbug.com/dawn/1205): Currently failing on new NVIDIA GTX 1660s on Linux/Vulkan.
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsNvidia());
-
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceTexture surfaceTexture;
 
@@ -399,9 +377,6 @@ TEST_P(SurfaceTests, ResizingWindowAndSurface) {
 
 // Test switching devices on the same adapter.
 TEST_P(SurfaceTests, SwitchingDevice) {
-    // TODO(https://crbug.com/dawn/2116): Disabled due to new Validation Layer failures.
-    DAWN_SUPPRESS_TEST_IF(IsVulkan());
-
     wgpu::Device device2 = CreateDevice();
 
     wgpu::Surface surface = CreateTestSurface();

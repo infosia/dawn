@@ -187,10 +187,6 @@ TEST_P(SurfaceConfigurationValidationTests, AlphaModeAuto) {
 
 // Using any combination of the reported capability is ok for configuring the surface.
 TEST_P(SurfaceConfigurationValidationTests, AnyCombinationOfCapabilities) {
-    // TODO(dawn:2320): Fails with "internal drawable creation failed" on the Windows NVIDIA CQ
-    // builders but not locally. This is a similar limitation to SwapChainTests.SwitchPresentMode.
-    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsVulkan() && IsNvidia());
-
     wgpu::Surface surface = CreateTestSurface();
 
     wgpu::SurfaceConfiguration config = baseConfig;
