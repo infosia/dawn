@@ -133,6 +133,40 @@
       ],
       "revId": "7fb7029816127902051130f93530fad23db7845a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f7d2dbe_2d33307f",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-21T14:21:03Z",
+      "side": 1,
+      "message": "Was this what the AST version did? We could track back through function calls, you just may end up with multiple root variables.",
+      "revId": "7fb7029816127902051130f93530fad23db7845a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65e61551_4f63232c",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-21T14:21:03Z",
+      "side": 1,
+      "message": "Maybe rename this to `IsRootVarIgnored` the binding is just the proxy we use to identify the variable, we aren\u0027t ignoring the binding itself, but the variable it\u0027s referring too.",
+      "revId": "7fb7029816127902051130f93530fad23db7845a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
