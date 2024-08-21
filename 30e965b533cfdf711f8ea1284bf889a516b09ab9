@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa8e877b_0043e103",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-21T15:18:26Z",
+      "side": 1,
+      "message": "Ah yes, I though `outval.type` was a `core::Type`, but that\u0027s not right.\n\nThis is fine the way it is then.",
+      "parentUuid": "d4c52a9a_4d282842",
+      "revId": "30e965b533cfdf711f8ea1284bf889a516b09ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35c7a035_5b9d4470",
