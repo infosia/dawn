@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0cbeef4_2be00b4e",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-21T09:25:40Z",
+      "side": 1,
+      "message": "I also have a slight preference for the approach Kai suggested in the issue that is to have a list of vendor ids instead of two different \"vendors\" for Qualcomm as long as we know that all ACPI vendor IDs are larger than 0xFFFF.\n\nWe could change \"id\" to \"pci id\", and \"devices\" to \"pci devices\" and have the same for ACPI. Are we sure there is zero correlation between ACPI device IDs and architectures? It would be VERY useful for workarounds to be able to check for specific architectures.\n\nWe could handle it as a follow-up if this CL is needed very quickly.",
+      "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
