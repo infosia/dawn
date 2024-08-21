@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d4c52a9a_4d282842",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-21T06:30:10Z",
+      "side": 1,
+      "message": "Sorry do you know how to get a `core::Type` from `outval.type`?\n\nIt only contains an identifier and I cannot get its type from `ctx.src-\u003eSem()`",
+      "parentUuid": "1919e0b8_1ee8fdce",
+      "revId": "30e965b533cfdf711f8ea1284bf889a516b09ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "35c7a035_5b9d4470",
         "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
         "patchSetId": 4
@@ -48,6 +66,30 @@
       "writtenOn": "2024-08-20T18:20:13Z",
       "side": 1,
       "message": "This breaks if the shader has another declaration called `inner_result`. Instead of doing this and having the `if (i\u003d\u003d0) {} else {}` logic here, I\u0027d recommend assigning the whole `output.value` to a `let` declaration and then pulling the elements from that.\n\nSo you\u0027d generate code along the lines of:\n```\nlet tmp_clip_distances \u003d inner_result.clip_distances;\nwrapper_result.clipDistance[0u] \u003d tmp_clip_distances[0u];\nwrapper_result.clipDistance[1u] \u003d tmp_clip_distances[1u];\nwrapper_result.clipDistance[2u] \u003d tmp_clip_distances[2u];\nwrapper_result.clipDistance[3u] \u003d tmp_clip_distances[3u];\n```\n\nThere\u0027s an extra copy here, but I\u0027d imagine the MSL compiler would optimize it out, and we can do a better job of emitting this when we switch to the IR version of the MSL backend.",
+      "range": {
+        "startLine": 715,
+        "startChar": 48,
+        "endLine": 715,
+        "endChar": 92
+      },
+      "revId": "30e965b533cfdf711f8ea1284bf889a516b09ab9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67bd4406_7b68ddf4",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-21T06:30:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c7a035_5b9d4470",
       "range": {
         "startLine": 715,
         "startChar": 48,
