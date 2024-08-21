@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e87109b3_4a376f0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-21T19:07:37Z",
+      "side": 1,
+      "message": "add the bug number here, so it gets linked to the issue",
+      "revId": "6eb702fc951fd7c945f7a3cd982a3bd0db1ea737",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e7dbbe7_96c52ce7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-21T19:07:37Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "6eb702fc951fd7c945f7a3cd982a3bd0db1ea737",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
