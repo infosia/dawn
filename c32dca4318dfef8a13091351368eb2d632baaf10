@@ -33,6 +33,24 @@
       "message": "will it work on these branch builders?",
       "revId": "c32dca4318dfef8a13091351368eb2d632baaf10",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e675caa3_f82335fc",
+        "filename": "infra/config/global/generated/commit-queue.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-08-22T22:25:45Z",
+      "side": 1,
+      "message": "I believe it will work if it\u0027s set up with the proper branch name (e.g. `chromium-m116`), although that appears to not be the case at the moment.\n\nI can see about doing that, although I think it makes sense to not branch for now in case we need to do reverts. The risk of two CLs ending up conflicting with each other is also much lower on branches due to the lower volume of CLs and lack of the CTS roller.",
+      "parentUuid": "db0e0d01_2e6c5634",
+      "revId": "c32dca4318dfef8a13091351368eb2d632baaf10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
