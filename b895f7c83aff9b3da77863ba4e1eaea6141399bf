@@ -22,6 +22,30 @@
       },
       "revId": "b895f7c83aff9b3da77863ba4e1eaea6141399bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "432339d1_e467e017",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-22T19:14:15Z",
+      "side": 0,
+      "message": "Ah.... yes that works! I\u0027m still so unfamiliar with JS 😂 I\u0027m surprised that even though `.finally` is supposed to take a callback, it just doesn\u0027t complain that I passed it a non-callback... But then again I guess it\u0027s not really typed so it just doesn\u0027t care",
+      "parentUuid": "be27d158_b2a4ea76",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 69
+      },
+      "revId": "b895f7c83aff9b3da77863ba4e1eaea6141399bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
