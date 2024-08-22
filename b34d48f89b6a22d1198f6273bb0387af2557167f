@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b6c9990_142d258e",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-22T01:18:14Z",
+      "side": 1,
+      "message": "The only real changes are in this file. The rest is running `-generate-skip`.",
+      "fixSuggestions": [
+        {
+          "fixId": "79b7d20e_2c68a9a2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 674,
+                "startChar": 0,
+                "endLine": 678,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 708,
+                "startChar": 0,
+                "endLine": 709,
+                "endChar": 0
+              },
+              "replacement": "\t\tinvalidTest :\u003d false\n"
+            },
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 710,
+                "startChar": 0,
+                "endLine": 711,
+                "endChar": 0
+              },
+              "replacement": "\t\t\tinvalidTest \u003d true\n"
+            },
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 800,
+                "startChar": 0,
+                "endLine": 801,
+                "endChar": 0
+              },
+              "replacement": "\t\tif invalidTest {\n"
+            },
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 821,
+                "startChar": 0,
+                "endLine": 822,
+                "endChar": 0
+              },
+              "replacement": "\t\t\tif invalidTest {\n"
+            },
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 865,
+                "startChar": 0,
+                "endLine": 865,
+                "endChar": 0
+              },
+              "replacement": "\n// Skips the path portion of FXC warning/error strings, matching the rest.\n// We use this to scrub the path to avoid generating needless diffs.\nvar reFXCErrorStringHash \u003d regexp.MustCompile(`(?:.*?)(\\(.*?\\): (?:warning|error).*)`)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b34d48f89b6a22d1198f6273bb0387af2557167f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
