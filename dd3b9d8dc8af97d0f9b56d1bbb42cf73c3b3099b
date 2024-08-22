@@ -16,6 +16,57 @@
       "message": "PTAL. As far as I can see, these are the right place to add the annotation for storage and workgroup. Will followup with texture.",
       "revId": "dd3b9d8dc8af97d0f9b56d1bbb42cf73c3b3099b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0101fe82_39873aa9",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-22T19:01:50Z",
+      "side": 1,
+      "message": "Don\u0027t need to do Uniform as it is read-only. Should also check the access mode here to avoid adding these to read-only or write-only storage buffers.",
+      "revId": "dd3b9d8dc8af97d0f9b56d1bbb42cf73c3b3099b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "778f89fd_478850bb",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2276,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-22T19:01:50Z",
+      "side": 1,
+      "message": "Don\u0027t need to change anything for `Function` as they are private to invocations.",
+      "revId": "dd3b9d8dc8af97d0f9b56d1bbb42cf73c3b3099b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fdd4212_975a65a8",
+        "filename": "src/tint/lang/spirv/writer/var_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-22T19:01:50Z",
+      "side": 1,
+      "message": "Please add a test like this for `workgroup` memory too.",
+      "revId": "dd3b9d8dc8af97d0f9b56d1bbb42cf73c3b3099b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
