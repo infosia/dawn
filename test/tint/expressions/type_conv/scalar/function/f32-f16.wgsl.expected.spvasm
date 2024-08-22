@@ -27,8 +27,8 @@
 %_ptr_Function_half = OpTypePointer Function %half
           %m = OpFunction %float None %6
           %7 = OpLabel
-               OpStore %t %float_1
-          %9 = OpLoad %float %t
+               OpStore %t %float_1 None
+          %9 = OpLoad %float %t None
                OpReturnValue %9
                OpFunctionEnd
           %f = OpFunction %void None %12
@@ -36,7 +36,7 @@
           %v = OpVariable %_ptr_Function_half Function
          %14 = OpFunctionCall %float %m
          %16 = OpFConvert %half %14
-               OpStore %v %16
+               OpStore %v %16 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %12

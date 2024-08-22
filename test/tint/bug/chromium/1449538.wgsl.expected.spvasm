@@ -36,7 +36,7 @@
       %i60_0 = OpVariable %_ptr_Function_int Function
                OpBranch %5
           %5 = OpLabel
-               OpStore %i0520 %int_0
+               OpStore %i0520 %int_0 None
                OpBranch %8
           %8 = OpLabel
                OpLoopMerge %9 %7 None
@@ -53,7 +53,7 @@
           %9 = OpLabel
                OpBranch %18
          %18 = OpLabel
-               OpStore %i62 %int_0
+               OpStore %i62 %int_0 None
                OpBranch %21
          %21 = OpLabel
                OpLoopMerge %22 %20 None
@@ -70,7 +70,7 @@
          %22 = OpLabel
                OpBranch %26
          %26 = OpLabel
-               OpStore %i0520_0 %int_0
+               OpStore %i0520_0 %int_0 None
                OpBranch %29
          %29 = OpLabel
                OpLoopMerge %30 %28 None
@@ -87,7 +87,7 @@
          %30 = OpLabel
                OpBranch %34
          %34 = OpLabel
-               OpStore %i62_0 %int_0
+               OpStore %i62_0 %int_0 None
                OpBranch %37
          %37 = OpLabel
                OpLoopMerge %38 %36 None
@@ -104,7 +104,7 @@
          %38 = OpLabel
                OpBranch %42
          %42 = OpLabel
-               OpStore %i62_1 %int_0
+               OpStore %i62_1 %int_0 None
                OpBranch %45
          %45 = OpLabel
                OpLoopMerge %46 %44 None
@@ -121,7 +121,7 @@
          %46 = OpLabel
                OpBranch %50
          %50 = OpLabel
-               OpStore %i60 %int_0
+               OpStore %i60 %int_0 None
                OpBranch %53
          %53 = OpLabel
                OpLoopMerge %54 %52 None
@@ -138,7 +138,7 @@
          %54 = OpLabel
                OpBranch %58
          %58 = OpLabel
-               OpStore %i62_2 %int_0
+               OpStore %i62_2 %int_0 None
                OpBranch %61
          %61 = OpLabel
                OpLoopMerge %62 %60 None
@@ -155,7 +155,7 @@
          %62 = OpLabel
                OpBranch %66
          %66 = OpLabel
-               OpStore %i60_0 %int_0
+               OpStore %i60_0 %int_0 None
                OpBranch %69
          %69 = OpLabel
                OpLoopMerge %70 %68 None

@@ -24,8 +24,8 @@
 %_ptr_Function_uint = OpTypePointer Function %uint
           %m = OpFunction %int None %6
           %7 = OpLabel
-               OpStore %t %int_1
-          %9 = OpLoad %int %t
+               OpStore %t %int_1 None
+          %9 = OpLoad %int %t None
                OpReturnValue %9
                OpFunctionEnd
           %f = OpFunction %void None %12
@@ -33,7 +33,7 @@
           %v = OpVariable %_ptr_Function_uint Function
          %14 = OpFunctionCall %int %m
          %16 = OpBitcast %uint %14
-               OpStore %v %16
+               OpStore %v %16 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %12

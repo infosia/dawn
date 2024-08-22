@@ -32,7 +32,7 @@
        %main = OpFunction %void None %8
           %9 = OpLabel
         %arr = OpVariable %_ptr_Function__arr_float_uint_4 Function
-               OpStore %arr %16
+               OpStore %arr %16 None
                OpBranch %17
          %17 = OpLabel
          %22 = OpFunctionCall %int %foo
@@ -42,7 +42,7 @@
                OpLoopMerge %21 %19 None
                OpBranch %18
          %18 = OpLabel
-          %x = OpLoad %float %a
+          %x = OpLoad %float %a None
                OpBranch %21
          %19 = OpLabel
                OpBranch %20

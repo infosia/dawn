@@ -113,31 +113,31 @@
         %v13 = OpVariable %_ptr_Function_MyStruct Function
         %v14 = OpVariable %_ptr_Function_MyStruct Function
         %v15 = OpVariable %_ptr_Function__arr_float_uint_10 Function
-               OpStore %v1 %int_1
-               OpStore %v2 %uint_1
-               OpStore %v3 %float_1
-               OpStore %v4 %43
-               OpStore %v5 %47
-               OpStore %v6 %51
-         %52 = OpLoad %v3float %v6
-         %53 = OpLoad %v3float %v6
-         %54 = OpLoad %v3float %v6
+               OpStore %v1 %int_1 None
+               OpStore %v2 %uint_1 None
+               OpStore %v3 %float_1 None
+               OpStore %v4 %43 None
+               OpStore %v5 %47 None
+               OpStore %v6 %51 None
+         %52 = OpLoad %v3float %v6 None
+         %53 = OpLoad %v3float %v6 None
+         %54 = OpLoad %v3float %v6 None
          %56 = OpCompositeConstruct %mat3v3float %52 %53 %54
-               OpStore %v7 %56
-               OpStore %v8 %61
-               OpStore %v9 %29
+               OpStore %v7 %56 None
+               OpStore %v8 %61 None
+               OpStore %v9 %29 None
          %64 = OpFunctionCall %int %ret_i32
-               OpStore %v10 %64
+               OpStore %v10 %64 None
          %66 = OpFunctionCall %uint %ret_u32
-               OpStore %v11 %66
+               OpStore %v11 %66 None
          %68 = OpFunctionCall %float %ret_f32
-               OpStore %v12 %68
+               OpStore %v12 %68 None
          %70 = OpFunctionCall %MyStruct %ret_MyStruct
-               OpStore %v13 %70
+               OpStore %v13 %70 None
          %72 = OpFunctionCall %MyStruct %ret_MyStruct
-               OpStore %v14 %72
+               OpStore %v14 %72 None
          %74 = OpFunctionCall %_arr_float_uint_10 %ret_MyArray
-               OpStore %v15 %74
+               OpStore %v15 %74 None
                OpReturn
                OpFunctionEnd
  %main_inner = OpFunction %v4float None %77
@@ -147,6 +147,6 @@
        %main = OpFunction %void None %32
          %81 = OpLabel
          %82 = OpFunctionCall %v4float %main_inner
-               OpStore %main_loc0_Output %82
+               OpStore %main_loc0_Output %82 None
                OpReturn
                OpFunctionEnd

@@ -281,25 +281,25 @@ TEST_F(SpirvWriterTest, Switch_Phi_SingleValue_CaseReturn) {
           %4 = OpLabel
 %return_value = OpVariable %_ptr_Function_int Function %7
 %continue_execution = OpVariable %_ptr_Function_bool Function
-               OpStore %continue_execution %true
+               OpStore %continue_execution %true None
                OpSelectionMerge %15 None
                OpSwitch %int_42 %12 1 %12 2 %14
          %12 = OpLabel
-               OpStore %continue_execution %false
-               OpStore %return_value %int_10
+               OpStore %continue_execution %false None
+               OpStore %return_value %int_10 None
                OpBranch %15
          %14 = OpLabel
                OpBranch %15
          %15 = OpLabel
          %18 = OpPhi %int %19 %12 %int_20 %14
-         %21 = OpLoad %bool %continue_execution
+         %21 = OpLoad %bool %continue_execution None
                OpSelectionMerge %22 None
                OpBranchConditional %21 %23 %22
          %23 = OpLabel
-               OpStore %return_value %18
+               OpStore %return_value %18 None
                OpBranch %22
          %22 = OpLabel
-         %24 = OpLoad %int %return_value
+         %24 = OpLoad %int %return_value None
                OpReturnValue %24
                OpFunctionEnd
 )");

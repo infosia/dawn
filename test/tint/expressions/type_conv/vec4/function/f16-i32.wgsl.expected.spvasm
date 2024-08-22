@@ -42,8 +42,8 @@
          %39 = OpConstantComposite %v4int %int_2147483647 %int_2147483647 %int_2147483647 %int_2147483647
           %m = OpFunction %v4half None %7
           %8 = OpLabel
-               OpStore %t %half_0x1p_0
-         %10 = OpLoad %half %t
+               OpStore %t %half_0x1p_0 None
+         %10 = OpLoad %half %t None
          %11 = OpCompositeConstruct %v4half %10 %10 %10 %10
                OpReturnValue %11
                OpFunctionEnd
@@ -52,7 +52,7 @@
           %v = OpVariable %_ptr_Function_v4int Function
          %16 = OpFunctionCall %v4half %m
          %17 = OpFunctionCall %v4int %tint_v4f16_to_v4i32 %16
-               OpStore %v %17
+               OpStore %v %17 None
                OpReturn
                OpFunctionEnd
 %tint_v4f16_to_v4i32 = OpFunction %v4int None %24

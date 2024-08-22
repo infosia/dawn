@@ -48,7 +48,7 @@
          %13 = OpAtomicCompareExchange %uint %10 %uint_1 %uint_0 %uint_0 %uint_1 %uint_1
          %15 = OpIEqual %bool %13 %uint_1
          %18 = OpCompositeConstruct %__atomic_compare_exchange_result_u32 %13 %15
-               OpStore %res %18
+               OpStore %res %18 None
                OpReturn
                OpFunctionEnd
 %fragment_main = OpFunction %void None %8

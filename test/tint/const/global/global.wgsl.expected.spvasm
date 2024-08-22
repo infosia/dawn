@@ -62,19 +62,19 @@
          %v6 = OpVariable %_ptr_Function_v3float Function
          %v7 = OpVariable %_ptr_Function_mat3v3float Function
          %v9 = OpVariable %_ptr_Function__arr_float_uint_10 Function
-               OpStore %v1 %int_1
-               OpStore %v2 %uint_1
-               OpStore %v3 %float_1
-               OpStore %v4 %22
-               OpStore %v5 %26
-               OpStore %v6 %30
-               OpStore %v7 %34
-               OpStore %v9 %39
+               OpStore %v1 %int_1 None
+               OpStore %v2 %uint_1 None
+               OpStore %v3 %float_1 None
+               OpStore %v4 %22 None
+               OpStore %v5 %26 None
+               OpStore %v6 %30 None
+               OpStore %v7 %34 None
+               OpStore %v9 %39 None
                OpReturnValue %40
                OpFunctionEnd
        %main = OpFunction %void None %43
          %44 = OpLabel
          %45 = OpFunctionCall %v4float %main_inner
-               OpStore %main_loc0_Output %45
+               OpStore %main_loc0_Output %45 None
                OpReturn
                OpFunctionEnd

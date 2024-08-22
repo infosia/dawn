@@ -70,10 +70,10 @@
           %4 = OpLabel
           %a = OpVariable %_ptr_Function_float Function
           %b = OpVariable %_ptr_Function_v2float Function
-               OpStore %a %float_0
-          %9 = OpLoad %float %a
+               OpStore %a %float_0 None
+          %9 = OpLoad %float %a None
          %11 = OpCompositeConstruct %v2float %float_1 %9
-               OpStore %b %11
+               OpStore %b %11 None
                OpReturn
                OpFunctionEnd
        %main = OpFunction %void None %3
@@ -99,26 +99,26 @@
  %v3u32_var3 = OpVariable %_ptr_Function_v3uint Function
 %v3bool_var4 = OpVariable %_ptr_Function_v3bool Function
 %v4bool_var5 = OpVariable %_ptr_Function_v4bool Function
-               OpStore %bool_var1 %true
-               OpStore %bool_var2 %true
-               OpStore %bool_var3 %true
-               OpStore %i32_var1 %int_123
-               OpStore %i32_var2 %int_123
-               OpStore %i32_var3 %int_1
-               OpStore %u32_var1 %uint_123
-               OpStore %u32_var2 %uint_123
-               OpStore %u32_var3 %uint_1
-               OpStore %v3bool_var1 %40
-               OpStore %v3bool_var11 %40
-               OpStore %v3bool_var2 %40
-               OpStore %v3bool_var3 %40
-               OpStore %v3i32_var1 %47
-               OpStore %v3i32_var2 %47
-               OpStore %v3i32_var3 %50
-               OpStore %v3u32_var1 %54
-               OpStore %v3u32_var2 %54
-               OpStore %v3u32_var3 %57
-               OpStore %v3bool_var4 %40
-               OpStore %v4bool_var5 %62
+               OpStore %bool_var1 %true None
+               OpStore %bool_var2 %true None
+               OpStore %bool_var3 %true None
+               OpStore %i32_var1 %int_123 None
+               OpStore %i32_var2 %int_123 None
+               OpStore %i32_var3 %int_1 None
+               OpStore %u32_var1 %uint_123 None
+               OpStore %u32_var2 %uint_123 None
+               OpStore %u32_var3 %uint_1 None
+               OpStore %v3bool_var1 %40 None
+               OpStore %v3bool_var11 %40 None
+               OpStore %v3bool_var2 %40 None
+               OpStore %v3bool_var3 %40 None
+               OpStore %v3i32_var1 %47 None
+               OpStore %v3i32_var2 %47 None
+               OpStore %v3i32_var3 %50 None
+               OpStore %v3u32_var1 %54 None
+               OpStore %v3u32_var2 %54 None
+               OpStore %v3u32_var3 %57 None
+               OpStore %v3bool_var4 %40 None
+               OpStore %v4bool_var5 %62 None
                OpReturn
                OpFunctionEnd

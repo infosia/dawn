@@ -23,7 +23,7 @@
           %4 = OpLabel
           %b = OpVariable %_ptr_Function_int Function
           %7 = OpVectorExtractDynamic %int %8 %i
-               OpStore %b %7
+               OpStore %b %7 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3
