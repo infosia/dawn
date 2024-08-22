@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ec48e9c_5dec8a5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-22T14:05:33Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "334825670f698ab5d6f3ccad9d474e533d074fe0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14bbac34_7955febb",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-22T14:05:33Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "334825670f698ab5d6f3ccad9d474e533d074fe0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27f379d5_2d53e2b8",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-22T14:05:33Z",
+      "side": 1,
+      "message": "nit: small preference to use the pattern in wgpu::Texture conversion at [1].",
+      "revId": "334825670f698ab5d6f3ccad9d474e533d074fe0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcd78f93_da093c2f",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-22T14:05:33Z",
+      "side": 1,
+      "message": "I believe these should explicitly be TypeErrors.",
+      "revId": "334825670f698ab5d6f3ccad9d474e533d074fe0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
