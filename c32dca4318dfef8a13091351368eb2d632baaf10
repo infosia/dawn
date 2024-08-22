@@ -51,6 +51,24 @@
       "parentUuid": "db0e0d01_2e6c5634",
       "revId": "c32dca4318dfef8a13091351368eb2d632baaf10",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "870056a5_17c4be47",
+        "filename": "infra/config/global/generated/commit-queue.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-08-22T22:35:46Z",
+      "side": 1,
+      "message": "Removed branched versions.",
+      "parentUuid": "e675caa3_f82335fc",
+      "revId": "c32dca4318dfef8a13091351368eb2d632baaf10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
