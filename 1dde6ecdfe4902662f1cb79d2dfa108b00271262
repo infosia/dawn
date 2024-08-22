@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "005fd4c2_9fd2f080",
+        "filename": "src/tint/lang/spirv/writer/common/helper_test.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-22T14:22:48Z",
+      "side": 1,
+      "message": "I\u0027ll do that as a followup as it\u0027s unrelated to this change.",
+      "parentUuid": "113988e3_45ec6b5e",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 9
+      },
+      "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba9ab528_3e949df8",
         "filename": "src/tint/lang/spirv/writer/common/options.h",
         "patchSetId": 7
@@ -37,6 +61,24 @@
       "writtenOn": "2024-08-22T01:57:00Z",
       "side": 1,
       "message": "Nit: I\u0027d prefer `use_vulkan_memory_model`, otherwise it sounds like the decision of which memory model to use is still up to Tint. If the caller sets the flag, we will always do it (at least, I think that\u0027s what we agreed...).",
+      "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b8b72e4_a5a4a4d3",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-22T14:22:48Z",
+      "side": 1,
+      "message": "I think the decision is still up to Tint at this point. We haven\u0027t done the finch trial if it\u0027s safe to always turn on the Vulkan memory model. So this is just a note from Dawn that it _can_ be turned on, we\u0027ll do what we want with that information.\n\nSo, the `has_` name is more appropriate I think.",
+      "parentUuid": "ba9ab528_3e949df8",
       "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -72,6 +114,24 @@
           ]
         }
       ],
+      "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a797366_93a24fde",
+        "filename": "src/tint/lang/spirv/writer/writer_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-22T14:22:48Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "a8e37f96_c8d7d95f",
       "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
