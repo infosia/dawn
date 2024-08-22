@@ -1,0 +1,79 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "113988e3_45ec6b5e",
+        "filename": "src/tint/lang/spirv/writer/common/helper_test.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-22T01:57:00Z",
+      "side": 1,
+      "message": "Now that the `Options` struct is passed to the printer, we should just use that in the tests that set this flag, instead of reverse engineering the options that do what we want.\n\nIn fact, I think this function should now be call `writer::Generate()` instead of separately calling `Raise` and `Print`, since this entry point is testing the full SPIR-V backend.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 9
+      },
+      "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba9ab528_3e949df8",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-22T01:57:00Z",
+      "side": 1,
+      "message": "Nit: I\u0027d prefer `use_vulkan_memory_model`, otherwise it sounds like the decision of which memory model to use is still up to Tint. If the caller sets the flag, we will always do it (at least, I think that\u0027s what we agreed...).",
+      "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8e37f96_c8d7d95f",
+        "filename": "src/tint/lang/spirv/writer/writer_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-22T01:57:00Z",
+      "side": 1,
+      "message": "Should this test just be `ModuleHeader_VulkanMemoryModel` now? The use of a subgroup matrix type has nothing to do with the SPIR-V that we emit, it\u0027s all based on the option provided below.",
+      "fixSuggestions": [
+        {
+          "fixId": "c0ab006f_74205551",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/writer_test.cc",
+              "range": {
+                "startLine": 43,
+                "startChar": 0,
+                "endLine": 46,
+                "endChar": 0
+              },
+              "replacement": "TEST_F(SpirvWriterTest, ModuleHeader_VulkanMemoryModel) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
