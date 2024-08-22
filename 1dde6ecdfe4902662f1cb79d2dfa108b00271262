@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34498860_4af5bc93",
+        "filename": "src/tint/lang/spirv/writer/common/helper_test.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-22T14:32:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "005fd4c2_9fd2f080",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 9
+      },
+      "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba9ab528_3e949df8",
@@ -79,6 +103,24 @@
       "side": 1,
       "message": "I think the decision is still up to Tint at this point. We haven\u0027t done the finch trial if it\u0027s safe to always turn on the Vulkan memory model. So this is just a note from Dawn that it _can_ be turned on, we\u0027ll do what we want with that information.\n\nSo, the `has_` name is more appropriate I think.",
       "parentUuid": "ba9ab528_3e949df8",
+      "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce9d1b6b_13dd186d",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-22T14:32:52Z",
+      "side": 1,
+      "message": "The logic for whether or not to turn it on lives in Dawn either way, and is guarded by the Finch Trial. The question is, if Dawn sets this flag to `true`, does Tint always use the Vulkan Memory Model?",
+      "parentUuid": "2b8b72e4_a5a4a4d3",
       "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
