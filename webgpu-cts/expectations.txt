@@ -1714,6 +1714,7 @@ crbug.com/dawn/0000 [ dawn-backend-validation no-asan no-clang-coverage release-
 
 # Miscellaneous flakes that are too flaky for retry
 crbug.com/dawn/0000 [ android-r qualcomm ] webgpu:api,operation,render_pipeline,overrides:precision:isAsync=true [ Failure ]
+crbug.com/dawn/0000 [ android qualcomm ] webgpu:api,operation,render_pipeline,overrides:precision:isAsync=true [ Failure ]
 
 # Failures due to AMD Macbook OS upgrade
 crbug.com/dawn/0000 [ amd dawn-backend-validation mac target-cpu-64 webgpu-adapter-default ] webgpu:shader,execution,expression,call,builtin,unpack2x16snorm:* [ Failure ]
