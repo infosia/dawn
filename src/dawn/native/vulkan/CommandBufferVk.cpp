@@ -206,6 +206,10 @@ MaybeError TransitionAndClearForSyncScope(Device* device,
         Buffer* buffer = ToBackend(scope.buffers[i]);
         buffer->EnsureDataInitialized(recordingContext);
 
+        if (scope.bufferSyncInfos[i].usage == kkIndirectBufferForFrontendValidation) {
+            continue;
+        }
+
         VkPipelineStageFlags srcStages = 0;
         VkPipelineStageFlags dstStages = 0;
 
