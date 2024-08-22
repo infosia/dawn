@@ -16,6 +16,23 @@
       "message": "Based on https://dawn-review.googlesource.com/c/dawn/+/203460, seems to be doing its job and detecting expectation conflicts on Dawn CLs.",
       "revId": "c32dca4318dfef8a13091351368eb2d632baaf10",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db0e0d01_2e6c5634",
+        "filename": "infra/config/global/generated/commit-queue.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-22T22:17:36Z",
+      "side": 1,
+      "message": "will it work on these branch builders?",
+      "revId": "c32dca4318dfef8a13091351368eb2d632baaf10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
