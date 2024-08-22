@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74ac7613_741009ac",
+        "filename": "test/tint/buffer/storage/dynamic_index/read_f16.wgsl.expected.fxc.hlsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-22T01:41:29Z",
+      "side": 1,
+      "message": "These should probably become `SKIP: INVALID` now, right?",
+      "revId": "a4ed18c0683434ae64d1b31a5890aadcd760f7e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
