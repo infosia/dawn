@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ffb3970_097f4ac2",
+        "filename": "generator/templates/art/api_kotlin_constants.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-08-22T12:00:59Z",
+      "side": 1,
+      "message": "Please add a hardcoded space at EOL here?",
+      "revId": "222df95e5a24107969e7e73b7c124a45a6fafeab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aca9a9da_63853796",
+        "filename": "generator/templates/art/api_kotlin_enum.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-08-22T12:00:59Z",
+      "side": 1,
+      "message": "Please {{- here and hardcode a space at end of line above",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "222df95e5a24107969e7e73b7c124a45a6fafeab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
