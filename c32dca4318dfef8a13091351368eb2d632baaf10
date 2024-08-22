@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eba230f4_ba19079e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-08-22T22:13:53Z",
+      "side": 1,
+      "message": "Based on https://dawn-review.googlesource.com/c/dawn/+/203460, seems to be doing its job and detecting expectation conflicts on Dawn CLs.",
+      "revId": "c32dca4318dfef8a13091351368eb2d632baaf10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
