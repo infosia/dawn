@@ -251,8 +251,7 @@ void IndirectDrawMetadata::AddMultiDrawIndirect(bool duplicateBaseVertexInstance
     mMultiDraws.push_back(multiDraw);
 }
 
-void IndirectDrawMetadata::AddMultiDrawIndexedIndirect(BufferBase* indexBuffer,
-                                                       wgpu::IndexFormat indexFormat,
+void IndirectDrawMetadata::AddMultiDrawIndexedIndirect(wgpu::IndexFormat indexFormat,
                                                        uint64_t indexBufferSize,
                                                        uint64_t indexBufferOffset,
                                                        bool duplicateBaseVertexInstance,
