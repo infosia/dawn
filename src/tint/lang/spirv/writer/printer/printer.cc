@@ -1990,11 +1990,25 @@ class Printer {
         current_function_.push_inst(op, std::move(operands));
     }
 
+    SpvMemoryAccessMask MemoryAccessMaskForPointer(const core::type::Pointer* ptr) {
+        TINT_ASSERT(ptr);
+
+        if (use_vulkan_memory_model_ && (ptr->AddressSpace() == core::AddressSpace::kStorage ||
+                                         ptr->AddressSpace() == core::AddressSpace::kUniform ||
+                                         ptr->AddressSpace() == core::AddressSpace::kWorkgroup)) {
+            return SpvMemoryAccessNonPrivatePointerMask;
+        }
+
+        return SpvMemoryAccessMaskNone;
+    }
+
     /// Emit a load instruction.
     /// @param load the load instruction to emit
     void EmitLoad(core::ir::Load* load) {
         current_function_.push_inst(
-            spv::Op::OpLoad, {Type(load->Result(0)->Type()), Value(load), Value(load->From())});
+            spv::Op::OpLoad, {Type(load->Result(0)->Type()), Value(load), Value(load->From()),
+                              U32Operand(MemoryAccessMaskForPointer(
+                                  load->From()->Type()->As<core::type::Pointer>()))});
     }
 
     /// Emit a load vector element instruction.
@@ -2008,7 +2022,8 @@ class Printer {
             spv::Op::OpAccessChain,
             {Type(el_ptr_ty), el_ptr_id, Value(load->From()), Value(load->Index())});
         current_function_.push_inst(spv::Op::OpLoad,
-                                    {Type(load->Result(0)->Type()), Value(load), el_ptr_id});
+                                    {Type(load->Result(0)->Type()), Value(load), el_ptr_id,
+                                     U32Operand(MemoryAccessMaskForPointer(vec_ptr_ty))});
     }
 
     /// Emit a loop instruction.
@@ -2123,7 +2138,10 @@ class Printer {
     /// Emit a store instruction.
     /// @param store the store instruction to emit
     void EmitStore(core::ir::Store* store) {
-        current_function_.push_inst(spv::Op::OpStore, {Value(store->To()), Value(store->From())});
+        current_function_.push_inst(spv::Op::OpStore,
+                                    {Value(store->To()), Value(store->From()),
+                                     U32Operand(MemoryAccessMaskForPointer(
+                                         store->To()->Type()->As<core::type::Pointer>()))});
     }
 
     /// Emit a store vector element instruction.
@@ -2136,7 +2154,9 @@ class Printer {
         current_function_.push_inst(
             spv::Op::OpAccessChain,
             {Type(el_ptr_ty), el_ptr_id, Value(store->To()), Value(store->Index())});
-        current_function_.push_inst(spv::Op::OpStore, {el_ptr_id, Value(store->Value())});
+        current_function_.push_inst(
+            spv::Op::OpStore,
+            {el_ptr_id, Value(store->Value()), U32Operand(MemoryAccessMaskForPointer(vec_ptr_ty))});
     }
 
     /// Emit a unary instruction.
@@ -2241,7 +2261,12 @@ class Printer {
                 TINT_ASSERT(current_function_);
                 if (var->Initializer()) {
                     current_function_.push_var({ty, id, U32Operand(SpvStorageClassFunction)});
-                    current_function_.push_inst(spv::Op::OpStore, {id, Value(var->Initializer())});
+                    current_function_.push_inst(
+                        spv::Op::OpStore, {id, Value(var->Initializer()),
+                                           U32Operand(MemoryAccessMaskForPointer(
+                                               var->Result(0)->Type()->As<core::type::Pointer>()))
+
+                                          });
                 } else {
                     current_function_.push_var(
                         {ty, id, U32Operand(SpvStorageClassFunction), ConstantNull(store_ty)});
