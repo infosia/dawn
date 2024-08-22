@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d370cc5_53d16d5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-08-22T14:47:16Z",
+      "side": 1,
+      "message": "I\u0027ll rebase when https://dawn-review.googlesource.com/c/dawn/+/203516 is merged",
+      "revId": "2d4afc0c2fd06d338994d2e4c11830aa8207e9f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
