@@ -125,6 +125,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19f53416_2659f633",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-22T14:59:06Z",
+      "side": 1,
+      "message": "Discussed offline, the answer is yes, Tint should be simplified and do what Dawn tells us. Done",
+      "parentUuid": "ce9d1b6b_13dd186d",
+      "revId": "1dde6ecdfe4902662f1cb79d2dfa108b00271262",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8e37f96_c8d7d95f",
