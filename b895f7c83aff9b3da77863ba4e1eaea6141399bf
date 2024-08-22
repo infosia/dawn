@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be27d158_b2a4ea76",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-22T18:54:54Z",
+      "side": 0,
+      "message": "Isn\u0027t the problem that it should actually be:\n\n\n```\n    WebGPU._futures[futureId] \u003d\n        new Promise((resolve) \u003d\u003e promise.finally(() \u003d\u003e resolve(futureId)));\n```\n?\n\n\nwhen you do `new Promise(cb)`, `cb` runs right away, so the old impl immediately did:\n\n`promise.finally(resolve(futureId))` or:\n\n```\nlet ret \u003d resolve(futureId);\npromise.finally(ret);\n```\n\nso you\u0027re actually resolving right away instead of doing it inside the `.finally` handler.",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 69
+      },
+      "revId": "b895f7c83aff9b3da77863ba4e1eaea6141399bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
