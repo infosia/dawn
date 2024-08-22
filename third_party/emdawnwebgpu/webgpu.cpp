@@ -78,11 +78,10 @@ class NonMovable : NonCopyable {
   void operator=(NonMovable&&) = delete;
 };
 
-// TODO(lokokung): For ref-counting, we should add RAII helpers like what we
-// have in dawn/common. These will be especially helpful with the addition of
-// the external ref-counting necessary for Device and DeviceLost.
 class RefCounted : NonMovable {
  public:
+  static constexpr bool HasExternalRefCount = false;
+
   void AddRef() {
     assert(mRefCount.fetch_add(1u, std::memory_order_relaxed) >= 1);
   }
@@ -100,14 +99,15 @@ class RefCounted : NonMovable {
 };
 
 template <typename T>
-class RefCountedWithExternalCount : public T {
+class RefCountedWithExternalCount : public RefCounted {
  public:
-  using T::T;
+  static constexpr bool HasExternalRefCount = true;
+
   virtual ~RefCountedWithExternalCount() = default;
 
   void AddRef() {
     AddExternalRef();
-    AddInternalRef();
+    T::AddRef();
   }
 
   void Release() {
@@ -118,19 +118,109 @@ class RefCountedWithExternalCount : public T {
     T::Release();
   }
 
-  // TODO(lokokung): We can probably clean these up a bit once we add RAII
-  // helpers.
-  void AddInternalRef() { T::AddRef(); }
   void AddExternalRef() {
     mExternalRefCount.fetch_add(1u, std::memory_order_relaxed);
   }
-  void ReleaseInternal() { T::Release(); }
 
  private:
   virtual void WillDropLastExternalRef() = 0;
 
-  std::atomic<uint64_t> mExternalRefCount = 1;
+  std::atomic<uint64_t> mExternalRefCount = 0;
 };
+
+template <typename T>
+class Ref {
+ public:
+  static_assert(std::is_convertible_v<T, RefCounted*>,
+                "Cannot make a Ref<T> when T is not a Refcounted type.");
+
+  Ref() : mValue(nullptr) {}
+  ~Ref() {
+    if (mValue) {
+      mValue->Release();
+    }
+  }
+
+  // Constructors from nullptr.
+  // NOLINTNEXTLINE(runtime/explicit)
+  constexpr Ref(std::nullptr_t) : Ref() {}
+
+  // Constructors from T.
+  // NOLINTNEXTLINE(runtime/explicit)
+  Ref(T value) : mValue(value) { AddRef(value); }
+  Ref<T>& operator=(const T& value) {
+    Set(value);
+    return *this;
+  }
+
+  // Constructors from a Ref<T>.
+  Ref(const Ref<T>& other) : mValue(other.mValue) { AddRef(other.mValue); }
+  Ref<T>& operator=(const Ref<T>& other) {
+    Set(other.mValue);
+    return *this;
+  }
+  Ref(Ref<T>&& other) { mValue = other.Detach(); }
+  Ref<T>& operator=(Ref<T>&& other) {
+    if (&other != this) {
+      Release(mValue);
+      mValue = other.Detach();
+    }
+    return *this;
+  }
+
+  explicit operator bool() const { return !!mValue; }
+
+  // Smart pointer methods.
+  const T& Get() const { return mValue; }
+  T& Get() { return mValue; }
+  const T operator->() const { return mValue; }
+  T operator->() { return mValue; }
+
+  [[nodiscard]] T Detach() {
+    T value = mValue;
+    mValue = nullptr;
+    return value;
+  }
+
+  void Acquire(T value) {
+    Release(mValue);
+    mValue = value;
+  }
+
+ private:
+  static void AddRef(T value) {
+    if (value != nullptr) {
+      value->RefCounted::AddRef();
+    }
+  }
+  static void Release(T value) {
+    if (value != nullptr) {
+      value->RefCounted::Release();
+    }
+  }
+
+  void Set(T value) {
+    if (mValue != value) {
+      // Ensure that the new value is referenced before the old is released to
+      // prevent any transitive frees that may affect the new value.
+      AddRef(value);
+      Release(mValue);
+      mValue = value;
+    }
+  }
+
+  T mValue;
+};
+
+template <typename T>
+auto ReturnToAPI(Ref<T*>&& object) {
+  if constexpr (T::HasExternalRefCount) {
+    // For an object which has external ref count, just need to increase the
+    // external ref count, and keep the total ref count unchanged.
+    object->AddExternalRef();
+  }
+  return object.Detach();
+}
 
 // clang-format off
 // X Macro to help generate boilerplate code for all refcounted object types.
@@ -521,7 +611,7 @@ struct WGPUDeviceImpl final : public RefCountedWithExternalCount<RefCounted>,
  private:
   void WillDropLastExternalRef() override;
 
-  WGPUQueue mQueue = nullptr;
+  Ref<WGPUQueue> mQueue;
   WGPUUncapturedErrorCallbackInfo2 mUncapturedErrorCallbackInfo =
       WGPU_UNCAPTURED_ERROR_CALLBACK_INFO_2_INIT;
   FutureID mDeviceLostFutureId = kNullFutureId;
@@ -544,9 +634,7 @@ class DeviceLostEvent final : public TrackedEvent {
         mUserdata2(callbackInfo.userdata2),
         mDevice(device) {
     assert(mDevice);
-    mDevice->AddInternalRef();
   }
-  ~DeviceLostEvent() override { mDevice->ReleaseInternal(); }
 
   EventType GetType() override { return kType; }
 
@@ -561,8 +649,9 @@ class DeviceLostEvent final : public TrackedEvent {
       mMessage = "A valid external Instance reference no longer exists.";
     }
     if (mCallback) {
-      WGPUDevice device =
-          mReason != WGPUDeviceLostReason_FailedCreation ? mDevice : nullptr;
+      WGPUDevice device = mReason != WGPUDeviceLostReason_FailedCreation
+                              ? mDevice.Get()
+                              : nullptr;
       mCallback(&device, mReason, mMessage ? mMessage->c_str() : nullptr,
                 mUserdata1, mUserdata2);
     }
@@ -573,8 +662,7 @@ class DeviceLostEvent final : public TrackedEvent {
   void* mUserdata1 = nullptr;
   void* mUserdata2 = nullptr;
 
-  WGPUDevice mDevice;
-
+  Ref<WGPUDevice> mDevice;
   WGPUDeviceLostReason mReason;
   std::optional<std::string> mMessage;
 };
@@ -596,7 +684,7 @@ class RequestAdapterEvent final : public TrackedEvent {
                  WGPUAdapter adapter,
                  const char* message) {
     mStatus = status;
-    mAdapter = adapter;
+    mAdapter.Acquire(adapter);
     mMessage = message;
   }
 
@@ -606,10 +694,11 @@ class RequestAdapterEvent final : public TrackedEvent {
       mMessage = "A valid external Instance reference no longer exists.";
     }
     if (mCallback) {
-      mCallback(
-          mStatus,
-          mStatus == WGPURequestAdapterStatus_Success ? mAdapter : nullptr,
-          mMessage ? mMessage->c_str() : nullptr, mUserdata1, mUserdata2);
+      mCallback(mStatus,
+                mStatus == WGPURequestAdapterStatus_Success
+                    ? ReturnToAPI(std::move(mAdapter))
+                    : nullptr,
+                mMessage ? mMessage->c_str() : nullptr, mUserdata1, mUserdata2);
     }
   }
 
@@ -619,8 +708,8 @@ class RequestAdapterEvent final : public TrackedEvent {
   void* mUserdata2 = nullptr;
 
   WGPURequestAdapterStatus mStatus;
-  WGPUAdapter mAdapter = nullptr;
-  std::optional<std::string> mMessage = std::nullopt;
+  Ref<WGPUAdapter> mAdapter;
+  std::optional<std::string> mMessage;
 };
 
 class RequestDeviceEvent final : public TrackedEvent {
@@ -640,7 +729,7 @@ class RequestDeviceEvent final : public TrackedEvent {
                  WGPUDevice device,
                  const char* message) {
     mStatus = status;
-    mDevice = device;
+    mDevice.Acquire(device);
     mMessage = message;
   }
 
@@ -650,18 +739,11 @@ class RequestDeviceEvent final : public TrackedEvent {
       mMessage = "A valid external Instance reference no longer exists.";
     }
     if (mCallback) {
-      // Since device has both an internal and external ref-count, we need to
-      // explicitly increment the external ref-count before returning it.
-      WGPUDevice device;
-      if (mStatus == WGPURequestDeviceStatus_Success) {
-        device = mDevice;
-        device->AddExternalRef();
-      } else {
-        device = nullptr;
-      }
-
-      mCallback(mStatus, device, mMessage ? mMessage->c_str() : nullptr,
-                mUserdata1, mUserdata2);
+      mCallback(mStatus,
+                mStatus == WGPURequestDeviceStatus_Success
+                    ? ReturnToAPI(std::move(mDevice))
+                    : nullptr,
+                mMessage ? mMessage->c_str() : nullptr, mUserdata1, mUserdata2);
     }
   }
 
@@ -671,8 +753,8 @@ class RequestDeviceEvent final : public TrackedEvent {
   void* mUserdata2 = nullptr;
 
   WGPURequestDeviceStatus mStatus;
-  WGPUDevice mDevice = nullptr;
-  std::optional<std::string> mMessage = std::nullopt;
+  Ref<WGPUDevice> mDevice;
+  std::optional<std::string> mMessage;
 };
 
 // ----------------------------------------------------------------------------
@@ -736,19 +818,12 @@ WGPUDeviceImpl::~WGPUDeviceImpl() {
 }
 
 WGPUQueue WGPUDeviceImpl::GetQueue() const {
-  return mQueue;
+  Ref<WGPUQueue> queue = mQueue;
+  return ReturnToAPI(std::move(queue));
 }
 
 void WGPUDeviceImpl::SetQueue(WGPUQueue queue) {
-  // TODO(lokokung) Currently we are manually doing the ref counting for
-  //                the Queue. We should probably have some RAII helpers.
-  if (mQueue) {
-    mQueue->Release();
-  }
-  mQueue = queue;
-  if (mQueue) {
-    mQueue->AddRef();
-  }
+  mQueue.Acquire(queue);
 }
 
 void WGPUDeviceImpl::OnDeviceLost(WGPUDeviceLostReason reason,
@@ -822,11 +897,9 @@ void emwgpuOnRequestDeviceCompleted(FutureID futureId,
     GetEventManager().SetFutureReady<RequestDeviceEvent>(futureId, status,
                                                          device, message);
   } else {
-    // If the request failed, we need to resolve the DeviceLostEvent and release
-    // the Device.
+    // If the request failed, we need to resolve the DeviceLostEvent.
     device->OnDeviceLost(WGPUDeviceLostReason_FailedCreation,
                          "Device failed at creation.");
-    device->Release();
     GetEventManager().SetFutureReady<RequestDeviceEvent>(futureId, status,
                                                          nullptr, message);
   }
@@ -963,7 +1036,6 @@ WGPUFuture wgpuAdapterRequestDevice2(
 // ----------------------------------------------------------------------------
 
 WGPUQueue wgpuDeviceGetQueue(WGPUDevice device) {
-  device->GetQueue()->AddRef();
   return device->GetQueue();
 }
 
