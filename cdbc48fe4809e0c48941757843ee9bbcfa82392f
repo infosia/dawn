@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d1fb30d_0e3a018c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-08-22T13:01:39Z",
+      "side": 1,
+      "message": "Shrek, PTAL.",
+      "revId": "cdbc48fe4809e0c48941757843ee9bbcfa82392f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
