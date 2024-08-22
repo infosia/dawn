@@ -18,8 +18,8 @@
           %a = OpFunction %void None %3
           %4 = OpLabel
         %a_0 = OpVariable %_ptr_Function_int Function
-               OpStore %a_0 %int_0
-          %9 = OpLoad %int %a_0
+               OpStore %a_0 %int_0 None
+          %9 = OpLoad %int %a_0 None
                OpSelectionMerge %11 None
                OpSwitch %9 %10
          %10 = OpLabel

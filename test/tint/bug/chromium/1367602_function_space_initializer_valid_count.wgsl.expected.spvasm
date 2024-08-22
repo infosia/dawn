@@ -22,7 +22,7 @@
           %f = OpFunction %void None %3
           %4 = OpLabel
           %v = OpVariable %_ptr_Function__arr_bool_uint_65535 Function
-               OpStore %v %11
+               OpStore %v %11 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

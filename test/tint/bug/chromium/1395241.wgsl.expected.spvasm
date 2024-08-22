@@ -18,7 +18,7 @@
    %fr6snorm = OpFunction %void None %3
           %4 = OpLabel
    %bzbxttch = OpVariable %_ptr_Function_int Function
-               OpStore %bzbxttch %int_2
+               OpStore %bzbxttch %int_2 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

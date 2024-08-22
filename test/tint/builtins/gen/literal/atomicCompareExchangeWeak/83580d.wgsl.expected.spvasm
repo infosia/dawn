@@ -41,7 +41,7 @@
          %10 = OpAtomicCompareExchange %uint %arg_0 %uint_2 %uint_0 %uint_0 %uint_1 %uint_1
          %14 = OpIEqual %bool %10 %uint_1
          %17 = OpCompositeConstruct %__atomic_compare_exchange_result_u32 %10 %14
-               OpStore %res %17
+               OpStore %res %17 None
                OpReturn
                OpFunctionEnd
 %compute_main_inner = OpFunction %void None %22
@@ -60,7 +60,7 @@
                OpFunctionEnd
 %compute_main = OpFunction %void None %8
          %32 = OpLabel
-         %33 = OpLoad %uint %compute_main_local_invocation_index_Input
+         %33 = OpLoad %uint %compute_main_local_invocation_index_Input None
          %34 = OpFunctionCall %void %compute_main_inner %33
                OpReturn
                OpFunctionEnd

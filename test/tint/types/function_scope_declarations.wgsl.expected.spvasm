@@ -83,15 +83,15 @@
    %m2x3_var = OpVariable %_ptr_Function_mat2v3float Function
     %arr_var = OpVariable %_ptr_Function__arr_float_uint_4 Function
  %struct_var = OpVariable %_ptr_Function_S Function
-               OpStore %bool_var %bool_let
-               OpStore %i32_var %i32_let
-               OpStore %u32_var %u32_let
-               OpStore %f32_var %f32_let
-               OpStore %v2i32_var %v2i32_let
-               OpStore %v3u32_var %v3u32_let
-               OpStore %v4f32_var %v4f32_let
-               OpStore %m2x3_var %37
-               OpStore %arr_var %arr_let
-               OpStore %struct_var %struct_let
+               OpStore %bool_var %bool_let None
+               OpStore %i32_var %i32_let None
+               OpStore %u32_var %u32_let None
+               OpStore %f32_var %f32_let None
+               OpStore %v2i32_var %v2i32_let None
+               OpStore %v3u32_var %v3u32_let None
+               OpStore %v4f32_var %v4f32_let None
+               OpStore %m2x3_var %37 None
+               OpStore %arr_var %arr_let None
+               OpStore %struct_var %struct_let None
                OpReturn
                OpFunctionEnd

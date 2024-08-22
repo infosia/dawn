@@ -26,10 +26,10 @@
           %4 = OpLabel
           %a = OpVariable %_ptr_Function_uint Function
           %b = OpVariable %_ptr_Function_uint Function
-               OpStore %a %uint_1
-               OpStore %b %uint_0
-         %11 = OpLoad %uint %a
-         %12 = OpLoad %uint %b
+               OpStore %a %uint_1 None
+               OpStore %b %uint_0 None
+         %11 = OpLoad %uint %a None
+         %12 = OpLoad %uint %b None
           %r = OpFunctionCall %uint %tint_mod_u32 %11 %12
                OpReturn
                OpFunctionEnd

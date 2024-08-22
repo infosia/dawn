@@ -18,7 +18,7 @@
           %f = OpFunction %void None %3
           %4 = OpLabel
           %v = OpVariable %_ptr_Function_float Function
-               OpStore %v %float_0
+               OpStore %v %float_0 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

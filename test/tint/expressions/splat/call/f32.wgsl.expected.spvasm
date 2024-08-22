@@ -35,13 +35,13 @@
          %v4 = OpVariable %_ptr_Function_v4float Function
          %10 = OpFunctionCall %float %get_f32
          %12 = OpCompositeConstruct %v2float %10 %10
-               OpStore %v2 %12
+               OpStore %v2 %12 None
          %15 = OpFunctionCall %float %get_f32
          %17 = OpCompositeConstruct %v3float %15 %15 %15
-               OpStore %v3 %17
+               OpStore %v3 %17 None
          %20 = OpFunctionCall %float %get_f32
          %22 = OpCompositeConstruct %v4float %20 %20 %20 %20
-               OpStore %v4 %22
+               OpStore %v4 %22 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %8

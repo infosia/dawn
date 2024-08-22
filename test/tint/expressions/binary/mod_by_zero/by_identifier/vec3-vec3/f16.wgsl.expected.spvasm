@@ -30,10 +30,10 @@
           %4 = OpLabel
           %a = OpVariable %_ptr_Function_v3half Function
           %b = OpVariable %_ptr_Function_v3half Function
-               OpStore %a %9
-               OpStore %b %14
-         %17 = OpLoad %v3half %a
-         %18 = OpLoad %v3half %b
+               OpStore %a %9 None
+               OpStore %b %14 None
+         %17 = OpLoad %v3half %a None
+         %18 = OpLoad %v3half %b None
           %r = OpFRem %v3half %17 %18
                OpReturn
                OpFunctionEnd

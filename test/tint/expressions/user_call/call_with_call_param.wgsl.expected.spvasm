@@ -40,7 +40,7 @@
         %a_0 = OpVariable %_ptr_Function_float Function
          %18 = OpFunctionCall %int %c %uint_2
          %20 = OpFunctionCall %float %b %18
-               OpStore %a_0 %20
+               OpStore %a_0 %20 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %16

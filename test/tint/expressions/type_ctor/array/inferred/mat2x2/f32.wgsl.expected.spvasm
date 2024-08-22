@@ -41,8 +41,8 @@
           %f = OpFunction %void None %26
          %27 = OpLabel
           %v = OpVariable %_ptr_Function__arr_mat2v2float_uint_2 Function
-         %28 = OpLoad %_arr_mat2v2float_uint_2 %arr
-               OpStore %v %28
+         %28 = OpLoad %_arr_mat2v2float_uint_2 %arr None
+               OpStore %v %28 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %26

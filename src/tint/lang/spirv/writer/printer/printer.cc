@@ -1683,15 +1683,21 @@ class Printer {
             case core::BuiltinFn::kStep:
                 glsl_ext_inst(GLSLstd450Step);
                 break;
-            case core::BuiltinFn::kStorageBarrier:
+            case core::BuiltinFn::kStorageBarrier: {
+                spv::MemorySemanticsMask memory_mask = spv::MemorySemanticsMask::UniformMemory |
+                                                       spv::MemorySemanticsMask::AcquireRelease;
+                if (options_.use_vulkan_memory_model) {
+                    memory_mask = memory_mask | spv::MemorySemanticsMask::MakeAvailable |
+                                  spv::MemorySemanticsMask::MakeVisible;
+                }
+
                 op = spv::Op::OpControlBarrier;
                 operands.clear();
                 operands.push_back(Constant(b_.ConstantValue(u32(spv::Scope::Workgroup))));
                 operands.push_back(Constant(b_.ConstantValue(u32(spv::Scope::Workgroup))));
-                operands.push_back(
-                    Constant(b_.ConstantValue(u32(spv::MemorySemanticsMask::UniformMemory |
-                                                  spv::MemorySemanticsMask::AcquireRelease))));
+                operands.push_back(Constant(b_.ConstantValue(u32(memory_mask))));
                 break;
+            }
             case core::BuiltinFn::kSubgroupAdd:
                 module_.PushCapability(SpvCapabilityGroupNonUniformArithmetic);
                 op = result_ty->is_integer_scalar_or_vector() ? spv::Op::OpGroupNonUniformIAdd
@@ -1858,15 +1864,21 @@ class Printer {
             case core::BuiltinFn::kUnpack4X8Unorm:
                 glsl_ext_inst(GLSLstd450UnpackUnorm4x8);
                 break;
-            case core::BuiltinFn::kWorkgroupBarrier:
+            case core::BuiltinFn::kWorkgroupBarrier: {
+                spv::MemorySemanticsMask memory_mask = spv::MemorySemanticsMask::WorkgroupMemory |
+                                                       spv::MemorySemanticsMask::AcquireRelease;
+                if (options_.use_vulkan_memory_model) {
+                    memory_mask = memory_mask | spv::MemorySemanticsMask::MakeAvailable |
+                                  spv::MemorySemanticsMask::MakeVisible;
+                }
+
                 op = spv::Op::OpControlBarrier;
                 operands.clear();
                 operands.push_back(Constant(b_.ConstantValue(u32(spv::Scope::Workgroup))));
                 operands.push_back(Constant(b_.ConstantValue(u32(spv::Scope::Workgroup))));
-                operands.push_back(
-                    Constant(b_.ConstantValue(u32(spv::MemorySemanticsMask::WorkgroupMemory |
-                                                  spv::MemorySemanticsMask::AcquireRelease))));
+                operands.push_back(Constant(b_.ConstantValue(u32(memory_mask))));
                 break;
+            }
             default:
                 TINT_ICE() << "unimplemented builtin function: " << builtin->Func();
         }
@@ -1985,11 +1997,26 @@ class Printer {
         current_function_.push_inst(op, std::move(operands));
     }
 
+    SpvMemoryAccessMask MemoryAccessMaskForPointer(const core::type::Pointer* ptr) {
+        TINT_ASSERT(ptr);
+
+        if (options_.use_vulkan_memory_model &&
+            (ptr->AddressSpace() == core::AddressSpace::kStorage ||
+             ptr->AddressSpace() == core::AddressSpace::kUniform ||
+             ptr->AddressSpace() == core::AddressSpace::kWorkgroup)) {
+            return SpvMemoryAccessNonPrivatePointerMask;
+        }
+
+        return SpvMemoryAccessMaskNone;
+    }
+
     /// Emit a load instruction.
     /// @param load the load instruction to emit
     void EmitLoad(core::ir::Load* load) {
         current_function_.push_inst(
-            spv::Op::OpLoad, {Type(load->Result(0)->Type()), Value(load), Value(load->From())});
+            spv::Op::OpLoad, {Type(load->Result(0)->Type()), Value(load), Value(load->From()),
+                              U32Operand(MemoryAccessMaskForPointer(
+                                  load->From()->Type()->As<core::type::Pointer>()))});
     }
 
     /// Emit a load vector element instruction.
@@ -2003,7 +2030,8 @@ class Printer {
             spv::Op::OpAccessChain,
             {Type(el_ptr_ty), el_ptr_id, Value(load->From()), Value(load->Index())});
         current_function_.push_inst(spv::Op::OpLoad,
-                                    {Type(load->Result(0)->Type()), Value(load), el_ptr_id});
+                                    {Type(load->Result(0)->Type()), Value(load), el_ptr_id,
+                                     U32Operand(MemoryAccessMaskForPointer(vec_ptr_ty))});
     }
 
     /// Emit a loop instruction.
@@ -2118,7 +2146,10 @@ class Printer {
     /// Emit a store instruction.
     /// @param store the store instruction to emit
     void EmitStore(core::ir::Store* store) {
-        current_function_.push_inst(spv::Op::OpStore, {Value(store->To()), Value(store->From())});
+        current_function_.push_inst(spv::Op::OpStore,
+                                    {Value(store->To()), Value(store->From()),
+                                     U32Operand(MemoryAccessMaskForPointer(
+                                         store->To()->Type()->As<core::type::Pointer>()))});
     }
 
     /// Emit a store vector element instruction.
@@ -2131,7 +2162,9 @@ class Printer {
         current_function_.push_inst(
             spv::Op::OpAccessChain,
             {Type(el_ptr_ty), el_ptr_id, Value(store->To()), Value(store->Index())});
-        current_function_.push_inst(spv::Op::OpStore, {el_ptr_id, Value(store->Value())});
+        current_function_.push_inst(
+            spv::Op::OpStore,
+            {el_ptr_id, Value(store->Value()), U32Operand(MemoryAccessMaskForPointer(vec_ptr_ty))});
     }
 
     /// Emit a unary instruction.
@@ -2236,7 +2269,11 @@ class Printer {
                 TINT_ASSERT(current_function_);
                 if (var->Initializer()) {
                     current_function_.push_var({ty, id, U32Operand(SpvStorageClassFunction)});
-                    current_function_.push_inst(spv::Op::OpStore, {id, Value(var->Initializer())});
+                    current_function_.push_inst(
+                        spv::Op::OpStore,
+                        {id, Value(var->Initializer()),
+                         U32Operand(MemoryAccessMaskForPointer(
+                             var->Result(0)->Type()->As<core::type::Pointer>()))});
                 } else {
                     current_function_.push_var(
                         {ty, id, U32Operand(SpvStorageClassFunction), ConstantNull(store_ty)});
