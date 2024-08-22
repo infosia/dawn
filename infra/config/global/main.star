@@ -862,15 +862,6 @@ chromium_dawn_tryjob("win", "arm64")
 chromium_dawn_tryjob("android", "arm")
 chromium_dawn_tryjob("android", "arm64")
 
-# TODO(crbug.com/352816949): Move this definition alongside the presubmit
-# trybot and make it run on every CL once we confirm that it works as expected
-# on Dawn CLs.
-luci.cq_tryjob_verifier(
-    cq_group = "Dawn-CQ",
-    builder = "chromium:try/dawn-chromium-presubmit",
-    includable_only = True,
-)
-
 tricium_dawn_tryjob()
 
 luci.cq_tryjob_verifier(
@@ -989,6 +980,10 @@ def _create_dawn_cq_group(name, refs, refs_exclude = None):
         verifiers = [
             luci.cq_tryjob_verifier(
                 builder = "dawn:try/presubmit",
+                disable_reuse = True,
+            ),
+            luci.cq_tryjob_verifier(
+                builder = "chromium:try/dawn-chromium-presubmit",
                 disable_reuse = True,
             ),
         ],
