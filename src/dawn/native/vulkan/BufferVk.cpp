@@ -107,7 +107,7 @@ VkPipelineStageFlags VulkanPipelineStage(wgpu::BufferUsage usage, wgpu::ShaderSt
             flags |= VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT;
         }
     }
-    if (usage & wgpu::BufferUsage::Indirect) {
+    if (usage & kIndirectBufferForBackendResourceTracking) {
         flags |= VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT;
     }
     if (usage & wgpu::BufferUsage::QueryResolve) {
@@ -147,7 +147,7 @@ VkAccessFlags VulkanAccessFlags(wgpu::BufferUsage usage) {
     if (usage & kReadOnlyStorageBuffer) {
         flags |= VK_ACCESS_SHADER_READ_BIT;
     }
-    if (usage & wgpu::BufferUsage::Indirect) {
+    if (usage & kIndirectBufferForBackendResourceTracking) {
         flags |= VK_ACCESS_INDIRECT_COMMAND_READ_BIT;
     }
     if (usage & wgpu::BufferUsage::QueryResolve) {
@@ -408,6 +408,10 @@ bool Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
                                              VkBufferMemoryBarrier* barrier,
                                              VkPipelineStageFlags* srcStages,
                                              VkPipelineStageFlags* dstStages) {
+    // `kIndirectBufferForFrontendValidation` is only for the front-end validation and shouldn't be
+    // used in the backend resource tracking.
+    usage &= ~kIndirectBufferForFrontendValidation;
+
     if (shaderStage == wgpu::ShaderStage::None) {
         // If the buffer isn't used in any shader stages, ignore shader usages. Eg. ignore a uniform
         // buffer that isn't actually read in any shader.
