@@ -79,7 +79,7 @@ TEST_F(SpirvWriterTest, FunctionVar_DeclInsideBlock) {
                OpSelectionMerge %5 None
                OpBranchConditional %true %6 %5
           %6 = OpLabel
-               OpStore %v %int_42
+               OpStore %v %int_42 None
                OpBranch %5
           %5 = OpLabel
                OpReturn
@@ -233,14 +233,14 @@ TEST_F(SpirvWriterTest, StorageVar_LoadAndStore) {
 
     EXPECT_INST(R"(
           %9 = OpAccessChain %_ptr_StorageBuffer_int %1 %uint_0
-       %load = OpLoad %int %9
+       %load = OpLoad %int %9 None
         %add = OpIAdd %int %load %int_1
          %16 = OpAccessChain %_ptr_StorageBuffer_int %1 %uint_0
-               OpStore %16 %add
+               OpStore %16 %add None
 )");
 }
 
-TEST_F(SpirvWriterTest, StorageVar_NoCoherentWithVulkan) {
+TEST_F(SpirvWriterTest, StorageVar_WithVulkan) {
     auto* v = b.Var("v", ty.ptr<storage, i32, read_write>());
     v->SetBindingPoint(0, 0);
     mod.root_block->Append(v);
@@ -297,10 +297,10 @@ TEST_F(SpirvWriterTest, StorageVar_NoCoherentWithVulkan) {
         %foo = OpFunction %void None %7
           %8 = OpLabel
           %9 = OpAccessChain %_ptr_StorageBuffer_int %1 %uint_0
-       %load = OpLoad %int %9
+       %load = OpLoad %int %9 NonPrivatePointer
         %add = OpIAdd %int %load %int_1
          %16 = OpAccessChain %_ptr_StorageBuffer_int %1 %uint_0
-               OpStore %16 %add
+               OpStore %16 %add NonPrivatePointer
                OpReturn
                OpFunctionEnd)");
 }
@@ -326,7 +326,7 @@ TEST_F(SpirvWriterTest, StorageVar_WriteOnly) {
 )");
     EXPECT_INST(R"(
           %9 = OpAccessChain %_ptr_StorageBuffer_int %1 %uint_0
-               OpStore %9 %int_42
+               OpStore %9 %int_42 None
 )");
 }
 
@@ -364,7 +364,7 @@ TEST_F(SpirvWriterTest, UniformVar_Load) {
     ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST(R"(
           %9 = OpAccessChain %_ptr_Uniform_int %1 %uint_0
-       %load = OpLoad %int %9
+       %load = OpLoad %int %9 None
 )");
 }
 
@@ -397,7 +397,7 @@ TEST_F(SpirvWriterTest, PushConstantVar_Load) {
     ASSERT_TRUE(Generate()) << Error() << output_;
     EXPECT_INST(R"(
           %8 = OpAccessChain %_ptr_PushConstant_int %1 %uint_0
-       %load = OpLoad %int %8
+       %load = OpLoad %int %8 None
                OpReturnValue %load
 )");
 }

@@ -42,7 +42,7 @@
           %x = OpFunctionParameter %float
           %8 = OpLabel
           %v = OpVariable %_ptr_Function_v4float Function
-               OpStore %v %12
+               OpStore %v %12 None
                OpBranch %15
          %15 = OpLabel
                OpLoopMerge %16 %14 None
@@ -72,7 +72,7 @@
                OpFunctionEnd
        %main = OpFunction %void None %31
          %32 = OpLabel
-         %33 = OpLoad %float %main_loc0_Input
+         %33 = OpLoad %float %main_loc0_Input None
          %34 = OpFunctionCall %void %main_inner %33
                OpReturn
                OpFunctionEnd

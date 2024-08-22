@@ -39,10 +39,10 @@
           %4 = OpLabel
           %a = OpVariable %_ptr_Function_v3int Function
           %b = OpVariable %_ptr_Function_v3int Function
-               OpStore %a %9
-               OpStore %b %14
-         %17 = OpLoad %v3int %a
-         %18 = OpLoad %v3int %b
+               OpStore %a %9 None
+               OpStore %b %14 None
+         %17 = OpLoad %v3int %a None
+         %18 = OpLoad %v3int %b None
           %r = OpFunctionCall %v3int %tint_mod_v3i32 %17 %18
                OpReturn
                OpFunctionEnd

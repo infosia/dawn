@@ -22,9 +22,9 @@
           %6 = OpLabel
         %a_1 = OpVariable %_ptr_Function_int Function
           %b = OpVariable %_ptr_Function_int Function
-               OpStore %a_1 %a_0
-          %9 = OpLoad %int %a_1
-               OpStore %b %9
+               OpStore %a_1 %a_0 None
+          %9 = OpLoad %int %a_1 None
+               OpStore %b %9 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %12

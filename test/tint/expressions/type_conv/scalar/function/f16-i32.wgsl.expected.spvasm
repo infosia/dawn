@@ -35,8 +35,8 @@
 %int_2147483647 = OpConstant %int 2147483647
           %m = OpFunction %half None %6
           %7 = OpLabel
-               OpStore %t %half_0x1p_0
-          %9 = OpLoad %half %t
+               OpStore %t %half_0x1p_0 None
+          %9 = OpLoad %half %t None
                OpReturnValue %9
                OpFunctionEnd
           %f = OpFunction %void None %12
@@ -44,7 +44,7 @@
           %v = OpVariable %_ptr_Function_int Function
          %14 = OpFunctionCall %half %m
          %15 = OpFunctionCall %int %tint_f16_to_i32 %14
-               OpStore %v %15
+               OpStore %v %15 None
                OpReturn
                OpFunctionEnd
 %tint_f16_to_i32 = OpFunction %int None %21

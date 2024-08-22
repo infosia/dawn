@@ -20,7 +20,7 @@
           %f = OpFunction %void None %3
           %4 = OpLabel
           %v = OpVariable %_ptr_Function_mat4v3float Function
-               OpStore %v %10
+               OpStore %v %10 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

@@ -43,9 +43,9 @@
 %_ptr_Function_mat3v3half = OpTypePointer Function %mat3v3half
           %m = OpFunction %mat3v3float None %8
           %9 = OpLabel
-         %10 = OpLoad %float %t
+         %10 = OpLoad %float %t None
          %11 = OpFAdd %float %10 %float_1
-               OpStore %t %11
+               OpStore %t %11 None
                OpReturnValue %13
                OpFunctionEnd
           %f = OpFunction %void None %27
@@ -59,7 +59,7 @@
          %36 = OpCompositeExtract %v3float %29 2
          %37 = OpFConvert %v3half %36
          %39 = OpCompositeConstruct %mat3v3half %33 %35 %37
-               OpStore %v %39
+               OpStore %v %39 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %27

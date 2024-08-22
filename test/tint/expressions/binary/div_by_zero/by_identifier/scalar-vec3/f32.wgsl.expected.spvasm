@@ -25,10 +25,10 @@
           %4 = OpLabel
           %a = OpVariable %_ptr_Function_float Function
           %b = OpVariable %_ptr_Function_v3float Function
-               OpStore %a %float_4
-               OpStore %b %12
-         %15 = OpLoad %float %a
-         %16 = OpLoad %v3float %b
+               OpStore %a %float_4 None
+               OpStore %b %12 None
+         %15 = OpLoad %float %a None
+         %16 = OpLoad %v3float %b None
          %17 = OpCompositeConstruct %v3float %15 %15 %15
           %r = OpFDiv %v3float %17 %16
                OpReturn

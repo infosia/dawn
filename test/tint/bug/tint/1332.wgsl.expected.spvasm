@@ -21,6 +21,6 @@
           %4 = OpLabel
           %b = OpVariable %_ptr_Function_float Function
           %7 = OpExtInst %float %8 FMax %a %float_1_17549435en38
-               OpStore %b %7
+               OpStore %b %7 None
                OpReturn
                OpFunctionEnd

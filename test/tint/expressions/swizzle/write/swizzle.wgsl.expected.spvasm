@@ -42,15 +42,15 @@
           %4 = OpLabel
         %a_0 = OpVariable %_ptr_Function_v4int Function
           %d = OpVariable %_ptr_Function_S Function
-               OpStore %a_0 %9
+               OpStore %a_0 %9 None
          %10 = OpAccessChain %_ptr_Function_int %a_0 %uint_0
-               OpStore %10 %int_1
+               OpStore %10 %int_1 None
          %15 = OpAccessChain %_ptr_Function_int %a_0 %uint_2
-               OpStore %15 %int_2
-               OpStore %d %25
+               OpStore %15 %int_2 None
+               OpStore %d %25 None
          %26 = OpAccessChain %_ptr_Function_v3float %d %uint_0 %int_2
          %28 = OpAccessChain %_ptr_Function_float %26 %uint_1
-               OpStore %28 %float_3
+               OpStore %28 %float_3 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

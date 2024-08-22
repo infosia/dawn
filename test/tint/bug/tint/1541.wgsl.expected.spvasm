@@ -21,6 +21,6 @@
           %v = OpVariable %_ptr_Function_bool Function
           %7 = OpLogicalAnd %bool %a %a
           %8 = OpSelect %bool %false %a %7
-               OpStore %v %8
+               OpStore %v %8 None
                OpReturn
                OpFunctionEnd
