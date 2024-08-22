@@ -16,6 +16,24 @@
       "message": "The only real diff is in https://dawn-review.googlesource.com/c/dawn/+/203397/1/tools/src/cmd/tests/main.go",
       "revId": "ad825fd146b1a26e19ca2bc05ec8fbe418e8162e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a3d74be_04bc1752",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-22T01:44:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "eaed4176_b4663d20",
+      "revId": "ad825fd146b1a26e19ca2bc05ec8fbe418e8162e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
