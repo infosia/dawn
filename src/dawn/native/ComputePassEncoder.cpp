@@ -371,12 +371,7 @@ void ComputePassEncoder::APIDispatchWorkgroupsIndirect(BufferBase* indirectBuffe
             }
 
             SyncScopeUsageTracker scope;
-            scope.BufferUsedAs(indirectBuffer, wgpu::BufferUsage::Indirect);
             mUsageTracker.AddReferencedBuffer(indirectBuffer);
-            // TODO(crbug.com/dawn/1166): If validation is enabled, adding |indirectBuffer|
-            // is needed for correct usage validation even though it will only be bound for
-            // storage. This will unecessarily transition the |indirectBuffer| in
-            // the backend.
 
             Ref<BufferBase> indirectBufferRef = indirectBuffer;
 
@@ -401,8 +396,16 @@ void ComputePassEncoder::APIDispatchWorkgroupsIndirect(BufferBase* indirectBuffe
             if (indirectBufferRef.Get() != indirectBuffer) {
                 // |indirectBufferRef| was replaced with a scratch buffer. Add it to the
                 // synchronization scope.
-                scope.BufferUsedAs(indirectBufferRef.Get(), wgpu::BufferUsage::Indirect);
+                scope.BufferUsedAs(indirectBufferRef.Get(),
+                                   wgpu::BufferUsage::Indirect |
+                                       kInternalIndirectBufferForBackendResourceTracking);
                 mUsageTracker.AddReferencedBuffer(indirectBufferRef.Get());
+
+                scope.BufferUsedAs(indirectBuffer, wgpu::BufferUsage::Indirect);
+            } else {
+                scope.BufferUsedAs(indirectBuffer,
+                                   wgpu::BufferUsage::Indirect |
+                                       kInternalIndirectBufferForBackendResourceTracking);
             }
 
             AddDispatchSyncScope(std::move(scope));

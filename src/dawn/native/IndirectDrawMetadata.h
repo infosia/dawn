@@ -169,8 +169,7 @@ class IndirectDrawMetadata : public NonCopyable {
 
     void AddMultiDrawIndirect(bool duplicateBaseVertexInstance, MultiDrawIndirectCmd* cmd);
 
-    void AddMultiDrawIndexedIndirect(BufferBase* indexBuffer,
-                                     wgpu::IndexFormat indexFormat,
+    void AddMultiDrawIndexedIndirect(wgpu::IndexFormat indexFormat,
                                      uint64_t indexBufferSize,
                                      uint64_t indexBufferOffset,
                                      bool duplicateBaseVertexInstance,
