@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89af6e26_a4480ed8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-22T23:31:16Z",
+      "side": 1,
+      "message": "LGMT (by looking at dawn::RefBase)",
+      "revId": "550e3c55789c2f4d2788ff0370b73dd9646d2f4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
