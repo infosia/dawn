@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d239a85_77ef872e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-22T16:30:10Z",
+      "side": 1,
+      "message": "PTAL. As far as I can see, these are the right place to add the annotation for storage and workgroup. Will followup with texture.",
+      "revId": "dd3b9d8dc8af97d0f9b56d1bbb42cf73c3b3099b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
