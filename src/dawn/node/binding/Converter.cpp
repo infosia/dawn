@@ -841,6 +841,31 @@ bool Converter::Convert(wgpu::BlendFactor& out, const interop::GPUBlendFactor& i
         case interop::GPUBlendFactor::kOneMinusConstant:
             out = wgpu::BlendFactor::OneMinusConstant;
             return true;
+        case interop::GPUBlendFactor::kSrc1:
+            if (!HasFeature(wgpu::FeatureName::DualSourceBlending)) {
+                return Throw("invalid value for GPUBlendFactor");
+            }
+            out = wgpu::BlendFactor::Src1;
+            return true;
+        case interop::GPUBlendFactor::kOneMinusSrc1:
+            if (!HasFeature(wgpu::FeatureName::DualSourceBlending)) {
+                return Throw("invalid value for GPUBlendFactor");
+            }
+            out = wgpu::BlendFactor::OneMinusSrc1;
+            return true;
+        case interop::GPUBlendFactor::kSrc1Alpha:
+            if (!HasFeature(wgpu::FeatureName::DualSourceBlending)) {
+                return Throw("invalid value for GPUBlendFactor");
+            }
+            out = wgpu::BlendFactor::Src1Alpha;
+            return true;
+        case interop::GPUBlendFactor::kOneMinusSrc1Alpha:
+            if (!HasFeature(wgpu::FeatureName::DualSourceBlending)) {
+                return Throw("invalid value for GPUBlendFactor");
+            }
+            out = wgpu::BlendFactor::OneMinusSrc1Alpha;
+            return true;
+
         default:
             break;
     }
@@ -1412,7 +1437,7 @@ bool Converter::Convert(wgpu::QueryType& out, const interop::GPUQueryType& in) {
                 out = wgpu::QueryType::Timestamp;
                 return true;
             } else {
-                return Throw(Napi::TypeError::New(env, "invalid value for GPUQueryType"));
+                return Throw("invalid value for GPUQueryType");
             }
     }
     return Throw("invalid value for GPUQueryType");
@@ -1462,6 +1487,9 @@ bool Converter::Convert(wgpu::FeatureName& out, interop::GPUFeatureName in) {
         case interop::GPUFeatureName::kMultiDrawIndirect:
             out = wgpu::FeatureName::MultiDrawIndirect;
             return true;
+        case interop::GPUFeatureName::kDualSourceBlending:
+            out = wgpu::FeatureName::DualSourceBlending;
+            return true;
         case interop::GPUFeatureName::kChromiumExperimentalSubgroups:
             out = wgpu::FeatureName::ChromiumExperimentalSubgroups;
             return true;
@@ -1496,6 +1524,7 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         CASE(Subgroups, kSubgroups);
         CASE(SubgroupsF16, kSubgroupsF16);
         CASE(MultiDrawIndirect, kMultiDrawIndirect);
+        CASE(DualSourceBlending, kDualSourceBlending);
 
 #undef CASE
 
@@ -1510,7 +1539,6 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         case wgpu::FeatureName::DawnMultiPlanarFormats:
         case wgpu::FeatureName::DawnNative:
         case wgpu::FeatureName::DrmFormatCapabilities:
-        case wgpu::FeatureName::DualSourceBlending:
         case wgpu::FeatureName::FormatCapabilities:
         case wgpu::FeatureName::FramebufferFetch:
         case wgpu::FeatureName::HostMappedPointer:
