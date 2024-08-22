@@ -140,102 +140,102 @@ $B1: {  # root
     ret
   }
 }
-%21 = func(%start_byte_offset:u32):Outer {
+%18 = func(%start_byte_offset:u32):array<Outer, 4> {
   $B4: {
-    %59:array<Inner, 4> = call %24, %start_byte_offset
-    %60:Outer = construct %59
-    ret %60
-  }
-}
-%24 = func(%start_byte_offset_1:u32):array<Inner, 4> {  # %start_byte_offset_1: 'start_byte_offset'
-  $B5: {
-    %a_1:ptr<function, array<Inner, 4>, read_write> = var, array<Inner, 4>(Inner(mat4x4<f16>(vec4<f16>(0.0h))))  # %a_1: 'a'
-    loop [i: $B6, b: $B7, c: $B8] {  # loop_1
-      $B6: {  # initializer
-        next_iteration 0u  # -> $B7
+    %a_1:ptr<function, array<Outer, 4>, read_write> = var, array<Outer, 4>(Outer(array<Inner, 4>(Inner(mat4x4<f16>(vec4<f16>(0.0h))))))  # %a_1: 'a'
+    loop [i: $B5, b: $B6, c: $B7] {  # loop_1
+      $B5: {  # initializer
+        next_iteration 0u  # -> $B6
       }
-      $B7 (%idx:u32): {  # body
-        %64:bool = gte %idx, 4u
-        if %64 [t: $B9] {  # if_1
-          $B9: {  # true
+      $B6 (%idx:u32): {  # body
+        %61:bool = gte %idx, 4u
+        if %61 [t: $B8] {  # if_1
+          $B8: {  # true
             exit_loop  # loop_1
           }
         }
-        %65:u32 = mul %idx, 64u
-        %66:u32 = add %start_byte_offset_1, %65
-        %67:ptr<function, Inner, read_write> = access %a_1, %idx
-        %68:Inner = call %28, %66
-        store %67, %68
-        continue  # -> $B8
+        %62:u32 = mul %idx, 256u
+        %63:u32 = add %start_byte_offset, %62
+        %64:ptr<function, Outer, read_write> = access %a_1, %idx
+        %65:Outer = call %21, %63
+        store %64, %65
+        continue  # -> $B7
       }
-      $B8: {  # continuing
-        %69:u32 = add %idx, 1u
-        next_iteration %69  # -> $B7
+      $B7: {  # continuing
+        %66:u32 = add %idx, 1u
+        next_iteration %66  # -> $B6
       }
     }
-    %70:array<Inner, 4> = load %a_1
+    %67:array<Outer, 4> = load %a_1
+    ret %67
+  }
+}
+%21 = func(%start_byte_offset_1:u32):Outer {  # %start_byte_offset_1: 'start_byte_offset'
+  $B9: {
+    %69:array<Inner, 4> = call %24, %start_byte_offset_1
+    %70:Outer = construct %69
     ret %70
   }
 }
-%28 = func(%start_byte_offset_2:u32):Inner {  # %start_byte_offset_2: 'start_byte_offset'
+%24 = func(%start_byte_offset_2:u32):array<Inner, 4> {  # %start_byte_offset_2: 'start_byte_offset'
   $B10: {
-    %72:mat4x4<f16> = call %32, %start_byte_offset_2
-    %73:Inner = construct %72
-    ret %73
+    %a_2:ptr<function, array<Inner, 4>, read_write> = var, array<Inner, 4>(Inner(mat4x4<f16>(vec4<f16>(0.0h))))  # %a_2: 'a'
+    loop [i: $B11, b: $B12, c: $B13] {  # loop_2
+      $B11: {  # initializer
+        next_iteration 0u  # -> $B12
+      }
+      $B12 (%idx_1:u32): {  # body
+        %74:bool = gte %idx_1, 4u
+        if %74 [t: $B14] {  # if_2
+          $B14: {  # true
+            exit_loop  # loop_2
+          }
+        }
+        %75:u32 = mul %idx_1, 64u
+        %76:u32 = add %start_byte_offset_2, %75
+        %77:ptr<function, Inner, read_write> = access %a_2, %idx_1
+        %78:Inner = call %28, %76
+        store %77, %78
+        continue  # -> $B13
+      }
+      $B13: {  # continuing
+        %79:u32 = add %idx_1, 1u
+        next_iteration %79  # -> $B12
+      }
+    }
+    %80:array<Inner, 4> = load %a_2
+    ret %80
   }
 }
-%32 = func(%start_byte_offset_3:u32):mat4x4<f16> {  # %start_byte_offset_3: 'start_byte_offset'
-  $B11: {
-    %75:u32 = div %start_byte_offset_3, 16u
-    %76:ptr<uniform, vec4<u32>, read> = access %a, %75
-    %77:vec4<u32> = load %76
-    %78:vec4<f16> = bitcast %77
-    %79:u32 = add 8u, %start_byte_offset_3
-    %80:u32 = div %79, 16u
-    %81:ptr<uniform, vec4<u32>, read> = access %a, %80
-    %82:vec4<u32> = load %81
-    %83:vec4<f16> = bitcast %82
-    %84:u32 = add 16u, %start_byte_offset_3
-    %85:u32 = div %84, 16u
+%28 = func(%start_byte_offset_3:u32):Inner {  # %start_byte_offset_3: 'start_byte_offset'
+  $B15: {
+    %82:mat4x4<f16> = call %32, %start_byte_offset_3
+    %83:Inner = construct %82
+    ret %83
+  }
+}
+%32 = func(%start_byte_offset_4:u32):mat4x4<f16> {  # %start_byte_offset_4: 'start_byte_offset'
+  $B16: {
+    %85:u32 = div %start_byte_offset_4, 16u
     %86:ptr<uniform, vec4<u32>, read> = access %a, %85
     %87:vec4<u32> = load %86
     %88:vec4<f16> = bitcast %87
-    %89:u32 = add 24u, %start_byte_offset_3
+    %89:u32 = add 8u, %start_byte_offset_4
     %90:u32 = div %89, 16u
     %91:ptr<uniform, vec4<u32>, read> = access %a, %90
     %92:vec4<u32> = load %91
     %93:vec4<f16> = bitcast %92
-    %94:mat4x4<f16> = construct %78, %83, %88, %93
-    ret %94
-  }
-}
-%18 = func(%start_byte_offset_4:u32):array<Outer, 4> {  # %start_byte_offset_4: 'start_byte_offset'
-  $B12: {
-    %a_2:ptr<function, array<Outer, 4>, read_write> = var, array<Outer, 4>(Outer(array<Inner, 4>(Inner(mat4x4<f16>(vec4<f16>(0.0h))))))  # %a_2: 'a'
-    loop [i: $B13, b: $B14, c: $B15] {  # loop_2
-      $B13: {  # initializer
-        next_iteration 0u  # -> $B14
-      }
-      $B14 (%idx_1:u32): {  # body
-        %98:bool = gte %idx_1, 4u
-        if %98 [t: $B16] {  # if_2
-          $B16: {  # true
-            exit_loop  # loop_2
-          }
-        }
-        %99:u32 = mul %idx_1, 256u
-        %100:u32 = add %start_byte_offset_4, %99
-        %101:ptr<function, Outer, read_write> = access %a_2, %idx_1
-        %102:Outer = call %21, %100
-        store %101, %102
-        continue  # -> $B15
-      }
-      $B15: {  # continuing
-        %103:u32 = add %idx_1, 1u
-        next_iteration %103  # -> $B14
-      }
-    }
-    %104:array<Outer, 4> = load %a_2
+    %94:u32 = add 16u, %start_byte_offset_4
+    %95:u32 = div %94, 16u
+    %96:ptr<uniform, vec4<u32>, read> = access %a, %95
+    %97:vec4<u32> = load %96
+    %98:vec4<f16> = bitcast %97
+    %99:u32 = add 24u, %start_byte_offset_4
+    %100:u32 = div %99, 16u
+    %101:ptr<uniform, vec4<u32>, read> = access %a, %100
+    %102:vec4<u32> = load %101
+    %103:vec4<f16> = bitcast %102
+    %104:mat4x4<f16> = construct %88, %93, %98, %103
     ret %104
   }
 }
