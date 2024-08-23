@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34dcbde4_600aaaba",
+        "filename": "generator/templates/art/api_kotlin_constants.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-08-23T12:54:33Z",
+      "side": 1,
+      "message": "Nit: can you throw a carriage return in between the privates and the publics, for clarity?",
+      "revId": "e57ed9829de68cf27c359412a298242f0c3ad10e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aedd1f50_a058d131",
+        "filename": "generator/templates/art/api_kotlin_structure.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-08-23T12:54:33Z",
+      "side": 1,
+      "message": "nit: typo: \"manging\"",
+      "revId": "e57ed9829de68cf27c359412a298242f0c3ad10e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
