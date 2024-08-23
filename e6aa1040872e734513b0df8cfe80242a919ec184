@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceeeac47_c1cdf533",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-08-23T12:47:21Z",
+      "side": 1,
+      "message": "Do you confirm I can land this one without waiting for the I2S as it\u0027s only for Dawn?",
+      "revId": "e6aa1040872e734513b0df8cfe80242a919ec184",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
