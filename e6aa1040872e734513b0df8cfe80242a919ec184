@@ -33,6 +33,23 @@
       "message": "Yeah, visibility to JS is still gated by the Chromium-side code.",
       "revId": "e6aa1040872e734513b0df8cfe80242a919ec184",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f656642_2cb41bc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-08-23T13:19:49Z",
+      "side": 1,
+      "message": "Thanks! Can you review (again)? I\u0027ve uploaded another patchset to fix an error in tests.",
+      "revId": "e6aa1040872e734513b0df8cfe80242a919ec184",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
