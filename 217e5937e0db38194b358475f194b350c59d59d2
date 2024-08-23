@@ -16,6 +16,24 @@
       "message": "We could remove this as well actually as it is now in the spec (and update the link in Features.cpp if needed.)",
       "revId": "217e5937e0db38194b358475f194b350c59d59d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6986d03_d2d1ad17",
+        "filename": "docs/dawn/features/dual_source_blending.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-08-23T12:40:20Z",
+      "side": 1,
+      "message": "I also took the opportunity to enable it by default.",
+      "parentUuid": "4a348031_f6a32796",
+      "revId": "217e5937e0db38194b358475f194b350c59d59d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
