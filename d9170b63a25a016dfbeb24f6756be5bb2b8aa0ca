@@ -69,6 +69,42 @@
       "message": "As mentioned in https://crbug.com/42241431#comment11 , I suspect this change will cause us to return `\"qualcomm_pci\"` (or something) as the vendor name instead of `\"qualcomm\"`.\n\nThe relevant generator output: https://source.chromium.org/chromium/chromium/src/+/main:out/win-Debug/gen/third_party/dawn/src/dawn/common/GPUInfo_autogen.cpp;l\u003d434",
       "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d059ebf2_41726a1f",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 3378882
+      },
+      "writtenOn": "2024-08-23T20:14:28Z",
+      "side": 1,
+      "message": "Yes the vendor\u0027s name will be like that. I tried to make minimum changes here since the solution you mentioned would require me to modify the template and the parser. I am just not confident enough to make those changes since I am not a frequent contributor here.",
+      "parentUuid": "629c9428_4ab0eb55",
+      "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "598583cb_5e9a0050",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 3378882
+      },
+      "writtenOn": "2024-08-23T20:14:28Z",
+      "side": 1,
+      "message": "An email query has been sent to Qualcomm but no response yet, Ravi did confirm that there is correlation between ACPI id and architecture. This is something I can keep following up with QC and I can fill in the hardcoded ACPI id if I need to. The communication will take a while, but for now I think having this change should be good enough",
+      "parentUuid": "fe750947_dbb3461c",
+      "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
