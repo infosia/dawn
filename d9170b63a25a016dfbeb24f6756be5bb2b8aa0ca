@@ -52,6 +52,23 @@
       "parentUuid": "567edf24_646e2b9a",
       "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "629c9428_4ab0eb55",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-23T17:19:43Z",
+      "side": 1,
+      "message": "As mentioned in https://crbug.com/42241431#comment11 , I suspect this change will cause us to return `\"qualcomm_pci\"` (or something) as the vendor name instead of `\"qualcomm\"`.\n\nThe relevant generator output: https://source.chromium.org/chromium/chromium/src/+/main:out/win-Debug/gen/third_party/dawn/src/dawn/common/GPUInfo_autogen.cpp;l\u003d434",
+      "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
