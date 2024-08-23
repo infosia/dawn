@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "219d14ed_c9fa264e",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-23T18:23:04Z",
+      "side": 1,
+      "message": "I wasn\u0027t able to do this because the html5 js file doesn\u0027t seem to have access to C++ functions (even if I add the appropriate `__deps` stuff for them). But it can access the functions from here, hence why I chose to do this.",
+      "parentUuid": "ffda2920_7b38a7f5",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9d5fe49d_2d47fdab",
         "filename": "third_party/emdawnwebgpu/library_webgpu.js",
         "patchSetId": 4
@@ -65,6 +83,30 @@
       "writtenOn": "2024-08-23T17:09:34Z",
       "side": 1,
       "message": "do we need to unset it?\n\nhttps://gpuweb.github.io/gpuweb/#lose-the-device\nsays:\n\u003e Note: No errors are generated after device loss. See § 22 Errors \u0026 Debugging.",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 715,
+        "endChar": 48
+      },
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc9f8492_6de0afbd",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-23T18:23:04Z",
+      "side": 1,
+      "message": "It\u0027s probably fine to no unset it, but if there ever was a bug that caused an error even after device loss, we will be potentially accessing freed memory so I figured it was safer to clear it out.",
+      "parentUuid": "9d5fe49d_2d47fdab",
       "range": {
         "startLine": 714,
         "startChar": 0,
