@@ -295,6 +295,7 @@ dawn_test("dawn_unittests") {
     "${dawn_root}/src/dawn/partition_alloc:raw_ptr",
     "${dawn_root}/src/dawn/utils",
     "${dawn_root}/src/dawn/wire",
+    "${dawn_root}/third_party/partition_alloc/src/partition_alloc:partition_alloc_buildflags",
   ]
 
   # Add internal dawn native config for internal unittests.
