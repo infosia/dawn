@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3915a514_08dc0073",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-23T17:09:34Z",
+      "side": 1,
+      "message": "some comments - Kai should review so there are other eyes on this.\n\nMentioned to Loko that I\u0027m worried about the code duplication. Maybe eventually we can factor out future/event handling between Emscripten/Dawn, and copy Dawn\u0027s version into Emscripten. Or, perhaps that is not a good idea since ~eventually Emscripten won\u0027t need to live inside Dawn.",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a11e442_ec2808c1",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-23T17:09:34Z",
+      "side": 1,
+      "message": "one alternative here might be to require the app to pass in their own instance.\n\nThat way it would be clear that they are getting a new one each time.\n\nCan\u0027t actually be done now because emscripten_webgpu_get_device doesn\u0027t take args.\n\nbecause you can create the instance with different features enabled, this may be necessary to implement all the validation (like timed wait any max count).",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffda2920_7b38a7f5",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-23T17:09:34Z",
+      "side": 1,
+      "message": "I found it a bit hard to follow the code hops.\n\ncan this entirely go in `emscripten_webgpu_get_device` instead, and have no `emwgpuTableInsertDevice` ?\n\n```\n  emscripten_webgpu_get_device: () \u003d\u003e {\n    if (WebGPU.preinitializedDeviceId \u003d\u003d\u003d undefined) {\n      var device \u003d Module[\u0027preinitializedWebGPUDevice\u0027];\n      var instancePtr \u003d _wgpuCreateInstance();\n      var queuePtr \u003d _emwgpuCreateQueue();\n      var devicePtr \u003d _emwgpuCreateDevice(instancePtr, queuePtr);\n      WebGPU._tableInsert(queuePtr, device.queue);\n      WebGPU._tableInsert(devicePtr, device);\n      WebGPU.preinitializedDeviceId \u003d devicePtr;\n    }\n    _wgpuDeviceAddRef(WebGPU.preinitializedDeviceId);\n    return WebGPU.preinitializedDeviceId;\n  },\n```",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d5fe49d_2d47fdab",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-23T17:09:34Z",
+      "side": 1,
+      "message": "do we need to unset it?\n\nhttps://gpuweb.github.io/gpuweb/#lose-the-device\nsays:\n\u003e Note: No errors are generated after device loss. See § 22 Errors \u0026 Debugging.",
+      "range": {
+        "startLine": 714,
+        "startChar": 0,
+        "endLine": 715,
+        "endChar": 48
+      },
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc46725e_1b1f4180",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-23T17:09:34Z",
+      "side": 1,
+      "message": "nit: bug number instead",
+      "range": {
+        "startLine": 1843,
+        "startChar": 10,
+        "endLine": 1843,
+        "endChar": 18
+      },
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bce9299e_ec3ed21b",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-23T17:09:34Z",
+      "side": 1,
+      "message": "would it be possible to make the queue as well and pass it into the ctor?\n\nWould be nice to avoid the public SetQueue method that is invoked in emwgpuOnRequestDeviceCompleted. Cleaner if the Device always has a queue, and it\u0027s not a mutable thing",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
