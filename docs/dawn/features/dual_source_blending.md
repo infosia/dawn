@@ -8,11 +8,11 @@ This feature adds the following `wgpu::BlendFactors`:
 - `Src1Alpha`
 - `OneMinusSrc1Alpha`
 
-This feature introduces the @blend_src WGSL attribute. This attribute is added to a fragment output at @location(0) to denote the blending source index. You must use `enable chromium_internal_dual_source_blending` in a shader to use the @blend_src attribute.
+This feature introduces the @blend_src WGSL attribute. This attribute is added to a fragment output at @location(0) to denote the blending source index. You must use `enable dual_source_blending` in a shader to use the @blend_src attribute.
 
 Example Fragment Shader:
 ```
-    enable chromium_internal_dual_source_blending;
+    enable dual_source_blending;
 
     struct FragOut {
         @location(0) @blend_src(0) color : vec4<f32>,
