@@ -16,6 +16,23 @@
       "message": "Do you confirm I can land this one without waiting for the I2S as it\u0027s only for Dawn?",
       "revId": "e6aa1040872e734513b0df8cfe80242a919ec184",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81dd09b6_dd479102",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-23T13:16:22Z",
+      "side": 1,
+      "message": "Yeah, visibility to JS is still gated by the Chromium-side code.",
+      "revId": "e6aa1040872e734513b0df8cfe80242a919ec184",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
