@@ -118,7 +118,9 @@ set(sources
     "WeakRefSupport.cpp"
 )
 
-set(conditional_private_depends)
+set(conditional_private_depends
+    dawn_shared_utils
+)
 
 if (WIN32)
     list(APPEND headers
