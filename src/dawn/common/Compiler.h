@@ -32,15 +32,6 @@
 
 // Defines macros for compiler-specific functionality
 
-// DAWN_DECLARE_UNUSED
-//
-// Prevents unused function warnings a subsequent declaration.
-#if DAWN_COMPILER_IS(GCC) || DAWN_COMPILER_IS(CLANG)
-#define DAWN_DECLARE_UNUSED __attribute__((unused))
-#else
-#define DAWN_DECLARE_UNUSED
-#endif
-
 // DAWN_NO_SANITIZE(instrumentation)
 //
 // Annotate a function or a global variable declaration to specify that a particular instrumentation
