@@ -430,7 +430,7 @@ bool Validator::StorageTexture(const core::type::StorageTexture* t, const Source
             return false;
     }
 
-    if (TINT_UNLIKELY(t->texel_format() == core::TexelFormat::kR8Unorm &&
+    if (DAWN_UNLIKELY(t->texel_format() == core::TexelFormat::kR8Unorm &&
                       !enabled_extensions_.Contains(wgsl::Extension::kChromiumInternalGraphite))) {
         AddError(source) << style::Enum(core::TexelFormat::kR8Unorm) << " requires the "
                          << style::Code(wgsl::Extension::kChromiumInternalGraphite) << " extension";
@@ -1171,7 +1171,7 @@ bool Validator::InterpolateAttribute(const ast::InterpolateAttribute* attr,
 
     auto i_type = attr->interpolation.type;
     auto i_sampling = attr->interpolation.sampling;
-    if (TINT_UNLIKELY(i_type == core::InterpolationType::kUndefined)) {
+    if (DAWN_UNLIKELY(i_type == core::InterpolationType::kUndefined)) {
         return false;
     }
 
@@ -1291,7 +1291,7 @@ bool Validator::Function(const sem::Function* func, ast::PipelineStage stage) co
                 AddError(end_source) << "missing return at end of function";
                 return false;
             }
-        } else if (TINT_UNLIKELY(IsValidationEnabled(
+        } else if (DAWN_UNLIKELY(IsValidationEnabled(
                        decl->attributes, ast::DisabledValidation::kFunctionHasNoBody))) {
             TINT_ICE() << "function " << decl->name->symbol.NameView() << " has no body";
         }
@@ -1305,7 +1305,7 @@ bool Validator::Function(const sem::Function* func, ast::PipelineStage stage) co
 
     // https://www.w3.org/TR/WGSL/#behaviors-rules
     // a function behavior is always one of {}, or {Next}.
-    if (TINT_UNLIKELY(func->Behaviors() != sem::Behaviors{} &&
+    if (DAWN_UNLIKELY(func->Behaviors() != sem::Behaviors{} &&
                       func->Behaviors() != sem::Behavior::kNext)) {
         auto name = decl->name->symbol.NameView();
         TINT_ICE() << "function '" << name << "' behaviors are: " << func->Behaviors();
@@ -1389,7 +1389,7 @@ bool Validator::EntryPoint(const sem::Function* func, ast::PipelineStage stage) 
                     }
                     pipeline_io_attribute = attr;
 
-                    if (TINT_UNLIKELY(!location.has_value())) {
+                    if (DAWN_UNLIKELY(!location.has_value())) {
                         TINT_ICE() << "@location has no value";
                     }
 
@@ -1398,7 +1398,7 @@ bool Validator::EntryPoint(const sem::Function* func, ast::PipelineStage stage) 
                 [&](const ast::BlendSrcAttribute* blend_src_attr) {
                     blend_src_attribute = blend_src_attr;
 
-                    if (TINT_UNLIKELY(!blend_src.has_value())) {
+                    if (DAWN_UNLIKELY(!blend_src.has_value())) {
                         TINT_ICE() << "@blend_src has no value";
                     }
 
@@ -1418,7 +1418,7 @@ bool Validator::EntryPoint(const sem::Function* func, ast::PipelineStage stage) 
 
                     bool is_input = param_or_ret == ParamOrRetType::kParameter;
 
-                    if (TINT_UNLIKELY(!color.has_value())) {
+                    if (DAWN_UNLIKELY(!color.has_value())) {
                         TINT_ICE() << "@color has no value";
                     }
 
@@ -2262,7 +2262,7 @@ bool Validator::ArrayConstructor(const ast::CallExpression* ctor,
         return false;
     }
 
-    if (TINT_UNLIKELY(!c->Is<core::type::ConstantArrayCount>())) {
+    if (DAWN_UNLIKELY(!c->Is<core::type::ConstantArrayCount>())) {
         TINT_ICE() << "Invalid ArrayCount found";
     }
 
@@ -3066,7 +3066,7 @@ bool Validator::CheckTypeAccessAddressSpace(const core::type::Type* store_ty,
             if (auto* str = store_ty->As<sem::Struct>()) {
                 for (auto* member : str->Members()) {
                     using Allowed = std::tuple<core::type::I32, core::type::U32, core::type::F32>;
-                    if (TINT_UNLIKELY(!member->Type()->TypeInfo().IsAnyOfTuple<Allowed>())) {
+                    if (DAWN_UNLIKELY(!member->Type()->TypeInfo().IsAnyOfTuple<Allowed>())) {
                         AddError(member->Declaration()->source)
                             << style::Keyword("struct") << " members used in the "
                             << style::Enum("pixel_local")
@@ -3078,14 +3078,14 @@ bool Validator::CheckTypeAccessAddressSpace(const core::type::Type* store_ty,
                         return false;
                     }
                 }
-            } else if (TINT_UNLIKELY(!store_ty->TypeInfo().Is<core::type::Struct>())) {
+            } else if (DAWN_UNLIKELY(!store_ty->TypeInfo().Is<core::type::Struct>())) {
                 AddError(source) << style::Enum("pixel_local")
                                  << " variable only support struct storage types";
                 return false;
             }
             break;
         case core::AddressSpace::kPushConstant:
-            if (TINT_UNLIKELY(!enabled_extensions_.Contains(
+            if (DAWN_UNLIKELY(!enabled_extensions_.Contains(
                                   wgsl::Extension::kChromiumExperimentalPushConstant) &&
                               IsValidationEnabled(attributes,
                                                   ast::DisabledValidation::kIgnoreAddressSpace))) {
@@ -3096,7 +3096,7 @@ bool Validator::CheckTypeAccessAddressSpace(const core::type::Type* store_ty,
             }
             break;
         case core::AddressSpace::kStorage:
-            if (TINT_UNLIKELY(access == core::Access::kWrite)) {
+            if (DAWN_UNLIKELY(access == core::Access::kWrite)) {
                 // The access mode for the storage address space can only be 'read' or 'read_write'.
                 AddError(source) << "access mode " << style::Enum("write")
                                  << " is not valid for the " << style::Enum("storage")
@@ -3128,7 +3128,7 @@ bool Validator::CheckTypeAccessAddressSpace(const core::type::Type* store_ty,
 
     auto check_sub_atomics = [&] {
         if (auto atomic_use = atomic_composite_info_.Get(store_ty)) {
-            if (TINT_UNLIKELY(atomic_error())) {
+            if (DAWN_UNLIKELY(atomic_error())) {
                 AddNote(**atomic_use)
                     << "atomic sub-type of " << style::Type(sem_.TypeNameOf(store_ty))
                     << " is declared here";
@@ -3141,7 +3141,7 @@ bool Validator::CheckTypeAccessAddressSpace(const core::type::Type* store_ty,
     return Switch(
         store_ty,  //
         [&](const core::type::Atomic*) {
-            if (TINT_UNLIKELY(atomic_error())) {
+            if (DAWN_UNLIKELY(atomic_error())) {
                 return false;
             }
             return true;
