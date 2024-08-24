@@ -899,7 +899,7 @@ bool ASTPrinter::EmitBitcastCall(StringStream& out, const ast::CallExpression* c
 bool ASTPrinter::EmitAssign(const ast::AssignmentStatement* stmt) {
     if (auto* lhs_access = stmt->lhs->As<ast::IndexAccessorExpression>()) {
         auto validate_obj_not_pointer = [&](const core::type::Type* object_ty) {
-            if (TINT_UNLIKELY(object_ty->Is<core::type::Pointer>())) {
+            if (DAWN_UNLIKELY(object_ty->Is<core::type::Pointer>())) {
                 TINT_ICE() << "lhs of index accessor should not be a pointer. These should have "
                               "been removed by transforms such as SimplifyPointers, "
                               "DecomposeMemoryAccess, and DirectVariableAccess";
@@ -2674,7 +2674,7 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
     };
 
     auto* texture = arg(Usage::kTexture);
-    if (TINT_UNLIKELY(!texture)) {
+    if (DAWN_UNLIKELY(!texture)) {
         TINT_ICE() << "missing texture argument";
     }
 
@@ -2789,7 +2789,7 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
                 }
             }
 
-            if (TINT_UNLIKELY(num_dimensions > 4)) {
+            if (DAWN_UNLIKELY(num_dimensions > 4)) {
                 TINT_ICE() << "Texture query builtin temporary vector has " << num_dimensions
                            << " dimensions";
             }
@@ -2822,7 +2822,7 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
                     pre << dims;
                 } else {
                     static constexpr char xyzw[] = {'x', 'y', 'z', 'w'};
-                    if (TINT_UNLIKELY(num_dimensions < 0 || num_dimensions > 4)) {
+                    if (DAWN_UNLIKELY(num_dimensions < 0 || num_dimensions > 4)) {
                         TINT_ICE() << "vector dimensions are " << num_dimensions;
                     }
                     for (int i = 0; i < num_dimensions; i++) {
@@ -2930,7 +2930,7 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
     }
 
     auto* param_coords = arg(Usage::kCoords);
-    if (TINT_UNLIKELY(!param_coords)) {
+    if (DAWN_UNLIKELY(!param_coords)) {
         TINT_ICE() << "missing coords argument";
     }
 
@@ -3015,7 +3015,7 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
                 out << "xyz"[i];
             }
         }
-        if (TINT_UNLIKELY(wgsl_ret_width > hlsl_ret_width)) {
+        if (DAWN_UNLIKELY(wgsl_ret_width > hlsl_ret_width)) {
             TINT_ICE() << "WGSL return width (" << wgsl_ret_width
                        << ") is wider than HLSL return width (" << hlsl_ret_width << ") for "
                        << builtin->Fn();
@@ -3523,7 +3523,7 @@ bool ASTPrinter::EmitHandleVariable(const ast::Var* var, const sem::Variable* se
         }
         out << "RasterizerOrderedTexture2D";
         auto* component = ImageFormatToRWtextureType(storage->texel_format());
-        if (TINT_UNLIKELY(!component)) {
+        if (DAWN_UNLIKELY(!component)) {
             TINT_ICE() << "Unsupported StorageTexture TexelFormat: "
                        << static_cast<int>(storage->texel_format());
         }
@@ -3709,7 +3709,7 @@ bool ASTPrinter::EmitEntryPointFunction(const ast::Function* func) {
         for (auto* var : func->params) {
             auto* sem = builder_.Sem().Get(var);
             auto* type = sem->Type();
-            if (TINT_UNLIKELY(!type->Is<core::type::Struct>())) {
+            if (DAWN_UNLIKELY(!type->Is<core::type::Struct>())) {
                 // ICE likely indicates that the CanonicalizeEntryPointIO transform was
                 // not run, or a builtin parameter was added after it was run.
                 TINT_ICE() << "Unsupported non-struct entry point parameter";
@@ -4395,7 +4395,7 @@ bool ASTPrinter::EmitType(StringStream& out,
             const core::type::Type* base_type = ary;
             std::vector<uint32_t> sizes;
             while (auto* arr = base_type->As<core::type::Array>()) {
-                if (TINT_UNLIKELY(arr->Count()->Is<core::type::RuntimeArrayCount>())) {
+                if (DAWN_UNLIKELY(arr->Count()->Is<core::type::RuntimeArrayCount>())) {
                     TINT_ICE()
                         << "runtime arrays may only exist in storage buffers, which should have "
                            "been transformed into a ByteAddressBuffer";
@@ -4479,7 +4479,7 @@ bool ASTPrinter::EmitType(StringStream& out,
             return true;
         },
         [&](const core::type::Texture* tex) {
-            if (TINT_UNLIKELY(tex->Is<core::type::ExternalTexture>())) {
+            if (DAWN_UNLIKELY(tex->Is<core::type::ExternalTexture>())) {
                 TINT_ICE() << "Multiplanar external texture transform was not run.";
             }
 
@@ -4518,7 +4518,7 @@ bool ASTPrinter::EmitType(StringStream& out,
 
             if (storage) {
                 auto* component = ImageFormatToRWtextureType(storage->texel_format());
-                if (TINT_UNLIKELY(!component)) {
+                if (DAWN_UNLIKELY(!component)) {
                     TINT_ICE() << "Unsupported StorageTexture TexelFormat: "
                                << static_cast<int>(storage->texel_format());
                 }
@@ -4532,7 +4532,7 @@ bool ASTPrinter::EmitType(StringStream& out,
                     out << "float4";
                 } else if (subtype->Is<core::type::I32>()) {
                     out << "int4";
-                } else if (TINT_LIKELY(subtype->Is<core::type::U32>())) {
+                } else if (DAWN_LIKELY(subtype->Is<core::type::U32>())) {
                     out << "uint4";
                 } else {
                     TINT_ICE() << "Unsupported multisampled texture type";
@@ -4609,7 +4609,7 @@ bool ASTPrinter::EmitStructType(TextBuffer* b, const core::type::Struct* str) {
 
             if (auto location = attributes.location) {
                 auto& pipeline_stage_uses = str->PipelineStageUses();
-                if (TINT_UNLIKELY(pipeline_stage_uses.Count() != 1)) {
+                if (DAWN_UNLIKELY(pipeline_stage_uses.Count() != 1)) {
                     TINT_ICE() << "invalid entry point IO struct uses";
                 }
                 if (pipeline_stage_uses.Contains(core::type::PipelineStageUsage::kVertexInput)) {
@@ -4620,7 +4620,7 @@ bool ASTPrinter::EmitStructType(TextBuffer* b, const core::type::Struct* str) {
                 } else if (pipeline_stage_uses.Contains(
                                core::type::PipelineStageUsage::kFragmentInput)) {
                     post += " : TEXCOORD" + std::to_string(location.value());
-                } else if (TINT_LIKELY(pipeline_stage_uses.Contains(
+                } else if (DAWN_LIKELY(pipeline_stage_uses.Contains(
                                core::type::PipelineStageUsage::kFragmentOutput))) {
                     if (auto blend_src = attributes.blend_src) {
                         post +=
