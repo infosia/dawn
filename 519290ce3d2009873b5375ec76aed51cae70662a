@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0938192e_eb8194d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-24T15:41:22Z",
+      "side": 1,
+      "message": "Thoughts? I used `src/utils` but we could change that if the bikeshed needs a different colour. This will probably break the roll into Skia because I madeup the Bazel, but I don\u0027 think we officially support the Bazel build?",
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
