@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1afa3cab_0c259de4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-24T03:21:19Z",
+      "side": 1,
+      "message": "LGTM. Happy to help with reviews, just note, I\u0027m typically OOO on Friday so reviews sent Fridays may not get reviewed until the following Monday.",
+      "revId": "e57ed9829de68cf27c359412a298242f0c3ad10e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "34dcbde4_600aaaba",
