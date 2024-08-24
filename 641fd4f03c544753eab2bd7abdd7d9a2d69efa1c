@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4728d4cd_01da2971",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-24T15:39:23Z",
+      "side": 1,
+      "message": "PTAL. This seems like it\u0027s been deprecated for long enough at this point? (It\u0027s also the last remaining one that I saw)",
+      "revId": "641fd4f03c544753eab2bd7abdd7d9a2d69efa1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
