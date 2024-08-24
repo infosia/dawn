@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9575f359_5334a19e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-24T15:40:28Z",
+      "side": 1,
+      "message": "PTAL. These were the changes needed for `gn check` to run cleanly on my standalone checkout.",
+      "revId": "e1360eee2ecef6ceb137625e10b12a62b1bc6902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
