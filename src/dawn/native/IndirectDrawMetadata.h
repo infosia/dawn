@@ -82,7 +82,9 @@ class IndirectDrawMetadata : public NonCopyable {
     struct IndirectMultiDraw {
         DrawType type;
 
+        Ref<BufferBase> indexBuffer = nullptr;
         uint64_t indexBufferSize = 0;
+        uint64_t indexBufferOffsetInBytes = 0;
         wgpu::IndexFormat indexFormat = wgpu::IndexFormat::Undefined;
         bool duplicateBaseVertexInstance;
 
