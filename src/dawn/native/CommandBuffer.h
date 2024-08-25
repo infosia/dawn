@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_COMMANDBUFFER_H_
 #define SRC_DAWN_NATIVE_COMMANDBUFFER_H_
 
+#include <queue>
 #include <string>
 
 #include "dawn/native/dawn_platform.h"
@@ -35,6 +36,7 @@
 #include "dawn/native/CommandAllocator.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
+#include "dawn/native/IndirectDrawMetadata.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/PassResourceUsage.h"
 #include "dawn/native/Texture.h"
@@ -62,7 +64,12 @@ class CommandBufferBase : public ApiObjectBase {
 
     const CommandBufferResourceUsage& GetResourceUsages() const;
 
+    // Not const because the metadatas need to be mutable for the Metal backend.
+    std::queue<IndirectDrawMetadata>& GetIndirectDrawMetadatas();
+
     CommandIterator* GetCommandIteratorForTesting();
+
+    void SetIndirectDrawMetadatas(std::queue<IndirectDrawMetadata>&& metadatas);
 
   protected:
     void DestroyImpl() override;
@@ -73,7 +80,7 @@ class CommandBufferBase : public ApiObjectBase {
     CommandBufferBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
 
     CommandBufferResourceUsage mResourceUsages;
-
+    std::queue<IndirectDrawMetadata> mIndirectDrawMetadatas;
     std::string mEncoderLabel;
 };
 
