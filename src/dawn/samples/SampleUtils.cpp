@@ -161,6 +161,9 @@ int SampleBase::Run(unsigned int delay) {
     for (const std::string& toggle : disableToggles) {
         disabledToggleNames.push_back(toggle.c_str());
     }
+
+    enableToggleNames.push_back("allow_unsafe_apis");
+
     wgpu::DawnTogglesDescriptor toggles = {};
     toggles.enabledToggles = enableToggleNames.data();
     toggles.enabledToggleCount = enableToggleNames.size();
@@ -192,7 +195,10 @@ int SampleBase::Run(unsigned int delay) {
     dawn::InfoLog() << "Using adapter \"" << info.device << "\"";
 
     // Set device callbacks
+    wgpu::FeatureName features[] = {wgpu::FeatureName::MultiDrawIndirect};
     wgpu::DeviceDescriptor deviceDesc = {};
+    deviceDesc.requiredFeatures = features;
+    deviceDesc.requiredFeatureCount = 1;
     deviceDesc.SetDeviceLostCallback(
         wgpu::CallbackMode::AllowSpontaneous,
         [](const wgpu::Device&, wgpu::DeviceLostReason reason, const char* message) {

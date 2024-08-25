@@ -41,8 +41,19 @@ class HelloTriangleSample : public SampleBase {
         static const float vertexData[12] = {
             0.0f, 0.5f, 0.0f, 1.0f, -0.5f, -0.5f, 0.0f, 1.0f, 0.5f, -0.5f, 0.0f, 1.0f,
         };
+
+        static const uint32_t indirectData[4] = {
+            3,
+            1,
+            0,
+            0,
+        };
+
         vertexBuffer = dawn::utils::CreateBufferFromData(device, vertexData, sizeof(vertexData),
                                                          wgpu::BufferUsage::Vertex);
+
+        indirectBuffer = dawn::utils::CreateBufferFromData(
+            device, indirectData, sizeof(indirectData), wgpu::BufferUsage::Indirect);
 
         wgpu::ShaderModule module = dawn::utils::CreateShaderModule(device, R"(
         @vertex fn vs(@location(0) pos : vec4f) -> @builtin(position) vec4f {
@@ -78,7 +89,7 @@ class HelloTriangleSample : public SampleBase {
             wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
             pass.SetPipeline(pipeline);
             pass.SetVertexBuffer(0, vertexBuffer);
-            pass.Draw(3);
+            pass.MultiDrawIndirect(indirectBuffer, 0, 1, nullptr);
             pass.End();
         }
 
@@ -87,6 +98,7 @@ class HelloTriangleSample : public SampleBase {
     }
 
     wgpu::Buffer vertexBuffer;
+    wgpu::Buffer indirectBuffer;
     wgpu::RenderPipeline pipeline;
 };
 

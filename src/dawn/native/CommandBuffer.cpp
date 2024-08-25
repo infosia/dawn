@@ -25,6 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <utility>
+
 #include "dawn/native/CommandBuffer.h"
 
 #include "dawn/common/BitSetIterator.h"
@@ -99,8 +101,18 @@ const CommandBufferResourceUsage& CommandBufferBase::GetResourceUsages() const {
     return mResourceUsages;
 }
 
+std::queue<IndirectDrawMetadata>& CommandBufferBase::GetIndirectDrawMetadatas() {
+    return mIndirectDrawMetadatas;
+}
+
 CommandIterator* CommandBufferBase::GetCommandIteratorForTesting() {
     return &mCommands;
+}
+
+void CommandBufferBase::SetIndirectDrawMetadatas(std::queue<IndirectDrawMetadata>&& metadatas) {
+    // Make sure we don't overwrite existing metadata
+    DAWN_ASSERT(mIndirectDrawMetadatas.empty());
+    mIndirectDrawMetadatas = std::move(metadatas);
 }
 
 bool IsCompleteSubresourceCopiedTo(const TextureBase* texture,
