@@ -2519,6 +2519,10 @@ bool DeviceBase::ShouldDuplicateParametersForDrawIndirect(
     return false;
 }
 
+bool DeviceBase::ShouldFrontendValidateMultiDraw() const {
+    return false;
+}
+
 bool DeviceBase::ShouldApplyIndexBufferOffsetToFirstIndex() const {
     return false;
 }
