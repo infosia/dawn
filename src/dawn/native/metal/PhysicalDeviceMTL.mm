@@ -702,6 +702,19 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         }
     }
 
+    if (@available(macOS 11.0, iOS 10.0, *)) {
+        // Image block functionality is available starting from the Apple4 family.
+        if ([*mDevice supportsFamily:MTLGPUFamilyApple4]) {
+            EnableFeature(Feature::PixelLocalStorageCoherent);
+            EnableFeature(Feature::PixelLocalStorageNonCoherent);
+        }
+    }
+
+    if (@available(macOS 10.14, iOS 12.0, *)) {
+        // MultiDraw requires Indirect Command Buffers
+        EnableFeature(Feature::MultiDrawIndirect);
+    }
+
     EnableFeature(Feature::IndirectFirstInstance);
     EnableFeature(Feature::ShaderF16);
     EnableFeature(Feature::RG11B10UfloatRenderable);
