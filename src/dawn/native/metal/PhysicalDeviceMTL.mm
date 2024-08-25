@@ -718,6 +718,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         }
     }
 
+    if (@available(macOS 10.14, iOS 12.0, *)) {
+        // MultiDraw requires Indirect Command Buffers
+        EnableFeature(Feature::MultiDrawIndirect);
+    }
+
     EnableFeature(Feature::IndirectFirstInstance);
     EnableFeature(Feature::ShaderF16);
     EnableFeature(Feature::RG11B10UfloatRenderable);
