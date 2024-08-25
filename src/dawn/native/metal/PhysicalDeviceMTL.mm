@@ -702,6 +702,24 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         }
     }
 
+    if (@available(macOS 11.0, iOS 10.0, *)) {
+        // Image block functionality is available starting from the Apple4 family.
+        if ([*mDevice supportsFamily:MTLGPUFamilyApple4]) {
+            EnableFeature(Feature::PixelLocalStorageCoherent);
+            EnableFeature(Feature::PixelLocalStorageNonCoherent);
+        }
+    }
+
+    // TODO(crbug.com/356461286): Intel and AMD GPUs support the indirect command buffer and
+    // argument buffer features which are required for multi draw. However, multi draw end2end tests
+    // fail on non-Apple GPUs. Disable the feature for non-Apple GPUs. Apple3 family is the minimum
+    // requirement and only includes Apple GPUs.
+    if (@available(macOS 10.15, iOS 13.0, *)) {
+        if ([*mDevice supportsFamily:MTLGPUFamilyApple3]) {
+            EnableFeature(Feature::MultiDrawIndirect);
+        }
+    }
+
     EnableFeature(Feature::IndirectFirstInstance);
     EnableFeature(Feature::ShaderF16);
     EnableFeature(Feature::RG11B10UfloatRenderable);
