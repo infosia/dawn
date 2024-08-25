@@ -154,8 +154,8 @@ IndirectDrawMetadata::GetIndexedIndirectBufferValidationInfo() {
     return &mIndexedIndirectBufferValidationInfo;
 }
 
-const std::vector<IndirectDrawMetadata::IndirectMultiDraw>&
-IndirectDrawMetadata::GetIndirectMultiDraws() const {
+std::vector<IndirectDrawMetadata::IndirectMultiDraw>&
+IndirectDrawMetadata::GetIndirectMultiDraws() {
     return mMultiDraws;
 }
 
@@ -259,8 +259,10 @@ void IndirectDrawMetadata::AddMultiDrawIndexedIndirect(BufferBase* indexBuffer,
                                                        MultiDrawIndexedIndirectCmd* cmd) {
     IndirectMultiDraw multiDraw;
     multiDraw.type = DrawType::Indexed;
+    multiDraw.indexBuffer = indexBuffer;
     multiDraw.cmd = cmd;
     multiDraw.indexBufferSize = indexBufferSize;
+    multiDraw.indexBufferOffsetInBytes = indexBufferOffset;
     multiDraw.indexFormat = indexFormat;
     multiDraw.duplicateBaseVertexInstance = duplicateBaseVertexInstance;
 

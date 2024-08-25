@@ -450,6 +450,11 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
     //     same issue if device loss implied device.destroy().
     DAWN_TRY(device->ValidateIsAlive());
 
+    // Metal propagates the indirect draw metadata to the command buffer to convert
+    // multi draws into an ICB and validates the indirect draw calls if needed at the same time.
+    // So if its propagating the metadata, we don't need to do the validation here.
+    bool skipMultiDrawValidation = device->ShouldPropagateIndirectDrawMetadataToCommandBuffer();
+
     struct Batch {
         raw_ptr<const IndirectDrawMetadata::IndirectValidationBatch> metadata;
         uint64_t dataBufferOffset;
@@ -576,27 +581,30 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
     const uint64_t multiDrawOutputParamsOffset = outputParamsSize;
 
     uint64_t outputParamsSizeForMultiDraw = 0;
-    // Calculate size of output params for multi draws
-    for (auto& draw : multiDraws) {
-        // Multi draw metadatas are added even if validation is disabled, because the Metal backend
-        // needs to convert all multi draws into an ICB. If validation is disabled, and the draw
-        // doesn't need duplication of base vertex and instance, we can skip the compute pass.
-        // In general, non-indexed multi draws don't need validation.
-        if ((draw.type == IndirectDrawMetadata::DrawType::NonIndexed ||
-             !device->IsValidationEnabled()) &&
-            !draw.duplicateBaseVertexInstance) {
-            continue;
-        }
 
-        outputParamsSizeForMultiDraw +=
-            draw.cmd->maxDrawCount *
-            GetOutputIndirectDrawSize(draw.type, draw.duplicateBaseVertexInstance);
+    if (!skipMultiDrawValidation) {
+        // Calculate size of output params for multi draws
+        for (auto& draw : multiDraws) {
+            // Multi draw metadatas are added even if validation is disabled, because the Metal
+            // backend needs to convert all multi draws into an ICB. If validation is disabled, and
+            // the draw doesn't need duplication of base vertex and instance, we can skip the
+            // compute pass. In general, non-indexed multi draws don't need validation.
+            if ((draw.type == IndirectDrawMetadata::DrawType::NonIndexed ||
+                 !device->IsValidationEnabled()) &&
+                !draw.duplicateBaseVertexInstance) {
+                continue;
+            }
 
-        outputParamsSizeForMultiDraw =
-            Align(outputParamsSizeForMultiDraw, minStorageBufferOffsetAlignment);
+            outputParamsSizeForMultiDraw +=
+                draw.cmd->maxDrawCount *
+                GetOutputIndirectDrawSize(draw.type, draw.duplicateBaseVertexInstance);
 
-        if (outputParamsSizeForMultiDraw > maxStorageBufferBindingSize) {
-            return DAWN_INTERNAL_ERROR("Too many multiDrawIndexedIndirect calls to validate");
+            outputParamsSizeForMultiDraw =
+                Align(outputParamsSizeForMultiDraw, minStorageBufferOffsetAlignment);
+
+            if (outputParamsSizeForMultiDraw > maxStorageBufferBindingSize) {
+                return DAWN_INTERNAL_ERROR("Too many multiDrawIndexedIndirect calls to validate");
+            }
         }
     }
 
@@ -728,7 +736,7 @@ MaybeError EncodeIndirectDrawValidationCommands(DeviceBase* device,
             passEncoder->APIEnd();
         }
     }
-    if (!multiDraws.empty()) {
+    if (!multiDraws.empty() && !skipMultiDrawValidation) {
         ScratchBuffer& drawConstantsBuffer = store->scratchStorage;
 
         ComputePipelineBase* pipeline;
