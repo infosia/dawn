@@ -158,6 +158,8 @@ MaybeError EncodingContext::ExitRenderPass(const ApiObjectBase* passEncoder,
         CommitCommands(std::move(renderCommands));
     }
 
+    mIndirectDrawMetadata.emplace_back(std::move(indirectDrawMetadata));
+
     mRenderPassUsages.push_back(usageTracker.AcquireResourceUsage());
     return {};
 }
@@ -200,6 +202,10 @@ ComputePassUsages EncodingContext::AcquireComputePassUsages() {
     DAWN_ASSERT(!mWereComputePassUsagesAcquired);
     mWereComputePassUsagesAcquired = true;
     return std::move(mComputePassUsages);
+}
+
+std::vector<IndirectDrawMetadata> EncodingContext::AcquireIndirectDrawMetadata() {
+    return std::move(mIndirectDrawMetadata);
 }
 
 void EncodingContext::PushDebugGroupLabel(std::string_view groupLabel) {
