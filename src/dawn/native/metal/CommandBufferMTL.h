@@ -30,10 +30,12 @@
 
 #include <set>
 #include <utility>
+#include <vector>
 
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/metal/MultiDrawEncoder.h"
 
 #import <Metal/Metal.h>
 
@@ -86,6 +88,9 @@ class CommandBuffer final : public CommandBufferBase {
     MaybeError EncodeRenderPass(id<MTLRenderCommandEncoder> encoder,
                                 BeginRenderPassCmd* renderPassCmd,
                                 EmptyOcclusionQueries* emptyOcclusionQueries);
+
+  private:
+    std::vector<PerMultiDrawData> mPerMultiDrawDatas;
 };
 
 }  // namespace dawn::native::metal

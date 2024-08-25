@@ -411,6 +411,10 @@ bool Device::UseCounterSamplingAtStageBoundary() const {
     return mCounterSamplingAtStageBoundary;
 }
 
+bool Device::ShouldPropagateIndirectDrawMetadataToCommandBuffer() const {
+    return true;
+}
+
 id<MTLBuffer> Device::GetMockBlitMtlBuffer() {
     if (mMockBlitMtlBuffer == nullptr) {
         mMockBlitMtlBuffer.Acquire(

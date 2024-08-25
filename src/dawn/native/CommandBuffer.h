@@ -29,12 +29,14 @@
 #define SRC_DAWN_NATIVE_COMMANDBUFFER_H_
 
 #include <string>
+#include <vector>
 
 #include "dawn/native/dawn_platform.h"
 
 #include "dawn/native/CommandAllocator.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
+#include "dawn/native/IndirectDrawMetadata.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/PassResourceUsage.h"
 #include "dawn/native/Texture.h"
@@ -62,7 +64,19 @@ class CommandBufferBase : public ApiObjectBase {
 
     const CommandBufferResourceUsage& GetResourceUsages() const;
 
+    // Not const because the metadatas need to be mutable for the Metal backend.
+    std::vector<IndirectDrawMetadata>& GetIndirectDrawMetadatas();
+
     CommandIterator* GetCommandIteratorForTesting();
+
+    // This function is used to set the indirect draw metadatas for the command buffer. It is only
+    // used by the Metal backend, so it isn't in the constructor.
+    void SetIndirectDrawMetadatas(std::vector<IndirectDrawMetadata>&& metadatas);
+
+    // Release the indirect draw metadatas to free the memory. The IndirectDrawMetadata has raw_ptrs
+    // to commands that expire when the backend has processed the command buffer, so the data
+    // in IndirectDrawMetadata is unsafe to use after the processing.
+    void ReleaseIndirectDrawMetadatas();
 
   protected:
     void DestroyImpl() override;
@@ -73,7 +87,7 @@ class CommandBufferBase : public ApiObjectBase {
     CommandBufferBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
 
     CommandBufferResourceUsage mResourceUsages;
-
+    std::vector<IndirectDrawMetadata> mIndirectDrawMetadatas;
     std::string mEncoderLabel;
 };
 

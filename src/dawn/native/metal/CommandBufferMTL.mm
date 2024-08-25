@@ -921,6 +921,20 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                                             commandContext));
                 commandContext->EndBlit();
 
+                // Before beginning, we encode a compute pass that converts multi draws into an ICB
+                // if they exist.
+                auto& indirectMetadatas = GetIndirectDrawMetadatas();
+                const IndirectDrawMetadata& metadata = indirectMetadatas[nextRenderPassNumber];
+                const auto& multiDraws = metadata.GetIndirectMultiDraws();
+                if (!multiDraws.empty()) {
+                    id<MTLComputeCommandEncoder> computeEnc = commandContext->BeginCompute();
+                    // Clear any previous multi draw datas.
+                    mPerMultiDrawDatas.clear();
+                    DAWN_TRY_ASSIGN(mPerMultiDrawDatas,
+                                    PrepareMultiDraws(GetDevice(), computeEnc, multiDraws));
+                    commandContext->EndCompute();
+                }
+
                 LazyClearRenderPassAttachments(cmd);
                 if (cmd->attachmentState->HasDepthStencilAttachment() &&
                     ToBackend(cmd->depthStencilAttachment.view->GetTexture())
@@ -1308,6 +1322,11 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
     }
 
     commandContext->EndBlit();
+
+    // Release the indirect draw metadata after the command buffer is recorded, since it has invalid
+    // raw_ptrs.
+    ReleaseIndirectDrawMetadatas();
+
     return {};
 }
 
@@ -1489,6 +1508,7 @@ MaybeError CommandBuffer::EncodeRenderPass(id<MTLRenderCommandEncoder> encoder,
     uint32_t indexBufferBaseOffset = 0;
     MTLIndexType indexBufferType;
     uint64_t indexFormatSize = 0;
+    uint32_t multiDrawIndex = 0;
 
     bool didDrawInCurrentOcclusionQuery = false;
 
@@ -1616,6 +1636,25 @@ MaybeError CommandBuffer::EncodeRenderPass(id<MTLRenderCommandEncoder> encoder,
                                 indirectBuffer:indirectBuffer
                           indirectBufferOffset:draw->indirectOffset];
                 didDrawInCurrentOcclusionQuery = true;
+                break;
+            }
+
+            case Command::MultiDrawIndirect: {
+                iter->NextCommand<MultiDrawIndirectCmd>();
+                vertexBuffers.Apply(encoder, lastPipeline, enableVertexPulling);
+                bindGroups.Apply(encoder);
+                storageBufferLengths.Apply(encoder, lastPipeline, enableVertexPulling);
+                ExecuteMultiDraw(mPerMultiDrawDatas[multiDrawIndex], encoder);
+                multiDrawIndex++;
+                break;
+            }
+            case Command::MultiDrawIndexedIndirect: {
+                iter->NextCommand<MultiDrawIndexedIndirectCmd>();
+                vertexBuffers.Apply(encoder, lastPipeline, enableVertexPulling);
+                bindGroups.Apply(encoder);
+                storageBufferLengths.Apply(encoder, lastPipeline, enableVertexPulling);
+                ExecuteMultiDraw(mPerMultiDrawDatas[multiDrawIndex], encoder);
+                multiDrawIndex++;
                 break;
             }
 
