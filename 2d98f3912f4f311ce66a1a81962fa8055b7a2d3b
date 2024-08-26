@@ -105,6 +105,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "77becf07_894b9f6f",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-26T20:21:15Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "95223b3a_4177a121",
+      "revId": "2d98f3912f4f311ce66a1a81962fa8055b7a2d3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c31a3047_5e6150cf",
+        "filename": "src/dawn/native/dawn_platform.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-26T20:21:15Z",
+      "side": 1,
+      "message": "nit. doesn\u0027t",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "2d98f3912f4f311ce66a1a81962fa8055b7a2d3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f875b1d_8c880037",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 10
