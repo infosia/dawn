@@ -33,6 +33,75 @@
       "message": "Swapping for Antonio who is working on the HLSL IR backend and has done a lot of the work on the HLSL AST backend.",
       "revId": "e49410f9549f404ea38fe9050f3f86c2f2815b9f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30f6af7d_ecfa91c0",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T19:56:35Z",
+      "side": 1,
+      "message": "Nit: Can just use `\u003d Empty`",
+      "fixSuggestions": [
+        {
+          "fixId": "090938b0_62739997",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.h",
+              "range": {
+                "startLine": 470,
+                "startChar": 0,
+                "endLine": 471,
+                "endChar": 0
+              },
+              "replacement": "                            Empty);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e49410f9549f404ea38fe9050f3f86c2f2815b9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a49f747_3191716d",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T19:56:35Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that you have to do this. If we weren\u0027t planning to replace this backend I\u0027d want to find a better way to handle this, but I guess we should just let it slide until we can delete this code altogether.",
+      "revId": "e49410f9549f404ea38fe9050f3f86c2f2815b9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a5c84f9_52280773",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T19:56:35Z",
+      "side": 1,
+      "message": "Nit: It feels like there\u0027s enough code duplication between generating the first and second members that you could pull the common code out to a helper lambda. Maybe worth trying to see how it looks.",
+      "revId": "e49410f9549f404ea38fe9050f3f86c2f2815b9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
