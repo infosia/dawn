@@ -50,6 +50,24 @@
       "message": "Could these two be fixed by adding a DEPS in src/dawn/samples/BUILD.gn or does it not work?",
       "revId": "e1360eee2ecef6ceb137625e10b12a62b1bc6902",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "337b2444_c5fa1b12",
+        "filename": "src/dawn/samples/DawnInfo.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-26T13:14:01Z",
+      "side": 1,
+      "message": "I tried that initially but it ends up as a weird depedency thing that I wasn\u0027t able to get working. It\u0027s also possible I was just holding it wrong, but this at least gets us back to `gn check` passing on dawn standalone checkouts.",
+      "parentUuid": "7edd6d19_c0aa7f50",
+      "revId": "e1360eee2ecef6ceb137625e10b12a62b1bc6902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
