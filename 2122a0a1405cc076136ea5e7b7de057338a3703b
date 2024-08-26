@@ -50,6 +50,24 @@
       "message": "```suggestion\n// This can help avoid common mistakes like not including \"compiler.h\" and falling into unwanted\n```",
       "revId": "2122a0a1405cc076136ea5e7b7de057338a3703b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fa8d702_7eaf8faa",
+        "filename": "src/utils/compiler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-26T13:16:22Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "dad188da_758b69b0",
+      "revId": "2122a0a1405cc076136ea5e7b7de057338a3703b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
