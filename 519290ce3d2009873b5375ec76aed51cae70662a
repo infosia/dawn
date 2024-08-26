@@ -54,6 +54,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eee66729_d651591e",
+        "filename": "src/dawn/common/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T20:54:29Z",
+      "side": 1,
+      "message": "Nit: Looks like you should just add this to the `dawn_add_library` call below, since it\u0027s unconditional.",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 1
+      },
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f4062fa_67d02460",
         "filename": "src/dawn/common/Compiler.h",
         "patchSetId": 8
@@ -101,6 +124,23 @@
       "side": 1,
       "message": "Yeah probably, there is no good reason other than historical why things are different. However it is a LOT of work to do so. So IMHO let\u0027s only do it for src/utils.",
       "parentUuid": "30b7533f_3af0ca87",
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60075bb9_dc8d59c4",
+        "filename": "src/tint/utils/macros/BUILD.cfg",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T20:54:29Z",
+      "side": 1,
+      "message": "Is this really needed? I thought the dependency scanner was supposed to pick this up automatically based on the path filter you added to `externals.json`?\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/tools/src/cmd/gen/build/build.go;l\u003d543?q\u003d%22Check%20for%20external%20includes%22\u0026ss\u003dchromium",
       "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
