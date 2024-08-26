@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6048bc5_9f23c820",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T14:33:02Z",
+      "side": 1,
+      "message": "LGTM overall.",
+      "revId": "2d98f3912f4f311ce66a1a81962fa8055b7a2d3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "865a5904_593b232e",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T14:33:02Z",
+      "side": 1,
+      "message": "Can we have a comment about the usage logic going on here?",
+      "revId": "2d98f3912f4f311ce66a1a81962fa8055b7a2d3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b75d27b_2c592e5d",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T14:33:02Z",
+      "side": 1,
+      "message": "This one isn\u0027t used as indirect for the frontend validation. WDYT of having `kIndirectBufferForFrontendValidation` that\u0027s equal to `wgpu::BufferUsage::Indirect` just for clarity and also `kIndirectBufferForBackendResourceTracking`.",
+      "revId": "2d98f3912f4f311ce66a1a81962fa8055b7a2d3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6739f10f_dabc5bbd",
+        "filename": "src/dawn/native/IndirectDrawMetadata.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T14:33:02Z",
+      "side": 1,
+      "message": "Let\u0027s keep this, it will be using in https://dawn-review.googlesource.com/c/dawn/+/203934/1/src/dawn/native/IndirectDrawMetadata.cpp",
+      "revId": "2d98f3912f4f311ce66a1a81962fa8055b7a2d3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00394a31_857f90a2",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T14:33:02Z",
+      "side": 1,
+      "message": "I believe that we could tag the indirect buffer as used as indirect here so we don\u0027t need to do it in the various special cases below.",
+      "revId": "2d98f3912f4f311ce66a1a81962fa8055b7a2d3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95223b3a_4177a121",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T14:33:02Z",
+      "side": 1,
+      "message": "Could we somehow avoid special-casing here and rely on the if just below instead to not add the barrier?",
+      "revId": "2d98f3912f4f311ce66a1a81962fa8055b7a2d3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f875b1d_8c880037",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T14:33:02Z",
+      "side": 1,
+      "message": "Can we somehow avoid this logic and rely on the MergeBufferBarrier logic / the if below? This code is pretty hot so it would be nice to avoid conditions if we can avoid them.",
+      "revId": "2d98f3912f4f311ce66a1a81962fa8055b7a2d3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
