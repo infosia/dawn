@@ -157,13 +157,14 @@ bool WaitQueueSerialsImpl(DeviceBase* device,
                           std::vector<TrackedFutureWaitInfo>::iterator end,
                           Nanoseconds timeout) {
     bool success = false;
+    // TODO(dawn:1662): Make error handling thread-safe.
+    auto deviceLock(device->GetScopedLock());
     if (device->ConsumedError([&]() -> MaybeError {
             if (waitSerial > queue->GetLastSubmittedCommandSerial()) {
                 // Serial has not been submitted yet. Submit it now.
                 // TODO(dawn:1413): This doesn't need to be a full tick. It just needs to
                 // flush work up to `waitSerial`. This should be done after the
                 // ExecutionQueue / ExecutionContext refactor.
-                auto guard = device->GetScopedLock();
                 queue->ForceEventualFlushOfCommands();
                 DAWN_TRY(device->Tick());
             }
