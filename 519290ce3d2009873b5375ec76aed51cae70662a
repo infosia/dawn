@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "518d1f52_fb494c3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T13:23:33Z",
+      "side": 1,
+      "message": "h",
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f4062fa_67d02460",
@@ -66,6 +83,24 @@
       "side": 1,
       "message": "Honestly, in this case I think we should fix Dawn to file the styleguide (https://google.github.io/styleguide/cppguide.html#File_Names).\n\n(If we decide to go that route I\u0027ll sign myself up for the annoying work as I\u0027m suggesting it, heh)",
       "parentUuid": "4f4062fa_67d02460",
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4837c03c_d3587a6c",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T13:23:33Z",
+      "side": 1,
+      "message": "Yeah probably, there is no good reason other than historical why things are different. However it is a LOT of work to do so. So IMHO let\u0027s only do it for src/utils.",
+      "parentUuid": "30b7533f_3af0ca87",
       "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
