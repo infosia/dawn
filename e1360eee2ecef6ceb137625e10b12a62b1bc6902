@@ -68,6 +68,24 @@
       "parentUuid": "7edd6d19_c0aa7f50",
       "revId": "e1360eee2ecef6ceb137625e10b12a62b1bc6902",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3f6adec_d897576a",
+        "filename": "src/dawn/samples/DawnInfo.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T13:22:42Z",
+      "side": 1,
+      "message": "Thank you for the explanation. Ok we can always see later.",
+      "parentUuid": "337b2444_c5fa1b12",
+      "revId": "e1360eee2ecef6ceb137625e10b12a62b1bc6902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
