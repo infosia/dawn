@@ -49,6 +49,7 @@ using namespace tint::core::fluent_types;     // NOLINT
 TINT_INSTANTIATE_TYPEINFO(tint::ast::transform::CanonicalizeEntryPointIO);
 TINT_INSTANTIATE_TYPEINFO(tint::ast::transform::CanonicalizeEntryPointIO::Config);
 TINT_INSTANTIATE_TYPEINFO(tint::ast::transform::CanonicalizeEntryPointIO::HLSLWaveIntrinsic);
+TINT_INSTANTIATE_TYPEINFO(tint::ast::transform::CanonicalizeEntryPointIO::HLSLClipDistance);
 
 namespace tint::ast::transform {
 
@@ -165,7 +166,8 @@ struct CanonicalizeEntryPointIO::State {
     Hashmap<const BuiltinAttribute*, core::BuiltinValue, 16> builtin_attrs;
     /// A map of builtin values to HLSL wave intrinsic functions.
     Hashmap<core::BuiltinValue, Symbol, 2> wave_intrinsics;
-    /// The array length of the struct member with builtin attribute `clip_distances`.
+    /// The array length of the struct member with builtin attribute `clip_distances`. Now it is
+    /// only set and used on HLSL and MSL backends.
     uint32_t clip_distances_size = 0;
 
     /// Constructor
@@ -409,7 +411,7 @@ struct CanonicalizeEntryPointIO::State {
                                      core::InterpolationSampling::kUndefined));
         }
 
-        if (cfg.shader_style == ShaderStyle::kMsl &&
+        if ((cfg.shader_style == ShaderStyle::kMsl || cfg.shader_style == ShaderStyle::kHlsl) &&
             func_ast->PipelineStage() == PipelineStage::kVertex &&
             builtin_attr == core::BuiltinValue::kClipDistances) {
             const auto* arrayType = type->As<core::type::Array>();
@@ -676,6 +678,123 @@ struct CanonicalizeEntryPointIO::State {
         wrapper_ep_parameters.Push(param);
     }
 
+    /// Handle `clip_distances` in MSL
+    /// @param assignments the assignments to the members of the output wrapper struct.
+    /// @param clip_distances_inner_array_name the `clip_distances` member in inner struct
+    /// @param wrapper_struct_name the symbol of the output wrapper struct
+    /// @param new_member_name the `clip_distances` member in new output wrapper struct
+    /// @param old_struct_member the information of the old output wrapper struct member.
+    void HandleClipDistancesInMSL(tint::Vector<const Statement*, 8>* assignments,
+                                  const Symbol& clip_distances_inner_array_name,
+                                  const Symbol& wrapper_struct_name,
+                                  const Symbol& new_member_name,
+                                  const OutputValue& old_struct_member) {
+        for (uint32_t i = 0; i < clip_distances_size; ++i) {
+            assignments->Push(b.Assign(
+                b.IndexAccessor(b.MemberAccessor(wrapper_struct_name, new_member_name), u32(i)),
+                b.IndexAccessor(clip_distances_inner_array_name, u32(i))));
+        }
+
+        wrapper_struct_output_members.Push({
+            /* member */ b.Member(new_member_name, old_struct_member.type,
+                                  std::move(old_struct_member.attributes)),
+            /* location */ std::nullopt,
+            /* blend_src */ std::nullopt,
+            /* color */ std::nullopt,
+        });
+    }
+
+    /// Handle `clip_distances` in HLSL
+    /// @param assignments the assignments to the members of the output wrapper struct.
+    /// @param clip_distances_inner_array_name the `clip_distances` member in inner struct
+    /// @param wrapper_struct_name the symbol of the output wrapper struct
+    /// @param new_member_name the `clip_distances` member in new output wrapper struct
+    /// @param old_struct_member the information of the old output wrapper struct member.
+    void HandleClipDistancesInHLSL(tint::Vector<const Statement*, 8>* assignments,
+                                   const Symbol& clip_distances_inner_array_name,
+                                   const Symbol& wrapper_struct_name,
+                                   const Symbol& new_member_name,
+                                   const OutputValue& old_struct_member) {
+        // Add an unused member to consume old_struct_member.attributes which will be ignored in
+        // HLSL writer. Without the unused member the resolver will report an internal error that
+        // the `clip_distances` BuiltinAttribute is not used.
+        auto unused = b.Symbols().New("clip_distance_unused");
+        wrapper_struct_output_members.Push({
+            /* member */ b.Member(unused, old_struct_member.type,
+                                  std::move(old_struct_member.attributes)),
+            /* location */ std::nullopt,
+            /* blend_src */ std::nullopt,
+            /* color */ std::nullopt,
+        });
+
+        auto attributeVector0 =
+            Vector{b.ASTNodes().Create<HLSLClipDistance>(b.ID(), b.AllocateNodeID(), 0u)};
+
+        // float clip_distances : SV_ClipDistance0;
+        if (clip_distances_size == 1u) {
+            assignments->Push(b.Assign(b.MemberAccessor(wrapper_struct_name, new_member_name),
+                                       b.IndexAccessor(clip_distances_inner_array_name, 0_u)));
+            wrapper_struct_output_members.Push({
+                /* member */ b.Member(new_member_name, b.ty.f32(), attributeVector0),
+                /* location */ std::nullopt,
+                /* blend_src */ std::nullopt,
+                /* color */ std::nullopt,
+            });
+            return;
+        }
+
+        // floatN clip_distances : SV_ClipDistance0;
+        uint32_t clip_distance0_size = std::min(clip_distances_size, 4u);
+        for (uint32_t i = 0; i < clip_distance0_size; ++i) {
+            assignments->Push(b.Assign(
+                b.IndexAccessor(b.MemberAccessor(wrapper_struct_name, new_member_name), u32(i)),
+                b.IndexAccessor(clip_distances_inner_array_name, u32(i))));
+        }
+        wrapper_struct_output_members.Push({
+            /* member */ b.Member(new_member_name, b.ty.vec(b.ty.f32(), clip_distance0_size),
+                                  attributeVector0),
+            /* location */ std::nullopt,
+            /* blend_src */ std::nullopt,
+            /* color */ std::nullopt,
+        });
+
+        if (clip_distances_size <= 4u) {
+            return;
+        }
+
+        auto attributeVector1 =
+            Vector{b.ASTNodes().Create<HLSLClipDistance>(b.ID(), b.AllocateNodeID(), 1u)};
+
+        // float clip_distances1 : SV_ClipDistance1;
+        Symbol name1 = b.Symbols().New(new_member_name.Name() + "1");
+        if (clip_distances_size == 5u) {
+            assignments->Push(b.Assign(b.MemberAccessor(wrapper_struct_name, name1),
+                                       b.IndexAccessor(clip_distances_inner_array_name, 4_u)));
+            wrapper_struct_output_members.Push({
+                /* member */ b.Member(name1, b.ty.f32(), attributeVector1),
+                /* location */ std::nullopt,
+                /* blend_src */ std::nullopt,
+                /* color */ std::nullopt,
+            });
+            return;
+        }
+
+        // floatN clip_distances1 : SV_ClipDistance1;
+        uint32_t clip_distances1_size = clip_distances_size - 4u;
+        for (uint32_t i = 0; i < clip_distances1_size; ++i) {
+            assignments->Push(
+                b.Assign(b.IndexAccessor(b.MemberAccessor(wrapper_struct_name, name1), u32(i)),
+                         b.IndexAccessor(clip_distances_inner_array_name, u32(i))));
+        }
+        wrapper_struct_output_members.Push({
+            /* member */ b.Member(name1, b.ty.vec(b.ty.f32(), clip_distances1_size),
+                                  attributeVector1),
+            /* location */ std::nullopt,
+            /* blend_src */ std::nullopt,
+            /* color */ std::nullopt,
+        });
+    }
+
     /// Create and return the wrapper function's struct result object.
     /// @returns the struct type
     Struct* CreateOutputStruct() {
@@ -696,19 +815,29 @@ struct CanonicalizeEntryPointIO::State {
             member_names.insert(name.Name());
 
             auto* builtin_attribute = GetAttribute<BuiltinAttribute>(outval.attributes);
-            if (cfg.shader_style == ShaderStyle::kMsl && builtin_attribute != nullptr &&
+            if ((cfg.shader_style == ShaderStyle::kMsl || cfg.shader_style == ShaderStyle::kHlsl) &&
+                builtin_attribute != nullptr &&
                 builtin_attribute->builtin == core::BuiltinValue::kClipDistances) {
                 Symbol clip_distances_inner_array = b.Symbols().New("tmp_inner_clip_distances");
                 assignments.Push(b.Decl(b.Let(clip_distances_inner_array, outval.value)));
-                for (uint32_t i = 0; i < clip_distances_size; ++i) {
-                    assignments.Push(
-                        b.Assign(b.IndexAccessor(b.MemberAccessor(wrapper_result, name), u32(i)),
-                                 b.IndexAccessor(clip_distances_inner_array, u32(i))));
+
+                switch (cfg.shader_style) {
+                    case ShaderStyle::kMsl:
+                        HandleClipDistancesInMSL(&assignments, clip_distances_inner_array,
+                                                 wrapper_result, name, outval);
+                        break;
+                    case ShaderStyle::kHlsl:
+                        HandleClipDistancesInHLSL(&assignments, clip_distances_inner_array,
+                                                  wrapper_result, name, outval);
+
+                        break;
+                    default:
+                        break;
                 }
-            } else {
-                assignments.Push(b.Assign(b.MemberAccessor(wrapper_result, name), outval.value));
+                continue;
             }
 
+            assignments.Push(b.Assign(b.MemberAccessor(wrapper_result, name), outval.value));
             wrapper_struct_output_members.Push({
                 /* member */ b.Member(name, outval.type, std::move(outval.attributes)),
                 /* location */ outval.location,
@@ -1066,6 +1195,30 @@ const CanonicalizeEntryPointIO::HLSLWaveIntrinsic*
 CanonicalizeEntryPointIO::HLSLWaveIntrinsic::Clone(ast::CloneContext& ctx) const {
     return ctx.dst->ASTNodes().Create<CanonicalizeEntryPointIO::HLSLWaveIntrinsic>(
         ctx.dst->ID(), ctx.dst->AllocateNodeID(), op);
+}
+
+CanonicalizeEntryPointIO::HLSLClipDistance::HLSLClipDistance(GenerationID pid,
+                                                             NodeID nid,
+                                                             uint32_t index)
+    : Base(pid, nid, Empty), clip_distance_index(index) {}
+
+CanonicalizeEntryPointIO::HLSLClipDistance::~HLSLClipDistance() = default;
+
+std::string CanonicalizeEntryPointIO::HLSLClipDistance::InternalName() const {
+    switch (clip_distance_index) {
+        case 0:
+            return "SV_ClipDistance0";
+        case 1:
+            return "SV_ClipDistance1";
+        default:
+            TINT_UNREACHABLE();
+    }
+}
+
+const CanonicalizeEntryPointIO::HLSLClipDistance* CanonicalizeEntryPointIO::HLSLClipDistance::Clone(
+    ast::CloneContext& ctx) const {
+    return ctx.dst->ASTNodes().Create<CanonicalizeEntryPointIO::HLSLClipDistance>(
+        ctx.dst->ID(), ctx.dst->AllocateNodeID(), clip_distance_index);
 }
 
 }  // namespace tint::ast::transform
