@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "cc2def41b25eb3fb7691cdecdbc4e9bfc2c517ed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35757c79_900e3d91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001671
+      },
+      "writtenOn": "2024-08-26T16:42:02Z",
+      "side": 1,
+      "message": "LGTM! Sort of surprised that this wasn\u0027t a bigger issue before now.",
+      "revId": "cc2def41b25eb3fb7691cdecdbc4e9bfc2c517ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
