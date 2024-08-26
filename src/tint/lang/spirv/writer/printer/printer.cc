@@ -2469,8 +2469,4 @@ tint::Result<std::vector<uint32_t>> Print(core::ir::Module& module, const Option
     return Printer{module, options}.Code();
 }
 
-tint::Result<Module> PrintModule(core::ir::Module& module, const Options& options) {
-    return Printer{module, options}.Module();
-}
-
 }  // namespace tint::spirv::writer
