@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fca3a417_bc48c14e",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dc702ec_eb5eea64",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "814fd76a_71714def",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-08-26T21:15:09Z",
       "side": 1,
       "message": "```suggestion\n                    if (new_elem_type \u003d\u003d arr-\u003eElemType()) {\n                        return arr;\n                    }\n                    \n                    if (arr-\u003eCount()-\u003eIs\u003ccore::type::RuntimeArrayCount\u003e()) {\n                        return ty.runtime_array(new_elem_type);\n                    } else if (auto count \u003d arr-\u003eConstantCount()) {\n                        return ty.array(new_elem_type, u32(count.value()));\n                    }\n                    TINT_UNREACHABLE();                   \n```",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 31
+      },
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b600f85d_9b6fa5c1",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "814fd76a_71714def",
       "range": {
         "startLine": 135,
         "startChar": 0,
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0e297eb_d11e1569",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f902e1b3_f38fe566",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f450267e_e73f82c3",
@@ -71,6 +131,24 @@
       "writtenOn": "2024-08-26T21:15:09Z",
       "side": 1,
       "message": "Why is it safe to blank out the IO attributes here? These are all host shareable things, so can\u0027t they have attributes attached?",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f4ca9b1_002e2417",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Correct. Added a comment.",
+      "parentUuid": "f450267e_e73f82c3",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -98,6 +176,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "24a708ee_84be7e72",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "ba090180_868ee527",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 41
+      },
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9105ba03_8f60d277",
@@ -115,6 +217,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fabbcb78_b142d43a",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "`vec3` (copypasta from Std140 transform).\n\nFixed.",
+      "parentUuid": "9105ba03_8f60d277",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6511cee3_f172139c",
@@ -128,6 +248,24 @@
       "writtenOn": "2024-08-26T21:15:09Z",
       "side": 1,
       "message": "Does `original vector type` here really mean `of a vec3` since we hardcode the 3 in teh size multiplier?",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75ff4352_c57d9c76",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Yes, it\u0027s always a vec3. Updated comment to say `vec3`.",
+      "parentUuid": "6511cee3_f172139c",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -151,6 +289,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "95fedabe_3f5b1ee1",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Changed to `GetPackedVec3ArrayElementStruct`?",
+      "parentUuid": "83368741_35f76a72",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "304f3382_f3455647",
         "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
         "patchSetId": 3
@@ -168,6 +324,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "68e38db9_9f31bfa5",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "The names are really useful to know what you\u0027re looking at when staring at generated shaders, but yes, we could in theory always use generic symbols for helper functions/structures/etc in transforms.\n\nIn this specific case, this will happen at most four times for any given shader (once per scalar type), so I don\u0027t think it\u0027d be too costly?",
+      "parentUuid": "304f3382_f3455647",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9c29ccfc_28499b25",
         "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
         "patchSetId": 3
@@ -179,6 +353,24 @@
       "writtenOn": "2024-08-26T21:15:09Z",
       "side": 1,
       "message": "I think we know the packed_type in each case when we call `UpdateUsage`, can we pass both types in here then we dont\u0027 have to recalculate the packed type below?",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "845f15ae_77cf3333",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c29ccfc_28499b25",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -202,6 +394,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d485a948_2265e126",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "When we recurse from updating an `access` instruction, it\u0027s possible that the result of an `access` might not be packed even if the source is, when there are structures involved where not all members need to be packed.\n\nCould move the check to the callsite instead, but not sure that\u0027s really any better.",
+      "parentUuid": "14110f03_635e29c9",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f708ee05_72bc9e5b",
         "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
         "patchSetId": 3
@@ -213,6 +423,24 @@
       "writtenOn": "2024-08-26T21:15:09Z",
       "side": 1,
       "message": "ditto pulling this out to a helper?",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21514ba0_f3c25472",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f708ee05_72bc9e5b",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -236,6 +464,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "50fcc933_f7bf0812",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "The use is the source object to the access chain, it doesn\u0027t tell us which of the indices will be accessing into matrices or arrays that directly contain vec3 elements.",
+      "parentUuid": "3da608f0_125d29dd",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0399416c_fbacbf72",
         "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
         "patchSetId": 3
@@ -247,6 +493,24 @@
       "writtenOn": "2024-08-26T21:15:09Z",
       "side": 1,
       "message": "Why is this correct? If it isn\u0027t constant, then it\u0027s a dynamic index, but i guess if it\u0027s dynamic then it must be an array,vec,mat so the element type is all the same? Maybe a comment?",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b35790c9_373c9c75",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Done, and switched to `Elements().type` which is the pattern we use elsewhere and will cause a nullptr deref if this assertion becomes no longer true.",
+      "parentUuid": "0399416c_fbacbf72",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -270,6 +534,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94e8c94c_cdd0caab",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "I added a very different comment because I\u0027m not really sure what you were trying to say here.",
+      "parentUuid": "3758cf05_91d95767",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9eff08d0_b7cb09fe",
         "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
         "patchSetId": 3
@@ -281,6 +563,24 @@
       "writtenOn": "2024-08-26T21:15:09Z",
       "side": 1,
       "message": "Should we do the check if we\u0027re actually going to change here and if not, bail early? Otherwise we may end up just recreating the same load over again and doing all the usage replacements for no reason",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deebee25_afa8c2c9",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "`ForEachUse*` won\u0027t be called on new instructions that are created during the lambda as it captures a copy of the uses and iterates over that.",
+      "parentUuid": "9eff08d0_b7cb09fe",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -304,6 +604,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "918e8577_332cf3d2",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "530baa6a_27347f4b",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "87ca898c_cb751caf",
         "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
         "patchSetId": 3
@@ -315,6 +633,24 @@
       "writtenOn": "2024-08-26T21:15:09Z",
       "side": 1,
       "message": "Can this actually happen?",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3de51d46_8ae111ed",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Yes, when looping over struct members this is called for each struct member, but not all of them necessarily contain packed vectors. You could put the check at the callsites instead but this felt marginally nicer.",
+      "parentUuid": "87ca898c_cb751caf",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -336,6 +672,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94b8c773_c87afab6",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "4f7cc14e_4d5fd29e",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee2a736b_cddeb8d2",
@@ -349,6 +703,24 @@
       "writtenOn": "2024-08-26T21:15:09Z",
       "side": 1,
       "message": "```suggestion\n                Vector\u003ccore::ir::Value*, 4\u003e members;\n                members.Reserve(unpacked_str-\u003eMembers().Size());\n```",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39dbe13e_1b198129",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-26T22:08:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee2a736b_cddeb8d2",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
