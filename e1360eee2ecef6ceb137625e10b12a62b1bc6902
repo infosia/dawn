@@ -16,6 +16,40 @@
       "message": "PTAL. These were the changes needed for `gn check` to run cleanly on my standalone checkout.",
       "revId": "e1360eee2ecef6ceb137625e10b12a62b1bc6902",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "724f5006_3cff3a7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T07:37:32Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "e1360eee2ecef6ceb137625e10b12a62b1bc6902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7edd6d19_c0aa7f50",
+        "filename": "src/dawn/samples/DawnInfo.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-26T07:37:32Z",
+      "side": 1,
+      "message": "Could these two be fixed by adding a DEPS in src/dawn/samples/BUILD.gn or does it not work?",
+      "revId": "e1360eee2ecef6ceb137625e10b12a62b1bc6902",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
