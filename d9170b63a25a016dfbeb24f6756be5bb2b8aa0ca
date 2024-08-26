@@ -123,6 +123,24 @@
       "parentUuid": "d059ebf2_41726a1f",
       "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3061bb7_f4a0a2d6",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 3378882
+      },
+      "writtenOn": "2024-08-26T19:50:58Z",
+      "side": 1,
+      "message": "That would cause the template to generate duplicated function name for both qualcomm_pci and qualcomm_acpi since the name is the same. Anyway I made changes like what Kai mentioned. I have verified the vendor\u0027s name is \"qualcomm\" after the changes. Could you all take a look? Thanks.",
+      "parentUuid": "1251020e_849169c5",
+      "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
