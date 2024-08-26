@@ -51,7 +51,7 @@ namespace dawn::native {
 // TrackedEvent). While concurrent calls on the same futures are not explicitly disallowed, they are
 // generally unintentional, and hence this can help to identify potential bugs. Note that for
 // WaitAny, this checks the embedder's behavior, but for ProcessEvents this is only an internal
-// DAWN_ASSERT (it's supposed to be synchronized so that this never happens).
+// DAWN_ASSERT.
 class EventManager::TrackedEvent::WaitRef : dawn::NonCopyable {
   public:
     WaitRef(WaitRef&& rhs) = default;
@@ -157,13 +157,14 @@ bool WaitQueueSerialsImpl(DeviceBase* device,
                           std::vector<TrackedFutureWaitInfo>::iterator end,
                           Nanoseconds timeout) {
     bool success = false;
+    // TODO(dawn:1662): Make error handling thread-safe.
+    auto deviceLock(device->GetScopedLock());
     if (device->ConsumedError([&]() -> MaybeError {
             if (waitSerial > queue->GetLastSubmittedCommandSerial()) {
                 // Serial has not been submitted yet. Submit it now.
                 // TODO(dawn:1413): This doesn't need to be a full tick. It just needs to
                 // flush work up to `waitSerial`. This should be done after the
                 // ExecutionQueue / ExecutionContext refactor.
-                auto guard = device->GetScopedLock();
                 queue->ForceEventualFlushOfCommands();
                 DAWN_TRY(device->Tick());
             }
@@ -420,14 +421,15 @@ void EventManager::SetFutureReady(TrackedEvent* event) {
 bool EventManager::ProcessPollEvents() {
     DAWN_ASSERT(!IsShutDown());
 
-    std::vector<TrackedEvent::WaitRef> completable;
+    std::vector<TrackedFutureWaitInfo> futures;
     wgpu::WaitStatus waitStatus;
     bool hasProgressingEvents = false;
-    auto hasIncompleteEvents = mEvents.Use([&](auto events) {
+    FutureID lastProcessEventID;
+    mEvents.Use([&](auto events) {
         // Iterate all events and record poll events and spontaneous events since they are both
         // allowed to be completed in the ProcessPoll call. Note that spontaneous events are allowed
         // to trigger anywhere which is why we include them in the call.
-        std::vector<TrackedFutureWaitInfo> futures;
+        lastProcessEventID = mLastProcessEventID.load(std::memory_order_acquire);
         futures.reserve((*events)->size());
         for (auto& [futureID, event] : **events) {
             if (event->mCallbackMode != wgpu::CallbackMode::WaitAnyOnly) {
@@ -446,38 +448,39 @@ bool EventManager::ProcessPollEvents() {
                     TrackedFutureWaitInfo{futureID, TrackedEvent::WaitRef{event.Get()}, 0, false});
             }
         }
+    });
 
-        // If there wasn't anything to wait on, we can skip the wait and just return the end.
-        if (futures.size() == 0) {
-            return false;
-        }
+    // If there wasn't anything to wait on, we can skip the wait and just return.
+    if (futures.size() == 0) {
+        return false;
+    }
 
-        waitStatus = WaitImpl(futures, Nanoseconds(0));
-        if (waitStatus == wgpu::WaitStatus::TimedOut) {
-            return true;
-        }
-        DAWN_ASSERT(waitStatus == wgpu::WaitStatus::Success);
+    // Wait and enforce callback ordering.
+    waitStatus = WaitImpl(futures, Nanoseconds(0));
+    if (waitStatus == wgpu::WaitStatus::TimedOut) {
+        return hasProgressingEvents;
+    }
+    DAWN_ASSERT(waitStatus == wgpu::WaitStatus::Success);
 
-        // Enforce callback ordering.
-        auto readyEnd = PrepareReadyCallbacks(futures);
+    // Enforce callback ordering.
+    auto readyEnd = PrepareReadyCallbacks(futures);
+    bool hasIncompleteEvents = readyEnd != futures.end();
 
-        // For all the futures we are about to complete, first ensure they're untracked.
+    // For all the futures we are about to complete, first ensure they're untracked.
+    mEvents.Use([&](auto events) {
         for (auto it = futures.begin(); it != readyEnd; ++it) {
             (*events)->erase(it->futureID);
-            completable.emplace_back(std::move(it->event));
         }
-        return readyEnd != futures.end();
     });
 
     // Finally, call callbacks while comparing the last process event id with any new ones that may
     // have been created via the callbacks.
-    FutureID lastProcessEventID = mLastProcessEventID.load(std::memory_order_acquire);
-    for (auto& event : completable) {
-        event->EnsureComplete(EventCompletionType::Ready);
+    for (auto it = futures.begin(); it != readyEnd; ++it) {
+        it->event->EnsureComplete(EventCompletionType::Ready);
     }
     // Note that in the event of all progressing events completing, but there exists non-progressing
     // events, we will return true one extra time.
-    return hasIncompleteEvents && hasProgressingEvents &&
+    return hasIncompleteEvents ||
            (lastProcessEventID != mLastProcessEventID.load(std::memory_order_acquire));
 }
 
