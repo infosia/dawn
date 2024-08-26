@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "30b7533f_3af0ca87",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-26T13:15:22Z",
+      "side": 1,
+      "message": "Honestly, in this case I think we should fix Dawn to file the styleguide (https://google.github.io/styleguide/cppguide.html#File_Names).\n\n(If we decide to go that route I\u0027ll sign myself up for the annoying work as I\u0027m suggesting it, heh)",
+      "parentUuid": "4f4062fa_67d02460",
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "86ac06a1_dd05470b",
         "filename": "src/utils/BUILD.bazel",
         "patchSetId": 8
@@ -99,6 +117,24 @@
       "writtenOn": "2024-08-26T07:53:30Z",
       "side": 1,
       "message": "At least for CMake we should no longer need placeholders for libraries since we support only 3.18 and above.",
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c85e4df_ced592d2",
+        "filename": "src/utils/placeholder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-26T13:15:22Z",
+      "side": 1,
+      "message": "I thought that as well, MSVC said differently. Without this file the MSVC bots got mad at me.",
+      "parentUuid": "772398f2_edfe457f",
       "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
