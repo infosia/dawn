@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33303c4e_874c9fe2",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4606,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-27T15:21:57Z",
+      "side": 1,
+      "message": "An example of the awkardness I\u0027m talking about in my comment below. `ast_struct_members` and `struct_type_members` should be the same size.",
+      "range": {
+        "startLine": 4606,
+        "startChar": 16,
+        "endLine": 4606,
+        "endChar": 47
+      },
+      "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f724e23a_725ffb89",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4654,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-27T15:21:57Z",
+      "side": 1,
+      "message": "More awkardness as per my comment below.",
+      "range": {
+        "startLine": 4649,
+        "startChar": 0,
+        "endLine": 4654,
+        "endChar": 17
+      },
+      "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84a37a30_b50881e7",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4676,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-27T15:21:57Z",
+      "side": 1,
+      "message": "More awkardness as per my comment below.",
+      "range": {
+        "startLine": 4676,
+        "startChar": 12,
+        "endLine": 4676,
+        "endChar": 48
+      },
+      "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1420c22_32a9795e",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-27T15:21:57Z",
+      "side": 1,
+      "message": "This is awkward, and results in more awkwardness in the backend. I discussed this with the team, and one idea we had that would avoid this issue would be to use the core `clip_distances` attribute to signifiy SV_ClipDistance0, and to add a new HLSL-specific attribute to signify SV_ClipDistance1 -- you could rename your `HLSLClipDistance ` class to `HLSLClipDistance1` perhaps. This would allow you to use the existing attribute without this workaround of adding an unused member. Can you look into implementing it this way?",
+      "range": {
+        "startLine": 735,
+        "startChar": 0,
+        "endLine": 746,
+        "endChar": 0
+      },
+      "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
