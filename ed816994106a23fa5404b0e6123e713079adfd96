@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ce7491f_f75d1df8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-27T15:30:02Z",
+      "side": 1,
+      "message": "Figured out the inconsistent test result issue: it was Metal UB happening where the buffers used in the compute pass were not resident.\n\nI\u0027ve addressed the comments from the initial draft, but there are also new changes.",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
