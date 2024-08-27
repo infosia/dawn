@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec2b360b_3ec572eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-27T09:58:05Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "ccfef2b2e1392db359f79c14d5caa341fbf69665",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "518d9805_795757e9",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-27T09:58:05Z",
+      "side": 1,
+      "message": "```suggestion\n    kkIndirectBufferForFrontendValidation | kIndirectBufferForBackendResourceTracking;\n```",
+      "revId": "ccfef2b2e1392db359f79c14d5caa341fbf69665",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
