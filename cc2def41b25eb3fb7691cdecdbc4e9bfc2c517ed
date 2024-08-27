@@ -50,6 +50,24 @@
       "message": "Oops! Let me approve that from the right account...",
       "revId": "cc2def41b25eb3fb7691cdecdbc4e9bfc2c517ed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "605a40ae_6e312fc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-27T09:54:52Z",
+      "side": 1,
+      "message": "It was broken by my previous CL for that file, just that originally it reported the wrong error in the catchall.",
+      "parentUuid": "35757c79_900e3d91",
+      "revId": "cc2def41b25eb3fb7691cdecdbc4e9bfc2c517ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
