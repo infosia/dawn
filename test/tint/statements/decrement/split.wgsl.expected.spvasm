@@ -20,12 +20,12 @@
           %4 = OpLabel
           %b = OpVariable %_ptr_Function_int Function
           %c = OpVariable %_ptr_Function_int Function
-               OpStore %b %int_2
-          %9 = OpLoad %int %b
-         %10 = OpLoad %int %b
+               OpStore %b %int_2 None
+          %9 = OpLoad %int %b None
+         %10 = OpLoad %int %b None
          %11 = OpSNegate %int %10
          %12 = OpISub %int %9 %11
-               OpStore %c %12
+               OpStore %c %12 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

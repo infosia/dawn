@@ -55,7 +55,7 @@
 %atomicCompareExchangeWeak_63d8e6 = OpFunction %void None %8
           %9 = OpLabel
         %res = OpVariable %_ptr_Function_x__atomic_compare_exchange_resultu32 Function
-               OpStore %res %14
+               OpStore %res %14 None
          %15 = OpAccessChain %_ptr_StorageBuffer_uint %1 %uint_0 %uint_0
          %18 = OpAtomicCompareExchange %uint %15 %uint_1 %uint_0 %uint_0 %uint_1 %uint_1
          %20 = OpIEqual %bool %18 %uint_1
@@ -63,7 +63,7 @@
 %old_value_1 = OpCompositeExtract %uint %22 0
          %24 = OpIEqual %bool %old_value_1 %uint_1
          %25 = OpCompositeConstruct %x__atomic_compare_exchange_resultu32 %old_value_1 %24
-               OpStore %res %25
+               OpStore %res %25 None
                OpReturn
                OpFunctionEnd
 %fragment_main_1 = OpFunction %void None %8

@@ -22,9 +22,9 @@
           %a = OpVariable %_ptr_Function_float Function
           %b = OpVariable %_ptr_Function_float Function
           %c = OpVariable %_ptr_Function_float Function
-               OpStore %a %float_1
-               OpStore %b %float_1
-               OpStore %c %float_1
+               OpStore %a %float_1 None
+               OpStore %b %float_1 None
+               OpStore %c %float_1 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

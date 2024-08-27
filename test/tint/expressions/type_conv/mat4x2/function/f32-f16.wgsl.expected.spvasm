@@ -43,9 +43,9 @@
 %_ptr_Function_mat4v2half = OpTypePointer Function %mat4v2half
           %m = OpFunction %mat4v2float None %8
           %9 = OpLabel
-         %10 = OpLoad %float %t
+         %10 = OpLoad %float %t None
          %11 = OpFAdd %float %10 %float_1
-               OpStore %t %11
+               OpStore %t %11 None
                OpReturnValue %13
                OpFunctionEnd
           %f = OpFunction %void None %27
@@ -61,7 +61,7 @@
          %38 = OpCompositeExtract %v2float %29 3
          %39 = OpFConvert %v2half %38
          %41 = OpCompositeConstruct %mat4v2half %33 %35 %37 %39
-               OpStore %v %41
+               OpStore %v %41 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %27

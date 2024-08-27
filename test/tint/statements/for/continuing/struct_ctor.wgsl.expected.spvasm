@@ -23,7 +23,7 @@
           %i = OpVariable %_ptr_Function_int Function
                OpBranch %5
           %5 = OpLabel
-               OpStore %i %int_0
+               OpStore %i %int_0 None
                OpBranch %8
           %8 = OpLabel
                OpLoopMerge %9 %7 None
@@ -36,9 +36,9 @@
          %14 = OpLabel
                OpBranch %7
           %7 = OpLabel
-         %18 = OpLoad %int %i
+         %18 = OpLoad %int %i None
          %19 = OpIAdd %int %18 %int_1
-               OpStore %i %19
+               OpStore %i %19 None
                OpBranch %8
           %9 = OpLabel
                OpReturn

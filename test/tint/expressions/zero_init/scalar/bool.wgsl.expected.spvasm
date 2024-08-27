@@ -18,7 +18,7 @@
           %f = OpFunction %void None %3
           %4 = OpLabel
           %v = OpVariable %_ptr_Function_bool Function
-               OpStore %v %false
+               OpStore %v %false None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

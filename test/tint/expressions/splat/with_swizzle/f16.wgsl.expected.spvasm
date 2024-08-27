@@ -25,9 +25,9 @@
           %a = OpVariable %_ptr_Function_half Function
           %b = OpVariable %_ptr_Function_half Function
           %c = OpVariable %_ptr_Function_half Function
-               OpStore %a %half_0x1p_0
-               OpStore %b %half_0x1p_0
-               OpStore %c %half_0x1p_0
+               OpStore %a %half_0x1p_0 None
+               OpStore %b %half_0x1p_0 None
+               OpStore %c %half_0x1p_0 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

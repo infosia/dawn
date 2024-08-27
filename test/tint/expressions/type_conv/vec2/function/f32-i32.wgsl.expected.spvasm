@@ -39,8 +39,8 @@
          %39 = OpConstantComposite %v2int %int_2147483647 %int_2147483647
           %m = OpFunction %v2float None %7
           %8 = OpLabel
-               OpStore %t %float_1
-         %10 = OpLoad %float %t
+               OpStore %t %float_1 None
+         %10 = OpLoad %float %t None
          %11 = OpCompositeConstruct %v2float %10 %10
                OpReturnValue %11
                OpFunctionEnd
@@ -49,7 +49,7 @@
           %v = OpVariable %_ptr_Function_v2int Function
          %16 = OpFunctionCall %v2float %m
          %17 = OpFunctionCall %v2int %tint_v2f32_to_v2i32 %16
-               OpStore %v %17
+               OpStore %v %17 None
                OpReturn
                OpFunctionEnd
 %tint_v2f32_to_v2i32 = OpFunction %v2int None %24

@@ -31,10 +31,10 @@
           %f = OpFunction %uint None %3
           %4 = OpLabel
           %a = OpVariable %_ptr_Function_S Function
-               OpStore %a %10
+               OpStore %a %10 None
          %11 = OpAccessChain %_ptr_Function_v3uint %a %uint_1
          %14 = OpAccessChain %_ptr_Function_uint %11 %int_2
-         %17 = OpLoad %uint %14
+         %17 = OpLoad %uint %14 None
                OpReturnValue %17
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %20

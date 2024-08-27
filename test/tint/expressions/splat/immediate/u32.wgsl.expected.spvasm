@@ -30,9 +30,9 @@
          %v2 = OpVariable %_ptr_Function_v2uint Function
          %v3 = OpVariable %_ptr_Function_v3uint Function
          %v4 = OpVariable %_ptr_Function_v4uint Function
-               OpStore %v2 %9
-               OpStore %v3 %14
-               OpStore %v4 %18
+               OpStore %v2 %9 None
+               OpStore %v3 %14 None
+               OpStore %v4 %18 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

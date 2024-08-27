@@ -32,8 +32,8 @@
 %uint_4294967295 = OpConstant %uint 4294967295
           %m = OpFunction %float None %6
           %7 = OpLabel
-               OpStore %t %float_1
-          %9 = OpLoad %float %t
+               OpStore %t %float_1 None
+          %9 = OpLoad %float %t None
                OpReturnValue %9
                OpFunctionEnd
           %f = OpFunction %void None %12
@@ -41,7 +41,7 @@
           %v = OpVariable %_ptr_Function_uint Function
          %14 = OpFunctionCall %float %m
          %15 = OpFunctionCall %uint %tint_f32_to_u32 %14
-               OpStore %v %15
+               OpStore %v %15 None
                OpReturn
                OpFunctionEnd
 %tint_f32_to_u32 = OpFunction %uint None %21

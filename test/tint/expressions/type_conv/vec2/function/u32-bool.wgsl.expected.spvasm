@@ -27,8 +27,8 @@
 %_ptr_Function_v2bool = OpTypePointer Function %v2bool
           %m = OpFunction %v2uint None %7
           %8 = OpLabel
-               OpStore %t %uint_1
-         %10 = OpLoad %uint %t
+               OpStore %t %uint_1 None
+         %10 = OpLoad %uint %t None
          %11 = OpCompositeConstruct %v2uint %10 %10
                OpReturnValue %11
                OpFunctionEnd
@@ -37,7 +37,7 @@
           %v = OpVariable %_ptr_Function_v2bool Function
          %16 = OpFunctionCall %v2uint %m
          %19 = OpINotEqual %v2bool %16 %20
-               OpStore %v %19
+               OpStore %v %19 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %14

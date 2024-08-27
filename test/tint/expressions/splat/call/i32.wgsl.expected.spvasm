@@ -35,13 +35,13 @@
          %v4 = OpVariable %_ptr_Function_v4int Function
          %10 = OpFunctionCall %int %get_i32
          %12 = OpCompositeConstruct %v2int %10 %10
-               OpStore %v2 %12
+               OpStore %v2 %12 None
          %15 = OpFunctionCall %int %get_i32
          %17 = OpCompositeConstruct %v3int %15 %15 %15
-               OpStore %v3 %17
+               OpStore %v3 %17 None
          %20 = OpFunctionCall %int %get_i32
          %22 = OpCompositeConstruct %v4int %20 %20 %20 %20
-               OpStore %v4 %22
+               OpStore %v4 %22 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %8
