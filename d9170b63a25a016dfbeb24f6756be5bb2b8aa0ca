@@ -141,6 +141,24 @@
       "parentUuid": "1251020e_849169c5",
       "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26c5a9db_e635489b",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-27T03:15:04Z",
+      "side": 1,
+      "message": "(I think Corentin and I were talking about the same fix.) Anyway, this looks OK.",
+      "parentUuid": "f3061bb7_f4a0a2d6",
+      "revId": "d9170b63a25a016dfbeb24f6756be5bb2b8aa0ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
