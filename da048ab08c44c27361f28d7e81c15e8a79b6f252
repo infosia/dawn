@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9d86e3b_3472691b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-27T21:08:41Z",
+      "side": 1,
+      "message": "Also flaky on https://ci.chromium.org/ui/p/chromium/builders/ci/Dawn%20Win10%20x64%20Release%20%28Intel%20UHD%20770%29\n\nSince we only have intel 630 (gen-9) and 770 (gen-12) bots on waterfall just suppress all intel d3d12.",
+      "revId": "da048ab08c44c27361f28d7e81c15e8a79b6f252",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
