@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e6c105a_7a76b812",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T20:57:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0101fe82_39873aa9",
+      "revId": "dd3b9d8dc8af97d0f9b56d1bbb42cf73c3b3099b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "778f89fd_478850bb",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e00fada3_d05c3f4c",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2276,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T20:57:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "778f89fd_478850bb",
+      "revId": "dd3b9d8dc8af97d0f9b56d1bbb42cf73c3b3099b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fdd4212_975a65a8",
@@ -65,6 +101,24 @@
       "writtenOn": "2024-08-22T19:01:50Z",
       "side": 1,
       "message": "Please add a test like this for `workgroup` memory too.",
+      "revId": "dd3b9d8dc8af97d0f9b56d1bbb42cf73c3b3099b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecb6c657_0cd1cae2",
+        "filename": "src/tint/lang/spirv/writer/var_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T20:57:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fdd4212_975a65a8",
       "revId": "dd3b9d8dc8af97d0f9b56d1bbb42cf73c3b3099b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
