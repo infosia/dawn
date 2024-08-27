@@ -34,6 +34,24 @@
       "parentUuid": "d0a83329_6194ecea",
       "revId": "3550b2c0b9b499c007159a4799cd9b975fc56d7f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cee3878_67b1c63e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-27T21:34:32Z",
+      "side": 1,
+      "message": "Ah... great catch! FWIW, the existing impl also had that problem. I fixed that issue by moving the `WaitImpl` call in `ProcessEvents` out of the event lock now, so it should\u0027t conflict with the device lock anymore.",
+      "parentUuid": "1304d84d_70822fde",
+      "revId": "3550b2c0b9b499c007159a4799cd9b975fc56d7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
