@@ -33,6 +33,24 @@
       "message": "```suggestion\n    kkIndirectBufferForFrontendValidation | kIndirectBufferForBackendResourceTracking;\n```",
       "revId": "ccfef2b2e1392db359f79c14d5caa341fbf69665",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c931fdba_cff30aea",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-27T14:43:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "518d9805_795757e9",
+      "revId": "ccfef2b2e1392db359f79c14d5caa341fbf69665",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
