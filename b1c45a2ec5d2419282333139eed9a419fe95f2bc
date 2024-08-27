@@ -20,6 +20,41 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "dd3b4fbe_663f7cbd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-27T16:32:27Z",
+      "side": 1,
+      "message": "I thought the Emscripten implementation could be a bit simpler, so wouldn\u0027t be that badly duplicated, but I don\u0027t remember specifically why I thought that. Anyway we would need to factor out any shared code so we can bring it along when exporting to Emscripten and I think that\u0027s probably not worth the effort.",
+      "parentUuid": "3915a514_08dc0073",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b222067_37bca0cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-27T16:32:27Z",
+      "side": 1,
+      "message": "I\u0027m sort of catching up on all the stuff you did before this, but I think this looks good!\n\nThere are a few bits of complexity overall that seem possibly unnecessary (EventType?) but I should go over the whole implementation separately.",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "9a11e442_ec2808c1",
         "filename": "third_party/emdawnwebgpu/library_webgpu.js",
         "patchSetId": 4
@@ -66,6 +101,58 @@
       "side": 1,
       "message": "I wasn\u0027t able to do this because the html5 js file doesn\u0027t seem to have access to C++ functions (even if I add the appropriate `__deps` stuff for them). But it can access the functions from here, hence why I chose to do this.",
       "parentUuid": "ffda2920_7b38a7f5",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8e20e88_f06502e1",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-27T16:32:27Z",
+      "side": 1,
+      "message": "I\u0027m surprised about that since I don\u0027t think there should be any difference in what functions they can take deps on....\n\nThough I\u0027m not super worried about the maintainability of this code because actually one of the things we should do is deprecate and remove preinitializedWebGPUDevice. It was a hack to avoid async in application startup; I don\u0027t think is really suitable for anything more than demos, and it _should_ be unnecessary with futures+jspi.",
+      "parentUuid": "219d14ed_c9fa264e",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "413125bd_51566dc3",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-27T16:32:27Z",
+      "side": 1,
+      "message": "Aside, I believe we _could_ use i53abi, as I don\u0027t think we actually need to preserve the full 64 bits. It would be less messy, though probably also generate slightly more code and be slightly slower.\n\nIf we did this then for example `emwgpuOnDeviceLostCompleted` could just take a `double` and have C++ cast it back to `uint64_t`.",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5192fd7_b84fe650",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-27T16:32:27Z",
+      "side": 1,
+      "message": "This seems to only be used as a boolean. Maybe write something like `deviceLostHasFuture \u003d !!deviceLostFutureIdH || !!deviceLostFutureIdL`?\n\nThat said, when would the future id be null, anyway? It seems like it\u0027s only when an invalid callback mode is passed?",
       "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -119,6 +206,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "783507a9_7e691c0b",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-27T16:32:27Z",
+      "side": 1,
+      "message": "Default to WGPUErrorType_Unknown probably",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bc46725e_1b1f4180",
         "filename": "third_party/emdawnwebgpu/library_webgpu.js",
         "patchSetId": 4
@@ -135,6 +239,52 @@
         "startChar": 10,
         "endLine": 1843,
         "endChar": 18
+      },
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0170487_f74a45ec",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-27T16:32:27Z",
+      "side": 1,
+      "message": "How would it improve things if we could do this? It seems just fine for it to take WGPUInstance and then we call into EventSource via inheritance.",
+      "range": {
+        "startLine": 226,
+        "startChar": 19,
+        "endLine": 228,
+        "endChar": 13
+      },
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7039ede6_da07e27a",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-27T16:32:27Z",
+      "side": 1,
+      "message": "I\u0027m guessing this is due to multiple inheritance, since EventSource is not the first base class?",
+      "range": {
+        "startLine": 229,
+        "startChar": 7,
+        "endLine": 229,
+        "endChar": 36
       },
       "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
