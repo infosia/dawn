@@ -16,6 +16,252 @@
       "message": "Figured out the inconsistent test result issue: it was Metal UB happening where the buffers used in the compute pass were not resident.\n\nI\u0027ve addressed the comments from the initial draft, but there are also new changes.",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4d9183d_b64c758a",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "instead of a setter, you could put this in the CommandBufferBase constructor.\n\nThis is where we acquire other things from the encoder, see:\n\n```\nCommandBufferBase::CommandBufferBase(CommandEncoder* encoder,\n                                     const CommandBufferDescriptor* descriptor)\n    : ApiObjectBase(encoder-\u003eGetDevice(), descriptor-\u003elabel),\n      mCommands(encoder-\u003eAcquireCommands()),\n      mResourceUsages(encoder-\u003eAcquireResourceUsages()),\n      mEncoderLabel(encoder-\u003eGetLabel()) {\n    GetObjectTrackingList()-\u003eTrack(this);\n}\n```",
+      "range": {
+        "startLine": 2068,
+        "startChar": 0,
+        "endLine": 2068,
+        "endChar": 79
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d82d8464_251f84f7",
+        "filename": "src/dawn/native/InternalPipelineStore.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "I think you could forward declare `MultiDrawConverterPipeline` and have Ref\u003cMultiDrawConverterPipeline\u003e here.\n\nnamespace dawn::native::metal {\n class MultiDrawConverterPipeline;\n}\n\n...\n\nRef\u003cmetal::MultiDrawConverterPipeline\u003e multidrawICBConverterPipeline;",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5e642a2_b1b9af71",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "nit: we should avoid beginning a compute pass unless we have to. (metadata nonempty)",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b15608f_8e83028c",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "not sure we need a queue to pop from.\n\nWe could have a simple vector, and access it based on the render pass number. See how we\u0027re doing `this-\u003eGetResourceUsages().renderPasses[nextRenderPassNumber].`\n\nThen GetIndirectDrawMetadatas can be const as well",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d9c27ac_0e5ed3a1",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "nit: when we have utilities like this, it\u0027s useful to explain with a class-level comment here at a high level what this is for and how it works",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4513c4c5_5ce95ace",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "why does the ArgumentBuffer need to be a member of this struct?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b4fee11_06d444e3",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "```suggestion\n    raw_ptr\u003cDeviceBase\u003e mDevice;\n```",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 24
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00bcd0f3_ca603f52",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "does Metal let us declare these as const? it would help communicate they are inputs.",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 39
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "249697ba_eca78e1d",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "do we even need to emit the zero-sized draw? could we alternatively return early?",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 102,
+        "endChar": 70
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ea8cf5b_31b77709",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "here, we\u0027ll return without doing anything with `render_command`.\nIs that OK or will it be uninitialized?\n\nthe metal example seems to indicate it\u0027s fine to leave it unset:\nhttps://developer.apple.com/documentation/metal/indirect_command_encoding/encoding_indirect_command_buffers_on_the_gpu?language\u003dobjc\n\nit would be worth a comment about it though",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a79f1a3e_47c64842",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "So this function stores into mMultiDraws, and then they get pulled out by `ExecuteICB`. I think this makes it a bit unclear how long mMultiDraws lives without closer investigation.\n\nI believe an alternative would be to have this function simply return the vector of multidraws, no member-variable stored.\n\nThe calling code could do something like:\n\n```\nstd::vector\u003c\u003e multidraws;\nDAWN_TRY_ASSIGN(multidraws, PrepareMultiDraws(...));\n```\n\nthen you pass multidraws into `this-\u003eEncodeComputePass`",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 24
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd2255f3_b380ae28",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000032
+      },
+      "writtenOn": "2024-08-27T22:32:52Z",
+      "side": 1,
+      "message": "is there a reason we need to use argument buffers versus using the normal `[MTLComputeCommandEncoder setBuffer:...]` ?",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
