@@ -746,6 +746,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cde9ae9_a9538200",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-27T19:26:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "918e8577_332cf3d2",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87ca898c_cb751caf",
