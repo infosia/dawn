@@ -693,6 +693,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53b25c37_3a780799",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-27T19:26:08Z",
+      "side": 1,
+      "message": "Discussed offline, shouldn\u0027t happen in practice.",
+      "parentUuid": "ba470d58_b7b1beac",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "530baa6a_27347f4b",
