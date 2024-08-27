@@ -72,6 +72,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "a7fae5e9_946d76df",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-27T12:38:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30f6af7d_ecfa91c0",
+      "revId": "e49410f9549f404ea38fe9050f3f86c2f2815b9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "0a49f747_3191716d",
         "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
         "patchSetId": 3
@@ -100,6 +118,24 @@
       "writtenOn": "2024-08-26T19:56:35Z",
       "side": 1,
       "message": "Nit: It feels like there\u0027s enough code duplication between generating the first and second members that you could pull the common code out to a helper lambda. Maybe worth trying to see how it looks.",
+      "revId": "e49410f9549f404ea38fe9050f3f86c2f2815b9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff57b2ff_a04096ff",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-27T12:38:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a5c84f9_52280773",
       "revId": "e49410f9549f404ea38fe9050f3f86c2f2815b9f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
