@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b663329_e2c87879",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-08-27T21:56:32Z",
+      "side": 1,
+      "message": "PTAL\n\nWill need to wait for crrev.com/c/5818207 to land before this.",
+      "revId": "f71b95758dff8d46fc412073c56935d021c06f6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
