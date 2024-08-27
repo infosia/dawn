@@ -305,6 +305,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "846815ab_dd532adf",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T17:21:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95fedabe_3f5b1ee1",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "304f3382_f3455647",
@@ -336,6 +354,24 @@
       "side": 1,
       "message": "The names are really useful to know what you\u0027re looking at when staring at generated shaders, but yes, we could in theory always use generic symbols for helper functions/structures/etc in transforms.\n\nIn this specific case, this will happen at most four times for any given shader (once per scalar type), so I don\u0027t think it\u0027d be too costly?",
       "parentUuid": "304f3382_f3455647",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a217255_1ef957b1",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T17:21:32Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "68e38db9_9f31bfa5",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -410,6 +446,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2102a883_02b8a666",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T17:21:32Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d485a948_2265e126",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f708ee05_72bc9e5b",
@@ -476,6 +530,24 @@
       "side": 1,
       "message": "The use is the source object to the access chain, it doesn\u0027t tell us which of the indices will be accessing into matrices or arrays that directly contain vec3 elements.",
       "parentUuid": "3da608f0_125d29dd",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23062ec8_28cc4857",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T17:21:32Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "50fcc933_f7bf0812",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -550,6 +622,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87ea7997_947ebf1b",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T17:21:32Z",
+      "side": 1,
+      "message": "Heh, s/assument/assignment. You said what I said, but with words that made sense, and were actually words.",
+      "parentUuid": "94e8c94c_cdd0caab",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9eff08d0_b7cb09fe",
@@ -581,6 +671,24 @@
       "side": 1,
       "message": "`ForEachUse*` won\u0027t be called on new instructions that are created during the lambda as it captures a copy of the uses and iterates over that.",
       "parentUuid": "9eff08d0_b7cb09fe",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba470d58_b7b1beac",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T17:21:32Z",
+      "side": 1,
+      "message": "I don\u0027t mean recursively, but the `LoadPackedToUnpacked` may return something which is identical to the original load, if there are no packed types. Which means this is a useless replacement. Probably not a huge deal as it\u0027s a single instruction we replace.",
+      "parentUuid": "deebee25_afa8c2c9",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -651,6 +759,24 @@
       "side": 1,
       "message": "Yes, when looping over struct members this is called for each struct member, but not all of them necessarily contain packed vectors. You could put the check at the callsites instead but this felt marginally nicer.",
       "parentUuid": "87ca898c_cb751caf",
+      "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7884a988_afa78b75",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T17:21:32Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3de51d46_8ae111ed",
       "revId": "30356ab16748d9ecb0d96f2dfa9da66dd1d739dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
