@@ -75,6 +75,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "286b7b10_1f8d9dd7",
+        "filename": "src/dawn/common/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T20:14:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eee66729_d651591e",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 1
+      },
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f4062fa_67d02460",
@@ -128,6 +152,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "090b3261_77f64931",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T20:14:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4837c03c_d3587a6c",
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60075bb9_dc8d59c4",
@@ -141,6 +183,24 @@
       "writtenOn": "2024-08-26T20:54:29Z",
       "side": 1,
       "message": "Is this really needed? I thought the dependency scanner was supposed to pick this up automatically based on the path filter you added to `externals.json`?\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/tools/src/cmd/gen/build/build.go;l\u003d543?q\u003d%22Check%20for%20external%20includes%22\u0026ss\u003dchromium",
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed9f1de7_5810cea7",
+        "filename": "src/tint/utils/macros/BUILD.cfg",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T20:14:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60075bb9_dc8d59c4",
       "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -162,6 +222,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e5f70a5_74a7523d",
+        "filename": "src/utils/BUILD.bazel",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T20:14:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86ac06a1_dd05470b",
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9f4b20a_b2e115c7",
@@ -175,6 +253,24 @@
       "writtenOn": "2024-08-26T07:53:30Z",
       "side": 1,
       "message": "I think this is no longer true, we should support all OSes that Chromium supports, esp since Chromium will eventually use Dawn everywhere for Graphite ^^",
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07a794c0_b3095c41",
+        "filename": "src/utils/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T20:14:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9f4b20a_b2e115c7",
       "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -210,6 +306,24 @@
       "side": 1,
       "message": "I thought that as well, MSVC said differently. Without this file the MSVC bots got mad at me.",
       "parentUuid": "772398f2_edfe457f",
+      "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f9809f0_00a74dfa",
+        "filename": "src/utils/placeholder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-27T20:14:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5c85e4df_ced592d2",
       "revId": "519290ce3d2009873b5375ec76aed51cae70662a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
