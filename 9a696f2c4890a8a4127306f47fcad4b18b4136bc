@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3b56e8f_1334a444",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T22:00:15Z",
+      "side": 1,
+      "message": "LGTM but Corentin\u0027s review is effectively stale at this point (I can\u0027t dismiss it for some reason)",
+      "revId": "9a696f2c4890a8a4127306f47fcad4b18b4136bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
