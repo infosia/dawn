@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "af369f6c8fcd1baa5c78e473086e4754c6af3ed4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53ccef4d_4bf5ec39",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T16:28:18Z",
+      "side": 1,
+      "message": "Nit: Prefer `Hashmap` for internal stuff.",
+      "revId": "af369f6c8fcd1baa5c78e473086e4754c6af3ed4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74d1718f_eeb6d4e7",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T16:28:18Z",
+      "side": 1,
+      "message": "Nit: Prefer `Hashset` for internal stuff.",
+      "revId": "af369f6c8fcd1baa5c78e473086e4754c6af3ed4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
