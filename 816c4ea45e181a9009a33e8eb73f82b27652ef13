@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05fe8ecd_a2b20006",
+        "filename": "test/tint/expressions/binary/mod/scalar-vec3/f32.wgsl.expected.ir.msl",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-28T01:38:58Z",
+      "side": 1,
+      "message": "Wait, why isn\u0027t this `msl.fmod` as it should be using the msl specific intrinsic, no?",
+      "revId": "816c4ea45e181a9009a33e8eb73f82b27652ef13",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
