@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "3e9b174273e8d53dcd675d43a3e5e7bc1b6f235d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5c9fabc_a4346a5d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T16:41:30Z",
+      "side": 1,
+      "message": "LGTM but let\u0027s generate expectation files soon.",
+      "revId": "3e9b174273e8d53dcd675d43a3e5e7bc1b6f235d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
