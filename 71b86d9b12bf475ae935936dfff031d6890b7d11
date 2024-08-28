@@ -91,6 +91,30 @@
       },
       "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6bcdfa6_4e4eb5be",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-28T06:59:16Z",
+      "side": 1,
+      "message": "Oh we not only need to consume `old_struct_member,attribute` but also need to consume `old_struct_member.type`.\n\nYour method doesn\u0027t consume `old_struct_member.type` (an array of f32) in the wrapper_struct, so we will meet below error message:\n\n..\\..\\src\\tint\\lang\\wgsl\\resolver\\resolver.cc:242 internal compiler error: AST node \u0027tint::ast::Identifier\u0027 was not reached by the resolver\n\nSo we have to find a way to consume the original both type and attribute (array\u003cf32, N\u003e [[clip_distances]]) while actually we don\u0027t need it in the HLSL backend.",
+      "parentUuid": "e1420c22_32a9795e",
+      "range": {
+        "startLine": 735,
+        "startChar": 0,
+        "endLine": 746,
+        "endChar": 0
+      },
+      "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
