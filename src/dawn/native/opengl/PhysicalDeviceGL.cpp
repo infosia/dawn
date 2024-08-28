@@ -228,6 +228,14 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         }
     }
 
+    if (mFunctions.IsGLExtensionSupported("GL_KHR_texture_compression_astc_ldr")) {
+        EnableFeature(Feature::TextureCompressionASTC);
+    }
+
+    if (mFunctions.IsAtLeastGLES(3, 0)) {
+        EnableFeature(Feature::TextureCompressionETC2);
+    }
+
     if (mDisplay->egl.HasExt(EGLExt::DisplayTextureShareGroup)) {
         EnableFeature(dawn::native::Feature::ANGLETextureSharing);
     }
