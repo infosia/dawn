@@ -16,6 +16,23 @@
       "message": "PTAL. I\u0027m going to use this in the GLSL backend to set `main` as the entry point name.",
       "revId": "05dedc45e066de086e7a35b51e433d656f79123a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e0bcbc1_354bac28",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T16:41:11Z",
+      "side": 1,
+      "message": "Discussed offline, let\u0027s not do this because ShaderIO is skipped for entry points that have no inputs and outputs.",
+      "revId": "05dedc45e066de086e7a35b51e433d656f79123a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
