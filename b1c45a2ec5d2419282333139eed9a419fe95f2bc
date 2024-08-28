@@ -123,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5051d4f9_a0a2de7c",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T22:46:07Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e8e20e88_f06502e1",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "413125bd_51566dc3",
@@ -140,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e641e920_a89768c1",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T22:46:07Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "413125bd_51566dc3",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5192fd7_b84fe650",
@@ -153,6 +189,24 @@
       "writtenOn": "2024-08-27T16:32:27Z",
       "side": 1,
       "message": "This seems to only be used as a boolean. Maybe write something like `deviceLostHasFuture \u003d !!deviceLostFutureIdH || !!deviceLostFutureIdL`?\n\nThat said, when would the future id be null, anyway? It seems like it\u0027s only when an invalid callback mode is passed?",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c14a68a3_2289c7bf",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T22:46:07Z",
+      "side": 1,
+      "message": "Done, and yea, it can be 0 if passed an invalid callback mode.",
+      "parentUuid": "b5192fd7_b84fe650",
       "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -221,6 +275,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08916ed4_1e38285e",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T22:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "783507a9_7e691c0b",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc46725e_1b1f4180",
@@ -234,6 +306,30 @@
       "writtenOn": "2024-08-23T17:09:34Z",
       "side": 1,
       "message": "nit: bug number instead",
+      "range": {
+        "startLine": 1843,
+        "startChar": 10,
+        "endLine": 1843,
+        "endChar": 18
+      },
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9c41674_38a9d3d9",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T22:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc46725e_1b1f4180",
       "range": {
         "startLine": 1843,
         "startChar": 10,
@@ -267,6 +363,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "05d6e9da_046857ec",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T22:46:07Z",
+      "side": 1,
+      "message": "Yea, it\u0027s fine as is. I just wanted to document the behavior for future reference.",
+      "parentUuid": "b0170487_f74a45ec",
+      "range": {
+        "startLine": 226,
+        "startChar": 19,
+        "endLine": 228,
+        "endChar": 13
+      },
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7039ede6_da07e27a",
@@ -290,6 +410,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d775097_fcf47637",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T22:46:07Z",
+      "side": 1,
+      "message": "Yea, I\u0027m pretty sure that\u0027s the case.",
+      "parentUuid": "7039ede6_da07e27a",
+      "range": {
+        "startLine": 229,
+        "startChar": 7,
+        "endLine": 229,
+        "endChar": 36
+      },
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bce9299e_ec3ed21b",
@@ -303,6 +447,24 @@
       "writtenOn": "2024-08-23T17:09:34Z",
       "side": 1,
       "message": "would it be possible to make the queue as well and pass it into the ctor?\n\nWould be nice to avoid the public SetQueue method that is invoked in emwgpuOnRequestDeviceCompleted. Cleaner if the Device always has a queue, and it\u0027s not a mutable thing",
+      "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd26f4d2_f309869e",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T22:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bce9299e_ec3ed21b",
       "revId": "b1c45a2ec5d2419282333139eed9a419fe95f2bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
