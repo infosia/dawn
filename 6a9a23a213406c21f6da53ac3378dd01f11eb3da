@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bc93f1d_0d9216a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T19:29:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "19f71c40_39743c5b",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "6a9a23a213406c21f6da53ac3378dd01f11eb3da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10321fd4_83185641",
@@ -58,6 +82,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d891f5e8_9432d985",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T19:29:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10321fd4_83185641",
+      "revId": "6a9a23a213406c21f6da53ac3378dd01f11eb3da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b6a50c0_75f686c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T19:29:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63eb3e48_a5208126",
+      "revId": "6a9a23a213406c21f6da53ac3378dd01f11eb3da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd076849_3c1f2569",
@@ -71,6 +131,30 @@
       "writtenOn": "2024-08-28T00:34:04Z",
       "side": 1,
       "message": "This part of the comment still needs to be updated",
+      "range": {
+        "startLine": 53,
+        "startChar": 49,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "6a9a23a213406c21f6da53ac3378dd01f11eb3da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4110a8d5_c36958b5",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T19:29:03Z",
+      "side": 1,
+      "message": "No longer applicable as I just removed the whole thing.",
+      "parentUuid": "fd076849_3c1f2569",
       "range": {
         "startLine": 53,
         "startChar": 49,
