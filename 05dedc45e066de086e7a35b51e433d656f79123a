@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7464c4dd_83417e87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-28T13:36:47Z",
+      "side": 1,
+      "message": "PTAL. I\u0027m going to use this in the GLSL backend to set `main` as the entry point name.",
+      "revId": "05dedc45e066de086e7a35b51e433d656f79123a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
