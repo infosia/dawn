@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19f71c40_39743c5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T00:34:04Z",
+      "side": 1,
+      "message": "\"before ConsumedError\"?",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "6a9a23a213406c21f6da53ac3378dd01f11eb3da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10321fd4_83185641",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T00:34:04Z",
+      "side": 1,
+      "message": "Briefly explain the lock inversion problem",
+      "revId": "6a9a23a213406c21f6da53ac3378dd01f11eb3da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63eb3e48_a5208126",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T00:34:04Z",
+      "side": 1,
+      "message": "And of course describe whatever we do to fix the failures.\n\nSome notes about what we discussed offline: The failures are caused by ProcessEvents now allowing the WaitRef check to fail. The WaitRef check is probably too strong - it was helpful before but if we have to split this critical section then it doesn\u0027t really work anymore. There are a few options:\n- Change the tests so they don\u0027t try to call ProcessEvents in parallel\n- Put a (new, instance-wide) lock around the whole ProcessEvents body, or the WaitImpl part, so it won\u0027t run in parallel (see mProcessEventLock from https://dawn-review.googlesource.com/c/dawn/+/151532/2..4)\n- Tighten the section that holds WaitRef (see PS1 of this CL https://dawn-review.googlesource.com/c/dawn/+/173566/1)\n- Get rid of WaitRef entirely. At the time of that CL I was pretty adamant that it was useful to keep, mostly for checking invariants inside Dawn, but I\u0027m less certain now. It seems like everything should be safe without it:\n  - EnsureComplete is safe, it was already outside the lock\n  - it seems like WaitImpl itself should be safe, it seems to mostly look at const things\n  - WaitQueueSerialsImpl is safe because you\u0027re adding a lock to it already in this CL\n  - WaitAnySystemEvent is almost certainly fine, but it does depend on the thread safety properties of the OS which are very hard to look up",
+      "revId": "6a9a23a213406c21f6da53ac3378dd01f11eb3da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd076849_3c1f2569",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T00:34:04Z",
+      "side": 1,
+      "message": "This part of the comment still needs to be updated",
+      "range": {
+        "startLine": 53,
+        "startChar": 49,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "6a9a23a213406c21f6da53ac3378dd01f11eb3da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
