@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cc3f324_b8159f1c",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-28T19:31:29Z",
+      "side": 1,
+      "message": "Will do as a followup as this was borrowed from the MSL backend, I\u0027ll fix all of them in one pass.",
+      "parentUuid": "53ccef4d_4bf5ec39",
+      "revId": "af369f6c8fcd1baa5c78e473086e4754c6af3ed4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74d1718f_eeb6d4e7",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-08-28T16:28:18Z",
       "side": 1,
       "message": "Nit: Prefer `Hashset` for internal stuff.",
+      "revId": "af369f6c8fcd1baa5c78e473086e4754c6af3ed4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6889580_fa08b296",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-28T19:31:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "74d1718f_eeb6d4e7",
       "revId": "af369f6c8fcd1baa5c78e473086e4754c6af3ed4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
