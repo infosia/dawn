@@ -52,6 +52,24 @@
       "parentUuid": "1304d84d_70822fde",
       "revId": "3550b2c0b9b499c007159a4799cd9b975fc56d7f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "011b7d63_077e54ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-08-28T05:55:38Z",
+      "side": 1,
+      "message": "I understand the problem also exists in the current code. I reported this issue some time in the past https://g-issues.chromium.org/issues/345541614#comment5\nHowever, it\u0027s low priority because it\u0027s much harder to reach the deadlock state with the current code than the change in this CL.",
+      "parentUuid": "2cee3878_67b1c63e",
+      "revId": "3550b2c0b9b499c007159a4799cd9b975fc56d7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
