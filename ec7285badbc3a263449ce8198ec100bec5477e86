@@ -16,6 +16,24 @@
       "message": "Do we want to be generating this into the source directory? I think we want it to generate into an output directory, which probably needs to be a param?",
       "revId": "ec7285badbc3a263449ce8198ec100bec5477e86",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d555b938_6efc7e77",
+        "filename": "src/tint/cmd/bench/generate_benchmark_inputs.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T02:36:04Z",
+      "side": 0,
+      "message": "Not exactly sure which part of the new script you\u0027re referring to since this comment is attached to the old version.\n\nThe header file is generated in the build directory, which is passed as parameter to the script.\n\nThe WGSL files are generated alongside their `.spv` sources, since we check them in.",
+      "parentUuid": "39e3a9db_85fb3c4e",
+      "revId": "ec7285badbc3a263449ce8198ec100bec5477e86",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

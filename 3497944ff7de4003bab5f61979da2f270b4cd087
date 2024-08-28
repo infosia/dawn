@@ -16,6 +16,24 @@
       "message": "Is this needed here and in bench.cc?",
       "revId": "3497944ff7de4003bab5f61979da2f270b4cd087",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad61b659_aaf91a8c",
+        "filename": "src/tint/cmd/bench/bench.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T02:36:04Z",
+      "side": 1,
+      "message": "It\u0027s needed here so that benchmarks that include this file pick up the benchmark macros.\n\nI originally didn\u0027t have it in `bench.cc` but you recently added it as part of a CL called \"`cmd` headers cleanup\", so I assume you hit some sort of IWYU issue.\n\nMaybe it needs an `IWYU: export`, but I don\u0027t know how well this plays with the `GEN_BUILD` comment as well.",
+      "parentUuid": "0afc2631_4f674a24",
+      "revId": "3497944ff7de4003bab5f61979da2f270b4cd087",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
