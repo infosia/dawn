@@ -309,6 +309,24 @@
       "parentUuid": "a3d2221b_4cc15d51",
       "revId": "2d98f3912f4f311ce66a1a81962fa8055b7a2d3b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88803b4b_b5cc3d9f",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-28T11:37:11Z",
+      "side": 1,
+      "message": "Ok that makes sense, I was looking at `TrackUsageAndGetResourceBarrier` and there doesn\u0027t seem to be a better, automagic way to do this.",
+      "parentUuid": "4ab39e99_29732ba7",
+      "revId": "2d98f3912f4f311ce66a1a81962fa8055b7a2d3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

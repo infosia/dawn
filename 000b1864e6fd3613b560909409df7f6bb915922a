@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c9b84b2_96d7a9f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-28T11:37:11Z",
+      "side": 1,
+      "message": "LGTM after last nits!",
+      "revId": "000b1864e6fd3613b560909409df7f6bb915922a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c7b2ad4_abab6f75",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-28T11:37:11Z",
+      "side": 1,
+      "message": "nit: double k",
+      "range": {
+        "startLine": 209,
+        "startChar": 46,
+        "endLine": 209,
+        "endChar": 48
+      },
+      "revId": "000b1864e6fd3613b560909409df7f6bb915922a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5b1a4fd_5fd0f4ff",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-28T11:37:11Z",
+      "side": 1,
+      "message": "nit: Maybe comment about why we skip early and that we could not skip early if we require synchronization2.",
+      "revId": "000b1864e6fd3613b560909409df7f6bb915922a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
