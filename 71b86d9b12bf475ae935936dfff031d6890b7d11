@@ -115,6 +115,30 @@
       },
       "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "308f1c9b_f74a4275",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-08-28T15:53:16Z",
+      "side": 1,
+      "message": "Okay, fair enough. We\u0027ve decided not to stall your work, and land this as-is; however, I created the follow up bug b/362739022, so can you please add `// TODO(crbug.com/362739022): clean up unused member workaround` above each of the places in the code related to this workaround (like where I commented)? With that, we can land this. Thanks.",
+      "parentUuid": "d6bcdfa6_4e4eb5be",
+      "range": {
+        "startLine": 735,
+        "startChar": 0,
+        "endLine": 746,
+        "endChar": 0
+      },
+      "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
