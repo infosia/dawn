@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43f8e168_ba1de1bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-28T00:45:19Z",
+      "side": 1,
+      "message": "https://ci.chromium.org/ui/p/chromium/builders/ci/Dawn%20Linux%20x64%20Release%20(Intel%20UHD%20770)\n\nBasically many (if not all) subcases under copy_from_video tests are flaky on multiple intel-xxx instances.",
+      "revId": "b18dda571a9bca137a78b5860c30f1da4acd9dea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
