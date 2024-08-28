@@ -34,6 +34,24 @@
       "parentUuid": "39e3a9db_85fb3c4e",
       "revId": "ec7285badbc3a263449ce8198ec100bec5477e86",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8cad2d7_b02089bb",
+        "filename": "src/tint/cmd/bench/generate_benchmark_inputs.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-28T02:42:23Z",
+      "side": 0,
+      "message": "oh, so it generates into `\u003cgen_dir\u003e/src/tint/cmd/bench/benchmark_inputs.h`? I was thrown off by the path in the `bench.h` file as it _looks_ like it\u0027s a source tree path",
+      "parentUuid": "d555b938_6efc7e77",
+      "revId": "ec7285badbc3a263449ce8198ec100bec5477e86",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
