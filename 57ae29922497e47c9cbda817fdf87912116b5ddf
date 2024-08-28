@@ -16,6 +16,24 @@
       "message": "```suggestion\n            // Check if this `continue` is inside a `switch` that is inside the `loop`.\n```",
       "revId": "57ae29922497e47c9cbda817fdf87912116b5ddf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb941120_475e0292",
+        "filename": "src/tint/lang/core/ir/transform/remove_continue_in_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T22:52:37Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "3d339c2e_03b67f3f",
+      "revId": "57ae29922497e47c9cbda817fdf87912116b5ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
