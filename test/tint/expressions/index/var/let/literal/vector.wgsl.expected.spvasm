@@ -27,9 +27,9 @@
           %f = OpFunction %float None %3
           %4 = OpLabel
           %v = OpVariable %_ptr_Function_v3float Function
-               OpStore %v %8
+               OpStore %v %8 None
          %14 = OpAccessChain %_ptr_Function_float %v %i
-         %16 = OpLoad %float %14
+         %16 = OpLoad %float %14 None
                OpReturnValue %16
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %19

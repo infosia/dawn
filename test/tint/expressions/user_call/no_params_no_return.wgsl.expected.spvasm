@@ -20,10 +20,10 @@
           %c = OpFunction %void None %3
           %4 = OpLabel
           %a = OpVariable %_ptr_Function_int Function
-               OpStore %a %int_1
-          %9 = OpLoad %int %a
+               OpStore %a %int_1 None
+          %9 = OpLoad %int %a None
          %10 = OpIAdd %int %9 %int_2
-               OpStore %a %10
+               OpStore %a %10 None
                OpReturn
                OpFunctionEnd
           %b = OpFunction %void None %3

@@ -24,12 +24,12 @@
           %b = OpVariable %_ptr_Function_int Function
         %a_0 = OpVariable %_ptr_Function_int Function
         %b_0 = OpVariable %_ptr_Function_int Function
-               OpStore %a %int_0
-          %9 = OpLoad %int %a
-               OpStore %b %9
-               OpStore %a_0 %int_0
-         %12 = OpLoad %int %a_0
-               OpStore %b_0 %12
+               OpStore %a %int_0 None
+          %9 = OpLoad %int %a None
+               OpStore %b %9 None
+               OpStore %a_0 %int_0 None
+         %12 = OpLoad %int %a_0 None
+               OpStore %b_0 %12 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

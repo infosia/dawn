@@ -35,6 +35,6 @@
           %4 = OpLabel
        %zero = OpVariable %_ptr_Function__arr__arr_int_uint_3_uint_2 Function %13
        %init = OpVariable %_ptr_Function__arr__arr_int_uint_3_uint_2 Function
-               OpStore %init %15
+               OpStore %init %15 None
                OpReturn
                OpFunctionEnd

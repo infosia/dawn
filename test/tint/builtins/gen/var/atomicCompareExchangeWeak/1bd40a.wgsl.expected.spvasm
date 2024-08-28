@@ -51,15 +51,15 @@
       %arg_1 = OpVariable %_ptr_Function_int Function
       %arg_2 = OpVariable %_ptr_Function_int Function
         %res = OpVariable %_ptr_Function___atomic_compare_exchange_result_i32 Function
-               OpStore %arg_1 %int_1
-               OpStore %arg_2 %int_1
+               OpStore %arg_1 %int_1 None
+               OpStore %arg_2 %int_1 None
          %14 = OpAccessChain %_ptr_StorageBuffer_int %1 %uint_0 %uint_0
-         %18 = OpLoad %int %arg_1
-         %19 = OpLoad %int %arg_2
+         %18 = OpLoad %int %arg_1 None
+         %19 = OpLoad %int %arg_2 None
          %20 = OpAtomicCompareExchange %int %14 %uint_1 %uint_0 %uint_0 %19 %18
          %22 = OpIEqual %bool %20 %18
          %25 = OpCompositeConstruct %__atomic_compare_exchange_result_i32 %20 %22
-               OpStore %res %25
+               OpStore %res %25 None
                OpReturn
                OpFunctionEnd
 %fragment_main = OpFunction %void None %8

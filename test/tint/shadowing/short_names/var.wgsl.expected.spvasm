@@ -28,11 +28,11 @@
           %b = OpVariable %_ptr_Function_int Function
           %c = OpVariable %_ptr_Function_v3float Function
           %d = OpVariable %_ptr_Function_v3float Function
-               OpStore %vec3f %int_1
-          %9 = OpLoad %int %vec3f
-               OpStore %b %9
-               OpStore %c %15
-               OpStore %d %15
+               OpStore %vec3f %int_1 None
+          %9 = OpLoad %int %vec3f None
+               OpStore %b %9 None
+               OpStore %c %15 None
+               OpStore %d %15 None
                OpReturn
                OpFunctionEnd
 %unused_entry_point = OpFunction %void None %3

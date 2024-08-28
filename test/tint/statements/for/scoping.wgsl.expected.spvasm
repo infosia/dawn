@@ -23,7 +23,7 @@
 %must_not_collide_0 = OpVariable %_ptr_Function_int Function %15
                OpBranch %5
           %5 = OpLabel
-               OpStore %must_not_collide %int_0
+               OpStore %must_not_collide %int_0 None
                OpBranch %8
           %8 = OpLabel
                OpLoopMerge %9 %7 None

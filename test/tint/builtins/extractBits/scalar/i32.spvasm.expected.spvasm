@@ -28,12 +28,12 @@
           %v = OpVariable %_ptr_Function_int Function
    %offset_1 = OpVariable %_ptr_Function_uint Function
       %count = OpVariable %_ptr_Function_uint Function
-               OpStore %v %int_0
-               OpStore %offset_1 %uint_0
-               OpStore %count %uint_0
-         %14 = OpLoad %int %v
-         %15 = OpLoad %uint %offset_1
-         %16 = OpLoad %uint %count
+               OpStore %v %int_0 None
+               OpStore %offset_1 %uint_0 None
+               OpStore %count %uint_0 None
+         %14 = OpLoad %int %v None
+         %15 = OpLoad %uint %offset_1 None
+         %16 = OpLoad %uint %count None
          %17 = OpExtInst %uint %18 UMin %15 %uint_32
          %20 = OpISub %uint %uint_32 %17
          %21 = OpExtInst %uint %18 UMin %16 %20
