@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a96c446_5161bb0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-08-28T22:44:18Z",
+      "side": 1,
+      "message": "PTAL\n\nhttps://dawn-review.googlesource.com/c/dawn/+/204414 needs to land before this can run on the CQ.",
+      "revId": "464fa104f8f3e7c84e5d0fa60fd2f64234ff439f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
