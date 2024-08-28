@@ -98,6 +98,9 @@ struct ShaderIOBackendState {
     /// @returns true if a vertex point size builtin should be added
     virtual bool NeedsVertexPointSize() const { return false; }
 
+    /// @returns the entry point name
+    virtual Symbol EntryPointName(std::string_view name) { return ir.symbols.Register(name); }
+
   protected:
     /// The IR module.
     Module& ir;

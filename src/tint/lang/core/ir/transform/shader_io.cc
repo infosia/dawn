@@ -137,7 +137,9 @@ struct State {
         ep->ClearWorkgroupSize();
 
         // Create the entry point wrapper function.
-        auto* wrapper_ep = b.Function(name, new_ret_ty);
+        auto* wrapper_ep = b.Function(new_ret_ty);
+        ir.SetName(wrapper_ep, backend->EntryPointName(name));
+
         wrapper_ep->SetParams(std::move(new_params));
         wrapper_ep->SetStage(stage);
         if (wgsize) {
