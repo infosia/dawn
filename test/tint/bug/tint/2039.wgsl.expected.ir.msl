@@ -5,18 +5,23 @@ kernel void tint_symbol() {
   uint out = 0u;
   {
     while(true) {
+      bool tint_continue = false;
       switch(2) {
         case 1:
         {
-          {
-            if (true) { break; }
-          }
-          continue;
+          tint_continue = true;
+          break;
         }
         default:
         {
           break;
         }
+      }
+      if (tint_continue) {
+        {
+          if (true) { break; }
+        }
+        continue;
       }
       out = (out + 1u);
       {
