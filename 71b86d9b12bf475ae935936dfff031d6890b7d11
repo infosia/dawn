@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fef7600_9a2816fa",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4606,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T22:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33303c4e_874c9fe2",
+      "range": {
+        "startLine": 4606,
+        "startChar": 16,
+        "endLine": 4606,
+        "endChar": 47
+      },
+      "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f724e23a_725ffb89",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "544d2879_839e94b1",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4654,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T22:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f724e23a_725ffb89",
+      "range": {
+        "startLine": 4649,
+        "startChar": 0,
+        "endLine": 4654,
+        "endChar": 17
+      },
+      "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84a37a30_b50881e7",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-08-27T15:21:57Z",
       "side": 1,
       "message": "More awkardness as per my comment below.",
+      "range": {
+        "startLine": 4676,
+        "startChar": 12,
+        "endLine": 4676,
+        "endChar": 48
+      },
+      "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cae0661d_fd1101fa",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4676,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T22:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84a37a30_b50881e7",
       "range": {
         "startLine": 4676,
         "startChar": 12,
@@ -131,6 +203,30 @@
       "side": 1,
       "message": "Okay, fair enough. We\u0027ve decided not to stall your work, and land this as-is; however, I created the follow up bug b/362739022, so can you please add `// TODO(crbug.com/362739022): clean up unused member workaround` above each of the places in the code related to this workaround (like where I commented)? With that, we can land this. Thanks.",
       "parentUuid": "d6bcdfa6_4e4eb5be",
+      "range": {
+        "startLine": 735,
+        "startChar": 0,
+        "endLine": 746,
+        "endChar": 0
+      },
+      "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5da318dc_92b3217b",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T22:02:55Z",
+      "side": 1,
+      "message": "We didn\u0027t see that you\u0027d uploaded a new patchset after making this comment. This looks like a reasonable approach that is more robust than the original. Thanks for taking the time to make these changes!",
+      "parentUuid": "308f1c9b_f74a4275",
       "range": {
         "startLine": 735,
         "startChar": 0,
