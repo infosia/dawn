@@ -34,6 +34,24 @@
       "parentUuid": "0afc2631_4f674a24",
       "revId": "3497944ff7de4003bab5f61979da2f270b4cd087",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83ad426b_98f57b61",
+        "filename": "src/tint/cmd/bench/bench.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-28T02:42:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ad61b659_aaf91a8c",
+      "revId": "3497944ff7de4003bab5f61979da2f270b4cd087",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
