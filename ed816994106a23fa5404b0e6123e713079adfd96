@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5fda727_a65246c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "oops, I almost forgot to finish this review. Overall looking good!",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4d9183d_b64c758a",
@@ -111,6 +128,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7d4e7384_c4eefb94",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "nit: This seems different from the struct MultiDrawData in the MSL source, so one of them should have a different name.",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73605f54_b9ab736a",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "nit: struct member should be named `mIndirectCommandBuffer` and so on",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4513c4c5_5ce95ace",
         "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
         "patchSetId": 4
@@ -157,6 +208,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "61f22146_dfb2fd4c",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "nit: name as a constant: `kMSLShader` or `kShaderSource` or something like that",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "00bcd0f3_ca603f52",
         "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
         "patchSetId": 4
@@ -174,6 +248,23 @@
         "endLine": 67,
         "endChar": 39
       },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc7b7de1_02e32791",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "The 64-wide parallelism thing that you had before (https://dawn-review.googlesource.com/c/dawn/+/195494/comment/d611b798_49825541/) might be more efficient. Could leave a TODO to investigate optimizing this compute dispatch later, if you think that\u0027s possible.",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -203,6 +294,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cfc63a9a_e48d81e9",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "Returning early is probably better, I\u0027d guess the \"no-op\" command could be slightly or significantly more efficient than an empty draw call.",
+      "parentUuid": "249697ba_eca78e1d",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 102,
+        "endChar": 70
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d19e6d4_dba195a2",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "I remember from the first draft CL you had a way to turn off validation. That seems like it would still be useful to have in the future, so we can leave a TODO like:\n\n\u003e TODO(crbug.com/356461286): Use a function_constant to statically skip this when validation is disabled on the device.",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ea8cf5b_31b77709",
         "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
         "patchSetId": 4
@@ -214,6 +346,41 @@
       "writtenOn": "2024-08-27T22:32:52Z",
       "side": 1,
       "message": "here, we\u0027ll return without doing anything with `render_command`.\nIs that OK or will it be uninitialized?\n\nthe metal example seems to indicate it\u0027s fine to leave it unset:\nhttps://developer.apple.com/documentation/metal/indirect_command_encoding/encoding_indirect_command_buffers_on_the_gpu?language\u003dobjc\n\nit would be worth a comment about it though",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27beb560_c3ce0d05",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "\u003e If the object is not visible, no draw command will be set since so long as the app has reset the indirect command buffer commands with a blit encoder before encoding the draw.\n\nSounds like if the ICB is zeroed then it\u0027s full of \"no-op\" commands and they\u0027ll remain that way if they\u0027re not written. Makes sense.",
+      "parentUuid": "5ea8cf5b_31b77709",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59bd5844_c70af416",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure it actually matters, but we usually use `static constexpr` for constants.",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -243,6 +410,76 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d1734506_604ce39b",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "This seems like a good idea to me. I actually think if you did this then MultiDrawIndirectEncoder wouldn\u0027t have to have any fields at all - the MultiDrawConverterPipeline is stored elsewhere and the only other field is mDevice which could probably be passed in as an argument. Then we wouldn\u0027t need the class and the methods could become standalone functions.\n\nThis is not very important though, so don\u0027t worry about it if you don\u0027t have time to try this refactor.",
+      "parentUuid": "a79f1a3e_47c64842",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 24
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "747c1eac_48859e4e",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "IIRC each ICB will only contain one kind of draw call, we should use that here so we can specify just one CommandType.\n\nFrom the docs: \"To save space, specify only the command types you are going to encode in the indirect command buffer.\"\n\n(Also suddenly this explains some questions I had a month ago about how ICBs determined how much space they needed.)",
+      "range": {
+        "startLine": 190,
+        "startChar": 34,
+        "endLine": 190,
+        "endChar": 96
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1d36dcf_402419b2",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "If it still works when set to Private, let\u0027s use that here as it\u0027s probably more efficient\n(from https://dawn-review.googlesource.com/c/dawn/+/195494/comment/da494594_31e001ae/)",
+      "range": {
+        "startLine": 202,
+        "startChar": 62,
+        "endLine": 202,
+        "endChar": 90
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd2255f3_b380ae28",
         "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
         "patchSetId": 4
@@ -260,6 +497,103 @@
         "endLine": 204,
         "endChar": 0
       },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b5a839e_e8191b90",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "nit: `sizeof(uint16_t)`. It\u0027s the same but self-documenting.",
+      "range": {
+        "startLine": 234,
+        "startChar": 72,
+        "endLine": 234,
+        "endChar": 73
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9774774_ee365f8a",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "nit: `sizeof(uint32_t)`",
+      "range": {
+        "startLine": 239,
+        "startChar": 72,
+        "endLine": 239,
+        "endChar": 73
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73d692c7_809adcbe",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "Nice find. This must have been tricky to figure out.",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "366d78a5_5e381f82",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "Since we already have `if (cmdIndex \u003e\u003d drawCount)` I think we could use `dispatchThreadgroups` instead of `dispatchThreads`. IIUC the difference is basically that `dispatchThreads` will insert an `if (thread index \u003e\u003d number of threads)` check for you. It is probably a little more efficient than that, but it also only works on some hardware, so probably best to just avoid it (see the red box here: https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/2866532-dispatchthreads?language\u003dobjc)",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17166c6b_a14e5e8b",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-28T06:01:29Z",
+      "side": 1,
+      "message": "I\u0027m generally curious how good the performance when the drawCount is much smaller than the maxDrawCount. Have you looked at that? (No worries if not.)",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
