@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d339c2e_03b67f3f",
+        "filename": "src/tint/lang/core/ir/transform/remove_continue_in_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-28T22:44:34Z",
+      "side": 1,
+      "message": "```suggestion\n            // Check if this `continue` is inside a `switch` that is inside the `loop`.\n```",
+      "revId": "57ae29922497e47c9cbda817fdf87912116b5ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
