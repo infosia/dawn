@@ -70,6 +70,24 @@
       "parentUuid": "e8cad2d7_b02089bb",
       "revId": "ec7285badbc3a263449ce8198ec100bec5477e86",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5d8b5be_faaeb350",
+        "filename": "src/tint/cmd/bench/generate_benchmark_inputs.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-28T13:23:15Z",
+      "side": 0,
+      "message": "Maybe file a bug to see if we want to make this change as it would be dawn and tint both changing.",
+      "parentUuid": "aa9805c5_23a793fc",
+      "revId": "ec7285badbc3a263449ce8198ec100bec5477e86",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
