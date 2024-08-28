@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c263e0cb_7c42abf7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-08-28T22:30:55Z",
+      "side": 1,
+      "message": "PTAL again, I inverted the ordering of the two CLs because it was easier to make changes in the other one with these helpers.",
+      "revId": "dd33bba0d2d9125847ea246201b9e9e393687346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
