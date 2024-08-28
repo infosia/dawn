@@ -88,6 +88,24 @@
       "parentUuid": "aa9805c5_23a793fc",
       "revId": "ec7285badbc3a263449ce8198ec100bec5477e86",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4eccaca_e6bfa520",
+        "filename": "src/tint/cmd/bench/generate_benchmark_inputs.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-28T15:15:28Z",
+      "side": 0,
+      "message": "crbug.com/362730688",
+      "parentUuid": "e5d8b5be_faaeb350",
+      "revId": "ec7285badbc3a263449ce8198ec100bec5477e86",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
