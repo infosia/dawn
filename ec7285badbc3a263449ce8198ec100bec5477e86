@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39e3a9db_85fb3c4e",
+        "filename": "src/tint/cmd/bench/generate_benchmark_inputs.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-28T02:24:39Z",
+      "side": 0,
+      "message": "Do we want to be generating this into the source directory? I think we want it to generate into an output directory, which probably needs to be a param?",
+      "revId": "ec7285badbc3a263449ce8198ec100bec5477e86",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
