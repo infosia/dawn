@@ -87,6 +87,30 @@
       },
       "revId": "c92d0cae5baeb2428fe8767cd8f1f532ffdfa144",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d633055f_b9d067ad",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-29T17:35:36Z",
+      "side": 1,
+      "message": "(All that to say, ICE\u0027ing sounds fine.)",
+      "parentUuid": "0a39cabe_51e91f76",
+      "range": {
+        "startLine": 469,
+        "startChar": 0,
+        "endLine": 471,
+        "endChar": 48
+      },
+      "revId": "c92d0cae5baeb2428fe8767cd8f1f532ffdfa144",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
