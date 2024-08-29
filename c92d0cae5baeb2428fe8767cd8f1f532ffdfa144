@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "c92d0cae5baeb2428fe8767cd8f1f532ffdfa144",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "513b1f5f_563e027a",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-29T13:03:29Z",
+      "side": 1,
+      "message": "dawn:1972 is marked as fixed. It sounds like we should just ICE here, if GL doesn\u0027t support this?\n\nCC @senorblanco@chromium.org ?",
+      "range": {
+        "startLine": 469,
+        "startChar": 0,
+        "endLine": 471,
+        "endChar": 48
+      },
+      "revId": "c92d0cae5baeb2428fe8767cd8f1f532ffdfa144",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
