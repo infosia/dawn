@@ -563,6 +563,7 @@ class Printer : public tint::TextGenerator {
             [&](const core::ir::InstructionResult* r) {
                 tint::Switch(
                     r->Instruction(),                                                  //
+                    [&](const core::ir::Let* l) { out << NameOf(l->Result(0)); },      //
                     [&](const core::ir::UserCall* c) { EmitUserCall(out, c); },        //
                     [&](const core::ir::Var* var) { out << NameOf(var->Result(0)); },  //
                     TINT_ICE_ON_NO_MATCH);
