@@ -16,6 +16,114 @@
       "message": "PTAL, thanks!",
       "revId": "af329501a32a193694a5057033fd6ac4ec615444",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8aec6e03_9ca60666",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-29T13:35:23Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "af329501a32a193694a5057033fd6ac4ec615444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c89ffe26_c98f4d80",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-29T13:35:23Z",
+      "side": 1,
+      "message": "Could we tag this as \"Experimental\" until we are ready to turn the feature on by default in Chromium?",
+      "range": {
+        "startLine": 399,
+        "startChar": 33,
+        "endLine": 399,
+        "endChar": 39
+      },
+      "revId": "af329501a32a193694a5057033fd6ac4ec615444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dfc4db4_de6f1ac8",
+        "filename": "src/dawn/tests/end2end/ClipDistancesTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-29T13:35:23Z",
+      "side": 1,
+      "message": "```suggestion\nusing ClipDistancesSize \u003d int32_t;\n```",
+      "revId": "af329501a32a193694a5057033fd6ac4ec615444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c5d088e_593f58af",
+        "filename": "src/dawn/tests/end2end/ClipDistancesTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-29T13:35:23Z",
+      "side": 1,
+      "message": "nit: can we have a small comment before the test?",
+      "revId": "af329501a32a193694a5057033fd6ac4ec615444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d57e38f2_695d56a4",
+        "filename": "src/dawn/tests/end2end/ClipDistancesTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-29T13:35:23Z",
+      "side": 1,
+      "message": "nit: entryPoints can be defaulted by Dawn!",
+      "revId": "af329501a32a193694a5057033fd6ac4ec615444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b73e73a7_73bceb5b",
+        "filename": "src/dawn/tests/end2end/ClipDistancesTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-29T13:35:23Z",
+      "side": 1,
+      "message": "Can we enable the OpenGL and D3D11 backends even if they don\u0027t support the feature yet?",
+      "revId": "af329501a32a193694a5057033fd6ac4ec615444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
