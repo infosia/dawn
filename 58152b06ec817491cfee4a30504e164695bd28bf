@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "58152b06ec817491cfee4a30504e164695bd28bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51297e32_3d973cee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-29T13:07:11Z",
+      "side": 1,
+      "message": "We should also `TINT_ASSERT` that the type of a let is not a pointer when we actually emit the `let` instruction itself. Antonio hit this issue in the HLSL backend and is going to write the transform that both backends will need to fold away pointer lets.",
+      "revId": "58152b06ec817491cfee4a30504e164695bd28bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
