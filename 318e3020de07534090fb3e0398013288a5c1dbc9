@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4c4dab2_f88fccc2",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-29T22:33:59Z",
+      "side": 1,
+      "message": "nit: Use `if constexpr` if it works here (I am not sure whether Metal allows it; if not then no change needed)",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 10
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d63d3f23_5e5f6d51",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-29T22:33:59Z",
+      "side": 1,
+      "message": "IIUC this is not used",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfc90024_039e6b05",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-29T22:33:59Z",
+      "side": 1,
+      "message": "nit: A more common pattern to do divide-rounding-up is `(maxDrawCount - 1) / threadExecutionWidth + 1` as long as we know `maxDrawCount \u003e 0` (which I assume should be true, and we can DAWN_ASSERT it here).",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b014abfc_ce6a8505",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-29T22:33:59Z",
+      "side": 1,
+      "message": "nit: swap these two \"paragraphs\" of code, so this check is right after `newLibraryWithSource` where `error` is set.",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
