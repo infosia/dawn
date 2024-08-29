@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "244240eb_c37fcdde",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "The metadata is only propagated to the CommandBuffer for Metal and not otherwise. Having it in the constructor means that every backend would need to supply it when creating the CommandBufferBase. Thats why I used a setter. Is that fine?",
+      "parentUuid": "d4d9183d_b64c758a",
+      "range": {
+        "startLine": 2068,
+        "startChar": 0,
+        "endLine": 2068,
+        "endChar": 79
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d82d8464_251f84f7",
         "filename": "src/dawn/native/InternalPipelineStore.h",
         "patchSetId": 4
@@ -71,6 +95,24 @@
       "writtenOn": "2024-08-27T22:32:52Z",
       "side": 1,
       "message": "I think you could forward declare `MultiDrawConverterPipeline` and have Ref\u003cMultiDrawConverterPipeline\u003e here.\n\nnamespace dawn::native::metal {\n class MultiDrawConverterPipeline;\n}\n\n...\n\nRef\u003cmetal::MultiDrawConverterPipeline\u003e multidrawICBConverterPipeline;",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "805b57e4_36620f80",
+        "filename": "src/dawn/native/InternalPipelineStore.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "`Ref\u003cMultiDrawConverterPipeline\u003e` needs a complete type so we would need the whole class definition. We can\u0027t have objc code in here so unfortunately it would have to stay this way... It\u0027s ugly :(",
+      "parentUuid": "d82d8464_251f84f7",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +134,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d300bf40_ffd903f7",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5e642a2_b1b9af71",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b15608f_8e83028c",
@@ -105,6 +165,24 @@
       "writtenOn": "2024-08-27T22:32:52Z",
       "side": 1,
       "message": "not sure we need a queue to pop from.\n\nWe could have a simple vector, and access it based on the render pass number. See how we\u0027re doing `this-\u003eGetResourceUsages().renderPasses[nextRenderPassNumber].`\n\nThen GetIndirectDrawMetadatas can be const as well",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c365414f_2bea34ca",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Queue was helpful in mitigating the raw_ptr issue, but we can also clear the vector of metadatas at the end of the function, to overcome this.",
+      "parentUuid": "2b15608f_8e83028c",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -126,6 +204,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "033ffd23_94c6cecc",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d9c27ac_0e5ed3a1",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d4e7384_c4eefb94",
@@ -139,6 +235,24 @@
       "writtenOn": "2024-08-28T06:01:29Z",
       "side": 1,
       "message": "nit: This seems different from the struct MultiDrawData in the MSL source, so one of them should have a different name.",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8eef1ae7_adbea875",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d4e7384_c4eefb94",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -160,6 +274,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c910c08f_6f1e26e5",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73605f54_b9ab736a",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4513c4c5_5ce95ace",
@@ -173,6 +305,30 @@
       "writtenOn": "2024-08-27T22:32:52Z",
       "side": 1,
       "message": "why does the ArgumentBuffer need to be a member of this struct?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73d9e4a1_463d52d4",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "It doesn\u0027t belong there",
+      "parentUuid": "4513c4c5_5ce95ace",
       "range": {
         "startLine": 73,
         "startChar": 0,
@@ -206,6 +362,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3d73e4e_e8a85a90",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2b4fee11_06d444e3",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 24
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61f22146_dfb2fd4c",
@@ -219,6 +399,30 @@
       "writtenOn": "2024-08-28T06:01:29Z",
       "side": 1,
       "message": "nit: name as a constant: `kMSLShader` or `kShaderSource` or something like that",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45a45696_61fe3194",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61f22146_dfb2fd4c",
       "range": {
         "startLine": 32,
         "startChar": 12,
@@ -252,6 +456,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f40a2b9_94655fc1",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "We aren\u0027t writing to any buffers so I converted all those to constant.",
+      "parentUuid": "00bcd0f3_ca603f52",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 39
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc7b7de1_02e32791",
@@ -265,6 +493,24 @@
       "writtenOn": "2024-08-28T06:01:29Z",
       "side": 1,
       "message": "The 64-wide parallelism thing that you had before (https://dawn-review.googlesource.com/c/dawn/+/195494/comment/d611b798_49825541/) might be more efficient. Could leave a TODO to investigate optimizing this compute dispatch later, if you think that\u0027s possible.",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57be5fd4_7a49fa30",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Really? The implementation right has each thread processing one command, whereas the previous implementation only has a fixed number of 64 threads to process all of the commands.",
+      "parentUuid": "dc7b7de1_02e32791",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -316,6 +562,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8832af6_11257531",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfc63a9a_e48d81e9",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 102,
+        "endChar": 70
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d19e6d4_dba195a2",
@@ -329,6 +599,24 @@
       "writtenOn": "2024-08-28T06:01:29Z",
       "side": 1,
       "message": "I remember from the first draft CL you had a way to turn off validation. That seems like it would still be useful to have in the future, so we can leave a TODO like:\n\n\u003e TODO(crbug.com/356461286): Use a function_constant to statically skip this when validation is disabled on the device.",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bd5c8cf_10bec247",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Implemented the function_constant path.",
+      "parentUuid": "5d19e6d4_dba195a2",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -368,6 +656,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d24c6f6f_56291367",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27beb560_c3ce0d05",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59bd5844_c70af416",
@@ -381,6 +687,24 @@
       "writtenOn": "2024-08-28T06:01:29Z",
       "side": 1,
       "message": "nit: I\u0027m not sure it actually matters, but we usually use `static constexpr` for constants.",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fd29b04_a395fb70",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59bd5844_c70af416",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -432,6 +756,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25ca22e2_588534ba",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "I did the refactoring.",
+      "parentUuid": "d1734506_604ce39b",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 24
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "747c1eac_48859e4e",
@@ -445,6 +793,30 @@
       "writtenOn": "2024-08-28T06:01:29Z",
       "side": 1,
       "message": "IIRC each ICB will only contain one kind of draw call, we should use that here so we can specify just one CommandType.\n\nFrom the docs: \"To save space, specify only the command types you are going to encode in the indirect command buffer.\"\n\n(Also suddenly this explains some questions I had a month ago about how ICBs determined how much space they needed.)",
+      "range": {
+        "startLine": 190,
+        "startChar": 34,
+        "endLine": 190,
+        "endChar": 96
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8efe694_98774b3b",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Yeah, I missed this field when investigating for that...\n\nInheriting buffers and pipeline states probably also save space, since they don\u0027t have to store pointers to different states/buffers in the ICB because they are inherited.",
+      "parentUuid": "747c1eac_48859e4e",
       "range": {
         "startLine": 190,
         "startChar": 34,
@@ -478,6 +850,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8b59210_851798be",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1d36dcf_402419b2",
+      "range": {
+        "startLine": 202,
+        "startChar": 62,
+        "endLine": 202,
+        "endChar": 90
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd2255f3_b380ae28",
@@ -491,6 +887,30 @@
       "writtenOn": "2024-08-27T22:32:52Z",
       "side": 1,
       "message": "is there a reason we need to use argument buffers versus using the normal `[MTLComputeCommandEncoder setBuffer:...]` ?",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0acd3ec_fe0adf1d",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Argument buffers have the function ’setIndirectCommandBuffer’ which allows us to pass the ICB to the shader. The compute command encoder does not have that, so we need to use the argument buffer to pass the ICB. Also since we need to use AB, we can put all the buffers that we are going to need per multidraw inside the argument buffer.",
+      "parentUuid": "fd2255f3_b380ae28",
       "range": {
         "startLine": 201,
         "startChar": 0,
@@ -524,6 +944,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "502ad0b5_86198266",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b5a839e_e8191b90",
+      "range": {
+        "startLine": 234,
+        "startChar": 72,
+        "endLine": 234,
+        "endChar": 73
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9774774_ee365f8a",
@@ -537,6 +981,30 @@
       "writtenOn": "2024-08-28T06:01:29Z",
       "side": 1,
       "message": "nit: `sizeof(uint32_t)`",
+      "range": {
+        "startLine": 239,
+        "startChar": 72,
+        "endLine": 239,
+        "endChar": 73
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c7fb32a_f63eb0d8",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9774774_ee365f8a",
       "range": {
         "startLine": 239,
         "startChar": 72,
@@ -581,6 +1049,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a46b9f1f_594973ef",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "Reverted to the dispatchThreadgroups impl",
+      "parentUuid": "366d78a5_5e381f82",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17166c6b_a14e5e8b",
@@ -594,6 +1080,24 @@
       "writtenOn": "2024-08-28T06:01:29Z",
       "side": 1,
       "message": "I\u0027m generally curious how good the performance when the drawCount is much smaller than the maxDrawCount. Have you looked at that? (No worries if not.)",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "675a88cd_b5e567f0",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-29T15:37:38Z",
+      "side": 1,
+      "message": "I have not analyzed the performance. Hopefully, it\u0027s efficient in going through the no-ops.",
+      "parentUuid": "17166c6b_a14e5e8b",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
