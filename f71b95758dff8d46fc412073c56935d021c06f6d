@@ -16,6 +16,23 @@
       "message": "PTAL\n\nWill need to wait for crrev.com/c/5818207 to land before this.",
       "revId": "f71b95758dff8d46fc412073c56935d021c06f6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4b49f3a_e1547305",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-08-29T17:22:56Z",
+      "side": 1,
+      "message": "Swapping reviewers to dsinclair@.",
+      "revId": "f71b95758dff8d46fc412073c56935d021c06f6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
