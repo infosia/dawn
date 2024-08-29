@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3882d38f_13186bfc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-08-29T22:55:08Z",
+      "side": 1,
+      "message": "Rubber stamper still won\u0027t stamp :(",
+      "revId": "6a0a12a02bd8b6530dbf9a5a5be18bea4b50cf6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
