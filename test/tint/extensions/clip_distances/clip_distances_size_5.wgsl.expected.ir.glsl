@@ -12,7 +12,7 @@ VertexOutputs main() {
 }
 error: Error parsing GLSL shader:
 ERROR: 0:8: 'structure' :  entry point cannot return a value
-ERROR: 0:8: '' : compilation terminated 
+ERROR: 0:8: '' : compilation terminated
 ERROR: 2 compilation errors.  No code generated.
 
 

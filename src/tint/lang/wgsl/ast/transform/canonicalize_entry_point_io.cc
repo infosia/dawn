@@ -306,8 +306,8 @@ struct CanonicalizeEntryPointIO::State {
 
         if (cfg.shader_style == ShaderStyle::kSpirv || cfg.shader_style == ShaderStyle::kGlsl) {
             // Vulkan requires that integer user-defined fragment inputs are always decorated with
-            // `Flat`. See:
-            // https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/StandaloneSpirv.html#VUID-StandaloneSpirv-Flat-04744
+            // `Flat`. See the description of validation rule "VUID-StandaloneSpirv-Flat-04744" in
+            // the Vulkan SPEC `StandaloneSpirv.html` for more details.
             // TODO(crbug.com/tint/1224): Remove this once a flat interpolation attribute is
             // required for integers.
             if (func_ast->PipelineStage() == PipelineStage::kFragment &&
