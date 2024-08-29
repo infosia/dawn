@@ -111,6 +111,30 @@
       },
       "revId": "c92d0cae5baeb2428fe8767cd8f1f532ffdfa144",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "045d9a47_31a8ce65",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-29T17:35:57Z",
+      "side": 1,
+      "message": "With the ICE, it trips over the `test/tint/builtins/gen/literal/textureDimensions/01e21e.wgsl` (and a bunch of others in that folder) which has a `texture_storage_1d\u003crg32uint, read_write\u003e`",
+      "parentUuid": "42f83ede_b22e14b1",
+      "range": {
+        "startLine": 469,
+        "startChar": 0,
+        "endLine": 471,
+        "endChar": 48
+      },
+      "revId": "c92d0cae5baeb2428fe8767cd8f1f532ffdfa144",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
