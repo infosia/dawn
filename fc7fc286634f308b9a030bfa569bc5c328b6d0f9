@@ -33,6 +33,24 @@
       "message": "The old backend also did depth here, but that isn\u0027t valid WGSL so I skipped it for IR at the moment.",
       "revId": "fc7fc286634f308b9a030bfa569bc5c328b6d0f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06228d44_26b4b278",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-29T21:24:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "42606900_fd310b66",
+      "revId": "fc7fc286634f308b9a030bfa569bc5c328b6d0f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
