@@ -16,6 +16,24 @@
       "message": "Why is this done in the `MakeReturnValue` instead of `FinalizeOutputs`? It seems unrelated to the return?",
       "revId": "d4faead2cf47906029a204d16b87c2349fe5993f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf0ee358_52c9d657",
+        "filename": "src/tint/lang/msl/writer/raise/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-29T20:32:47Z",
+      "side": 1,
+      "message": "`FinalizeOutputs` is not the best name, could probably rename to `FinalizeOutputType()` or something.\n\n`MakeReturnValue()` makes the actual value that is returned by the shader, and that is the point at which we need to add in the fixed sample mask.",
+      "parentUuid": "10273488_23a51640",
+      "revId": "d4faead2cf47906029a204d16b87c2349fe5993f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
