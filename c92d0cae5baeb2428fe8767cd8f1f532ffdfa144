@@ -39,6 +39,30 @@
       },
       "revId": "c92d0cae5baeb2428fe8767cd8f1f532ffdfa144",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42f83ede_b22e14b1",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-29T13:56:55Z",
+      "side": 1,
+      "message": "I\u0027ll ICE it for now, we may hit it again when we get back to the dawn e2e tests, but we can fix the tests as we hit them instead of working around it here.",
+      "parentUuid": "513b1f5f_563e027a",
+      "range": {
+        "startLine": 469,
+        "startChar": 0,
+        "endLine": 471,
+        "endChar": 48
+      },
+      "revId": "c92d0cae5baeb2428fe8767cd8f1f532ffdfa144",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
