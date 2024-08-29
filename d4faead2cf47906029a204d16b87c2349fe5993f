@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10273488_23a51640",
+        "filename": "src/tint/lang/msl/writer/raise/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-29T20:28:21Z",
+      "side": 1,
+      "message": "Why is this done in the `MakeReturnValue` instead of `FinalizeOutputs`? It seems unrelated to the return?",
+      "revId": "d4faead2cf47906029a204d16b87c2349fe5993f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
