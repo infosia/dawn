@@ -63,6 +63,30 @@
       },
       "revId": "c92d0cae5baeb2428fe8767cd8f1f532ffdfa144",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a39cabe_51e91f76",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-29T17:34:34Z",
+      "side": 1,
+      "message": "Thanks for cc\u0027ing me.\n\nSadly, folks often close bugs when they\u0027re fixed in Core but not in Compat. Feel free to reopen, or open a new bug.\n\nThe change was landed in this CL:\n\nhttps://dawn-review.googlesource.com/c/dawn/+/147460\n\nI actually asked the author to produce failing GLSL (using \"readwrite\") for those cases, so that Tint would flag the failing tests via failing glslang validation. Not sure why that wasn\u0027t done.\n\nAt the time this was discussed in the CG, I thought that this same limitation also applied to the other APIs, but I can\u0027t find that now. If that\u0027s not the case, we\u0027ll have to add a Compat limitation for it.",
+      "parentUuid": "42f83ede_b22e14b1",
+      "range": {
+        "startLine": 469,
+        "startChar": 0,
+        "endLine": 471,
+        "endChar": 48
+      },
+      "revId": "c92d0cae5baeb2428fe8767cd8f1f532ffdfa144",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
