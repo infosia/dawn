@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bae2513e_e385018f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-08-29T17:17:27Z",
+      "side": 1,
+      "message": "+kainino since the rubber stamper doesn\u0027t feel like stamping today",
+      "revId": "5f75a16bc116f8451ccbb9063fbca1519a1cb120",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
