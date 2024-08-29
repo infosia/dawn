@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b9588cd_ae6e8a00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-29T17:54:40Z",
+      "side": 1,
+      "message": "Corresponding Chromium CL:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/5827092",
+      "revId": "ca23ea120b73feb74eda68f39dd82dff46623b64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
