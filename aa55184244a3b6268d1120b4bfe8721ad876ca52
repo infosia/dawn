@@ -16,6 +16,41 @@
       "message": "PTAL.",
       "revId": "aa55184244a3b6268d1120b4bfe8721ad876ca52",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c91a57e0_6a4a8ad1",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-29T12:59:05Z",
+      "side": 1,
+      "message": "Nit: `kUndefined` shouldn\u0027t happen.",
+      "fixSuggestions": [
+        {
+          "fixId": "3f4f5cf1_d71e75a5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 467,
+                "startChar": 0,
+                "endLine": 469,
+                "endChar": 0
+              },
+              "replacement": "                   space \u003d\u003d core::AddressSpace::kFunction) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "aa55184244a3b6268d1120b4bfe8721ad876ca52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
