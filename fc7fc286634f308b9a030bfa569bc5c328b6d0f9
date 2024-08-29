@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1d98f65_af5793b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-29T17:26:01Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "fc7fc286634f308b9a030bfa569bc5c328b6d0f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42606900_fd310b66",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-29T17:26:01Z",
+      "side": 1,
+      "message": "The old backend also did depth here, but that isn\u0027t valid WGSL so I skipped it for IR at the moment.",
+      "revId": "fc7fc286634f308b9a030bfa569bc5c328b6d0f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
