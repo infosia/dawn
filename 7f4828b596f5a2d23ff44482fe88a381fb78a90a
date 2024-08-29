@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52a30666_c7188f80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-29T12:56:25Z",
+      "side": 1,
+      "message": "We only add these when targeting ES in the AST printer but AFAICT desktop GL accepts them as a no-op so shouldn\u0027t matter here.",
+      "revId": "7f4828b596f5a2d23ff44482fe88a381fb78a90a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
