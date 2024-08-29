@@ -517,6 +517,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d7e13533_086f2a9b",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-29T22:35:09Z",
+      "side": 1,
+      "message": "It\u0027s possible. For example if we had 128 commands then the previous implementation would only need to initialize 64 threads (each doing 2 commands) whereas this one will initialize 128 threads (each doing 1 command). There is only a tiny amount of extra work inside the shader but the initialization time could be large enough that it\u0027s measurable at large numbers of threads.\n\nOTOH of course there can be some wasted threads if using 64 threads, but the waste would be constant-bounded.",
+      "parentUuid": "57be5fd4_7a49fa30",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "249697ba_eca78e1d",
         "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
         "patchSetId": 4
