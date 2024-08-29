@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb4de889_3c304466",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-29T20:39:56Z",
+      "side": 1,
+      "message": "LGTM\n\nSeems strange that it\u0027s needed here but not in the main expectations.txt, but at this point, whatever works to get the roll unblocked!",
+      "revId": "5facecbb5b928507cc69ca81cd428ecd840e6ee5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
