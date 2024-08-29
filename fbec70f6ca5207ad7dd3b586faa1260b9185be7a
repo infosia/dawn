@@ -16,6 +16,30 @@
       "message": "PTAL.",
       "revId": "fbec70f6ca5207ad7dd3b586faa1260b9185be7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9c6edbf_8d7d6092",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-29T21:13:26Z",
+      "side": 1,
+      "message": "\u003e \"statments\" is a possible misspelling of \"statements\".\n\nNit: Please fix.",
+      "parentUuid": "00968810_ac5eb0f0",
+      "range": {
+        "startLine": 617,
+        "startChar": 61,
+        "endLine": 617,
+        "endChar": 70
+      },
+      "revId": "fbec70f6ca5207ad7dd3b586faa1260b9185be7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
