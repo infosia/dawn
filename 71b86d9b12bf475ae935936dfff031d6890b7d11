@@ -235,6 +235,30 @@
       },
       "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54689439_13385929",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-29T00:42:34Z",
+      "side": 1,
+      "message": "Oh sorry I forgot to reply you here. Yeah I found a way as a workaround to consume outval.type (in a `let` statement although we actually don\u0027t need the type).",
+      "parentUuid": "d6bcdfa6_4e4eb5be",
+      "range": {
+        "startLine": 735,
+        "startChar": 0,
+        "endLine": 746,
+        "endChar": 0
+      },
+      "revId": "71b86d9b12bf475ae935936dfff031d6890b7d11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

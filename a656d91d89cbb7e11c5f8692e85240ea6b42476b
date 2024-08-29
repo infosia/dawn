@@ -16,6 +16,29 @@
       "message": "LGTM",
       "revId": "a656d91d89cbb7e11c5f8692e85240ea6b42476b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46afba6a_b9b70007",
+        "filename": "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-29T00:42:34Z",
+      "side": 1,
+      "message": "[1]",
+      "range": {
+        "startLine": 829,
+        "startChar": 27,
+        "endLine": 829,
+        "endChar": 98
+      },
+      "revId": "a656d91d89cbb7e11c5f8692e85240ea6b42476b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
