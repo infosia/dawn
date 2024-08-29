@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e02ea3cb_a23a3e69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-08-29T15:23:43Z",
+      "side": 1,
+      "message": "confirmed: SPIR-V 1.6 Rev2 added a rule that such duplication is invalid.\nThe spir-v validator from spirv-tools validates this.",
+      "revId": "e81af3d568b08249e97092023de256c257cbc862",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
