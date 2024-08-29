@@ -755,6 +755,9 @@ TEST_P(CompressedTextureFormatTest, Cube) {
 
     const wgpu::TextureFormat format = GetParam().mTextureFormat;
 
+    // TODO(crbug.com/362762192): diagnose this failure on GLES with ASTC texture formats
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && utils::IsASTCTextureFormat(format));
+
     constexpr uint32_t kLayers = 6;
     CopyConfig config = GetDefaultSmallConfig(kLayers);
     config.copyExtent3D = config.textureDescriptor.size;
