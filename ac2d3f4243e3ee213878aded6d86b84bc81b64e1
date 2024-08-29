@@ -16,6 +16,23 @@
       "message": "Sorry for my fault. PTAL, thanks!",
       "revId": "ac2d3f4243e3ee213878aded6d86b84bc81b64e1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80a9f1de_6e2b792b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-29T13:10:31Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "ac2d3f4243e3ee213878aded6d86b84bc81b64e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
