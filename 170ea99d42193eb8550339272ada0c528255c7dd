@@ -33,6 +33,24 @@
       "message": "Nit: I\u0027d move the `UnwrapPtr()` out of the loop onto the initial setting of `current_type`; it only needs to happen once.",
       "revId": "170ea99d42193eb8550339272ada0c528255c7dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bb86e80_a0357ac2",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-08-29T23:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9eafcd9_45d2d77b",
+      "revId": "170ea99d42193eb8550339272ada0c528255c7dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
