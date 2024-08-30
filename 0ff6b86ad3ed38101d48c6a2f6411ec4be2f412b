@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3a5821a_1fa1481a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-08-30T06:05:13Z",
+      "side": 1,
+      "message": "A trivial fix I just occasionally stumbled on.\nPTAL",
+      "revId": "0ff6b86ad3ed38101d48c6a2f6411ec4be2f412b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
