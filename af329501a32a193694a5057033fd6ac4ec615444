@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4ab2f08_699f77cd",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-30T05:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c89ffe26_c98f4d80",
+      "range": {
+        "startLine": 399,
+        "startChar": 33,
+        "endLine": 399,
+        "endChar": 39
+      },
+      "revId": "af329501a32a193694a5057033fd6ac4ec615444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4dfc4db4_de6f1ac8",
@@ -71,6 +95,24 @@
       "writtenOn": "2024-08-29T13:35:23Z",
       "side": 1,
       "message": "```suggestion\nusing ClipDistancesSize \u003d int32_t;\n```",
+      "revId": "af329501a32a193694a5057033fd6ac4ec615444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0f728f1_264676ba",
+        "filename": "src/dawn/tests/end2end/ClipDistancesTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-30T05:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dfc4db4_de6f1ac8",
       "revId": "af329501a32a193694a5057033fd6ac4ec615444",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +134,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c981bcb4_d78ac629",
+        "filename": "src/dawn/tests/end2end/ClipDistancesTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-30T05:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c5d088e_593f58af",
+      "revId": "af329501a32a193694a5057033fd6ac4ec615444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d57e38f2_695d56a4",
@@ -109,6 +169,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e089374f_91e69f1f",
+        "filename": "src/dawn/tests/end2end/ClipDistancesTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-30T05:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d57e38f2_695d56a4",
+      "revId": "af329501a32a193694a5057033fd6ac4ec615444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b73e73a7_73bceb5b",
@@ -122,6 +200,24 @@
       "writtenOn": "2024-08-29T13:35:23Z",
       "side": 1,
       "message": "Can we enable the OpenGL and D3D11 backends even if they don\u0027t support the feature yet?",
+      "revId": "af329501a32a193694a5057033fd6ac4ec615444",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60d1c2f0_1e414539",
+        "filename": "src/dawn/tests/end2end/ClipDistancesTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-08-30T05:18:56Z",
+      "side": 1,
+      "message": "Done\n\nActually we can support `clip-distances` on D3D11.",
+      "parentUuid": "b73e73a7_73bceb5b",
       "revId": "af329501a32a193694a5057033fd6ac4ec615444",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
