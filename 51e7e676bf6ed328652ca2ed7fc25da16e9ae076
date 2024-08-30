@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0f81092_cb7804b3",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-30T21:14:19Z",
+      "side": 1,
+      "message": "This is kinda gross, but the alternative would be to add a new MSL type for a C-style array and then special case the type emission logic to allow you to put the name and the builtin attribute before the array count. That seemed fairly awkward too so I went with this instead.",
+      "range": {
+        "startLine": 1472,
+        "startChar": 0,
+        "endLine": 1477,
+        "endChar": 13
+      },
+      "revId": "51e7e676bf6ed328652ca2ed7fc25da16e9ae076",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
