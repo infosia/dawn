@@ -106,6 +106,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72120233_9d5eaf04",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "I had a misunderstanding, sorry for the confusion.",
+      "parentUuid": "71b3c844_1534a41b",
+      "range": {
+        "startLine": 2068,
+        "startChar": 0,
+        "endLine": 2068,
+        "endChar": 79
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d82d8464_251f84f7",
@@ -553,6 +577,24 @@
       "side": 1,
       "message": "It\u0027s possible. For example if we had 128 commands then the previous implementation would only need to initialize 64 threads (each doing 2 commands) whereas this one will initialize 128 threads (each doing 1 command). There is only a tiny amount of extra work inside the shader but the initialization time could be large enough that it\u0027s measurable at large numbers of threads.\n\nOTOH of course there can be some wasted threads if using 64 threads, but the waste would be constant-bounded.",
       "parentUuid": "57be5fd4_7a49fa30",
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56a96343_b4fc8f22",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "I see, that way could be faster. I would assume metal would do similar \"thread recycling\" (each thread processes multiple draws) under the hood if it runs out of threads, but the initialization overhead could be there.\nWould be interesting to see how it performs though...\n\nI left a todo about it.",
+      "parentUuid": "d7e13533_086f2a9b",
       "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

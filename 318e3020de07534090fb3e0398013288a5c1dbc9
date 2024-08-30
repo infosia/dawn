@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d3b915d_9f406d90",
+        "filename": "src/dawn/native/CommandBuffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "I refactored the backend code and now we can have it const.",
+      "parentUuid": "92950c86_5b9658e9",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2f929df_0782e22e",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-08-30T12:09:48Z",
       "side": 1,
       "message": "We can do that in DestroyImpl() that should be called right after a successful submit.",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c1c7ff6_737bc158",
+        "filename": "src/dawn/native/CommandBuffer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Thanks, that works!",
+      "parentUuid": "b2f929df_0782e22e",
       "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a777ee9_d156f64d",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3c2a872_cf372cc2",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8889ec45_06468b32",
@@ -82,6 +136,30 @@
       "writtenOn": "2024-08-30T12:09:48Z",
       "side": 1,
       "message": "Maybe bool `doMultiDrawValidation \u003d device-\u003eShouldFrontendValidateMultiDraw()`? It makes it more clear to say \"what\" is required, and now \"how\" it needs to happen.",
+      "range": {
+        "startLine": 456,
+        "startChar": 43,
+        "endLine": 456,
+        "endChar": 93
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce1e6e6e_7a3fbd97",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8889ec45_06468b32",
       "range": {
         "startLine": 456,
         "startChar": 43,
@@ -115,6 +193,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52ae84bf_ba7a0578",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "837b202c_6cc14d0e",
+      "range": {
+        "startLine": 93,
+        "startChar": 40,
+        "endLine": 93,
+        "endChar": 64
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c290f821_46dda320",
@@ -128,6 +230,30 @@
       "writtenOn": "2024-08-30T12:09:48Z",
       "side": 1,
       "message": "This member is just used to pass state to the render pass. Can we instead make it a stack variable in this `BeginRenderPass` case and pass it to `EncodeRenderPass` below? It would avoid the need to clear raw_ptrs at the end of encoding.",
+      "range": {
+        "startLine": 932,
+        "startChar": 20,
+        "endLine": 932,
+        "endChar": 44
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6354c7cb_c102846a",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "The ExecutionDatas do not hold the raw_ptrs that need clearing, instead the `CommandBufferBase::mIndirectDrawMetadata` hold it, so the clearing has to be done anyways. A stack variable is nicer to have.",
+      "parentUuid": "c290f821_46dda320",
       "range": {
         "startLine": 932,
         "startChar": 20,
@@ -161,6 +287,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03f33b03_9e381815",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1648,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0984b804_7210da2a",
+      "range": {
+        "startLine": 1643,
+        "startChar": 4,
+        "endLine": 1648,
+        "endChar": 33
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2fe1e37_0df7443a",
@@ -174,6 +324,30 @@
       "writtenOn": "2024-08-30T12:09:48Z",
       "side": 1,
       "message": "nit: It\u0027s a bit weird that this would be ObjectBase as it is neither an API object, nor an object that can be an error. Maybe just use `RefCounted`?",
+      "range": {
+        "startLine": 46,
+        "startChar": 42,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8eca7ca1_1812dde1",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2fe1e37_0df7443a",
       "range": {
         "startLine": 46,
         "startChar": 42,
@@ -203,6 +377,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e0a72cac_ac93182c",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Do you mean a class inherited from ObjectBase shouldn\u0027t be modified?",
+      "parentUuid": "b748166c_7791da75",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cc25ad77_f0d128f0",
         "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
         "patchSetId": 8
@@ -214,6 +406,24 @@
       "writtenOn": "2024-08-30T12:09:48Z",
       "side": 1,
       "message": "```suggestion\nconstant uint8_t kIndexType16 \u003d 1u;  // if this bit is set the index type is 16bit, else it\u0027s 32bit\n```",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a16f9d3b_1c57d99d",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Changed so that both code (C++ and MSL) have the same comment",
+      "parentUuid": "cc25ad77_f0d128f0",
       "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -231,6 +441,24 @@
       "writtenOn": "2024-08-30T12:09:48Z",
       "side": 1,
       "message": "I believe that in MSL we can test drawData-\u003ecountBuffer \u003d\u003d nullptr.",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5deec721_f621bae3",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "That worked for me on my machine, but I wasn\u0027t sure if the behavior would be same across all devices since I could not find any documentation on it. I think we should leave as it is for now.",
+      "parentUuid": "af5ea6e4_62a2153f",
       "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -275,6 +503,48 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03826082_c0359a13",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "209b71e9_00cae3d2",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57fe74ec_1ad3bdee",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Doesn\u0027t work.",
+      "parentUuid": "b4c4dab2_f88fccc2",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 10
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58a25eb9_deeadc2c",
@@ -288,6 +558,30 @@
       "writtenOn": "2024-08-30T12:09:48Z",
       "side": 1,
       "message": "Where do we validate that MultiDrawIndirect must be triangles?",
+      "range": {
+        "startLine": 131,
+        "startChar": 44,
+        "endLine": 131,
+        "endChar": 68
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e646067d_01b86f0f",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "True, the user might want to draw something else than triangles, we need to pass the primitive type to the shader then...",
+      "parentUuid": "58a25eb9_deeadc2c",
       "range": {
         "startLine": 131,
         "startChar": 44,
@@ -315,6 +609,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "871676c2_9796a85e",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d63d3f23_5e5f6d51",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03923637_76f61197",
@@ -328,6 +640,24 @@
       "writtenOn": "2024-08-30T12:09:48Z",
       "side": 1,
       "message": "Since we do this lazily already we don\u0027t need to create the pipeline lazily in the `MultiDrawConverterPipeline`. The code here could be:\n\n```\nif (... \u003d\u003d nullptr) {\n   DAWN_TRY_ASSIGN(..., MultiDrawConverterPipeline::Create());\n}\n```\n\nAnd the `Create` static method would do the usual\n\n```\nRef\u003c....\u003e result \u003d AcquireRef(new ..);\nDAWN_TRY(result-\u003eInitialize());\nreturn result;\n```\n\nAnd then we\u0027d just have `store-\u003emulti...-\u003eGetMTLPipeline()` below.",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d13b6260_5c69ad59",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03923637_76f61197",
       "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -349,6 +679,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27fb52cf_4fdaf10a",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b403f0b4_e919e183",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e111d7fc_e101884f",
@@ -366,6 +714,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdbbcff3_581152b7",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e111d7fc_e101884f",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d33d97b_c1a6b3b2",
@@ -379,6 +745,24 @@
       "writtenOn": "2024-08-30T12:09:48Z",
       "side": 1,
       "message": "We need to gracefully handle OOM here by returning an INTERNAL_ERROR and not just ASSERTing.",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb2b56d2_671236df",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d33d97b_c1a6b3b2",
       "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -406,6 +790,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fee08d7f_29c5a61b",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Oh yeah, we already have the size in the `draw` variable.",
+      "parentUuid": "6bf82d9d_da044be9",
+      "range": {
+        "startLine": 241,
+        "startChar": 19,
+        "endLine": 241,
+        "endChar": 47
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6806469_06a2e309",
@@ -423,6 +831,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "409bd094_d6418ced",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6806469_06a2e309",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e307430_acf6b221",
@@ -436,6 +862,30 @@
       "writtenOn": "2024-08-30T12:09:48Z",
       "side": 1,
       "message": "u-nit:\n\n```suggestion\n        // Metal requires that we call useResource makes the resource resident for the pass.\n```\n\nThe second part is a bit redundant and doesn\u0027t further help future readers.",
+      "range": {
+        "startLine": 266,
+        "startChar": 39,
+        "endLine": 268,
+        "endChar": 64
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbc72f68_3b61f959",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e307430_acf6b221",
       "range": {
         "startLine": 266,
         "startChar": 39,
@@ -483,6 +933,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b7a2bdc0_9ed75f81",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "This would mean that no-op draws are not possible and there has to be a constraint of maxDrawCount \u003e 0 in the spec. We can move this validation to the frontend if that is the case.",
+      "parentUuid": "d5b2d4c6_4b5b6288",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b014abfc_ce6a8505",
         "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
         "patchSetId": 8
@@ -494,6 +962,24 @@
       "writtenOn": "2024-08-29T22:33:59Z",
       "side": 1,
       "message": "nit: swap these two \"paragraphs\" of code, so this check is right after `newLibraryWithSource` where `error` is set.",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d15e1f0_868c9611",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-08-30T20:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b014abfc_ce6a8505",
       "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
