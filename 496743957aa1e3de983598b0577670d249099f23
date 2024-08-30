@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e8c36cb_79146951",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-08-30T16:51:26Z",
+      "side": 1,
+      "message": "Although bumped up max attempt, roller seems to stop when there\u0027s merge conflict. I was hoping to copy \u0026 paste suppressions from this one and manual fix but, meh.",
+      "revId": "496743957aa1e3de983598b0577670d249099f23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
