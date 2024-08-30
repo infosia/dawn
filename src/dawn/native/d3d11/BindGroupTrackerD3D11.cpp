@@ -493,11 +493,6 @@ void BindGroupTracker::UnApplyBindGroup(BindGroupIndex index) {
                             IsSubset(bindingInfo.visibility,
                                      wgpu::ShaderStage::Fragment | wgpu::ShaderStage::Compute));
                         ID3D11UnorderedAccessView* nullUAV = nullptr;
-                        if (bindingVisibility & wgpu::ShaderStage::Fragment) {
-                            deviceContext->OMSetRenderTargetsAndUnorderedAccessViews(
-                                D3D11_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL, nullptr, nullptr,
-                                bindingSlot, 1, &nullUAV, nullptr);
-                        }
                         if (bindingVisibility & wgpu::ShaderStage::Compute) {
                             deviceContext->CSSetUnorderedAccessViews(bindingSlot, 1, &nullUAV,
                                                                      nullptr);
@@ -555,11 +550,6 @@ void BindGroupTracker::UnApplyBindGroup(BindGroupIndex index) {
                     case wgpu::StorageTextureAccess::WriteOnly:
                     case wgpu::StorageTextureAccess::ReadWrite: {
                         ID3D11UnorderedAccessView* nullUAV = nullptr;
-                        if (bindingVisibility & wgpu::ShaderStage::Fragment) {
-                            deviceContext->OMSetRenderTargetsAndUnorderedAccessViews(
-                                D3D11_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL, nullptr, nullptr,
-                                bindingSlot, 1, &nullUAV, nullptr);
-                        }
                         if (bindingVisibility & wgpu::ShaderStage::Compute) {
                             deviceContext->CSSetUnorderedAccessViews(bindingSlot, 1, &nullUAV,
                                                                      nullptr);
