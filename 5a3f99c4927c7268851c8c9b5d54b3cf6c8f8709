@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df6fe39b_5f0116e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-30T21:38:52Z",
+      "side": 1,
+      "message": "LGTM still, nice improvements!\n\nFYI I believe this is the end of Srijan\u0027s contribution period, so maybe we can land this and wrap up any remaining changes in another CL (or update this CL before landing it)",
+      "revId": "5a3f99c4927c7268851c8c9b5d54b3cf6c8f8709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "411e3b2c_5c33d041",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-30T21:38:52Z",
+      "side": 1,
+      "message": "This condition name seems inverted now, need to either swap true/false or rename for example `BackendWillValidateMultiDraw`",
+      "revId": "5a3f99c4927c7268851c8c9b5d54b3cf6c8f8709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

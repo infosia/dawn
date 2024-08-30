@@ -465,6 +465,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f6ad9c52_7267680b",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-30T21:38:52Z",
+      "side": 1,
+      "message": "Makes sense to me, I\u0027m not sure whether the pointer is going to be null or uninitialized.",
+      "parentUuid": "5deec721_f621bae3",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b4c4dab2_f88fccc2",
         "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
         "patchSetId": 8
@@ -582,6 +600,30 @@
       "side": 1,
       "message": "True, the user might want to draw something else than triangles, we need to pass the primitive type to the shader then...",
       "parentUuid": "58a25eb9_deeadc2c",
+      "range": {
+        "startLine": 131,
+        "startChar": 44,
+        "endLine": 131,
+        "endChar": 68
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3420db6a_3292e2e1",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-30T21:38:52Z",
+      "side": 1,
+      "message": "Maybe to get this CL landed we could just return a DAWN_VALIDATION_ERROR from the Metal backend if the primitive type isn\u0027t triangle-list, and fix afterward?\n\n(Or just add a TODO and fix afterward... IMO not a huge deal if we land the CL with known bugs since the feature is still experimental)",
+      "parentUuid": "e646067d_01b86f0f",
       "range": {
         "startLine": 131,
         "startChar": 44,
@@ -945,6 +987,24 @@
       "side": 1,
       "message": "This would mean that no-op draws are not possible and there has to be a constraint of maxDrawCount \u003e 0 in the spec. We can move this validation to the frontend if that is the case.",
       "parentUuid": "d5b2d4c6_4b5b6288",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e67ecaa_2a72bb93",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-30T21:38:52Z",
+      "side": 1,
+      "message": "Right... for some reason I assumed we\u0027d skip in the frontend in that case. (I actually thought some backend didn\u0027t allow zero-sized dispatches, but https://github.com/gpuweb/gpuweb/issues/1045 says it\u0027s OK.)\n\nFiled crbug.com/363270175 about RoundUp. No need to change anything for now.",
+      "parentUuid": "b7a2bdc0_9ed75f81",
       "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
