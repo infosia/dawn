@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73e60a24_d8987525",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-30T21:11:04Z",
+      "side": 1,
+      "message": "I toyed with the idea of representing this in MSL IR \"properly\", but it requires adding two additional MSL-specific types and adding conversion and bitcast operators for them, which seemed like overkill.",
+      "revId": "da384f57ddeb44f259e1c631da0639c5ca4c8436",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
