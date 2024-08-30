@@ -37,6 +37,7 @@
 namespace dawn::native::d3d11 {
 
 class ScopedSwapStateCommandRecordingContext;
+class D3D11SlotTracker;
 
 // We need convert WebGPU bind slot to d3d11 bind slot according a map in PipelineLayout, so we
 // cannot inherit BindGroupTrackerGroups. Currently we arrange all the RTVs and UAVs when calling
@@ -53,8 +54,8 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
     MaybeError Apply();
 
   private:
-    MaybeError ApplyBindGroup(BindGroupIndex index);
-    void UnApplyBindGroup(BindGroupIndex index);
+    MaybeError ApplyBindGroup(BindGroupIndex index, D3D11SlotTracker* d3d11SlotTracker);
+    void UnApplyBindGroup(BindGroupIndex index, D3D11SlotTracker* d3d11SlotTracker);
 
     raw_ptr<const ScopedSwapStateCommandRecordingContext> mCommandContext;
     const bool mIsRenderPass;
