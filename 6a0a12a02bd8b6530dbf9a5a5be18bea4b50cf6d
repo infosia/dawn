@@ -51,6 +51,24 @@
       "parentUuid": "197e9855_39b77c3e",
       "revId": "6a0a12a02bd8b6530dbf9a5a5be18bea4b50cf6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d369782_95c7984a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-08-30T17:01:51Z",
+      "side": 1,
+      "message": "Looks like the other roll got abandoned, submitting.",
+      "parentUuid": "a39d4f6f_cb7514a2",
+      "revId": "6a0a12a02bd8b6530dbf9a5a5be18bea4b50cf6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
