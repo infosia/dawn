@@ -34,6 +34,24 @@
       "parentUuid": "65ae1108_2b32f942",
       "revId": "ade43d1e80804729be7712a84f20b0f632790afb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4601391e_a11b46a6",
+        "filename": "src/dawn/native/opengl/GLFormat.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-30T15:28:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9f26dd00_9cb39348",
+      "revId": "ade43d1e80804729be7712a84f20b0f632790afb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
