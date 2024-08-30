@@ -1615,6 +1615,7 @@ crbug.com/dawn/0000 [ intel-0x3e9b ] webgpu:shader,execution,expression,call,bui
 crbug.com/dawn/0000 [ intel-0x3e9b ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=true [ Failure ]
 crbug.com/dawn/0000 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize="_undef_";non_uniform_discard=true [ Failure ]
 crbug.com/dawn/0000 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=true [ Failure ]
+crbug.com/dawn/0000 [ win10 nvidia-0x2184 ] webgpu:api,validation,render_pipeline,depth_stencil_state:depth_bias:* [ Failure ]
 
 ################################################################################
 # AMD Macbook 16" Qualification (NEEDS TRIAGE)
