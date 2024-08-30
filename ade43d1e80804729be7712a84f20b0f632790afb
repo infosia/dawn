@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65ae1108_2b32f942",
+        "filename": "src/dawn/native/opengl/GLFormat.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-08-30T14:01:54Z",
+      "side": 1,
+      "message": "clang-format insists on reindenting these three lines. I\u0027m not sure why.",
+      "revId": "ade43d1e80804729be7712a84f20b0f632790afb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
