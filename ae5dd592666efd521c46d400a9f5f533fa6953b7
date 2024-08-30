@@ -94,6 +94,30 @@
       },
       "revId": "ae5dd592666efd521c46d400a9f5f533fa6953b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eda1bc90_3836d226",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-30T09:13:21Z",
+      "side": 0,
+      "message": "Yes, and maybe rename to `UnapplyComputeBindings`?",
+      "parentUuid": "068a167b_18870eee",
+      "range": {
+        "startLine": 459,
+        "startChar": 23,
+        "endLine": 459,
+        "endChar": 39
+      },
+      "revId": "ae5dd592666efd521c46d400a9f5f533fa6953b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
