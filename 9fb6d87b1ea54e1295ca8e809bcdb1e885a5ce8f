@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6376d67d_765da713",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-30T14:14:46Z",
+      "side": 1,
+      "message": "LGTM with a couple of very minor nits.",
+      "revId": "9fb6d87b1ea54e1295ca8e809bcdb1e885a5ce8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "243a3714_401b8da8",
@@ -34,6 +51,120 @@
                 "endChar": 0
               },
               "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "9fb6d87b1ea54e1295ca8e809bcdb1e885a5ce8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62b7b188_993c73ce",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-30T14:14:46Z",
+      "side": 1,
+      "message": "Yeah, shouldn\u0027t be needed.",
+      "parentUuid": "243a3714_401b8da8",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "9fb6d87b1ea54e1295ca8e809bcdb1e885a5ce8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaf2cd8d_bc5d789d",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-30T14:14:46Z",
+      "side": 1,
+      "message": "Nit: Doesn\u0027t look like you use `maxSubgroupSize`?",
+      "fixSuggestions": [
+        {
+          "fixId": "757d1717_49db5145",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+              "range": {
+                "startLine": 274,
+                "startChar": 0,
+                "endLine": 275,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "9fb6d87b1ea54e1295ca8e809bcdb1e885a5ce8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "747d4d94_69afda39",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-08-30T14:14:46Z",
+      "side": 1,
+      "message": "Nit: `IsPowerOfTwo(outputSubgroupSizeAt0)`",
+      "fixSuggestions": [
+        {
+          "fixId": "a87fef52_263b367f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+              "range": {
+                "startLine": 206,
+                "startChar": 0,
+                "endLine": 207,
+                "endChar": 0
+              },
+              "replacement": "                    (IsPowerOfTwo(outputSubgroupSizeAt0)))) {\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+              "range": {
+                "startLine": 339,
+                "startChar": 0,
+                "endLine": 340,
+                "endChar": 0
+              },
+              "replacement": "                    (IsPowerOfTwo(outputSubgroupSizeAt0)))) {\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+              "range": {
+                "startLine": 538,
+                "startChar": 0,
+                "endLine": 539,
+                "endChar": 0
+              },
+              "replacement": "                    (IsPowerOfTwo(outputSubgroupSize)))) {\n"
             }
           ]
         }
