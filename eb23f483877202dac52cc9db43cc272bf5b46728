@@ -16,6 +16,23 @@
       "message": "Sorry for the delay! I ended up inverting the ordering of these two CLs because it was easier to update this one with the Ref utils. PTAL!",
       "revId": "eb23f483877202dac52cc9db43cc272bf5b46728",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc204c1e_87a1ab97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-08-30T01:59:05Z",
+      "side": 1,
+      "message": "Definitely improved by adding Ref\u003c\u003e. We\u0027re going to need it more too (I plan to do the thing where we track usages of buffers/textures/querysets so we can auto-destroy() when refcounts reach 0).",
+      "revId": "eb23f483877202dac52cc9db43cc272bf5b46728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
