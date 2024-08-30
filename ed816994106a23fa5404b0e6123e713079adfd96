@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "71b3c844_1534a41b",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-08-30T12:09:48Z",
+      "side": 1,
+      "message": "The CommandBuffer constructor takes the encoder directly, so backends don\u0027t need to know that there is this extra data, so it would be better to just assign in the constructor. Or am I missing something that the backend do per encoder thing?",
+      "parentUuid": "244240eb_c37fcdde",
+      "range": {
+        "startLine": 2068,
+        "startChar": 0,
+        "endLine": 2068,
+        "endChar": 79
+      },
+      "revId": "ed816994106a23fa5404b0e6123e713079adfd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d82d8464_251f84f7",
         "filename": "src/dawn/native/InternalPipelineStore.h",
         "patchSetId": 4
