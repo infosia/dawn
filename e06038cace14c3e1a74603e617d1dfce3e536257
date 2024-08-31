@@ -50,6 +50,24 @@
       "message": "This counts both bug number and comments in the uniqueness, which could lead to collisions.\n\nThis is fine for today, but it would be better to use something like keyOf on line 465.  (And probably best to pull that out as a method on Expecations.)",
       "revId": "e06038cace14c3e1a74603e617d1dfce3e536257",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "675d6fee_d38b73cb",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-08-31T16:17:47Z",
+      "side": 1,
+      "message": "posted low priority crbug.com/363494566",
+      "parentUuid": "9365b8ee_c7783a5b",
+      "revId": "e06038cace14c3e1a74603e617d1dfce3e536257",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
