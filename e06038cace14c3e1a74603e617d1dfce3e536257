@@ -16,6 +16,40 @@
       "message": "PTAL",
       "revId": "e06038cace14c3e1a74603e617d1dfce3e536257",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38733e2f_7f19bf1e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-08-31T16:09:47Z",
+      "side": 1,
+      "message": "Thanks!  This patch definitely fixes the current issue and will get us rolling again.\n\nI think there\u0027s still a hole we can fall into eventually, by including comments and bug info (at least the comments) when determining uniqueness.\n\nHappy to land this now.",
+      "revId": "e06038cace14c3e1a74603e617d1dfce3e536257",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9365b8ee_c7783a5b",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-08-31T16:09:47Z",
+      "side": 1,
+      "message": "This counts both bug number and comments in the uniqueness, which could lead to collisions.\n\nThis is fine for today, but it would be better to use something like keyOf on line 465.  (And probably best to pull that out as a method on Expecations.)",
+      "revId": "e06038cace14c3e1a74603e617d1dfce3e536257",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
