@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-08-05 07:59:00AM
+# Last rolled: 2024-08-31 05:04:36AM
 
 # SharedImage interop failures on Linux
 # Skipped instead of just Crash because of the number of failures
@@ -1254,7 +1254,6 @@ crbug.com/331237795 [ dawn-backend-validation graphite-enabled nvidia webgpu-ada
 crbug.com/331237795 [ dawn-backend-validation graphite-enabled nvidia webgpu-adapter-default webgpu-no-worker win ] webgpu:web_platform,copyToTexture,ImageBitmap:from_canvas:orientation="none";colorSpaceConversion="default";srcFlipYInCopy=true;dstFormat="rgba32float";dstPremultiplied=true [ Failure ]
 crbug.com/331237795 [ dawn-backend-validation graphite-enabled nvidia webgpu-adapter-default webgpu-no-worker win ] webgpu:web_platform,copyToTexture,ImageBitmap:from_canvas:orientation="none";colorSpaceConversion="none";srcFlipYInCopy=false;dstFormat="bgra8unorm";dstPremultiplied=true [ Failure ]
 
-
 # Triaged but uncategorized expectations
 crbug.com/dawn/2497 [ android-t ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:* [ Failure ]
 
@@ -1543,7 +1542,6 @@ crbug.com/351363904 [ nvidia-0x2184 webgpu-dxc-enabled win10 ] webgpu:shader,val
 crbug.com/351363904 [ nvidia-0x2184 webgpu-dxc-enabled win10 ] webgpu:shader,validation,expression,call,builtin,refract:values:stage="override";type="vec3%3Cf16%3E" [ Failure ]
 crbug.com/351363904 [ nvidia-0x2184 webgpu-dxc-enabled win10 ] webgpu:shader,validation,expression,call,builtin,refract:values:stage="override";type="vec4%3Cf16%3E" [ Failure ]
 
-
 crbug.com/341812551 webgpu:api,validation,render_pipeline,misc:no_attachment:* [ Failure ]
 
 crbug.com/331316080 [ dawn-backend-validation intel-0x4680 webgpu-adapter-default webgpu-no-worker win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_canvas:orientation="none";colorSpaceConversion="default";srcFlipYInCopy=false;dstFormat="rg32float";dstPremultiplied=true [ Failure ]
@@ -1555,7 +1553,6 @@ crbug.com/40223285 [ webgpu-adapter-default webgpu-shared-worker win10 ] webgpu:
 
 crbug.com/352379272 [ amd mac ] webgpu:web_platform,copyToTexture,video:copy_from_video:* [ Failure ]
 
-
 # Failures from upgrading to Ubuntu 22 w/ a newer driver.
 crbug.com/358165874 [ linux nvidia-0x2184 nvidia_ge_535.183.01 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,position:nearFar=[0,1];sampleCount=4;interpolation={"type":"linear","sampling":"sample"} [ Failure ]
 crbug.com/358165874 [ linux nvidia-0x2184 nvidia_ge_535.183.01 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,position:nearFar=[0,1];sampleCount=4;interpolation={"type":"perspective","sampling":"sample"} [ Failure ]
@@ -1564,12 +1561,12 @@ crbug.com/358165874 [ linux nvidia-0x2184 nvidia_ge_535.183.01 ] webgpu:shader,e
 crbug.com/358165874 [ linux nvidia-0x2184 nvidia_ge_535.183.01 webgpu-adapter-default ] webgpu:web_platform,copyToTexture,* [ Failure ]
 
 # createComputePipelineAsync slowness with FXC.
-crbug.com/363034688 [ win10 webgpu-dxc-disabled ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=false;containerType="array";shadowingMode="function-scope";isAtomic=false;baseType="f32" [ Failure ]
-crbug.com/363034688 [ win10 webgpu-dxc-disabled ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=false;containerType="array";shadowingMode="module-scope";isAtomic=false;baseType="f32" [ Failure ]
-crbug.com/363034688 [ win10 webgpu-dxc-disabled ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=false;containerType="array";shadowingMode="none";isAtomic=false;baseType="f32" [ Failure ]
-crbug.com/363034688 [ win10 webgpu-dxc-disabled ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=true;containerType="array";shadowingMode="function-scope";isAtomic=false;baseType="f32" [ Failure ]
-crbug.com/363034688 [ win10 webgpu-dxc-disabled ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=true;containerType="array";shadowingMode="module-scope";isAtomic=false;baseType="f32" [ Failure ]
-crbug.com/363034688 [ win10 webgpu-dxc-disabled ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=true;containerType="array";shadowingMode="none";isAtomic=false;baseType="f32" [ Failure ]
+crbug.com/363034688 [ webgpu-dxc-disabled win10 ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=false;containerType="array";shadowingMode="function-scope";isAtomic=false;baseType="f32" [ Failure ]
+crbug.com/363034688 [ webgpu-dxc-disabled win10 ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=false;containerType="array";shadowingMode="module-scope";isAtomic=false;baseType="f32" [ Failure ]
+crbug.com/363034688 [ webgpu-dxc-disabled win10 ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=false;containerType="array";shadowingMode="none";isAtomic=false;baseType="f32" [ Failure ]
+crbug.com/363034688 [ webgpu-dxc-disabled win10 ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=true;containerType="array";shadowingMode="function-scope";isAtomic=false;baseType="f32" [ Failure ]
+crbug.com/363034688 [ webgpu-dxc-disabled win10 ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=true;containerType="array";shadowingMode="module-scope";isAtomic=false;baseType="f32" [ Failure ]
+crbug.com/363034688 [ webgpu-dxc-disabled win10 ] webgpu:shader,execution,robust_access:linear_memory:addressSpace="uniform";access="read";dynamicOffset=true;containerType="array";shadowingMode="none";isAtomic=false;baseType="f32" [ Failure ]
 
 ################################################################################
 # Assorted failures that are missing bug associations (NEEDS TRIAGE)
@@ -1579,7 +1576,6 @@ crbug.com/363034688 [ win10 webgpu-dxc-disabled ] webgpu:shader,execution,robust
 # ... fragment_output_mask:interpolated=true;sampleCount=4;* is very flaky, so mark it Failure
 [ amd-0x67ef mac ] webgpu:api,operation,render_pipeline,sample_mask:fragment_output_mask:interpolated=false;* [ Failure ]
 [ amd-0x67ef mac ] webgpu:api,operation,render_pipeline,sample_mask:fragment_output_mask:interpolated=true;sampleCount=4;* [ Failure ]
-
 
 # external_texture failures
 crbug.com/dawn/0000 [ intel-0x9bc5 linux no-clang-coverage webgpu-adapter-default ] webgpu:web_platform,external_texture,* [ Failure ]
