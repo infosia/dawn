@@ -33,6 +33,24 @@
       "message": "This condition name seems inverted now, need to either swap true/false or rename for example `BackendWillValidateMultiDraw`",
       "revId": "5a3f99c4927c7268851c8c9b5d54b3cf6c8f8709",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23b974a2_defbba4f",
+        "filename": "src/dawn/native/IndirectDrawValidationEncoder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-09-01T10:13:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "411e3b2c_5c33d041",
+      "revId": "5a3f99c4927c7268851c8c9b5d54b3cf6c8f8709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -481,6 +481,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56db5fce_4fc95ecb",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-09-01T10:13:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6ad9c52_7267680b",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4c4dab2_f88fccc2",
@@ -624,6 +642,30 @@
       "side": 1,
       "message": "Maybe to get this CL landed we could just return a DAWN_VALIDATION_ERROR from the Metal backend if the primitive type isn\u0027t triangle-list, and fix afterward?\n\n(Or just add a TODO and fix afterward... IMO not a huge deal if we land the CL with known bugs since the feature is still experimental)",
       "parentUuid": "e646067d_01b86f0f",
+      "range": {
+        "startLine": 131,
+        "startChar": 44,
+        "endLine": 131,
+        "endChar": 68
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e633af50_00166135",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-09-01T10:13:11Z",
+      "side": 1,
+      "message": "I implemented it so we don\u0027t have to make a TODO. I think the backend is pretty much feature complete now.",
+      "parentUuid": "3420db6a_3292e2e1",
       "range": {
         "startLine": 131,
         "startChar": 44,
