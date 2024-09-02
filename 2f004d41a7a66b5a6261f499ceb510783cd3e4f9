@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3c95590_990ea572",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-02T07:55:17Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "2f004d41a7a66b5a6261f499ceb510783cd3e4f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb185550_05afe248",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-02T07:55:17Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "2f004d41a7a66b5a6261f499ceb510783cd3e4f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fda84558_d46a197c",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-02T07:55:17Z",
+      "side": 1,
+      "message": "We could move this compute visibility check out of the switch and put it at [1]",
+      "revId": "2f004d41a7a66b5a6261f499ceb510783cd3e4f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
