@@ -1032,12 +1032,14 @@ class Printer : public tint::TextGenerator {
             case core::BuiltinFn::kDpdxCoarse:
                 if (version_.IsES()) {
                     out << "dFdx";
+                    break;
                 }
                 out << "dFdxCoarse";
                 break;
             case core::BuiltinFn::kDpdxFine:
                 if (version_.IsES()) {
                     out << "dFdx";
+                    break;
                 }
                 out << "dFdxFine";
                 break;
@@ -1047,12 +1049,14 @@ class Printer : public tint::TextGenerator {
             case core::BuiltinFn::kDpdyCoarse:
                 if (version_.IsES()) {
                     out << "dFdy";
+                    break;
                 }
                 out << "dFdyCoarse";
                 break;
             case core::BuiltinFn::kDpdyFine:
                 if (version_.IsES()) {
                     out << "dFdy";
+                    break;
                 }
                 out << "dFdyFine";
                 break;
