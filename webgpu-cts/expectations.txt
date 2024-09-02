@@ -82,11 +82,9 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-08-31 09:34:10PM
-
+# Last rolled: 2024-09-02 04:04:49PM
 
 # conflicts_allowed: true
-
 
 # SharedImage interop failures on Linux
 # Skipped instead of just Crash because of the number of failures
@@ -158,7 +156,6 @@ crbug.com/dawn/1956 [ android-r dawn-no-backend-validation ] webgpu:api,validati
 # writeTimestamp is exposed to GPUCommandEncoder if webgpu-experimental-features
 # is enabled
 crbug.com/dawn/2269 webgpu:api,validation,capability_checks,features,query_types:timestamp:featureContainsTimestampQuery=true [ Failure ]
-
 
 # D3D12 create command queue failed with DXGI_ERROR_DEVICE_REMOVED. Skipped because these tests likely cause downstream flakes.
 crbug.com/dawn/2325 [ nvidia-0x2184 win10 ] webgpu:api,validation,capability_checks,* [ Skip ]
@@ -1819,7 +1816,7 @@ crbug.com/dawn/0000 [ dawn-no-backend-validation nvidia-0x2184 target-cpu-64 web
 crbug.com/dawn/0000 [ dawn-no-backend-validation nvidia-0x2184 target-cpu-64 webgpu-dxc-disabled win10 ] webgpu:web_platform,canvas,configure:format:canvasType="onscreen";format="r8sint" [ RetryOnFailure ]
 crbug.com/dawn/0000 [ dawn-no-backend-validation qualcomm ] webgpu:shader,execution,expression,call,builtin,textureLoad:arrayed:format="r32float";texture_type="texture_2d_array" [ RetryOnFailure ]
 crbug.com/dawn/0000 [ dawn-no-backend-validation qualcomm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-12x10-unorm";viewDimension="cube";samplePoints="cube-edges" [ RetryOnFailure ]
-crbug.com/dawn/0000 [ android-r android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-12x10-unorm";viewDimension="cube";samplePoints="spiral" [ Failure ]
+crbug.com/dawn/0000 [ android-pixel-4 android-r ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-12x10-unorm";viewDimension="cube";samplePoints="spiral" [ Failure ]
 crbug.com/dawn/0000 [ dawn-no-backend-validation qualcomm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="bgra8unorm-srgb";viewDimension="cube";samplePoints="spiral" [ RetryOnFailure ]
 crbug.com/dawn/0000 [ dawn-no-backend-validation qualcomm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="eac-rg11unorm";viewDimension="cube";samplePoints="texel-centre" [ RetryOnFailure ]
 crbug.com/dawn/0000 [ dawn-no-backend-validation qualcomm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="etc2-rgba8unorm-srgb";viewDimension="cube";samplePoints="cube-edges" [ RetryOnFailure ]
@@ -1976,12 +1973,12 @@ crbug.com/dawn/0000 [ nvidia-0x2184 ubuntu ] webgpu:shader,execution,shader_io,f
 crbug.com/dawn/0000 [ nvidia-0x2184 ubuntu ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"perspective","sampling":"sample"} [ Failure ]
 crbug.com/dawn/0000 [ webgpu-dxc-disabled win10 ] webgpu:shader,execution,memory_model,barrier:workgroup_barrier_store_load:accessValueType="u32";memType="non_atomic_texture";accessPair="wr";normalBarrier=true [ Failure ]
 
-crbug.com/dawn/0000 [ android-r android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureLoad:sampled_3d:format="rgba16uint" [ Failure ]
-crbug.com/dawn/0000 [ android-r android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-8x6-unorm-srgb";samplePoints="texel-centre" [ Failure ]
-crbug.com/dawn/0000 [ android-r android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="eac-r11snorm";viewDimension="cube";samplePoints="texel-centre" [ Failure ]
-crbug.com/dawn/0000 [ android-r android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="eac-r11unorm";viewDimension="cube";samplePoints="cube-edges" [ Failure ]
-crbug.com/dawn/0000 [ android-r android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_3d_coords:format="r16float";viewDimension="cube" [ Failure ]
-crbug.com/dawn/0000 [ android-r android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_3d_coords:format="eac-r11snorm" [ Failure ]
+crbug.com/dawn/0000 [ android-pixel-4 android-r ] webgpu:shader,execution,expression,call,builtin,textureLoad:sampled_3d:format="rgba16uint" [ Failure ]
+crbug.com/dawn/0000 [ android-pixel-4 android-r ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-8x6-unorm-srgb";samplePoints="texel-centre" [ Failure ]
+crbug.com/dawn/0000 [ android-pixel-4 android-r ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="eac-r11snorm";viewDimension="cube";samplePoints="texel-centre" [ Failure ]
+crbug.com/dawn/0000 [ android-pixel-4 android-r ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="eac-r11unorm";viewDimension="cube";samplePoints="cube-edges" [ Failure ]
+crbug.com/dawn/0000 [ android-pixel-4 android-r ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_3d_coords:format="r16float";viewDimension="cube" [ Failure ]
+crbug.com/dawn/0000 [ android-pixel-4 android-r ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_3d_coords:format="eac-r11snorm" [ Failure ]
 
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:api,operation,command_buffer,copyBufferToBuffer:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:api,operation,command_buffer,copyTextureToTexture:* [ Failure ]
@@ -1997,13 +1994,13 @@ crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:api,operation,vertex_stat
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:api,validation,render_pipeline,depth_stencil_state:depth_bias:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_bitmaprenderer_context_canvas:* [ Failure ]
-crbug.com/dawn/0000 [ webgpu-adapter-default intel-0x3e9b mac-x86_64 ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gl_context_canvas:* [ Failure ]
+crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 webgpu-adapter-default ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gl_context_canvas:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:web_platform,copyToTexture,image:from_image:* [ Failure ]
-crbug.com/dawn/0000 [ webgpu-adapter-default intel-0x3e9b mac-x86_64 ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:* [ Failure ]
+crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 webgpu-adapter-default ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:web_platform,copyToTexture,ImageBitmap:copy_subrect_from_ImageData:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:* [ Failure ]
-crbug.com/dawn/0000 [ webgpu-adapter-default intel-0x3e9b mac-x86_64 ] webgpu:web_platform,copyToTexture,ImageData:from_ImageData:* [ Failure ]
+crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 webgpu-adapter-default ] webgpu:web_platform,copyToTexture,ImageData:from_ImageData:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:web_platform,copyToTexture,image:from_image:srcDoFlipYDuringCopy=true;dstColorFormat="r32float";dstPremultiplied=true [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:web_platform,copyToTexture,image:from_image:srcDoFlipYDuringCopy=true;dstColorFormat="r8unorm";dstPremultiplied=true [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b mac-x86_64 ] webgpu:web_platform,copyToTexture,image:from_image:srcDoFlipYDuringCopy=true;dstColorFormat="rg16float";dstPremultiplied=false [ Failure ]
@@ -2020,5 +2017,3 @@ crbug.com/dawn/0000 [ amd mac-x86_64 ] webgpu:web_platform,copyToTexture,canvas:
 # New failures. Please triage - will be discarded/regenerated by the next roll:
 # ##ROLLER_DISCARD_AND_REWRITE##
 ################################################################################
-
-
