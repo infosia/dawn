@@ -50,6 +50,24 @@
       "message": "We could move this compute visibility check out of the switch and put it at [1]",
       "revId": "2f004d41a7a66b5a6261f499ceb510783cd3e4f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "330390e4_a4ca4c15",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-02T14:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fda84558_d46a197c",
+      "revId": "2f004d41a7a66b5a6261f499ceb510783cd3e4f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
