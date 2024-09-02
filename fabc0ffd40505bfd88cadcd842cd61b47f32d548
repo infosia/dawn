@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d494872d_a9e1002e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-09-02T15:01:12Z",
+      "side": 1,
+      "message": "lgtm. I\u0027m on parental leave so response would be slow FYI.",
+      "revId": "fabc0ffd40505bfd88cadcd842cd61b47f32d548",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
