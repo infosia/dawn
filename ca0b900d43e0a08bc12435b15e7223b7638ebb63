@@ -68,6 +68,24 @@
       "parentUuid": "4447c91a_ad8eb146",
       "revId": "ca0b900d43e0a08bc12435b15e7223b7638ebb63",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfc62369_be1fe68c",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4241,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-09-02T12:14:24Z",
+      "side": 1,
+      "message": "I\u0027m addressing it in https://dawn-review.googlesource.com/c/dawn/+/197476",
+      "parentUuid": "7deb6313_eecc09da",
+      "revId": "ca0b900d43e0a08bc12435b15e7223b7638ebb63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
