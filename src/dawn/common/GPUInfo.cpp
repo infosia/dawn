@@ -123,4 +123,9 @@ bool IsIrisPlus655(PCIDeviceID deviceId) {
     return std::find(IrisPlus655.cbegin(), IrisPlus655.cend(), deviceId) != IrisPlus655.cend();
 }
 
+bool IsIntelGen12AndNewer(PCIVendorID venderId, PCIDeviceID deviceId) {
+    return IsIntelGen12LP(venderId, deviceId) || IsIntelGen12HP(venderId, deviceId) ||
+           IsIntelGen13LP(venderId, deviceId) || IsIntelGen13HP(venderId, deviceId);
+}
+
 }  // namespace dawn::gpu_info

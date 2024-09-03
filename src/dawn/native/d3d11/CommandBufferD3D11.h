@@ -53,7 +53,8 @@ class CommandBuffer final : public CommandBufferBase {
 
     MaybeError ExecuteComputePass(const ScopedSwapStateCommandRecordingContext* commandContext);
     MaybeError ExecuteRenderPass(BeginRenderPassCmd* renderPass,
-                                 const ScopedSwapStateCommandRecordingContext* commandContext);
+                                 const ScopedSwapStateCommandRecordingContext* commandContext,
+                                 const PerColorAttachment<bool>* isLazyClear);
     void HandleDebugCommands(const ScopedSwapStateCommandRecordingContext* commandContext,
                              CommandIterator* iter,
                              Command command);
