@@ -28,10 +28,13 @@
 #ifndef SRC_DAWN_NATIVE_APPLYCLEARVALUEWITHDRAWHELPER_H_
 #define SRC_DAWN_NATIVE_APPLYCLEARVALUEWITHDRAWHELPER_H_
 
+#include <vector>
+
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/ityp_array.h"
 #include "dawn/common/ityp_bitset.h"
+#include "dawn/native/ChainUtils.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/IntegerTypes.h"
 
@@ -47,6 +50,8 @@ struct KeyOfApplyClearColorValueWithDrawPipelines {
     ColorAttachmentMask colorTargetsToApplyClearColorValue;
     uint32_t sampleCount = 0;
     wgpu::TextureFormat depthStencilFormat = wgpu::TextureFormat::Undefined;
+    uint64_t totalPixelLocalStorageSize;
+    std::vector<wgpu::PipelineLayoutStorageAttachment> plsAttachments;
 };
 
 struct KeyOfApplyClearColorValueWithDrawPipelinesHashFunc {
@@ -68,7 +73,7 @@ class ClearWithDrawHelper {
     ~ClearWithDrawHelper();
 
     MaybeError Initialize(CommandEncoder* encoder,
-                          const RenderPassDescriptor* renderPassDescriptor);
+                          const UnpackedPtr<RenderPassDescriptor>& renderPassDescriptor);
     MaybeError Apply(RenderPassEncoder* renderPassEncoder);
 
   private:

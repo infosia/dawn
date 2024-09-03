@@ -87,7 +87,8 @@ bool IsCompleteSubresourceCopiedTo(const TextureBase* texture,
                                    wgpu::TextureAspect textureAspect);
 SubresourceRange GetSubresourcesAffectedByCopy(const TextureCopy& copy, const Extent3D& copySize);
 
-void LazyClearRenderPassAttachments(BeginRenderPassCmd* renderPass);
+void LazyClearRenderPassAttachments(BeginRenderPassCmd* renderPass,
+                                    PerColorAttachment<bool>* isLazyClear = nullptr);
 
 bool IsFullBufferOverwrittenInTextureToBufferCopy(const CopyTextureToBufferCmd* copy);
 bool IsFullBufferOverwrittenInTextureToBufferCopy(const TextureCopy& source,

@@ -279,7 +279,6 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
                 }
                 DAWN_TRY(
                     LazyClearSyncScope(GetResourceUsages().renderPasses[nextRenderPassNumber]));
-                LazyClearRenderPassAttachments(cmd);
                 DAWN_TRY(ExecuteRenderPass(cmd, commandContext));
 
                 nextRenderPassNumber++;
@@ -564,6 +563,8 @@ MaybeError CommandBuffer::ExecuteComputePass(
 MaybeError CommandBuffer::ExecuteRenderPass(
     BeginRenderPassCmd* renderPass,
     const ScopedSwapStateCommandRecordingContext* commandContext) {
+    PerColorAttachment<bool> isLazyClear{};
+    LazyClearRenderPassAttachments(renderPass, &isLazyClear);
     auto* d3d11DeviceContext = commandContext->GetD3D11DeviceContext4();
 
     // Hold ID3D11RenderTargetView ComPtr to make attachments alive.
@@ -576,7 +577,16 @@ MaybeError CommandBuffer::ExecuteRenderPass(
         DAWN_TRY_ASSIGN(d3d11RenderTargetViews[i],
                         colorTextureView->GetOrCreateD3D11RenderTargetView(
                             renderPass->colorAttachments[i].depthSlice));
-        if (!clearWithDraw && renderPass->colorAttachments[i].loadOp == wgpu::LoadOp::Clear) {
+        // d3d11 "ClearRenderTargetView" is buggy on some old GPUs and drivers, so we try to use
+        // "ClearColorWithDraw" as a workaround.
+        // However, in case of lazy clear, we still need to use "ClearRenderTargetView" as the
+        // workaround's handling is at command submission time.
+        // TODO(crbug.com/364834368): Move handling of workaround at command submission time instead
+        // of recording time.
+        if (clearWithDraw && !isLazyClear[i]) {
+            renderPass->colorAttachments[i].loadOp = wgpu::LoadOp::Load;
+        }
+        if (renderPass->colorAttachments[i].loadOp == wgpu::LoadOp::Clear) {
             std::array<float, 4> clearColor =
                 ConvertToFloatColor(renderPass->colorAttachments[i].clearColor);
             d3d11DeviceContext->ClearRenderTargetView(d3d11RenderTargetViews[i], clearColor.data());
