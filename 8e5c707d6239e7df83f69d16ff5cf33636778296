@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6636d5e_202fbb07",
+        "filename": "src/tint/lang/glsl/writer/if_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-03T15:46:28Z",
+      "side": 1,
+      "message": "This looks identical to the test above?",
+      "revId": "8e5c707d6239e7df83f69d16ff5cf33636778296",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
