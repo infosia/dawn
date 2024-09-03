@@ -16,6 +16,24 @@
       "message": "Nit: Could just use the `Default` case for this one?",
       "revId": "748723dc6aa64db900a00265f84dd273fe073e59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2499abc3_ed8b6b41",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-03T19:49:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae39039a_c5dd00c0",
+      "revId": "748723dc6aa64db900a00265f84dd273fe073e59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
