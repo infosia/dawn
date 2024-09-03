@@ -47582,6 +47582,8 @@ webgpu:shader,execution,expression,call,builtin,textureSample:sampled_array_3d_c
 webgpu:shader,execution,expression,call,builtin,textureSample:depth_3d_coords:
 webgpu:shader,execution,expression,call,builtin,textureSample:depth_array_2d_coords:
 webgpu:shader,execution,expression,call,builtin,textureSample:depth_array_3d_coords:
+webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:textureType="texture_2d%3Cf32%3E"
+webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:textureType="texture_external"
 webgpu:shader,execution,expression,call,builtin,textureSampleBias:sampled_2d_coords:
 webgpu:shader,execution,expression,call,builtin,textureSampleBias:sampled_3d_coords:texture_type="texture_3d"
 webgpu:shader,execution,expression,call,builtin,textureSampleBias:sampled_3d_coords:texture_type="texture_cube"
