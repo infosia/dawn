@@ -34,6 +34,7 @@
 #include <vector>
 
 #include "dawn/common/WindowsUtils.h"
+#include "dawn/native/ApplyClearColorValueWithDrawHelper.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/CommandValidation.h"
@@ -279,7 +280,6 @@ MaybeError CommandBuffer::Execute(const ScopedSwapStateCommandRecordingContext* 
                 }
                 DAWN_TRY(
                     LazyClearSyncScope(GetResourceUsages().renderPasses[nextRenderPassNumber]));
-                LazyClearRenderPassAttachments(cmd);
                 DAWN_TRY(ExecuteRenderPass(cmd, commandContext));
 
                 nextRenderPassNumber++;
@@ -564,19 +564,30 @@ MaybeError CommandBuffer::ExecuteComputePass(
 MaybeError CommandBuffer::ExecuteRenderPass(
     BeginRenderPassCmd* renderPass,
     const ScopedSwapStateCommandRecordingContext* commandContext) {
-    auto* d3d11DeviceContext = commandContext->GetD3D11DeviceContext4();
+    // For the color attachments that the clear_color_with_draw workaround has applied, we can skip
+    // the clear for them.
+    ClearWithDrawHelper::VisitAppliedColorAttachments(
+        GetDevice(), renderPass, [](RenderPassColorAttachmentInfo& colorAttachment) {
+            DAWN_ASSERT(colorAttachment.loadOp == wgpu::LoadOp::Clear);
+            // Skip the clear as it will be handled by the workaround. However, it may cause an
+            // extra lazy clear.
+            // TODO(crbug.com/364834368): Move handling of workaround at command submission time
+            // instead of recording time.
+            colorAttachment.loadOp = wgpu::LoadOp::Load;
+        });
+    LazyClearRenderPassAttachments(renderPass);
 
+    auto* d3d11DeviceContext = commandContext->GetD3D11DeviceContext4();
     // Hold ID3D11RenderTargetView ComPtr to make attachments alive.
     PerColorAttachment<ID3D11RenderTargetView*> d3d11RenderTargetViews = {};
     ColorAttachmentIndex attachmentCount{};
-    bool clearWithDraw = GetDevice()->IsToggleEnabled(Toggle::ClearColorWithDraw);
     // TODO(dawn:1815): Shrink the sparse attachments to accommodate more UAVs.
     for (auto i : IterateBitSet(renderPass->attachmentState->GetColorAttachmentsMask())) {
         TextureView* colorTextureView = ToBackend(renderPass->colorAttachments[i].view.Get());
         DAWN_TRY_ASSIGN(d3d11RenderTargetViews[i],
                         colorTextureView->GetOrCreateD3D11RenderTargetView(
                             renderPass->colorAttachments[i].depthSlice));
-        if (!clearWithDraw && renderPass->colorAttachments[i].loadOp == wgpu::LoadOp::Clear) {
+        if (renderPass->colorAttachments[i].loadOp == wgpu::LoadOp::Clear) {
             std::array<float, 4> clearColor =
                 ConvertToFloatColor(renderPass->colorAttachments[i].clearColor);
             d3d11DeviceContext->ClearRenderTargetView(d3d11RenderTargetViews[i], clearColor.data());
