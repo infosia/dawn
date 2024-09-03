@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae39039a_c5dd00c0",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-03T17:09:27Z",
+      "side": 1,
+      "message": "Nit: Could just use the `Default` case for this one?",
+      "revId": "748723dc6aa64db900a00265f84dd273fe073e59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
