@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-09-02 08:05:51PM
+# Last rolled: 2024-09-03 01:46:52PM
 
 # conflicts_allowed: true
 
@@ -2046,5 +2046,4 @@ crbug.com/dawn/0000 [ dawn-no-backend-validation nvidia-0x2184 webgpu-dxc-enable
 
 crbug.com/dawn/0000 [ angle-opengl dawn-backend-validation desktop display-server-x graphite-disabled intel-0x9bc5 no-asan no-clang-coverage oop-c passthrough release renderer-skia-vulkan target-cpu-64 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:format="depth16unorm" [ Failure ]
 
-crbug.com/dawn/0000 [ android-r android-pixel-4 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_3d_coords:* [ Failure ]
-
+crbug.com/dawn/0000 [ android-pixel-4 android-r ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_3d_coords:* [ Failure ]
