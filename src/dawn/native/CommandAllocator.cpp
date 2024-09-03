@@ -72,10 +72,21 @@ CommandIterator::CommandIterator(CommandAllocator allocator) : mBlocks(allocator
 void CommandIterator::AcquireCommandBlocks(std::vector<CommandAllocator> allocators) {
     DAWN_ASSERT(IsEmpty());
     mBlocks.clear();
+
+    size_t totalBlocksSize = 0;
+    for (CommandAllocator& allocator : allocators) {
+        totalBlocksSize += allocator.GetCommandBlocksSize();
+    }
+
+    if (totalBlocksSize == 0) {
+        Reset();
+        return;
+    }
+
+    mBlocks.reserve(totalBlocksSize);
     for (CommandAllocator& allocator : allocators) {
         CommandBlocks blocks = allocator.AcquireBlocks();
         if (!blocks.empty()) {
-            mBlocks.reserve(mBlocks.size() + blocks.size());
             for (BlockDef& block : blocks) {
                 mBlocks.push_back(std::move(block));
             }
@@ -172,6 +183,10 @@ void CommandAllocator::Reset() {
 
 bool CommandAllocator::IsEmpty() const {
     return mCurrentPtr == reinterpret_cast<const char*>(&mPlaceholderSpace[0]);
+}
+
+size_t CommandAllocator::GetCommandBlocksSize() const {
+    return mBlocks.size();
 }
 
 CommandBlocks&& CommandAllocator::AcquireBlocks() {
