@@ -43,6 +43,8 @@ if(TINT_BUILD_GLSL_WRITER)
 tint_add_target(tint_lang_glsl_writer_raise lib
   lang/glsl/writer/raise/raise.cc
   lang/glsl/writer/raise/raise.h
+  lang/glsl/writer/raise/shader_io.cc
+  lang/glsl/writer/raise/shader_io.h
 )
 
 tint_target_add_dependencies(tint_lang_glsl_writer_raise lib
@@ -50,6 +52,8 @@ tint_target_add_dependencies(tint_lang_glsl_writer_raise lib
   tint_lang_core
   tint_lang_core_common
   tint_lang_core_constant
+  tint_lang_core_intrinsic
+  tint_lang_core_ir
   tint_lang_core_ir_transform
   tint_lang_core_type
   tint_lang_wgsl
