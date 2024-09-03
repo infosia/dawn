@@ -35,6 +35,7 @@
 #include "dawn/common/Assert.h"
 #include "dawn/common/Log.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/d3d/BlobD3D.h"
 #include "dawn/native/d3d/D3DError.h"
@@ -48,6 +49,18 @@
 
 namespace dawn::native::d3d12 {
 namespace {
+
+// Reserve register names for internal use. This registers map to bindings in the shader,
+// but are not directly related to allocation of the root signature.
+// In the root signature, it the index of the root parameter where these registers are
+// used that determines the layout of the root signature.
+static constexpr uint32_t kRenderOrComputeInternalRegisterSpace = kMaxBindGroups + 1;
+static constexpr uint32_t kRenderOrComputeInternalBaseRegister = 0;
+
+static constexpr uint32_t kDynamicStorageBufferLengthsRegisterSpace = kMaxBindGroups + 2;
+static constexpr uint32_t kDynamicStorageBufferLengthsBaseRegister = 0;
+
+static constexpr uint32_t kInvalidRootParameterIndex = std::numeric_limits<uint32_t>::max();
 
 D3D12_INPUT_CLASSIFICATION VertexStepModeFunction(wgpu::VertexStepMode mode) {
     switch (mode) {
@@ -308,6 +321,83 @@ D3D12_INDEX_BUFFER_STRIP_CUT_VALUE ComputeIndexBufferStripCutValue(
 
 }  // anonymous namespace
 
+ImmediateDataManagerD3D12::ImmediateDataManagerD3D12()
+    : ImmediateDataManagerBase(),
+      mImmediateDataRegisterSpace(kRenderOrComputeInternalRegisterSpace),
+      mImmediateDataRegister(kRenderOrComputeInternalBaseRegister),
+      mDynamicStorageBufferRegisterSpace(kDynamicStorageBufferLengthsRegisterSpace),
+      mDynamicStorageBufferRegister(kDynamicStorageBufferLengthsBaseRegister),
+      mImmediateDataRootSignatureIndex(kInvalidRootParameterIndex),
+      mDynamicStorageSizeRootSignatureIndex(kInvalidRootParameterIndex) {}
+
+void ImmediateDataManagerD3D12::InitializeImmediateDataLayout(
+    const ImmediateDataMetadataTable& metadatas) {
+    mImmediateDataMetadata = metadatas;
+
+    // All immediate data are in continuous space
+    for (auto item : mImmediateDataMetadata) {
+        if (item.first != ImmediateDataUsage::ArrayLengthFromUniform) {
+            mImmediateDataRangeSizes += item.second.rangeSize;
+        } else {
+            mDynamicStorageBufferSizesBytes += item.second.rangeSize;
+        }
+    }
+}
+
+void ImmediateDataManagerD3D12::Apply(ID3D12GraphicsCommandList* commandList, bool inCompute) {
+    if (mImmediateDataRootSignatureIndex != kInvalidRootParameterIndex) {
+        uint32_t rootConstantsCounts = mImmediateDataRangeSizes / sizeof(uint32_t);
+        if (inCompute) {
+            commandList->SetComputeRoot32BitConstants(
+                mImmediateDataRootSignatureIndex, rootConstantsCounts, mImmediateData.data(), 0);
+        } else {
+            commandList->SetGraphicsRoot32BitConstants(
+                mImmediateDataRootSignatureIndex, rootConstantsCounts, mImmediateData.data(), 0);
+        }
+    }
+
+    if (mDynamicStorageSizeRootSignatureIndex != kInvalidRootParameterIndex) {
+        uint32_t dynamicStorageBufferSizeConstantsCounts =
+            mDynamicStorageBufferSizesBytes / sizeof(uint32_t);
+        if (inCompute) {
+            commandList->SetComputeRoot32BitConstants(mDynamicStorageSizeRootSignatureIndex,
+                                                      dynamicStorageBufferSizeConstantsCounts,
+                                                      mDynamicStorageBuffers.data(), 0);
+        } else {
+            commandList->SetGraphicsRoot32BitConstants(mDynamicStorageSizeRootSignatureIndex,
+                                                       dynamicStorageBufferSizeConstantsCounts,
+                                                       mDynamicStorageBuffers.data(), 0);
+        }
+    }
+}
+
+void ImmediateDataManagerD3D12::UpdateDynamicStorageBufferSizeValue(ImmediateDataUsage usage,
+                                                                    uint32_t offset,
+                                                                    uint32_t size,
+                                                                    const uint32_t* immediateData) {
+    const ImmediateDataMetadata& metadata = mImmediateDataMetadata.at(usage);
+    const uint32_t rangeStartOffset = metadata.startOffset + offset;
+    uint32_t counts = size / sizeof(uint32_t);
+    std::copy(immediateData, immediateData + counts,
+              mDynamicStorageBuffers.begin() + rangeStartOffset);
+}
+
+void ImmediateDataManagerD3D12::UpdateDynamicStorageBufferSizeMetadata(uint32_t rangeSize) {
+    ImmediateDataMetadata metadata;
+    metadata.startOffset = 0;
+    metadata.rangeSize = rangeSize;
+    mImmediateDataMetadata.emplace(ImmediateDataUsage::ArrayLengthFromUniform, std::move(metadata));
+}
+
+const ImmediateDataMetadata& ImmediateDataManagerD3D12::GetImmediateDataMetadata(
+    ImmediateDataUsage usage) {
+    return mImmediateDataMetadata.at(usage);
+}
+
+bool ImmediateDataManagerD3D12::HasImmediateDataMetaData(ImmediateDataUsage usage) {
+    return mImmediateDataMetadata.contains(usage);
+}
+
 Ref<RenderPipeline> RenderPipeline::CreateUninitialized(
     Device* device,
     const UnpackedPtr<RenderPipelineDescriptor>& descriptor) {
@@ -374,9 +464,44 @@ MaybeError RenderPipeline::InitializeImpl() {
     mUsesVertexOrInstanceIndex = compiledShader[SingleShaderStage::Vertex].usesVertexIndex ||
                                  compiledShader[SingleShaderStage::Vertex].usesInstanceIndex;
 
-    PipelineLayout* layout = ToBackend(GetLayout());
+    // Use fragment shader module immediate data metadata table to initialize manager because
+    // fragment compilation happens after vertex and have whole picture of total immediate data
+    // block.
+    mImmediateDataManager = std::make_unique<ImmediateDataManagerD3D12>();
+    if (HasStage(SingleShaderStage::Fragment)) {
+        mImmediateDataManager->InitializeImmediateDataLayout(
+            compiledShader[SingleShaderStage::Fragment].immediateDataMetadataTable);
+    } else {
+        mImmediateDataManager->InitializeImmediateDataLayout(
+            compiledShader[SingleShaderStage::Vertex].immediateDataMetadataTable);
+    }
 
-    descriptorD3D12.pRootSignature = layout->GetRootSignature();
+    // We have to consider both shader stage and merge them into the same metadata table.
+    // To resolve this, vertex immediate data block related transform should bring result to
+    // fragmennt compilation stage.
+    uint32_t vertexDynamicStorageBufferSizeRangeSize =
+        compiledShader[SingleShaderStage::Vertex].immediateDataMetadataTable.contains(
+            ImmediateDataUsage::ArrayLengthFromUniform)
+            ? compiledShader[SingleShaderStage::Vertex]
+                  .immediateDataMetadataTable.at(ImmediateDataUsage::ArrayLengthFromUniform)
+                  .rangeSize
+            : 0;
+    uint32_t fragmentDynamicStorageBufferSizeRangeSize =
+        compiledShader[SingleShaderStage::Fragment].immediateDataMetadataTable.contains(
+            ImmediateDataUsage::ArrayLengthFromUniform)
+            ? compiledShader[SingleShaderStage::Fragment]
+                  .immediateDataMetadataTable.at(ImmediateDataUsage::ArrayLengthFromUniform)
+                  .rangeSize
+            : 0;
+    if (vertexDynamicStorageBufferSizeRangeSize || fragmentDynamicStorageBufferSizeRangeSize) {
+        mImmediateDataManager->UpdateDynamicStorageBufferSizeMetadata(std::max(
+            vertexDynamicStorageBufferSizeRangeSize, fragmentDynamicStorageBufferSizeRangeSize));
+    }
+
+    ID3D12RootSignature* rootSignature;
+    DAWN_TRY_ASSIGN(rootSignature,
+                    ToBackend(GetLayout())->GetOrCreateRootSignature(mImmediateDataManager.get()));
+    descriptorD3D12.pRootSignature = rootSignature;
 
     // D3D12 logs warnings if any empty input state is used
     std::array<D3D12_INPUT_ELEMENT_DESC, kMaxVertexAttributes> inputElementDescriptors;
@@ -431,7 +556,13 @@ MaybeError RenderPipeline::InitializeImpl() {
 
     mD3d12PrimitiveTopology = D3D12PrimitiveTopology(GetPrimitiveTopology());
 
-    StreamIn(&mCacheKey, descriptorD3D12, *layout->GetRootSignatureBlob());
+    // mInternalImmediateDataRangeByteSize = mImmediateDataManager->GetImmediateDataRangeByteSize();
+    // mInternalDynamicStorageBufferSizeByteSize =
+    //     mImmediateDataManager->GetDynamicStorageBufferSizesBytes();
+
+    StreamIn(&mCacheKey, descriptorD3D12,
+             *ToBackend(GetLayout())
+                  ->GetRootSignatureBlob(mImmediateDataManager->GetImmediateDataRangeByteSize()));
 
     // Try to see if we have anything in the blob cache.
     Blob blob = device->LoadCachedBlob(GetCacheKey());
@@ -502,7 +633,8 @@ void RenderPipeline::SetLabelImpl() {
 
 ComPtr<ID3D12CommandSignature> RenderPipeline::GetDrawIndirectCommandSignature() {
     if (mUsesVertexOrInstanceIndex) {
-        return ToBackend(GetLayout())->GetDrawIndirectCommandSignatureWithInstanceVertexOffsets();
+        return ToBackend(GetLayout())
+            ->GetDrawIndirectCommandSignatureWithInstanceVertexOffsets(mImmediateDataManager.get());
     }
 
     return ToBackend(GetDevice())->GetDrawIndirectSignature();
@@ -511,7 +643,8 @@ ComPtr<ID3D12CommandSignature> RenderPipeline::GetDrawIndirectCommandSignature()
 ComPtr<ID3D12CommandSignature> RenderPipeline::GetDrawIndexedIndirectCommandSignature() {
     if (mUsesVertexOrInstanceIndex) {
         return ToBackend(GetLayout())
-            ->GetDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets();
+            ->GetDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets(
+                mImmediateDataManager.get());
     }
 
     return ToBackend(GetDevice())->GetDrawIndexedIndirectSignature();
@@ -570,6 +703,10 @@ D3D12_DEPTH_STENCIL_DESC RenderPipeline::ComputeDepthStencilDesc() {
     depthStencilDescriptor.FrontFace = StencilOpDesc(descriptor->stencilFront);
     depthStencilDescriptor.BackFace = StencilOpDesc(descriptor->stencilBack);
     return depthStencilDescriptor;
+}
+
+ImmediateDataManagerD3D12* RenderPipeline::GetImmediateDataManager() {
+    return mImmediateDataManager.get();
 }
 
 }  // namespace dawn::native::d3d12

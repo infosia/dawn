@@ -36,6 +36,7 @@
 #include "dawn/native/d3d12/BindGroupLayoutD3D12.h"
 #include "dawn/native/d3d12/DeviceD3D12.h"
 #include "dawn/native/d3d12/PlatformFunctionsD3D12.h"
+#include "dawn/native/d3d12/RenderPipelineD3D12.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
 
 using Microsoft::WRL::ComPtr;
@@ -52,9 +53,6 @@ static constexpr uint32_t kRenderOrComputeInternalBaseRegister = 0;
 
 static constexpr uint32_t kDynamicStorageBufferLengthsRegisterSpace = kMaxBindGroups + 2;
 static constexpr uint32_t kDynamicStorageBufferLengthsBaseRegister = 0;
-
-static constexpr uint32_t kInvalidDynamicStorageBufferLengthsParameterIndex =
-    std::numeric_limits<uint32_t>::max();
 
 D3D12_ROOT_PARAMETER_TYPE RootParameterType(wgpu::BufferBindingType type) {
     switch (type) {
@@ -149,11 +147,8 @@ ResultOrError<Ref<PipelineLayout>> PipelineLayout::Create(
 }
 
 MaybeError PipelineLayout::Initialize() {
-    Device* device = ToBackend(GetDevice());
     // Parameters are D3D12_ROOT_PARAMETER_TYPE which is either a root table, constant, or
     // descriptor.
-    std::vector<D3D12_ROOT_PARAMETER1> rootParameters;
-    std::vector<D3D12_STATIC_SAMPLER_DESC> staticSamplers;
 
     size_t rangesCount = 0;
     size_t staticSamplerCount = 0;
@@ -165,8 +160,8 @@ MaybeError PipelineLayout::Initialize() {
     }
 
     // We are taking pointers to `ranges`, so we cannot let it resize while we're pushing to it.
-    std::vector<D3D12_DESCRIPTOR_RANGE1> ranges(rangesCount);
-    staticSamplers.reserve(staticSamplerCount);
+    mRanges.resize(rangesCount);
+    mStaticSamplers.reserve(staticSamplerCount);
 
     uint32_t rangeIndex = 0;
 
@@ -187,30 +182,30 @@ MaybeError PipelineLayout::Initialize() {
             rootParameter.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
             rootParameter.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
             rootParameter.DescriptorTable.NumDescriptorRanges = rangeCount;
-            rootParameter.DescriptorTable.pDescriptorRanges = &ranges[rangeIndex];
+            rootParameter.DescriptorTable.pDescriptorRanges = &mRanges[rangeIndex];
 
             for (auto& range : descriptorRanges) {
                 DAWN_ASSERT(range.RegisterSpace == kRegisterSpacePlaceholder);
-                ranges[rangeIndex] = range;
-                ranges[rangeIndex].RegisterSpace = static_cast<uint32_t>(group);
+                mRanges[rangeIndex] = range;
+                mRanges[rangeIndex].RegisterSpace = static_cast<uint32_t>(group);
                 rangeIndex++;
             }
 
-            rootParameters.emplace_back(rootParameter);
+            mRootParameters.emplace_back(rootParameter);
 
             return true;
         };
 
         if (SetRootDescriptorTable(bindGroupLayout->GetCbvUavSrvDescriptorRanges())) {
-            mCbvUavSrvRootParameterInfo[group] = rootParameters.size() - 1;
+            mCbvUavSrvRootParameterInfo[group] = mRootParameters.size() - 1;
         }
         if (SetRootDescriptorTable(bindGroupLayout->GetSamplerDescriptorRanges())) {
-            mSamplerRootParameterInfo[group] = rootParameters.size() - 1;
+            mSamplerRootParameterInfo[group] = mRootParameters.size() - 1;
         }
 
         // Combine the static samplers from the all of the bind group layouts to one vector.
         for (auto& samplerDesc : bindGroupLayout->GetStaticSamplers()) {
-            auto& newSampler = staticSamplers.emplace_back(samplerDesc);
+            auto& newSampler = mStaticSamplers.emplace_back(samplerDesc);
             newSampler.RegisterSpace = static_cast<uint32_t>(group);
         }
 
@@ -242,7 +237,7 @@ MaybeError PipelineLayout::Initialize() {
 
             // Set root descriptors in root signatures.
             rootParameter.Descriptor = rootDescriptor;
-            mDynamicRootParameterIndices[group][dynamicBindingIndex] = rootParameters.size();
+            mDynamicRootParameterIndices[group][dynamicBindingIndex] = mRootParameters.size();
 
             // Set parameter types according to bind group layout descriptor.
             rootParameter.ParameterType =
@@ -251,32 +246,13 @@ MaybeError PipelineLayout::Initialize() {
             // Set visibilities according to bind group layout descriptor.
             rootParameter.ShaderVisibility = ShaderVisibilityType(bindingInfo.visibility);
 
-            rootParameters.emplace_back(rootParameter);
+            mRootParameters.emplace_back(rootParameter);
         }
     }
 
     // Make sure that we added exactly the number of elements we expected. If we added more,
     // |ranges| will have resized and the pointers in the |rootParameter|s will be invalid.
     DAWN_ASSERT(rangeIndex == rangesCount);
-
-    D3D12_ROOT_PARAMETER1 renderOrComputeInternalConstants{};
-    renderOrComputeInternalConstants.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-    renderOrComputeInternalConstants.ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
-    // Always allocate 3 constants for either:
-    //  - vertex_index and instance_index
-    //  - num_workgroups_x, num_workgroups_y and num_workgroups_z
-    // NOTE: We should consider delaying root signature creation until we know how many values
-    // we need
-    renderOrComputeInternalConstants.Constants.Num32BitValues = 3;
-    renderOrComputeInternalConstants.Constants.RegisterSpace =
-        kRenderOrComputeInternalRegisterSpace;
-    renderOrComputeInternalConstants.Constants.ShaderRegister =
-        kRenderOrComputeInternalBaseRegister;
-    mFirstIndexOffsetParameterIndex = rootParameters.size();
-    mNumWorkgroupsParameterIndex = rootParameters.size();
-    // NOTE: We should consider moving this entry to earlier in the root signature since offsets
-    // would need to be updated often
-    rootParameters.emplace_back(renderOrComputeInternalConstants);
 
     // Loops over all of the dynamic storage buffer bindings in the layout and build
     // a mapping from the binding to the next offset into the root constant array where
@@ -308,69 +284,6 @@ MaybeError PipelineLayout::Initialize() {
         DAWN_ASSERT(mDynamicStorageBufferLengthInfo[group].bindingAndRegisterOffsets.size() ==
                     bgl->GetBindingCountInfo().dynamicStorageBufferCount);
     }
-
-    if (dynamicStorageBufferLengthsShaderRegisterOffset > 0) {
-        D3D12_ROOT_PARAMETER1 dynamicStorageBufferLengthConstants{};
-        dynamicStorageBufferLengthConstants.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-        dynamicStorageBufferLengthConstants.ParameterType =
-            D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
-        dynamicStorageBufferLengthConstants.Constants.Num32BitValues =
-            dynamicStorageBufferLengthsShaderRegisterOffset;
-        dynamicStorageBufferLengthConstants.Constants.RegisterSpace =
-            kDynamicStorageBufferLengthsRegisterSpace;
-        dynamicStorageBufferLengthConstants.Constants.ShaderRegister =
-            kDynamicStorageBufferLengthsBaseRegister;
-        mDynamicStorageBufferLengthsParameterIndex = rootParameters.size();
-        rootParameters.emplace_back(dynamicStorageBufferLengthConstants);
-    } else {
-        mDynamicStorageBufferLengthsParameterIndex =
-            kInvalidDynamicStorageBufferLengthsParameterIndex;
-    }
-
-    D3D12_VERSIONED_ROOT_SIGNATURE_DESC versionedRootSignatureDescriptor = {};
-    versionedRootSignatureDescriptor.Version = D3D_ROOT_SIGNATURE_VERSION_1_1;
-    versionedRootSignatureDescriptor.Desc_1_1.NumParameters = rootParameters.size();
-    versionedRootSignatureDescriptor.Desc_1_1.pParameters = rootParameters.data();
-    versionedRootSignatureDescriptor.Desc_1_1.NumStaticSamplers = staticSamplers.size();
-    versionedRootSignatureDescriptor.Desc_1_1.pStaticSamplers = staticSamplers.data();
-    versionedRootSignatureDescriptor.Desc_1_1.Flags =
-        D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-
-    DAWN_TRY([&]() -> MaybeError {
-        ComPtr<ID3DBlob> error;
-        if (device->IsToggleEnabled(Toggle::D3D12UseRootSignatureVersion1_1) &&
-            DAWN_LIKELY(SUCCEEDED(device->GetFunctions()->d3d12SerializeVersionedRootSignature(
-                &versionedRootSignatureDescriptor, &mRootSignatureBlob, &error)))) {
-            return {};
-        }
-        // If using root signature version 1.1 failed, try again with root signature version 1.0.
-        // Some drivers appear to run an outdated version of the DXIL validator and can't support
-        // 1.1.
-        // Note that retrying again is OK because whether we use version 1.0 or 1.1 doesn't
-        // affect anything else except pipeline layout creation. Nothing else in Dawn cares
-        // what decision we made here.
-        // TODO(crbug.com/1512318): Add some telemetry so we log how often/when this happens.
-        std::ostringstream messageStream;
-        if (error) {
-            messageStream << static_cast<const char*>(error->GetBufferPointer()) << "\n";
-        }
-        HRESULT hr = SerializeRootParameter1_0(device, versionedRootSignatureDescriptor,
-                                               &mRootSignatureBlob, &error);
-        if (DAWN_LIKELY(SUCCEEDED(hr))) {
-            return {};
-        }
-        if (error) {
-            messageStream << static_cast<const char*>(error->GetBufferPointer()) << "\n";
-        }
-        messageStream << "D3D12 serialize root signature";
-        DAWN_TRY(CheckHRESULT(hr, messageStream.str().c_str()));
-        return {};
-    }());
-    DAWN_TRY(CheckHRESULT(device->GetD3D12Device()->CreateRootSignature(
-                              0, mRootSignatureBlob->GetBufferPointer(),
-                              mRootSignatureBlob->GetBufferSize(), IID_PPV_ARGS(&mRootSignature)),
-                          "D3D12 create root signature"));
-    StreamIn(&mCacheKey, mRootSignatureBlob.Get());
     return {};
 }
 
@@ -378,20 +291,28 @@ void PipelineLayout::DestroyImpl() {
     PipelineLayoutBase::DestroyImpl();
 
     Device* device = ToBackend(GetDevice());
-    device->ReferenceUntilUnused(mRootSignature);
+    for (auto& item : mRootSignatures) {
+        device->ReferenceUntilUnused(item.second);
+    }
 
     // The ID3D12CommandSignature object should not be referenced by GPU operations in-flight on
     // Command Queue when it is being deleted. According to D3D12 debug layer, "it is not safe to
     // final-release objects that may have GPU operations pending. This can result in application
     // instability (921)".
-    if (mDispatchIndirectCommandSignatureWithNumWorkgroups.Get()) {
-        device->ReferenceUntilUnused(mDispatchIndirectCommandSignatureWithNumWorkgroups);
+    if (!mDispatchIndirectCommandSignatureWithNumWorkgroups.empty()) {
+        for (auto& item : mDispatchIndirectCommandSignatureWithNumWorkgroups) {
+            device->ReferenceUntilUnused(item.second);
+        }
     }
-    if (mDrawIndirectCommandSignatureWithInstanceVertexOffsets.Get()) {
-        device->ReferenceUntilUnused(mDrawIndirectCommandSignatureWithInstanceVertexOffsets);
+    if (!mDrawIndirectCommandSignatureWithInstanceVertexOffsets.empty()) {
+        for (auto& item : mDrawIndirectCommandSignatureWithInstanceVertexOffsets) {
+            device->ReferenceUntilUnused(item.second);
+        }
     }
-    if (mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets.Get()) {
-        device->ReferenceUntilUnused(mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets);
+    if (!mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets.empty()) {
+        for (auto& item : mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets) {
+            device->ReferenceUntilUnused(item.second);
+        }
     }
 }
 
@@ -405,12 +326,115 @@ uint32_t PipelineLayout::GetSamplerRootParameterIndex(BindGroupIndex group) cons
     return mSamplerRootParameterInfo[group];
 }
 
-ID3D12RootSignature* PipelineLayout::GetRootSignature() const {
-    return mRootSignature.Get();
+ResultOrError<ID3D12RootSignature*> PipelineLayout::GetOrCreateRootSignature(
+    ImmediateDataManagerD3D12* manager) {
+    Device* device = ToBackend(GetDevice());
+    ImmediateDataRangeSize size = manager->GetImmediateDataRangeByteSize();
+    if (!mRootSignatures.contains(size)) {
+        DAWN_ASSERT(!mRootSignatureBlobs.contains(size));
+
+        std::vector<D3D12_ROOT_PARAMETER1> rootParameters = mRootParameters;
+
+        // TODO: Reserve root constants here.
+        // Have non-empty immediate data block
+        if (size) {
+            D3D12_ROOT_PARAMETER1 renderOrComputeInternalConstants{};
+            renderOrComputeInternalConstants.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+            renderOrComputeInternalConstants.ParameterType =
+                D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
+            // Always allocate 3 constants for either:
+            //  - vertex_index and instance_index
+            //  - num_workgroups_x, num_workgroups_y and num_workgroups_z
+            // NOTE: We should consider delaying root signature creation until we know how many
+            // values we need
+            renderOrComputeInternalConstants.Constants.Num32BitValues = size / sizeof(uint32_t);
+            renderOrComputeInternalConstants.Constants.RegisterSpace =
+                manager->GetImmediateDataRegisterSpace();
+            renderOrComputeInternalConstants.Constants.ShaderRegister =
+                manager->GetImmediateDataRegister();
+            manager->SetImmediateDataRootSignatureIndex(rootParameters.size());
+            rootParameters.emplace_back(renderOrComputeInternalConstants);
+        }
+
+        uint32_t dynamicStorageBufferSizeConstantsBytes =
+            manager->GetDynamicStorageBufferSizesBytes();
+        // Have non-empty dynamic storage buffer size block
+        if (dynamicStorageBufferSizeConstantsBytes) {
+            D3D12_ROOT_PARAMETER1 dynamicStorageBufferLengthConstants{};
+            dynamicStorageBufferLengthConstants.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+            dynamicStorageBufferLengthConstants.ParameterType =
+                D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
+            dynamicStorageBufferLengthConstants.Constants.Num32BitValues =
+                dynamicStorageBufferSizeConstantsBytes / sizeof(uint32_t);
+            dynamicStorageBufferLengthConstants.Constants.RegisterSpace =
+                manager->GetDynamicStorageBufferRegisterSpace();
+            dynamicStorageBufferLengthConstants.Constants.ShaderRegister =
+                manager->GetDynamicStorageBufferRegister();
+            manager->SetDynamicStorageSizeRootSignatureIndex(rootParameters.size());
+            rootParameters.emplace_back(dynamicStorageBufferLengthConstants);
+        }
+
+        D3D12_VERSIONED_ROOT_SIGNATURE_DESC versionedRootSignatureDescriptor = {};
+        versionedRootSignatureDescriptor.Version = D3D_ROOT_SIGNATURE_VERSION_1_1;
+        versionedRootSignatureDescriptor.Desc_1_1.NumParameters = rootParameters.size();
+        versionedRootSignatureDescriptor.Desc_1_1.pParameters = rootParameters.data();
+        versionedRootSignatureDescriptor.Desc_1_1.NumStaticSamplers = mStaticSamplers.size();
+        versionedRootSignatureDescriptor.Desc_1_1.pStaticSamplers = mStaticSamplers.data();
+        versionedRootSignatureDescriptor.Desc_1_1.Flags =
+            D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+        ComPtr<ID3DBlob> rootSignatureBlob;
+        DAWN_TRY([&]() -> MaybeError {
+            ComPtr<ID3DBlob> error;
+            if (device->IsToggleEnabled(Toggle::D3D12UseRootSignatureVersion1_1) &&
+                DAWN_LIKELY(SUCCEEDED(device->GetFunctions()->d3d12SerializeVersionedRootSignature(
+                    &versionedRootSignatureDescriptor, &rootSignatureBlob, &error)))) {
+                return {};
+            }
+            // If using root signature version 1.1 failed, try again with root signature
+            // version 1.0. Some drivers appear to run an outdated version of the DXIL validator and
+            // can't support 1.1. Note that retrying again is OK because whether we use version 1.0
+            // or 1.1 doesn't affect anything else except pipeline layout creation. Nothing else in
+            // Dawn cares what decision we made here.
+            // TODO(crbug.com/1512318): Add some telemetry so we log how often/when this happens.
+            std::ostringstream messageStream;
+            if (error) {
+                messageStream << static_cast<const char*>(error->GetBufferPointer()) << "\n";
+            }
+            HRESULT hr = SerializeRootParameter1_0(device, versionedRootSignatureDescriptor,
+                                                   &rootSignatureBlob, &error);
+            if (DAWN_LIKELY(SUCCEEDED(hr))) {
+                return {};
+            }
+            if (error) {
+                messageStream << static_cast<const char*>(error->GetBufferPointer()) << "\n";
+            }
+            messageStream << "D3D12 serialize root signature";
+            DAWN_TRY(CheckHRESULT(hr, messageStream.str().c_str()));
+            return {};
+        }());
+
+        ComPtr<ID3D12RootSignature> rootSignature;
+        DAWN_TRY(CheckHRESULT(device->GetD3D12Device()->CreateRootSignature(
+                                  0, rootSignatureBlob->GetBufferPointer(),
+                                  rootSignatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature)),
+                              "D3D12 create root signature"));
+
+        mRootSignatureBlobs.emplace(size, std::move(rootSignatureBlob));
+        mRootSignatures.emplace(size, std::move(rootSignature));
+    }
+
+    return mRootSignatures.at(size).Get();
 }
 
-ID3DBlob* PipelineLayout::GetRootSignatureBlob() const {
-    return mRootSignatureBlob.Get();
+ID3D12RootSignature* PipelineLayout::GetRootSignature(ImmediateDataRangeSize rangeSizes) const {
+    DAWN_ASSERT(mRootSignatures.contains(rangeSizes));
+    return mRootSignatures.at(rangeSizes).Get();
+}
+
+ID3DBlob* PipelineLayout::GetRootSignatureBlob(ImmediateDataRangeSize rangeSizes) const {
+    DAWN_ASSERT(mRootSignatureBlobs.contains(rangeSizes));
+    return mRootSignatureBlobs.at(rangeSizes).Get();
 }
 
 const PipelineLayout::DynamicStorageBufferLengthInfo&
@@ -429,16 +453,158 @@ uint32_t PipelineLayout::GetDynamicRootParameterIndex(BindGroupIndex group,
     return mDynamicRootParameterIndices[group][bindingIndex];
 }
 
+ID3D12CommandSignature* PipelineLayout::GetDispatchIndirectCommandSignatureWithNumWorkgroups(
+    ImmediateDataManagerD3D12* manager) {
+    ImmediateDataRangeSize size = manager->GetImmediateDataRangeByteSize();
+    // mDispatchIndirectCommandSignatureWithNumWorkgroups won't be created until it is needed.
+    if (mDispatchIndirectCommandSignatureWithNumWorkgroups.contains(size)) {
+        return mDispatchIndirectCommandSignatureWithNumWorkgroups.at(size).Get();
+    }
+
+    ComPtr<ID3D12CommandSignature> commandRootSignature;
+
+    std::vector<D3D12_INDIRECT_ARGUMENT_DESC> argumentDescs;
+    // We could remove DevceD3D12 mDrawIndexedIndirectSignature. ImmediateDataManagerD3D12 brings
+    // enough infos.
+    if (manager->HasImmediateDataMetaData(ImmediateDataUsage::NumWorkgroupsFromUniform)) {
+        const ImmediateDataMetadata& metadata =
+            manager->GetImmediateDataMetadata(ImmediateDataUsage::NumWorkgroupsFromUniform);
+        D3D12_INDIRECT_ARGUMENT_DESC argConstantsDesc;
+        argConstantsDesc.Type = D3D12_INDIRECT_ARGUMENT_TYPE_CONSTANT;
+        argConstantsDesc.Constant.RootParameterIndex =
+            manager->GetImmediateDataRootSignatureIndex();
+        argConstantsDesc.Constant.Num32BitValuesToSet = metadata.rangeSize / sizeof(uint32_t);
+        argConstantsDesc.Constant.DestOffsetIn32BitValues = metadata.startOffset / sizeof(uint32_t);
+        argumentDescs.emplace_back(std::move(argConstantsDesc));
+    }
+
+    // A command signature must contain exactly 1 Draw / Dispatch / DispatchMesh / DispatchRays
+    // command. That command must come last.
+    D3D12_INDIRECT_ARGUMENT_DESC argDesc;
+    argDesc.Type = D3D12_INDIRECT_ARGUMENT_TYPE_DISPATCH;
+    argumentDescs.emplace_back(std::move(argDesc));
+
+    D3D12_COMMAND_SIGNATURE_DESC programDesc = {};
+    programDesc.ByteStride = 6 * sizeof(uint32_t);
+    programDesc.NumArgumentDescs = argumentDescs.size();
+    programDesc.pArgumentDescs = argumentDescs.data();
+
+    // The root signature must be specified if and only if the command signature changes one of
+    // the root arguments.
+    ToBackend(GetDevice())
+        ->GetD3D12Device()
+        ->CreateCommandSignature(&programDesc, GetRootSignature(size),
+                                 IID_PPV_ARGS(&commandRootSignature));
+    mDispatchIndirectCommandSignatureWithNumWorkgroups.emplace(size,
+                                                               std::move(commandRootSignature));
+    return mDispatchIndirectCommandSignatureWithNumWorkgroups.at(size).Get();
+}
+
+ID3D12CommandSignature* PipelineLayout::GetDrawIndirectCommandSignatureWithInstanceVertexOffsets(
+    ImmediateDataManagerD3D12* manager) {
+    ImmediateDataRangeSize size = manager->GetImmediateDataRangeByteSize();
+    // mDrawIndirectCommandSignatureWithInstanceVertexOffsets won't be created until it is
+    // needed.
+    if (mDrawIndirectCommandSignatureWithInstanceVertexOffsets.contains(size)) {
+        return mDrawIndirectCommandSignatureWithInstanceVertexOffsets.at(size).Get();
+    }
+
+    ComPtr<ID3D12CommandSignature> commandRootSignature;
+
+    std::vector<D3D12_INDIRECT_ARGUMENT_DESC> argumentDescs;
+    // We could remove DevceD3D12 mDrawIndexedIndirectSignature. ImmediateDataManagerD3D12 brings
+    // enough infos.
+    if (manager->HasImmediateDataMetaData(ImmediateDataUsage::FirstIndexOffset)) {
+        const ImmediateDataMetadata& metadata =
+            manager->GetImmediateDataMetadata(ImmediateDataUsage::FirstIndexOffset);
+        D3D12_INDIRECT_ARGUMENT_DESC argConstantsDesc;
+        argConstantsDesc.Type = D3D12_INDIRECT_ARGUMENT_TYPE_CONSTANT;
+        argConstantsDesc.Constant.RootParameterIndex =
+            manager->GetImmediateDataRootSignatureIndex();
+        argConstantsDesc.Constant.Num32BitValuesToSet = metadata.rangeSize / sizeof(uint32_t);
+        argConstantsDesc.Constant.DestOffsetIn32BitValues = metadata.startOffset / sizeof(uint32_t);
+        argumentDescs.emplace_back(std::move(argConstantsDesc));
+    }
+
+    // A command signature must contain exactly 1 Draw / Dispatch / DispatchMesh / DispatchRays
+    // command. That command must come last.
+    D3D12_INDIRECT_ARGUMENT_DESC argDesc;
+    argDesc.Type = D3D12_INDIRECT_ARGUMENT_TYPE_DRAW;
+    argumentDescs.emplace_back(std::move(argDesc));
+
+    D3D12_COMMAND_SIGNATURE_DESC programDesc = {};
+    programDesc.ByteStride = 6 * sizeof(uint32_t);
+    programDesc.NumArgumentDescs = argumentDescs.size();
+    programDesc.pArgumentDescs = argumentDescs.data();
+
+    // The root signature must be specified if and only if the command signature changes one of
+    // the root arguments.
+    ToBackend(GetDevice())
+        ->GetD3D12Device()
+        ->CreateCommandSignature(&programDesc, GetRootSignature(size),
+                                 IID_PPV_ARGS(&commandRootSignature));
+
+    mDrawIndirectCommandSignatureWithInstanceVertexOffsets.emplace(size,
+                                                                   std::move(commandRootSignature));
+    return mDrawIndirectCommandSignatureWithInstanceVertexOffsets.at(size).Get();
+}
+
+ID3D12CommandSignature*
+PipelineLayout::GetDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets(
+    ImmediateDataManagerD3D12* manager) {
+    ImmediateDataRangeSize size = manager->GetImmediateDataRangeByteSize();
+    // mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets won't be created until it
+    // is needed.
+    if (mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets.contains(size)) {
+        return mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets.at(size).Get();
+    }
+
+    ComPtr<ID3D12CommandSignature> commandRootSignature;
+
+    std::vector<D3D12_INDIRECT_ARGUMENT_DESC> argumentDescs;
+    // We could remove DevceD3D12 mDrawIndexedIndirectSignature. ImmediateDataManagerD3D12 brings
+    // enough infos.
+    if (manager->HasImmediateDataMetaData(ImmediateDataUsage::FirstIndexOffset)) {
+        const ImmediateDataMetadata& metadata =
+            manager->GetImmediateDataMetadata(ImmediateDataUsage::FirstIndexOffset);
+        D3D12_INDIRECT_ARGUMENT_DESC argConstantsDesc;
+        argConstantsDesc.Type = D3D12_INDIRECT_ARGUMENT_TYPE_CONSTANT;
+        argConstantsDesc.Constant.RootParameterIndex =
+            manager->GetImmediateDataRootSignatureIndex();
+        argConstantsDesc.Constant.Num32BitValuesToSet = metadata.rangeSize / sizeof(uint32_t);
+        argConstantsDesc.Constant.DestOffsetIn32BitValues = metadata.startOffset / sizeof(uint32_t);
+        argumentDescs.emplace_back(std::move(argConstantsDesc));
+    }
+
+    // A command signature must contain exactly 1 Draw / Dispatch / DispatchMesh / DispatchRays
+    // command. That command must come last.
+    D3D12_INDIRECT_ARGUMENT_DESC argDesc;
+    argDesc.Type = D3D12_INDIRECT_ARGUMENT_TYPE_DRAW_INDEXED;
+    argumentDescs.emplace_back(std::move(argDesc));
+
+    D3D12_COMMAND_SIGNATURE_DESC programDesc = {};
+    programDesc.ByteStride = 7 * sizeof(uint32_t);
+    programDesc.NumArgumentDescs = argumentDescs.size();
+    programDesc.pArgumentDescs = argumentDescs.data();
+
+    // The root signature must be specified if and only if the command signature changes one of
+    // the root arguments.
+    ToBackend(GetDevice())
+        ->GetD3D12Device()
+        ->CreateCommandSignature(&programDesc, GetRootSignature(size),
+                                 IID_PPV_ARGS(&commandRootSignature));
+
+    mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets.emplace(
+        size, std::move(commandRootSignature));
+    return mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets.at(size).Get();
+}
+
 uint32_t PipelineLayout::GetFirstIndexOffsetRegisterSpace() const {
     return kRenderOrComputeInternalRegisterSpace;
 }
 
 uint32_t PipelineLayout::GetFirstIndexOffsetShaderRegister() const {
     return kRenderOrComputeInternalBaseRegister;
-}
-
-uint32_t PipelineLayout::GetFirstIndexOffsetParameterIndex() const {
-    return mFirstIndexOffsetParameterIndex;
 }
 
 uint32_t PipelineLayout::GetNumWorkgroupsRegisterSpace() const {
@@ -449,117 +615,12 @@ uint32_t PipelineLayout::GetNumWorkgroupsShaderRegister() const {
     return kRenderOrComputeInternalBaseRegister;
 }
 
-uint32_t PipelineLayout::GetNumWorkgroupsParameterIndex() const {
-    return mNumWorkgroupsParameterIndex;
-}
-
 uint32_t PipelineLayout::GetDynamicStorageBufferLengthsRegisterSpace() const {
     return kDynamicStorageBufferLengthsRegisterSpace;
 }
 
 uint32_t PipelineLayout::GetDynamicStorageBufferLengthsShaderRegister() const {
     return kDynamicStorageBufferLengthsBaseRegister;
-}
-
-uint32_t PipelineLayout::GetDynamicStorageBufferLengthsParameterIndex() const {
-    DAWN_ASSERT(mDynamicStorageBufferLengthsParameterIndex !=
-                kInvalidDynamicStorageBufferLengthsParameterIndex);
-    return mDynamicStorageBufferLengthsParameterIndex;
-}
-
-ID3D12CommandSignature* PipelineLayout::GetDispatchIndirectCommandSignatureWithNumWorkgroups() {
-    // mDispatchIndirectCommandSignatureWithNumWorkgroups won't be created until it is needed.
-    if (mDispatchIndirectCommandSignatureWithNumWorkgroups.Get() != nullptr) {
-        return mDispatchIndirectCommandSignatureWithNumWorkgroups.Get();
-    }
-
-    D3D12_INDIRECT_ARGUMENT_DESC argumentDescs[2] = {};
-    argumentDescs[0].Type = D3D12_INDIRECT_ARGUMENT_TYPE_CONSTANT;
-    argumentDescs[0].Constant.RootParameterIndex = GetNumWorkgroupsParameterIndex();
-    argumentDescs[0].Constant.Num32BitValuesToSet = 3;
-    argumentDescs[0].Constant.DestOffsetIn32BitValues = 0;
-
-    // A command signature must contain exactly 1 Draw / Dispatch / DispatchMesh / DispatchRays
-    // command. That command must come last.
-    argumentDescs[1].Type = D3D12_INDIRECT_ARGUMENT_TYPE_DISPATCH;
-
-    D3D12_COMMAND_SIGNATURE_DESC programDesc = {};
-    programDesc.ByteStride = 6 * sizeof(uint32_t);
-    programDesc.NumArgumentDescs = 2;
-    programDesc.pArgumentDescs = argumentDescs;
-
-    // The root signature must be specified if and only if the command signature changes one of
-    // the root arguments.
-    ToBackend(GetDevice())
-        ->GetD3D12Device()
-        ->CreateCommandSignature(&programDesc, GetRootSignature(),
-                                 IID_PPV_ARGS(&mDispatchIndirectCommandSignatureWithNumWorkgroups));
-    return mDispatchIndirectCommandSignatureWithNumWorkgroups.Get();
-}
-
-ID3D12CommandSignature* PipelineLayout::GetDrawIndirectCommandSignatureWithInstanceVertexOffsets() {
-    // mDrawIndirectCommandSignatureWithInstanceVertexOffsets won't be created until it is
-    // needed.
-    if (mDrawIndirectCommandSignatureWithInstanceVertexOffsets.Get() != nullptr) {
-        return mDrawIndirectCommandSignatureWithInstanceVertexOffsets.Get();
-    }
-
-    D3D12_INDIRECT_ARGUMENT_DESC argumentDescs[2] = {};
-    argumentDescs[0].Type = D3D12_INDIRECT_ARGUMENT_TYPE_CONSTANT;
-    argumentDescs[0].Constant.RootParameterIndex = GetFirstIndexOffsetParameterIndex();
-    argumentDescs[0].Constant.Num32BitValuesToSet = 2;
-    argumentDescs[0].Constant.DestOffsetIn32BitValues = 0;
-
-    // A command signature must contain exactly 1 Draw / Dispatch / DispatchMesh / DispatchRays
-    // command. That command must come last.
-    argumentDescs[1].Type = D3D12_INDIRECT_ARGUMENT_TYPE_DRAW;
-
-    D3D12_COMMAND_SIGNATURE_DESC programDesc = {};
-    programDesc.ByteStride = 6 * sizeof(uint32_t);
-    programDesc.NumArgumentDescs = 2;
-    programDesc.pArgumentDescs = argumentDescs;
-
-    // The root signature must be specified if and only if the command signature changes one of
-    // the root arguments.
-    ToBackend(GetDevice())
-        ->GetD3D12Device()
-        ->CreateCommandSignature(
-            &programDesc, GetRootSignature(),
-            IID_PPV_ARGS(&mDrawIndirectCommandSignatureWithInstanceVertexOffsets));
-    return mDrawIndirectCommandSignatureWithInstanceVertexOffsets.Get();
-}
-
-ID3D12CommandSignature*
-PipelineLayout::GetDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets() {
-    // mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets won't be created until it
-    // is needed.
-    if (mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets.Get() != nullptr) {
-        return mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets.Get();
-    }
-
-    D3D12_INDIRECT_ARGUMENT_DESC argumentDescs[2] = {};
-    argumentDescs[0].Type = D3D12_INDIRECT_ARGUMENT_TYPE_CONSTANT;
-    argumentDescs[0].Constant.RootParameterIndex = GetFirstIndexOffsetParameterIndex();
-    argumentDescs[0].Constant.Num32BitValuesToSet = 2;
-    argumentDescs[0].Constant.DestOffsetIn32BitValues = 0;
-
-    // A command signature must contain exactly 1 Draw / Dispatch / DispatchMesh / DispatchRays
-    // command. That command must come last.
-    argumentDescs[1].Type = D3D12_INDIRECT_ARGUMENT_TYPE_DRAW_INDEXED;
-
-    D3D12_COMMAND_SIGNATURE_DESC programDesc = {};
-    programDesc.ByteStride = 7 * sizeof(uint32_t);
-    programDesc.NumArgumentDescs = 2;
-    programDesc.pArgumentDescs = argumentDescs;
-
-    // The root signature must be specified if and only if the command signature changes one of
-    // the root arguments.
-    ToBackend(GetDevice())
-        ->GetD3D12Device()
-        ->CreateCommandSignature(
-            &programDesc, GetRootSignature(),
-            IID_PPV_ARGS(&mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets));
-    return mDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets.Get();
 }
 
 }  // namespace dawn::native::d3d12

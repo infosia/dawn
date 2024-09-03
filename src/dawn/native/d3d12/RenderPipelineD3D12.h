@@ -37,6 +37,63 @@ namespace dawn::native::d3d12 {
 
 class Device;
 
+// Define here for quick prototyping. Should lives in a seperate header file.
+class ImmediateDataManagerD3D12 : public ImmediateDataManagerBase {
+  public:
+    ImmediateDataManagerD3D12();
+    void InitializeImmediateDataLayout(const ImmediateDataMetadataTable& metadatas);
+    void Apply(ID3D12GraphicsCommandList* commandList, bool inCompute);
+    uint32_t GetDynamicStorageBufferSizesBytes() const { return mDynamicStorageBufferSizesBytes; }
+    uint32_t GetImmediateDataRegisterSpace() const { return mImmediateDataRegisterSpace; }
+    uint32_t GetImmediateDataRegister() const { return mImmediateDataRegister; }
+    uint32_t GetDynamicStorageBufferRegisterSpace() const {
+        return mDynamicStorageBufferRegisterSpace;
+    }
+    uint32_t GetDynamicStorageBufferRegister() const { return mDynamicStorageBufferRegister; }
+
+    void SetImmediateDataRootSignatureIndex(uint32_t index) {
+        mImmediateDataRootSignatureIndex = index;
+    }
+    uint32_t GetImmediateDataRootSignatureIndex() const { return mImmediateDataRootSignatureIndex; }
+
+    void SetDynamicStorageSizeRootSignatureIndex(uint32_t index) {
+        mDynamicStorageSizeRootSignatureIndex = index;
+    }
+    uint32_t GetDynamicStorageSizeRootSignatureIndex() const {
+        return mDynamicStorageSizeRootSignatureIndex;
+    }
+
+    // We don't need this after implementing unify immediate data block
+    void UpdateDynamicStorageBufferSizeValue(ImmediateDataUsage usage,
+                                             uint32_t offset,
+                                             uint32_t size,
+                                             const uint32_t* immediateData);
+    // We don't need this after implementing unify immediate data block.
+    void UpdateDynamicStorageBufferSizeMetadata(uint32_t rangeSize);
+
+    bool HasImmediateDataMetaData(ImmediateDataUsage usage);
+    const ImmediateDataMetadata& GetImmediateDataMetadata(ImmediateDataUsage usage);
+
+  private:
+    // ImmediateData shares the same range between shader stages.
+    // TODO: Adding per stage immediate data support.
+    uint32_t mDynamicStorageBufferSizesBytes = 0;
+
+    // Temp range for dynamic storage buffer size, which uses seperated register
+    std::array<uint32_t, kMaxImmediateDataCounts> mDynamicStorageBuffers;
+
+    // D3D12 specific immediate data register info.
+    uint32_t mImmediateDataRegisterSpace;
+    uint32_t mImmediateDataRegister;
+
+    // Temp register info for dynamic storage buffer size
+    uint32_t mDynamicStorageBufferRegisterSpace;
+    uint32_t mDynamicStorageBufferRegister;
+
+    uint32_t mImmediateDataRootSignatureIndex;
+    uint32_t mDynamicStorageSizeRootSignatureIndex;
+};
+
 class RenderPipeline final : public RenderPipelineBase {
   public:
     static Ref<RenderPipeline> CreateUninitialized(
@@ -57,11 +114,16 @@ class RenderPipeline final : public RenderPipelineBase {
     ComPtr<ID3D12CommandSignature> GetDrawIndirectCommandSignature();
 
     ComPtr<ID3D12CommandSignature> GetDrawIndexedIndirectCommandSignature();
+    ImmediateDataManagerD3D12* GetImmediateDataManager();
 
   private:
     ~RenderPipeline() override;
 
     void DestroyImpl() override;
+
+    ID3D12CommandSignature* GetDrawIndirectCommandSignatureWithInstanceVertexOffsets();
+
+    ID3D12CommandSignature* GetDrawIndexedIndirectCommandSignatureWithInstanceVertexOffsets();
 
     using RenderPipelineBase::RenderPipelineBase;
     D3D12_INPUT_LAYOUT_DESC ComputeInputLayout(
@@ -71,6 +133,8 @@ class RenderPipeline final : public RenderPipelineBase {
     D3D12_PRIMITIVE_TOPOLOGY mD3d12PrimitiveTopology;
     ComPtr<ID3D12PipelineState> mPipelineState;
     bool mUsesVertexOrInstanceIndex;
+
+    std::unique_ptr<ImmediateDataManagerD3D12> mImmediateDataManager;
 };
 
 }  // namespace dawn::native::d3d12

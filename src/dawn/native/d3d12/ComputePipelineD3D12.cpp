@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/d3d/BlobD3D.h"
 #include "dawn/native/d3d/D3DError.h"
@@ -81,7 +82,6 @@ MaybeError ComputePipeline::InitializeImpl() {
     }
 
     D3D12_COMPUTE_PIPELINE_STATE_DESC d3dDesc = {};
-    d3dDesc.pRootSignature = ToBackend(GetLayout())->GetRootSignature();
 
     d3d::CompiledShader compiledShader;
     DAWN_TRY_ASSIGN(
@@ -95,7 +95,21 @@ MaybeError ComputePipeline::InitializeImpl() {
                 : std::nullopt));
     d3dDesc.CS = {compiledShader.shaderBlob.Data(), compiledShader.shaderBlob.Size()};
 
-    StreamIn(&mCacheKey, d3dDesc, ToBackend(GetLayout())->GetRootSignatureBlob());
+    mImmediateDataManager = std::make_unique<ImmediateDataManagerD3D12>();
+    mImmediateDataManager->InitializeImmediateDataLayout(compiledShader.immediateDataMetadataTable);
+
+    ID3D12RootSignature* rootSignature;
+    DAWN_TRY_ASSIGN(rootSignature,
+                    ToBackend(GetLayout())->GetOrCreateRootSignature(mImmediateDataManager.get()));
+
+    // mInternalImmediateDataRangeByteSize = mImmediateDataManager->GetImmediateDataRangeByteSize();
+    // mInternalDynamicStorageBufferSizeByteSize =
+    //     mImmediateDataManager->GetDynamicStorageBufferSizesBytes();
+
+    StreamIn(&mCacheKey, d3dDesc,
+             *ToBackend(GetLayout())
+                  ->GetRootSignatureBlob(mImmediateDataManager->GetImmediateDataRangeByteSize()));
+    d3dDesc.pRootSignature = rootSignature;
 
     // Try to see if we have anything in the blob cache.
     Blob blob = device->LoadCachedBlob(GetCacheKey());
@@ -161,9 +175,14 @@ bool ComputePipeline::UsesNumWorkgroups() const {
 
 ComPtr<ID3D12CommandSignature> ComputePipeline::GetDispatchIndirectCommandSignature() {
     if (UsesNumWorkgroups()) {
-        return ToBackend(GetLayout())->GetDispatchIndirectCommandSignatureWithNumWorkgroups();
+        return ToBackend(GetLayout())
+            ->GetDispatchIndirectCommandSignatureWithNumWorkgroups(mImmediateDataManager.get());
     }
     return ToBackend(GetDevice())->GetDispatchIndirectSignature();
+}
+
+ImmediateDataManagerD3D12* ComputePipeline::GetImmediateDataManager() {
+    return mImmediateDataManager.get();
 }
 
 }  // namespace dawn::native::d3d12

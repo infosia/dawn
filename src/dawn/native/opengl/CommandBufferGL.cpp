@@ -253,13 +253,13 @@ class VertexStateBufferBindingTracker {
 
 class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
   public:
-    void OnSetPipeline(RenderPipeline* pipeline) {
+    void OnSetRenderPipeline(RenderPipeline* pipeline) {
         BindGroupTrackerBase::OnSetPipeline(pipeline);
         mPipeline = pipeline;
         ResetInternalUniformDataDirtyRange();
     }
 
-    void OnSetPipeline(ComputePipeline* pipeline) {
+    void OnSetComputePipeline(ComputePipeline* pipeline) {
         BindGroupTrackerBase::OnSetPipeline(pipeline);
         mPipeline = pipeline;
         ResetInternalUniformDataDirtyRange();
@@ -948,7 +948,7 @@ MaybeError CommandBuffer::ExecuteComputePass() {
                 lastPipeline = ToBackend(cmd->pipeline).Get();
                 lastPipeline->ApplyNow();
 
-                bindGroupTracker.OnSetPipeline(lastPipeline);
+                bindGroupTracker.OnSetComputePipeline(lastPipeline);
                 break;
             }
 
@@ -1235,7 +1235,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass) {
                 lastPipeline->ApplyNow(persistentPipelineState);
 
                 vertexStateBufferBindingTracker.OnSetPipeline(lastPipeline);
-                bindGroupTracker.OnSetPipeline(lastPipeline);
+                bindGroupTracker.OnSetRenderPipeline(lastPipeline);
                 if (lastPipeline->UsesFragDepth()) {
                     gl.Uniform1f(PipelineLayout::PushConstantLocation::MinDepth, minDepth);
                     gl.Uniform1f(PipelineLayout::PushConstantLocation::MaxDepth, maxDepth);

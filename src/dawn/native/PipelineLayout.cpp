@@ -467,6 +467,9 @@ size_t PipelineLayoutBase::ComputeContentHash() {
         recorder.Record(slotFormat);
     }
 
+    // Hash the immediate data range byte size
+    recorder.Record(mImmediateDataRangeByteSize);
+
     return recorder.GetContentHash();
 }
 
@@ -495,7 +498,16 @@ bool PipelineLayoutBase::EqualityFunc::operator()(const PipelineLayoutBase* a,
         }
     }
 
+    // Check immediate data range
+    if (a->mImmediateDataRangeByteSize != b->mImmediateDataRangeByteSize) {
+        return false;
+    }
+
     return true;
+}
+
+uint32_t PipelineLayoutBase::GetImmediateDataRanageByteSize() const {
+    return mImmediateDataRangeByteSize;
 }
 
 }  // namespace dawn::native

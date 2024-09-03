@@ -34,8 +34,9 @@
 
 #include "dawn/common/Constants.h"
 #include "dawn/native/BindGroup.h"
-#include "dawn/native/Pipeline.h"
+#include "dawn/native/ComputePipeline.h"
 #include "dawn/native/PipelineLayout.h"
+#include "dawn/native/RenderPipeline.h"
 #include "partition_alloc/pointers/raw_ptr_exclusion.h"
 
 namespace dawn::native {
@@ -74,7 +75,14 @@ class BindGroupTrackerBase {
                   mDynamicOffsets[index].begin());
     }
 
-    void OnSetPipeline(PipelineBase* pipeline) { mPipelineLayout = pipeline->GetLayout(); }
+    // NOTE: After we support ToBackend(ImmediateDataManager), we could change these back to
+    // single OnSetPipeline(PipelineBase* pipeline);
+    virtual void OnSetPipeline(RenderPipelineBase* pipeline) {
+        mPipelineLayout = pipeline->GetLayout();
+    }
+    virtual void OnSetPipeline(ComputePipelineBase* pipeline) {
+        mPipelineLayout = pipeline->GetLayout();
+    }
 
   protected:
     // The Derived class should call this before it applies bind groups.
