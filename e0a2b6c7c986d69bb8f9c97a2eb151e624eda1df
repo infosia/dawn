@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1286cec_1d7eecce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-03T18:08:09Z",
+      "side": 1,
+      "message": "There are build failures in Skia and there probably be similar failures in some other dependents as well. I think we should keep the old names as aliases for the new names for now, and fix the dependents during the interim period.",
+      "revId": "e0a2b6c7c986d69bb8f9c97a2eb151e624eda1df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
