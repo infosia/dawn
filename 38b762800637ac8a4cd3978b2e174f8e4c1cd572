@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ad97c431_76047f4f",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-03T18:54:26Z",
+      "side": 1,
+      "message": "Both the `ComputePassEncoder` and the `RenderPassEncoder` should have a reference to the `CommandEncoder` in `mCommandEncoder`. Assuming that the validation mode on the parent `CommandEncoder` can be used, might just need to expose a getter or something to retrieve the mode from `mCommandEncoder`.",
+      "parentUuid": "1f6e79bb_c3f2dfdc",
+      "range": {
+        "startLine": 356,
+        "startChar": 42,
+        "endLine": 356,
+        "endChar": 70
+      },
+      "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f73eb579_b0c7e44e",
         "filename": "src/dawn/native/RenderEncoderBase.cpp",
         "patchSetId": 2
