@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82398ae7_ece5b61e",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-03T18:56:07Z",
+      "side": 1,
+      "message": "nit: s/other/storage",
+      "revId": "410f88ef2826da5bd1fd879426bfc6b8d9a885ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
