@@ -284,13 +284,6 @@ TEST_P(SurfaceTests, SwitchPresentMode) {
     // locally.
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsVulkan() && IsNvidia());
 
-    // TODO(jiawei.shao@intel.com): find out why this test sometimes hangs on the latest Linux Intel
-    // Vulkan drivers.
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsIntel());
-
-    // crbug.com/358166481
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
-
     constexpr wgpu::PresentMode kAllPresentModes[] = {
         wgpu::PresentMode::Immediate,
         wgpu::PresentMode::Fifo,
