@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16c62798_5463344a",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-03T15:52:30Z",
+      "side": 1,
+      "message": "Nit: Should never see `Discard` here, and if we did emitting as GLSL `discard` wouldn\u0027t quite be right (we\u0027d want to use `GLSL_EXT_demote_to_helper_invocation` instead). Suggest ICE instead.",
+      "revId": "117d4146191d940ebce0d6455c1935182eff1f16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
