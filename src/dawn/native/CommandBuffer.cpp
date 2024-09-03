@@ -149,7 +149,8 @@ SubresourceRange GetSubresourcesAffectedByCopy(const TextureCopy& copy, const Ex
     DAWN_UNREACHABLE();
 }
 
-void LazyClearRenderPassAttachments(BeginRenderPassCmd* renderPass) {
+void LazyClearRenderPassAttachments(BeginRenderPassCmd* renderPass,
+                                    PerColorAttachment<bool>* isLazyClear) {
     for (auto i : IterateBitSet(renderPass->attachmentState->GetColorAttachmentsMask())) {
         auto& attachmentInfo = renderPass->colorAttachments[i];
         TextureViewBase* view = attachmentInfo.view.Get();
@@ -163,7 +164,10 @@ void LazyClearRenderPassAttachments(BeginRenderPassCmd* renderPass) {
         if (attachmentInfo.loadOp == wgpu::LoadOp::Load &&
             !view->GetTexture()->IsSubresourceContentInitialized(range)) {
             attachmentInfo.loadOp = wgpu::LoadOp::Clear;
-            attachmentInfo.clearColor = {0.f, 0.f, 0.f, 0.f};
+            attachmentInfo.clearColor = {.r = 0.f, .g = 0.f, .b = 0.f, .a = 0.f};
+            if (isLazyClear) {
+                (*isLazyClear)[i] = true;
+            }
         }
 
         if (hasResolveTarget) {

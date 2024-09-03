@@ -27,6 +27,7 @@
 
 #include "dawn/native/ApplyClearColorValueWithDrawHelper.h"
 
+#include <format>
 #include <limits>
 #include <string>
 #include <utility>
@@ -43,7 +44,6 @@
 #include "dawn/native/RenderPassEncoder.h"
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/utils/WGPUHelpers.h"
-#include "dawn/native/webgpu_absl_format.h"
 
 namespace dawn::native {
 
@@ -87,23 +87,73 @@ std::string ConstructFragmentShader(DeviceBase* device,
     clearValueUniformBufferDeclarationStream << "struct ClearColors {\n";
 
     // Only generate the assignments we need.
-    for (auto i : IterateBitSet(key.colorTargetsToApplyClearColorValue)) {
-        wgpu::TextureFormat currentFormat = key.colorTargetFormats[i];
+    for (size_t i = 0; auto it : IterateBitSet(key.colorTargetsToApplyClearColorValue)) {
+        wgpu::TextureFormat currentFormat = key.colorTargetFormats[it];
         DAWN_ASSERT(currentFormat != wgpu::TextureFormat::Undefined);
 
         const char* type = GetTextureComponentTypeString(device, currentFormat);
 
         outputColorDeclarationStream
-            << absl::StrFormat("    @location(%u) output%u : vec4<%s>,\n", i, i, type);
+            << std::format("    @location({0}) output{0} : vec4<{1}>,\n", i, type);
         clearValueUniformBufferDeclarationStream
-            << absl::StrFormat("    color%u : vec4<%s>,\n", i, type);
-        assignOutputColorStream << absl::StrFormat(
-            "    outputColor.output%u = clearColors.color%u;\n", i, i);
+            << std::format("    color{} : vec4<{}>,\n", i, type);
+        assignOutputColorStream << std::format(
+            "    outputColor.output{0} = clearColors.color{0};\n", i);
+        ++i;
     }
     outputColorDeclarationStream << "}\n";
     clearValueUniformBufferDeclarationStream << "}\n";
 
     std::ostringstream fragmentShaderStream;
+    std::ostringstream plsAssignmentStream;
+    if (key.hasPLS) {
+        std::vector<const char*> plsTypes;
+        plsTypes.resize(key.totalPixelLocalStorageSize / kPLSSlotByteSize, "u32");
+        for (const auto& attachment : key.plsAttachments) {
+            switch (attachment.format) {
+                case wgpu::TextureFormat::R32Uint:
+                    plsTypes[attachment.offset / kPLSSlotByteSize] = "u32";
+                    break;
+                case wgpu::TextureFormat::R32Sint:
+                    plsTypes[attachment.offset / kPLSSlotByteSize] = "i32";
+                    break;
+                case wgpu::TextureFormat::R32Float:
+                    plsTypes[attachment.offset / kPLSSlotByteSize] = "f32";
+                    break;
+                default:
+                    DAWN_UNREACHABLE();
+            }
+        }
+
+        fragmentShaderStream << R"(
+enable chromium_experimental_pixel_local;
+)";
+
+        // Assemble the PLS decalaration like:
+        //
+        // enable chromium_experimental_pixel_local;
+        // struct PLS {
+        //     a0 : u32,
+        //     a1 : u32,
+        //     a2 : u32,
+        //     a3 : u32,
+        // }
+        //
+        // var<pixel_local> pls : PLS;
+        std::ostringstream plsDecalarationStream;
+
+        plsDecalarationStream << "struct PLS {\n";
+        for (size_t i = 0; i < key.totalPixelLocalStorageSize / kPLSSlotByteSize; ++i) {
+            plsDecalarationStream << std::format("    a{} : {},\n", i, plsTypes[i]);
+            plsAssignmentStream << std::format("    pls.a{} = {}(0);\n", i, plsTypes[i]);
+        }
+        plsDecalarationStream << "}\n";
+
+        fragmentShaderStream << plsDecalarationStream.str() << R"(
+var<pixel_local> pls : PLS;
+)";
+    }
+
     fragmentShaderStream << outputColorDeclarationStream.str()
                          << clearValueUniformBufferDeclarationStream.str() << R"(
 @group(0) @binding(0) var<uniform> clearColors : ClearColors;
@@ -111,8 +161,8 @@ std::string ConstructFragmentShader(DeviceBase* device,
 @fragment
 fn main() -> OutputColor {
     var outputColor : OutputColor;
-)" << assignOutputColorStream.str()
-                         << R"(
+)" << plsAssignmentStream.str()
+                         << assignOutputColorStream.str() << R"(
     return outputColor;
 })";
     return fragmentShaderStream.str();
@@ -168,12 +218,37 @@ ResultOrError<RenderPipelineBase*> GetOrCreateApplyClearValueWithDrawPipeline(
     renderPipelineDesc.fragment = &fragment;
     renderPipelineDesc.multisample.count = key.sampleCount;
     DepthStencilState depthStencilState = {};
+    depthStencilState.depthWriteEnabled = false;
     if (key.depthStencilFormat != wgpu::TextureFormat::Undefined) {
         depthStencilState.format = key.depthStencilFormat;
         renderPipelineDesc.depthStencil = &depthStencilState;
     }
     fragment.targetCount = key.colorAttachmentCount;
     fragment.targets = colorTargets.data();
+
+    Ref<BindGroupLayoutBase> bgl;
+
+    PipelineLayoutDescriptor pipelineLayoutDesc = {};
+    pipelineLayoutDesc.bindGroupLayoutCount = 1;
+    pipelineLayoutDesc.bindGroupLayouts = &bgl.Get();
+
+    wgpu::PipelineLayoutPixelLocalStorage pls{};
+    pls.totalPixelLocalStorageSize = key.totalPixelLocalStorageSize;
+    pls.storageAttachmentCount = key.plsAttachments.size();
+    pls.storageAttachments = key.plsAttachments.data();
+
+    pipelineLayoutDesc.nextInChain = &pls;
+
+    Ref<PipelineLayoutBase> pipelineLayout;
+    if (key.hasPLS) {
+        DAWN_TRY_ASSIGN(
+            bgl, utils::MakeBindGroupLayout(
+                     device, {{0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Uniform}}));
+
+        DAWN_TRY_ASSIGN(pipelineLayout, device->CreatePipelineLayout(&pipelineLayoutDesc));
+
+        renderPipelineDesc.layout = pipelineLayout.Get();
+    }
 
     Ref<RenderPipelineBase> pipeline;
     DAWN_TRY_ASSIGN(pipeline, device->CreateRenderPipeline(&renderPipelineDesc));
@@ -289,7 +364,7 @@ bool NeedsBigIntClear(const RenderPassColorAttachment& colorAttachmentInfo) {
 
 bool GetKeyOfApplyClearColorValueWithDrawPipelines(
     const DeviceBase* device,
-    const RenderPassDescriptor* renderPassDescriptor,
+    const UnpackedPtr<RenderPassDescriptor>& renderPassDescriptor,
     KeyOfApplyClearColorValueWithDrawPipelines* key) {
     bool clearWithDraw = device->IsToggleEnabled(Toggle::ClearColorWithDraw);
     bool clearWithDrawForBigInt =
@@ -336,6 +411,17 @@ bool GetKeyOfApplyClearColorValueWithDrawPipelines(
         return false;
     }
 
+    if (const auto* pls = renderPassDescriptor.Get<RenderPassPixelLocalStorage>()) {
+        key->hasPLS = true;
+        key->totalPixelLocalStorageSize = pls->totalPixelLocalStorageSize;
+        for (size_t i = 0; i < pls->storageAttachmentCount; ++i) {
+            wgpu::PipelineLayoutStorageAttachment attachment{};
+            attachment.format = pls->storageAttachments[i].storage->GetFormat().format;
+            attachment.offset = pls->storageAttachments[i].offset;
+            key->plsAttachments.push_back(std::move(attachment));
+        }
+    }
+
     return true;
 }
 
@@ -357,6 +443,12 @@ size_t KeyOfApplyClearColorValueWithDrawPipelinesHashFunc::operator()(
 
     HashCombine(&hash, key.depthStencilFormat);
 
+    HashCombine(&hash, key.hasPLS);
+    HashCombine(&hash, key.totalPixelLocalStorageSize);
+    for (const auto attachment : key.plsAttachments) {
+        HashCombine(&hash, attachment.format);
+    }
+
     return hash;
 }
 
@@ -377,6 +469,18 @@ bool KeyOfApplyClearColorValueWithDrawPipelinesEqualityFunc::operator()(
         }
     }
 
+    if (key1.hasPLS != key2.hasPLS ||
+        key1.totalPixelLocalStorageSize != key2.totalPixelLocalStorageSize ||
+        key1.plsAttachments.size() != key2.plsAttachments.size()) {
+        return false;
+    }
+
+    for (auto i : Range(key1.plsAttachments.size())) {
+        if (key1.plsAttachments[i].format != key2.plsAttachments[i].format) {
+            return false;
+        }
+    }
+
     return key1.sampleCount == key2.sampleCount &&
            key1.depthStencilFormat == key2.depthStencilFormat;
 }
@@ -384,8 +488,9 @@ bool KeyOfApplyClearColorValueWithDrawPipelinesEqualityFunc::operator()(
 ClearWithDrawHelper::ClearWithDrawHelper() = default;
 ClearWithDrawHelper::~ClearWithDrawHelper() = default;
 
-MaybeError ClearWithDrawHelper::Initialize(CommandEncoder* encoder,
-                                           const RenderPassDescriptor* renderPassDescriptor) {
+MaybeError ClearWithDrawHelper::Initialize(
+    CommandEncoder* encoder,
+    const UnpackedPtr<RenderPassDescriptor>& renderPassDescriptor) {
     DeviceBase* device = encoder->GetDevice();
     mShouldRun = GetKeyOfApplyClearColorValueWithDrawPipelines(device, renderPassDescriptor, &mKey);
     if (!mShouldRun) {
@@ -393,7 +498,7 @@ MaybeError ClearWithDrawHelper::Initialize(CommandEncoder* encoder,
     }
 
     DAWN_TRY_ASSIGN(mUniformBufferWithClearColorValues,
-                    CreateUniformBufferWithClearValues(encoder, renderPassDescriptor, mKey));
+                    CreateUniformBufferWithClearValues(encoder, *renderPassDescriptor, mKey));
 
     return {};
 }
