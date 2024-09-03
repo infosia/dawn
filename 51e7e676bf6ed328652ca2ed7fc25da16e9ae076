@@ -22,6 +22,30 @@
       },
       "revId": "51e7e676bf6ed328652ca2ed7fc25da16e9ae076",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a2ae92c_f328cf34",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-03T20:09:08Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c0f81092_cb7804b3",
+      "range": {
+        "startLine": 1472,
+        "startChar": 0,
+        "endLine": 1477,
+        "endChar": 13
+      },
+      "revId": "51e7e676bf6ed328652ca2ed7fc25da16e9ae076",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
