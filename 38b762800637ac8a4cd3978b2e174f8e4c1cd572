@@ -16,6 +16,86 @@
       "message": "PTAL, thanks!",
       "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de24372c_07f9d59a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-03T09:12:36Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f6e79bb_c3f2dfdc",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-03T09:12:36Z",
+      "side": 1,
+      "message": "Don\u0027t we have access to a usage validation mode here? If the usage mode is not easy to grab here, feel free to ignore this comment.",
+      "range": {
+        "startLine": 356,
+        "startChar": 42,
+        "endLine": 356,
+        "endChar": 70
+      },
+      "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f73eb579_b0c7e44e",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-03T09:12:36Z",
+      "side": 1,
+      "message": "Same comment as for compute passes.",
+      "range": {
+        "startLine": 206,
+        "startChar": 41,
+        "endLine": 206,
+        "endChar": 70
+      },
+      "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c89d772_f947216a",
+        "filename": "src/dawn/tests/white_box/InternalStorageBufferBindingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-03T09:12:36Z",
+      "side": 1,
+      "message": "nit: I believe that we have a native::utils helper for this.",
+      "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
