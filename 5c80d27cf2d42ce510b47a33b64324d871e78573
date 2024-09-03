@@ -16,6 +16,46 @@
       "message": "LGTM",
       "revId": "5c80d27cf2d42ce510b47a33b64324d871e78573",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3dca291_0b6b0730",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-03T18:29:28Z",
+      "side": 1,
+      "message": "LGTM, one tiny thing I\u0027d like to fix before landing!",
+      "revId": "5c80d27cf2d42ce510b47a33b64324d871e78573",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f724b6b5_53a645fc",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-03T18:29:28Z",
+      "side": 1,
+      "message": "small thing: for switches that should be exhaustive, we avoid `default` to make sure the `switch` raises an error if we add a new enum. Typically we do something like this:\n```suggestion\n        wgpu::PrimitiveTopology::Undefined:\n            break;\n    }\n    DAWN_UNREACHABLE();\n```\n(I think it should work without the `return kTriangleList;`, but add it back if it doesn\u0027t.)",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 5
+      },
+      "revId": "5c80d27cf2d42ce510b47a33b64324d871e78573",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

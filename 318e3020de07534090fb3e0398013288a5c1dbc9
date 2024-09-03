@@ -676,6 +676,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6828602f_8fc66f86",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-03T18:29:28Z",
+      "side": 1,
+      "message": "Awesome, thank you!",
+      "parentUuid": "e633af50_00166135",
+      "range": {
+        "startLine": 131,
+        "startChar": 44,
+        "endLine": 131,
+        "endChar": 68
+      },
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d63d3f23_5e5f6d51",
