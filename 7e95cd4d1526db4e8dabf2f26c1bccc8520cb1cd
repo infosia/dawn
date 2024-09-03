@@ -16,6 +16,63 @@
       "message": "PTAL, thanks!",
       "revId": "7e95cd4d1526db4e8dabf2f26c1bccc8520cb1cd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d69c62f_ff8a5e2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-03T07:57:56Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "7e95cd4d1526db4e8dabf2f26c1bccc8520cb1cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60a885b8_4a75da1c",
+        "filename": "src/dawn/native/CommandAllocator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-03T07:57:56Z",
+      "side": 1,
+      "message": "If .reserver(0) is allowed then I don\u0027t know that this early out does anything different than the code below.",
+      "revId": "7e95cd4d1526db4e8dabf2f26c1bccc8520cb1cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53ecd18e_c352b7d4",
+        "filename": "src/dawn/native/CommandAllocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-03T07:57:56Z",
+      "side": 1,
+      "message": "nit: block size sounds like the total allocated number of bytes in the blocks. Maybe \"block count\" would be more clear.",
+      "range": {
+        "startLine": 212,
+        "startChar": 11,
+        "endLine": 212,
+        "endChar": 31
+      },
+      "revId": "7e95cd4d1526db4e8dabf2f26c1bccc8520cb1cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
