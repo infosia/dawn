@@ -33,6 +33,24 @@
       "message": "```suggestion\n        // Create the polyfill function, which looks like this:\n```",
       "revId": "da384f57ddeb44f259e1c631da0639c5ca4c8436",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "946ddece_aac6c1b8",
+        "filename": "src/tint/lang/msl/writer/raise/simd_ballot.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-03T14:38:06Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "62800e19_8028c874",
+      "revId": "da384f57ddeb44f259e1c631da0639c5ca4c8436",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
