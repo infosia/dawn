@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df4413c1_94dcfb3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-09-03T17:14:28Z",
+      "side": 1,
+      "message": "I\u0027m trying to roll CTS at the moment, can we hold off on this until the current roll lands? Otherwise I\u0027m guessing it\u0027s going to conflict.",
+      "revId": "c3fe4cdb819f52491276a0a4061cc48a102f0ffb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
