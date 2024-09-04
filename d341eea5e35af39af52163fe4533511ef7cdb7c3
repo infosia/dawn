@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b2311c2_69d2ed24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-04T08:45:01Z",
+      "side": 1,
+      "message": "Not for review but for design ref. Another option(option2) here https://dawn-review.googlesource.com/c/dawn/+/205314\nA helper CL for compare two options : https://dawn-review.googlesource.com/c/dawn/+/205334",
+      "revId": "d341eea5e35af39af52163fe4533511ef7cdb7c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
