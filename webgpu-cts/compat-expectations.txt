@@ -1197,8 +1197,6 @@ crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,buil
 crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=3;non_uniform_discard=true [ Failure ]
 crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=false [ Failure ]
 crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=true [ Failure ]
-crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureNumLayers:arrayed:texture_type="texture_depth_2d_array" [ Failure ]
-crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureNumLayers:sampled:texture_type="texture_2d_array" [ Failure ]
 crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureNumLayers:storage:format="r32float" [ Failure ]
 crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureNumLayers:storage:format="r32sint" [ Failure ]
 crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureNumLayers:storage:format="r32uint" [ Failure ]
