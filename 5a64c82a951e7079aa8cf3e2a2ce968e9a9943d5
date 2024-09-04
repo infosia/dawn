@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "5a64c82a951e7079aa8cf3e2a2ce968e9a9943d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "032c3960_9c441fe3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-09-04T12:45:41Z",
+      "side": 1,
+      "message": "This should be fixed in the roll https://dawn-review.googlesource.com/c/dawn/+/205076?tab\u003dchecks",
+      "revId": "5a64c82a951e7079aa8cf3e2a2ce968e9a9943d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
