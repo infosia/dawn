@@ -297,12 +297,11 @@ TEST_P(SurfaceTests, SwitchPresentMode) {
         wgpu::PresentMode::Mailbox,
     };
 
-    wgpu::Surface surface1 = CreateTestSurface();
-    wgpu::Surface surface2 = CreateTestSurface();
+    wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceTexture surfaceTexture;
 
     wgpu::SurfaceCapabilities capabilities;
-    surface1.GetCapabilities(adapter, &capabilities);
+    surface.GetCapabilities(adapter, &capabilities);
 
     for (wgpu::PresentMode mode1 : kAllPresentModes) {
         if (!SupportsPresentMode(capabilities, mode1)) {
@@ -313,21 +312,20 @@ TEST_P(SurfaceTests, SwitchPresentMode) {
                 continue;
             }
 
-            wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface1);
+            wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
 
             config.presentMode = mode1;
-            surface1.Configure(&config);
-            surface1.GetCurrentTexture(&surfaceTexture);
+            surface.Configure(&config);
+            surface.GetCurrentTexture(&surfaceTexture);
             ClearTexture(surfaceTexture.texture, {0.0, 0.0, 0.0, 1.0});
-            surface1.Present();
-            surface1.Unconfigure();
+            surface.Present();
 
             config.presentMode = mode2;
-            surface2.Configure(&config);
-            surface2.GetCurrentTexture(&surfaceTexture);
+            surface.Configure(&config);
+            surface.GetCurrentTexture(&surfaceTexture);
             ClearTexture(surfaceTexture.texture, {0.0, 0.0, 0.0, 1.0});
-            surface2.Present();
-            surface2.Unconfigure();
+            surface.Present();
+            surface.Unconfigure();
         }
     }
 }
@@ -401,6 +399,9 @@ TEST_P(SurfaceTests, SwitchingDevice) {
     // published by Khronos are that the spec is wrong and should require the swapchain to be from
     // the same device.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsBackendValidationEnabled());
+
+    // TODO(dawn:269): This isn't implemented yet but could be supported in the future.
+    DAWN_SUPPRESS_TEST_IF(IsD3D11() || IsD3D12());
 
     wgpu::Device device2 = CreateDevice();
 
@@ -626,10 +627,9 @@ TEST_P(SurfaceTests, Storage) {
     surface.Present();
 }
 
-// TODO(dawn:2320): Enable D3D tests (though they are not enabled in SwapChainTests neither)
 DAWN_INSTANTIATE_TEST(SurfaceTests,
-                      // D3D11Backend(),
-                      // D3D12Backend(),
+                      D3D11Backend(),
+                      D3D12Backend(),
                       MetalBackend(),
                       VulkanBackend());
 
