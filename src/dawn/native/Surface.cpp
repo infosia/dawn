@@ -539,7 +539,10 @@ void APISurfaceCapabilitiesFreeMembers(WGPUSurfaceCapabilities capabilities) {
 }
 
 MaybeError Surface::GetCurrentTexture(SurfaceTexture* surfaceTexture) const {
-    surfaceTexture->texture = nullptr;
+    if (surfaceTexture->texture != nullptr) {
+        surfaceTexture->texture->APIRelease();
+        surfaceTexture->texture = nullptr;
+    }
     surfaceTexture->suboptimal = false;
 
     surfaceTexture->status = wgpu::SurfaceGetCurrentTextureStatus::Error;
