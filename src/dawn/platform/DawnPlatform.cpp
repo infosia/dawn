@@ -30,6 +30,7 @@
 #include <memory>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/Platform.h"
 #include "dawn/platform/WorkerThread.h"
 
 namespace dawn::platform {
@@ -101,7 +102,7 @@ bool Platform::IsFeatureEnabled(Features feature) {
             return false;
 #endif
         case Features::kWebGPUUseTintIR:
-#if defined(DAWN_OS_CHROMEOS)
+#if defined(DAWN_OS_CHROMEOS) || DAWN_PLATFORM_IS(MACOS)
             return true;
 #else
             return false;
