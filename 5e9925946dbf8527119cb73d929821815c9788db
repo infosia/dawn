@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "5e9925946dbf8527119cb73d929821815c9788db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f69c2446_36e4a4ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-04T13:50:27Z",
+      "side": 1,
+      "message": "Nice, this is much better, thanks!",
+      "revId": "5e9925946dbf8527119cb73d929821815c9788db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "124c3721_7acbad85",
+        "filename": "src/tint/lang/core/ir/module.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-04T13:50:27Z",
+      "side": 1,
+      "message": "Nit: Do we really need this? Can\u0027t those few tests just use `CreateInstruction()` too?",
+      "revId": "5e9925946dbf8527119cb73d929821815c9788db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
