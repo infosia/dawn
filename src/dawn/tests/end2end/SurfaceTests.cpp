@@ -400,7 +400,7 @@ TEST_P(SurfaceTests, SwitchingDevice) {
     // the same device.
     DAWN_SUPPRESS_TEST_IF(IsVulkan() && IsBackendValidationEnabled());
 
-    // TODO(dawn:269): This isn't implemented yet but could be supported in the future.
+    // TODO(42241264): This isn't implemented yet but could be supported in the future.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() || IsD3D12());
 
     wgpu::Device device2 = CreateDevice();
