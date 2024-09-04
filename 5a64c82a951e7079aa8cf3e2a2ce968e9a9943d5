@@ -33,6 +33,24 @@
       "message": "This should be fixed in the roll https://dawn-review.googlesource.com/c/dawn/+/205076?tab\u003dchecks",
       "revId": "5a64c82a951e7079aa8cf3e2a2ce968e9a9943d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed9bdf25_2ea9eee1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-09-04T13:00:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "032c3960_9c441fe3",
+      "revId": "5a64c82a951e7079aa8cf3e2a2ce968e9a9943d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
