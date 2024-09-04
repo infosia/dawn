@@ -56,6 +56,30 @@
       },
       "revId": "5c80d27cf2d42ce510b47a33b64324d871e78573",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5148f141_b96a75b7",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-09-04T20:15:20Z",
+      "side": 1,
+      "message": "works without return :)",
+      "parentUuid": "f724b6b5_53a645fc",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 5
+      },
+      "revId": "5c80d27cf2d42ce510b47a33b64324d871e78573",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

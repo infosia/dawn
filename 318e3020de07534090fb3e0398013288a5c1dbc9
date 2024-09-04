@@ -393,6 +393,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a519a96f_f52f4017",
+        "filename": "src/dawn/native/metal/MultiDrawEncoder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-09-04T20:15:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e0a72cac_ac93182c",
+      "revId": "318e3020de07534090fb3e0398013288a5c1dbc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc25ad77_f0d128f0",
