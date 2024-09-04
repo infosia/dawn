@@ -1,0 +1,66 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa174568_aec017cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-04T20:42:43Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "42e16c603fe1f270944c076956e3d11d7868713f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b2d7e67_41e9c1ef",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-04T20:42:43Z",
+      "side": 1,
+      "message": "Nit: Could just do `subgroup_invocation_id_index \u003d\u003d idx`, as the operator overload for `\u003d\u003d` will take care of checking whether there is a value for you.",
+      "fixSuggestions": [
+        {
+          "fixId": "a42976a2_a981772d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 268,
+                "startChar": 0,
+                "endLine": 269,
+                "endChar": 0
+              },
+              "replacement": "        if (subgroup_invocation_id_index \u003d\u003d idx) {\n"
+            },
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 273,
+                "startChar": 0,
+                "endLine": 274,
+                "endChar": 0
+              },
+              "replacement": "        if (subgroup_size_index \u003d\u003d idx) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "42e16c603fe1f270944c076956e3d11d7868713f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
