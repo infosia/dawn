@@ -108,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "edf0145a_2246a04b",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-04T08:22:24Z",
+      "side": 1,
+      "message": "Gotcha, ok maybe we can drop the capability for compute passes as well and just open an issue about it somewhere. Thank you for checking if this was possible!",
+      "parentUuid": "db8384e8_407c20ea",
+      "range": {
+        "startLine": 356,
+        "startChar": 42,
+        "endLine": 356,
+        "endChar": 70
+      },
+      "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f73eb579_b0c7e44e",
         "filename": "src/dawn/native/RenderEncoderBase.cpp",
         "patchSetId": 2
