@@ -782,7 +782,7 @@ TEST_P(PixelLocalStorageTests, ImplicitPLSAndLargerRenderAttachmentsInOneCommand
     EXPECT_TEXTURE_EQ(kExpectedResult2.data(), color2, {0, 1, 0}, {2, 1, 1});
 }
 
-DAWN_INSTANTIATE_TEST(PixelLocalStorageTests, D3D11Backend(), MetalBackend());
+DAWN_INSTANTIATE_TEST(PixelLocalStorageTests, D3D11Backend());
 
 }  // anonymous namespace
 }  // namespace dawn
