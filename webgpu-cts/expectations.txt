@@ -104,6 +104,9 @@ crbug.com/1344876 [ webgpu-adapter-swiftshader win ] webgpu:web_platform,copyToT
 crbug.com/1344876 [ webgpu-adapter-swiftshader win ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_2d_context_canvas:* [ Skip ]
 crbug.com/1344876 [ webgpu-adapter-swiftshader win ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gl_context_canvas:* [ Skip ]
 
+# Skipped due to the removal of `maxInterStageShaderComponents` has not been completed in the below tests
+crbug.com/364338810 webgpu:api,validation,capability_checks,limits,maxInterStageShaderComponents:* [ Skip ]
+
 # SharedWorker is not available on Android
 crbug.com/dawn/2486 [ android webgpu-shared-worker ] * [ Skip ]
 
