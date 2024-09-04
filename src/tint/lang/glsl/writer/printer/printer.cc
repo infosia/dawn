@@ -30,6 +30,7 @@
 #include <string>
 #include <utility>
 
+#include "src/tint/lang/core/address_space.h"
 #include "src/tint/lang/core/builtin_fn.h"
 #include "src/tint/lang/core/constant/splat.h"
 #include "src/tint/lang/core/ir/access.h"
@@ -78,7 +79,6 @@
 #include "src/tint/lang/core/type/void.h"
 #include "src/tint/lang/glsl/writer/common/printer_support.h"
 #include "src/tint/lang/glsl/writer/common/version.h"
-#include "src/tint/utils/containers/map.h"
 #include "src/tint/utils/generator/text_generator.h"
 #include "src/tint/utils/macros/scoped_assignment.h"
 #include "src/tint/utils/rtti/switch.h"
@@ -708,10 +708,61 @@ class Printer : public tint::TextGenerator {
     }
 
     void EmitVar(StringStream& out, const core::ir::Var* var) {
-        EmitTypeAndName(out, var->Result(0)->Type(), NameOf(var->Result(0)));
-
         auto* ptr = var->Result(0)->Type()->As<core::type::Pointer>();
         auto space = ptr->AddressSpace();
+
+        switch (space) {
+            case core::AddressSpace::kUniform:
+            case core::AddressSpace::kStorage:
+            case core::AddressSpace::kHandle:
+                TINT_UNREACHABLE();
+            case core::AddressSpace::kPushConstant:
+                out << "layout(location = 0) ";
+                break;
+            case core::AddressSpace::kWorkgroup:
+                out << "shared ";
+                break;
+            case core::AddressSpace::kIn:
+            case core::AddressSpace::kOut: {
+                auto& attrs = var->Attributes();
+                if (attrs.location.has_value()) {
+                    out << "layout(location = " << attrs.location.value();
+                    if (attrs.blend_src.has_value()) {
+                        out << ", index = " << attrs.blend_src.value();
+                    }
+                    out << ")";
+                }
+                if (attrs.interpolation.has_value()) {
+                    switch (attrs.interpolation->type) {
+                        case core::InterpolationType::kPerspective:
+                        case core::InterpolationType::kLinear:
+                        case core::InterpolationType::kUndefined:
+                            break;
+                        case core::InterpolationType::kFlat:
+                            out << "flat ";
+                            break;
+                    }
+
+                    switch (attrs.interpolation->sampling) {
+                        case core::InterpolationSampling::kCentroid:
+                            out << "centroid ";
+                            break;
+                        case core::InterpolationSampling::kSample:
+                        case core::InterpolationSampling::kCenter:
+                        case core::InterpolationSampling::kFirst:
+                        case core::InterpolationSampling::kEither:
+                        case core::InterpolationSampling::kUndefined:
+                            break;
+                    }
+                }
+                break;
+            }
+            default:
+                break;
+        }
+
+        EmitTypeAndName(out, var->Result(0)->Type(), NameOf(var->Result(0)));
+
         if (var->Initializer()) {
             out << " = ";
             EmitValue(out, var->Initializer());

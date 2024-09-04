@@ -43,6 +43,8 @@ if (tint_build_glsl_writer) {
     sources = [
       "raise.cc",
       "raise.h",
+      "shader_io.cc",
+      "shader_io.h",
     ]
     deps = [
       "${dawn_root}/src/utils:utils",
@@ -50,6 +52,8 @@ if (tint_build_glsl_writer) {
       "${tint_src_dir}/lang/core",
       "${tint_src_dir}/lang/core/common",
       "${tint_src_dir}/lang/core/constant",
+      "${tint_src_dir}/lang/core/intrinsic",
+      "${tint_src_dir}/lang/core/ir",
       "${tint_src_dir}/lang/core/ir/transform",
       "${tint_src_dir}/lang/core/type",
       "${tint_src_dir}/lang/wgsl",
