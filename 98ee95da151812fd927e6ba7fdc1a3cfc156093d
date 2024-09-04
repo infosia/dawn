@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e78c3d7c_9e25a3b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-04T13:29:18Z",
+      "side": 1,
+      "message": "Should be fixed in the roll https://dawn-review.googlesource.com/c/dawn/+/205076?tab\u003dchecks",
+      "revId": "98ee95da151812fd927e6ba7fdc1a3cfc156093d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
