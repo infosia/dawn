@@ -16,6 +16,23 @@
       "message": "Currently rolling: https://dawn-review.googlesource.com/c/dawn/+/205076?tab\u003dchecks",
       "revId": "f993aa16f5e45261169f6d8028cd870e27f0c02d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d16eef48_adf2d83c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-04T14:47:35Z",
+      "side": 1,
+      "message": "Roll has landed, please feel free to update and land.",
+      "revId": "f993aa16f5e45261169f6d8028cd870e27f0c02d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
