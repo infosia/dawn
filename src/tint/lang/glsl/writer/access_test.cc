@@ -524,13 +524,19 @@ TEST_F(GlslWriterTest, AccessDirectVariable) {
 precision highp int;
 
 
-vec4 v1;
-vec4 v2;
+layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+  vec4 tint_symbol;
+} v;
+
+layout(binding = 1, std430) buffer tint_symbol_3_1_ssbo {
+  vec4 tint_symbol_2;
+} v_1;
+
 void bar() {
-  float a = v1.y;
+  float a = v.tint_symbol.y;
 }
 void bar_1() {
-  float a = v2.y;
+  float a = v_1.tint_symbol_2.y;
 }
 void main() {
   bar();
