@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "db8384e8_407c20ea",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-09-04T02:45:20Z",
+      "side": 1,
+      "message": "Oh I find it\u0027s OK for `ComputePassEncoder`, but we cannot do this for `RenderEncoderBase` because `RenderBundleBase` is not created with `CommandEncoderBase`, and currently we cannot set usage validation mode for `RenderBundleBase` because we can only set it through `DawnEncoderInternalUsageDescriptor` in `CommandEncoderDescriptor`.",
+      "parentUuid": "ad97c431_76047f4f",
+      "range": {
+        "startLine": 356,
+        "startChar": 42,
+        "endLine": 356,
+        "endChar": 70
+      },
+      "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f73eb579_b0c7e44e",
         "filename": "src/dawn/native/RenderEncoderBase.cpp",
         "patchSetId": 2
@@ -118,6 +142,24 @@
       "writtenOn": "2024-09-03T09:12:36Z",
       "side": 1,
       "message": "nit: I believe that we have a native::utils helper for this.",
+      "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47ffb2ed_5992737d",
+        "filename": "src/dawn/tests/white_box/InternalStorageBufferBindingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-09-04T02:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c89d772_f947216a",
       "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
