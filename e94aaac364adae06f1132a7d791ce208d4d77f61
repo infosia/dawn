@@ -52,6 +52,24 @@
       "parentUuid": "3702cfb9_0ee6b362",
       "revId": "e94aaac364adae06f1132a7d791ce208d4d77f61",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "432ac49d_5f555a7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-09-05T13:46:52Z",
+      "side": 1,
+      "message": "The lines shouldn\u0027t conflict, but I\u0027m more worried about it moving things around in the file and causing the patch to fail.\n\nRubber stampper isn\u0027t a committer anymore, there was a change so it should be able to bot commit, but maybe it isn\u0027t working?",
+      "parentUuid": "a55834df_85c2e5b2",
+      "revId": "e94aaac364adae06f1132a7d791ce208d4d77f61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
