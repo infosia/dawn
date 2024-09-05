@@ -16,6 +16,23 @@
       "message": "PTAL. I think this is more likely to work as it\u0027s a built-in Gerrit feature and the documentation page seems to imply you can send emails to addresses that don\u0027t have accounts? But let me know what you think.",
       "revId": "018ab8dcf5e93b72129fca00adc26d464da69d4f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a102414_7c1e2d2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-09-05T21:47:58Z",
+      "side": 1,
+      "message": "s/Dan/Corentin since dan is OOO.",
+      "revId": "018ab8dcf5e93b72129fca00adc26d464da69d4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
