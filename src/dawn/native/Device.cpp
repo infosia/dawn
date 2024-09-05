@@ -1569,6 +1569,14 @@ QueueBase* DeviceBase::APIGetQueue() {
     return ReturnToAPI(std::move(queue));
 }
 
+uint32_t DeviceBase::APIGetId() const {
+    DAWN_UNREACHABLE();
+}
+
+uint32_t DeviceBase::APIGetGeneration() const {
+    DAWN_UNREACHABLE();
+}
+
 ExternalTextureBase* DeviceBase::APICreateExternalTexture(
     const ExternalTextureDescriptor* descriptor) {
     Ref<ExternalTextureBase> result;

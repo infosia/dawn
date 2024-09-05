@@ -278,6 +278,14 @@ void Device::WillDropLastExternalRef() {
     Unregister();
 }
 
+uint32_t Device::GetGeneration() const {
+    return GetWireGeneration();
+}
+
+uint32_t Device::GetId() const {
+    return GetWireId();
+}
+
 WGPUStatus Device::GetLimits(WGPUSupportedLimits* limits) const {
     return mLimitsAndFeatures.GetLimits(limits);
 }
