@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5990243e_84bc1bec",
+        "filename": "src/dawn/tests/end2end/PixelLocalStorageTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T07:58:50Z",
+      "side": 1,
+      "message": "The test checks that the extension is present so disabling it in the backend would be sufficient. We also need to disable it in the backend otherwise we are exposing an extension we can\u0027t support. My suggestion is to gate on the UseTintIR toggle here instead: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/PhysicalDeviceMTL.mm;drc\u003d5c2720d5c66959995ddca15fafc3f4abc92e9f2c;l\u003d715\n\n(or remove the whole block)",
+      "revId": "7a52c4b49b051a2d1091b411e8f98bcd0c7d9f2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
