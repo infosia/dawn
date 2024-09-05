@@ -16,6 +16,223 @@
       "message": "PTAL",
       "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81444d53_9f4725eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T10:45:54Z",
+      "side": 1,
+      "message": "Quyen is OOO, swapping reviewers.",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88584305_ce2f93fd",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T10:45:54Z",
+      "side": 1,
+      "message": "I believe that as long as the pipeline declares a PLS in its layout, we don\u0027t need to add the PLS to the shader. Here the shader always clears to 0, but the clearing of the attachments is already done here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/CommandBufferD3D11.cpp;drc\u003d03dfd718c9be433d303250376f1e8c63fcced985;l\u003d144\n\nWe still need the PLS in the layout to stay compatible with the current render pass, but not the shader part.",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e5e6fef_e554a570",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T10:45:54Z",
+      "side": 1,
+      "message": "```suggestion\n        // Assemble the PLS declaration like:\n```",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 40
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "404c8a7d_0f475270",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T10:45:54Z",
+      "side": 1,
+      "message": "```suggestion\n        std::ostringstream plsDeclarationStream;\n```",
+      "range": {
+        "startLine": 142,
+        "startChar": 27,
+        "endLine": 142,
+        "endChar": 48
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaa95e08_3cf42165",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T10:45:54Z",
+      "side": 1,
+      "message": "nit: I think we should always use the BGL / pipeline layout in the non-PLS case, to minimize the code path differences. So it would be:\n\n```\n// Build the pipeline layout explicitly as we might need to add PLS information to it.\nRef\u003cBindGroupLayoutBase\u003e bgl;\n        DAWN_TRY_ASSIGN(\n            bgl, utils::MakeBindGroupLayout(\n                     device, {{0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Uniform}}));\n                     \n              PipelineLayoutDescriptor pipelineLayoutDesc \u003d {};\n    pipelineLayoutDesc.bindGroupLayoutCount \u003d 1;\n    pipelineLayoutDesc.bindGroupLayouts \u003d \u0026bgl.Get();\n           \nwgpu::PipelineLayoutPixelLocalStorage pls;\nif (key.hasPLS) {\n       pls.totalPixelLocalStorageSize \u003d key.totalPixelLocalStorageSize;\n    pls.storageAttachmentCount \u003d key.plsAttachments.size();\n    pls.storageAttachments \u003d key.plsAttachments.data();\n   \n   pipelineLayoutDesc.nextInChain \u003d \u0026pls;\n}\n\nRef\u003cPipelineLayoutBase\u003e pipelineLayout;\nDAWN_TRY_ASSIGN(pipelineLayout, device-\u003eCreatePipelineLayout(\u0026pipelineLayoutDesc));\nrenderPipelineDesc.layout \u003d pipelineLayout.Get();\n```",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "965366bf_9851c565",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T10:45:54Z",
+      "side": 1,
+      "message": "nit: We can also do the same thing as we do in the pipeline layout with a single vector of TextureFormat.",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "786d2160_051c1449",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T10:45:54Z",
+      "side": 1,
+      "message": "nit: We could move this inside ExecuteRenderPass so that we don\u0027t have to pass the argument back and forth as much.",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 66
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43009eff_42b06839",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T10:45:54Z",
+      "side": 1,
+      "message": "I\u0027m trying to see if we can limit this special casing to the D3D11 backend and removing the change to LazyClearAttachments. WDYT of doing:\n\n```\nif (clearWithDraw) {\n   set all the loadops to load, because that\u0027s what happened are going to do.\n}\n\n// Rest of the code as it was previously, just with no other handling of clearWithDraw\n```\n\nBut also how does D3D12 handle the same situation?",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64a85ee9_1c022883",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T10:45:54Z",
+      "side": 1,
+      "message": "The fact that we do things at both recording and execution time comes to bite us again :( We\u0027re going to give having issues like this one as long as we don\u0027t fix it (but it is a large effort to do so). Can we have a TODO to handle this as part of https://docs.google.com/document/d/1czI8vAzCCGx9SqpstRsJQ6C9Qlasu7ydMTRZa637_PI ? I filed issue 364834368 for that",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74b07d86_67f76070",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T10:45:54Z",
+      "side": 1,
+      "message": "Isn\u0027t isLazyClear always non-null here?",
+      "range": {
+        "startLine": 585,
+        "startChar": 13,
+        "endLine": 585,
+        "endChar": 24
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c73aa244_8c6cdf5f",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T10:45:54Z",
+      "side": 1,
+      "message": "nit: slight preference to have Gen11OrOlder since we know all of the devices released there and don\u0027t need to update the condition in GPUInfo to include Gen13 or any new GPUs.",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 292,
+        "endChar": 39
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
