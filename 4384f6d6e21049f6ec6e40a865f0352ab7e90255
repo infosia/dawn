@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "590d1ebc_c0f8b955",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-05T20:33:15Z",
+      "side": 1,
+      "message": "I\u0027ll be OOO also tomorrow, so feel free to reassign back Quyen or someone else if needed!",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "88584305_ce2f93fd",
         "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
         "patchSetId": 5
@@ -90,6 +107,108 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5fc0061b_264bef01",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-05T20:33:15Z",
+      "side": 1,
+      "message": "General question for my understanding... Right not, it seems like there\u0027s an implication that each PLS attachment is the same size. (Othewise IIUC, the logic here wouldn\u0027t work since we could end up with holes in `plsTypes` that isn\u0027t filled given we are using the offsets.)\n\nSo the question is whether it will ALWAYS be the case that each PLS attachment will be the same size or not. If that won\u0027t be the case, I think we should probably be doing a sort or something on the offset at the beginning instead of relying on `offset / kPLSSlotByteSize` which could leave holes if one of attachments is, say double the size of the others. Otherwise, if they will ALWAYS be the same size, we could probably just add a comment and pull the `attachment.offset / kPLSSlotByteSize` computation in each `case` below out of the switch and rename that to something like `attachmentIndex`. Otherwise right now when I look at the switch case below, it kinda looks like we intend to support different sizes and stuff.\n\nEDIT: Sorry just got further down and saw that we are sorting the attachments, so in the case where the sizes would all be the same, couldn\u0027t we just rely on the order and potentially do this whole part in 1 loop instead of 2?\n\nEDIT2: Nvm, I think the part further down is for computing the hash so I don\u0027t think it\u0027s applicable... Sorry for the noise heh.",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 42
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "fd1df092_a2a9b8d4",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+              "range": {
+                "startLine": 109,
+                "startChar": 0,
+                "endLine": 109,
+                "endChar": 0
+              },
+              "replacement": "        // TODO(dawn:1911): Support PLS attachments with different sizes.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99f2241c_09a920c9",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-05T20:33:15Z",
+      "side": 1,
+      "message": "nit. Could we name this as an intermediate value? (I think it\u0027s used again in the second loop)",
+      "range": {
+        "startLine": 110,
+        "startChar": 24,
+        "endLine": 110,
+        "endChar": 73
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "17f3ec50_f1fa4ec8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+              "range": {
+                "startLine": 109,
+                "startChar": 0,
+                "endLine": 109,
+                "endChar": 0
+              },
+              "replacement": "        size_t plsSlotCount \u003d key.totalPixelLocalStorageSize / kPLSSlotByteSize;\n"
+            },
+            {
+              "path": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+              "range": {
+                "startLine": 110,
+                "startChar": 0,
+                "endLine": 111,
+                "endChar": 0
+              },
+              "replacement": "        plsTypes.resize(plsSlotCount, \"u32\");\n"
+            },
+            {
+              "path": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+              "range": {
+                "startLine": 145,
+                "startChar": 0,
+                "endLine": 146,
+                "endChar": 0
+              },
+              "replacement": "        for (size_t i \u003d 0; i \u003c plsSlotCount; ++i) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3e5e6fef_e554a570",
         "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
         "patchSetId": 5
@@ -107,6 +226,47 @@
         "endLine": 131,
         "endChar": 40
       },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d5896d1_bc60ba2c",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-05T20:33:15Z",
+      "side": 1,
+      "message": "nit. Could we have a comment like this for the assignment stream also?",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 46
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5db0248f_c51f6a55",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+              "range": {
+                "startLine": 107,
+                "startChar": 0,
+                "endLine": 107,
+                "endChar": 0
+              },
+              "replacement": "    // Assemble the PLS assignment like:\n    //\n    // pls.a0 \u003d u32(0);\n    // pls.a1 \u003d u32(0);\n    // pls.a2 \u003d u32(0);\n    // pls.a3 \u003d u32(0);\n"
+            }
+          ]
+        }
+      ],
       "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -164,6 +324,47 @@
       "writtenOn": "2024-09-05T10:45:54Z",
       "side": 1,
       "message": "nit: We can also do the same thing as we do in the pipeline layout with a single vector of TextureFormat.",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29be72fb_8d54f4c0",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-05T20:33:15Z",
+      "side": 1,
+      "message": "I\u0027m not too familiar with the PLS stack, but does `totalPixelLocalStorageSize \u003d 0` also imply `hasPLS \u003d false` bidirectionally? If so, maybe we don\u0027t need `hasPLS`? (Feel free to ignore this if the statement above is not an iff).",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "39184a9c_c4e6e89c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/ApplyClearColorValueWithDrawHelper.h",
+              "range": {
+                "startLine": 53,
+                "startChar": 0,
+                "endLine": 54,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
       "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
