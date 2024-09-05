@@ -2,10 +2,10 @@
 precision highp float;
 precision highp int;
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   ivec2 tint_symbol;
 } v;
-
 ivec2 select_00b848() {
   ivec2 arg_0 = ivec2(1);
   ivec2 arg_1 = ivec2(1);
@@ -22,10 +22,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   ivec2 tint_symbol;
 } v;
-
 ivec2 select_00b848() {
   ivec2 arg_0 = ivec2(1);
   ivec2 arg_1 = ivec2(1);
@@ -49,9 +49,7 @@ struct VertexOutput {
   ivec2 prevent_dce;
 };
 
-
 layout(location = 0) flat out ivec2 vertex_main_loc0_Output;
-
 ivec2 select_00b848() {
   ivec2 arg_0 = ivec2(1);
   ivec2 arg_1 = ivec2(1);

@@ -2,10 +2,10 @@
 precision highp float;
 precision highp int;
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   uint tint_symbol;
 } v;
-
 uint countTrailingZeros_21e394() {
   uint arg_0 = 1u;
   uint v_1 = arg_0;
@@ -22,10 +22,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   uint tint_symbol;
 } v;
-
 uint countTrailingZeros_21e394() {
   uint arg_0 = 1u;
   uint v_1 = arg_0;
@@ -49,9 +49,7 @@ struct VertexOutput {
   uint prevent_dce;
 };
 
-
 layout(location = 0) flat out uint vertex_main_loc0_Output;
-
 uint countTrailingZeros_21e394() {
   uint arg_0 = 1u;
   uint v = arg_0;

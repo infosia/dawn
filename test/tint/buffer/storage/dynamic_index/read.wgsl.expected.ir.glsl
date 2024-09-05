@@ -26,15 +26,14 @@ struct Inner {
   vec3 arr2_vec3_f32[2];
 };
 
-layout(binding = 0, std430) buffer S_1_ssbo {
+layout(binding = 0, std430)
+buffer S_1_ssbo {
   Inner arr[];
 } sb;
-
-layout(binding = 1, std430) buffer tint_symbol_2_1_ssbo {
+layout(binding = 1, std430)
+buffer tint_symbol_2_1_ssbo {
   int tint_symbol_1;
 } v;
-
-
 int tint_f32_to_i32(float value) {
   return (((value <= 2147483520.0f)) ? ((((value >= -2147483648.0f)) ? (int(value)) : ((-2147483647 - 1)))) : (2147483647));
 }

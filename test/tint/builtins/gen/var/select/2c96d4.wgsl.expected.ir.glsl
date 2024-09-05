@@ -32,8 +32,6 @@ struct VertexOutput {
   vec4 pos;
 };
 
-
-
 void select_2c96d4() {
   bvec3 arg_2 = bvec3(true);
   bvec3 v = arg_2;
