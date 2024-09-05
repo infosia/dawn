@@ -142,6 +142,24 @@
       "parentUuid": "c3a9740a_f9cd2feb",
       "revId": "e0a2b6c7c986d69bb8f9c97a2eb151e624eda1df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf279de5_2711c0c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-09-05T04:21:25Z",
+      "side": 1,
+      "message": "I think we can resolve this as there are no build failures anymore.",
+      "parentUuid": "a8a9d11b_307e77e6",
+      "revId": "e0a2b6c7c986d69bb8f9c97a2eb151e624eda1df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
