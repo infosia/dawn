@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a7f0395_41ca8633",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-05T19:09:39Z",
+      "side": 1,
+      "message": "My demo still has several crashes but after these fixes it kind of works. My notes:\n\n\u003e Flaky alignfault on `new WGPUTextureImpl` and similar, fixed locally by adding\na member `int x \u003d 0` to WGPUTextureImpl but then the problem moves to TextureViewImpl.\n\u003e Adding that to all \"PASSTHROUGH\" objects doesn\u0027t work (then fails in Texture).\n\u003e Likely related to next item\n\u003e \n\u003e ASan use-after-free errors, trying to release a Buffer after it\u0027s been released already?\n\u003e This is happening on shutdown due to destruction of static objects in particular.\n\u003e \n\u003e Release build crashes with \"memory access out of bounds\" (before even rendering anything), not sure if fixing ASan build will fix this",
+      "revId": "a009938b71ff8301bd258be62d840f05bd306985",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
