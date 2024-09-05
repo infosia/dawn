@@ -16,6 +16,24 @@
       "message": "The test checks that the extension is present so disabling it in the backend would be sufficient. We also need to disable it in the backend otherwise we are exposing an extension we can\u0027t support. My suggestion is to gate on the UseTintIR toggle here instead: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/PhysicalDeviceMTL.mm;drc\u003d5c2720d5c66959995ddca15fafc3f4abc92e9f2c;l\u003d715\n\n(or remove the whole block)",
       "revId": "7a52c4b49b051a2d1091b411e8f98bcd0c7d9f2b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c15eb45a_1cc32595",
+        "filename": "src/dawn/tests/end2end/PixelLocalStorageTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-05T13:15:53Z",
+      "side": 1,
+      "message": "Fair point. I removed to whole block, so that the feature doesn\u0027t get unintentionally re-enabled when the IR backend becomes the default. Opened crbug.com/364856319 to track re-adding support.",
+      "parentUuid": "5990243e_84bc1bec",
+      "revId": "7a52c4b49b051a2d1091b411e8f98bcd0c7d9f2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
