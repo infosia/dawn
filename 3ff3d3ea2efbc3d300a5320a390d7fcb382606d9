@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7711ba8b_230f7d3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T08:27:16Z",
+      "side": 1,
+      "message": "PTAL! Tests for D3D12 are enabled later down the chain and detected the leak.",
+      "revId": "3ff3d3ea2efbc3d300a5320a390d7fcb382606d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
