@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb98e0db_40720cc5",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-05T19:21:41Z",
+      "side": 1,
+      "message": "Hmm, did you observe this issue? Intuitively since this is inside Dawn, the `wgpu::SurfaceTexture` struct\u0027s `texture` member should be a reference (instance of `ObjectBase`. That said, by setting it to `nullptr`, it should automatically call `APIRelease()`.",
+      "range": {
+        "startLine": 545,
+        "startChar": 4,
+        "endLine": 548,
+        "endChar": 5
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c7e0dcc5_01f28ea3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Surface.cpp",
+              "range": {
+                "startLine": 545,
+                "startChar": 0,
+                "endLine": 549,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "dc0482da9dc742eb138967421f7ae315ad219c47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
