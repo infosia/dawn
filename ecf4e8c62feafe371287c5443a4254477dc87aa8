@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c17b7ab9_ece637a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-05T14:27:55Z",
+      "side": 1,
+      "message": "LGTM, just annoying style nits (sorry!).\n\nI\u0027d love it if we could find a way to reliably CTS test this (with either this behaviour or \"device lost\" as the two acceptable outcomes), but not sure if some platforms will just lock up even if we have a timeout.",
+      "revId": "ecf4e8c62feafe371287c5443a4254477dc87aa8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0baaf8ed_1ee77ef7",
+        "filename": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-05T14:27:55Z",
+      "side": 1,
+      "message": "übernit: Dawn style is to use PascalCase for method names.",
+      "fixSuggestions": [
+        {
+          "fixId": "0f4ea7ff_49c27805",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 128,
+                "startChar": 0,
+                "endLine": 129,
+                "endChar": 0
+              },
+              "replacement": "    std::string IndexStr() {\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 139,
+                "startChar": 0,
+                "endLine": 140,
+                "endChar": 0
+              },
+              "replacement": "    std::string BreakCondStr() {\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 144,
+                "startChar": 0,
+                "endLine": 145,
+                "endChar": 0
+              },
+              "replacement": "                return \"(min(\" + IndexStr() +\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 147,
+                "startChar": 0,
+                "endLine": 148,
+                "endChar": 0
+              },
+              "replacement": "                return \"(min(\" + IndexStr() + \", arrayLength(\u0026outputs)-1) \u003e arrayLength(\u0026outputs))\";\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 152,
+                "startChar": 0,
+                "endLine": 153,
+                "endChar": 0
+              },
+              "replacement": "    std::string LoopStr() {\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 155,
+                "startChar": 0,
+                "endLine": 156,
+                "endChar": 0
+              },
+              "replacement": "                return \"loop { if \" + BreakCondStr() +\"{break;} }\\n\";\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 157,
+                "startChar": 0,
+                "endLine": 158,
+                "endChar": 0
+              },
+              "replacement": "                return \"loop { continuing { break if \" + BreakCondStr() + \"; } }\\n\";\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 159,
+                "startChar": 0,
+                "endLine": 160,
+                "endChar": 0
+              },
+              "replacement": "                return \"for (; !\" + BreakCondStr() + \"; ) { }\\n\";\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 161,
+                "startChar": 0,
+                "endLine": 162,
+                "endChar": 0
+              },
+              "replacement": "                return \"while (!\" + BreakCondStr() + \") { }\\n\";\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 176,
+                "startChar": 0,
+                "endLine": 177,
+                "endChar": 0
+              },
+              "replacement": "  )\" + LoopStr() +\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 178,
+                "startChar": 0,
+                "endLine": 179,
+                "endChar": 0
+              },
+              "replacement": "  outputs[)\" + IndexStr() +\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ecf4e8c62feafe371287c5443a4254477dc87aa8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71cdb50b_eec779a1",
+        "filename": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-05T14:27:55Z",
+      "side": 1,
+      "message": "übernit: Dawn style for local variables is camelCase, as you\u0027ve done above.",
+      "fixSuggestions": [
+        {
+          "fixId": "bfca7da3_f4ac1f8c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 205,
+                "startChar": 0,
+                "endLine": 206,
+                "endChar": 0
+              },
+              "replacement": "    std::vector\u003cuint32_t\u003e dstInitValues(numOutputs, 0);\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 209,
+                "startChar": 0,
+                "endLine": 210,
+                "endChar": 0
+              },
+              "replacement": "        device, dstInitValues.data(), outSize,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ecf4e8c62feafe371287c5443a4254477dc87aa8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dc3515a_c65d6d1c",
+        "filename": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-05T14:27:55Z",
+      "side": 1,
+      "message": "übernit: Again, Dawn prefers camelCase.",
+      "fixSuggestions": [
+        {
+          "fixId": "d081686e_052ca244",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 246,
+                "startChar": 0,
+                "endLine": 247,
+                "endChar": 0
+              },
+              "replacement": "        std::optional\u003csize_t\u003e whereFound;\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 249,
+                "startChar": 0,
+                "endLine": 250,
+                "endChar": 0
+              },
+              "replacement": "                if (whereFound.has_value()) {\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 251,
+                "startChar": 0,
+                "endLine": 252,
+                "endChar": 0
+              },
+              "replacement": "                           \u003c\u003c \"Found value \" \u003c\u003c mValue \u003c\u003c \" at data[\" \u003c\u003c whereFound.value()\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 254,
+                "startChar": 0,
+                "endLine": 255,
+                "endChar": 0
+              },
+              "replacement": "                whereFound \u003d i;\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/InfiniteLoopTests.cpp",
+              "range": {
+                "startLine": 261,
+                "startChar": 0,
+                "endLine": 262,
+                "endChar": 0
+              },
+              "replacement": "        if (!whereFound.has_value()) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ecf4e8c62feafe371287c5443a4254477dc87aa8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
