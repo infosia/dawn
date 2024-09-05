@@ -201,6 +201,11 @@ TEST_P(WireAdapterTests, RequestDeviceSuccess) {
             .WillOnce(WithArg<1>(Invoke([&](wgpu::Device result) {
                 device = std::move(result);
 
+                Handle deviceWireHandle = GetWireClient()->GetWireHandle(device.Get());
+                WGPUDevice apiDeviceExpected =
+                    GetWireServer()->GetDevice(deviceWireHandle.id, deviceWireHandle.generation);
+                EXPECT_EQ(apiDevice, apiDeviceExpected);
+
                 wgpu::AdapterInfo adapterInfo;
                 EXPECT_EQ(device.GetAdapterInfo(&adapterInfo), wgpu::Status::Success);
                 EXPECT_EQ(adapterInfo.vendor, kEmptyOutputStringView);
