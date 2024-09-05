@@ -38,18 +38,18 @@ struct VertexOutput {
   vec4 member;
 };
 
-layout(binding = 0, std140) uniform tint_symbol_3_1_ubo {
+layout(binding = 0, std140)
+uniform tint_symbol_3_1_ubo {
   ub_SceneParams tint_symbol_2;
 } v_1;
-
-layout(binding = 1, std140) uniform tint_symbol_5_1_ubo {
+layout(binding = 1, std140)
+uniform tint_symbol_5_1_ubo {
   ub_MaterialParams tint_symbol_4;
 } v_2;
-
-layout(binding = 2, std140) uniform tint_symbol_7_1_ubo {
+layout(binding = 2, std140)
+uniform tint_symbol_7_1_ubo {
   ub_PacketParams tint_symbol_6;
 } v_3;
-
 vec3 a_Position1 = vec3(0.0f);
 vec2 a_UV1 = vec2(0.0f);
 vec4 a_Color1 = vec4(0.0f);
@@ -65,8 +65,6 @@ layout(location = 3) in vec3 tint_symbol_1_loc3_Input;
 layout(location = 4) in float tint_symbol_1_loc4_Input;
 layout(location = 0) out vec4 tint_symbol_1_loc0_Output;
 layout(location = 1) out vec2 tint_symbol_1_loc1_Output;
-
-
 vec4 Mul(Mat4x4_ m8, vec4 v) {
   Mat4x4_ m9 = Mat4x4_(vec4(0.0f), vec4(0.0f), vec4(0.0f), vec4(0.0f));
   vec4 v1 = vec4(0.0f);

@@ -5,10 +5,10 @@ struct S {
   int a;
 };
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   S tint_symbol;
 } v_1;
-
 int tint_div_i32(int lhs, int rhs) {
   return (lhs / ((((rhs == 0) | ((lhs == (-2147483647 - 1)) & (rhs == -1)))) ? (1) : (rhs)));
 }

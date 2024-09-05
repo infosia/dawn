@@ -86,14 +86,14 @@ struct S_std140 {
   Inner array_struct_inner[4];
 };
 
-layout(binding = 0, std140) uniform tint_symbol_2_std140_1_ubo {
+layout(binding = 0, std140)
+uniform tint_symbol_2_std140_1_ubo {
   S_std140 tint_symbol_1;
 } v;
-
-layout(binding = 1, std430) buffer tint_symbol_4_1_ssbo {
+layout(binding = 1, std430)
+buffer tint_symbol_4_1_ssbo {
   int tint_symbol_3;
 } v_1;
-
 int tint_f16_to_i32(float16_t value) {
   return (((value <= 65504.0hf)) ? ((((value >= -65504.0hf)) ? (int(value)) : ((-2147483647 - 1)))) : (2147483647));
 }

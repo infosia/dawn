@@ -3,10 +3,10 @@
 precision highp float;
 precision highp int;
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   int tint_symbol;
 } v;
-
 int transpose_06794e() {
   f16mat3 res = f16mat3(f16vec3(1.0hf), f16vec3(1.0hf), f16vec3(1.0hf));
   return (((res[0].x == 0.0hf)) ? (1) : (0));
@@ -17,10 +17,10 @@ void main() {
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   int tint_symbol;
 } v;
-
 int transpose_06794e() {
   f16mat3 res = f16mat3(f16vec3(1.0hf), f16vec3(1.0hf), f16vec3(1.0hf));
   return (((res[0].x == 0.0hf)) ? (1) : (0));
@@ -38,9 +38,7 @@ struct VertexOutput {
   int prevent_dce;
 };
 
-
 layout(location = 0) flat out int vertex_main_loc0_Output;
-
 int transpose_06794e() {
   f16mat3 res = f16mat3(f16vec3(1.0hf), f16vec3(1.0hf), f16vec3(1.0hf));
   return (((res[0].x == 0.0hf)) ? (1) : (0));

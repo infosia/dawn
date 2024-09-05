@@ -1,9 +1,9 @@
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_2_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_2_1_ssbo {
   float tint_symbol_1;
 } v;
-
 void bar(inout float p) {
   float a = 1.0f;
   float b = 2.0f;

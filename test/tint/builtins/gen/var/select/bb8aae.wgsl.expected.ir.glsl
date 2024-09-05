@@ -2,10 +2,10 @@
 precision highp float;
 precision highp int;
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   vec4 tint_symbol;
 } v;
-
 vec4 select_bb8aae() {
   vec4 arg_0 = vec4(1.0f);
   vec4 arg_1 = vec4(1.0f);
@@ -24,10 +24,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   vec4 tint_symbol;
 } v;
-
 vec4 select_bb8aae() {
   vec4 arg_0 = vec4(1.0f);
   vec4 arg_1 = vec4(1.0f);
@@ -53,9 +53,7 @@ struct VertexOutput {
   vec4 prevent_dce;
 };
 
-
 layout(location = 0) flat out vec4 vertex_main_loc0_Output;
-
 vec4 select_bb8aae() {
   vec4 arg_0 = vec4(1.0f);
   vec4 arg_1 = vec4(1.0f);
