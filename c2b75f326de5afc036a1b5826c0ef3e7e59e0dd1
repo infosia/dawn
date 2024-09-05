@@ -52,6 +52,24 @@
       "parentUuid": "77556519_8cf9d35c",
       "revId": "c2b75f326de5afc036a1b5826c0ef3e7e59e0dd1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaefb2af_40d6c9e4",
+        "filename": "src/tint/lang/glsl/writer/var_and_let_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-05T19:06:34Z",
+      "side": 1,
+      "message": "k, will followup. Mostly I\u0027d add the entry point so i didnt\u0027 get the empty entry point added, but it means you can\u0027t pass the vars as arguments.",
+      "parentUuid": "cf262bb4_3e0eb868",
+      "revId": "c2b75f326de5afc036a1b5826c0ef3e7e59e0dd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
