@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c081a89_6ef6e2fb",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-05T19:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39bc6d10_bc218727",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "7fddb4c1ae54b9b02ea975407d37a150085f14e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "83f6e3a9_00836848",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3813af97_a62b5891",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-05T19:56:59Z",
+      "side": 1,
+      "message": "I thought i\u0027d removed that already, done.",
+      "parentUuid": "83f6e3a9_00836848",
+      "revId": "7fddb4c1ae54b9b02ea975407d37a150085f14e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c02b1b19_e01e8308",
@@ -54,6 +96,30 @@
       "writtenOn": "2024-09-05T16:22:02Z",
       "side": 1,
       "message": "The `depth_offsets.{min,max}` are supposed to be byte offsets into the push constant structure that contains the min and max values to clamp with. So we need to be creating a push constant structure here with members at those offsets, creating a global `var\u003cpush_constant\u003e` and then loading from it.\n\nThe SPIR-V version does most of this except it doesn\u0027t take the offsets from the caller. This is going to take a bunch more work to do properly, so maybe worth leaving this out of this CL?",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 24
+      },
+      "revId": "7fddb4c1ae54b9b02ea975407d37a150085f14e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d947cbcd_2593584e",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-05T19:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c02b1b19_e01e8308",
       "range": {
         "startLine": 265,
         "startChar": 0,
