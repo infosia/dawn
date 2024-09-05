@@ -50,6 +50,24 @@
       "message": "Roll landed, thanks for waiting",
       "revId": "9f09c4edec48d3b5a390daa6ac4b22334efed277",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34a49b0a_e65cf38d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-09-05T18:17:56Z",
+      "side": 1,
+      "message": "No problem!",
+      "parentUuid": "69f3199f_94ce70fb",
+      "revId": "9f09c4edec48d3b5a390daa6ac4b22334efed277",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
