@@ -78,6 +78,8 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
         WGPURenderPipelineDescriptor const* descriptor,
         const WGPUCreateRenderPipelineAsyncCallbackInfo& callbackInfo);
 
+    uint32_t GetGeneration() const;
+    uint32_t GetId() const;
     WGPUStatus GetLimits(WGPUSupportedLimits* limits) const;
     WGPUFuture GetLostFuture();
     bool HasFeature(WGPUFeatureName feature) const;

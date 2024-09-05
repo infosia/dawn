@@ -267,6 +267,9 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     AdapterBase* APIGetAdapter();
     QueueBase* APIGetQueue();
 
+    uint32_t APIGetId() const;
+    uint32_t APIGetGeneration() const;
+
     wgpu::Status APIGetAHardwareBufferProperties(void* handle,
                                                  AHardwareBufferProperties* properties);
     wgpu::Status APIGetLimits(SupportedLimits* limits) const;
