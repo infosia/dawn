@@ -130,6 +130,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3e253c4_e283783b",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-09-05T14:21:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edf0145a_2246a04b",
+      "range": {
+        "startLine": 356,
+        "startChar": 42,
+        "endLine": 356,
+        "endChar": 70
+      },
+      "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f73eb579_b0c7e44e",
@@ -143,6 +167,30 @@
       "writtenOn": "2024-09-03T09:12:36Z",
       "side": 1,
       "message": "Same comment as for compute passes.",
+      "range": {
+        "startLine": 206,
+        "startChar": 41,
+        "endLine": 206,
+        "endChar": 70
+      },
+      "revId": "38b762800637ac8a4cd3978b2e174f8e4c1cd572",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33c7fa31_37fcfb01",
+        "filename": "src/dawn/native/RenderEncoderBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-09-05T14:21:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f73eb579_b0c7e44e",
       "range": {
         "startLine": 206,
         "startChar": 41,
