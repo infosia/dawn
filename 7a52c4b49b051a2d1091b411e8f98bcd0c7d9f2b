@@ -34,6 +34,24 @@
       "parentUuid": "5990243e_84bc1bec",
       "revId": "7a52c4b49b051a2d1091b411e8f98bcd0c7d9f2b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8f64115_a2282396",
+        "filename": "src/dawn/tests/end2end/PixelLocalStorageTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-05T14:47:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c15eb45a_1cc32595",
+      "revId": "7a52c4b49b051a2d1091b411e8f98bcd0c7d9f2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
