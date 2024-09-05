@@ -2,11 +2,10 @@
 precision highp float;
 precision highp int;
 
-
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   int tint_symbol;
 } v;
-
 int reverseBits_7c4269() {
   int res = (-2147483647 - 1);
   return res;
@@ -16,10 +15,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   int tint_symbol;
 } v;
-
 int reverseBits_7c4269() {
   int res = (-2147483647 - 1);
   return res;
@@ -30,14 +29,13 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
   int prevent_dce;
 };
 
-
 layout(location = 0) flat out int vertex_main_loc0_Output;
-
 int reverseBits_7c4269() {
   int res = (-2147483647 - 1);
   return res;

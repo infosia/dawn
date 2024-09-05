@@ -7,8 +7,6 @@ layout(location = 2) in float tint_symbol_loc2_Input;
 layout(location = 3) in vec4 tint_symbol_loc3_Input;
 layout(location = 4) in float16_t tint_symbol_loc4_Input;
 layout(location = 5) in f16vec3 tint_symbol_loc5_Input;
-
-
 vec4 tint_symbol_inner(int loc0, uint loc1, float loc2, vec4 loc3, float16_t loc4, f16vec3 loc5) {
   int i = loc0;
   uint u = loc1;

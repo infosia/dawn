@@ -1,10 +1,9 @@
 #version 310 es
 
+
 struct VertexOutputs {
   vec4 position;
 };
-
-
 
 VertexOutputs tint_symbol_inner() {
   return VertexOutputs(vec4(1.0f, 2.0f, 3.0f, 4.0f));

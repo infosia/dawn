@@ -1,10 +1,9 @@
 #version 310 es
 
+
 struct VSOut {
   vec4 pos;
 };
-
-
 
 void foo(inout VSOut tint_symbol) {
   vec4 pos = vec4(1.0f, 2.0f, 3.0f, 4.0f);

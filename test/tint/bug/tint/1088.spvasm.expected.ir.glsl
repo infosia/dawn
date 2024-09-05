@@ -1,5 +1,6 @@
 #version 310 es
 
+
 struct strided_arr {
   float el;
 };
@@ -17,10 +18,10 @@ struct main_out {
 };
 
 vec3 position_1 = vec3(0.0f);
-layout(binding = 2, std140) uniform tint_symbol_3_1_ubo {
+layout(binding = 2, std140)
+uniform tint_symbol_3_1_ubo {
   LeftOver tint_symbol_2;
 } v;
-
 vec2 vUV = vec2(0.0f);
 vec2 uv = vec2(0.0f);
 vec3 normal = vec3(0.0f);
@@ -28,9 +29,7 @@ vec4 tint_symbol = vec4(0.0f);
 layout(location = 0) in vec3 tint_symbol_1_loc0_Input;
 layout(location = 2) in vec2 tint_symbol_1_loc2_Input;
 layout(location = 1) in vec3 tint_symbol_1_loc1_Input;
-
 layout(location = 0) out vec2 tint_symbol_1_loc0_Output;
-
 void main_1() {
   vec4 q = vec4(0.0f);
   vec3 p = vec3(0.0f);

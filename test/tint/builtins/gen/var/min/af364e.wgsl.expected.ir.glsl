@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void min_af364e() {
   ivec4 res = ivec4(1);
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void min_af364e() {
   ivec4 res = ivec4(1);

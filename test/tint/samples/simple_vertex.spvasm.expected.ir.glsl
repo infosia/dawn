@@ -1,12 +1,11 @@
 #version 310 es
 
+
 struct main_out {
   vec4 tint_symbol;
 };
 
 vec4 tint_symbol = vec4(0.0f);
-
-
 void main_1() {
   tint_symbol = vec4(0.0f);
 }

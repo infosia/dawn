@@ -3,11 +3,10 @@
 precision highp float;
 precision highp int;
 
-
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   f16vec3 tint_symbol;
 } v;
-
 f16vec3 pow_fa5429() {
   f16vec3 arg_0 = f16vec3(1.0hf);
   f16vec3 arg_1 = f16vec3(1.0hf);
@@ -20,10 +19,10 @@ void main() {
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   f16vec3 tint_symbol;
 } v;
-
 f16vec3 pow_fa5429() {
   f16vec3 arg_0 = f16vec3(1.0hf);
   f16vec3 arg_1 = f16vec3(1.0hf);
@@ -37,14 +36,13 @@ void main() {
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 
+
 struct VertexOutput {
   vec4 pos;
   f16vec3 prevent_dce;
 };
 
-
 layout(location = 0) flat out f16vec3 vertex_main_loc0_Output;
-
 f16vec3 pow_fa5429() {
   f16vec3 arg_0 = f16vec3(1.0hf);
   f16vec3 arg_1 = f16vec3(1.0hf);

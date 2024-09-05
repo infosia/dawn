@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void max_caa3d7() {
   int res = 1;
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void max_caa3d7() {
   int res = 1;

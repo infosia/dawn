@@ -1,10 +1,9 @@
 #version 310 es
 
+
 struct Out {
   vec4 pos;
 };
-
-
 
 Out tint_symbol_inner() {
   return Out(vec4(0.0f));

@@ -2,11 +2,10 @@
 precision highp float;
 precision highp int;
 
-
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   vec4 tint_symbol;
 } v;
-
 vec4 unpack4x8snorm_523fb3() {
   vec4 res = vec4(0.00787401571869850159f, 0.0f, 0.0f, 0.0f);
   return res;
@@ -16,10 +15,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   vec4 tint_symbol;
 } v;
-
 vec4 unpack4x8snorm_523fb3() {
   vec4 res = vec4(0.00787401571869850159f, 0.0f, 0.0f, 0.0f);
   return res;
@@ -30,14 +29,13 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
   vec4 prevent_dce;
 };
 
-
 layout(location = 0) flat out vec4 vertex_main_loc0_Output;
-
 vec4 unpack4x8snorm_523fb3() {
   vec4 res = vec4(0.00787401571869850159f, 0.0f, 0.0f, 0.0f);
   return res;

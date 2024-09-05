@@ -2,11 +2,10 @@
 precision highp float;
 precision highp int;
 
-
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   uvec4 tint_symbol;
 } v;
-
 uvec4 reverseBits_35fea9() {
   uvec4 arg_0 = uvec4(1u);
   uvec4 res = bitfieldReverse(arg_0);
@@ -17,10 +16,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   uvec4 tint_symbol;
 } v;
-
 uvec4 reverseBits_35fea9() {
   uvec4 arg_0 = uvec4(1u);
   uvec4 res = bitfieldReverse(arg_0);
@@ -32,14 +31,13 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
   uvec4 prevent_dce;
 };
 
-
 layout(location = 0) flat out uvec4 vertex_main_loc0_Output;
-
 uvec4 reverseBits_35fea9() {
   uvec4 arg_0 = uvec4(1u);
   uvec4 res = bitfieldReverse(arg_0);

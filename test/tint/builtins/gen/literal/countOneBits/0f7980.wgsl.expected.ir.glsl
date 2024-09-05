@@ -2,11 +2,10 @@
 precision highp float;
 precision highp int;
 
-
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   ivec4 tint_symbol;
 } v;
-
 ivec4 countOneBits_0f7980() {
   ivec4 res = ivec4(1);
   return res;
@@ -16,10 +15,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   ivec4 tint_symbol;
 } v;
-
 ivec4 countOneBits_0f7980() {
   ivec4 res = ivec4(1);
   return res;
@@ -30,14 +29,13 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
   ivec4 prevent_dce;
 };
 
-
 layout(location = 0) flat out ivec4 vertex_main_loc0_Output;
-
 ivec4 countOneBits_0f7980() {
   ivec4 res = ivec4(1);
   return res;

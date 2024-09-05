@@ -1,10 +1,9 @@
 #version 310 es
 
+
 struct Normals {
   vec3 f;
 };
-
-
 
 vec4 tint_symbol_inner() {
   int zero = 0;

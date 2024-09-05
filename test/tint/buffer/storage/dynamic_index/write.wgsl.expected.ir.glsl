@@ -1,5 +1,6 @@
 #version 310 es
 
+
 struct Inner {
   float scalar_f32;
   int scalar_i32;
@@ -25,11 +26,10 @@ struct Inner {
   vec3 arr2_vec3_f32[2];
 };
 
-layout(binding = 0, std430) buffer S_1_ssbo {
+layout(binding = 0, std430)
+buffer S_1_ssbo {
   Inner arr[];
 } sb;
-
-
 void tint_store_and_preserve_padding_3(inout vec3 target[2], vec3 value_param[2]) {
   {
     uint v = 0u;

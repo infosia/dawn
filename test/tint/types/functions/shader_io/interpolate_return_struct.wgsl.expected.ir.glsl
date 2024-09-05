@@ -1,5 +1,6 @@
 #version 310 es
 
+
 struct Out {
   vec4 pos;
   float none;
@@ -12,7 +13,6 @@ struct Out {
   float linear_sample;
 };
 
-
 layout(location = 0) out float tint_symbol_1_loc0_Output;
 layout(location = 1) flat out float tint_symbol_1_loc1_Output;
 layout(location = 2) out float tint_symbol_1_loc2_Output;
@@ -21,7 +21,6 @@ layout(location = 4) out float tint_symbol_1_loc4_Output;
 layout(location = 5) out float tint_symbol_1_loc5_Output;
 layout(location = 6) centroid out float tint_symbol_1_loc6_Output;
 layout(location = 7) out float tint_symbol_1_loc7_Output;
-
 Out tint_symbol_1_inner() {
   return Out(vec4(0.0f), 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 }

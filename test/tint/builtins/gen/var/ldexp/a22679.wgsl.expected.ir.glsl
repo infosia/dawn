@@ -2,11 +2,10 @@
 precision highp float;
 precision highp int;
 
-
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   vec2 tint_symbol;
 } v;
-
 vec2 ldexp_a22679() {
   vec2 arg_0 = vec2(1.0f);
   vec2 res = ldexp(arg_0, ivec2(1));
@@ -17,10 +16,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   vec2 tint_symbol;
 } v;
-
 vec2 ldexp_a22679() {
   vec2 arg_0 = vec2(1.0f);
   vec2 res = ldexp(arg_0, ivec2(1));
@@ -32,14 +31,13 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
   vec2 prevent_dce;
 };
 
-
 layout(location = 0) flat out vec2 vertex_main_loc0_Output;
-
 vec2 ldexp_a22679() {
   vec2 arg_0 = vec2(1.0f);
   vec2 res = ldexp(arg_0, ivec2(1));

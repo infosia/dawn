@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void transpose_7eb2c5() {
   mat2 res = mat2(vec2(1.0f), vec2(1.0f));
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void transpose_7eb2c5() {
   mat2 res = mat2(vec2(1.0f), vec2(1.0f));

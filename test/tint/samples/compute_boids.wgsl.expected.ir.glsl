@@ -3,8 +3,6 @@
 layout(location = 0) in vec2 vert_main_loc0_Input;
 layout(location = 1) in vec2 vert_main_loc1_Input;
 layout(location = 2) in vec2 vert_main_loc2_Input;
-
-
 vec4 vert_main_inner(vec2 a_particlePos, vec2 a_particleVel, vec2 a_pos) {
   float angle = -(atan(a_particleVel[0u], a_particleVel[1u]));
   float v = (a_pos[0u] * cos(angle));
@@ -23,7 +21,6 @@ void main() {
 precision highp float;
 precision highp int;
 
-
 layout(location = 0) out vec4 frag_main_loc0_Output;
 vec4 frag_main_inner() {
   return vec4(1.0f);
@@ -32,6 +29,7 @@ void main() {
   frag_main_loc0_Output = frag_main_inner();
 }
 #version 310 es
+
 
 struct SimParams {
   float deltaT;
@@ -52,19 +50,18 @@ struct Particles {
   Particle particles[5];
 };
 
-layout(binding = 0, std140) uniform tint_symbol_2_1_ubo {
+layout(binding = 0, std140)
+uniform tint_symbol_2_1_ubo {
   SimParams tint_symbol_1;
 } v;
-
-layout(binding = 1, std430) buffer tint_symbol_4_1_ssbo {
+layout(binding = 1, std430)
+buffer tint_symbol_4_1_ssbo {
   Particles tint_symbol_3;
 } v_1;
-
-layout(binding = 2, std430) buffer tint_symbol_6_1_ssbo {
+layout(binding = 2, std430)
+buffer tint_symbol_6_1_ssbo {
   Particles tint_symbol_5;
 } v_2;
-
-
 void comp_main_inner(uvec3 tint_symbol) {
   uint index = tint_symbol[0u];
   if ((index >= 5u)) {

@@ -1,13 +1,13 @@
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
+precision highp float;
+precision highp int;
+
 
 struct frexp_result_f16 {
   float16_t fract;
   int exp;
 };
-precision highp float;
-precision highp int;
-
 
 void frexp_5257dd() {
   frexp_result_f16 res = frexp_result_f16(0.5hf, 1);
@@ -17,6 +17,7 @@ void main() {
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
+
 
 struct frexp_result_f16 {
   float16_t fract;
@@ -33,6 +34,7 @@ void main() {
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 
+
 struct frexp_result_f16 {
   float16_t fract;
   int exp;
@@ -41,8 +43,6 @@ struct frexp_result_f16 {
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void frexp_5257dd() {
   frexp_result_f16 res = frexp_result_f16(0.5hf, 1);

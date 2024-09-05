@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void log_f60cc7() {
   vec2 res = vec2(0.0f);
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void log_f60cc7() {
   vec2 res = vec2(0.0f);

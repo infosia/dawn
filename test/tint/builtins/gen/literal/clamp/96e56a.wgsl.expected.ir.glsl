@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void clamp_96e56a() {
   int res = 1;
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void clamp_96e56a() {
   int res = 1;

@@ -1,15 +1,14 @@
 #version 310 es
 
+
 struct DeclaredAfterUsage {
   float f;
 };
 
-layout(binding = 0, std140) uniform tint_symbol_2_1_ubo {
+layout(binding = 0, std140)
+uniform tint_symbol_2_1_ubo {
   DeclaredAfterUsage tint_symbol_1;
 } v;
-
-
-
 vec4 tint_symbol_inner() {
   return vec4(v.tint_symbol_1.f);
 }

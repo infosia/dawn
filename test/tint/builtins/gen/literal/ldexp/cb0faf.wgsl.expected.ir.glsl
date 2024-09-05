@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void ldexp_cb0faf() {
   vec4 res = vec4(2.0f);
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void ldexp_cb0faf() {
   vec4 res = vec4(2.0f);

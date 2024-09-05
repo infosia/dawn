@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void round_8fdca3() {
   vec2 res = vec2(4.0f);
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void round_8fdca3() {
   vec2 res = vec2(4.0f);

@@ -1,6 +1,7 @@
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 
+
 struct VertexInputs {
   int loc0;
   uint loc1;
@@ -16,8 +17,6 @@ layout(location = 2) in float tint_symbol_loc2_Input;
 layout(location = 3) in vec4 tint_symbol_loc3_Input;
 layout(location = 4) in float16_t tint_symbol_loc4_Input;
 layout(location = 5) in f16vec3 tint_symbol_loc5_Input;
-
-
 vec4 tint_symbol_inner(VertexInputs inputs) {
   int i = inputs.loc0;
   uint u = inputs.loc1;

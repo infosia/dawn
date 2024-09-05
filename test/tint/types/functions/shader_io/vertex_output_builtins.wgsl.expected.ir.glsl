@@ -1,7 +1,5 @@
 #version 310 es
 
-
-
 vec4 tint_symbol_inner() {
   return vec4(1.0f, 2.0f, 3.0f, 4.0f);
 }

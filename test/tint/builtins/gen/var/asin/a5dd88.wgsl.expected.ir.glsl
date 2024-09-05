@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void asin_a5dd88() {
   vec2 res = vec2(0.5f);
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void asin_a5dd88() {
   vec2 res = vec2(0.5f);

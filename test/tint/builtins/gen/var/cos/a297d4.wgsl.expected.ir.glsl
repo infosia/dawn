@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void cos_a297d4() {
   float res = 1.0f;
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void cos_a297d4() {
   float res = 1.0f;

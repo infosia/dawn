@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void floor_dcd5a2() {
   float res = 1.0f;
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void floor_dcd5a2() {
   float res = 1.0f;

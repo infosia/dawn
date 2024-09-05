@@ -1,15 +1,15 @@
 #version 310 es
 
+
 struct S {
   vec3 v;
   uint i;
 };
 
-layout(binding = 0, std430) buffer tint_symbol_2_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_2_1_ssbo {
   S tint_symbol_1;
 } v_1;
-
-
 vec3 Bad(uint index, vec3 rd) {
   vec3 normal = vec3(0.0f);
   normal[index] = -(sign(rd[index]));

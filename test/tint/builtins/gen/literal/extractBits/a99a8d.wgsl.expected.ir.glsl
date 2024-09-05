@@ -2,11 +2,10 @@
 precision highp float;
 precision highp int;
 
-
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   ivec2 tint_symbol;
 } v;
-
 ivec2 extractBits_a99a8d() {
   ivec2 res = ivec2(0);
   return res;
@@ -16,10 +15,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   ivec2 tint_symbol;
 } v;
-
 ivec2 extractBits_a99a8d() {
   ivec2 res = ivec2(0);
   return res;
@@ -30,14 +29,13 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
   ivec2 prevent_dce;
 };
 
-
 layout(location = 0) flat out ivec2 vertex_main_loc0_Output;
-
 ivec2 extractBits_a99a8d() {
   ivec2 res = ivec2(0);
   return res;

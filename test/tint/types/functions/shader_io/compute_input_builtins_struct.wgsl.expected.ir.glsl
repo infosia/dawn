@@ -1,5 +1,6 @@
 #version 310 es
 
+
 struct ComputeInputs {
   uvec3 local_invocation_id;
   uint local_invocation_index;
@@ -7,11 +8,6 @@ struct ComputeInputs {
   uvec3 workgroup_id;
   uvec3 num_workgroups;
 };
-
-
-
-
-
 
 void tint_symbol_inner(ComputeInputs inputs) {
   uint foo = ((((inputs.local_invocation_id[0u] + inputs.local_invocation_index) + inputs.global_invocation_id[0u]) + inputs.workgroup_id[0u]) + inputs.num_workgroups[0u]);

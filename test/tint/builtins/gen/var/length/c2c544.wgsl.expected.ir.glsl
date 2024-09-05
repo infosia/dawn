@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void length_c2c544() {
   float res = 0.0f;
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void length_c2c544() {
   float res = 0.0f;

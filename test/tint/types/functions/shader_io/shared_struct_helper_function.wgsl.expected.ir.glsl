@@ -1,13 +1,12 @@
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
   int loc0;
 };
 
-
 layout(location = 0) flat out int vert_main1_loc0_Output;
-
 VertexOutput foo(float x) {
   return VertexOutput(vec4(x, x, x, 1.0f), 42);
 }
@@ -24,14 +23,13 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
   int loc0;
 };
 
-
 layout(location = 0) flat out int vert_main2_loc0_Output;
-
 VertexOutput foo(float x) {
   return VertexOutput(vec4(x, x, x, 1.0f), 42);
 }

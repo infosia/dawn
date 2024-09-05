@@ -2,11 +2,10 @@
 precision highp float;
 precision highp int;
 
-
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   uint tint_symbol;
 } v;
-
 uint min_46c5d3() {
   uint res = 1u;
   return res;
@@ -16,10 +15,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   uint tint_symbol;
 } v;
-
 uint min_46c5d3() {
   uint res = 1u;
   return res;
@@ -30,14 +29,13 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
   uint prevent_dce;
 };
 
-
 layout(location = 0) flat out uint vertex_main_loc0_Output;
-
 uint min_46c5d3() {
   uint res = 1u;
   return res;

@@ -2,7 +2,6 @@
 precision highp float;
 precision highp int;
 
-
 void max_067f3a() {
   ivec2 res = ivec2(1);
 }
@@ -20,11 +19,10 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
 };
-
-
 
 void max_067f3a() {
   ivec2 res = ivec2(1);

@@ -2,11 +2,10 @@
 precision highp float;
 precision highp int;
 
-
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   float tint_symbol;
 } v;
-
 float asin_c0c272() {
   float arg_0 = 0.47942554950714111328f;
   float res = asin(arg_0);
@@ -17,10 +16,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   float tint_symbol;
 } v;
-
 float asin_c0c272() {
   float arg_0 = 0.47942554950714111328f;
   float res = asin(arg_0);
@@ -32,14 +31,13 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
   float prevent_dce;
 };
 
-
 layout(location = 0) flat out float vertex_main_loc0_Output;
-
 float asin_c0c272() {
   float arg_0 = 0.47942554950714111328f;
   float res = asin(arg_0);

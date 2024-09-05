@@ -2,11 +2,10 @@
 precision highp float;
 precision highp int;
 
-
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   ivec3 tint_symbol;
 } v;
-
 ivec3 max_25eafe() {
   ivec3 arg_0 = ivec3(1);
   ivec3 arg_1 = ivec3(1);
@@ -18,10 +17,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   ivec3 tint_symbol;
 } v;
-
 ivec3 max_25eafe() {
   ivec3 arg_0 = ivec3(1);
   ivec3 arg_1 = ivec3(1);
@@ -34,14 +33,13 @@ void main() {
 }
 #version 310 es
 
+
 struct VertexOutput {
   vec4 pos;
   ivec3 prevent_dce;
 };
 
-
 layout(location = 0) flat out ivec3 vertex_main_loc0_Output;
-
 ivec3 max_25eafe() {
   ivec3 arg_0 = ivec3(1);
   ivec3 arg_1 = ivec3(1);
