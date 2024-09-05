@@ -34,6 +34,24 @@
       "parentUuid": "23ca78d2_9530f5aa",
       "revId": "c2b75f326de5afc036a1b5826c0ef3e7e59e0dd1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf262bb4_3e0eb868",
+        "filename": "src/tint/lang/glsl/writer/var_and_let_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-05T16:23:56Z",
+      "side": 1,
+      "message": "That\u0027s fine, I just wasn\u0027t sure why you went to the effort of creating entry points for some of these tests but then didn\u0027t actually use the variables from them.\n\nThese tests run `Raise()`, so arguably they should actually just be using entry point parameters and return values instead of directly creating `var\u003cin\u003e/var\u003cout\u003e` variables, but I\u0027m not too fussed about that at this stage.",
+      "parentUuid": "77556519_8cf9d35c",
+      "revId": "c2b75f326de5afc036a1b5826c0ef3e7e59e0dd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
