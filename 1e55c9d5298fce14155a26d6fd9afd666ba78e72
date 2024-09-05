@@ -70,6 +70,30 @@
       },
       "revId": "1e55c9d5298fce14155a26d6fd9afd666ba78e72",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d08e30c0_819a1484",
+        "filename": "src/dawn/native/d3d12/SwapChainD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-09-05T19:02:40Z",
+      "side": 1,
+      "message": "Yup, I like something like `std::vector\u003cBuffer\u003e SwapChain::AcquireBuffers` which sets the acquired state and moves the buffers. It avoids copying then \"fixing up\" the lazy acquired state.",
+      "parentUuid": "8ecb6214_e1fbf235",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "1e55c9d5298fce14155a26d6fd9afd666ba78e72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
