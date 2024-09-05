@@ -26,8 +26,6 @@ struct VertexOutput {
   vec4 pos;
 };
 
-
-
 void select_494051() {
   bool arg_2 = true;
   float res = ((arg_2) ? (1.0f) : (1.0f));

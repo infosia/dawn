@@ -2,10 +2,10 @@
 precision highp float;
 precision highp int;
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   float tint_symbol;
 } v;
-
 float select_416e14() {
   float arg_0 = 1.0f;
   float arg_1 = 1.0f;
@@ -18,10 +18,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   float tint_symbol;
 } v;
-
 float select_416e14() {
   float arg_0 = 1.0f;
   float arg_1 = 1.0f;
@@ -41,9 +41,7 @@ struct VertexOutput {
   float prevent_dce;
 };
 
-
 layout(location = 0) flat out float vertex_main_loc0_Output;
-
 float select_416e14() {
   float arg_0 = 1.0f;
   float arg_1 = 1.0f;

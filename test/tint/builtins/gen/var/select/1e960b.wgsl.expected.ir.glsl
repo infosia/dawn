@@ -2,10 +2,10 @@
 precision highp float;
 precision highp int;
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   uvec2 tint_symbol;
 } v;
-
 uvec2 select_1e960b() {
   uvec2 arg_0 = uvec2(1u);
   uvec2 arg_1 = uvec2(1u);
@@ -22,10 +22,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   uvec2 tint_symbol;
 } v;
-
 uvec2 select_1e960b() {
   uvec2 arg_0 = uvec2(1u);
   uvec2 arg_1 = uvec2(1u);
@@ -49,9 +49,7 @@ struct VertexOutput {
   uvec2 prevent_dce;
 };
 
-
 layout(location = 0) flat out uvec2 vertex_main_loc0_Output;
-
 uvec2 select_1e960b() {
   uvec2 arg_0 = uvec2(1u);
   uvec2 arg_1 = uvec2(1u);

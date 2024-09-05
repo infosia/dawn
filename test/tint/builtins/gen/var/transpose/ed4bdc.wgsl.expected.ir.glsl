@@ -2,10 +2,10 @@
 precision highp float;
 precision highp int;
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   int tint_symbol;
 } v;
-
 int transpose_ed4bdc() {
   mat3x2 arg_0 = mat3x2(vec2(1.0f), vec2(1.0f), vec2(1.0f));
   mat2x3 res = transpose(arg_0);
@@ -16,10 +16,10 @@ void main() {
 }
 #version 310 es
 
-layout(binding = 0, std430) buffer tint_symbol_1_1_ssbo {
+layout(binding = 0, std430)
+buffer tint_symbol_1_1_ssbo {
   int tint_symbol;
 } v;
-
 int transpose_ed4bdc() {
   mat3x2 arg_0 = mat3x2(vec2(1.0f), vec2(1.0f), vec2(1.0f));
   mat2x3 res = transpose(arg_0);
@@ -37,9 +37,7 @@ struct VertexOutput {
   int prevent_dce;
 };
 
-
 layout(location = 0) flat out int vertex_main_loc0_Output;
-
 int transpose_ed4bdc() {
   mat3x2 arg_0 = mat3x2(vec2(1.0f), vec2(1.0f), vec2(1.0f));
   mat2x3 res = transpose(arg_0);
