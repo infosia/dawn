@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "980466cf_f4f895cc",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-05T15:48:18Z",
+      "side": 1,
+      "message": "This is all doing the right thing AFAICT, but I\u0027m finding the logic quite hard to follow as these functions sometimes do more than the name suggests (hence the need to early exit for storage and uniform above).\n\nThere\u0027s enough differences between the different address spaces that I think it\u0027d be clearer to split them out into separate functions per address space, as is done in the AST backend. Or at least grouped into address spaces that behave similarly (e.g. EmitBufferVariable for uniform and storage, EmitIOVariable for in/out, etc).",
+      "range": {
+        "startLine": 798,
+        "startChar": 0,
+        "endLine": 811,
+        "endChar": 77
+      },
+      "revId": "7cc234873810c38d180cdc18144402df0fb4a7e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

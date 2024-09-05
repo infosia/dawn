@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23ca78d2_9530f5aa",
+        "filename": "src/tint/lang/glsl/writer/var_and_let_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-05T15:48:18Z",
+      "side": 1,
+      "message": "For some of these tests you\u0027re creating entry points, but they don\u0027t reference the variables you\u0027re creating. Arguably all of these tests should have entry points, and they should all reference the target variables so that will still work when we run `SingleEntryPoint` in the backend.",
+      "revId": "c2b75f326de5afc036a1b5826c0ef3e7e59e0dd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
