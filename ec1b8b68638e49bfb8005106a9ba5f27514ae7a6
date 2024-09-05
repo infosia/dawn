@@ -16,6 +16,24 @@
       "message": "Rebased and reran the tests because there were a bunch of failures that seemed to be totally unrelated.\nThe \"dangling pointer\" failures didn\u0027t go away though, so they are probably real.",
       "revId": "ec1b8b68638e49bfb8005106a9ba5f27514ae7a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "568401d1_50976d67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-09-05T14:40:14Z",
+      "side": 1,
+      "message": "Will investigate the dangling pointer. Seems to have come from moving the metadatas to the encoding context. (glossed over the call stack in lldb)",
+      "parentUuid": "5cce9bec_13047ca6",
+      "revId": "ec1b8b68638e49bfb8005106a9ba5f27514ae7a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
