@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb191e64_f7d2658f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-09-05T12:10:25Z",
+      "side": 1,
+      "message": "Dan, LMK when it\u0027s safe to land this.",
+      "revId": "9f09c4edec48d3b5a390daa6ac4b22334efed277",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
