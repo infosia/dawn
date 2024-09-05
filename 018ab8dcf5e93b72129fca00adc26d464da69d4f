@@ -33,6 +33,23 @@
       "message": "s/Dan/Corentin since dan is OOO.",
       "revId": "018ab8dcf5e93b72129fca00adc26d464da69d4f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aafe43ca_0523a170",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-09-05T21:55:42Z",
+      "side": 1,
+      "message": "Never mind, it occurred to me to check Chromium\u0027s config to see if they\u0027re using it:\nhttps://chromium.googlesource.com/chromium/src/+/refs/meta/config/project.config\n\nand they are not. Things like `blink-reviews@chromium.org` are added via WATCHLISTS. So I\u0027m going to pursue fixing the WATCHLISTS.",
+      "revId": "018ab8dcf5e93b72129fca00adc26d464da69d4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
