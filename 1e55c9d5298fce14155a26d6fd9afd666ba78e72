@@ -22,6 +22,30 @@
       },
       "revId": "1e55c9d5298fce14155a26d6fd9afd666ba78e72",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c2432e4_3517e94b",
+        "filename": "src/dawn/native/d3d12/SwapChainD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-05T14:42:12Z",
+      "side": 1,
+      "message": "Nothing is called before at the moment, but WDYT of adding an AcquireBuffers() that does this computation and moves things out so that it is the previousSwapchain that packages everything correctly first.",
+      "parentUuid": "9b715652_1a4431c4",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "1e55c9d5298fce14155a26d6fd9afd666ba78e72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
