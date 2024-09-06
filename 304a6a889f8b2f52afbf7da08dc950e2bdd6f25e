@@ -71,6 +71,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ca5b6c39_0c9853fa",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-09-06T17:13:29Z",
+      "side": 1,
+      "message": "nit: it would be nice to print extra info in this error is front_face_use or input_sample_mask_used or sample_index_usage is true since otherwise the user will count their variables an find it\u0027s at/under the limit. It doesn\u0027t have to happen in this CL. Just something I noticed.",
+      "revId": "304a6a889f8b2f52afbf7da08dc950e2bdd6f25e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "025fcb12_2cb7b945",
         "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
         "patchSetId": 6
