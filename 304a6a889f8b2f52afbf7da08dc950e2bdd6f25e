@@ -16,6 +16,23 @@
       "message": "Hi reviewers,\n\nPlease help add the WebGPU CTS gardener here as I need to change the expectation file.\n\nPTAL, thanks!",
       "revId": "304a6a889f8b2f52afbf7da08dc950e2bdd6f25e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6747d7c_b4e0aa43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-06T09:54:10Z",
+      "side": 1,
+      "message": "Thank you for the head\u0027s up for the gardener",
+      "revId": "304a6a889f8b2f52afbf7da08dc950e2bdd6f25e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
