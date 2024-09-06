@@ -69,6 +69,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b25a97d_6fa180d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-09-06T17:37:41Z",
+      "side": 1,
+      "message": "note: there appear to be several more CTS tests that will fail when this is removed\n\nhttps://github.com/search?q\u003drepo%3Agpuweb%2Fcts+maxInterStageShaderComponents\u0026type\u003dcode",
+      "revId": "304a6a889f8b2f52afbf7da08dc950e2bdd6f25e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca5b6c39_0c9853fa",
