@@ -1,0 +1,16 @@
+
+float2 v() {
+  return (0.0f).xx;
+}
+
+void f() {
+  float2 a = (1.0f).xx;
+  float2 b = float2((a).xx);
+  float2 c = float2((v()).xx);
+  float2 d = float2(((a * 2.0f)).xx);
+}
+
+[numthreads(1, 1, 1)]
+void unused_entry_point() {
+}
+
