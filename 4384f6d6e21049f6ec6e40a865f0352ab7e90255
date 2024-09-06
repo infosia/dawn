@@ -107,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a8814438_a70c0955",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "It looks an empty PLS block couldn\u0027t work.\n```\n[ RUN      ] PixelLocalStorageTests.ImplicitPLSAndLargerRenderAttachmentsInOneCommandBuffer/D3D11_Microsoft_Basic_Render_Driver_CPU\nunknown file: error: Uninteresting mock function call - returning directly.\n    Function call: Call(@000000B623AFE578 8-byte object \u003c20-92 A8-4C A4-02 00-00\u003e, ErrorType::Validation, 000002A451285230 pointing to \"The entry-point\u0027s pixel local block size (4) is different from the layout\u0027s total pixel local size (8).\\n - While validating fragment stage ([ShaderModule (unlabeled)], entryPoint: main).\\n - While validating fragment state.\\n\")\n\n```\nInspecting the validation [code lines](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ShaderModule.cpp;drc\u003df5ae33ceefbd30cdd17ba2834d7e7fcda1e90b31;l\u003d1257), I think the PLS block must exactly match.",
+      "parentUuid": "6c56182d_38660f28",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5fc0061b_264bef01",
         "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
         "patchSetId": 5
@@ -142,6 +160,30 @@
           ]
         }
       ],
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfe79ceb_f80481fa",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Thank you @lokokung@google.com for the comments. I really appreciate that.\ndawn:1911 looks like an irrelevant issue. Do we have one for different size PLS?",
+      "parentUuid": "5fc0061b_264bef01",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 42
+      },
       "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -203,6 +245,30 @@
           ]
         }
       ],
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed0e2bc0_ba30b7e1",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99f2241c_09a920c9",
+      "range": {
+        "startLine": 110,
+        "startChar": 24,
+        "endLine": 110,
+        "endChar": 73
+      },
       "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -271,6 +337,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b1df63e_3b998b02",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e5e6fef_e554a570",
+      "range": {
+        "startLine": 131,
+        "startChar": 28,
+        "endLine": 131,
+        "endChar": 40
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a11542e7_0d3ce04c",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Sounds good. Probably a complete shader sample would be more readable.",
+      "parentUuid": "5d5896d1_bc60ba2c",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 46
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "404c8a7d_0f475270",
@@ -284,6 +398,30 @@
       "writtenOn": "2024-09-05T10:45:54Z",
       "side": 1,
       "message": "```suggestion\n        std::ostringstream plsDeclarationStream;\n```",
+      "range": {
+        "startLine": 142,
+        "startChar": 27,
+        "endLine": 142,
+        "endChar": 48
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8cc06ff_9f62dd04",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "404c8a7d_0f475270",
       "range": {
         "startLine": 142,
         "startChar": 27,
@@ -311,6 +449,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ac34e16_b856ede3",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaa95e08_3cf42165",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "965366bf_9851c565",
@@ -324,6 +480,24 @@
       "writtenOn": "2024-09-05T10:45:54Z",
       "side": 1,
       "message": "nit: We can also do the same thing as we do in the pipeline layout with a single vector of TextureFormat.",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "033e9382_7a632862",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "IIUC, you mean [this sort](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PipelineLayout.cpp;drc\u003d8e948282d37c0e119e3102236878d6f4d5052c16;l\u003d133).\nWe are a little different here.\nIf `key-\u003etotalPixelLocalStorageSize` is 16, the vector size `key-\u003eplsAttachments` doesn\u0027t have to be 4. It may contain just 1 element {offset \u003d 12, format \u003d rgbafloat}.\nThe sort here is just to make sure the equality of key hash.",
+      "parentUuid": "965366bf_9851c565",
       "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -395,6 +569,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3a181130_9d5d557b",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Thanks, it\u0027s probably the cause of CQ errors I am struggling with. Let me restore and retry it.",
+      "parentUuid": "29be72fb_8d54f4c0",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "786d2160_051c1449",
         "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
         "patchSetId": 5
@@ -406,6 +604,30 @@
       "writtenOn": "2024-09-05T10:45:54Z",
       "side": 1,
       "message": "nit: We could move this inside ExecuteRenderPass so that we don\u0027t have to pass the argument back and forth as much.",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 66
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4ed5437_68d5b752",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "786d2160_051c1449",
       "range": {
         "startLine": 282,
         "startChar": 0,
@@ -435,6 +657,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "07a78f95_d02a5968",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Nice, done!\nThe toggle is only enabled on D3D11. It\u0027s yet to be verified on other backends.",
+      "parentUuid": "43009eff_42b06839",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "64a85ee9_1c022883",
         "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
         "patchSetId": 5
@@ -446,6 +686,24 @@
       "writtenOn": "2024-09-05T10:45:54Z",
       "side": 1,
       "message": "The fact that we do things at both recording and execution time comes to bite us again :( We\u0027re going to give having issues like this one as long as we don\u0027t fix it (but it is a large effort to do so). Can we have a TODO to handle this as part of https://docs.google.com/document/d/1czI8vAzCCGx9SqpstRsJQ6C9Qlasu7ydMTRZa637_PI ? I filed issue 364834368 for that",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bedba3bd_1dc9b142",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Done, thanks for sharing the insightful view!",
+      "parentUuid": "64a85ee9_1c022883",
       "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -473,6 +731,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c31b8c25_5d19fcef",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74b07d86_67f76070",
+      "range": {
+        "startLine": 585,
+        "startChar": 13,
+        "endLine": 585,
+        "endChar": 24
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c73aa244_8c6cdf5f",
@@ -486,6 +768,30 @@
       "writtenOn": "2024-09-05T10:45:54Z",
       "side": 1,
       "message": "nit: slight preference to have Gen11OrOlder since we know all of the devices released there and don\u0027t need to update the condition in GPUInfo to include Gen13 or any new GPUs.",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 292,
+        "endChar": 39
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "191247dd_1333a298",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-06T12:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73aa244_8c6cdf5f",
       "range": {
         "startLine": 292,
         "startChar": 8,
