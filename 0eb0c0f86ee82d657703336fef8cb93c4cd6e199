@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bf51378_dd785591",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-06T18:03:55Z",
+      "side": 1,
+      "message": "LGTM with a small suggestion.",
+      "revId": "0eb0c0f86ee82d657703336fef8cb93c4cd6e199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54410c00_946f0c84",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-06T18:03:55Z",
+      "side": 1,
+      "message": "Nit: Since you\u0027re just optionally adding an additional instruction, I think it\u0027d be simpler and clearer to do something like:\n```\nb.InsertBefore(bitcast, [\u0026] {\n  auto* source \u003d bitcast-\u003eVal();\n  if (cast is needed) {\n    source \u003d b.Construct(src_type, source)-\u003eResult(0);\n  }\n\n  b.CallWithResult\u003c...\u003e(..., source, ...)};\n);\n```",
+      "revId": "0eb0c0f86ee82d657703336fef8cb93c4cd6e199",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
