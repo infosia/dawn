@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "684b23c4_4533efcd",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-06T04:01:18Z",
+      "side": 1,
+      "message": "As discussed this morning I think this should be done in webgpu_cpp.h. Here, we don\u0027t know whether `surfaceTexture-\u003etexture` is a valid pointer, or if it\u0027s actually already been freed and the app is just asking for it to be overwritten.\n\nIt should be possible to do in webgpu_cpp.h because there we have an RAII object, so we know for sure whether the wgpu::Texture contains a valid pointer or not.",
+      "revId": "dc0482da9dc742eb138967421f7ae315ad219c47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cb98e0db_40720cc5",
         "filename": "src/dawn/native/Surface.cpp",
         "patchSetId": 4
