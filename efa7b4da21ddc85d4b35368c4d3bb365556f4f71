@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c057e7b2_5fb0b00f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-06T03:59:03Z",
+      "side": 1,
+      "message": "Sorry for the delay...\n\nLGTM, quick stamp since it doesn\u0027t look like anything changed since I last reviewed (and the open comment was wrong)\n\nHowever you\u0027ll need an owner review on one file, `DawnNative.h`.",
+      "revId": "efa7b4da21ddc85d4b35368c4d3bb365556f4f71",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
