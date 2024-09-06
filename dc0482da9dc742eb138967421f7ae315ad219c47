@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b115f451_5a2e5a6e",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-06T13:46:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4877b2c6_27a248cd",
+      "revId": "dc0482da9dc742eb138967421f7ae315ad219c47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb98e0db_40720cc5",
@@ -73,6 +91,30 @@
           ]
         }
       ],
+      "revId": "dc0482da9dc742eb138967421f7ae315ad219c47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "018347b6_a9fe33e9",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-06T13:46:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb98e0db_40720cc5",
+      "range": {
+        "startLine": 545,
+        "startChar": 4,
+        "endLine": 548,
+        "endChar": 5
+      },
       "revId": "dc0482da9dc742eb138967421f7ae315ad219c47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
