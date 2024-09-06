@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e284837_b4e31fec",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-06T13:22:50Z",
+      "side": 1,
+      "message": "Can you detail what the issue is? Is it just that some values aren\u0027t written properly?",
+      "revId": "09dccdc1e7cabb3f0379ba52192ffd9305860b5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

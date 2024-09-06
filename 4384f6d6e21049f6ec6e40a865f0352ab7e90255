@@ -125,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9fa1b0fb_2c064a39",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-06T13:22:50Z",
+      "side": 1,
+      "message": "Ah thanks, it\u0027s been a while. However we still shouldn\u0027t write to the PLS because it can have LoadOp::Load and writing zeroes to it would essentially be clearing it.",
+      "parentUuid": "a8814438_a70c0955",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5fc0061b_264bef01",
         "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
         "patchSetId": 5
@@ -669,6 +687,24 @@
       "side": 1,
       "message": "Nice, done!\nThe toggle is only enabled on D3D11. It\u0027s yet to be verified on other backends.",
       "parentUuid": "43009eff_42b06839",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b28680d_3ec8fca2",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-06T13:22:50Z",
+      "side": 1,
+      "message": "My suggestion was to hoist this outside of the loop even:\n\n```\n// Take into account that attachments where already scheduled to be cleared by the frontend so skip any call to ClearRenderTargetView below.\nif (GetDevice()-\u003eIsToggleEnabled(Toggle::ClearColorWithDraw)) {\n    for (auto i : IterateBitSet(renderPass-\u003eattachmentState-\u003eGetColorAttachmentsMask())) {\n        if (loadOp is clear) loadOp \u003d store\n    }\n}\n\nLazyClearRenderPassAttachments(renderPass);\n\nfor (auto i : IterateBitSet(renderPass-\u003eattachmentState-\u003eGetColorAttachmentsMask())) {\n        TextureView* colorTextureView \u003d ToBackend(renderPass-\u003ecolorAttachments[i].view.Get());\n        DAWN_TRY_ASSIGN(d3d11RenderTargetViews[i],\n                        colorTextureView-\u003eGetOrCreateD3D11RenderTargetView(\n                            renderPass-\u003ecolorAttachments[i].depthSlice));\n        if (renderPass-\u003ecolorAttachments[i].loadOp \u003d\u003d wgpu::LoadOp::Clear) {\n            std::array\u003cfloat, 4\u003e clearColor \u003d\n                ConvertToFloatColor(renderPass-\u003ecolorAttachments[i].clearColor);\n            d3d11DeviceContext-\u003eClearRenderTargetView(d3d11RenderTargetViews[i], clearColor.data());\n        }\n        attachmentCount \u003d ityp::PlusOne(i);\n    }\n}\n```\n\nWould this work? The only problem is that we may end up clearing some attachments twice: once with the lazy clear and another time with the workaround. We could fix that with issue 364834368  but that\u0027s much later.",
+      "parentUuid": "07a78f95_d02a5968",
       "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
