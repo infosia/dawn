@@ -16,6 +16,46 @@
       "message": "PTAL, thanks!",
       "revId": "7d4fd15e57a26b852c32a04b3a9122e32e11b47a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7db3268_10ce9476",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-06T12:58:17Z",
+      "side": 1,
+      "message": "LGTM, very nice!",
+      "revId": "7d4fd15e57a26b852c32a04b3a9122e32e11b47a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae82af3d_1faf2717",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-06T12:58:17Z",
+      "side": 1,
+      "message": "nit: dawn:: is not needed.",
+      "range": {
+        "startLine": 728,
+        "startChar": 16,
+        "endLine": 728,
+        "endChar": 22
+      },
+      "revId": "7d4fd15e57a26b852c32a04b3a9122e32e11b47a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
