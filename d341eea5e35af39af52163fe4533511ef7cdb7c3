@@ -16,6 +16,23 @@
       "message": "Not for review but for design ref. Another option(option2) here https://dawn-review.googlesource.com/c/dawn/+/205314\nA helper CL for compare two options : https://dawn-review.googlesource.com/c/dawn/+/205334",
       "revId": "d341eea5e35af39af52163fe4533511ef7cdb7c3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c352128c_84089b60",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-06T02:16:34Z",
+      "side": 1,
+      "message": "NOTE: The most aggressive way in my mind is to move all of these \"real physical layout\" things and \"real physical layout creation\" steps into pipeline instead of pipelinelayout.\n\nPipeline get pipelinelayout metas to create \"real physical layout creation\". But this CL doesn\u0027t do that for simplify because it shows the direction \"move things into pipeline\"",
+      "revId": "d341eea5e35af39af52163fe4533511ef7cdb7c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
