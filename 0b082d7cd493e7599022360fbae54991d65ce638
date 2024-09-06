@@ -16,6 +16,41 @@
       "message": "Note the IR version appears to be correct. The CTS change will confirm and enforce this.",
       "revId": "0b082d7cd493e7599022360fbae54991d65ce638",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92f63a1f_9dd67d29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-06T16:08:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "86681e9c_ce57bf5a",
+      "revId": "0b082d7cd493e7599022360fbae54991d65ce638",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40f7fa4a_0c444c3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-06T16:08:31Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "0b082d7cd493e7599022360fbae54991d65ce638",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
