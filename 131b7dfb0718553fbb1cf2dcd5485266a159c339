@@ -16,6 +16,24 @@
       "message": "Following up, we discussed offline.\n\nThe purported signed integer overflow is doing this:\n\nvec1[0] * vec2[0] + ...\n\nwhere vec1 and vec2 are char4.\nIf that arithmetic is done in 8 bits then that would overflow 8bit signed int.\n\nIn C/C++, operands to arithmetic operators (like * and +) undergo integral promotion to \u0027int\u0027 or higher up the usual arithmetic conversion chain, and *then* usual arithmetic conversion to make the two types match.  So in this case it ought to promote both vec2[0] and vec1[0] to \u0027int\u0027, and then the multiply would not overflow. (bounded by +/- 65535), and then added 4 times.\n\nHowever, MSL section 3.1 says:\n\n\"The arithmetic binary operators, add (+), subtract (–), multiply (*) and divide (/), act\nupon scalar and vector, integer, and floating-point data type operands. Following the\nusual arithmetic conversions, all arithmetic operators return a result of the same built-in\ntype (integer or floating-point) as the type of the operands\n\"\nThat skips over mentioning \"integral promotion\".\n\nSo.... it might be that MSL is differnt in this detail, *OR* the MSL spec is sloppy by not mentioning integral promotion *and* just relying on Clang\u0027s C++ flow to do what C++ does in this regard.",
       "revId": "131b7dfb0718553fbb1cf2dcd5485266a159c339",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee515a2b_2e96acb1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-09-06T18:49:02Z",
+      "side": 1,
+      "message": "whoops.  \nNo integral promotion is required because:\n\n\". The arithmetic binary operators, add (+), subtract (–), multiply (*) and divide (/), act\nupon scalar and vector, integer, and floating-point data type operands. \"\n\nSo that means * can operate on char and uchar, in MSL.\n\nWhich means yes, that    a * b can overflow if a\u003d127 and b\u003d127 and both are char (signed integer 8bit)",
+      "parentUuid": "ca2091d4_282ac1ac",
+      "revId": "131b7dfb0718553fbb1cf2dcd5485266a159c339",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
