@@ -33,6 +33,24 @@
       "message": "NOTE: The most aggressive way in my mind is to move all of these \"real physical layout\" things and \"real physical layout creation\" steps into pipeline instead of pipelinelayout.\n\nPipeline get pipelinelayout metas to create \"real physical layout creation\". But this CL doesn\u0027t do that for simplify because it shows the direction \"move things into pipeline\"",
       "revId": "d341eea5e35af39af52163fe4533511ef7cdb7c3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3f0e549_b8eaf943",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-06T02:25:21Z",
+      "side": 1,
+      "message": "(Forgot the cons part above).\n(But If we apply the aggressive delegating from pipelineLayout to Pipeline).\nWe might lost the chance to finish part of the initializatio works during layout creation (if user calls explicitly). But that might be Ok.",
+      "parentUuid": "c352128c_84089b60",
+      "revId": "d341eea5e35af39af52163fe4533511ef7cdb7c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
