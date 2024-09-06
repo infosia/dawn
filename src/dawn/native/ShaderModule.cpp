@@ -723,6 +723,10 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
 
         // Other vertex metadata.
         metadata->totalInterStageShaderVariables = entryPoint.output_variables.size();
+        if (entryPoint.clip_distances_size.has_value()) {
+            metadata->totalInterStageShaderVariables +=
+                dawn::RoundUp(*entryPoint.clip_distances_size, 4) / 4;
+        }
         DelayedInvalidIf(metadata->totalInterStageShaderVariables > maxInterStageShaderVariables,
                          "Total vertex output variables count (%u) exceeds the maximum (%u).",
                          metadata->totalInterStageShaderVariables, maxInterStageShaderVariables);
