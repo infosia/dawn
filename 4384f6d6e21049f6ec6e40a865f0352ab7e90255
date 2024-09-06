@@ -371,6 +371,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cd24b0fa_fdea2f39",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-06T10:24:04Z",
+      "side": 1,
+      "message": "Unfortunately for reasons I don\u0027t remember off-hand, we had to make the difference between PLS \u003d 0 and no PLS. It is part of the pipeline layout https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PipelineLayout.h;drc\u003db7ff90f7c6343b596dcd02583d32a33f76748e83;l\u003d121",
+      "parentUuid": "29be72fb_8d54f4c0",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "786d2160_051c1449",
         "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
         "patchSetId": 5
