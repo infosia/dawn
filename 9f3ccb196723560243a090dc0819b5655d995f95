@@ -35,6 +35,41 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "465b0c09_1f71aac3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-09-06T18:08:38Z",
+      "side": 1,
+      "message": "Thanks. That\u0027s much simpler",
+      "revId": "9f3ccb196723560243a090dc0819b5655d995f95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c4d5456_7e2556e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-09-06T18:08:38Z",
+      "side": 1,
+      "message": "doh, this comment is on the wrong CL 😅",
+      "parentUuid": "d0e043b8_66e61d67",
+      "revId": "9f3ccb196723560243a090dc0819b5655d995f95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4afcb488_1fb53c4e",
@@ -48,6 +83,30 @@
       "writtenOn": "2024-09-06T17:52:25Z",
       "side": 1,
       "message": "Nit: switch with single case could just be an `if ()` ?",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 53
+      },
+      "revId": "9f3ccb196723560243a090dc0819b5655d995f95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1c82bc9_0a6781ba",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-09-06T18:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4afcb488_1fb53c4e",
       "range": {
         "startLine": 254,
         "startChar": 0,
@@ -81,6 +140,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa7e5313_48238ebd",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-09-06T18:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4af2c0c_5e76966e",
+      "range": {
+        "startLine": 255,
+        "startChar": 20,
+        "endLine": 259,
+        "endChar": 41
+      },
+      "revId": "9f3ccb196723560243a090dc0819b5655d995f95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c29ccb7_7bfdfab7",
@@ -94,6 +177,30 @@
       "writtenOn": "2024-09-06T17:52:25Z",
       "side": 1,
       "message": "Likewise here, should just be able to get the type from the argument directly. I realize that this isn\u0027t new code but we might as well clean it up in this refactor.",
+      "range": {
+        "startLine": 1130,
+        "startChar": 16,
+        "endLine": 1133,
+        "endChar": 37
+      },
+      "revId": "9f3ccb196723560243a090dc0819b5655d995f95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a0b3211_cfa537a6",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-09-06T18:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c29ccb7_7bfdfab7",
       "range": {
         "startLine": 1130,
         "startChar": 16,
