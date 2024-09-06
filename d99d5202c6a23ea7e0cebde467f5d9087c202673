@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90329957_ce4a3224",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-06T15:39:37Z",
+      "side": 1,
+      "message": "I purposely uploaded Patchset 1 with my new e2e tests _before_ my change was applied, then uploaded Patchset 2 with changes applied, so you can see the difference by looking at https://dawn-review.googlesource.com/c/dawn/+/205914/1..2",
+      "revId": "d99d5202c6a23ea7e0cebde467f5d9087c202673",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
