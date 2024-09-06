@@ -102,6 +102,24 @@
       "parentUuid": "025fcb12_2cb7b945",
       "revId": "304a6a889f8b2f52afbf7da08dc950e2bdd6f25e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "facb86f7_fdb23900",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-06T12:55:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7af47d6a_259913b0",
+      "revId": "304a6a889f8b2f52afbf7da08dc950e2bdd6f25e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
