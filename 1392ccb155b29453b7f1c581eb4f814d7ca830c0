@@ -16,6 +16,23 @@
       "message": "Here is the option2\n\nOption1 link:https://dawn-review.googlesource.com/c/dawn/+/205315\nHelper CL to compare two options link: https://dawn-review.googlesource.com/c/dawn/+/205314",
       "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "329babc4_43224e1b",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-06T02:18:17Z",
+      "side": 1,
+      "message": "NOTE: If we want to keep physical layout here, we need to hold these.",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
