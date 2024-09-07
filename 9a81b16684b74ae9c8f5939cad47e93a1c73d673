@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de4fd9b3_7c1c3c9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-09-07T08:04:10Z",
+      "side": 1,
+      "message": "Non-Apple silicon chips fail on all of the tests and the validation layers don’t report anything. https://developer.apple.com/metal/Metal-Feature-Set-Tables.pdf \nThis table says thet they are supported for the GPUs tested. How should we proceed?",
+      "revId": "9a81b16684b74ae9c8f5939cad47e93a1c73d673",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
