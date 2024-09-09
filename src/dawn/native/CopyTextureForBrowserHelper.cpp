@@ -764,8 +764,13 @@ MaybeError DoCopyTextureForBrowser(DeviceBase* device,
     srcTextureViewDesc.baseMipLevel = source->mipLevel;
     srcTextureViewDesc.mipLevelCount = 1;
     srcTextureViewDesc.arrayLayerCount = 1;
+    srcTextureViewDesc.usage =
+        options->internalUsage ? source->texture->GetInternalUsage() : source->texture->GetUsage();
+
+    UsageValidationMode mode =
+        options->internalUsage ? UsageValidationMode::Internal : UsageValidationMode::Default;
     DAWN_TRY_ASSIGN(srcTextureView,
-                    device->CreateTextureView(source->texture, &srcTextureViewDesc));
+                    device->CreateTextureView(source->texture, &srcTextureViewDesc, mode));
 
     RenderPipelineBase* pipeline;
     DAWN_TRY_ASSIGN(pipeline, GetOrCreateCopyTextureForBrowserPipeline(

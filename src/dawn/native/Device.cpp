@@ -2388,7 +2388,8 @@ ResultOrError<Ref<TextureBase>> DeviceBase::CreateTexture(const TextureDescripto
 
 ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
     TextureBase* texture,
-    const TextureViewDescriptor* descriptorOrig) {
+    const TextureViewDescriptor* descriptorOrig,
+    UsageValidationMode mode) {
     DAWN_TRY(ValidateIsAlive());
     DAWN_TRY(ValidateObject(texture));
 
@@ -2398,7 +2399,7 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
     UnpackedPtr<TextureViewDescriptor> descriptor;
     if (IsValidationEnabled()) {
         DAWN_TRY_ASSIGN_CONTEXT(descriptor, ValidateAndUnpack(&desc), "validating %s.", &desc);
-        DAWN_TRY_CONTEXT(ValidateTextureViewDescriptor(this, texture, descriptor),
+        DAWN_TRY_CONTEXT(ValidateTextureViewDescriptor(this, texture, descriptor, mode),
                          "validating %s against %s.", descriptor, texture);
     } else {
         descriptor = Unpack(&desc);

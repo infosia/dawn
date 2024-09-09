@@ -236,7 +236,8 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     ResultOrError<Ref<TextureBase>> CreateTexture(const TextureDescriptor* rawDescriptor);
     ResultOrError<Ref<TextureViewBase>> CreateTextureView(
         TextureBase* texture,
-        const TextureViewDescriptor* descriptor = nullptr);
+        const TextureViewDescriptor* descriptor = nullptr,
+        UsageValidationMode mode = UsageValidationMode::Default);
 
     ResultOrError<wgpu::TextureUsage> GetSupportedSurfaceUsage(const Surface* surface) const;
 
