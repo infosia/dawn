@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-09-05 01:29:48PM
+# Last rolled: 2024-09-09 05:07:31AM
 
 # Flaky on all platforms
 crbug.com/42251085 webgpu:shader,validation,expression,call,builtin,log:values:stage="override";type="f32" [ Failure ]
