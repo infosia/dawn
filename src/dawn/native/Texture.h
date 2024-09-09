@@ -243,6 +243,12 @@ class TextureViewBase : public ApiObjectBase {
     // Returns the size of the texture's subresource at this view's base mip level and aspect.
     Extent3D GetSingleSubresourceVirtualSize() const;
 
+    // |GetUsage| returns the usage with which the texture view was created using the base WebGPU
+    // API. The dawn-internal-usages extension may add additional usages. |GetInternalUsage|
+    // returns the union of base usage and the usages added by the extension.
+    wgpu::TextureUsage GetUsage() const;
+    wgpu::TextureUsage GetInternalUsage() const;
+
   protected:
     void DestroyImpl() override;
 
@@ -256,6 +262,8 @@ class TextureViewBase : public ApiObjectBase {
     const raw_ref<const Format> mFormat;
     wgpu::TextureViewDimension mDimension;
     SubresourceRange mRange;
+    wgpu::TextureUsage mUsage = wgpu::TextureUsage::None;
+    wgpu::TextureUsage mInternalUsage = wgpu::TextureUsage::None;
 };
 
 }  // namespace dawn::native
