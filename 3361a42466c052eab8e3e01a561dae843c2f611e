@@ -40,6 +40,30 @@
       ],
       "revId": "3361a42466c052eab8e3e01a561dae843c2f611e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4820385_4accbebf",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-09T23:49:24Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a robust way of detecting whether the object would be const-qualified without coupling this to the logic of let/param emission. And to find out whether we came from let/param/other we\u0027d have to walk back chains of `access` instructions until we hit one.",
+      "parentUuid": "a4b29348_0e35dd72",
+      "range": {
+        "startLine": 913,
+        "startChar": 27,
+        "endLine": 913,
+        "endChar": 38
+      },
+      "revId": "3361a42466c052eab8e3e01a561dae843c2f611e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
