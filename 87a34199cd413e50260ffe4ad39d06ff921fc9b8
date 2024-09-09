@@ -1,0 +1,79 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9d3117b_cbfa5a5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-09T15:27:41Z",
+      "side": 1,
+      "message": "LGTM with a couple of nits.",
+      "revId": "87a34199cd413e50260ffe4ad39d06ff921fc9b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0e91a8c_60fe1f0e",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-09T15:27:41Z",
+      "side": 1,
+      "message": "Nit: Most of these `-\u003eResult(0)` calls are unnecessary, as the builder functions can take instructions as arguments and will automatically call `-\u003eResult(0)` in that case.",
+      "revId": "87a34199cd413e50260ffe4ad39d06ff921fc9b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19b7e43e_d699c1d1",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-09T15:27:41Z",
+      "side": 1,
+      "message": "Nit: Marginally more efficient in this case to use `b.CallWithResult(call-\u003eDetachResult(), ...)`, instead of creating the instruction and then changing its result.",
+      "range": {
+        "startLine": 440,
+        "startChar": 0,
+        "endLine": 443,
+        "endChar": 69
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b20a733b_5ab9f114",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+              "range": {
+                "startLine": 440,
+                "startChar": 0,
+                "endLine": 444,
+                "endChar": 0
+              },
+              "replacement": "                    b.CallWithResult(call-\u003eDetachResult(), core::BuiltinFn::kSelect, f, t,\n                                     b.LessThan\u003cbool\u003e(shr, 32_u));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "87a34199cd413e50260ffe4ad39d06ff921fc9b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
