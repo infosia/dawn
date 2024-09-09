@@ -23,12 +23,12 @@ half2 atanh_5bf88d() {
 
 fragment void fragment_main(device half2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = atanh_5bf88d();
+  (*prevent_dce) = atanh_5bf88d();
 }
 
 kernel void compute_main(device half2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = atanh_5bf88d();
+  (*prevent_dce) = atanh_5bf88d();
 }
 
 VertexOutput vertex_main_inner() {

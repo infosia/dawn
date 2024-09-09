@@ -58,6 +58,10 @@ struct State {
     /// A map from a function to the value that contains the module-scope variable pointers.
     Hashmap<core::ir::Function*, core::ir::Value*, 8> function_to_struct_value{};
 
+    /// A map from an entry point function to a mapping from module-scope var to local declaration.
+    using ModuleVarToLocalDecl = Hashmap<core::ir::Var*, core::ir::Value*, 8>;
+    Hashmap<core::ir::Function*, ModuleVarToLocalDecl, 8> entry_point_to_var_to_local_decl{};
+
     /// A map from block to its containing function.
     Hashmap<core::ir::Block*, core::ir::Function*, 64> block_to_function{};
 
@@ -94,18 +98,18 @@ struct State {
             Vector<core::ir::Instruction*, 16> to_destroy;
             auto* ptr = var->Result(0)->Type()->As<core::type::Pointer>();
             var->Result(0)->ForEachUseUnsorted([&](core::ir::Usage use) {  //
-                auto* extracted_variable = GetVariableFromStruct(var, use.instruction, index);
+                auto* local_decl = GetLocalDeclaration(var, use.instruction, index);
 
                 // We drop the pointer from handle variables and store them in the struct by value
                 // instead, so remove any load instructions for the handle address space.
                 if (use.instruction->Is<core::ir::Load>() &&
                     ptr->AddressSpace() == core::AddressSpace::kHandle) {
-                    use.instruction->Result(0)->ReplaceAllUsesWith(extracted_variable);
+                    use.instruction->Result(0)->ReplaceAllUsesWith(local_decl);
                     to_destroy.Push(use.instruction);
                     return;
                 }
 
-                use.instruction->SetOperand(use.operand_index, extracted_variable);
+                use.instruction->SetOperand(use.operand_index, local_decl);
             });
             var->Destroy();
             index++;
@@ -244,6 +248,9 @@ struct State {
                     ir.SetName(decl, name);
                 }
                 construct_args.Push(decl);
+
+                // Record the mapping from module-scope variable to the local declaration.
+                entry_point_to_var_to_local_decl.GetOrAddZero(func).Add(var, decl);
             }
 
             // Construct the structure value and name it with a `let` instruction.
@@ -280,16 +287,26 @@ struct State {
         return param;
     }
 
-    /// Get a variable from the module-scope variable replacement structure, inserting new access
-    /// instructions before @p inst.
+    /// Get a variable from the local declaration that replaces a module-scope variable, inserting
+    /// new access instructions before @p inst.
     /// @param var the variable to get the replacement for
     /// @param inst the instruction that uses the variable
     /// @param index the index of the variable in the structure member list
-    /// @returns the variable extracted from the structure
-    core::ir::Value* GetVariableFromStruct(core::ir::Var* var,
-                                           core::ir::Instruction* inst,
-                                           uint32_t index) {
+    /// @returns the value extracted from the local declaration
+    core::ir::Value* GetLocalDeclaration(core::ir::Var* var,
+                                         core::ir::Instruction* inst,
+                                         uint32_t index) {
         auto* func = ContainingFunction(inst);
+
+        // If we are in an entry point, use the local declaration directly instead of extracting the
+        // value from the structure. We do this to work around an MSL bug that prevents us from
+        // being able to use texture fence intrinsics when texture handles are stored inside
+        // const-qualified structures (see crbug.com/365570202).
+        auto ep_mapping = entry_point_to_var_to_local_decl.Get(func);
+        if (ep_mapping) {
+            return *ep_mapping->Get(var).value;
+        }
+
         auto* struct_value = function_to_struct_value.GetOr(func, nullptr);
         auto* type = var->Result(0)->Type();
 

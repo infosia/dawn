@@ -23,12 +23,12 @@ uint2 countTrailingZeros_1ad138() {
 
 fragment void fragment_main(device uint2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = countTrailingZeros_1ad138();
+  (*prevent_dce) = countTrailingZeros_1ad138();
 }
 
 kernel void compute_main(device uint2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = countTrailingZeros_1ad138();
+  (*prevent_dce) = countTrailingZeros_1ad138();
 }
 
 VertexOutput vertex_main_inner() {

@@ -32,12 +32,12 @@ uint pack4xI8Clamp_e42b2a() {
 
 fragment void fragment_main(device uint* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = pack4xI8Clamp_e42b2a();
+  (*prevent_dce) = pack4xI8Clamp_e42b2a();
 }
 
 kernel void compute_main(device uint* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = pack4xI8Clamp_e42b2a();
+  (*prevent_dce) = pack4xI8Clamp_e42b2a();
 }
 
 VertexOutput vertex_main_inner() {

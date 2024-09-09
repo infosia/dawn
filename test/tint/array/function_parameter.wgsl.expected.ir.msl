@@ -37,5 +37,5 @@ kernel void tint_symbol(device float* s [[buffer(0)]]) {
   float const v1 = f1(a1);
   float const v2 = f2(a2);
   float const v3 = f3(a3);
-  (*tint_module_vars.s) = ((v1 + v2) + v3);
+  (*s) = ((v1 + v2) + v3);
 }

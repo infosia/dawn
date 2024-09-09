@@ -31,10 +31,10 @@ void g() {
 
 kernel void tint_symbol(const constant int* u [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.u=u};
-  switch((*tint_module_vars.u)) {
+  switch((*u)) {
     case 0:
     {
-      switch((*tint_module_vars.u)) {
+      switch((*u)) {
         case 0:
         {
           break;

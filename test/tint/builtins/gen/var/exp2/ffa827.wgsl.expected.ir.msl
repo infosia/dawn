@@ -23,12 +23,12 @@ half4 exp2_ffa827() {
 
 fragment void fragment_main(device half4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = exp2_ffa827();
+  (*prevent_dce) = exp2_ffa827();
 }
 
 kernel void compute_main(device half4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = exp2_ffa827();
+  (*prevent_dce) = exp2_ffa827();
 }
 
 VertexOutput vertex_main_inner() {

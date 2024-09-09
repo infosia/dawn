@@ -22,12 +22,12 @@ half degrees_5e9805() {
 
 fragment void fragment_main(device half* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = degrees_5e9805();
+  (*prevent_dce) = degrees_5e9805();
 }
 
 kernel void compute_main(device half* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = degrees_5e9805();
+  (*prevent_dce) = degrees_5e9805();
 }
 
 VertexOutput vertex_main_inner() {

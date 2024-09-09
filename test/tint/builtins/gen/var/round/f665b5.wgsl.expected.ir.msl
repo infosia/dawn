@@ -23,12 +23,12 @@ half4 round_f665b5() {
 
 fragment void fragment_main(device half4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = round_f665b5();
+  (*prevent_dce) = round_f665b5();
 }
 
 kernel void compute_main(device half4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = round_f665b5();
+  (*prevent_dce) = round_f665b5();
 }
 
 VertexOutput vertex_main_inner() {

@@ -22,12 +22,12 @@ half4 normalize_b8cb8d() {
 
 fragment void fragment_main(device half4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = normalize_b8cb8d();
+  (*prevent_dce) = normalize_b8cb8d();
 }
 
 kernel void compute_main(device half4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = normalize_b8cb8d();
+  (*prevent_dce) = normalize_b8cb8d();
 }
 
 VertexOutput vertex_main_inner() {

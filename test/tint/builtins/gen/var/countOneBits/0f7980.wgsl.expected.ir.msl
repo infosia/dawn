@@ -23,12 +23,12 @@ int4 countOneBits_0f7980() {
 
 fragment void fragment_main(device int4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = countOneBits_0f7980();
+  (*prevent_dce) = countOneBits_0f7980();
 }
 
 kernel void compute_main(device int4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = countOneBits_0f7980();
+  (*prevent_dce) = countOneBits_0f7980();
 }
 
 VertexOutput vertex_main_inner() {

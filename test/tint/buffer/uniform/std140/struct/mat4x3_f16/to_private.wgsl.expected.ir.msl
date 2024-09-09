@@ -58,12 +58,12 @@ tint_array<S, 4> tint_load_array_packed_vec3(const constant tint_array<S_packed_
 kernel void f(const constant tint_array<S_packed_vec3, 4>* u [[buffer(0)]]) {
   thread tint_array<S, 4> p = {};
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.u=u, .p=(&p)};
-  (*tint_module_vars.p) = tint_load_array_packed_vec3(tint_module_vars.u);
-  (*tint_module_vars.p)[1] = tint_load_struct_packed_vec3((&(*tint_module_vars.u)[2]));
-  tint_array<tint_packed_vec3_f16_array_element, 4> const v_9 = (*tint_module_vars.u)[2].m;
+  p = tint_load_array_packed_vec3(u);
+  p[1] = tint_load_struct_packed_vec3((&(*u)[2]));
+  tint_array<tint_packed_vec3_f16_array_element, 4> const v_9 = (*u)[2].m;
   half3 const v_10 = half3(v_9[0u].packed);
   half3 const v_11 = half3(v_9[1u].packed);
   half3 const v_12 = half3(v_9[2u].packed);
-  (*tint_module_vars.p)[3].m = half4x3(v_10, v_11, v_12, half3(v_9[3u].packed));
-  (*tint_module_vars.p)[1].m[0] = half3((*tint_module_vars.u)[0].m[1].packed).zxy;
+  p[3].m = half4x3(v_10, v_11, v_12, half3(v_9[3u].packed));
+  p[1].m[0] = half3((*u)[0].m[1].packed).zxy;
 }

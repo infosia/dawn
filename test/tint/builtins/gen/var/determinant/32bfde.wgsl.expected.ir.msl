@@ -23,12 +23,12 @@ half determinant_32bfde() {
 
 fragment void fragment_main(device half* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = determinant_32bfde();
+  (*prevent_dce) = determinant_32bfde();
 }
 
 kernel void compute_main(device half* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = determinant_32bfde();
+  (*prevent_dce) = determinant_32bfde();
 }
 
 VertexOutput vertex_main_inner() {

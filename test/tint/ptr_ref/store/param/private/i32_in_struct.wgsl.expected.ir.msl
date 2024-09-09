@@ -16,5 +16,5 @@ void func(thread int* const pointer) {
 kernel void tint_symbol() {
   thread str P = {};
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.P=(&P)};
-  func((&(*tint_module_vars.P).i));
+  func((&P.i));
 }

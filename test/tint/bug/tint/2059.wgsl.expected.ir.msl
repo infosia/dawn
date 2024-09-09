@@ -162,19 +162,19 @@ kernel void tint_symbol(device tint_array<tint_packed_vec3_f32_array_element, 3>
     }
   }
   float3x3 const a = m;
-  tint_store_and_preserve_padding(tint_module_vars.buffer0, a);
+  tint_store_and_preserve_padding(buffer0, a);
   S const a_1 = S{.m=m};
-  tint_store_and_preserve_padding_1(tint_module_vars.buffer1, a_1);
+  tint_store_and_preserve_padding_1(buffer1, a_1);
   S2 const a_2 = S2{.m=tint_array<float3x3, 1>{m}};
-  tint_store_and_preserve_padding_2(tint_module_vars.buffer2, a_2);
+  tint_store_and_preserve_padding_2(buffer2, a_2);
   S3 const a_3 = S3{.s=S{.m=m}};
-  tint_store_and_preserve_padding_4(tint_module_vars.buffer3, a_3);
+  tint_store_and_preserve_padding_4(buffer3, a_3);
   S4 const a_4 = S4{.s=tint_array<S, 1>{S{.m=m}}};
-  tint_store_and_preserve_padding_5(tint_module_vars.buffer4, a_4);
+  tint_store_and_preserve_padding_5(buffer4, a_4);
   tint_array<float3x3, 1> const a_5 = tint_array<float3x3, 1>{m};
-  tint_store_and_preserve_padding_3(tint_module_vars.buffer5, a_5);
+  tint_store_and_preserve_padding_3(buffer5, a_5);
   tint_array<S, 1> const a_6 = tint_array<S, 1>{S{.m=m}};
-  tint_store_and_preserve_padding_6(tint_module_vars.buffer6, a_6);
+  tint_store_and_preserve_padding_6(buffer6, a_6);
   tint_array<S2, 1> const a_7 = tint_array<S2, 1>{S2{.m=tint_array<float3x3, 1>{m}}};
-  tint_store_and_preserve_padding_7(tint_module_vars.buffer7, a_7);
+  tint_store_and_preserve_padding_7(buffer7, a_7);
 }

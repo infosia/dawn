@@ -12,7 +12,7 @@ struct tint_module_vars_struct {
 kernel void e(texture2d<float, access::sample> tint_symbol [[texture(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.tint_symbol=tint_symbol};
   {
-    uint level = tint_module_vars.tint_symbol.get_num_mip_levels();
+    uint level = tint_symbol.get_num_mip_levels();
     TINT_ISOLATE_UB(tint_volatile_true) while(true) {
       if ((level > 0u)) {
       } else {

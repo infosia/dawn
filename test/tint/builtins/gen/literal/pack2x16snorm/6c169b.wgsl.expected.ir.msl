@@ -22,12 +22,12 @@ uint pack2x16snorm_6c169b() {
 
 fragment void fragment_main(device uint* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = pack2x16snorm_6c169b();
+  (*prevent_dce) = pack2x16snorm_6c169b();
 }
 
 kernel void compute_main(device uint* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = pack2x16snorm_6c169b();
+  (*prevent_dce) = pack2x16snorm_6c169b();
 }
 
 VertexOutput vertex_main_inner() {

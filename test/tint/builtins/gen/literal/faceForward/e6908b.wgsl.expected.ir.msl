@@ -22,12 +22,12 @@ float2 faceForward_e6908b() {
 
 fragment void fragment_main(device float2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = faceForward_e6908b();
+  (*prevent_dce) = faceForward_e6908b();
 }
 
 kernel void compute_main(device float2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = faceForward_e6908b();
+  (*prevent_dce) = faceForward_e6908b();
 }
 
 VertexOutput vertex_main_inner() {

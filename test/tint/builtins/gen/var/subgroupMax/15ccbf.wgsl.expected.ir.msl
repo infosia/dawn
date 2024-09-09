@@ -13,10 +13,10 @@ uint4 subgroupMax_15ccbf() {
 
 fragment void fragment_main(device uint4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = subgroupMax_15ccbf();
+  (*prevent_dce) = subgroupMax_15ccbf();
 }
 
 kernel void compute_main(device uint4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = subgroupMax_15ccbf();
+  (*prevent_dce) = subgroupMax_15ccbf();
 }

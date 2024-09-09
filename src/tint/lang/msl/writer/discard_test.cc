@@ -65,7 +65,7 @@ fragment void frag_main() {
   thread bool continue_execution = true;
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.continue_execution=(&continue_execution)};
   foo(tint_module_vars);
-  if (!((*tint_module_vars.continue_execution))) {
+  if (!(continue_execution)) {
     discard_fragment();
   }
 }

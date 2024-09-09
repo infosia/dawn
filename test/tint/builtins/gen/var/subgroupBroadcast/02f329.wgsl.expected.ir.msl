@@ -13,10 +13,10 @@ half4 subgroupBroadcast_02f329() {
 
 fragment void fragment_main(device half4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = subgroupBroadcast_02f329();
+  (*prevent_dce) = subgroupBroadcast_02f329();
 }
 
 kernel void compute_main(device half4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = subgroupBroadcast_02f329();
+  (*prevent_dce) = subgroupBroadcast_02f329();
 }

@@ -62,6 +62,6 @@ S tint_load_struct_packed_vec3(const device S_packed_vec3* const from) {
 
 kernel void tint_symbol(const device S_packed_vec3* in [[buffer(1)]], device S_packed_vec3* out [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.in=in, .out=out};
-  S const t = tint_load_struct_packed_vec3(tint_module_vars.in);
-  tint_store_and_preserve_padding(tint_module_vars.out, t);
+  S const t = tint_load_struct_packed_vec3(in);
+  tint_store_and_preserve_padding(out, t);
 }

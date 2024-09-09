@@ -11,7 +11,7 @@ struct tint_module_vars_struct {
 
 kernel void tint_symbol_1(device int* tint_symbol [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.tint_symbol=tint_symbol};
-  int i = (*tint_module_vars.tint_symbol);
+  int i = (*tint_symbol);
   {
     TINT_ISOLATE_UB(tint_volatile_true) while(true) {
       {
@@ -32,5 +32,5 @@ kernel void tint_symbol_1(device int* tint_symbol [[buffer(0)]]) {
       continue;
     }
   }
-  (*tint_module_vars.tint_symbol) = i;
+  (*tint_symbol) = i;
 }

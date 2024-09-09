@@ -852,7 +852,7 @@ S tint_load_struct_packed_vec3(device S_packed_vec3* const from) {
 
 kernel void foo(device S_packed_vec3* a [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=a};
-  tint_load_struct_packed_vec3(tint_module_vars.a);
+  tint_load_struct_packed_vec3(a);
 }
 )";
 

@@ -114,13 +114,10 @@ tint_module_vars_struct = struct @align(1) {
     %b:ptr<private, i32, read_write> = var
     %4:tint_module_vars_struct = construct %a, %b
     %tint_module_vars:tint_module_vars_struct = let %4
-    %6:ptr<private, i32, read_write> = access %tint_module_vars, 0u
-    %7:i32 = load %6
-    %8:ptr<private, i32, read_write> = access %tint_module_vars, 1u
-    %9:i32 = load %8
-    %10:i32 = add %7, %9
-    %11:ptr<private, i32, read_write> = access %tint_module_vars, 0u
-    store %11, %10
+    %6:i32 = load %a
+    %7:i32 = load %b
+    %8:i32 = add %6, %7
+    store %a, %8
     ret
   }
 }
@@ -175,13 +172,10 @@ tint_module_vars_struct = struct @align(1) {
     %b:ptr<private, i32, read_write> = var, -1i
     %4:tint_module_vars_struct = construct %a, %b
     %tint_module_vars:tint_module_vars_struct = let %4
-    %6:ptr<private, i32, read_write> = access %tint_module_vars, 0u
-    %7:i32 = load %6
-    %8:ptr<private, i32, read_write> = access %tint_module_vars, 1u
-    %9:i32 = load %8
-    %10:i32 = add %7, %9
-    %11:ptr<private, i32, read_write> = access %tint_module_vars, 0u
-    store %11, %10
+    %6:i32 = load %a
+    %7:i32 = load %b
+    %8:i32 = add %6, %7
+    store %a, %8
     ret
   }
 }
@@ -236,13 +230,10 @@ tint_module_vars_struct = struct @align(1) {
   $B1: {
     %4:tint_module_vars_struct = construct %a, %b
     %tint_module_vars:tint_module_vars_struct = let %4
-    %6:ptr<storage, i32, read> = access %tint_module_vars, 0u
-    %7:i32 = load %6
-    %8:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    %9:i32 = load %8
-    %10:i32 = add %7, %9
-    %11:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    store %11, %10
+    %6:i32 = load %a
+    %7:i32 = load %b
+    %8:i32 = add %6, %7
+    store %b, %8
     ret
   }
 }
@@ -296,11 +287,9 @@ tint_module_vars_struct = struct @align(1) {
   $B1: {
     %4:tint_module_vars_struct = construct %a, %b
     %tint_module_vars:tint_module_vars_struct = let %4
-    %6:ptr<uniform, i32, read> = access %tint_module_vars, 0u
-    %7:i32 = load %6
-    %8:ptr<uniform, i32, read> = access %tint_module_vars, 1u
-    %9:i32 = load %8
-    %10:i32 = add %7, %9
+    %6:i32 = load %a
+    %7:i32 = load %b
+    %8:i32 = add %6, %7
     ret
   }
 }
@@ -355,9 +344,7 @@ tint_module_vars_struct = struct @align(1) {
   $B1: {
     %4:tint_module_vars_struct = construct %t, %s
     %tint_module_vars:tint_module_vars_struct = let %4
-    %6:texture_2d<f32> = access %tint_module_vars, 0u
-    %7:sampler = access %tint_module_vars, 1u
-    %8:vec4<f32> = textureSample %6, %7, vec2<f32>(0.0f)
+    %6:vec4<f32> = textureSample %t, %s, vec2<f32>(0.0f)
     ret
   }
 }
@@ -418,13 +405,10 @@ tint_symbol_2 = struct @align(4) {
     %b:ptr<workgroup, i32, read_write> = access %2, 1u
     %5:tint_module_vars_struct = construct %a, %b
     %tint_module_vars:tint_module_vars_struct = let %5
-    %7:ptr<workgroup, i32, read_write> = access %tint_module_vars, 0u
-    %8:i32 = load %7
-    %9:ptr<workgroup, i32, read_write> = access %tint_module_vars, 1u
-    %10:i32 = load %9
-    %11:i32 = add %8, %10
-    %12:ptr<workgroup, i32, read_write> = access %tint_module_vars, 0u
-    store %12, %11
+    %7:i32 = load %a
+    %8:i32 = load %b
+    %9:i32 = add %7, %8
+    store %a, %9
     ret
   }
 }
@@ -487,16 +471,12 @@ tint_module_vars_struct = struct @align(1) {
     %c:ptr<private, i32, read_write> = var
     %5:tint_module_vars_struct = construct %a, %b, %c
     %tint_module_vars:tint_module_vars_struct = let %5
-    %7:ptr<uniform, i32, read> = access %tint_module_vars, 0u
-    %8:i32 = load %7
-    %9:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    %10:i32 = load %9
-    %11:ptr<private, i32, read_write> = access %tint_module_vars, 2u
-    %12:i32 = load %11
-    %13:i32 = add %10, %12
-    %14:i32 = add %8, %13
-    %15:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    store %15, %14
+    %7:i32 = load %a
+    %8:i32 = load %b
+    %9:i32 = load %c
+    %10:i32 = add %8, %9
+    %11:i32 = add %7, %10
+    store %b, %11
     ret
   }
 }
@@ -556,14 +536,11 @@ tint_module_vars_struct = struct @align(1) {
   $B1: {
     %5:tint_module_vars_struct = construct %a, %b
     %tint_module_vars:tint_module_vars_struct = let %5
-    %7:ptr<storage, i32, read> = access %tint_module_vars, 0u
-    %8:i32 = load %7
-    %9:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    %10:i32 = load %9
-    %11:i32 = add %10, %param
-    %12:i32 = add %8, %11
-    %13:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    store %13, %12
+    %7:i32 = load %a
+    %8:i32 = load %b
+    %9:i32 = add %8, %param
+    %10:i32 = add %7, %9
+    store %b, %10
     ret
   }
 }
@@ -956,15 +933,12 @@ tint_module_vars_struct = struct @align(1) {
   $B2: {
     %5:tint_module_vars_struct = construct %a, %b
     %tint_module_vars:tint_module_vars_struct = let %5
-    %7:ptr<storage, i32, read> = access %tint_module_vars, 0u
-    %8:i32 = load %7
-    %9:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    %10:i32 = load %9
-    %11:i32 = call %foo
-    %12:i32 = add %10, %11
-    %13:i32 = add %8, %12
-    %14:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    store %14, %13
+    %7:i32 = load %a
+    %8:i32 = load %b
+    %9:i32 = call %foo
+    %10:i32 = add %8, %9
+    %11:i32 = add %7, %10
+    store %b, %11
     ret
   }
 }
@@ -1057,15 +1031,12 @@ tint_module_vars_struct = struct @align(1) {
   $B3: {
     %11:tint_module_vars_struct = construct %a, %b
     %tint_module_vars_2:tint_module_vars_struct = let %11  # %tint_module_vars_2: 'tint_module_vars'
-    %13:ptr<storage, i32, read> = access %tint_module_vars_2, 0u
-    %14:i32 = load %13
-    %15:ptr<storage, i32, read_write> = access %tint_module_vars_2, 1u
-    %16:i32 = load %15
-    %17:i32 = call %foo, %tint_module_vars_2
-    %18:i32 = add %16, %17
-    %19:i32 = add %14, %18
-    %20:ptr<storage, i32, read_write> = access %tint_module_vars_2, 1u
-    store %20, %19
+    %13:i32 = load %a
+    %14:i32 = load %b
+    %15:i32 = call %foo, %tint_module_vars_2
+    %16:i32 = add %14, %15
+    %17:i32 = add %13, %16
+    store %b, %17
     ret
   }
 }
@@ -1160,15 +1131,12 @@ tint_module_vars_struct = struct @align(1) {
   $B3: {
     %11:tint_module_vars_struct = construct %a, %b
     %tint_module_vars_2:tint_module_vars_struct = let %11  # %tint_module_vars_2: 'tint_module_vars'
-    %13:ptr<storage, i32, read> = access %tint_module_vars_2, 0u
-    %14:i32 = load %13
-    %15:ptr<storage, i32, read_write> = access %tint_module_vars_2, 1u
-    %16:i32 = load %15
-    %17:i32 = call %foo, %tint_module_vars_2
-    %18:i32 = add %16, %17
-    %19:i32 = add %14, %18
-    %20:ptr<storage, i32, read_write> = access %tint_module_vars_2, 1u
-    store %20, %19
+    %13:i32 = load %a
+    %14:i32 = load %b
+    %15:i32 = call %foo, %tint_module_vars_2
+    %16:i32 = add %14, %15
+    %17:i32 = add %13, %16
+    store %b, %17
     ret
   }
 }
@@ -1251,34 +1219,26 @@ tint_module_vars_struct = struct @align(1) {
     %c:ptr<private, i32, read_write> = var
     %5:tint_module_vars_struct = construct %a, %b, %c
     %tint_module_vars:tint_module_vars_struct = let %5
-    %7:ptr<uniform, i32, read> = access %tint_module_vars, 0u
-    %8:i32 = load %7
-    %9:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    %10:i32 = load %9
-    %11:ptr<private, i32, read_write> = access %tint_module_vars, 2u
-    %12:i32 = load %11
-    %13:i32 = add %10, %12
-    %14:i32 = add %8, %13
-    %15:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    store %15, %14
+    %7:i32 = load %a
+    %8:i32 = load %b
+    %9:i32 = load %c
+    %10:i32 = add %8, %9
+    %11:i32 = add %7, %10
+    store %b, %11
     ret
   }
 }
 %main_b = @fragment func(%a_1:ptr<uniform, i32, read> [@binding_point(1, 2)], %b_1:ptr<storage, i32, read_write> [@binding_point(3, 4)]):void {  # %a_1: 'a', %b_1: 'b'
   $B2: {
     %c_1:ptr<private, i32, read_write> = var  # %c_1: 'c'
-    %20:tint_module_vars_struct = construct %a_1, %b_1, %c_1
-    %tint_module_vars_1:tint_module_vars_struct = let %20  # %tint_module_vars_1: 'tint_module_vars'
-    %22:ptr<uniform, i32, read> = access %tint_module_vars_1, 0u
-    %23:i32 = load %22
-    %24:ptr<storage, i32, read_write> = access %tint_module_vars_1, 1u
-    %25:i32 = load %24
-    %26:ptr<private, i32, read_write> = access %tint_module_vars_1, 2u
-    %27:i32 = load %26
-    %28:i32 = mul %25, %27
-    %29:i32 = mul %23, %28
-    %30:ptr<storage, i32, read_write> = access %tint_module_vars_1, 1u
-    store %30, %29
+    %16:tint_module_vars_struct = construct %a_1, %b_1, %c_1
+    %tint_module_vars_1:tint_module_vars_struct = let %16  # %tint_module_vars_1: 'tint_module_vars'
+    %18:i32 = load %a_1
+    %19:i32 = load %b_1
+    %20:i32 = load %c_1
+    %21:i32 = mul %19, %20
+    %22:i32 = mul %18, %21
+    store %b_1, %22
     ret
   }
 }
@@ -1354,28 +1314,22 @@ tint_module_vars_struct = struct @align(1) {
   $B1: {
     %4:tint_module_vars_struct = construct %a, %b, unused
     %tint_module_vars:tint_module_vars_struct = let %4
-    %6:ptr<uniform, i32, read> = access %tint_module_vars, 0u
-    %7:i32 = load %6
-    %8:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    %9:i32 = load %8
-    %10:i32 = add %7, %9
-    %11:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    store %11, %10
+    %6:i32 = load %a
+    %7:i32 = load %b
+    %8:i32 = add %6, %7
+    store %b, %8
     ret
   }
 }
 %main_b = @fragment func(%a_1:ptr<uniform, i32, read> [@binding_point(1, 2)]):void {  # %a_1: 'a'
   $B2: {
     %c:ptr<private, i32, read_write> = var
-    %15:tint_module_vars_struct = construct %a_1, unused, %c
-    %tint_module_vars_1:tint_module_vars_struct = let %15  # %tint_module_vars_1: 'tint_module_vars'
-    %17:ptr<uniform, i32, read> = access %tint_module_vars_1, 0u
-    %18:i32 = load %17
-    %19:ptr<private, i32, read_write> = access %tint_module_vars_1, 2u
-    %20:i32 = load %19
-    %21:i32 = mul %18, %20
-    %22:ptr<private, i32, read_write> = access %tint_module_vars_1, 2u
-    store %22, %21
+    %12:tint_module_vars_struct = construct %a_1, unused, %c
+    %tint_module_vars_1:tint_module_vars_struct = let %12  # %tint_module_vars_1: 'tint_module_vars'
+    %14:i32 = load %a_1
+    %15:i32 = load %c
+    %16:i32 = mul %14, %15
+    store %c, %16
     ret
   }
 }
@@ -1467,26 +1421,22 @@ tint_module_vars_struct = struct @align(1) {
   $B2: {
     %8:tint_module_vars_struct = construct %a, %b, unused
     %tint_module_vars_1:tint_module_vars_struct = let %8  # %tint_module_vars_1: 'tint_module_vars'
-    %10:ptr<storage, i32, read_write> = access %tint_module_vars_1, 1u
-    %11:i32 = load %10
-    %12:i32 = call %foo, %tint_module_vars_1
-    %13:i32 = add %12, %11
-    %14:ptr<storage, i32, read_write> = access %tint_module_vars_1, 1u
-    store %14, %13
+    %10:i32 = load %b
+    %11:i32 = call %foo, %tint_module_vars_1
+    %12:i32 = add %11, %10
+    store %b, %12
     ret
   }
 }
 %main_b = @fragment func(%a_1:ptr<uniform, i32, read> [@binding_point(1, 2)]):void {  # %a_1: 'a'
   $B3: {
     %c:ptr<private, i32, read_write> = var
-    %18:tint_module_vars_struct = construct %a_1, unused, %c
-    %tint_module_vars_2:tint_module_vars_struct = let %18  # %tint_module_vars_2: 'tint_module_vars'
-    %20:ptr<private, i32, read_write> = access %tint_module_vars_2, 2u
-    %21:i32 = load %20
-    %22:i32 = call %foo, %tint_module_vars_2
-    %23:i32 = mul %22, %21
-    %24:ptr<private, i32, read_write> = access %tint_module_vars_2, 2u
-    store %24, %23
+    %16:tint_module_vars_struct = construct %a_1, unused, %c
+    %tint_module_vars_2:tint_module_vars_struct = let %16  # %tint_module_vars_2: 'tint_module_vars'
+    %18:i32 = load %c
+    %19:i32 = call %foo, %tint_module_vars_2
+    %20:i32 = mul %19, %18
+    store %c, %20
     ret
   }
 }
@@ -1549,16 +1499,12 @@ tint_module_vars_struct = struct @align(1) {
     %4:ptr<private, i32, read_write> = var
     %5:tint_module_vars_struct = construct %2, %3, %4
     %tint_module_vars:tint_module_vars_struct = let %5
-    %7:ptr<uniform, i32, read> = access %tint_module_vars, 0u
-    %8:i32 = load %7
-    %9:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    %10:i32 = load %9
-    %11:ptr<private, i32, read_write> = access %tint_module_vars, 2u
-    %12:i32 = load %11
-    %13:i32 = add %10, %12
-    %14:i32 = add %8, %13
-    %15:ptr<storage, i32, read_write> = access %tint_module_vars, 1u
-    store %15, %14
+    %7:i32 = load %2
+    %8:i32 = load %3
+    %9:i32 = load %4
+    %10:i32 = add %8, %9
+    %11:i32 = add %7, %10
+    store %3, %11
     ret
   }
 }

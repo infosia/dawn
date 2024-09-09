@@ -12,10 +12,10 @@ half4 subgroupShuffleUp_0990cd() {
 
 fragment void fragment_main(device half4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = subgroupShuffleUp_0990cd();
+  (*prevent_dce) = subgroupShuffleUp_0990cd();
 }
 
 kernel void compute_main(device half4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = subgroupShuffleUp_0990cd();
+  (*prevent_dce) = subgroupShuffleUp_0990cd();
 }

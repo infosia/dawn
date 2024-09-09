@@ -23,12 +23,12 @@ int bitcast_7e67cc() {
 
 fragment void fragment_main(device int* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = bitcast_7e67cc();
+  (*prevent_dce) = bitcast_7e67cc();
 }
 
 kernel void compute_main(device int* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = bitcast_7e67cc();
+  (*prevent_dce) = bitcast_7e67cc();
 }
 
 VertexOutput vertex_main_inner() {

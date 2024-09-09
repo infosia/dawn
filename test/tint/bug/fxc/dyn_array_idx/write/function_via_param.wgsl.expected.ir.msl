@@ -38,5 +38,5 @@ kernel void f(const constant UBO* ubo [[buffer(0)]], device Result* result [[buf
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.ubo=ubo, .result=result};
   S s = {};
   x((&s), tint_module_vars);
-  (*tint_module_vars.result).out = s.data[3];
+  (*result).out = s.data[3];
 }

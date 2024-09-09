@@ -11,7 +11,7 @@ kernel void f(device int* s [[buffer(0)]]) {
   thread int a = 1;
   thread int a__ = 2;
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.s=s, .a=(&a), .a__=(&a__)};
-  int b = (*tint_module_vars.a);
-  int b__ = (*tint_module_vars.a__);
-  (*tint_module_vars.s) = as_type<int>((as_type<uint>(b) + as_type<uint>(b__)));
+  int b = a;
+  int b__ = a__;
+  (*s) = as_type<int>((as_type<uint>(b) + as_type<uint>(b__)));
 }

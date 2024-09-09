@@ -12,10 +12,10 @@ int4 subgroupShuffle_e854d5() {
 
 fragment void fragment_main(device int4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = subgroupShuffle_e854d5();
+  (*prevent_dce) = subgroupShuffle_e854d5();
 }
 
 kernel void compute_main(device int4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = subgroupShuffle_e854d5();
+  (*prevent_dce) = subgroupShuffle_e854d5();
 }

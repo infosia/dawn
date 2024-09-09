@@ -33,14 +33,14 @@ void outer(tint_module_vars_struct tint_module_vars) {
 kernel void main1() {
   thread int a = 0;
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=(&a)};
-  (*tint_module_vars.a) = 42;
+  a = 42;
   uses_a(tint_module_vars);
 }
 
 kernel void main2() {
   thread int b = 0;
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.b=(&b)};
-  (*tint_module_vars.b) = 7;
+  b = 7;
   uses_b(tint_module_vars);
 }
 

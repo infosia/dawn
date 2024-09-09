@@ -30,12 +30,12 @@ int2 insertBits_fe6ba6() {
 
 fragment void fragment_main(device int2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = insertBits_fe6ba6();
+  (*prevent_dce) = insertBits_fe6ba6();
 }
 
 kernel void compute_main(device int2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = insertBits_fe6ba6();
+  (*prevent_dce) = insertBits_fe6ba6();
 }
 
 VertexOutput vertex_main_inner() {

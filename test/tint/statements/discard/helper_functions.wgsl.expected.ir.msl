@@ -25,7 +25,7 @@ fragment void tint_symbol(device int* non_uniform_global [[buffer(0)]], device f
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.non_uniform_global=non_uniform_global, .output=output, .continue_execution=(&continue_execution)};
   foo(tint_module_vars);
   bar(tint_module_vars);
-  if (!((*tint_module_vars.continue_execution))) {
+  if (!(continue_execution)) {
     discard_fragment();
   }
 }

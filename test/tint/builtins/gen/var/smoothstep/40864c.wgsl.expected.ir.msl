@@ -25,12 +25,12 @@ float4 smoothstep_40864c() {
 
 fragment void fragment_main(device float4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = smoothstep_40864c();
+  (*prevent_dce) = smoothstep_40864c();
 }
 
 kernel void compute_main(device float4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = smoothstep_40864c();
+  (*prevent_dce) = smoothstep_40864c();
 }
 
 VertexOutput vertex_main_inner() {

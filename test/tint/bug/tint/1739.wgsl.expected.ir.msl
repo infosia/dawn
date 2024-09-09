@@ -118,12 +118,12 @@ tint_ExternalTextureParams tint_load_struct_packed_vec3(const constant tint_Exte
 
 kernel void tint_symbol(texture2d<float, access::sample> t_plane0 [[texture(1)]], texture2d<float, access::sample> t_plane1 [[texture(2)]], const constant tint_ExternalTextureParams_packed_vec3* t_params [[buffer(3)]], texture2d<float, access::write> outImage [[texture(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.t_plane0=t_plane0, .t_plane1=t_plane1, .t_params=t_params, .outImage=outImage};
-  tint_ExternalTextureParams const v_22 = tint_load_struct_packed_vec3(tint_module_vars.t_params);
-  float4 red = tint_TextureLoadExternal(tint_module_vars.t_plane0, tint_module_vars.t_plane1, v_22, min(uint2(int2(10)), ((v_22.visibleSize + uint2(1u)) - uint2(1u))));
+  tint_ExternalTextureParams const v_22 = tint_load_struct_packed_vec3(t_params);
+  float4 red = tint_TextureLoadExternal(t_plane0, t_plane1, v_22, min(uint2(int2(10)), ((v_22.visibleSize + uint2(1u)) - uint2(1u))));
   float4 const v_23 = red;
-  tint_module_vars.outImage.write(v_23, uint2(int2(0)));
-  tint_ExternalTextureParams const v_24 = tint_load_struct_packed_vec3(tint_module_vars.t_params);
-  float4 green = tint_TextureLoadExternal(tint_module_vars.t_plane0, tint_module_vars.t_plane1, v_24, min(uint2(int2(70, 118)), ((v_24.visibleSize + uint2(1u)) - uint2(1u))));
+  outImage.write(v_23, uint2(int2(0)));
+  tint_ExternalTextureParams const v_24 = tint_load_struct_packed_vec3(t_params);
+  float4 green = tint_TextureLoadExternal(t_plane0, t_plane1, v_24, min(uint2(int2(70, 118)), ((v_24.visibleSize + uint2(1u)) - uint2(1u))));
   float4 const v_25 = green;
-  tint_module_vars.outImage.write(v_25, uint2(int2(1, 0)));
+  outImage.write(v_25, uint2(int2(1, 0)));
 }

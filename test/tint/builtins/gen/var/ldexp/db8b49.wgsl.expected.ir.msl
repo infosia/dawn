@@ -24,12 +24,12 @@ float ldexp_db8b49() {
 
 fragment void fragment_main(device float* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = ldexp_db8b49();
+  (*prevent_dce) = ldexp_db8b49();
 }
 
 kernel void compute_main(device float* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = ldexp_db8b49();
+  (*prevent_dce) = ldexp_db8b49();
 }
 
 VertexOutput vertex_main_inner() {

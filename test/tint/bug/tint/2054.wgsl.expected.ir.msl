@@ -22,5 +22,5 @@ kernel void foo(device float* out [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.out=out};
   float param = 0.0f;
   bar((&param));
-  (*tint_module_vars.out) = param;
+  (*out) = param;
 }

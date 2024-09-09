@@ -24,12 +24,12 @@ float step_0b073b() {
 
 fragment void fragment_main(device float* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = step_0b073b();
+  (*prevent_dce) = step_0b073b();
 }
 
 kernel void compute_main(device float* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = step_0b073b();
+  (*prevent_dce) = step_0b073b();
 }
 
 VertexOutput vertex_main_inner() {

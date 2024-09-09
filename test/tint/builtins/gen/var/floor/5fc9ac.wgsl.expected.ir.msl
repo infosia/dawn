@@ -23,12 +23,12 @@ float2 floor_5fc9ac() {
 
 fragment void fragment_main(device float2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = floor_5fc9ac();
+  (*prevent_dce) = floor_5fc9ac();
 }
 
 kernel void compute_main(device float2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = floor_5fc9ac();
+  (*prevent_dce) = floor_5fc9ac();
 }
 
 VertexOutput vertex_main_inner() {

@@ -22,12 +22,12 @@ half2 floor_84658c() {
 
 fragment void fragment_main(device half2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = floor_84658c();
+  (*prevent_dce) = floor_84658c();
 }
 
 kernel void compute_main(device half2* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = floor_84658c();
+  (*prevent_dce) = floor_84658c();
 }
 
 VertexOutput vertex_main_inner() {

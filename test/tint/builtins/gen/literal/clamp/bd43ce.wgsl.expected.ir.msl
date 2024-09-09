@@ -22,12 +22,12 @@ uint4 clamp_bd43ce() {
 
 fragment void fragment_main(device uint4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = clamp_bd43ce();
+  (*prevent_dce) = clamp_bd43ce();
 }
 
 kernel void compute_main(device uint4* prevent_dce [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce};
-  (*tint_module_vars.prevent_dce) = clamp_bd43ce();
+  (*prevent_dce) = clamp_bd43ce();
 }
 
 VertexOutput vertex_main_inner() {
