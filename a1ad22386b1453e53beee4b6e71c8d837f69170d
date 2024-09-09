@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4787fe23_aef40d3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-09T14:39:36Z",
+      "side": 1,
+      "message": "Apologies for the many iterations, but keeping things small even when we have to do spaghetti workarounds is pretty important. Letting ClearWithDrawHelper say which attachments it handled was good though!",
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4199e6cc_7eede858",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-09T14:39:36Z",
+      "side": 1,
+      "message": "nit: Maybe we can just read the PLS and do nothing with it.\n\n```\nif (plsSlotCount \u003e 0) {\n  stream \u003c\u003c \"_ \u003d pls.a0;\"\n}\n```",
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8848ea4_14640b60",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-09T14:39:36Z",
+      "side": 1,
+      "message": "```suggestion\nbool NeedsBigIntClear(const Format\u0026 format, const std::array\u003cdouble, 4\u003e\u0026 clearValue) {\n```",
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e3b14de_908387c0",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-09T14:39:36Z",
+      "side": 1,
+      "message": "Factoring that out is nice!",
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1df61d8c_fe690e48",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-09T14:39:36Z",
+      "side": 1,
+      "message": "nit: That method just doing an accessor is probably a historical artifact but doesn\u0027t really make sense anymore.",
+      "range": {
+        "startLine": 422,
+        "startChar": 27,
+        "endLine": 422,
+        "endChar": 45
+      },
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "538aa64f_86592c06",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-09T14:39:36Z",
+      "side": 1,
+      "message": "We still need to set the key for the sample count below, so this block of code should move just below the sample count computation, and even better do:\n\n```\n// sample count stuff\n\nif (ShouldApply...) {\n  key-\u003ecolorTargetsToApplyClearColorValue.set(i);\n}\n```",
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cca21046_1318bcfb",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-09T14:39:36Z",
+      "side": 1,
+      "message": "nit: Instead of a visitor, we can return a ColorAttachmentMask. Maybe also add the TODO on 364834368 here.",
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
