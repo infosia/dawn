@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "622268c1_6616e8ca",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-09T19:57:11Z",
+      "side": 1,
+      "message": "Nit: There\u0027s also an `n, ` missing here.",
+      "fixSuggestions": [
+        {
+          "fixId": "cdb02c15_fec7632b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+              "range": {
+                "startLine": 599,
+                "startChar": 0,
+                "endLine": 600,
+                "endChar": 0
+              },
+              "replacement": "                    //    insertBits(e, n, o, c);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "125fa201a7c251df48a0b0d71211a88af2334417",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
