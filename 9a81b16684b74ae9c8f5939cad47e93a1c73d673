@@ -34,6 +34,24 @@
       "parentUuid": "de4fd9b3_7c1c3c9b",
       "revId": "9a81b16684b74ae9c8f5939cad47e93a1c73d673",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d983f915_584877c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-09-09T11:36:30Z",
+      "side": 1,
+      "message": "I don’t have the hardware to repro.",
+      "parentUuid": "fbfca7ea_348d2bb3",
+      "revId": "9a81b16684b74ae9c8f5939cad47e93a1c73d673",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
