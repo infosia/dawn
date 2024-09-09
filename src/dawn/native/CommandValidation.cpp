@@ -634,6 +634,7 @@ MaybeError ValidateCanUseAs(const TextureBase* texture,
                             wgpu::TextureUsage usage,
                             UsageValidationMode mode) {
     DAWN_ASSERT(wgpu::HasZeroOrOneBits(usage));
+    DAWN_ASSERT(IsSubset(usage, ~kShaderTextureUsages));
     switch (mode) {
         case UsageValidationMode::Default:
             DAWN_INVALID_IF(!(texture->GetUsage() & usage), "%s usage (%s) doesn't include %s.",
@@ -643,6 +644,25 @@ MaybeError ValidateCanUseAs(const TextureBase* texture,
             DAWN_INVALID_IF(!(texture->GetInternalUsage() & usage),
                             "%s internal usage (%s) doesn't include %s.", texture,
                             texture->GetInternalUsage(), usage);
+            break;
+    }
+    return {};
+}
+
+MaybeError ValidateCanUseAs(const TextureViewBase* textureView,
+                            wgpu::TextureUsage usage,
+                            UsageValidationMode mode) {
+    DAWN_ASSERT(wgpu::HasZeroOrOneBits(usage));
+    DAWN_ASSERT(IsSubset(usage, kShaderTextureUsages));
+    switch (mode) {
+        case UsageValidationMode::Default:
+            DAWN_INVALID_IF(!(textureView->GetUsage() & usage), "%s usage (%s) doesn't include %s.",
+                            textureView, textureView->GetUsage(), usage);
+            break;
+        case UsageValidationMode::Internal:
+            DAWN_INVALID_IF(!(textureView->GetInternalUsage() & usage),
+                            "%s internal usage (%s) doesn't include %s.", textureView,
+                            textureView->GetInternalUsage(), usage);
             break;
     }
     return {};
