@@ -1267,7 +1267,6 @@ crbug.com/351372334 webgpu:shader,validation,expression,call,builtin,insertBits:
 # some missing tint validation errors
 crbug.com/350775869 webgpu:shader,validation,expression,call,builtin,ldexp:partial_values:stage="constant";* [ Failure ]
 crbug.com/350775869 webgpu:shader,validation,expression,call,builtin,ldexp:partial_values:stage="override";* [ Failure ]
-crbug.com/351378281 webgpu:shader,validation,expression,call,builtin,clamp:low_high:* [ Failure ]
 
 # Derivative tests
 crbug.com/42251283 [ intel-0x3e9b ] webgpu:shader,execution,expression,call,builtin,dpdxFine:* [ Failure ]
