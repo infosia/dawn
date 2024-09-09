@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09fb5697_ca557cef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-09T22:36:26Z",
+      "side": 1,
+      "message": "As discussed, I think we should localize the fix to the call to \u0027fence\u0027 by `const_cast`ing away the const. From https://g-issues.chromium.org/issues/365570202, we would do either:\n\n```\n//    tint_module_vars.tex.fence();\n    const_cast\u003ctexture2d\u003cfloat, access::read_write\u003ethread *\u003e(\u0026tint_module_vars.tex)-\u003efence();\n    const_cast\u003ctexture2d\u003cfloat, access::read_write\u003ethread \u0026\u003e(tint_module_vars.tex).fence();\n```\n\n+2ing so that you can land this to unblock CTS in the meantime.",
+      "revId": "1fa94d42991d25e1027bbf463dabadbde4f318e8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
