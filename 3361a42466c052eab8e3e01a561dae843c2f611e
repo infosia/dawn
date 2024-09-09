@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4b29348_0e35dd72",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-09T23:41:34Z",
+      "side": 1,
+      "message": "Would it be possible to only emit the const_cast when necessary?",
+      "range": {
+        "startLine": 913,
+        "startChar": 27,
+        "endLine": 913,
+        "endChar": 38
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1e2ef680_c525dc87",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/msl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 906,
+                "startChar": 0,
+                "endLine": 915,
+                "endChar": 0
+              },
+              "replacement": "            if (c-\u003eObject()-\u003eType()-\u003eIs\u003ccore::type::Pointer\u003e() \u0026\u0026\n                c-\u003eObject()-\u003eType()-\u003eAs\u003ccore::type::Pointer\u003e()-\u003eAccess() \u003d\u003d\n                    core::Access::kRead) {\n                // If this is a fence builtin, we need to `const_cast\u003c\u003e` the object to remove the\n                // `const` qualifier. We do this to work around an MSL bug that prevents us from\n                // being able to use texture fence intrinsics when texture handles are stored inside\n                // const-qualified structures (see crbug.com/365570202).\n                out \u003c\u003c \"const_cast\u003c\";\n                EmitType(out, c-\u003eObject()-\u003eType());\n                out \u003c\u003c \"thread \u0026\u003e(\";\n                EmitValue(out, c-\u003eObject());\n                out \u003c\u003c \")\";\n            } else {\n                EmitValue(out, c-\u003eObject());\n            }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "3361a42466c052eab8e3e01a561dae843c2f611e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
