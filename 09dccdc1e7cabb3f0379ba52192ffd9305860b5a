@@ -16,6 +16,24 @@
       "message": "Can you detail what the issue is? Is it just that some values aren\u0027t written properly?",
       "revId": "09dccdc1e7cabb3f0379ba52192ffd9305860b5a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c92bca7_e9e599d8",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-09T11:07:05Z",
+      "side": 1,
+      "message": "Sorry, I am not very clear about that. It was done by Peng. If my memory serves, he did that based on the telemetry crash report, and the fact that the similar workaround is by default applied on Ganesh.",
+      "parentUuid": "5e284837_b4e31fec",
+      "revId": "09dccdc1e7cabb3f0379ba52192ffd9305860b5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
