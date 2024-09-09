@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e637ce92_9ae41443",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-09T15:31:35Z",
+      "side": 1,
+      "message": "Yeah, the reason I did this was so that I could reuse `f` and `t` for the next select call below. Originally, I had these calls inlined in the select call, but then there\u0027s a compile-time failure that triggers because it detects possible out-of-order executions (which is actually quite clever!), so I hoisted these out.",
+      "parentUuid": "b0e91a8c_60fe1f0e",
+      "revId": "87a34199cd413e50260ffe4ad39d06ff921fc9b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "19b7e43e_d699c1d1",
         "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
         "patchSetId": 1
