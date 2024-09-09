@@ -393,7 +393,6 @@ struct State {
     void ExtractBits(ir::CoreBuiltinCall* call) {
         auto* offset = call->Args()[1];
         auto* count = call->Args()[2];
-
         switch (config.extract_bits) {
             case BuiltinPolyfillLevel::kClampOrRangeCheck: {
                 b.InsertBefore(call, [&] {
@@ -409,8 +408,42 @@ struct State {
                     call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 1, o->Result(0));
                     call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 2, c->Result(0));
                 });
-                break;
-            }
+            } break;
+            case BuiltinPolyfillLevel::kFull: {
+                // Replace:
+                //    result = extractBits(v, offset, count)
+                // With:
+                //   let s = min(offset, 32u);
+                //   let e = min(32u, (s + count));
+                //   let shl = (32u - e);
+                //   let shr = (shl + s);
+                //   let shl_result = select(i32(), (v << shl), (shl < 32u));
+                //   result = select(((shl_result >> 31u) >> 1u), (shl_result >> shr), (shr < 32u));
+                // }
+                auto* v = call->Args()[0];
+                auto* result_ty = v->Type();
+                auto* uint_ty = ty.match_width(ty.u32(), result_ty);
+                auto V = [&](uint32_t u) { return b.MatchWidth(u32(u), result_ty); };
+                b.InsertBefore(call, [&] {
+                    auto* s = b.Call<u32>(core::BuiltinFn::kMin, offset, 32_u)->Result(0);
+                    auto* e = b.Call<u32>(core::BuiltinFn::kMin, 32_u,
+                                          b.Add(ty.u32(), s, count)->Result(0));
+                    auto* shl = b.Subtract<u32>(32_u, e)->Result(0);
+                    auto* shr = b.Add<u32>(shl, s)->Result(0);
+                    Value* f = b.Zero(result_ty);
+                    Value* t = b.ShiftLeft(result_ty, v, b.Construct(uint_ty, shl))->Result(0);
+                    auto* shl_result = b.Call(result_ty, core::BuiltinFn::kSelect, f, t,
+                                              b.LessThan<bool>(shl, 32_u));
+                    f = b.ShiftRight(result_ty, b.ShiftRight(result_ty, shl_result, V(31)), V(1))
+                            ->Result(0);
+                    t = b.ShiftRight(result_ty, shl_result, b.Construct(uint_ty, shr))->Result(0);
+                    auto* result = b.Call(result_ty, core::BuiltinFn::kSelect, f, t,
+                                          b.LessThan<bool>(shr, 32_u));
+
+                    result->SetResults(Vector{call->DetachResult()});
+                });
+                call->Destroy();
+            } break;
             default:
                 TINT_UNIMPLEMENTED() << "extractBits polyfill level";
         }
