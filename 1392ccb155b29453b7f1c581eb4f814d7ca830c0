@@ -20,6 +20,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d7992395_a3666bb3",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-09T16:51:38Z",
+      "side": 1,
+      "message": "I need to think about this a bit more, but I think we could try to have a simpler data layout for this instead of reaching out in the pipeline all the time.\n\nSomething like:\n\n```\n// Defined in pipeline layout.\nConstantIndex \u003d ityp::TypedInteger\u003cuint8_t, struct ConstnatIndexT\u003e;\n\n// Common constants\nConstantIndex immediateStart \u003d 0;\nConstnatIndex bufferLengthStart \u003d immediateStart + 4;\n\n// Constants for compute\nConstantIndex numWorkgroup \u003d bufferLengthStart + N;\nConstantIndex maxConstantComputes \u003d numWorkgroup + 3;\n\nstruct RootConstants\u003ccompute vs. render\u003e {\n   // Helpers to set dirty + values\n   SetNumWorkgroups(x, y, z);\n   SetBufferLength();\n   \n   ityp::bitset\u003cmaxofcompute vs render\u003e dirty;\n   std::array\u003cmaxofcompute vs render, uint32_t\u003e values;\n};\n\nRootConstants rootconstants;\n\nAt some point before draw:\n    // Aplpy missing constants\n    Get mask of used constants from the pipeline.\n    Or it with the dirty constants.\n    Somehow call setRootConstants correctly.\n    \nOf course dirtying also sometimes needs to happen when switching root signature or w/e.\n```\n\nSry for messy comment, I have to leave for something but wanted to get this in today.",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd71f13b_5b379371",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-09T16:51:38Z",
+      "side": 1,
+      "message": "This looks good overall, but I think we can do better with a map\u003ckey, Ref\u003cRootSignature\u003e\u003e with RootSignature being our new object that contains info about the D3D12 root signature. Then store a ref to that in the pipeline directly instead of querying with the rangeSizes over and over again.\n\nThat said the root signature itself only depends on how many u32s we need, not what we put in them. So maybe a mix of option 1 and 2, with the pipeline layout keeping a cache of root signature with varying numbers of constants, but the pipeline themselves knowing where to put each constant? But also the pipeline layout could keep other caches like GetDispatchWithNumWG(total constant size, wgOffset).",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "329babc4_43224e1b",
         "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
         "patchSetId": 1
