@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a834a8a_a9411abe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-10T18:28:29Z",
+      "side": 1,
+      "message": "Addresses the problem described here:\nhttps://dawn-review.googlesource.com/c/dawn/+/206154",
+      "revId": "f1932d0a3a71c18bd620afe2caf781e0a8e9e404",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
