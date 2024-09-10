@@ -170,10 +170,6 @@ crbug.com/354152178 [ intel-0x4680 ] webgpu:shader,execution,expression,call,bui
 crbug.com/354152178 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,bitcast:ai_to_f32:* [ Failure ]
 crbug.com/354152178 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,bitcast:ai_to_f32:* [ Failure ]
 
-# crbug.com/bug/350785841: smoothstep: needs CTS fixes to pass
-crbug.com/dawn/350785841 webgpu:shader,execution,expression,call,builtin,smoothstep:* [ Failure ]
-crbug.com/dawn/350785841 webgpu:shader,validation,expression,call,builtin,smoothstep:* [ Failure ]
-
 # Temporarily skipped due to the removal of `maxInterStageShaderComponents` has not been completed in the below tests
 crbug.com/364338810 webgpu:api,validation,capability_checks,limits,maxInterStageShaderComponents:* [ Skip ]
 crbug.com/364338810 webgpu:api,validation,render_pipeline,inter_stage:max_components_count,* [ Skip ]
