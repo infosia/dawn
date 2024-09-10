@@ -90,6 +90,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed800d85_6b134544",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-09-10T19:39:16Z",
+      "side": 1,
+      "message": "I had a closer look at the feature set table and it says \"varies\" in Argument Buffer Tier for \"CommonX\" where the non-apple GPUs probably belong. I\u0027m assuming argument buffers aren\u0027t supported for this hardware. It is also hard to find what GPUs are in \"CommonX\". \"Apple3\" family seems to have the required features.",
+      "parentUuid": "f5689ebe_5f699b8d",
+      "revId": "9a81b16684b74ae9c8f5939cad47e93a1c73d673",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "51ba2868_e7a99357",
