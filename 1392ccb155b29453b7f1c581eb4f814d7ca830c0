@@ -20,6 +20,80 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c84c6c07_235e82d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T12:22:09Z",
+      "side": 1,
+      "message": "Thank you for your patience, this is a most interesting read as it shows the set of all the things a complete implementation needs to care about.\n\nOne structural thing to change is that the Render/ComputePipeline should explicitly know where each root constant used is located, and pass that explicitly to the HLSL compilation. Querying stuff after transforms is actually something that the Tint team wants to remove over time, it just hasn\u0027t done it for HLSL yet.\n\nSo RenderPipelineD3D12 would during initialization completely determine which root constants are needed and their offsets in the register space used for all root constants and pass that to TranslateHLSL. So I think a pre-CL for this would be to change the current Dawn to do that and stack the immediate CL on top (it allows landing that part without waiting for the rest of the design to stick).\n\nSo that\u0027s two pre-CLs that we can do:\n\n - Making Compute/RenderPipelineD3D12 push to HLSL compilation the register offset / space of the builtins and which builtins are used.\n - Landing immediateDataSize in PipelineLayout + limit, validation and validation tests.\n \nI\u0027m pretty convinced that we can have a small solution for handling root constants using dirty bits that would be faster and more ergonomic to use than a whole extra object. Though we\u0027ll have to be careful when to consider things dirty (for example a pipeline change should dirty all the bits used by the pipeline as a first approximation, but DispatchIndirect with NumWorkgroups set in the indirect commands shouldn\u0027t need to apply NumWorkgroups directly since we don\u0027t know what it is).\n\nLet me know if you\u0027d like a small meeting to discuss all of this, I know it\u0027s a lot but a clear solution is in sight!",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cef9b778_59640a46",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T12:22:09Z",
+      "side": 1,
+      "message": "Could we start landing this part of the code (just the new pipeline layout desc member) as well as limits and validation? I think it is very non-controversial and would de-risk the rest while we iterate.",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbebf4d3_fa3beb0b",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T12:22:09Z",
+      "side": 1,
+      "message": "We shouldn\u0027t return this and instead use https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ShaderModule.h;drc\u003d3aac157b6d86098e25a76f3ef4b3d4bd535ee061;l\u003d281 in RenderPipelineD3D12 to know if there is a need to reserve space for the firstIndexOffset.\n\nThough it seems that `usesInstanceIndex` is missing on EntryPointMetadata?",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 57
+      },
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62b271c8_61a6a891",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T12:22:09Z",
+      "side": 1,
+      "message": "This would just set the values and the dirty bits, skipping setting the root constant here would be done when we try to apply the values before a draw / dispatch.",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d7992395_a3666bb3",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 1
@@ -49,6 +123,58 @@
       "side": 1,
       "message": "Looking forward to the formal comments:P\n\nDirty bit is a good idea but I debated in my mind about two uploading model many times:\n - Multiple CPU calls to upload several dirty pieces. Don\u0027t waste any bandwidth but\n   start uploading process many times \n - Single CPU calls to upload continuous range with non-necessary flush. Waste bandwidth but start uploading process only once.\n \nMaybe a high-low dirty range is a balanced way?\n\n\u003e   SetNumWorkgroups(x, y, z);\n   SetBufferLength();\n\nUsing function name instead of enum is a great idea!\n\nIf we have new \"RootSignature\" object, I\u0027d like to put this immediate data block struct/class in RootSignatureBase.",
       "parentUuid": "d7992395_a3666bb3",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f44d4d8_f02d9d25",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T12:22:09Z",
+      "side": 1,
+      "message": "Either a dirty bit or min-max works for the actual call to SetRootConstants, but for tracking I believe dirty bits are better because they allow easy masking with the pipeline\u0027s mask of used constants. The problem otherwise is that it becomes difficult to find that the min in the RootConstant in the stack variable is the actual min for the pipeline, or how to update it if the pipeline doesn\u0027t use that min variable.\n\nSo we can do min/max (using ScanForward / ScanBackward) or a few calls for `Somehow call setRootConstants correctly.`, but the tracking would still use dirty bits. WDYT?\n\n\u003e If we have new \"RootSignature\" object, I\u0027d like to put this immediate data block struct/class in RootSignatureBase.\n\nDeduplicating the code between backends would be nice, but I don\u0027t think that it is possible here because they all have their own special immediates to set for workaround / emulation. They also use different mechanisms to set them. D3D12 and Vulkan are similar but Metal would use setBytes, D3D11 a dynamic uniform buffer and GL just GL uniforms. So overall handling of immediate, both in the layout, the shader module and the command buffer would be per-backend. The frontend just says how many the user needs.",
+      "parentUuid": "787f017f_6eb991e6",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d6d6ebb_bea86e4d",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T12:22:09Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50023f84_9b40f18e",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T12:22:09Z",
+      "side": 1,
+      "message": "Ultimately the pipeline should be the one computing how many root constants it needs and what each one corresponds to but the root signature only depends on how many root constants are needed. So for example in the render pipeline initialization we\u0027d do:\n\n```\nConstantIndex mUsedConstants;\n// This could be in d3d12::PipelineBase\nmUsedConstants |\u003d constantsForImmediates (0, 0b1, 0b11, 0b111 or 0b1111, we\u0027d have a helper function doing bit twiddling for that).\nmUsedConstants |\u003d constantsForDynamicBuffers;\n\n// This could be in d3d12::RenderPipeline\nif (uses vertex index) { mUsedConstants |\u003d ConstantIndex::VertexIndex}\nif (uses instance index) { mUsedConstants |\u003d ConstantIndex::VertexIndex}\n\n// Equivalent in d3d12::ComputePipeline.\n\n\n// In PipelineBase?\nrootSignature \u003d layout-\u003eGetRootSignature(popcount(mUsedConstants))\n```",
       "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -90,6 +216,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "011c5470_5300f023",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T12:22:09Z",
+      "side": 1,
+      "message": "Ditto about backends needing to be different so we can\u0027t really do code reuse.",
+      "parentUuid": "677bae5a_8d2a27a5",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "329babc4_43224e1b",
         "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
         "patchSetId": 1
@@ -101,6 +245,23 @@
       "writtenOn": "2024-09-06T02:18:17Z",
       "side": 1,
       "message": "NOTE: If we want to keep physical layout here, we need to hold these.",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ee3f4c9_4ff22cdf",
+        "filename": "src/dawn/native/d3d12/RenderPipelineD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T12:22:09Z",
+      "side": 1,
+      "message": "Here we would compute the indices of root constants, and a structure explicitly containing the start offset (if any) for the various root constants that are used by the shader.",
       "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
