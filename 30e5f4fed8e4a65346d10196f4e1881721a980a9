@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b0dc658_dc32d357",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-09-10T18:45:03Z",
+      "side": 1,
+      "message": "PTAL! Just doing my annual-ish roll of devices into gpu_info.json\n\nBiggest change is in the categorization of AMD devices after I found that we were miscategorizing a large chunk of them due to AMDs... unorthodox deviceID conventions.",
+      "revId": "30e5f4fed8e4a65346d10196f4e1881721a980a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
