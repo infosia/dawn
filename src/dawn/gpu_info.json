@@ -138,7 +138,26 @@
 
           "Midgard": ["0x00000000"],
           "Bifrost": ["0x60000000", "0x70000000"],
-          "Valhall": ["0x90000000", "0xA0000000", "0xB0000000"]
+          "Valhall": ["0x90000000", "0xA0000000", "0xB0000000"],
+          "Gen 5": ["0xC0000000"]
+        }
+      }]
+    },
+
+    "Broadcom": {
+      "id": "0x14e4",
+
+      "devices": [{
+        "mask": "0x00000000",
+        "architecture": {
+          "_comment": [
+            "The Broadcom GPUs are rare (used by Rasberry Pi and similar low-power devices) and",
+            "have device IDs that are all over place, so they're all going to get lumped into a",
+            "single 'VideoCore' architecture unless someone comes up with a better way to break",
+            "them down."
+          ],
+
+          "VideoCore": ["0x00000000"]
         }
       }]
     },
@@ -154,7 +173,16 @@
     },
 
     "Img Tec": {
-      "id": "0x1010"
+      "id": "0x1010",
+
+      "devices": [{
+        "mask": "0xFF000000",
+        "architecture": {
+          "Rogue": ["0x00000000", "0x22000000", "0x24000000"],
+          "Furian": ["0x1b000000"],
+          "Albiorix": ["0x35000000", "0x36000000"]
+        }
+      }]
     },
 
     "Intel": {
@@ -166,7 +194,7 @@
           "Gen 7": ["0x0100", "0x0400", "0x0A00", "0x0D00", "0x0F00"],
           "Gen 8": ["0x1600", "0x2200"],
           "Gen 9": ["0x1900", "0x3100", "0x3E00", "0x5A00", "0x5900", "0x9B00"],
-          "Gen 11": ["0x8A00", "0x4E00"],
+          "Gen 11": ["0x8A00", "0x4E00", "0x9800"],
           "Gen 12 LP": ["0x4600", "0x4C00", "0x4900", "0x9A00", "0xA700", "0x7D00"],
           "Gen 12 HP": ["0x4F00", "0x5600"],
           "Gen 13 LP": ["0x6400"],
@@ -206,7 +234,7 @@
           "Maxwell": ["0x1300", "0x1400", "0x1600", "0x1700"],
           "Pascal": ["0x1500", "0x1B00", "0x1C00", "0x1D00"],
           "Turing": ["0x1E00", "0x1F00", "0x2100"],
-          "Ampere": ["0x2200", "0x2400", "0x2500"],
+          "Ampere": ["0x2200", "0x2400", "0x2500", "0x2000"],
           "Lovelace": ["0x2600", "0x2700", "0x2800"]
         }
       }, {
@@ -215,7 +243,9 @@
         "architecture": {
           "Kepler": ["0x1e000000"],
           "Maxwell": ["0x92000000"],
-          "Pascal": ["0x93000000"]
+          "Pascal": ["0x93000000"],
+          "Ampere": ["0x97000000"],
+          "Volta": ["0xa5000000"]
         }
       }]
     },
@@ -237,15 +267,29 @@
 
     "Qualcomm_ACPI": {
       "name_override": "Qualcomm",
-      "id": "0x4D4F4351"
+      "id": "0x4D4F4351",
+
+      "devices": [{
+        "mask": "0xFF000000",
+        "architecture": {
+          "Adreno 8xx": ["0x36000000"]
+        }
+      }]
+
     },
 
     "Samsung": {
       "id": "0x144d",
 
       "devices": [{
+        "_comment": [
+          "Haven't seen enough of these to determine a good masking pattern, so just using full",
+          "device IDs of known devices in the meantime."
+        ],
+        "mask": "0xFFFFFFFF",
         "architecture": {
-          "RDNA 2": ["0x73A0"]
+          "RDNA 2": ["0x73A0", "0x1300100"],
+          "RDNA 3": ["0x2600200"]
         }
       }]
     }
