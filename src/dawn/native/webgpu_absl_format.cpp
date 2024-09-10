@@ -693,4 +693,26 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
     return {true};
 }
 
+absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
+    const StringView& value,
+    const absl::FormatConversionSpec& spec,
+    absl::FormatSink* s) {
+    std::string_view sv = value;
+    s->Append(sv);
+    return {true};
+}
+
+absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
+    const NullableStringView& value,
+    const absl::FormatConversionSpec& spec,
+    absl::FormatSink* s) {
+    std::optional<std::string_view> sv = value;
+    if (sv) {
+        s->Append(*sv);
+    } else {
+        s->Append("undefined");
+    }
+    return {true};
+}
+
 }  // namespace dawn::native
