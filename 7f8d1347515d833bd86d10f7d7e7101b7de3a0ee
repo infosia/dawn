@@ -33,6 +33,23 @@
       "message": "thanks!",
       "revId": "7f8d1347515d833bd86d10f7d7e7101b7de3a0ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64a827d8_5670f4de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-09-10T23:24:14Z",
+      "side": 1,
+      "message": "Looks like Dan is OOO for this week, so swapping in dneto@ as reviewer",
+      "revId": "7f8d1347515d833bd86d10f7d7e7101b7de3a0ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
