@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "787f017f_6eb991e6",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-10T08:30:07Z",
+      "side": 1,
+      "message": "Looking forward to the formal comments:P\n\nDirty bit is a good idea but I debated in my mind about two uploading model many times:\n - Multiple CPU calls to upload several dirty pieces. Don\u0027t waste any bandwidth but\n   start uploading process many times \n - Single CPU calls to upload continuous range with non-necessary flush. Waste bandwidth but start uploading process only once.\n \nMaybe a high-low dirty range is a balanced way?\n\n\u003e   SetNumWorkgroups(x, y, z);\n   SetBufferLength();\n\nUsing function name instead of enum is a great idea!\n\nIf we have new \"RootSignature\" object, I\u0027d like to put this immediate data block struct/class in RootSignatureBase.",
+      "parentUuid": "d7992395_a3666bb3",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dd71f13b_5b379371",
         "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2024-09-09T16:51:38Z",
       "side": 1,
       "message": "This looks good overall, but I think we can do better with a map\u003ckey, Ref\u003cRootSignature\u003e\u003e with RootSignature being our new object that contains info about the D3D12 root signature. Then store a ref to that in the pipeline directly instead of querying with the rangeSizes over and over again.\n\nThat said the root signature itself only depends on how many u32s we need, not what we put in them. So maybe a mix of option 1 and 2, with the pipeline layout keeping a cache of root signature with varying numbers of constants, but the pipeline themselves knowing where to put each constant? But also the pipeline layout could keep other caches like GetDispatchWithNumWG(total constant size, wgOffset).",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "677bae5a_8d2a27a5",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-10T08:30:07Z",
+      "side": 1,
+      "message": "\u003emap\u003ckey, Ref\u003cRootSignature\u003e\u003e with RootSignature being our new object that contains info about the D3D12 root signature.\n\nThat would be an option. Structure would be clear if we define a new \"RootSignature\" for all native backends. It lives between GPUPipelineLayout and GPUPipeline and stores real backend rootsignature. Pipeline holds it for querying some info. (And it could hold commandRootSignature). What\u0027s more, this \"rootsignature\" could be held in PipelineBase and BindGroupStateTrackers.\n\nConsidering the change size to address the complete design and the truth that we have limited internal immediate data, another option would be we keep current implementation for now (waste some immediate data slots but keeps the structure clean) :).",
+      "parentUuid": "dd71f13b_5b379371",
       "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
