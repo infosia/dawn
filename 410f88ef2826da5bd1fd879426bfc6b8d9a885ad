@@ -52,6 +52,24 @@
       "parentUuid": "ffb84efe_28787d05",
       "revId": "410f88ef2826da5bd1fd879426bfc6b8d9a885ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e78f3b6_07b17fd0",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T13:15:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c64b033b_1b22a221",
+      "revId": "410f88ef2826da5bd1fd879426bfc6b8d9a885ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
