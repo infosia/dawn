@@ -338,7 +338,7 @@ TEST(WireCreatePipelineAsyncTestNullBackend, ServerDeletedBeforeCallback) {
 
     WGPUShaderSourceWGSL wgslDesc = {};
     wgslDesc.chain.sType = WGPUSType_ShaderSourceWGSL;
-    wgslDesc.code = "@compute @workgroup_size(64) fn main() {}";
+    wgslDesc.code = {"@compute @workgroup_size(64) fn main() {}", SIZE_MAX};
 
     WGPUShaderModuleDescriptor smDesc = {};
     smDesc.nextInChain = &wgslDesc.chain;
