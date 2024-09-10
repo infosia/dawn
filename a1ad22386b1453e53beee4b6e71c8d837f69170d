@@ -220,6 +220,24 @@
       "message": "nit: Instead of a visitor, we can return a ColorAttachmentMask. Maybe also add the TODO on 364834368 here.",
       "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f7814d7_f1153e55",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T11:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cca21046_1318bcfb",
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

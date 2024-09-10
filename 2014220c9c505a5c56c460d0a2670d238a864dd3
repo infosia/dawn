@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63560184_9a563b5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T11:36:28Z",
+      "side": 1,
+      "message": "LGTM, Loko PTAL again!",
+      "revId": "2014220c9c505a5c56c460d0a2670d238a864dd3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19efab1b_10303dfd",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T11:36:28Z",
+      "side": 1,
+      "message": "To mark the PLS as statically used for compatibility with the render pass.",
+      "range": {
+        "startLine": 165,
+        "startChar": 51,
+        "endLine": 165,
+        "endChar": 81
+      },
+      "revId": "2014220c9c505a5c56c460d0a2670d238a864dd3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

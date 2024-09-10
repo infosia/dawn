@@ -558,6 +558,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ac1c7b77_f7e44b18",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T11:36:28Z",
+      "side": 1,
+      "message": "Looking at this again, we could address as a follow-up, but both the PipelineLayout and the AttachmentState store PLS slots like this. The vector is size `totalPixelLocalStorageSize / kPLSSlotByteSize` with unused entries set to `TextureFormat::Undefined`. The same approach here should work as well and simplify the keys a bunch.",
+      "parentUuid": "033e9382_7a632862",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29be72fb_8d54f4c0",
         "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.h",
         "patchSetId": 5
@@ -759,6 +777,24 @@
       "side": 1,
       "message": "Sounds good. To avoid clearing twice, it seems okay to manually set the view content as initialized.\nI also tried to refactor the logic of detecting the workaround. The current `GetDevice()-\u003eIsToggleEnabled(Toggle::ClearColorWithDraw)` is not precise as `ApplyClearBigIntegerColorValueWithDraw` also needs to be taken into account.",
       "parentUuid": "0b28680d_3ec8fca2",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8daf0404_453a20a6",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T11:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f24e972_8dd440a2",
       "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
