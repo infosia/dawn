@@ -52,6 +52,24 @@
       "parentUuid": "fbfca7ea_348d2bb3",
       "revId": "9a81b16684b74ae9c8f5939cad47e93a1c73d673",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7353f46e_704d9d81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-10T00:34:31Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org should we land this by skipping tests or by doing the allowlist now? How is that done, is it by adding a new toggle and then setting that toggle based on the vendor id in [PhysicalDevice::SetupBackendDeviceToggles](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/PhysicalDeviceMTL.mm;l\u003d406;drc\u003d131b7dfb0718553fbb1cf2dcd5485266a159c339)",
+      "parentUuid": "d983f915_584877c4",
+      "revId": "9a81b16684b74ae9c8f5939cad47e93a1c73d673",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
