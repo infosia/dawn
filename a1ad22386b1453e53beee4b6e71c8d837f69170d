@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc7e1810_ba933353",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-10T07:37:15Z",
+      "side": 1,
+      "message": "Totally fine. It has been always a pleasure to iterate with you.",
+      "parentUuid": "4787fe23_aef40d3c",
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4199e6cc_7eede858",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63cc74a3_1aa98693",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-10T07:37:15Z",
+      "side": 1,
+      "message": "Cool, didn\u0027t know the phony-assignment.",
+      "parentUuid": "4199e6cc_7eede858",
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8848ea4_14640b60",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-09-09T14:39:36Z",
       "side": 1,
       "message": "```suggestion\nbool NeedsBigIntClear(const Format\u0026 format, const std::array\u003cdouble, 4\u003e\u0026 clearValue) {\n```",
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb2f2aad_9a2f9c69",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-10T07:37:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8848ea4_14640b60",
       "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +146,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "370237bd_b89711af",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-10T07:37:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1df61d8c_fe690e48",
+      "range": {
+        "startLine": 422,
+        "startChar": 27,
+        "endLine": 422,
+        "endChar": 45
+      },
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "538aa64f_86592c06",
@@ -105,6 +183,24 @@
       "writtenOn": "2024-09-09T14:39:36Z",
       "side": 1,
       "message": "We still need to set the key for the sample count below, so this block of code should move just below the sample count computation, and even better do:\n\n```\n// sample count stuff\n\nif (ShouldApply...) {\n  key-\u003ecolorTargetsToApplyClearColorValue.set(i);\n}\n```",
+      "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6be681d8_6b2669a7",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-10T07:37:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "538aa64f_86592c06",
       "revId": "a1ad22386b1453e53beee4b6e71c8d837f69170d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
