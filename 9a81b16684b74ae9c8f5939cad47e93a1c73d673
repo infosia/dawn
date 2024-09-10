@@ -70,6 +70,41 @@
       "parentUuid": "d983f915_584877c4",
       "revId": "9a81b16684b74ae9c8f5939cad47e93a1c73d673",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5689ebe_5f699b8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T07:26:50Z",
+      "side": 1,
+      "message": "IMHO we could allow-list directly where we set the feature in PhysicalDeviceMTL at [1] by checking for Apple Silicon.",
+      "parentUuid": "7353f46e_704d9d81",
+      "revId": "9a81b16684b74ae9c8f5939cad47e93a1c73d673",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51ba2868_e7a99357",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-10T07:26:50Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "9a81b16684b74ae9c8f5939cad47e93a1c73d673",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
