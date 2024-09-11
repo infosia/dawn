@@ -57,7 +57,8 @@ TEST_F(WireExtensionTests, ChainedStruct) {
                 const auto* ext =
                     reinterpret_cast<const WGPUShaderSourceWGSL*>(serverDesc->nextInChain);
                 EXPECT_EQ(ext->chain.sType, WGPUSType_ShaderSourceWGSL);
-                EXPECT_STREQ(ext->code.data, clientExt.code.data);
+                EXPECT_NE(ext->code.length, WGPU_STRLEN) << "The wire should decay WGPU_STRLEN";
+                EXPECT_EQ(0, memcmp(ext->code.data, clientExt.code.data, ext->code.length));
                 EXPECT_EQ(ext->chain.next, nullptr);
 
                 return apiShaderModule;
@@ -85,11 +86,13 @@ TEST_F(WireExtensionTests, MultipleChainedStructs) {
                 const auto* ext1 =
                     reinterpret_cast<const WGPUShaderSourceWGSL*>(serverDesc->nextInChain);
                 EXPECT_EQ(ext1->chain.sType, WGPUSType_ShaderSourceWGSL);
-                EXPECT_STREQ(ext1->code.data, clientExt1.code.data);
+                EXPECT_NE(ext1->code.length, WGPU_STRLEN) << "The wire should decay WGPU_STRLEN";
+                EXPECT_EQ(0, memcmp(ext1->code.data, clientExt1.code.data, ext1->code.length));
 
                 const auto* ext2 = reinterpret_cast<const WGPUShaderSourceWGSL*>(ext1->chain.next);
                 EXPECT_EQ(ext2->chain.sType, WGPUSType_ShaderSourceWGSL);
-                EXPECT_STREQ(ext2->code.data, clientExt2.code.data);
+                EXPECT_NE(ext2->code.length, WGPU_STRLEN) << "The wire should decay WGPU_STRLEN";
+                EXPECT_EQ(0, memcmp(ext2->code.data, clientExt2.code.data, ext2->code.length));
                 EXPECT_EQ(ext2->chain.next, nullptr);
 
                 return apiShaderModule;
@@ -108,11 +111,13 @@ TEST_F(WireExtensionTests, MultipleChainedStructs) {
                 const auto* ext2 =
                     reinterpret_cast<const WGPUShaderSourceWGSL*>(serverDesc->nextInChain);
                 EXPECT_EQ(ext2->chain.sType, WGPUSType_ShaderSourceWGSL);
-                EXPECT_STREQ(ext2->code.data, clientExt2.code.data);
+                EXPECT_NE(ext2->code.length, WGPU_STRLEN) << "The wire should decay WGPU_STRLEN";
+                EXPECT_EQ(0, memcmp(ext2->code.data, clientExt2.code.data, ext2->code.length));
 
                 const auto* ext1 = reinterpret_cast<const WGPUShaderSourceWGSL*>(ext2->chain.next);
                 EXPECT_EQ(ext1->chain.sType, WGPUSType_ShaderSourceWGSL);
-                EXPECT_STREQ(ext1->code.data, clientExt1.code.data);
+                EXPECT_NE(ext1->code.length, WGPU_STRLEN) << "The wire should decay WGPU_STRLEN";
+                EXPECT_EQ(0, memcmp(ext1->code.data, clientExt1.code.data, ext1->code.length));
                 EXPECT_EQ(ext1->chain.next, nullptr);
 
                 return apiShaderModule;
@@ -183,7 +188,8 @@ TEST_F(WireExtensionTests, ValidAndInvalidSTypeInChain) {
                 const auto* ext =
                     reinterpret_cast<const WGPUShaderSourceWGSL*>(serverDesc->nextInChain);
                 EXPECT_EQ(ext->chain.sType, clientExt1.chain.sType);
-                EXPECT_STREQ(ext->code.data, clientExt1.code.data);
+                EXPECT_NE(ext->code.length, WGPU_STRLEN) << "The wire should decay WGPU_STRLEN";
+                EXPECT_EQ(0, memcmp(ext->code.data, clientExt1.code.data, ext->code.length));
 
                 EXPECT_EQ(ext->chain.next->sType, WGPUSType(0));
                 EXPECT_EQ(ext->chain.next->next, nullptr);
@@ -206,7 +212,8 @@ TEST_F(WireExtensionTests, ValidAndInvalidSTypeInChain) {
                 const auto* ext =
                     reinterpret_cast<const WGPUShaderSourceWGSL*>(serverDesc->nextInChain->next);
                 EXPECT_EQ(ext->chain.sType, clientExt1.chain.sType);
-                EXPECT_STREQ(ext->code.data, clientExt1.code.data);
+                EXPECT_NE(ext->code.length, WGPU_STRLEN) << "The wire should decay WGPU_STRLEN";
+                EXPECT_EQ(0, memcmp(ext->code.data, clientExt1.code.data, ext->code.length));
                 EXPECT_EQ(ext->chain.next, nullptr);
 
                 return apiShaderModule;

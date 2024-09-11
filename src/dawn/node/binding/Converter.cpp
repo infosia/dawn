@@ -1760,4 +1760,12 @@ bool Converter::Throw(Napi::Error&& error) {
     return false;
 }
 
+std::string CopyLabel(NullableStringView label) {
+    if (label.data == nullptr) {
+        return {};
+    }
+    size_t length = label.length == WGPU_STRLEN ? std::strlen(label.data) : label.length;
+    return {label.data, label.length};
+}
+
 }  // namespace wgpu::binding

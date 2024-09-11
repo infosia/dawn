@@ -113,7 +113,9 @@ RenderBundleEncoder::RenderBundleEncoder(DeviceBase* device,
     GetObjectTrackingList()->Track(this);
 }
 
-RenderBundleEncoder::RenderBundleEncoder(DeviceBase* device, ErrorTag errorTag, const char* label)
+RenderBundleEncoder::RenderBundleEncoder(DeviceBase* device,
+                                         ErrorTag errorTag,
+                                         NullableStringView label)
     : RenderEncoderBase(device, &mBundleEncodingContext, errorTag, label),
       mBundleEncodingContext(device, errorTag) {}
 
@@ -136,7 +138,8 @@ Ref<RenderBundleEncoder> RenderBundleEncoder::Create(
 }
 
 // static
-Ref<RenderBundleEncoder> RenderBundleEncoder::MakeError(DeviceBase* device, const char* label) {
+Ref<RenderBundleEncoder> RenderBundleEncoder::MakeError(DeviceBase* device,
+                                                        NullableStringView label) {
     return AcquireRef(new RenderBundleEncoder(device, ObjectBase::kError, label));
 }
 
