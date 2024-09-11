@@ -16,6 +16,40 @@
       "message": "Kai, Brandon, I\u0027m taking this task over where Austin left it, PTAL! I\u0027m hoping that we won\u0027t need a breaking change define if folks use the C++ API.\n\nJim FYI for ART template changes.",
       "revId": "8892865a866cf51ac1b988ae5bd8c88cc1af2660",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38102ae6_123f30b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-09-11T17:11:17Z",
+      "side": 1,
+      "message": "Overall LGTM but I have a question about SIZE_MAX",
+      "revId": "8892865a866cf51ac1b988ae5bd8c88cc1af2660",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd45579e_95694fd4",
+        "filename": "generator/templates/art/structures.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-09-11T17:11:17Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused about this assert and the use of SIZE_MAX down below. I think this is supposed to be a signifier that the string doesn\u0027t have a specific length and should be read until a nullptr is encountered, but it reads as if we\u0027re expecting every string to have the maximum string length allocated.\n\nIf we are indeed using SIZE_MAX as a signifier perhaps for API ergonomics we could add a constant like NULL_TERMINATED \u003d SIZE_MAX to emphasize the intent?",
+      "revId": "8892865a866cf51ac1b988ae5bd8c88cc1af2660",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
