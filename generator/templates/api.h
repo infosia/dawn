@@ -37,6 +37,8 @@
 #ifndef {{metadata.api.upper()}}_H_
 #define {{metadata.api.upper()}}_H_
 
+#define WGPU_BREAKING_CHANGE_STRING_VIEW_LABELS
+
 {% set API = metadata.c_prefix %}
 #if defined({{API}}_SHARED_LIBRARY)
 #    if defined(_WIN32)
@@ -165,7 +167,11 @@ typedef struct {{API}}ChainedStructOut {
     {%- elif member.default_value != None -%}
         {{member.default_value}}
     {%- elif member.type.category == "structure" and member.annotation == "value" -%}
-        {{API}}_{{member.type.name.SNAKE_CASE()}}_INIT
+        {%- if member.type.name.get() == "nullable string view" -%}
+            WGPU_STRING_VIEW_INIT
+        {%- else -%}
+            {{API}}_{{member.type.name.SNAKE_CASE()}}_INIT
+        {%- endif -%}
     {%- else -%}
         {{- assert(member.json_data.get("no_default", false) == false) -}}
         {{- assert(member.default_value == None) -}}
