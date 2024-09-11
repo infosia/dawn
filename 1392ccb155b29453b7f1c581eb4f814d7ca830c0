@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0dd03772_d3c56869",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-11T14:19:40Z",
+      "side": 1,
+      "message": "Do you know when the HLSL translation adds uses of useVertexIndex / useInstanceIndex? My understanding is that we only need to add the variables when the FirstIndexOffset transforms does something useful so we should be good?\n\nWe pass information in random places in the D3D12 backend but for all of arglengths, firstIndexOffset and NumWorkgroup we pass binding points to Tint. Right now these have to be different bindings points because Tint will generate different ConstantBuffer\u003c\u003e for each, but Dawn can still compute them as a single bunch of root constants except that ah ... but then the root signature depends on them instead of only the total immediate size.\n\nOk so we have a chicken and egg problem where we need to move these transforms to use immediates when we don\u0027t have support for them yet in the D3D12 backend.\n\nSo let\u0027s do things in this order:\n\n - Add some skeleton support of immediates in the D3D12 backend (still with full dirty bits, caching of root signature etc), and use it for arglength only.\n - Move Tint to allow use of var\u003cimmediate\u003e for argLength (as an option) and make the HLSL option take a register space + register number for the immediates, as well as an offset for where the arglength should be.\n - Move Tint to allow use of immediate for numworkgroups, make the D3D12 backend use that.\n - Move Tint to allow use of immediate for vertex/index, use it in D3D12 backend.\n - Add support for immediates in WGSL, plump it in the frontend API, have it all work in D3D12.\n - Remove options to use non-immediates for the various Tint transforms.",
+      "parentUuid": "b7f33686_c73095fb",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cef9b778_59640a46",
         "filename": "src/dawn/native/PipelineLayout.cpp",
         "patchSetId": 1
@@ -243,6 +261,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8fa24b19_d84b4fb3",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-11T14:19:40Z",
+      "side": 1,
+      "message": "IMHO we could even do more explicitly and have structure containing all the data that we reinterpret_cast as a bunch of uint32_t for setting via root constants:\n\n```\nstruct CommonImmediates {\n    uint32_t immedates[kMaxImmediates];\n    uint32_t bufferLength[kMaxDynamicBuffers];\n}\n\nstruct RenderImmediateValues : CommonImmediates {\n    uint32_t vertexIndexOffset;\n    uint32_t instanceIndexOffset;\n    // ...\n};\n\nclass CommonImmediates\u003cValue\u003e {\n  public:\n    const size_t kValueCount \u003d sizeof(Value) / sizeof(uin32_t);\n\n    // Const getters for calling setRootConstant, or retreiving the data for other purpose\n    const Value* operator -\u003e () const {return reinterpret_cast\u003cconst Value*\u003e(\u0026mData);}\n    const std::ityp_array\u003cuint32_t, kValueCount\u003e\u0026 AsUint32() const { ... }\n\n    // Setters\n    void SetImmediates(offset, count, uint32_t* values) {\n        for (ConstantIndex i : Range(count)) {\n            ConstantIndex index \u003d offset + i;\n            mDirty |\u003d index;\n            this-\u003eimmediates[i] \u003d values[index];\n        }\n    }\n    \n    void OnPipelineChange(PipelineD3D12 pipeline) {\n        mDirty |\u003d pipelineD3D12-\u003eGetConstantsMask();\n    }\n    \n    void SetRootConstants(Id3D12CommandList*, Mak pipelineConstantMask, Mask requiredConstant \u003d all) {\n        Mask constantsToApply \u003d mDirty \u0026 requiredConstant \u0026 pipelineConstantMask;\n        // Apply them\n        mDirty |\u003d ~constantsToApply;\n    }\n \n  protected:\n    // Only child class is allowed to mutate\n    operator -\u003e () {return reinterpret_cast\u003cValue*\u003e(\u0026mData);}\n    \n    // This is necessary to be char to not have UB\n    alignas(Value) char [kValueCount * sizeof(uin32_t)] mDataata;\n    ityp::bitset\u003ckValueCount, ConstantIndex\u003e mDirty;\n};\n\nclass RenderImmediates : CommonImmediates\u003c RenderImmediateValues \u003e {\n   void SetVertexAndInstanceIndex(uint32_t vertex, uint32_t instance) {\n        mDirty |\u003d ...;\n        this-\u003e vertexIndexOffset \u003d ...;\n        // same for instance\n    }\n};\n```\n\nThen when we do other backends we can see how much of that can be reused if at all.",
+      "parentUuid": "7436f1fe_6fa371db",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1d6d6ebb_bea86e4d",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 1
@@ -289,6 +325,24 @@
       "side": 1,
       "message": "\u003e// In PipelineBase?\n\nIn PipelineBase.",
       "parentUuid": "50023f84_9b40f18e",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "174d2c3e_d9b5427d",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-11T14:19:40Z",
+      "side": 1,
+      "message": "I mean d3d12::PipelineBase 😊 oh and we don\u0027t have it. I guess we can add that class similarly to PipelineGL https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/ComputePipelineGL.h;drc\u003d17ae9a413c120786d6e625bc126b6e62f8194d79;l\u003d41\n\nThis way we can store data that\u0027s the same in both compute and render pipelines while not adding it to the layout (because multiiple pipelines use the layout)",
+      "parentUuid": "2f7b1af6_61c436d7",
       "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -360,6 +414,24 @@
       "side": 1,
       "message": "With the dirty bits struct above. I think we could have a base-derived structure. Because it contains all possible internal immediate data usages. Each backend/pipeline could operates on required parts.\nWDYT?",
       "parentUuid": "011c5470_5300f023",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6caf2c5_c541370c",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-11T14:19:40Z",
+      "side": 1,
+      "message": "The immediates that we are going to use will be different for each backend (Vulkan doesn\u0027t need array lengths, D3D12 doesn\u0027t need viewport bounds) and the mechanisms to set them will be different as well so it\u0027s not clear that there\u0027s any win to forcing code sharing. What do you imagine the code reuse would achieve?",
+      "parentUuid": "edda08f4_7fca6946",
       "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
