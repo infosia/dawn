@@ -34,6 +34,24 @@
       "parentUuid": "6243bb61_e26d9edd",
       "revId": "d4cb4531213b24a30853f6df0c67cabbb368ac32",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee1d6349_2bf6751d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3470507
+      },
+      "writtenOn": "2024-09-11T16:20:56Z",
+      "side": 1,
+      "message": "Due to some account issues, I don\u0027t own the \"Arthur Sonzogni\" account associated with this patch.\n\nCould you please \"abandon\" this patch on my behalf, because I can\u0027t XD.",
+      "parentUuid": "a7422b0b_8410e09b",
+      "revId": "d4cb4531213b24a30853f6df0c67cabbb368ac32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
