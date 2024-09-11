@@ -115,7 +115,7 @@ RenderPassEncoder::RenderPassEncoder(DeviceBase* device,
                                      CommandEncoder* commandEncoder,
                                      EncodingContext* encodingContext,
                                      ErrorTag errorTag,
-                                     const char* label)
+                                     NullableStringView label)
     : RenderEncoderBase(device, encodingContext, errorTag, label),
       mCommandEncoder(commandEncoder) {}
 
@@ -123,7 +123,7 @@ RenderPassEncoder::RenderPassEncoder(DeviceBase* device,
 Ref<RenderPassEncoder> RenderPassEncoder::MakeError(DeviceBase* device,
                                                     CommandEncoder* commandEncoder,
                                                     EncodingContext* encodingContext,
-                                                    const char* label) {
+                                                    NullableStringView label) {
     return AcquireRef(
         new RenderPassEncoder(device, commandEncoder, encodingContext, ObjectBase::kError, label));
 }

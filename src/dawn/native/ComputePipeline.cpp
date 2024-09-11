@@ -85,7 +85,7 @@ ComputePipelineBase::ComputePipelineBase(DeviceBase* device,
 
 ComputePipelineBase::ComputePipelineBase(DeviceBase* device,
                                          ObjectBase::ErrorTag tag,
-                                         const char* label)
+                                         NullableStringView label)
     : PipelineBase(device, tag, label) {}
 
 ComputePipelineBase::~ComputePipelineBase() = default;
@@ -99,10 +99,11 @@ bool ComputePipelineBase::IsFullSubgroupsRequired() const {
 }
 
 // static
-Ref<ComputePipelineBase> ComputePipelineBase::MakeError(DeviceBase* device, const char* label) {
+Ref<ComputePipelineBase> ComputePipelineBase::MakeError(DeviceBase* device,
+                                                        NullableStringView label) {
     class ErrorComputePipeline final : public ComputePipelineBase {
       public:
-        explicit ErrorComputePipeline(DeviceBase* device, const char* label)
+        explicit ErrorComputePipeline(DeviceBase* device, NullableStringView label)
             : ComputePipelineBase(device, ObjectBase::kError, label) {}
 
         MaybeError InitializeImpl() override {

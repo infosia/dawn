@@ -1308,7 +1308,9 @@ TextureViewBase::TextureViewBase(TextureBase* texture,
     GetObjectTrackingList()->Track(this);
 }
 
-TextureViewBase::TextureViewBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label)
+TextureViewBase::TextureViewBase(DeviceBase* device,
+                                 ObjectBase::ErrorTag tag,
+                                 NullableStringView label)
     : ApiObjectBase(device, tag, label), mFormat(kUnusedFormat) {}
 
 TextureViewBase::~TextureViewBase() = default;
@@ -1316,7 +1318,7 @@ TextureViewBase::~TextureViewBase() = default;
 void TextureViewBase::DestroyImpl() {}
 
 // static
-Ref<TextureViewBase> TextureViewBase::MakeError(DeviceBase* device, const char* label) {
+Ref<TextureViewBase> TextureViewBase::MakeError(DeviceBase* device, NullableStringView label) {
     return AcquireRef(new TextureViewBase(device, ObjectBase::kError, label));
 }
 

@@ -107,7 +107,7 @@ SamplerBase::SamplerBase(DeviceBase* device, const SamplerDescriptor* descriptor
     GetObjectTrackingList()->Track(this);
 }
 
-SamplerBase::SamplerBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label)
+SamplerBase::SamplerBase(DeviceBase* device, ObjectBase::ErrorTag tag, NullableStringView label)
     : ApiObjectBase(device, tag, label) {}
 
 SamplerBase::~SamplerBase() = default;
@@ -117,7 +117,7 @@ void SamplerBase::DestroyImpl() {
 }
 
 // static
-Ref<SamplerBase> SamplerBase::MakeError(DeviceBase* device, const char* label) {
+Ref<SamplerBase> SamplerBase::MakeError(DeviceBase* device, NullableStringView label) {
     return AcquireRef(new SamplerBase(device, ObjectBase::kError, label));
 }
 
