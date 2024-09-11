@@ -207,8 +207,21 @@ ResultOrError<Ref<BindGroupBase>> MakeBindGroup(
     return device->CreateBindGroup(&descriptor, mode);
 }
 
-const char* GetLabelForTrace(const char* label) {
-    return (label == nullptr || strlen(label) == 0) ? "None" : label;
+const char* GetLabelForTrace(const std::string& label) {
+    if (label.length() == 0) {
+        return "None";
+    }
+    return label.c_str();
+}
+
+const char* GetLabelForTrace(std::optional<std::string_view> label) {
+    if (!label || label->length() == 0) {
+        return "None";
+    }
+    if (label->back() != '\0') {
+        return "Label not null terminated (issue 365980798)";
+    }
+    return label->data();
 }
 
 std::string_view NormalizeLabel(std::string_view in) {
