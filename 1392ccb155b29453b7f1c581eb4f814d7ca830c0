@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b7f33686_c73095fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-11T02:34:33Z",
+      "side": 1,
+      "message": "Thanks for the reading and comments!\n\n\u003eQuerying stuff after transforms is actually something that the Tint team wants to remove over time, it just hasn\u0027t done it for HLSL yet.\n\nThat\u0027s a big change. Still possible to achieve \"use exact numbers of immediate data slots\". Tint Reflection might provide enough infos (as you mentioned in below comments about useVertexIndex). But I\u0027m not sure whether some transforms e.g. \"ArrayLengthFromUniform\" (https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/wgsl/ast/transform/array_length_from_uniform.cc;drc\u003da6941c6ee100b201f6f02c12e90fa8c05c3a607f;l\u003d261) (which only emit (from 0 to) highest dynamic storage buffer(analysis in trasforms) size variables) might generate builtins or additional codes which uses part of immediate datas. \nTo be clear about the concern, take \"vertex index offset\" as an example, tint reflection told us no vertexIndex or instance index has been used, but after applying some hlsl specific transforms, some generated code uses them. So we got false info from tint reflection. \n\nBut it might be Ok. API side could know the final result by query proper tint reflection info combined with API side toggle/workaround/extra command utils info.\n\nBut still need your wise about this.\n\n\n\n\n\u003eLet me know if you\u0027d like a small meeting to discuss all of this, I know it\u0027s a lot but a clear solution is in sight!\n\nThanks! That would be great! Pls send me the calendar after you find the available time slot!",
+      "parentUuid": "c84c6c07_235e82d5",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cef9b778_59640a46",
         "filename": "src/dawn/native/PipelineLayout.cpp",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2024-09-10T12:22:09Z",
       "side": 1,
       "message": "Could we start landing this part of the code (just the new pipeline layout desc member) as well as limits and validation? I think it is very non-controversial and would de-risk the rest while we iterate.",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "630f975b_3d8979d7",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-11T02:34:33Z",
+      "side": 1,
+      "message": "For sure! I think that\u0027s the common and necessary part and small enough.",
+      "parentUuid": "cef9b778_59640a46",
       "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -77,6 +113,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "482420ff_9a195b2e",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-11T02:34:33Z",
+      "side": 1,
+      "message": "Agree unless above (in last comment) concern could be resolved.",
+      "parentUuid": "cbebf4d3_fa3beb0b",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 57
+      },
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "62b271c8_61a6a891",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 1
@@ -88,6 +148,24 @@
       "writtenOn": "2024-09-10T12:22:09Z",
       "side": 1,
       "message": "This would just set the values and the dirty bits, skipping setting the root constant here would be done when we try to apply the values before a draw / dispatch.",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e052945_6025368f",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-11T02:34:33Z",
+      "side": 1,
+      "message": "Yes. Record the state/value here and apply all dirty constants at once is the way we follow",
+      "parentUuid": "62b271c8_61a6a891",
       "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -147,6 +225,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7436f1fe_6fa371db",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-11T02:34:33Z",
+      "side": 1,
+      "message": "\u003e, but for tracking I believe dirty bits are better because they allow easy masking with the pipeline\u0027s mask of used constants.\n\nYou convinced me. I agree that the dirty bits is a necessary and simple state tracking struct. What\u0027s in my mind is:\n```\n// All known internal immediate data usages. Offset (and // size for some special \n// internal immediate data usages like arrayLengthFromUniform) are initialized to // std::max\u003cuint32_t\u003e or some invalid values.\nuint32_t VertexIndexOffset \u003d 0;\nuint32_t BufferLengthOffset \u003d invalid;\n\n// Values for each internal immediate data;\nstd::array\u003cuint32_t, 2\u003e firstIndexFirstInstance \u003d {};\nstd::vector\u003cuint32_t\u003e bufferLengths;\n\n// Or a uniform vector. Vector could reserve size after initialization. With \n// known offsets, it could store all values continuous.\n// std::vector\u003cuint32_t\u003e allValues.\n\n// Bits to represent whether pipeline need the internal immediate data, \n// initialize once and never changes again.\nBits mUsedConstants;\n\n// DirtyBits represent all known internal immediate data usages\nDirtyBits mAllInternalImmediateDataStates;\n\n```",
+      "parentUuid": "0f44d4d8_f02d9d25",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1d6d6ebb_bea86e4d",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 1
@@ -175,6 +271,24 @@
       "writtenOn": "2024-09-10T12:22:09Z",
       "side": 1,
       "message": "Ultimately the pipeline should be the one computing how many root constants it needs and what each one corresponds to but the root signature only depends on how many root constants are needed. So for example in the render pipeline initialization we\u0027d do:\n\n```\nConstantIndex mUsedConstants;\n// This could be in d3d12::PipelineBase\nmUsedConstants |\u003d constantsForImmediates (0, 0b1, 0b11, 0b111 or 0b1111, we\u0027d have a helper function doing bit twiddling for that).\nmUsedConstants |\u003d constantsForDynamicBuffers;\n\n// This could be in d3d12::RenderPipeline\nif (uses vertex index) { mUsedConstants |\u003d ConstantIndex::VertexIndex}\nif (uses instance index) { mUsedConstants |\u003d ConstantIndex::VertexIndex}\n\n// Equivalent in d3d12::ComputePipeline.\n\n\n// In PipelineBase?\nrootSignature \u003d layout-\u003eGetRootSignature(popcount(mUsedConstants))\n```",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f7b1af6_61c436d7",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-11T02:34:33Z",
+      "side": 1,
+      "message": "\u003e// In PipelineBase?\n\nIn PipelineBase.",
+      "parentUuid": "50023f84_9b40f18e",
       "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -228,6 +342,24 @@
       "side": 1,
       "message": "Ditto about backends needing to be different so we can\u0027t really do code reuse.",
       "parentUuid": "677bae5a_8d2a27a5",
+      "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edda08f4_7fca6946",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-11T02:34:33Z",
+      "side": 1,
+      "message": "With the dirty bits struct above. I think we could have a base-derived structure. Because it contains all possible internal immediate data usages. Each backend/pipeline could operates on required parts.\nWDYT?",
+      "parentUuid": "011c5470_5300f023",
       "revId": "1392ccb155b29453b7f1c581eb4f814d7ca830c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
