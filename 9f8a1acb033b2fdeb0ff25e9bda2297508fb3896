@@ -16,6 +16,24 @@
       "message": "It seems that the Tint tests are failing for mac. Does this happen in other CL’s also? I don’t think this CL causes them to fail.",
       "revId": "9f8a1acb033b2fdeb0ff25e9bda2297508fb3896",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "087db356_ade7bc6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-11T13:31:11Z",
+      "side": 1,
+      "message": "Seems like it is using Tint IR which doesn\u0027t support PLS without noticing that it is used and shouldn\u0027t run PLS.",
+      "parentUuid": "f6a71454_4b3f2921",
+      "revId": "9f8a1acb033b2fdeb0ff25e9bda2297508fb3896",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "465a022a_38fdc5f0",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-11T13:31:11Z",
+      "side": 1,
+      "message": "This merge conflict causes the issue. This block of code was removed.",
+      "revId": "a1b126e49dd7cba3ca6b324cfbbe20a585e777fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
