@@ -34,6 +34,7 @@
 
 #include "{{native_dir}}/ChainUtils.h"
 #include "{{native_dir}}/ObjectType_autogen.h"
+#include "{{native_dir}}/webgpu_absl_format.h"
 
 namespace {{native_namespace}} {
 

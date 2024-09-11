@@ -602,7 +602,7 @@ BindGroupLayoutInternalBase::BindGroupLayoutInternalBase(
 
 BindGroupLayoutInternalBase::BindGroupLayoutInternalBase(DeviceBase* device,
                                                          ObjectBase::ErrorTag tag,
-                                                         const char* label)
+                                                         NullableStringView label)
     : ApiObjectBase(device, tag, label) {}
 
 BindGroupLayoutInternalBase::~BindGroupLayoutInternalBase() = default;
