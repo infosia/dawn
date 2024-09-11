@@ -46,7 +46,7 @@ SharedResourceMemoryContents* SharedResource::GetSharedResourceMemoryContents() 
 
 SharedResourceMemory::SharedResourceMemory(DeviceBase* device,
                                            ObjectBase::ErrorTag tag,
-                                           const char* label)
+                                           NullableStringView label)
     : ApiObjectBase(device, tag, label),
       mContents(new SharedResourceMemoryContents(GetWeakRef(this))) {}
 

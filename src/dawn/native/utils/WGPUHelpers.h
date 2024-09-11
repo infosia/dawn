@@ -32,6 +32,7 @@
 #include <initializer_list>
 #include <vector>
 
+#include "dawn/common/NonCopyable.h"
 #include "dawn/common/Ref.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/UsageValidationMode.h"
@@ -141,7 +142,16 @@ ResultOrError<Ref<BindGroupBase>> MakeBindGroup(
     std::initializer_list<BindingInitializationHelper> entriesInitializer,
     UsageValidationMode mode);
 
-const char* GetLabelForTrace(const char* label);
+// Converts a label to be nice for TraceEvent calls. Might perform a copy if the string isn't
+// null-terminated as TraceEvent only supports const char*
+struct TraceLabel : NonCopyable {
+    TraceLabel();
+    TraceLabel(std::string storage, const char* label);
+    std::string storage;
+    const char* label;
+};
+TraceLabel GetLabelForTrace(NullableStringView label);
+const char* GetLabelForTrace(const std::string& label);
 
 // Given a std vector, allocate an equivalent array that can be returned in an API's foos/fooCount
 // pair of fields. The apiData must eventually be freed using FreeApiSeq.
