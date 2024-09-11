@@ -430,8 +430,9 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
 
     mFormatTable = BuildFormatTable(this);
 
-    if (descriptor->label != nullptr && strlen(descriptor->label) != 0) {
-        mLabel = descriptor->label;
+    std::optional<std::string_view> label = descriptor->label;
+    if (label.has_value()) {
+        mLabel = label.value();
     }
 
     mIsImmediateErrorHandlingEnabled = IsToggleEnabled(Toggle::EnableImmediateErrorHandling);
@@ -1345,8 +1346,9 @@ CommandEncoder* DeviceBase::APICreateCommandEncoder(const CommandEncoderDescript
 }
 ComputePipelineBase* DeviceBase::APICreateComputePipeline(
     const ComputePipelineDescriptor* descriptor) {
+    utils::TraceLabel label = utils::GetLabelForTrace(descriptor->label);
     TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateComputePipeline", "label",
-                 utils::GetLabelForTrace(descriptor->label));
+                 label.label);
 
     auto resultOrError = CreateComputePipeline(descriptor);
     if (resultOrError.IsSuccess()) {
@@ -1399,8 +1401,9 @@ Future DeviceBase::APICreateComputePipelineAsyncF(
 Future DeviceBase::APICreateComputePipelineAsync2(
     const ComputePipelineDescriptor* descriptor,
     const WGPUCreateComputePipelineAsyncCallbackInfo2& callbackInfo) {
+    utils::TraceLabel label = utils::GetLabelForTrace(descriptor->label);
     TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateComputePipelineAsync", "label",
-                 utils::GetLabelForTrace(descriptor->label));
+                 label.label);
 
     EventManager* manager = GetInstance()->GetEventManager();
 
@@ -1500,8 +1503,9 @@ Future DeviceBase::APICreateRenderPipelineAsyncF(
 Future DeviceBase::APICreateRenderPipelineAsync2(
     const RenderPipelineDescriptor* descriptor,
     const WGPUCreateRenderPipelineAsyncCallbackInfo2& callbackInfo) {
+    utils::TraceLabel label = utils::GetLabelForTrace(descriptor->label);
     TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateRenderPipelineAsync", "label",
-                 utils::GetLabelForTrace(descriptor->label));
+                 label.label);
 
     EventManager* manager = GetInstance()->GetEventManager();
 
@@ -1550,8 +1554,9 @@ RenderBundleEncoder* DeviceBase::APICreateRenderBundleEncoder(
 }
 RenderPipelineBase* DeviceBase::APICreateRenderPipeline(
     const RenderPipelineDescriptor* descriptor) {
+    utils::TraceLabel label = utils::GetLabelForTrace(descriptor->label);
     TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateRenderPipeline", "label",
-                 utils::GetLabelForTrace(descriptor->label));
+                 label.label);
 
     auto resultOrError = CreateRenderPipeline(descriptor);
     if (resultOrError.IsSuccess()) {
@@ -1569,8 +1574,8 @@ RenderPipelineBase* DeviceBase::APICreateRenderPipeline(
     return ReturnToAPI(std::move(result));
 }
 ShaderModuleBase* DeviceBase::APICreateShaderModule(const ShaderModuleDescriptor* descriptor) {
-    TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateShaderModule", "label",
-                 utils::GetLabelForTrace(descriptor->label));
+    utils::TraceLabel label = utils::GetLabelForTrace(descriptor->label);
+    TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateShaderModule", "label", label.label);
 
     std::unique_ptr<OwnedCompilationMessages> compilationMessages(
         std::make_unique<OwnedCompilationMessages>());
