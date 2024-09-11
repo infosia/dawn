@@ -33,6 +33,23 @@
       "message": "PTAL!",
       "revId": "b82e15be1a7e36d4e67ce839b32f76a087341f93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85f2fac7_0ac26b10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003291
+      },
+      "writtenOn": "2024-09-11T17:31:28Z",
+      "side": 1,
+      "message": "LGTM you will also need to remove this stuff from chromium: https://chromium-review.googlesource.com/c/chromium/src/+/4022918",
+      "revId": "b82e15be1a7e36d4e67ce839b32f76a087341f93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
