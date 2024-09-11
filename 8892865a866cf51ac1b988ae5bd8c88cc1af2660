@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "493341d7_26e09ca7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-11T16:44:48Z",
+      "side": 1,
+      "message": "Kai, Brandon, I\u0027m taking this task over where Austin left it, PTAL! I\u0027m hoping that we won\u0027t need a breaking change define if folks use the C++ API.\n\nJim FYI for ART template changes.",
+      "revId": "8892865a866cf51ac1b988ae5bd8c88cc1af2660",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
