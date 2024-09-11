@@ -207,8 +207,28 @@ ResultOrError<Ref<BindGroupBase>> MakeBindGroup(
     return device->CreateBindGroup(&descriptor, mode);
 }
 
-const char* GetLabelForTrace(const char* label) {
-    return (label == nullptr || strlen(label) == 0) ? "None" : label;
+TraceLabel::TraceLabel() : label(nullptr) {}
+TraceLabel::TraceLabel(std::string storage, const char* label) : storage(storage), label(label) {}
+
+const char* GetLabelForTrace(const std::string& label) {
+    if (label.length() == 0) {
+        return "None";
+    }
+    return label.c_str();
+}
+
+TraceLabel GetLabelForTrace(NullableStringView label) {
+    if (label.data == nullptr) {
+        return {{}, "None"};
+    }
+    if (label.length == WGPU_STRLEN) {
+        return {{}, label.data};
+    }
+
+    TraceLabel result;
+    result.storage = {label.data, label.length};
+    result.label = result.storage.data();
+    return result;
 }
 
 std::string_view NormalizeLabel(std::string_view in) {
