@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6a71454_4b3f2921",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003706
+      },
+      "writtenOn": "2024-09-11T13:17:33Z",
+      "side": 1,
+      "message": "It seems that the Tint tests are failing for mac. Does this happen in other CL’s also? I don’t think this CL causes them to fail.",
+      "revId": "9f8a1acb033b2fdeb0ff25e9bda2297508fb3896",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
