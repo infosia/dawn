@@ -576,6 +576,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c7ab89a3_03a39b78",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-11T05:34:36Z",
+      "side": 1,
+      "message": "Looking into the PLS implementation again, I feel unused entries should have no side effects. It\u0027s okay to remove the vector sort.",
+      "parentUuid": "ac1c7b77_f7e44b18",
+      "revId": "4384f6d6e21049f6ec6e40a865f0352ab7e90255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29be72fb_8d54f4c0",
         "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.h",
         "patchSetId": 5

@@ -39,6 +39,30 @@
       },
       "revId": "2014220c9c505a5c56c460d0a2670d238a864dd3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a60c6250_b203221d",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-11T05:34:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19efab1b_10303dfd",
+      "range": {
+        "startLine": 165,
+        "startChar": 51,
+        "endLine": 165,
+        "endChar": 81
+      },
+      "revId": "2014220c9c505a5c56c460d0a2670d238a864dd3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
