@@ -16,6 +16,23 @@
       "message": "Brandon PTAL as well!",
       "revId": "cd55c76993892cbb2940a065c3824d94a3ba3c1a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06f7fece_4a7d05ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-09-11T18:42:46Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "cd55c76993892cbb2940a065c3824d94a3ba3c1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
