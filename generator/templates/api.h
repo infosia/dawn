@@ -165,7 +165,11 @@ typedef struct {{API}}ChainedStructOut {
     {%- elif member.default_value != None -%}
         {{member.default_value}}
     {%- elif member.type.category == "structure" and member.annotation == "value" -%}
-        {{API}}_{{member.type.name.SNAKE_CASE()}}_INIT
+        {%- if member.type.name.get() == "nullable string view" -%}
+            WGPU_STRING_VIEW_INIT
+        {%- else -%}
+            {{API}}_{{member.type.name.SNAKE_CASE()}}_INIT
+        {%- endif -%}
     {%- else -%}
         {{- assert(member.json_data.get("no_default", false) == false) -}}
         {{- assert(member.default_value == None) -}}

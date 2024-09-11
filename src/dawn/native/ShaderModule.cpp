@@ -1370,7 +1370,9 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
     GetObjectTrackingList()->Track(this);
 }
 
-ShaderModuleBase::ShaderModuleBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label)
+ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
+                                   ObjectBase::ErrorTag tag,
+                                   NullableStringView label)
     : Base(device, tag, label), mType(Type::Undefined) {}
 
 ShaderModuleBase::~ShaderModuleBase() = default;
@@ -1380,7 +1382,7 @@ void ShaderModuleBase::DestroyImpl() {
 }
 
 // static
-Ref<ShaderModuleBase> ShaderModuleBase::MakeError(DeviceBase* device, const char* label) {
+Ref<ShaderModuleBase> ShaderModuleBase::MakeError(DeviceBase* device, NullableStringView label) {
     return AcquireRef(new ShaderModuleBase(device, ObjectBase::kError, label));
 }
 

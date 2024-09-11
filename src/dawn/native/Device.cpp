@@ -430,8 +430,9 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
 
     mFormatTable = BuildFormatTable(this);
 
-    if (descriptor->label != nullptr && strlen(descriptor->label) != 0) {
-        mLabel = descriptor->label;
+    std::optional<std::string_view> label = descriptor->label;
+    if (label.has_value()) {
+        mLabel = label.value();
     }
 
     mIsImmediateErrorHandlingEnabled = IsToggleEnabled(Toggle::EnableImmediateErrorHandling);
