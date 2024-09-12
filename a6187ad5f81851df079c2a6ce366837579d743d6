@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d6896f5_f78af86f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-12T20:46:51Z",
+      "side": 1,
+      "message": "Passes CTS that will be added here:\nhttps://github.com/gpuweb/cts/pull/3567",
+      "revId": "a6187ad5f81851df079c2a6ce366837579d743d6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
