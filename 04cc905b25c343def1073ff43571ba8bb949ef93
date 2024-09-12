@@ -16,6 +16,103 @@
       "message": "Please take a look, thanks! By the way, this feature dependency thing is not clear yet for the spec side, see https://github.com/gpuweb/gpuweb/issues/4734",
       "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d292922_b7a98b1e",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-12T15:48:57Z",
+      "side": 1,
+      "message": "For this and subgroup, let\u0027s use the builtin formatting with `%s` and passing the feature as an argument. (and just mention Subgroups not the experimental version because we will remove the experimental version).",
+      "range": {
+        "startLine": 285,
+        "startChar": 13,
+        "endLine": 285,
+        "endChar": 34
+      },
+      "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd89f154_24ef668f",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-12T15:48:57Z",
+      "side": 1,
+      "message": "We cannot use .contains yet because it is C++20 😞",
+      "range": {
+        "startLine": 286,
+        "startChar": 44,
+        "endLine": 286,
+        "endChar": 52
+      },
+      "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55b6fc27_e6cd6022",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-12T15:48:57Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4b4c4ee_210eda2d",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-12T15:48:57Z",
+      "side": 1,
+      "message": "u-nit: Slight preference for a function returning a vector and that does a switch internally. Also the formatting seems off?",
+      "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce0caec0_2a6788b2",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-12T15:48:57Z",
+      "side": 1,
+      "message": "This would be:\n\n```\nstd::vector\u003cFeatures\u003e features \u003d FeaturesAndDependencies(featureName);\nbool requiresExperimentalFeatures \u003d false;\nfor (feature : features) {\n   if(is experimental (feature)) {\n       requiresExperimentalFeatures \u003d true;\n   }\n}\n```",
+      "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
