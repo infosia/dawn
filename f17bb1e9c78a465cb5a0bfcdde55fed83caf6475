@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe299bc3_e20dffdf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-12T17:15:00Z",
+      "side": 1,
+      "message": "Looks good in general but I think the execution/memory barrier order needs to be swapped, unless I\u0027m missing something.",
+      "revId": "f17bb1e9c78a465cb5a0bfcdde55fed83caf6475",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f61c4d8a_b741512f",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-12T17:15:00Z",
+      "side": 1,
+      "message": "I might be wrong, but I think these need to be in the other order.\n\nConsider:\n```\ninv. A writes to storage buffer variable x\nstorageBarrier()\ninv. B reads from storage buffer variable x\n```\nWe\u0027d expect `B` to read the value that was written by `A`. With the barriers the way round you have them now, there is no guarantee that `A` will have finished flushing its write with the `memoryBarrierBuffer()` call before `B` gets to the read, because `memoryBarrierBuffer` is not an execution barrier.",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 38
+      },
+      "revId": "f17bb1e9c78a465cb5a0bfcdde55fed83caf6475",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
