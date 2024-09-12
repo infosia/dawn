@@ -16,6 +16,40 @@
       "message": "PTAL",
       "revId": "7049617cacaaaba6d21dd0a6fafec728cee4b991",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7172b7a_f5ab4ea1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-12T15:22:13Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "7049617cacaaaba6d21dd0a6fafec728cee4b991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "560b0938_d4d7ea44",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-12T15:22:13Z",
+      "side": 1,
+      "message": "Note: We should handle wgpu::TextureFormat::Undefined here as I believe it can happen for implicit PLS.",
+      "revId": "7049617cacaaaba6d21dd0a6fafec728cee4b991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
