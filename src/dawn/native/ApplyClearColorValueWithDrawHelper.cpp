@@ -134,18 +134,18 @@ std::string ConstructFragmentShader(DeviceBase* device,
     std::ostringstream fragmentShaderStream;
     if (key.hasPLS) {
         std::vector<const char*> plsTypes;
-        const size_t plsSlotCount = key.totalPixelLocalStorageSize / kPLSSlotByteSize;
+        const size_t plsSlotCount = key.plsFormats.size();
         plsTypes.resize(plsSlotCount, "u32");
-        for (const auto& attachment : key.plsAttachments) {
-            switch (attachment.format) {
+        for (size_t i = 0; i < plsSlotCount; ++i) {
+            switch (key.plsFormats[i]) {
                 case wgpu::TextureFormat::R32Uint:
-                    plsTypes[attachment.offset / kPLSSlotByteSize] = "u32";
+                    plsTypes[i] = "u32";
                     break;
                 case wgpu::TextureFormat::R32Sint:
-                    plsTypes[attachment.offset / kPLSSlotByteSize] = "i32";
+                    plsTypes[i] = "i32";
                     break;
                 case wgpu::TextureFormat::R32Float:
-                    plsTypes[attachment.offset / kPLSSlotByteSize] = "f32";
+                    plsTypes[i] = "f32";
                     break;
                 default:
                     DAWN_UNREACHABLE();
@@ -256,10 +256,14 @@ ResultOrError<RenderPipelineBase*> GetOrCreateApplyClearValueWithDrawPipeline(
     pipelineLayoutDesc.bindGroupLayouts = &bgl.Get();
 
     wgpu::PipelineLayoutPixelLocalStorage pls;
+    std::vector<wgpu::PipelineLayoutStorageAttachment> plsAttachments;
     if (key.hasPLS) {
-        pls.totalPixelLocalStorageSize = key.totalPixelLocalStorageSize;
-        pls.storageAttachmentCount = key.plsAttachments.size();
-        pls.storageAttachments = key.plsAttachments.data();
+        pls.totalPixelLocalStorageSize = key.plsFormats.size() * kPLSSlotByteSize;
+        pls.storageAttachmentCount = key.plsFormats.size();
+        for (size_t i = 0; i < key.plsFormats.size(); ++i) {
+            plsAttachments.push_back({nullptr, i * kPLSSlotByteSize, key.plsFormats[i]});
+        }
+        pls.storageAttachments = plsAttachments.data();
 
         pipelineLayoutDesc.nextInChain = &pls;
     }
@@ -447,15 +451,11 @@ bool GetKeyOfApplyClearColorValueWithDrawPipelines(
 
     if (const auto* pls = renderPassDescriptor.Get<RenderPassPixelLocalStorage>()) {
         key->hasPLS = true;
-        key->totalPixelLocalStorageSize = pls->totalPixelLocalStorageSize;
-        key->plsAttachments = std::vector<wgpu::PipelineLayoutStorageAttachment>(
-            pls->totalPixelLocalStorageSize / kPLSSlotByteSize,
-            {nullptr, 0, wgpu::TextureFormat::Undefined});
+        key->plsFormats = std::vector<wgpu::TextureFormat>(
+            pls->totalPixelLocalStorageSize / kPLSSlotByteSize, wgpu::TextureFormat::Undefined);
         for (size_t i = 0; i < pls->storageAttachmentCount; i++) {
             size_t slot = pls->storageAttachments[i].offset / kPLSSlotByteSize;
-            key->plsAttachments[slot].format =
-                pls->storageAttachments[i].storage->GetFormat().format;
-            key->plsAttachments[slot].offset = pls->storageAttachments[i].offset;
+            key->plsFormats[slot] = pls->storageAttachments[i].storage->GetFormat().format;
         }
     }
 
@@ -502,10 +502,8 @@ size_t KeyOfApplyClearColorValueWithDrawPipelinesHashFunc::operator()(
     HashCombine(&hash, key.depthStencilFormat);
 
     HashCombine(&hash, key.hasPLS);
-    HashCombine(&hash, key.totalPixelLocalStorageSize);
-    for (const auto attachment : key.plsAttachments) {
-        HashCombine(&hash, attachment.offset);
-        HashCombine(&hash, attachment.format);
+    for (const auto format : key.plsFormats) {
+        HashCombine(&hash, format);
     }
 
     return hash;
@@ -528,15 +526,12 @@ bool KeyOfApplyClearColorValueWithDrawPipelinesEqualityFunc::operator()(
         }
     }
 
-    if (key1.hasPLS != key2.hasPLS ||
-        key1.totalPixelLocalStorageSize != key2.totalPixelLocalStorageSize ||
-        key1.plsAttachments.size() != key2.plsAttachments.size()) {
+    if (key1.hasPLS != key2.hasPLS || key1.plsFormats.size() != key2.plsFormats.size()) {
         return false;
     }
 
-    for (auto i : Range(key1.plsAttachments.size())) {
-        if (key1.plsAttachments[i].format != key2.plsAttachments[i].format ||
-            key1.plsAttachments[i].offset != key2.plsAttachments[i].offset) {
+    for (auto i : Range(key1.plsFormats.size())) {
+        if (key1.plsFormats[i] != key2.plsFormats[i]) {
             return false;
         }
     }
