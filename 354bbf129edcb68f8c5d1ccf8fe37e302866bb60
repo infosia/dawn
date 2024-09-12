@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e3194c1_91d389c3",
+        "filename": "src/dawn/native/webgpu_absl_format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-12T21:46:23Z",
+      "side": 1,
+      "message": "nit: I think this makes it indistinguishable from the string \"undefined\"",
+      "revId": "354bbf129edcb68f8c5d1ccf8fe37e302866bb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9efa1776_0efd13bc",
+        "filename": "src/dawn/tests/unittests/wire/WireCreatePipelineAsyncTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-12T21:46:23Z",
+      "side": 1,
+      "message": "In other places in the API we always have the size first, pointer second. Seems StringView is the other way around in Dawn right now. Any particular reason for it?",
+      "revId": "354bbf129edcb68f8c5d1ccf8fe37e302866bb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a40938e_43e32daa",
+        "filename": "src/dawn/tests/unittests/wire/WireCreatePipelineAsyncTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-12T21:46:23Z",
+      "side": 1,
+      "message": "nit: if `wgslDesc` were default initialized with the `INIT` macro, I think this could be `wgslDesc.code.data \u003d \"...\";`\n\n... except we are not actually initializing the stringview substruct correctly right now:\nhttps://source.chromium.org/chromium/chromium/src/+/main:out/webview-Debug/gen/third_party/dawn/include/dawn/webgpu.h;l\u003d2251;drc\u003d504c89715bea6d46d605b86c4559f30c275388ce",
+      "revId": "354bbf129edcb68f8c5d1ccf8fe37e302866bb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
