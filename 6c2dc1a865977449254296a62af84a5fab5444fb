@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "780a20e4_34b240ae",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-12T00:58:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cf422606_74cf6cca",
+      "revId": "6c2dc1a865977449254296a62af84a5fab5444fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76a11276_44ef0ef6",
@@ -65,6 +83,24 @@
       "writtenOn": "2024-09-11T13:17:31Z",
       "side": 1,
       "message": "Offset is redundant with `slot * kPLSSlotByteSize` and can be removed. Likewise for the nextInChain.\n\nSo overall we get the same `std::vector\u003cTextureFormat\u003e` that\u0027s in the pipeline layout. Again happy to have these comments addressed as follow ups to unblock this CL.",
+      "revId": "6c2dc1a865977449254296a62af84a5fab5444fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e11f8fe8_a8293955",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-12T00:58:59Z",
+      "side": 1,
+      "message": "Thanks. I\u0027d land this first, and address the comments with a follow-up CL.",
+      "parentUuid": "76a11276_44ef0ef6",
       "revId": "6c2dc1a865977449254296a62af84a5fab5444fb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
