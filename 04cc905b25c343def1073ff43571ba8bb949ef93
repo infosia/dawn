@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4980a092_70801c6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-09-12T08:56:57Z",
+      "side": 1,
+      "message": "Please take a look, thanks! By the way, this feature dependency thing is not clear yet for the spec side, see https://github.com/gpuweb/gpuweb/issues/4734",
+      "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
