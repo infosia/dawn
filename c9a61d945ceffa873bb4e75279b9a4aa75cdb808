@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a473ee0e_c304497a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-09-12T10:14:07Z",
+      "side": 1,
+      "message": "Thanks for reviewing! The latest patch fix `GetInstanceDeprecationCountsForTesting` -\u003e `GetInstanceDeprecationCountForTesting`",
+      "revId": "c9a61d945ceffa873bb4e75279b9a4aa75cdb808",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
