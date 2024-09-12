@@ -88,6 +88,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b6a6e0c_96bee206",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-12T21:25:13Z",
+      "side": 1,
+      "message": "LGTM, I didn\u0027t realize we hadn\u0027t implemented this validation yet for clip_distances+maxInterStageShaderComponents before the removal, but it makes sense since clip_distances wasn\u0027t fully implemented yet.\n\nThanks for picking up the work on the maxInterStageShaderComponents removal!",
+      "revId": "b5fc023db5ce4845c22d089dc4c0ccb6f3a8dd2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec020830_2ff86cde",
@@ -101,6 +118,47 @@
       "writtenOn": "2024-09-12T13:16:51Z",
       "side": 1,
       "message": "Greater or equal to %u (maxInterStageShaderVariables) - %u (clip_distances) would be slightly more clear than adding the -1 IMHO",
+      "revId": "b5fc023db5ce4845c22d089dc4c0ccb6f3a8dd2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b531c13_247fc78c",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-12T21:25:13Z",
+      "side": 1,
+      "message": "Maybe something like \"location (%u) that is too large. It should be less than %u...\"",
+      "parentUuid": "ec020830_2ff86cde",
+      "revId": "b5fc023db5ce4845c22d089dc4c0ccb6f3a8dd2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad5e461a_a093bd30",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-12T21:25:13Z",
+      "side": 1,
+      "message": "(here too)",
+      "range": {
+        "startLine": 730,
+        "startChar": 28,
+        "endLine": 730,
+        "endChar": 40
+      },
       "revId": "b5fc023db5ce4845c22d089dc4c0ccb6f3a8dd2d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
