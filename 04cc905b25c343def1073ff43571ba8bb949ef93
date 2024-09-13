@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12430ffc_8816d090",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-09-13T03:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d292922_b7a98b1e",
+      "range": {
+        "startLine": 285,
+        "startChar": 13,
+        "endLine": 285,
+        "endChar": 34
+      },
+      "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd89f154_24ef668f",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-09-12T15:48:57Z",
       "side": 1,
       "message": "We cannot use .contains yet because it is C++20 😞",
+      "range": {
+        "startLine": 286,
+        "startChar": 44,
+        "endLine": 286,
+        "endChar": 52
+      },
+      "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f76d42f_63bda0aa",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-09-13T03:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd89f154_24ef668f",
       "range": {
         "startLine": 286,
         "startChar": 44,
@@ -81,6 +129,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d82c0ea4_c9b4c9a9",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-09-13T03:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55b6fc27_e6cd6022",
+      "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4b4c4ee_210eda2d",
@@ -98,6 +164,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2475820_dc6c2f4c",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-09-13T03:22:58Z",
+      "side": 1,
+      "message": "Done, make a `std::unordered_set\u003cwgpu::FeatureName\u003e FeatureAndDependenciesSet(wgpu::FeatureName feature)`",
+      "parentUuid": "d4b4c4ee_210eda2d",
+      "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce0caec0_2a6788b2",
@@ -111,6 +195,24 @@
       "writtenOn": "2024-09-12T15:48:57Z",
       "side": 1,
       "message": "This would be:\n\n```\nstd::vector\u003cFeatures\u003e features \u003d FeaturesAndDependencies(featureName);\nbool requiresExperimentalFeatures \u003d false;\nfor (feature : features) {\n   if(is experimental (feature)) {\n       requiresExperimentalFeatures \u003d true;\n   }\n}\n```",
+      "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66e70464_ea05eae0",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-09-13T03:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce0caec0_2a6788b2",
       "revId": "04cc905b25c343def1073ff43571ba8bb949ef93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
