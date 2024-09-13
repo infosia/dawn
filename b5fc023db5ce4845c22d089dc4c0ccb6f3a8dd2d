@@ -140,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42222207_169c7652",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-09-13T02:11:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b531c13_247fc78c",
+      "revId": "b5fc023db5ce4845c22d089dc4c0ccb6f3a8dd2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad5e461a_a093bd30",
@@ -163,6 +181,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a5cb384_0d669fed",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-09-13T02:11:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad5e461a_a093bd30",
+      "range": {
+        "startLine": 730,
+        "startChar": 28,
+        "endLine": 730,
+        "endChar": 40
+      },
+      "revId": "b5fc023db5ce4845c22d089dc4c0ccb6f3a8dd2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "522fcb80_9d931b65",
@@ -176,6 +218,30 @@
       "writtenOn": "2024-09-12T13:16:51Z",
       "side": 1,
       "message": "```suggestion\n            device.CreateRenderPipeline(\u0026descriptor);\n```",
+      "range": {
+        "startLine": 1188,
+        "startChar": 0,
+        "endLine": 1189,
+        "endChar": 47
+      },
+      "revId": "b5fc023db5ce4845c22d089dc4c0ccb6f3a8dd2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c5b9fb1_95919c03",
+        "filename": "src/dawn/tests/end2end/MaxLimitTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-09-13T02:11:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "522fcb80_9d931b65",
       "range": {
         "startLine": 1188,
         "startChar": 0,
