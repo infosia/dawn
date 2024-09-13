@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7337d22f_2067b394",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-09-13T18:40:35Z",
+      "side": 1,
+      "message": "This needed more changes as it was the last instance of using ValidationMode. PTAL",
+      "revId": "66f18a78b4020fa269ec7f79cd80ffde217d00a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
