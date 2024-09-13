@@ -50,6 +50,24 @@
       "message": "Note: We should handle wgpu::TextureFormat::Undefined here as I believe it can happen for implicit PLS.",
       "revId": "7049617cacaaaba6d21dd0a6fafec728cee4b991",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2b52f96_2e9e1888",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-13T02:37:23Z",
+      "side": 1,
+      "message": "You are right, and it should have been caught by the `DAWN_UNREACHABLE` below.\nThis is because of a bug, newly introduced by my previous CL. I am fixing it with another [CL](https://dawn-review.googlesource.com/c/dawn/+/206093).\n\nBTW, this CL should be dropped, as undefined format can\u0027t be used to create pipeline layout according to this [validation](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PipelineLayout.cpp;drc\u003d8b00b43b06712a6c61f59f2e9f9230459d2a9025;l\u003d66).",
+      "parentUuid": "560b0938_d4d7ea44",
+      "revId": "7049617cacaaaba6d21dd0a6fafec728cee4b991",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
