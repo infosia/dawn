@@ -199,6 +199,7 @@ class Texture final : public TextureBase {
 
     // The states of an external texture:
     //   InternalOnly: A regular texture created with device.CreateTexture or equivalent.
+    //   SwapChain: The texture was created from a swapchain.
     //   PendingAcquire: Initialized as an external texture already, but unavailable for access yet.
     //   Acquired: Ready for access.
     //   EagerlyTransitioned: The texture has ever been used, and eagerly transitioned for export.
@@ -206,6 +207,7 @@ class Texture final : public TextureBase {
     //   been destroyed, and should no longer be used.
     enum class ExternalState {
         InternalOnly,
+        SwapChain,
         PendingAcquire,
         Acquired,
         EagerlyTransitioned,

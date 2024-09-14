@@ -1071,6 +1071,12 @@ MaybeError Texture::BindExternalMemory(const ExternalImageDescriptorVk* descript
 
 MaybeError Texture::OnBeforeSubmit(CommandRecordingContext* recordingContext) {
     Device* device = ToBackend(GetDevice());
+    if (mExternalState == ExternalState::SwapChain) {
+        recordingContext->waitSemaphores.insert(recordingContext->waitSemaphores.end(),
+                                                mWaitRequirements.begin(), mWaitRequirements.end());
+        return {};
+    }
+
     mExternalState = ExternalState::EagerlyTransitioned;
 
     // Insert semaphores to be able to order operations on this texture between Dawn and the
@@ -1146,6 +1152,10 @@ MaybeError Texture::OnBeforeSubmit(CommandRecordingContext* recordingContext) {
 }
 
 void Texture::OnAfterSubmit() {
+    if (mExternalState == ExternalState::SwapChain) {
+        return;
+    }
+
     // The submit is successful so the previous external semaphore is no longer the latest. Replace
     // it with the pending semaphore, which is the latest.
     if (mExternalSemaphoreHandle != kNullExternalSemaphoreHandle) {
@@ -1503,7 +1513,11 @@ void Texture::TransitionUsageForPassImpl(
     });
 
     if (mExternalState != ExternalState::InternalOnly) {
-        TweakTransitionForExternalUsage(recordingContext, imageBarriers, transitionBarrierStart);
+        if (mExternalState == ExternalState::SwapChain) {
+            recordingContext->specialSyncTextures.insert(this);
+        } else {
+            TweakTransitionForExternalUsage(recordingContext, imageBarriers, transitionBarrierStart);
+        }
     }
 
     // Skip adding pipeline stages if no barrier was needed to avoid putting TOP_OF_PIPE in the
@@ -1527,7 +1541,11 @@ void Texture::TransitionUsageNow(CommandRecordingContext* recordingContext,
                                          &dstStages);
 
     if (mExternalState != ExternalState::InternalOnly) {
-        TweakTransitionForExternalUsage(recordingContext, &barriers, 0);
+        if (mExternalState == ExternalState::SwapChain) {
+            recordingContext->specialSyncTextures.insert(this);
+        } else {
+            TweakTransitionForExternalUsage(recordingContext, &barriers, 0);
+        }
     }
 
     if (!barriers.empty()) {
