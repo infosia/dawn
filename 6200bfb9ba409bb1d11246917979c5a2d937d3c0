@@ -68,6 +68,24 @@
       "message": "Wasn\u0027t the point that the key would be a bool + vector\u003ctextureFormat\u003e ?",
       "revId": "6200bfb9ba409bb1d11246917979c5a2d937d3c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5533722e_3ec35b0e",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-14T12:37:10Z",
+      "side": 1,
+      "message": "If we were to go that way, we would need to trim the undefined ones from vector\u003ctextureFormat\u003e, and restore offsets, when creating the pipeline from the key, as the pipeline layout [validation](vector\u003ctextureFormat\u003e) doesn\u0027t allow undefined texture format. I am okay either way.",
+      "parentUuid": "05bd667b_80c319c4",
+      "revId": "6200bfb9ba409bb1d11246917979c5a2d937d3c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
