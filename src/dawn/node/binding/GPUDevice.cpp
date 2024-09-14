@@ -186,11 +186,20 @@ interop::Interface<interop::GPUSupportedLimits> GPUDevice::getLimits(Napi::Env e
     wgpu::SupportedLimits limits{};
     wgpu::DawnExperimentalSubgroupLimits subgroupLimits{};
 
+    wgpu::ChainedStructOut** limitsListTail = &limits.nextInChain;
     // Query the subgroup limits only if subgroups feature is enabled on the device.
     // TODO(349125474): Remove deprecated ChromiumExperimentalSubgroups.
     if (device_.HasFeature(wgpu::FeatureName::Subgroups) ||
         device_.HasFeature(wgpu::FeatureName::ChromiumExperimentalSubgroups)) {
-        limits.nextInChain = &subgroupLimits;
+        *limitsListTail = &subgroupLimits;
+        limitsListTail = &(*limitsListTail)->nextInChain;
+    }
+
+    // Query the immediate data limits only if ChromiumExperimentalImmediateData feature
+    // is available on device.
+    if (device_.HasFeature(FeatureName::ChromiumExperimentalImmediateData)) {
+        *limitsListTail = &immediateDataLimits;
+        limitsListTail = &(*limitsListTail)->nextInChain;
     }
 
     if (!device_.GetLimits(&limits)) {

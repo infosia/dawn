@@ -104,11 +104,20 @@ interop::Interface<interop::GPUSupportedLimits> GPUAdapter::getLimits(Napi::Env 
 
     wgpu::Adapter wgpuAdapter = adapter_.Get();
 
+    wgpu::ChainedStructOut** limitsListTail = &limits.nextInChain;
     // Query the subgroup limits only if subgroups feature is available on the adapter.
     // TODO(349125474): Remove deprecated ChromiumExperimentalSubgroups.
     if (wgpuAdapter.HasFeature(FeatureName::Subgroups) ||
         wgpuAdapter.HasFeature(FeatureName::ChromiumExperimentalSubgroups)) {
-        limits.nextInChain = &subgroupLimits;
+        *limitsListTail = &subgroupLimits;
+        limitsListTail = &(*limitsListTail)->nextInChain;
+    }
+
+    // Query the immediate data limits only if ChromiumExperimentalImmediateData feature
+    // is available on adapter.
+    if (wgpuAdapter.HasFeature(FeatureName::ChromiumExperimentalImmediateData)) {
+        *limitsListTail = &immediateDataLimits;
+        limitsListTail = &(*limitsListTail)->nextInChain;
     }
 
     if (!wgpuAdapter.GetLimits(&limits)) {
