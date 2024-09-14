@@ -33,6 +33,7 @@
 #include "dawn/native/SwapChain.h"
 
 #include "dawn/common/vulkan_platform.h"
+#include "dawn/native/IntegerTypes.h"
 
 namespace dawn::native::vulkan {
 
@@ -86,8 +87,16 @@ class SwapChain : public SwapChainBase {
 
     VkSurfaceKHR mVkSurface = VK_NULL_HANDLE;
     VkSwapchainKHR mSwapChain = VK_NULL_HANDLE;
-    std::vector<VkImage> mSwapChainImages;
-    std::vector<VkSemaphore> mSwapChainSemaphores;
+
+    struct PerImage {
+        VkImage image;
+        // Used for the rendering -> present dependency, we need one semaphore per image because a
+        // present tehcnically not be started when signal the semaphore for the next frame.
+        VkSemaphore semaphore;
+        // Used for frame pacing.
+        ExecutionSerial lastRendered = kBeginningOfGPUTime;
+    };
+    std::vector<PerImage> mImages;
     uint32_t mLastImageIndex = 0;
 
     Ref<Texture> mBlitTexture;
