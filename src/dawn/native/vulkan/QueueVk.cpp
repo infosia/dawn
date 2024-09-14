@@ -345,13 +345,13 @@ MaybeError Queue::SubmitPendingCommands() {
 
     Device* device = ToBackend(GetDevice());
 
-    if (!mRecordingContext.mappableBuffersForEagerTransition.empty()) {
+    if (!mRecordingContext.specialSyncBuffers.empty()) {
         // Transition mappable buffers back to map usages with the submit.
-        Buffer::TransitionMappableBuffersEagerly(
-            device->fn, &mRecordingContext, mRecordingContext.mappableBuffersForEagerTransition);
+        Buffer::TransitionMappableBuffersEagerly(device->fn, &mRecordingContext,
+                                                 mRecordingContext.specialSyncBuffers);
     }
     std::vector<ScopedSignalSemaphore> externalTextureSemaphores;
-    for (size_t i = 0; i < mRecordingContext.externalTexturesForEagerTransition.size(); ++i) {
+    for (size_t i = 0; i < mRecordingContext.specialSyncTextures.size(); ++i) {
         // Create an external semaphore for each external textures that have been used in the
         // pending submit.
         auto& externalTextureSemaphore =
@@ -361,7 +361,8 @@ MaybeError Queue::SubmitPendingCommands() {
     }
 
     // Transition eagerly all used external textures for export.
-    for (auto* texture : mRecordingContext.externalTexturesForEagerTransition) {
+    for (auto texture : mRecordingContext.specialSyncTextures) {
+        // TODO(330385376): Remove once ExternalImageDescriptorVk is removed.
         texture->TransitionEagerlyForExport(&mRecordingContext);
 
         // TODO(330385376): Remove once ExternalImageDescriptorVk is removed.
@@ -377,16 +378,8 @@ MaybeError Queue::SubmitPendingCommands() {
             for (const auto& fence : fences) {
                 // All semaphores are binary semaphores.
                 DAWN_ASSERT(fence.signaledValue == 1u);
-                ExternalSemaphoreHandle semaphoreHandle = [&]() {
-                    if constexpr (std::is_same_v<ExternalSemaphoreHandle, SystemHandle::Handle>) {
-                        return ToBackend(fence.object)->GetHandle().Get();
-                    } else {
-                        // TODO(crbug.com/dawn/1745): Remove this path and make the semaphore
-                        // service use SystemHandle.
-                        DAWN_UNREACHABLE();
-                        return ExternalSemaphoreHandle{};
-                    }
-                }();
+                ExternalSemaphoreHandle semaphoreHandle =
+                    ToBackend(fence.object)->GetHandle().Get();
 
                 VkSemaphore semaphore;
                 DAWN_TRY_ASSIGN(semaphore, device->GetExternalSemaphoreService()->ImportSemaphore(
@@ -446,7 +439,7 @@ MaybeError Queue::SubmitPendingCommands() {
     }
 
     auto externalTextureSemaphoreIter = externalTextureSemaphores.begin();
-    for (auto* texture : mRecordingContext.externalTexturesForEagerTransition) {
+    for (auto texture : mRecordingContext.specialSyncTextures) {
         // Export the signal semaphore.
         ExternalSemaphoreHandle semaphoreHandle;
         DAWN_TRY_ASSIGN(semaphoreHandle, device->GetExternalSemaphoreService()->ExportSemaphore(

@@ -1150,7 +1150,7 @@ MaybeError Texture::EndAccess(ExternalSemaphoreHandle* handle,
 
         Queue* queue = ToBackend(GetDevice()->GetQueue());
         CommandRecordingContext* recordingContext = queue->GetPendingRecordingContext();
-        recordingContext->externalTexturesForEagerTransition.insert(this);
+        recordingContext->specialSyncTextures.insert(this);
         DAWN_TRY(queue->SubmitPendingCommands());
 
         currentLayout = targetLayout;
@@ -1252,7 +1252,7 @@ void Texture::TweakTransitionForExternalUsage(CommandRecordingContext* recording
 
     if (mExternalState == ExternalState::PendingAcquire ||
         mExternalState == ExternalState::EagerlyTransitioned) {
-        recordingContext->externalTexturesForEagerTransition.insert(this);
+        recordingContext->specialSyncTextures.insert(this);
         if (barriers->size() == transitionBarrierStart) {
             barriers->push_back(BuildMemoryBarrier(
                 this, wgpu::TextureUsage::None, wgpu::TextureUsage::None,

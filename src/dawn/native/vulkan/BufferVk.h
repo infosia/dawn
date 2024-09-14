@@ -73,9 +73,10 @@ class Buffer final : public BufferBase {
     // Dawn API
     void SetLabelImpl() override;
 
-    static void TransitionMappableBuffersEagerly(const VulkanFunctions& fn,
-                                                 CommandRecordingContext* recordingContext,
-                                                 const absl::flat_hash_set<Ref<Buffer>>& buffers);
+    static void TransitionMappableBuffersEagerly(
+        const VulkanFunctions& fn,
+        CommandRecordingContext* recordingContext,
+        const absl::flat_hash_set<raw_ptr<Buffer>>& buffers);
 
   private:
     ~Buffer() override;
