@@ -592,6 +592,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Don't validate the required VkImage size against the size of the AHardwareBuffer on import. "
       "Some drivers report the wrong size.",
       "https://crbug.com/333424893", ToggleStage::Device}},
+    {Toggle::UseImmediateData,
+     {"use_immediate_data",
+      "Use WebGPU proposed feature immediate data. Provide immediate data methods to upload small "
+      "constants for users and support dawn internal small constants uploading through immediate "
+      "data.",
+      "https://crbug.com/366291600", ToggleStage::Device}},
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
 }};
 }  // anonymous namespace

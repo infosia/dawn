@@ -428,6 +428,10 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
     mLimits.experimentalSubgroupLimits =
         GetPhysicalDevice()->GetLimits().experimentalSubgroupLimits;
 
+    // Get experimentalImmediateDataRangeByteSizeLimit from physical device
+    mLimits.experimentalImmediateDataLimits =
+        GetPhysicalDevice()->GetLimits().experimentalImmediateDataLimits;
+
     mFormatTable = BuildFormatTable(this);
 
     if (descriptor->label != nullptr && strlen(descriptor->label) != 0) {
@@ -1995,6 +1999,18 @@ wgpu::Status DeviceBase::APIGetLimits(SupportedLimits* limits) const {
             *subgroupLimits = DawnExperimentalSubgroupLimits{};
         } else {
             *subgroupLimits = mLimits.experimentalSubgroupLimits;
+        }
+    }
+
+    if (auto* immediateDataRangeByteSizeLimits =
+            unpacked.Get<DawnExperimentalImmediateDataLimits>()) {
+        if (!HasFeature(Feature::ChromiumExperimentalImmediateData)) {
+            // If immediate data feature is not enabled, return the default-initialized
+            // DawnExperimentalImmediateDataLimits object, where maxImmediateDataRangeByteSize and
+            // are WGPU_LIMIT_U32_UNDEFINED.
+            *immediateDataRangeByteSizeLimits = DawnExperimentalImmediateDataLimits{};
+        } else {
+            *immediateDataRangeByteSizeLimits = mLimits.experimentalImmediateDataLimits;
         }
     }
 

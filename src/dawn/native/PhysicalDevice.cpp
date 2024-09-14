@@ -56,6 +56,7 @@ MaybeError PhysicalDeviceBase::Initialize() {
     EnableFeature(Feature::DawnInternalUsages);
     EnableFeature(Feature::ImplicitDeviceSynchronization);
     EnableFeature(Feature::FormatCapabilities);
+    EnableFeature(Feature::ChromiumExperimentalImmediateData);
     InitializeSupportedFeaturesImpl();
 
     DAWN_TRY_CONTEXT(
@@ -65,6 +66,9 @@ MaybeError PhysicalDeviceBase::Initialize() {
         mName, mDriverDescription, mVendorId, mDeviceId, mBackend, mAdapterType);
 
     NormalizeLimits(&mLimits.v1);
+
+    mLimits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
+        kMaxImmediateDataRangeByteSize;
 
     return {};
 }
