@@ -141,12 +141,12 @@ MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
 
         // Delete the previous swapchain's semaphores once they are not in use.
         // TODO(crbug.com/dawn/269): Wait for presentation to finish rather than submission.
-        for (VkSemaphore semaphore : previousVulkanSwapChain->mSwapChainSemaphores) {
+        for (auto& image : previousVulkanSwapChain->mImages) {
             ToBackend(previousSwapChain->GetDevice())
                 ->GetFencedDeleter()
-                ->DeleteWhenUnused(semaphore);
+                ->DeleteWhenUnused(image.semaphore);
+            image.semaphore = VK_NULL_HANDLE;
         }
-        previousVulkanSwapChain->mSwapChainSemaphores.clear();
     }
 
     if (mVkSurface == VK_NULL_HANDLE) {
@@ -191,24 +191,22 @@ MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
         device->fn.GetSwapchainImagesKHR(device->GetVkDevice(), mSwapChain, &count, nullptr),
         "GetSwapChainImages1"));
 
-    mSwapChainImages.resize(count);
-    DAWN_TRY(
-        CheckVkSuccess(device->fn.GetSwapchainImagesKHR(device->GetVkDevice(), mSwapChain, &count,
-                                                        AsVkArray(mSwapChainImages.data())),
-                       "GetSwapChainImages2"));
+    std::vector<VkImage> vkImages(count);
+    DAWN_TRY(CheckVkSuccess(device->fn.GetSwapchainImagesKHR(device->GetVkDevice(), mSwapChain,
+                                                             &count, AsVkArray(vkImages.data())),
+                            "GetSwapChainImages2"));
 
-    // Create one semaphore per swapchain image.
-    mSwapChainSemaphores.resize(count);
+    mImages.resize(count);
+    for (uint32_t i = 0; i < count; i++) {
+        mImages[i].image = vkImages[i];
 
-    VkSemaphoreCreateInfo semaphoreCreateInfo;
-    semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-    semaphoreCreateInfo.pNext = nullptr;
-    semaphoreCreateInfo.flags = 0;
-
-    for (std::size_t i = 0; i < mSwapChainSemaphores.size(); i++) {
+        VkSemaphoreCreateInfo semaphoreCreateInfo;
+        semaphoreCreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+        semaphoreCreateInfo.pNext = nullptr;
+        semaphoreCreateInfo.flags = 0;
         DAWN_TRY(
             CheckVkSuccess(device->fn.CreateSemaphore(device->GetVkDevice(), &semaphoreCreateInfo,
-                                                      nullptr, &*mSwapChainSemaphores[i]),
+                                                      nullptr, &*mImages[i].semaphore),
                            "CreateSemaphore"));
     }
 
@@ -422,9 +420,10 @@ MaybeError SwapChain::PresentImpl() {
                                  wgpu::ShaderStage::None, mTexture->GetAllSubresources());
 
     // Use a semaphore to make sure all rendering has finished before presenting.
-    VkSemaphore currentSemaphore = mSwapChainSemaphores[mLastImageIndex];
+    VkSemaphore currentSemaphore = mImages[mLastImageIndex].semaphore;
     recordingContext->signalSemaphores.push_back(currentSemaphore);
 
+    mImages[mLastImageIndex].lastRendered = queue->GetPendingCommandSerial();
     DAWN_TRY(queue->SubmitPendingCommands());
 
     VkPresentInfoKHR presentInfo;
@@ -472,8 +471,21 @@ ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureInternal(bool is
     Device* device = ToBackend(GetDevice());
     SwapChainTextureInfo swapChainTextureInfo;
 
+    // Force some form of frame pacing by waiting on the CPU for the current texture to be done
+    // rendering. Otherwise we could be queuing more frames on the same texture without ever
+    // waiting, causing massive latency on user inputs.
+
+    bool passed;
+    DAWN_TRY_ASSIGN(
+        passed, device->GetQueue()->WaitForQueueSerial(mImages[mLastImageIndex].lastRendered,
+                                                       std::numeric_limits<Nanoseconds>::max()));
+    DAWN_ASSERT(passed);
+
     // Transiently create a semaphore that will be signaled when the presentation engine is done
     // with the swapchain image. Further operations on the image will wait for this semaphore.
+    // We create one transiently instead of reusing one because if the application never does
+    // rendering with the images, the semaphore won't get signaled, and will be forbidden to be
+    // signaled again.
     VkSemaphoreCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
     createInfo.pNext = nullptr;
@@ -539,8 +551,8 @@ ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureInternal(bool is
     textureDesc.format = mConfig.wgpuFormat;
     textureDesc.usage = mConfig.wgpuUsage;
 
-    VkImage currentImage = mSwapChainImages[mLastImageIndex];
-    mTexture = Texture::CreateForSwapChain(device, Unpack(&textureDesc), currentImage);
+    mTexture =
+        Texture::CreateForSwapChain(device, Unpack(&textureDesc), mImages[mLastImageIndex].image);
 
     // In the happy path we can use the swapchain image directly.
     if (!mConfig.needsBlit) {
@@ -568,11 +580,13 @@ void SwapChain::DetachFromSurfaceImpl() {
         mBlitTexture = nullptr;
     }
 
-    for (VkSemaphore semaphore : mSwapChainSemaphores) {
-        // TODO(crbug.com/dawn/269): Wait for presentation to finish rather than submission.
-        ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(semaphore);
+    // TODO(crbug.com/dawn/269): Wait for presentation to finish rather than submission.
+    for (auto& image : mImages) {
+        if (image.semaphore != VK_NULL_HANDLE) {
+            ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(image.semaphore);
+            image.semaphore = VK_NULL_HANDLE;
+        }
     }
-    mSwapChainSemaphores.clear();
 
     // The swapchain images are destroyed with the swapchain.
     if (mSwapChain != VK_NULL_HANDLE) {
