@@ -119,6 +119,19 @@ wgpu::Status AdapterBase::APIGetLimits(SupportedLimits* limits) const {
         }
     }
 
+    if (auto* immediateDataLimits = unpacked.Get<DawnExperimentalImmediateDataLimits>()) {
+        if (!mSupportedFeatures.IsEnabled(wgpu::FeatureName::ChromiumExperimentalImmediateData)) {
+            // If immediate data features are not supported, return the default-initialized
+            // DawnExperimentalImmediateDataLimits object, where maxImmediateDataByteSize is
+            // WGPU_LIMIT_U32_UNDEFINED.
+            *immediateDataLimits = DawnExperimentalImmediateDataLimits{};
+        } else {
+            // If adapter supports immediate data features, always return the valid immediate data
+            // limits.
+            *immediateDataLimits = mPhysicalDevice->GetLimits().experimentalImmediateDataLimits;
+        }
+    }
+
     return wgpu::Status::Success;
 }
 
