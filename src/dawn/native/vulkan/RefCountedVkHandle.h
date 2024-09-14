@@ -40,7 +40,8 @@ namespace dawn::native::vulkan {
 template <typename Handle>
 class RefCountedVkHandle : public RefCounted {
   public:
-    RefCountedVkHandle(Device* device, Handle handle) : mDevice(device), mHandle(handle) {}
+    RefCountedVkHandle(Device* device, Handle handle = VK_NULL_HANDLE)
+        : mDevice(device), mHandle(handle) {}
 
     ~RefCountedVkHandle() override {
         if (mHandle != VK_NULL_HANDLE) {
@@ -49,6 +50,7 @@ class RefCountedVkHandle : public RefCounted {
     }
 
     Handle Get() const { return mHandle; }
+    Handle* InitializeInto() { return &mHandle; }
 
   private:
     Ref<Device> mDevice;

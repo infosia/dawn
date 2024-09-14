@@ -116,9 +116,10 @@ class Texture final : public TextureBase {
                      wgpu::ShaderStage shaderStages,
                      const SubresourceRange& range);
 
-    // Eagerly transition the texture for export.
-    void TransitionEagerlyForExport(CommandRecordingContext* recordingContext);
-    std::vector<VkSemaphore> AcquireWaitRequirements();
+    // Adds any special synchronization once for the current submit.
+    MaybeError OnBeforeSubmit(CommandRecordingContext* recordingContext);
+    // Cleans up after the submit. Must be infallaible.
+    void OnAfterSubmit();
 
     MaybeError EnsureSubresourceContentInitialized(CommandRecordingContext* recordingContext,
                                                    const SubresourceRange& range);
@@ -130,8 +131,6 @@ class Texture final : public TextureBase {
     MaybeError BindExternalMemory(const ExternalImageDescriptorVk* descriptor,
                                   VkDeviceMemory externalMemoryAllocation,
                                   std::vector<VkSemaphore> waitSemaphores);
-    // Update the 'ExternalSemaphoreHandle' to be used for export with the newly submitted one.
-    void UpdateExternalSemaphoreHandle(ExternalSemaphoreHandle handle);
     MaybeError ExportExternalTexture(VkImageLayout desiredLayout,
                                      ExternalSemaphoreHandle* handle,
                                      VkImageLayout* releasedOldLayout,
@@ -199,12 +198,12 @@ class Texture final : public TextureBase {
     SharedTextureMemoryObjects mSharedTextureMemoryObjects;
 
     // The states of an external texture:
-    //   InternalOnly: Not initialized as an external texture yet.
-    //   PendingAcquire: Intialized as an external texture already, but unavailable for access yet.
+    //   InternalOnly: A regular texture created with device.CreateTexture or equivalent.
+    //   PendingAcquire: Initialized as an external texture already, but unavailable for access yet.
     //   Acquired: Ready for access.
     //   EagerlyTransitioned: The texture has ever been used, and eagerly transitioned for export.
     //   Now it can be acquired for access again, or directly exported. Released: The texture has
-    //   been destoried, and should no longer be used.
+    //   been destroyed, and should no longer be used.
     enum class ExternalState {
         InternalOnly,
         PendingAcquire,
@@ -221,6 +220,7 @@ class Texture final : public TextureBase {
 
     VkImageLayout mDesiredExportLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 
+    ExternalSemaphoreHandle mPendingExternalSemaphoreHandle = kNullExternalSemaphoreHandle;
     ExternalSemaphoreHandle mExternalSemaphoreHandle = kNullExternalSemaphoreHandle;
 
     std::vector<VkSemaphore> mWaitRequirements;

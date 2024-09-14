@@ -40,11 +40,13 @@
 #include "dawn/native/vulkan/CommandBufferVk.h"
 #include "dawn/native/vulkan/CommandRecordingContext.h"
 #include "dawn/native/vulkan/DeviceVk.h"
+#include "dawn/native/vulkan/ExternalHandle.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/PhysicalDeviceVk.h"
 #include "dawn/native/vulkan/QueueVk.h"
 #include "dawn/native/vulkan/ResourceHeapVk.h"
 #include "dawn/native/vulkan/ResourceMemoryAllocatorVk.h"
+#include "dawn/native/vulkan/SharedFenceVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
 
@@ -1067,8 +1069,32 @@ MaybeError Texture::BindExternalMemory(const ExternalImageDescriptorVk* descript
     return {};
 }
 
-void Texture::TransitionEagerlyForExport(CommandRecordingContext* recordingContext) {
+MaybeError Texture::OnBeforeSubmit(CommandRecordingContext* recordingContext) {
+    Device* device = ToBackend(GetDevice());
     mExternalState = ExternalState::EagerlyTransitioned;
+
+    // Insert semaphores to be able to order operations on this texture between Dawn and the
+    // external uses.
+    SharedResourceMemoryContents* contents = GetSharedResourceMemoryContents();
+    if (contents != nullptr) {
+        DAWN_ASSERT(mWaitRequirements.empty());
+        SharedTextureMemoryBase::PendingFenceList fences;
+        contents->AcquirePendingFences(&fences);
+
+        for (const auto& fence : fences) {
+            // All semaphores are binary semaphores.
+            DAWN_ASSERT(fence.signaledValue == 1u);
+            ExternalSemaphoreHandle semaphoreHandle = ToBackend(fence.object)->GetHandle().Get();
+
+            VkSemaphore semaphore;
+            DAWN_TRY_ASSIGN(
+                semaphore, device->GetExternalSemaphoreService()->ImportSemaphore(semaphoreHandle));
+            recordingContext->waitSemaphores.push_back(semaphore);
+        }
+    } else {
+        recordingContext->waitSemaphores.insert(recordingContext->waitSemaphores.end(),
+                                                mWaitRequirements.begin(), mWaitRequirements.end());
+    }
 
     // Get any usage, ideally the last one to do nothing
     DAWN_ASSERT(GetNumMipLevels() == 1 && GetArrayLayers() == 1);
@@ -1093,7 +1119,6 @@ void Texture::TransitionEagerlyForExport(CommandRecordingContext* recordingConte
         barrier.newLayout = mDesiredExportLayout;
     }
 
-    Device* device = ToBackend(GetDevice());
     barrier.srcQueueFamilyIndex = device->GetGraphicsQueueFamily();
     barrier.dstQueueFamilyIndex = mExportQueueFamilyIndex;
 
@@ -1104,10 +1129,32 @@ void Texture::TransitionEagerlyForExport(CommandRecordingContext* recordingConte
 
     device->fn.CmdPipelineBarrier(recordingContext->commandBuffer, srcStages, dstStages, 0, 0,
                                   nullptr, 0, nullptr, 1, &barrier);
+
+    // Create an external semaphore to synchronize future uses of the texture with the submission.
+    // However only make the semaphore "pending" instead of replacing mExternalSemphoreHandle in
+    // case the submission fails. If it fails, the pending semaphore won't have been used and future
+    // uses of the texture must synchronize with the previously signaled semphaore.
+    RefCountedVkHandle<VkSemaphore> externalSemaphore(device);
+    DAWN_TRY_ASSIGN(*externalSemaphore.InitializeInto(),
+                    device->GetExternalSemaphoreService()->CreateExportableSemaphore());
+    DAWN_TRY_ASSIGN(
+        mPendingExternalSemaphoreHandle,
+        device->GetExternalSemaphoreService()->ExportSemaphore(externalSemaphore.Get()));
+    recordingContext->signalSemaphores.push_back(externalSemaphore.Get());
+
+    return {};
 }
 
-std::vector<VkSemaphore> Texture::AcquireWaitRequirements() {
-    return std::move(mWaitRequirements);
+void Texture::OnAfterSubmit() {
+    // The submit is successful so the previous external semaphore is no longer the latest. Replace
+    // it with the pending semaphore, which is the latest.
+    if (mExternalSemaphoreHandle != kNullExternalSemaphoreHandle) {
+        ToBackend(GetDevice())
+            ->GetExternalSemaphoreService()
+            ->CloseHandle(mExternalSemaphoreHandle);
+    }
+    mExternalSemaphoreHandle = mPendingExternalSemaphoreHandle;
+    mPendingExternalSemaphoreHandle = kNullExternalSemaphoreHandle;
 }
 
 void Texture::SetPendingAcquire(VkImageLayout pendingAcquireOldLayout,
@@ -1187,6 +1234,9 @@ MaybeError Texture::ExportExternalTexture(VkImageLayout desiredLayout,
 }
 
 Texture::~Texture() {
+    // The external semaphore can be queried even after device loss or destroy (so applications can
+    // keep relying on them for synchronization) so only destroy it in the destructor instead of
+    // DestroyImpl.
     if (mExternalSemaphoreHandle != kNullExternalSemaphoreHandle) {
         ToBackend(GetDevice())
             ->GetExternalSemaphoreService()
@@ -1228,6 +1278,13 @@ void Texture::DestroyImpl() {
     mHandle = VK_NULL_HANDLE;
     mExternalAllocation = VK_NULL_HANDLE;
     mSharedTextureMemoryObjects = {};
+
+    if (mPendingExternalSemaphoreHandle != kNullExternalSemaphoreHandle) {
+        ToBackend(GetDevice())
+            ->GetExternalSemaphoreService()
+            ->CloseHandle(mPendingExternalSemaphoreHandle);
+    }
+    mPendingExternalSemaphoreHandle = kNullExternalSemaphoreHandle;
 
     // For Vulkan, we currently run the base destruction code after the internal changes because
     // of the dependency on the texture state which the base code overwrites too early.
@@ -1744,15 +1801,6 @@ MaybeError Texture::EnsureSubresourceContentInitialized(CommandRecordingContext*
         DAWN_TRY(ClearTexture(recordingContext, range, TextureBase::ClearValue::Zero));
     }
     return {};
-}
-
-void Texture::UpdateExternalSemaphoreHandle(ExternalSemaphoreHandle handle) {
-    if (mExternalSemaphoreHandle != kNullExternalSemaphoreHandle) {
-        ToBackend(GetDevice())
-            ->GetExternalSemaphoreService()
-            ->CloseHandle(mExternalSemaphoreHandle);
-    }
-    mExternalSemaphoreHandle = handle;
 }
 
 VkImageLayout Texture::GetCurrentLayoutForSwapChain() const {
