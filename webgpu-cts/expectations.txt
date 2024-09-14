@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-09-05 01:29:48PM
+# Last rolled: 2024-09-14 05:04:23AM
 
 # conflicts_allowed: true
 
@@ -110,7 +110,6 @@ crbug.com/364338810 webgpu:api,validation,render_pipeline,inter_stage:max_compon
 
 # SharedWorker is not available on Android
 crbug.com/dawn/2486 [ android webgpu-shared-worker ] * [ Skip ]
-
 
 # depth_bias validation failures
 crbug.com/365922174 webgpu:api,validation,render_pipeline,depth_stencil_state:depth_bias:* [ Failure ]
