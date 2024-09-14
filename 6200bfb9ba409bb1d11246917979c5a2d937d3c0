@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "adcdaf27_de49f6f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-14T09:33:49Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "6200bfb9ba409bb1d11246917979c5a2d937d3c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "0be29c00_01fc818b",
         "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
         "patchSetId": 1
@@ -14,6 +31,41 @@
       "writtenOn": "2024-09-13T05:51:05Z",
       "side": 1,
       "message": "Really sorry about this mistake. Next time I will be more careful.",
+      "revId": "6200bfb9ba409bb1d11246917979c5a2d937d3c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbfc58b6_faa7d04b",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-14T09:33:49Z",
+      "side": 1,
+      "message": "NP, happens",
+      "parentUuid": "0be29c00_01fc818b",
+      "revId": "6200bfb9ba409bb1d11246917979c5a2d937d3c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05bd667b_80c319c4",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-14T09:33:49Z",
+      "side": 1,
+      "message": "Wasn\u0027t the point that the key would be a bool + vector\u003ctextureFormat\u003e ?",
       "revId": "6200bfb9ba409bb1d11246917979c5a2d937d3c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
