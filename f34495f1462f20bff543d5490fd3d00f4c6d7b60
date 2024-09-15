@@ -34,6 +34,24 @@
       "parentUuid": "a08c02e3_d30a128e",
       "revId": "f34495f1462f20bff543d5490fd3d00f4c6d7b60",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "685c9ce7_a55e673c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2024-09-15T14:18:21Z",
+      "side": 1,
+      "message": "I see, I suppose your CL will fix the issue then! FTR my cmake options were as follows:\n\n```\nDAWN_BUILD_SAMPLES\u003dOFF\nDAWN_ENABLE_D3D11\u003dOFF\nDAWN_ENABLE_D3D12\u003dOFF\nDAWN_ENABLE_DESKTOP_GL\u003dOFF\nDAWN_ENABLE_METAL\u003dOFF\nDAWN_ENABLE_NULL\u003dOFF\nDAWN_ENABLE_OPENGLES\u003dOFF\nDAWN_ENABLE_VULKAN\u003dON\nDAWN_FETCH_DEPENDENCIES\u003dON\nTINT_BUILD_CMD_TOOLS\u003dOFF\nTINT_BUILD_IR_BINARY\u003dOFF\nTINT_BUILD_SPV_READER\u003dOFF\nTINT_BUILD_TESTS\u003dOFF\n```\n\nedit: Oops sorry to submit the other day, but I can now confirm that it is fixed, thx!",
+      "parentUuid": "98caee38_0fb187d9",
+      "revId": "f34495f1462f20bff543d5490fd3d00f4c6d7b60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
