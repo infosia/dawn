@@ -22,6 +22,30 @@
       },
       "revId": "6a4fdf0337978908316a20df534838ea60f3327a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b415db64_b60c3b4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-16T13:47:01Z",
+      "side": 1,
+      "message": "I filed https://issues.chromium.org/issues/367066331 to do this as a followup. This change keeps it in line with the AST backend, and I\u0027ll follow up with a fix to both of them and add CTS tests.\n\nI\u0027d like to keep them in sync, in case we end up shipping before IR is ready.",
+      "parentUuid": "044ec85a_c7a78115",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "6a4fdf0337978908316a20df534838ea60f3327a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
