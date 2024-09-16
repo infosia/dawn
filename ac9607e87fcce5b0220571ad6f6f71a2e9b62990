@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6596795_b94fda0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-09-16T21:31:37Z",
+      "side": 1,
+      "message": "PTAL. (This is just a hand-rebased version of https://dawn-review.googlesource.com/c/dawn/+/206497.)",
+      "revId": "ac9607e87fcce5b0220571ad6f6f71a2e9b62990",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
