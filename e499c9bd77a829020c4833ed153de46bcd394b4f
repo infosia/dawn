@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10e94305_0c81dd3d",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-16T21:19:25Z",
+      "side": 1,
+      "message": "This gets called in the first stage of decoding, and there is a check for no errors at the end of the stage before doing more processing.",
+      "revId": "e499c9bd77a829020c4833ed153de46bcd394b4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb5c398d_d3adfdfa",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-16T21:19:25Z",
+      "side": 1,
+      "message": "Possibly for these functions that have a return value, early return a nullptr on error to cause an immediate end to the decode?",
+      "revId": "e499c9bd77a829020c4833ed153de46bcd394b4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
