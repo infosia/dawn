@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "27a43ee6_76775eed",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-16T22:12:49Z",
+      "side": 1,
+      "message": "I\u0027m guessing this will only print out part of the name, up to the `\\0`? Maybe add something like `found a \\0 before the end of the string`?",
+      "range": {
+        "startLine": 245,
+        "startChar": 48,
+        "endLine": 245,
+        "endChar": 60
+      },
+      "revId": "e499c9bd77a829020c4833ed153de46bcd394b4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bb5c398d_d3adfdfa",
         "filename": "src/tint/lang/core/ir/binary/decode.cc",
         "patchSetId": 1
