@@ -241,7 +241,11 @@ struct Decoder {
 
     void PopulateFunction(ir::Function* fn_out, const pb::Function& fn_in) {
         if (!fn_in.name().empty()) {
-            mod_out_.SetName(fn_out, fn_in.name());
+            if (DAWN_UNLIKELY(fn_in.name().find('\0') != std::string::npos)) {
+                Error() << "function name '" << fn_in.name() << "' is a malformed string";
+            } else {
+                mod_out_.SetName(fn_out, fn_in.name());
+            }
         }
         fn_out->SetReturnType(Type(fn_in.return_type()));
         if (fn_in.has_pipeline_stage()) {
@@ -940,7 +944,11 @@ struct Decoder {
         auto* type = Type(res_in.type());
         auto* res_out = b.InstructionResult(type);
         if (!res_in.name().empty()) {
-            mod_out_.SetName(res_out, res_in.name());
+            if (DAWN_UNLIKELY(res_in.name().find('\0') != std::string::npos)) {
+                Error() << "result name '" << res_in.name() << "' is a malformed string";
+            } else {
+                mod_out_.SetName(res_out, res_in.name());
+            }
         }
         return res_out;
     }
@@ -949,7 +957,11 @@ struct Decoder {
         auto* type = Type(param_in.type());
         auto* param_out = b.FunctionParam(type);
         if (!param_in.name().empty()) {
-            mod_out_.SetName(param_out, param_in.name());
+            if (DAWN_UNLIKELY(param_in.name().find('\0') != std::string::npos)) {
+                Error() << "param name '" << param_in.name() << "' is a malformed string";
+            } else {
+                mod_out_.SetName(param_out, param_in.name());
+            }
         }
 
         if (param_in.has_attributes()) {
@@ -982,7 +994,11 @@ struct Decoder {
         auto* type = Type(param_in.type());
         auto* param_out = b.BlockParam(type);
         if (!param_in.name().empty()) {
-            mod_out_.SetName(param_out, param_in.name());
+            if (DAWN_UNLIKELY(param_in.name().find('\0') != std::string::npos)) {
+                Error() << "param name '" << param_in.name() << "' is a malformed string";
+            } else {
+                mod_out_.SetName(param_out, param_in.name());
+            }
         }
         return param_out;
     }
