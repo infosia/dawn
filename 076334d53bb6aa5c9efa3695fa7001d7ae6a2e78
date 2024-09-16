@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b3e2b72_edcaf660",
+        "filename": "src/tint/lang/wgsl/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-09-16T14:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "223f1fa7_a53c1978",
+      "revId": "076334d53bb6aa5c9efa3695fa7001d7ae6a2e78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ed753d5_6cae5bce",
@@ -65,6 +83,24 @@
       "writtenOn": "2024-09-16T13:39:01Z",
       "side": 1,
       "message": "```suggestion\n            // Allow for trailing comma.\n```\n\nThe superfluous is superfluous, heh. Also, it isn\u0027t really superfluous from Tint\u0027s perspective as it\u0027s required by spec to allow it.",
+      "revId": "076334d53bb6aa5c9efa3695fa7001d7ae6a2e78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "607e4f12_1441d52a",
+        "filename": "src/tint/lang/wgsl/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-09-16T14:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ed753d5_6cae5bce",
       "revId": "076334d53bb6aa5c9efa3695fa7001d7ae6a2e78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
