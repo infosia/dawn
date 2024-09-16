@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "2a804ff29a6f4ef29549e110c8960b87115e7ddc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10ad6359_c17b32ae",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-16T16:25:05Z",
+      "side": 1,
+      "message": "Could just use `swap` directly here?\n\nIn fact, I\u0027m not sure you need to create the `var` at all? Instead of storing the values to it and then loading the result, you could just directly construct the result from `{swap, exchanged}`.",
+      "range": {
+        "startLine": 140,
+        "startChar": 50,
+        "endLine": 140,
+        "endChar": 67
+      },
+      "revId": "2a804ff29a6f4ef29549e110c8960b87115e7ddc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
