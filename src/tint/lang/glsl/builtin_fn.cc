@@ -52,6 +52,10 @@ const char* str(BuiltinFn i) {
             return "atomicCompSwap";
         case BuiltinFn::kAtomicSub:
             return "atomicSub";
+        case BuiltinFn::kTextureSize:
+            return "textureSize";
+        case BuiltinFn::kImageSize:
+            return "imageSize";
     }
     return "<unknown>";
 }
