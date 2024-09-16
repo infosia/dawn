@@ -51,6 +51,7 @@
 #include "src/tint/lang/hlsl/writer/raise/decompose_storage_access.h"
 #include "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.h"
 #include "src/tint/lang/hlsl/writer/raise/fxc_polyfill.h"
+#include "src/tint/lang/hlsl/writer/raise/num_workgroups_from_uniform.h"
 #include "src/tint/lang/hlsl/writer/raise/promote_initializers.h"
 #include "src/tint/lang/hlsl/writer/raise/shader_io.h"
 #include "src/tint/utils/result/result.h"
@@ -167,11 +168,14 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     // TODO(dsinclair): LocalizeStructArrayAssignment
     // TODO(dsinclair): PixelLocal transform
     // TODO(dsinclair): TruncateInterstageVariables
-    // TODO(dsinclair): NumWorkgroupsFromUniform
     // TODO(dsinclair): CalculateArrayLength
     // TODO(dsinclair): RemoveContinueInSwitch
+    {
+        raise::ShaderIOConfig config;
+        config.num_workgroups_binding = options.root_constant_binding_point;
+        RUN_TRANSFORM(raise::ShaderIO, module, config);
+    }
 
-    RUN_TRANSFORM(raise::ShaderIO, module);
     // DemoteToHelper must come before any transform that introduces non-core instructions.
     // Run after ShaderIO to ensure the discards are added to the entry point it introduces.
     RUN_TRANSFORM(core::ir::transform::DemoteToHelper, module);
