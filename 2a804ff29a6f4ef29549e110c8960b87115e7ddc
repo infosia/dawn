@@ -39,6 +39,30 @@
       },
       "revId": "2a804ff29a6f4ef29549e110c8960b87115e7ddc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d13aa98_36ac6569",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-16T17:48:06Z",
+      "side": 1,
+      "message": "Done\n\nThat\u0027s a lot simpler, thanks.",
+      "parentUuid": "10ad6359_c17b32ae",
+      "range": {
+        "startLine": 140,
+        "startChar": 50,
+        "endLine": 140,
+        "endChar": 67
+      },
+      "revId": "2a804ff29a6f4ef29549e110c8960b87115e7ddc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
