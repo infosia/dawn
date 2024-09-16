@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8efd49de_6afa3249",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-16T17:18:50Z",
+      "side": 1,
+      "message": "LGTM but we also need to make this change for Dawn:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/SpirvValidation.cpp;l\u003d1?q\u003dSpirvValidation.cpp\u0026sq\u003d\u0026ss\u003dchromium\n\n...and we should probably dedup this code across Tint/Dawn at some point too.",
+      "revId": "dea761c02284dc2be16df5c07b9927d097f076a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
