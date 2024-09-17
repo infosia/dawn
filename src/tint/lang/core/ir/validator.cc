@@ -1176,6 +1176,45 @@ void Validator::CheckFunction(const Function* func) {
         }
     }
 
+    if (func->Stage() == Function::PipelineStage::kVertex) {
+        const auto* ret_struct = func->ReturnType()->As<core::type::Struct>();
+        if (ret_struct) {
+            bool contains_position = false;
+            for (auto* mem : ret_struct->Members()) {
+                if (!mem->Attributes().builtin.has_value()) {
+                    continue;
+                }
+                switch (mem->Attributes().builtin.value()) {
+                    case BuiltinValue::kPosition:
+                        contains_position = true;
+                        if (!mem->Type()->IsFloatVector() ||
+                            mem->Type()->As<core::type::Vector>()->Size() != 4) {
+                            AddError(func) << "position must be a vec4<f32>";
+                        }
+                        break;
+                    case BuiltinValue::kClipDistances: {
+                        const auto elems = mem->Type()->Elements();
+                        if (!elems.type || !elems.type->IsFloatScalar() || elems.count > 8) {
+                            AddError(func)
+                                << "clip_distances must be an array<f32, N>, where N <= 8";
+                        }
+                    } break;
+                    default:
+                        AddError(func) << mem->Attributes().builtin.value()
+                                       << " is not valid vertex entry point output";
+                }
+            }
+            if (DAWN_UNLIKELY(!contains_position)) {
+                AddError(func) << "position must be declared for vertex entry point output";
+            }
+        } else {
+            if (DAWN_UNLIKELY(!func->ReturnBuiltin() || !func->ReturnBuiltin().has_value() ||
+                              func->ReturnBuiltin().value() != BuiltinValue::kPosition)) {
+                AddError(func) << "position must be declared for vertex entry point output";
+            }
+        }
+    }
+
     QueueBlock(func->Block());
     ProcessTasks();
 }
