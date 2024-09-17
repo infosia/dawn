@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a8d6333_1339301b",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-17T17:59:07Z",
+      "side": 1,
+      "message": "Why does this have to be a struct? I see that the AST transform does this, but I don\u0027t see any justification for why.\n\nIt may be that the AST transform predates WGSL\u0027s change to allow non-structures for uniform buffers.",
+      "revId": "eb5aaa8538b97ccaa3e3bca8875f0f0ca363adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df95b76a_77d1f0b9",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-17T17:59:07Z",
+      "side": 1,
+      "message": "I feel like we should move this logic to the Tint executable, so that the transform doesn\u0027t have to deal with this case and can instead just assert that it was given a binding point.\n\nWe can do this later though.",
+      "revId": "eb5aaa8538b97ccaa3e3bca8875f0f0ca363adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
