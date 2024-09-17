@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5c55ec21_b3727f78",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-17T18:02:47Z",
+      "side": 1,
+      "message": "You\u0027re probably right that it must have come from when WGSL required structs for uniforms. I\u0027ll try to remove it and see how it goes.",
+      "parentUuid": "8a8d6333_1339301b",
+      "revId": "eb5aaa8538b97ccaa3e3bca8875f0f0ca363adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "df95b76a_77d1f0b9",
         "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
         "patchSetId": 7
@@ -31,6 +49,24 @@
       "writtenOn": "2024-09-17T17:59:07Z",
       "side": 1,
       "message": "I feel like we should move this logic to the Tint executable, so that the transform doesn\u0027t have to deal with this case and can instead just assert that it was given a binding point.\n\nWe can do this later though.",
+      "revId": "eb5aaa8538b97ccaa3e3bca8875f0f0ca363adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8152ad8b_643c0038",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-17T18:02:47Z",
+      "side": 1,
+      "message": "Yeah, I wondered if this was just for the Tint CLI. Let\u0027s do this later.",
+      "parentUuid": "df95b76a_77d1f0b9",
       "revId": "eb5aaa8538b97ccaa3e3bca8875f0f0ca363adf8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
