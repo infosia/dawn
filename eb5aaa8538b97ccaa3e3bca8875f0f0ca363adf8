@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02893072_ca1f9238",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-09-17T18:34:17Z",
+      "side": 1,
+      "message": "Also it\u0027s safer as sometimes these names conflict with backend names, so having the prefix they never conflict.",
+      "parentUuid": "1354d8d9_9b82efbb",
+      "revId": "eb5aaa8538b97ccaa3e3bca8875f0f0ca363adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "df95b76a_77d1f0b9",
         "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
         "patchSetId": 7
