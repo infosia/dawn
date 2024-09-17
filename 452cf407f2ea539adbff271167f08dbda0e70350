@@ -46,6 +46,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "720ad2e9_0e3aa4ad",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-17T21:01:18Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "43d76a75_f9fe7292",
+      "revId": "452cf407f2ea539adbff271167f08dbda0e70350",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dbd1198_26210bd7",
@@ -69,6 +87,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91696eb5_52726e85",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-17T21:01:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dbd1198_26210bd7",
+      "range": {
+        "startLine": 290,
+        "startChar": 62,
+        "endLine": 290,
+        "endChar": 73
+      },
+      "revId": "452cf407f2ea539adbff271167f08dbda0e70350",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "458e435b_0e9d4779",
@@ -82,6 +124,24 @@
       "writtenOn": "2024-09-17T19:42:04Z",
       "side": 1,
       "message": "You can just do `b.Construct(dst_type, left, right)` here, as we support that vector constructor.",
+      "revId": "452cf407f2ea539adbff271167f08dbda0e70350",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab060117_27f2621f",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-17T21:01:18Z",
+      "side": 1,
+      "message": "but my beautiful swizzles....",
+      "parentUuid": "458e435b_0e9d4779",
       "revId": "452cf407f2ea539adbff271167f08dbda0e70350",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
