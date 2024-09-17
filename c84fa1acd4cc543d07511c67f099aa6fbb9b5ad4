@@ -39,6 +39,30 @@
       },
       "revId": "c84fa1acd4cc543d07511c67f099aa6fbb9b5ad4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21ff9bf8_d669d3ef",
+        "filename": "src/tint/lang/glsl/glsl.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-17T20:47:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b68293d4_d3332daa",
+      "range": {
+        "startLine": 83,
+        "startChar": 66,
+        "endLine": 83,
+        "endChar": 69
+      },
+      "revId": "c84fa1acd4cc543d07511c67f099aa6fbb9b5ad4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
