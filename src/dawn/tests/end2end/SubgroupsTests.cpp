@@ -796,12 +796,159 @@ TEST_P(SubgroupsFullSubgroupsTests,
     }
 }
 
-// DawnTestBase::CreateDeviceImpl always enables allow_unsafe_apis toggle.
-DAWN_INSTANTIATE_TEST_P(SubgroupsFullSubgroupsTests,
+// Core functions that may be polyfilled
+enum class SubgroupIntrinsicType {
+    Add,
+    Mul,
+};
+
+std::ostream& operator<<(std::ostream& o, SubgroupIntrinsicType subgroup_intrinsic) {
+    switch (subgroup_intrinsic) {
+        case SubgroupIntrinsicType::Add:
+            o << "subgroupInclusiveAdd";
+            break;
+        case SubgroupIntrinsicType::Mul:
+            o << "subgroupInclusiveMul";
+            break;
+    }
+    return o;
+}
+
+DAWN_TEST_PARAM_STRUCT(SubgroupsShaderInclusiveTestsParams,
+                       UseChromiumExperimentalSubgroups,
+                       SubgroupIntrinsicType,
+                       BroadcastType);
+
+// Subgroup inclusive operations are polyfilled on some backends (HLSL) so it is convient to
+// execution test them here. This is only to establish that the polyfill is working as expected and
+// not to evaluate the accuracy of these subgroup operations.
+class SubgroupsShaderInclusiveTest
+    : public SubgroupsTestsBase<SubgroupsShaderInclusiveTestsParams> {
+  protected:
+    void TestReadSubgroupSize(uint32_t workgroupSize) {
+        auto shaderModule = CreateShaderModuleForReadSubgroupSize(workgroupSize, kValueInShader);
+
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = shaderModule;
+        auto pipeline = device.CreateComputePipeline(&csDesc);
+
+        uint32_t outputBufferSizeInBytes = workgroupSize * sizeof(float);
+        wgpu::BufferDescriptor outputBufferDesc;
+        outputBufferDesc.size = outputBufferSizeInBytes;
+        outputBufferDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc;
+        wgpu::Buffer outputBuffer = device.CreateBuffer(&outputBufferDesc);
+
+        wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                         {
+                                                             {0, outputBuffer},
+                                                         });
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        EXPECT_BUFFER(outputBuffer, 0, outputBufferSizeInBytes,
+                      new ExpectReadSubgroupSizeOutput(workgroupSize));
+    }
+
+  private:
+    //
+    static constexpr float kValueInShader = 1.05f;
+
+    wgpu::ShaderModule CreateShaderModuleForReadSubgroupSize(uint32_t workgroupSize,
+                                                             float common_value) {
+        DAWN_ASSERT((1 <= workgroupSize) && (workgroupSize <= 256));
+        std::stringstream code;
+        EnableExtensions(code) << R"(
+const workgroupSize = )" << workgroupSize
+                               << R"(u;
+
+@group(0) @binding(0) var<storage, read_write> output : array<f32, workgroupSize>;
+
+@compute @workgroup_size(workgroupSize, 1, 1)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u
+) {
+    let a:)" << GetParam().mBroadcastType
+                               << R"( = )" << common_value << R"(;
+    output[local_id.x] = f32( )"
+                               << GetParam().mSubgroupIntrinsicType << R"( (a));
+}
+)";
+        return utils::CreateShaderModule(device, code.str().c_str());
+    }
+
+    class ExpectReadSubgroupSizeOutput : public dawn::detail::Expectation {
+      public:
+        explicit ExpectReadSubgroupSizeOutput(uint32_t workgroupSize)
+            : mWorkgroupSize(workgroupSize) {}
+        testing::AssertionResult Check(const void* data, size_t size) override {
+            DAWN_ASSERT(size == sizeof(float) * mWorkgroupSize);
+            const float* actual = static_cast<const float*>(data);
+
+            auto approximate_f = [](float actual, float expected) {
+                return abs(actual - expected) / abs(expected) < (kValueInShader / 2.0f);
+            };
+
+            float expected_value = kValueInShader;
+            for (uint32_t i = 0; i < mWorkgroupSize; i++) {
+                if (!approximate_f(actual[i], expected_value)) {
+                    // This could be the next subgroup so retest with the inital value.
+                    float old_expected_value = expected_value;
+                    expected_value = kValueInShader;
+                    if (!approximate_f(actual[i], expected_value)) {
+                        testing::AssertionResult result =
+                            testing::AssertionFailure()
+                            << "Unexpected result for " << GetParam().mSubgroupIntrinsicType
+                            << " for type " << GetParam().mBroadcastType << " for element " << i
+                            << " of a workgroup size of " << mWorkgroupSize
+                            << ". The actual value was " << actual[i] << " and the expected was "
+                            << expected_value << " or " << old_expected_value;
+
+                        return result;
+                    }
+                }
+
+                if (GetParam().mSubgroupIntrinsicType == SubgroupIntrinsicType::Add) {
+                    expected_value += kValueInShader;
+                } else if (GetParam().mSubgroupIntrinsicType == SubgroupIntrinsicType::Mul) {
+                    expected_value *= kValueInShader;
+                }
+            }
+
+            return testing::AssertionSuccess();
+        }
+
+      private:
+        uint32_t mWorkgroupSize;
+    };
+};
+
+TEST_P(SubgroupsShaderInclusiveTest, InclusiveExecution) {
+    if (GetParam().mBroadcastType == BroadcastType::F16) {
+        DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsF16SupportedByBackend());
+        DAWN_ASSERT(IsShaderF16EnabledInWGSL() && IsSubgroupsEnabledInWGSL() &&
+                    IsSubgroupsF16EnabledInWGSL());
+    } else {
+        DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsEnabledInWGSL());
+    }
+
+    for (uint32_t workgroupSize : {1, 2, 3, 4, 7, 8, 15, 16, 31, 32, 63, 64, 127, 128, 255, 256}) {
+        TestReadSubgroupSize(workgroupSize);
+    }
+}
+
+DAWN_INSTANTIATE_TEST_P(SubgroupsShaderInclusiveTest,
                         {D3D12Backend(), D3D12Backend({}, {"use_dxc"}), MetalBackend(),
                          VulkanBackend()},
-                        {false, true}  // UseChromiumExperimentalSubgroups
-);
+                        {false, true},  // UseChromiumExperimentalSubgroups
+                        {SubgroupIntrinsicType::Add, SubgroupIntrinsicType::Mul},
+                        {BroadcastType::F32, BroadcastType::F16});
 
 }  // anonymous namespace
 }  // namespace dawn
