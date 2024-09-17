@@ -145,7 +145,7 @@ struct State {
                 auto* bool_ty = ty.match_width(ty.bool_(), result_ty);
                 auto* cond = b.Equal(bool_ty, rhs, zero);
                 if (is_signed) {
-                    auto* lowest = b.MatchWidth(i32::Lowest(), result_ty);
+                    auto* lowest = b.MatchWidth(I32::Lowest(), result_ty);
                     auto* minus_one = b.MatchWidth(-1_i, result_ty);
                     auto* lhs_is_lowest = b.Equal(bool_ty, lhs, lowest);
                     auto* rhs_is_minus_one = b.Equal(bool_ty, rhs, minus_one);
@@ -191,7 +191,7 @@ struct State {
     void MaskShiftAmount(ir::CoreBinary* binary) {
         auto* lhs = binary->LHS();
         auto* rhs = binary->RHS();
-        auto mask = u32(lhs->Type()->DeepestElement()->Size() * 8 - 1);
+        auto mask = U32(lhs->Type()->DeepestElement()->Size() * 8 - 1);
         auto* masked = b.And(rhs->Type(), rhs, b.MatchWidth(mask, rhs->Type()));
         masked->InsertBefore(binary);
         binary->SetOperand(ir::CoreBinary::kRhsOperandOffset, masked->Result(0));

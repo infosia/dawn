@@ -349,17 +349,17 @@ class Parser {
             auto* int_ty = i->type()->AsInteger();
             TINT_ASSERT(int_ty->width() == 32);
             if (int_ty->IsSigned()) {
-                return b_.ConstantValue(i32(i->GetS32BitValue()));
+                return b_.ConstantValue(core::I32(i->GetS32BitValue()));
             } else {
-                return b_.ConstantValue(u32(i->GetU32BitValue()));
+                return b_.ConstantValue(core::U32(i->GetU32BitValue()));
             }
         }
         if (auto* f = constant->AsFloatConstant()) {
             auto* float_ty = f->type()->AsFloat();
             if (float_ty->width() == 16) {
-                return b_.ConstantValue(f16::FromBits(static_cast<uint16_t>(f->words()[0])));
+                return b_.ConstantValue(core::F16::FromBits(static_cast<uint16_t>(f->words()[0])));
             } else if (float_ty->width() == 32) {
-                return b_.ConstantValue(f32(f->GetFloat()));
+                return b_.ConstantValue(core::F32(f->GetFloat()));
             } else {
                 TINT_UNREACHABLE() << "unsupported floating point type width";
             }
@@ -570,7 +570,7 @@ class Parser {
     void EmitCompositeExtract(const spvtools::opt::Instruction& inst) {
         Vector<core::ir::Value*, 4> indices;
         for (uint32_t i = 3; i < inst.NumOperandWords(); i++) {
-            indices.Push(b_.Constant(u32(inst.GetSingleWordOperand(i))));
+            indices.Push(b_.Constant(core::U32(inst.GetSingleWordOperand(i))));
         }
         auto* object = Value(inst.GetSingleWordOperand(2));
         auto* access = b_.Access(Type(inst.type_id()), object, std::move(indices));

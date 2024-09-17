@@ -41,10 +41,10 @@ namespace {
 using MslWriter_PackedVec3Test = core::ir::transform::TransformTest;
 
 TEST_F(MslWriter_PackedVec3Test, NoModify_PrivateVar) {
-    auto* var = b.Var<function, vec3<u32>>("v");
+    auto* var = b.Var<function, Vec3<U32>>("v");
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.vec3<u32>());
+    auto* func = b.Function("foo", ty.vec3<U32>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -71,11 +71,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, NoModify_Vec2) {
-    auto* var = b.Var<uniform, vec2<u32>>("v");
+    auto* var = b.Var<uniform, Vec2<U32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.vec2<u32>());
+    auto* func = b.Function("foo", ty.vec2<U32>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -102,11 +102,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, NoModify_Mat3x2) {
-    auto* var = b.Var<uniform, mat3x2<f32>>("v");
+    auto* var = b.Var<uniform, Mat3x2<F32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.mat3x2<f32>());
+    auto* func = b.Function("foo", ty.mat3x2<F32>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -133,11 +133,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, NoModify_ArrayOfVec4) {
-    auto* var = b.Var<uniform, array<vec4<u32>, 3>>("v");
+    auto* var = b.Var<uniform, Array<Vec4<U32>, 3>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.array<vec4<u32>, 3>());
+    auto* func = b.Function("foo", ty.array<Vec4<U32>, 3>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -164,10 +164,10 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, WorkgroupVar_Vec3) {
-    auto* var = b.Var<workgroup, vec3<u32>>("v");
+    auto* var = b.Var<workgroup, Vec3<U32>>("v");
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.vec3<u32>());
+    auto* func = b.Function("foo", ty.vec3<U32>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -206,11 +206,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, UniformVar_Vec3) {
-    auto* var = b.Var<uniform, vec3<u32>>("v");
+    auto* var = b.Var<uniform, Vec3<U32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.vec3<u32>());
+    auto* func = b.Function("foo", ty.vec3<U32>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -249,11 +249,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Vec3_LoadVector) {
-    auto* var = b.Var<storage, vec3<u32>>("v");
+    auto* var = b.Var<storage, Vec3<U32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.vec3<u32>());
+    auto* func = b.Function("foo", ty.vec3<U32>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -292,7 +292,7 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Vec3_LoadElement) {
-    auto* var = b.Var<storage, vec3<u32>>("v");
+    auto* var = b.Var<storage, Vec3<U32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
@@ -300,7 +300,7 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_Vec3_LoadElement) {
     b.Append(func->Block(), [&] {  //
         auto* el_0 = b.LoadVectorElement(var, 0_u);
         auto* el_1 = b.LoadVectorElement(var, 1_u);
-        b.Return(func, b.Add<u32>(el_0, el_1));
+        b.Return(func, b.Add<U32>(el_0, el_1));
     });
 
     auto* src = R"(
@@ -340,12 +340,12 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Vec3_StoreVector) {
-    auto* var = b.Var<storage, vec3<u32>>("v");
+    auto* var = b.Var<storage, Vec3<U32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.void_());
-    auto* value = b.FunctionParam("value", ty.vec3<u32>());
+    auto* value = b.FunctionParam("value", ty.vec3<U32>());
     func->SetParams({value});
     b.Append(func->Block(), [&] {  //
         b.Store(var, value);
@@ -386,7 +386,7 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Vec3_StoreElement) {
-    auto* var = b.Var<storage, vec3<u32>>("v");
+    auto* var = b.Var<storage, Vec3<U32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
@@ -437,11 +437,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Mat4x3_LoadMatrix) {
-    auto* var = b.Var<storage, mat4x3<f32>>("v");
+    auto* var = b.Var<storage, Mat4x3<F32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.mat4x3<f32>());
+    auto* func = b.Function("foo", ty.mat4x3<F32>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -492,18 +492,18 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Mat4x3_LoadColumn) {
-    auto* var = b.Var<storage, mat4x3<f32>>("v");
+    auto* var = b.Var<storage, Mat4x3<F32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.vec3<f32>());
+    auto* func = b.Function("foo", ty.vec3<F32>());
     b.Append(func->Block(), [&] {  //
-        auto* col_0 = b.Load(b.Access(ty.ptr<storage, vec3<f32>>(), var, 0_u));
-        auto* col_1 = b.Load(b.Access(ty.ptr<storage, vec3<f32>>(), var, 1_u));
-        auto* col_2 = b.Load(b.Access(ty.ptr<storage, vec3<f32>>(), var, 2_u));
-        auto* col_3 = b.Load(b.Access(ty.ptr<storage, vec3<f32>>(), var, 3_u));
+        auto* col_0 = b.Load(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 0_u));
+        auto* col_1 = b.Load(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 1_u));
+        auto* col_2 = b.Load(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 2_u));
+        auto* col_3 = b.Load(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 3_u));
         b.Return(func,
-                 b.Add<vec3<f32>>(b.Add<vec3<f32>>(b.Add<vec3<f32>>(col_0, col_1), col_2), col_3));
+                 b.Add<Vec3<F32>>(b.Add<Vec3<F32>>(b.Add<Vec3<F32>>(col_0, col_1), col_2), col_3));
     });
 
     auto* src = R"(
@@ -567,17 +567,17 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Mat4x3_LoadElement) {
-    auto* var = b.Var<storage, mat4x3<f32>>("v");
+    auto* var = b.Var<storage, Mat4x3<F32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.f32());
     b.Append(func->Block(), [&] {  //
-        auto* el_0 = b.LoadVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 0_u), 1_u);
-        auto* el_1 = b.LoadVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 1_u), 1_u);
-        auto* el_2 = b.LoadVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 2_u), 2_u);
-        auto* el_3 = b.LoadVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 3_u), 2_u);
-        b.Return(func, b.Add<f32>(b.Add<f32>(b.Add<f32>(el_0, el_1), el_2), el_3));
+        auto* el_0 = b.LoadVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 0_u), 1_u);
+        auto* el_1 = b.LoadVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 1_u), 1_u);
+        auto* el_2 = b.LoadVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 2_u), 2_u);
+        auto* el_3 = b.LoadVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 3_u), 2_u);
+        b.Return(func, b.Add<F32>(b.Add<F32>(b.Add<F32>(el_0, el_1), el_2), el_3));
     });
 
     auto* src = R"(
@@ -637,12 +637,12 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Mat4x3_StoreMatrix) {
-    auto* var = b.Var<storage, mat4x3<f32>>("v");
+    auto* var = b.Var<storage, Mat4x3<F32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.void_());
-    auto* value = b.FunctionParam("value", ty.mat4x3<f32>());
+    auto* value = b.FunctionParam("value", ty.mat4x3<F32>());
     func->SetParams({value});
     b.Append(func->Block(), [&] {  //
         b.Store(var, value);
@@ -701,18 +701,18 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Mat4x3_StoreColumn) {
-    auto* var = b.Var<storage, mat4x3<f32>>("v");
+    auto* var = b.Var<storage, Mat4x3<F32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.void_());
-    auto* value = b.FunctionParam("value", ty.vec3<f32>());
+    auto* value = b.FunctionParam("value", ty.vec3<F32>());
     func->SetParams({value});
     b.Append(func->Block(), [&] {  //
-        b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), var, 0_u), value);
-        b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), var, 1_u), value);
-        b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), var, 2_u), value);
-        b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), var, 3_u), value);
+        b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 0_u), value);
+        b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 1_u), value);
+        b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 2_u), value);
+        b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 3_u), value);
         b.Return(func);
     });
 
@@ -771,7 +771,7 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Mat4x3_StoreElement) {
-    auto* var = b.Var<storage, mat4x3<f32>>("v");
+    auto* var = b.Var<storage, Mat4x3<F32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
@@ -779,10 +779,10 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_Mat4x3_StoreElement) {
     auto* value = b.FunctionParam("value", ty.f32());
     func->SetParams({value});
     b.Append(func->Block(), [&] {  //
-        b.StoreVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 0_u), 1_u, value);
-        b.StoreVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 1_u), 1_u, value);
-        b.StoreVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 2_u), 2_u, value);
-        b.StoreVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 3_u), 2_u, value);
+        b.StoreVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 0_u), 1_u, value);
+        b.StoreVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 1_u), 1_u, value);
+        b.StoreVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 2_u), 2_u, value);
+        b.StoreVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 3_u), 2_u, value);
         b.Return(func);
     });
 
@@ -837,11 +837,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Mat2x3_F16_LoadMatrix) {
-    auto* var = b.Var<storage, mat2x3<f16>>("v");
+    auto* var = b.Var<storage, Mat2x3<F16>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.mat2x3<f16>());
+    auto* func = b.Function("foo", ty.mat2x3<F16>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -888,11 +888,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Array_LoadArray) {
-    auto* var = b.Var<storage, array<vec3<f32>, 2>>("v");
+    auto* var = b.Var<storage, Array<Vec3<F32>, 2>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.array<vec3<f32>, 2>());
+    auto* func = b.Function("foo", ty.array<Vec3<F32>, 2>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -946,11 +946,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Array_LoadArray_LargeCount) {
-    auto* var = b.Var<storage, array<vec3<f32>, 1024>>("v");
+    auto* var = b.Var<storage, Array<Vec3<F32>, 1024>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.array<vec3<f32>, 1024>());
+    auto* func = b.Function("foo", ty.array<Vec3<F32>, 1024>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -1022,15 +1022,15 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Array_LoadVector) {
-    auto* var = b.Var<storage, array<vec3<f32>, 2>>("v");
+    auto* var = b.Var<storage, Array<Vec3<F32>, 2>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.vec3<f32>());
+    auto* func = b.Function("foo", ty.vec3<F32>());
     b.Append(func->Block(), [&] {  //
-        auto* el_0 = b.Load(b.Access(ty.ptr<storage, vec3<f32>>(), var, 0_u));
-        auto* el_1 = b.Load(b.Access(ty.ptr<storage, vec3<f32>>(), var, 1_u));
-        b.Return(func, b.Add<vec3<f32>>(el_0, el_1));
+        auto* el_0 = b.Load(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 0_u));
+        auto* el_1 = b.Load(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 1_u));
+        b.Return(func, b.Add<Vec3<F32>>(el_0, el_1));
     });
 
     auto* src = R"(
@@ -1080,15 +1080,15 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Array_LoadElement) {
-    auto* var = b.Var<storage, array<vec3<f32>, 2>>("v");
+    auto* var = b.Var<storage, Array<Vec3<F32>, 2>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.f32());
     b.Append(func->Block(), [&] {  //
-        auto* el_0 = b.LoadVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 0_u), 2_u);
-        auto* el_1 = b.LoadVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 1_u), 2_u);
-        b.Return(func, b.Add<f32>(el_0, el_1));
+        auto* el_0 = b.LoadVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 0_u), 2_u);
+        auto* el_1 = b.LoadVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 1_u), 2_u);
+        b.Return(func, b.Add<F32>(el_0, el_1));
     });
 
     auto* src = R"(
@@ -1136,12 +1136,12 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Array_StoreArray) {
-    auto* var = b.Var<storage, array<vec3<f32>, 2>>("v");
+    auto* var = b.Var<storage, Array<Vec3<F32>, 2>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.void_());
-    auto* value = b.FunctionParam("value", ty.array<vec3<f32>, 2>());
+    auto* value = b.FunctionParam("value", ty.array<Vec3<F32>, 2>());
     func->SetParams({value});
     b.Append(func->Block(), [&] {  //
         b.Store(var, value);
@@ -1198,12 +1198,12 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Array_StoreArray_LargeCount) {
-    auto* var = b.Var<storage, array<vec3<f32>, 1024>>("v");
+    auto* var = b.Var<storage, Array<Vec3<F32>, 1024>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.void_());
-    auto* value = b.FunctionParam("value", ty.array<vec3<f32>, 1024>());
+    auto* value = b.FunctionParam("value", ty.array<Vec3<F32>, 1024>());
     func->SetParams({value});
     b.Append(func->Block(), [&] {  //
         b.Store(var, value);
@@ -1274,16 +1274,16 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Array_StoreVector) {
-    auto* var = b.Var<storage, array<vec3<f32>, 2>>("v");
+    auto* var = b.Var<storage, Array<Vec3<F32>, 2>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.void_());
-    auto* value = b.FunctionParam("value", ty.vec3<f32>());
+    auto* value = b.FunctionParam("value", ty.vec3<F32>());
     func->SetParams({value});
     b.Append(func->Block(), [&] {  //
-        b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), var, 0_u), value);
-        b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), var, 1_u), value);
+        b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 0_u), value);
+        b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 1_u), value);
         b.Return(func);
     });
 
@@ -1332,7 +1332,7 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Array_StoreElement) {
-    auto* var = b.Var<storage, array<vec3<f32>, 2>>("v");
+    auto* var = b.Var<storage, Array<Vec3<F32>, 2>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
@@ -1340,8 +1340,8 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_Array_StoreElement) {
     auto* value = b.FunctionParam("value", ty.f32());
     func->SetParams({value});
     b.Append(func->Block(), [&] {  //
-        b.StoreVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 0_u), 2_u, value);
-        b.StoreVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 1_u), 2_u, value);
+        b.StoreVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 0_u), 2_u, value);
+        b.StoreVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 1_u), 2_u, value);
         b.Return(func);
     });
 
@@ -1388,11 +1388,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Array_F16_LoadArray) {
-    auto* var = b.Var<storage, array<vec3<f16>, 2>>("v");
+    auto* var = b.Var<storage, Array<Vec3<F16>, 2>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.array<vec3<f16>, 2>());
+    auto* func = b.Function("foo", ty.array<Vec3<F16>, 2>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -1446,11 +1446,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_NestedArray_LoadOuter) {
-    auto* var = b.Var<storage, array<array<vec3<f32>, 2>, 3>>("v");
+    auto* var = b.Var<storage, Array<Array<Vec3<F32>, 2>, 3>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.array<array<vec3<f32>, 2>, 3>());
+    auto* func = b.Function("foo", ty.array<Array<Vec3<F32>, 2>, 3>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -1516,11 +1516,11 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_NestedArray_LoadOuter_LargeCount) {
-    auto* var = b.Var<storage, array<array<vec3<f32>, 2>, 1024>>("v");
+    auto* var = b.Var<storage, Array<Array<Vec3<F32>, 2>, 1024>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.array<array<vec3<f32>, 2>, 1024>());
+    auto* func = b.Function("foo", ty.array<Array<Vec3<F32>, 2>, 1024>());
     b.Append(func->Block(), [&] {  //
         b.Return(func, b.Load(var));
     });
@@ -1603,13 +1603,13 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_NestedArray_LoadInner) {
-    auto* var = b.Var<storage, array<array<vec3<f32>, 2>, 3>>("v");
+    auto* var = b.Var<storage, Array<Array<Vec3<F32>, 2>, 3>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.array<vec3<f32>, 2>());
+    auto* func = b.Function("foo", ty.array<Vec3<F32>, 2>());
     b.Append(func->Block(), [&] {  //
-        b.Return(func, b.Load(b.Access(ty.ptr<storage, array<vec3<f32>, 2>>(), var, 1_u)));
+        b.Return(func, b.Load(b.Access(ty.ptr<storage, Array<Vec3<F32>, 2>>(), var, 1_u)));
     });
 
     auto* src = R"(
@@ -1663,12 +1663,12 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_NestedArray_StoreOuter) {
-    auto* var = b.Var<storage, array<array<vec3<f32>, 2>, 3>>("v");
+    auto* var = b.Var<storage, Array<Array<Vec3<F32>, 2>, 3>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.void_());
-    auto* value = b.FunctionParam("value", ty.array<array<vec3<f32>, 2>, 3>());
+    auto* value = b.FunctionParam("value", ty.array<Array<Vec3<F32>, 2>, 3>());
     func->SetParams({value});
     b.Append(func->Block(), [&] {  //
         b.Store(var, value);
@@ -1739,12 +1739,12 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_NestedArray_StoreOuter_LargeCount) {
-    auto* var = b.Var<storage, array<array<vec3<f32>, 2>, 1024>>("v");
+    auto* var = b.Var<storage, Array<Array<Vec3<F32>, 2>, 1024>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.void_());
-    auto* value = b.FunctionParam("value", ty.array<array<vec3<f32>, 2>, 1024>());
+    auto* value = b.FunctionParam("value", ty.array<Array<Vec3<F32>, 2>, 1024>());
     func->SetParams({value});
     b.Append(func->Block(), [&] {  //
         b.Store(var, value);
@@ -1827,15 +1827,15 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_RuntimeArray_LoadVector) {
-    auto* var = b.Var<storage, array<vec3<f32>>>("v");
+    auto* var = b.Var<storage, Array<Vec3<F32>>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
-    auto* func = b.Function("foo", ty.vec3<f32>());
+    auto* func = b.Function("foo", ty.vec3<F32>());
     b.Append(func->Block(), [&] {  //
-        auto* el_0 = b.Load(b.Access(ty.ptr<storage, vec3<f32>>(), var, 0_u));
-        auto* el_1 = b.Load(b.Access(ty.ptr<storage, vec3<f32>>(), var, 1_u));
-        b.Return(func, b.Add<vec3<f32>>(el_0, el_1));
+        auto* el_0 = b.Load(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 0_u));
+        auto* el_1 = b.Load(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 1_u));
+        b.Return(func, b.Add<Vec3<F32>>(el_0, el_1));
     });
 
     auto* src = R"(
@@ -1887,9 +1887,9 @@ $B1: {  # root
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Struct_LoadStruct) {
     auto* s =
         ty.Struct(mod.symbols.New("S"), {
-                                            {mod.symbols.Register("vec"), ty.vec3<u32>()},
-                                            {mod.symbols.Register("mat"), ty.mat4x3<f32>()},
-                                            {mod.symbols.Register("arr"), ty.array<vec3<f32>, 2>()},
+                                            {mod.symbols.Register("vec"), ty.vec3<U32>()},
+                                            {mod.symbols.Register("mat"), ty.mat4x3<F32>()},
+                                            {mod.symbols.Register("arr"), ty.array<Vec3<F32>, 2>()},
                                         });
 
     auto* var = b.Var("v", storage, s);
@@ -1992,9 +1992,9 @@ $B1: {  # root
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Struct_LoadMembers) {
     auto* s =
         ty.Struct(mod.symbols.New("S"), {
-                                            {mod.symbols.Register("vec"), ty.vec3<u32>()},
-                                            {mod.symbols.Register("mat"), ty.mat4x3<f32>()},
-                                            {mod.symbols.Register("arr"), ty.array<vec3<f32>, 2>()},
+                                            {mod.symbols.Register("vec"), ty.vec3<U32>()},
+                                            {mod.symbols.Register("mat"), ty.mat4x3<F32>()},
+                                            {mod.symbols.Register("arr"), ty.array<Vec3<F32>, 2>()},
                                         });
 
     auto* var = b.Var("v", storage, s);
@@ -2003,9 +2003,9 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_Struct_LoadMembers) {
 
     auto* func = b.Function("foo", ty.void_());
     b.Append(func->Block(), [&] {  //
-        b.Load(b.Access(ty.ptr<storage, vec3<u32>>(), var, 0_u));
-        b.Load(b.Access(ty.ptr<storage, mat4x3<f32>>(), var, 1_u));
-        b.Load(b.Access(ty.ptr<storage, array<vec3<f32>, 2>>(), var, 2_u));
+        b.Load(b.Access(ty.ptr<storage, Vec3<U32>>(), var, 0_u));
+        b.Load(b.Access(ty.ptr<storage, Mat4x3<F32>>(), var, 1_u));
+        b.Load(b.Access(ty.ptr<storage, Array<Vec3<F32>, 2>>(), var, 2_u));
         b.Return(func);
     });
 
@@ -2098,9 +2098,9 @@ $B1: {  # root
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Struct_StoreStruct) {
     auto* s =
         ty.Struct(mod.symbols.New("S"), {
-                                            {mod.symbols.Register("vec"), ty.vec3<f32>()},
-                                            {mod.symbols.Register("mat"), ty.mat4x3<f32>()},
-                                            {mod.symbols.Register("arr"), ty.array<vec3<f32>, 2>()},
+                                            {mod.symbols.Register("vec"), ty.vec3<F32>()},
+                                            {mod.symbols.Register("mat"), ty.mat4x3<F32>()},
+                                            {mod.symbols.Register("arr"), ty.array<Vec3<F32>, 2>()},
                                         });
 
     auto* var = b.Var("v", storage, s);
@@ -2215,9 +2215,9 @@ $B1: {  # root
 TEST_F(MslWriter_PackedVec3Test, StorageVar_Struct_StoreMembers) {
     auto* s =
         ty.Struct(mod.symbols.New("S"), {
-                                            {mod.symbols.Register("vec"), ty.vec3<f32>()},
-                                            {mod.symbols.Register("mat"), ty.mat4x3<f32>()},
-                                            {mod.symbols.Register("arr"), ty.array<vec3<f32>, 2>()},
+                                            {mod.symbols.Register("vec"), ty.vec3<F32>()},
+                                            {mod.symbols.Register("mat"), ty.mat4x3<F32>()},
+                                            {mod.symbols.Register("arr"), ty.array<Vec3<F32>, 2>()},
                                         });
 
     auto* var = b.Var("v", storage, s);
@@ -2225,12 +2225,12 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_Struct_StoreMembers) {
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.void_());
-    auto* value = b.FunctionParam("value", ty.vec3<f32>());
+    auto* value = b.FunctionParam("value", ty.vec3<F32>());
     func->SetParams({value});
     b.Append(func->Block(), [&] {  //
-        b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), var, 0_u), value);
-        b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), var, 1_u, 3_u), value);
-        b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), var, 2_u, 1_u), value);
+        b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 0_u), value);
+        b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 1_u, 3_u), value);
+        b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 2_u, 1_u), value);
         b.Return(func);
     });
 
@@ -2305,12 +2305,12 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_Struct_WithUnpackedMembers_LoadStruc
     auto* s = ty.Struct(mod.symbols.New("S"),
                         {
                             {mod.symbols.Register("u32"), ty.u32()},
-                            {mod.symbols.Register("vec3"), ty.vec3<u32>()},
-                            {mod.symbols.Register("vec4"), ty.vec4<u32>()},
-                            {mod.symbols.Register("mat3"), ty.mat4x3<f32>()},
-                            {mod.symbols.Register("mat2"), ty.mat3x2<f32>()},
-                            {mod.symbols.Register("arr3"), ty.array<vec3<f32>, 2>()},
-                            {mod.symbols.Register("arr4"), ty.array<vec4<f32>, 2>()},
+                            {mod.symbols.Register("vec3"), ty.vec3<U32>()},
+                            {mod.symbols.Register("vec4"), ty.vec4<U32>()},
+                            {mod.symbols.Register("mat3"), ty.mat4x3<F32>()},
+                            {mod.symbols.Register("mat2"), ty.mat3x2<F32>()},
+                            {mod.symbols.Register("arr3"), ty.array<Vec3<F32>, 2>()},
+                            {mod.symbols.Register("arr4"), ty.array<Vec4<F32>, 2>()},
                         });
 
     auto* var = b.Var("v", storage, s);
@@ -2434,12 +2434,12 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_Struct_WithUnpackedMembers_LoadMembe
     auto* s = ty.Struct(mod.symbols.New("S"),
                         {
                             {mod.symbols.Register("u32"), ty.u32()},
-                            {mod.symbols.Register("vec3"), ty.vec3<u32>()},
-                            {mod.symbols.Register("vec4"), ty.vec4<u32>()},
-                            {mod.symbols.Register("mat3"), ty.mat4x3<f32>()},
-                            {mod.symbols.Register("mat2"), ty.mat3x2<f32>()},
-                            {mod.symbols.Register("arr3"), ty.array<vec3<f32>, 2>()},
-                            {mod.symbols.Register("arr4"), ty.array<vec4<f32>, 2>()},
+                            {mod.symbols.Register("vec3"), ty.vec3<U32>()},
+                            {mod.symbols.Register("vec4"), ty.vec4<U32>()},
+                            {mod.symbols.Register("mat3"), ty.mat4x3<F32>()},
+                            {mod.symbols.Register("mat2"), ty.mat3x2<F32>()},
+                            {mod.symbols.Register("arr3"), ty.array<Vec3<F32>, 2>()},
+                            {mod.symbols.Register("arr4"), ty.array<Vec4<F32>, 2>()},
                         });
 
     auto* var = b.Var("v", storage, s);
@@ -2448,13 +2448,13 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_Struct_WithUnpackedMembers_LoadMembe
 
     auto* func = b.Function("foo", ty.void_());
     b.Append(func->Block(), [&] {  //
-        b.Load(b.Access(ty.ptr<storage, u32>(), var, 0_u));
-        b.Load(b.Access(ty.ptr<storage, vec3<u32>>(), var, 1_u));
-        b.Load(b.Access(ty.ptr<storage, vec4<u32>>(), var, 2_u));
-        b.Load(b.Access(ty.ptr<storage, mat4x3<f32>>(), var, 3_u));
-        b.Load(b.Access(ty.ptr<storage, mat3x2<f32>>(), var, 4_u));
-        b.Load(b.Access(ty.ptr<storage, array<vec3<f32>, 2>>(), var, 5_u));
-        b.Load(b.Access(ty.ptr<storage, array<vec4<f32>, 2>>(), var, 6_u));
+        b.Load(b.Access(ty.ptr<storage, U32>(), var, 0_u));
+        b.Load(b.Access(ty.ptr<storage, Vec3<U32>>(), var, 1_u));
+        b.Load(b.Access(ty.ptr<storage, Vec4<U32>>(), var, 2_u));
+        b.Load(b.Access(ty.ptr<storage, Mat4x3<F32>>(), var, 3_u));
+        b.Load(b.Access(ty.ptr<storage, Mat3x2<F32>>(), var, 4_u));
+        b.Load(b.Access(ty.ptr<storage, Array<Vec3<F32>, 2>>(), var, 5_u));
+        b.Load(b.Access(ty.ptr<storage, Array<Vec4<F32>, 2>>(), var, 6_u));
         b.Return(func);
     });
 
@@ -2576,12 +2576,12 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_Struct_WithUnpackedMembers_StoreStru
     auto* s = ty.Struct(mod.symbols.New("S"),
                         {
                             {mod.symbols.Register("u32"), ty.u32()},
-                            {mod.symbols.Register("vec3"), ty.vec3<u32>()},
-                            {mod.symbols.Register("vec4"), ty.vec4<u32>()},
-                            {mod.symbols.Register("mat3"), ty.mat4x3<f32>()},
-                            {mod.symbols.Register("mat2"), ty.mat3x2<f32>()},
-                            {mod.symbols.Register("arr3"), ty.array<vec3<f32>, 2>()},
-                            {mod.symbols.Register("arr4"), ty.array<vec4<f32>, 2>()},
+                            {mod.symbols.Register("vec3"), ty.vec3<U32>()},
+                            {mod.symbols.Register("vec4"), ty.vec4<U32>()},
+                            {mod.symbols.Register("mat3"), ty.mat4x3<F32>()},
+                            {mod.symbols.Register("mat2"), ty.mat3x2<F32>()},
+                            {mod.symbols.Register("arr3"), ty.array<Vec3<F32>, 2>()},
+                            {mod.symbols.Register("arr4"), ty.array<Vec4<F32>, 2>()},
                         });
 
     auto* var = b.Var("v", storage, s);
@@ -2725,19 +2725,19 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_Struct_NonDefaultOffset) {
                                              /* offset */ 0u, /* align */ 4u, /* size */ 4u,
                                              core::IOAttributes{}),
             ty.Get<core::type::StructMember>(
-                mod.symbols.Register("vec3"), ty.vec3<u32>(), /* index */ 1u,
+                mod.symbols.Register("vec3"), ty.vec3<U32>(), /* index */ 1u,
                 /* offset */ 16u, /* align */ 4u, /* size */ 12u, core::IOAttributes{}),
             ty.Get<core::type::StructMember>(
-                mod.symbols.Register("vec4"), ty.vec4<u32>(), /* index */ 2u,
+                mod.symbols.Register("vec4"), ty.vec4<U32>(), /* index */ 2u,
                 /* offset */ 64u, /* align */ 4u, /* size */ 16u, core::IOAttributes{}),
             ty.Get<core::type::StructMember>(
-                mod.symbols.Register("mat3"), ty.mat4x3<f32>(), /* index */ 3u,
+                mod.symbols.Register("mat3"), ty.mat4x3<F32>(), /* index */ 3u,
                 /* offset */ 128u, /* align */ 16u, /* size */ 48u, core::IOAttributes{}),
             ty.Get<core::type::StructMember>(
-                mod.symbols.Register("mat2"), ty.mat3x2<f32>(), /* index */ 4u,
+                mod.symbols.Register("mat2"), ty.mat3x2<F32>(), /* index */ 4u,
                 /* offset */ 256u, /* align */ 8u, /* size */ 24u, core::IOAttributes{}),
             ty.Get<core::type::StructMember>(
-                mod.symbols.Register("arr3"), ty.array<vec3<f32>, 2>(), /* index */ 5u,
+                mod.symbols.Register("arr3"), ty.array<Vec3<F32>, 2>(), /* index */ 5u,
                 /* offset */ 1024u, /* align */ 16u, /* size */ 32u, core::IOAttributes{}),
         });
 
@@ -2799,8 +2799,8 @@ $B1: {  # root
 TEST_F(MslWriter_PackedVec3Test, StorageVar_DeeplyNestedType) {
     auto* s = ty.Struct(mod.symbols.New("S"),
                         {
-                            {mod.symbols.Register("vec3"), ty.vec3<u32>()},
-                            {mod.symbols.Register("arr"), ty.array<mat2x3<f32>, 11>()},
+                            {mod.symbols.Register("vec3"), ty.vec3<U32>()},
+                            {mod.symbols.Register("arr"), ty.array<Mat2x3<F32>, 11>()},
                         });
     auto* outer = ty.array(s, 16);
 
@@ -2812,9 +2812,9 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_DeeplyNestedType) {
     b.Append(func->Block(), [&] {  //
         b.Let("load_outer_array", b.Load(var));
         b.Let("load_matrix_column",
-              b.Load(b.Access(ty.ptr<storage, vec3<f32>>(), var, 7_u, 1_u, 3_u, 1_u)));
+              b.Load(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 7_u, 1_u, 3_u, 1_u)));
         b.Store(var, b.Construct(outer));
-        b.StoreVectorElement(b.Access(ty.ptr<storage, vec3<f32>>(), var, 6_u, 1_u, 4_u, 0_u), 2_u,
+        b.StoreVectorElement(b.Access(ty.ptr<storage, Vec3<F32>>(), var, 6_u, 1_u, 4_u, 0_u), 2_u,
                              42_f);
         b.Return(func);
     });
@@ -3033,16 +3033,16 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_PointerInLet) {
-    auto* var = b.Var<storage, mat4x3<f32>>("v");
+    auto* var = b.Var<storage, Mat4x3<F32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.void_());
     b.Append(func->Block(), [&] {  //
         auto* mat_ptr = b.Let("mat", var);
-        auto* col_ptr = b.Let("col", b.Access(ty.ptr<storage, vec3<f32>>(), mat_ptr, 1_u));
+        auto* col_ptr = b.Let("col", b.Access(ty.ptr<storage, Vec3<F32>>(), mat_ptr, 1_u));
         auto* col = b.Load(col_ptr);
-        b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), mat_ptr, 2_u), col);
+        b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), mat_ptr, 2_u), col);
         b.StoreVectorElement(col_ptr, 2_u, 42_f);
         b.Return(func);
     });
@@ -3098,18 +3098,18 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_PointerInFunctionParameter) {
-    auto* var = b.Var<storage, mat4x3<f32>>("v");
+    auto* var = b.Var<storage, Mat4x3<F32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* bar = b.Function("bar", ty.void_());
     {
-        auto* mat_ptr = b.FunctionParam("mat", (ty.ptr<storage, mat4x3<f32>>()));
-        auto* col_ptr = b.FunctionParam("col", (ty.ptr<storage, vec3<f32>>()));
+        auto* mat_ptr = b.FunctionParam("mat", (ty.ptr<storage, Mat4x3<F32>>()));
+        auto* col_ptr = b.FunctionParam("col", (ty.ptr<storage, Vec3<F32>>()));
         bar->SetParams({mat_ptr, col_ptr});
         b.Append(bar->Block(), [&] {  //
             auto* col = b.Load(col_ptr);
-            b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), mat_ptr, 2_u), col);
+            b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), mat_ptr, 2_u), col);
             b.StoreVectorElement(col_ptr, 2_u, 42_f);
             b.Return(bar);
         });
@@ -3119,7 +3119,7 @@ TEST_F(MslWriter_PackedVec3Test, StorageVar_PointerInFunctionParameter) {
     {
         b.Append(foo->Block(), [&] {  //
             auto* mat_ptr = b.Let("mat", var);
-            auto* col_ptr = b.Let("col", b.Access(ty.ptr<storage, vec3<f32>>(), var, 1_u));
+            auto* col_ptr = b.Let("col", b.Access(ty.ptr<storage, Vec3<F32>>(), var, 1_u));
             b.Call(bar, mat_ptr, col_ptr);
             b.Return(foo);
         });
@@ -3188,17 +3188,17 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_ViaAccessWithNoIndices) {
-    auto* var = b.Var<storage, mat4x3<f32>>("v");
+    auto* var = b.Var<storage, Mat4x3<F32>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* func = b.Function("foo", ty.void_());
     b.Append(func->Block(), [&] {  //
-        auto* mat_ptr = b.Access(ty.ptr<storage, mat4x3<f32>>(), var);
-        auto* col_ptr = b.Access(ty.ptr<storage, vec3<f32>>(),
-                                 b.Access(ty.ptr<storage, vec3<f32>>(), mat_ptr, 1_u));
+        auto* mat_ptr = b.Access(ty.ptr<storage, Mat4x3<F32>>(), var);
+        auto* col_ptr = b.Access(ty.ptr<storage, Vec3<F32>>(),
+                                 b.Access(ty.ptr<storage, Vec3<F32>>(), mat_ptr, 1_u));
         auto* col = b.Load(col_ptr);
-        b.Store(b.Access(ty.ptr<storage, vec3<f32>>(), mat_ptr, 2_u), col);
+        b.Store(b.Access(ty.ptr<storage, Vec3<F32>>(), mat_ptr, 2_u), col);
         b.Return(func);
     });
 
@@ -3251,13 +3251,13 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, StorageVar_ArrayLengthBuiltinCall) {
-    auto* var = b.Var<storage, array<vec3<f32>>>("v");
+    auto* var = b.Var<storage, Array<Vec3<F32>>>("v");
     var->SetBindingPoint(0, 0);
     mod.root_block->Append(var);
 
     auto* foo = b.Function("foo", ty.u32());
     b.Append(foo->Block(), [&] {  //
-        auto* len = b.Call<u32>(core::BuiltinFn::kArrayLength, var);
+        auto* len = b.Call<U32>(core::BuiltinFn::kArrayLength, var);
         b.Return(foo, len);
     });
 
@@ -3298,13 +3298,13 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, MultipleAddressSpaces_LoadArray) {
-    auto* uvar = b.Var<uniform, array<vec3<f32>, 2>>("u");
+    auto* uvar = b.Var<uniform, Array<Vec3<F32>, 2>>("u");
     uvar->SetBindingPoint(0, 0);
     mod.root_block->Append(uvar);
-    auto* svar = b.Var<storage, array<vec3<f32>, 2>>("s");
+    auto* svar = b.Var<storage, Array<Vec3<F32>, 2>>("s");
     svar->SetBindingPoint(0, 1);
     mod.root_block->Append(svar);
-    auto* wvar = b.Var<workgroup, array<vec3<f32>, 2>>("w");
+    auto* wvar = b.Var<workgroup, Array<Vec3<F32>, 2>>("w");
     mod.root_block->Append(wvar);
 
     auto* func = b.Function("foo", ty.void_());
@@ -3402,16 +3402,16 @@ $B1: {  # root
 }
 
 TEST_F(MslWriter_PackedVec3Test, MultipleAddressSpaces_StoreArray) {
-    auto* svar = b.Var<storage, array<vec3<f32>, 2>>("s");
+    auto* svar = b.Var<storage, Array<Vec3<F32>, 2>>("s");
     svar->SetBindingPoint(0, 0);
     mod.root_block->Append(svar);
-    auto* wvar = b.Var<workgroup, array<vec3<f32>, 2>>("w");
+    auto* wvar = b.Var<workgroup, Array<Vec3<F32>, 2>>("w");
     mod.root_block->Append(wvar);
 
     auto* func = b.Function("foo", ty.void_());
     b.Append(func->Block(), [&] {  //
-        b.Store(svar, b.Zero<array<vec3<f32>, 2>>());
-        b.Store(wvar, b.Zero<array<vec3<f32>, 2>>());
+        b.Store(svar, b.Zero<Array<Vec3<F32>, 2>>());
+        b.Store(wvar, b.Zero<Array<Vec3<F32>, 2>>());
         b.Return(func);
     });
 
@@ -3483,7 +3483,7 @@ $B1: {  # root
 
 TEST_F(MslWriter_PackedVec3Test, MultipleAddressSpaces_LoadStruct) {
     auto* s = ty.Struct(mod.symbols.New("S"), {
-                                                  {mod.symbols.Register("vec"), ty.vec3<u32>()},
+                                                  {mod.symbols.Register("vec"), ty.vec3<U32>()},
                                                   {mod.symbols.Register("u"), ty.u32()},
                                               });
 
@@ -3600,7 +3600,7 @@ $B1: {  # root
 
 TEST_F(MslWriter_PackedVec3Test, MultipleAddressSpaces_StoreStruct) {
     auto* s = ty.Struct(mod.symbols.New("S"), {
-                                                  {mod.symbols.Register("vec"), ty.vec3<u32>()},
+                                                  {mod.symbols.Register("vec"), ty.vec3<U32>()},
                                                   {mod.symbols.Register("u"), ty.u32()},
                                               });
 
@@ -3694,8 +3694,8 @@ $B1: {  # root
 
 TEST_F(MslWriter_PackedVec3Test, AtomicOnPackedStructMember) {
     auto* s = ty.Struct(mod.symbols.New("S"), {
-                                                  {mod.symbols.Register("vec"), ty.vec3<u32>()},
-                                                  {mod.symbols.Register("u"), ty.atomic<u32>()},
+                                                  {mod.symbols.Register("vec"), ty.vec3<U32>()},
+                                                  {mod.symbols.Register("u"), ty.atomic<U32>()},
                                               });
 
     auto* var = b.Var("v", ty.ptr<workgroup>(s));
@@ -3703,8 +3703,8 @@ TEST_F(MslWriter_PackedVec3Test, AtomicOnPackedStructMember) {
 
     auto* func = b.Function("foo", ty.u32());
     b.Append(func->Block(), [&] {  //
-        auto* p = b.Access<ptr<workgroup, atomic<u32>>>(var, 1_u);
-        auto* result = b.Call<u32>(core::BuiltinFn::kAtomicLoad, p);
+        auto* p = b.Access<Ptr<workgroup, Atomic<U32>>>(var, 1_u);
+        auto* result = b.Call<U32>(core::BuiltinFn::kAtomicLoad, p);
         b.Return(func, result);
     });
 
@@ -3759,8 +3759,8 @@ $B1: {  # root
 
 TEST_F(MslWriter_PackedVec3Test, AtomicOnPackedStructMember_ViaLet) {
     auto* s = ty.Struct(mod.symbols.New("S"), {
-                                                  {mod.symbols.Register("vec"), ty.vec3<u32>()},
-                                                  {mod.symbols.Register("u"), ty.atomic<u32>()},
+                                                  {mod.symbols.Register("vec"), ty.vec3<U32>()},
+                                                  {mod.symbols.Register("u"), ty.atomic<U32>()},
                                               });
 
     auto* var = b.Var("v", ty.ptr<workgroup>(s));
@@ -3768,8 +3768,8 @@ TEST_F(MslWriter_PackedVec3Test, AtomicOnPackedStructMember_ViaLet) {
 
     auto* func = b.Function("foo", ty.u32());
     b.Append(func->Block(), [&] {  //
-        auto* p = b.Let("p", b.Access<ptr<workgroup, atomic<u32>>>(var, 1_u));
-        auto* result = b.Call<u32>(core::BuiltinFn::kAtomicLoad, p);
+        auto* p = b.Let("p", b.Access<Ptr<workgroup, Atomic<U32>>>(var, 1_u));
+        auto* result = b.Call<U32>(core::BuiltinFn::kAtomicLoad, p);
         b.Return(func, result);
     });
 

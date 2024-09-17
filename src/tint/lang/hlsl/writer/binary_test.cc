@@ -222,8 +222,8 @@ TEST_F(HlslWriterTest, BinaryF32Mod) {
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kCompute);
     func->SetWorkgroupSize(1, 1, 1);
     b.Append(func->Block(), [&] {
-        auto* left = b.Var("left", ty.ptr<core::AddressSpace::kFunction, f32>());
-        auto* right = b.Var("right", ty.ptr<core::AddressSpace::kFunction, f32>());
+        auto* left = b.Var("left", ty.ptr<core::AddressSpace::kFunction, F32>());
+        auto* right = b.Var("right", ty.ptr<core::AddressSpace::kFunction, F32>());
 
         auto* l = b.Load(left);
         auto* r = b.Load(right);
@@ -253,8 +253,8 @@ TEST_F(HlslWriterTest, BinaryF16Mod) {
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kCompute);
     func->SetWorkgroupSize(1, 1, 1);
     b.Append(func->Block(), [&] {
-        auto* left = b.Var("left", ty.ptr<core::AddressSpace::kFunction, f16>());
-        auto* right = b.Var("right", ty.ptr<core::AddressSpace::kFunction, f16>());
+        auto* left = b.Var("left", ty.ptr<core::AddressSpace::kFunction, F16>());
+        auto* right = b.Var("right", ty.ptr<core::AddressSpace::kFunction, F16>());
 
         auto* l = b.Load(left);
         auto* r = b.Load(right);
@@ -284,12 +284,12 @@ TEST_F(HlslWriterTest, BinaryF32ModVec3) {
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kCompute);
     func->SetWorkgroupSize(1, 1, 1);
     b.Append(func->Block(), [&] {
-        auto* left = b.Var("left", ty.ptr(core::AddressSpace::kFunction, ty.vec3<f32>()));
-        auto* right = b.Var("right", ty.ptr(core::AddressSpace::kFunction, ty.vec3<f32>()));
+        auto* left = b.Var("left", ty.ptr(core::AddressSpace::kFunction, ty.vec3<F32>()));
+        auto* right = b.Var("right", ty.ptr(core::AddressSpace::kFunction, ty.vec3<F32>()));
 
         auto* l = b.Load(left);
         auto* r = b.Load(right);
-        auto* expr1 = b.Binary(core::BinaryOp::kModulo, ty.vec3<f32>(), l, r);
+        auto* expr1 = b.Binary(core::BinaryOp::kModulo, ty.vec3<F32>(), l, r);
 
         b.Let("val", expr1);
         b.Return(func);
@@ -315,12 +315,12 @@ TEST_F(HlslWriterTest, BinaryF16ModVec3) {
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kCompute);
     func->SetWorkgroupSize(1, 1, 1);
     b.Append(func->Block(), [&] {
-        auto* left = b.Var("left", ty.ptr(core::AddressSpace::kFunction, ty.vec3<f16>()));
-        auto* right = b.Var("right", ty.ptr(core::AddressSpace::kFunction, ty.vec3<f16>()));
+        auto* left = b.Var("left", ty.ptr(core::AddressSpace::kFunction, ty.vec3<F16>()));
+        auto* right = b.Var("right", ty.ptr(core::AddressSpace::kFunction, ty.vec3<F16>()));
 
         auto* l = b.Load(left);
         auto* r = b.Load(right);
-        auto* expr1 = b.Binary(core::BinaryOp::kModulo, ty.vec3<f16>(), l, r);
+        auto* expr1 = b.Binary(core::BinaryOp::kModulo, ty.vec3<F16>(), l, r);
 
         b.Let("val", expr1);
         b.Return(func);
@@ -400,11 +400,11 @@ TEST_F(HlslWriterTest, BinaryMulMatVec) {
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kCompute);
     func->SetWorkgroupSize(1, 1, 1);
     b.Append(func->Block(), [&] {
-        auto* x = b.Var("x", b.Zero<mat4x4<f32>>());
-        auto* y = b.Var("y", b.Zero<vec4<f32>>());
+        auto* x = b.Var("x", b.Zero<Mat4x4<F32>>());
+        auto* y = b.Var("y", b.Zero<Vec4<F32>>());
         auto* l = b.Load(x);
         auto* r = b.Load(y);
-        b.Var("c", b.Multiply(ty.vec4<f32>(), l, r));
+        b.Var("c", b.Multiply(ty.vec4<F32>(), l, r));
         b.Return(func);
     });
 
@@ -424,11 +424,11 @@ TEST_F(HlslWriterTest, BinaryMulVecMat) {
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kCompute);
     func->SetWorkgroupSize(1, 1, 1);
     b.Append(func->Block(), [&] {
-        auto* x = b.Var("x", b.Zero<mat4x4<f32>>());
-        auto* y = b.Var("y", b.Zero<vec4<f32>>());
+        auto* x = b.Var("x", b.Zero<Mat4x4<F32>>());
+        auto* y = b.Var("y", b.Zero<Vec4<F32>>());
         auto* l = b.Load(x);
         auto* r = b.Load(y);
-        b.Var("c", b.Multiply(ty.vec4<f32>(), r, l));
+        b.Var("c", b.Multiply(ty.vec4<F32>(), r, l));
         b.Return(func);
     });
 
@@ -448,11 +448,11 @@ TEST_F(HlslWriterTest, BinaryMulVec4Mat3x4) {
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kCompute);
     func->SetWorkgroupSize(1, 1, 1);
     b.Append(func->Block(), [&] {
-        auto* x = b.Var("x", b.Zero<vec4<f32>>());
-        auto* y = b.Var("y", b.Zero<mat3x4<f32>>());
+        auto* x = b.Var("x", b.Zero<Vec4<F32>>());
+        auto* y = b.Var("y", b.Zero<Mat3x4<F32>>());
         auto* l = b.Load(x);
         auto* r = b.Load(y);
-        b.Var("c", b.Multiply(ty.vec3<f32>(), l, r));
+        b.Var("c", b.Multiply(ty.vec3<F32>(), l, r));
         b.Return(func);
     });
 
@@ -472,11 +472,11 @@ TEST_F(HlslWriterTest, BinaryMulMat3x2Vec3) {
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kCompute);
     func->SetWorkgroupSize(1, 1, 1);
     b.Append(func->Block(), [&] {
-        auto* x = b.Var("x", b.Zero<mat3x2<f32>>());
-        auto* y = b.Var("y", b.Zero<vec3<f32>>());
+        auto* x = b.Var("x", b.Zero<Mat3x2<F32>>());
+        auto* y = b.Var("y", b.Zero<Vec3<F32>>());
         auto* l = b.Load(x);
         auto* r = b.Load(y);
-        b.Var("c", b.Multiply(ty.vec2<f32>(), l, r));
+        b.Var("c", b.Multiply(ty.vec2<F32>(), l, r));
         b.Return(func);
     });
 
@@ -496,11 +496,11 @@ TEST_F(HlslWriterTest, BinaryMulMatMat) {
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kCompute);
     func->SetWorkgroupSize(1, 1, 1);
     b.Append(func->Block(), [&] {
-        auto* x = b.Var("x", b.Zero<mat4x4<f32>>());
-        auto* y = b.Var("y", b.Zero<mat4x4<f32>>());
+        auto* x = b.Var("x", b.Zero<Mat4x4<F32>>());
+        auto* y = b.Var("y", b.Zero<Mat4x4<F32>>());
         auto* l = b.Load(x);
         auto* r = b.Load(y);
-        b.Var("c", b.Multiply(ty.mat4x4<f32>(), l, r));
+        b.Var("c", b.Multiply(ty.mat4x4<F32>(), l, r));
         b.Return(func);
     });
 

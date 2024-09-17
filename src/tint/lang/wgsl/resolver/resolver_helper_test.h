@@ -457,7 +457,7 @@ struct DataType<core::AInt> {
 
 /// Helper for building vector types and expressions
 template <uint32_t N, typename T>
-struct DataType<core::fluent_types::vec<N, T>> {
+struct DataType<core::fluent_types::Vec<N, T>> {
     /// The element type
     using ElementType = T;
 
@@ -509,7 +509,7 @@ struct DataType<core::fluent_types::vec<N, T>> {
 
 /// Helper for building matrix types and expressions
 template <uint32_t N, uint32_t M, typename T>
-struct DataType<core::fluent_types::mat<N, M, T>> {
+struct DataType<core::fluent_types::Mat<N, M, T>> {
     /// The element type
     using ElementType = T;
 
@@ -547,13 +547,13 @@ struct DataType<core::fluent_types::mat<N, M, T>> {
         for (uint32_t i = 0; i < N; ++i) {
             if (one_value) {
                 r.Push(
-                    DataType<core::fluent_types::vec<M, T>>::Expr(b, Vector<Scalar, 1>{args[0]}));
+                    DataType<core::fluent_types::Vec<M, T>>::Expr(b, Vector<Scalar, 1>{args[0]}));
             } else {
                 Vector<Scalar, M> v;
                 for (size_t j = 0; j < M; ++j) {
                     v.Push(args[next++]);
                 }
-                r.Push(DataType<core::fluent_types::vec<M, T>>::Expr(b, std::move(v)));
+                r.Push(DataType<core::fluent_types::Vec<M, T>>::Expr(b, std::move(v)));
             }
         }
         return r;
@@ -631,7 +631,7 @@ struct DataType<alias<T, ID>> {
 /// Helper for building pointer types and expressions
 template <typename T>
 struct DataType<
-    core::fluent_types::ptr<core::AddressSpace::kPrivate, T, core::Access::kUndefined>> {
+    core::fluent_types::Ptr<core::AddressSpace::kPrivate, T, core::Access::kUndefined>> {
     /// The element type
     using ElementType = typename DataType<T>::ElementType;
 
@@ -672,7 +672,7 @@ struct DataType<
 
 /// Helper for building array types and expressions
 template <typename T, uint32_t N>
-struct DataType<core::fluent_types::array<T, N>> {
+struct DataType<core::fluent_types::Array<T, N>> {
     /// The element type
     using ElementType = typename DataType<T>::ElementType;
 
@@ -737,7 +737,7 @@ struct DataType<core::fluent_types::array<T, N>> {
 
 /// Helper for building atomic types and expressions
 template <typename T>
-struct DataType<core::fluent_types::atomic<T>> {
+struct DataType<core::fluent_types::Atomic<T>> {
     /// The element type
     using ElementType = typename DataType<T>::ElementType;
 
@@ -867,7 +867,7 @@ Value Vec(Ts... args) {
                   "Vector args must all be the same type");
     constexpr size_t N = sizeof...(args);
     Vector<Scalar, sizeof...(args)> v{args...};
-    return Value::Create<core::fluent_types::vec<N, FirstT>>(std::move(v));
+    return Value::Create<core::fluent_types::Vec<N, FirstT>>(std::move(v));
 }
 
 /// Creates a Value of DataType<array<N, T>> from N scalar `args`
@@ -878,7 +878,7 @@ Value Array(Ts... args) {
                   "Array args must all be the same type");
     constexpr size_t N = sizeof...(args);
     Vector<Scalar, sizeof...(args)> v{args...};
-    return Value::Create<core::fluent_types::array<FirstT, N>>(std::move(v));
+    return Value::Create<core::fluent_types::Array<FirstT, N>>(std::move(v));
 }
 
 /// Creates a Value of DataType<mat<C,R,T> from C*R scalar `args`
@@ -890,7 +890,7 @@ Value Mat(const T (&m_in)[C][R]) {
             m.Push(m_in[i][j]);
         }
     }
-    return Value::Create<core::fluent_types::mat<C, R, T>>(std::move(m));
+    return Value::Create<core::fluent_types::Mat<C, R, T>>(std::move(m));
 }
 
 /// Creates a Value of DataType<mat<2,R,T> from column vectors `c0` and `c1`
@@ -904,7 +904,7 @@ Value Mat(const T (&c0)[R], const T (&c1)[R]) {
     for (auto v : c1) {
         m.Push(v);
     }
-    return Value::Create<core::fluent_types::mat<C, R, T>>(std::move(m));
+    return Value::Create<core::fluent_types::Mat<C, R, T>>(std::move(m));
 }
 
 /// Creates a Value of DataType<mat<3,R,T> from column vectors `c0`, `c1`, and `c2`
@@ -921,7 +921,7 @@ Value Mat(const T (&c0)[R], const T (&c1)[R], const T (&c2)[R]) {
     for (auto v : c2) {
         m.Push(v);
     }
-    return Value::Create<core::fluent_types::mat<C, R, T>>(std::move(m));
+    return Value::Create<core::fluent_types::Mat<C, R, T>>(std::move(m));
 }
 
 /// Creates a Value of DataType<mat<4,R,T> from column vectors `c0`, `c1`, `c2`, and `c3`
@@ -941,7 +941,7 @@ Value Mat(const T (&c0)[R], const T (&c1)[R], const T (&c2)[R], const T (&c3)[R]
     for (auto v : c3) {
         m.Push(v);
     }
-    return Value::Create<core::fluent_types::mat<C, R, T>>(std::move(m));
+    return Value::Create<core::fluent_types::Mat<C, R, T>>(std::move(m));
 }
 }  // namespace builder
 }  // namespace tint::resolver

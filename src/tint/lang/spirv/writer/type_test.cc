@@ -64,7 +64,7 @@ TEST_F(SpirvWriterTest, Type_Bool) {
 
 TEST_F(SpirvWriterTest, Type_I32) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, i32, read_write>("v");
+        b.Var<private_, I32, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -73,7 +73,7 @@ TEST_F(SpirvWriterTest, Type_I32) {
 
 TEST_F(SpirvWriterTest, Type_U32) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, u32, read_write>("v");
+        b.Var<private_, U32, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -82,7 +82,7 @@ TEST_F(SpirvWriterTest, Type_U32) {
 
 TEST_F(SpirvWriterTest, Type_F32) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, f32, read_write>("v");
+        b.Var<private_, F32, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -91,7 +91,7 @@ TEST_F(SpirvWriterTest, Type_F32) {
 
 TEST_F(SpirvWriterTest, Type_F16) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, f16, read_write>("v");
+        b.Var<private_, F16, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -103,7 +103,7 @@ TEST_F(SpirvWriterTest, Type_F16) {
 
 TEST_F(SpirvWriterTest, Type_Vec2i) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, vec2<i32>, read_write>("v");
+        b.Var<private_, Vec2<I32>, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -112,7 +112,7 @@ TEST_F(SpirvWriterTest, Type_Vec2i) {
 
 TEST_F(SpirvWriterTest, Type_Vec3u) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, vec3<u32>, read_write>("v");
+        b.Var<private_, Vec3<U32>, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -121,7 +121,7 @@ TEST_F(SpirvWriterTest, Type_Vec3u) {
 
 TEST_F(SpirvWriterTest, Type_Vec4f) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, vec4<f32>, read_write>("v");
+        b.Var<private_, Vec4<F32>, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -130,7 +130,7 @@ TEST_F(SpirvWriterTest, Type_Vec4f) {
 
 TEST_F(SpirvWriterTest, Type_Vec2h) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, vec2<f16>, read_write>("v");
+        b.Var<private_, Vec2<F16>, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -139,7 +139,7 @@ TEST_F(SpirvWriterTest, Type_Vec2h) {
 
 TEST_F(SpirvWriterTest, Type_Vec4Bool) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, vec4<bool>, read_write>("v");
+        b.Var<private_, Vec4<bool>, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -148,7 +148,7 @@ TEST_F(SpirvWriterTest, Type_Vec4Bool) {
 
 TEST_F(SpirvWriterTest, Type_Mat2x3f) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, mat2x3<f32>, read_write>("v");
+        b.Var<private_, Mat2x3<F32>, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -157,7 +157,7 @@ TEST_F(SpirvWriterTest, Type_Mat2x3f) {
 
 TEST_F(SpirvWriterTest, Type_Mat4x2h) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, mat4x2<f16>, read_write>("v");
+        b.Var<private_, Mat4x2<F16>, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -166,7 +166,7 @@ TEST_F(SpirvWriterTest, Type_Mat4x2h) {
 
 TEST_F(SpirvWriterTest, Type_Array_DefaultStride) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, array<f32, 4>, read_write>("v");
+        b.Var<private_, Array<F32, 4>, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -176,7 +176,7 @@ TEST_F(SpirvWriterTest, Type_Array_DefaultStride) {
 
 TEST_F(SpirvWriterTest, Type_Array_ExplicitStride) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var("v", ty.ptr<private_, read_write>(ty.array<f32, 4>(16)));
+        b.Var("v", ty.ptr<private_, read_write>(ty.array<F32, 4>(16)));
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -186,7 +186,7 @@ TEST_F(SpirvWriterTest, Type_Array_ExplicitStride) {
 
 TEST_F(SpirvWriterTest, Type_Array_NestedArray) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, array<array<f32, 64>, 4>, read_write>("v");
+        b.Var<private_, Array<Array<F32, 64>, 4>, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -198,7 +198,7 @@ TEST_F(SpirvWriterTest, Type_Array_NestedArray) {
 
 TEST_F(SpirvWriterTest, Type_RuntimeArray_DefaultStride) {
     b.Append(b.ir.root_block, [&] {  //
-        auto* v = b.Var<storage, array<f32>, read_write>("v");
+        auto* v = b.Var<storage, Array<F32>, read_write>("v");
         v->SetBindingPoint(0, 0);
     });
 
@@ -209,7 +209,7 @@ TEST_F(SpirvWriterTest, Type_RuntimeArray_DefaultStride) {
 
 TEST_F(SpirvWriterTest, Type_RuntimeArray_ExplicitStride) {
     b.Append(b.ir.root_block, [&] {  //
-        auto* v = b.Var("v", ty.ptr<storage, read_write>(ty.array<f32>(16)));
+        auto* v = b.Var("v", ty.ptr<storage, read_write>(ty.array<F32>(16)));
         v->SetBindingPoint(0, 0);
     });
 
@@ -222,7 +222,7 @@ TEST_F(SpirvWriterTest, Type_Struct) {
     auto* str =
         ty.Struct(mod.symbols.New("MyStruct"), {
                                                    {mod.symbols.Register("a"), ty.f32()},
-                                                   {mod.symbols.Register("b"), ty.vec4<i32>()},
+                                                   {mod.symbols.Register("b"), ty.vec4<I32>()},
                                                });
     b.Append(b.ir.root_block, [&] {  //
         b.Var("v", ty.ptr<private_, read_write>(str));
@@ -241,9 +241,9 @@ TEST_F(SpirvWriterTest, Type_Struct_MatrixLayout) {
     auto* str = ty.Struct(
         mod.symbols.New("MyStruct"),
         {
-            {mod.symbols.Register("m"), ty.mat3x3<f32>()},
+            {mod.symbols.Register("m"), ty.mat3x3<F32>()},
             // Matrices nested inside arrays need layout decorations on the struct member too.
-            {mod.symbols.Register("arr"), ty.array(ty.array(ty.mat2x4<f16>(), 4), 4)},
+            {mod.symbols.Register("arr"), ty.array(ty.array(ty.mat2x4<F16>(), 4), 4)},
         });
     b.Append(b.ir.root_block, [&] {  //
         b.Var("v", ty.ptr<private_, read_write>(str));
@@ -259,7 +259,7 @@ TEST_F(SpirvWriterTest, Type_Struct_MatrixLayout) {
 
 TEST_F(SpirvWriterTest, Type_Atomic) {
     b.Append(b.ir.root_block, [&] {  //
-        b.Var<private_, atomic<i32>, read_write>("v");
+        b.Var<private_, Atomic<I32>, read_write>("v");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -532,10 +532,10 @@ INSTANTIATE_TEST_SUITE_P(SpirvWriterTest,
 // Includes types with the same opcode but different parameters.
 TEST_F(SpirvWriterTest, Type_Multiple) {
     b.Append(b.ir.root_block, [&] {
-        b.Var<private_, i32, read_write>("v1");
-        b.Var<private_, u32, read_write>("v2");
-        b.Var<private_, f32, read_write>("v3");
-        b.Var<private_, f16, read_write>("v4");
+        b.Var<private_, I32, read_write>("v1");
+        b.Var<private_, U32, read_write>("v2");
+        b.Var<private_, F32, read_write>("v3");
+        b.Var<private_, F16, read_write>("v4");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -548,9 +548,9 @@ TEST_F(SpirvWriterTest, Type_Multiple) {
 // Test that we do not emit the same type more than once.
 TEST_F(SpirvWriterTest, Type_Deduplicate) {
     b.Append(b.ir.root_block, [&] {
-        b.Var<private_, i32, read_write>("v1");
-        b.Var<private_, i32, read_write>("v2");
-        b.Var<private_, i32, read_write>("v3");
+        b.Var<private_, I32, read_write>("v1");
+        b.Var<private_, I32, read_write>("v2");
+        b.Var<private_, I32, read_write>("v3");
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;

@@ -244,7 +244,7 @@ struct State {
         if (auto* str = inner_result->Type()->As<core::type::Struct>()) {
             for (auto* member : str->Members()) {
                 Value* from =
-                    builder.Access(member->Type(), inner_result, u32(member->Index()))->Result(0);
+                    builder.Access(member->Type(), inner_result, U32(member->Index()))->Result(0);
                 backend->SetOutput(builder, member->Index(), from);
             }
         } else if (!inner_result->Type()->Is<core::type::Void>()) {

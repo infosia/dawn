@@ -103,7 +103,7 @@ using HlslImportData_SingleVectorParamTest = TestParamHelper<HlslImportData>;
 TEST_P(HlslImportData_SingleVectorParamTest, FloatVector) {
     auto param = GetParam();
 
-    auto* expr = Call(param.name, Call<vec3<f32>>(0.1_f, 0.2_f, 0.3_f));
+    auto* expr = Call(param.name, Call<vec3<F32>>(0.1_f, 0.2_f, 0.3_f));
     WrapInFunction(expr);
 
     ASTPrinter& gen = Build();
@@ -166,7 +166,7 @@ using HlslImportData_DualParam_VectorTest = TestParamHelper<HlslImportData>;
 TEST_P(HlslImportData_DualParam_VectorTest, Float) {
     auto param = GetParam();
 
-    auto* expr = Call(param.name, Call<vec3<f32>>(1_f, 2_f, 3_f), Call<vec3<f32>>(4_f, 5_f, 6_f));
+    auto* expr = Call(param.name, Call<vec3<F32>>(1_f, 2_f, 3_f), Call<vec3<F32>>(4_f, 5_f, 6_f));
     WrapInFunction(expr);
 
     ASTPrinter& gen = Build();
@@ -229,8 +229,8 @@ using HlslImportData_TripleParam_VectorTest = TestParamHelper<HlslImportData>;
 TEST_P(HlslImportData_TripleParam_VectorTest, Float) {
     auto param = GetParam();
 
-    auto* expr = Call(param.name, Call<vec3<f32>>(1_f, 2_f, 3_f), Call<vec3<f32>>(4_f, 5_f, 6_f),
-                      Call<vec3<f32>>(7_f, 8_f, 9_f));
+    auto* expr = Call(param.name, Call<vec3<F32>>(1_f, 2_f, 3_f), Call<vec3<F32>>(4_f, 5_f, 6_f),
+                      Call<vec3<F32>>(7_f, 8_f, 9_f));
     WrapInFunction(expr);
 
     ASTPrinter& gen = Build();
@@ -267,7 +267,7 @@ INSTANTIATE_TEST_SUITE_P(HlslASTPrinterTest_Import,
                          testing::Values(HlslImportData{"clamp", "clamp"}));
 
 TEST_F(HlslASTPrinterTest_Import, HlslImportData_Determinant) {
-    GlobalVar("var", ty.mat3x3<f32>(), core::AddressSpace::kPrivate);
+    GlobalVar("var", ty.mat3x3<F32>(), core::AddressSpace::kPrivate);
 
     auto* expr = Call("determinant", "var");
     WrapInFunction(expr);
@@ -293,7 +293,7 @@ TEST_F(HlslASTPrinterTest_Import, HlslImportData_QuantizeToF16_Scalar) {
 }
 
 TEST_F(HlslASTPrinterTest_Import, HlslImportData_QuantizeToF16_Vector) {
-    GlobalVar("v", Call<vec3<f32>>(2_f), core::AddressSpace::kPrivate);
+    GlobalVar("v", Call<Vec3<F32>>(2_f), core::AddressSpace::kPrivate);
 
     auto* expr = Call("quantizeToF16", "v");
     WrapInFunction(expr);

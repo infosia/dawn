@@ -1090,11 +1090,13 @@ bool FunctionEmitter::EmitPipelineInput(std::string var_name,
                 Switch(
                     current_type,
                     [&](const Matrix* matrix_type) {
-                        store_dest = builder_.IndexAccessor(store_dest, builder_.Expr(i32(index)));
+                        store_dest =
+                            builder_.IndexAccessor(store_dest, builder_.Expr(core::I32(index)));
                         current_type = ty_.Vector(matrix_type->type, matrix_type->rows);
                     },
                     [&](const Array* array_type) {
-                        store_dest = builder_.IndexAccessor(store_dest, builder_.Expr(i32(index)));
+                        store_dest =
+                            builder_.IndexAccessor(store_dest, builder_.Expr(core::I32(index)));
                         current_type = array_type->type->UnwrapAlias();
                     },
                     [&](const Struct* struct_type) {
@@ -1221,11 +1223,11 @@ bool FunctionEmitter::EmitPipelineOutput(std::string var_name,
                 Switch(
                     current_type,
                     [&](const Matrix* matrix_type) {
-                        load_source = builder_.IndexAccessor(load_source, i32(index));
+                        load_source = builder_.IndexAccessor(load_source, core::I32(index));
                         current_type = ty_.Vector(matrix_type->type, matrix_type->rows);
                     },
                     [&](const Array* array_type) {
-                        load_source = builder_.IndexAccessor(load_source, i32(index));
+                        load_source = builder_.IndexAccessor(load_source, core::I32(index));
                         current_type = array_type->type->UnwrapAlias();
                     },
                     [&](const Struct* struct_type) {
@@ -1400,9 +1402,9 @@ bool FunctionEmitter::EmitEntryPointAsWrapper() {
     if (ep_info_->stage == ast::PipelineStage::kCompute) {
         auto& size = ep_info_->workgroup_size;
         if (size.x != 0 && size.y != 0 && size.z != 0) {
-            const ast::Expression* x = builder_.Expr(i32(size.x));
-            const ast::Expression* y = size.y ? builder_.Expr(i32(size.y)) : nullptr;
-            const ast::Expression* z = size.z ? builder_.Expr(i32(size.z)) : nullptr;
+            const ast::Expression* x = builder_.Expr(core::I32(size.x));
+            const ast::Expression* y = size.y ? builder_.Expr(core::I32(size.y)) : nullptr;
+            const ast::Expression* z = size.z ? builder_.Expr(core::I32(size.z)) : nullptr;
             fn_attrs.Push(create<ast::WorkgroupAttribute>(Source{}, x, y, z));
         }
     }
@@ -4128,7 +4130,7 @@ TypedExpression FunctionEmitter::EmitGlslStd450MatrixInverse(
     auto& pb = builder_;
 
     auto idx = [&](size_t row, size_t col) {
-        return pb.IndexAccessor(pb.IndexAccessor(mat.expr, u32(row)), u32(col));
+        return pb.IndexAccessor(pb.IndexAccessor(mat.expr, core::U32(row)), core::U32(col));
     };
 
     // Compute and save determinant to a let
@@ -5913,9 +5915,9 @@ bool FunctionEmitter::EmitAtomicOp(const spvtools::opt::Instruction& inst) {
     auto lit = [&](int v) -> TypedExpression {
         auto* result_type = parser_impl_.ConvertType(inst.type_id());
         if (result_type->Is<I32>()) {
-            return TypedExpression(result_type, builder_.Expr(i32(v)));
+            return TypedExpression(result_type, builder_.Expr(core::I32(v)));
         } else if (result_type->Is<U32>()) {
-            return TypedExpression(result_type, builder_.Expr(u32(v)));
+            return TypedExpression(result_type, builder_.Expr(core::U32(v)));
         }
         return {};
     };

@@ -53,11 +53,11 @@ using namespace tint::core::fluent_types;  // NOLINT
 using ParameterUsage = core::ParameterUsage;
 using OverloadFlag = core::intrinsic::OverloadFlag;
 
-using AFloatV = vec3<AFloat>;
-using AIntV = vec3<AInt>;
-using f32V = vec3<f32>;
-using i32V = vec3<i32>;
-using u32V = vec3<u32>;
+using AFloatV = Vec3<AFloat>;
+using AIntV = Vec3<AInt>;
+using f32V = Vec3<F32>;
+using i32V = Vec3<I32>;
+using u32V = Vec3<U32>;
 
 class WgslIntrinsicTableTest : public testing::Test, public ProgramBuilder {
   public:
@@ -1227,8 +1227,8 @@ INSTANTIATE_TEST_SUITE_P(AFloat_f32,
                          IntrinsicTableAbstractBinaryTest,
                          testing::Values(  // clang-format off
 //            result   | param lhs | param rhs |  arg lhs  |  arg rhs
-Case::Create<f32,        f32,        f32,        AFloat,     f32>(),
-Case::Create<f32,        f32,        f32,        f32,        AFloat>()
+Case::Create<F32,        F32,        F32,        AFloat,     F32>(),
+Case::Create<F32,        F32,        F32,        F32,        AFloat>()
                              ));  // clang-format on
 
 INSTANTIATE_TEST_SUITE_P(VecAFloat_Vecf32,
@@ -1243,8 +1243,8 @@ INSTANTIATE_TEST_SUITE_P(AFloat_i32,
                          IntrinsicTableAbstractBinaryTest,
                          testing::Values(  // clang-format off
 //            result   | param lhs | param rhs |  arg lhs  |  arg rhs
-Case::Create<void,        void,        void,        AFloat,     i32>(false),
-Case::Create<void,        void,        void,        i32,        AFloat>(false)
+Case::Create<void,        void,        void,        AFloat,     I32>(false),
+Case::Create<void,        void,        void,        I32,        AFloat>(false)
                              ));  // clang-format on
 
 INSTANTIATE_TEST_SUITE_P(VecAFloat_Veci32,
@@ -1259,8 +1259,8 @@ INSTANTIATE_TEST_SUITE_P(AFloat_u32,
                          IntrinsicTableAbstractBinaryTest,
                          testing::Values(  // clang-format off
 //            result   | param lhs | param rhs |  arg lhs  |  arg rhs
-Case::Create<void,        void,        void,        AFloat,     u32>(false),
-Case::Create<void,        void,        void,        u32,        AFloat>(false)
+Case::Create<void,        void,        void,        AFloat,     U32>(false),
+Case::Create<void,        void,        void,        U32,        AFloat>(false)
                              ));  // clang-format on
 
 INSTANTIATE_TEST_SUITE_P(VecAFloat_Vecu32,
@@ -1275,8 +1275,8 @@ INSTANTIATE_TEST_SUITE_P(AInt_f32,
                          IntrinsicTableAbstractBinaryTest,
                          testing::Values(  // clang-format off
 //            result   | param lhs | param rhs |  arg lhs  |  arg rhs
-Case::Create<f32,        f32,        f32,        AInt,       f32>(),
-Case::Create<f32,        f32,        f32,        f32,        AInt>()
+Case::Create<F32,        F32,        F32,        AInt,       F32>(),
+Case::Create<F32,        F32,        F32,        F32,        AInt>()
                              ));  // clang-format on
 
 INSTANTIATE_TEST_SUITE_P(VecAInt_Vecf32,
@@ -1291,8 +1291,8 @@ INSTANTIATE_TEST_SUITE_P(AInt_i32,
                          IntrinsicTableAbstractBinaryTest,
                          testing::Values(  // clang-format off
 //            result   | param lhs | param rhs |  arg lhs  |  arg rhs
-Case::Create<i32,        i32,        i32,        AInt,       i32>(),
-Case::Create<i32,        i32,        i32,        i32,        AInt>()
+Case::Create<I32,        I32,        I32,        AInt,       I32>(),
+Case::Create<I32,        I32,        I32,        I32,        AInt>()
                              ));  // clang-format on
 
 INSTANTIATE_TEST_SUITE_P(VecAInt_Veci32,
@@ -1307,8 +1307,8 @@ INSTANTIATE_TEST_SUITE_P(AInt_u32,
                          IntrinsicTableAbstractBinaryTest,
                          testing::Values(  // clang-format off
 //            result   | param lhs | param rhs |  arg lhs  |  arg rhs
-Case::Create<u32,        u32,        u32,        AInt,       u32>(),
-Case::Create<u32,        u32,        u32,        u32,        AInt>()
+Case::Create<U32,        U32,        U32,        AInt,       U32>(),
+Case::Create<U32,        U32,        U32,        U32,        AInt>()
                              ));  // clang-format on
 
 INSTANTIATE_TEST_SUITE_P(VecAInt_Vecu32,
@@ -1423,12 +1423,12 @@ INSTANTIATE_TEST_SUITE_P(
     IntrinsicTableAbstractTernaryTest,
     testing::Values(  // clang-format off
 //           result  | param a | param b | param c |  arg a  |  arg b  |  arg c
-Case::Create<f32,      f32,      f32,      f32,      AFloat,   AFloat,   f32>(),
-Case::Create<f32,      f32,      f32,      f32,      AFloat,   f32,      AFloat>(),
-Case::Create<f32,      f32,      f32,      f32,      AFloat,   f32,      f32>(),
-Case::Create<f32,      f32,      f32,      f32,      f32,      AFloat,   AFloat>(),
-Case::Create<f32,      f32,      f32,      f32,      f32,      AFloat,   f32>(),
-Case::Create<f32,      f32,      f32,      f32,      f32,      f32,      AFloat>()
+Case::Create<F32,      F32,      F32,      F32,      AFloat,   AFloat,   F32>(),
+Case::Create<F32,      F32,      F32,      F32,      AFloat,   F32,      AFloat>(),
+Case::Create<F32,      F32,      F32,      F32,      AFloat,   F32,      F32>(),
+Case::Create<F32,      F32,      F32,      F32,      F32,      AFloat,   AFloat>(),
+Case::Create<F32,      F32,      F32,      F32,      F32,      AFloat,   F32>(),
+Case::Create<F32,      F32,      F32,      F32,      F32,      F32,      AFloat>()
         // clang-format on
         ));
 
@@ -1451,12 +1451,12 @@ INSTANTIATE_TEST_SUITE_P(
     IntrinsicTableAbstractTernaryTest,
     testing::Values(  // clang-format off
 //           result  | param a | param b | param c |  arg a  |  arg b  |  arg c
-Case::Create<void,     void,     void,     void,     AFloat,   AFloat,   i32>(false),
-Case::Create<void,     void,     void,     void,     AFloat,   i32,      AFloat>(false),
-Case::Create<void,     void,     void,     void,     AFloat,   i32,      i32>(false),
-Case::Create<void,     void,     void,     void,     i32,      AFloat,   AFloat>(false),
-Case::Create<void,     void,     void,     void,     i32,      AFloat,   i32>(false),
-Case::Create<void,     void,     void,     void,     i32,      i32,      AFloat>(false)
+Case::Create<void,     void,     void,     void,     AFloat,   AFloat,   I32>(false),
+Case::Create<void,     void,     void,     void,     AFloat,   I32,      AFloat>(false),
+Case::Create<void,     void,     void,     void,     AFloat,   I32,      I32>(false),
+Case::Create<void,     void,     void,     void,     I32,      AFloat,   AFloat>(false),
+Case::Create<void,     void,     void,     void,     I32,      AFloat,   I32>(false),
+Case::Create<void,     void,     void,     void,     I32,      I32,      AFloat>(false)
         // clang-format on
         ));
 
@@ -1479,12 +1479,12 @@ INSTANTIATE_TEST_SUITE_P(
     IntrinsicTableAbstractTernaryTest,
     testing::Values(  // clang-format off
 //           result  | param a | param b | param c |  arg a  |  arg b  |  arg c
-Case::Create<void,     void,     void,     void,     AFloat,   AFloat,   u32>(false),
-Case::Create<void,     void,     void,     void,     AFloat,   u32,      AFloat>(false),
-Case::Create<void,     void,     void,     void,     AFloat,   u32,      u32>(false),
-Case::Create<void,     void,     void,     void,     u32,      AFloat,   AFloat>(false),
-Case::Create<void,     void,     void,     void,     u32,      AFloat,   u32>(false),
-Case::Create<void,     void,     void,     void,     u32,      u32,      AFloat>(false)
+Case::Create<void,     void,     void,     void,     AFloat,   AFloat,   U32>(false),
+Case::Create<void,     void,     void,     void,     AFloat,   U32,      AFloat>(false),
+Case::Create<void,     void,     void,     void,     AFloat,   U32,      U32>(false),
+Case::Create<void,     void,     void,     void,     U32,      AFloat,   AFloat>(false),
+Case::Create<void,     void,     void,     void,     U32,      AFloat,   U32>(false),
+Case::Create<void,     void,     void,     void,     U32,      U32,      AFloat>(false)
         // clang-format on
         ));
 
@@ -1507,12 +1507,12 @@ INSTANTIATE_TEST_SUITE_P(
     IntrinsicTableAbstractTernaryTest,
     testing::Values(  // clang-format off
 //           result  | param a | param b | param c |  arg a  |  arg b  |  arg c
-Case::Create<f32,      f32,      f32,      f32,      AInt,     AInt,     f32>(),
-Case::Create<f32,      f32,      f32,      f32,      AInt,     f32,      AInt>(),
-Case::Create<f32,      f32,      f32,      f32,      AInt,     f32,      f32>(),
-Case::Create<f32,      f32,      f32,      f32,      f32,      AInt,     AInt>(),
-Case::Create<f32,      f32,      f32,      f32,      f32,      AInt,     f32>(),
-Case::Create<f32,      f32,      f32,      f32,      f32,      f32,      AInt>()
+Case::Create<F32,      F32,      F32,      F32,      AInt,     AInt,     F32>(),
+Case::Create<F32,      F32,      F32,      F32,      AInt,     F32,      AInt>(),
+Case::Create<F32,      F32,      F32,      F32,      AInt,     F32,      F32>(),
+Case::Create<F32,      F32,      F32,      F32,      F32,      AInt,     AInt>(),
+Case::Create<F32,      F32,      F32,      F32,      F32,      AInt,     F32>(),
+Case::Create<F32,      F32,      F32,      F32,      F32,      F32,      AInt>()
         // clang-format on
         ));
 
@@ -1535,12 +1535,12 @@ INSTANTIATE_TEST_SUITE_P(
     IntrinsicTableAbstractTernaryTest,
     testing::Values(  // clang-format off
 //           result  | param a | param b | param c |  arg a  |  arg b  |  arg c
-Case::Create<i32,      i32,      i32,      i32,      AInt,     AInt,     i32>(),
-Case::Create<i32,      i32,      i32,      i32,      AInt,     i32,      AInt>(),
-Case::Create<i32,      i32,      i32,      i32,      AInt,     i32,      i32>(),
-Case::Create<i32,      i32,      i32,      i32,      i32,      AInt,     AInt>(),
-Case::Create<i32,      i32,      i32,      i32,      i32,      AInt,     i32>(),
-Case::Create<i32,      i32,      i32,      i32,      i32,      i32,      AInt>()
+Case::Create<I32,      I32,      I32,      I32,      AInt,     AInt,     I32>(),
+Case::Create<I32,      I32,      I32,      I32,      AInt,     I32,      AInt>(),
+Case::Create<I32,      I32,      I32,      I32,      AInt,     I32,      I32>(),
+Case::Create<I32,      I32,      I32,      I32,      I32,      AInt,     AInt>(),
+Case::Create<I32,      I32,      I32,      I32,      I32,      AInt,     I32>(),
+Case::Create<I32,      I32,      I32,      I32,      I32,      I32,      AInt>()
         // clang-format on
         ));
 
@@ -1563,12 +1563,12 @@ INSTANTIATE_TEST_SUITE_P(
     IntrinsicTableAbstractTernaryTest,
     testing::Values(  // clang-format off
 //           result  | param a | param b | param c |  arg a  |  arg b  |  arg c
-Case::Create<u32,      u32,      u32,      u32,      AInt,     AInt,     u32>(),
-Case::Create<u32,      u32,      u32,      u32,      AInt,     u32,      AInt>(),
-Case::Create<u32,      u32,      u32,      u32,      AInt,     u32,      u32>(),
-Case::Create<u32,      u32,      u32,      u32,      u32,      AInt,     AInt>(),
-Case::Create<u32,      u32,      u32,      u32,      u32,      AInt,     u32>(),
-Case::Create<u32,      u32,      u32,      u32,      u32,      u32,      AInt>()
+Case::Create<U32,      U32,      U32,      U32,      AInt,     AInt,     U32>(),
+Case::Create<U32,      U32,      U32,      U32,      AInt,     U32,      AInt>(),
+Case::Create<U32,      U32,      U32,      U32,      AInt,     U32,      U32>(),
+Case::Create<U32,      U32,      U32,      U32,      U32,      AInt,     AInt>(),
+Case::Create<U32,      U32,      U32,      U32,      U32,      AInt,     U32>(),
+Case::Create<U32,      U32,      U32,      U32,      U32,      U32,      AInt>()
         // clang-format on
         ));
 

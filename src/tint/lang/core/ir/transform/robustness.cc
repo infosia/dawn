@@ -114,7 +114,7 @@ struct State {
             auto* vec = lve->From()->Type()->UnwrapPtr()->As<type::Vector>();
             b.InsertBefore(lve, [&] {  //
                 ClampOperand(lve, LoadVectorElement::kIndexOperandOffset,
-                             b.Constant(u32(vec->Width() - 1u)));
+                             b.Constant(U32(vec->Width() - 1u)));
             });
         }
 
@@ -123,7 +123,7 @@ struct State {
             auto* vec = sve->To()->Type()->UnwrapPtr()->As<type::Vector>();
             b.InsertBefore(sve, [&] {  //
                 ClampOperand(sve, StoreVectorElement::kIndexOperandOffset,
-                             b.Constant(u32(vec->Width() - 1u)));
+                             b.Constant(U32(vec->Width() - 1u)));
             });
         }
 
@@ -191,7 +191,7 @@ struct State {
         ir::Value* clamped_idx = nullptr;
         if (const_idx && const_limit) {
             // Generate a new constant index that is clamped to the limit.
-            clamped_idx = b.Constant(u32(std::min(const_idx->Value()->ValueAs<uint32_t>(),
+            clamped_idx = b.Constant(U32(std::min(const_idx->Value()->ValueAs<uint32_t>(),
                                                   const_limit->Value()->ValueAs<uint32_t>())));
         } else {
             // Clamp it to the dynamic limit.
@@ -216,14 +216,14 @@ struct State {
             auto limit = tint::Switch(
                 type,  //
                 [&](const type::Vector* vec) -> ir::Value* {
-                    return b.Constant(u32(vec->Width() - 1u));
+                    return b.Constant(U32(vec->Width() - 1u));
                 },
                 [&](const type::Matrix* mat) -> ir::Value* {
-                    return b.Constant(u32(mat->Columns() - 1u));
+                    return b.Constant(U32(mat->Columns() - 1u));
                 },
                 [&](const type::Array* arr) -> ir::Value* {
                     if (arr->ConstantCount()) {
-                        return b.Constant(u32(arr->ConstantCount().value() - 1u));
+                        return b.Constant(U32(arr->ConstantCount().value() - 1u));
                     }
                     TINT_ASSERT(arr->Count()->Is<type::RuntimeArrayCount>());
 
@@ -254,7 +254,7 @@ struct State {
             }
 
             // Get the type that this index produces.
-            type = const_idx ? type->Element(const_idx->Value()->ValueAs<u32>())
+            type = const_idx ? type->Element(const_idx->Value()->ValueAs<U32>())
                              : type->Elements().type;
         }
     }

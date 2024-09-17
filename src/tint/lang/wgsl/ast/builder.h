@@ -3582,23 +3582,23 @@ struct Builder::TypesBuilder::CToAST<bool> {
     static ast::Type get(const Builder::TypesBuilder* t) { return t->bool_(); }
 };
 template <typename T, uint32_t N>
-struct Builder::TypesBuilder::CToAST<core::fluent_types::array<T, N>> {
+struct Builder::TypesBuilder::CToAST<core::fluent_types::Array<T, N>> {
     static ast::Type get(const Builder::TypesBuilder* t) { return t->array<T, N>(); }
 };
 template <typename T>
-struct Builder::TypesBuilder::CToAST<core::fluent_types::atomic<T>> {
+struct Builder::TypesBuilder::CToAST<core::fluent_types::Atomic<T>> {
     static ast::Type get(const Builder::TypesBuilder* t) { return t->atomic<T>(); }
 };
 template <uint32_t C, uint32_t R, typename T>
-struct Builder::TypesBuilder::CToAST<core::fluent_types::mat<C, R, T>> {
+struct Builder::TypesBuilder::CToAST<core::fluent_types::Mat<C, R, T>> {
     static ast::Type get(const Builder::TypesBuilder* t) { return t->mat<T>(C, R); }
 };
 template <uint32_t N, typename T>
-struct Builder::TypesBuilder::CToAST<core::fluent_types::vec<N, T>> {
+struct Builder::TypesBuilder::CToAST<core::fluent_types::Vec<N, T>> {
     static ast::Type get(const Builder::TypesBuilder* t) { return t->vec<T, N>(); }
 };
 template <core::AddressSpace ADDRESS, typename T, core::Access ACCESS>
-struct Builder::TypesBuilder::CToAST<core::fluent_types::ptr<ADDRESS, T, ACCESS>> {
+struct Builder::TypesBuilder::CToAST<core::fluent_types::Ptr<ADDRESS, T, ACCESS>> {
     static ast::Type get(const Builder::TypesBuilder* t) { return t->ptr<ADDRESS, T, ACCESS>(); }
 };
 //! @endcond

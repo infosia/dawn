@@ -188,11 +188,11 @@ INSTANTIATE_TEST_SUITE_P(Add,
                          testing::Combine(testing::Values(core::BinaryOp::kAdd),
                                           testing::ValuesIn(Concat(  //
                                               OpAddIntCases<AInt>(),
-                                              OpAddIntCases<i32>(),
-                                              OpAddIntCases<u32>(),
+                                              OpAddIntCases<I32>(),
+                                              OpAddIntCases<U32>(),
                                               OpAddFloatCases<AFloat>(),
-                                              OpAddFloatCases<f32>(),
-                                              OpAddFloatCases<f16>()))));
+                                              OpAddFloatCases<F32>(),
+                                              OpAddFloatCases<F16>()))));
 
 template <typename T>
 std::vector<Case> OpSubIntCases() {
@@ -244,11 +244,11 @@ INSTANTIATE_TEST_SUITE_P(Sub,
                          testing::Combine(testing::Values(core::BinaryOp::kSubtract),
                                           testing::ValuesIn(Concat(  //
                                               OpSubIntCases<AInt>(),
-                                              OpSubIntCases<i32>(),
-                                              OpSubIntCases<u32>(),
+                                              OpSubIntCases<I32>(),
+                                              OpSubIntCases<U32>(),
                                               OpSubFloatCases<AFloat>(),
-                                              OpSubFloatCases<f32>(),
-                                              OpSubFloatCases<f16>()))));
+                                              OpSubFloatCases<F32>(),
+                                              OpSubFloatCases<F16>()))));
 
 template <typename T>
 std::vector<Case> OpMulScalarCases() {
@@ -421,20 +421,20 @@ INSTANTIATE_TEST_SUITE_P(Mul,
                              testing::Values(core::BinaryOp::kMultiply),
                              testing::ValuesIn(Concat(  //
                                  OpMulScalarCases<AInt>(),
-                                 OpMulScalarCases<i32>(),
-                                 OpMulScalarCases<u32>(),
+                                 OpMulScalarCases<I32>(),
+                                 OpMulScalarCases<U32>(),
                                  OpMulScalarCases<AFloat>(),
-                                 OpMulScalarCases<f32>(),
-                                 OpMulScalarCases<f16>(),
+                                 OpMulScalarCases<F32>(),
+                                 OpMulScalarCases<F16>(),
                                  OpMulVecCases<AInt>(),
-                                 OpMulVecCases<i32>(),
-                                 OpMulVecCases<u32>(),
+                                 OpMulVecCases<I32>(),
+                                 OpMulVecCases<U32>(),
                                  OpMulVecCases<AFloat>(),
-                                 OpMulVecCases<f32>(),
-                                 OpMulVecCases<f16>(),
+                                 OpMulVecCases<F32>(),
+                                 OpMulVecCases<F16>(),
                                  OpMulMatCases<AFloat>(),
-                                 OpMulMatCases<f32>(),
-                                 OpMulMatCases<f16>()))));
+                                 OpMulMatCases<F32>(),
+                                 OpMulMatCases<F16>()))));
 
 template <typename T>
 std::vector<Case> OpDivIntCases() {
@@ -498,11 +498,11 @@ INSTANTIATE_TEST_SUITE_P(Div,
                              testing::Values(core::BinaryOp::kDivide),
                              testing::ValuesIn(Concat(  //
                                  OpDivIntCases<AInt>(),
-                                 OpDivIntCases<i32>(),
-                                 OpDivIntCases<u32>(),
+                                 OpDivIntCases<I32>(),
+                                 OpDivIntCases<U32>(),
                                  OpDivFloatCases<AFloat>(),
-                                 OpDivFloatCases<f32>(),
-                                 OpDivFloatCases<f16>()))));
+                                 OpDivFloatCases<F32>(),
+                                 OpDivFloatCases<F16>()))));
 
 template <typename T>
 std::vector<Case> OpModCases() {
@@ -659,11 +659,11 @@ INSTANTIATE_TEST_SUITE_P(Mod,
                              testing::Values(core::BinaryOp::kModulo),
                              testing::ValuesIn(Concat(  //
                                  OpModCases<AInt>(),
-                                 OpModCases<i32>(),
-                                 OpModCases<u32>(),
+                                 OpModCases<I32>(),
+                                 OpModCases<U32>(),
                                  OpModCases<AFloat>(),
-                                 OpModCases<f32>(),
-                                 OpModCases<f16>()))));
+                                 OpModCases<F32>(),
+                                 OpModCases<F16>()))));
 
 template <typename T, bool equals>
 std::vector<Case> OpEqualCases() {
@@ -683,11 +683,11 @@ INSTANTIATE_TEST_SUITE_P(Equal,
                              testing::Values(core::BinaryOp::kEqual),
                              testing::ValuesIn(Concat(  //
                                  OpEqualCases<AInt, true>(),
-                                 OpEqualCases<i32, true>(),
-                                 OpEqualCases<u32, true>(),
+                                 OpEqualCases<I32, true>(),
+                                 OpEqualCases<U32, true>(),
                                  OpEqualCases<AFloat, true>(),
-                                 OpEqualCases<f32, true>(),
-                                 OpEqualCases<f16, true>(),
+                                 OpEqualCases<F32, true>(),
+                                 OpEqualCases<F16, true>(),
                                  OpEqualCases<bool, true>()))));
 INSTANTIATE_TEST_SUITE_P(NotEqual,
                          ConstEvalBinaryOpTest,
@@ -695,11 +695,11 @@ INSTANTIATE_TEST_SUITE_P(NotEqual,
                              testing::Values(core::BinaryOp::kNotEqual),
                              testing::ValuesIn(Concat(  //
                                  OpEqualCases<AInt, false>(),
-                                 OpEqualCases<i32, false>(),
-                                 OpEqualCases<u32, false>(),
+                                 OpEqualCases<I32, false>(),
+                                 OpEqualCases<U32, false>(),
                                  OpEqualCases<AFloat, false>(),
-                                 OpEqualCases<f32, false>(),
-                                 OpEqualCases<f16, false>(),
+                                 OpEqualCases<F32, false>(),
+                                 OpEqualCases<F16, false>(),
                                  OpEqualCases<bool, false>()))));
 
 template <typename T, bool less_than>
@@ -721,22 +721,22 @@ INSTANTIATE_TEST_SUITE_P(LessThan,
                              testing::Values(core::BinaryOp::kLessThan),
                              testing::ValuesIn(Concat(  //
                                  OpLessThanCases<AInt, true>(),
-                                 OpLessThanCases<i32, true>(),
-                                 OpLessThanCases<u32, true>(),
+                                 OpLessThanCases<I32, true>(),
+                                 OpLessThanCases<U32, true>(),
                                  OpLessThanCases<AFloat, true>(),
-                                 OpLessThanCases<f32, true>(),
-                                 OpLessThanCases<f16, true>()))));
+                                 OpLessThanCases<F32, true>(),
+                                 OpLessThanCases<F16, true>()))));
 INSTANTIATE_TEST_SUITE_P(GreaterThanEqual,
                          ConstEvalBinaryOpTest,
                          testing::Combine(  //
                              testing::Values(core::BinaryOp::kGreaterThanEqual),
                              testing::ValuesIn(Concat(  //
                                  OpLessThanCases<AInt, false>(),
-                                 OpLessThanCases<i32, false>(),
-                                 OpLessThanCases<u32, false>(),
+                                 OpLessThanCases<I32, false>(),
+                                 OpLessThanCases<U32, false>(),
                                  OpLessThanCases<AFloat, false>(),
-                                 OpLessThanCases<f32, false>(),
-                                 OpLessThanCases<f16, false>()))));
+                                 OpLessThanCases<F32, false>(),
+                                 OpLessThanCases<F16, false>()))));
 
 template <typename T, bool greater_than>
 std::vector<Case> OpGreaterThanCases() {
@@ -757,7 +757,7 @@ INSTANTIATE_TEST_SUITE_P(GreaterThan,
                              testing::Values(core::BinaryOp::kGreaterThan),
                              testing::ValuesIn(Concat(  //
                                  OpGreaterThanCases<AInt, true>(),
-                                 OpGreaterThanCases<i32, true>(),
+                                 OpGreaterThanCases<I32, true>(),
                                  OpGreaterThanCases<u32, true>(),
                                  OpGreaterThanCases<AFloat, true>(),
                                  OpGreaterThanCases<f32, true>(),
@@ -768,7 +768,7 @@ INSTANTIATE_TEST_SUITE_P(LessThanEqual,
                              testing::Values(core::BinaryOp::kLessThanEqual),
                              testing::ValuesIn(Concat(  //
                                  OpGreaterThanCases<AInt, false>(),
-                                 OpGreaterThanCases<i32, false>(),
+                                 OpGreaterThanCases<I32, false>(),
                                  OpGreaterThanCases<u32, false>(),
                                  OpGreaterThanCases<AFloat, false>(),
                                  OpGreaterThanCases<f32, false>(),
@@ -885,7 +885,7 @@ INSTANTIATE_TEST_SUITE_P(And,
                              testing::ValuesIn(            //
                                  Concat(OpAndBoolCases(),  //
                                         OpAndIntCases<AInt>(),
-                                        OpAndIntCases<i32>(),
+                                        OpAndIntCases<I32>(),
                                         OpAndIntCases<u32>()))));
 
 static std::vector<Case> OpOrBoolCases() {
@@ -936,7 +936,7 @@ INSTANTIATE_TEST_SUITE_P(Or,
                              testing::Values(core::BinaryOp::kOr),
                              testing::ValuesIn(Concat(OpOrBoolCases(),
                                                       OpOrIntCases<AInt>(),
-                                                      OpOrIntCases<i32>(),
+                                                      OpOrIntCases<I32>(),
                                                       OpOrIntCases<u32>()))));
 
 TEST_F(ConstEvalTest, NotAndOrOfVecs) {
@@ -999,7 +999,7 @@ INSTANTIATE_TEST_SUITE_P(Xor,
                          testing::Combine(  //
                              testing::Values(core::BinaryOp::kXor),
                              testing::ValuesIn(Concat(XorCases<AInt>(),  //
-                                                      XorCases<i32>(),   //
+                                                      XorCases<I32>(),   //
                                                       XorCases<u32>()))));
 
 template <typename T>
@@ -1080,7 +1080,7 @@ std::vector<Case> ShiftLeftCases() {
     ConcatIntoIf<IsAbstract<T>>(  //
         r, std::vector<Case>{
                // ShiftLeft of AInts that result in values not representable as AInts.
-               // Note that for i32/u32, these would error because shift value is larger than 32.
+               // Note that for I32/u32, these would error because shift value is larger than 32.
                E(B::All, T{B::NumBits}, error_msg(B::All, T{B::NumBits})),
                E(B::RightMost, T{B::NumBits}, error_msg(B::RightMost, T{B::NumBits})),
                E(B::AllButLeftMost, T{B::NumBits}, error_msg(B::AllButLeftMost, T{B::NumBits})),
@@ -1114,7 +1114,7 @@ INSTANTIATE_TEST_SUITE_P(ShiftLeft,
                          testing::Combine(  //
                              testing::Values(core::BinaryOp::kShiftLeft),
                              testing::ValuesIn(Concat(ShiftLeftCases<AInt>(),  //
-                                                      ShiftLeftCases<i32>(),   //
+                                                      ShiftLeftCases<I32>(),   //
                                                       ShiftLeftCases<u32>()))));
 
 TEST_F(ConstEvalTest, BinaryAbstractAddOverflow_AInt) {
@@ -1223,7 +1223,7 @@ TEST_F(ConstEvalTest, BinaryAbstractShiftLeftRemainsAbstract) {
     EXPECT_EQ(sem2->Type(), aint_ty);
 }
 
-// i32/u32 left shift by >= 32 -> error
+// I32/u32 left shift by >= 32 -> error
 using ConstEvalShiftLeftConcreteGeqBitWidthError = ConstEvalTestWithParam<ErrorCase>;
 TEST_P(ConstEvalShiftLeftConcreteGeqBitWidthError, Test) {
     auto* lhs_expr = GetParam().lhs.Expr(*this);
@@ -1301,7 +1301,7 @@ INSTANTIATE_TEST_SUITE_P(Test,
                          ConstEvalShiftLeftSignChangeError,
                          testing::ValuesIn(Concat(  //
                              ShiftLeftSignChangeErrorCases<AInt>(),
-                             ShiftLeftSignChangeErrorCases<i32>())));
+                             ShiftLeftSignChangeErrorCases<I32>())));
 
 template <typename T>
 std::vector<Case> ShiftRightCases() {
@@ -1345,7 +1345,7 @@ std::vector<Case> ShiftRightCases() {
                  T{0b00000000001000000000000000000000}),
            });
 
-    // msb set, result differs for i32 and u32
+    // msb set, result differs for I32 and u32
     if constexpr (std::is_same_v<T, u32>) {
         // If unsigned, insert zero bits at the most significant positions.
         ConcatInto(  //
@@ -1374,7 +1374,7 @@ std::vector<Case> ShiftRightCases() {
                    C(T{0b10000000000000000000000000000000}, u32{31},
                      T{0b00000000000000000000000000000001}),
                });
-    } else if constexpr (std::is_same_v<T, i32>) {
+    } else if constexpr (std::is_same_v<T, I32>) {
         // If signed, each inserted bit is 1, so the result is negative.
         ConcatInto(  //
             r, std::vector<Case>{
@@ -1442,7 +1442,7 @@ INSTANTIATE_TEST_SUITE_P(ShiftRight,
                          testing::Combine(  //
                              testing::Values(core::BinaryOp::kShiftRight),
                              testing::ValuesIn(Concat(ShiftRightCases<AInt>(),  //
-                                                      ShiftRightCases<i32>(),   //
+                                                      ShiftRightCases<I32>(),   //
                                                       ShiftRightCases<u32>()))));
 
 namespace LogicalShortCircuit {
@@ -1682,13 +1682,13 @@ TEST_F(ConstEvalTest, ShortCircuit_And_Error_Materialize) {
 
     EXPECT_FALSE(r()->Resolve());
     EXPECT_EQ(r()->error(),
-              R"(12:34 error: no matching overload for 'operator == (abstract-float, i32)'
+              R"(12:34 error: no matching overload for 'operator == (abstract-float, I32)'
 
 2 candidate operators:
  • 'operator == (T  ✓ , T  ✗ ) -> bool' where:
-      ✓  'T' is 'abstract-int', 'abstract-float', 'f32', 'f16', 'i32', 'u32' or 'bool'
+      ✓  'T' is 'abstract-int', 'abstract-float', 'f32', 'f16', 'I32', 'u32' or 'bool'
  • 'operator == (vecN<T>  ✗ , vecN<T>  ✗ ) -> vecN<bool>' where:
-      ✗  'T' is 'abstract-int', 'abstract-float', 'f32', 'f16', 'i32', 'u32' or 'bool'
+      ✗  'T' is 'abstract-int', 'abstract-float', 'f32', 'f16', 'I32', 'u32' or 'bool'
 )");
 }
 
@@ -1735,11 +1735,11 @@ TEST_F(ConstEvalTest, ShortCircuit_Or_Error_Materialize) {
 
     EXPECT_FALSE(r()->Resolve());
     EXPECT_EQ(r()->error(),
-              R"(12:34 error: no matching overload for 'operator == (abstract-float, i32)'
+              R"(12:34 error: no matching overload for 'operator == (abstract-float, I32)'
 
 2 candidate operators:
  • 'operator == (T  ✓ , T  ✗ ) -> bool' where:
-      ✓  'T' is 'abstract-int', 'abstract-float', 'f32', 'f16', 'i32', 'u32' or 'bool'
+      ✓  'T' is 'abstract-int', 'abstract-float', 'f32', 'f16', 'I32', 'u32' or 'bool'
  • 'operator == (vecN<T>  ✗ , vecN<T>  ✗ ) -> vecN<bool>' where:
       ✗  'T' is 'abstract-int', 'abstract-float', 'f32', 'f16', 'i32', 'u32' or 'bool'
 )");
@@ -1755,7 +1755,7 @@ TEST_F(ConstEvalTest, ShortCircuit_And_Invalid_Index) {
     // const i = 4;
     // const result = (one == 0) && (a[i] == 0);
     GlobalConst("one", Expr(1_a));
-    GlobalConst("a", Call<array<i32, 3>>(1_i, 2_i, 3_i));
+    GlobalConst("a", Call<array<I32, 3>>(1_i, 2_i, 3_i));
     GlobalConst("i", Expr(4_a));
     auto* lhs = Equal("one", 0_a);
     auto* rhs = Equal(IndexAccessor("a", "i"), 0_a);
@@ -1772,7 +1772,7 @@ TEST_F(ConstEvalTest, NonShortCircuit_And_Invalid_Index) {
     // const i = 3;
     // const result = (one == 1) && (a[i] == 0);
     GlobalConst("one", Expr(1_a));
-    GlobalConst("a", Call<array<i32, 3>>(1_i, 2_i, 3_i));
+    GlobalConst("a", Call<array<I32, 3>>(1_i, 2_i, 3_i));
     GlobalConst("i", Expr(3_a));
     auto* lhs = Equal("one", 1_a);
     auto* rhs = Equal(IndexAccessor("a", Expr(Source{{12, 34}}, "i")), 0_a);
@@ -1789,7 +1789,7 @@ TEST_F(ConstEvalTest, ShortCircuit_And_Error_Index) {
     // const i = 3;
     // const result = (one == 0) && (a[i] == 0.0f);
     GlobalConst("one", Expr(1_a));
-    GlobalConst("a", Call<array<i32, 3>>(1_i, 2_i, 3_i));
+    GlobalConst("a", Call<array<I32, 3>>(1_i, 2_i, 3_i));
     GlobalConst("i", Expr(3_a));
     auto* lhs = Equal("one", 0_a);
     auto* rhs = Equal(Source{{12, 34}}, IndexAccessor("a", "i"), 0.0_f);
@@ -1814,7 +1814,7 @@ TEST_F(ConstEvalTest, ShortCircuit_Or_Invalid_Index) {
     // const i = 4;
     // const result = (one == 1) || (a[i] == 0);
     GlobalConst("one", Expr(1_a));
-    GlobalConst("a", Call<array<i32, 3>>(1_i, 2_i, 3_i));
+    GlobalConst("a", Call<array<I32, 3>>(1_i, 2_i, 3_i));
     GlobalConst("i", Expr(4_a));
     auto* lhs = Equal("one", 1_a);
     auto* rhs = Equal(IndexAccessor("a", "i"), 0_a);
@@ -1831,7 +1831,7 @@ TEST_F(ConstEvalTest, NonShortCircuit_Or_Invalid_Index) {
     // const i = 3;
     // const result = (one == 0) || (a[i] == 0);
     GlobalConst("one", Expr(1_a));
-    GlobalConst("a", Call<array<i32, 3>>(1_i, 2_i, 3_i));
+    GlobalConst("a", Call<array<I32, 3>>(1_i, 2_i, 3_i));
     GlobalConst("i", Expr(3_a));
     auto* lhs = Equal("one", 0_a);
     auto* rhs = Equal(IndexAccessor("a", Expr(Source{{12, 34}}, "i")), 0_a);
@@ -1848,7 +1848,7 @@ TEST_F(ConstEvalTest, ShortCircuit_Or_Error_Index) {
     // const i = 3;
     // const result = (one == 1) || (a[i] == 0.0f);
     GlobalConst("one", Expr(1_a));
-    GlobalConst("a", Call<array<i32, 3>>(1_i, 2_i, 3_i));
+    GlobalConst("a", Call<array<I32, 3>>(1_i, 2_i, 3_i));
     GlobalConst("i", Expr(3_a));
     auto* lhs = Equal("one", 1_a);
     auto* rhs = Equal(Source{{12, 34}}, IndexAccessor("a", "i"), 0.0_f);

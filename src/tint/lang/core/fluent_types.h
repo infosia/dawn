@@ -36,12 +36,12 @@
 
 namespace tint::core::fluent_types {
 
-using f16 = tint::core::F16;
-using f32 = tint::core::F32;
-using i32 = tint::core::I32;
-using i8 = tint::core::I8;
-using u32 = tint::core::U32;
-using u8 = tint::core::U8;
+using F16 = tint::core::F16;
+using F32 = tint::core::F32;
+using I32 = tint::core::I32;
+using I8 = tint::core::I8;
+using U32 = tint::core::U32;
+using U8 = tint::core::U8;
 using AFloat = tint::core::AFloat;
 using AInt = tint::core::AInt;
 
@@ -53,7 +53,7 @@ struct Infer {};
 /// @tparam N the array length. 0 represents a runtime-sized array.
 /// @see https://www.w3.org/TR/WGSL/#array-types
 template <typename T, uint32_t N = 0>
-struct array {
+struct Array {
     /// the array element type
     using type = T;
     /// the array length. 0 represents a runtime-sized array.
@@ -64,7 +64,7 @@ struct array {
 /// @tparam T the atomic element type
 /// @see https://www.w3.org/TR/WGSL/#atomic-types
 template <typename T>
-struct atomic {
+struct Atomic {
     /// the atomic element type
     using type = T;
 };
@@ -73,7 +73,7 @@ struct atomic {
 /// @tparam N the vector width
 /// @tparam T the vector element type
 template <uint32_t N, typename T>
-struct vec {
+struct Vec {
     /// the vector width
     static constexpr uint32_t width = N;
     /// the vector element type
@@ -86,7 +86,7 @@ struct vec {
 /// @tparam T the matrix element type
 /// @see https://www.w3.org/TR/WGSL/#matrix-types
 template <uint32_t C, uint32_t R, typename T>
-struct mat {
+struct Mat {
     /// the number of columns of the matrix
     static constexpr uint32_t columns = C;
     /// the number of rows of the matrix
@@ -94,7 +94,7 @@ struct mat {
     /// the matrix element type
     using type = T;
     /// the column vector type
-    using column = vec<R, T>;
+    using column = Vec<R, T>;
 };
 
 /// A 'fluent' type helper used to construct an ast::Pointer or type::Pointer.
@@ -102,7 +102,7 @@ struct mat {
 /// @tparam T the pointer storage type
 /// @tparam ACCESS the pointer access control
 template <core::AddressSpace ADDRESS, typename T, core::Access ACCESS = core::Access::kUndefined>
-struct ptr {
+struct Ptr {
     /// the pointer address space
     static constexpr core::AddressSpace address = ADDRESS;
     /// the pointer storage type
@@ -119,40 +119,40 @@ struct ptr {
 
 //! @cond Doxygen_Suppress
 template <typename T>
-using mat2x2 = mat<2, 2, T>;
+using Mat2x2 = Mat<2, 2, T>;
 
 template <typename T>
-using mat2x3 = mat<2, 3, T>;
+using Mat2x3 = Mat<2, 3, T>;
 
 template <typename T>
-using mat2x4 = mat<2, 4, T>;
+using Mat2x4 = Mat<2, 4, T>;
 
 template <typename T>
-using mat3x2 = mat<3, 2, T>;
+using Mat3x2 = Mat<3, 2, T>;
 
 template <typename T>
-using mat3x3 = mat<3, 3, T>;
+using Mat3x3 = Mat<3, 3, T>;
 
 template <typename T>
-using mat3x4 = mat<3, 4, T>;
+using Mat3x4 = Mat<3, 4, T>;
 
 template <typename T>
-using mat4x2 = mat<4, 2, T>;
+using Mat4x2 = Mat<4, 2, T>;
 
 template <typename T>
-using mat4x3 = mat<4, 3, T>;
+using Mat4x3 = Mat<4, 3, T>;
 
 template <typename T>
-using mat4x4 = mat<4, 4, T>;
+using Mat4x4 = Mat<4, 4, T>;
 
 template <typename T>
-using vec2 = vec<2, T>;
+using Vec2 = Vec<2, T>;
 
 template <typename T>
-using vec3 = vec<3, T>;
+using Vec3 = Vec<3, T>;
 
 template <typename T>
-using vec4 = vec<4, T>;
+using Vec4 = Vec<4, T>;
 
 //! @endcond
 
@@ -186,7 +186,7 @@ struct IsArray {
 };
 
 template <typename T, uint32_t N>
-struct IsArray<array<T, N>> {
+struct IsArray<Array<T, N>> {
     static constexpr bool value = true;
 };
 
@@ -196,7 +196,7 @@ struct IsAtomic {
 };
 
 template <typename T>
-struct IsAtomic<atomic<T>> {
+struct IsAtomic<Atomic<T>> {
     static constexpr bool value = true;
 };
 
@@ -206,7 +206,7 @@ struct IsMatrix {
 };
 
 template <uint32_t C, uint32_t R, typename T>
-struct IsMatrix<mat<C, R, T>> {
+struct IsMatrix<Mat<C, R, T>> {
     static constexpr bool value = true;
 };
 
@@ -216,7 +216,7 @@ struct IsVector {
 };
 
 template <uint32_t N, typename T>
-struct IsVector<vec<N, T>> {
+struct IsVector<Vec<N, T>> {
     static constexpr bool value = true;
 };
 
@@ -226,7 +226,7 @@ struct IsPointer {
 };
 
 template <core::AddressSpace ADDRESS, typename T, core::Access ACCESS>
-struct IsPointer<ptr<ADDRESS, T, ACCESS>> {
+struct IsPointer<Ptr<ADDRESS, T, ACCESS>> {
     static constexpr bool value = true;
 };
 //! @endcond

@@ -1916,15 +1916,15 @@ bool ASTPrinter::EmitConstant(StringStream& out, const core::constant::Value* co
             return true;
         },
         [&](const core::type::F32*) {
-            PrintF32(out, constant->ValueAs<f32>());
+            PrintF32(out, constant->ValueAs<F32>());
             return true;
         },
         [&](const core::type::F16*) {
-            PrintF16(out, constant->ValueAs<f16>());
+            PrintF16(out, constant->ValueAs<F16>());
             return true;
         },
         [&](const core::type::I32*) {
-            PrintI32(out, constant->ValueAs<i32>());
+            PrintI32(out, constant->ValueAs<I32>());
             return true;
         },
         [&](const core::type::U32*) {

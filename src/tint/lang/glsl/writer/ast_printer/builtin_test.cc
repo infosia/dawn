@@ -210,18 +210,18 @@ TEST_P(GlslBuiltinTest, Emit) {
     if (param.type == CallParamType::kF16) {
         Enable(wgsl::Extension::kF16);
 
-        GlobalVar("h2", ty.vec2<f16>(), core::AddressSpace::kPrivate);
-        GlobalVar("h3", ty.vec3<f16>(), core::AddressSpace::kPrivate);
-        GlobalVar("hm2x2", ty.mat2x2<f16>(), core::AddressSpace::kPrivate);
-        GlobalVar("hm3x2", ty.mat3x2<f16>(), core::AddressSpace::kPrivate);
+        GlobalVar("h2", ty.vec2<F16>(), core::AddressSpace::kPrivate);
+        GlobalVar("h3", ty.vec3<F16>(), core::AddressSpace::kPrivate);
+        GlobalVar("hm2x2", ty.mat2x2<F16>(), core::AddressSpace::kPrivate);
+        GlobalVar("hm3x2", ty.mat3x2<F16>(), core::AddressSpace::kPrivate);
     }
 
-    GlobalVar("f2", ty.vec2<f32>(), core::AddressSpace::kPrivate);
-    GlobalVar("f3", ty.vec3<f32>(), core::AddressSpace::kPrivate);
-    GlobalVar("u2", ty.vec2<u32>(), core::AddressSpace::kPrivate);
-    GlobalVar("i2", ty.vec2<i32>(), core::AddressSpace::kPrivate);
+    GlobalVar("f2", ty.vec2<F32>(), core::AddressSpace::kPrivate);
+    GlobalVar("f3", ty.vec3<F32>(), core::AddressSpace::kPrivate);
+    GlobalVar("u2", ty.vec2<U32>(), core::AddressSpace::kPrivate);
+    GlobalVar("i2", ty.vec2<I32>(), core::AddressSpace::kPrivate);
     GlobalVar("b2", ty.vec2<bool>(), core::AddressSpace::kPrivate);
-    GlobalVar("m2x2", ty.mat2x2<f32>(), core::AddressSpace::kPrivate);
+    GlobalVar("m2x2", ty.mat2x2<F32>(), core::AddressSpace::kPrivate);
     GlobalVar("m3x2", ty.mat3x2<f32>(), core::AddressSpace::kPrivate);
 
     auto* call = GenerateCall(param.builtin, param.type, this);
@@ -355,8 +355,8 @@ INSTANTIATE_TEST_SUITE_P(
 TEST_F(GlslASTPrinterTest_Builtin, Builtin_Call) {
     auto* call = Call("dot", "param1", "param2");
 
-    GlobalVar("param1", ty.vec3<f32>(), core::AddressSpace::kPrivate);
-    GlobalVar("param2", ty.vec3<f32>(), core::AddressSpace::kPrivate);
+    GlobalVar("param1", ty.vec3<F32>(), core::AddressSpace::kPrivate);
+    GlobalVar("param2", ty.vec3<F32>(), core::AddressSpace::kPrivate);
 
     WrapInFunction(Decl(Var("r", call)));
 
@@ -384,9 +384,9 @@ TEST_F(GlslASTPrinterTest_Builtin, Select_Scalar) {
 }
 
 TEST_F(GlslASTPrinterTest_Builtin, Select_Vector) {
-    GlobalVar("a", Call<vec2<i32>>(1_i, 2_i), core::AddressSpace::kPrivate);
-    GlobalVar("b", Call<vec2<i32>>(3_i, 4_i), core::AddressSpace::kPrivate);
-    auto* call = Call("select", "a", "b", Call<vec2<bool>>(true, false));
+    GlobalVar("a", Call<vec2<I32>>(1_i, 2_i), core::AddressSpace::kPrivate);
+    GlobalVar("b", Call<vec2<I32>>(3_i, 4_i), core::AddressSpace::kPrivate);
+    auto* call = Call("select", "a", "b", Call<Vec2<bool>>(true, false));
     WrapInFunction(Decl(Var("r", call)));
     ASTPrinter& gen = Build();
 
@@ -400,9 +400,9 @@ TEST_F(GlslASTPrinterTest_Builtin, Select_Vector) {
 TEST_F(GlslASTPrinterTest_Builtin, FMA_f32) {
     auto* call = Call("fma", "a", "b", "c");
 
-    GlobalVar("a", ty.vec3<f32>(), core::AddressSpace::kPrivate);
-    GlobalVar("b", ty.vec3<f32>(), core::AddressSpace::kPrivate);
-    GlobalVar("c", ty.vec3<f32>(), core::AddressSpace::kPrivate);
+    GlobalVar("a", ty.vec3<F32>(), core::AddressSpace::kPrivate);
+    GlobalVar("b", ty.vec3<F32>(), core::AddressSpace::kPrivate);
+    GlobalVar("c", ty.vec3<F32>(), core::AddressSpace::kPrivate);
 
     WrapInFunction(Decl(Var("r", call)));
 
@@ -418,9 +418,9 @@ TEST_F(GlslASTPrinterTest_Builtin, FMA_f32) {
 TEST_F(GlslASTPrinterTest_Builtin, FMA_f16) {
     Enable(wgsl::Extension::kF16);
 
-    GlobalVar("a", ty.vec3<f16>(), core::AddressSpace::kPrivate);
-    GlobalVar("b", ty.vec3<f16>(), core::AddressSpace::kPrivate);
-    GlobalVar("c", ty.vec3<f16>(), core::AddressSpace::kPrivate);
+    GlobalVar("a", ty.vec3<F16>(), core::AddressSpace::kPrivate);
+    GlobalVar("b", ty.vec3<F16>(), core::AddressSpace::kPrivate);
+    GlobalVar("c", ty.vec3<F16>(), core::AddressSpace::kPrivate);
 
     auto* call = Call("fma", "a", "b", "c");
     WrapInFunction(Decl(Var("r", call)));
@@ -508,7 +508,7 @@ void main() {
 }
 
 TEST_F(GlslASTPrinterTest_Builtin, Runtime_Modf_Vector_f32) {
-    WrapInFunction(Decl(Let("f", Call<vec3<f32>>(1.5_f, 2.5_f, 3.5_f))),  //
+    WrapInFunction(Decl(Let("f", Call<vec3<F32>>(1.5_f, 2.5_f, 3.5_f))),  //
                    Decl(Let("v", Call("modf", "f"))));
 
     ASTPrinter& gen = SanitizeAndBuild();
@@ -545,7 +545,7 @@ void main() {
 TEST_F(GlslASTPrinterTest_Builtin, Runtime_Modf_Vector_f16) {
     Enable(wgsl::Extension::kF16);
 
-    WrapInFunction(Decl(Let("f", Call<vec3<f16>>(1.5_h, 2.5_h, 3.5_h))),  //
+    WrapInFunction(Decl(Let("f", Call<vec3<F16>>(1.5_h, 2.5_h, 3.5_h))),  //
                    Decl(Let("v", Call("modf", "f"))));
 
     ASTPrinter& gen = SanitizeAndBuild();
@@ -638,7 +638,7 @@ void main() {
 }
 
 TEST_F(GlslASTPrinterTest_Builtin, Const_Modf_Vector_f32) {
-    WrapInFunction(Decl(Let("v", Call("modf", Call<vec3<f32>>(1.5_f, 2.5_f, 3.5_f)))));
+    WrapInFunction(Decl(Let("v", Call("modf", Call<vec3<F32>>(1.5_f, 2.5_f, 3.5_f)))));
 
     ASTPrinter& gen = SanitizeAndBuild();
 
@@ -667,7 +667,7 @@ void main() {
 TEST_F(GlslASTPrinterTest_Builtin, Const_Modf_Vector_f16) {
     Enable(wgsl::Extension::kF16);
 
-    WrapInFunction(Decl(Let("v", Call("modf", Call<vec3<f16>>(1.5_h, 2.5_h, 3.5_h)))));
+    WrapInFunction(Decl(Let("v", Call("modf", Call<vec3<F16>>(1.5_h, 2.5_h, 3.5_h)))));
 
     ASTPrinter& gen = SanitizeAndBuild();
 
@@ -768,7 +768,7 @@ void main() {
 }
 
 TEST_F(GlslASTPrinterTest_Builtin, Runtime_Frexp_Vector_f32) {
-    WrapInFunction(Var("f", Call<vec3<f32>>()),  //
+    WrapInFunction(Var("f", Call<vec3<F32>>()),  //
                    Var("v", Call("frexp", "f")));
 
     ASTPrinter& gen = SanitizeAndBuild();
@@ -805,7 +805,7 @@ void main() {
 TEST_F(GlslASTPrinterTest_Builtin, Runtime_Frexp_Vector_f16) {
     Enable(wgsl::Extension::kF16);
 
-    WrapInFunction(Var("f", Call<vec3<f16>>()),  //
+    WrapInFunction(Var("f", Call<vec3<F16>>()),  //
                    Var("v", Call("frexp", "f")));
 
     ASTPrinter& gen = SanitizeAndBuild();
@@ -898,7 +898,7 @@ void main() {
 }
 
 TEST_F(GlslASTPrinterTest_Builtin, Const_Frexp_Vector_f32) {
-    WrapInFunction(Decl(Let("v", Call("frexp", Call<vec3<f32>>()))));
+    WrapInFunction(Decl(Let("v", Call("frexp", Call<vec3<F32>>()))));
 
     ASTPrinter& gen = SanitizeAndBuild();
 

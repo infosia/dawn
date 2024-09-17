@@ -2057,7 +2057,8 @@ TypedExpression ASTParser::MakeConstantExpressionForScalarSpirvConstant(
                                        ast::IntLiteralExpression::Suffix::kU)};
         },
         [&](const F32*) {
-            if (auto f = core::CheckedConvert<f32>(AFloat(spirv_const->GetFloat())); f == Success) {
+            if (auto f = core::CheckedConvert<core::F32>(AFloat(spirv_const->GetFloat()));
+                f == Success) {
                 return TypedExpression{ty_.F32(),
                                        create<ast::FloatLiteralExpression>(
                                            source, static_cast<double>(spirv_const->GetFloat()),

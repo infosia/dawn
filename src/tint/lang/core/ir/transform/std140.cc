@@ -242,7 +242,7 @@ struct State {
         Vector<Value*, 4> column_indices(std::move(indices));
         Vector<Value*, 4> args;
         for (uint32_t i = 0; i < mat->Columns(); i++) {
-            column_indices.Back() = b.Constant(u32(first_column + i));
+            column_indices.Back() = b.Constant(U32(first_column + i));
             if (is_ptr) {
                 auto* access = b.Access(ty.ptr(uniform, mat->ColumnType()), root, column_indices);
                 args.Push(b.Load(access)->Result(0));
@@ -278,12 +278,12 @@ struct State {
                         for (auto* member : str->Members()) {
                             if (auto* mat = NeedsDecomposing(member->Type())) {
                                 args.Push(
-                                    RebuildMatrix(mat, input, Vector{b.Constant(u32(index))}));
+                                    RebuildMatrix(mat, input, Vector{b.Constant(U32(index))}));
                                 index += mat->Columns();
                             } else {
                                 // Extract and convert the member.
                                 auto* type = input_str->Element(index);
-                                auto* extract = b.Access(type, input, u32(index));
+                                auto* extract = b.Access(type, input, U32(index));
                                 args.Push(Convert(extract->Result(0), member->Type()));
                                 index++;
                             }
@@ -302,7 +302,7 @@ struct State {
                 // Create a loop that copies and converts each element of the array.
                 auto* el_ty = source->Type()->Elements().type;
                 auto* new_arr = b.Var(ty.ptr(function, arr));
-                b.LoopRange(ty, 0_u, u32(arr->ConstantCount().value()), 1_u, [&](Value* idx) {
+                b.LoopRange(ty, 0_u, U32(arr->ConstantCount().value()), 1_u, [&](Value* idx) {
                     // Convert arr[idx] and store to new_arr[idx];
                     auto* to = b.Access(ty.ptr(function, arr->ElemType()), new_arr, idx);
                     auto* from = b.Access(el_ty, source, idx)->Result(0);
@@ -314,7 +314,7 @@ struct State {
                 if (!NeedsDecomposing(mat)) {
                     return source;
                 }
-                return RebuildMatrix(mat, source, Vector{b.Constant(u32(0))});
+                return RebuildMatrix(mat, source, Vector{b.Constant(U32(0))});
             },
             [&](Default) { return source; });
     }
@@ -366,7 +366,7 @@ struct State {
                                 // column vector member.
                                 auto* base_idx = indices.Back()->As<Constant>();
                                 indices.Back() =
-                                    b.Constant(u32(base_idx->Value()->ValueAs<uint32_t>() +
+                                    b.Constant(U32(base_idx->Value()->ValueAs<uint32_t>() +
                                                    const_idx->Value()->ValueAs<uint32_t>()));
                                 current_type = mat->ColumnType();
                                 i++;  // We've already consumed the column access
@@ -383,7 +383,7 @@ struct State {
                             uint32_t old_index = idx->As<Constant>()->Value()->ValueAs<uint32_t>();
                             uint32_t new_index = *member_index_map.Get(str->Members()[old_index]);
                             current_type = str->Element(old_index);
-                            indices.Push(b.Constant(u32(new_index)));
+                            indices.Push(b.Constant(U32(new_index)));
                         } else {
                             indices.Push(idx);
                             current_type = current_type->Elements().type;

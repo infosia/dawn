@@ -82,9 +82,9 @@ TEST_F(ConstantTest_Splat, Index) {
     ASSERT_NE(sp->Index(2), nullptr);
     EXPECT_EQ(sp->Index(3), nullptr);
 
-    EXPECT_EQ(sp->Index(0)->As<Scalar<f32>>()->ValueOf(), 1.f);
-    EXPECT_EQ(sp->Index(1)->As<Scalar<f32>>()->ValueOf(), 1.f);
-    EXPECT_EQ(sp->Index(2)->As<Scalar<f32>>()->ValueOf(), 1.f);
+    EXPECT_EQ(sp->Index(0)->As<Scalar<F32>>()->ValueOf(), 1.f);
+    EXPECT_EQ(sp->Index(1)->As<Scalar<F32>>()->ValueOf(), 1.f);
+    EXPECT_EQ(sp->Index(2)->As<Scalar<F32>>()->ValueOf(), 1.f);
 }
 
 TEST_F(ConstantTest_Splat, Clone) {
@@ -99,7 +99,7 @@ TEST_F(ConstantTest_Splat, Clone) {
     EXPECT_NE(r, sp);
     ASSERT_NE(r, nullptr);
     EXPECT_TRUE(r->type->Is<core::type::Vector>());
-    EXPECT_TRUE(r->el->Is<Scalar<i32>>());
+    EXPECT_TRUE(r->el->Is<Scalar<I32>>());
     EXPECT_EQ(r->count, 2u);
 }
 

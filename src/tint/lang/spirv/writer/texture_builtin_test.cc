@@ -1899,12 +1899,12 @@ TEST_F(SpirvWriterTest, TextureSampleBaseClampToEdge_2d_f32) {
     Vector<core::ir::FunctionParam*, 4> args;
     args.Push(b.FunctionParam("texture", texture_ty));
     args.Push(b.FunctionParam("sampler", ty.sampler()));
-    args.Push(b.FunctionParam("coords", ty.vec2<f32>()));
+    args.Push(b.FunctionParam("coords", ty.vec2<F32>()));
 
-    auto* func = b.Function("foo", ty.vec4<f32>());
+    auto* func = b.Function("foo", ty.vec4<F32>());
     func->SetParams(args);
     b.Append(func->Block(), [&] {
-        auto* result = b.Call(ty.vec4<f32>(), core::BuiltinFn::kTextureSampleBaseClampToEdge, args);
+        auto* result = b.Call(ty.vec4<F32>(), core::BuiltinFn::kTextureSampleBaseClampToEdge, args);
         b.Return(func, result);
         mod.SetName(result, "result");
     });
@@ -1934,8 +1934,8 @@ TEST_F(SpirvWriterTest, Bgra8Unorm_textureStore) {
         core::type::StorageTexture::SubtypeFor(format, ty));
 
     auto* texture = b.FunctionParam("texture", texture_ty);
-    auto* coords = b.FunctionParam("coords", ty.vec2<u32>());
-    auto* value = b.FunctionParam("value", ty.vec4<f32>());
+    auto* coords = b.FunctionParam("coords", ty.vec2<U32>());
+    auto* value = b.FunctionParam("value", ty.vec4<F32>());
     auto* func = b.Function("foo", ty.void_());
     func->SetParams({texture, coords, value});
     b.Append(func->Block(), [&] {
@@ -1962,10 +1962,10 @@ TEST_F(SpirvWriterTest, TextureDimensions_WithRobustness) {
 
     auto* texture = b.FunctionParam("texture", texture_ty);
     auto* level = b.FunctionParam("level", ty.i32());
-    auto* func = b.Function("foo", ty.vec2<u32>());
+    auto* func = b.Function("foo", ty.vec2<U32>());
     func->SetParams({texture, level});
     b.Append(func->Block(), [&] {
-        auto* dims = b.Call(ty.vec2<u32>(), core::BuiltinFn::kTextureDimensions, texture, level);
+        auto* dims = b.Call(ty.vec2<U32>(), core::BuiltinFn::kTextureDimensions, texture, level);
         b.Return(func, dims);
         mod.SetName(dims, "dims");
     });
@@ -1985,13 +1985,13 @@ TEST_F(SpirvWriterTest, TextureLoad_WithRobustness) {
         ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32());
 
     auto* texture = b.FunctionParam("texture", texture_ty);
-    auto* coords = b.FunctionParam("coords", ty.vec2<u32>());
+    auto* coords = b.FunctionParam("coords", ty.vec2<U32>());
     auto* level = b.FunctionParam("level", ty.i32());
-    auto* func = b.Function("foo", ty.vec4<f32>());
+    auto* func = b.Function("foo", ty.vec4<F32>());
     func->SetParams({texture, coords, level});
     b.Append(func->Block(), [&] {
         auto* result =
-            b.Call(ty.vec4<f32>(), core::BuiltinFn::kTextureLoad, texture, coords, level);
+            b.Call(ty.vec4<F32>(), core::BuiltinFn::kTextureLoad, texture, coords, level);
         b.Return(func, result);
         mod.SetName(result, "result");
     });
