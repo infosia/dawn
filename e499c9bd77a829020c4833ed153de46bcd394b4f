@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1537fdf3_24235e9c",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-17T14:11:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10e94305_0c81dd3d",
+      "revId": "e499c9bd77a829020c4833ed153de46bcd394b4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27a43ee6_76775eed",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a3ea9c5_9297e83d",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-17T14:11:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27a43ee6_76775eed",
+      "range": {
+        "startLine": 245,
+        "startChar": 48,
+        "endLine": 245,
+        "endChar": 60
+      },
+      "revId": "e499c9bd77a829020c4833ed153de46bcd394b4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb5c398d_d3adfdfa",
@@ -54,6 +96,24 @@
       "writtenOn": "2024-09-16T21:19:25Z",
       "side": 1,
       "message": "Possibly for these functions that have a return value, early return a nullptr on error to cause an immediate end to the decode?",
+      "revId": "e499c9bd77a829020c4833ed153de46bcd394b4f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c5a9535_6639f3ab",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-17T14:11:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb5c398d_d3adfdfa",
       "revId": "e499c9bd77a829020c4833ed153de46bcd394b4f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
