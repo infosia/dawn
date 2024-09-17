@@ -25,8 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_TINT_LANG_CORE_IR_TRANSFORM_COMMON_REFERENCED_MODULE_VARS_H_
-#define SRC_TINT_LANG_CORE_IR_TRANSFORM_COMMON_REFERENCED_MODULE_VARS_H_
+#ifndef SRC_TINT_LANG_CORE_IR_COMMON_REFERENCED_MODULE_VARS_H_
+#define SRC_TINT_LANG_CORE_IR_COMMON_REFERENCED_MODULE_VARS_H_
 
 #include <functional>
 
@@ -70,6 +70,9 @@ class ReferencedModuleVars {
         for (auto inst : *ir_.root_block) {
             if (auto* var = inst->As<Var>()) {
                 if (!pred || pred(var)) {
+                    if (!var->Result(0)) {
+                        continue;
+                    }
                     var->Result(0)->ForEachUseUnsorted([&](const Usage& use) {
                         block_to_direct_vars_.GetOrAddZero(use.instruction->Block()).Add(var);
                     });
@@ -82,24 +85,24 @@ class ReferencedModuleVars {
     /// the predicate function if provided.
     /// @param func the function
     /// @returns the set of (possibly filtered) transitively reference module-scope variables
-    const VarSet& TransitiveReferences(Function* func);
+    const VarSet& TransitiveReferences(const Function* func);
 
   private:
     /// The module.
     Module& ir_;
 
     /// A map from blocks to their directly referenced variables.
-    Hashmap<Block*, VarSet, 64> block_to_direct_vars_{};
+    Hashmap<const Block*, VarSet, 64> block_to_direct_vars_{};
 
     /// A map from functions to their transitively referenced variables.
-    Hashmap<Function*, VarSet, 8> transitive_references_;
+    Hashmap<const Function*, VarSet, 8> transitive_references_;
 
     /// Get the set of transitively referenced module-scope variables for a block.
     /// @param block the block
     /// @param vars the set of transitively reference module-scope variables to populate
-    void GetTransitiveReferences(Block* block, VarSet& vars);
+    void GetTransitiveReferences(const Block* block, VarSet& vars);
 };
 
 }  // namespace tint::core::ir
 
-#endif  // SRC_TINT_LANG_CORE_IR_TRANSFORM_COMMON_REFERENCED_MODULE_VARS_H_
+#endif  // SRC_TINT_LANG_CORE_IR_COMMON_REFERENCED_MODULE_VARS_H_

@@ -34,8 +34,8 @@
 #                       Do not modify this file directly
 ################################################################################
 
-import("../../../../../../../scripts/dawn_overrides_with_defaults.gni")
-import("../../../../../../../scripts/tint_overrides_with_defaults.gni")
+import("../../../../../../scripts/dawn_overrides_with_defaults.gni")
+import("../../../../../../scripts/tint_overrides_with_defaults.gni")
 
 import("${tint_src_dir}/tint.gni")
 
@@ -82,7 +82,7 @@ if (tint_build_unittests) {
       "${tint_src_dir}/lang/core/intrinsic",
       "${tint_src_dir}/lang/core/ir",
       "${tint_src_dir}/lang/core/ir:unittests",
-      "${tint_src_dir}/lang/core/ir/transform/common",
+      "${tint_src_dir}/lang/core/ir/common",
       "${tint_src_dir}/lang/core/type",
       "${tint_src_dir}/utils/containers",
       "${tint_src_dir}/utils/diagnostic",

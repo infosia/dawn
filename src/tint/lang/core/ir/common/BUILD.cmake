@@ -35,15 +35,15 @@
 ################################################################################
 
 ################################################################################
-# Target:    tint_lang_core_ir_transform_common
+# Target:    tint_lang_core_ir_common
 # Kind:      lib
 ################################################################################
-tint_add_target(tint_lang_core_ir_transform_common lib
-  lang/core/ir/transform/common/referenced_module_vars.cc
-  lang/core/ir/transform/common/referenced_module_vars.h
+tint_add_target(tint_lang_core_ir_common lib
+  lang/core/ir/common/referenced_module_vars.cc
+  lang/core/ir/common/referenced_module_vars.h
 )
 
-tint_target_add_dependencies(tint_lang_core_ir_transform_common lib
+tint_target_add_dependencies(tint_lang_core_ir_common lib
   tint_api_common
   tint_lang_core
   tint_lang_core_constant
@@ -64,25 +64,25 @@ tint_target_add_dependencies(tint_lang_core_ir_transform_common lib
   tint_utils_traits
 )
 
-tint_target_add_external_dependencies(tint_lang_core_ir_transform_common lib
+tint_target_add_external_dependencies(tint_lang_core_ir_common lib
   "src_utils"
 )
 
 ################################################################################
-# Target:    tint_lang_core_ir_transform_common_test
+# Target:    tint_lang_core_ir_common_test
 # Kind:      test
 ################################################################################
-tint_add_target(tint_lang_core_ir_transform_common_test test
-  lang/core/ir/transform/common/referenced_module_vars_test.cc
+tint_add_target(tint_lang_core_ir_common_test test
+  lang/core/ir/common/referenced_module_vars_test.cc
 )
 
-tint_target_add_dependencies(tint_lang_core_ir_transform_common_test test
+tint_target_add_dependencies(tint_lang_core_ir_common_test test
   tint_api_common
   tint_lang_core
   tint_lang_core_constant
   tint_lang_core_intrinsic
   tint_lang_core_ir
-  tint_lang_core_ir_transform_common
+  tint_lang_core_ir_common
   tint_lang_core_ir_test
   tint_lang_core_type
   tint_utils_containers
@@ -100,7 +100,7 @@ tint_target_add_dependencies(tint_lang_core_ir_transform_common_test test
   tint_utils_traits
 )
 
-tint_target_add_external_dependencies(tint_lang_core_ir_transform_common_test test
+tint_target_add_external_dependencies(tint_lang_core_ir_common_test test
   "gtest"
   "src_utils"
 )

@@ -25,7 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/tint/lang/core/ir/transform/common/referenced_module_vars.h"
+#include "src/tint/lang/core/ir/common/referenced_module_vars.h"
 
 #include "src/tint/lang/core/ir/control_instruction.h"
 #include "src/tint/lang/core/ir/module.h"
@@ -35,7 +35,8 @@
 
 namespace tint::core::ir {
 
-const ReferencedModuleVars::VarSet& ReferencedModuleVars::TransitiveReferences(Function* func) {
+const ReferencedModuleVars::VarSet& ReferencedModuleVars::TransitiveReferences(
+    const Function* func) {
     return transitive_references_.GetOrAdd(func, [&] {
         VarSet vars;
         GetTransitiveReferences(func->Block(), vars);
@@ -46,7 +47,7 @@ const ReferencedModuleVars::VarSet& ReferencedModuleVars::TransitiveReferences(F
 /// Get the set of variables transitively referenced by @p block.
 /// @param block the block
 /// @param vars the set of transitively referenced variables to populate
-void ReferencedModuleVars::GetTransitiveReferences(Block* block, VarSet& vars) {
+void ReferencedModuleVars::GetTransitiveReferences(const Block* block, VarSet& vars) {
     // Add directly referenced vars.
     if (auto itr = block_to_direct_vars_.Get(block)) {
         for (auto& var : *itr) {
@@ -58,16 +59,16 @@ void ReferencedModuleVars::GetTransitiveReferences(Block* block, VarSet& vars) {
     for (auto* inst : *block) {
         tint::Switch(
             inst,
-            [&](UserCall* call) {
+            [&](const UserCall* call) {
                 // Get variables referenced by a function called from this block.
                 const auto& callee_vars = TransitiveReferences(call->Target());
                 for (auto* var : callee_vars) {
                     vars.Add(var);
                 }
             },
-            [&](ControlInstruction* ctrl) {
+            [&](const ControlInstruction* ctrl) {
                 // Recurse into control instructions and gather their referenced vars.
-                ctrl->ForeachBlock([&](Block* blk) { GetTransitiveReferences(blk, vars); });
+                ctrl->ForeachBlock([&](const Block* blk) { GetTransitiveReferences(blk, vars); });
             });
     }
 }

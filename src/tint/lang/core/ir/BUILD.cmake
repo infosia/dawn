@@ -35,6 +35,7 @@
 ################################################################################
 
 include(lang/core/ir/binary/BUILD.cmake)
+include(lang/core/ir/common/BUILD.cmake)
 include(lang/core/ir/transform/BUILD.cmake)
 
 ################################################################################
