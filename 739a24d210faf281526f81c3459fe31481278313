@@ -33,6 +33,24 @@
       "message": "Needs rebase.",
       "revId": "739a24d210faf281526f81c3459fe31481278313",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f43bcef1_70096dad",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-17T21:13:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b5d1dae_4d085bc4",
+      "revId": "739a24d210faf281526f81c3459fe31481278313",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
