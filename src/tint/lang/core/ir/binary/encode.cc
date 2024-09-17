@@ -589,16 +589,16 @@ struct Encoder {
                 [&](const core::constant::Scalar<bool>* b) {
                     constant_out.mutable_scalar()->set_bool_(b->value);
                 },
-                [&](const core::constant::Scalar<core::i32>* i32) {
+                [&](const core::constant::Scalar<core::I32>* i32) {
                     constant_out.mutable_scalar()->set_i32(i32->value);
                 },
-                [&](const core::constant::Scalar<core::u32>* u32) {
+                [&](const core::constant::Scalar<core::U32>* u32) {
                     constant_out.mutable_scalar()->set_u32(u32->value);
                 },
-                [&](const core::constant::Scalar<core::f32>* f32) {
+                [&](const core::constant::Scalar<core::F32>* f32) {
                     constant_out.mutable_scalar()->set_f32(f32->value);
                 },
-                [&](const core::constant::Scalar<core::f16>* f16) {
+                [&](const core::constant::Scalar<core::F16>* f16) {
                     constant_out.mutable_scalar()->set_f16(f16->value);
                 },
                 [&](const core::constant::Composite* composite) {

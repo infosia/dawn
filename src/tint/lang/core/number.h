@@ -278,19 +278,19 @@ using AInt = Number<int64_t>;
 /// `AFloat` is a type alias to `Number<double>`.
 using AFloat = Number<double>;
 
-/// `i8` is a type alias to `Number<int8_t>`.
-using i8 = Number<int8_t>;
-/// `i32` is a type alias to `Number<int32_t>`.
-using i32 = Number<int32_t>;
+/// `I8` is a type alias to `Number<int8_t>`.
+using I8 = Number<int8_t>;
+/// `I32` is a type alias to `Number<int32_t>`.
+using I32 = Number<int32_t>;
 /// `u8` is a type alias to `Number<uint8_t>`.
-using u8 = Number<uint8_t>;
+using U8 = Number<uint8_t>;
 /// `u32` is a type alias to `Number<uint32_t>`.
-using u32 = Number<uint32_t>;
-/// `f32` is a type alias to `Number<float>`
-using f32 = Number<float>;
-/// `f16` is a type alias to `Number<detail::NumberKindF16>`, which should be IEEE 754 binary16.
+using U32 = Number<uint32_t>;
+/// `F32` is a type alias to `Number<float>`
+using F32 = Number<float>;
+/// `F16` is a type alias to `Number<detail::NumberKindF16>`, which should be IEEE 754 binary16.
 /// However since C++ don't have native binary16 type, the value is stored as float.
-using f16 = Number<tint::core::detail::NumberKindF16>;
+using F16 = Number<tint::core::detail::NumberKindF16>;
 
 /// The algorithms in this module require support for infinity and quiet NaNs on
 /// floating point types.
@@ -313,13 +313,13 @@ const char* FriendlyName() {
         return "abstract-int";
     } else if constexpr (std::is_same_v<T, AFloat>) {
         return "abstract-float";
-    } else if constexpr (std::is_same_v<T, i32>) {
+    } else if constexpr (std::is_same_v<T, I32>) {
         return "i32";
-    } else if constexpr (std::is_same_v<T, u32>) {
+    } else if constexpr (std::is_same_v<T, U32>) {
         return "u32";
-    } else if constexpr (std::is_same_v<T, f32>) {
+    } else if constexpr (std::is_same_v<T, F32>) {
         return "f32";
-    } else if constexpr (std::is_same_v<T, f16>) {
+    } else if constexpr (std::is_same_v<T, F16>) {
         return "f16";
     } else {
         static_assert(!sizeof(T), "Unhandled type");
@@ -698,33 +698,33 @@ inline AFloat operator""_a(long double value) {  // NOLINT
 }
 
 /// Literal suffix for i32 literals
-inline i32 operator""_i(unsigned long long int value) {  // NOLINT
-    return i32(static_cast<int32_t>(value));
+inline I32 operator""_i(unsigned long long int value) {  // NOLINT
+    return I32(static_cast<int32_t>(value));
 }
 
 /// Literal suffix for u32 literals
-inline u32 operator""_u(unsigned long long int value) {  // NOLINT
-    return u32(static_cast<uint32_t>(value));
+inline U32 operator""_u(unsigned long long int value) {  // NOLINT
+    return U32(static_cast<uint32_t>(value));
 }
 
 /// Literal suffix for f32 literals
-inline f32 operator""_f(long double value) {  // NOLINT
-    return f32(static_cast<double>(value));
+inline F32 operator""_f(long double value) {  // NOLINT
+    return F32(static_cast<double>(value));
 }
 
 /// Literal suffix for f32 literals
-inline f32 operator""_f(unsigned long long int value) {  // NOLINT
-    return f32(static_cast<double>(value));
+inline F32 operator""_f(unsigned long long int value) {  // NOLINT
+    return F32(static_cast<double>(value));
 }
 
 /// Literal suffix for f16 literals
-inline f16 operator""_h(long double value) {  // NOLINT
-    return f16(static_cast<double>(value));
+inline F16 operator""_h(long double value) {  // NOLINT
+    return F16(static_cast<double>(value));
 }
 
 /// Literal suffix for f16 literals
-inline f16 operator""_h(unsigned long long int value) {  // NOLINT
-    return f16(static_cast<double>(value));
+inline F16 operator""_h(unsigned long long int value) {  // NOLINT
+    return F16(static_cast<double>(value));
 }
 
 }  // namespace tint::core::number_suffixes

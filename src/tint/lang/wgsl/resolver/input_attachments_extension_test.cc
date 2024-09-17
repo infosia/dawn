@@ -141,7 +141,7 @@ TEST_F(InputAttachmenExtensionTest, InputAttachmentIndexNegative) {
     Enable(Source{{12, 34}}, wgsl::Extension::kChromiumInternalInputAttachments);
 
     GlobalVar("input_tex", ty.input_attachment(ty.Of<f32>()),
-              Vector{Binding(0_u), Group(0_u), InputAttachmentIndex(core::i32(-2))});
+              Vector{Binding(0_u), Group(0_u), InputAttachmentIndex(core::I32(-2))});
 
     EXPECT_FALSE(r()->Resolve());
     EXPECT_EQ(r()->error(), R"(error: '@input_attachment_index' value must be non-negative)");

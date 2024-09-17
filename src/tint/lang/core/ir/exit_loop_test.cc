@@ -72,12 +72,12 @@ TEST_F(IR_ExitLoopTest, Clone) {
     ASSERT_EQ(2u, args.Length());
 
     auto new_arg1 = args[0]->As<Constant>()->Value();
-    ASSERT_TRUE(new_arg1->Is<core::constant::Scalar<u32>>());
-    EXPECT_EQ(1_u, new_arg1->As<core::constant::Scalar<u32>>()->ValueAs<u32>());
+    ASSERT_TRUE(new_arg1->Is<core::constant::Scalar<U32>>());
+    EXPECT_EQ(1_u, new_arg1->As<core::constant::Scalar<U32>>()->ValueAs<U32>());
 
     auto new_arg2 = args[1]->As<Constant>()->Value();
-    ASSERT_TRUE(new_arg2->Is<core::constant::Scalar<u32>>());
-    EXPECT_EQ(2_u, new_arg2->As<core::constant::Scalar<u32>>()->ValueAs<u32>());
+    ASSERT_TRUE(new_arg2->Is<core::constant::Scalar<U32>>());
+    EXPECT_EQ(2_u, new_arg2->As<core::constant::Scalar<U32>>()->ValueAs<U32>());
 }
 
 TEST_F(IR_ExitLoopTest, CloneNoArgs) {

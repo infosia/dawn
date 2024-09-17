@@ -33,6 +33,7 @@ namespace tint::core::type {
 namespace {
 
 using namespace tint::core::number_suffixes;  // NOLINT
+
 using TypeStructTest = TestHelper;
 
 TEST_F(TypeStructTest, Creation) {
@@ -68,8 +69,8 @@ TEST_F(TypeStructTest, Layout) {
                                Member("a", ty.i32()),
                                Member("b", ty.u32()),
                                Member("c", ty.f32()),
-                               Member("d", ty.vec3<f32>()),
-                               Member("e", ty.mat4x2<f32>()),
+                               Member("d", ty.vec3<F32>()),
+                               Member("e", ty.mat4x2<F32>()),
                            });
 
     auto* outer_st = Structure("Outer", tint::Vector{
@@ -124,8 +125,8 @@ TEST_F(TypeStructTest, IsConstructable) {
                                Member("a", ty.i32()),
                                Member("b", ty.u32()),
                                Member("c", ty.f32()),
-                               Member("d", ty.vec3<f32>()),
-                               Member("e", ty.mat4x2<f32>()),
+                               Member("d", ty.vec3<F32>()),
+                               Member("e", ty.mat4x2<F32>()),
                            });
 
     auto* outer = Structure("Outer", tint::Vector{
@@ -137,7 +138,7 @@ TEST_F(TypeStructTest, IsConstructable) {
         Structure("OuterRuntimeSizedArray", tint::Vector{
                                                 Member("inner", ty("Inner")),
                                                 Member("a", ty.i32()),
-                                                Member("runtime_sized_array", ty.array<i32>()),
+                                                Member("runtime_sized_array", ty.array<I32>()),
                                             });
     auto p = Build();
     ASSERT_TRUE(p.IsValid()) << p.Diagnostics();
@@ -157,9 +158,9 @@ TEST_F(TypeStructTest, HasCreationFixedFootprint) {
                                Member("a", ty.i32()),
                                Member("b", ty.u32()),
                                Member("c", ty.f32()),
-                               Member("d", ty.vec3<f32>()),
-                               Member("e", ty.mat4x2<f32>()),
-                               Member("f", ty.array<f32, 32>()),
+                               Member("d", ty.vec3<F32>()),
+                               Member("e", ty.mat4x2<F32>()),
+                               Member("f", ty.array<F32, 32>()),
                            });
 
     auto* outer = Structure("Outer", tint::Vector{
@@ -169,7 +170,7 @@ TEST_F(TypeStructTest, HasCreationFixedFootprint) {
     auto* outer_with_runtime_sized_array =
         Structure("OuterRuntimeSizedArray", tint::Vector{
                                                 Member("inner", ty("Inner")),
-                                                Member("runtime_sized_array", ty.array<i32>()),
+                                                Member("runtime_sized_array", ty.array<I32>()),
                                             });
 
     auto p = Build();
@@ -190,9 +191,9 @@ TEST_F(TypeStructTest, HasFixedFootprint) {
                                Member("a", ty.i32()),
                                Member("b", ty.u32()),
                                Member("c", ty.f32()),
-                               Member("d", ty.vec3<f32>()),
-                               Member("e", ty.mat4x2<f32>()),
-                               Member("f", ty.array<f32, 32>()),
+                               Member("d", ty.vec3<F32>()),
+                               Member("e", ty.mat4x2<F32>()),
+                               Member("f", ty.array<F32, 32>()),
                            });
 
     auto* outer = Structure("Outer", tint::Vector{
@@ -202,7 +203,7 @@ TEST_F(TypeStructTest, HasFixedFootprint) {
     auto* outer_with_runtime_sized_array =
         Structure("OuterRuntimeSizedArray", tint::Vector{
                                                 Member("inner", ty("Inner")),
-                                                Member("runtime_sized_array", ty.array<i32>()),
+                                                Member("runtime_sized_array", ty.array<I32>()),
                                             });
 
     auto p = Build();

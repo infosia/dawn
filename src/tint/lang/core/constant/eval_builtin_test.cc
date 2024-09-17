@@ -101,7 +101,7 @@ static std::ostream& operator<<(std::ostream& o, const Case& c) {
     return o;
 }
 
-using ScalarTypes = std::variant<AInt, AFloat, u32, i32, f32, f16>;
+using ScalarTypes = std::variant<AInt, AFloat, U32, I32, F32, F16>;
 
 /// Creates a Case with Values for args and result
 static Case C(std::initializer_list<Value> args, Value result) {
@@ -249,7 +249,7 @@ std::vector<Case> AbsCases() {
             // If e is signed and is the largest negative, the result is e
             C({T::Lowest()}, T::Lowest()),
 
-            // 1 more then min i32
+            // 1 more then min I32
             C({Negate(T(2147483647))}, T(2147483647)),
 
             C({Vec(T(0), Negate(T(0)))}, Vec(T(0), T(0))),
@@ -262,11 +262,11 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kAbs),
                      testing::ValuesIn(Concat(AbsCases<AInt>(),  //
-                                              AbsCases<i32>(),
-                                              AbsCases<u32>(),
+                                              AbsCases<I32>(),
+                                              AbsCases<U32>(),
                                               AbsCases<AFloat>(),
-                                              AbsCases<f32>(),
-                                              AbsCases<f16>()))));
+                                              AbsCases<F32>(),
+                                              AbsCases<F16>()))));
 
 static std::vector<Case> AllCases() {
     return {
@@ -361,8 +361,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kAtan2),
                      testing::ValuesIn(Concat(Atan2Cases<AFloat>(),  //
-                                              Atan2Cases<f32>(),
-                                              Atan2Cases<f16>()))));
+                                              Atan2Cases<F32>(),
+                                              Atan2Cases<F16>()))));
 
 template <typename T>
 std::vector<Case> AtanCases() {
@@ -382,8 +382,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kAtan),
                      testing::ValuesIn(Concat(AtanCases<AFloat>(),  //
-                                              AtanCases<f32>(),
-                                              AtanCases<f16>()))));
+                                              AtanCases<F32>(),
+                                              AtanCases<F16>()))));
 
 template <typename T>
 std::vector<Case> AtanhCases() {
@@ -407,8 +407,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kAtanh),
                      testing::ValuesIn(Concat(AtanhCases<AFloat>(),  //
-                                              AtanhCases<f32>(),
-                                              AtanhCases<f16>()))));
+                                              AtanhCases<F32>(),
+                                              AtanhCases<F16>()))));
 
 template <typename T>
 std::vector<Case> AcosCases() {
@@ -433,8 +433,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kAcos),
                      testing::ValuesIn(Concat(AcosCases<AFloat>(),  //
-                                              AcosCases<f32>(),
-                                              AcosCases<f16>()))));
+                                              AcosCases<F32>(),
+                                              AcosCases<F16>()))));
 
 template <typename T>
 std::vector<Case> AcoshCases() {
@@ -455,8 +455,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kAcosh),
                      testing::ValuesIn(Concat(AcoshCases<AFloat>(),  //
-                                              AcoshCases<f32>(),
-                                              AcoshCases<f16>()))));
+                                              AcoshCases<F32>(),
+                                              AcoshCases<F16>()))));
 
 template <typename T>
 std::vector<Case> AsinCases() {
@@ -482,8 +482,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kAsin),
                      testing::ValuesIn(Concat(AsinCases<AFloat>(),  //
-                                              AsinCases<f32>(),
-                                              AsinCases<f16>()))));
+                                              AsinCases<F32>(),
+                                              AsinCases<F16>()))));
 
 template <typename T>
 std::vector<Case> AsinhCases() {
@@ -506,8 +506,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kAsinh),
                      testing::ValuesIn(Concat(AsinhCases<AFloat>(),  //
-                                              AsinhCases<f32>(),
-                                              AsinhCases<f16>()))));
+                                              AsinhCases<F32>(),
+                                              AsinhCases<F16>()))));
 
 template <typename T>
 std::vector<Case> CeilCases() {
@@ -527,7 +527,7 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(
         testing::Values(core::BuiltinFn::kCeil),
-        testing::ValuesIn(Concat(CeilCases<AFloat>(), CeilCases<f32>(), CeilCases<f16>()))));
+        testing::ValuesIn(Concat(CeilCases<AFloat>(), CeilCases<F32>(), CeilCases<F16>()))));
 
 template <typename T>
 std::vector<Case> ClampCases() {
@@ -574,11 +574,11 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kClamp),
                      testing::ValuesIn(Concat(ClampCases<AInt>(),  //
-                                              ClampCases<i32>(),
-                                              ClampCases<u32>(),
+                                              ClampCases<I32>(),
+                                              ClampCases<U32>(),
                                               ClampCases<AFloat>(),
-                                              ClampCases<f32>(),
-                                              ClampCases<f16>()))));
+                                              ClampCases<F32>(),
+                                              ClampCases<F16>()))));
 
 template <typename T>
 std::vector<Case> CosCases() {
@@ -597,8 +597,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kCos),
                      testing::ValuesIn(Concat(CosCases<AFloat>(),  //
-                                              CosCases<f32>(),
-                                              CosCases<f16>()))));
+                                              CosCases<F32>(),
+                                              CosCases<F16>()))));
 
 template <typename T>
 std::vector<Case> CoshCases() {
@@ -623,8 +623,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kCosh),
                      testing::ValuesIn(Concat(CoshCases<AFloat>(),  //
-                                              CoshCases<f32>(),
-                                              CoshCases<f16>()))));
+                                              CoshCases<F32>(),
+                                              CoshCases<F16>()))));
 
 template <typename T>
 std::vector<Case> CountLeadingZerosCases() {
@@ -669,8 +669,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     CountLeadingZeros,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kCountLeadingZeros),
-                     testing::ValuesIn(Concat(CountLeadingZerosCases<i32>(),  //
-                                              CountLeadingZerosCases<u32>()))));
+                     testing::ValuesIn(Concat(CountLeadingZerosCases<I32>(),  //
+                                              CountLeadingZerosCases<U32>()))));
 
 template <typename T>
 std::vector<Case> CountTrailingZerosCases() {
@@ -715,8 +715,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     CountTrailingZeros,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kCountTrailingZeros),
-                     testing::ValuesIn(Concat(CountTrailingZerosCases<i32>(),  //
-                                              CountTrailingZerosCases<u32>()))));
+                     testing::ValuesIn(Concat(CountTrailingZerosCases<I32>(),  //
+                                              CountTrailingZerosCases<U32>()))));
 
 template <typename T>
 std::vector<Case> CountOneBitsCases() {
@@ -752,8 +752,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     CountOneBits,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kCountOneBits),
-                     testing::ValuesIn(Concat(CountOneBitsCases<i32>(),  //
-                                              CountOneBitsCases<u32>()))));
+                     testing::ValuesIn(Concat(CountOneBitsCases<I32>(),  //
+                                              CountOneBitsCases<U32>()))));
 
 template <typename T>
 std::vector<Case> CrossCases() {
@@ -852,8 +852,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kCross),
                      testing::ValuesIn(Concat(CrossCases<AFloat>(),  //
-                                              CrossCases<f32>(),     //
-                                              CrossCases<f16>()))));
+                                              CrossCases<F32>(),     //
+                                              CrossCases<F16>()))));
 
 template <typename T>
 std::vector<Case> DistanceCases() {
@@ -879,8 +879,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kDistance),
                      testing::ValuesIn(Concat(DistanceCases<AFloat>(),  //
-                                              DistanceCases<f32>(),     //
-                                              DistanceCases<f16>()))));
+                                              DistanceCases<F32>(),     //
+                                              DistanceCases<F16>()))));
 
 template <typename T>
 std::vector<Case> DotCases() {
@@ -927,11 +927,11 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kDot),
                      testing::ValuesIn(Concat(DotCases<AInt>(),    //
-                                              DotCases<i32>(),     //
-                                              DotCases<u32>(),     //
+                                              DotCases<I32>(),     //
+                                              DotCases<U32>(),     //
                                               DotCases<AFloat>(),  //
-                                              DotCases<f32>(),     //
-                                              DotCases<f16>()))));
+                                              DotCases<F32>(),     //
+                                              DotCases<F16>()))));
 
 template <typename T>
 std::vector<Case> DeterminantCases() {
@@ -1007,8 +1007,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kDeterminant),
                      testing::ValuesIn(Concat(DeterminantCases<AFloat>(),  //
-                                              DeterminantCases<f32>(),     //
-                                              DeterminantCases<f16>()))));
+                                              DeterminantCases<F32>(),     //
+                                              DeterminantCases<F16>()))));
 
 template <typename T>
 std::vector<Case> FaceForwardCases() {
@@ -1089,8 +1089,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kFaceForward),
                      testing::ValuesIn(Concat(FaceForwardCases<AFloat>(),  //
-                                              FaceForwardCases<f32>(),     //
-                                              FaceForwardCases<f16>()))));
+                                              FaceForwardCases<F32>(),     //
+                                              FaceForwardCases<F16>()))));
 
 template <typename T>
 std::vector<Case> FirstLeadingBitCases() {
@@ -1151,8 +1151,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     FirstLeadingBit,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kFirstLeadingBit),
-                     testing::ValuesIn(Concat(FirstLeadingBitCases<i32>(),  //
-                                              FirstLeadingBitCases<u32>()))));
+                     testing::ValuesIn(Concat(FirstLeadingBitCases<I32>(),  //
+                                              FirstLeadingBitCases<U32>()))));
 
 template <typename T>
 std::vector<Case> FirstTrailingBitCases() {
@@ -1184,8 +1184,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     FirstTrailingBit,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kFirstTrailingBit),
-                     testing::ValuesIn(Concat(FirstTrailingBitCases<i32>(),  //
-                                              FirstTrailingBitCases<u32>()))));
+                     testing::ValuesIn(Concat(FirstTrailingBitCases<I32>(),  //
+                                              FirstTrailingBitCases<U32>()))));
 
 template <typename T>
 std::vector<Case> FloorCases() {
@@ -1205,8 +1205,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kFloor),
                      testing::ValuesIn(Concat(FloorCases<AFloat>(),  //
-                                              FloorCases<f32>(),
-                                              FloorCases<f16>()))));
+                                              FloorCases<F32>(),
+                                              FloorCases<F16>()))));
 
 template <typename T>
 std::vector<Case> FmaCases() {
@@ -1229,8 +1229,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kFma),
                      testing::ValuesIn(Concat(FmaCases<AFloat>(),  //
-                                              FmaCases<f32>(),
-                                              FmaCases<f16>()))));
+                                              FmaCases<F32>(),
+                                              FmaCases<F16>()))));
 
 template <typename T>
 std::vector<Case> FractCases() {
@@ -1249,7 +1249,7 @@ std::vector<Case> FractCases() {
     };
     // Note: Valid results are in the closed interval [0, 1.0]. For example, if e is a very small
     // negative number, then fract(e) may be 1.0.
-    ConcatIntoIf<!std::is_same_v<T, f16>>(  //
+    ConcatIntoIf<!std::is_same_v<T, F16>>(  //
         r, std::vector<Case>{
                C({T(-0.000000000000000001)}, T(1)),
            });
@@ -1261,13 +1261,13 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kFract),
                      testing::ValuesIn(Concat(FractCases<AFloat>(),  //
-                                              FractCases<f32>(),
-                                              FractCases<f16>()))));
+                                              FractCases<F32>(),
+                                              FractCases<F16>()))));
 
 template <typename T>
 std::vector<Case> FrexpCases() {
     using F = T;                                                         // fract type
-    using E = std::conditional_t<std::is_same_v<T, AFloat>, AInt, i32>;  // exp type
+    using E = std::conditional_t<std::is_same_v<T, AFloat>, AInt, I32>;  // exp type
 
     std::vector<Case> cases = {
         // Scalar tests
@@ -1292,13 +1292,13 @@ std::vector<Case> FrexpCases() {
         C({Vec(T(+3.5), T(-2.5))}, {Vec(F(+0.875), F(-0.625)), Vec(E(2), E(2))}),
     };
 
-    ConcatIntoIf<std::is_same_v<T, f16>>(cases, std::vector<Case>{
+    ConcatIntoIf<std::is_same_v<T, F16>>(cases, std::vector<Case>{
                                                     C({T::Highest()}, {F(0x0.ffep0), E(16)}),  //
                                                     C({T::Lowest()}, {F(-0x0.ffep0), E(16)}),  //
                                                     C({T::Smallest()}, {F(0.5), E(-13)}),      //
                                                 });
 
-    ConcatIntoIf<std::is_same_v<T, f32>>(cases,
+    ConcatIntoIf<std::is_same_v<T, F32>>(cases,
                                          std::vector<Case>{
                                              C({T::Highest()}, {F(0x0.ffffffp0), E(128)}),  //
                                              C({T::Lowest()}, {F(-0x0.ffffffp0), E(128)}),  //
@@ -1318,8 +1318,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kFrexp),
                      testing::ValuesIn(Concat(FrexpCases<AFloat>(),  //
-                                              FrexpCases<f32>(),     //
-                                              FrexpCases<f16>()))));
+                                              FrexpCases<F32>(),     //
+                                              FrexpCases<F16>()))));
 
 template <typename T>
 std::vector<Case> InsertBitsCases() {
@@ -1390,7 +1390,7 @@ std::vector<Case> InsertBitsCases() {
                E({T(1), T(1), UT(1000), UT(1000)}, error_msg),    //
                E({T(1), T(1), UT::Highest(), UT(1)}, error_msg),
                E({T(1), T(1), UT(1), UT::Highest()}, error_msg),
-               E({T(1), T(1), UT::Highest(), u32::Highest()}, error_msg),
+               E({T(1), T(1), UT::Highest(), U32::Highest()}, error_msg),
            });
 
     return r;
@@ -1399,8 +1399,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     InsertBits,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kInsertBits),
-                     testing::ValuesIn(Concat(InsertBitsCases<i32>(),  //
-                                              InsertBitsCases<u32>()))));
+                     testing::ValuesIn(Concat(InsertBitsCases<I32>(),  //
+                                              InsertBitsCases<U32>()))));
 
 template <typename T>
 std::vector<Case> InverseSqrtCases() {
@@ -1420,8 +1420,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kInverseSqrt),
                      testing::ValuesIn(Concat(InverseSqrtCases<AFloat>(),  //
-                                              InverseSqrtCases<f32>(),
-                                              InverseSqrtCases<f16>()))));
+                                              InverseSqrtCases<F32>(),
+                                              InverseSqrtCases<F16>()))));
 
 template <typename T>
 std::vector<Case> DegreesAFloatCases() {
@@ -1455,7 +1455,7 @@ INSTANTIATE_TEST_SUITE_P(  //
     DegreesF32,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kDegrees),
-                     testing::ValuesIn(DegreesF32Cases<f32>())));
+                     testing::ValuesIn(DegreesF32Cases<F32>())));
 
 template <typename T>
 std::vector<Case> DegreesF16Cases() {
@@ -1472,7 +1472,7 @@ INSTANTIATE_TEST_SUITE_P(  //
     DegreesF16,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kDegrees),
-                     testing::ValuesIn(DegreesF16Cases<f16>())));
+                     testing::ValuesIn(DegreesF16Cases<F16>())));
 
 template <typename T>
 std::vector<Case> ExpCases() {
@@ -1490,8 +1490,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kExp),
                      testing::ValuesIn(Concat(ExpCases<AFloat>(),  //
-                                              ExpCases<f32>(),
-                                              ExpCases<f16>()))));
+                                              ExpCases<F32>(),
+                                              ExpCases<F16>()))));
 
 template <typename T>
 std::vector<Case> Exp2Cases() {
@@ -1511,8 +1511,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kExp2),
                      testing::ValuesIn(Concat(Exp2Cases<AFloat>(),  //
-                                              Exp2Cases<f32>(),
-                                              Exp2Cases<f16>()))));
+                                              Exp2Cases<F32>(),
+                                              Exp2Cases<F16>()))));
 
 template <typename T>
 std::vector<Case> ExtractBitsCases() {
@@ -1607,16 +1607,16 @@ INSTANTIATE_TEST_SUITE_P(  //
     ExtractBits,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kExtractBits),
-                     testing::ValuesIn(Concat(ExtractBitsCases<i32>(),  //
-                                              ExtractBitsCases<u32>()))));
+                     testing::ValuesIn(Concat(ExtractBitsCases<I32>(),  //
+                                              ExtractBitsCases<U32>()))));
 
 template <typename T>
 std::vector<Case> LdexpCases() {
-    using T2 = std::conditional_t<std::is_same_v<T, AFloat>, AInt, i32>;
+    using T2 = std::conditional_t<std::is_same_v<T, AFloat>, AInt, I32>;
     T2 bias;
-    if constexpr (std::is_same_v<T, f16>) {
+    if constexpr (std::is_same_v<T, F16>) {
         bias = 15;
-    } else if constexpr (std::is_same_v<T, f32>) {
+    } else if constexpr (std::is_same_v<T, F32>) {
         bias = 127;
     } else {
         bias = 1023;
@@ -1672,8 +1672,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kLdexp),
                      testing::ValuesIn(Concat(LdexpCases<AFloat>(),  //
-                                              LdexpCases<f32>(),
-                                              LdexpCases<f16>()))));
+                                              LdexpCases<F32>(),
+                                              LdexpCases<F16>()))));
 
 template <typename T>
 std::vector<Case> LengthCases() {
@@ -1731,8 +1731,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kLength),
                      testing::ValuesIn(Concat(LengthCases<AFloat>(),  //
-                                              LengthCases<f32>(),
-                                              LengthCases<f16>()))));
+                                              LengthCases<F32>(),
+                                              LengthCases<F16>()))));
 
 template <typename T>
 std::vector<Case> LogCases() {
@@ -1747,8 +1747,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kLog),
                      testing::ValuesIn(Concat(LogCases<AFloat>(),  //
-                                              LogCases<f32>(),
-                                              LogCases<f16>()))));
+                                              LogCases<F32>(),
+                                              LogCases<F16>()))));
 template <typename T>
 std::vector<Case> LogF16Cases() {
     return {
@@ -1759,7 +1759,7 @@ INSTANTIATE_TEST_SUITE_P(  //
     LogF16,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kLog),
-                     testing::ValuesIn(LogF16Cases<f16>())));
+                     testing::ValuesIn(LogF16Cases<F16>())));
 template <typename T>
 std::vector<Case> LogF32Cases() {
     return {
@@ -1770,7 +1770,7 @@ INSTANTIATE_TEST_SUITE_P(  //
     LogF32,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kLog),
-                     testing::ValuesIn(LogF32Cases<f32>())));
+                     testing::ValuesIn(LogF32Cases<F32>())));
 
 template <typename T>
 std::vector<Case> LogAbstractCases() {
@@ -1801,8 +1801,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kLog2),
                      testing::ValuesIn(Concat(Log2Cases<AFloat>(),  //
-                                              Log2Cases<f32>(),
-                                              Log2Cases<f16>()))));
+                                              Log2Cases<F32>(),
+                                              Log2Cases<F16>()))));
 template <typename T>
 std::vector<Case> Log2F16Cases() {
     return {
@@ -1813,7 +1813,7 @@ INSTANTIATE_TEST_SUITE_P(  //
     Log2F16,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kLog2),
-                     testing::ValuesIn(Log2F16Cases<f16>())));
+                     testing::ValuesIn(Log2F16Cases<F16>())));
 template <typename T>
 std::vector<Case> Log2F32Cases() {
     return {
@@ -1824,7 +1824,7 @@ INSTANTIATE_TEST_SUITE_P(  //
     Log2F32,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kLog2),
-                     testing::ValuesIn(Log2F32Cases<f32>())));
+                     testing::ValuesIn(Log2F32Cases<F32>())));
 template <typename T>
 std::vector<Case> Log2AbstractCases() {
     return {
@@ -1859,11 +1859,11 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kMax),
                      testing::ValuesIn(Concat(MaxCases<AInt>(),  //
-                                              MaxCases<i32>(),
-                                              MaxCases<u32>(),
+                                              MaxCases<I32>(),
+                                              MaxCases<U32>(),
                                               MaxCases<AFloat>(),
-                                              MaxCases<f32>(),
-                                              MaxCases<f16>()))));
+                                              MaxCases<F32>(),
+                                              MaxCases<F16>()))));
 
 template <typename T>
 std::vector<Case> MinCases() {
@@ -1885,11 +1885,11 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kMin),
                      testing::ValuesIn(Concat(MinCases<AInt>(),  //
-                                              MinCases<i32>(),
-                                              MinCases<u32>(),
+                                              MinCases<I32>(),
+                                              MinCases<U32>(),
                                               MinCases<AFloat>(),
-                                              MinCases<f32>(),
-                                              MinCases<f16>()))));
+                                              MinCases<F32>(),
+                                              MinCases<F16>()))));
 
 template <typename T>
 std::vector<Case> MixCases() {
@@ -1931,8 +1931,8 @@ std::vector<Case> MixCases() {
            Val(T(0.25))},
           Vec(T(0.25), T(0.75), T(250))),
     };
-    // Can't interpolate lowest value for f16 because (1 - lowest) is not representable as f16.
-    if constexpr (!std::is_same_v<T, f16>) {
+    // Can't interpolate lowest value for F16 because (1 - lowest) is not representable as F16.
+    if constexpr (!std::is_same_v<T, F16>) {
         ConcatInto(r, std::vector<Case>{
                           C({T(0), T(1), T::Lowest()}, T::Lowest()),
                           C({T(1), T(0), T::Highest()}, T::Lowest()),
@@ -1944,9 +1944,9 @@ std::vector<Case> MixCases() {
 12:34 note: when calculating mix)";
     };
     auto kLargeValue = T{T::Highest() / 2};
-    // Test f16 separately as it overflows for a different reason at the boundary inputs.
-    // Specifically, (1 - lowest) fails for f16 because the result is not representable.
-    if constexpr (!std::is_same_v<T, f16>) {
+    // Test F16 separately as it overflows for a different reason at the boundary inputs.
+    // Specifically, (1 - lowest) fails for F16 because the result is not representable.
+    if constexpr (!std::is_same_v<T, F16>) {
         ConcatInto(  //
             r,
             std::vector<Case>{
@@ -1975,8 +1975,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kMix),
                      testing::ValuesIn(Concat(MixCases<AFloat>(),  //
-                                              MixCases<f32>(),     //
-                                              MixCases<f16>()))));
+                                              MixCases<F32>(),     //
+                                              MixCases<F16>()))));
 
 template <typename T>
 std::vector<Case> ModfCases() {
@@ -2009,8 +2009,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kModf),
                      testing::ValuesIn(Concat(ModfCases<AFloat>(),  //
-                                              ModfCases<f32>(),     //
-                                              ModfCases<f16>()))));
+                                              ModfCases<F32>(),     //
+                                              ModfCases<F16>()))));
 
 template <typename T>
 std::vector<Case> NormalizeCases() {
@@ -2039,19 +2039,19 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kNormalize),
                      testing::ValuesIn(Concat(NormalizeCases<AFloat>(),  //
-                                              NormalizeCases<f32>(),     //
-                                              NormalizeCases<f16>()))));
+                                              NormalizeCases<F32>(),     //
+                                              NormalizeCases<F16>()))));
 
 std::vector<Case> Pack4x8snormCases() {
     return {
-        C({Vec(f32(0), f32(0), f32(0), f32(0))}, Val(u32(0x0000'0000))),
-        C({Vec(f32(0), f32(0), f32(0), f32(-1))}, Val(u32(0x8100'0000))),
-        C({Vec(f32(0), f32(0), f32(0), f32(1))}, Val(u32(0x7f00'0000))),
-        C({Vec(f32(0), f32(0), f32(-1), f32(0))}, Val(u32(0x0081'0000))),
-        C({Vec(f32(0), f32(1), f32(0), f32(0))}, Val(u32(0x0000'7f00))),
-        C({Vec(f32(-1), f32(0), f32(0), f32(0))}, Val(u32(0x0000'0081))),
-        C({Vec(f32(1), f32(-1), f32(1), f32(-1))}, Val(u32(0x817f'817f))),
-        C({Vec(f32::Highest(), f32(-0.5), f32(0.5), f32::Lowest())}, Val(u32(0x8140'c17f))),
+        C({Vec(F32(0), F32(0), F32(0), F32(0))}, Val(U32(0x0000'0000))),
+        C({Vec(F32(0), F32(0), F32(0), F32(-1))}, Val(U32(0x8100'0000))),
+        C({Vec(F32(0), F32(0), F32(0), F32(1))}, Val(U32(0x7f00'0000))),
+        C({Vec(F32(0), F32(0), F32(-1), F32(0))}, Val(U32(0x0081'0000))),
+        C({Vec(F32(0), F32(1), F32(0), F32(0))}, Val(U32(0x0000'7f00))),
+        C({Vec(F32(-1), F32(0), F32(0), F32(0))}, Val(U32(0x0000'0081))),
+        C({Vec(F32(1), F32(-1), F32(1), F32(-1))}, Val(U32(0x817f'817f))),
+        C({Vec(F32::Highest(), F32(-0.5), F32(0.5), F32::Lowest())}, Val(U32(0x8140'c17f))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2062,13 +2062,13 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Pack4x8unormCases() {
     return {
-        C({Vec(f32(0), f32(0), f32(0), f32(0))}, Val(u32(0x0000'0000))),
-        C({Vec(f32(0), f32(0), f32(0), f32(1))}, Val(u32(0xff00'0000))),
-        C({Vec(f32(0), f32(0), f32(1), f32(0))}, Val(u32(0x00ff'0000))),
-        C({Vec(f32(0), f32(1), f32(0), f32(0))}, Val(u32(0x0000'ff00))),
-        C({Vec(f32(1), f32(0), f32(0), f32(0))}, Val(u32(0x0000'00ff))),
-        C({Vec(f32(1), f32(0), f32(1), f32(0))}, Val(u32(0x00ff'00ff))),
-        C({Vec(f32::Highest(), f32(0), f32(0.5), f32::Lowest())}, Val(u32(0x0080'00ff))),
+        C({Vec(F32(0), F32(0), F32(0), F32(0))}, Val(U32(0x0000'0000))),
+        C({Vec(F32(0), F32(0), F32(0), F32(1))}, Val(U32(0xff00'0000))),
+        C({Vec(F32(0), F32(0), F32(1), F32(0))}, Val(U32(0x00ff'0000))),
+        C({Vec(F32(0), F32(1), F32(0), F32(0))}, Val(U32(0x0000'ff00))),
+        C({Vec(F32(1), F32(0), F32(0), F32(0))}, Val(U32(0x0000'00ff))),
+        C({Vec(F32(1), F32(0), F32(1), F32(0))}, Val(U32(0x00ff'00ff))),
+        C({Vec(F32::Highest(), F32(0), F32(0.5), F32::Lowest())}, Val(U32(0x0080'00ff))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2079,17 +2079,17 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Pack2x16floatCases() {
     return {
-        C({Vec(f32(f16::Lowest()), f32(f16::Highest()))}, Val(u32(0x7bff'fbff))),
-        C({Vec(f32(1), f32(-1))}, Val(u32(0xbc00'3c00))),
-        C({Vec(f32(0), f32(0))}, Val(u32(0x0000'0000))),
-        C({Vec(f32(10), f32(-10.5))}, Val(u32(0xc940'4900))),
+        C({Vec(F32(F16::Lowest()), F32(F16::Highest()))}, Val(U32(0x7bff'fbff))),
+        C({Vec(F32(1), F32(-1))}, Val(U32(0xbc00'3c00))),
+        C({Vec(F32(0), F32(0))}, Val(U32(0x0000'0000))),
+        C({Vec(F32(10), F32(-10.5))}, Val(U32(0xc940'4900))),
 
-        E({Vec(f32(0), f32::Highest())},
+        E({Vec(F32(0), F32::Highest())},
           "12:34 error: value 340282346638528859811704183484516925440.0 cannot be "
-          "represented as 'f16'"),
-        E({Vec(f32::Lowest(), f32(0))},
+          "represented as 'F16'"),
+        E({Vec(F32::Lowest(), F32(0))},
           "12:34 error: value -340282346638528859811704183484516925440.0 cannot be "
-          "represented as 'f16'"),
+          "represented as 'F16'"),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2100,14 +2100,14 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Pack2x16snormCases() {
     return {
-        C({Vec(f32(0), f32(0))}, Val(u32(0x0000'0000))),
-        C({Vec(f32(0), f32(-1))}, Val(u32(0x8001'0000))),
-        C({Vec(f32(0), f32(1))}, Val(u32(0x7fff'0000))),
-        C({Vec(f32(-1), f32(0))}, Val(u32(0x0000'8001))),
-        C({Vec(f32(1), f32(0))}, Val(u32(0x0000'7fff))),
-        C({Vec(f32(1), f32(-1))}, Val(u32(0x8001'7fff))),
-        C({Vec(f32::Highest(), f32::Lowest())}, Val(u32(0x8001'7fff))),
-        C({Vec(f32(-0.5), f32(0.5))}, Val(u32(0x4000'c001))),
+        C({Vec(F32(0), F32(0))}, Val(U32(0x0000'0000))),
+        C({Vec(F32(0), F32(-1))}, Val(U32(0x8001'0000))),
+        C({Vec(F32(0), F32(1))}, Val(U32(0x7fff'0000))),
+        C({Vec(F32(-1), F32(0))}, Val(U32(0x0000'8001))),
+        C({Vec(F32(1), F32(0))}, Val(U32(0x0000'7fff))),
+        C({Vec(F32(1), F32(-1))}, Val(U32(0x8001'7fff))),
+        C({Vec(F32::Highest(), F32::Lowest())}, Val(U32(0x8001'7fff))),
+        C({Vec(F32(-0.5), F32(0.5))}, Val(U32(0x4000'c001))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2118,10 +2118,10 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Pack2x16unormCases() {
     return {
-        C({Vec(f32(0), f32(1))}, Val(u32(0xffff'0000))),
-        C({Vec(f32(1), f32(0))}, Val(u32(0x0000'ffff))),
-        C({Vec(f32(0.5), f32(0))}, Val(u32(0x0000'8000))),
-        C({Vec(f32::Highest(), f32::Lowest())}, Val(u32(0x0000'ffff))),
+        C({Vec(F32(0), F32(1))}, Val(U32(0xffff'0000))),
+        C({Vec(F32(1), F32(0))}, Val(U32(0x0000'ffff))),
+        C({Vec(F32(0.5), F32(0))}, Val(U32(0x0000'8000))),
+        C({Vec(F32::Highest(), F32::Lowest())}, Val(U32(0x0000'ffff))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2175,8 +2175,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kPow),
                      testing::ValuesIn(Concat(PowCases<AFloat>(),  //
-                                              PowCases<f32>(),     //
-                                              PowCases<f16>()))));
+                                              PowCases<F32>(),     //
+                                              PowCases<F16>()))));
 
 template <typename T>
 std::vector<Case> ReverseBitsCases() {
@@ -2221,8 +2221,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ReverseBits,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kReverseBits),
-                     testing::ValuesIn(Concat(ReverseBitsCases<i32>(),  //
-                                              ReverseBitsCases<u32>()))));
+                     testing::ValuesIn(Concat(ReverseBitsCases<I32>(),  //
+                                              ReverseBitsCases<U32>()))));
 
 template <typename T>
 std::vector<Case> ReflectCases() {
@@ -2274,8 +2274,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kReflect),
                      testing::ValuesIn(Concat(ReflectCases<AFloat>(),  //
-                                              ReflectCases<f32>(),     //
-                                              ReflectCases<f16>()))));
+                                              ReflectCases<F32>(),     //
+                                              ReflectCases<F16>()))));
 
 template <typename T>
 std::vector<Case> RefractCases() {
@@ -2300,7 +2300,7 @@ std::vector<Case> RefractCases() {
     auto up_right = Vec(T(cos_45), T(cos_45), T(0));
 
     auto eps = 0.001;
-    if constexpr (std::is_same_v<T, f16>) {
+    if constexpr (std::is_same_v<T, F16>) {
         eps = 0.1;
     }
 
@@ -2348,7 +2348,7 @@ std::vector<Case> RefractCases() {
             // Overflow the k^2 operation
             E({down_right, pos_y, Val(T::Highest())}, error_msg(T::Highest(), "*", T::Highest())),
         });
-    ConcatIntoIf<std::is_same_v<T, f32>>(  //
+    ConcatIntoIf<std::is_same_v<T, F32>>(  //
         r, std::vector<Case>{
                // Overflow the final multiply by e2 operation
                // From https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=58526
@@ -2364,8 +2364,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kRefract),
                      testing::ValuesIn(Concat(RefractCases<AFloat>(),  //
-                                              RefractCases<f32>(),     //
-                                              RefractCases<f16>()))));
+                                              RefractCases<F32>(),     //
+                                              RefractCases<F16>()))));
 
 template <typename T>
 std::vector<Case> RadiansCases() {
@@ -2383,7 +2383,7 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kRadians),
                      testing::ValuesIn(Concat(RadiansCases<AFloat>(),  //
-                                              RadiansCases<f32>()))));
+                                              RadiansCases<F32>()))));
 
 template <typename T>
 std::vector<Case> RadiansF16Cases() {
@@ -2400,7 +2400,7 @@ INSTANTIATE_TEST_SUITE_P(  //
     RadiansF16,
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kRadians),
-                     testing::ValuesIn(RadiansF16Cases<f16>())));
+                     testing::ValuesIn(RadiansF16Cases<F16>())));
 
 template <typename T>
 std::vector<Case> RoundCases() {
@@ -2427,8 +2427,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kRound),
                      testing::ValuesIn(Concat(RoundCases<AFloat>(),  //
-                                              RoundCases<f32>(),
-                                              RoundCases<f16>()))));
+                                              RoundCases<F32>(),
+                                              RoundCases<F16>()))));
 
 template <typename T>
 std::vector<Case> SaturateCases() {
@@ -2452,8 +2452,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kSaturate),
                      testing::ValuesIn(Concat(SaturateCases<AFloat>(),  //
-                                              SaturateCases<f32>(),
-                                              SaturateCases<f16>()))));
+                                              SaturateCases<F32>(),
+                                              SaturateCases<F16>()))));
 
 template <typename T>
 std::vector<Case> SelectCases() {
@@ -2494,11 +2494,11 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kSelect),
                      testing::ValuesIn(Concat(SelectCases<AInt>(),  //
-                                              SelectCases<i32>(),
-                                              SelectCases<u32>(),
+                                              SelectCases<I32>(),
+                                              SelectCases<U32>(),
                                               SelectCases<AFloat>(),
-                                              SelectCases<f32>(),
-                                              SelectCases<f16>(),
+                                              SelectCases<F32>(),
+                                              SelectCases<F16>(),
                                               SelectBoolCases()))));
 
 template <typename T>
@@ -2535,10 +2535,10 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kSign),
                      testing::ValuesIn(Concat(SignCases<AInt>(),  //
-                                              SignCases<i32>(),
+                                              SignCases<I32>(),
                                               SignCases<AFloat>(),
-                                              SignCases<f32>(),
-                                              SignCases<f16>()))));
+                                              SignCases<F32>(),
+                                              SignCases<F16>()))));
 
 template <typename T>
 std::vector<Case> SinCases() {
@@ -2557,8 +2557,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kSin),
                      testing::ValuesIn(Concat(SinCases<AFloat>(),  //
-                                              SinCases<f32>(),
-                                              SinCases<f16>()))));
+                                              SinCases<F32>(),
+                                              SinCases<F16>()))));
 
 template <typename T>
 std::vector<Case> SinhCases() {
@@ -2582,8 +2582,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kSinh),
                      testing::ValuesIn(Concat(SinhCases<AFloat>(),  //
-                                              SinhCases<f32>(),
-                                              SinhCases<f16>()))));
+                                              SinhCases<F32>(),
+                                              SinhCases<F16>()))));
 
 template <typename T>
 std::vector<Case> SmoothstepCases() {
@@ -2625,8 +2625,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kSmoothstep),
                      testing::ValuesIn(Concat(SmoothstepCases<AFloat>(),  //
-                                              SmoothstepCases<f32>(),
-                                              SmoothstepCases<f16>()))));
+                                              SmoothstepCases<F32>(),
+                                              SmoothstepCases<F16>()))));
 
 template <typename T>
 std::vector<Case> StepCases() {
@@ -2657,8 +2657,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kStep),
                      testing::ValuesIn(Concat(StepCases<AFloat>(),  //
-                                              StepCases<f32>(),
-                                              StepCases<f16>()))));
+                                              StepCases<F32>(),
+                                              StepCases<F16>()))));
 
 template <typename T>
 std::vector<Case> SqrtCases() {
@@ -2678,8 +2678,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kSqrt),
                      testing::ValuesIn(Concat(SqrtCases<AFloat>(),  //
-                                              SqrtCases<f32>(),
-                                              SqrtCases<f16>()))));
+                                              SqrtCases<F32>(),
+                                              SqrtCases<F16>()))));
 
 template <typename T>
 std::vector<Case> TanCases() {
@@ -2697,8 +2697,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kTan),
                      testing::ValuesIn(Concat(TanCases<AFloat>(),  //
-                                              TanCases<f32>(),
-                                              TanCases<f16>()))));
+                                              TanCases<F32>(),
+                                              TanCases<F16>()))));
 
 template <typename T>
 std::vector<Case> TanhCases() {
@@ -2717,8 +2717,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kTanh),
                      testing::ValuesIn(Concat(TanhCases<AFloat>(),  //
-                                              TanhCases<f32>(),
-                                              TanhCases<f16>()))));
+                                              TanhCases<F32>(),
+                                              TanhCases<F16>()))));
 
 template <typename T>
 std::vector<Case> TransposeCases() {
@@ -2783,8 +2783,8 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kTranspose),
                      testing::ValuesIn(Concat(TransposeCases<AFloat>(),  //
-                                              TransposeCases<f32>(),
-                                              TransposeCases<f16>()))));
+                                              TransposeCases<F32>(),
+                                              TransposeCases<F16>()))));
 
 template <typename T>
 std::vector<Case> TruncCases() {
@@ -2801,20 +2801,20 @@ INSTANTIATE_TEST_SUITE_P(  //
     ConstEvalBuiltinTest,
     testing::Combine(testing::Values(core::BuiltinFn::kTrunc),
                      testing::ValuesIn(Concat(TruncCases<AFloat>(),  //
-                                              TruncCases<f32>(),
-                                              TruncCases<f16>()))));
+                                              TruncCases<F32>(),
+                                              TruncCases<F16>()))));
 
 std::vector<Case> Unpack4x8snormCases() {
     return {
-        C({Val(u32(0x0000'0000))}, Vec(f32(0), f32(0), f32(0), f32(0))),
-        C({Val(u32(0x8100'0000))}, Vec(f32(0), f32(0), f32(0), f32(-1))),
-        C({Val(u32(0x7f00'0000))}, Vec(f32(0), f32(0), f32(0), f32(1))),
-        C({Val(u32(0x0081'0000))}, Vec(f32(0), f32(0), f32(-1), f32(0))),
-        C({Val(u32(0x0000'7f00))}, Vec(f32(0), f32(1), f32(0), f32(0))),
-        C({Val(u32(0x0000'0081))}, Vec(f32(-1), f32(0), f32(0), f32(0))),
-        C({Val(u32(0x817f'817f))}, Vec(f32(1), f32(-1), f32(1), f32(-1))),
-        C({Val(u32(0x816d'937f))},
-          Vec(f32(1), f32(-0.8582677165354), f32(0.8582677165354), f32(-1))),
+        C({Val(U32(0x0000'0000))}, Vec(F32(0), F32(0), F32(0), F32(0))),
+        C({Val(U32(0x8100'0000))}, Vec(F32(0), F32(0), F32(0), F32(-1))),
+        C({Val(U32(0x7f00'0000))}, Vec(F32(0), F32(0), F32(0), F32(1))),
+        C({Val(U32(0x0081'0000))}, Vec(F32(0), F32(0), F32(-1), F32(0))),
+        C({Val(U32(0x0000'7f00))}, Vec(F32(0), F32(1), F32(0), F32(0))),
+        C({Val(U32(0x0000'0081))}, Vec(F32(-1), F32(0), F32(0), F32(0))),
+        C({Val(U32(0x817f'817f))}, Vec(F32(1), F32(-1), F32(1), F32(-1))),
+        C({Val(U32(0x816d'937f))},
+          Vec(F32(1), F32(-0.8582677165354), F32(0.8582677165354), F32(-1))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2825,13 +2825,13 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Unpack4x8unormCases() {
     return {
-        C({Val(u32(0x0000'0000))}, Vec(f32(0), f32(0), f32(0), f32(0))),
-        C({Val(u32(0xff00'0000))}, Vec(f32(0), f32(0), f32(0), f32(1))),
-        C({Val(u32(0x00ff'0000))}, Vec(f32(0), f32(0), f32(1), f32(0))),
-        C({Val(u32(0x0000'ff00))}, Vec(f32(0), f32(1), f32(0), f32(0))),
-        C({Val(u32(0x0000'00ff))}, Vec(f32(1), f32(0), f32(0), f32(0))),
-        C({Val(u32(0x00ff'00ff))}, Vec(f32(1), f32(0), f32(1), f32(0))),
-        C({Val(u32(0x0066'00ff))}, Vec(f32(1), f32(0), f32(0.4), f32(0))),
+        C({Val(U32(0x0000'0000))}, Vec(F32(0), F32(0), F32(0), F32(0))),
+        C({Val(U32(0xff00'0000))}, Vec(F32(0), F32(0), F32(0), F32(1))),
+        C({Val(U32(0x00ff'0000))}, Vec(F32(0), F32(0), F32(1), F32(0))),
+        C({Val(U32(0x0000'ff00))}, Vec(F32(0), F32(1), F32(0), F32(0))),
+        C({Val(U32(0x0000'00ff))}, Vec(F32(1), F32(0), F32(0), F32(0))),
+        C({Val(U32(0x00ff'00ff))}, Vec(F32(1), F32(0), F32(1), F32(0))),
+        C({Val(U32(0x0066'00ff))}, Vec(F32(1), F32(0), F32(0.4), F32(0))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2842,10 +2842,10 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Unpack2x16floatCases() {
     return {
-        C({Val(u32(0x7bff'fbff))}, Vec(f32(f16::Lowest()), f32(f16::Highest()))),
-        C({Val(u32(0xbc00'3c00))}, Vec(f32(1), f32(-1))),
-        C({Val(u32(0x0000'0000))}, Vec(f32(0), f32(0))),
-        C({Val(u32(0xc940'4900))}, Vec(f32(10), f32(-10.5))),
+        C({Val(U32(0x7bff'fbff))}, Vec(F32(F16::Lowest()), F32(F16::Highest()))),
+        C({Val(U32(0xbc00'3c00))}, Vec(F32(1), F32(-1))),
+        C({Val(U32(0x0000'0000))}, Vec(F32(0), F32(0))),
+        C({Val(U32(0xc940'4900))}, Vec(F32(10), F32(-10.5))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2856,14 +2856,14 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Unpack2x16snormCases() {
     return {
-        C({Val(u32(0x0000'0000))}, Vec(f32(0), f32(0))),
-        C({Val(u32(0x8001'0000))}, Vec(f32(0), f32(-1))),
-        C({Val(u32(0x7fff'0000))}, Vec(f32(0), f32(1))),
-        C({Val(u32(0x0000'8001))}, Vec(f32(-1), f32(0))),
-        C({Val(u32(0x0000'7fff))}, Vec(f32(1), f32(0))),
-        C({Val(u32(0x8001'7fff))}, Vec(f32(1), f32(-1))),
-        C({Val(u32(0x8001'7fff))}, Vec(f32(1), f32(-1))),
-        C({Val(u32(0x4000'999a))}, Vec(f32(-0.80001220740379), f32(0.500015259254737))).FloatComp(),
+        C({Val(U32(0x0000'0000))}, Vec(F32(0), F32(0))),
+        C({Val(U32(0x8001'0000))}, Vec(F32(0), F32(-1))),
+        C({Val(U32(0x7fff'0000))}, Vec(F32(0), F32(1))),
+        C({Val(U32(0x0000'8001))}, Vec(F32(-1), F32(0))),
+        C({Val(U32(0x0000'7fff))}, Vec(F32(1), F32(0))),
+        C({Val(U32(0x8001'7fff))}, Vec(F32(1), F32(-1))),
+        C({Val(U32(0x8001'7fff))}, Vec(F32(1), F32(-1))),
+        C({Val(U32(0x4000'999a))}, Vec(F32(-0.80001220740379), F32(0.500015259254737))).FloatComp(),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2874,10 +2874,10 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Unpack2x16unormCases() {
     return {
-        C({Val(u32(0xffff'0000))}, Vec(f32(0), f32(1))),
-        C({Val(u32(0x0000'ffff))}, Vec(f32(1), f32(0))),
-        C({Val(u32(0x0000'6666))}, Vec(f32(0.4), f32(0))),
-        C({Val(u32(0x0000'ffff))}, Vec(f32(1), f32(0))),
+        C({Val(U32(0xffff'0000))}, Vec(F32(0), F32(1))),
+        C({Val(U32(0x0000'ffff))}, Vec(F32(1), F32(0))),
+        C({Val(U32(0x0000'6666))}, Vec(F32(0.4), F32(0))),
+        C({Val(U32(0x0000'ffff))}, Vec(F32(1), F32(0))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2905,7 +2905,7 @@ std::vector<Case> QuantizeToF16Cases() {
         C({8196_f}, 8192_f),    //
         C({-8196_f}, -8192_f),  //
 
-        // Value in subnormal f16 range
+        // Value in subnormal F16 range
         C({0x0.034p-14_f}, 0x0.034p-14_f),    //
         C({-0x0.034p-14_f}, -0x0.034p-14_f),  //
         C({0x0.068p-14_f}, 0x0.068p-14_f),    //
@@ -2927,7 +2927,7 @@ std::vector<Case> QuantizeToF16Cases() {
         C({Vec(0x0.034p-14_f, -0x0.034p-14_f, 0x0.068p-14_f, -0x0.068p-14_f)},
           Vec(0x0.034p-14_f, -0x0.034p-14_f, 0x0.068p-14_f, -0x0.068p-14_f)),
 
-        // Value out of f16 range
+        // Value out of F16 range
         E({65504.003_f}, "12:34 error: value 65504.00390625 cannot be represented as 'f16'"),
         E({-65504.003_f}, "12:34 error: value -65504.00390625 cannot be represented as 'f16'"),
         E({0x1.234p56_f}, "12:34 error: value 81979586966978560.0 cannot be represented as 'f16'"),
@@ -2948,17 +2948,17 @@ INSTANTIATE_TEST_SUITE_P(  //
 std::vector<Case> Dot4I8PackedCases() {
     return {
         // {-1, -2, -3, -4} . {-5, -6, -7, -8}
-        C({Val(u32(0xFFFEFDFC)), Val(u32(0xFBFAF9F8))}, Val(i32(70))),
+        C({Val(U32(0xFFFEFDFC)), Val(U32(0xFBFAF9F8))}, Val(I32(70))),
         // {1, 2, 3, 4} . {-1, -2, -3, -4}
-        C({Val(u32(0x01020304)), Val(u32(0xFFFEFDFC))}, Val(i32(-30))),
+        C({Val(U32(0x01020304)), Val(U32(0xFFFEFDFC))}, Val(I32(-30))),
         // {-9, -10, -11, -12} . {5, 6, 7, 8}
-        C({Val(u32(0xF7F6F5F4)), Val(u32(0x05060708))}, Val(i32(-278))),
+        C({Val(U32(0xF7F6F5F4)), Val(U32(0x05060708))}, Val(I32(-278))),
         // {0, 0, 0, 0} . {0, 0, 0, 0}
-        C({Val(u32(0)), Val(u32(0))}, Val(i32(0))),
+        C({Val(U32(0)), Val(U32(0))}, Val(I32(0))),
         // {127, 127, 127, 127} . {127, 127, 127, 127}
-        C({Val(u32(0x7F7F7F7F)), Val(u32(0x7F7F7F7F))}, Val(i32(64516))),
+        C({Val(U32(0x7F7F7F7F)), Val(U32(0x7F7F7F7F))}, Val(I32(64516))),
         // {-128, -128, -128, -128} . {-128, -128, -128, -128}
-        C({Val(u32(0x80808080)), Val(u32(0x80808080))}, Val(i32(65536))),
+        C({Val(U32(0x80808080)), Val(U32(0x80808080))}, Val(I32(65536))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2970,13 +2970,13 @@ INSTANTIATE_TEST_SUITE_P(  //
 std::vector<Case> Dot4U8PackedCases() {
     return {
         // {255, 254, 253, 252} . {251, 250, 249, 248}
-        C({Val(u32(0xFFFEFDFC)), Val(u32(0xFBFAF9F8))}, Val(u32(252998))),
+        C({Val(U32(0xFFFEFDFC)), Val(U32(0xFBFAF9F8))}, Val(U32(252998))),
         // {1, 2, 3, 4} . {255, 254, 253, 252}
-        C({Val(u32(0x01020304)), Val(u32(0xFFFEFDFC))}, Val(u32(2530))),
+        C({Val(U32(0x01020304)), Val(U32(0xFFFEFDFC))}, Val(U32(2530))),
         // {0, 0, 0, 0} . {0, 0, 0, 0}
-        C({Val(u32(0)), Val(u32(0))}, Val(u32(0))),
+        C({Val(U32(0)), Val(U32(0))}, Val(U32(0))),
         // {255, 255, 255, 255} . {255, 255, 255, 255}
-        C({Val(u32(0xFFFFFFFF)), Val(u32(0xFFFFFFFF))}, Val(u32(260100))),
+        C({Val(U32(0xFFFFFFFF)), Val(U32(0xFFFFFFFF))}, Val(U32(260100))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -2987,24 +2987,24 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Pack4xI8Cases() {
     return {
-        C({Vec(i32(0), i32(0), i32(0), i32(0))}, Val(u32(0x0000'0000))),
-        C({Vec(i32(1), i32(2), i32(3), i32(4))}, Val(u32(0x0403'0201))),
-        C({Vec(i32(-1), i32(-2), i32(-3), i32(-4))}, Val(u32(0xFCFD'FEFF))),
-        C({Vec(i32(-1), i32(2), i32(3), i32(4))}, Val(u32(0x0403'02FF))),
-        C({Vec(i32(1), i32(-2), i32(3), i32(4))}, Val(u32(0x0403'FE01))),
-        C({Vec(i32(1), i32(2), i32(-3), i32(4))}, Val(u32(0x04FD'0201))),
-        C({Vec(i32(1), i32(2), i32(3), i32(-4))}, Val(u32(0xFC03'0201))),
-        C({Vec(i32(1), i32(-2), i32(-3), i32(-4))}, Val(u32(0xFCFD'FE01))),
-        C({Vec(i32(-1), i32(2), i32(-3), i32(-4))}, Val(u32(0xFCFD'02FF))),
-        C({Vec(i32(-1), i32(-2), i32(3), i32(-4))}, Val(u32(0xFC03'FEFF))),
-        C({Vec(i32(-1), i32(-2), i32(-3), i32(4))}, Val(u32(0x04FD'FEFF))),
-        C({Vec(i32(-1), i32(-2), i32(3), i32(4))}, Val(u32(0x0403'FEFF))),
-        C({Vec(i32(-1), i32(2), i32(-3), i32(4))}, Val(u32(0x04FD'02FF))),
-        C({Vec(i32(-1), i32(2), i32(3), i32(-4))}, Val(u32(0xFC03'02FF))),
-        C({Vec(i32(1), i32(-2), i32(-3), i32(4))}, Val(u32(0x04FD'FE01))),
-        C({Vec(i32(1), i32(-2), i32(3), i32(-4))}, Val(u32(0xFC03'FE01))),
-        C({Vec(i32(1), i32(2), i32(-3), i32(-4))}, Val(u32(0xFCFD'0201))),
-        C({Vec(i32(127), i32(128), i32(-128), i32(-129))}, Val(u32(0x7F80'807F))),
+        C({Vec(I32(0), I32(0), I32(0), I32(0))}, Val(U32(0x0000'0000))),
+        C({Vec(I32(1), I32(2), I32(3), I32(4))}, Val(U32(0x0403'0201))),
+        C({Vec(I32(-1), I32(-2), I32(-3), I32(-4))}, Val(U32(0xFCFD'FEFF))),
+        C({Vec(I32(-1), I32(2), I32(3), I32(4))}, Val(U32(0x0403'02FF))),
+        C({Vec(I32(1), I32(-2), I32(3), I32(4))}, Val(U32(0x0403'FE01))),
+        C({Vec(I32(1), I32(2), I32(-3), I32(4))}, Val(U32(0x04FD'0201))),
+        C({Vec(I32(1), I32(2), I32(3), I32(-4))}, Val(U32(0xFC03'0201))),
+        C({Vec(I32(1), I32(-2), I32(-3), I32(-4))}, Val(U32(0xFCFD'FE01))),
+        C({Vec(I32(-1), I32(2), I32(-3), I32(-4))}, Val(U32(0xFCFD'02FF))),
+        C({Vec(I32(-1), I32(-2), I32(3), I32(-4))}, Val(U32(0xFC03'FEFF))),
+        C({Vec(I32(-1), I32(-2), I32(-3), I32(4))}, Val(U32(0x04FD'FEFF))),
+        C({Vec(I32(-1), I32(-2), I32(3), I32(4))}, Val(U32(0x0403'FEFF))),
+        C({Vec(I32(-1), I32(2), I32(-3), I32(4))}, Val(U32(0x04FD'02FF))),
+        C({Vec(I32(-1), I32(2), I32(3), I32(-4))}, Val(U32(0xFC03'02FF))),
+        C({Vec(I32(1), I32(-2), I32(-3), I32(4))}, Val(U32(0x04FD'FE01))),
+        C({Vec(I32(1), I32(-2), I32(3), I32(-4))}, Val(U32(0xFC03'FE01))),
+        C({Vec(I32(1), I32(2), I32(-3), I32(-4))}, Val(U32(0xFCFD'0201))),
+        C({Vec(I32(127), I32(128), I32(-128), I32(-129))}, Val(U32(0x7F80'807F))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -3015,10 +3015,10 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Pack4xU8Cases() {
     return {
-        C({Vec(u32(0), u32(0), u32(0), u32(0))}, Val(u32(0x0000'0000))),
-        C({Vec(u32(2), u32(4), u32(6), u32(8))}, Val(u32(0x0806'0402))),
-        C({Vec(u32(255), u32(255), u32(255), u32(255))}, Val(u32(0xFFFF'FFFF))),
-        C({Vec(u32(254), u32(255), u32(256), u32(257))}, Val(u32(0x0100'FFFE))),
+        C({Vec(U32(0), U32(0), U32(0), U32(0))}, Val(U32(0x0000'0000))),
+        C({Vec(U32(2), U32(4), U32(6), U32(8))}, Val(U32(0x0806'0402))),
+        C({Vec(U32(255), U32(255), U32(255), U32(255))}, Val(U32(0xFFFF'FFFF))),
+        C({Vec(U32(254), U32(255), U32(256), U32(257))}, Val(U32(0x0100'FFFE))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -3029,25 +3029,25 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Pack4xI8ClampCases() {
     return {
-        C({Vec(i32(0), i32(0), i32(0), i32(0))}, Val(u32(0x0000'0000))),
-        C({Vec(i32(1), i32(2), i32(3), i32(4))}, Val(u32(0x0403'0201))),
-        C({Vec(i32(-1), i32(-2), i32(-3), i32(-4))}, Val(u32(0xFCFD'FEFF))),
-        C({Vec(i32(-1), i32(2), i32(3), i32(4))}, Val(u32(0x0403'02FF))),
-        C({Vec(i32(1), i32(-2), i32(3), i32(4))}, Val(u32(0x0403'FE01))),
-        C({Vec(i32(1), i32(2), i32(-3), i32(4))}, Val(u32(0x04FD'0201))),
-        C({Vec(i32(1), i32(2), i32(3), i32(-4))}, Val(u32(0xFC03'0201))),
-        C({Vec(i32(1), i32(-2), i32(-3), i32(-4))}, Val(u32(0xFCFD'FE01))),
-        C({Vec(i32(-1), i32(2), i32(-3), i32(-4))}, Val(u32(0xFCFD'02FF))),
-        C({Vec(i32(-1), i32(-2), i32(3), i32(-4))}, Val(u32(0xFC03'FEFF))),
-        C({Vec(i32(-1), i32(-2), i32(-3), i32(4))}, Val(u32(0x04FD'FEFF))),
-        C({Vec(i32(-1), i32(-2), i32(3), i32(4))}, Val(u32(0x0403'FEFF))),
-        C({Vec(i32(-1), i32(2), i32(-3), i32(4))}, Val(u32(0x04FD'02FF))),
-        C({Vec(i32(-1), i32(2), i32(3), i32(-4))}, Val(u32(0xFC03'02FF))),
-        C({Vec(i32(1), i32(-2), i32(-3), i32(4))}, Val(u32(0x04FD'FE01))),
-        C({Vec(i32(1), i32(-2), i32(3), i32(-4))}, Val(u32(0xFC03'FE01))),
-        C({Vec(i32(1), i32(2), i32(-3), i32(-4))}, Val(u32(0xFCFD'0201))),
-        C({Vec(i32(127), i32(128), i32(-128), i32(-129))}, Val(u32(0x8080'7F7F))),
-        C({Vec(i32(-32768), i32(-65536), i32(32767), i32(65535))}, Val(u32(0x7F7F'8080))),
+        C({Vec(I32(0), I32(0), I32(0), I32(0))}, Val(U32(0x0000'0000))),
+        C({Vec(I32(1), I32(2), I32(3), I32(4))}, Val(U32(0x0403'0201))),
+        C({Vec(I32(-1), I32(-2), I32(-3), I32(-4))}, Val(U32(0xFCFD'FEFF))),
+        C({Vec(I32(-1), I32(2), I32(3), I32(4))}, Val(U32(0x0403'02FF))),
+        C({Vec(I32(1), I32(-2), I32(3), I32(4))}, Val(U32(0x0403'FE01))),
+        C({Vec(I32(1), I32(2), I32(-3), I32(4))}, Val(U32(0x04FD'0201))),
+        C({Vec(I32(1), I32(2), I32(3), I32(-4))}, Val(U32(0xFC03'0201))),
+        C({Vec(I32(1), I32(-2), I32(-3), I32(-4))}, Val(U32(0xFCFD'FE01))),
+        C({Vec(I32(-1), I32(2), I32(-3), I32(-4))}, Val(U32(0xFCFD'02FF))),
+        C({Vec(I32(-1), I32(-2), I32(3), I32(-4))}, Val(U32(0xFC03'FEFF))),
+        C({Vec(I32(-1), I32(-2), I32(-3), I32(4))}, Val(U32(0x04FD'FEFF))),
+        C({Vec(I32(-1), I32(-2), I32(3), I32(4))}, Val(U32(0x0403'FEFF))),
+        C({Vec(I32(-1), I32(2), I32(-3), I32(4))}, Val(U32(0x04FD'02FF))),
+        C({Vec(I32(-1), I32(2), I32(3), I32(-4))}, Val(U32(0xFC03'02FF))),
+        C({Vec(I32(1), I32(-2), I32(-3), I32(4))}, Val(U32(0x04FD'FE01))),
+        C({Vec(I32(1), I32(-2), I32(3), I32(-4))}, Val(U32(0xFC03'FE01))),
+        C({Vec(I32(1), I32(2), I32(-3), I32(-4))}, Val(U32(0xFCFD'0201))),
+        C({Vec(I32(127), I32(128), I32(-128), I32(-129))}, Val(U32(0x8080'7F7F))),
+        C({Vec(I32(-32768), I32(-65536), I32(32767), I32(65535))}, Val(U32(0x7F7F'8080))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -3058,11 +3058,11 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Pack4xU8ClampCases() {
     return {
-        C({Vec(u32(0), u32(0), u32(0), u32(0))}, Val(u32(0x0000'0000))),
-        C({Vec(u32(2), u32(4), u32(6), u32(8))}, Val(u32(0x0806'0402))),
-        C({Vec(u32(255), u32(255), u32(255), u32(255))}, Val(u32(0xFFFF'FFFF))),
-        C({Vec(u32(254), u32(255), u32(256), u32(257))}, Val(u32(0xFFFF'FFFE))),
-        C({Vec(u32(65535), u32(65536), u32(255), u32(254))}, Val(u32(0xFEFF'FFFF))),
+        C({Vec(U32(0), U32(0), U32(0), U32(0))}, Val(U32(0x0000'0000))),
+        C({Vec(U32(2), U32(4), U32(6), U32(8))}, Val(U32(0x0806'0402))),
+        C({Vec(U32(255), U32(255), U32(255), U32(255))}, Val(U32(0xFFFF'FFFF))),
+        C({Vec(U32(254), U32(255), U32(256), U32(257))}, Val(U32(0xFFFF'FFFE))),
+        C({Vec(U32(65535), U32(65536), U32(255), U32(254))}, Val(U32(0xFEFF'FFFF))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -3073,24 +3073,24 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Unpack4xI8Cases() {
     return {
-        C({Val(u32(0x0000'0000))}, Vec(i32(0), i32(0), i32(0), i32(0))),
-        C({Val(u32(0x0102'0304))}, Vec(i32(4), i32(3), i32(2), i32(1))),
-        C({Val(u32(0xFCFD'FEFF))}, Vec(i32(-1), i32(-2), i32(-3), i32(-4))),
-        C({Val(u32(0x0403'02FF))}, Vec(i32(-1), i32(2), i32(3), i32(4))),
-        C({Val(u32(0x0403'FE01))}, Vec(i32(1), i32(-2), i32(3), i32(4))),
-        C({Val(u32(0x04FD'0201))}, Vec(i32(1), i32(2), i32(-3), i32(4))),
-        C({Val(u32(0xFC03'0201))}, Vec(i32(1), i32(2), i32(3), i32(-4))),
-        C({Val(u32(0xFCFD'FE01))}, Vec(i32(1), i32(-2), i32(-3), i32(-4))),
-        C({Val(u32(0xFCFD'02FF))}, Vec(i32(-1), i32(2), i32(-3), i32(-4))),
-        C({Val(u32(0xFC03'FEFF))}, Vec(i32(-1), i32(-2), i32(3), i32(-4))),
-        C({Val(u32(0x04FD'FEFF))}, Vec(i32(-1), i32(-2), i32(-3), i32(4))),
-        C({Val(u32(0x0403'FEFF))}, Vec(i32(-1), i32(-2), i32(3), i32(4))),
-        C({Val(u32(0x04FD'02FF))}, Vec(i32(-1), i32(2), i32(-3), i32(4))),
-        C({Val(u32(0xFC03'02FF))}, Vec(i32(-1), i32(2), i32(3), i32(-4))),
-        C({Val(u32(0x04FD'FE01))}, Vec(i32(1), i32(-2), i32(-3), i32(4))),
-        C({Val(u32(0xFC03'FE01))}, Vec(i32(1), i32(-2), i32(3), i32(-4))),
-        C({Val(u32(0xFCFD'0201))}, Vec(i32(1), i32(2), i32(-3), i32(-4))),
-        C({Val(u32(0x8081'7F7E))}, Vec(i32(126), i32(127), i32(-127), i32(-128))),
+        C({Val(U32(0x0000'0000))}, Vec(I32(0), I32(0), I32(0), I32(0))),
+        C({Val(U32(0x0102'0304))}, Vec(I32(4), I32(3), I32(2), I32(1))),
+        C({Val(U32(0xFCFD'FEFF))}, Vec(I32(-1), I32(-2), I32(-3), I32(-4))),
+        C({Val(U32(0x0403'02FF))}, Vec(I32(-1), I32(2), I32(3), I32(4))),
+        C({Val(U32(0x0403'FE01))}, Vec(I32(1), I32(-2), I32(3), I32(4))),
+        C({Val(U32(0x04FD'0201))}, Vec(I32(1), I32(2), I32(-3), I32(4))),
+        C({Val(U32(0xFC03'0201))}, Vec(I32(1), I32(2), I32(3), I32(-4))),
+        C({Val(U32(0xFCFD'FE01))}, Vec(I32(1), I32(-2), I32(-3), I32(-4))),
+        C({Val(U32(0xFCFD'02FF))}, Vec(I32(-1), I32(2), I32(-3), I32(-4))),
+        C({Val(U32(0xFC03'FEFF))}, Vec(I32(-1), I32(-2), I32(3), I32(-4))),
+        C({Val(U32(0x04FD'FEFF))}, Vec(I32(-1), I32(-2), I32(-3), I32(4))),
+        C({Val(U32(0x0403'FEFF))}, Vec(I32(-1), I32(-2), I32(3), I32(4))),
+        C({Val(U32(0x04FD'02FF))}, Vec(I32(-1), I32(2), I32(-3), I32(4))),
+        C({Val(U32(0xFC03'02FF))}, Vec(I32(-1), I32(2), I32(3), I32(-4))),
+        C({Val(U32(0x04FD'FE01))}, Vec(I32(1), I32(-2), I32(-3), I32(4))),
+        C({Val(U32(0xFC03'FE01))}, Vec(I32(1), I32(-2), I32(3), I32(-4))),
+        C({Val(U32(0xFCFD'0201))}, Vec(I32(1), I32(2), I32(-3), I32(-4))),
+        C({Val(U32(0x8081'7F7E))}, Vec(I32(126), I32(127), I32(-127), I32(-128))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //
@@ -3101,10 +3101,10 @@ INSTANTIATE_TEST_SUITE_P(  //
 
 std::vector<Case> Unpack4xU8Cases() {
     return {
-        C({Val(u32(0x0000'0000))}, Vec(u32(0), u32(0), u32(0), u32(0))),
-        C({Val(u32(0x0806'0402))}, Vec(u32(2), u32(4), u32(6), u32(8))),
-        C({Val(u32(0xFFFF'FFFF))}, Vec(u32(255), u32(255), u32(255), u32(255))),
-        C({Val(u32(0xFFFE'FDFC))}, Vec(u32(252), u32(253), u32(254), u32(255))),
+        C({Val(U32(0x0000'0000))}, Vec(U32(0), U32(0), U32(0), U32(0))),
+        C({Val(U32(0x0806'0402))}, Vec(U32(2), U32(4), U32(6), U32(8))),
+        C({Val(U32(0xFFFF'FFFF))}, Vec(U32(255), U32(255), U32(255), U32(255))),
+        C({Val(U32(0xFFFE'FDFC))}, Vec(U32(252), U32(253), U32(254), U32(255))),
     };
 }
 INSTANTIATE_TEST_SUITE_P(  //

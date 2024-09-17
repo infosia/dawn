@@ -85,8 +85,8 @@ TEST_F(IR_ReturnTest, Clone) {
     EXPECT_EQ(1u, new_ret->Args().Length());
 
     auto new_val = new_ret->Value()->As<Constant>()->Value();
-    ASSERT_TRUE(new_val->Is<core::constant::Scalar<i32>>());
-    EXPECT_EQ(1_i, new_val->As<core::constant::Scalar<i32>>()->ValueAs<i32>());
+    ASSERT_TRUE(new_val->Is<core::constant::Scalar<I32>>());
+    EXPECT_EQ(1_i, new_val->As<core::constant::Scalar<I32>>()->ValueAs<I32>());
 }
 
 TEST_F(IR_ReturnTest, CloneWithoutArgs) {

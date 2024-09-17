@@ -326,32 +326,32 @@ class Builder {
     /// Creates a ir::Constant for an i32 Scalar
     /// @param v the value
     /// @returns the new constant
-    ir::Constant* Constant(core::i32 v) { return Constant(ConstantValue(v)); }
+    ir::Constant* Constant(core::I32 v) { return Constant(ConstantValue(v)); }
 
     /// Creates a ir::Constant for an i8 Scalar
     /// @param v the value
     /// @returns the new constant
-    ir::Constant* Constant(core::i8 v) { return Constant(ConstantValue(v)); }
+    ir::Constant* Constant(core::I8 v) { return Constant(ConstantValue(v)); }
 
     /// Creates a ir::Constant for a u32 Scalar
     /// @param v the value
     /// @returns the new constant
-    ir::Constant* Constant(core::u32 v) { return Constant(ConstantValue(v)); }
+    ir::Constant* Constant(core::U32 v) { return Constant(ConstantValue(v)); }
 
     /// Creates a ir::Constant for a u8 Scalar
     /// @param v the value
     /// @returns the new constant
-    ir::Constant* Constant(core::u8 v) { return Constant(ConstantValue(v)); }
+    ir::Constant* Constant(core::U8 v) { return Constant(ConstantValue(v)); }
 
     /// Creates a ir::Constant for a f32 Scalar
     /// @param v the value
     /// @returns the new constant
-    ir::Constant* Constant(core::f32 v) { return Constant(ConstantValue(v)); }
+    ir::Constant* Constant(core::F32 v) { return Constant(ConstantValue(v)); }
 
     /// Creates a ir::Constant for a f16 Scalar
     /// @param v the value
     /// @returns the new constant
-    ir::Constant* Constant(core::f16 v) { return Constant(ConstantValue(v)); }
+    ir::Constant* Constant(core::F16 v) { return Constant(ConstantValue(v)); }
 
     /// Creates a ir::Constant for a bool Scalar
     /// @param v the value
@@ -373,32 +373,32 @@ class Builder {
     /// Creates a core::constant::Value for an i32 Scalar
     /// @param v the value
     /// @returns the new constant
-    const core::constant::Value* ConstantValue(core::i32 v) { return ir.constant_values.Get(v); }
+    const core::constant::Value* ConstantValue(core::I32 v) { return ir.constant_values.Get(v); }
 
     /// Creates a core::constant::Value for an i8 Scalar
     /// @param v the value
     /// @returns the new constant
-    const core::constant::Value* ConstantValue(core::i8 v) { return ir.constant_values.Get(v); }
+    const core::constant::Value* ConstantValue(core::I8 v) { return ir.constant_values.Get(v); }
 
     /// Creates a core::constant::Value for a u32 Scalar
     /// @param v the value
     /// @returns the new constant
-    const core::constant::Value* ConstantValue(core::u32 v) { return ir.constant_values.Get(v); }
+    const core::constant::Value* ConstantValue(core::U32 v) { return ir.constant_values.Get(v); }
 
     /// Creates a core::constant::Value for a u8 Scalar
     /// @param v the value
     /// @returns the new constant
-    const core::constant::Value* ConstantValue(core::u8 v) { return ir.constant_values.Get(v); }
+    const core::constant::Value* ConstantValue(core::U8 v) { return ir.constant_values.Get(v); }
 
     /// Creates a core::constant::Value for a f32 Scalar
     /// @param v the value
     /// @returns the new constant
-    const core::constant::Value* ConstantValue(core::f32 v) { return ir.constant_values.Get(v); }
+    const core::constant::Value* ConstantValue(core::F32 v) { return ir.constant_values.Get(v); }
 
     /// Creates a core::constant::Value for a f16 Scalar
     /// @param v the value
     /// @returns the new constant
-    const core::constant::Value* ConstantValue(core::f16 v) { return ir.constant_values.Get(v); }
+    const core::constant::Value* ConstantValue(core::F16 v) { return ir.constant_values.Get(v); }
 
     /// Creates a core::constant::Value for a bool Scalar
     /// @param v the value

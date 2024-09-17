@@ -63,17 +63,17 @@ constexpr uint32_t kMinF32BiasedExpForF16SubnormalNumber = 103;
 
 }  // namespace
 
-f16::type f16::Quantize(f16::type value) {
+F16::type F16::Quantize(F16::type value) {
     if (value > kHighestValue) {
-        return std::numeric_limits<f16::type>::infinity();
+        return std::numeric_limits<F16::type>::infinity();
     }
     if (value < kLowestValue) {
-        return -std::numeric_limits<f16::type>::infinity();
+        return -std::numeric_limits<F16::type>::infinity();
     }
 
-    // Below value must be within the finite range of a f16.
+    // Below value must be within the finite range of a F16.
     // Assert we use binary32 (i.e. float) as underlying type, which has 4 bytes.
-    static_assert(std::is_same<f16::type, float>());
+    static_assert(std::is_same<F16::type, float>());
 
     uint32_t u32 = tint::Bitcast<uint32_t>(value);
     if ((u32 & ~kF32SignMask) == 0) {
@@ -113,14 +113,14 @@ f16::type f16::Quantize(f16::type value) {
     // 2. We can decide whether a given normal f32 number v is in the set R, by looking at its
     // mantissa bits and biased exponent `e`. Recall that biased exponent e is unbiased exponent +
     // 127, and in the range of 1 to 254 for normal f32 number.
-    //   2.1. If e >= 143, i.e. abs(v) >= 2^16 > f16::kHighestValue = 0x1.ffcp15, v is larger than
+    //   2.1. If e >= 143, i.e. abs(v) >= 2^16 > F16::kHighestValue = 0x1.ffcp15, v is larger than
     //   any finite f16 value and can not be in set R. 2.2. If 142 >= e >= 113, or
-    //   f16::kHighestValue >= abs(v) >= f16::kSmallestValue = 2^-14, v falls in the range of normal
+    //   F16::kHighestValue >= abs(v) >= F16::kSmallestValue = 2^-14, v falls in the range of normal
     //   f16 values. In this case, v is in the set R iff the lowest 13 mantissa bits are all 0. (See
     //   below for proof)
     //     2.2.1. If we let v' be v with lowest 13 mantissa bits masked to 0, v' will be in set R
     //     and the largest one in set R that no larger than v. Such v' is the quantized value of v.
-    //   2.3. If 112 >= e >= 103, i.e. 2^-14 > abs(v) >= f16::kSmallestSubnormalValue = 2^-24, v
+    //   2.3. If 112 >= e >= 103, i.e. 2^-14 > abs(v) >= F16::kSmallestSubnormalValue = 2^-24, v
     //   falls in the range of subnormal f16 values. In this case, v is in the set R iff the lowest
     //   126-e mantissa bits are all 0. Notice that 126-e is in range 14 to 23, inclusive. (See
     //   below for proof)
@@ -262,12 +262,12 @@ f16::type f16::Quantize(f16::type value) {
         return value > 0 ? 0.0 : -0.0;
     }
 
-    return tint::Bitcast<f16::type>(u32);
+    return tint::Bitcast<F16::type>(u32);
 }
 
-uint16_t f16::BitsRepresentation() const {
+uint16_t F16::BitsRepresentation() const {
     // Assert we use binary32 (i.e. float) as underlying type, which has 4 bytes.
-    static_assert(std::is_same<f16::type, float>());
+    static_assert(std::is_same<F16::type, float>());
 
     // The stored value in f16 object must be already quantized, so it should be either NaN, +/-
     // Inf, or exactly representable by normal or subnormal f16.
@@ -345,21 +345,21 @@ uint16_t f16::BitsRepresentation() const {
 }
 
 // static
-core::Number<core::detail::NumberKindF16> f16::FromBits(uint16_t bits) {
+core::Number<core::detail::NumberKindF16> F16::FromBits(uint16_t bits) {
     // Assert we use binary32 (i.e. float) as underlying type, which has 4 bytes.
-    static_assert(std::is_same<f16::type, float>());
+    static_assert(std::is_same<F16::type, float>());
 
     if (bits == kF16PosInf) {
-        return f16(std::numeric_limits<f16::type>::infinity());
+        return F16(std::numeric_limits<F16::type>::infinity());
     }
     if (bits == kF16NegInf) {
-        return f16(-std::numeric_limits<f16::type>::infinity());
+        return F16(-std::numeric_limits<F16::type>::infinity());
     }
 
     auto f16_sign_bit = uint32_t(bits & kF16SignMask);
     // If none of the other bits are set we have a 0. If only the sign bit is set we have a -0.
     if ((bits & ~kF16SignMask) == 0) {
-        return f16(f16_sign_bit > 0 ? -0.f : 0.f);
+        return F16(f16_sign_bit > 0 ? -0.f : 0.f);
     }
 
     auto f16_mantissa = uint32_t(bits & kF16MantissaMask);
@@ -367,7 +367,7 @@ core::Number<core::detail::NumberKindF16> f16::FromBits(uint16_t bits) {
 
     // F16 NaN has all expoennt bits set and at least one mantissa bit set
     if (((f16_biased_exponent & kF16ExponentMask) == kF16ExponentMask) && f16_mantissa != 0) {
-        return f16(std::numeric_limits<f16::type>::quiet_NaN());
+        return F16(std::numeric_limits<F16::type>::quiet_NaN());
     }
 
     // Shift the exponent over to be a regular number.
@@ -410,7 +410,7 @@ core::Number<core::detail::NumberKindF16> f16::FromBits(uint16_t bits) {
     uint32_t val = f32_sign_bit | f32_biased_exponent | f32_mantissa;
 
     // Bitcast to a F32 and then store into the F16 Number
-    return f16(tint::Bitcast<f16::type>(val));
+    return F16(tint::Bitcast<F16::type>(val));
 }
 
 }  // namespace tint::core

@@ -65,8 +65,8 @@ TEST_F(IR_SwitchTest, Clone) {
     EXPECT_NE(switch_, new_switch);
 
     auto new_cond = new_switch->Condition()->As<Constant>()->Value();
-    ASSERT_TRUE(new_cond->Is<core::constant::Scalar<i32>>());
-    EXPECT_EQ(1_i, new_cond->As<core::constant::Scalar<i32>>()->ValueAs<i32>());
+    ASSERT_TRUE(new_cond->Is<core::constant::Scalar<I32>>());
+    EXPECT_EQ(1_i, new_cond->As<core::constant::Scalar<I32>>()->ValueAs<I32>());
 
     auto& cases = new_switch->Cases();
     ASSERT_EQ(2u, cases.Length());
@@ -80,8 +80,8 @@ TEST_F(IR_SwitchTest, Clone) {
         ASSERT_EQ(2u, case1.selectors.Length());
         EXPECT_EQ(nullptr, case1.selectors[0].val);
         auto val = case1.selectors[1].val->Value();
-        ASSERT_TRUE(val->Is<core::constant::Scalar<i32>>());
-        EXPECT_EQ(2_i, val->As<core::constant::Scalar<i32>>()->ValueAs<i32>());
+        ASSERT_TRUE(val->Is<core::constant::Scalar<I32>>());
+        EXPECT_EQ(2_i, val->As<core::constant::Scalar<I32>>()->ValueAs<I32>());
     }
 
     {
@@ -92,8 +92,8 @@ TEST_F(IR_SwitchTest, Clone) {
 
         ASSERT_EQ(1u, case2.selectors.Length());
         auto val = case2.selectors[0].val->Value();
-        ASSERT_TRUE(val->Is<core::constant::Scalar<i32>>());
-        EXPECT_EQ(3_i, val->As<core::constant::Scalar<i32>>()->ValueAs<i32>());
+        ASSERT_TRUE(val->Is<core::constant::Scalar<I32>>());
+        EXPECT_EQ(3_i, val->As<core::constant::Scalar<I32>>()->ValueAs<I32>());
     }
 }
 

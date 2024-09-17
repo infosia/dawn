@@ -38,6 +38,8 @@
 #include "src/tint/lang/core/interpolation_type.h"
 #include "src/tint/lang/core/number.h"
 #include "src/tint/lang/core/texel_format.h"
+#include "src/tint/lang/core/type/f32.h"
+#include "src/tint/lang/core/type/i32.h"
 #include "src/tint/lang/core/type/sampler_kind.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
 #include "src/tint/lang/wgsl/ast/alias.h"
@@ -990,7 +992,7 @@ class Builder {
                     source, builder->Sym("array"),
                     Vector{
                         Of<T>().expr,
-                        builder->Expr(builder->source_, core::u32(N)),
+                        builder->Expr(builder->source_, core::U32(N)),
                     },
                     std::move(attrs)))};
             }
@@ -1444,7 +1446,7 @@ class Builder {
     /// @param source the source information
     /// @param value the float value
     /// @return a 'f'-suffixed FloatLiteralExpression for the f32 value
-    const ast::FloatLiteralExpression* Expr(const Source& source, core::f32 value) {
+    const ast::FloatLiteralExpression* Expr(const Source& source, core::F32 value) {
         return create<ast::FloatLiteralExpression>(source, static_cast<double>(value.value),
                                                    ast::FloatLiteralExpression::Suffix::kF);
     }
@@ -1452,7 +1454,7 @@ class Builder {
     /// @param source the source information
     /// @param value the float value
     /// @return a 'h'-suffixed FloatLiteralExpression for the f16 value
-    const ast::FloatLiteralExpression* Expr(const Source& source, core::f16 value) {
+    const ast::FloatLiteralExpression* Expr(const Source& source, core::F16 value) {
         return create<ast::FloatLiteralExpression>(source, static_cast<double>(value.value),
                                                    ast::FloatLiteralExpression::Suffix::kH);
     }
@@ -1476,7 +1478,7 @@ class Builder {
     /// @param source the source information
     /// @param value the integer value
     /// @return a signed 'i'-suffixed IntLiteralExpression for the i32 value
-    const ast::IntLiteralExpression* Expr(const Source& source, core::i32 value) {
+    const ast::IntLiteralExpression* Expr(const Source& source, core::I32 value) {
         return create<ast::IntLiteralExpression>(source, value,
                                                  ast::IntLiteralExpression::Suffix::kI);
     }
@@ -1484,7 +1486,7 @@ class Builder {
     /// @param source the source information
     /// @param value the unsigned int value
     /// @return an unsigned 'u'-suffixed IntLiteralExpression for the u32 value
-    const ast::IntLiteralExpression* Expr(const Source& source, core::u32 value) {
+    const ast::IntLiteralExpression* Expr(const Source& source, core::U32 value) {
         return create<ast::IntLiteralExpression>(source, value,
                                                  ast::IntLiteralExpression::Suffix::kU);
     }
@@ -3544,6 +3546,14 @@ class Builder {
 //! @cond Doxygen_Suppress
 // Various template specializations for Builder::TypesBuilder::CToAST.
 template <>
+struct Builder::TypesBuilder::CToAST<core::type::I32> {
+    static ast::Type get(const Builder::TypesBuilder* t) { return t->i32(); }
+};
+template <>
+struct Builder::TypesBuilder::CToAST<core::type::F32> {
+    static ast::Type get(const Builder::TypesBuilder* t) { return t->f32(); }
+};
+template <>
 struct Builder::TypesBuilder::CToAST<core::AInt> {
     static ast::Type get(const Builder::TypesBuilder*) { return ast::Type{}; }
 };
@@ -3552,19 +3562,19 @@ struct Builder::TypesBuilder::CToAST<core::AFloat> {
     static ast::Type get(const Builder::TypesBuilder*) { return ast::Type{}; }
 };
 template <>
-struct Builder::TypesBuilder::CToAST<core::i32> {
+struct Builder::TypesBuilder::CToAST<core::I32> {
     static ast::Type get(const Builder::TypesBuilder* t) { return t->i32(); }
 };
 template <>
-struct Builder::TypesBuilder::CToAST<core::u32> {
+struct Builder::TypesBuilder::CToAST<core::U32> {
     static ast::Type get(const Builder::TypesBuilder* t) { return t->u32(); }
 };
 template <>
-struct Builder::TypesBuilder::CToAST<core::f32> {
+struct Builder::TypesBuilder::CToAST<core::F32> {
     static ast::Type get(const Builder::TypesBuilder* t) { return t->f32(); }
 };
 template <>
-struct Builder::TypesBuilder::CToAST<core::f16> {
+struct Builder::TypesBuilder::CToAST<core::F16> {
     static ast::Type get(const Builder::TypesBuilder* t) { return t->f16(); }
 };
 template <>

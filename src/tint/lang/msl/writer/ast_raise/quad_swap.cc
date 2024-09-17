@@ -133,7 +133,7 @@ struct QuadSwap::State {
             // | quadSwapDiagonal | 0b11 |
             // +------------------+------+
             auto* expr = b.Param("e", CreateASTTypeFor(ctx, type));
-            core::u32 rhs;
+            core::U32 rhs;
             switch (func) {
                 case wgsl::BuiltinFn::kQuadSwapX:
                     rhs = 0b1;

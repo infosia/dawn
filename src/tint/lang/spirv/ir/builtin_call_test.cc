@@ -51,10 +51,10 @@ TEST_F(IR_SpirvBuiltinCallTest, Clone) {
     EXPECT_EQ(2u, args.Length());
 
     auto* val0 = args[0]->As<core::ir::Constant>()->Value();
-    EXPECT_EQ(1_u, val0->As<core::constant::Scalar<core::u32>>()->ValueAs<core::u32>());
+    EXPECT_EQ(1_u, val0->As<core::constant::Scalar<core::U32>>()->ValueAs<core::U32>());
 
     auto* val1 = args[1]->As<core::ir::Constant>()->Value();
-    EXPECT_EQ(2_u, val1->As<core::constant::Scalar<core::u32>>()->ValueAs<core::u32>());
+    EXPECT_EQ(2_u, val1->As<core::constant::Scalar<core::U32>>()->ValueAs<core::U32>());
 }
 
 TEST_F(IR_SpirvBuiltinCallTest, CloneNoArgs) {

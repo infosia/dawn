@@ -36,12 +36,12 @@
 
 namespace tint::core::fluent_types {
 
-using f16 = tint::core::f16;
-using f32 = tint::core::f32;
-using i32 = tint::core::i32;
-using i8 = tint::core::i8;
-using u32 = tint::core::u32;
-using u8 = tint::core::u8;
+using f16 = tint::core::F16;
+using f32 = tint::core::F32;
+using i32 = tint::core::I32;
+using i8 = tint::core::I8;
+using u32 = tint::core::U32;
+using u8 = tint::core::U8;
 using AFloat = tint::core::AFloat;
 using AInt = tint::core::AInt;
 

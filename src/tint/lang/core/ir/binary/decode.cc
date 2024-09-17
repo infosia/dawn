@@ -697,13 +697,13 @@ struct Decoder {
             case pb::TypeBasic::bool_:
                 return mod_out_.Types().Get<bool>();
             case pb::TypeBasic::i32:
-                return mod_out_.Types().Get<i32>();
+                return mod_out_.Types().Get<I32>();
             case pb::TypeBasic::u32:
-                return mod_out_.Types().Get<u32>();
+                return mod_out_.Types().Get<U32>();
             case pb::TypeBasic::f32:
-                return mod_out_.Types().Get<f32>();
+                return mod_out_.Types().Get<F32>();
             case pb::TypeBasic::f16:
-                return mod_out_.Types().Get<f16>();
+                return mod_out_.Types().Get<F16>();
 
             case pb::TypeBasic::TypeBasic_INT_MIN_SENTINEL_DO_NOT_USE_:
             case pb::TypeBasic::TypeBasic_INT_MAX_SENTINEL_DO_NOT_USE_:

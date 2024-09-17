@@ -55,7 +55,7 @@ TEST_F(IR_HlslBuiltinCallTest, Clone) {
     EXPECT_EQ(1u, args.Length());
 
     auto* val0 = args[0]->As<core::ir::Constant>()->Value();
-    EXPECT_EQ(0_f, val0->As<core::constant::Scalar<core::f32>>()->ValueAs<core::f32>());
+    EXPECT_EQ(0_f, val0->As<core::constant::Scalar<core::F32>>()->ValueAs<core::F32>());
 }
 
 }  // namespace

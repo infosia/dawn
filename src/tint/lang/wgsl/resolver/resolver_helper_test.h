@@ -160,7 +160,7 @@ using alias3 = alias<TO, 3>;
 struct Scalar {
     /// The possible types of a scalar value.
     using Value =
-        std::variant<core::i32, core::u32, core::f32, core::f16, core::AInt, core::AFloat, bool>;
+        std::variant<core::I32, core::U32, core::F32, core::F16, core::AInt, core::AFloat, bool>;
 
     /// Constructor
     /// @param val the value used to construct this Scalar
@@ -261,9 +261,9 @@ struct DataType<bool> {
 
 /// Helper for building i32 types and expressions
 template <>
-struct DataType<core::i32> {
+struct DataType<core::I32> {
     /// The element type
-    using ElementType = core::i32;
+    using ElementType = core::I32;
 
     /// false as i32 is not a composite type
     static constexpr bool is_composite = false;
@@ -280,7 +280,7 @@ struct DataType<core::i32> {
     /// @param args args of size 1 with the i32 value to init with
     /// @return a new AST i32 literal value expression
     static inline const ast::Expression* Expr(ProgramBuilder& b, VectorRef<Scalar> args) {
-        return b.Expr(std::get<core::i32>(args[0].value));
+        return b.Expr(std::get<core::I32>(args[0].value));
     }
     /// @param b the ProgramBuilder
     /// @param v arg of type double that will be cast to i32.
@@ -294,9 +294,9 @@ struct DataType<core::i32> {
 
 /// Helper for building u32 types and expressions
 template <>
-struct DataType<core::u32> {
+struct DataType<core::U32> {
     /// The element type
-    using ElementType = core::u32;
+    using ElementType = core::U32;
 
     /// false as u32 is not a composite type
     static constexpr bool is_composite = false;
@@ -313,7 +313,7 @@ struct DataType<core::u32> {
     /// @param args args of size 1 with the u32 value to init with
     /// @return a new AST u32 literal value expression
     static inline const ast::Expression* Expr(ProgramBuilder& b, VectorRef<Scalar> args) {
-        return b.Expr(std::get<core::u32>(args[0].value));
+        return b.Expr(std::get<core::U32>(args[0].value));
     }
     /// @param b the ProgramBuilder
     /// @param v arg of type double that will be cast to u32.
@@ -327,9 +327,9 @@ struct DataType<core::u32> {
 
 /// Helper for building f32 types and expressions
 template <>
-struct DataType<core::f32> {
+struct DataType<core::F32> {
     /// The element type
-    using ElementType = core::f32;
+    using ElementType = core::F32;
 
     /// false as f32 is not a composite type
     static constexpr bool is_composite = false;
@@ -346,13 +346,13 @@ struct DataType<core::f32> {
     /// @param args args of size 1 with the f32 value to init with
     /// @return a new AST f32 literal value expression
     static inline const ast::Expression* Expr(ProgramBuilder& b, VectorRef<Scalar> args) {
-        return b.Expr(std::get<core::f32>(args[0].value));
+        return b.Expr(std::get<core::F32>(args[0].value));
     }
     /// @param b the ProgramBuilder
     /// @param v arg of type double that will be cast to f32.
     /// @return a new AST f32 literal value expression
     static inline const ast::Expression* ExprFromDouble(ProgramBuilder& b, double v) {
-        return Expr(b, Vector<Scalar, 1>{static_cast<core::f32>(v)});
+        return Expr(b, Vector<Scalar, 1>{static_cast<core::F32>(v)});
     }
     /// @returns the WGSL name for the type
     static inline std::string Name() { return "f32"; }
@@ -360,9 +360,9 @@ struct DataType<core::f32> {
 
 /// Helper for building f16 types and expressions
 template <>
-struct DataType<core::f16> {
+struct DataType<core::F16> {
     /// The element type
-    using ElementType = core::f16;
+    using ElementType = core::F16;
 
     /// false as f16 is not a composite type
     static constexpr bool is_composite = false;
@@ -379,7 +379,7 @@ struct DataType<core::f16> {
     /// @param args args of size 1 with the f16 value to init with
     /// @return a new AST f16 literal value expression
     static inline const ast::Expression* Expr(ProgramBuilder& b, VectorRef<Scalar> args) {
-        return b.Expr(std::get<core::f16>(args[0].value));
+        return b.Expr(std::get<core::F16>(args[0].value));
     }
     /// @param b the ProgramBuilder
     /// @param v arg of type double that will be cast to f16.
@@ -683,7 +683,7 @@ struct DataType<core::fluent_types::array<T, N>> {
     /// @return a new AST array type
     static inline ast::Type AST(ProgramBuilder& b) {
         if (auto ast = DataType<T>::AST(b)) {
-            return b.ty.array(ast, core::u32(N));
+            return b.ty.array(ast, core::U32(N));
         }
         return b.ty.array<core::fluent_types::Infer>();
     }

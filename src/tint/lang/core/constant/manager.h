@@ -114,27 +114,27 @@ class Manager final {
 
     /// @param value the constant value
     /// @return a Scalar holding the i32 value @p value
-    const Scalar<i32>* Get(i32 value);
+    const Scalar<I32>* Get(I32 value);
 
     /// @param value the constant value
     /// @return a Scalar holding the u32 value @p value
-    const Scalar<u32>* Get(u32 value);
+    const Scalar<U32>* Get(U32 value);
 
     /// @param value the constant value
     /// @return a Scalar holding the i8 value @p value
-    const Scalar<i8>* Get(i8 value);
+    const Scalar<I8>* Get(I8 value);
 
     /// @param value the constant value
     /// @return a Scalar holding the u8 value @p value
-    const Scalar<u8>* Get(u8 value);
+    const Scalar<U8>* Get(U8 value);
 
     /// @param value the constant value
     /// @return a Scalar holding the f32 value @p value
-    const Scalar<f32>* Get(f32 value);
+    const Scalar<F32>* Get(F32 value);
 
     /// @param value the constant value
     /// @return a Scalar holding the f16 value @p value
-    const Scalar<f16>* Get(f16 value);
+    const Scalar<F16>* Get(F16 value);
 
     /// @param value the constant value
     /// @return a Scalar holding the bool value @p value

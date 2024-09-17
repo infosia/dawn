@@ -61,7 +61,7 @@ TEST_F(ManagerTest, GetUnregistered) {
     constant::Manager cm;
 
     auto* c = cm.Get(1_i);
-    static_assert(std::is_same_v<const Scalar<i32>*, decltype(c)>);
+    static_assert(std::is_same_v<const Scalar<I32>*, decltype(c)>);
     ASSERT_NE(c, nullptr);
 }
 
@@ -69,11 +69,11 @@ TEST_F(ManagerTest, GetSameConstantReturnsSamePtr) {
     constant::Manager cm;
 
     auto* c1 = cm.Get(1_i);
-    static_assert(std::is_same_v<const Scalar<i32>*, decltype(c1)>);
+    static_assert(std::is_same_v<const Scalar<I32>*, decltype(c1)>);
     ASSERT_NE(c1, nullptr);
 
     auto* c2 = cm.Get(1_i);
-    static_assert(std::is_same_v<const Scalar<i32>*, decltype(c2)>);
+    static_assert(std::is_same_v<const Scalar<I32>*, decltype(c2)>);
     EXPECT_EQ(c1, c2);
     EXPECT_EQ(c1->Type(), c2->Type());
 }
@@ -82,11 +82,11 @@ TEST_F(ManagerTest, GetDifferentTypeReturnsDifferentPtr) {
     constant::Manager cm;
 
     auto* c1 = cm.Get(1_i);
-    static_assert(std::is_same_v<const Scalar<i32>*, decltype(c1)>);
+    static_assert(std::is_same_v<const Scalar<I32>*, decltype(c1)>);
     ASSERT_NE(c1, nullptr);
 
     auto* c2 = cm.Get(1_u);
-    static_assert(std::is_same_v<const Scalar<u32>*, decltype(c2)>);
+    static_assert(std::is_same_v<const Scalar<U32>*, decltype(c2)>);
     EXPECT_NE(static_cast<const Value*>(c1), static_cast<const Value*>(c2));
     EXPECT_NE(c1->Type(), c2->Type());
 }
@@ -95,11 +95,11 @@ TEST_F(ManagerTest, GetDifferentValueReturnsDifferentPtr) {
     constant::Manager cm;
 
     auto* c1 = cm.Get(1_i);
-    static_assert(std::is_same_v<const Scalar<i32>*, decltype(c1)>);
+    static_assert(std::is_same_v<const Scalar<I32>*, decltype(c1)>);
     ASSERT_NE(c1, nullptr);
 
     auto* c2 = cm.Get(2_i);
-    static_assert(std::is_same_v<const Scalar<i32>*, decltype(c2)>);
+    static_assert(std::is_same_v<const Scalar<I32>*, decltype(c2)>);
     ASSERT_NE(c2, nullptr);
     EXPECT_NE(c1, c2);
     EXPECT_EQ(c1->Type(), c2->Type());
@@ -109,7 +109,7 @@ TEST_F(ManagerTest, Get_i32) {
     constant::Manager cm;
 
     auto* c = cm.Get(1_i);
-    static_assert(std::is_same_v<const Scalar<i32>*, decltype(c)>);
+    static_assert(std::is_same_v<const Scalar<I32>*, decltype(c)>);
     ASSERT_TRUE(Is<core::type::I32>(c->Type()));
     EXPECT_EQ(c->value, 1_i);
 }
@@ -117,17 +117,17 @@ TEST_F(ManagerTest, Get_i32) {
 TEST_F(ManagerTest, Get_i8) {
     constant::Manager cm;
 
-    auto* c = cm.Get(i8(1));
-    static_assert(std::is_same_v<const Scalar<i8>*, decltype(c)>);
+    auto* c = cm.Get(I8(1));
+    static_assert(std::is_same_v<const Scalar<I8>*, decltype(c)>);
     ASSERT_TRUE(Is<core::type::I8>(c->Type()));
-    EXPECT_EQ(c->value, i8(1));
+    EXPECT_EQ(c->value, I8(1));
 }
 
 TEST_F(ManagerTest, Get_u32) {
     constant::Manager cm;
 
     auto* c = cm.Get(1_u);
-    static_assert(std::is_same_v<const Scalar<u32>*, decltype(c)>);
+    static_assert(std::is_same_v<const Scalar<U32>*, decltype(c)>);
     ASSERT_TRUE(Is<core::type::U32>(c->Type()));
     EXPECT_EQ(c->value, 1_u);
 }
@@ -135,17 +135,17 @@ TEST_F(ManagerTest, Get_u32) {
 TEST_F(ManagerTest, Get_u8) {
     constant::Manager cm;
 
-    auto* c = cm.Get(u8(1));
-    static_assert(std::is_same_v<const Scalar<u8>*, decltype(c)>);
+    auto* c = cm.Get(U8(1));
+    static_assert(std::is_same_v<const Scalar<U8>*, decltype(c)>);
     ASSERT_TRUE(Is<core::type::U8>(c->Type()));
-    EXPECT_EQ(c->value, u8(1));
+    EXPECT_EQ(c->value, U8(1));
 }
 
 TEST_F(ManagerTest, Get_f32) {
     constant::Manager cm;
 
     auto* c = cm.Get(1_f);
-    static_assert(std::is_same_v<const Scalar<f32>*, decltype(c)>);
+    static_assert(std::is_same_v<const Scalar<F32>*, decltype(c)>);
     ASSERT_TRUE(Is<core::type::F32>(c->Type()));
     EXPECT_EQ(c->value, 1_f);
 }
@@ -154,7 +154,7 @@ TEST_F(ManagerTest, Get_f16) {
     constant::Manager cm;
 
     auto* c = cm.Get(1_h);
-    static_assert(std::is_same_v<const Scalar<f16>*, decltype(c)>);
+    static_assert(std::is_same_v<const Scalar<F16>*, decltype(c)>);
     ASSERT_TRUE(Is<core::type::F16>(c->Type()));
     EXPECT_EQ(c->value, 1_h);
 }

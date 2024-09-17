@@ -197,13 +197,13 @@ class SpirvWriterTestHelperBase : public BASE {
             case kBool:
                 return b.Constant(true);
             case kI32:
-                return b.Constant(core::i32(value));
+                return b.Constant(core::I32(value));
             case kU32:
-                return b.Constant(core::u32(value));
+                return b.Constant(core::U32(value));
             case kF32:
-                return b.Constant(core::f32(value));
+                return b.Constant(core::F32(value));
             case kF16:
-                return b.Constant(core::f16(value));
+                return b.Constant(core::F16(value));
         }
         return nullptr;
     }

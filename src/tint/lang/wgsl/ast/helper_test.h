@@ -125,31 +125,31 @@ void CheckIdentifier(const Identifier* ident, const TemplatedIdentifierMatcher<A
             EXPECT_EQ(got_arg->As<IntLiteralExpression>()->suffix,
                       IntLiteralExpression::Suffix::kNone);
             EXPECT_EQ(core::AInt(got_arg->As<IntLiteralExpression>()->value), expected_arg);
-        } else if constexpr (std::is_same_v<T, core::i32>) {
+        } else if constexpr (std::is_same_v<T, core::I32>) {
             ASSERT_TRUE(got_arg->Is<IntLiteralExpression>());
             EXPECT_EQ(got_arg->As<IntLiteralExpression>()->suffix,
                       IntLiteralExpression::Suffix::kI);
-            EXPECT_EQ(core::i32(got_arg->As<IntLiteralExpression>()->value), expected_arg);
-        } else if constexpr (std::is_same_v<T, core::u32>) {
+            EXPECT_EQ(core::I32(got_arg->As<IntLiteralExpression>()->value), expected_arg);
+        } else if constexpr (std::is_same_v<T, core::U32>) {
             ASSERT_TRUE(got_arg->Is<IntLiteralExpression>());
             EXPECT_EQ(got_arg->As<IntLiteralExpression>()->suffix,
                       IntLiteralExpression::Suffix::kU);
-            EXPECT_EQ(core::u32(got_arg->As<IntLiteralExpression>()->value), expected_arg);
+            EXPECT_EQ(core::U32(got_arg->As<IntLiteralExpression>()->value), expected_arg);
         } else if constexpr (std::is_same_v<T, core::AFloat>) {
             ASSERT_TRUE(got_arg->Is<FloatLiteralExpression>());
             EXPECT_EQ(got_arg->As<FloatLiteralExpression>()->suffix,
                       FloatLiteralExpression::Suffix::kNone);
             EXPECT_EQ(core::AFloat(got_arg->As<FloatLiteralExpression>()->value), expected_arg);
-        } else if constexpr (std::is_same_v<T, core::f32>) {
+        } else if constexpr (std::is_same_v<T, core::F32>) {
             ASSERT_TRUE(got_arg->Is<FloatLiteralExpression>());
             EXPECT_EQ(got_arg->As<FloatLiteralExpression>()->suffix,
                       FloatLiteralExpression::Suffix::kF);
-            EXPECT_EQ(core::f32(got_arg->As<FloatLiteralExpression>()->value), expected_arg);
-        } else if constexpr (std::is_same_v<T, core::f16>) {
+            EXPECT_EQ(core::F32(got_arg->As<FloatLiteralExpression>()->value), expected_arg);
+        } else if constexpr (std::is_same_v<T, core::F16>) {
             ASSERT_TRUE(got_arg->Is<FloatLiteralExpression>());
             EXPECT_EQ(got_arg->As<FloatLiteralExpression>()->suffix,
                       FloatLiteralExpression::Suffix::kH);
-            EXPECT_EQ(core::f16(got_arg->As<FloatLiteralExpression>()->value), expected_arg);
+            EXPECT_EQ(core::F16(got_arg->As<FloatLiteralExpression>()->value), expected_arg);
         } else {
             FAIL() << "unhandled expected_args type";
         }

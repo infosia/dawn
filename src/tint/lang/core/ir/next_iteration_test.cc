@@ -68,10 +68,10 @@ TEST_F(IR_NextIterationTest, Clone) {
     EXPECT_EQ(2u, args.Length());
 
     auto* val0 = args[0]->As<Constant>()->Value();
-    EXPECT_EQ(1_u, val0->As<core::constant::Scalar<u32>>()->ValueAs<u32>());
+    EXPECT_EQ(1_u, val0->As<core::constant::Scalar<U32>>()->ValueAs<U32>());
 
     auto* val1 = args[1]->As<Constant>()->Value();
-    EXPECT_EQ(2_u, val1->As<core::constant::Scalar<u32>>()->ValueAs<u32>());
+    EXPECT_EQ(2_u, val1->As<core::constant::Scalar<U32>>()->ValueAs<U32>());
 }
 
 TEST_F(IR_NextIterationTest, CloneNoArgs) {

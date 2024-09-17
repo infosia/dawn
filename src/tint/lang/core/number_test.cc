@@ -153,110 +153,110 @@ TEST(NumberTest, Inequality) {
 TEST(NumberTest, CheckedConvertIdentity) {
     EXPECT_EQ(CheckedConvert<AInt>(0_a), 0_a);
     EXPECT_EQ(CheckedConvert<AFloat>(0_a), 0.0_a);
-    EXPECT_EQ(CheckedConvert<i32>(0_i), 0_i);
-    EXPECT_EQ(CheckedConvert<i8>(i8(0)), i8(0));
-    EXPECT_EQ(CheckedConvert<u32>(0_u), 0_u);
-    EXPECT_EQ(CheckedConvert<u8>(u8(0)), u8(0));
-    EXPECT_EQ(CheckedConvert<f32>(0_f), 0_f);
-    EXPECT_EQ(CheckedConvert<f16>(0_h), 0_h);
+    EXPECT_EQ(CheckedConvert<I32>(0_i), 0_i);
+    EXPECT_EQ(CheckedConvert<I8>(I8(0)), I8(0));
+    EXPECT_EQ(CheckedConvert<U32>(0_u), 0_u);
+    EXPECT_EQ(CheckedConvert<U8>(U8(0)), U8(0));
+    EXPECT_EQ(CheckedConvert<F32>(0_f), 0_f);
+    EXPECT_EQ(CheckedConvert<F16>(0_h), 0_h);
 
     EXPECT_EQ(CheckedConvert<AInt>(1_a), 1_a);
     EXPECT_EQ(CheckedConvert<AFloat>(1_a), 1.0_a);
-    EXPECT_EQ(CheckedConvert<i32>(1_i), 1_i);
-    EXPECT_EQ(CheckedConvert<i8>(i8(1)), i8(1));
-    EXPECT_EQ(CheckedConvert<u32>(1_u), 1_u);
-    EXPECT_EQ(CheckedConvert<u8>(u8(1)), u8(1));
-    EXPECT_EQ(CheckedConvert<f32>(1_f), 1_f);
-    EXPECT_EQ(CheckedConvert<f16>(1_h), 1_h);
+    EXPECT_EQ(CheckedConvert<I32>(1_i), 1_i);
+    EXPECT_EQ(CheckedConvert<I8>(I8(1)), I8(1));
+    EXPECT_EQ(CheckedConvert<U32>(1_u), 1_u);
+    EXPECT_EQ(CheckedConvert<U8>(U8(1)), U8(1));
+    EXPECT_EQ(CheckedConvert<F32>(1_f), 1_f);
+    EXPECT_EQ(CheckedConvert<F16>(1_h), 1_h);
 }
 
 TEST(NumberTest, CheckedConvertLargestValue) {
-    EXPECT_EQ(CheckedConvert<i32>(AInt(i32::Highest())), i32::Highest());
-    EXPECT_EQ(CheckedConvert<i8>(AInt(i8::Highest())), i8::Highest());
-    EXPECT_EQ(CheckedConvert<u32>(AInt(u32::Highest())), u32::Highest());
-    EXPECT_EQ(CheckedConvert<u32>(i32::Highest()), u32(i32::Highest()));
-    EXPECT_EQ(CheckedConvert<u8>(AInt(u8::Highest())), u8::Highest());
-    EXPECT_EQ(CheckedConvert<f32>(AFloat(f32::Highest())), f32::Highest());
-    EXPECT_EQ(CheckedConvert<f16>(AFloat(f16::Highest())), f16::Highest());
+    EXPECT_EQ(CheckedConvert<I32>(AInt(I32::Highest())), I32::Highest());
+    EXPECT_EQ(CheckedConvert<I8>(AInt(I8::Highest())), I8::Highest());
+    EXPECT_EQ(CheckedConvert<U32>(AInt(U32::Highest())), U32::Highest());
+    EXPECT_EQ(CheckedConvert<U32>(I32::Highest()), U32(I32::Highest()));
+    EXPECT_EQ(CheckedConvert<U8>(AInt(U8::Highest())), U8::Highest());
+    EXPECT_EQ(CheckedConvert<F32>(AFloat(F32::Highest())), F32::Highest());
+    EXPECT_EQ(CheckedConvert<F16>(AFloat(F16::Highest())), F16::Highest());
 }
 
 TEST(NumberTest, CheckedConvertLowestValue) {
-    EXPECT_EQ(CheckedConvert<i32>(AInt(i32::Lowest())), i32::Lowest());
-    EXPECT_EQ(CheckedConvert<i8>(AInt(i8::Lowest())), i8::Lowest());
-    EXPECT_EQ(CheckedConvert<u32>(AInt(u32::Lowest())), u32::Lowest());
-    EXPECT_EQ(CheckedConvert<u8>(AInt(u8::Lowest())), u8::Lowest());
-    EXPECT_EQ(CheckedConvert<f32>(AFloat(f32::Lowest())), f32::Lowest());
-    EXPECT_EQ(CheckedConvert<f16>(AFloat(f16::Lowest())), f16::Lowest());
+    EXPECT_EQ(CheckedConvert<I32>(AInt(I32::Lowest())), I32::Lowest());
+    EXPECT_EQ(CheckedConvert<I8>(AInt(I8::Lowest())), I8::Lowest());
+    EXPECT_EQ(CheckedConvert<U32>(AInt(U32::Lowest())), U32::Lowest());
+    EXPECT_EQ(CheckedConvert<U8>(AInt(U8::Lowest())), U8::Lowest());
+    EXPECT_EQ(CheckedConvert<F32>(AFloat(F32::Lowest())), F32::Lowest());
+    EXPECT_EQ(CheckedConvert<F16>(AFloat(F16::Lowest())), F16::Lowest());
 }
 
 TEST(NumberTest, CheckedConvertSmallestValue) {
-    EXPECT_EQ(CheckedConvert<i32>(AInt(0)), i32(0));
-    EXPECT_EQ(CheckedConvert<i8>(AInt(0)), i8(0));
-    EXPECT_EQ(CheckedConvert<u32>(AInt(0)), u32(0));
-    EXPECT_EQ(CheckedConvert<u8>(AInt(0)), u8(0));
-    EXPECT_EQ(CheckedConvert<f32>(AFloat(f32::Smallest())), f32::Smallest());
-    EXPECT_EQ(CheckedConvert<f16>(AFloat(f16::Smallest())), f16::Smallest());
+    EXPECT_EQ(CheckedConvert<I32>(AInt(0)), I32(0));
+    EXPECT_EQ(CheckedConvert<I8>(AInt(0)), I8(0));
+    EXPECT_EQ(CheckedConvert<U32>(AInt(0)), U32(0));
+    EXPECT_EQ(CheckedConvert<U8>(AInt(0)), U8(0));
+    EXPECT_EQ(CheckedConvert<F32>(AFloat(F32::Smallest())), F32::Smallest());
+    EXPECT_EQ(CheckedConvert<F16>(AFloat(F16::Smallest())), F16::Smallest());
 }
 
 TEST(NumberTest, CheckedConvertExceedsPositiveLimit) {
-    EXPECT_EQ(CheckedConvert<i32>(AInt(static_cast<int64_t>(i32::Highest()) + 1)),
+    EXPECT_EQ(CheckedConvert<I32>(AInt(static_cast<int64_t>(I32::Highest()) + 1)),
               ConversionFailure::kExceedsPositiveLimit);
-    EXPECT_EQ(CheckedConvert<i8>(AInt(static_cast<int64_t>(i8::Highest()) + 1)),
+    EXPECT_EQ(CheckedConvert<I8>(AInt(static_cast<int64_t>(I8::Highest()) + 1)),
               ConversionFailure::kExceedsPositiveLimit);
-    EXPECT_EQ(CheckedConvert<u32>(AInt(static_cast<uint64_t>(u32::Highest()) + 1)),
+    EXPECT_EQ(CheckedConvert<U32>(AInt(static_cast<uint64_t>(U32::Highest()) + 1)),
               ConversionFailure::kExceedsPositiveLimit);
-    EXPECT_EQ(CheckedConvert<u8>(AInt(static_cast<uint64_t>(u8::Highest()) + 1)),
+    EXPECT_EQ(CheckedConvert<U8>(AInt(static_cast<uint64_t>(U8::Highest()) + 1)),
               ConversionFailure::kExceedsPositiveLimit);
-    EXPECT_EQ(CheckedConvert<i32>(u32::Highest()), ConversionFailure::kExceedsPositiveLimit);
-    EXPECT_EQ(CheckedConvert<i32>(u32(0x80000000)), ConversionFailure::kExceedsPositiveLimit);
-    EXPECT_EQ(CheckedConvert<i8>(u8::Highest()), ConversionFailure::kExceedsPositiveLimit);
-    EXPECT_EQ(CheckedConvert<i8>(u8(0x80)), ConversionFailure::kExceedsPositiveLimit);
-    EXPECT_EQ(CheckedConvert<u32>(f32::Highest()), u32::Highest());
-    EXPECT_EQ(CheckedConvert<u8>(f32::Highest()), u8::Highest());
-    EXPECT_EQ(CheckedConvert<i32>(f32::Highest()), i32::Highest());
-    EXPECT_EQ(CheckedConvert<i8>(f32::Highest()), i8::Highest());
-    EXPECT_EQ(CheckedConvert<u32>(AFloat::Highest()), u32::Highest());
-    EXPECT_EQ(CheckedConvert<u8>(AFloat::Highest()), u8::Highest());
-    EXPECT_EQ(CheckedConvert<i32>(AFloat::Highest()), i32::Highest());
-    EXPECT_EQ(CheckedConvert<i8>(AFloat::Highest()), i8::Highest());
-    EXPECT_EQ(CheckedConvert<f32>(AFloat(kHighestF32NextULP)),
+    EXPECT_EQ(CheckedConvert<I32>(U32::Highest()), ConversionFailure::kExceedsPositiveLimit);
+    EXPECT_EQ(CheckedConvert<I32>(U32(0x80000000)), ConversionFailure::kExceedsPositiveLimit);
+    EXPECT_EQ(CheckedConvert<I8>(U8::Highest()), ConversionFailure::kExceedsPositiveLimit);
+    EXPECT_EQ(CheckedConvert<I8>(U8(0x80)), ConversionFailure::kExceedsPositiveLimit);
+    EXPECT_EQ(CheckedConvert<U32>(F32::Highest()), U32::Highest());
+    EXPECT_EQ(CheckedConvert<U8>(F32::Highest()), U8::Highest());
+    EXPECT_EQ(CheckedConvert<I32>(F32::Highest()), I32::Highest());
+    EXPECT_EQ(CheckedConvert<I8>(F32::Highest()), I8::Highest());
+    EXPECT_EQ(CheckedConvert<U32>(AFloat::Highest()), U32::Highest());
+    EXPECT_EQ(CheckedConvert<U8>(AFloat::Highest()), U8::Highest());
+    EXPECT_EQ(CheckedConvert<I32>(AFloat::Highest()), I32::Highest());
+    EXPECT_EQ(CheckedConvert<I8>(AFloat::Highest()), I8::Highest());
+    EXPECT_EQ(CheckedConvert<F32>(AFloat(kHighestF32NextULP)),
               ConversionFailure::kExceedsPositiveLimit);
-    EXPECT_EQ(CheckedConvert<f16>(AFloat(kHighestF16NextULP)),
+    EXPECT_EQ(CheckedConvert<F16>(AFloat(kHighestF16NextULP)),
               ConversionFailure::kExceedsPositiveLimit);
 }
 
 TEST(NumberTest, CheckedConvertExceedsNegativeLimit) {
-    EXPECT_EQ(CheckedConvert<i32>(AInt(static_cast<int64_t>(i32::Lowest()) - 1)),
+    EXPECT_EQ(CheckedConvert<I32>(AInt(static_cast<int64_t>(I32::Lowest()) - 1)),
               ConversionFailure::kExceedsNegativeLimit);
-    EXPECT_EQ(CheckedConvert<i8>(AInt(static_cast<int64_t>(i8::Lowest()) - 1)),
+    EXPECT_EQ(CheckedConvert<I8>(AInt(static_cast<int64_t>(I8::Lowest()) - 1)),
               ConversionFailure::kExceedsNegativeLimit);
-    EXPECT_EQ(CheckedConvert<u32>(AInt(static_cast<uint64_t>(u32::Lowest()) - 1)),
+    EXPECT_EQ(CheckedConvert<U32>(AInt(static_cast<uint64_t>(U32::Lowest()) - 1)),
               ConversionFailure::kExceedsNegativeLimit);
-    EXPECT_EQ(CheckedConvert<u8>(AInt(static_cast<uint64_t>(u8::Lowest()) - 1)),
+    EXPECT_EQ(CheckedConvert<U8>(AInt(static_cast<uint64_t>(U8::Lowest()) - 1)),
               ConversionFailure::kExceedsNegativeLimit);
-    EXPECT_EQ(CheckedConvert<u32>(i32(-1)), ConversionFailure::kExceedsNegativeLimit);
-    EXPECT_EQ(CheckedConvert<u32>(i32::Lowest()), ConversionFailure::kExceedsNegativeLimit);
-    EXPECT_EQ(CheckedConvert<u32>(f32::Lowest()), u32::Lowest());
-    EXPECT_EQ(CheckedConvert<u8>(i8(-1)), ConversionFailure::kExceedsNegativeLimit);
-    EXPECT_EQ(CheckedConvert<u8>(i8::Lowest()), ConversionFailure::kExceedsNegativeLimit);
-    EXPECT_EQ(CheckedConvert<u8>(f32::Lowest()), u8::Lowest());
-    EXPECT_EQ(CheckedConvert<i32>(f32::Lowest()), i32::Lowest());
-    EXPECT_EQ(CheckedConvert<i8>(f32::Lowest()), i8::Lowest());
-    EXPECT_EQ(CheckedConvert<u32>(AFloat::Lowest()), u32::Lowest());
-    EXPECT_EQ(CheckedConvert<u8>(AFloat::Lowest()), u8::Lowest());
-    EXPECT_EQ(CheckedConvert<i32>(AFloat::Lowest()), i32::Lowest());
-    EXPECT_EQ(CheckedConvert<i8>(AFloat::Lowest()), i8::Lowest());
-    EXPECT_EQ(CheckedConvert<f32>(AFloat(kLowestF32NextULP)),
+    EXPECT_EQ(CheckedConvert<U32>(I32(-1)), ConversionFailure::kExceedsNegativeLimit);
+    EXPECT_EQ(CheckedConvert<U32>(I32::Lowest()), ConversionFailure::kExceedsNegativeLimit);
+    EXPECT_EQ(CheckedConvert<U32>(F32::Lowest()), U32::Lowest());
+    EXPECT_EQ(CheckedConvert<U8>(I8(-1)), ConversionFailure::kExceedsNegativeLimit);
+    EXPECT_EQ(CheckedConvert<U8>(I8::Lowest()), ConversionFailure::kExceedsNegativeLimit);
+    EXPECT_EQ(CheckedConvert<U8>(F32::Lowest()), U8::Lowest());
+    EXPECT_EQ(CheckedConvert<I32>(F32::Lowest()), I32::Lowest());
+    EXPECT_EQ(CheckedConvert<I8>(F32::Lowest()), I8::Lowest());
+    EXPECT_EQ(CheckedConvert<U32>(AFloat::Lowest()), U32::Lowest());
+    EXPECT_EQ(CheckedConvert<U8>(AFloat::Lowest()), U8::Lowest());
+    EXPECT_EQ(CheckedConvert<I32>(AFloat::Lowest()), I32::Lowest());
+    EXPECT_EQ(CheckedConvert<I8>(AFloat::Lowest()), I8::Lowest());
+    EXPECT_EQ(CheckedConvert<F32>(AFloat(kLowestF32NextULP)),
               ConversionFailure::kExceedsNegativeLimit);
-    EXPECT_EQ(CheckedConvert<f16>(AFloat(kLowestF16NextULP)),
+    EXPECT_EQ(CheckedConvert<F16>(AFloat(kLowestF16NextULP)),
               ConversionFailure::kExceedsNegativeLimit);
 }
 
 TEST(NumberTest, CheckedConvertSubnormals) {
-    EXPECT_EQ(CheckedConvert<f32>(AFloat(kHighestF32Subnormal)), f32(kHighestF32Subnormal));
-    EXPECT_EQ(CheckedConvert<f16>(AFloat(kHighestF16Subnormal)), f16(kHighestF16Subnormal));
-    EXPECT_EQ(CheckedConvert<f32>(AFloat(-kHighestF32Subnormal)), f32(-kHighestF32Subnormal));
-    EXPECT_EQ(CheckedConvert<f16>(AFloat(-kHighestF16Subnormal)), f16(-kHighestF16Subnormal));
+    EXPECT_EQ(CheckedConvert<F32>(AFloat(kHighestF32Subnormal)), F32(kHighestF32Subnormal));
+    EXPECT_EQ(CheckedConvert<F16>(AFloat(kHighestF16Subnormal)), F16(kHighestF16Subnormal));
+    EXPECT_EQ(CheckedConvert<F32>(AFloat(-kHighestF32Subnormal)), F32(-kHighestF32Subnormal));
+    EXPECT_EQ(CheckedConvert<F16>(AFloat(-kHighestF16Subnormal)), F16(-kHighestF16Subnormal));
 }
 
 // Test cases for f16 subnormal quantization and BitsRepresentation.
@@ -310,9 +310,9 @@ TEST_P(NumberF16Test, QuantizeF16) {
     SCOPED_TRACE(ss.str());
 
     if (std::isnan(quantized_value)) {
-        EXPECT_TRUE(std::isnan(f16(input_value)));
+        EXPECT_TRUE(std::isnan(F16(input_value)));
     } else {
-        EXPECT_EQ(f16(input_value), quantized_value);
+        EXPECT_EQ(F16(input_value), quantized_value);
     }
 }
 
@@ -326,7 +326,7 @@ TEST_P(NumberF16Test, BitsRepresentation) {
        << representation;
     SCOPED_TRACE(ss.str());
 
-    EXPECT_EQ(f16(input_value).BitsRepresentation(), representation);
+    EXPECT_EQ(F16(input_value).BitsRepresentation(), representation);
 }
 
 TEST_P(NumberF16Test, FromBits) {
@@ -339,9 +339,9 @@ TEST_P(NumberF16Test, FromBits) {
     SCOPED_TRACE(ss.str());
 
     if (std::isnan(input_value)) {
-        EXPECT_TRUE(std::isnan(f16::FromBits(representation)));
+        EXPECT_TRUE(std::isnan(F16::FromBits(representation)));
     } else {
-        EXPECT_EQ(f16::FromBits(representation), f16(input_value));
+        EXPECT_EQ(F16::FromBits(representation), F16(input_value));
     }
 }
 
@@ -447,9 +447,9 @@ auto Error = std::optional<T>{};
 using BinaryCheckedCase_AInt = std::tuple<std::optional<AInt>, AInt, AInt>;
 using CheckedAddTest_AInt = testing::TestWithParam<BinaryCheckedCase_AInt>;
 
-using FloatInputTypes = std::variant<AFloat, f32, f16>;
+using FloatInputTypes = std::variant<AFloat, F32, F16>;
 using FloatExpectedTypes =
-    std::variant<std::optional<AFloat>, std::optional<f32>, std::optional<f16>>;
+    std::variant<std::optional<AFloat>, std::optional<F32>, std::optional<F16>>;
 using BinaryCheckedCase_Float = std::tuple<FloatExpectedTypes, FloatInputTypes, FloatInputTypes>;
 
 /// Validates that result is equal to expect. If `float_comp` is true, uses EXPECT_FLOAT_EQ to
@@ -542,8 +542,8 @@ std::vector<BinaryCheckedCase_Float> CheckedAddTest_FloatCases() {
 INSTANTIATE_TEST_SUITE_P(CheckedAddTest_Float,
                          CheckedAddTest_Float,
                          testing::ValuesIn(Concat(CheckedAddTest_FloatCases<AFloat>(),
-                                                  CheckedAddTest_FloatCases<f32>(),
-                                                  CheckedAddTest_FloatCases<f16>())));
+                                                  CheckedAddTest_FloatCases<F32>(),
+                                                  CheckedAddTest_FloatCases<F16>())));
 
 using CheckedSubTest_AInt = testing::TestWithParam<BinaryCheckedCase_AInt>;
 TEST_P(CheckedSubTest_AInt, Test) {
@@ -610,8 +610,8 @@ std::vector<BinaryCheckedCase_Float> CheckedSubTest_FloatCases() {
 INSTANTIATE_TEST_SUITE_P(CheckedSubTest_Float,
                          CheckedSubTest_Float,
                          testing::ValuesIn(Concat(CheckedSubTest_FloatCases<AFloat>(),
-                                                  CheckedSubTest_FloatCases<f32>(),
-                                                  CheckedSubTest_FloatCases<f16>())));
+                                                  CheckedSubTest_FloatCases<F32>(),
+                                                  CheckedSubTest_FloatCases<F16>())));
 
 using CheckedMulTest_AInt = testing::TestWithParam<BinaryCheckedCase_AInt>;
 TEST_P(CheckedMulTest_AInt, Test) {
@@ -690,8 +690,8 @@ std::vector<BinaryCheckedCase_Float> CheckedMulTest_FloatCases() {
 INSTANTIATE_TEST_SUITE_P(CheckedMulTest_Float,
                          CheckedMulTest_Float,
                          testing::ValuesIn(Concat(CheckedMulTest_FloatCases<AFloat>(),
-                                                  CheckedMulTest_FloatCases<f32>(),
-                                                  CheckedMulTest_FloatCases<f16>())));
+                                                  CheckedMulTest_FloatCases<F32>(),
+                                                  CheckedMulTest_FloatCases<F16>())));
 
 using CheckedDivTest_AInt = testing::TestWithParam<BinaryCheckedCase_AInt>;
 TEST_P(CheckedDivTest_AInt, Test) {
@@ -753,8 +753,8 @@ std::vector<BinaryCheckedCase_Float> CheckedDivTest_FloatCases() {
 INSTANTIATE_TEST_SUITE_P(CheckedDivTest_Float,
                          CheckedDivTest_Float,
                          testing::ValuesIn(Concat(CheckedDivTest_FloatCases<AFloat>(),
-                                                  CheckedDivTest_FloatCases<f32>(),
-                                                  CheckedDivTest_FloatCases<f16>())));
+                                                  CheckedDivTest_FloatCases<F32>(),
+                                                  CheckedDivTest_FloatCases<F16>())));
 
 using CheckedModTest_AInt = testing::TestWithParam<BinaryCheckedCase_AInt>;
 TEST_P(CheckedModTest_AInt, Test) {
@@ -824,8 +824,8 @@ std::vector<BinaryCheckedCase_Float> CheckedModTest_FloatCases() {
 INSTANTIATE_TEST_SUITE_P(CheckedModTest_Float,
                          CheckedModTest_Float,
                          testing::ValuesIn(Concat(CheckedModTest_FloatCases<AFloat>(),
-                                                  CheckedModTest_FloatCases<f32>(),
-                                                  CheckedModTest_FloatCases<f16>())));
+                                                  CheckedModTest_FloatCases<F32>(),
+                                                  CheckedModTest_FloatCases<F16>())));
 
 using CheckedPowTest_Float = testing::TestWithParam<BinaryCheckedCase_Float>;
 TEST_P(CheckedPowTest_Float, Test) {
@@ -881,8 +881,8 @@ std::vector<BinaryCheckedCase_Float> CheckedPowTest_FloatCases() {
 INSTANTIATE_TEST_SUITE_P(CheckedPowTest_Float,
                          CheckedPowTest_Float,
                          testing::ValuesIn(Concat(CheckedPowTest_FloatCases<AFloat>(),
-                                                  CheckedPowTest_FloatCases<f32>(),
-                                                  CheckedPowTest_FloatCases<f16>())));
+                                                  CheckedPowTest_FloatCases<F32>(),
+                                                  CheckedPowTest_FloatCases<F16>())));
 
 using TernaryCheckedCase = std::tuple<std::optional<AInt>, AInt, AInt, AInt>;
 

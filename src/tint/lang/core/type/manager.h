@@ -139,17 +139,17 @@ class Manager final {
             return Get<core::type::AbstractInt>(std::forward<ARGS>(args)...);
         } else if constexpr (std::is_same_v<T, tint::core::AFloat>) {
             return Get<core::type::AbstractFloat>(std::forward<ARGS>(args)...);
-        } else if constexpr (std::is_same_v<T, tint::core::i8>) {
+        } else if constexpr (std::is_same_v<T, tint::core::I8>) {
             return Get<core::type::I8>(std::forward<ARGS>(args)...);
-        } else if constexpr (std::is_same_v<T, tint::core::i32>) {
+        } else if constexpr (std::is_same_v<T, tint::core::I32>) {
             return Get<core::type::I32>(std::forward<ARGS>(args)...);
-        } else if constexpr (std::is_same_v<T, tint::core::u8>) {
+        } else if constexpr (std::is_same_v<T, tint::core::U8>) {
             return Get<core::type::U8>(std::forward<ARGS>(args)...);
-        } else if constexpr (std::is_same_v<T, tint::core::u32>) {
+        } else if constexpr (std::is_same_v<T, tint::core::U32>) {
             return Get<core::type::U32>(std::forward<ARGS>(args)...);
-        } else if constexpr (std::is_same_v<T, tint::core::f32>) {
+        } else if constexpr (std::is_same_v<T, tint::core::F32>) {
             return Get<core::type::F32>(std::forward<ARGS>(args)...);
-        } else if constexpr (std::is_same_v<T, tint::core::f16>) {
+        } else if constexpr (std::is_same_v<T, tint::core::F16>) {
             return Get<core::type::F16>(std::forward<ARGS>(args)...);
         } else if constexpr (std::is_same_v<T, bool>) {
             return Get<core::type::Bool>(std::forward<ARGS>(args)...);

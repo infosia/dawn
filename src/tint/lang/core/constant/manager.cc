@@ -93,28 +93,28 @@ const constant::Splat* Manager::Splat(const core::type::Type* type,
     return Get<constant::Splat>(type, element);
 }
 
-const Scalar<i32>* Manager::Get(i32 value) {
-    return Get<Scalar<i32>>(types.i32(), value);
+const Scalar<I32>* Manager::Get(I32 value) {
+    return Get<Scalar<I32>>(types.i32(), value);
 }
 
-const Scalar<u32>* Manager::Get(u32 value) {
-    return Get<Scalar<u32>>(types.u32(), value);
+const Scalar<U32>* Manager::Get(U32 value) {
+    return Get<Scalar<U32>>(types.u32(), value);
 }
 
-const Scalar<i8>* Manager::Get(i8 value) {
-    return Get<Scalar<i8>>(types.i8(), value);
+const Scalar<I8>* Manager::Get(I8 value) {
+    return Get<Scalar<I8>>(types.i8(), value);
 }
 
-const Scalar<u8>* Manager::Get(u8 value) {
-    return Get<Scalar<u8>>(types.u8(), value);
+const Scalar<U8>* Manager::Get(U8 value) {
+    return Get<Scalar<U8>>(types.u8(), value);
 }
 
-const Scalar<f32>* Manager::Get(f32 value) {
-    return Get<Scalar<f32>>(types.f32(), value);
+const Scalar<F32>* Manager::Get(F32 value) {
+    return Get<Scalar<F32>>(types.f32(), value);
 }
 
-const Scalar<f16>* Manager::Get(f16 value) {
-    return Get<Scalar<f16>>(types.f16(), value);
+const Scalar<F16>* Manager::Get(F16 value) {
+    return Get<Scalar<F16>>(types.f16(), value);
 }
 
 const Scalar<bool>* Manager::Get(bool value) {
@@ -168,10 +168,10 @@ const Value* Manager::Zero(const core::type::Type* type) {
         },
         [&](const core::type::AbstractInt*) { return Get(AInt(0)); },      //
         [&](const core::type::AbstractFloat*) { return Get(AFloat(0)); },  //
-        [&](const core::type::I32*) { return Get(i32(0)); },               //
-        [&](const core::type::U32*) { return Get(u32(0)); },               //
-        [&](const core::type::F32*) { return Get(f32(0)); },               //
-        [&](const core::type::F16*) { return Get(f16(0)); },               //
+        [&](const core::type::I32*) { return Get(I32(0)); },               //
+        [&](const core::type::U32*) { return Get(U32(0)); },               //
+        [&](const core::type::F32*) { return Get(F32(0)); },               //
+        [&](const core::type::F16*) { return Get(F16(0)); },               //
         [&](const core::type::Bool*) { return Get(false); },               //
         [&](const core::type::Invalid*) { return Invalid(); },             //
         TINT_ICE_ON_NO_MATCH);

@@ -734,7 +734,7 @@ struct CanonicalizeEntryPointIO::State {
         const Symbol& wrapper_struct_name,
         tint::Vector<const Attribute*, 8>&& old_struct_member_attributes) {
         auto TranslateClipDistancesIntoF32 =
-            [&](const Symbol& new_member, core::u32 inner_array_index,
+            [&](const Symbol& new_member, core::U32 inner_array_index,
                 tint::VectorRef<const ast::Attribute*>&& new_member_attributes) {
                 assignments->Push(
                     b.Assign(b.MemberAccessor(wrapper_struct_name, new_member),

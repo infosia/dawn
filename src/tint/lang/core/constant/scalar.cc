@@ -30,12 +30,12 @@
 TINT_INSTANTIATE_TYPEINFO(tint::core::constant::ScalarBase);
 TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::AInt>);
 TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::AFloat>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::i32>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::i8>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::u32>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::u8>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::f16>);
-TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::f32>);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::I32>);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::I8>);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::U32>);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::U8>);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::F16>);
+TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<tint::core::F32>);
 TINT_INSTANTIATE_TYPEINFO(tint::core::constant::Scalar<bool>);
 
 namespace tint::core::constant {
