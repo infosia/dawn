@@ -38,6 +38,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1354d8d9_9b82efbb",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-17T18:18:35Z",
+      "side": 1,
+      "message": "Nit: We tend to prefix our generated symbols with `tint_`, just to make it clear where things came from.",
+      "fixSuggestions": [
+        {
+          "fixId": "efced630_f3dc5944",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 284,
+                "startChar": 0,
+                "endLine": 285,
+                "endChar": 0
+              },
+              "replacement": "            num_wg_var \u003d builder.Var(\"tint_num_workgroups\", ty.ptr(uniform, struct_ty));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "eb5aaa8538b97ccaa3e3bca8875f0f0ca363adf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "df95b76a_77d1f0b9",
         "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
         "patchSetId": 7
