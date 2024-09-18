@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-09-14 07:18:52AM
+# Last rolled: 2024-09-18 05:04:27AM
 
 # conflicts_allowed: true
 
@@ -1844,7 +1844,6 @@ crbug.com/dawn/0000 [ dawn-no-backend-validation qualcomm ] webgpu:shader,execut
 crbug.com/dawn/0000 [ dawn-no-backend-validation qualcomm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="rg8snorm";viewDimension="cube";samplePoints="spiral" [ RetryOnFailure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ubuntu ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:* [ RetryOnFailure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ubuntu ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_2d_coords:* [ RetryOnFailure ]
-
 
 crbug.com/dawn/0000 [ android-chromium android-r angle-opengles dawn-backend-validation graphite-disabled mobile no-asan no-clang-coverage oop-c passthrough qualcomm renderer-skia-gl target-cpu-32 webgpu-adapter-default webgpu-no-worker ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_3d_coords:* [ Failure ]
 crbug.com/dawn/0000 [ android-chromium android-r angle-opengles dawn-backend-validation graphite-disabled mobile no-asan no-clang-coverage oop-c passthrough qualcomm renderer-skia-gl target-cpu-32 webgpu-adapter-default webgpu-no-worker ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_3d_coords:format="astc-12x10-unorm" [ Failure ]
