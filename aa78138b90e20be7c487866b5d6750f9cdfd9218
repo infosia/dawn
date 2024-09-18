@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b877501_6fc88595",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-18T15:36:01Z",
+      "side": 1,
+      "message": "Should this be a feature instead of a toggle? But also IMHO we should first condition on the feature being enabled, and then do the validation of the size, or validation that it is 0.",
+      "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5589f90_664e64fb",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-18T15:36:01Z",
+      "side": 1,
+      "message": "This boolean seems unnecessary as immediate data byte size will be 0 if the shader doesn\u0027t use them, and that at the end of the function we validate the PL, so if the feature is not enabled, any immediate data that\u0027s used will cause an error.",
+      "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab0ef87c_a3387744",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-18T15:36:01Z",
+      "side": 1,
+      "message": "nit: without the feature enabled :)",
+      "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bac08e3_ddb1eb65",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-18T15:36:01Z",
+      "side": 1,
+      "message": "Comment doesn\u0027t match the test anymore, also IMHO we could merge both tests to get both a control case and an error case in the same test.",
+      "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cb9f4e7_8417907b",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-18T15:36:01Z",
+      "side": 1,
+      "message": "Comment should be updated for success.",
+      "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
