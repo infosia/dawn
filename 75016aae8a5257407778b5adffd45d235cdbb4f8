@@ -33,6 +33,23 @@
       "message": "I\u0027m a little nervous about generating *only* desktop GLSL, since it\u0027s not a path we\u0027re shipping to users, and likely won\u0027t be for quite some time.\n\nWhat do you think about maintaining both ES and desktop GLSL test results (as la FXC vs DXC)? Would that be sustainable?",
       "revId": "75016aae8a5257407778b5adffd45d235cdbb4f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6823ea45_bacb6152",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-09-18T22:22:51Z",
+      "side": 1,
+      "message": "This is a nice option!",
+      "revId": "75016aae8a5257407778b5adffd45d235cdbb4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
