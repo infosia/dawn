@@ -67,6 +67,24 @@
       "message": "Oh wait, I think I misunderstood. You\u0027ve only added the flag for those tests which don\u0027t pass on ES anyway. If so, that\u0027s fine! \n\n(Carry on, nothing to see here.)",
       "revId": "75016aae8a5257407778b5adffd45d235cdbb4f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be5a891a_77301927",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-18T23:39:11Z",
+      "side": 1,
+      "message": "Correct, this only updates the end to end tests which use things that fail to compile in GLSL when translated (cube arrays, texel formats that aren\u0027t supported). All other tests continue to be ES tests.",
+      "parentUuid": "712b961d_21a98b5a",
+      "revId": "75016aae8a5257407778b5adffd45d235cdbb4f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
