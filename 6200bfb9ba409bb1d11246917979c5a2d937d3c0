@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "ba13058b_fc479353",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-18T06:24:13Z",
+      "side": 1,
+      "message": "Thanks, @lokokung@google.com.",
+      "revId": "6200bfb9ba409bb1d11246917979c5a2d937d3c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "0be29c00_01fc818b",
         "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
         "patchSetId": 1
@@ -84,6 +101,24 @@
       "side": 1,
       "message": "If we were to go that way, we would need to trim the undefined ones from vector\u003ctextureFormat\u003e, and restore offsets, when creating the pipeline from the key, as the pipeline layout [validation](vector\u003ctextureFormat\u003e) doesn\u0027t allow undefined texture format. I am okay either way.",
       "parentUuid": "05bd667b_80c319c4",
+      "revId": "6200bfb9ba409bb1d11246917979c5a2d937d3c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91428ad6_0897befb",
+        "filename": "src/dawn/native/ApplyClearColorValueWithDrawHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-09-18T06:24:13Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org I am landing this CL. Let me know if you are still concerned about this issue.",
+      "parentUuid": "5533722e_3ec35b0e",
       "revId": "6200bfb9ba409bb1d11246917979c5a2d937d3c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
