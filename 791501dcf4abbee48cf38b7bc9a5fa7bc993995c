@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b3073bf_15b54763",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-18T15:30:02Z",
+      "side": 1,
+      "message": "That\u0027s a lot, IDK that we can support it on D3D12 without adding another limit somewhere. Could we start with 16?",
+      "range": {
+        "startLine": 91,
+        "startChar": 59,
+        "endLine": 91,
+        "endChar": 61
+      },
+      "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6344a1e_ab39a8c5",
+        "filename": "src/dawn/native/PhysicalDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-18T15:30:02Z",
+      "side": 1,
+      "message": "That enables the feature for all backends, when we implemented it on none of the backends. The Null backend gets all features enabled, so for testing of validation we don\u0027t need to pretend that the feature is allowed on real backends.",
+      "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b2873c0_b81b5eee",
+        "filename": "src/dawn/native/PhysicalDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-18T15:30:02Z",
+      "side": 1,
+      "message": "This would change and be part of the default limits? We might need to modify the null backend to set the limit as well.",
+      "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0840fe7c_6a413e25",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-18T15:30:02Z",
+      "side": 1,
+      "message": "Why is this both a Toggle and a Feature?",
+      "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
