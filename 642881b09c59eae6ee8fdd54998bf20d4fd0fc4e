@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9da708e3_89512ef2",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-18T13:12:54Z",
+      "side": 1,
+      "message": "It strikes me that these could just be `b.ConvertWithResult()` instead of bitcasts, which bypasses all of the bitcast logic. Outcome is the same though.",
+      "revId": "642881b09c59eae6ee8fdd54998bf20d4fd0fc4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
