@@ -440,6 +440,30 @@
       },
       "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6972613f_0ba7da89",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-19T21:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a09e27a9_19ccac46",
+      "range": {
+        "startLine": 91,
+        "startChar": 50,
+        "endLine": 91,
+        "endChar": 59
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
