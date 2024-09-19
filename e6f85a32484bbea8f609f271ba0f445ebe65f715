@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69e13a81_a35a6d57",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-19T22:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe5c9ad4_a70d4614",
+      "revId": "e6f85a32484bbea8f609f271ba0f445ebe65f715",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a2a0504_6ab176e8",
@@ -66,6 +84,30 @@
       "writtenOn": "2024-09-19T21:36:45Z",
       "side": 1,
       "message": "übernits: We\u0027d usually `auto` this, and I\u0027d `std::move(call_args)` as well.\n\nAlso, you could use `CallWithResult()` instead of `ReplaceAllUsesWith` below.",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 80
+      },
+      "revId": "e6f85a32484bbea8f609f271ba0f445ebe65f715",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "622c1948_a503aa2b",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-19T22:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a2a0504_6ab176e8",
       "range": {
         "startLine": 327,
         "startChar": 0,
