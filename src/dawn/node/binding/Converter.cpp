@@ -1499,8 +1499,10 @@ bool Converter::Convert(wgpu::FeatureName& out, interop::GPUFeatureName in) {
         case interop::GPUFeatureName::kChromiumExperimentalSubgroupUniformControlFlow:
             out = wgpu::FeatureName::ChromiumExperimentalSubgroupUniformControlFlow;
             return true;
-        case interop::GPUFeatureName::kTextureCompressionBcSliced3D:
         case interop::GPUFeatureName::kClipDistances:
+            out = wgpu::FeatureName::ClipDistances;
+            return true;
+        case interop::GPUFeatureName::kTextureCompressionBcSliced3D:
             return false;
     }
     return false;
