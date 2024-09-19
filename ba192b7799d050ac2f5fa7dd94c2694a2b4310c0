@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb4ca732_15a079ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-19T21:49:06Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "ba192b7799d050ac2f5fa7dd94c2694a2b4310c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75582fc6_d38bec36",
@@ -20,6 +37,41 @@
         "endLine": 104,
         "endChar": 33
       },
+      "revId": "ba192b7799d050ac2f5fa7dd94c2694a2b4310c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25039492_70ba1ee7",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-19T21:49:06Z",
+      "side": 1,
+      "message": "Nit: I think you can just do `ep-\u003eReturnBuiltin() \u003d\u003d BuiltinValue::kPosition` here and std::optional magic takes care of the optionality checking.",
+      "fixSuggestions": [
+        {
+          "fixId": "e33e1fa1_cbc448ac",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 1225,
+                "startChar": 0,
+                "endLine": 1227,
+                "endChar": 0
+              },
+              "replacement": "        if (ep-\u003eReturnBuiltin() \u003d\u003d BuiltinValue::kPosition) {\n"
+            }
+          ]
+        }
+      ],
       "revId": "ba192b7799d050ac2f5fa7dd94c2694a2b4310c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
