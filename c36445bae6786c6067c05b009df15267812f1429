@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5691b539_2e80a50c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-19T09:33:21Z",
+      "side": 1,
+      "message": "LGTM, though any reason you chose LLVM 15 Jaswant?",
+      "revId": "c36445bae6786c6067c05b009df15267812f1429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
