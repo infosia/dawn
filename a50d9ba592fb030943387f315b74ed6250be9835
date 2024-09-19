@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a62457a_60dfaee0",
+        "filename": "go",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-19T17:06:29Z",
+      "side": 0,
+      "message": "I assume you did not mean to add this file.",
+      "revId": "a50d9ba592fb030943387f315b74ed6250be9835",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

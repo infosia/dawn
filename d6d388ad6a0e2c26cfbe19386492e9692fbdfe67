@@ -16,6 +16,40 @@
       "message": "I\u0027ll send to the CQ after rebasing on Antonio\u0027s change as I\u0027m guessing I\u0027ll have to regen the expectations again, but should be reviewable as is.",
       "revId": "d6d388ad6a0e2c26cfbe19386492e9692fbdfe67",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bea80486_b725712a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-19T17:06:29Z",
+      "side": 1,
+      "message": "Change looks good.",
+      "revId": "d6d388ad6a0e2c26cfbe19386492e9692fbdfe67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5181f186_7d259473",
+        "filename": "src/tint/lang/core/ir/transform/value_to_let.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-19T17:06:29Z",
+      "side": 1,
+      "message": "Please add a `ValueToLet` unit test to cover this change so we\u0027re not just relying on the tests of various backends.",
+      "revId": "d6d388ad6a0e2c26cfbe19386492e9692fbdfe67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
