@@ -33,6 +33,103 @@
       "message": "Hi, we still need a code owner\u0027s approval",
       "revId": "66d8ac0d4c9b907ff92bb34f5b1bc957f35f58d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7f8f266_2274ef8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-19T07:42:06Z",
+      "side": 1,
+      "message": "LGMT with nits",
+      "revId": "66d8ac0d4c9b907ff92bb34f5b1bc957f35f58d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c931f95_5c7f1115",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-19T07:42:06Z",
+      "side": 1,
+      "message": "nit: extra space? I\u0027m surprised that git cl format doesn\u0027t complain.",
+      "range": {
+        "startLine": 286,
+        "startChar": 62,
+        "endLine": 286,
+        "endChar": 63
+      },
+      "revId": "66d8ac0d4c9b907ff92bb34f5b1bc957f35f58d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7712745_62bc2964",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-19T07:42:06Z",
+      "side": 1,
+      "message": "```suggestion\n    switch (feature) {\n        case wgpu::FeatureName::SubgroupsF16:\n            return {{wgpu::FeatureName::ShaderF16, wgpu::FeatureName::Subgroups}};\n        default:\n            return {};\n    }\n```",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "66d8ac0d4c9b907ff92bb34f5b1bc957f35f58d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fd98959_71821cc5",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-19T07:42:06Z",
+      "side": 1,
+      "message": "```suggestion\nbool IsExperimental(wgpu::FeatureName feature) {\n```",
+      "revId": "66d8ac0d4c9b907ff92bb34f5b1bc957f35f58d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15931de3_210da69f",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-19T07:42:06Z",
+      "side": 1,
+      "message": "```suggestion\n        auto ExpectDeviceHasRequiredFeatures \u003d\n```",
+      "revId": "66d8ac0d4c9b907ff92bb34f5b1bc957f35f58d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
