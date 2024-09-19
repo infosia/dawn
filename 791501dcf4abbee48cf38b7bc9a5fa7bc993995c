@@ -73,6 +73,24 @@
       "message": "Why is this both a Toggle and a Feature?",
       "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "473e0ea7_92a268b0",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T00:19:27Z",
+      "side": 1,
+      "message": "The origin design is that UseImmediateData is that we use this to control tests. But as your comments above said, we could enable features per backends achieve this.",
+      "parentUuid": "0840fe7c_6a413e25",
+      "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
