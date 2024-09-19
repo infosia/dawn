@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "26ac48f6_c8427af3",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 4351,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-19T07:05:37Z",
+      "side": 1,
+      "message": "You\u0027ll need to add handling for this enum in src/dawn/node/interop/Converter.cpp",
+      "revId": "bd799ada2dc551a00052f8b49b24da32b365318e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28188449_b47ae5e7",
         "filename": "src/dawn/native/Adapter.cpp",
         "patchSetId": 3
