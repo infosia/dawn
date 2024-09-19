@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75582fc6_d38bec36",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-19T21:11:04Z",
+      "side": 1,
+      "message": "Add doc",
+      "range": {
+        "startLine": 104,
+        "startChar": 13,
+        "endLine": 104,
+        "endChar": 33
+      },
+      "revId": "ba192b7799d050ac2f5fa7dd94c2694a2b4310c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
