@@ -416,6 +416,30 @@
       },
       "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a09e27a9_19ccac46",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-19T20:00:19Z",
+      "side": 1,
+      "message": "So remove the `Predicate` typedef (using) defined in the class, then update this constructor with a template param:\n\n```\ntemplate \u003ctypename Predicate\u003e\nexplicit ReferencedModuleVars(ModuleType\u0026 ir, Predicate\u0026\u0026 pred \u003d {}) {\n```\n\nNote that we lose the ability to specify the args and return type when using this method. This is fixable with C++20 concepts. Also fixable using a \"function_ref\" type that is not in the standard, but lots of codebases define it, like LLVM. Anyway, we use this pattern a lot in Tint, so it\u0027s fine.",
+      "parentUuid": "69d72fe2_d97ffae7",
+      "range": {
+        "startLine": 91,
+        "startChar": 50,
+        "endLine": 91,
+        "endChar": 59
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
