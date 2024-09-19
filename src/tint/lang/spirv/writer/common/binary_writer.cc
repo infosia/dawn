@@ -58,10 +58,18 @@ void BinaryWriter::WriteHeader(uint32_t bound, uint32_t version) {
     out_.push_back(0);
 }
 
+<<<<<<< HEAD   (65fc64 DEPS: Update DXC to patched branch)
 void BinaryWriter::process_instruction(const Instruction& inst) {
     out_.push_back(inst.word_length() << 16 | static_cast<uint32_t>(inst.opcode()));
     for (const auto& op : inst.operands()) {
         process_op(op);
+=======
+void BinaryWriter::ProcessInstruction(const Instruction& inst) {
+    TINT_ASSERT(inst.WordLength() < 65536);
+    out_.push_back(inst.WordLength() << 16 | static_cast<uint32_t>(inst.Opcode()));
+    for (const auto& op : inst.Operands()) {
+        ProcessOp(op);
+>>>>>>> CHANGE (3940ce [spirv] Guard against instruction length overflow)
     }
 }
 
