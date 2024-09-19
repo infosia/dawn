@@ -16,6 +16,24 @@
       "message": "nit: you don\u0027t actually know this was an `array` do you? Maybe emit the member type instead of `array`?",
       "revId": "349421aa498864e40a48b17ab0630e23746c17f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81c574f5_9d7136f5",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-19T21:33:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b02c17_e466da50",
+      "revId": "349421aa498864e40a48b17ab0630e23746c17f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
