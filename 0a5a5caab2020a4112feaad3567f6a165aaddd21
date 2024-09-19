@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "0a5a5caab2020a4112feaad3567f6a165aaddd21",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9e24d08_68c466b6",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-19T21:40:26Z",
+      "side": 1,
+      "message": "übernit: `std::move(new_args)`",
+      "revId": "0a5a5caab2020a4112feaad3567f6a165aaddd21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
