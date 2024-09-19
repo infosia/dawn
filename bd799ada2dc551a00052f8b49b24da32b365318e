@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbf094c9_0b226277",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 4351,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T08:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26ac48f6_c8427af3",
+      "revId": "bd799ada2dc551a00052f8b49b24da32b365318e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28188449_b47ae5e7",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-09-19T07:03:47Z",
       "side": 1,
       "message": "nit: We could do `wgpu::ChainedStructOut* nextInChain \u003d subgroupLimits-\u003enextInChain;` then `subgroupLimits-\u003enextInChain \u003d nextInChain` to avoid the reinterpret_casts.\n\nOr we could directly set only the members that are necessary in subgroupLimits.",
+      "revId": "bd799ada2dc551a00052f8b49b24da32b365318e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a8636ce_e6b6e74a",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T08:57:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28188449_b47ae5e7",
       "revId": "bd799ada2dc551a00052f8b49b24da32b365318e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
