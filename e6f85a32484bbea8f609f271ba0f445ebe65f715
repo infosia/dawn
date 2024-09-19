@@ -20,6 +20,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fe5c9ad4_a70d4614",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-19T21:37:55Z",
+      "side": 1,
+      "message": "Nit: Bump to 3, since there can be 3 things.",
+      "fixSuggestions": [
+        {
+          "fixId": "7b26a561_86580c1b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+              "range": {
+                "startLine": 285,
+                "startChar": 0,
+                "endLine": 286,
+                "endChar": 0
+              },
+              "replacement": "            Vector\u003ccore::ir::Value*, 3\u003e call_args{tex};\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e6f85a32484bbea8f609f271ba0f445ebe65f715",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6a2a0504_6ab176e8",
         "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
         "patchSetId": 1
