@@ -46,6 +46,30 @@
       },
       "revId": "d3e90db0af37a26ddb5a4d94faed08168fd041e1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1645c37e_451dff04",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1804,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-19T21:14:30Z",
+      "side": 0,
+      "message": "Hmm, I suspect it should be fine for the most part? I\u0027m imagining a user who has just been putting all valid usages on a texture, but using them in a valid way, will now see validation errors that they didn\u0027t before. Aside from a PSA email or something though, I\u0027m not sure if there\u0027s a formal process for this. Maybe Corentin will have some advice here as well?",
+      "parentUuid": "68469079_e1b224bb",
+      "range": {
+        "startLine": 1800,
+        "startChar": 4,
+        "endLine": 1804,
+        "endChar": 5
+      },
+      "revId": "d3e90db0af37a26ddb5a4d94faed08168fd041e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
