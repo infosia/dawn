@@ -35,7 +35,9 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/depth_multisampled_texture.h"
+#include "src/tint/lang/core/type/depth_texture.h"
 #include "src/tint/lang/core/type/multisampled_texture.h"
+#include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/glsl/builtin_fn.h"
 #include "src/tint/lang/glsl/ir/builtin_call.h"
@@ -74,6 +76,7 @@ struct State {
                     case core::BuiltinFn::kStorageBarrier:
                     case core::BuiltinFn::kTextureBarrier:
                     case core::BuiltinFn::kTextureDimensions:
+                    case core::BuiltinFn::kTextureLoad:
                     case core::BuiltinFn::kTextureNumLayers:
                     case core::BuiltinFn::kWorkgroupBarrier:
                         call_worklist.Push(call);
@@ -116,6 +119,9 @@ struct State {
                     break;
                 case core::BuiltinFn::kTextureDimensions:
                     TextureDimensions(call);
+                    break;
+                case core::BuiltinFn::kTextureLoad:
+                    TextureLoad(call);
                     break;
                 case core::BuiltinFn::kTextureNumLayers:
                     TextureNumLayers(call);
@@ -246,6 +252,82 @@ struct State {
 
             auto* swizzle = b.Swizzle(ty.i32(), new_call, {2});
             b.BitcastWithResult(call->DetachResult(), swizzle->Result(0));
+        });
+        call->Destroy();
+    }
+
+    void TextureLoad(core::ir::CoreBuiltinCall* call) {
+        auto args = call->Args();
+        auto* tex = args[0];
+
+        // No loading from a depth texture in GLSL, so we should never have gotten here.
+        TINT_ASSERT(!tex->Type()->Is<core::type::DepthTexture>());
+
+        auto* tex_type = tex->Type()->As<core::type::Texture>();
+
+        glsl::BuiltinFn func = glsl::BuiltinFn::kNone;
+        if (tex_type->Is<core::type::StorageTexture>()) {
+            func = glsl::BuiltinFn::kImageLoad;
+        } else {
+            func = glsl::BuiltinFn::kTexelFetch;
+        }
+
+        const core::type::Type* ret_ty = tint::Switch(
+            tex_type,  //
+            [&](const core::type::SampledTexture* sampled) { return sampled->Type(); },
+            [&](const core::type::StorageTexture* storage) { return storage->Type(); },
+            [&](const core::type::MultisampledTexture* ms) { return ms->Type(); },
+            TINT_ICE_ON_NO_MATCH);
+
+        bool is_ms = tex_type->Is<core::type::MultisampledTexture>();
+        bool is_storage = tex_type->Is<core::type::StorageTexture>();
+        b.InsertBefore(call, [&] {
+            Vector<core::ir::Value*, 2> call_args{tex};
+            switch (tex_type->Dim()) {
+                case core::type::TextureDimension::k1d: {
+                    call_args.Push(b.Convert(ty.i32(), args[1])->Result(0));
+                    if (!is_storage) {
+                        call_args.Push(b.Convert(ty.i32(), args[2])->Result(0));
+                    }
+                    break;
+                }
+                case core::type::TextureDimension::k2d: {
+                    call_args.Push(b.Convert(ty.vec2<i32>(), args[1])->Result(0));
+                    if (is_ms) {
+                        call_args.Push(b.Convert(ty.i32(), args[2])->Result(0));
+                    } else {
+                        if (!is_storage) {
+                            call_args.Push(b.Convert(ty.i32(), args[2])->Result(0));
+                        }
+                    }
+                    break;
+                }
+                case core::type::TextureDimension::k2dArray: {
+                    auto* coord = b.Convert(ty.vec2<i32>(), args[1]);
+                    auto* ary_idx = b.Convert(ty.i32(), args[2]);
+                    call_args.Push(b.Construct(ty.vec3<i32>(), coord, ary_idx)->Result(0));
+
+                    if (!is_storage) {
+                        call_args.Push(b.Convert(ty.i32(), args[3])->Result(0));
+                    }
+                    break;
+                }
+                case core::type::TextureDimension::k3d: {
+                    call_args.Push(b.Convert(ty.vec3<i32>(), args[1])->Result(0));
+
+                    if (!is_storage) {
+                        call_args.Push(b.Convert(ty.i32(), args[2])->Result(0));
+                    }
+                    break;
+                }
+                default:
+                    TINT_UNREACHABLE();
+            }
+
+            core::ir::Instruction* builtin =
+                b.Call<glsl::ir::BuiltinCall>(ty.vec4(ret_ty), func, call_args);
+
+            call->Result(0)->ReplaceAllUsesWith(builtin->Result(0));
         });
         call->Destroy();
     }
