@@ -1,0 +1,57 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a5dedba_21d71666",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-19T21:09:25Z",
+      "side": 1,
+      "message": "\u003e enum \u0027SubgroupIntrinsicOp\u0027 uses a larger base type (\u0027int\u0027, size: 4 bytes) than necessary for its value set, consider using \u0027std::uint8_t\u0027 (1 byte) as the base type to reduce its size (https://clang.llvm.org/extra/clang-tidy/checks/performance/enum-size.html)\n\u003e \n\u003e (Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)\n\nPlease fix.",
+      "parentUuid": "caae31da_40e1da41",
+      "revId": "34c0a84a0c7ec548720a793ae284e7b2f691c657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf19b6e4_3e2f6bae",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-19T21:09:25Z",
+      "side": 1,
+      "message": "\u003e enum \u0027SubgroupOpDataType\u0027 uses a larger base type (\u0027int\u0027, size: 4 bytes) than necessary for its value set, consider using \u0027std::uint8_t\u0027 (1 byte) as the base type to reduce its size (https://clang.llvm.org/extra/clang-tidy/checks/performance/enum-size.html)\n\u003e \n\u003e (Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)\n\nPlease fix.",
+      "parentUuid": "ab35e248_2679d310",
+      "revId": "34c0a84a0c7ec548720a793ae284e7b2f691c657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fb49da5_0706cee1",
+        "filename": "test/tint/builtins/gen/literal/subgroupInclusiveAdd/e18ebb.wgsl.expected.glsl",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-19T21:09:25Z",
+      "side": 1,
+      "message": "For the GLSL entries, can you change the `SKIP: FAILED` to `SKIP: INVALID`. We don\u0027t support these on GLSL so the test just isn\u0027t valid.\n\nCan you also do the same change to `glsl-ir` for `SKIP: INVALID` ?",
+      "revId": "34c0a84a0c7ec548720a793ae284e7b2f691c657",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
