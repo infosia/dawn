@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12609efb_6ea914fd",
+        "filename": "src/dawn/native/webgpu_absl_format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-19T10:16:23Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to fix this. We could have auto-quoting for things that have WGPUStringView such that NullableStringView could use `[nil]` which would be different from all the `\"stuff\"` but the autoquoting behavior would be quite surprising compared to std::string and std::string_view when writing error messages.\n\nThat said these seem to no longer be necessary for this CL, it was probably used in an earlier version, so I just removed them.",
+      "parentUuid": "8e3194c1_91d389c3",
+      "revId": "354bbf129edcb68f8c5d1ccf8fe37e302866bb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9efa1776_0efd13bc",
@@ -48,6 +66,42 @@
       "writtenOn": "2024-09-12T21:46:23Z",
       "side": 1,
       "message": "nit: if `wgslDesc` were default initialized with the `INIT` macro, I think this could be `wgslDesc.code.data \u003d \"...\";`\n\n... except we are not actually initializing the stringview substruct correctly right now:\nhttps://source.chromium.org/chromium/chromium/src/+/main:out/webview-Debug/gen/third_party/dawn/include/dawn/webgpu.h;l\u003d2251;drc\u003d504c89715bea6d46d605b86c4559f30c275388ce",
+      "revId": "354bbf129edcb68f8c5d1ccf8fe37e302866bb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f921ea7_0834d9da",
+        "filename": "src/dawn/tests/unittests/wire/WireCreatePipelineAsyncTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-19T10:16:23Z",
+      "side": 1,
+      "message": "It is how it was set up previously and I didn\u0027t think to revisit this. That said for string views as a single structure I think it makes sense to have them in this order as it looks more like how std::span, std::string_view and other work. C developers are likely to use designated initializers anyway and the order wouldn\u0027t matter.",
+      "parentUuid": "9efa1776_0efd13bc",
+      "revId": "354bbf129edcb68f8c5d1ccf8fe37e302866bb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49498cbb_37bdd9eb",
+        "filename": "src/dawn/tests/unittests/wire/WireCreatePipelineAsyncTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-19T10:16:23Z",
+      "side": 1,
+      "message": "I have:\n\n```\n// Can be chained in WGPUShaderModuleDescriptor\ntypedef struct WGPUShaderSourceWGSL {\n    WGPUChainedStruct chain;\n    WGPUStringView code;\n} WGPUShaderSourceWGSL WGPU_STRUCTURE_ATTRIBUTE;\n\n#define WGPU_SHADER_SOURCE_WGSL_INIT WGPU_MAKE_INIT_STRUCT(WGPUShaderSourceWGSL, { \\\n    /*.chain\u003d*/{} WGPU_COMMA \\\n    /*.code\u003d*/WGPU_STRING_VIEW_INIT WGPU_COMMA \\\n})\n```\n\nlocally, so I updated the code here directly. Ah, found that the chain is not unitialized correctly. I\u0027ll have a fix in a follow-up.",
+      "parentUuid": "6a40938e_43e32daa",
       "revId": "354bbf129edcb68f8c5d1ccf8fe37e302866bb60",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
