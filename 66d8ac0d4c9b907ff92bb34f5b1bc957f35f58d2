@@ -75,6 +75,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e800fd9_99dc4192",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-09-19T17:57:56Z",
+      "side": 1,
+      "message": "Done, it seems like cl-format take it as valid gramma `::ScopedName`?",
+      "parentUuid": "2c931f95_5c7f1115",
+      "range": {
+        "startLine": 286,
+        "startChar": 62,
+        "endLine": 286,
+        "endChar": 63
+      },
+      "revId": "66d8ac0d4c9b907ff92bb34f5b1bc957f35f58d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7712745_62bc2964",
@@ -88,6 +112,30 @@
       "writtenOn": "2024-09-19T07:42:06Z",
       "side": 1,
       "message": "```suggestion\n    switch (feature) {\n        case wgpu::FeatureName::SubgroupsF16:\n            return {{wgpu::FeatureName::ShaderF16, wgpu::FeatureName::Subgroups}};\n        default:\n            return {};\n    }\n```",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "66d8ac0d4c9b907ff92bb34f5b1bc957f35f58d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb8888d4_eb530fd9",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-09-19T17:57:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7712745_62bc2964",
       "range": {
         "startLine": 126,
         "startChar": 0,
@@ -115,6 +163,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0978042_7653dd2f",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-09-19T17:57:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fd98959_71821cc5",
+      "revId": "66d8ac0d4c9b907ff92bb34f5b1bc957f35f58d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15931de3_210da69f",
@@ -128,6 +194,24 @@
       "writtenOn": "2024-09-19T07:42:06Z",
       "side": 1,
       "message": "```suggestion\n        auto ExpectDeviceHasRequiredFeatures \u003d\n```",
+      "revId": "66d8ac0d4c9b907ff92bb34f5b1bc957f35f58d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "875596eb_b5457ce1",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-09-19T17:57:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15931de3_210da69f",
       "revId": "66d8ac0d4c9b907ff92bb34f5b1bc957f35f58d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
