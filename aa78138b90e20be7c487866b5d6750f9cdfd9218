@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "377d5ee9_a40f0834",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T05:37:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b877501_6fc88595",
+      "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5589f90_664e64fb",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-09-18T15:36:01Z",
       "side": 1,
       "message": "This boolean seems unnecessary as immediate data byte size will be 0 if the shader doesn\u0027t use them, and that at the end of the function we validate the PL, so if the feature is not enabled, any immediate data that\u0027s used will cause an error.",
+      "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b21d351_523d8397",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T05:37:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5589f90_664e64fb",
       "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bea989d1_0ab5f977",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T05:37:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab0ef87c_a3387744",
+      "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bac08e3_ddb1eb65",
@@ -69,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e62e91b_7b06ef9f",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T05:37:26Z",
+      "side": 1,
+      "message": "Case merged!",
+      "parentUuid": "7bac08e3_ddb1eb65",
+      "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cb9f4e7_8417907b",
@@ -82,6 +154,24 @@
       "writtenOn": "2024-09-18T15:36:01Z",
       "side": 1,
       "message": "Comment should be updated for success.",
+      "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fe90b78_7ba03a81",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T05:37:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb9f4e7_8417907b",
       "revId": "aa78138b90e20be7c487866b5d6750f9cdfd9218",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
