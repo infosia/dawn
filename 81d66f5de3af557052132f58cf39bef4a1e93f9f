@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "81d66f5de3af557052132f58cf39bef4a1e93f9f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41bcc493_82dcf808",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-09-19T14:19:25Z",
+      "side": 1,
+      "message": "nit: std::vector has a constructor that takes the size\n\n`std::vector\u003cUniqueVkHandle\u003cVkSemaphore\u003e\u003e externalTextureSemaphores(mRecordingContext.externalTexturesForEagerTransition.size());`",
+      "range": {
+        "startLine": 336,
+        "startChar": 4,
+        "endLine": 336,
+        "endChar": 98
+      },
+      "revId": "81d66f5de3af557052132f58cf39bef4a1e93f9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
