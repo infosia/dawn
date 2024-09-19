@@ -33,6 +33,23 @@
       "message": "LGTM",
       "revId": "1d0f9166558a98a6ec31bae938ee946019ee1b6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75dbb5b4_018acc50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-09-19T19:32:25Z",
+      "side": 1,
+      "message": "Looks like I don\u0027t have permissions to CR+2.",
+      "revId": "1d0f9166558a98a6ec31bae938ee946019ee1b6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
