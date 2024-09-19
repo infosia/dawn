@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09782988_bb3706e4",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-09-19T17:23:09Z",
+      "side": 1,
+      "message": "Default to none.",
+      "range": {
+        "startLine": 1837,
+        "startChar": 17,
+        "endLine": 1837,
+        "endChar": 28
+      },
+      "revId": "0ea286730458c5feb3fb2096ee069baa36e1bd5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fe29fe5_9dcb2881",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1866,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-09-19T17:23:09Z",
+      "side": 1,
+      "message": "Do call result zero replace all usages with instruction result zero\n\nsee suggestion",
+      "range": {
+        "startLine": 1866,
+        "startChar": 18,
+        "endLine": 1866,
+        "endChar": 28
+      },
+      "revId": "0ea286730458c5feb3fb2096ee069baa36e1bd5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

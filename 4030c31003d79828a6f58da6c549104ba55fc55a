@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ad7d19b_1d0c42c3",
+        "filename": "src/tint/lang/core/ir/binary/encode.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-09-19T17:23:09Z",
+      "side": 1,
+      "message": "This doesnt look right!",
+      "range": {
+        "startLine": 1167,
+        "startChar": 38,
+        "endLine": 1167,
+        "endChar": 60
+      },
+      "revId": "4030c31003d79828a6f58da6c549104ba55fc55a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5b3f5b2_68b42465",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-09-19T17:23:09Z",
+      "side": 1,
+      "message": "Update comment",
+      "range": {
+        "startLine": 307,
+        "startChar": 8,
+        "endLine": 307,
+        "endChar": 91
+      },
+      "revId": "4030c31003d79828a6f58da6c549104ba55fc55a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
