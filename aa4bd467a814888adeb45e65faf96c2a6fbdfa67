@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e40004f4_efa0bfb3",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-19T20:04:53Z",
+      "side": 1,
+      "message": "My bad, I mispelled this. Should be `TranscribeConst`.",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "aa4bd467a814888adeb45e65faf96c2a6fbdfa67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
