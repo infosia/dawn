@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ad60852_4577eb09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-19T23:09:33Z",
+      "side": 1,
+      "message": "nit: b/337089429 since it\u0027s outside of the chromium project on buganizer",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "c9558ccb716e55d2f85c381ed7b428842c1a7182",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
