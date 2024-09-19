@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05b02c17_e466da50",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-19T21:24:21Z",
+      "side": 1,
+      "message": "nit: you don\u0027t actually know this was an `array` do you? Maybe emit the member type instead of `array`?",
+      "revId": "349421aa498864e40a48b17ab0630e23746c17f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
