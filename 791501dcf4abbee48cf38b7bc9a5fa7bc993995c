@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c83327d2_b72392d7",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T05:32:27Z",
+      "side": 1,
+      "message": "Upgrade to 16 and remove this constant.",
+      "parentUuid": "6b3073bf_15b54763",
+      "range": {
+        "startLine": 91,
+        "startChar": 59,
+        "endLine": 91,
+        "endChar": 61
+      },
+      "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b6344a1e_ab39a8c5",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0cdeb2b_f75ad94c",
+        "filename": "src/dawn/native/PhysicalDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T05:32:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6344a1e_ab39a8c5",
+      "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b2873c0_b81b5eee",
@@ -54,6 +96,24 @@
       "writtenOn": "2024-09-18T15:30:02Z",
       "side": 1,
       "message": "This would change and be part of the default limits? We might need to modify the null backend to set the limit as well.",
+      "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c33a791_5ed6dcbd",
+        "filename": "src/dawn/native/PhysicalDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T05:32:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b2873c0_b81b5eee",
       "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -89,6 +149,24 @@
       "side": 1,
       "message": "The origin design is that UseImmediateData is that we use this to control tests. But as your comments above said, we could enable features per backends achieve this.",
       "parentUuid": "0840fe7c_6a413e25",
+      "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfd9e356_8e70fc49",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-19T05:32:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "473e0ea7_92a268b0",
       "revId": "791501dcf4abbee48cf38b7bc9a5fa7bc993995c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
