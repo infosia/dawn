@@ -20,6 +20,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "528b3f3c_7afa980a",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-19T17:50:33Z",
+      "side": 1,
+      "message": "Suggest using `std::add_const_t\u003cDst\u003e` as this makes this metafunction more general (if Dst is already `const`, it won\u0027t add it).",
+      "range": {
+        "startLine": 48,
+        "startChar": 68,
+        "endLine": 48,
+        "endChar": 77
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5bc1479_f0272b53",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-19T17:50:33Z",
+      "side": 1,
+      "message": "nit: We usually use PascalCase for our template metafunctions, and don\u0027t bother including the `_t`, so `TrascribeConst` would be fine.",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8babedcf_04086756",
         "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
         "patchSetId": 1
