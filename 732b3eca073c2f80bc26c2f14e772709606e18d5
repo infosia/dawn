@@ -64,6 +64,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4ab5947_b6cf7f98",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-19T19:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "528b3f3c_7afa980a",
+      "range": {
+        "startLine": 48,
+        "startChar": 68,
+        "endLine": 48,
+        "endChar": 77
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e2de438_f0a0d424",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-19T19:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5bc1479_f0272b53",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8babedcf_04086756",
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5bdda91_fff8551b",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-19T19:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8babedcf_04086756",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 78
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f8b39636_778527c5",
@@ -100,6 +172,30 @@
       "writtenOn": "2024-09-19T17:45:00Z",
       "side": 1,
       "message": "This isn\u0027t needed, right, since `M` is already the template type of this class.",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 53
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84d07c41_1a404e4d",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-19T19:56:01Z",
+      "side": 1,
+      "message": "I don\u0027t think so anymore. (I think I put this in before the static_assert on M being a Module)",
+      "parentUuid": "f8b39636_778527c5",
       "range": {
         "startLine": 75,
         "startChar": 4,
@@ -251,6 +347,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c55c443_32bf8559",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-19T19:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33c60c4c_446e539e",
+      "range": {
+        "startLine": 76,
+        "startChar": 10,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25fc8a19_189a53ef",
@@ -264,6 +384,30 @@
       "writtenOn": "2024-09-19T17:45:00Z",
       "side": 1,
       "message": "I know this was already there, but this should just be a template parameter to this contructor, rather than a `std::function`, as it is only used within the body. Using `std::function` here means that we may end up heap-allocating and deallocating for no reason.",
+      "range": {
+        "startLine": 91,
+        "startChar": 50,
+        "endLine": 91,
+        "endChar": 59
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69d72fe2_d97ffae7",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-19T19:56:01Z",
+      "side": 1,
+      "message": "Can you point me at an example that looks like what you want here?\n\n(I am not familar enough with C++ templates to be aware of a pattern for replacing a use of std::function like this with a template param)",
+      "parentUuid": "25fc8a19_189a53ef",
       "range": {
         "startLine": 91,
         "startChar": 50,
