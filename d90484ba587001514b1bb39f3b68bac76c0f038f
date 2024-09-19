@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d935ef2_4a060948",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-19T19:42:44Z",
+      "side": 1,
+      "message": "Overall LGTM. Was wondering if it would be possible to split the spec roll and dawn node changes out into separate CL? (Though I don\u0027t think it should matter too much?)",
+      "revId": "d90484ba587001514b1bb39f3b68bac76c0f038f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "228a490a_7fe15d6e",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-19T19:42:44Z",
+      "side": 1,
+      "message": "[1] Could potentially roll this directly into the ctor initializer",
+      "range": {
+        "startLine": 1349,
+        "startChar": 4,
+        "endLine": 1351,
+        "endChar": 81
+      },
+      "revId": "d90484ba587001514b1bb39f3b68bac76c0f038f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7101fc7b_d5d7daad",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-19T19:42:44Z",
+      "side": 1,
+      "message": "nit. We could potentially make these `const` if [1].",
+      "range": {
+        "startLine": 265,
+        "startChar": 4,
+        "endLine": 266,
+        "endChar": 65
+      },
+      "revId": "d90484ba587001514b1bb39f3b68bac76c0f038f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
