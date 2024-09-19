@@ -16,6 +16,30 @@
       "message": "Will need more work to handle arrays-of-matrices if we need to support that in the future.",
       "revId": "44c3a3f59ac803aef95d738e90fd7bf76ca5d167",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aed13ace_c98c3bc0",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-19T20:49:50Z",
+      "side": 1,
+      "message": "\u003e \"tranpose\" is a possible misspelling of \"transpose\".\n\nPlease fix.",
+      "parentUuid": "15665b5f_b346475f",
+      "range": {
+        "startLine": 314,
+        "startChar": 47,
+        "endLine": 314,
+        "endChar": 55
+      },
+      "revId": "44c3a3f59ac803aef95d738e90fd7bf76ca5d167",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
