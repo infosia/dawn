@@ -16,6 +16,216 @@
       "message": "PTAL",
       "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8babedcf_04086756",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-19T17:45:00Z",
+      "side": 1,
+      "message": "Could be simplified to: `std::is_same\u003cstd::remove_cv_t\u003cM\u003e, Module()\u003e`",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 78
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8b39636_778527c5",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-19T17:45:00Z",
+      "side": 1,
+      "message": "This isn\u0027t needed, right, since `M` is already the template type of this class.",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 53
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33c60c4c_446e539e",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-19T17:45:00Z",
+      "side": 1,
+      "message": "Suggest `BlockT` instead of `BlockType`, same for `VarT` and `FunctionT`.",
+      "range": {
+        "startLine": 76,
+        "startChar": 10,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4c610600_d7edc804",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_vars.h",
+              "range": {
+                "startLine": 75,
+                "startChar": 0,
+                "endLine": 79,
+                "endChar": 0
+              },
+              "replacement": "    using ModuleT \u003d transcribe_const_t\u003cM, Module\u003e;\n    using BlockT \u003d transcribe_const_t\u003cM, Block\u003e;\n    using VarT \u003d transcribe_const_t\u003cM, Var\u003e;\n    using FunctionT \u003d transcribe_const_t\u003cM, Function\u003e;\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_vars.h",
+              "range": {
+                "startLine": 82,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": "    using Predicate \u003d std::function\u003cbool(VarT*)\u003e;\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_vars.h",
+              "range": {
+                "startLine": 85,
+                "startChar": 0,
+                "endLine": 86,
+                "endChar": 0
+              },
+              "replacement": "    using VarSet \u003d UniqueVector\u003cVarT*, 16\u003e;\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_vars.h",
+              "range": {
+                "startLine": 91,
+                "startChar": 0,
+                "endLine": 92,
+                "endChar": 0
+              },
+              "replacement": "    explicit ReferencedModuleVars(ModuleT\u0026 ir, Predicate\u0026\u0026 pred \u003d {}) {\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_vars.h",
+              "range": {
+                "startLine": 93,
+                "startChar": 0,
+                "endLine": 94,
+                "endChar": 0
+              },
+              "replacement": "        BlockT* root_block \u003d ir.root_block;\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_vars.h",
+              "range": {
+                "startLine": 95,
+                "startChar": 0,
+                "endLine": 96,
+                "endChar": 0
+              },
+              "replacement": "            if (auto* var \u003d inst-\u003etemplate As\u003cVarT\u003e()) {\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_vars.h",
+              "range": {
+                "startLine": 112,
+                "startChar": 0,
+                "endLine": 113,
+                "endChar": 0
+              },
+              "replacement": "    VarSet\u0026 TransitiveReferences(FunctionT* func) {\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_vars.h",
+              "range": {
+                "startLine": 122,
+                "startChar": 0,
+                "endLine": 123,
+                "endChar": 0
+              },
+              "replacement": "    Hashmap\u003cBlockT*, VarSet, 64\u003e block_to_direct_vars_{};\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_vars.h",
+              "range": {
+                "startLine": 125,
+                "startChar": 0,
+                "endLine": 126,
+                "endChar": 0
+              },
+              "replacement": "    Hashmap\u003cFunctionT*, VarSet, 8\u003e transitive_references_;\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_vars.h",
+              "range": {
+                "startLine": 130,
+                "startChar": 0,
+                "endLine": 131,
+                "endChar": 0
+              },
+              "replacement": "    void GetTransitiveReferences(BlockT* block, VarSet\u0026 vars) {\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_vars.h",
+              "range": {
+                "startLine": 151,
+                "startChar": 0,
+                "endLine": 152,
+                "endChar": 0
+              },
+              "replacement": "                    ctrl-\u003eForeachBlock([\u0026](BlockT* blk) { GetTransitiveReferences(blk, vars); });\n"
+            }
+          ]
+        }
+      ],
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25fc8a19_189a53ef",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-19T17:45:00Z",
+      "side": 1,
+      "message": "I know this was already there, but this should just be a template parameter to this contructor, rather than a `std::function`, as it is only used within the body. Using `std::function` here means that we may end up heap-allocating and deallocating for no reason.",
+      "range": {
+        "startLine": 91,
+        "startChar": 50,
+        "endLine": 91,
+        "endChar": 59
+      },
+      "revId": "732b3eca073c2f80bc26c2f14e772709606e18d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
