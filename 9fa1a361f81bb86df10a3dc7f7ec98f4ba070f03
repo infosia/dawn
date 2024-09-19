@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4aaee5d5_b7438385",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-19T09:30:07Z",
+      "side": 1,
+      "message": "PTAL! I didn\u0027t do windef_with_undefs.h as my Windows workstation apparently shut off and I didn\u0027t want to hammer trybots to figure out compilation issues :)",
+      "revId": "9fa1a361f81bb86df10a3dc7f7ec98f4ba070f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
