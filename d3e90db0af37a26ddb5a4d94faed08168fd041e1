@@ -22,6 +22,30 @@
       },
       "revId": "d3e90db0af37a26ddb5a4d94faed08168fd041e1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68469079_e1b224bb",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1804,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-09-19T20:50:33Z",
+      "side": 0,
+      "message": "Yes, this is an intentionally breaking change. Before, this was worked around in the VK backend by removing the incompatible usages from the views but they would not have worked if you tried to use them.\n\nDo you know of some other process we should go through due to potential breakage?",
+      "parentUuid": "0d09f8df_98526674",
+      "range": {
+        "startLine": 1800,
+        "startChar": 4,
+        "endLine": 1804,
+        "endChar": 5
+      },
+      "revId": "d3e90db0af37a26ddb5a4d94faed08168fd041e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

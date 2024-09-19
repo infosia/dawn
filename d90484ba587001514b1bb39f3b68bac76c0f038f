@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "57e72d62_2c62516f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-09-19T20:50:33Z",
+      "side": 1,
+      "message": "I figured that since it rolls gpuweb right up to adding the usage to the idl, it fits in with this CL. No strong preference though, could split it.",
+      "parentUuid": "4d935ef2_4a060948",
+      "revId": "d90484ba587001514b1bb39f3b68bac76c0f038f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "228a490a_7fe15d6e",
         "filename": "src/dawn/native/Texture.cpp",
         "patchSetId": 9
@@ -31,6 +49,30 @@
       "writtenOn": "2024-09-19T19:42:44Z",
       "side": 1,
       "message": "[1] Could potentially roll this directly into the ctor initializer",
+      "range": {
+        "startLine": 1349,
+        "startChar": 4,
+        "endLine": 1351,
+        "endChar": 81
+      },
+      "revId": "d90484ba587001514b1bb39f3b68bac76c0f038f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3ba7a78_0620975a",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-09-19T20:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "228a490a_7fe15d6e",
       "range": {
         "startLine": 1349,
         "startChar": 4,
@@ -54,6 +96,30 @@
       "writtenOn": "2024-09-19T19:42:44Z",
       "side": 1,
       "message": "nit. We could potentially make these `const` if [1].",
+      "range": {
+        "startLine": 265,
+        "startChar": 4,
+        "endLine": 266,
+        "endChar": 65
+      },
+      "revId": "d90484ba587001514b1bb39f3b68bac76c0f038f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8d03a74_89240b4f",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-09-19T20:50:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7101fc7b_d5d7daad",
       "range": {
         "startLine": 265,
         "startChar": 4,
