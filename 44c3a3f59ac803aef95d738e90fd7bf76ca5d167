@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9109400c_65b0a3c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-19T20:22:23Z",
+      "side": 1,
+      "message": "Will need more work to handle arrays-of-matrices if we need to support that in the future.",
+      "revId": "44c3a3f59ac803aef95d738e90fd7bf76ca5d167",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
