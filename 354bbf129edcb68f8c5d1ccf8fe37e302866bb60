@@ -104,6 +104,24 @@
       "parentUuid": "6a40938e_43e32daa",
       "revId": "354bbf129edcb68f8c5d1ccf8fe37e302866bb60",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b05c0021_8a978f90",
+        "filename": "src/dawn/tests/unittests/wire/WireCreatePipelineAsyncTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-19T23:19:38Z",
+      "side": 1,
+      "message": "Ack, no strong feeling either way. Makes sense to match std::span/string_view. Also kind of makes sense since `data` is \"required\" and `length` is \"optional\" in a way.",
+      "parentUuid": "5f921ea7_0834d9da",
+      "revId": "354bbf129edcb68f8c5d1ccf8fe37e302866bb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

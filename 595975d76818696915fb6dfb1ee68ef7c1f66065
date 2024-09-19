@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0c2941d_3ae768f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-19T23:19:38Z",
+      "side": 1,
+      "message": "lgtm, +2 since brandon indicated overall lgtm earlier",
+      "revId": "595975d76818696915fb6dfb1ee68ef7c1f66065",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
