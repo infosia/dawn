@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "119d55c1_1b349a56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-09-20T18:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28b4ae1d_9c69873a",
+      "revId": "93c5d9b13bf0acaff1b607cf94b1d971168aa369",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c259d93b_332e7471",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-09-20T17:30:08Z",
       "side": 1,
       "message": "Discussed offline - consider testing `i32` and `u32` as well.",
+      "revId": "93c5d9b13bf0acaff1b607cf94b1d971168aa369",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5173d07c_95c1a648",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-09-20T18:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c259d93b_332e7471",
       "revId": "93c5d9b13bf0acaff1b607cf94b1d971168aa369",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
