@@ -16,6 +16,41 @@
       "message": "Are the changes to this file intentionally included in this CL?",
       "revId": "5d1a1b43583b33393328e641414bb31e06ffd0d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "829bd7ce_fb1db624",
+        "filename": "tools/android/webgpu/src/androidTest/cpp/webgpu_wrapper_tests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-09-20T14:03:01Z",
+      "side": 1,
+      "message": "Is the idea that meaningful tests will follow?",
+      "fixSuggestions": [
+        {
+          "fixId": "5d7d7d22_243f2288",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/androidTest/cpp/webgpu_wrapper_tests.cpp",
+              "range": {
+                "startLine": 18,
+                "startChar": 0,
+                "endLine": 19,
+                "endChar": 0
+              },
+              "replacement": "    EXPECT_EQ(4, 2 + 2);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5d1a1b43583b33393328e641414bb31e06ffd0d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
