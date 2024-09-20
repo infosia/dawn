@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ba92a5e_82b6f87d",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2024-09-20T14:47:28Z",
+      "side": 1,
+      "message": "Yes, these changes follow the NDK template of native Android tests.\nhttps://github.com/DanAlbert/ndk-app-template/tree/main\nWe can adjust any setting if it breaks either tests or aar release.",
+      "parentUuid": "1e87545c_56fdce60",
+      "revId": "5d1a1b43583b33393328e641414bb31e06ffd0d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "829bd7ce_fb1db624",
         "filename": "tools/android/webgpu/src/androidTest/cpp/webgpu_wrapper_tests.cpp",
         "patchSetId": 1
@@ -49,6 +67,24 @@
           ]
         }
       ],
+      "revId": "5d1a1b43583b33393328e641414bb31e06ffd0d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ba69161_7e94e9d6",
+        "filename": "tools/android/webgpu/src/androidTest/cpp/webgpu_wrapper_tests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2024-09-20T14:47:28Z",
+      "side": 1,
+      "message": "Yes, the idea is to include tests of functions generated in methods.cpp, for example.",
+      "parentUuid": "829bd7ce_fb1db624",
       "revId": "5d1a1b43583b33393328e641414bb31e06ffd0d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
