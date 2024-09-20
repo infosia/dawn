@@ -94,6 +94,7 @@
         "args": [
             {"name": "status", "type": "request adapter status"},
             {"name": "adapter", "type": "adapter", "optional": true},
+            //TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
             {"name": "userdata", "type": "void *"}
         ]
@@ -103,6 +104,7 @@
         "args": [
             {"name": "status", "type": "request adapter status"},
             {"name": "adapter", "type": "adapter", "optional": true},
+            //TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
         ]
     },
@@ -221,6 +223,7 @@
         "category": "structure",
         "extensible": "out",
         "members": [
+            // TODOs
             {"name": "vendor", "type": "char", "annotation": "const*", "length": "strlen", "default": "nullptr"},
             {"name": "architecture", "type": "char", "annotation": "const*", "length": "strlen", "default": "nullptr"},
             {"name": "device", "type": "char", "annotation": "const*", "length": "strlen", "default": "nullptr"},
@@ -300,6 +303,7 @@
         "chained": "in",
         "chain roots": ["device descriptor"],
         "members": [
+            // TODO
             {"name": "isolation key", "type": "char", "annotation": "const*", "length": "strlen", "default": "\"\""},
             {"name": "load data function", "type": "dawn load cache data function", "default": "nullptr"},
             {"name": "store data function", "type": "dawn store cache data function", "default": "nullptr"},
@@ -756,6 +760,7 @@
         "category": "callback function",
         "args": [
             {"name": "status", "type": "map async status"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
@@ -854,6 +859,7 @@
         "category": "structure",
         "extensible": "in",
         "members": [
+            // TODO
             {"name": "key", "type": "char", "annotation": "const*", "length": "strlen"},
             {"name": "value", "type": "double"}
         ]
@@ -1110,6 +1116,7 @@
         "category": "structure",
         "extensible": "in",
         "members": [
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
             {"name": "type", "type": "compilation message type"},
             {"name": "line num", "type": "uint64_t"},
@@ -1322,6 +1329,7 @@
         "args": [
             {"name": "status", "type": "create pipeline async status"},
             {"name": "pipeline", "type": "compute pipeline", "optional": true},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
             {"name": "userdata", "type": "void *"}
         ]
@@ -1331,6 +1339,7 @@
         "args": [
             {"name": "status", "type": "create pipeline async status"},
             {"name": "pipeline", "type": "compute pipeline", "optional": true},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
         ]
     },
@@ -1368,6 +1377,7 @@
         "args": [
             {"name": "status", "type": "create pipeline async status"},
             {"name": "pipeline", "type": "render pipeline", "optional": true},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
             {"name": "userdata", "type": "void *"}
         ]
@@ -1377,6 +1387,7 @@
         "args": [
             {"name": "status", "type": "create pipeline async status"},
             {"name": "pipeline", "type": "render pipeline", "optional": true},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
         ]
     },
@@ -1813,6 +1824,7 @@
         "category": "function pointer",
         "args": [
             {"name": "reason", "type": "device lost reason"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
             {"name": "userdata", "type": "void *"}
         ]
@@ -1822,6 +1834,7 @@
         "args": [
             {"name": "device", "type": "device", "annotation": "const*", "length": 1},
             {"name": "reason", "type": "device lost reason"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
             {"name": "userdata", "type": "void *"}
         ]
@@ -1831,6 +1844,7 @@
         "args": [
             {"name": "device", "type": "device", "annotation": "const*", "length": 1},
             {"name": "reason", "type": "device lost reason"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
@@ -1869,6 +1883,7 @@
         "category": "function pointer",
         "args": [
             {"name": "type", "type": "error type"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
             {"name": "userdata", "type": "void *"}
         ]
@@ -1878,6 +1893,7 @@
         "args": [
             {"name": "device", "type": "device", "annotation": "const*", "length": 1},
             {"name": "type", "type": "error type"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
@@ -1908,6 +1924,7 @@
         "args": [
             {"name": "status", "type": "pop error scope status"},
             {"name": "type", "type": "error type"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
             {"name": "userdata", "type": "void *"}
         ]
@@ -1917,6 +1934,7 @@
         "args": [
             {"name": "status", "type": "pop error scope status"},
             {"name": "type", "type": "error type"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
@@ -2003,6 +2021,7 @@
         "tags": ["dawn"],
         "args": [
             {"name": "type", "type": "logging type"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
             {"name": "userdata", "type": "void *"}
         ]
@@ -3023,6 +3042,7 @@
         "extensible": "in",
         "members": [
             {"name": "module", "type": "shader module"},
+            // TODO
             {"name": "entry point", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
             {"name": "constant count", "type": "size_t", "default": 0},
             {"name": "constants", "type": "constant entry", "annotation": "const*", "length": "constant count"}
@@ -3724,6 +3744,7 @@
         "args": [
             {"name": "status", "type": "request device status"},
             {"name": "device", "type": "device", "optional": true},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
             {"name": "userdata", "type": "void *"}
         ]
@@ -3734,6 +3755,7 @@
         "args": [
             {"name": "status", "type": "request device status"},
             {"name": "device", "type": "device", "optional": true},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
         ]
     },
@@ -3770,6 +3792,7 @@
         "extensible": "in",
         "members": [
             {"name": "module", "type": "shader module"},
+            // TODO
             {"name": "entry point", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
             {"name": "constant count", "type": "size_t", "default": 0},
             {"name": "constants", "type": "constant entry", "annotation": "const*", "length": "constant count"},
@@ -3822,6 +3845,7 @@
         "extensible": "in",
         "members": [
             {"name": "module", "type": "shader module"},
+            // TODO
             {"name": "entry point", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
             {"name": "constant count", "type": "size_t", "default": 0},
             {"name": "constants", "type": "constant entry", "annotation": "const*", "length": "constant count"},
@@ -3964,6 +3988,7 @@
         "extensible": "in",
         "tags": ["upstream"],
         "members": [
+            // TODO
             {"name": "entry point", "type": "char", "annotation": "const*", "length": "strlen"},
             {"name": "layout", "type": "pipeline layout"}
         ]
@@ -4135,6 +4160,7 @@
         "chain roots": ["surface descriptor"],
         "tags": ["emscripten"],
         "members": [
+            // TODO
             {"name": "selector", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
