@@ -47,6 +47,14 @@ void emwgpuAdapterRequestDevice(WGPUAdapter adapter,
                                 WGPUDevice device,
                                 WGPUQueue queue,
                                 const WGPUDeviceDescriptor* descriptor);
+void emwgpuDeviceCreateComputePipeline(
+    WGPUDevice device,
+    FutureID futureId,
+    const WGPUComputePipelineDescriptor* descriptor);
+void emwgpuDeviceCreateRenderPipeline(
+    WGPUDevice device,
+    FutureID futureId,
+    const WGPURenderPipelineDescriptor* descriptor);
 void emwgpuInstanceRequestAdapter(WGPUInstance instance,
                                   FutureID futureId,
                                   const WGPURequestAdapterOptions* options);
@@ -281,6 +289,8 @@ enum class EventCompletionType {
   Shutdown,
 };
 enum class EventType {
+  CreateComputePipeline,
+  CreateRenderPipeline,
   DeviceLost,
   RequestAdapter,
   RequestDevice,
@@ -618,6 +628,62 @@ struct WGPUDeviceImpl final : public RefCountedWithExternalCount,
 // Future events.
 // ----------------------------------------------------------------------------
 
+template <typename Pipeline, EventType Type, typename CallbackInfo>
+class CreatePipelineEventBase final : public TrackedEvent {
+ public:
+  static constexpr EventType kType = Type;
+
+  CreatePipelineEventBase(InstanceID instance, const CallbackInfo& callbackInfo)
+      : TrackedEvent(instance, callbackInfo.mode),
+        mCallback(callbackInfo.callback),
+        mUserdata1(callbackInfo.userdata1),
+        mUserdata2(callbackInfo.userdata2) {}
+
+  EventType GetType() override { return kType; }
+
+  void ReadyHook(WGPUCreatePipelineAsyncStatus status,
+                 Pipeline pipeline,
+                 const char* message) {
+    mStatus = status;
+    mPipeline.Acquire(pipeline);
+    if (message) {
+      mMessage = message;
+    }
+  }
+
+  void Complete(FutureID, EventCompletionType type) override {
+    if (type == EventCompletionType::Shutdown) {
+      mStatus = WGPUCreatePipelineAsyncStatus_InstanceDropped;
+      mMessage = "A valid external Instance reference no longer exists.";
+    }
+    if (mCallback) {
+      mCallback(mStatus,
+                mStatus == WGPUCreatePipelineAsyncStatus_Success
+                    ? ReturnToAPI(std::move(mPipeline))
+                    : nullptr,
+                mMessage ? mMessage->c_str() : nullptr, mUserdata1, mUserdata2);
+    }
+  }
+
+ private:
+  using Callback = decltype(std::declval<CallbackInfo>().callback);
+  Callback mCallback = nullptr;
+  void* mUserdata1 = nullptr;
+  void* mUserdata2 = nullptr;
+
+  WGPUCreatePipelineAsyncStatus mStatus = WGPUCreatePipelineAsyncStatus_Success;
+  Ref<Pipeline> mPipeline;
+  std::optional<std::string> mMessage = std::nullopt;
+};
+using CreateComputePipelineEvent =
+    CreatePipelineEventBase<WGPUComputePipeline,
+                            EventType::CreateComputePipeline,
+                            WGPUCreateComputePipelineAsyncCallbackInfo2>;
+using CreateRenderPipelineEvent =
+    CreatePipelineEventBase<WGPURenderPipeline,
+                            EventType::CreateRenderPipeline,
+                            WGPUCreateRenderPipelineAsyncCallbackInfo2>;
+
 class DeviceLostEvent final : public TrackedEvent {
  public:
   static constexpr EventType kType = EventType::DeviceLost;
@@ -869,6 +935,22 @@ WGPUDevice emwgpuCreateDevice(WGPUInstance instance, WGPUQueue queue) {
 }
 
 // Future event callbacks.
+void emwgpuOnDeviceCreateComputePipelineCompleted(
+    FutureID futureId,
+    WGPUCreatePipelineAsyncStatus status,
+    WGPUComputePipeline pipeline,
+    const char* message) {
+  GetEventManager().SetFutureReady<CreateComputePipelineEvent>(
+      futureId, status, pipeline, message);
+}
+void emwgpuOnDeviceCreateRenderPipelineCompleted(
+    FutureID futureId,
+    WGPUCreatePipelineAsyncStatus status,
+    WGPURenderPipeline pipeline,
+    const char* message) {
+  GetEventManager().SetFutureReady<CreateRenderPipelineEvent>(
+      futureId, status, pipeline, message);
+}
 void emwgpuOnDeviceLostCompleted(FutureID futureId,
                                  WGPUDeviceLostReason reason,
                                  const char* message) {
@@ -1036,6 +1118,73 @@ WGPUFuture wgpuAdapterRequestDevice2(
 // ----------------------------------------------------------------------------
 // Methods of Device
 // ----------------------------------------------------------------------------
+
+void wgpuDeviceCreateComputePipelineAsync(
+    WGPUDevice device,
+    const WGPUComputePipelineDescriptor* descriptor,
+    WGPUCreateComputePipelineAsyncCallback callback,
+    void* userdata) {
+  WGPUCreateComputePipelineAsyncCallbackInfo2 callbackInfo = {};
+  callbackInfo.mode = WGPUCallbackMode_AllowSpontaneous;
+  callbackInfo.callback = [](WGPUCreatePipelineAsyncStatus status,
+                             WGPUComputePipeline pipeline, char const* message,
+                             void* callback, void* userdata) {
+    auto cb =
+        reinterpret_cast<WGPUCreateComputePipelineAsyncCallback>(callback);
+    cb(status, pipeline, message, userdata);
+  };
+  callbackInfo.userdata1 = reinterpret_cast<void*>(callback);
+  callbackInfo.userdata2 = userdata;
+  wgpuDeviceCreateComputePipelineAsync2(device, descriptor, callbackInfo);
+}
+
+WGPUFuture wgpuDeviceCreateComputePipelineAsync2(
+    WGPUDevice device,
+    const WGPUComputePipelineDescriptor* descriptor,
+    WGPUCreateComputePipelineAsyncCallbackInfo2 callbackInfo) {
+  auto [futureId, tracked] =
+      GetEventManager().TrackEvent(std::make_unique<CreateComputePipelineEvent>(
+          device->GetInstanceId(), callbackInfo));
+  if (!tracked) {
+    return WGPUFuture{kNullFutureId};
+  }
+
+  emwgpuDeviceCreateComputePipeline(device, futureId, descriptor);
+  return WGPUFuture{futureId};
+}
+
+void wgpuDeviceCreateRenderPipelineAsync(
+    WGPUDevice device,
+    const WGPURenderPipelineDescriptor* descriptor,
+    WGPUCreateRenderPipelineAsyncCallback callback,
+    void* userdata) {
+  WGPUCreateRenderPipelineAsyncCallbackInfo2 callbackInfo = {};
+  callbackInfo.mode = WGPUCallbackMode_AllowSpontaneous;
+  callbackInfo.callback = [](WGPUCreatePipelineAsyncStatus status,
+                             WGPURenderPipeline pipeline, char const* message,
+                             void* callback, void* userdata) {
+    auto cb = reinterpret_cast<WGPUCreateRenderPipelineAsyncCallback>(callback);
+    cb(status, pipeline, message, userdata);
+  };
+  callbackInfo.userdata1 = reinterpret_cast<void*>(callback);
+  callbackInfo.userdata2 = userdata;
+  wgpuDeviceCreateRenderPipelineAsync2(device, descriptor, callbackInfo);
+}
+
+WGPUFuture wgpuDeviceCreateRenderPipelineAsync2(
+    WGPUDevice device,
+    const WGPURenderPipelineDescriptor* descriptor,
+    WGPUCreateRenderPipelineAsyncCallbackInfo2 callbackInfo) {
+  auto [futureId, tracked] =
+      GetEventManager().TrackEvent(std::make_unique<CreateRenderPipelineEvent>(
+          device->GetInstanceId(), callbackInfo));
+  if (!tracked) {
+    return WGPUFuture{kNullFutureId};
+  }
+
+  emwgpuDeviceCreateRenderPipeline(device, futureId, descriptor);
+  return WGPUFuture{futureId};
+}
 
 WGPUQueue wgpuDeviceGetQueue(WGPUDevice device) {
   return device->GetQueue();
