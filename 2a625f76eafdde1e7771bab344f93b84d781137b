@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68e26129_91c3de38",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Non-mechanical change.",
+      "revId": "2a625f76eafdde1e7771bab344f93b84d781137b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6919e93f_33184c86",
+        "filename": "src/dawn/native/CreatePipelineAsyncEvent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Non-mechanical change.",
+      "revId": "2a625f76eafdde1e7771bab344f93b84d781137b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bdd9532_42fb1c6e",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Non-mechanical change.",
+      "revId": "2a625f76eafdde1e7771bab344f93b84d781137b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce4d7771_c9431649",
+        "filename": "src/dawn/native/ObjectBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Non-mechanical change.",
+      "revId": "2a625f76eafdde1e7771bab344f93b84d781137b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea60edb4_b334f0cc",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Non-mechanical change.",
+      "revId": "2a625f76eafdde1e7771bab344f93b84d781137b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ec3e84a_054f19b0",
+        "filename": "src/dawn/native/utils/WGPUHelpers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Non-mechanical change.",
+      "revId": "2a625f76eafdde1e7771bab344f93b84d781137b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d2196a1_a3f594c6",
+        "filename": "src/dawn/native/webgpu_absl_format.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Kai, following on the previous thread, would this be a bit better if it were `[undefined]` even if it would look the same as a string with value `\"[undefined]\"`?",
+      "revId": "2a625f76eafdde1e7771bab344f93b84d781137b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cbbdd18_0044f958",
+        "filename": "src/dawn/native/webgpu_absl_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Non-mechanical change.",
+      "revId": "2a625f76eafdde1e7771bab344f93b84d781137b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e402b6e_7da43d5f",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:23:12Z",
+      "side": 1,
+      "message": "Non-mechanical change.",
+      "revId": "2a625f76eafdde1e7771bab344f93b84d781137b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
