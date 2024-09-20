@@ -1395,16 +1395,17 @@ ObjectType ShaderModuleBase::GetType() const {
     return ObjectType::ShaderModule;
 }
 
-bool ShaderModuleBase::HasEntryPoint(const std::string& entryPoint) const {
+bool ShaderModuleBase::HasEntryPoint(std::string_view entryPoint) const {
     return mEntryPoints.contains(entryPoint);
 }
 
-ShaderModuleEntryPoint ShaderModuleBase::ReifyEntryPointName(const char* entryPointName,
-                                                             SingleShaderStage stage) const {
+ShaderModuleEntryPoint ShaderModuleBase::ReifyEntryPointName(
+    std::optional<std::string_view> entryPointName,
+    SingleShaderStage stage) const {
     ShaderModuleEntryPoint entryPoint;
     if (entryPointName) {
         entryPoint.defaulted = false;
-        entryPoint.name = entryPointName;
+        entryPoint.name = *entryPointName;
     } else {
         entryPoint.defaulted = true;
         entryPoint.name = mDefaultEntryPointNames[stage];
@@ -1416,7 +1417,7 @@ std::optional<bool> ShaderModuleBase::GetStrictMath() const {
     return mStrictMath;
 }
 
-const EntryPointMetadata& ShaderModuleBase::GetEntryPoint(const std::string& entryPoint) const {
+const EntryPointMetadata& ShaderModuleBase::GetEntryPoint(std::string_view entryPoint) const {
     DAWN_ASSERT(HasEntryPoint(entryPoint));
     return *mEntryPoints.at(entryPoint);
 }
