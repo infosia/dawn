@@ -1449,33 +1449,30 @@ var LibraryWebGPU = {
     return ptr;
   },
 
-  wgpuDeviceCreateComputePipelineAsync__deps: ['$callUserCallback', '$stringToUTF8OnStack', 'emwgpuCreateComputePipeline'],
-  wgpuDeviceCreateComputePipelineAsync: (devicePtr, descriptor, callback, userdata) => {
+  emwgpuDeviceCreateComputePipeline__i53abi:false,
+  emwgpuDeviceCreateComputePipeline__deps: ['$stringToUTF8OnStack', 'emwgpuCreateComputePipeline', 'emwgpuOnDeviceCreateComputePipelineCompleted'],
+  emwgpuDeviceCreateComputePipeline: (devicePtr, futureIdL, futureIdH, descriptor) => {
     var desc = WebGPU.makeComputePipelineDesc(descriptor);
     var device = WebGPU._tableGet(devicePtr);
     {{{ runtimeKeepalivePush() }}}
-    device.createComputePipelineAsync(desc).then((pipeline) => {
+    WebGPU._futureInsert(futureIdL, futureIdH, device.createComputePipelineAsync(desc).then((pipeline) => {
       {{{ runtimeKeepalivePop() }}}
-      callUserCallback(() => {
-        var ptr = _emwgpuCreateComputePipeline();
-        WebGPU._tableInsert(ptr, pipeline);
-        {{{ makeDynCall('vippp', 'callback') }}}({{{ gpu.CreatePipelineAsyncStatus.Success }}}, ptr, 0, userdata);
-      });
+      var pipelinePtr = _emwgpuCreateComputePipeline();
+      WebGPU._tableInsert(pipelinePtr, pipeline);
+      _emwgpuOnDeviceCreateComputePipelineCompleted(futureIdL, futureIdH, {{{ gpu.CreatePipelineAsyncStatus.Success }}}, pipelinePtr, 0);
     }, (pipelineError) => {
       {{{ runtimeKeepalivePop() }}}
-      callUserCallback(() => {
-        var sp = stackSave();
-        var messagePtr = stringToUTF8OnStack(pipelineError.message);
-        if (pipelineError.reason === 'validation') {
-          {{{ makeDynCall('vippp', 'callback') }}}({{{ gpu.CreatePipelineAsyncStatus.ValidationError }}}, 0, messagePtr, userdata);
-        } else if (pipelineError.reason === 'internal') {
-          {{{ makeDynCall('vippp', 'callback') }}}({{{ gpu.CreatePipelineAsyncStatus.InternalError }}}, 0, messagePtr, userdata);
-        } else {
-          {{{ makeDynCall('vippp', 'callback') }}}({{{ gpu.CreatePipelineAsyncStatus.Unknown }}}, 0, messagePtr, userdata);
-        }
-        stackRestore(sp);
-      });
-    });
+      var sp = stackSave();
+      var messagePtr = stringToUTF8OnStack(pipelineError.message);
+      if (pipelineError.reason === 'validation') {
+        _emwgpuOnDeviceCreateComputePipelineCompleted(futureIdL, futureIdH, {{{ gpu.CreatePipelineAsyncStatus.ValidationError }}}, 0, messagePtr);
+      } else if (pipelineError.reason === 'internal') {
+        _emwgpuOnDeviceCreateComputePipelineCompleted(futureIdL, futureIdH, {{{ gpu.CreatePipelineAsyncStatus.InternalError }}}, 0, messagePtr);
+      } else {
+        _emwgpuOnDeviceCreateComputePipelineCompleted(futureIdL, futureIdH, {{{ gpu.CreatePipelineAsyncStatus.Unknown }}}, 0, messagePtr);
+      }
+      stackRestore(sp);
+    }));
   },
 
   wgpuDeviceCreatePipelineLayout__deps: ['emwgpuCreatePipelineLayout'],
@@ -1564,33 +1561,30 @@ var LibraryWebGPU = {
     return ptr;
   },
 
-  wgpuDeviceCreateRenderPipelineAsync__deps: ['$callUserCallback', '$stringToUTF8OnStack', 'emwgpuCreateRenderPipeline'],
-  wgpuDeviceCreateRenderPipelineAsync: (devicePtr, descriptor, callback, userdata) => {
+  emwgpuDeviceCreateRenderPipeline__i53abi:false,
+  emwgpuDeviceCreateRenderPipeline__deps: ['$stringToUTF8OnStack', 'emwgpuCreateRenderPipeline', 'emwgpuOnDeviceCreateRenderPipelineCompleted'],
+  emwgpuDeviceCreateRenderPipeline: (devicePtr, futureIdL, futureIdH, descriptor) => {
     var desc = WebGPU.makeRenderPipelineDesc(descriptor);
     var device = WebGPU._tableGet(devicePtr);
     {{{ runtimeKeepalivePush() }}}
-    device.createRenderPipelineAsync(desc).then((pipeline) => {
+    WebGPU._futureInsert(futureIdL, futureIdH, device.createRenderPipelineAsync(desc).then((pipeline) => {
       {{{ runtimeKeepalivePop() }}}
-      callUserCallback(() => {
-        var ptr = _emwgpuCreateRenderPipeline();
-        WebGPU._tableInsert(ptr, pipeline);
-        {{{ makeDynCall('vippp', 'callback') }}}({{{ gpu.CreatePipelineAsyncStatus.Success }}}, ptr, 0, userdata);
-      });
+      var pipelinePtr = _emwgpuCreateRenderPipeline();
+      WebGPU._tableInsert(pipelinePtr, pipeline);
+      _emwgpuOnDeviceCreateRenderPipelineCompleted(futureIdL, futureIdH, {{{ gpu.CreatePipelineAsyncStatus.Success }}}, pipelinePtr, 0);
     }, (pipelineError) => {
       {{{ runtimeKeepalivePop() }}}
-      callUserCallback(() => {
-        var sp = stackSave();
-        var messagePtr = stringToUTF8OnStack(pipelineError.message);
-        if (pipelineError.reason === 'validation') {
-          {{{ makeDynCall('vippp', 'callback') }}}({{{ gpu.CreatePipelineAsyncStatus.ValidationError }}}, 0, messagePtr, userdata);
-        } else if (pipelineError.reason === 'internal') {
-          {{{ makeDynCall('vippp', 'callback') }}}({{{ gpu.CreatePipelineAsyncStatus.InternalError }}}, 0, messagePtr, userdata);
-        } else {
-          {{{ makeDynCall('vippp', 'callback') }}}({{{ gpu.CreatePipelineAsyncStatus.Unknown }}}, 0, messagePtr, userdata);
-        }
-        stackRestore(sp);
-      });
-    });
+      var sp = stackSave();
+      var messagePtr = stringToUTF8OnStack(pipelineError.message);
+      if (pipelineError.reason === 'validation') {
+        _emwgpuOnDeviceCreateRenderPipelineCompleted(futureIdL, futureIdH, {{{ gpu.CreatePipelineAsyncStatus.ValidationError }}}, 0, messagePtr);
+      } else if (pipelineError.reason === 'internal') {
+        _emwgpuOnDeviceCreateRenderPipelineCompleted(futureIdL, futureIdH, {{{ gpu.CreatePipelineAsyncStatus.InternalError }}}, 0, messagePtr);
+      } else {
+        _emwgpuOnDeviceCreateRenderPipelineCompleted(futureIdL, futureIdH, {{{ gpu.CreatePipelineAsyncStatus.Unknown }}}, 0, messagePtr);
+      }
+      stackRestore(sp);
+    }));
   },
 
   wgpuDeviceCreateSampler__deps: ['emwgpuCreateSampler'],
@@ -1917,14 +1911,12 @@ var LibraryWebGPU = {
         _emwgpuOnRequestAdapterCompleted(futureIdL, futureIdH, {{{ gpu.RequestAdapterStatus.Unavailable }}}, 0, messagePtr);
         stackRestore(sp);
       }
-      return;
     }, (ex) => {
       {{{ runtimeKeepalivePop() }}}
       var sp = stackSave();
       var messagePtr = stringToUTF8OnStack(ex.message);
       _emwgpuOnRequestAdapterCompleted(futureIdL, futureIdH, {{{ gpu.RequestAdapterStatus.Error }}}, 0, messagePtr);
       stackRestore(sp);
-      return;
     }));
   },
 
