@@ -747,7 +747,7 @@ var LibraryWebGPU = {
   // Methods of Buffer
   // --------------------------------------------------------------------------
 
-  wgpuBufferDestroy: (bufferPtr) => {
+  emwgpuBufferDestroy: (bufferPtr) => {
     var bufferWrapper = WebGPU._tableGet(bufferPtr);
     {{{ gpu.makeCheckDefined('bufferWrapper') }}}
     if (bufferWrapper.onUnmap) {
@@ -762,8 +762,8 @@ var LibraryWebGPU = {
 
   // In webgpu.h offset and size are passed in as size_t.
   // And library_webgpu assumes that size_t is always 32bit in emscripten.
-  wgpuBufferGetConstMappedRange__deps: ['$warnOnce', 'memalign', 'free'],
-  wgpuBufferGetConstMappedRange: (bufferPtr, offset, size) => {
+  emwgpuBufferGetConstMappedRange__deps: ['$warnOnce', 'memalign', 'free'],
+  emwgpuBufferGetConstMappedRange: (bufferPtr, offset, size) => {
     var bufferWrapper = WebGPU._tableGet(bufferPtr);
     {{{ gpu.makeCheckDefined('bufferWrapper') }}}
 
@@ -787,15 +787,10 @@ var LibraryWebGPU = {
     return data;
   },
 
-  wgpuBufferGetMapState: (bufferPtr) => {
-    var buffer = WebGPU._tableGet(bufferPtr).object;
-    return WebGPU.Int_BufferMapState[buffer.mapState];
-  },
-
   // In webgpu.h offset and size are passed in as size_t.
   // And library_webgpu assumes that size_t is always 32bit in emscripten.
-  wgpuBufferGetMappedRange__deps: ['$warnOnce', 'memalign', 'free'],
-  wgpuBufferGetMappedRange: (bufferPtr, offset, size) => {
+  emwgpuBufferGetMappedRange__deps: ['$warnOnce', 'memalign', 'free'],
+  emwgpuBufferGetMappedRange: (bufferPtr, offset, size) => {
     var bufferWrapper = WebGPU._tableGet(bufferPtr);
     {{{ gpu.makeCheckDefined('bufferWrapper') }}}
 
@@ -844,6 +839,7 @@ var LibraryWebGPU = {
 
   // In webgpu.h offset and size are passed in as size_t.
   // And library_webgpu assumes that size_t is always 32bit in emscripten.
+  // TODO(369445924) Deprecate this version of the implementation once headers are up to date.
   wgpuBufferMapAsync__deps: ['$callUserCallback'],
   wgpuBufferMapAsync: (bufferPtr, mode, offset, size, callback, userdata) => {
     var bufferWrapper = WebGPU._tableGet(bufferPtr);
@@ -871,12 +867,38 @@ var LibraryWebGPU = {
     });
   },
 
+  emwgpuBufferMapAsync__deps: ['emwgpuOnBufferMapAsyncCompleted'],
+  emwgpuBufferMapAsync: (bufferPtr, futureIdL, futureIdH, mode, offset, size) => {
+    var bufferWrapper = WebGPU._tableGet(bufferPtr);
+    {{{ gpu.makeCheckDefined('bufferWrapper') }}}
+    bufferWrapper.mapMode = mode;
+    bufferWrapper.onUnmap = [];
+    var buffer = bufferWrapper.object;
+
+    {{{ gpu.convertSentinelToUndefined('size') }}}
+
+    {{{ runtimeKeepalivePush() }}}
+    buffer.mapAsync(mode, offset, size).then(() => {
+      {{{ runtimeKeepalivePop() }}}
+      _emwgpuOnBufferMapAsyncCompleted(futureIdL, futureIdH, {{{ gpu.MapAsyncStatus.Success }}}, 0);
+    }, (ex) => {
+      {{{ runtimeKeepalivePop() }}}
+      var sp = stackSave();
+      var messagePtr = stringToUTF8OnStack(ex.message);
+      var status =
+        ex instanceof AbortError ? {{{ gpu.MapAsyncStatus.Aborted }}} :
+        ex instanceof OperationError ? {{{ gpu.MapAsyncStatus.Error }}} :
+        {{{ gpu.MapAsyncStatus.Unknown }}};
+        _emwgpuOnBufferMapAsyncCompleted(futureIdL, futureIdH, status, messagePtr);
+    });
+  },
+
   wgpuBufferSetLabel: (bufferPtr, labelPtr) => {
     var buffer = WebGPU._tableGet(bufferPtr).object;
     buffer.label = UTF8ToString(labelPtr);
   },
 
-  wgpuBufferUnmap: (bufferPtr) => {
+  emwgpuBufferUnmap: (bufferPtr) => {
     var bufferWrapper = WebGPU._tableGet(bufferPtr);
     {{{ gpu.makeCheckDefined('bufferWrapper') }}}
 
@@ -1395,8 +1417,7 @@ var LibraryWebGPU = {
     return ptr;
   },
 
-  wgpuDeviceCreateBuffer__deps: ['emwgpuCreateBuffer'],
-  wgpuDeviceCreateBuffer: (devicePtr, descriptor) => {
+  emwgpuDeviceCreateBuffer: (devicePtr, descriptor, bufferPtr) => {
     {{{ gpu.makeCheckDescriptor('descriptor') }}}
 
     var mappedAtCreation = {{{ gpu.makeGetBool('descriptor', C_STRUCTS.WGPUBufferDescriptor.mappedAtCreation) }}};
@@ -1414,13 +1435,11 @@ var LibraryWebGPU = {
     var bufferWrapper = {
       object: device.createBuffer(desc),
     };
-    var ptr = _emwgpuCreateBuffer();
-    WebGPU._tableInsert(ptr, bufferWrapper);
+    WebGPU._tableInsert(bufferPtr, bufferWrapper);
     if (mappedAtCreation) {
       bufferWrapper.mapMode = {{{ gpu.MapMode.Write }}};
       bufferWrapper.onUnmap = [];
     }
-    return ptr;
   },
 
   wgpuDeviceCreateCommandEncoder__deps: ['emwgpuCreateCommandEncoder'],
