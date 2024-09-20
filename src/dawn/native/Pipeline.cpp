@@ -50,15 +50,16 @@ bool IsDoubleValueRepresentableAsF16(double value) {
 namespace dawn::native {
 ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* device,
                                                                 const ShaderModuleBase* module,
-                                                                const char* entryPointName,
+                                                                NullableStringView entryPointName,
                                                                 uint32_t constantCount,
                                                                 const ConstantEntry* constants,
                                                                 const PipelineLayoutBase* layout,
                                                                 SingleShaderStage stage) {
     DAWN_TRY(device->ValidateObject(module));
 
-    if (entryPointName) {
-        DAWN_INVALID_IF(!module->HasEntryPoint(entryPointName),
+    std::optional<std::string_view> entryPointView = entryPointName;
+    if (entryPointView) {
+        DAWN_INVALID_IF(!module->HasEntryPoint(*entryPointView),
                         "Entry point \"%s\" doesn't exist in the shader module %s.", entryPointName,
                         module);
     } else {
@@ -75,7 +76,7 @@ ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* devi
         }
     }
 
-    ShaderModuleEntryPoint entryPoint = module->ReifyEntryPointName(entryPointName, stage);
+    ShaderModuleEntryPoint entryPoint = module->ReifyEntryPointName(entryPointView, stage);
     const EntryPointMetadata& metadata = module->GetEntryPoint(entryPoint.name);
 
     if (!metadata.infringedLimitErrors.empty()) {
@@ -103,7 +104,7 @@ ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* devi
     // pipelineBase is not yet constructed at this moment so iterate constants from descriptor
     size_t numUninitializedConstants = metadata.uninitializedOverrides.size();
     // Keep an initialized constants sets to handle duplicate initialization cases
-    absl::flat_hash_set<std::string> stageInitializedConstantIdentifiers;
+    absl::flat_hash_set<std::string_view> stageInitializedConstantIdentifiers;
     for (uint32_t i = 0; i < constantCount; i++) {
         DAWN_INVALID_IF(metadata.overrides.count(constants[i].key) == 0,
                         "Pipeline overridable constant \"%s\" not found in %s.", constants[i].key,
@@ -148,11 +149,12 @@ ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* devi
                 DAWN_UNREACHABLE();
         }
 
-        if (!stageInitializedConstantIdentifiers.contains(constants[i].key)) {
-            if (metadata.uninitializedOverrides.contains(constants[i].key)) {
+        std::string_view key = constants[i].key;
+        if (!stageInitializedConstantIdentifiers.contains(key)) {
+            if (metadata.uninitializedOverrides.contains(key)) {
                 numUninitializedConstants--;
             }
-            stageInitializedConstantIdentifiers.insert(constants[i].key);
+            stageInitializedConstantIdentifiers.insert(key);
         } else {
             // There are duplicate initializations
             return DAWN_VALIDATION_ERROR(
