@@ -47,6 +47,11 @@ void emwgpuAdapterRequestDevice(WGPUAdapter adapter,
                                 WGPUDevice device,
                                 WGPUQueue queue,
                                 const WGPUDeviceDescriptor* descriptor);
+void emwgpuBufferMapAsync(WGPUBuffer buffer,
+                          FutureID futureID,
+                          WGPUMapMode mode,
+                          size_t offset,
+                          size_t size);
 void emwgpuDeviceCreateComputePipeline(
     WGPUDevice device,
     FutureID futureId,
@@ -260,7 +265,6 @@ auto ReturnToAPI(Ref<T*>&& object) {
 #define WGPU_PASSTHROUGH_OBJECTS(X) \
   X(BindGroup)           \
   X(BindGroupLayout)     \
-  X(Buffer)              \
   X(CommandBuffer)       \
   X(CommandEncoder)      \
   X(ComputePassEncoder)  \
@@ -292,6 +296,7 @@ enum class EventType {
   CreateComputePipeline,
   CreateRenderPipeline,
   DeviceLost,
+  MapAsync,
   RequestAdapter,
   RequestDevice,
 };
@@ -540,7 +545,7 @@ class EventManager : NonMovable {
       auto& event = eventIt->second;
       assert(event->GetType() == Event::kType);
       static_cast<Event*>(event.get())
-          ->ReadyHook(std::forward<ReadyArgs>(readyArgs)...);
+          ->ReadyHook(futureId, std::forward<ReadyArgs>(readyArgs)...);
       event->mIsReady = true;
 
       // If the event can be spontaneously completed, prepare to do so now.
@@ -579,25 +584,21 @@ static EventManager& GetEventManager() {
   struct WGPU##Name##Impl final : public RefCounted {};
 WGPU_PASSTHROUGH_OBJECTS(DEFINE_WGPU_DEFAULT_STRUCT)
 
-// Instance is specially implemented in order to handle Futures implementation.
-struct WGPUInstanceImpl final : public RefCounted, public EventSource {
- public:
-  WGPUInstanceImpl();
-  ~WGPUInstanceImpl();
-
-  void ProcessEvents();
-  WGPUWaitStatus WaitAny(size_t count,
-                         WGPUFutureWaitInfo* infos,
-                         uint64_t timeoutNS);
-
- private:
-  static InstanceID GetNextInstanceId();
-};
-
 struct WGPUAdapterImpl final : public RefCounted, public EventSource {
  public:
   WGPUAdapterImpl(const EventSource* source);
 };
+
+struct WGPUBufferImpl final : public RefCountedWithExternalCount,
+                              public EventSource {
+ public:
+  WGPUBufferImpl(const EventSource* source);
+
+ private:
+  friend class MapAsyncEvent;
+
+  FutureID mPendingMapFutureId = kNullFutureId;
+}
 
 // Device is specially implemented in order to handle refcounting the Queue.
 struct WGPUDeviceImpl final : public RefCountedWithExternalCount,
@@ -622,6 +623,21 @@ struct WGPUDeviceImpl final : public RefCountedWithExternalCount,
   WGPUUncapturedErrorCallbackInfo2 mUncapturedErrorCallbackInfo =
       WGPU_UNCAPTURED_ERROR_CALLBACK_INFO_2_INIT;
   FutureID mDeviceLostFutureId = kNullFutureId;
+};
+
+// Instance is specially implemented in order to handle Futures implementation.
+struct WGPUInstanceImpl final : public RefCounted, public EventSource {
+ public:
+  WGPUInstanceImpl();
+  ~WGPUInstanceImpl();
+
+  void ProcessEvents();
+  WGPUWaitStatus WaitAny(size_t count,
+                         WGPUFutureWaitInfo* infos,
+                         uint64_t timeoutNS);
+
+ private:
+  static InstanceID GetNextInstanceId();
 };
 
 // ----------------------------------------------------------------------------
@@ -701,7 +717,7 @@ class DeviceLostEvent final : public TrackedEvent {
 
   EventType GetType() override { return kType; }
 
-  void ReadyHook(WGPUDeviceLostReason reason, const char* message) {
+  void ReadyHook(FutureID, WGPUDeviceLostReason reason, const char* message) {
     mReason = reason;
     if (message) {
       mMessage = message;
@@ -733,6 +749,47 @@ class DeviceLostEvent final : public TrackedEvent {
   std::optional<std::string> mMessage;
 };
 
+class MapAsyncEvent final : public TrackedEvent {
+ public:
+  static constexpr EventType kType = EventType::MapAsync;
+
+  MapAsyncEvent() {}
+
+  EventType GetType() override { return kType; }
+
+  void ReadyHook(FutureID futureId,
+                 WGPUMapAsyncStatus status,
+                 const char* message) {
+    // For mapping, this hook may be called more than once if we are not in
+    // Spontaneous mode. The precedence of which status should follow
+    // Success < Error < Aborted. Luckily, the enum is defined such that the
+    // precedence holds true already, so we can exploit that here.
+    if (status > mStatus) {
+      mStatus = status;
+      if (message) {
+        mMessage = message;
+      }
+    }
+  }
+
+  void Complete(FutureID, EventCompletionType type) override {
+    if (type == EventCompletionType::Shutdown) {
+      mStatus = WGPUMapAsyncStatus_InstanceDropped;
+      mMessage = "A valid external Instance reference no longer exists.";
+    }
+    if (mCallback) {
+    }
+  }
+
+ private:
+  WGPUBufferMapCallback2 mCallback = nullptr;
+  void* mUserdata1 = nullptr;
+  void* mUserdata2 = nullptr;
+
+  WGPUMapAsyncStatus mStatus = WGPUMapAsyncStatus_Success;
+  std::optional<std::string> mMessage = std::nullopt;
+};
+
 class RequestAdapterEvent final : public TrackedEvent {
  public:
   static constexpr EventType kType = EventType::RequestAdapter;
@@ -746,7 +803,8 @@ class RequestAdapterEvent final : public TrackedEvent {
 
   EventType GetType() override { return kType; }
 
-  void ReadyHook(WGPURequestAdapterStatus status,
+  void ReadyHook(FutureID,
+                 WGPURequestAdapterStatus status,
                  WGPUAdapter adapter,
                  const char* message) {
     mStatus = status;
@@ -839,32 +897,6 @@ WGPUAdapterImpl::WGPUAdapterImpl(const EventSource* source)
     : EventSource(source->GetInstanceId()) {}
 
 // ----------------------------------------------------------------------------
-// WGPUInstanceImpl implementations.
-// ----------------------------------------------------------------------------
-
-WGPUInstanceImpl::WGPUInstanceImpl() : EventSource(GetNextInstanceId()) {
-  GetEventManager().RegisterInstance(GetInstanceId());
-}
-WGPUInstanceImpl::~WGPUInstanceImpl() {
-  GetEventManager().UnregisterInstance(GetInstanceId());
-}
-
-void WGPUInstanceImpl::ProcessEvents() {
-  GetEventManager().ProcessEvents(GetInstanceId());
-}
-
-WGPUWaitStatus WGPUInstanceImpl::WaitAny(size_t count,
-                                         WGPUFutureWaitInfo* infos,
-                                         uint64_t timeoutNS) {
-  return GetEventManager().WaitAny(GetInstanceId(), count, infos, timeoutNS);
-}
-
-InstanceID WGPUInstanceImpl::GetNextInstanceId() {
-  static std::atomic<InstanceID> kNextInstanceId = 1;
-  return kNextInstanceId++;
-}
-
-// ----------------------------------------------------------------------------
 // WGPUDeviceImpl implementations.
 // ----------------------------------------------------------------------------
 
@@ -914,6 +946,32 @@ void WGPUDeviceImpl::WillDropLastExternalRef() {
 }
 
 // ----------------------------------------------------------------------------
+// WGPUInstanceImpl implementations.
+// ----------------------------------------------------------------------------
+
+WGPUInstanceImpl::WGPUInstanceImpl() : EventSource(GetNextInstanceId()) {
+  GetEventManager().RegisterInstance(GetInstanceId());
+}
+WGPUInstanceImpl::~WGPUInstanceImpl() {
+  GetEventManager().UnregisterInstance(GetInstanceId());
+}
+
+void WGPUInstanceImpl::ProcessEvents() {
+  GetEventManager().ProcessEvents(GetInstanceId());
+}
+
+WGPUWaitStatus WGPUInstanceImpl::WaitAny(size_t count,
+                                         WGPUFutureWaitInfo* infos,
+                                         uint64_t timeoutNS) {
+  return GetEventManager().WaitAny(GetInstanceId(), count, infos, timeoutNS);
+}
+
+InstanceID WGPUInstanceImpl::GetNextInstanceId() {
+  static std::atomic<InstanceID> kNextInstanceId = 1;
+  return kNextInstanceId++;
+}
+
+// ----------------------------------------------------------------------------
 // Definitions for C++ emwgpu functions (callable from library_webgpu.js)
 // ----------------------------------------------------------------------------
 extern "C" {
@@ -928,6 +986,10 @@ WGPU_PASSTHROUGH_OBJECTS(DEFINE_EMWGPU_DEFAULT_CREATE)
 
 WGPUAdapter emwgpuCreateAdapter(WGPUInstance instance) {
   return new WGPUAdapterImpl(instance);
+}
+
+WGPUBuffer emwgpuCreateBuffer(WGPUDevice device) {
+  return new WGPUBufferImpl(device);
 }
 
 WGPUDevice emwgpuCreateDevice(WGPUInstance instance, WGPUQueue queue) {
@@ -955,6 +1017,11 @@ void emwgpuOnDeviceLostCompleted(FutureID futureId,
                                  WGPUDeviceLostReason reason,
                                  const char* message) {
   GetEventManager().SetFutureReady<DeviceLostEvent>(futureId, reason, message);
+}
+void emwgpuOnMapAsyncCompleted(FutureID futureId,
+                               WGPUMapAsyncStatus status,
+                               const char* message) {
+  GetEventManager().SetFutureReady<MapAsyncEvent>(futureId, status, message);
 }
 void emwgpuOnRequestAdapterCompleted(FutureID futureId,
                                      WGPURequestAdapterStatus status,
