@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e87545c_56fdce60",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-09-20T14:02:07Z",
+      "side": 1,
+      "message": "Are the changes to this file intentionally included in this CL?",
+      "revId": "5d1a1b43583b33393328e641414bb31e06ffd0d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
