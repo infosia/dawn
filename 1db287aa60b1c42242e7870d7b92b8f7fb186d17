@@ -16,6 +16,40 @@
       "message": "cwallez@: Bots happy now :). Do you think we need another reviewer for this?",
       "revId": "1db287aa60b1c42242e7870d7b92b8f7fb186d17",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f98d71c_978ad8ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T08:12:33Z",
+      "side": 1,
+      "message": "LGTM still, it\u0027d be nice to have a second reviewer, Jiawei could you TAL?",
+      "revId": "1db287aa60b1c42242e7870d7b92b8f7fb186d17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fad1e54f_b02480ac",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T08:12:33Z",
+      "side": 1,
+      "message": "nit: I think we don\u0027t need the tail if we insert in the first position in the chain:\n\n```\nauto InsertInChain \u003d [\u0026](wgpu::ChainedStructOut* node) {\n    node.nextInChain \u003d limits.nextInChain;\n    limits.nextInChain \u003d node;\n};\n```",
+      "revId": "1db287aa60b1c42242e7870d7b92b8f7fb186d17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
