@@ -100,7 +100,7 @@ ResultOrError<UnpackedPtr<PipelineLayoutDescriptor>> ValidatePipelineLayoutDescr
 
 StageAndDescriptor::StageAndDescriptor(SingleShaderStage shaderStage,
                                        ShaderModuleBase* module,
-                                       const char* entryPoint,
+                                       NullableStringView entryPoint,
                                        size_t constantCount,
                                        ConstantEntry const* constants)
     : shaderStage(shaderStage),
