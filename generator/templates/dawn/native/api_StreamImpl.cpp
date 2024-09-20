@@ -32,6 +32,7 @@
 {% set prefix = metadata.proc_table_prefix.lower() %}
 #include "{{native_dir}}/CacheKey.h"
 #include "{{native_dir}}/{{prefix}}_platform.h"
+#include "{{native_dir}}/{{metadata.namespace}}_structs_autogen.h"
 
 #include <cstring>
 
@@ -96,12 +97,21 @@ namespace {{native_namespace}} {
     {% endif %}
 {% endmacro %}
 
-// Custom stream operator for special bool type.
+// Custom stream operator for special bool type that doesn't have the same size as C++'s bool.
 {% set BoolCppType = metadata.namespace + "::" + as_cppType(types["bool"].name) %}
 template <>
 void stream::Stream<{{BoolCppType}}>::Write(stream::Sink* sink, const {{BoolCppType}}& t) {
     StreamIn(sink, static_cast<bool>(t));
 }
+
+//Custom stream operator for NullableStringView.
+{% set NullableStringViewType = as_cppType(types["nullable string view"].name) %}
+template <>
+void stream::Stream<{{NullableStringViewType}}>::Write(stream::Sink* sink, const {{NullableStringViewType}}& t) {
+    std::optional<std::string_view> sv = t;
+    StreamIn(sink, sv);
+}
+
 
 {% call render_streaming_impl("adapter info", true, false) %}
 {% endcall %}
