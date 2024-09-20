@@ -94,6 +94,7 @@
         "args": [
             {"name": "status", "type": "request adapter status"},
             {"name": "adapter", "type": "adapter", "optional": true},
+            //TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
             {"name": "userdata", "type": "void *"}
         ]
@@ -103,6 +104,7 @@
         "args": [
             {"name": "status", "type": "request adapter status"},
             {"name": "adapter", "type": "adapter", "optional": true},
+            //TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
         ]
     },
@@ -221,6 +223,7 @@
         "category": "structure",
         "extensible": "out",
         "members": [
+            // TODOs
             {"name": "vendor", "type": "char", "annotation": "const*", "length": "strlen", "default": "nullptr"},
             {"name": "architecture", "type": "char", "annotation": "const*", "length": "strlen", "default": "nullptr"},
             {"name": "device", "type": "char", "annotation": "const*", "length": "strlen", "default": "nullptr"},
@@ -756,6 +759,7 @@
         "category": "callback function",
         "args": [
             {"name": "status", "type": "map async status"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
@@ -1110,6 +1114,7 @@
         "category": "structure",
         "extensible": "in",
         "members": [
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
             {"name": "type", "type": "compilation message type"},
             {"name": "line num", "type": "uint64_t"},
@@ -1331,6 +1336,7 @@
         "args": [
             {"name": "status", "type": "create pipeline async status"},
             {"name": "pipeline", "type": "compute pipeline", "optional": true},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
         ]
     },
@@ -1377,6 +1383,7 @@
         "args": [
             {"name": "status", "type": "create pipeline async status"},
             {"name": "pipeline", "type": "render pipeline", "optional": true},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
         ]
     },
@@ -1831,6 +1838,7 @@
         "args": [
             {"name": "device", "type": "device", "annotation": "const*", "length": 1},
             {"name": "reason", "type": "device lost reason"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
@@ -1869,6 +1877,7 @@
         "category": "function pointer",
         "args": [
             {"name": "type", "type": "error type"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
             {"name": "userdata", "type": "void *"}
         ]
@@ -1878,6 +1887,7 @@
         "args": [
             {"name": "device", "type": "device", "annotation": "const*", "length": 1},
             {"name": "type", "type": "error type"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
@@ -1917,6 +1927,7 @@
         "args": [
             {"name": "status", "type": "pop error scope status"},
             {"name": "type", "type": "error type"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
         ]
     },
@@ -2003,6 +2014,7 @@
         "tags": ["dawn"],
         "args": [
             {"name": "type", "type": "logging type"},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
             {"name": "userdata", "type": "void *"}
         ]
@@ -3734,6 +3746,7 @@
         "args": [
             {"name": "status", "type": "request device status"},
             {"name": "device", "type": "device", "optional": true},
+            // TODO
             {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
         ]
     },
