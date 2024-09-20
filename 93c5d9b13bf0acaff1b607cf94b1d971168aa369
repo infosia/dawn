@@ -16,6 +16,40 @@
       "message": "Spoke to james in person. \nCheck on integer versions of these functions. Add to end2end tests.",
       "revId": "93c5d9b13bf0acaff1b607cf94b1d971168aa369",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bbcd4f8_26adcc88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-20T17:30:08Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "93c5d9b13bf0acaff1b607cf94b1d971168aa369",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c259d93b_332e7471",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-20T17:30:08Z",
+      "side": 1,
+      "message": "Discussed offline - consider testing `i32` and `u32` as well.",
+      "revId": "93c5d9b13bf0acaff1b607cf94b1d971168aa369",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
