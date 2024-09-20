@@ -70,6 +70,30 @@
       },
       "revId": "d3e90db0af37a26ddb5a4d94faed08168fd041e1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aea16ddf_212ce37f",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1804,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:08:35Z",
+      "side": 0,
+      "message": "Yeah we agreed that this tiny breaking change we\u0027d just do as IIRC it only affects `BGRA8Unorm` if you don\u0027t request the `bgra8unorm-storage` feature.",
+      "parentUuid": "1645c37e_451dff04",
+      "range": {
+        "startLine": 1800,
+        "startChar": 4,
+        "endLine": 1804,
+        "endChar": 5
+      },
+      "revId": "d3e90db0af37a26ddb5a4d94faed08168fd041e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

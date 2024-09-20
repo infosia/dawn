@@ -16,6 +16,108 @@
       "message": "Thanks for the review!",
       "revId": "cd7d35f0da0138220c3ad2379d8c99e61eb964be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16f69a43_cf173e4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:08:35Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "cd7d35f0da0138220c3ad2379d8c99e61eb964be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47ea9d6c_9379a31f",
+        "filename": "src/dawn/native/CommandValidation.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:08:35Z",
+      "side": 1,
+      "message": "Would it be possible to have a `DAWN_ASSERT` that `usage` is a subset of a `kTextureUsageRequiringViews` defined around [1]? Likewise an assert in `ValidateCanUseAs(TextureBase)` that we don\u0027t have any of the view usages. This would make sure that when we add more `ValidateCanUseAs` calls in the future we do it on the correct object (view or parent texture). (I\u0027m not actually sure if this invariant that view and non-view usages are disjoint isn\u0027t already broken in some way by the WebGPU spec).",
+      "revId": "cd7d35f0da0138220c3ad2379d8c99e61eb964be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "310d14d0_0d4a5112",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:08:35Z",
+      "side": 1,
+      "message": "Why do we need to validate the `inheritedUsages` against the parent texture\u0027s dimension? Since `inheritedUsages` is a subset of `texture-\u003eGetUsage()`, this validation should have already been done as part of the texture creation validation.\n\nAh it\u0027s because what we are really validating is that the usages work with the format.",
+      "revId": "cd7d35f0da0138220c3ad2379d8c99e61eb964be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae43c778_bbae0dce",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:08:35Z",
+      "side": 1,
+      "message": "optional-nit: Would it be sufficient to copy over the internal usages from the parent texture? It\u0027s a bit more usages than strictly needed but doesn\u0027t seem like a terrible pessimization.",
+      "revId": "cd7d35f0da0138220c3ad2379d8c99e61eb964be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bac49cd_d6d57412",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1445,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:08:35Z",
+      "side": 1,
+      "message": "Can we `ASSERT(!IsError())` to help make sure that validation code doesn\u0027t try to use invalid data from error textures?",
+      "revId": "cd7d35f0da0138220c3ad2379d8c99e61eb964be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5c1f4ff_96a7d6ae",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-20T09:08:35Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "cd7d35f0da0138220c3ad2379d8c99e61eb964be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
