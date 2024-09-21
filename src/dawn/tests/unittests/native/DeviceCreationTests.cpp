@@ -161,9 +161,9 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
             wgpu::Device device = unsafeAdapter.CreateDevice(&deviceDescriptor);
             EXPECT_NE(device, nullptr);
 
-            ASSERT_EQ(1u, device.EnumerateFeatures(nullptr));
+            ASSERT_EQ(1u, device.GetFeatures(nullptr));
             wgpu::FeatureName enabledFeature;
-            device.EnumerateFeatures(&enabledFeature);
+            device.GetFeatures(&enabledFeature);
             EXPECT_EQ(enabledFeature, featureName);
         }
 
@@ -181,9 +181,9 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
                 wgpu::Device device = adapter.CreateDevice(&deviceDescriptor);
                 EXPECT_NE(device, nullptr);
 
-                ASSERT_EQ(1u, device.EnumerateFeatures(nullptr));
+                ASSERT_EQ(1u, device.GetFeatures(nullptr));
                 wgpu::FeatureName enabledFeature;
-                device.EnumerateFeatures(&enabledFeature);
+                device.GetFeatures(&enabledFeature);
                 EXPECT_EQ(enabledFeature, featureName);
             }
 
@@ -192,9 +192,9 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
                 wgpu::Device device = unsafeAdapter.CreateDevice(&deviceDescriptor);
                 EXPECT_NE(device, nullptr);
 
-                ASSERT_EQ(1u, device.EnumerateFeatures(nullptr));
+                ASSERT_EQ(1u, device.GetFeatures(nullptr));
                 wgpu::FeatureName enabledFeature;
-                device.EnumerateFeatures(&enabledFeature);
+                device.GetFeatures(&enabledFeature);
                 EXPECT_EQ(enabledFeature, featureName);
             }
         }

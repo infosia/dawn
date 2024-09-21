@@ -1073,9 +1073,9 @@ wgpu::SupportedLimits DawnTestBase::GetSupportedLimits() {
 bool DawnTestBase::SupportsFeatures(const std::vector<wgpu::FeatureName>& features) {
     DAWN_ASSERT(mBackendAdapter);
     std::vector<wgpu::FeatureName> supportedFeatures;
-    uint32_t count = native::GetProcs().adapterEnumerateFeatures(mBackendAdapter.Get(), nullptr);
+    uint32_t count = native::GetProcs().adapterGetFeatures(mBackendAdapter.Get(), nullptr);
     supportedFeatures.resize(count);
-    native::GetProcs().adapterEnumerateFeatures(
+    native::GetProcs().adapterGetFeatures(
         mBackendAdapter.Get(), reinterpret_cast<WGPUFeatureName*>(&supportedFeatures[0]));
 
     std::unordered_set<wgpu::FeatureName> supportedSet;

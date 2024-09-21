@@ -430,6 +430,17 @@ size_t FeaturesSet::EnumerateFeatures(wgpu::FeatureName* features) const {
     return featuresBitSet.count();
 }
 
+size_t FeaturesSet::GetFeatures(wgpu::FeatureName* features) const {
+    for (Feature f : IterateBitSet(featuresBitSet)) {
+        wgpu::FeatureName feature = ToAPI(f);
+        if (features != nullptr) {
+            *features = feature;
+            features += 1;
+        }
+    }
+    return featuresBitSet.count();
+}
+
 std::vector<const char*> FeaturesSet::GetEnabledFeatureNames() const {
     std::vector<const char*> enabledFeatureNames(featuresBitSet.count());
 

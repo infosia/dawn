@@ -156,10 +156,10 @@ TEST_P(WireInstanceTests, RequestAdapterSuccess) {
                     return WGPUStatus_Success;
                 })));
 
-            EXPECT_CALL(api, AdapterEnumerateFeatures(apiAdapter, nullptr))
+            EXPECT_CALL(api, AdapterGetFeatures(apiAdapter, nullptr))
                 .WillOnce(Return(fakeFeatures.size()));
 
-            EXPECT_CALL(api, AdapterEnumerateFeatures(apiAdapter, NotNull()))
+            EXPECT_CALL(api, AdapterGetFeatures(apiAdapter, NotNull()))
                 .WillOnce(WithArg<1>(Invoke([&](WGPUFeatureName* features) {
                     for (WGPUFeatureName feature : fakeFeatures) {
                         *(features++) = feature;
@@ -195,9 +195,9 @@ TEST_P(WireInstanceTests, RequestAdapterSuccess) {
                 EXPECT_EQ(limits.limits.maxVertexAttributes, fakeLimits.limits.maxVertexAttributes);
 
                 std::vector<WGPUFeatureName> features;
-                features.resize(wgpuAdapterEnumerateFeatures(adapter, nullptr));
+                features.resize(wgpuAdapterGetFeatures(adapter, nullptr));
                 ASSERT_EQ(features.size(), fakeFeatures.size());
-                EXPECT_EQ(wgpuAdapterEnumerateFeatures(adapter, &features[0]), features.size());
+                EXPECT_EQ(wgpuAdapterGetFeatures(adapter, &features[0]), features.size());
 
                 std::unordered_set<WGPUFeatureName> featureSet(fakeFeatures);
                 for (WGPUFeatureName feature : features) {
@@ -289,10 +289,10 @@ TEST_P(WireInstanceTests, RequestAdapterPassesChainedProperties) {
                     return WGPUStatus_Success;
                 })));
 
-            EXPECT_CALL(api, AdapterEnumerateFeatures(apiAdapter, nullptr))
+            EXPECT_CALL(api, AdapterGetFeatures(apiAdapter, nullptr))
                 .WillOnce(Return(fakeFeatures.size()));
 
-            EXPECT_CALL(api, AdapterEnumerateFeatures(apiAdapter, NotNull()))
+            EXPECT_CALL(api, AdapterGetFeatures(apiAdapter, NotNull()))
                 .WillOnce(WithArg<1>(Invoke([&](WGPUFeatureName* features) {
                     for (WGPUFeatureName feature : fakeFeatures) {
                         *(features++) = feature;
@@ -385,10 +385,10 @@ TEST_P(WireInstanceTests, RequestAdapterWireLacksFeatureSupport) {
                     return WGPUStatus_Success;
                 })));
 
-            EXPECT_CALL(api, AdapterEnumerateFeatures(apiAdapter, nullptr))
+            EXPECT_CALL(api, AdapterGetFeatures(apiAdapter, nullptr))
                 .WillOnce(Return(fakeFeatures.size()));
 
-            EXPECT_CALL(api, AdapterEnumerateFeatures(apiAdapter, NotNull()))
+            EXPECT_CALL(api, AdapterGetFeatures(apiAdapter, NotNull()))
                 .WillOnce(WithArg<1>(Invoke([&](WGPUFeatureName* features) {
                     for (WGPUFeatureName feature : fakeFeatures) {
                         *(features++) = feature;
@@ -407,8 +407,8 @@ TEST_P(WireInstanceTests, RequestAdapterWireLacksFeatureSupport) {
         EXPECT_CALL(mockCb, Call(WGPURequestAdapterStatus_Success, NotNull(), nullptr, nullptr))
             .WillOnce(WithArg<1>(Invoke([&](WGPUAdapter adapter) {
                 WGPUFeatureName feature;
-                ASSERT_EQ(wgpuAdapterEnumerateFeatures(adapter, nullptr), 1u);
-                wgpuAdapterEnumerateFeatures(adapter, &feature);
+                ASSERT_EQ(wgpuAdapterGetFeatures(adapter, nullptr), 1u);
+                wgpuAdapterGetFeatures(adapter, &feature);
                 EXPECT_EQ(feature, WGPUFeatureName_Depth32FloatStencil8);
             })));
 

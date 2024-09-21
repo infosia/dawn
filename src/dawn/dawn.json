@@ -171,6 +171,13 @@
                 ]
             },
             {
+                "name": "get features",
+                "returns": "size_t",
+                "args": [
+                    {"name": "features", "type": "feature name", "annotation": "*"}
+                ]
+            },
+            {
                 "name": "request device",
                 "args": [
                     {"name": "descriptor", "type": "device descriptor", "annotation": "const*", "optional": true, "no_default": true},
@@ -1669,6 +1676,13 @@
             },
             {
                 "name": "enumerate features",
+                "returns": "size_t",
+                "args": [
+                    {"name": "features", "type": "feature name", "annotation": "*"}
+                ]
+            },
+            {
+                "name": "get features",
                 "returns": "size_t",
                 "args": [
                     {"name": "features", "type": "feature name", "annotation": "*"}

@@ -2009,6 +2009,10 @@ size_t DeviceBase::APIEnumerateFeatures(wgpu::FeatureName* features) const {
     return mEnabledFeatures.EnumerateFeatures(features);
 }
 
+size_t DeviceBase::APIGetFeatures(wgpu::FeatureName* features) const {
+    return mEnabledFeatures.GetFeatures(features);
+}
+
 void DeviceBase::APIInjectError2(wgpu::ErrorType type, std::string_view message) {
     if (ConsumedError(ValidateErrorType(type))) {
         return;

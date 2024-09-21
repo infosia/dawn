@@ -98,6 +98,7 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     WGPUStatus GetLimits(WGPUSupportedLimits* limits) const;
     bool HasFeature(WGPUFeatureName feature) const;
     size_t EnumerateFeatures(WGPUFeatureName* features) const;
+    size_t GetFeatures(WGPUFeatureName* features) const;
     WGPUAdapter GetAdapter() const;
     WGPUQueue GetQueue();
 

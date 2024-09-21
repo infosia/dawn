@@ -88,9 +88,9 @@ void Server::OnRequestAdapterCallback(RequestAdapterUserdata* data,
     // Query and report the adapter supported features.
     std::vector<WGPUFeatureName> features;
 
-    size_t featuresCount = mProcs.adapterEnumerateFeatures(adapter, nullptr);
+    size_t featuresCount = mProcs.adapterGetFeatures(adapter, nullptr);
     features.resize(featuresCount);
-    mProcs.adapterEnumerateFeatures(adapter, features.data());
+    mProcs.adapterGetFeatures(adapter, features.data());
 
     // Hide features the wire cannot support.
     auto it = std::partition(features.begin(), features.end(), IsFeatureSupported);
