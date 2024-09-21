@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdd972e4_634887f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-21T15:53:07Z",
+      "side": 1,
+      "message": "PTAL, I noted all non mechanical changes in comments.",
+      "revId": "a5aefcb6f3a68a5e99a9c51449f4b829adb10786",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7a1cbaf_d05b2584",
+        "filename": "generator/templates/art/api_kotlin_types.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-21T15:53:07Z",
+      "side": 1,
+      "message": "More non-mechanical changes.",
+      "revId": "a5aefcb6f3a68a5e99a9c51449f4b829adb10786",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f08f3342_e7909051",
+        "filename": "generator/templates/dawn/native/api_absl_format.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-21T15:53:07Z",
+      "side": 1,
+      "message": "More non-mechanical changes.",
+      "revId": "a5aefcb6f3a68a5e99a9c51449f4b829adb10786",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c616f1a_0a38d75b",
+        "filename": "src/dawn/tests/unittests/wire/WireExtensionTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-21T15:53:07Z",
+      "side": 1,
+      "message": "More non-mechanical changes.",
+      "revId": "a5aefcb6f3a68a5e99a9c51449f4b829adb10786",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
