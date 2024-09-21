@@ -50,6 +50,24 @@
       "message": "nit: I think we don\u0027t need the tail if we insert in the first position in the chain:\n\n```\nauto InsertInChain \u003d [\u0026](wgpu::ChainedStructOut* node) {\n    node.nextInChain \u003d limits.nextInChain;\n    limits.nextInChain \u003d node;\n};\n```",
       "revId": "1db287aa60b1c42242e7870d7b92b8f7fb186d17",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb39b2a0_27e9bb17",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-21T01:45:38Z",
+      "side": 1,
+      "message": "Absolutely!",
+      "parentUuid": "fad1e54f_b02480ac",
+      "revId": "1db287aa60b1c42242e7870d7b92b8f7fb186d17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
