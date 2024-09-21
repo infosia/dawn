@@ -76,7 +76,9 @@ class Texture : public TextureBase {
     Aspect GetDisjointVulkanAspects() const;
 
     // TODO(XXX): Replace with a getter for the layout of a specific subresource.
-    VkImageLayout GetCurrentLayoutForSwapChain() const;
+    VkImageLayout GetCurrentLayout(Aspect aspect,
+                                   uint32_t arrayLayer = 0,
+                                   uint32_t mipLevel = 0) const;
 
     // Transitions the texture to be used as `usage`, recording any necessary barrier in
     // `commands`.
