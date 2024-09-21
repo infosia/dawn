@@ -16,6 +16,24 @@
       "message": "PTAL",
       "revId": "1947255313c9dcad27eb69632bf339c2f4ff0ccd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc5b9da3_e0bef8ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2024-09-21T14:48:49Z",
+      "side": 1,
+      "message": "Here are the errors mentioned in the commit message:\n\n(These are not complete error messages, but other error messages are similar to what I listed.)\n\nerror: definition of implicit copy assignment operator for \u0027WaitableEvent\u0027 is deprecated because it has a user-declared destructor [-Werror,-Wdeprecated-copy-with-dtor]\n\nerror: constructor for \u0027dawn::native::(anonymous namespace)::MemoryDumpMock\u0027 must explicitly initialize the base class \u0027MemoryDump\u0027 which does not have a default constructor",
+      "parentUuid": "24eccd40_352d8411",
+      "revId": "1947255313c9dcad27eb69632bf339c2f4ff0ccd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
