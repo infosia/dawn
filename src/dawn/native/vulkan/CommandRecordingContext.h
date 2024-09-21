@@ -36,7 +36,7 @@
 
 namespace dawn::native::vulkan {
 
-class Texture;
+class ExternalTextureBase;
 
 // Wrapping class that currently associates a command buffer to it's corresponding pool.
 // TODO(dawn:1601) Revisit this structure since it is where the 1:1 mapping is implied.
@@ -58,9 +58,15 @@ struct CommandRecordingContext {
     // formats.
     std::vector<Ref<Buffer>> tempBuffers;
 
-    // External textures that will be eagerly transitioned just before VkSubmit. The textures are
-    // kept alive by the CommandBuffer so they don't need to be Ref-ed.
-    absl::flat_hash_set<Texture*> externalTexturesForEagerTransition;
+    // Textures can have special synchronization requirements that need to be handled during submit.
+    // They are tracked here to avoid walking all the texture during submission. It is ok to keep a
+    // raw_ptr as they are kept alive by the CommandBuffer. Special synchronization can be:
+    //
+    //  - Eager transition to a new usage after the submit.
+    //  - Acquiring extra semaphores or fences.
+    //  - Exporting extra semaphore or fences.
+    //  - and more!
+    absl::flat_hash_set<raw_ptr<ExternalTextureBase>> specialSyncTextures;
 
     // Mappable buffers which will be eagerly transitioned to usage MapRead or MapWrite after
     // VkSubmit.

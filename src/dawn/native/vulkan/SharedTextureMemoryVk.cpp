@@ -995,7 +995,7 @@ void SharedTextureMemory::DestroyImpl() {
 
 ResultOrError<Ref<TextureBase>> SharedTextureMemory::CreateTextureImpl(
     const UnpackedPtr<TextureDescriptor>& descriptor) {
-    return Texture::CreateFromSharedTextureMemory(this, descriptor);
+    return STMTexture::Create(this, descriptor);
 }
 
 MaybeError SharedTextureMemory::BeginAccessImpl(
@@ -1020,7 +1020,7 @@ MaybeError SharedTextureMemory::BeginAccessImpl(
         DAWN_INVALID_IF(descriptor->signaledValues[i] != 1, "%s signaled value (%u) was not 1.",
                         descriptor->fences[i], descriptor->signaledValues[i]);
     }
-    ToBackend(texture)->SetPendingAcquire(
+    static_cast<STMTexture*>(texture)->SetPendingAcquire(
         static_cast<VkImageLayout>(vkLayoutBeginState->oldLayout),
         static_cast<VkImageLayout>(vkLayoutBeginState->newLayout));
     return {};
