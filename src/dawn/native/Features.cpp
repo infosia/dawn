@@ -419,7 +419,7 @@ bool FeaturesSet::IsEnabled(wgpu::FeatureName feature) const {
     return f != Feature::InvalidEnum && IsEnabled(f);
 }
 
-size_t FeaturesSet::EnumerateFeatures(wgpu::FeatureName* features) const {
+size_t FeaturesSet::GetFeatures(wgpu::FeatureName* features) const {
     for (Feature f : IterateBitSet(featuresBitSet)) {
         wgpu::FeatureName feature = ToAPI(f);
         if (features != nullptr) {

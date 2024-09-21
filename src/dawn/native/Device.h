@@ -302,7 +302,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
                                                  AHardwareBufferProperties* properties);
     wgpu::Status APIGetLimits(SupportedLimits* limits) const;
     bool APIHasFeature(wgpu::FeatureName feature) const;
-    size_t APIEnumerateFeatures(wgpu::FeatureName* features) const;
+    size_t APIGetFeatures(wgpu::FeatureName* features) const;
     void APIInjectError(wgpu::ErrorType type, const char* message) {
         // TODO(crbug.com/42241188): Remove const char* version of the method.
         APIInjectError2(type, message);

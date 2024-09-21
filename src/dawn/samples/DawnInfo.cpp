@@ -234,9 +234,9 @@ void DumpAdapterInfo(const wgpu::Adapter& adapter) {
 }
 
 void DumpAdapterFeatures(const wgpu::Adapter& adapter) {
-    auto feature_count = adapter.EnumerateFeatures(nullptr);
+    auto feature_count = adapter.GetFeatures(nullptr);
     std::vector<wgpu::FeatureName> features(feature_count);
-    adapter.EnumerateFeatures(features.data());
+    adapter.GetFeatures(features.data());
 
     std::cout << "  Features\n";
     std::cout << "  ========\n";

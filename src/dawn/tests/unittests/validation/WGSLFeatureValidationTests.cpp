@@ -169,7 +169,7 @@ TEST_F(WGSLFeatureValidationTest, HasFeatureWithoutExposeWGSLTestingFeatures) {
 }
 
 // Tests for the behavior of WGSL feature enumeration.
-TEST_F(WGSLFeatureValidationTest, EnumerateFeatures) {
+TEST_F(WGSLFeatureValidationTest, GetFeatures) {
     SetUp({});
 
     size_t featureCount = instance.EnumerateWGSLLanguageFeatures(nullptr);

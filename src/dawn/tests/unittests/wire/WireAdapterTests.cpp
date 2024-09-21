@@ -181,10 +181,10 @@ TEST_P(WireAdapterTests, RequestDeviceSuccess) {
                     return WGPUStatus_Success;
                 })));
 
-            EXPECT_CALL(api, DeviceEnumerateFeatures(apiDevice, nullptr))
+            EXPECT_CALL(api, DeviceGetFeatures(apiDevice, nullptr))
                 .WillOnce(Return(fakeFeatures.size()));
 
-            EXPECT_CALL(api, DeviceEnumerateFeatures(apiDevice, NotNull()))
+            EXPECT_CALL(api, DeviceGetFeatures(apiDevice, NotNull()))
                 .WillOnce(WithArg<1>(Invoke([&](WGPUFeatureName* features) {
                     for (wgpu::FeatureName feature : fakeFeatures) {
                         *(features++) = static_cast<WGPUFeatureName>(feature);
@@ -218,9 +218,9 @@ TEST_P(WireAdapterTests, RequestDeviceSuccess) {
                 EXPECT_EQ(limits.limits.maxVertexAttributes, fakeLimits.limits.maxVertexAttributes);
 
                 std::vector<wgpu::FeatureName> features;
-                features.resize(device.EnumerateFeatures(nullptr));
+                features.resize(device.GetFeatures(nullptr));
                 ASSERT_EQ(features.size(), fakeFeatures.size());
-                EXPECT_EQ(device.EnumerateFeatures(&features[0]), features.size());
+                EXPECT_EQ(device.GetFeatures(&features[0]), features.size());
 
                 std::unordered_set<wgpu::FeatureName> featureSet(fakeFeatures);
                 for (wgpu::FeatureName feature : features) {
@@ -262,10 +262,10 @@ TEST_P(WireAdapterTests, RequestFeatureUnsupportedByWire) {
     WGPUDevice apiDevice = api.GetNewDevice();
     EXPECT_CALL(api, OnAdapterRequestDevice(apiAdapter, NotNull(), _))
         .WillOnce(InvokeWithoutArgs([&] {
-            EXPECT_CALL(api, DeviceEnumerateFeatures(apiDevice, nullptr))
+            EXPECT_CALL(api, DeviceGetFeatures(apiDevice, nullptr))
                 .WillOnce(Return(fakeFeatures.size()));
 
-            EXPECT_CALL(api, DeviceEnumerateFeatures(apiDevice, NotNull()))
+            EXPECT_CALL(api, DeviceGetFeatures(apiDevice, NotNull()))
                 .WillOnce(WithArg<1>(Invoke([&](WGPUFeatureName* features) {
                     for (wgpu::FeatureName feature : fakeFeatures) {
                         *(features++) = static_cast<WGPUFeatureName>(feature);
@@ -344,10 +344,10 @@ TEST_P(WireAdapterTests, RequestDeviceAdapterDestroyedBeforeCallback) {
                     return WGPUStatus_Success;
                 })));
 
-            EXPECT_CALL(api, DeviceEnumerateFeatures(apiDevice, nullptr))
+            EXPECT_CALL(api, DeviceGetFeatures(apiDevice, nullptr))
                 .WillOnce(Return(fakeFeatures.size()));
 
-            EXPECT_CALL(api, DeviceEnumerateFeatures(apiDevice, NotNull()))
+            EXPECT_CALL(api, DeviceGetFeatures(apiDevice, NotNull()))
                 .WillOnce(WithArg<1>(Invoke([&](WGPUFeatureName* features) {
                     for (wgpu::FeatureName feature : fakeFeatures) {
                         *(features++) = static_cast<WGPUFeatureName>(feature);

@@ -543,7 +543,7 @@ var LibraryWebGPU = {
   // Methods of Adapter
   // --------------------------------------------------------------------------
 
-  wgpuAdapterEnumerateFeatures: (adapterPtr, featuresOutPtr) => {
+  wgpuAdapterGetFeatures: (adapterPtr, featuresOutPtr) => {
     var adapter = WebGPU._tableGet(adapterPtr);
     if (featuresOutPtr !== 0) {
       var offset = 0;
@@ -1749,7 +1749,7 @@ var LibraryWebGPU = {
     WebGPU._tableGet(devicePtr).destroy()
   },
 
-  wgpuDeviceEnumerateFeatures: (devicePtr, featuresOutPtr) => {
+  wgpuDeviceGetFeatures: (devicePtr, featuresOutPtr) => {
     var device = WebGPU._tableGet(devicePtr);
     if (featuresOutPtr !== 0) {
       var offset = 0;
@@ -2531,7 +2531,7 @@ var LibraryWebGPU = {
   },
 };
 
-// Inverted index used by EnumerateFeatures/HasFeature
+// Inverted index used by GetFeatures/HasFeature
 LibraryWebGPU.$WebGPU.FeatureNameString2Enum = {};
 for (var value in LibraryWebGPU.$WebGPU.FeatureName) {
   LibraryWebGPU.$WebGPU.FeatureNameString2Enum[LibraryWebGPU.$WebGPU.FeatureName[value]] = value;

@@ -149,8 +149,8 @@ bool Adapter::HasFeature(WGPUFeatureName feature) const {
     return mLimitsAndFeatures.HasFeature(feature);
 }
 
-size_t Adapter::EnumerateFeatures(WGPUFeatureName* features) const {
-    return mLimitsAndFeatures.EnumerateFeatures(features);
+size_t Adapter::GetFeatures(WGPUFeatureName* features) const {
+    return mLimitsAndFeatures.GetFeatures(features);
 }
 
 void Adapter::SetLimits(const WGPUSupportedLimits* limits) {
