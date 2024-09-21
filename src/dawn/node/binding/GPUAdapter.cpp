@@ -91,9 +91,9 @@ GPUAdapter::GPUAdapter(dawn::native::Adapter a,
 // std::string&
 interop::Interface<interop::GPUSupportedFeatures> GPUAdapter::getFeatures(Napi::Env env) {
     wgpu::Adapter adapter(adapter_.Get());
-    size_t count = adapter.EnumerateFeatures(nullptr);
+    size_t count = adapter.GetFeatures(nullptr);
     std::vector<wgpu::FeatureName> features(count);
-    adapter.EnumerateFeatures(&features[0]);
+    adapter.GetFeatures(&features[0]);
     return interop::GPUSupportedFeatures::Create<GPUSupportedFeatures>(env, env,
                                                                        std::move(features));
 }

@@ -2005,8 +2005,8 @@ bool DeviceBase::APIHasFeature(wgpu::FeatureName feature) const {
     return mEnabledFeatures.IsEnabled(feature);
 }
 
-size_t DeviceBase::APIEnumerateFeatures(wgpu::FeatureName* features) const {
-    return mEnabledFeatures.EnumerateFeatures(features);
+size_t DeviceBase::APIGetFeatures(wgpu::FeatureName* features) const {
+    return mEnabledFeatures.GetFeatures(features);
 }
 
 void DeviceBase::APIInjectError2(wgpu::ErrorType type, std::string_view message) {

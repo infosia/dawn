@@ -164,7 +164,7 @@
                 ]
             },
             {
-                "name": "enumerate features",
+                "name": "get features",
                 "returns": "size_t",
                 "args": [
                     {"name": "features", "type": "feature name", "annotation": "*"}
@@ -1668,7 +1668,7 @@
                 ]
             },
             {
-                "name": "enumerate features",
+                "name": "get features",
                 "returns": "size_t",
                 "args": [
                     {"name": "features", "type": "feature name", "annotation": "*"}

@@ -113,7 +113,7 @@ void WireTest::SetUp() {
                 return WGPUStatus_Success;
             })));
 
-        EXPECT_CALL(api, AdapterEnumerateFeatures(apiAdapter, nullptr))
+        EXPECT_CALL(api, AdapterGetFeatures(apiAdapter, nullptr))
             .WillOnce(Return(0))
             .WillOnce(Return(0));
 
@@ -161,7 +161,7 @@ void WireTest::SetUp() {
                     return WGPUStatus_Success;
                 })));
 
-            EXPECT_CALL(api, DeviceEnumerateFeatures(apiDevice, nullptr))
+            EXPECT_CALL(api, DeviceGetFeatures(apiDevice, nullptr))
                 .WillOnce(Return(0))
                 .WillOnce(Return(0));
 

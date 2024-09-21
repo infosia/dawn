@@ -341,8 +341,8 @@ bool Device::HasFeature(WGPUFeatureName feature) const {
     return mLimitsAndFeatures.HasFeature(feature);
 }
 
-size_t Device::EnumerateFeatures(WGPUFeatureName* features) const {
-    return mLimitsAndFeatures.EnumerateFeatures(features);
+size_t Device::GetFeatures(WGPUFeatureName* features) const {
+    return mLimitsAndFeatures.GetFeatures(features);
 }
 
 void Device::SetLimits(const WGPUSupportedLimits* limits) {

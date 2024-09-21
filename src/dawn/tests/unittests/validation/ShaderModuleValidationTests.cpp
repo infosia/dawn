@@ -790,9 +790,9 @@ class ShaderModuleExtensionValidationTestBase : public ValidationTest {
 
     std::vector<wgpu::FeatureName> GetAllFeatures() {
         std::vector<wgpu::FeatureName> requiredFeatures;
-        const size_t featureCount = adapter.EnumerateFeatures(nullptr);
+        const size_t featureCount = adapter.GetFeatures(nullptr);
         requiredFeatures.resize(featureCount);
-        adapter.EnumerateFeatures(requiredFeatures.data());
+        adapter.GetFeatures(requiredFeatures.data());
         return requiredFeatures;
     }
 };

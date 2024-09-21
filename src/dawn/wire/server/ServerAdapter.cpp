@@ -98,9 +98,9 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
 
     std::vector<WGPUFeatureName> features;
 
-    size_t featuresCount = mProcs.deviceEnumerateFeatures(device, nullptr);
+    size_t featuresCount = mProcs.deviceGetFeatures(device, nullptr);
     features.resize(featuresCount);
-    mProcs.deviceEnumerateFeatures(device, features.data());
+    mProcs.deviceGetFeatures(device, features.data());
 
     // The client should only be able to request supported features, so all enumerated
     // features that were enabled must also be supported by the wire.

@@ -173,10 +173,10 @@ void GPUDevice::ForceLoss(wgpu::DeviceLostReason reason, const char* message) {
 }
 
 interop::Interface<interop::GPUSupportedFeatures> GPUDevice::getFeatures(Napi::Env env) {
-    size_t count = device_.EnumerateFeatures(nullptr);
+    size_t count = device_.GetFeatures(nullptr);
     std::vector<wgpu::FeatureName> features(count);
     if (count > 0) {
-        device_.EnumerateFeatures(features.data());
+        device_.GetFeatures(features.data());
     }
     return interop::GPUSupportedFeatures::Create<GPUSupportedFeatures>(env, env,
                                                                        std::move(features));
