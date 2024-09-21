@@ -45,6 +45,7 @@
 #include "dawn/native/vulkan/QueueVk.h"
 #include "dawn/native/vulkan/ResourceHeapVk.h"
 #include "dawn/native/vulkan/ResourceMemoryAllocatorVk.h"
+#include "dawn/native/vulkan/SharedFenceVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
 
@@ -1265,6 +1266,11 @@ void Texture::TweakTransition(CommandRecordingContext* recordingContext,
                               std::vector<VkImageMemoryBarrier>* barriers,
                               size_t transitionBarrierStart) {}
 
+MaybeError Texture::OnBeforeSubmit(CommandRecordingContext*) {
+    DAWN_UNREACHABLE();
+}
+void Texture::OnAfterSubmit() {}
+
 //
 // InternalTexture
 //
@@ -1460,8 +1466,14 @@ ExternalTextureBase::~ExternalTextureBase() {
         ToBackend(GetDevice())
             ->GetExternalSemaphoreService()
             ->CloseHandle(mExternalSemaphoreHandle);
+        mExternalSemaphoreHandle = kNullExternalSemaphoreHandle;
     }
-    mExternalSemaphoreHandle = kNullExternalSemaphoreHandle;
+    if (mPendingExternalSemaphoreHandle != kNullExternalSemaphoreHandle) {
+        ToBackend(GetDevice())
+            ->GetExternalSemaphoreService()
+            ->CloseHandle(mPendingExternalSemaphoreHandle);
+        mPendingExternalSemaphoreHandle = kNullExternalSemaphoreHandle;
+    }
 }
 
 void ExternalTextureBase::TransitionEagerlyForExport(CommandRecordingContext* recordingContext) {
@@ -1501,15 +1513,6 @@ void ExternalTextureBase::TransitionEagerlyForExport(CommandRecordingContext* re
 
     device->fn.CmdPipelineBarrier(recordingContext->commandBuffer, srcStages, dstStages, 0, 0,
                                   nullptr, 0, nullptr, 1, &barrier);
-}
-
-void ExternalTextureBase::UpdateExternalSemaphoreHandle(ExternalSemaphoreHandle handle) {
-    if (mExternalSemaphoreHandle != kNullExternalSemaphoreHandle) {
-        ToBackend(GetDevice())
-            ->GetExternalSemaphoreService()
-            ->CloseHandle(mExternalSemaphoreHandle);
-    }
-    mExternalSemaphoreHandle = handle;
 }
 
 bool ExternalTextureBase::CanReuseWithoutBarrier(wgpu::TextureUsage lastUsage,
@@ -1651,6 +1654,36 @@ MaybeError ExternalTextureBase::EndAccess(ExternalSemaphoreHandle* handle,
     return {};
 }
 
+MaybeError ExternalTextureBase::OnBeforeSubmit(CommandRecordingContext* context) {
+    // On every submit using an exportable texture, we eagerly prepare for an export. This avoids
+    // the need to schedule an almost empty submit just for exporting later. To export we both need
+    // to transition the resource to export it, and need an exportable semaphore for future
+    // synchronization.
+    TransitionEagerlyForExport(context);
+
+    // Create the external semaphore and add it to be signaled, but only mark it pending: if
+    // anything fails during the submit we still keep the previously signaled exportable semaphore
+    // so that EndAccess always returns a valid, signaled semaphore.
+    auto semaphoreService = ToBackend(GetDevice())->GetExternalSemaphoreService();
+    VkSemaphore semaphore;
+    DAWN_TRY_ASSIGN(semaphore, semaphoreService->CreateExportableSemaphore());
+    DAWN_TRY_ASSIGN(mPendingExternalSemaphoreHandle, semaphoreService->ExportSemaphore(semaphore));
+    context->signalSemaphores.push_back(semaphore);
+
+    return {};
+}
+
+void ExternalTextureBase::OnAfterSubmit() {
+    // The submit succeeded, we can replace the previous external semaphore with the pending one.
+    if (mExternalSemaphoreHandle != kNullExternalSemaphoreHandle) {
+        ToBackend(GetDevice())
+            ->GetExternalSemaphoreService()
+            ->CloseHandle(mExternalSemaphoreHandle);
+    }
+    mExternalSemaphoreHandle = mPendingExternalSemaphoreHandle;
+    mPendingExternalSemaphoreHandle = kNullExternalSemaphoreHandle;
+}
+
 //
 // ExternalTexture
 //
@@ -1782,8 +1815,10 @@ MaybeError ExternalTexture::ExportExternalTexture(VkImageLayout desiredLayout,
     return {};
 }
 
-std::vector<VkSemaphore> ExternalTexture::AcquireWaitRequirements() {
-    return std::move(mWaitRequirements);
+MaybeError ExternalTexture::OnBeforeSubmit(CommandRecordingContext* context) {
+    context->waitSemaphores.insert(context->waitSemaphores.end(), mWaitRequirements.begin(),
+                                   mWaitRequirements.end());
+    return ExternalTextureBase::OnBeforeSubmit(context);
 }
 
 //
@@ -1828,6 +1863,27 @@ void STMTexture::SetPendingAcquire(VkImageLayout pendingAcquireOldLayout,
 
     mPendingAcquireOldLayout = pendingAcquireOldLayout;
     mPendingAcquireNewLayout = pendingAcquireNewLayout;
+}
+
+MaybeError STMTexture::OnBeforeSubmit(CommandRecordingContext* context) {
+    Device* device = ToBackend(GetDevice());
+    SharedResourceMemoryContents* contents = GetSharedResourceMemoryContents();
+
+    SharedTextureMemoryBase::PendingFenceList fences;
+    contents->AcquirePendingFences(&fences);
+
+    for (const auto& fence : fences) {
+        // All semaphores are binary semaphores.
+        DAWN_ASSERT(fence.signaledValue == 1u);
+        ExternalSemaphoreHandle semaphoreHandle = ToBackend(fence.object)->GetHandle().Get();
+
+        VkSemaphore semaphore;
+        DAWN_TRY_ASSIGN(semaphore,
+                        device->GetExternalSemaphoreService()->ImportSemaphore(semaphoreHandle));
+        context->waitSemaphores.push_back(semaphore);
+    }
+
+    return ExternalTextureBase::OnBeforeSubmit(context);
 }
 
 //
