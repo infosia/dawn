@@ -38,6 +38,7 @@
 namespace dawn::native::vulkan {
 
 class Device;
+class SwapChainTexture;
 class Texture;
 class PhysicalDevice;
 struct VulkanSurfaceInfo;
@@ -100,7 +101,7 @@ class SwapChain : public SwapChainBase {
     uint32_t mLastImageIndex = 0;
 
     Ref<Texture> mBlitTexture;
-    Ref<Texture> mTexture;
+    Ref<SwapChainTexture> mTexture;
 };
 
 ResultOrError<VkSurfaceKHR> CreateVulkanSurface(InstanceBase* instance,
