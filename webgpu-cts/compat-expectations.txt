@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-09-19 06:35:49AM
+# Last rolled: 2024-09-22 05:04:43AM
 
 # Flaky on all platforms
 crbug.com/42251085 webgpu:shader,validation,expression,call,builtin,log:values:stage="override";type="f32" [ RetryOnFailure ]
@@ -577,7 +577,7 @@ crbug.com/367807042 [ android-pixel-6 arm ] webgpu:shader,execution,expression,c
 # limits:const_array_elements failures
 # also failing on Vulkan Pixel 6 (Core) and NVidia GL ES Compat
 crbug.com/dawn/0000 [ android-pixel-6 arm ] webgpu:shader,execution,limits:const_array_elements: [ Failure ]
-crbug.com/dawn/0000 [ nvidia-0x2184 linux ] webgpu:shader,execution,limits:const_array_elements: [ Failure ]
+crbug.com/dawn/0000 [ linux nvidia-0x2184 ] webgpu:shader,execution,limits:const_array_elements: [ Failure ]
 
 # importExternalTexture,sampleWithVideoFrameWithVisibleRectParam failures on Pixel 6
 # also failing on Vulkan Pixel 6 (Core)
