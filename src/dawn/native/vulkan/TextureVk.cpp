@@ -624,7 +624,7 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
         } else {
             flags |= VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
             if (!format.IsMultiPlanar() && (usage & wgpu::TextureUsage::TextureBinding) &&
-                device->HasFeature(Feature::DawnLoadResolveTexture)) {
+                device->HasFeature(Feature::LoadResolveTexture_Dawn)) {
                 // Automatically set "input attachment" usage so that the texture would be
                 // used in ExpandResolveTexture subpass.
                 flags |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;

@@ -624,7 +624,7 @@ TogglesSet::Iterator TogglesSet::Iterate() const {
 
 TogglesState::TogglesState(ToggleStage stage) : mStage(stage) {}
 
-TogglesState TogglesState::CreateFromTogglesDescriptor(const DawnTogglesDescriptor* togglesDesc,
+TogglesState TogglesState::CreateFromTogglesDescriptor(const TogglesDescriptor_Dawn* togglesDesc,
                                                        ToggleStage requiredStage) {
     TogglesState togglesState(requiredStage);
 

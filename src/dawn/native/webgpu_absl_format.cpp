@@ -64,7 +64,7 @@ AbslFormatConvert(const Color* value, const absl::FormatConversionSpec& spec, ab
 }
 
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
-    const Extent2D* value,
+    const Extent2D_Dawn* value,
     const absl::FormatConversionSpec& spec,
     absl::FormatSink* s) {
     if (value == nullptr) {
@@ -89,7 +89,7 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
 }
 
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
-    const Origin2D* value,
+    const Origin2D_Dawn* value,
     const absl::FormatConversionSpec& spec,
     absl::FormatSink* s) {
     if (value == nullptr) {
@@ -356,7 +356,7 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
 
         s->Append(absl::StrFormat("%d={format:%s", i, value->GetColorAttachmentFormat(i)));
 
-        if (value->GetDevice()->HasFeature(Feature::DawnLoadResolveTexture) &&
+        if (value->GetDevice()->HasFeature(Feature::LoadResolveTexture_Dawn) &&
             value->GetExpandResolveInfo().attachmentsToExpandResolve.any()) {
             s->Append(
                 absl::StrFormat(", resolve:%v, expandResolve:%v",

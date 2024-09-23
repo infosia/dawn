@@ -1,7 +1,7 @@
 # Buffer Map Extended Usages
 
 ## Overview:
- - The `wgpu::Feature::BufferMapExtendedUsages` feature allows creating a buffer with `wgpu::BufferUsage::MapRead` and/or `wgpu::BufferUsage::MapWrite` and any other `wgpu::BufferUsage`.
+ - The `wgpu::Feature::BufferMapExtendedUsages_Dawn` feature allows creating a buffer with `wgpu::BufferUsage::MapRead` and/or `wgpu::BufferUsage::MapWrite` and any other `wgpu::BufferUsage`.
 
 ### Example Usage:
 ```

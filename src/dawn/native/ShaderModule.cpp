@@ -883,7 +883,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
 
             // Tint should disallow using @color(N) without the respective enable, which is gated
             // on the extension.
-            DAWN_ASSERT(device->HasFeature(Feature::FramebufferFetch));
+            DAWN_ASSERT(device->HasFeature(Feature::FramebufferFetch_Dawn));
 
             EntryPointMetadata::FragmentRenderAttachmentInfo variable;
             DAWN_TRY_ASSIGN(variable.baseType,
@@ -1189,7 +1189,7 @@ MaybeError ValidateAndParseShaderModule(
     DAWN_ASSERT(wgslDesc != nullptr);
 
     DAWN_INVALID_IF(descriptor.Get<ShaderModuleCompilationOptions>() != nullptr &&
-                        !device->HasFeature(Feature::ShaderModuleCompilationOptions),
+                        !device->HasFeature(Feature::ShaderModuleCompilationOptions_Dawn),
                     "Shader module compilation options used without %s enabled.",
                     wgpu::FeatureName::ShaderModuleCompilationOptions);
 

@@ -115,7 +115,7 @@ void stream::Stream<{{StringViewType}}>::Write(stream::Sink* sink, const {{Strin
 {% call render_streaming_impl("adapter info", true, false) %}
 {% endcall %}
 
-{% call render_streaming_impl("dawn cache device descriptor", true, false,
+{% call render_streaming_impl("cache device descriptor _Dawn", true, false,
                               omits=["load data function", "store data function", "function userdata"]) %}
 {% endcall %}
 

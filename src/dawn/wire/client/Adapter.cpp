@@ -381,12 +381,12 @@ DAWN_WIRE_EXPORT void wgpuDawnWireClientAdapterInfoFreeMembers(WGPUAdapterInfo i
     delete[] info.vendor.data;
 }
 
-DAWN_WIRE_EXPORT void wgpuDawnWireClientAdapterPropertiesMemoryHeapsFreeMembers(
+DAWN_WIRE_EXPORT void wgpuDawnWireClientAdapterPropertiesMemoryHeaps_DawnFreeMembers(
     WGPUAdapterPropertiesMemoryHeaps memoryHeapProperties) {
     delete[] memoryHeapProperties.heapInfo;
 }
 
-DAWN_WIRE_EXPORT void wgpuDawnWireClientDrmFormatCapabilitiesFreeMembers(
+DAWN_WIRE_EXPORT void wgpuDawnWireClientDrmFormatCapabilities_DawnFreeMembers(
     WGPUDrmFormatCapabilities capabilities) {
     delete[] capabilities.properties;
 }

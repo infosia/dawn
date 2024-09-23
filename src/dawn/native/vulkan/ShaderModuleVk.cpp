@@ -372,7 +372,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
 
     // Set subgroup uniform control flow flag for subgroup experiment, if device has
     // Chromium-experimental-subgroup-uniform-control-flow feature. (dawn:464)
-    if (GetDevice()->HasFeature(Feature::ChromiumExperimentalSubgroupUniformControlFlow)) {
+    if (GetDevice()->HasFeature(Feature::ChromiumExperimentalSubgroupUniformControlFlow_Dawn)) {
         req.tintOptions.experimental_require_subgroup_uniform_control_flow = true;
     } else {
         req.tintOptions.experimental_require_subgroup_uniform_control_flow = false;

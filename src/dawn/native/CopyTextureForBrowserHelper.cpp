@@ -402,7 +402,7 @@ MaybeError DoCopyForBrowser(DeviceBase* device,
                             T* sourceResource,
                             const ImageCopyTexture* destination,
                             const Extent3D* copySize,
-                            const CopyTextureForBrowserOptions* options,
+                            const CopyTextureForBrowserOptions_Dawn* options,
                             RenderPipelineBase* pipeline) {
     // TODO(crbug.com/dawn/856): In D3D12 and Vulkan, compatible texture format can directly
     // copy to each other. This can be a potential fast path.
@@ -606,7 +606,7 @@ MaybeError DoCopyForBrowser(DeviceBase* device,
 MaybeError ValidateCopyForBrowserDestination(DeviceBase* device,
                                              const ImageCopyTexture& destination,
                                              const Extent3D& copySize,
-                                             const CopyTextureForBrowserOptions& options) {
+                                             const CopyTextureForBrowserOptions_Dawn& options) {
     DAWN_TRY(device->ValidateObject(destination.texture));
     DAWN_TRY(destination.texture->ValidateCanUseInSubmitNow());
     DAWN_TRY_CONTEXT(ValidateImageCopyTexture(device, destination, copySize),
@@ -634,7 +634,7 @@ MaybeError ValidateCopyForBrowserDestination(DeviceBase* device,
     return {};
 }
 
-MaybeError ValidateCopyForBrowserOptions(const CopyTextureForBrowserOptions& options) {
+MaybeError ValidateCopyForBrowserOptions(const CopyTextureForBrowserOptions_Dawn& options) {
     DAWN_INVALID_IF(options.nextInChain != nullptr, "nextInChain must be nullptr");
 
     DAWN_TRY(ValidateAlphaMode(options.srcAlphaMode));
@@ -656,7 +656,7 @@ MaybeError ValidateCopyTextureForBrowser(DeviceBase* device,
                                          const ImageCopyTexture* source,
                                          const ImageCopyTexture* destination,
                                          const Extent3D* copySize,
-                                         const CopyTextureForBrowserOptions* options) {
+                                         const CopyTextureForBrowserOptions_Dawn* options) {
     // Validate source
     DAWN_TRY(device->ValidateObject(source->texture));
     DAWN_TRY(source->texture->ValidateCanUseInSubmitNow());
@@ -669,8 +669,8 @@ MaybeError ValidateCopyTextureForBrowser(DeviceBase* device,
                     "The source texture sample count (%u) is not 1. ",
                     source->texture->GetSampleCount());
     DAWN_INVALID_IF(
-        options->internalUsage && !device->HasFeature(Feature::DawnInternalUsages),
-        "The internalUsage is true while the dawn-internal-usages feature is not enabled.");
+        options->internalUsage && !device->HasFeature(Feature::InternalUsages_Dawn),
+        "The internalUsage is true while the internal-usages_Dawn feature is not enabled.");
     UsageValidationMode mode =
         options->internalUsage ? UsageValidationMode::Internal : UsageValidationMode::Default;
     DAWN_TRY(ValidateCanUseAs(source->texture, wgpu::TextureUsage::CopySrc, mode));
@@ -696,7 +696,7 @@ MaybeError ValidateCopyExternalTextureForBrowser(DeviceBase* device,
                                                  const ImageCopyExternalTexture* source,
                                                  const ImageCopyTexture* destination,
                                                  const Extent3D* copySize,
-                                                 const CopyTextureForBrowserOptions* options) {
+                                                 const CopyTextureForBrowserOptions_Dawn* options) {
     // Validate source
     DAWN_TRY(device->ValidateObject(source->externalTexture));
     DAWN_TRY(source->externalTexture->ValidateCanUseInSubmitNow());
@@ -717,8 +717,8 @@ MaybeError ValidateCopyExternalTextureForBrowser(DeviceBase* device,
         &source->origin, copySize, source->externalTexture, &sourceSize);
     DAWN_INVALID_IF(source->origin.z > 0, "Source has a non-zero z origin (%u).", source->origin.z);
     DAWN_INVALID_IF(
-        options->internalUsage && !device->HasFeature(Feature::DawnInternalUsages),
-        "The internalUsage is true while the dawn-internal-usages feature is not enabled.");
+        options->internalUsage && !device->HasFeature(Feature::InternalUsages_Dawn),
+        "The internalUsage is true while the internal-usages_Dawn feature is not enabled.");
 
     // Validate destination
     DAWN_TRY(ValidateCopyForBrowserDestination(device, *destination, *copySize, *options));
@@ -737,7 +737,7 @@ MaybeError DoCopyExternalTextureForBrowser(DeviceBase* device,
                                            const ImageCopyExternalTexture* source,
                                            const ImageCopyTexture* destination,
                                            const Extent3D* copySize,
-                                           const CopyTextureForBrowserOptions* options) {
+                                           const CopyTextureForBrowserOptions_Dawn* options) {
     TextureInfo info;
     info.origin = source->origin;
     info.size = {source->naturalSize.width, source->naturalSize.height, 1};
@@ -753,7 +753,7 @@ MaybeError DoCopyTextureForBrowser(DeviceBase* device,
                                    const ImageCopyTexture* source,
                                    const ImageCopyTexture* destination,
                                    const Extent3D* copySize,
-                                   const CopyTextureForBrowserOptions* options) {
+                                   const CopyTextureForBrowserOptions_Dawn* options) {
     TextureInfo info;
     info.origin = source->origin;
     info.size = source->texture->GetSize(source->aspect);

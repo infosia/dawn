@@ -38,7 +38,7 @@
 
 namespace dawn::native {
 
-struct DawnTogglesDescriptor;
+struct TogglesDescriptor_Dawn;
 
 enum class Toggle {
     EmulateStoreAndMSAAResolve,
@@ -180,9 +180,9 @@ class TogglesState {
     // Create an empty toggles state of given stage
     explicit TogglesState(ToggleStage stage);
 
-    // Create a TogglesState from a DawnTogglesDescriptor, only considering toggles of
+    // Create a TogglesState from a TogglesDescriptor_Dawn, only considering toggles of
     // required toggle stage.
-    static TogglesState CreateFromTogglesDescriptor(const DawnTogglesDescriptor* togglesDesc,
+    static TogglesState CreateFromTogglesDescriptor(const TogglesDescriptor_Dawn* togglesDesc,
                                                     ToggleStage requiredStage);
 
     // Inherit from a given toggles state of earlier stage, only inherit the forced and the
