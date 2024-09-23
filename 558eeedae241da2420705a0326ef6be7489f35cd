@@ -33,6 +33,24 @@
       "message": "Nit: s/bitcasts/binary instructions",
       "revId": "558eeedae241da2420705a0326ef6be7489f35cd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "debdbfd5_27afebaa",
+        "filename": "src/tint/lang/glsl/writer/raise/binary_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-23T16:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4522ff73_9ac1d0c2",
+      "revId": "558eeedae241da2420705a0326ef6be7489f35cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
