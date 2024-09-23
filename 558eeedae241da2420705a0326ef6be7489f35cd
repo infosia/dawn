@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "558eeedae241da2420705a0326ef6be7489f35cd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4522ff73_9ac1d0c2",
+        "filename": "src/tint/lang/glsl/writer/raise/binary_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-23T16:05:15Z",
+      "side": 1,
+      "message": "Nit: s/bitcasts/binary instructions",
+      "revId": "558eeedae241da2420705a0326ef6be7489f35cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
