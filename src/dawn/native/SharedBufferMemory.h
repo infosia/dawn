@@ -39,20 +39,20 @@
 
 namespace dawn::native {
 
-struct SharedBufferMemoryDescriptor;
-struct SharedBufferMemoryBeginAccessDescriptor;
-struct SharedBufferMemoryEndAccessState;
-struct SharedBufferMemoryProperties;
+struct SharedBufferMemoryDescriptor_Dawn;
+struct SharedBufferMemoryBeginAccessDescriptor_Dawn;
+struct SharedBufferMemoryEndAccessState_Dawn;
+struct SharedBufferMemoryProperties_Dawn;
 struct BufferDescriptor;
 
 class SharedBufferMemoryBase : public SharedResourceMemory {
   public:
-    using BeginAccessDescriptor = SharedBufferMemoryBeginAccessDescriptor;
-    using EndAccessState = SharedBufferMemoryEndAccessState;
+    using BeginAccessDescriptor = SharedBufferMemoryBeginAccessDescriptor_Dawn;
+    using EndAccessState = SharedBufferMemoryEndAccessState_Dawn;
     static SharedBufferMemoryBase* MakeError(DeviceBase* device,
-                                             const SharedBufferMemoryDescriptor* descriptor);
+                                             const SharedBufferMemoryDescriptor_Dawn* descriptor);
 
-    wgpu::Status APIGetProperties(SharedBufferMemoryProperties* properties) const;
+    wgpu::Status APIGetProperties(SharedBufferMemoryProperties_Dawn* properties) const;
     BufferBase* APICreateBuffer(const BufferDescriptor* descriptor);
 
     ObjectType GetType() const override;
@@ -60,9 +60,9 @@ class SharedBufferMemoryBase : public SharedResourceMemory {
   protected:
     SharedBufferMemoryBase(DeviceBase* device,
                            StringView label,
-                           const SharedBufferMemoryProperties& properties);
+                           const SharedBufferMemoryProperties_Dawn& properties);
     SharedBufferMemoryBase(DeviceBase* device,
-                           const SharedBufferMemoryDescriptor* descriptor,
+                           const SharedBufferMemoryDescriptor_Dawn* descriptor,
                            ObjectBase::ErrorTag tag);
 
   private:
@@ -71,7 +71,7 @@ class SharedBufferMemoryBase : public SharedResourceMemory {
     virtual ResultOrError<Ref<BufferBase>> CreateBufferImpl(
         const UnpackedPtr<BufferDescriptor>& descriptor) = 0;
 
-    SharedBufferMemoryProperties mProperties;
+    SharedBufferMemoryProperties_Dawn mProperties;
 };
 
 }  // namespace dawn::native
