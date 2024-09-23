@@ -455,7 +455,7 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
 
     // clang-format off
     // 1 byte color formats
-    auto r8unormSupportsStorage = device->HasFeature(Feature::R8UnormStorage) ? Cap::StorageROrW : Cap::None;
+    auto r8unormSupportsStorage = device->HasFeature(Feature::DawnR8UnormStorage) ? Cap::StorageROrW : Cap::None;
     AddColorFormat(wgpu::TextureFormat::R8Unorm, Cap::Renderable | Cap::Multisample | Cap::Resolve | r8unormSupportsStorage | Cap::Blendable, ByteSize(1), kAnyFloat, ComponentCount(1), RenderTargetPixelByteCost(1), RenderTargetComponentAlignment(1));
     AddColorFormat(wgpu::TextureFormat::R8Snorm, Cap::None, ByteSize(1), kAnyFloat, ComponentCount(1));
     AddColorFormat(wgpu::TextureFormat::R8Uint, Cap::Renderable | Cap::Multisample, ByteSize(1), SampleTypeBit::Uint, ComponentCount(1), RenderTargetPixelByteCost(1), RenderTargetComponentAlignment(1));
@@ -472,7 +472,7 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
 
     // 4 bytes color formats
     SampleTypeBit sampleTypeFor32BitFloatFormats = device->HasFeature(Feature::Float32Filterable) ? kAnyFloat : SampleTypeBit::UnfilterableFloat;
-    auto supportsPLS = device->HasFeature(Feature::PixelLocalStorageCoherent) || device->HasFeature(Feature::PixelLocalStorageNonCoherent) ? Cap::PLS : Cap::None;
+    auto supportsPLS = device->HasFeature(Feature::DawnPixelLocalStorageCoherent) || device->HasFeature(Feature::DawnPixelLocalStorageNonCoherent) ? Cap::PLS : Cap::None;
     auto float32BlendableCaps = device->HasFeature(Feature::Float32Blendable) ? Cap::Blendable : Cap::None;
 
     AddColorFormat(wgpu::TextureFormat::R32Uint, Cap::Renderable | Cap::StorageROrW | Cap::StorageRW | supportsPLS, ByteSize(4), SampleTypeBit::Uint, ComponentCount(1), RenderTargetPixelByteCost(4), RenderTargetComponentAlignment(4));
@@ -487,7 +487,7 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
     AddColorFormat(wgpu::TextureFormat::RGBA8Uint, Cap::Renderable | Cap::StorageROrW | Cap::Multisample, ByteSize(4), SampleTypeBit::Uint, ComponentCount(4), RenderTargetPixelByteCost(4), RenderTargetComponentAlignment(1));
     AddColorFormat(wgpu::TextureFormat::RGBA8Sint, Cap::Renderable | Cap::StorageROrW | Cap::Multisample, ByteSize(4), SampleTypeBit::Sint, ComponentCount(4), RenderTargetPixelByteCost(4), RenderTargetComponentAlignment(1));
 
-    const UnsupportedReason externalUnsupportedReason = device->HasFeature(Feature::YCbCrVulkanSamplers) ?  Format::supported : RequiresFeature{wgpu::FeatureName::YCbCrVulkanSamplers};
+    const UnsupportedReason externalUnsupportedReason = device->HasFeature(Feature::DawnYCbCrVulkanSamplers) ?  Format::supported : RequiresFeature{wgpu::FeatureName::YCbCrVulkanSamplers};
     AddConditionalColorFormat(wgpu::TextureFormat::External, externalUnsupportedReason, Cap::None, ByteSize(1), SampleTypeBit::External, ComponentCount(0));
 
     auto BGRA8UnormSupportsStorageUsage = device->HasFeature(Feature::BGRA8UnormStorage) ? Cap::StorageROrW : Cap::None;
@@ -515,15 +515,15 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
     AddColorFormat(wgpu::TextureFormat::RGBA32Sint, Cap::Renderable | Cap::StorageROrW, ByteSize(16), SampleTypeBit::Sint, ComponentCount(4), RenderTargetPixelByteCost(16), RenderTargetComponentAlignment(4));
     AddColorFormat(wgpu::TextureFormat::RGBA32Float, Cap::Renderable | Cap::StorageROrW | float32BlendableCaps, ByteSize(16), sampleTypeFor32BitFloatFormats, ComponentCount(4), RenderTargetPixelByteCost(16), RenderTargetComponentAlignment(4));
 
-    bool norm16TextureFormats = device->HasFeature(Feature::Norm16TextureFormats);
+    bool norm16TextureFormats = device->HasFeature(Feature::DawnNorm16TextureFormats);
     // Unorm16 color formats
-    auto unorm16Supported = (norm16TextureFormats || device->HasFeature(Feature::Unorm16TextureFormats)) ? Format::supported : RequiresFeature{wgpu::FeatureName::Unorm16TextureFormats};
+    auto unorm16Supported = (norm16TextureFormats || device->HasFeature(Feature::DawnUnorm16TextureFormats)) ? Format::supported : RequiresFeature{wgpu::FeatureName::Unorm16TextureFormats};
     AddConditionalColorFormat(wgpu::TextureFormat::R16Unorm, unorm16Supported, Cap::Renderable | Cap::Multisample | Cap::Resolve, ByteSize(2), kAnyFloat, ComponentCount(1), RenderTargetPixelByteCost(2), RenderTargetComponentAlignment(2));
     AddConditionalColorFormat(wgpu::TextureFormat::RG16Unorm, unorm16Supported, Cap::Renderable | Cap::Multisample | Cap::Resolve, ByteSize(4), kAnyFloat, ComponentCount(2), RenderTargetPixelByteCost(4), RenderTargetComponentAlignment(2));
     AddConditionalColorFormat(wgpu::TextureFormat::RGBA16Unorm, unorm16Supported, Cap::Renderable | Cap::Multisample | Cap::Resolve, ByteSize(8), kAnyFloat, ComponentCount(4), RenderTargetPixelByteCost(8), RenderTargetComponentAlignment(2));
 
     // Snorm16 color formats
-    auto snorm16Supported = (norm16TextureFormats || device->HasFeature(Feature::Snorm16TextureFormats)) ? Format::supported : RequiresFeature{wgpu::FeatureName::Snorm16TextureFormats};
+    auto snorm16Supported = (norm16TextureFormats || device->HasFeature(Feature::DawnSnorm16TextureFormats)) ? Format::supported : RequiresFeature{wgpu::FeatureName::Snorm16TextureFormats};
     AddConditionalColorFormat(wgpu::TextureFormat::R16Snorm, snorm16Supported, Cap::Renderable | Cap::Multisample | Cap::Resolve, ByteSize(2), kAnyFloat, ComponentCount(1), RenderTargetPixelByteCost(2), RenderTargetComponentAlignment(2));
     AddConditionalColorFormat(wgpu::TextureFormat::RG16Snorm, snorm16Supported, Cap::Renderable | Cap::Multisample | Cap::Resolve, ByteSize(4), kAnyFloat, ComponentCount(2), RenderTargetPixelByteCost(4), RenderTargetComponentAlignment(2));
     AddConditionalColorFormat(wgpu::TextureFormat::RGBA16Snorm, snorm16Supported, Cap::Renderable | Cap::Multisample | Cap::Resolve, ByteSize(8), kAnyFloat, ComponentCount(4), RenderTargetPixelByteCost(8), RenderTargetComponentAlignment(2));
@@ -604,26 +604,26 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
     AddCompressedFormat(wgpu::TextureFormat::ASTC12x12UnormSrgb, ByteSize(16), Width(12), Height(12), astcFormatUnsupportedReason, ComponentCount(4), wgpu::TextureFormat::ASTC12x12Unorm);
 
     // multi-planar formats
-    auto multiPlanarCapabilities = device->HasFeature(Feature::MultiPlanarRenderTargets) ? Cap::Renderable : Cap::None;
+    auto multiPlanarCapabilities = device->HasFeature(Feature::DawnMultiPlanarRenderTargets) ? Cap::Renderable : Cap::None;
     const UnsupportedReason multiPlanarFormatNv12UnsupportedReason = device->HasFeature(Feature::DawnMultiPlanarFormats) ?  Format::supported : RequiresFeature{wgpu::FeatureName::DawnMultiPlanarFormats};
     AddMultiAspectFormat(wgpu::TextureFormat::R8BG8Biplanar420Unorm, TextureSubsampling::e420, Aspect::Plane0 | Aspect::Plane1,
         multiPlanarCapabilities, multiPlanarFormatNv12UnsupportedReason, ComponentCount(3), wgpu::TextureFormat::R8Unorm, wgpu::TextureFormat::RG8Unorm);
-    const UnsupportedReason multiPlanarFormatNv16UnsupportedReason = device->HasFeature(Feature::MultiPlanarFormatNv16) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatNv16};
+    const UnsupportedReason multiPlanarFormatNv16UnsupportedReason = device->HasFeature(Feature::DawnMultiPlanarFormatNv16) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatNv16};
     AddMultiAspectFormat(wgpu::TextureFormat::R8BG8Biplanar422Unorm, TextureSubsampling::e422, Aspect::Plane0 | Aspect::Plane1,
         multiPlanarCapabilities, multiPlanarFormatNv16UnsupportedReason, ComponentCount(3), wgpu::TextureFormat::R8Unorm, wgpu::TextureFormat::RG8Unorm);
-    const UnsupportedReason multiPlanarFormatNv24UnsupportedReason = device->HasFeature(Feature::MultiPlanarFormatNv24) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatNv24};
+    const UnsupportedReason multiPlanarFormatNv24UnsupportedReason = device->HasFeature(Feature::DawnMultiPlanarFormatNv24) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatNv24};
     AddMultiAspectFormat(wgpu::TextureFormat::R8BG8Biplanar444Unorm, TextureSubsampling::e444, Aspect::Plane0 | Aspect::Plane1,
         multiPlanarCapabilities, multiPlanarFormatNv24UnsupportedReason, ComponentCount(3), wgpu::TextureFormat::R8Unorm, wgpu::TextureFormat::RG8Unorm);
-    const UnsupportedReason multiPlanarFormatP010UnsupportedReason = device->HasFeature(Feature::MultiPlanarFormatP010) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatP010};
+    const UnsupportedReason multiPlanarFormatP010UnsupportedReason = device->HasFeature(Feature::DawnMultiPlanarFormatP010) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatP010};
     AddMultiAspectFormat(wgpu::TextureFormat::R10X6BG10X6Biplanar420Unorm, TextureSubsampling::e420, Aspect::Plane0 | Aspect::Plane1,
         multiPlanarCapabilities, multiPlanarFormatP010UnsupportedReason, ComponentCount(3), wgpu::TextureFormat::R16Unorm, wgpu::TextureFormat::RG16Unorm);
-    const UnsupportedReason multiPlanarFormatP210UnsupportedReason = device->HasFeature(Feature::MultiPlanarFormatP210) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatP210};
+    const UnsupportedReason multiPlanarFormatP210UnsupportedReason = device->HasFeature(Feature::DawnMultiPlanarFormatP210) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatP210};
     AddMultiAspectFormat(wgpu::TextureFormat::R10X6BG10X6Biplanar422Unorm, TextureSubsampling::e422, Aspect::Plane0 | Aspect::Plane1,
         multiPlanarCapabilities, multiPlanarFormatP210UnsupportedReason, ComponentCount(3), wgpu::TextureFormat::R16Unorm, wgpu::TextureFormat::RG16Unorm);
-    const UnsupportedReason multiPlanarFormatP410UnsupportedReason = device->HasFeature(Feature::MultiPlanarFormatP410) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatP410};
+    const UnsupportedReason multiPlanarFormatP410UnsupportedReason = device->HasFeature(Feature::DawnMultiPlanarFormatP410) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatP410};
     AddMultiAspectFormat(wgpu::TextureFormat::R10X6BG10X6Biplanar444Unorm, TextureSubsampling::e444, Aspect::Plane0 | Aspect::Plane1,
         multiPlanarCapabilities, multiPlanarFormatP410UnsupportedReason, ComponentCount(3), wgpu::TextureFormat::R16Unorm, wgpu::TextureFormat::RG16Unorm);
-    const UnsupportedReason multiPlanarFormatNv12aUnsupportedReason = device->HasFeature(Feature::MultiPlanarFormatNv12a) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatNv12a};
+    const UnsupportedReason multiPlanarFormatNv12aUnsupportedReason = device->HasFeature(Feature::DawnMultiPlanarFormatNv12a) ?  Format::supported : RequiresFeature{wgpu::FeatureName::MultiPlanarFormatNv12a};
     AddMultiAspectFormat(wgpu::TextureFormat::R8BG8A8Triplanar420Unorm, TextureSubsampling::e420, Aspect::Plane0 | Aspect::Plane1 | Aspect::Plane2,
         multiPlanarCapabilities, multiPlanarFormatNv12aUnsupportedReason, ComponentCount(4), wgpu::TextureFormat::R8Unorm, wgpu::TextureFormat::RG8Unorm, wgpu::TextureFormat::R8Unorm);
     // clang-format on

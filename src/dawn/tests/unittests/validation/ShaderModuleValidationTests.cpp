@@ -259,7 +259,7 @@ TEST_F(ShaderModuleValidationTest, ShaderModuleCompilationOptionsNoFeature) {
     desc.nextInChain = &wgslDesc;
     wgslDesc.nextInChain = &compilationOptions;
     ASSERT_DEVICE_ERROR(device.CreateShaderModule(&desc),
-                        testing::HasSubstr("FeatureName::ShaderModuleCompilationOptions"));
+                        testing::HasSubstr("FeatureName::DawnShaderModuleCompilationOptions"));
 }
 
 // Tests that shader module compilation messages can be queried.

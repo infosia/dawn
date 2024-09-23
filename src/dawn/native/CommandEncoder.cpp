@@ -455,9 +455,9 @@ MaybeError ValidateColorAttachmentRenderToSingleSampled(
     DAWN_ASSERT(msaaRenderToSingleSampledDesc != nullptr);
 
     DAWN_INVALID_IF(
-        !device->HasFeature(Feature::MSAARenderToSingleSampled),
+        !device->HasFeature(Feature::DawnMSAARenderToSingleSampled),
         "The color attachment %s has implicit sample count while the %s feature is not enabled.",
-        colorAttachment.view, ToAPI(Feature::MSAARenderToSingleSampled));
+        colorAttachment.view, ToAPI(Feature::DawnMSAARenderToSingleSampled));
 
     DAWN_INVALID_IF(!IsValidSampleCount(msaaRenderToSingleSampledDesc->implicitSampleCount) ||
                         msaaRenderToSingleSampledDesc->implicitSampleCount <= 1,
