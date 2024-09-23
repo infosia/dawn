@@ -29,11 +29,13 @@ namespace dawn::native {
 
 wgpu::FeatureName ToAPI(Feature feature) {
   switch (feature) {
-    {% for enum in types["feature name"].values if enum.valid %}
+    {% for enum in types["feature name"].values if (enum.valid and (not "deprecated" in enum.json_data.get("tags", []) or not enum.json_data.get("conflicts", false))) %}
       case Feature::{{as_cppEnum(enum.name)}}:
         return wgpu::FeatureName::{{as_cppEnum(enum.name)}};
     {% endfor %}
     case Feature::InvalidEnum:
+      break;
+    default:
       break;
   }
   DAWN_UNREACHABLE();
@@ -41,7 +43,7 @@ wgpu::FeatureName ToAPI(Feature feature) {
 
 Feature FromAPI(wgpu::FeatureName feature) {
   switch (feature) {
-    {% for enum in types["feature name"].values %}
+    {% for enum in types["feature name"].values if (not "deprecated" in enum.json_data.get("tags", []) or not enum.json_data.get("conflicts", false)) %}
       case wgpu::FeatureName::{{as_cppEnum(enum.name)}}:
         {% if enum.valid %}
           return Feature::{{as_cppEnum(enum.name)}};
