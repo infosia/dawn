@@ -64,14 +64,14 @@ AbslFormatConvert(const Color* value, const absl::FormatConversionSpec& spec, ab
 }
 
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
-    const Extent2D* value,
+    const Extent2D_Dawn* value,
     const absl::FormatConversionSpec& spec,
     absl::FormatSink* s) {
     if (value == nullptr) {
         s->Append("[null]");
         return {true};
     }
-    s->Append(absl::StrFormat("[Extent2D width:%u, height:%u]", value->width, value->height));
+    s->Append(absl::StrFormat("[Extent2D_Dawn width:%u, height:%u]", value->width, value->height));
     return {true};
 }
 
@@ -89,14 +89,14 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
 }
 
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
-    const Origin2D* value,
+    const Origin2D_Dawn* value,
     const absl::FormatConversionSpec& spec,
     absl::FormatSink* s) {
     if (value == nullptr) {
         s->Append("[null]");
         return {true};
     }
-    s->Append(absl::StrFormat("[Origin2D x:%u, y:%u]", value->x, value->y));
+    s->Append(absl::StrFormat("[Origin2D_Dawn x:%u, y:%u]", value->x, value->y));
     return {true};
 }
 
