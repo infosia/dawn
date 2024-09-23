@@ -93,6 +93,7 @@ struct State {
                     case core::BuiltinFn::kExtractBits:
                     case core::BuiltinFn::kFma:
                     case core::BuiltinFn::kInsertBits:
+                    case core::BuiltinFn::kModf:
                     case core::BuiltinFn::kSelect:
                     case core::BuiltinFn::kStorageBarrier:
                     case core::BuiltinFn::kTextureBarrier:
@@ -143,6 +144,9 @@ struct State {
                     break;
                 case core::BuiltinFn::kInsertBits:
                     InsertBits(call);
+                    break;
+                case core::BuiltinFn::kModf:
+                    Modf(call);
                     break;
                 case core::BuiltinFn::kSelect:
                     Select(call);
@@ -225,6 +229,25 @@ struct State {
         auto* func = CreateDotPolyfill(vec_ty);
         b.InsertBefore(call,
                        [&] { b.CallWithResult(call->DetachResult(), func, args[0], args[1]); });
+        call->Destroy();
+    }
+
+    void Modf(core::ir::BuiltinCall* call) {
+        b.InsertBefore(call, [&] {
+            // GLSL's modf returns `fract` and outputs `whole` as an output parameter.
+            // Polyfill it by declaring the result struct and then setting the values:
+            //   __modf_result result = {};
+            //   result.fract = modf(arg, result.whole);
+            auto* result_type = call->Result(0)->Type();
+            auto* element_type = result_type->Element(0);
+            auto* result = b.Var(ty.ptr(function, result_type));
+            auto* whole = b.Access(ty.ptr(function, element_type), result, u32(1));
+            auto args = Vector<core::ir::Value*, 2>{call->Args()[0], whole->Result(0)};
+            auto* res = b.Call<glsl::ir::BuiltinCall>(element_type, glsl::BuiltinFn::kModf,
+                                                      std::move(args));
+            b.Store(b.Access(ty.ptr(function, element_type), result, u32(0)), res);
+            call->Result(0)->ReplaceAllUsesWith(b.Load(result)->Result(0));
+        });
         call->Destroy();
     }
 
