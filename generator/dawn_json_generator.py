@@ -101,6 +101,18 @@ def concat_names(*names):
 
 class Type:
     def __init__(self, name, json_data, native=False):
+        # tags = json_data.get('tags', [])
+        # name_suffix = ''
+        # if 'deprecated' in tags and len(tags) > 1:
+        #     assert name_suffix == ''
+        # elif 'dawn' in tags:
+        #     name_suffix = '_Dawn'
+        # elif 'emscripten' in tags:
+        #     name_suffix = '_Emscripten'
+        # else:
+        #     assert name_suffix == ''
+        # self.value_name = name + name_suffix
+
         self.json_data = json_data
         self.dict_name = name
         self.name = Name(name, native=native)
@@ -141,6 +153,33 @@ class EnumType(Type):
 
             if prefix == 0 and 'native' in tags:
                 prefix = 0x0001_0000
+
+            # Assert that the value name ending matches tags.
+            if 'deprecated' in tags and len(tags) > 1:
+                assert not value_name.endswith(
+                    '_Dawn'), 'Enum "{}" name can\'t end with "_Dawn"'.format(
+                        value_name)
+                assert not value_name.endswith(
+                    '_Emscripten'
+                ), 'Enum "{}" name can\'t end with "_Emscripten"'.format(
+                    value_name)
+            elif 'dawn' in tags:
+                assert value_name.endswith(
+                    '_Dawn'), 'Enum "{}" name must end with "_Dawn"'.format(
+                        value_name)
+            elif 'emscripten' in tags:
+                assert value_name.endswith(
+                    '_Emscripten'
+                ), 'Enum "{}" name must end with "_Emscripten"'.format(
+                    value_name)
+            else:
+                assert not value_name.endswith(
+                    '_Dawn'), 'Enum "{}" name can\'t end with "_Dawn"'.format(
+                        value_name)
+                assert not value_name.endswith(
+                    '_Emscripten'
+                ), 'Enum "{}" name can\'t end with "_Emscripten"'.format(
+                    value_name)
 
             value += prefix
 
@@ -294,6 +333,31 @@ class Record:
 
 class StructureType(Record, Type):
     def __init__(self, is_enabled, name, json_data):
+        # Assert that the name ending matches tags.
+        tags = json_data.get('tags', [])
+        if 'deprecated' in tags and len(tags) > 1:
+            assert not name.endswith(
+                '_Dawn'), 'Struct "{}" name can\'t end with "_Dawn"'.format(
+                    name)
+            assert not name.endswith(
+                '_Emscripten'
+            ), 'Struct "{}" name can\'t end with "_Emscripten"'.format(name)
+        elif 'dawn' in tags:
+            assert name.endswith(
+                '_Dawn'), 'Struct "{}" name must end with "_Dawn"'.format(name)
+        elif 'emscripten' in tags:
+            if name != 'INTERNAL__HAVE_EMDAWNWEBGPU_HEADER':
+                assert name.endswith(
+                    '_Emscripten'
+                ), 'Struct "{}" name must end with "_Emscripten"'.format(name)
+        else:
+            assert not name.endswith(
+                '_Dawn'), 'Struct "{}" name can\'t end with "_Dawn"'.format(
+                    name)
+            assert not name.endswith(
+                '_Emscripten'
+            ), 'Struct "{}" name can\'t end with "_Emscripten"'.format(name)
+
         Record.__init__(self, name)
         json_data_override = {}
         if 'members' in json_data:
