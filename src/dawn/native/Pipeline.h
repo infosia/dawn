@@ -38,6 +38,7 @@
 #include "dawn/native/Forward.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/PerStage.h"
+#include "dawn/native/PhysicalPipelineLayout.h"
 #include "dawn/native/PipelineLayout.h"
 #include "dawn/native/ShaderModule.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -72,6 +73,8 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
 
     PipelineLayoutBase* GetLayout();
     const PipelineLayoutBase* GetLayout() const;
+    PhysicalPipelineLayoutBase* GetPhysicalLayout();
+    const PhysicalPipelineLayoutBase* GetPhysicalLayout() const;
     const RequiredBufferSizes& GetMinBufferSizes() const;
     const ProgrammableStage& GetStage(SingleShaderStage stage) const;
     const PerStage<ProgrammableStage>& GetAllStages() const;
@@ -100,6 +103,14 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
                  std::vector<StageAndDescriptor> stages);
     PipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
 
+    // PhysicalPipelineLayoutBase stores native pipeline layouts handles and pipeline
+    // internalImmediateData size.
+    // PipelineLayout manages PhysicalPipelineLayout lifecycle to extend beyond
+    // pipeline lifecycle.
+    raw_ptr<PhysicalPipelineLayoutBase> mPhysicalLayout = nullptr;
+
+    void DestroyImpl() override;
+
   private:
     MaybeError ValidateGetBindGroupLayout(BindGroupIndex group);
 
@@ -109,6 +120,7 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
     PerStage<ProgrammableStage> mStages;
 
     Ref<PipelineLayoutBase> mLayout;
+
     RequiredBufferSizes mMinBufferSizes;
 };
 

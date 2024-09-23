@@ -114,6 +114,15 @@ class PipelineLayoutBase : public ApiObjectBase,
 
     uint32_t GetImmediateDataRangeByteSize() const;
 
+    // PhysicalLayout related.
+    void Install(uint32_t internalImmediateDataRangeByteSize,
+                 Ref<PhysicalPipelineLayoutBase> physicalPipelineLayout);
+
+    bool HasPhysicalLayout(uint32_t internalImmediateDataRangeByteSize) const;
+
+    PhysicalPipelineLayoutBase* GetPhysicalLayout(
+        uint32_t internalImmediateDataRangeByteSize) const;
+
   protected:
     PipelineLayoutBase(DeviceBase* device, ObjectBase::ErrorTag tag, const char* label);
     void DestroyImpl() override;
@@ -123,6 +132,7 @@ class PipelineLayoutBase : public ApiObjectBase,
     bool mHasPLS = false;
     std::vector<wgpu::TextureFormat> mStorageAttachmentSlots;
     uint32_t mImmediateDataRangeByteSize = 0;
+    absl::flat_hash_map<uint32_t, Ref<PhysicalPipelineLayoutBase>> mPhysicalPipelineLayouts;
 };
 
 }  // namespace dawn::native

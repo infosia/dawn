@@ -263,6 +263,16 @@ const PipelineLayoutBase* PipelineBase::GetLayout() const {
     return mLayout.Get();
 }
 
+PhysicalPipelineLayoutBase* PipelineBase::GetPhysicalLayout() {
+    DAWN_ASSERT(!IsError());
+    return mPhysicalLayout;
+}
+
+const PhysicalPipelineLayoutBase* PipelineBase::GetPhysicalLayout() const {
+    DAWN_ASSERT(!IsError());
+    return mPhysicalLayout;
+}
+
 const RequiredBufferSizes& PipelineBase::GetMinBufferSizes() const {
     DAWN_ASSERT(!IsError());
     return mMinBufferSizes;
@@ -374,6 +384,10 @@ MaybeError PipelineBase::Initialize(std::optional<ScopedUseShaderPrograms> scope
         scopedUsePrograms = UseShaderPrograms();
     }
     return InitializeImpl();
+}
+
+void PipelineBase::DestroyImpl() {
+    mPhysicalLayout = nullptr;
 }
 
 }  // namespace dawn::native

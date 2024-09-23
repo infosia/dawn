@@ -331,7 +331,7 @@ Ref<RenderPipeline> RenderPipeline::CreateUninitialized(
 
 MaybeError RenderPipeline::InitializeImpl() {
     Device* device = ToBackend(GetDevice());
-    const PipelineLayout* layout = ToBackend(GetLayout());
+    PipelineLayout* layout = ToBackend(GetLayout());
 
     // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
     StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
@@ -539,6 +539,20 @@ MaybeError RenderPipeline::InitializeImpl() {
         DAWN_TRY_ASSIGN(renderPassInfo, device->GetRenderPassCache()->GetRenderPass(query));
     }
 
+    // TODO(crbug.com/366291600): Decide internal immediate data size dynamically instead of
+    // always reserving ClampFragDepth attributes.
+    uint32_t internalImmediateDataRangeByteSize = kClampFragDepthArgsSize;
+
+    if (!layout->HasPhysicalLayout(internalImmediateDataRangeByteSize)) {
+        Ref<PhysicalPipelineLayout> physicalLayout;
+        DAWN_TRY_ASSIGN(physicalLayout,
+                        PhysicalPipelineLayout::Create(GetDevice(), GetLayout(),
+                                                       internalImmediateDataRangeByteSize));
+        layout->Install(internalImmediateDataRangeByteSize, std::move(physicalLayout));
+    }
+
+    mPhysicalLayout = layout->GetPhysicalLayout(internalImmediateDataRangeByteSize);
+
     // The create info chains in a bunch of things created on the stack here or inside state
     // objects.
     VkGraphicsPipelineCreateInfo createInfo;
@@ -557,7 +571,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     createInfo.pColorBlendState =
         (GetStageMask() & wgpu::ShaderStage::Fragment) ? &colorBlend : nullptr;
     createInfo.pDynamicState = &dynamic;
-    createInfo.layout = ToBackend(GetLayout())->GetHandle();
+    createInfo.layout = ToBackend(mPhysicalLayout)->GetHandle();
     createInfo.renderPass = renderPassInfo.renderPass;
     createInfo.basePipelineHandle = VkPipeline{};
     createInfo.basePipelineIndex = -1;
@@ -571,7 +585,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     createInfo.subpass = mHasInputAttachment ? 0 : renderPassInfo.mainSubpass;
 
     // Record cache key information now since createInfo is not stored.
-    StreamIn(&mCacheKey, createInfo, layout->GetCacheKey());
+    StreamIn(&mCacheKey, createInfo, ToBackend(mPhysicalLayout)->GetCacheKey());
 
     // Try to see if we have anything in the blob cache.
     platform::metrics::DawnHistogramTimer cacheTimer(GetDevice()->GetPlatform());

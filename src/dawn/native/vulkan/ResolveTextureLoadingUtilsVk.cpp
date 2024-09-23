@@ -229,7 +229,7 @@ MaybeError BeginRenderPassAndExpandResolveTextureWithDraw(Device* device,
                                   device, pipelineKey, static_cast<uint8_t>(colorAttachmentCount)));
 
     RenderPipeline* pipelineVk = ToBackend(pipeline.Get());
-    PipelineLayout* layoutVk = ToBackend(pipeline->GetLayout());
+    PhysicalPipelineLayout* layoutVk = ToBackend(pipeline->GetPhysicalLayout());
     DAWN_ASSERT(layoutVk != nullptr);
 
     // Construct bind group.
