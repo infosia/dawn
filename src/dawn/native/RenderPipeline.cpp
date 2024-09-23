@@ -452,7 +452,7 @@ MaybeError ValidateBlendState(DeviceBase* device, const BlendState* descriptor) 
     DAWN_TRY(ValidateBlendFactor(descriptor->color.srcFactor));
     DAWN_TRY(ValidateBlendFactor(descriptor->color.dstFactor));
 
-    bool dualSourceBlendingEnabled = device->HasFeature(Feature::DualSourceBlending);
+    bool dualSourceBlendingEnabled = device->HasFeature(Feature::DawnDualSourceBlending);
     DAWN_TRY(ValidateBlendComponent(descriptor->alpha, dualSourceBlendingEnabled));
     DAWN_TRY(ValidateBlendComponent(descriptor->color, dualSourceBlendingEnabled));
 

@@ -48,11 +48,11 @@ namespace detail {
 
 // SType for implementation details. Kept inside the detail namespace for extensibility.
 template <typename T>
-inline {{namespace}}::SType STypeForImpl;
+constexpr inline {{namespace}}::SType STypeForImpl = {{namespace}}::SType(0u);
 
 // Specialize STypeFor to map from native struct types to their SType.
 {% for value in types["s type"].values %}
-    {% if value.valid and value.name.get() in types %}
+    {% if value.valid and ((not "deprecated" in value.json_data.get("tags", []) or not value.json_data.get("conflicts", false))) and value.name.get() in types %}
         template <>
         constexpr inline {{namespace}}::SType STypeForImpl<{{as_cppEnum(value.name)}}> =
             {{namespace}}::SType::{{as_cppEnum(value.name)}};

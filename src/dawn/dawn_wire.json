@@ -206,9 +206,9 @@
     },
     "special items": {
         "client_side_structures": [
+            "DawnSurfaceDescriptorFromWindowsCoreWindow",
+            "DawnSurfaceDescriptorFromWindowsSwapChainPanel",
             "FutureWaitInfo",
-            "SurfaceDescriptorFromWindowsCoreWindow",
-            "SurfaceDescriptorFromWindowsSwapChainPanel",
             "SurfaceSourceMetalLayer",
             "SurfaceSourceWindowsHWND",
             "SurfaceSourceXlibWindow",

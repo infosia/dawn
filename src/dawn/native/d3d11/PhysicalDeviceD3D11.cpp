@@ -140,42 +140,42 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::Depth32FloatStencil8);
     EnableFeature(Feature::DepthClipControl);
     EnableFeature(Feature::TextureCompressionBC);
-    EnableFeature(Feature::D3D11MultithreadProtected);
+    EnableFeature(Feature::DawnD3D11MultithreadProtected);
     EnableFeature(Feature::Float32Filterable);
     EnableFeature(Feature::Float32Blendable);
-    EnableFeature(Feature::DualSourceBlending);
-    EnableFeature(Feature::ClipDistances);
-    EnableFeature(Feature::Unorm16TextureFormats);
-    EnableFeature(Feature::Snorm16TextureFormats);
-    EnableFeature(Feature::Norm16TextureFormats);
-    EnableFeature(Feature::AdapterPropertiesMemoryHeaps);
-    EnableFeature(Feature::AdapterPropertiesD3D);
-    EnableFeature(Feature::R8UnormStorage);
-    EnableFeature(Feature::ShaderModuleCompilationOptions);
+    EnableFeature(Feature::DawnDualSourceBlending);
+    EnableFeature(Feature::DawnClipDistances);
+    EnableFeature(Feature::DawnUnorm16TextureFormats);
+    EnableFeature(Feature::DawnSnorm16TextureFormats);
+    EnableFeature(Feature::DawnNorm16TextureFormats);
+    EnableFeature(Feature::DawnAdapterPropertiesMemoryHeaps);
+    EnableFeature(Feature::DawnAdapterPropertiesD3D);
+    EnableFeature(Feature::DawnR8UnormStorage);
+    EnableFeature(Feature::DawnShaderModuleCompilationOptions);
     EnableFeature(Feature::DawnLoadResolveTexture);
     EnableFeature(Feature::DawnPartialLoadResolveTexture);
     EnableFeature(Feature::RG11B10UfloatRenderable);
     if (mDeviceInfo.isUMA && mDeviceInfo.supportsMapNoOverwriteDynamicBuffers) {
         // With UMA we should allow mapping usages on more type of buffers.
-        EnableFeature(Feature::BufferMapExtendedUsages);
+        EnableFeature(Feature::DawnBufferMapExtendedUsages);
     }
 
     // Multi planar formats are always supported since Feature Level 11.0
     // https://learn.microsoft.com/en-us/windows/win32/direct3ddxgi/format-support-for-direct3d-11-0-feature-level-hardware
     EnableFeature(Feature::DawnMultiPlanarFormats);
-    EnableFeature(Feature::MultiPlanarFormatP010);
-    EnableFeature(Feature::MultiPlanarRenderTargets);
+    EnableFeature(Feature::DawnMultiPlanarFormatP010);
+    EnableFeature(Feature::DawnMultiPlanarRenderTargets);
 
     if (mDeviceInfo.supportsROV) {
-        EnableFeature(Feature::PixelLocalStorageCoherent);
+        EnableFeature(Feature::DawnPixelLocalStorageCoherent);
     }
 
-    EnableFeature(Feature::SharedTextureMemoryD3D11Texture2D);
+    EnableFeature(Feature::DawnSharedTextureMemoryD3D11Texture2D);
     if (mDeviceInfo.supportsSharedResourceCapabilityTier2) {
-        EnableFeature(Feature::SharedTextureMemoryDXGISharedHandle);
+        EnableFeature(Feature::DawnSharedTextureMemoryDXGISharedHandle);
     }
     if (mDeviceInfo.supportsMonitoredFence || mDeviceInfo.supportsNonMonitoredFence) {
-        EnableFeature(Feature::SharedFenceDXGISharedHandle);
+        EnableFeature(Feature::DawnSharedFenceDXGISharedHandle);
     }
 
     UINT formatSupport = 0;

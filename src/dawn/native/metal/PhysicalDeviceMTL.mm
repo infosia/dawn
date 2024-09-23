@@ -650,7 +650,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
             }
 
             if (enableTimestampQueryInsidePasses) {
-                EnableFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses);
+                EnableFeature(Feature::DawnChromiumExperimentalTimestampQueryInsidePasses);
             }
         }
     }
@@ -666,7 +666,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 // TODO(dawn:2249): Enable on iOS. Some XCode or SDK versions seem to not match the docs.
 #if DAWN_PLATFORM_IS(MACOS)
     if (@available(macOS 10.12, iOS 16.0, *)) {
-        EnableFeature(Feature::AdapterPropertiesMemoryHeaps);
+        EnableFeature(Feature::DawnAdapterPropertiesMemoryHeaps);
     }
 #endif
 
@@ -674,31 +674,31 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     // on ios 11.0+ and macOS 11.0+
     if (@available(macOS 10.11, iOS 11.0, *)) {
         EnableFeature(Feature::DawnMultiPlanarFormats);
-        EnableFeature(Feature::MultiPlanarFormatP010);
-        EnableFeature(Feature::MultiPlanarRenderTargets);
-        EnableFeature(Feature::MultiPlanarFormatExtendedUsages);
+        EnableFeature(Feature::DawnMultiPlanarFormatP010);
+        EnableFeature(Feature::DawnMultiPlanarRenderTargets);
+        EnableFeature(Feature::DawnMultiPlanarFormatExtendedUsages);
     }
 
     if (@available(macOS 10.13, iOS 11.0, *)) {
-        EnableFeature(Feature::MultiPlanarFormatP210);
-        EnableFeature(Feature::MultiPlanarFormatP410);
+        EnableFeature(Feature::DawnMultiPlanarFormatP210);
+        EnableFeature(Feature::DawnMultiPlanarFormatP410);
     }
 
     if (@available(macOS 10.15, iOS 13.0, *)) {
-        EnableFeature(Feature::MultiPlanarFormatNv12a);
+        EnableFeature(Feature::DawnMultiPlanarFormatNv12a);
     }
 
     if (@available(macOS 11.0, iOS 14.0, *)) {
-        EnableFeature(Feature::MultiPlanarFormatNv16);
-        EnableFeature(Feature::MultiPlanarFormatNv24);
+        EnableFeature(Feature::DawnMultiPlanarFormatNv16);
+        EnableFeature(Feature::DawnMultiPlanarFormatNv24);
     }
 
     if (@available(macOS 11.0, iOS 10.0, *)) {
         // Memoryless storage mode and programmable blending are available only from the Apple2
         // family of GPUs on.
         if ([*mDevice supportsFamily:MTLGPUFamilyApple2]) {
-            EnableFeature(Feature::FramebufferFetch);
-            EnableFeature(Feature::TransientAttachments);
+            EnableFeature(Feature::DawnFramebufferFetch);
+            EnableFeature(Feature::DawnTransientAttachments);
         }
     }
 
@@ -708,7 +708,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     // requirement and only includes Apple GPUs.
     if (@available(macOS 10.15, iOS 13.0, *)) {
         if ([*mDevice supportsFamily:MTLGPUFamilyApple3]) {
-            EnableFeature(Feature::MultiDrawIndirect);
+            EnableFeature(Feature::DawnMultiDrawIndirect);
         }
     }
 
@@ -716,11 +716,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::ShaderF16);
     EnableFeature(Feature::RG11B10UfloatRenderable);
     EnableFeature(Feature::BGRA8UnormStorage);
-    EnableFeature(Feature::DualSourceBlending);
-    EnableFeature(Feature::R8UnormStorage);
-    EnableFeature(Feature::ShaderModuleCompilationOptions);
+    EnableFeature(Feature::DawnDualSourceBlending);
+    EnableFeature(Feature::DawnR8UnormStorage);
+    EnableFeature(Feature::DawnShaderModuleCompilationOptions);
     EnableFeature(Feature::DawnLoadResolveTexture);
-    EnableFeature(Feature::ClipDistances);
+    EnableFeature(Feature::DawnClipDistances);
     EnableFeature(Feature::Float32Blendable);
 
     // SIMD-scoped permute operations is supported by GPU family Metal3, Apple6, Apple7, Apple8,
@@ -737,27 +737,27 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
             EnableFeature(Feature::Subgroups);
             EnableFeature(Feature::SubgroupsF16);
             // TODO(349125474): Remove deprecated ChromiumExperimentalSubgroups.
-            EnableFeature(Feature::ChromiumExperimentalSubgroups);
+            EnableFeature(Feature::DawnChromiumExperimentalSubgroups);
         }
     }
 
-    EnableFeature(Feature::SharedTextureMemoryIOSurface);
+    EnableFeature(Feature::DawnSharedTextureMemoryIOSurface);
     if (@available(macOS 10.14, iOS 12.0, *)) {
-        EnableFeature(Feature::SharedFenceMTLSharedEvent);
+        EnableFeature(Feature::DawnSharedFenceMTLSharedEvent);
     }
 
-    EnableFeature(Feature::Unorm16TextureFormats);
-    EnableFeature(Feature::Snorm16TextureFormats);
-    EnableFeature(Feature::Norm16TextureFormats);
+    EnableFeature(Feature::DawnUnorm16TextureFormats);
+    EnableFeature(Feature::DawnSnorm16TextureFormats);
+    EnableFeature(Feature::DawnNorm16TextureFormats);
 
-    EnableFeature(Feature::HostMappedPointer);
+    EnableFeature(Feature::DawnHostMappedPointer);
 
 #if DAWN_PLATFORM_IS(IOS)
-    EnableFeature(Feature::BufferMapExtendedUsages);
+    EnableFeature(Feature::DawnBufferMapExtendedUsages);
 #else
     if (@available(macOS 10.15, iOS 13.0, *)) {
         if ([*mDevice hasUnifiedMemory]) {
-            EnableFeature(Feature::BufferMapExtendedUsages);
+            EnableFeature(Feature::DawnBufferMapExtendedUsages);
         }
     }
 #endif
