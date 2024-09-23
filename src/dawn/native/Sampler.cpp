@@ -72,8 +72,8 @@ MaybeError ValidateSamplerDescriptor(DeviceBase* device, const SamplerDescriptor
 
     UnpackedPtr<SamplerDescriptor> unpacked = Unpack(descriptor);
     if (unpacked.Get<YCbCrVkDescriptor>()) {
-        DAWN_INVALID_IF(!device->HasFeature(Feature::YCbCrVulkanSamplers), "%s is not enabled.",
-                        wgpu::FeatureName::YCbCrVulkanSamplers);
+        DAWN_INVALID_IF(!device->HasFeature(Feature::DawnYCbCrVulkanSamplers), "%s is not enabled.",
+                        wgpu::FeatureName::DawnYCbCrVulkanSamplers);
     }
 
     return {};

@@ -103,7 +103,7 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     DAWN_TRY_ASSIGN(queue, Queue::Create(this, &descriptor->defaultQueue));
 
     if ((HasFeature(Feature::TimestampQuery) ||
-         HasFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses)) &&
+         HasFeature(Feature::DawnChromiumExperimentalTimestampQueryInsidePasses)) &&
         !IsToggleEnabled(Toggle::DisableTimestampQueryConversion)) {
         // Get GPU timestamp counter frequency (in ticks/second). This fails if the specified
         // command queue doesn't support timestamps. D3D12_COMMAND_LIST_TYPE_DIRECT queues
@@ -439,9 +439,9 @@ ResultOrError<Ref<SharedBufferMemoryBase>> Device::ImportSharedBufferMemoryImpl(
 
     switch (type) {
         case wgpu::SType::SharedBufferMemoryD3D12ResourceDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedBufferMemoryD3D12Resource),
+            DAWN_INVALID_IF(!HasFeature(Feature::DawnSharedBufferMemoryD3D12Resource),
                             "%s is not enabled.",
-                            wgpu::FeatureName::SharedBufferMemoryD3D12Resource);
+                            wgpu::FeatureName::DawnSharedBufferMemoryD3D12Resource);
             return SharedBufferMemory::Create(
                 this, descriptor->label, unpacked.Get<SharedBufferMemoryD3D12ResourceDescriptor>());
         default:
@@ -460,9 +460,9 @@ ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImp
 
     switch (type) {
         case wgpu::SType::SharedTextureMemoryDXGISharedHandleDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryDXGISharedHandle),
+            DAWN_INVALID_IF(!HasFeature(Feature::DawnSharedTextureMemoryDXGISharedHandle),
                             "%s is not enabled.",
-                            wgpu::FeatureName::SharedTextureMemoryDXGISharedHandle);
+                            wgpu::FeatureName::DawnSharedTextureMemoryDXGISharedHandle);
             return SharedTextureMemory::Create(
                 this, descriptor->label,
                 unpacked.Get<SharedTextureMemoryDXGISharedHandleDescriptor>());
@@ -482,8 +482,9 @@ ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
 
     switch (type) {
         case wgpu::SType::SharedFenceDXGISharedHandleDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceDXGISharedHandle), "%s is not enabled.",
-                            wgpu::FeatureName::SharedFenceDXGISharedHandle);
+            DAWN_INVALID_IF(!HasFeature(Feature::DawnSharedFenceDXGISharedHandle),
+                            "%s is not enabled.",
+                            wgpu::FeatureName::DawnSharedFenceDXGISharedHandle);
             return SharedFence::Create(this, descriptor->label,
                                        unpacked.Get<SharedFenceDXGISharedHandleDescriptor>());
         default:

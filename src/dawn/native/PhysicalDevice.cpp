@@ -54,8 +54,8 @@ MaybeError PhysicalDeviceBase::Initialize() {
 
     EnableFeature(Feature::DawnNative);
     EnableFeature(Feature::DawnInternalUsages);
-    EnableFeature(Feature::ImplicitDeviceSynchronization);
-    EnableFeature(Feature::FormatCapabilities);
+    EnableFeature(Feature::DawnImplicitDeviceSynchronization);
+    EnableFeature(Feature::DawnFormatCapabilities);
     InitializeSupportedFeaturesImpl();
 
     DAWN_TRY_CONTEXT(

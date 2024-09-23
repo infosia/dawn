@@ -130,22 +130,22 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
 
     mExternalMemoryService = std::make_unique<external_memory::Service>(this);
 
-    if (uint32_t(HasFeature(Feature::SharedFenceVkSemaphoreOpaqueFD)) +
-            uint32_t(HasFeature(Feature::SharedFenceVkSemaphoreSyncFD)) +
-            uint32_t(HasFeature(Feature::SharedFenceVkSemaphoreZirconHandle)) >
+    if (uint32_t(HasFeature(Feature::DawnSharedFenceVkSemaphoreOpaqueFD)) +
+            uint32_t(HasFeature(Feature::DawnSharedFenceVkSemaphoreSyncFD)) +
+            uint32_t(HasFeature(Feature::DawnSharedFenceVkSemaphoreZirconHandle)) >
         1) {
         return DAWN_VALIDATION_ERROR("At most one of %s, %s, and %s may be enabled.",
                                      wgpu::FeatureName::SharedFenceVkSemaphoreOpaqueFD,
                                      wgpu::FeatureName::SharedFenceVkSemaphoreSyncFD,
                                      wgpu::FeatureName::SharedFenceVkSemaphoreZirconHandle);
     }
-    if (HasFeature(Feature::SharedFenceVkSemaphoreOpaqueFD)) {
+    if (HasFeature(Feature::DawnSharedFenceVkSemaphoreOpaqueFD)) {
         mExternalSemaphoreService = std::make_unique<external_semaphore::Service>(
             this, VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR);
-    } else if (HasFeature(Feature::SharedFenceVkSemaphoreSyncFD)) {
+    } else if (HasFeature(Feature::DawnSharedFenceVkSemaphoreSyncFD)) {
         mExternalSemaphoreService = std::make_unique<external_semaphore::Service>(
             this, VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT);
-    } else if (HasFeature(Feature::SharedFenceVkSemaphoreZirconHandle)) {
+    } else if (HasFeature(Feature::DawnSharedFenceVkSemaphoreZirconHandle)) {
         mExternalSemaphoreService = std::make_unique<external_semaphore::Service>(
             this, VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_ZIRCON_EVENT_BIT_FUCHSIA);
     } else {
@@ -255,20 +255,20 @@ ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImp
 
     switch (type) {
         case wgpu::SType::SharedTextureMemoryDmaBufDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryDmaBuf), "%s is not enabled.",
-                            wgpu::FeatureName::SharedTextureMemoryDmaBuf);
+            DAWN_INVALID_IF(!HasFeature(Feature::DawnSharedTextureMemoryDmaBuf),
+                            "%s is not enabled.", wgpu::FeatureName::SharedTextureMemoryDmaBuf);
             return SharedTextureMemory::Create(this, descriptor->label,
                                                unpacked.Get<SharedTextureMemoryDmaBufDescriptor>());
         case wgpu::SType::SharedTextureMemoryAHardwareBufferDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryAHardwareBuffer),
+            DAWN_INVALID_IF(!HasFeature(Feature::DawnSharedTextureMemoryAHardwareBuffer),
                             "%s is not enabled.",
                             wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer);
             return SharedTextureMemory::Create(
                 this, descriptor->label,
                 unpacked.Get<SharedTextureMemoryAHardwareBufferDescriptor>());
         case wgpu::SType::SharedTextureMemoryOpaqueFDDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryOpaqueFD), "%s is not enabled.",
-                            wgpu::FeatureName::SharedTextureMemoryOpaqueFD);
+            DAWN_INVALID_IF(!HasFeature(Feature::DawnSharedTextureMemoryOpaqueFD),
+                            "%s is not enabled.", wgpu::FeatureName::SharedTextureMemoryOpaqueFD);
             return SharedTextureMemory::Create(
                 this, descriptor->label, unpacked.Get<SharedTextureMemoryOpaqueFDDescriptor>());
         default:
@@ -289,19 +289,19 @@ ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
 
     switch (type) {
         case wgpu::SType::SharedFenceVkSemaphoreZirconHandleDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceVkSemaphoreZirconHandle),
+            DAWN_INVALID_IF(!HasFeature(Feature::DawnSharedFenceVkSemaphoreZirconHandle),
                             "%s is not enabled.",
                             wgpu::FeatureName::SharedFenceVkSemaphoreZirconHandle);
             return SharedFence::Create(
                 this, descriptor->label,
                 unpacked.Get<SharedFenceVkSemaphoreZirconHandleDescriptor>());
         case wgpu::SType::SharedFenceVkSemaphoreSyncFDDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceVkSemaphoreSyncFD),
+            DAWN_INVALID_IF(!HasFeature(Feature::DawnSharedFenceVkSemaphoreSyncFD),
                             "%s is not enabled.", wgpu::FeatureName::SharedFenceVkSemaphoreSyncFD);
             return SharedFence::Create(this, descriptor->label,
                                        unpacked.Get<SharedFenceVkSemaphoreSyncFDDescriptor>());
         case wgpu::SType::SharedFenceVkSemaphoreOpaqueFDDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceVkSemaphoreOpaqueFD),
+            DAWN_INVALID_IF(!HasFeature(Feature::DawnSharedFenceVkSemaphoreOpaqueFD),
                             "%s is not enabled.",
                             wgpu::FeatureName::SharedFenceVkSemaphoreOpaqueFD);
             return SharedFence::Create(this, descriptor->label,
@@ -483,10 +483,11 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
 
     // Set device feature for subgroups with f16 types.
     // TODO(349125474): Remove deprecated ChromiumExperimentalSubgroups.
-    if (HasFeature(Feature::SubgroupsF16) || HasFeature(Feature::ChromiumExperimentalSubgroups)) {
+    if (HasFeature(Feature::SubgroupsF16) ||
+        HasFeature(Feature::DawnChromiumExperimentalSubgroups)) {
         // If ChromiumExperimentalSubgroups feature is required, set the shaderSubgroupExtendedTypes
         // as-is, so that subgroups functions with f16 can be used if supported by backend.
-        if (HasFeature(Feature::ChromiumExperimentalSubgroups)) {
+        if (HasFeature(Feature::DawnChromiumExperimentalSubgroups)) {
             if (usedKnobs.HasExt(DeviceExt::ShaderSubgroupExtendedTypes)) {
                 usedKnobs.shaderSubgroupExtendedTypes = mDeviceInfo.shaderSubgroupExtendedTypes;
                 featuresChain.Add(&usedKnobs.shaderSubgroupExtendedTypes);
@@ -510,7 +511,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         usedKnobs.features.shaderClipDistance = VK_TRUE;
     }
 
-    if (HasFeature(Feature::R8UnormStorage)) {
+    if (HasFeature(Feature::DawnR8UnormStorage)) {
         usedKnobs.features.shaderStorageImageExtendedFormats = VK_TRUE;
     }
 
@@ -521,7 +522,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         featuresChain.Add(&usedKnobs.robustness2Features);
     }
 
-    if (HasFeature(Feature::ChromiumExperimentalSubgroupUniformControlFlow)) {
+    if (HasFeature(Feature::DawnChromiumExperimentalSubgroupUniformControlFlow)) {
         DAWN_ASSERT(
             usedKnobs.HasExt(DeviceExt::ShaderSubgroupUniformControlFlow) &&
             mDeviceInfo.shaderSubgroupUniformControlFlowFeatures.shaderSubgroupUniformControlFlow ==
@@ -532,7 +533,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         featuresChain.Add(&usedKnobs.shaderSubgroupUniformControlFlowFeatures);
     }
 
-    if (HasFeature(Feature::YCbCrVulkanSamplers) &&
+    if (HasFeature(Feature::DawnYCbCrVulkanSamplers) &&
         mDeviceInfo.HasExt(DeviceExt::SamplerYCbCrConversion) &&
         mDeviceInfo.HasExt(DeviceExt::ExternalMemoryAndroidHardwareBuffer)) {
         usedKnobs.samplerYCbCrConversionFeatures.samplerYcbcrConversion = VK_TRUE;
@@ -540,7 +541,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
                           VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES);
     }
 
-    if (HasFeature(Feature::MultiDrawIndirect)) {
+    if (HasFeature(Feature::DawnMultiDrawIndirect)) {
         DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DrawIndirectCount) &&
                     mDeviceInfo.features.multiDrawIndirect == VK_TRUE);
         usedKnobs.features.multiDrawIndirect = VK_TRUE;

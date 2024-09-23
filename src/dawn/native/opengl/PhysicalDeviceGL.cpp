@@ -195,7 +195,7 @@ MaybeError PhysicalDevice::InitializeImpl() {
 }
 
 void PhysicalDevice::InitializeSupportedFeaturesImpl() {
-    EnableFeature(Feature::StaticSamplers);
+    EnableFeature(Feature::DawnStaticSamplers);
 
     // TextureCompressionBC
     {
@@ -249,7 +249,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     if (mDisplay->egl.HasExt(EGLExt::DisplayTextureShareGroup)) {
-        EnableFeature(dawn::native::Feature::ANGLETextureSharing);
+        EnableFeature(dawn::native::Feature::DawnANGLETextureSharing);
     }
 
     // Non-zero baseInstance requires at least desktop OpenGL 4.2, and it is not supported in
@@ -274,9 +274,9 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     // Unorm16TextureFormats, Snorm16TextureFormats and Norm16TextureFormats
     if (mFunctions.IsGLExtensionSupported("GL_EXT_texture_norm16")) {
-        EnableFeature(Feature::Unorm16TextureFormats);
-        EnableFeature(Feature::Snorm16TextureFormats);
-        EnableFeature(Feature::Norm16TextureFormats);
+        EnableFeature(Feature::DawnUnorm16TextureFormats);
+        EnableFeature(Feature::DawnSnorm16TextureFormats);
+        EnableFeature(Feature::DawnNorm16TextureFormats);
     }
 
     // Float32Blendable
