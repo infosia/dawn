@@ -63,10 +63,10 @@ MaybeError ValidateQuerySetDescriptor(DeviceBase* device, const QuerySetDescript
             break;
 
         case wgpu::QueryType::Timestamp:
-            DAWN_INVALID_IF(
-                !device->HasFeature(Feature::TimestampQuery) &&
-                    !device->HasFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses),
-                "Timestamp query set created without the feature being enabled.");
+            DAWN_INVALID_IF(!device->HasFeature(Feature::TimestampQuery) &&
+                                !device->HasFeature(
+                                    Feature::ChromiumExperimentalTimestampQueryInsidePasses_Dawn),
+                            "Timestamp query set created without the feature being enabled.");
             break;
 
         default:

@@ -52,10 +52,10 @@ MaybeError PhysicalDeviceBase::Initialize() {
     DAWN_TRY_CONTEXT(InitializeImpl(), "initializing adapter (backend=%s)", mBackend);
     InitializeVendorArchitectureImpl();
 
-    EnableFeature(Feature::DawnNative);
-    EnableFeature(Feature::DawnInternalUsages);
-    EnableFeature(Feature::ImplicitDeviceSynchronization);
-    EnableFeature(Feature::FormatCapabilities);
+    EnableFeature(Feature::DawnNative_Dawn);
+    EnableFeature(Feature::DawnInternalUsages_Dawn);
+    EnableFeature(Feature::ImplicitDeviceSynchronization_Dawn);
+    EnableFeature(Feature::FormatCapabilities_Dawn);
     InitializeSupportedFeaturesImpl();
 
     DAWN_TRY_CONTEXT(

@@ -40,7 +40,7 @@ namespace {
 
 class ErrorSharedBufferMemory : public SharedBufferMemoryBase {
   public:
-    ErrorSharedBufferMemory(DeviceBase* device, const SharedBufferMemoryDescriptor* descriptor)
+    ErrorSharedBufferMemory(DeviceBase* device, const SharedBufferMemoryDescriptor_Dawn* descriptor)
         : SharedBufferMemoryBase(device, descriptor, ObjectBase::kError) {}
 
     Ref<SharedResourceMemoryContents> CreateContents() override { DAWN_UNREACHABLE(); }
@@ -65,12 +65,12 @@ class ErrorSharedBufferMemory : public SharedBufferMemoryBase {
 // static
 SharedBufferMemoryBase* SharedBufferMemoryBase::MakeError(
     DeviceBase* device,
-    const SharedBufferMemoryDescriptor* descriptor) {
+    const SharedBufferMemoryDescriptor_Dawn* descriptor) {
     return new ErrorSharedBufferMemory(device, descriptor);
 }
 
 SharedBufferMemoryBase::SharedBufferMemoryBase(DeviceBase* device,
-                                               const SharedBufferMemoryDescriptor* descriptor,
+                                               const SharedBufferMemoryDescriptor_Dawn* descriptor,
                                                ObjectBase::ErrorTag tag)
     : SharedResourceMemory(device, tag, descriptor->label),
       mProperties{nullptr, wgpu::BufferUsage::None, 0} {}
@@ -150,7 +150,8 @@ ResultOrError<Ref<BufferBase>> SharedBufferMemoryBase::CreateBuffer(
     return buffer;
 }
 
-void APISharedBufferMemoryEndAccessStateFreeMembers(WGPUSharedBufferMemoryEndAccessState cState) {
+void APISharedBufferMemoryEndAccessState_DawnFreeMembers(
+    WGPUSharedBufferMemoryEndAccessState cState) {
     auto* state = reinterpret_cast<SharedBufferMemoryBase::EndAccessState*>(&cState);
     for (size_t i = 0; i < state->fenceCount; ++i) {
         state->fences[i]->APIRelease();

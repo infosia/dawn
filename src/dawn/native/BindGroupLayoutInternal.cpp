@@ -197,7 +197,7 @@ MaybeError ValidateBindGroupLayoutEntry(DeviceBase* device,
     if (auto* staticSamplerBindingLayout = entry.Get<StaticSamplerBindingLayout>()) {
         bindingMemberCount++;
 
-        DAWN_INVALID_IF(!device->HasFeature(Feature::StaticSamplers),
+        DAWN_INVALID_IF(!device->HasFeature(Feature::StaticSamplers_Dawn),
                         "Static samplers used without the %s feature enabled.",
                         wgpu::FeatureName::StaticSamplers);
 

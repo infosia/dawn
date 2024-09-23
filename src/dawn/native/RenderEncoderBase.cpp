@@ -328,7 +328,7 @@ void RenderEncoderBase::APIMultiDrawIndirect(BufferBase* indirectBuffer,
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
             if (IsValidationEnabled()) {
-                DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::MultiDrawIndirect),
+                DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::MultiDrawIndirect_Dawn),
                                 "%s is not enabled.", wgpu::FeatureName::MultiDrawIndirect);
 
                 DAWN_TRY(GetDevice()->ValidateObject(indirectBuffer));
@@ -433,7 +433,7 @@ void RenderEncoderBase::APIMultiDrawIndexedIndirect(BufferBase* indirectBuffer,
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
             if (IsValidationEnabled()) {
-                DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::MultiDrawIndirect),
+                DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::MultiDrawIndirect_Dawn),
                                 "%s is not enabled.", wgpu::FeatureName::MultiDrawIndirect);
 
                 DAWN_TRY(GetDevice()->ValidateObject(indirectBuffer));

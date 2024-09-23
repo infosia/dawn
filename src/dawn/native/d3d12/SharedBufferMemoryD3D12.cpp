@@ -130,7 +130,7 @@ MaybeError SharedBufferMemory::BeginAccessImpl(
         DAWN_TRY(fence->ExportInfo(&exportInfo));
         switch (exportInfo.type) {
             case wgpu::SharedFenceType::DXGISharedHandle:
-                DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::SharedFenceDXGISharedHandle),
+                DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::SharedFenceDXGISharedHandle_Dawn),
                                 "Required feature (%s) is missing.",
                                 wgpu::FeatureName::SharedFenceDXGISharedHandle);
                 break;
@@ -147,7 +147,7 @@ ResultOrError<FenceAndSignalValue> SharedBufferMemory::EndAccessImpl(
     ExecutionSerial lastUsageSerial,
     UnpackedPtr<EndAccessState>& state) {
     DAWN_TRY(state.ValidateSubset<>());
-    DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::SharedFenceDXGISharedHandle),
+    DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::SharedFenceDXGISharedHandle_Dawn),
                     "Required feature (%s) is missing.",
                     wgpu::FeatureName::SharedFenceDXGISharedHandle);
 
