@@ -142,6 +142,28 @@ class EnumType(Type):
             if prefix == 0 and 'native' in tags:
                 prefix = 0x0001_0000
 
+            # Assert that the value name matches tags.
+            if 'deprecated' not in tags:
+                if 'dawn' in tags:
+                    assert value_name.startswith(
+                        'dawn'
+                    ), 'Enum "{}" name must start with "dawn"'.format(
+                        value_name)
+                elif 'emscripten' in tags:
+                    assert value_name.startswith(
+                        'emscripten'
+                    ), 'Enum "{}" name must start with "emscripten"'.format(
+                        value_name)
+                else:
+                    assert not value_name.startswith(
+                        'dawn'
+                    ), 'Enum "{}" name can\'t start with "dawn"'.format(
+                        value_name)
+                    assert not value_name.startswith(
+                        'emscripten'
+                    ), 'Enum "{}" name can\'t start with "emscripten"'.format(
+                        value_name)
+
             value += prefix
 
             if value_name == "undefined":
@@ -154,12 +176,15 @@ class EnumType(Type):
             self.values.append(
                 EnumValue(Name(value_name), value, m.get('valid', True), m))
 
-        # Assert that all values are unique in enums
+        # Assert that all values except those with "conflicts": true are unique in enums
         all_values = set()
         for value in self.values:
             if value.value in all_values:
-                raise Exception("Duplicate value {} in enum {}".format(
-                    value.value, name))
+                #TODO(42241174) remove this condition once wgpu refactoring is complete.
+                if not value.json_data.get('conflicts', False):
+                    raise Exception(
+                        "Duplicate value {} for '{}' in enum '{}'".format(
+                            hex(value.value), value.name.get(), name))
             all_values.add(value.value)
         self.is_wire_transparent = True
 
@@ -294,6 +319,31 @@ class Record:
 
 class StructureType(Record, Type):
     def __init__(self, is_enabled, name, json_data):
+        # Assert that the name matches tags.
+        tags = json_data.get('tags', [])
+        if 'deprecated' in tags and len(tags) > 1:
+            assert not name.startswith(
+                'dawn'), 'Struct "{}" name can\'t start with "dawn"'.format(
+                    name)
+            assert not name.startswith(
+                'emscripten'
+            ), 'Struct "{}" name can\'t start with "emscripten"'.format(name)
+        elif 'dawn' in tags:
+            assert name.startswith(
+                'dawn'), 'Struct "{}" name must start with "dawn"'.format(name)
+        elif 'emscripten' in tags:
+            if name != 'INTERNAL__HAVE_EMDAWNWEBGPU_HEADER':
+                assert name.startswith(
+                    'emscripten'
+                ), 'Struct "{}" name must start with "emscripten"'.format(name)
+        else:
+            assert not name.startswith(
+                'dawn'), 'Struct "{}" name can\'t start with "dawn"'.format(
+                    name)
+            assert not name.startswith(
+                'emscripten'
+            ), 'Struct "{}" name can\'t start with "emscripten"'.format(name)
+
         Record.__init__(self, name)
         json_data_override = {}
         if 'members' in json_data:
@@ -1011,6 +1061,14 @@ def unreachable_code(msg="unreachable_code"):
     assert False, msg
 
 
+#TODO(42241174) remove this helper function once wgpu refactoring is complete.
+def maybe_remove_dawn_suffix(name, json_data):
+    prefix = 'dawn '
+    if name.get().startswith(prefix) and json_data.get('conflicts', False):
+        return Name(name.get()[len(prefix):], name.native)
+    return name
+
+
 def make_base_render_params(metadata):
     c_prefix = metadata.c_prefix
 
@@ -1070,6 +1128,7 @@ def make_base_render_params(metadata):
             'find_by_name': find_by_name,
             'print': print,
             'unreachable_code': unreachable_code,
+            'maybe_remove_dawn_suffix': maybe_remove_dawn_suffix,
         }
 
 

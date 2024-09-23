@@ -358,7 +358,7 @@ Ref<TextureBase> Device::CreateTextureWrappingGLTexture(const ExternalImageDescr
     if (ConsumedError(ValidateTextureDescriptor(this, textureDescriptor))) {
         return nullptr;
     }
-    if (!HasFeature(Feature::ANGLETextureSharing)) {
+    if (!HasFeature(Feature::DawnANGLETextureSharing)) {
         HandleError(DAWN_VALIDATION_ERROR("Device does not support ANGLE GL texture sharing."));
         return nullptr;
     }

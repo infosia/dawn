@@ -475,7 +475,7 @@ void ComputePassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t quer
             if (IsValidationEnabled()) {
                 DAWN_TRY(ValidateTimestampQuery(
                     GetDevice(), querySet, queryIndex,
-                    Feature::ChromiumExperimentalTimestampQueryInsidePasses));
+                    Feature::DawnChromiumExperimentalTimestampQueryInsidePasses));
             }
 
             mCommandEncoder->TrackQueryAvailability(querySet, queryIndex);

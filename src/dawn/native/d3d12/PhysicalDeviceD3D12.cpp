@@ -135,23 +135,23 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::DepthClipControl);
     EnableFeature(Feature::Float32Filterable);
     EnableFeature(Feature::Float32Blendable);
-    EnableFeature(Feature::DualSourceBlending);
-    EnableFeature(Feature::Unorm16TextureFormats);
-    EnableFeature(Feature::Snorm16TextureFormats);
-    EnableFeature(Feature::Norm16TextureFormats);
-    EnableFeature(Feature::AdapterPropertiesMemoryHeaps);
-    EnableFeature(Feature::AdapterPropertiesD3D);
-    EnableFeature(Feature::MultiPlanarRenderTargets);
-    EnableFeature(Feature::R8UnormStorage);
-    EnableFeature(Feature::SharedBufferMemoryD3D12Resource);
-    EnableFeature(Feature::ShaderModuleCompilationOptions);
-    EnableFeature(Feature::StaticSamplers);
-    EnableFeature(Feature::MultiDrawIndirect);
-    EnableFeature(Feature::ClipDistances);
+    EnableFeature(Feature::DawnDualSourceBlending);
+    EnableFeature(Feature::DawnUnorm16TextureFormats);
+    EnableFeature(Feature::DawnSnorm16TextureFormats);
+    EnableFeature(Feature::DawnNorm16TextureFormats);
+    EnableFeature(Feature::DawnAdapterPropertiesMemoryHeaps);
+    EnableFeature(Feature::DawnAdapterPropertiesD3D);
+    EnableFeature(Feature::DawnMultiPlanarRenderTargets);
+    EnableFeature(Feature::DawnR8UnormStorage);
+    EnableFeature(Feature::DawnSharedBufferMemoryD3D12Resource);
+    EnableFeature(Feature::DawnShaderModuleCompilationOptions);
+    EnableFeature(Feature::DawnStaticSamplers);
+    EnableFeature(Feature::DawnMultiDrawIndirect);
+    EnableFeature(Feature::DawnClipDistances);
 
     if (AreTimestampQueriesSupported()) {
         EnableFeature(Feature::TimestampQuery);
-        EnableFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses);
+        EnableFeature(Feature::DawnChromiumExperimentalTimestampQueryInsidePasses);
     }
 
     // ShaderF16 features require DXC version being 1.4 or higher, shader model supporting 6.2 or
@@ -166,7 +166,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     // ChromiumExperimentalSubgroups requires SM >= 6.0 and capabilities flags.
     if (GetBackend()->IsDXCAvailable() && mDeviceInfo.supportsWaveOps) {
         // TODO(349125474): Remove deprecated ChromiumExperimentalSubgroups.
-        EnableFeature(Feature::ChromiumExperimentalSubgroups);
+        EnableFeature(Feature::DawnChromiumExperimentalSubgroups);
         EnableFeature(Feature::Subgroups);
         // D3D12 devices that support both native f16 and wave ops can support subgroups-f16.
         if (shaderF16Enabled) {
@@ -187,11 +187,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     hr = mD3d12Device->CheckFeatureSupport(D3D12_FEATURE_EXISTING_HEAPS, &existingHeapInfo,
                                            sizeof(existingHeapInfo));
     if (SUCCEEDED(hr) && existingHeapInfo.Supported) {
-        EnableFeature(Feature::HostMappedPointer);
+        EnableFeature(Feature::DawnHostMappedPointer);
     }
 
-    EnableFeature(Feature::SharedTextureMemoryDXGISharedHandle);
-    EnableFeature(Feature::SharedFenceDXGISharedHandle);
+    EnableFeature(Feature::DawnSharedTextureMemoryDXGISharedHandle);
+    EnableFeature(Feature::DawnSharedFenceDXGISharedHandle);
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
