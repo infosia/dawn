@@ -130,9 +130,9 @@ MaybeError SharedBufferMemory::BeginAccessImpl(
         DAWN_TRY(fence->ExportInfo(&exportInfo));
         switch (exportInfo.type) {
             case wgpu::SharedFenceType::DXGISharedHandle:
-                DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::SharedFenceDXGISharedHandle),
+                DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::DawnSharedFenceDXGISharedHandle),
                                 "Required feature (%s) is missing.",
-                                wgpu::FeatureName::SharedFenceDXGISharedHandle);
+                                wgpu::FeatureName::DawnSharedFenceDXGISharedHandle);
                 break;
             default:
                 return DAWN_VALIDATION_ERROR("Unsupported fence type %s.", exportInfo.type);
@@ -147,9 +147,9 @@ ResultOrError<FenceAndSignalValue> SharedBufferMemory::EndAccessImpl(
     ExecutionSerial lastUsageSerial,
     UnpackedPtr<EndAccessState>& state) {
     DAWN_TRY(state.ValidateSubset<>());
-    DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::SharedFenceDXGISharedHandle),
+    DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::DawnSharedFenceDXGISharedHandle),
                     "Required feature (%s) is missing.",
-                    wgpu::FeatureName::SharedFenceDXGISharedHandle);
+                    wgpu::FeatureName::DawnSharedFenceDXGISharedHandle);
 
     Ref<d3d::SharedFence> sharedFence;
     DAWN_TRY_ASSIGN(sharedFence, ToBackend(GetDevice()->GetQueue())->GetOrCreateSharedFence());

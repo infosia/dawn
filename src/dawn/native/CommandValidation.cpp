@@ -715,8 +715,8 @@ MaybeError ValidatePLSInfo(
     uint64_t totalSize,
     ityp::span<size_t, StorageAttachmentInfoForValidation> storageAttachments) {
     DAWN_INVALID_IF(
-        !(device->HasFeature(Feature::PixelLocalStorageCoherent) ||
-          device->HasFeature(Feature::PixelLocalStorageNonCoherent)),
+        !(device->HasFeature(Feature::DawnPixelLocalStorageCoherent) ||
+          device->HasFeature(Feature::DawnPixelLocalStorageNonCoherent)),
         "Pixel Local Storage feature used without either of the pixel-local-storage-coherent or "
         "pixel-local-storage-non-coherent features enabled.");
 

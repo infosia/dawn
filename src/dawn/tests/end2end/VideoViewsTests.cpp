@@ -1485,7 +1485,7 @@ TEST_P(VideoViewsValidationTests, RenderAttachmentInvalid) {
         .Times(testing::AnyNumber());
 
     // multi-planar formats are NOT allowed to be renderable by default and require
-    // Feature::MultiPlanarRenderTargets.
+    // Feature::DawnMultiPlanarRenderTargets.
     // "RenderAttachment is incompatible with the non-renderable format" error is expected.
     ASSERT_DEVICE_ERROR_MSG(auto platformTexture = mBackend->CreateVideoTextureForTest(
                                 GetFormat(), wgpu::TextureUsage::RenderAttachment,
@@ -1545,13 +1545,14 @@ class VideoViewsRenderTargetTests : public VideoViewsValidationTests {
 
         DAWN_TEST_UNSUPPORTED_IF(!IsMultiPlanarFormatsSupported());
 
-        DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::MultiPlanarRenderTargets));
+        DAWN_TEST_UNSUPPORTED_IF(
+            !device.HasFeature(wgpu::FeatureName::DawnMultiPlanarRenderTargets));
     }
 
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         std::vector<wgpu::FeatureName> requiredFeatures = VideoViewsTests::GetRequiredFeatures();
-        if (SupportsFeatures({wgpu::FeatureName::MultiPlanarRenderTargets})) {
-            requiredFeatures.push_back(wgpu::FeatureName::MultiPlanarRenderTargets);
+        if (SupportsFeatures({wgpu::FeatureName::DawnMultiPlanarRenderTargets})) {
+            requiredFeatures.push_back(wgpu::FeatureName::DawnMultiPlanarRenderTargets);
         }
         return requiredFeatures;
     }
@@ -1928,7 +1929,7 @@ class VideoViewsRenderTargetTests : public VideoViewsValidationTests {
 // Tests creating a texture with a multi-plane format.
 TEST_P(VideoViewsRenderTargetTests, RenderAttachmentValid) {
     // multi-planar formats should be allowed to be renderable with
-    // Feature::MultiPlanarRenderTargets.
+    // Feature::DawnMultiPlanarRenderTargets.
     auto platformTexture =
         mBackend->CreateVideoTextureForTest(GetFormat(), wgpu::TextureUsage::RenderAttachment,
                                             /*isCheckerboard*/ true,

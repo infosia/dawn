@@ -98,10 +98,10 @@ ResultOrError<UnpackedPtr<PipelineLayoutDescriptor>> ValidatePipelineLayoutDescr
 
     // Validate immediateDataRangeByteSize.
     if (descriptor->immediateDataRangeByteSize) {
-        DAWN_INVALID_IF(!device->HasFeature(Feature::ChromiumExperimentalImmediateData),
+        DAWN_INVALID_IF(!device->HasFeature(Feature::DawnChromiumExperimentalImmediateData),
                         "Set non-zero immediateDatRangeByteSize without "
                         "%s feature is not allowed.",
-                        ToAPI(Feature::ChromiumExperimentalImmediateData));
+                        ToAPI(Feature::DawnChromiumExperimentalImmediateData));
 
         uint32_t maxImmediateDataRangeByteSize =
             device->GetLimits().experimentalImmediateDataLimits.maxImmediateDataRangeByteSize;

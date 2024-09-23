@@ -42,21 +42,22 @@ namespace dawn::native {
 
 class SharedTextureMemoryContents;
 class SharedResourceMemoryContents;
-struct SharedTextureMemoryDescriptor;
-struct SharedTextureMemoryBeginAccessDescriptor;
-struct SharedTextureMemoryEndAccessState;
-struct SharedTextureMemoryProperties;
+struct DawnSharedTextureMemoryDescriptor;
+struct DawnSharedTextureMemoryBeginAccessDescriptor;
+struct DawnSharedTextureMemoryEndAccessState;
+struct DawnSharedTextureMemoryProperties;
 struct TextureDescriptor;
 
 class SharedTextureMemoryBase : public SharedResourceMemory {
   public:
-    using BeginAccessDescriptor = SharedTextureMemoryBeginAccessDescriptor;
-    using EndAccessState = SharedTextureMemoryEndAccessState;
+    using BeginAccessDescriptor = DawnSharedTextureMemoryBeginAccessDescriptor;
+    using EndAccessState = DawnSharedTextureMemoryEndAccessState;
 
-    static Ref<SharedTextureMemoryBase> MakeError(DeviceBase* device,
-                                                  const SharedTextureMemoryDescriptor* descriptor);
+    static Ref<SharedTextureMemoryBase> MakeError(
+        DeviceBase* device,
+        const DawnSharedTextureMemoryDescriptor* descriptor);
 
-    wgpu::Status APIGetProperties(SharedTextureMemoryProperties* properties) const;
+    wgpu::Status APIGetProperties(DawnSharedTextureMemoryProperties* properties) const;
     TextureBase* APICreateTexture(const TextureDescriptor* descriptor);
 
     ObjectType GetType() const override;
@@ -66,14 +67,14 @@ class SharedTextureMemoryBase : public SharedResourceMemory {
   protected:
     SharedTextureMemoryBase(DeviceBase* device,
                             StringView label,
-                            const SharedTextureMemoryProperties& properties);
+                            const DawnSharedTextureMemoryProperties& properties);
     SharedTextureMemoryBase(DeviceBase* device,
-                            const SharedTextureMemoryDescriptor* descriptor,
+                            const DawnSharedTextureMemoryDescriptor* descriptor,
                             ObjectBase::ErrorTag tag);
 
   private:
     ResultOrError<Ref<TextureBase>> CreateTexture(const TextureDescriptor* rawDescriptor);
-    MaybeError GetProperties(SharedTextureMemoryProperties* properties) const;
+    MaybeError GetProperties(DawnSharedTextureMemoryProperties* properties) const;
 
     Ref<SharedResourceMemoryContents> CreateContents() override;
 
@@ -81,11 +82,11 @@ class SharedTextureMemoryBase : public SharedResourceMemory {
         const UnpackedPtr<TextureDescriptor>& descriptor) = 0;
 
     virtual MaybeError GetChainedProperties(
-        UnpackedPtr<SharedTextureMemoryProperties>& properties) const {
+        UnpackedPtr<DawnSharedTextureMemoryProperties>& properties) const {
         return {};
     }
 
-    SharedTextureMemoryProperties mProperties;
+    DawnSharedTextureMemoryProperties mProperties;
 };
 
 class SharedTextureMemoryContents : public SharedResourceMemoryContents {
