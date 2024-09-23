@@ -228,11 +228,11 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
         std::unique_ptr<OwnedCompilationMessages>* compilationMessages = nullptr);
     // Deprecated: this was the way to create a SwapChain when it was explicitly manipulated by the
     // end user.
-    ResultOrError<Ref<SwapChainBase>> CreateSwapChain(Surface* surface,
-                                                      const SwapChainDescriptor* descriptor);
-    ResultOrError<Ref<SwapChainBase>> CreateSwapChain(Surface* surface,
-                                                      SwapChainBase* previousSwapChain,
-                                                      const SurfaceConfiguration* config);
+    ResultOrError<Ref<SwapChain_DawnBase>> CreateSwapChain(Surface* surface,
+                                                           const SwapChainDescriptor* descriptor);
+    ResultOrError<Ref<SwapChain_DawnBase>> CreateSwapChain(Surface* surface,
+                                                           SwapChain_DawnBase* previousSwapChain,
+                                                           const SurfaceConfiguration* config);
     ResultOrError<Ref<TextureBase>> CreateTexture(const TextureDescriptor* rawDescriptor);
     ResultOrError<Ref<TextureViewBase>> CreateTextureView(
         TextureBase* texture,
@@ -283,7 +283,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     ShaderModuleBase* APICreateErrorShaderModule2(const ShaderModuleDescriptor* descriptor,
                                                   std::string_view errorMessage);
     // TODO(crbug.com/dawn/2320): Remove after deprecation.
-    SwapChainBase* APICreateSwapChain(Surface* surface, const SwapChainDescriptor* descriptor);
+    SwapChain_DawnBase* APICreateSwapChain(Surface* surface, const SwapChainDescriptor* descriptor);
     TextureBase* APICreateTexture(const TextureDescriptor* descriptor);
 
     wgpu::TextureUsage APIGetSupportedSurfaceUsage(Surface* surface);
@@ -506,9 +506,9 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
         ShaderModuleParseResult* parseResult,
         OwnedCompilationMessages* compilationMessages) = 0;
     // Note that previousSwapChain may be nullptr, or come from a different backend.
-    virtual ResultOrError<Ref<SwapChainBase>> CreateSwapChainImpl(
+    virtual ResultOrError<Ref<SwapChain_DawnBase>> CreateSwapChainImpl(
         Surface* surface,
-        SwapChainBase* previousSwapChain,
+        SwapChain_DawnBase* previousSwapChain,
         const SurfaceConfiguration* config) = 0;
     virtual ResultOrError<Ref<TextureBase>> CreateTextureImpl(
         const UnpackedPtr<TextureDescriptor>& descriptor) = 0;

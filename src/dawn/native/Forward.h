@@ -67,7 +67,7 @@ class SamplerBase;
 class SharedFenceBase;
 class Surface;
 class ShaderModuleBase;
-class SwapChainBase;
+class SwapChain_DawnBase;
 class TextureBase;
 class TextureViewBase;
 

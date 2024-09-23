@@ -1614,9 +1614,9 @@ ShaderModuleBase* DeviceBase::APICreateErrorShaderModule2(const ShaderModuleDesc
 
     return ReturnToAPI(std::move(result));
 }
-SwapChainBase* DeviceBase::APICreateSwapChain(Surface* surface,
-                                              const SwapChainDescriptor* descriptor) {
-    Ref<SwapChainBase> result;
+SwapChain_DawnBase* DeviceBase::APICreateSwapChain(Surface* surface,
+                                                   const SwapChainDescriptor* descriptor) {
+    Ref<SwapChain_DawnBase> result;
     if (ConsumedError(CreateSwapChain(surface, descriptor), &result,
                       "calling %s.CreateSwapChain(%s).", this, descriptor)) {
         SurfaceConfiguration config;
@@ -1630,7 +1630,7 @@ SwapChainBase* DeviceBase::APICreateSwapChain(Surface* surface,
         config.viewFormatCount = 0;
         config.viewFormats = nullptr;
         config.alphaMode = wgpu::CompositeAlphaMode::Opaque;
-        result = SwapChainBase::MakeError(this, &config);
+        result = SwapChain_DawnBase::MakeError(this, &config);
     }
     return ReturnToAPI(std::move(result));
 }
@@ -2314,7 +2314,7 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
     return GetOrCreateShaderModule(unpacked, internalExtensions, &parseResult, compilationMessages);
 }
 
-ResultOrError<Ref<SwapChainBase>> DeviceBase::CreateSwapChain(
+ResultOrError<Ref<SwapChain_DawnBase>> DeviceBase::CreateSwapChain(
     Surface* surface,
     const SwapChainDescriptor* descriptor) {
     GetInstance()->EmitDeprecationWarning(
@@ -2339,15 +2339,15 @@ ResultOrError<Ref<SwapChainBase>> DeviceBase::CreateSwapChain(
     config.viewFormats = nullptr;
     config.alphaMode = wgpu::CompositeAlphaMode::Opaque;
 
-    SwapChainBase* previousSwapChain = surface->GetAttachedSwapChain();
-    ResultOrError<Ref<SwapChainBase>> maybeNewSwapChain =
+    SwapChain_DawnBase* previousSwapChain = surface->GetAttachedSwapChain();
+    ResultOrError<Ref<SwapChain_DawnBase>> maybeNewSwapChain =
         CreateSwapChainImpl(surface, previousSwapChain, &config);
 
     if (previousSwapChain != nullptr) {
         previousSwapChain->DetachFromSurface();
     }
 
-    Ref<SwapChainBase> newSwapChain;
+    Ref<SwapChain_DawnBase> newSwapChain;
     DAWN_TRY_ASSIGN(newSwapChain, std::move(maybeNewSwapChain));
 
     newSwapChain->SetIsAttached();
@@ -2355,9 +2355,10 @@ ResultOrError<Ref<SwapChainBase>> DeviceBase::CreateSwapChain(
     return newSwapChain;
 }
 
-ResultOrError<Ref<SwapChainBase>> DeviceBase::CreateSwapChain(Surface* surface,
-                                                              SwapChainBase* previousSwapChain,
-                                                              const SurfaceConfiguration* config) {
+ResultOrError<Ref<SwapChain_DawnBase>> DeviceBase::CreateSwapChain(
+    Surface* surface,
+    SwapChain_DawnBase* previousSwapChain,
+    const SurfaceConfiguration* config) {
     // Nothing to validate here as it is done in Surface::Configure
     return CreateSwapChainImpl(surface, previousSwapChain, config);
 }
