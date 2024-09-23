@@ -52,7 +52,7 @@ inline {{namespace}}::SType STypeForImpl;
 
 // Specialize STypeFor to map from native struct types to their SType.
 {% for value in types["s type"].values %}
-    {% if value.valid and value.name.get() in types %}
+    {% if value.valid and value.name.get() and (not "deprecated" in value.json_data.get("tags", []) and not value.json_data.get("conflicts", false)) in types %}
         template <>
         constexpr inline {{namespace}}::SType STypeForImpl<{{as_cppEnum(value.name)}}> =
             {{namespace}}::SType::{{as_cppEnum(value.name)}};

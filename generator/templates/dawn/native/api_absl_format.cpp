@@ -87,7 +87,7 @@ namespace {{namespace}} {
         if (spec.conversion_char() == absl::FormatConversionChar::s) {
             s->Append("{{as_cppType(type.name)}}::");
             switch ({{as_cType(type.name)}}(value)) {
-            {% for value in type.values %}
+            {% for value in type.values if (not "deprecated" in value.json_data.get("tags", []) and not value.json_data.get("conflicts", false)) %}
                 case {{as_cEnum(type.name, value.name)}}:
                     s->Append("{{as_cppEnum(value.name)}}");
                     return {true};
