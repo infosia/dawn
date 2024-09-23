@@ -207,8 +207,8 @@
     "special items": {
         "client_side_structures": [
             "FutureWaitInfo",
-            "SurfaceDescriptorFromWindowsCoreWindow",
-            "SurfaceDescriptorFromWindowsSwapChainPanel",
+            "SurfaceDescriptorFromWindowsCoreWindow_Dawn",
+            "SurfaceDescriptorFromWindowsSwapChainPanel_Dawn",
             "SurfaceSourceMetalLayer",
             "SurfaceSourceWindowsHWND",
             "SurfaceSourceXlibWindow",
