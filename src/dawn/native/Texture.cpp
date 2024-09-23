@@ -216,7 +216,7 @@ MaybeError ValidateSampleCount(const TextureDescriptor* descriptor,
         DAWN_INVALID_IF(usage & wgpu::TextureUsage::StorageBinding,
                         "The sample count (%u) of a storage texture is not 1.",
                         descriptor->sampleCount);
-        DAWN_INVALID_IF(usage & wgpu::TextureUsage::StorageAttachment,
+        DAWN_INVALID_IF(usage & wgpu::TextureUsage::StorageAttachment_Dawn,
                         "The sample count (%u) of a storage attachment texture is not 1.",
                         descriptor->sampleCount);
 
@@ -381,11 +381,11 @@ MaybeError ValidateTextureUsage(const DeviceBase* device,
         wgpu::TextureUsage::StorageBinding, format->format);
 
     DAWN_INVALID_IF(
-        !format->supportsStorageAttachment && (usage & wgpu::TextureUsage::StorageAttachment),
+        !format->supportsStorageAttachment && (usage & wgpu::TextureUsage::StorageAttachment_Dawn),
         "The texture usage (%s) includes %s, which is incompatible with the format (%s).", usage,
-        wgpu::TextureUsage::StorageAttachment, format->format);
+        wgpu::TextureUsage::StorageAttachment_Dawn, format->format);
 
-    const auto kTransientAttachment = wgpu::TextureUsage::TransientAttachment;
+    const auto kTransientAttachment = wgpu::TextureUsage::TransientAttachment_Dawn;
     if (usage & kTransientAttachment) {
         DAWN_INVALID_IF(
             !device->HasFeature(Feature::TransientAttachments),
@@ -397,7 +397,7 @@ MaybeError ValidateTextureUsage(const DeviceBase* device,
             "The texture usage is only %s (which always requires another attachment usage).",
             kTransientAttachment);
         const auto kAttachmentUsages = kTransientAttachment | wgpu::TextureUsage::RenderAttachment |
-                                       wgpu::TextureUsage::StorageAttachment;
+                                       wgpu::TextureUsage::StorageAttachment_Dawn;
         DAWN_INVALID_IF(!IsSubset(usage, kAttachmentUsages),
                         "The texture usage (%s) includes both %s and non-attachment usages (%s).",
                         usage, kTransientAttachment, usage & ~kAttachmentUsages);
