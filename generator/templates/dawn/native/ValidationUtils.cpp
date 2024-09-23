@@ -37,7 +37,7 @@ namespace {{native_namespace}} {
     {% for type in by_category["enum"] %}
         MaybeError Validate{{type.name.CamelCase()}}({{namespace}}::{{as_cppType(type.name)}} value) {
             switch ({{as_cType(type.name)}}(value)) {
-                {% for value in type.values if value.valid %}
+                {% for value in type.values if (value.valid and not "deprecated" in value.json_data.get("tags", []) and not value.json_data.get("conflicts", false)) %}
                     case {{as_cEnum(type.name, value.name)}}:
                         return {};
                 {% endfor %}

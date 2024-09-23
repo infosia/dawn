@@ -37,10 +37,10 @@ namespace {
 
 class ErrorSharedFence : public SharedFenceBase {
   public:
-    ErrorSharedFence(DeviceBase* device, const SharedFenceDescriptor* descriptor)
+    ErrorSharedFence(DeviceBase* device, const SharedFenceDescriptor_Dawn* descriptor)
         : SharedFenceBase(device, descriptor, ObjectBase::kError) {}
 
-    MaybeError ExportInfoImpl(UnpackedPtr<SharedFenceExportInfo>& info) const override {
+    MaybeError ExportInfoImpl(UnpackedPtr<SharedFenceExportInfo_Dawn>& info) const override {
         DAWN_UNREACHABLE();
     }
 };
@@ -49,12 +49,12 @@ class ErrorSharedFence : public SharedFenceBase {
 
 // static
 Ref<SharedFenceBase> SharedFenceBase::MakeError(DeviceBase* device,
-                                                const SharedFenceDescriptor* descriptor) {
+                                                const SharedFenceDescriptor_Dawn* descriptor) {
     return AcquireRef(new ErrorSharedFence(device, descriptor));
 }
 
 SharedFenceBase::SharedFenceBase(DeviceBase* device,
-                                 const SharedFenceDescriptor* descriptor,
+                                 const SharedFenceDescriptor_Dawn* descriptor,
                                  ObjectBase::ErrorTag tag)
     : ApiObjectBase(device, tag, descriptor->label) {}
 
@@ -65,20 +65,20 @@ ObjectType SharedFenceBase::GetType() const {
     return ObjectType::SharedFence;
 }
 
-void SharedFenceBase::APIExportInfo(SharedFenceExportInfo* info) const {
+void SharedFenceBase::APIExportInfo(SharedFenceExportInfo_Dawn* info) const {
     [[maybe_unused]] bool hadError = GetDevice()->ConsumedError(ExportInfo(info));
 }
 
 void SharedFenceBase::DestroyImpl() {}
 
-MaybeError SharedFenceBase::ExportInfo(SharedFenceExportInfo* info) const {
+MaybeError SharedFenceBase::ExportInfo(SharedFenceExportInfo_Dawn* info) const {
     // Set the type to 0. It will be overwritten to the actual type
     // as long as no error occurs.
     info->type = wgpu::SharedFenceType(0);
 
     DAWN_TRY(GetDevice()->ValidateObject(this));
 
-    UnpackedPtr<SharedFenceExportInfo> unpacked;
+    UnpackedPtr<SharedFenceExportInfo_Dawn> unpacked;
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(info));
     return ExportInfoImpl(unpacked);
 }

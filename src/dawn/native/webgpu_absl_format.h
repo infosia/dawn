@@ -54,9 +54,9 @@ struct Color;
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString>
 AbslFormatConvert(const Color* value, const absl::FormatConversionSpec& spec, absl::FormatSink* s);
 
-struct Extent2D;
+struct Extent2D_Dawn;
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
-    const Extent2D* value,
+    const Extent2D_Dawn* value,
     const absl::FormatConversionSpec& spec,
     absl::FormatSink* s);
 
@@ -66,9 +66,9 @@ absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConv
     const absl::FormatConversionSpec& spec,
     absl::FormatSink* s);
 
-struct Origin2D;
+struct Origin2D_Dawn;
 absl::FormatConvertResult<absl::FormatConversionCharSet::kString> AbslFormatConvert(
-    const Origin2D* value,
+    const Origin2D_Dawn* value,
     const absl::FormatConversionSpec& spec,
     absl::FormatSink* s);
 

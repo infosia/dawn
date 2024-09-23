@@ -33,29 +33,29 @@
 
 namespace dawn::native {
 
-struct SharedFenceDescriptor;
-struct SharedFenceExportInfo;
+struct SharedFenceDescriptor_Dawn;
+struct SharedFenceExportInfo_Dawn;
 
 class SharedFenceBase : public ApiObjectBase {
   public:
     static Ref<SharedFenceBase> MakeError(DeviceBase* device,
-                                          const SharedFenceDescriptor* descriptor);
+                                          const SharedFenceDescriptor_Dawn* descriptor);
 
     ObjectType GetType() const override;
 
-    void APIExportInfo(SharedFenceExportInfo* info) const;
+    void APIExportInfo(SharedFenceExportInfo_Dawn* info) const;
 
-    MaybeError ExportInfo(SharedFenceExportInfo* info) const;
+    MaybeError ExportInfo(SharedFenceExportInfo_Dawn* info) const;
 
   protected:
     SharedFenceBase(DeviceBase* device, const char* label);
     SharedFenceBase(DeviceBase* device,
-                    const SharedFenceDescriptor* descriptor,
+                    const SharedFenceDescriptor_Dawn* descriptor,
                     ObjectBase::ErrorTag tag);
 
   private:
     void DestroyImpl() override;
-    virtual MaybeError ExportInfoImpl(UnpackedPtr<SharedFenceExportInfo>& info) const = 0;
+    virtual MaybeError ExportInfoImpl(UnpackedPtr<SharedFenceExportInfo_Dawn>& info) const = 0;
 };
 
 struct FenceAndSignalValue {
