@@ -68,6 +68,24 @@
       "parentUuid": "cbae6b09_42c37139",
       "revId": "ea4e0fe7947d8fb0c33dc916a2d9ba17a72b9bcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dacc3cc9_7344910e",
+        "filename": "src/dawn/common/GPUInfo.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-23T07:40:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "52418fcb_d3dd23e7",
+      "revId": "ea4e0fe7947d8fb0c33dc916a2d9ba17a72b9bcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
