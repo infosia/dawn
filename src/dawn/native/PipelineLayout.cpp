@@ -167,6 +167,11 @@ PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
 PipelineLayoutBase::~PipelineLayoutBase() = default;
 
 void PipelineLayoutBase::DestroyImpl() {
+    for (auto it : mPhysicalPipelineLayouts) {
+        it.second->Destroy();
+    }
+    mPhysicalPipelineLayouts.clear();
+
     Uncache();
 }
 
@@ -535,6 +540,30 @@ bool PipelineLayoutBase::EqualityFunc::operator()(const PipelineLayoutBase* a,
 
 uint32_t PipelineLayoutBase::GetImmediateDataRangeByteSize() const {
     return mImmediateDataRangeByteSize;
+}
+
+bool PipelineLayoutBase::HasPhysicalLayout(uint32_t internalImmediateDataRangeByteSize) const {
+    return mPhysicalPipelineLayouts.contains(internalImmediateDataRangeByteSize);
+}
+
+void PipelineLayoutBase::Install(uint32_t internalImmediateDataRangeByteSize,
+                                 Ref<PhysicalPipelineLayoutBase> physicalPipelineLayout) {
+    if (mPhysicalPipelineLayouts.contains(internalImmediateDataRangeByteSize)) {
+        return;
+    }
+
+    DAWN_ASSERT(physicalPipelineLayout != nullptr);
+    mPhysicalPipelineLayouts.insert(
+        {internalImmediateDataRangeByteSize, std::move(physicalPipelineLayout)});
+}
+
+PhysicalPipelineLayoutBase* PipelineLayoutBase::GetPhysicalLayout(
+    uint32_t internalImmediateDataRangeByteSize) const {
+    if (!mPhysicalPipelineLayouts.contains(internalImmediateDataRangeByteSize)) {
+        return nullptr;
+    }
+
+    return mPhysicalPipelineLayouts.find(internalImmediateDataRangeByteSize)->second.Get();
 }
 
 }  // namespace dawn::native

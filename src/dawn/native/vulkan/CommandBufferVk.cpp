@@ -163,9 +163,10 @@ class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
             uint32_t count = static_cast<uint32_t>(mDynamicOffsets[dirtyIndex].size());
             const uint32_t* dynamicOffset =
                 count > 0 ? mDynamicOffsets[dirtyIndex].data() : nullptr;
-            device->fn.CmdBindDescriptorSets(
-                recordingContext->commandBuffer, bindPoint, ToBackend(mPipelineLayout)->GetHandle(),
-                static_cast<uint32_t>(dirtyIndex), 1, &*set, count, dynamicOffset);
+            device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint,
+                                             ToBackend(mPhysicalPipelineLayout)->GetHandle(),
+                                             static_cast<uint32_t>(dirtyIndex), 1, &*set, count,
+                                             dynamicOffset);
         }
         AfterApply();
     }
@@ -1211,7 +1212,8 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         if (!clampFragDepthArgsDirty || lastPipeline == nullptr) {
             return;
         }
-        device->fn.CmdPushConstants(commands, ToBackend(lastPipeline->GetLayout())->GetHandle(),
+        device->fn.CmdPushConstants(commands,
+                                    ToBackend(lastPipeline->GetPhysicalLayout())->GetHandle(),
                                     VK_SHADER_STAGE_FRAGMENT_BIT, kClampFragDepthArgsOffset,
                                     kClampFragDepthArgsSize, &clampFragDepthArgs);
         clampFragDepthArgsDirty = false;

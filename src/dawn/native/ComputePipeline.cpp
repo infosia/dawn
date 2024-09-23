@@ -91,6 +91,8 @@ ComputePipelineBase::ComputePipelineBase(DeviceBase* device,
 ComputePipelineBase::~ComputePipelineBase() = default;
 
 void ComputePipelineBase::DestroyImpl() {
+    PipelineBase::DestroyImpl();
+
     Uncache();
 }
 

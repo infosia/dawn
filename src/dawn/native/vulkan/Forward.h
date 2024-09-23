@@ -52,6 +52,7 @@ class SharedFence;
 class SwapChain;
 class Texture;
 class TextureView;
+class PhysicalPipelineLayout;
 
 struct VulkanBackendTraits {
     using BindGroupType = BindGroup;
@@ -74,6 +75,7 @@ struct VulkanBackendTraits {
     using SwapChainType = SwapChain;
     using TextureType = Texture;
     using TextureViewType = TextureView;
+    using PhysicalPipelineLayoutType = PhysicalPipelineLayout;
 };
 
 template <typename T>
