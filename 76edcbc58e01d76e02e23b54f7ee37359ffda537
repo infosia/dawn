@@ -22,6 +22,30 @@
       },
       "revId": "76edcbc58e01d76e02e23b54f7ee37359ffda537",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d39105d_558c2aee",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-23T09:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "532e82c4_fbc59644",
+      "range": {
+        "startLine": 110,
+        "startChar": 24,
+        "endLine": 111,
+        "endChar": 86
+      },
+      "revId": "76edcbc58e01d76e02e23b54f7ee37359ffda537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
