@@ -422,7 +422,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     // AutoLock. It would crash if such thing happens.
     [[nodiscard]] Mutex::AutoLock GetScopedLock();
 
-    // This method returns true if Feature::ImplicitDeviceSynchronization is turned on and the
+    // This method returns true if Feature::DawnImplicitDeviceSynchronization is turned on and the
     // device is locked by current thread. This method is only enabled when DAWN_ENABLE_ASSERTS is
     // turned on. Thus it should only be wrapped inside DAWN_ASSERT() macro. i.e.
     // DAWN_ASSERT(device.IsLockedByCurrentThread())
@@ -600,7 +600,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     // We cache this toggle so that we can check it without locking the device.
     bool mIsImmediateErrorHandlingEnabled = false;
 
-    // This pointer is non-null if Feature::ImplicitDeviceSynchronization is turned on.
+    // This pointer is non-null if Feature::DawnImplicitDeviceSynchronization is turned on.
     Ref<Mutex> mMutex = nullptr;
 };
 
