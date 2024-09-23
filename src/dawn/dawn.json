@@ -212,7 +212,7 @@
                 "returns": "status",
                 "args": [
                     {"name": "format", "type": "texture format"},
-                    {"name": "capabilities", "type": "format capabilities", "annotation": "*"}
+                    {"name": "capabilities", "type": "format capabilities _Dawn", "annotation": "*"}
                 ]
             }
         ]
@@ -261,6 +261,11 @@
     },
     "dawn toggles descriptor": {
         "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "dawn toggles descriptor _Dawn"
+    },
+    "dawn toggles descriptor _Dawn": {
+        "tags": ["dawn", "native"],
         "category": "structure",
         "chained": "in",
         "chain roots": ["instance descriptor", "request adapter options", "device descriptor"],
@@ -296,6 +301,11 @@
     },
     "dawn cache device descriptor" : {
         "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "dawn cache device descriptor _Dawn"
+    },
+    "dawn cache device descriptor _Dawn" : {
+        "tags": ["dawn", "native"],
         "category": "structure",
         "chained": "in",
         "chain roots": ["device descriptor"],
@@ -307,6 +317,11 @@
         ]
     },
     "dawn WGSL blocklist": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "dawn WGSL blocklist _Dawn"
+    },
+    "dawn WGSL blocklist _Dawn": {
         "tags": ["dawn", "native"],
         "category": "structure",
         "chained": "in",
@@ -437,6 +452,10 @@
         ]
     },
     "static sampler binding layout": {
+        "category": "typedef",
+        "type": "static sampler binding layout _Dawn"
+    },
+    "static sampler binding layout _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["bind group layout entry"],
@@ -502,6 +521,10 @@
         ]
     },
     "external texture binding entry": {
+        "category": "typedef",
+        "type": "external texture binding entry _Dawn"
+    },
+    "external texture binding entry _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["bind group entry"],
@@ -512,6 +535,10 @@
     },
 
     "external texture binding layout": {
+        "category": "typedef",
+        "type": "external texture binding layout _Dawn"
+    },
+    "external texture binding layout _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["bind group layout entry"],
@@ -721,6 +748,10 @@
         ]
     },
     "buffer host mapped pointer": {
+        "category": "typedef",
+        "type": "buffer host mapped pointer _Dawn"
+    },
+    "buffer host mapped pointer _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["buffer descriptor"],
@@ -1275,6 +1306,10 @@
         ]
     },
     "dawn compute pipeline full subgroups": {
+        "category": "typedef",
+        "type": "dawn compute pipeline full subgroups _Dawn"
+    },
+    "dawn compute pipeline full subgroups _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["compute pipeline descriptor"],
@@ -1293,6 +1328,10 @@
         ]
     },
     "copy texture for browser options": {
+        "category": "typedef",
+        "type": "copy texture for browser options _Dawn"
+    },
+    "copy texture for browser options _Dawn": {
         "category": "structure",
         "extensible": "in",
         "tags": ["dawn"],
@@ -1399,10 +1438,15 @@
         ]
     },
     "a hardware buffer properties": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "a hardware buffer properties _Dawn"
+    },
+    "a hardware buffer properties _Dawn": {
         "category": "structure",
         "tags": ["dawn", "native"],
         "members": [
-            {"name": "y cb cr info", "type": "y cb cr vk descriptor"}
+            {"name": "y cb cr info", "type": "y cb cr vk descriptor _Dawn"}
         ]
     },
     "device": {
@@ -1487,7 +1531,7 @@
                 "returns": "external texture",
                 "tags": ["dawn"],
                 "args": [
-                    {"name": "external texture descriptor", "type": "external texture descriptor", "annotation": "const*"}
+                    {"name": "external texture descriptor", "type": "external texture descriptor _Dawn", "annotation": "const*"}
                 ]
             },
             {
@@ -1598,7 +1642,7 @@
                 "returns": "shared buffer memory",
                 "tags": ["dawn", "native"],
                 "args": [
-                    {"name": "descriptor", "type": "shared buffer memory descriptor", "annotation": "const*"}
+                    {"name": "descriptor", "type": "shared buffer memory descriptor _Dawn", "annotation": "const*"}
                 ]
             },
             {
@@ -1606,7 +1650,7 @@
                 "returns": "shared texture memory",
                 "tags": ["dawn", "native"],
                 "args": [
-                    {"name": "descriptor", "type": "shared texture memory descriptor", "annotation": "const*"}
+                    {"name": "descriptor", "type": "shared texture memory descriptor _Dawn", "annotation": "const*"}
                 ]
             },
             {
@@ -1614,7 +1658,7 @@
                 "returns": "shared fence",
                 "tags": ["dawn", "native"],
                 "args": [
-                    {"name": "descriptor", "type": "shared fence descriptor", "annotation": "const*"}
+                    {"name": "descriptor", "type": "shared fence descriptor _Dawn", "annotation": "const*"}
                 ]
             },
             {
@@ -1634,7 +1678,7 @@
                 "returns": "status",
                 "args": [
                     {"name": "handle", "type": "void *"},
-                    {"name": "properties", "type": "a hardware buffer properties", "annotation": "*"}
+                    {"name": "properties", "type": "a hardware buffer properties _Dawn", "annotation": "*"}
                 ]
             },
             {
@@ -1959,6 +2003,11 @@
         ]
     },
     "dawn experimental subgroup limits": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "dawn experimental subgroup limits _Dawn"
+    },
+    "dawn experimental subgroup limits _Dawn": {
         "category": "structure",
         "chained": "out",
         "chain roots": ["supported limits"],
@@ -1969,6 +2018,11 @@
         ]
     },
     "dawn experimental immediate data limits": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "dawn experimental immediate data limits _Dawn"
+    },
+    "dawn experimental immediate data limits _Dawn": {
         "category": "structure",
         "chained": "out",
         "chain roots": ["supported limits"],
@@ -2031,6 +2085,11 @@
         ]
     },
     "extent 2D": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "extent 2D _Dawn"
+    },
+    "extent 2D _Dawn": {
         "category": "structure",
         "tags": ["dawn"],
         "members": [
@@ -2090,6 +2149,11 @@
         ]
     },
     "external texture descriptor": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "external texture descriptor _Dawn"
+    },
+    "external texture descriptor _Dawn": {
         "category": "structure",
         "extensible": "in",
         "tags": ["dawn"],
@@ -2098,8 +2162,8 @@
             {"name": "label", "type": "string view", "optional": true},
             {"name": "plane 0", "type": "texture view"},
             {"name": "plane 1", "type": "texture view", "optional": true},
-            {"name": "visible origin", "type": "origin 2D"},
-            {"name": "visible size", "type": "extent 2D"},
+            {"name": "visible origin", "type": "origin 2D _Dawn"},
+            {"name": "visible size", "type": "extent 2D _Dawn"},
             {"name": "do yuv to rgb conversion only", "type": "bool", "default": "false"},
             {"name": "yuv to rgb conversion matrix", "type": "float", "annotation": "const*",
                 "length": 12, "optional": true},
@@ -2142,7 +2206,7 @@
                 "name": "get properties",
                 "returns": "status",
                 "args": [
-                    {"name": "properties", "type": "shared buffer memory properties", "annotation": "*"}
+                    {"name": "properties", "type": "shared buffer memory properties _Dawn", "annotation": "*"}
                 ]
             },
             {
@@ -2157,7 +2221,7 @@
                 "returns": "status",
                 "args": [
                     {"name": "buffer", "type": "buffer"},
-                    {"name": "descriptor", "type": "shared buffer memory begin access descriptor", "annotation": "const*"}
+                    {"name": "descriptor", "type": "shared buffer memory begin access descriptor _Dawn", "annotation": "const*"}
                 ]
             },
             {
@@ -2165,7 +2229,7 @@
                 "returns": "status",
                 "args": [
                     {"name": "buffer", "type": "buffer"},
-                    {"name": "descriptor", "type": "shared buffer memory end access state", "annotation": "*"}
+                    {"name": "descriptor", "type": "shared buffer memory end access state _Dawn", "annotation": "*"}
                 ]
             },
             {
@@ -2176,6 +2240,11 @@
         ]
     },
     "shared buffer memory properties": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared buffer memory properties _Dawn"
+    },
+    "shared buffer memory properties _Dawn": {
         "category": "structure",
         "extensible": "out",
         "tags": ["dawn", "native"],
@@ -2185,6 +2254,11 @@
         ]
     },
     "shared buffer memory descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared buffer memory descriptor _Dawn"
+    },
+    "shared buffer memory descriptor _Dawn": {
         "category": "structure",
         "extensible": "in",
         "tags": ["dawn", "native"],
@@ -2214,7 +2288,7 @@
                 "name": "get properties",
                 "returns": "status",
                 "args": [
-                    {"name": "properties", "type": "shared texture memory properties", "annotation": "*"}
+                    {"name": "properties", "type": "shared texture memory properties _Dawn", "annotation": "*"}
                 ]
             },
             {
@@ -2229,7 +2303,7 @@
                 "returns": "status",
                 "args": [
                     {"name": "texture", "type": "texture"},
-                    {"name": "descriptor", "type": "shared texture memory begin access descriptor", "annotation": "const*"}
+                    {"name": "descriptor", "type": "shared texture memory begin access descriptor _Dawn", "annotation": "const*"}
                 ]
             },
             {
@@ -2237,7 +2311,7 @@
                 "returns": "status",
                 "args": [
                     {"name": "texture", "type": "texture"},
-                    {"name": "descriptor", "type": "shared texture memory end access state", "annotation": "*"}
+                    {"name": "descriptor", "type": "shared texture memory end access state _Dawn", "annotation": "*"}
                 ]
             },
             {
@@ -2248,6 +2322,11 @@
         ]
     },
     "shared texture memory properties": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory properties _Dawn"
+    },
+    "shared texture memory properties _Dawn": {
         "category": "structure",
         "extensible": "out",
         "tags": ["dawn", "native"],
@@ -2258,15 +2337,25 @@
         ]
     },
     "shared texture memory a hardware buffer properties": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory a hardware buffer properties _Dawn"
+    },
+    "shared texture memory a hardware buffer properties _Dawn": {
         "category": "structure",
         "chained": "out",
-        "chain roots": ["shared texture memory properties"],
+        "chain roots": ["shared texture memory properties _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
-            {"name": "y cb cr info", "type": "y cb cr vk descriptor"}
+            {"name": "y cb cr info", "type": "y cb cr vk descriptor _Dawn"}
         ]
     },
     "shared texture memory descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory descriptor _Dawn"
+    },
+    "shared texture memory descriptor _Dawn": {
         "category": "structure",
         "extensible": "in",
         "tags": ["dawn", "native"],
@@ -2275,6 +2364,11 @@
         ]
     },
     "shared buffer memory begin access descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared buffer memory begin access descriptor _Dawn"
+    },
+    "shared buffer memory begin access descriptor _Dawn": {
         "category": "structure",
         "extensible": "in",
         "tags": ["dawn", "native"],
@@ -2286,6 +2380,11 @@
         ]
     },
     "shared buffer memory end access state": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared buffer memory end access state _Dawn"
+    },
+    "shared buffer memory end access state _Dawn": {
         "category": "structure",
         "extensible": "out",
         "tags": ["dawn", "native"],
@@ -2297,18 +2396,28 @@
         ]
     },
     "shared texture memory vk dedicated allocation descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory vk dedicated allocation descriptor _Dawn"
+    },
+    "shared texture memory vk dedicated allocation descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared texture memory descriptor"],
+        "chain roots": ["shared texture memory descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "dedicated allocation", "type": "bool"}
         ]
     },
     "shared texture memory a hardware buffer descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory a hardware buffer descriptor _Dawn"
+    },
+    "shared texture memory a hardware buffer descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared texture memory descriptor"],
+        "chain roots": ["shared texture memory descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "handle", "type": "void *"},
@@ -2316,6 +2425,11 @@
         ]
     },
     "shared texture memory dma buf plane": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory dma buf plane _Dawn"
+    },
+    "shared texture memory dma buf plane _Dawn": {
         "category": "structure",
         "tags": ["dawn", "native"],
         "members": [
@@ -2325,22 +2439,32 @@
         ]
     },
     "shared texture memory dma buf descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory dma buf descriptor _Dawn"
+    },
+    "shared texture memory dma buf descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared texture memory descriptor"],
+        "chain roots": ["shared texture memory descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "size", "type": "extent 3D"},
             {"name": "drm format", "type": "uint32_t"},
             {"name": "drm modifier", "type": "uint64_t"},
             {"name": "plane count", "type": "size_t"},
-            {"name": "planes", "type": "shared texture memory dma buf plane", "annotation": "const*", "length": "plane count"}
+            {"name": "planes", "type": "shared texture memory dma buf plane _Dawn", "annotation": "const*", "length": "plane count"}
         ]
     },
     "shared texture memory opaque FD descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory opaque FD descriptor _Dawn"
+    },
+    "shared texture memory opaque FD descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared texture memory descriptor"],
+        "chain roots": ["shared texture memory descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "vk image create info", "type": "void const *"},
@@ -2351,9 +2475,14 @@
         ]
     },
     "shared texture memory zircon handle descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory zircon handle descriptor _Dawn"
+    },
+    "shared texture memory zircon handle descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared texture memory descriptor"],
+        "chain roots": ["shared texture memory descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "memory FD", "type": "uint32_t"},
@@ -2361,9 +2490,14 @@
         ]
     },
     "shared texture memory DXGI shared handle descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory DXGI shared handle descriptor _Dawn"
+    },
+    "shared texture memory DXGI shared handle descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared texture memory descriptor"],
+        "chain roots": ["shared texture memory descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "_comment": "TODO(crbug.com/dawn/1745): improve type safety",
         "members": [
@@ -2372,9 +2506,14 @@
         ]
     },
     "shared texture memory IO surface descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory IO surface descriptor _Dawn"
+    },
+    "shared texture memory IO surface descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared texture memory descriptor"],
+        "chain roots": ["shared texture memory descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "_comment": "TODO(crbug.com/dawn/1745): improve type safety",
         "members": [
@@ -2382,9 +2521,14 @@
         ]
     },
     "shared texture memory EGL image descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory EGL image descriptor _Dawn"
+    },
+    "shared texture memory EGL image descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared texture memory descriptor"],
+        "chain roots": ["shared texture memory descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "_comment": "TODO(crbug.com/dawn/1745): improve type safety",
         "members": [
@@ -2392,6 +2536,11 @@
         ]
     },
     "shared texture memory begin access descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory begin access descriptor _Dawn"
+    },
+    "shared texture memory begin access descriptor _Dawn": {
         "category": "structure",
         "extensible": "in",
         "tags": ["dawn", "native"],
@@ -2404,6 +2553,11 @@
         ]
     },
     "shared texture memory end access state": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory end access state _Dawn"
+    },
+    "shared texture memory end access state _Dawn": {
         "category": "structure",
         "extensible": "out",
         "tags": ["dawn", "native"],
@@ -2415,9 +2569,14 @@
         ]
     },
     "shared texture memory vk image layout begin state": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory vk image layout begin state _Dawn"
+    },
+    "shared texture memory vk image layout begin state _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared texture memory begin access descriptor"],
+        "chain roots": ["shared texture memory begin access descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "_comment": "TODO(crbug.com/dawn/1745): improve type safety",
         "members": [
@@ -2426,9 +2585,14 @@
         ]
     },
     "shared texture memory vk image layout end state": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory vk image layout end state _Dawn"
+    },
+    "shared texture memory vk image layout end state _Dawn": {
         "category": "structure",
         "chained": "out",
-        "chain roots": ["shared texture memory end access state"],
+        "chain roots": ["shared texture memory end access state _Dawn"],
         "tags": ["dawn", "native"],
         "_comment": "TODO(crbug.com/dawn/1745): improve type safety",
         "members": [
@@ -2437,9 +2601,14 @@
         ]
     },
     "shared texture memory D3D swapchain begin state": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared texture memory D3D swapchain begin state _Dawn"
+    },
+    "shared texture memory D3D swapchain begin state _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared texture memory begin access descriptor"],
+        "chain roots": ["shared texture memory begin access descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "is swapchain", "type": "bool", "default": "false"}
@@ -2453,12 +2622,17 @@
                 "name": "export info",
                 "returns": "void",
                 "args": [
-                    {"name": "info", "type": "shared fence export info", "annotation": "*"}
+                    {"name": "info", "type": "shared fence export info _Dawn", "annotation": "*"}
                 ]
             }
         ]
     },
     "shared fence descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence descriptor _Dawn"
+    },
+    "shared fence descriptor _Dawn": {
         "category": "structure",
         "extensible": "in",
         "tags": ["dawn", "native"],
@@ -2467,45 +2641,70 @@
         ]
     },
     "shared fence vk semaphore opaque FD descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence vk semaphore opaque FD descriptor _Dawn"
+    },
+    "shared fence vk semaphore opaque FD descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared fence descriptor"],
+        "chain roots": ["shared fence descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "handle", "type": "int"}
         ]
     },
     "shared fence vk semaphore sync FD descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence vk semaphore sync FD descriptor _Dawn"
+    },
+    "shared fence vk semaphore sync FD descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared fence descriptor"],
+        "chain roots": ["shared fence descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "handle", "type": "int"}
         ]
     },
     "shared fence vk semaphore zircon handle descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence vk semaphore zircon handle descriptor _Dawn"
+    },
+    "shared fence vk semaphore zircon handle descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared fence descriptor"],
+        "chain roots": ["shared fence descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "handle", "type": "uint32_t"}
         ]
     },
     "shared fence DXGI shared handle descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence DXGI shared handle descriptor _Dawn"
+    },
+    "shared fence DXGI shared handle descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared fence descriptor"],
+        "chain roots": ["shared fence descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "handle", "type": "void *"}
         ]
     },
     "shared fence MTL shared event descriptor": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence MTL shared event descriptor _Dawn"
+    },
+    "shared fence MTL shared event descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
-        "chain roots": ["shared fence descriptor"],
+        "chain roots": ["shared fence descriptor _Dawn"],
         "tags": ["dawn", "native"],
         "_comment": "TODO(crbug.com/dawn/1745): improve type safety",
         "members": [
@@ -2524,6 +2723,11 @@
         ]
     },
     "shared fence export info": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence export info _Dawn"
+    },
+    "shared fence export info _Dawn": {
         "category": "structure",
         "extensible": "out",
         "tags": ["dawn", "native"],
@@ -2532,45 +2736,70 @@
         ]
     },
     "shared fence vk semaphore opaque FD export info": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence vk semaphore opaque FD export info _Dawn"
+    },
+    "shared fence vk semaphore opaque FD export info _Dawn": {
         "category": "structure",
         "chained": "out",
-        "chain roots": ["shared fence export info"],
+        "chain roots": ["shared fence export info _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "handle", "type": "int"}
         ]
     },
     "shared fence vk semaphore sync FD export info": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence vk semaphore sync FD export info _Dawn"
+    },
+    "shared fence vk semaphore sync FD export info _Dawn": {
         "category": "structure",
         "chained": "out",
-        "chain roots": ["shared fence export info"],
+        "chain roots": ["shared fence export info _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "handle", "type": "int"}
         ]
     },
     "shared fence vk semaphore zircon handle export info": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence vk semaphore zircon handle export info _Dawn"
+    },
+    "shared fence vk semaphore zircon handle export info _Dawn": {
         "category": "structure",
         "chained": "out",
-        "chain roots": ["shared fence export info"],
+        "chain roots": ["shared fence export info _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "handle", "type": "uint32_t"}
         ]
     },
     "shared fence DXGI shared handle export info": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence DXGI shared handle export info _Dawn"
+    },
+    "shared fence DXGI shared handle export info _Dawn": {
         "category": "structure",
         "chained": "out",
-        "chain roots": ["shared fence export info"],
+        "chain roots": ["shared fence export info _Dawn"],
         "tags": ["dawn", "native"],
         "members": [
             {"name": "handle", "type": "void *"}
         ]
     },
     "shared fence MTL shared event export info": {
+        "tags": ["dawn", "native"],
+        "category": "typedef",
+        "type": "shared fence MTL shared event export info _Dawn"
+    },
+    "shared fence MTL shared event export info _Dawn": {
         "category": "structure",
         "chained": "out",
-        "chain roots": ["shared fence export info"],
+        "chain roots": ["shared fence export info _Dawn"],
         "tags": ["dawn", "native"],
         "_comment": "TODO(crbug.com/dawn/1745): improve type safety",
         "members": [
@@ -2594,66 +2823,124 @@
             {"value": 12, "name": "subgroups"},
             {"value": 13, "name": "subgroups f16"},
 
-            {"value": 0, "name": "dawn internal usages", "tags": ["dawn"]},
-            {"value": 1, "name": "dawn multi planar formats", "tags": ["dawn"]},
-            {"value": 2, "name": "dawn native", "tags": ["dawn", "native"]},
-            {"value": 3, "name": "chromium experimental timestamp query inside passes", "tags": ["dawn"]},
-            {"value": 4, "name": "implicit device synchronization", "tags": ["dawn", "native"]},
-            {"value": 5, "name": "surface capabilities", "tags": ["dawn", "native"]},
-            {"value": 6, "name": "transient attachments", "tags": ["dawn"]},
-            {"value": 7, "name": "MSAA render to single sampled", "tags": ["dawn"]},
-            {"value": 8, "name": "dual source blending", "tags": ["dawn"]},
-            {"value": 9, "name": "D3D11 multithread protected", "tags": ["dawn", "native"]},
-            {"value": 10, "name": "ANGLE texture sharing", "tags": ["dawn", "native"]},
-            {"value": 11, "name": "chromium experimental subgroups", "tags": ["dawn"]},
-            {"value": 12, "name": "chromium experimental subgroup uniform control flow", "tags": ["dawn"]},
-            {"value": 13, "name": "pixel local storage coherent", "tags": ["dawn"]},
-            {"value": 14, "name": "pixel local storage non coherent", "tags": ["dawn"]},
-            {"value": 15, "name": "unorm16 texture formats", "tags": ["dawn"]},
-            {"value": 16, "name": "snorm16 texture formats", "tags": ["dawn"]},
-            {"value": 17, "name": "multi planar format extended usages", "tags": ["dawn"]},
-            {"value": 18, "name": "multi planar format p010", "tags": ["dawn"]},
-            {"value": 19, "name": "host mapped pointer", "tags": ["dawn"]},
-            {"value": 20, "name": "multi planar render targets", "tags": ["dawn"]},
-            {"value": 21, "name": "multi planar format nv12a", "tags": ["dawn"]},
-            {"value": 22, "name": "framebuffer fetch", "tags": ["dawn"]},
-            {"value": 23, "name": "buffer map extended usages", "tags": ["dawn"]},
-            {"value": 24, "name": "adapter properties memory heaps", "tags": ["dawn"]},
-            {"value": 25, "name": "adapter properties D3D", "tags": ["dawn"]},
-            {"value": 26, "name": "adapter properties vk", "tags": ["dawn"]},
-            {"value": 27, "name": "r8 unorm storage", "tags": ["dawn"]},
-            {"value": 28, "name": "format capabilities", "tags": ["dawn"]},
-            {"value": 29, "name": "drm format capabilities", "tags": ["dawn"]},
-            {"value": 30, "name": "norm16 texture formats", "tags": ["dawn"]},
-            {"value": 31, "name": "multi planar format nv16", "tags": ["dawn"]},
-            {"value": 32, "name": "multi planar format nv24", "tags": ["dawn"]},
-            {"value": 33, "name": "multi planar format p210", "tags": ["dawn"]},
-            {"value": 34, "name": "multi planar format p410", "tags": ["dawn"]},
+            {"value": 0, "name": "dawn internal usages", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 0, "name": "dawn internal usages _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 1, "name": "dawn multi planar formats", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 1, "name": "dawn multi planar formats _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 2, "name": "dawn native", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 2, "name": "dawn native _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 3, "name": "chromium experimental timestamp query inside passes", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 3, "name": "chromium experimental timestamp query inside passes _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 4, "name": "implicit device synchronization", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 4, "name": "implicit device synchronization _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 5, "name": "surface capabilities", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 5, "name": "surface capabilities _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 6, "name": "transient attachments", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 6, "name": "transient attachments _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 7, "name": "MSAA render to single sampled", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 7, "name": "MSAA render to single sampled _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 8, "name": "dual source blending", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 8, "name": "dual source blending _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 9, "name": "D3D11 multithread protected", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 9, "name": "D3D11 multithread protected _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 10, "name": "ANGLE texture sharing", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 10, "name": "ANGLE texture sharing _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 11, "name": "chromium experimental subgroups", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 11, "name": "chromium experimental subgroups _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 12, "name": "chromium experimental subgroup uniform control flow", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 12, "name": "chromium experimental subgroup uniform control flow _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 13, "name": "pixel local storage coherent", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 13, "name": "pixel local storage coherent _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 14, "name": "pixel local storage non coherent", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 14, "name": "pixel local storage non coherent _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 15, "name": "unorm16 texture formats", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 15, "name": "unorm16 texture formats _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 16, "name": "snorm16 texture formats", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 16, "name": "snorm16 texture formats _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 17, "name": "multi planar format extended usages", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 17, "name": "multi planar format extended usages _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 18, "name": "multi planar format p010", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 18, "name": "multi planar format p010 _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 19, "name": "host mapped pointer", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 19, "name": "host mapped pointer _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 20, "name": "multi planar render targets", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 20, "name": "multi planar render targets _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 21, "name": "multi planar format nv12a", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 21, "name": "multi planar format nv12a _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 22, "name": "framebuffer fetch", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 22, "name": "framebuffer fetch _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 23, "name": "buffer map extended usages", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 23, "name": "buffer map extended usages _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 24, "name": "adapter properties memory heaps", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 24, "name": "adapter properties memory heaps _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 25, "name": "adapter properties D3D", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 25, "name": "adapter properties D3D _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 26, "name": "adapter properties vk", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 26, "name": "adapter properties vk _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 27, "name": "r8 unorm storage", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 27, "name": "r8 unorm storage _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 28, "name": "format capabilities", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 28, "name": "format capabilities _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 29, "name": "drm format capabilities", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 29, "name": "drm format capabilities _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 30, "name": "norm16 texture formats", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 30, "name": "norm16 texture formats _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 31, "name": "multi planar format nv16", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 31, "name": "multi planar format nv16 _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 32, "name": "multi planar format nv24", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 32, "name": "multi planar format nv24 _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 33, "name": "multi planar format p210", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 33, "name": "multi planar format p210 _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 34, "name": "multi planar format p410", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 34, "name": "multi planar format p410 _Dawn", "conflicts": true, "tags": ["dawn"]},
 
-            {"value": 35, "name": "shared texture memory vk dedicated allocation", "tags": ["dawn", "native"]},
-            {"value": 36, "name": "shared texture memory a hardware buffer", "tags": ["dawn", "native"]},
-            {"value": 37, "name": "shared texture memory dma buf", "tags": ["dawn", "native"]},
-            {"value": 38, "name": "shared texture memory opaque FD", "tags": ["dawn", "native"]},
-            {"value": 39, "name": "shared texture memory zircon handle", "tags": ["dawn", "native"]},
-            {"value": 40, "name": "shared texture memory DXGI shared handle", "tags": ["dawn", "native"]},
-            {"value": 41, "name": "shared texture memory D3D11 texture 2D", "tags": ["dawn", "native"]},
-            {"value": 42, "name": "shared texture memory IO surface", "tags": ["dawn", "native"]},
-            {"value": 43, "name": "shared texture memory EGL image", "tags": ["dawn", "native"]},
-            {"value": 44, "name": "shared fence vk semaphore opaque FD", "tags": ["dawn", "native"]},
-            {"value": 45, "name": "shared fence vk semaphore sync FD", "tags": ["dawn", "native"]},
-            {"value": 46, "name": "shared fence vk semaphore zircon handle", "tags": ["dawn", "native"]},
-            {"value": 47, "name": "shared fence DXGI shared handle", "tags": ["dawn", "native"]},
-            {"value": 48, "name": "shared fence MTL shared event", "tags": ["dawn", "native"]},
-            {"value": 49, "name": "shared buffer memory D3D12 resource", "tags": ["dawn", "native"]},
-            {"value": 50, "name": "static samplers", "tags": ["dawn"]},
-            {"value": 51, "name": "y cb cr vulkan samplers", "tags": ["dawn"]},
-            {"value": 52, "name": "shader module compilation options", "tags": ["dawn"]},
+            {"value": 35, "name": "shared texture memory vk dedicated allocation", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 35, "name": "shared texture memory vk dedicated allocation _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 36, "name": "shared texture memory a hardware buffer", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 36, "name": "shared texture memory a hardware buffer _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 37, "name": "shared texture memory dma buf", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 37, "name": "shared texture memory dma buf _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 38, "name": "shared texture memory opaque FD", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 38, "name": "shared texture memory opaque FD _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 39, "name": "shared texture memory zircon handle", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 39, "name": "shared texture memory zircon handle _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 40, "name": "shared texture memory DXGI shared handle", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 40, "name": "shared texture memory DXGI shared handle _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 41, "name": "shared texture memory D3D11 texture 2D", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 41, "name": "shared texture memory D3D11 texture 2D _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 42, "name": "shared texture memory IO surface", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 42, "name": "shared texture memory IO surface _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 43, "name": "shared texture memory EGL image", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 43, "name": "shared texture memory EGL image _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 44, "name": "shared fence vk semaphore opaque FD", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 44, "name": "shared fence vk semaphore opaque FD _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 45, "name": "shared fence vk semaphore sync FD", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 45, "name": "shared fence vk semaphore sync FD _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 46, "name": "shared fence vk semaphore zircon handle", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 46, "name": "shared fence vk semaphore zircon handle _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 47, "name": "shared fence DXGI shared handle", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 47, "name": "shared fence DXGI shared handle _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 48, "name": "shared fence MTL shared event", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 48, "name": "shared fence MTL shared event _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 49, "name": "shared buffer memory D3D12 resource", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 49, "name": "shared buffer memory D3D12 resource _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 50, "name": "static samplers", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 50, "name": "static samplers _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 51, "name": "y cb cr vulkan samplers", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 51, "name": "y cb cr vulkan samplers _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 52, "name": "shader module compilation options", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 52, "name": "shader module compilation options _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 53, "name": "dawn load resolve texture", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 53, "name": "dawn load resolve texture _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 54, "name": "dawn partial load resolve texture", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 54, "name": "dawn partial load resolve texture _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 55, "name": "multi draw indirect", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 55, "name": "multi draw indirect _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 56, "name": "clip distances", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 56, "name": "clip distances _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 57, "name": "chromium experimental immediate data", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 57, "name": "chromium experimental immediate data _Dawn",  "conflicts": true, "tags": ["dawn"]}
 
-            {"value": 53, "name": "dawn load resolve texture", "tags": ["dawn"]},
-            {"value": 54, "name": "dawn partial load resolve texture", "tags": ["dawn"]},
-            {"value": 55, "name": "multi draw indirect", "tags": ["dawn"]},
-            {"value": 56, "name": "clip distances", "tags": ["dawn"]},
-            {"value": 57, "name": "chromium experimental immediate data", "tags": ["dawn"]}
         ]
     },
     "filter mode": {
@@ -2669,22 +2956,37 @@
         "wasm type": "f"
     },
     "format capabilities": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "format capabilities _Dawn"
+    },
+    "format capabilities _Dawn": {
       "category": "structure",
       "tags": ["dawn"],
       "extensible": "out",
       "members": []
     },
     "drm format capabilities": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "drm format capabilities _Dawn"
+    },
+    "drm format capabilities _Dawn": {
       "category": "structure",
       "tags": ["dawn"],
       "chained": "out",
-      "chain roots": ["format capabilities"],
+      "chain roots": ["format capabilities _Dawn"],
       "members": [
           {"name": "properties count", "type": "size_t"},
-          {"name": "properties", "type": "drm format properties", "annotation": "const*", "length": "properties count"}
+          {"name": "properties", "type": "drm format properties _Dawn", "annotation": "const*", "length": "properties count"}
       ]
     },
     "drm format properties": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "drm format properties _Dawn"
+    },
+    "drm format properties _Dawn": {
       "category": "structure",
       "tags": ["dawn"],
       "members": [
@@ -2717,13 +3019,18 @@
         ]
     },
     "image copy external texture": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "image copy external texture _Dawn"
+    },
+    "image copy external texture _Dawn": {
         "category": "structure",
         "extensible": "in",
         "tags": ["dawn"],
         "members": [
             {"name": "external texture", "type": "external texture"},
             {"name": "origin", "type": "origin 3D"},
-            {"name": "natural size", "type": "extent 2D"}
+            {"name": "natural size", "type": "extent 2D _Dawn"}
         ]
     },
     "index format": {
@@ -2859,6 +3166,11 @@
         ]
     },
     "dawn wire WGSL control": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "dawn wire WGSL control _Dawn"
+    },
+    "dawn wire WGSL control _Dawn": {
         "category": "structure",
         "tags": ["dawn"],
         "chained": "in",
@@ -2903,7 +3215,8 @@
             {"value": 0, "name": "undefined", "jsrepr": "undefined"},
             {"value": 1, "name": "load"},
             {"value": 2, "name": "clear"},
-            {"value": 3, "name": "expand resolve texture", "tags": ["dawn"]}
+            {"value": 3, "name": "expand resolve texture", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 3, "name": "expand resolve texture _Dawn", "conflicts": true, "tags": ["dawn"]}
         ]
     },
     "map mode": {
@@ -2939,6 +3252,11 @@
         ]
     },
     "origin 2D": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "origin 2D _Dawn"
+    },
+    "origin 2D _Dawn": {
         "category": "structure",
         "tags": ["dawn"],
         "members": [
@@ -2976,6 +3294,11 @@
         ]
     },
     "pipeline layout pixel local storage": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "pipeline layout pixel local storage _Dawn"
+    },
+    "pipeline layout pixel local storage _Dawn": {
         "category": "structure",
         "tags": ["dawn"],
         "chained": "in",
@@ -2983,10 +3306,15 @@
         "members": [
             {"name": "total pixel local storage size", "type": "uint64_t"},
             {"name": "storage attachment count", "type": "size_t", "default": 0},
-            {"name": "storage attachments", "type": "pipeline layout storage attachment", "annotation": "const*", "length": "storage attachment count"}
+            {"name": "storage attachments", "type": "pipeline layout storage attachment _Dawn", "annotation": "const*", "length": "storage attachment count"}
         ]
     },
     "pipeline layout storage attachment": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "pipeline layout storage attachment _Dawn"
+    },
+    "pipeline layout storage attachment _Dawn": {
         "category": "structure",
         "tags": ["dawn"],
         "extensible": "in",
@@ -3143,7 +3471,7 @@
                     {"name": "source", "type": "image copy texture", "annotation": "const*"},
                     {"name": "destination", "type": "image copy texture", "annotation": "const*"},
                     {"name": "copy size", "type": "extent 3D", "annotation": "const*"},
-                    {"name": "options", "type": "copy texture for browser options", "annotation": "const*"}
+                    {"name": "options", "type": "copy texture for browser options _Dawn", "annotation": "const*"}
                 ]
             },
             {
@@ -3151,10 +3479,10 @@
                 "extensible": "in",
                 "tags": ["dawn"],
                 "args": [
-                    {"name": "source", "type": "image copy external texture", "annotation": "const*"},
+                    {"name": "source", "type": "image copy external texture _Dawn", "annotation": "const*"},
                     {"name": "destination", "type": "image copy texture", "annotation": "const*"},
                     {"name": "copy size", "type": "extent 3D", "annotation": "const*"},
-                    {"name": "options", "type": "copy texture for browser options", "annotation": "const*"}
+                    {"name": "options", "type": "copy texture for browser options _Dawn", "annotation": "const*"}
                 ]
             },
             {
@@ -3399,6 +3727,11 @@
     },
     "dawn render pass color attachment render to single sampled": {
         "tags": ["dawn"],
+        "category": "typedef",
+        "type": "dawn render pass color attachment render to single sampled _Dawn"
+    },
+    "dawn render pass color attachment render to single sampled _Dawn": {
+        "tags": ["dawn"],
         "category": "structure",
         "chained": "in",
         "chain roots": ["render pass color attachment"],
@@ -3446,6 +3779,11 @@
         ]
     },
     "render pass descriptor expand resolve rect": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "render pass descriptor expand resolve rect _Dawn"
+    },
+    "render pass descriptor expand resolve rect _Dawn": {
         "category": "structure",
         "tags": ["dawn"],
         "chained": "in",
@@ -3458,6 +3796,11 @@
         ]
     },
     "render pass pixel local storage": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "render pass pixel local storage _Dawn"
+    },
+    "render pass pixel local storage _Dawn": {
         "category": "structure",
         "tags": ["dawn"],
         "chained": "in",
@@ -3465,10 +3808,15 @@
         "members": [
             {"name": "total pixel local storage size", "type": "uint64_t"},
             {"name": "storage attachment count", "type": "size_t", "default": 0},
-            {"name": "storage attachments", "type": "render pass storage attachment", "annotation": "const*", "length": "storage attachment count"}
+            {"name": "storage attachments", "type": "render pass storage attachment _Dawn", "annotation": "const*", "length": "storage attachment count"}
         ]
     },
     "render pass storage attachment": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "render pass storage attachment _Dawn"
+    },
+    "render pass storage attachment _Dawn": {
         "category": "structure",
         "tags": ["dawn"],
         "extensible": "in",
@@ -3835,6 +4183,11 @@
     },
     "color target state expand resolve texture dawn": {
         "tags": ["dawn"],
+        "category": "typedef",
+        "type": "color target state expand resolve texture _Dawn"
+    },
+    "color target state expand resolve texture _Dawn": {
+        "tags": ["dawn"],
         "category": "structure",
         "chained": "in",
         "chain roots": ["color target state"],
@@ -3978,6 +4331,11 @@
         ]
     },
     "dawn shader module SPIRV options descriptor": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "dawn shader module SPIRV options descriptor _Dawn"
+    },
+    "dawn shader module SPIRV options descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shader module descriptor"],
@@ -3987,6 +4345,11 @@
         ]
     },
     "shader module compilation options": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "shader module compilation options _Dawn"
+    },
+    "shader module compilation options _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["shader module descriptor"],
@@ -4190,6 +4553,11 @@
         ]
     },
     "surface descriptor from windows core window": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "surface descriptor from windows core window _Dawn"
+    },
+    "surface descriptor from windows core window _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -4199,6 +4567,11 @@
         ]
     },
     "surface descriptor from windows swap chain panel": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "surface descriptor from windows swap chain panel _Dawn"
+    },
+    "surface descriptor from windows swap chain panel _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -4233,67 +4606,127 @@
 
             {"value": 0, "name": "surface source canvas HTML selector _Emscripten", "tags": ["emscripten"]},
 
-            {"value": 0, "name": "surface descriptor from windows core window", "tags": ["dawn"]},
-            {"value": 1, "name": "external texture binding entry", "tags": ["dawn"]},
-            {"value": 2, "name": "external texture binding layout", "tags": ["dawn"]},
-            {"value": 3, "name": "surface descriptor from windows swap chain panel", "tags": ["dawn"]},
-            {"value": 4, "name": "dawn texture internal usage descriptor", "tags": ["dawn"]},
-            {"value": 5, "name": "dawn encoder internal usage descriptor", "tags": ["dawn"]},
-            {"value": 6, "name": "dawn instance descriptor", "tags": ["dawn", "native"]},
-            {"value": 7, "name": "dawn cache device descriptor", "tags": ["dawn", "native"]},
-            {"value": 8, "name": "dawn adapter properties power preference", "tags": ["dawn", "native"]},
-            {"value": 9, "name": "dawn buffer descriptor error info from wire client", "tags": ["dawn"]},
-            {"value": 10, "name": "dawn toggles descriptor", "tags": ["dawn", "native"]},
-            {"value": 11, "name": "dawn shader module SPIRV options descriptor", "tags": ["dawn"]},
-            {"value": 12, "name": "request adapter options LUID", "tags": ["dawn", "native"]},
-            {"value": 13, "name": "request adapter options get GL proc", "tags": ["dawn", "native"]},
-            {"value": 14, "name": "request adapter options D3D11 device", "tags": ["dawn", "native"]},
-            {"value": 15, "name": "dawn render pass color attachment render to single sampled", "tags": ["dawn"]},
-            {"value": 16, "name": "render pass pixel local storage", "tags": ["dawn"]},
-            {"value": 17, "name": "pipeline layout pixel local storage", "tags": ["dawn"]},
-            {"value": 18, "name": "buffer host mapped pointer", "tags": ["dawn"]},
-            {"value": 19, "name": "dawn experimental subgroup limits", "tags": ["dawn"]},
-            {"value": 20, "name": "adapter properties memory heaps", "tags": ["dawn"]},
-            {"value": 21, "name": "adapter properties D3D", "tags": ["dawn"]},
-            {"value": 22, "name": "adapter properties vk", "tags": ["dawn"]},
-            {"value": 23, "name": "dawn compute pipeline full subgroups", "tags": ["dawn"]},
-            {"value": 24, "name": "dawn wire WGSL control", "tags": ["dawn"]},
-            {"value": 25, "name": "dawn WGSL blocklist", "tags": ["dawn", "native"]},
-            {"value": 26, "name": "drm format capabilities", "tags": ["dawn"]},
-            {"value": 27, "name": "shader module compilation options", "tags": ["dawn"]},
-            {"value": 28, "name": "color target state expand resolve texture dawn", "tags": ["dawn"]},
-            {"value": 29, "name": "render pass descriptor expand resolve rect", "tags": ["dawn"]},
+            {"value": 0, "name": "surface descriptor from windows core window", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 0, "name": "surface descriptor from windows core window _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 1, "name": "external texture binding entry",  "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 1, "name": "external texture binding entry _Dawn",  "conflicts": true, "tags": ["dawn"]},
+            {"value": 2, "name": "external texture binding layout", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 2, "name": "external texture binding layout _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 3, "name": "surface descriptor from windows swap chain panel", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 3, "name": "surface descriptor from windows swap chain panel _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 4, "name": "dawn texture internal usage descriptor", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 4, "name": "dawn texture internal usage descriptor _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 5, "name": "dawn encoder internal usage descriptor", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 5, "name": "dawn encoder internal usage descriptor _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 6, "name": "dawn instance descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 6, "name": "dawn instance descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 7, "name": "dawn cache device descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 7, "name": "dawn cache device descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 8, "name": "dawn adapter properties power preference", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 8, "name": "dawn adapter properties power preference _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 9, "name": "dawn buffer descriptor error info from wire client", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 9, "name": "dawn buffer descriptor error info from wire client _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 10, "name": "dawn toggles descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 10, "name": "dawn toggles descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 11, "name": "dawn shader module SPIRV options descriptor", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 11, "name": "dawn shader module SPIRV options descriptor _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 12, "name": "request adapter options LUID", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 12, "name": "request adapter options LUID _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 13, "name": "request adapter options get GL proc", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 13, "name": "request adapter options get GL proc _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 14, "name": "request adapter options D3D11 device", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 14, "name": "request adapter options D3D11 device _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 15, "name": "dawn render pass color attachment render to single sampled", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 15, "name": "dawn render pass color attachment render to single sampled _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 16, "name": "render pass pixel local storage", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 16, "name": "render pass pixel local storage _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 17, "name": "pipeline layout pixel local storage", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 17, "name": "pipeline layout pixel local storage _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 18, "name": "buffer host mapped pointer", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 18, "name": "buffer host mapped pointer _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 19, "name": "dawn experimental subgroup limits", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 19, "name": "dawn experimental subgroup limits _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 20, "name": "adapter properties memory heaps", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 20, "name": "adapter properties memory heaps _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 21, "name": "adapter properties D3D", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 21, "name": "adapter properties D3D _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 22, "name": "adapter properties vk", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 22, "name": "adapter properties vk _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 23, "name": "dawn compute pipeline full subgroups", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 23, "name": "dawn compute pipeline full subgroups _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 24, "name": "dawn wire WGSL control", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 24, "name": "dawn wire WGSL control _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 25, "name": "dawn WGSL blocklist", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 25, "name": "dawn WGSL blocklist _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 26, "name": "drm format capabilities", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 26, "name": "drm format capabilities _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 27, "name": "shader module compilation options", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 27, "name": "shader module compilation options _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 28, "name": "color target state expand resolve texture dawn", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 28, "name": "color target state expand resolve texture _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 29, "name": "render pass descriptor expand resolve rect", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 29, "name": "render pass descriptor expand resolve rect _Dawn", "conflicts": true, "tags": ["dawn"]},
 
-            {"value": 30, "name": "shared texture memory vk dedicated allocation descriptor", "tags": ["dawn", "native"]},
-            {"value": 31, "name": "shared texture memory a hardware buffer descriptor", "tags": ["dawn", "native"]},
-            {"value": 32, "name": "shared texture memory dma buf descriptor", "tags": ["dawn", "native"]},
-            {"value": 33, "name": "shared texture memory opaque FD descriptor", "tags": ["dawn", "native"]},
-            {"value": 34, "name": "shared texture memory zircon handle descriptor", "tags": ["dawn", "native"]},
-            {"value": 35, "name": "shared texture memory DXGI shared handle descriptor", "tags": ["dawn", "native"]},
-            {"value": 36, "name": "shared texture memory D3D11 texture 2D descriptor", "tags": ["dawn", "native"]},
-            {"value": 37, "name": "shared texture memory IO surface descriptor", "tags": ["dawn", "native"]},
-            {"value": 38, "name": "shared texture memory EGL image descriptor", "tags": ["dawn", "native"]},
-            {"value": 39, "name": "shared texture memory initialized begin state", "tags": ["dawn", "native"]},
-            {"value": 40, "name": "shared texture memory initialized end state", "tags": ["dawn", "native"]},
-            {"value": 41, "name": "shared texture memory vk image layout begin state", "tags": ["dawn", "native"]},
-            {"value": 42, "name": "shared texture memory vk image layout end state", "tags": ["dawn", "native"]},
-            {"value": 43, "name": "shared texture memory D3D swapchain begin state", "tags": ["dawn", "native"]},
-            {"value": 44, "name": "shared fence vk semaphore opaque FD descriptor", "tags": ["dawn", "native"]},
-            {"value": 45, "name": "shared fence vk semaphore opaque FD export info", "tags": ["dawn", "native"]},
-            {"value": 46, "name": "shared fence vk semaphore sync FD descriptor", "tags": ["dawn", "native"]},
-            {"value": 47, "name": "shared fence vk semaphore sync FD export info", "tags": ["dawn", "native"]},
-            {"value": 48, "name": "shared fence vk semaphore zircon handle descriptor", "tags": ["dawn", "native"]},
-            {"value": 49, "name": "shared fence vk semaphore zircon handle export info", "tags": ["dawn", "native"]},
-            {"value": 50, "name": "shared fence DXGI shared handle descriptor", "tags": ["dawn", "native"]},
-            {"value": 51, "name": "shared fence DXGI shared handle export info", "tags": ["dawn", "native"]},
-            {"value": 52, "name": "shared fence MTL shared event descriptor", "tags": ["dawn", "native"]},
-            {"value": 53, "name": "shared fence MTL shared event export info", "tags": ["dawn", "native"]},
-            {"value": 54, "name": "shared buffer memory D3D12 resource descriptor", "tags": ["dawn", "native"]},
-            {"value": 55, "name": "static sampler binding layout", "tags": ["dawn"]},
-            {"value": 56, "name": "y cb cr vk descriptor", "tags": ["dawn"]},
-            {"value": 57, "name": "shared texture memory a hardware buffer properties", "tags": ["dawn", "native"]},
-            {"value": 58, "name": "a hardware buffer properties", "tags": ["dawn", "native"]},
-            {"value": 59, "name": "dawn experimental immediate data limits", "tags": ["dawn"]}
+            {"value": 30, "name": "shared texture memory vk dedicated allocation descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 30, "name": "shared texture memory vk dedicated allocation descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 31, "name": "shared texture memory a hardware buffer descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 31, "name": "shared texture memory a hardware buffer descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 32, "name": "shared texture memory dma buf descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 32, "name": "shared texture memory dma buf descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 33, "name": "shared texture memory opaque FD descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 33, "name": "shared texture memory opaque FD descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 34, "name": "shared texture memory zircon handle descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 34, "name": "shared texture memory zircon handle descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 35, "name": "shared texture memory DXGI shared handle descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 35, "name": "shared texture memory DXGI shared handle descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 36, "name": "shared texture memory D3D11 texture 2D descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 36, "name": "shared texture memory D3D11 texture 2D descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 37, "name": "shared texture memory IO surface descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 37, "name": "shared texture memory IO surface descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 38, "name": "shared texture memory EGL image descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 38, "name": "shared texture memory EGL image descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 39, "name": "shared texture memory initialized begin state", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 39, "name": "shared texture memory initialized begin state _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 40, "name": "shared texture memory initialized end state", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 40, "name": "shared texture memory initialized end state _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 41, "name": "shared texture memory vk image layout begin state", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 41, "name": "shared texture memory vk image layout begin state _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 42, "name": "shared texture memory vk image layout end state", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 42, "name": "shared texture memory vk image layout end state _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 43, "name": "shared texture memory D3D swapchain begin state", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 43, "name": "shared texture memory D3D swapchain begin state _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 44, "name": "shared fence vk semaphore opaque FD descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 44, "name": "shared fence vk semaphore opaque FD descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 45, "name": "shared fence vk semaphore opaque FD export info", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 45, "name": "shared fence vk semaphore opaque FD export info _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 46, "name": "shared fence vk semaphore sync FD descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 46, "name": "shared fence vk semaphore sync FD descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 47, "name": "shared fence vk semaphore sync FD export info", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 47, "name": "shared fence vk semaphore sync FD export info _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 48, "name": "shared fence vk semaphore zircon handle descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 48, "name": "shared fence vk semaphore zircon handle descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 49, "name": "shared fence vk semaphore zircon handle export info", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 49, "name": "shared fence vk semaphore zircon handle export info _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 50, "name": "shared fence DXGI shared handle descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 50, "name": "shared fence DXGI shared handle descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 51, "name": "shared fence DXGI shared handle export info", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 51, "name": "shared fence DXGI shared handle export info _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 52, "name": "shared fence MTL shared event descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 52, "name": "shared fence MTL shared event descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 53, "name": "shared fence MTL shared event export info", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 53, "name": "shared fence MTL shared event export info _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 54, "name": "shared buffer memory D3D12 resource descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 54, "name": "shared buffer memory D3D12 resource descriptor _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 55, "name": "static sampler binding layout", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 55, "name": "static sampler binding layout _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 56, "name": "y cb cr vk descriptor", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 56, "name": "y cb cr vk descriptor _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 57, "name": "shared texture memory a hardware buffer properties", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 57, "name": "shared texture memory a hardware buffer properties _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 58, "name": "a hardware buffer properties", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
+            {"value": 58, "name": "a hardware buffer properties _Dawn", "conflicts": true, "tags": ["dawn", "native"]},
+            {"value": 59, "name": "dawn experimental immediate data limits", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 59, "name": "dawn experimental immediate data limits _Dawn", "conflicts": true, "tags": ["dawn"]}
 
         ]
     },
@@ -4385,9 +4818,12 @@
             {"value": 1, "name": "all"},
             {"value": 2, "name": "stencil only"},
             {"value": 3, "name": "depth only"},
-            {"value": 0, "name": "plane 0 only", "tags": ["dawn"]},
-            {"value": 1, "name": "plane 1 only", "tags": ["dawn"]},
-            {"value": 2, "name": "plane 2 only", "tags": ["dawn"]}
+            {"value": 0, "name": "plane 0 only", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 0, "name": "plane 0 only _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 1, "name": "plane 1 only", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 1, "name": "plane 1 only _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 2, "name": "plane 2 only", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 2, "name": "plane 2 only _Dawn", "conflicts": true, "tags": ["dawn"]}
         ]
     },
     "texture data layout": {
@@ -4540,21 +4976,35 @@
             {"value": 94, "name": "ASTC 12x12 unorm",       "jsrepr": "'astc-12x12-unorm'"},
             {"value": 95, "name": "ASTC 12x12 unorm srgb",  "jsrepr": "'astc-12x12-unorm-srgb'"},
 
-            {"value": 0, "name": "R16 unorm", "tags": ["dawn"]},
-            {"value": 1, "name": "RG16 unorm", "tags": ["dawn"]},
-            {"value": 2, "name": "RGBA16 unorm", "tags": ["dawn"]},
-            {"value": 3, "name": "R16 snorm", "tags": ["dawn"]},
-            {"value": 4, "name": "RG16 snorm", "tags": ["dawn"]},
-            {"value": 5, "name": "RGBA16 snorm", "tags": ["dawn"]},
+            {"value": 0, "name": "R16 unorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 0, "name": "R16 unorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 1, "name": "RG16 unorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 1, "name": "RG16 unorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 2, "name": "RGBA16 unorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 2, "name": "RGBA16 unorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 3, "name": "R16 snorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 3, "name": "R16 snorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 4, "name": "RG16 snorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 4, "name": "RG16 snorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 5, "name": "RGBA16 snorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 5, "name": "RGBA16 snorm _Dawn", "conflicts": true, "tags": ["dawn"]},
 
-            {"value": 6, "name": "R8 BG8 Biplanar 420 unorm", "tags": ["dawn"]},
-            {"value": 7, "name": "R10X6 BG10X6 Biplanar 420 unorm", "tags": ["dawn"]},
-            {"value": 8, "name": "R8 BG8 A8 Triplanar 420 unorm", "tags": ["dawn"]},
-            {"value": 9, "name": "R8 BG8 Biplanar 422 unorm", "tags": ["dawn"]},
-            {"value": 10, "name": "R8 BG8 Biplanar 444 unorm", "tags": ["dawn"]},
-            {"value": 11, "name": "R10X6 BG10X6 Biplanar 422 unorm", "tags": ["dawn"]},
-            {"value": 12, "name": "R10X6 BG10X6 Biplanar 444 unorm", "tags": ["dawn"]},
-            {"value": 13, "name": "External", "tags": ["dawn"]}
+            {"value": 6, "name": "R8 BG8 Biplanar 420 unorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 6, "name": "R8 BG8 Biplanar 420 unorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 7, "name": "R10X6 BG10X6 Biplanar 420 unorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 7, "name": "R10X6 BG10X6 Biplanar 420 unorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 8, "name": "R8 BG8 A8 Triplanar 420 unorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 8, "name": "R8 BG8 A8 Triplanar 420 unorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 9, "name": "R8 BG8 Biplanar 422 unorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 9, "name": "R8 BG8 Biplanar 422 unorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 10, "name": "R8 BG8 Biplanar 444 unorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 10, "name": "R8 BG8 Biplanar 444 unorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 11, "name": "R10X6 BG10X6 Biplanar 422 unorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 11, "name": "R10X6 BG10X6 Biplanar 422 unorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 12, "name": "R10X6 BG10X6 Biplanar 444 unorm", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 12, "name": "R10X6 BG10X6 Biplanar 444 unorm _Dawn", "conflicts": true, "tags": ["dawn"]},
+            {"value": 13, "name": "External", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 13, "name": "External _Dawn", "conflicts": true, "tags": ["dawn"]}
         ]
     },
     "texture usage": {
@@ -4566,8 +5016,10 @@
             {"value": 4, "name": "texture binding"},
             {"value": 8, "name": "storage binding"},
             {"value": 16, "name": "render attachment"},
-            {"value": 32, "name": "transient attachment", "tags": ["dawn"]},
-            {"value": 64, "name": "storage attachment", "tags": ["dawn"]}
+            {"value": 32, "name": "transient attachment", "tags": ["dawn", "deprecated"]},
+            {"value": 32, "name": "transient attachment _Dawn", "tags": ["dawn"]},
+            {"value": 64, "name": "storage attachment", "tags": ["dawn", "deprecated"]},
+            {"value": 64, "name": "storage attachment _Dawn", "tags": ["dawn"]}
         ]
     },
     "texture view descriptor": {
@@ -4617,6 +5069,11 @@
         ]
     },
     "y cb cr vk descriptor": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "y cb cr vk descriptor _Dawn"
+    },
+    "y cb cr vk descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["sampler descriptor", "texture view descriptor"],
@@ -4680,11 +5137,17 @@
             {"value": 3, "name": "unrestricted pointer parameters", "jsrepr": "'unrestricted_pointer_parameters'"},
             {"value": 4, "name": "pointer composite access", "jsrepr": "'pointer_composite_access'"},
 
-            {"value": 0, "name": "chromium testing unimplemented", "jsrepr": "'chromium_testing_unimplemented'", "tags": ["dawn"]},
-            {"value": 1, "name": "chromium testing unsafe experimental", "jsrepr": "'chromium_testing_unsafe_experimental'", "tags": ["dawn"]},
-            {"value": 2, "name": "chromium testing experimental", "jsrepr": "'chromium_testing_experimental'", "tags": ["dawn"]},
-            {"value": 3, "name": "chromium testing shipped with killswitch", "jsrepr": "'chromium_testing_shipped_with_killswitch'", "tags": ["dawn"]},
-            {"value": 4, "name": "chromium testing shipped", "jsrepr": "'chromium_testing_shipped'", "tags": ["dawn"]}
+            {"value": 0, "name": "chromium testing unimplemented", "jsrepr": "'chromium_testing_unimplemented'", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 0, "name": "chromium testing unimplemented _Dawn", "jsrepr": "'chromium_testing_unimplemented'", "conflicts": true, "tags": ["dawn"]},
+            {"value": 1, "name": "chromium testing unsafe experimental", "jsrepr": "'chromium_testing_unsafe_experimental'", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 1, "name": "chromium testing unsafe experimental _Dawn", "jsrepr": "'chromium_testing_unsafe_experimental'", "conflicts": true, "tags": ["dawn"]},
+            {"value": 2, "name": "chromium testing experimental", "jsrepr": "'chromium_testing_experimental'", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 2, "name": "chromium testing experimental _Dawn", "jsrepr": "'chromium_testing_experimental'", "conflicts": true, "tags": ["dawn"]},
+            {"value": 3, "name": "chromium testing shipped with killswitch", "jsrepr": "'chromium_testing_shipped_with_killswitch'", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 3, "name": "chromium testing shipped with killswitch _Dawn", "jsrepr": "'chromium_testing_shipped_with_killswitch'", "conflicts": true, "tags": ["dawn"]},
+            {"value": 4, "name": "chromium testing shipped", "jsrepr": "'chromium_testing_shipped'", "conflicts": true, "tags": ["dawn", "deprecated"]},
+            {"value": 4, "name": "chromium testing shipped _Dawn", "jsrepr": "'chromium_testing_shipped'", "conflicts": true, "tags": ["dawn"]}
+
         ]
     },
     "whole size" : {
@@ -4789,6 +5252,11 @@
         "category": "native"
     },
     "dawn texture internal usage descriptor": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "dawn texture internal usage descriptor _Dawn"
+    },
+    "dawn texture internal usage descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["texture descriptor"],
@@ -4798,6 +5266,11 @@
         ]
     },
     "dawn encoder internal usage descriptor": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "dawn encoder internal usage descriptor _Dawn"
+    },
+    "dawn encoder internal usage descriptor _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["command encoder descriptor"],
@@ -4807,6 +5280,11 @@
         ]
     },
     "dawn adapter properties power preference": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "dawn adapter properties power preference _Dawn"
+    },
+    "dawn adapter properties power preference _Dawn": {
         "category": "structure",
         "chained": "out",
         "chain roots": ["adapter info"],
@@ -4816,6 +5294,11 @@
         ]
     },
     "heap property": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "heap property _Dawn"
+    },
+    "heap property _Dawn": {
         "category": "bitmask",
         "tags": ["dawn"],
         "values": [
@@ -4827,24 +5310,39 @@
         ]
     },
     "memory heap info": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "memory heap info _Dawn"
+    },
+    "memory heap info _Dawn": {
         "category": "structure",
         "tags": ["dawn"],
         "members": [
-            {"name": "properties", "type": "heap property"},
+            {"name": "properties", "type": "heap property _Dawn"},
             {"name": "size", "type": "uint64_t"}
         ]
     },
     "adapter properties memory heaps": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "adapter properties memory heaps _Dawn"
+    },
+    "adapter properties memory heaps _Dawn": {
         "category": "structure",
         "chained": "out",
         "chain roots": ["adapter info"],
         "tags": ["dawn"],
         "members": [
             {"name": "heap count", "type": "size_t"},
-            {"name": "heap info", "type": "memory heap info", "annotation": "const*", "length": "heap count"}
+            {"name": "heap info", "type": "memory heap info _Dawn", "annotation": "const*", "length": "heap count"}
         ]
     },
     "adapter properties D3D": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "adapter properties D3D _Dawn"
+    },
+    "adapter properties D3D _Dawn": {
         "category": "structure",
         "chained": "out",
         "chain roots": ["adapter info"],
@@ -4854,15 +5352,25 @@
         ]
     },
     "adapter properties vk": {
-      "category": "structure",
-      "chained": "out",
-      "chain roots": ["adapter info"],
-      "tags": ["dawn"],
-      "members": [
-          {"name": "driver version", "type": "uint32_t"}
-      ]
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "adapter properties vk _Dawn"
+    },
+    "adapter properties vk _Dawn": {
+        "category": "structure",
+        "chained": "out",
+        "chain roots": ["adapter info"],
+        "tags": ["dawn"],
+        "members": [
+            {"name": "driver version", "type": "uint32_t"}
+        ]
     },
     "dawn buffer descriptor error info from wire client": {
+        "tags": ["dawn"],
+        "category": "typedef",
+        "type": "dawn buffer descriptor error info from wire client _Dawn"
+    },
+    "dawn buffer descriptor error info from wire client _Dawn": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["buffer descriptor"],
