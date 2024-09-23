@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8207c5a8_779c4eff",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-23T14:17:24Z",
+      "side": 1,
+      "message": "```suggestion\n        }\n        if (auto* arr \u003d ty-\u003eAs\u003ccore::type::Array\u003e()) {\n```\n\nnit: else not needed as `if` returns.",
+      "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04dd51bd_4a3de1d6",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-23T14:17:24Z",
+      "side": 1,
+      "message": "```suggestion\n            return b.ty.array(TransposeType(arr-\u003eElemType()), Vector{stride});\n```",
+      "range": {
+        "startLine": 200,
+        "startChar": 13,
+        "endLine": 202,
+        "endChar": 13
+      },
+      "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0e9ea8b_8beda2ff",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-23T14:17:24Z",
+      "side": 1,
+      "message": "The `true` and `false` flip between `source` and `result` here. The flip makes the comment a bit confusing.",
+      "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5540e218_c0e5b2ce",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-23T14:17:24Z",
+      "side": 1,
+      "message": "Can we turn `bool src_row_major` into the following?\n\n```\nenum class RowOrdering : uint8_t {\n  kRow,\n  kColumn,\n}\n```",
+      "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea2e9781_8e6c1047",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-23T14:17:24Z",
+      "side": 1,
+      "message": "`result_type` and `return_type` appear to be the same type, why the split?",
+      "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
