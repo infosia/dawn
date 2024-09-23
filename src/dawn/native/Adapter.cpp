@@ -211,12 +211,12 @@ void APIAdapterInfoFreeMembers(WGPUAdapterInfo info) {
     delete[] info.vendor.data;
 }
 
-void APIAdapterPropertiesMemoryHeapsFreeMembers(
+void APIDawnAdapterPropertiesMemoryHeapsFreeMembers(
     WGPUAdapterPropertiesMemoryHeaps memoryHeapProperties) {
     delete[] memoryHeapProperties.heapInfo;
 }
 
-void APIDrmFormatCapabilitiesFreeMembers(WGPUDrmFormatCapabilities capabilities) {
+void APIDawnDrmFormatCapabilitiesFreeMembers(WGPUDrmFormatCapabilities capabilities) {
     delete[] capabilities.properties;
 }
 

@@ -86,7 +86,7 @@ TEST_P(BufferHostMappedPointerNoFeatureTests, Creation) {
     ASSERT_DEVICE_ERROR_MSG(
         device.CreateBuffer(&bufferDesc),
         testing::HasSubstr(
-            "SType::BufferHostMappedPointer requires FeatureName::HostMappedPointer"));
+            "SType::DawnBufferHostMappedPointer requires FeatureName::DawnHostMappedPointer"));
 }
 
 DAWN_INSTANTIATE_TEST(BufferHostMappedPointerNoFeatureTests,

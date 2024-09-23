@@ -444,7 +444,7 @@ void RenderPassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t query
             if (IsValidationEnabled()) {
                 DAWN_TRY(ValidateTimestampQuery(
                     GetDevice(), querySet, queryIndex,
-                    Feature::ChromiumExperimentalTimestampQueryInsidePasses));
+                    Feature::DawnChromiumExperimentalTimestampQueryInsidePasses));
                 DAWN_TRY_CONTEXT(ValidateQueryIndexOverwrite(
                                      querySet, queryIndex, mUsageTracker.GetQueryAvailabilityMap()),
                                  "validating the timestamp query index (%u) of %s", queryIndex,
