@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61f7052a_028cc4f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-23T14:18:49Z",
+      "side": 1,
+      "message": "PTAL. This was polyfilled in the original AST version, but I don\u0027t see any reason for it. It was implemetned that way from the start, even though at the start the spec called out this as GLSL radians and degrees.\n\nWe can always switch to polyfill if we see CTS failures.",
+      "revId": "5fac660e9b8ddb2b6fd130fb1f1ee634e691e186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
