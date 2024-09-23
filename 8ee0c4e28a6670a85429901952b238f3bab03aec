@@ -1,0 +1,179 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ac99637_7c6fb202",
+        "filename": "docs/tint/benchmark.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-09-23T21:49:44Z",
+      "side": 1,
+      "message": "Some day we can use the new \u0027embed\u0027 preprocessor directive in C23.\nhttps://en.cppreference.com/w/c/preprocessor/embed",
+      "revId": "8ee0c4e28a6670a85429901952b238f3bab03aec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d96ee401_29e88ca7",
+        "filename": "docs/tint/benchmark.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-09-23T21:49:44Z",
+      "side": 1,
+      "message": "link this?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 116
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7ceb7ab5_00ef7dbf",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/tint/benchmark.md",
+              "range": {
+                "startLine": 22,
+                "startChar": 0,
+                "endLine": 23,
+                "endChar": 0
+              },
+              "replacement": "[writer_bench.cc](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/spirv/writer/writer_bench.cc)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8ee0c4e28a6670a85429901952b238f3bab03aec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb407442_8ed09ff0",
+        "filename": "docs/tint/benchmark.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-09-23T21:49:44Z",
+      "side": 1,
+      "message": "link this?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 102
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "03d3007b_2adbf0e0",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/tint/benchmark.md",
+              "range": {
+                "startLine": 29,
+                "startChar": 0,
+                "endLine": 30,
+                "endChar": 0
+              },
+              "replacement": "https://source.chromium.org/chromium/chromium/src/+/refs/tags/131.0.6735.1:chrome/test/BUILD.gn;l\u003d5909;drc\u003d131.0.6735.1\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8ee0c4e28a6670a85429901952b238f3bab03aec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e99deaa_d1bfc784",
+        "filename": "docs/tint/benchmark.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-09-23T21:49:44Z",
+      "side": 1,
+      "message": "link this?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 65
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8708c165_4b60a415",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/tint/benchmark.md",
+              "range": {
+                "startLine": 32,
+                "startChar": 0,
+                "endLine": 34,
+                "endChar": 0
+              },
+              "replacement": "The benchmark was added to the waterfall in [this CL](https://chromium-review.googlesource.com/c/chromium/src/+/5815585).\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8ee0c4e28a6670a85429901952b238f3bab03aec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23d2c132_8648b13a",
+        "filename": "docs/tint/benchmark.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-09-23T21:49:44Z",
+      "side": 1,
+      "message": "units are nanoseconds?",
+      "fixSuggestions": [
+        {
+          "fixId": "36666522_177c2c22",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/tint/benchmark.md",
+              "range": {
+                "startLine": 39,
+                "startChar": 0,
+                "endLine": 40,
+                "endChar": 0
+              },
+              "replacement": "View benchmark data with the [perf.luci.app](https://perf.luci.app/) dashboard. The units are nanoseconds.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8ee0c4e28a6670a85429901952b238f3bab03aec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
