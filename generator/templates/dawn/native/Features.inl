@@ -29,11 +29,13 @@ namespace dawn::native {
 
 wgpu::FeatureName ToAPI(Feature feature) {
   switch (feature) {
-    {% for enum in types["feature name"].values if enum.valid %}
+    {% for enum in types["feature name"].values if (enum.valid and (not "deprecated" in enum.json_data.get("tags", []) or not enum.json_data.get("conflicts", false))) %}
       case Feature::{{as_cppEnum(enum.name)}}:
         return wgpu::FeatureName::{{as_cppEnum(enum.name)}};
     {% endfor %}
     case Feature::InvalidEnum:
+      break;
+    default:
       break;
   }
   DAWN_UNREACHABLE();
@@ -41,7 +43,7 @@ wgpu::FeatureName ToAPI(Feature feature) {
 
 Feature FromAPI(wgpu::FeatureName feature) {
   switch (feature) {
-    {% for enum in types["feature name"].values %}
+    {% for enum in types["feature name"].values if (not "deprecated" in enum.json_data.get("tags", []) or not enum.json_data.get("conflicts", false)) %}
       case wgpu::FeatureName::{{as_cppEnum(enum.name)}}:
         {% if enum.valid %}
           return Feature::{{as_cppEnum(enum.name)}};
@@ -66,15 +68,15 @@ static constexpr bool FeatureInfoIsDefined(Feature feature) {
 static constexpr ityp::array<Feature, FeatureInfo, kEnumCount<Feature>> InitializeFeatureEnumAndInfoList() {
   constexpr size_t kInfoCount = sizeof(kFeatureInfo) / sizeof(kFeatureInfo[0]);
   ityp::array<Feature, FeatureInfo, kEnumCount<Feature>> list{};
-  {% for enum in types["feature name"].values if enum.valid %}
+  {% for enum in types["feature name"].values if (enum.valid and (not "deprecated" in enum.json_data.get("tags", []) or not enum.json_data.get("conflicts", false))) %}
     {
-      static_assert(FeatureInfoIsDefined(Feature::{{as_cppEnum(enum.name)}}),
-                    "Please define feature info for {{as_cppEnum(enum.name)}} in Features.cpp");
+      static_assert(FeatureInfoIsDefined(Feature::{{as_cppEnum(maybe_remove_dawn_suffix(enum.name, enum.json_data))}}),
+                    "Please define feature info for {{as_cppEnum(maybe_remove_dawn_suffix(enum.name, enum.json_data))}} in Features.cpp");
       for (size_t i = 0; i < kInfoCount; ++i) {
-        if (kFeatureInfo[i].feature == Feature::{{as_cppEnum(enum.name)}}) {
-          list[Feature::{{as_cppEnum(enum.name)}}] = {
+        if (kFeatureInfo[i].feature == Feature::{{as_cppEnum(maybe_remove_dawn_suffix(enum.name, enum.json_data))}}) {
+          list[Feature::{{as_cppEnum(maybe_remove_dawn_suffix(enum.name, enum.json_data))}}] = {
             //* Match feature name casing with javascript casing.
-            "{{enum.name.js_enum_case()}}",
+            "{{maybe_remove_dawn_suffix(enum.name, enum.json_data).js_enum_case()}}",
             kFeatureInfo[i].info.description,
             kFeatureInfo[i].info.url,
             kFeatureInfo[i].info.featureState,
