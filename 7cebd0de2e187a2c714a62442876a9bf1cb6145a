@@ -16,6 +16,23 @@
       "message": "SGTM!",
       "revId": "7cebd0de2e187a2c714a62442876a9bf1cb6145a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06ed637a_5f50ec0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-23T09:37:18Z",
+      "side": 1,
+      "message": "Jiawei PTAL as well!",
+      "revId": "7cebd0de2e187a2c714a62442876a9bf1cb6145a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
