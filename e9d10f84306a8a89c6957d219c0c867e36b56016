@@ -16,6 +16,41 @@
       "message": "PTAL.",
       "revId": "e9d10f84306a8a89c6957d219c0c867e36b56016",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02007806_13e86f43",
+        "filename": "src/tint/lang/glsl/writer/binary_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-23T16:10:08Z",
+      "side": 1,
+      "message": "Nit: This can go now?",
+      "fixSuggestions": [
+        {
+          "fixId": "a80ef904_f63ccff7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/binary_test.cc",
+              "range": {
+                "startLine": 181,
+                "startChar": 0,
+                "endLine": 183,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "e9d10f84306a8a89c6957d219c0c867e36b56016",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
