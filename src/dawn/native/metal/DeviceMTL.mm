@@ -154,8 +154,9 @@ Device::Device(AdapterBase* adapter,
         mCounterSamplingAtStageBoundary = false;
     }
 
-    mIsTimestampQueryEnabled = HasFeature(Feature::TimestampQuery) ||
-                               HasFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses);
+    mIsTimestampQueryEnabled =
+        HasFeature(Feature::TimestampQuery) ||
+        HasFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses_Dawn);
 }
 
 Device::~Device() {
@@ -281,7 +282,7 @@ ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImp
     const auto* descriptor = unpacked.Get<SharedTextureMemoryIOSurfaceDescriptor>();
     DAWN_ASSERT(descriptor != nullptr);
 
-    DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryIOSurface), "%s is not enabled.",
+    DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryIOSurface_Dawn), "%s is not enabled.",
                     wgpu::FeatureName::SharedTextureMemoryIOSurface);
 
     return SharedTextureMemory::Create(this, baseDescriptor->label, descriptor);
@@ -299,7 +300,7 @@ ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
     const auto* descriptor = unpacked.Get<SharedFenceMTLSharedEventDescriptor>();
     DAWN_ASSERT(descriptor != nullptr);
 
-    DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceMTLSharedEvent), "%s is not enabled.",
+    DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceMTLSharedEvent_Dawn), "%s is not enabled.",
                     wgpu::FeatureName::SharedFenceMTLSharedEvent);
     if (@available(macOS 10.14, ios 12.0, *)) {
         return SharedFence::Create(this, baseDescriptor->label, descriptor);

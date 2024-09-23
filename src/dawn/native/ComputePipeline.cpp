@@ -42,9 +42,9 @@ MaybeError ValidateComputePipelineDescriptor(DeviceBase* device,
     // TODO(349125474): Decide what to do with fullSubgroupsOption before removing deprecated
     // ChromiumExperimentalSubgroups.
     DAWN_INVALID_IF(
-        (fullSubgroupsOption && !device->HasFeature(Feature::ChromiumExperimentalSubgroups)),
+        (fullSubgroupsOption && !device->HasFeature(Feature::ChromiumExperimentalSubgroups_Dawn)),
         "DawnComputePipelineFullSubgroups is used without %s enabled.",
-        ToAPI(Feature::ChromiumExperimentalSubgroups));
+        ToAPI(Feature::ChromiumExperimentalSubgroups_Dawn));
 
     if (descriptor->layout != nullptr) {
         DAWN_TRY(device->ValidateObject(descriptor->layout));

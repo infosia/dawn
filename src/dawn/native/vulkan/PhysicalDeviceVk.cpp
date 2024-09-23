@@ -211,8 +211,8 @@ MaybeError PhysicalDevice::InitializeImpl() {
 }
 
 void PhysicalDevice::InitializeSupportedFeaturesImpl() {
-    EnableFeature(Feature::AdapterPropertiesMemoryHeaps);
-    EnableFeature(Feature::StaticSamplers);
+    EnableFeature(Feature::AdapterPropertiesMemoryHeaps_Dawn);
+    EnableFeature(Feature::StaticSamplers_Dawn);
 
     // Initialize supported extensions
     if (mDeviceInfo.features.textureCompressionBC == VK_TRUE) {
@@ -229,7 +229,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     if (mDeviceInfo.properties.limits.timestampComputeAndGraphics == VK_TRUE) {
         EnableFeature(Feature::TimestampQuery);
-        EnableFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses);
+        EnableFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses_Dawn);
     }
 
     if (IsDepthStencilFormatSupported(VK_FORMAT_D32_SFLOAT_S8_UINT)) {
@@ -241,15 +241,15 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     if (mDeviceInfo.features.dualSrcBlend == VK_TRUE) {
-        EnableFeature(Feature::DualSourceBlending);
+        EnableFeature(Feature::DualSourceBlending_Dawn);
     }
 
     if (mDeviceInfo.features.shaderStorageImageExtendedFormats == VK_TRUE) {
-        EnableFeature(Feature::R8UnormStorage);
+        EnableFeature(Feature::R8UnormStorage_Dawn);
     }
 
     if (mDeviceInfo.features.shaderClipDistance == VK_TRUE) {
-        EnableFeature(Feature::ClipDistances);
+        EnableFeature(Feature::ClipDistances_Dawn);
     }
 
     bool shaderF16Enabled = false;
@@ -267,7 +267,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     if (mDeviceInfo.HasExt(DeviceExt::DrawIndirectCount) &&
         mDeviceInfo.features.multiDrawIndirect == VK_TRUE) {
-        EnableFeature(Feature::MultiDrawIndirect);
+        EnableFeature(Feature::MultiDrawIndirect_Dawn);
     }
 
     // unclippedDepth=true translates to depthClamp=true, which implicitly disables clipping.
@@ -278,7 +278,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (mDeviceInfo.HasExt(DeviceExt::SamplerYCbCrConversion) &&
         mDeviceInfo.HasExt(DeviceExt::ExternalMemoryAndroidHardwareBuffer) &&
         mDeviceInfo.samplerYCbCrConversionFeatures.samplerYcbcrConversion == VK_TRUE) {
-        EnableFeature(Feature::YCbCrVulkanSamplers);
+        EnableFeature(Feature::YCbCrVulkanSamplers_Dawn);
     }
 
     VkFormatProperties rg11b10Properties;
@@ -311,7 +311,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
             unorm16Properties.optimalTilingFeatures);
     }
     if (unorm16TextureFormatsSupported) {
-        EnableFeature(Feature::Unorm16TextureFormats);
+        EnableFeature(Feature::Unorm16TextureFormats_Dawn);
     }
 
     bool snorm16TextureFormatsSupported = true;
@@ -327,11 +327,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
             snorm16Properties.optimalTilingFeatures);
     }
     if (snorm16TextureFormatsSupported) {
-        EnableFeature(Feature::Snorm16TextureFormats);
+        EnableFeature(Feature::Snorm16TextureFormats_Dawn);
     }
 
     if (unorm16TextureFormatsSupported && snorm16TextureFormatsSupported) {
-        EnableFeature(Feature::Norm16TextureFormats);
+        EnableFeature(Feature::Norm16TextureFormats_Dawn);
     }
 
     // 32 bit float channel formats.
@@ -373,13 +373,13 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     if (allMultiplanarFormatsSupported) {
-        EnableFeature(Feature::DawnMultiPlanarFormats);
-        EnableFeature(Feature::MultiPlanarFormatExtendedUsages);
+        EnableFeature(Feature::DawnMultiPlanarFormats_Dawn);
+        EnableFeature(Feature::MultiPlanarFormatExtendedUsages_Dawn);
     }
 
-    EnableFeature(Feature::TransientAttachments);
-    EnableFeature(Feature::AdapterPropertiesVk);
-    EnableFeature(Feature::DawnLoadResolveTexture);
+    EnableFeature(Feature::TransientAttachments_Dawn);
+    EnableFeature(Feature::AdapterPropertiesVk_Dawn);
+    EnableFeature(Feature::DawnLoadResolveTexture_Dawn);
 
     // TODO(349125474): Remove deprecated ChromiumExperimentalSubgroups.
     // Enable ChromiumExperimentalSubgroups feature if:
@@ -398,7 +398,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         (mDeviceInfo.HasExt(DeviceExt::SubgroupSizeControl)) &&
         (mDeviceInfo.subgroupSizeControlFeatures.subgroupSizeControl == VK_TRUE) &&
         (mDeviceInfo.subgroupSizeControlFeatures.computeFullSubgroups == VK_TRUE)) {
-        EnableFeature(Feature::ChromiumExperimentalSubgroups);
+        EnableFeature(Feature::ChromiumExperimentalSubgroups_Dawn);
     }
 
     // Enable Subgroups feature if:
@@ -437,7 +437,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (mDeviceInfo.HasExt(DeviceExt::ShaderSubgroupUniformControlFlow) &&
         (mDeviceInfo.shaderSubgroupUniformControlFlowFeatures.shaderSubgroupUniformControlFlow ==
          VK_TRUE)) {
-        EnableFeature(Feature::ChromiumExperimentalSubgroupUniformControlFlow);
+        EnableFeature(Feature::ChromiumExperimentalSubgroupUniformControlFlow_Dawn);
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryHost) &&
@@ -445,40 +445,40 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         // TODO(crbug.com/dawn/2018): properly surface the limit.
         // Linux nearly always exposes 4096.
         // https://vulkan.gpuinfo.org/displayextensionproperty.php?platform=linux&extensionname=VK_EXT_external_memory_host&extensionproperty=minImportedHostPointerAlignment
-        EnableFeature(Feature::HostMappedPointer);
+        EnableFeature(Feature::HostMappedPointer_Dawn);
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryDmaBuf) &&
         mDeviceInfo.HasExt(DeviceExt::ImageDrmFormatModifier)) {
-        EnableFeature(Feature::SharedTextureMemoryDmaBuf);
+        EnableFeature(Feature::SharedTextureMemoryDmaBuf_Dawn);
     }
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryFD)) {
-        EnableFeature(Feature::SharedTextureMemoryOpaqueFD);
+        EnableFeature(Feature::SharedTextureMemoryOpaqueFD_Dawn);
     }
 
 #if DAWN_PLATFORM_IS(ANDROID)
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryAndroidHardwareBuffer)) {
         if (GetOrLoadAHBFunctions()->IsValid()) {
-            EnableFeature(Feature::SharedTextureMemoryAHardwareBuffer);
+            EnableFeature(Feature::SharedTextureMemoryAHardwareBuffer_Dawn);
         }
     }
 #endif  // DAWN_PLATFORM_IS(ANDROID)
 
     if (CheckSemaphoreSupport(DeviceExt::ExternalSemaphoreZirconHandle,
                               VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_ZIRCON_EVENT_BIT_FUCHSIA)) {
-        EnableFeature(Feature::SharedFenceVkSemaphoreZirconHandle);
+        EnableFeature(Feature::SharedFenceVkSemaphoreZirconHandle_Dawn);
     }
     if (CheckSemaphoreSupport(DeviceExt::ExternalSemaphoreFD,
                               VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR)) {
-        EnableFeature(Feature::SharedFenceVkSemaphoreSyncFD);
+        EnableFeature(Feature::SharedFenceVkSemaphoreSyncFD_Dawn);
     }
     if (CheckSemaphoreSupport(DeviceExt::ExternalSemaphoreFD,
                               VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR)) {
-        EnableFeature(Feature::SharedFenceVkSemaphoreOpaqueFD);
+        EnableFeature(Feature::SharedFenceVkSemaphoreOpaqueFD_Dawn);
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ImageDrmFormatModifier)) {
-        EnableFeature(Feature::DrmFormatCapabilities);
+        EnableFeature(Feature::DrmFormatCapabilities_Dawn);
     }
 }
 

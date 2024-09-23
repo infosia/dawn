@@ -1041,13 +1041,13 @@ ResultOrError<FenceAndSignalValue> SharedTextureMemory::EndAccessImpl(
     DAWN_ASSERT(vkLayoutEndState != nullptr);
 
 #if DAWN_PLATFORM_IS(FUCHSIA)
-    DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::SharedFenceVkSemaphoreZirconHandle),
+    DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::SharedFenceVkSemaphoreZirconHandle_Dawn),
                     "Required feature (%s) for %s is missing.",
                     wgpu::FeatureName::SharedFenceVkSemaphoreZirconHandle,
                     wgpu::SharedFenceType::VkSemaphoreZirconHandle);
 #elif DAWN_PLATFORM_IS(LINUX)
-    DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::SharedFenceVkSemaphoreSyncFD) &&
-                        !GetDevice()->HasFeature(Feature::SharedFenceVkSemaphoreOpaqueFD),
+    DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::SharedFenceVkSemaphoreSyncFD_Dawn) &&
+                        !GetDevice()->HasFeature(Feature::SharedFenceVkSemaphoreOpaqueFD_Dawn),
                     "Required feature (%s or %s) for %s or %s is missing.",
                     wgpu::FeatureName::SharedFenceVkSemaphoreOpaqueFD,
                     wgpu::FeatureName::SharedFenceVkSemaphoreSyncFD,
@@ -1080,7 +1080,7 @@ ResultOrError<FenceAndSignalValue> SharedTextureMemory::EndAccessImpl(
     DAWN_TRY_ASSIGN(fence,
                     SharedFence::Create(ToBackend(GetDevice()), "Internal VkSemaphore", &desc));
 #elif DAWN_PLATFORM_IS(LINUX)
-    if (GetDevice()->HasFeature(Feature::SharedFenceVkSemaphoreSyncFD)) {
+    if (GetDevice()->HasFeature(Feature::SharedFenceVkSemaphoreSyncFD_Dawn)) {
         SharedFenceVkSemaphoreSyncFDDescriptor desc;
         desc.handle = handle.Get();
 
