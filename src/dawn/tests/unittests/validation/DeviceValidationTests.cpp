@@ -318,7 +318,7 @@ TEST_F(DeviceGetAHardwareBufferPropertiesValidationTest,
     ASSERT_DEVICE_ERROR(
         device.GetAHardwareBufferProperties(handle, properties),
         testing::HasSubstr(
-            "without the FeatureName::SharedTextureMemoryAHardwareBuffer feature being set"));
+            "without the FeatureName::DawnSharedTextureMemoryAHardwareBuffer feature being set"));
 }
 
 }  // anonymous namespace

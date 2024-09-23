@@ -216,7 +216,7 @@ MaybeError ValidateSampleCount(const TextureDescriptor* descriptor,
         DAWN_INVALID_IF(usage & wgpu::TextureUsage::StorageBinding,
                         "The sample count (%u) of a storage texture is not 1.",
                         descriptor->sampleCount);
-        DAWN_INVALID_IF(usage & wgpu::TextureUsage::StorageAttachment,
+        DAWN_INVALID_IF(usage & wgpu::TextureUsage::DawnStorageAttachment,
                         "The sample count (%u) of a storage attachment texture is not 1.",
                         descriptor->sampleCount);
 
@@ -381,23 +381,23 @@ MaybeError ValidateTextureUsage(const DeviceBase* device,
         wgpu::TextureUsage::StorageBinding, format->format);
 
     DAWN_INVALID_IF(
-        !format->supportsStorageAttachment && (usage & wgpu::TextureUsage::StorageAttachment),
+        !format->supportsStorageAttachment && (usage & wgpu::TextureUsage::DawnStorageAttachment),
         "The texture usage (%s) includes %s, which is incompatible with the format (%s).", usage,
-        wgpu::TextureUsage::StorageAttachment, format->format);
+        wgpu::TextureUsage::DawnStorageAttachment, format->format);
 
-    const auto kTransientAttachment = wgpu::TextureUsage::TransientAttachment;
+    const auto kTransientAttachment = wgpu::TextureUsage::DawnTransientAttachment;
     if (usage & kTransientAttachment) {
         DAWN_INVALID_IF(
-            !device->HasFeature(Feature::TransientAttachments),
+            !device->HasFeature(Feature::DawnTransientAttachments),
             "The texture usage (%s) includes %s, which requires the %s feature to be set", usage,
-            kTransientAttachment, ToAPI(Feature::TransientAttachments));
+            kTransientAttachment, ToAPI(Feature::DawnTransientAttachments));
 
         DAWN_INVALID_IF(
             usage == kTransientAttachment,
             "The texture usage is only %s (which always requires another attachment usage).",
             kTransientAttachment);
         const auto kAttachmentUsages = kTransientAttachment | wgpu::TextureUsage::RenderAttachment |
-                                       wgpu::TextureUsage::StorageAttachment;
+                                       wgpu::TextureUsage::DawnStorageAttachment;
         DAWN_INVALID_IF(!IsSubset(usage, kAttachmentUsages),
                         "The texture usage (%s) includes both %s and non-attachment usages (%s).",
                         usage, kTransientAttachment, usage & ~kAttachmentUsages);
@@ -409,10 +409,10 @@ MaybeError ValidateTextureUsage(const DeviceBase* device,
         // Only allows simple readonly texture usages.
         wgpu::TextureUsage validMultiPlanarUsages =
             wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::CopySrc;
-        if (device->HasFeature(Feature::MultiPlanarFormatExtendedUsages)) {
+        if (device->HasFeature(Feature::DawnMultiPlanarFormatExtendedUsages)) {
             validMultiPlanarUsages |= wgpu::TextureUsage::CopyDst;
         }
-        if (device->HasFeature(Feature::MultiPlanarRenderTargets)) {
+        if (device->HasFeature(Feature::DawnMultiPlanarRenderTargets)) {
             validMultiPlanarUsages |= wgpu::TextureUsage::RenderAttachment;
         }
         DAWN_INVALID_IF(format->IsMultiPlanar() && !IsSubset(usage, validMultiPlanarUsages),
@@ -723,7 +723,7 @@ MaybeError ValidateTextureViewDescriptor(const DeviceBase* device,
         descriptor->baseMipLevel, descriptor->mipLevelCount, texture->GetNumMipLevels());
 
     if (descriptor.Get<YCbCrVkDescriptor>()) {
-        DAWN_INVALID_IF(!device->HasFeature(Feature::YCbCrVulkanSamplers), "%s is not enabled.",
+        DAWN_INVALID_IF(!device->HasFeature(Feature::DawnYCbCrVulkanSamplers), "%s is not enabled.",
                         wgpu::FeatureName::YCbCrVulkanSamplers);
         DAWN_INVALID_IF(format.format != wgpu::TextureFormat::External,
                         "Texture format (%s) is not (%s).", format.format,
