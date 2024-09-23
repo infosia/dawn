@@ -148,7 +148,7 @@ void Server::OnRequestAdapterCallback(RequestAdapterUserdata* data,
 
     SerializeCommand(cmd);
     mProcs.adapterInfoFreeMembers(info);
-    mProcs.adapterPropertiesMemoryHeapsFreeMembers(memoryHeapProperties);
+    mProcs.dawnAdapterPropertiesMemoryHeapsFreeMembers(memoryHeapProperties);
 }
 
 }  // namespace dawn::wire::server

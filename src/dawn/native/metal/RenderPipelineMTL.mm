@@ -349,7 +349,7 @@ MaybeError RenderPipeline::InitializeImpl() {
 
     // Only put this flag on if the feature is enabled because it may have a performance cost.
     descriptorMTL.supportIndirectCommandBuffers =
-        GetDevice()->HasFeature(Feature::MultiDrawIndirect);
+        GetDevice()->HasFeature(Feature::DawnMultiDrawIndirect);
 
     NSRef<MTLVertexDescriptor> vertexDesc;
     if (GetDevice()->IsToggleEnabled(Toggle::MetalEnableVertexPulling)) {

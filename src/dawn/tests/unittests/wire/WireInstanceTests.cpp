@@ -225,9 +225,9 @@ TEST_P(WireInstanceTests, RequestAdapterPassesChainedProperties) {
     InstanceRequestAdapter(instance, &options, nullptr);
 
     WGPUMemoryHeapInfo fakeHeapInfo[3] = {
-        {WGPUHeapProperty_DeviceLocal, 64},
-        {WGPUHeapProperty_DeviceLocal | WGPUHeapProperty_HostVisible, 136},
-        {WGPUHeapProperty_HostCached | WGPUHeapProperty_HostVisible, 460},
+        {WGPUDawnHeapProperty_DeviceLocal, 64},
+        {WGPUDawnHeapProperty_DeviceLocal | WGPUDawnHeapProperty_HostVisible, 136},
+        {WGPUDawnHeapProperty_HostCached | WGPUDawnHeapProperty_HostVisible, 460},
     };
 
     WGPUAdapterPropertiesMemoryHeaps fakeMemoryHeapProperties = {};
