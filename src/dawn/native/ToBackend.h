@@ -137,6 +137,11 @@ struct ToBackendTraits<TextureViewBase, BackendTraits> {
     using BackendType = typename BackendTraits::TextureViewType;
 };
 
+template <typename BackendTraits>
+struct ToBackendTraits<PhysicalPipelineLayoutBase, BackendTraits> {
+    using BackendType = typename BackendTraits::PhysicalPipelineLayoutType;
+};
+
 // ToBackendBase implements conversion to the given BackendTraits
 // To use it in a backend, use the following:
 //   template<typename T>

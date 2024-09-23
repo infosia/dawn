@@ -1080,6 +1080,8 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
 RenderPipelineBase::~RenderPipelineBase() = default;
 
 void RenderPipelineBase::DestroyImpl() {
+    PipelineBase::DestroyImpl();
+
     Uncache();
 
     // Remove reference to the attachment state so that we don't have lingering references to

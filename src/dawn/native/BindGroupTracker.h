@@ -74,7 +74,10 @@ class BindGroupTrackerBase {
                   mDynamicOffsets[index].begin());
     }
 
-    void OnSetPipeline(PipelineBase* pipeline) { mPipelineLayout = pipeline->GetLayout(); }
+    void OnSetPipeline(PipelineBase* pipeline) {
+        mPipelineLayout = pipeline->GetLayout();
+        mPhysicalPipelineLayout = pipeline->GetPhysicalLayout();
+    }
 
   protected:
     // The Derived class should call this before it applies bind groups.
@@ -115,6 +118,7 @@ class BindGroupTrackerBase {
         // the intersection of the dirty bind groups and bind group layout mask in next Draw
         // or Dispatch (which is very hot code) until the layout is changed again.
         mLastAppliedPipelineLayout = mPipelineLayout;
+        mLastAppliedPhysicalPipelineLayout = mPhysicalPipelineLayout;
     }
 
     BindGroupMask mDirtyBindGroups = 0;
@@ -131,6 +135,15 @@ class BindGroupTrackerBase {
     // freed from underneath this class.
     RAW_PTR_EXCLUSION PipelineLayoutBase* mPipelineLayout = nullptr;
     RAW_PTR_EXCLUSION PipelineLayoutBase* mLastAppliedPipelineLayout = nullptr;
+
+    // |mPhysicalPipelineLayout| is the current physical pipeline layout set on the command buffer.
+    // |mLastAppliedPhysicalPipelineLayout| is the last physical pipeline layout for which we
+    // applied changes to the bind group bindings.
+    // RAW_PTR_EXCLUSION: These pointers are very hot in command recording code and point at
+    // physical pipeline layouts referenced by the object graph of the CommandBuffer so they
+    // cannot be freed from underneath this class.
+    RAW_PTR_EXCLUSION PhysicalPipelineLayoutBase* mPhysicalPipelineLayout = nullptr;
+    RAW_PTR_EXCLUSION PhysicalPipelineLayoutBase* mLastAppliedPhysicalPipelineLayout = nullptr;
 };
 
 }  // namespace dawn::native

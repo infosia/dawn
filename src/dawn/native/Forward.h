@@ -53,6 +53,7 @@ class ExternalTextureBase;
 class SharedTextureMemoryBase;
 class InstanceBase;
 class PhysicalDeviceBase;
+class PhysicalPipelineLayoutBase;
 class PipelineBase;
 class PipelineCacheBase;
 class PipelineLayoutBase;

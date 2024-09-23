@@ -52,16 +52,30 @@ Ref<ComputePipeline> ComputePipeline::CreateUninitialized(
 
 MaybeError ComputePipeline::InitializeImpl() {
     Device* device = ToBackend(GetDevice());
-    const PipelineLayout* layout = ToBackend(GetLayout());
+    PipelineLayout* layout = ToBackend(GetLayout());
 
     // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
     StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
+
+    // TODO(crbug.com/366291600): Decide internal immediate data size dynamically instead of
+    // always reserving ClampFragDepth attributes.
+    uint32_t internalImmediateDataRangeByteSize = 0;
+
+    if (!layout->HasPhysicalLayout(internalImmediateDataRangeByteSize)) {
+        Ref<PhysicalPipelineLayoutBase> physicalLayout;
+        DAWN_TRY_ASSIGN(physicalLayout,
+                        PhysicalPipelineLayout::Create(GetDevice(), GetLayout(),
+                                                       internalImmediateDataRangeByteSize));
+        layout->Install(internalImmediateDataRangeByteSize, std::move(physicalLayout));
+    }
+
+    mPhysicalLayout = layout->GetPhysicalLayout(internalImmediateDataRangeByteSize);
 
     VkComputePipelineCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
-    createInfo.layout = layout->GetHandle();
+    createInfo.layout = ToBackend(mPhysicalLayout)->GetHandle();
     createInfo.basePipelineHandle = VkPipeline{};
     createInfo.basePipelineIndex = -1;
 
