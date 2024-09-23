@@ -186,6 +186,24 @@
       "parentUuid": "ea2e9781_8e6c1047",
       "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0281081f_9fe00d02",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-23T15:23:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fe9678af_667a0613",
+      "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
