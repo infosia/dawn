@@ -40,7 +40,7 @@ namespace {
 
 class ErrorSharedBufferMemory : public SharedBufferMemoryBase {
   public:
-    ErrorSharedBufferMemory(DeviceBase* device, const SharedBufferMemoryDescriptor* descriptor)
+    ErrorSharedBufferMemory(DeviceBase* device, const SharedBufferMemoryDescriptor_Dawn* descriptor)
         : SharedBufferMemoryBase(device, descriptor, ObjectBase::kError) {}
 
     Ref<SharedResourceMemoryContents> CreateContents() override { DAWN_UNREACHABLE(); }
@@ -65,12 +65,12 @@ class ErrorSharedBufferMemory : public SharedBufferMemoryBase {
 // static
 SharedBufferMemoryBase* SharedBufferMemoryBase::MakeError(
     DeviceBase* device,
-    const SharedBufferMemoryDescriptor* descriptor) {
+    const SharedBufferMemoryDescriptor_Dawn* descriptor) {
     return new ErrorSharedBufferMemory(device, descriptor);
 }
 
 SharedBufferMemoryBase::SharedBufferMemoryBase(DeviceBase* device,
-                                               const SharedBufferMemoryDescriptor* descriptor,
+                                               const SharedBufferMemoryDescriptor_Dawn* descriptor,
                                                ObjectBase::ErrorTag tag)
     : SharedResourceMemory(device, tag, descriptor->label),
       mProperties{nullptr, wgpu::BufferUsage::None, 0} {}
