@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "532e82c4_fbc59644",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-09-23T08:17:31Z",
+      "side": 1,
+      "message": "We can write the error message as https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/RenderPipeline.cpp;l\u003d492",
+      "range": {
+        "startLine": 110,
+        "startChar": 24,
+        "endLine": 111,
+        "endChar": 86
+      },
+      "revId": "76edcbc58e01d76e02e23b54f7ee37359ffda537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
