@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c54c981b_8e763db0",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-23T15:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8207c5a8_779c4eff",
+      "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04dd51bd_4a3de1d6",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-09-23T14:17:24Z",
       "side": 1,
       "message": "```suggestion\n            return b.ty.array(TransposeType(arr-\u003eElemType()), Vector{stride});\n```",
+      "range": {
+        "startLine": 200,
+        "startChar": 13,
+        "endLine": 202,
+        "endChar": 13
+      },
+      "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e0ccd50_dc705e23",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-23T15:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04dd51bd_4a3de1d6",
       "range": {
         "startLine": 200,
         "startChar": 13,
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b6464e8_a6a40e3b",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-23T15:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0e9ea8b_8beda2ff",
+      "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5540e218_c0e5b2ce",
@@ -75,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91a56319_e00d9739",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-23T15:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5540e218_c0e5b2ce",
+      "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea2e9781_8e6c1047",
@@ -88,6 +166,24 @@
       "writtenOn": "2024-09-23T14:17:24Z",
       "side": 1,
       "message": "`result_type` and `return_type` appear to be the same type, why the split?",
+      "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe9678af_667a0613",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/transpose_row_major.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-23T15:20:09Z",
+      "side": 1,
+      "message": "They are the same, but in AST land we cannot reuse nodes so we have to recreate the type node twice.",
+      "parentUuid": "ea2e9781_8e6c1047",
       "revId": "cae1e3323f310238cd3a3dbd1d3c109c42b1a5be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
