@@ -51,6 +51,24 @@
       ],
       "revId": "e9d10f84306a8a89c6957d219c0c867e36b56016",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50bca3c3_4cc3e554",
+        "filename": "src/tint/lang/glsl/writer/binary_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-23T16:29:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02007806_13e86f43",
+      "revId": "e9d10f84306a8a89c6957d219c0c867e36b56016",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
