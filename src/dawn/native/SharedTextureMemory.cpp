@@ -42,7 +42,8 @@ namespace {
 
 class ErrorSharedTextureMemory : public SharedTextureMemoryBase {
   public:
-    ErrorSharedTextureMemory(DeviceBase* device, const SharedTextureMemoryDescriptor* descriptor)
+    ErrorSharedTextureMemory(DeviceBase* device,
+                             const SharedTextureMemoryDescriptor_Dawn* descriptor)
         : SharedTextureMemoryBase(device, descriptor, ObjectBase::kError) {}
 
     Ref<SharedResourceMemoryContents> CreateContents() override { DAWN_UNREACHABLE(); }
@@ -67,13 +68,14 @@ class ErrorSharedTextureMemory : public SharedTextureMemoryBase {
 // static
 Ref<SharedTextureMemoryBase> SharedTextureMemoryBase::MakeError(
     DeviceBase* device,
-    const SharedTextureMemoryDescriptor* descriptor) {
+    const SharedTextureMemoryDescriptor_Dawn* descriptor) {
     return AcquireRef(new ErrorSharedTextureMemory(device, descriptor));
 }
 
-SharedTextureMemoryBase::SharedTextureMemoryBase(DeviceBase* device,
-                                                 const SharedTextureMemoryDescriptor* descriptor,
-                                                 ObjectBase::ErrorTag tag)
+SharedTextureMemoryBase::SharedTextureMemoryBase(
+    DeviceBase* device,
+    const SharedTextureMemoryDescriptor_Dawn* descriptor,
+    ObjectBase::ErrorTag tag)
     : SharedResourceMemory(device, tag, descriptor->label),
       mProperties{
           nullptr,
@@ -82,9 +84,10 @@ SharedTextureMemoryBase::SharedTextureMemoryBase(DeviceBase* device,
           wgpu::TextureFormat::Undefined,
       } {}
 
-SharedTextureMemoryBase::SharedTextureMemoryBase(DeviceBase* device,
-                                                 StringView label,
-                                                 const SharedTextureMemoryProperties& properties)
+SharedTextureMemoryBase::SharedTextureMemoryBase(
+    DeviceBase* device,
+    StringView label,
+    const SharedTextureMemoryProperties_Dawn& properties)
     : SharedResourceMemory(device, label), mProperties(properties) {
     // Reify properties to ensure we don't expose capabilities not supported by the device.
     const Format& internalFormat = device->GetValidInternalFormat(mProperties.format);
@@ -94,11 +97,11 @@ SharedTextureMemoryBase::SharedTextureMemoryBase(DeviceBase* device,
         }
         if (!internalFormat.isRenderable ||
             (internalFormat.IsMultiPlanar() &&
-             !device->HasFeature(Feature::MultiPlanarRenderTargets))) {
+             !device->HasFeature(Feature::MultiPlanarRenderTargets_Dawn))) {
             mProperties.usage = mProperties.usage & ~wgpu::TextureUsage::RenderAttachment;
         }
         if (internalFormat.IsMultiPlanar() &&
-            !device->HasFeature(Feature::MultiPlanarFormatExtendedUsages)) {
+            !device->HasFeature(Feature::MultiPlanarFormatExtendedUsages_Dawn)) {
             mProperties.usage = mProperties.usage & ~wgpu::TextureUsage::CopyDst;
         }
     }
@@ -111,27 +114,28 @@ ObjectType SharedTextureMemoryBase::GetType() const {
 }
 
 wgpu::Status SharedTextureMemoryBase::APIGetProperties(
-    SharedTextureMemoryProperties* properties) const {
+    SharedTextureMemoryProperties_Dawn* properties) const {
     if (GetDevice()->ConsumedError(GetProperties(properties), "calling %s.GetProperties", this)) {
         return wgpu::Status::Error;
     }
     return wgpu::Status::Success;
 }
 
-MaybeError SharedTextureMemoryBase::GetProperties(SharedTextureMemoryProperties* properties) const {
+MaybeError SharedTextureMemoryBase::GetProperties(
+    SharedTextureMemoryProperties_Dawn* properties) const {
     properties->usage = mProperties.usage;
     properties->size = mProperties.size;
     properties->format = mProperties.format;
 
-    UnpackedPtr<SharedTextureMemoryProperties> unpacked;
+    UnpackedPtr<SharedTextureMemoryProperties_Dawn> unpacked;
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(properties));
 
     if (unpacked.Get<SharedTextureMemoryAHardwareBufferProperties>()) {
         DAWN_INVALID_IF(
-            !GetDevice()->HasFeature(Feature::SharedTextureMemoryAHardwareBuffer),
+            !GetDevice()->HasFeature(Feature::SharedTextureMemoryAHardwareBuffer_Dawn),
             "SharedTextureMemory properties (%s) have a chained "
             "SharedTextureMemoryAHardwareBufferProperties without the %s feature being set.",
-            this, ToAPI(Feature::SharedTextureMemoryAHardwareBuffer));
+            this, ToAPI(Feature::SharedTextureMemoryAHardwareBuffer_Dawn));
     }
 
     DAWN_TRY(GetChainedProperties(unpacked));
@@ -210,7 +214,8 @@ SharedTextureMemoryContents* SharedTextureMemoryBase::GetContents() const {
     return static_cast<SharedTextureMemoryContents*>(SharedResourceMemory::GetContents());
 }
 
-void APISharedTextureMemoryEndAccessStateFreeMembers(WGPUSharedTextureMemoryEndAccessState cState) {
+void APISharedTextureMemoryEndAccessState_DawnFreeMembers(
+    WGPUSharedTextureMemoryEndAccessState cState) {
     auto* state = reinterpret_cast<SharedTextureMemoryBase::EndAccessState*>(&cState);
     for (size_t i = 0; i < state->fenceCount; ++i) {
         state->fences[i]->APIRelease();

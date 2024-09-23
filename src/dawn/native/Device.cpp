@@ -502,7 +502,7 @@ MaybeError DeviceBase::Initialize(Ref<QueueBase> defaultQueue) {
                         CreateShaderModule(&descriptor));
     }
 
-    if (HasFeature(Feature::ImplicitDeviceSynchronization)) {
+    if (HasFeature(Feature::ImplicitDeviceSynchronization_Dawn)) {
         mMutex = AcquireRef(new Mutex);
     } else {
         mMutex = nullptr;
@@ -1818,7 +1818,7 @@ void DeviceBase::SetWGSLExtensionAllowList() {
         mWGSLAllowedFeatures.extensions.insert(tint::wgsl::Extension::kF16);
     }
     // TODO(349125474): Remove deprecated ChromiumExperimentalSubgroups.
-    if (mEnabledFeatures.IsEnabled(Feature::ChromiumExperimentalSubgroups)) {
+    if (mEnabledFeatures.IsEnabled(Feature::ChromiumExperimentalSubgroups_Dawn)) {
         mWGSLAllowedFeatures.extensions.insert(
             tint::wgsl::Extension::kChromiumExperimentalSubgroups);
     }
@@ -1833,19 +1833,19 @@ void DeviceBase::SetWGSLExtensionAllowList() {
             tint::wgsl::Extension::kChromiumDisableUniformityAnalysis);
         mWGSLAllowedFeatures.extensions.insert(tint::wgsl::Extension::kChromiumInternalGraphite);
     }
-    if (mEnabledFeatures.IsEnabled(Feature::DualSourceBlending)) {
+    if (mEnabledFeatures.IsEnabled(Feature::DualSourceBlending_Dawn)) {
         mWGSLAllowedFeatures.extensions.insert(tint::wgsl::Extension::kDualSourceBlending);
     }
-    if (mEnabledFeatures.IsEnabled(Feature::PixelLocalStorageNonCoherent) ||
-        mEnabledFeatures.IsEnabled(Feature::PixelLocalStorageCoherent)) {
+    if (mEnabledFeatures.IsEnabled(Feature::PixelLocalStorageNonCoherent_Dawn) ||
+        mEnabledFeatures.IsEnabled(Feature::PixelLocalStorageCoherent_Dawn)) {
         mWGSLAllowedFeatures.extensions.insert(
             tint::wgsl::Extension::kChromiumExperimentalPixelLocal);
     }
-    if (mEnabledFeatures.IsEnabled(Feature::FramebufferFetch)) {
+    if (mEnabledFeatures.IsEnabled(Feature::FramebufferFetch_Dawn)) {
         mWGSLAllowedFeatures.extensions.insert(
             tint::wgsl::Extension::kChromiumExperimentalFramebufferFetch);
     }
-    if (mEnabledFeatures.IsEnabled(Feature::ClipDistances)) {
+    if (mEnabledFeatures.IsEnabled(Feature::ClipDistances_Dawn)) {
         mWGSLAllowedFeatures.extensions.insert(tint::wgsl::Extension::kClipDistances);
     }
 
@@ -1937,11 +1937,11 @@ void DeviceBase::EmitLog(WGPULoggingType loggingType, const char* message) {
 
 wgpu::Status DeviceBase::APIGetAHardwareBufferProperties(void* handle,
                                                          AHardwareBufferProperties* properties) {
-    if (!HasFeature(Feature::SharedTextureMemoryAHardwareBuffer)) {
+    if (!HasFeature(Feature::SharedTextureMemoryAHardwareBuffer_Dawn)) {
         ConsumeError(
             DAWN_VALIDATION_ERROR("Queried APIGetAHardwareBufferProperties() on %s "
                                   "without the %s feature being set.",
-                                  this, ToAPI(Feature::SharedTextureMemoryAHardwareBuffer)));
+                                  this, ToAPI(Feature::SharedTextureMemoryAHardwareBuffer_Dawn)));
         return wgpu::Status::Error;
     }
 
@@ -1967,7 +1967,7 @@ wgpu::Status DeviceBase::APIGetLimits(SupportedLimits* limits) const {
         wgpu::ChainedStructOut* originalChain = subgroupLimits->nextInChain;
         // TODO(349125474): Remove deprecated ChromiumExperimentalSubgroups.
         if (!(HasFeature(Feature::Subgroups) ||
-              HasFeature(Feature::ChromiumExperimentalSubgroups))) {
+              HasFeature(Feature::ChromiumExperimentalSubgroups_Dawn))) {
             // If subgroups feature is not enabled, return the default-initialized
             // DawnExperimentalSubgroupLimits object, where minSubgroupSize and
             // maxSubgroupSize are WGPU_LIMIT_U32_UNDEFINED.
@@ -1982,7 +1982,7 @@ wgpu::Status DeviceBase::APIGetLimits(SupportedLimits* limits) const {
 
     if (auto* immediateDataLimits = unpacked.Get<DawnExperimentalImmediateDataLimits>()) {
         wgpu::ChainedStructOut* originalChain = immediateDataLimits->nextInChain;
-        if (!HasFeature(Feature::ChromiumExperimentalImmediateData)) {
+        if (!HasFeature(Feature::ChromiumExperimentalImmediateData_Dawn)) {
             // If immediate data feature is not enabled, return the default-initialized
             // DawnExperimentalImmediateDataLimits object, where maxImmediateDataRangeByteSize and
             // are WGPU_LIMIT_U32_UNDEFINED.
@@ -2026,7 +2026,7 @@ void DeviceBase::APIInjectError2(wgpu::ErrorType type, StringView message) {
 
 void DeviceBase::APIValidateTextureDescriptor(const TextureDescriptor* descriptorOrig) {
     AllowMultiPlanarTextureFormat allowMultiPlanar;
-    if (HasFeature(Feature::MultiPlanarFormatExtendedUsages)) {
+    if (HasFeature(Feature::MultiPlanarFormatExtendedUsages_Dawn)) {
         allowMultiPlanar = AllowMultiPlanarTextureFormat::Yes;
     } else {
         allowMultiPlanar = AllowMultiPlanarTextureFormat::No;
@@ -2326,7 +2326,7 @@ ResultOrError<Ref<TextureBase>> DeviceBase::CreateTexture(const TextureDescripto
     UnpackedPtr<TextureDescriptor> descriptor;
     if (IsValidationEnabled()) {
         AllowMultiPlanarTextureFormat allowMultiPlanar;
-        if (HasFeature(Feature::MultiPlanarFormatExtendedUsages)) {
+        if (HasFeature(Feature::MultiPlanarFormatExtendedUsages_Dawn)) {
             allowMultiPlanar = AllowMultiPlanarTextureFormat::SingleLayerOnly;
         } else {
             allowMultiPlanar = AllowMultiPlanarTextureFormat::No;

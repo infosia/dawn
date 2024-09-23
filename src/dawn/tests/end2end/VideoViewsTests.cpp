@@ -1485,7 +1485,7 @@ TEST_P(VideoViewsValidationTests, RenderAttachmentInvalid) {
         .Times(testing::AnyNumber());
 
     // multi-planar formats are NOT allowed to be renderable by default and require
-    // Feature::MultiPlanarRenderTargets.
+    // Feature::MultiPlanarRenderTargets_Dawn.
     // "RenderAttachment is incompatible with the non-renderable format" error is expected.
     ASSERT_DEVICE_ERROR_MSG(auto platformTexture = mBackend->CreateVideoTextureForTest(
                                 GetFormat(), wgpu::TextureUsage::RenderAttachment,
@@ -1928,7 +1928,7 @@ class VideoViewsRenderTargetTests : public VideoViewsValidationTests {
 // Tests creating a texture with a multi-plane format.
 TEST_P(VideoViewsRenderTargetTests, RenderAttachmentValid) {
     // multi-planar formats should be allowed to be renderable with
-    // Feature::MultiPlanarRenderTargets.
+    // Feature::MultiPlanarRenderTargets_Dawn.
     auto platformTexture =
         mBackend->CreateVideoTextureForTest(GetFormat(), wgpu::TextureUsage::RenderAttachment,
                                             /*isCheckerboard*/ true,
