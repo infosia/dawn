@@ -36,7 +36,7 @@
 namespace dawn::native {
 
 enum class Feature {
-  {% for enum in types["feature name"].values if enum.valid %}
+  {% for enum in types["feature name"].values if (enum.valid and (not "deprecated" in enum.json_data.get("tags", []) or not enum.json_data.get("conflicts", false))) %}
     {{as_cppEnum(enum.name)}},
   {% endfor %}
   InvalidEnum,
