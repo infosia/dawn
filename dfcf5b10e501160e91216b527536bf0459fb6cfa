@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "dfcf5b10e501160e91216b527536bf0459fb6cfa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e4d72c7_5c1c119a",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-23T16:06:41Z",
+      "side": 1,
+      "message": "Nit: `UnwrapRef()` is not necessary, the IR explicitly loads and passes by value.",
+      "revId": "dfcf5b10e501160e91216b527536bf0459fb6cfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
