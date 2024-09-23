@@ -218,7 +218,7 @@ MaybeError CommandRecordingContext::Initialize(Device* device) {
         CheckHRESULT(d3d11DeviceContext4.As(&mD3DUserDefinedAnnotation),
                      "D3D11 querying immediate context for ID3DUserDefinedAnnotation interface"));
 
-    if (device->HasFeature(Feature::D3D11MultithreadProtected)) {
+    if (device->HasFeature(Feature::D3D11MultithreadProtected_Dawn)) {
         DAWN_TRY(CheckHRESULT(d3d11DeviceContext.As(&mD3D11Multithread),
                               "D3D11 querying immediate context for ID3D11Multithread interface"));
         mD3D11Multithread->SetMultithreadProtected(TRUE);

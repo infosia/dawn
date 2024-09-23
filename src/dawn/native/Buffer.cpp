@@ -415,8 +415,8 @@ ResultOrError<UnpackedPtr<BufferDescriptor>> ValidateBufferDescriptor(
             requiredAlignment = 65536;
         }
 
-        DAWN_INVALID_IF(!device->HasFeature(Feature::HostMappedPointer), "%s requires %s.",
-                        hostMappedDesc->sType, ToAPI(Feature::HostMappedPointer));
+        DAWN_INVALID_IF(!device->HasFeature(Feature::HostMappedPointer_Dawn), "%s requires %s.",
+                        hostMappedDesc->sType, ToAPI(Feature::HostMappedPointer_Dawn));
         DAWN_INVALID_IF(!IsAligned(descriptor->size, requiredAlignment),
                         "Buffer size (%u) wrapping host-mapped memory was not aligned to %u.",
                         descriptor->size, requiredAlignment);
@@ -434,7 +434,7 @@ ResultOrError<UnpackedPtr<BufferDescriptor>> ValidateBufferDescriptor(
 
     DAWN_INVALID_IF(usage == wgpu::BufferUsage::None, "Buffer usages must not be 0.");
 
-    if (!device->HasFeature(Feature::BufferMapExtendedUsages)) {
+    if (!device->HasFeature(Feature::BufferMapExtendedUsages_Dawn)) {
         const wgpu::BufferUsage kMapWriteAllowedUsages =
             wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc;
         DAWN_INVALID_IF(

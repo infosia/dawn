@@ -140,42 +140,42 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::Depth32FloatStencil8);
     EnableFeature(Feature::DepthClipControl);
     EnableFeature(Feature::TextureCompressionBC);
-    EnableFeature(Feature::D3D11MultithreadProtected);
+    EnableFeature(Feature::D3D11MultithreadProtected_Dawn);
     EnableFeature(Feature::Float32Filterable);
     EnableFeature(Feature::Float32Blendable);
-    EnableFeature(Feature::DualSourceBlending);
-    EnableFeature(Feature::ClipDistances);
-    EnableFeature(Feature::Unorm16TextureFormats);
-    EnableFeature(Feature::Snorm16TextureFormats);
-    EnableFeature(Feature::Norm16TextureFormats);
-    EnableFeature(Feature::AdapterPropertiesMemoryHeaps);
-    EnableFeature(Feature::AdapterPropertiesD3D);
-    EnableFeature(Feature::R8UnormStorage);
-    EnableFeature(Feature::ShaderModuleCompilationOptions);
-    EnableFeature(Feature::DawnLoadResolveTexture);
-    EnableFeature(Feature::DawnPartialLoadResolveTexture);
+    EnableFeature(Feature::DualSourceBlending_Dawn);
+    EnableFeature(Feature::ClipDistances_Dawn);
+    EnableFeature(Feature::Unorm16TextureFormats_Dawn);
+    EnableFeature(Feature::Snorm16TextureFormats_Dawn);
+    EnableFeature(Feature::Norm16TextureFormats_Dawn);
+    EnableFeature(Feature::AdapterPropertiesMemoryHeaps_Dawn);
+    EnableFeature(Feature::AdapterPropertiesD3D_Dawn);
+    EnableFeature(Feature::R8UnormStorage_Dawn);
+    EnableFeature(Feature::ShaderModuleCompilationOptions_Dawn);
+    EnableFeature(Feature::DawnLoadResolveTexture_Dawn);
+    EnableFeature(Feature::DawnPartialLoadResolveTexture_Dawn);
     EnableFeature(Feature::RG11B10UfloatRenderable);
     if (mDeviceInfo.isUMA && mDeviceInfo.supportsMapNoOverwriteDynamicBuffers) {
         // With UMA we should allow mapping usages on more type of buffers.
-        EnableFeature(Feature::BufferMapExtendedUsages);
+        EnableFeature(Feature::BufferMapExtendedUsages_Dawn);
     }
 
     // Multi planar formats are always supported since Feature Level 11.0
     // https://learn.microsoft.com/en-us/windows/win32/direct3ddxgi/format-support-for-direct3d-11-0-feature-level-hardware
-    EnableFeature(Feature::DawnMultiPlanarFormats);
-    EnableFeature(Feature::MultiPlanarFormatP010);
-    EnableFeature(Feature::MultiPlanarRenderTargets);
+    EnableFeature(Feature::DawnMultiPlanarFormats_Dawn);
+    EnableFeature(Feature::MultiPlanarFormatP010_Dawn);
+    EnableFeature(Feature::MultiPlanarRenderTargets_Dawn);
 
     if (mDeviceInfo.supportsROV) {
-        EnableFeature(Feature::PixelLocalStorageCoherent);
+        EnableFeature(Feature::PixelLocalStorageCoherent_Dawn);
     }
 
-    EnableFeature(Feature::SharedTextureMemoryD3D11Texture2D);
+    EnableFeature(Feature::SharedTextureMemoryD3D11Texture2D_Dawn);
     if (mDeviceInfo.supportsSharedResourceCapabilityTier2) {
-        EnableFeature(Feature::SharedTextureMemoryDXGISharedHandle);
+        EnableFeature(Feature::SharedTextureMemoryDXGISharedHandle_Dawn);
     }
     if (mDeviceInfo.supportsMonitoredFence || mDeviceInfo.supportsNonMonitoredFence) {
-        EnableFeature(Feature::SharedFenceDXGISharedHandle);
+        EnableFeature(Feature::SharedFenceDXGISharedHandle_Dawn);
     }
 
     UINT formatSupport = 0;

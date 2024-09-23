@@ -452,7 +452,7 @@ MaybeError ValidateBlendState(DeviceBase* device, const BlendState* descriptor) 
     DAWN_TRY(ValidateBlendFactor(descriptor->color.srcFactor));
     DAWN_TRY(ValidateBlendFactor(descriptor->color.dstFactor));
 
-    bool dualSourceBlendingEnabled = device->HasFeature(Feature::DualSourceBlending);
+    bool dualSourceBlendingEnabled = device->HasFeature(Feature::DualSourceBlending_Dawn);
     DAWN_TRY(ValidateBlendComponent(descriptor->alpha, dualSourceBlendingEnabled));
     DAWN_TRY(ValidateBlendComponent(descriptor->color, dualSourceBlendingEnabled));
 
@@ -491,10 +491,10 @@ MaybeError ValidateColorTargetState(
     UnpackedPtr<ColorTargetState> unpacked;
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(&descriptor));
     if (unpacked.Get<ColorTargetStateExpandResolveTextureDawn>()) {
-        DAWN_INVALID_IF(!device->HasFeature(Feature::DawnLoadResolveTexture),
+        DAWN_INVALID_IF(!device->HasFeature(Feature::DawnLoadResolveTexture_Dawn),
                         "The ColorTargetStateExpandResolveTextureDawn struct is used while the "
                         "%s feature is not enabled.",
-                        ToAPI(Feature::DawnLoadResolveTexture));
+                        ToAPI(Feature::DawnLoadResolveTexture_Dawn));
 
         DAWN_INVALID_IF(
             multisample.count <= 1,

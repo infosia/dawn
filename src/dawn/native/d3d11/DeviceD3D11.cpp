@@ -288,14 +288,14 @@ ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImp
 
     switch (type) {
         case wgpu::SType::SharedTextureMemoryDXGISharedHandleDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryDXGISharedHandle),
+            DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryDXGISharedHandle_Dawn),
                             "%s is not enabled.",
                             wgpu::FeatureName::SharedTextureMemoryDXGISharedHandle);
             return SharedTextureMemory::Create(
                 this, descriptor->label,
                 unpacked.Get<SharedTextureMemoryDXGISharedHandleDescriptor>());
         case wgpu::SType::SharedTextureMemoryD3D11Texture2DDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryD3D11Texture2D),
+            DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryD3D11Texture2D_Dawn),
                             "%s is not enabled.",
                             wgpu::FeatureName::SharedTextureMemoryD3D11Texture2D);
             return SharedTextureMemory::Create(
@@ -317,8 +317,8 @@ ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
 
     switch (type) {
         case wgpu::SType::SharedFenceDXGISharedHandleDescriptor:
-            DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceDXGISharedHandle), "%s is not enabled.",
-                            wgpu::FeatureName::SharedFenceDXGISharedHandle);
+            DAWN_INVALID_IF(!HasFeature(Feature::SharedFenceDXGISharedHandle_Dawn),
+                            "%s is not enabled.", wgpu::FeatureName::SharedFenceDXGISharedHandle);
             return SharedFence::Create(this, descriptor->label,
                                        unpacked.Get<SharedFenceDXGISharedHandleDescriptor>());
         default:

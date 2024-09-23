@@ -455,9 +455,9 @@ MaybeError ValidateColorAttachmentRenderToSingleSampled(
     DAWN_ASSERT(msaaRenderToSingleSampledDesc != nullptr);
 
     DAWN_INVALID_IF(
-        !device->HasFeature(Feature::MSAARenderToSingleSampled),
+        !device->HasFeature(Feature::MSAARenderToSingleSampled_Dawn),
         "The color attachment %s has implicit sample count while the %s feature is not enabled.",
-        colorAttachment.view, ToAPI(Feature::MSAARenderToSingleSampled));
+        colorAttachment.view, ToAPI(Feature::MSAARenderToSingleSampled_Dawn));
 
     DAWN_INVALID_IF(!IsValidSampleCount(msaaRenderToSingleSampledDesc->implicitSampleCount) ||
                         msaaRenderToSingleSampledDesc->implicitSampleCount <= 1,
@@ -488,9 +488,9 @@ MaybeError ValidateColorAttachmentRenderToSingleSampled(
 MaybeError ValidateExpandResolveTextureLoadOp(const DeviceBase* device,
                                               const RenderPassColorAttachment& colorAttachment,
                                               RenderPassValidationState* validationState) {
-    DAWN_INVALID_IF(!device->HasFeature(Feature::DawnLoadResolveTexture),
+    DAWN_INVALID_IF(!device->HasFeature(Feature::DawnLoadResolveTexture_Dawn),
                     "%s is used while the %s is not enabled.", wgpu::LoadOp::ExpandResolveTexture,
-                    ToAPI(Feature::DawnLoadResolveTexture));
+                    ToAPI(Feature::DawnLoadResolveTexture_Dawn));
 
     uint32_t textureSampleCount = colorAttachment.view->GetTexture()->GetSampleCount();
 
@@ -825,9 +825,9 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
     }
 
     if (const auto* rect = descriptor.Get<RenderPassDescriptorExpandResolveRect>()) {
-        DAWN_INVALID_IF(!device->HasFeature(Feature::DawnPartialLoadResolveTexture),
+        DAWN_INVALID_IF(!device->HasFeature(Feature::DawnPartialLoadResolveTexture_Dawn),
                         "RenderPassDescriptorExpandResolveRect can't be used without %s.",
-                        ToAPI(Feature::DawnPartialLoadResolveTexture));
+                        ToAPI(Feature::DawnPartialLoadResolveTexture_Dawn));
         DAWN_INVALID_IF(
             !validationState->WillExpandResolveTexture(),
             "ExpandResolveRect is invalid to use without wgpu::LoadOp::ExpandResolveTexture.");

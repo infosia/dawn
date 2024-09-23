@@ -195,7 +195,7 @@ MaybeError PhysicalDevice::InitializeImpl() {
 }
 
 void PhysicalDevice::InitializeSupportedFeaturesImpl() {
-    EnableFeature(Feature::StaticSamplers);
+    EnableFeature(Feature::StaticSamplers_Dawn);
 
     // TextureCompressionBC
     {
@@ -249,7 +249,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     if (mDisplay->egl.HasExt(EGLExt::DisplayTextureShareGroup)) {
-        EnableFeature(dawn::native::Feature::ANGLETextureSharing);
+        EnableFeature(dawn::native::Feature::ANGLETextureSharing_Dawn);
     }
 
     // Non-zero baseInstance requires at least desktop OpenGL 4.2, and it is not supported in
@@ -269,14 +269,14 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     // DualSourceBlending
     if (mFunctions.IsGLExtensionSupported("GL_EXT_blend_func_extended") ||
         mFunctions.IsAtLeastGL(3, 3)) {
-        EnableFeature(Feature::DualSourceBlending);
+        EnableFeature(Feature::DualSourceBlending_Dawn);
     }
 
     // Unorm16TextureFormats, Snorm16TextureFormats and Norm16TextureFormats
     if (mFunctions.IsGLExtensionSupported("GL_EXT_texture_norm16")) {
-        EnableFeature(Feature::Unorm16TextureFormats);
-        EnableFeature(Feature::Snorm16TextureFormats);
-        EnableFeature(Feature::Norm16TextureFormats);
+        EnableFeature(Feature::Unorm16TextureFormats_Dawn);
+        EnableFeature(Feature::Snorm16TextureFormats_Dawn);
+        EnableFeature(Feature::Norm16TextureFormats_Dawn);
     }
 
     // Float32Blendable

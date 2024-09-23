@@ -128,30 +128,30 @@ bool PhysicalDevice::AreTimestampQueriesSupported() const {
 
 void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::TextureCompressionBC);
-    EnableFeature(Feature::DawnMultiPlanarFormats);
+    EnableFeature(Feature::DawnMultiPlanarFormats_Dawn);
     EnableFeature(Feature::Depth32FloatStencil8);
     EnableFeature(Feature::IndirectFirstInstance);
     EnableFeature(Feature::RG11B10UfloatRenderable);
     EnableFeature(Feature::DepthClipControl);
     EnableFeature(Feature::Float32Filterable);
     EnableFeature(Feature::Float32Blendable);
-    EnableFeature(Feature::DualSourceBlending);
-    EnableFeature(Feature::Unorm16TextureFormats);
-    EnableFeature(Feature::Snorm16TextureFormats);
-    EnableFeature(Feature::Norm16TextureFormats);
-    EnableFeature(Feature::AdapterPropertiesMemoryHeaps);
-    EnableFeature(Feature::AdapterPropertiesD3D);
-    EnableFeature(Feature::MultiPlanarRenderTargets);
-    EnableFeature(Feature::R8UnormStorage);
-    EnableFeature(Feature::SharedBufferMemoryD3D12Resource);
-    EnableFeature(Feature::ShaderModuleCompilationOptions);
-    EnableFeature(Feature::StaticSamplers);
-    EnableFeature(Feature::MultiDrawIndirect);
-    EnableFeature(Feature::ClipDistances);
+    EnableFeature(Feature::DualSourceBlending_Dawn);
+    EnableFeature(Feature::Unorm16TextureFormats_Dawn);
+    EnableFeature(Feature::Snorm16TextureFormats_Dawn);
+    EnableFeature(Feature::Norm16TextureFormats_Dawn);
+    EnableFeature(Feature::AdapterPropertiesMemoryHeaps_Dawn);
+    EnableFeature(Feature::AdapterPropertiesD3D_Dawn);
+    EnableFeature(Feature::MultiPlanarRenderTargets_Dawn);
+    EnableFeature(Feature::R8UnormStorage_Dawn);
+    EnableFeature(Feature::SharedBufferMemoryD3D12Resource_Dawn);
+    EnableFeature(Feature::ShaderModuleCompilationOptions_Dawn);
+    EnableFeature(Feature::StaticSamplers_Dawn);
+    EnableFeature(Feature::MultiDrawIndirect_Dawn);
+    EnableFeature(Feature::ClipDistances_Dawn);
 
     if (AreTimestampQueriesSupported()) {
         EnableFeature(Feature::TimestampQuery);
-        EnableFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses);
+        EnableFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses_Dawn);
     }
 
     // ShaderF16 features require DXC version being 1.4 or higher, shader model supporting 6.2 or
@@ -166,7 +166,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     // ChromiumExperimentalSubgroups requires SM >= 6.0 and capabilities flags.
     if (GetBackend()->IsDXCAvailable() && mDeviceInfo.supportsWaveOps) {
         // TODO(349125474): Remove deprecated ChromiumExperimentalSubgroups.
-        EnableFeature(Feature::ChromiumExperimentalSubgroups);
+        EnableFeature(Feature::ChromiumExperimentalSubgroups_Dawn);
         EnableFeature(Feature::Subgroups);
         // D3D12 devices that support both native f16 and wave ops can support subgroups-f16.
         if (shaderF16Enabled) {
@@ -187,11 +187,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     hr = mD3d12Device->CheckFeatureSupport(D3D12_FEATURE_EXISTING_HEAPS, &existingHeapInfo,
                                            sizeof(existingHeapInfo));
     if (SUCCEEDED(hr) && existingHeapInfo.Supported) {
-        EnableFeature(Feature::HostMappedPointer);
+        EnableFeature(Feature::HostMappedPointer_Dawn);
     }
 
-    EnableFeature(Feature::SharedTextureMemoryDXGISharedHandle);
-    EnableFeature(Feature::SharedFenceDXGISharedHandle);
+    EnableFeature(Feature::SharedTextureMemoryDXGISharedHandle_Dawn);
+    EnableFeature(Feature::SharedFenceDXGISharedHandle_Dawn);
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {

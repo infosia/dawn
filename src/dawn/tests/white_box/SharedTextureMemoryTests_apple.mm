@@ -220,7 +220,7 @@ TEST_P(SharedTextureMemoryNoFeatureTests, SharedFenceImportWithoutFeature) {
     fenceDesc.nextInChain = &sharedEventDesc;
 
     ASSERT_DEVICE_ERROR_MSG(wgpu::SharedFence fence = device.ImportSharedFence(&fenceDesc),
-                            testing::HasSubstr("MTLSharedEvent is not enabled"));
+                            testing::HasSubstr("MTLSharedEvent_Dawn is not enabled"));
 }
 
 // Test that it is an error to import a shared fence with a null MTLSharedEvent
