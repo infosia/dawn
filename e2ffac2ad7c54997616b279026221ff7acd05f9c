@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be3687d2_71596220",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1763,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-23T09:36:30Z",
+      "side": 1,
+      "message": "Non-mechanical",
+      "revId": "e2ffac2ad7c54997616b279026221ff7acd05f9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c50c06b7_c38c62d1",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-23T09:36:30Z",
+      "side": 1,
+      "message": "Non-mechanical.",
+      "revId": "e2ffac2ad7c54997616b279026221ff7acd05f9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
