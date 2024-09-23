@@ -47,6 +47,7 @@ namespace tint::glsl {
 
 /// Enumerator of all builtin functions
 enum class BuiltinFn : uint8_t {
+    kLength,
     kBarrier,
     kMemoryBarrierBuffer,
     kMemoryBarrierImage,
