@@ -331,11 +331,11 @@ implicit(T: f32_f16) fn fmod(T, T) -> T
 implicit(N: num, T: f32_f16) fn fmod(vec<N, T>, vec<N, T>) -> vec<N, T>
 implicit(N: num, T: f32_f16) fn fmod(T, vec<N, T>) -> vec<N, T>
 implicit(N: num, T: f32_f16) fn fmod(vec<N, T>, T) -> vec<N, T>
-implicit(T: f32_f16) fn frexp(T, i32) -> T
-implicit(N: num, T: f32_f16) fn frexp(vec<N, T>, vec<N, i32>) -> vec<N, T>
+implicit(T: f32_f16) fn frexp(T, ptr<function, i32, read_write>) -> T
+implicit(N: num, T: f32_f16) fn frexp(vec<N, T>, ptr<function, vec<N, i32>, read_write>) -> vec<N, T>
 implicit(N: num, T: f32_f16) fn length(vec<N, T>) -> T
-implicit(T: f32_f16) fn modf(T, T) -> T
-implicit(N: num, T: f32_f16) fn modf(vec<N, T>, vec<N, T>) -> vec<N, T>
+implicit(T: f32_f16) fn modf(T, ptr<function, T, read_write>) -> T
+implicit(N: num, T: f32_f16) fn modf(vec<N, T>, ptr<function, vec<N, T>, read_write>) -> vec<N, T>
 implicit(T: f32_f16) fn sign(T) -> T
 implicit(N: num, T: f32_f16) fn sign(vec<N, T>) -> vec<N, T>
 @stage("compute") fn threadgroup_barrier(u32)

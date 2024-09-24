@@ -394,18 +394,12 @@ struct State {
             // Polyfill it by declaring the result struct and then setting the values:
             //   __frexp_result result = {};
             //   result.fract = frexp(arg, result.exp);
-            //
-            // Note: We need to use a `load` instruction to pass `result.exp`, as the intrinsic
-            // definition expects a value type (as we do not have reference types in the IR). The
-            // printer will just fold away the load, which achieves the pass-by-reference semantics
-            // that we want.
-            //
             auto* result_type = builtin->Result(0)->Type();
             auto* float_type = result_type->Element(0);
             auto* i32_type = result_type->Element(1);
             auto* result = b.Var(ty.ptr(function, result_type));
             auto* exp = b.Access(ty.ptr(function, i32_type), result, u32(1));
-            auto args = Vector<core::ir::Value*, 2>{builtin->Args()[0], b.Load(exp)->Result(0)};
+            auto args = Vector<core::ir::Value*, 2>{builtin->Args()[0], exp->Result(0)};
             auto* call =
                 b.Call<msl::ir::BuiltinCall>(float_type, msl::BuiltinFn::kFrexp, std::move(args));
             b.Store(b.Access(ty.ptr(function, float_type), result, u32(0)), call);
@@ -438,17 +432,11 @@ struct State {
             // Polyfill it by declaring the result struct and then setting the values:
             //   __modf_result result = {};
             //   result.fract = modf(arg, result.whole);
-            //
-            // Note: We need to use a `load` instruction to pass `result.whole`, as the intrinsic
-            // definition expects a value type (as we do not have reference types in the IR). The
-            // printer will just fold away the load, which achieves the pass-by-reference semantics
-            // that we want.
-            //
             auto* result_type = builtin->Result(0)->Type();
             auto* element_type = result_type->Element(0);
             auto* result = b.Var(ty.ptr(function, result_type));
             auto* whole = b.Access(ty.ptr(function, element_type), result, u32(1));
-            auto args = Vector<core::ir::Value*, 2>{builtin->Args()[0], b.Load(whole)->Result(0)};
+            auto args = Vector<core::ir::Value*, 2>{builtin->Args()[0], whole->Result(0)};
             auto* call =
                 b.Call<msl::ir::BuiltinCall>(element_type, msl::BuiltinFn::kModf, std::move(args));
             b.Store(b.Access(ty.ptr(function, element_type), result, u32(0)), call);

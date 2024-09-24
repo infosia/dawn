@@ -1063,16 +1063,15 @@ __frexp_result_f32 = struct @align(4) {
   $B1: {
     %3:ptr<function, __frexp_result_f32, read_write> = var
     %4:ptr<function, i32, read_write> = access %3, 1u
-    %5:i32 = load %4
-    %6:f32 = msl.frexp %value, %5
-    %7:ptr<function, f32, read_write> = access %3, 0u
-    store %7, %6
-    %8:__frexp_result_f32 = load %3
-    %9:f32 = access %8, 0u
-    %10:i32 = access %8, 1u
-    %11:f32 = convert %10
-    %12:f32 = add %9, %11
-    ret %12
+    %5:f32 = msl.frexp %value, %4
+    %6:ptr<function, f32, read_write> = access %3, 0u
+    store %6, %5
+    %7:__frexp_result_f32 = load %3
+    %8:f32 = access %7, 0u
+    %9:i32 = access %7, 1u
+    %10:f32 = convert %9
+    %11:f32 = add %8, %10
+    ret %11
   }
 }
 )";
@@ -1123,16 +1122,15 @@ __frexp_result_vec4_f32 = struct @align(16) {
   $B1: {
     %3:ptr<function, __frexp_result_vec4_f32, read_write> = var
     %4:ptr<function, vec4<i32>, read_write> = access %3, 1u
-    %5:vec4<i32> = load %4
-    %6:vec4<f32> = msl.frexp %value, %5
-    %7:ptr<function, vec4<f32>, read_write> = access %3, 0u
-    store %7, %6
-    %8:__frexp_result_vec4_f32 = load %3
-    %9:vec4<f32> = access %8, 0u
-    %10:vec4<i32> = access %8, 1u
-    %11:vec4<f32> = convert %10
-    %12:vec4<f32> = add %9, %11
-    ret %12
+    %5:vec4<f32> = msl.frexp %value, %4
+    %6:ptr<function, vec4<f32>, read_write> = access %3, 0u
+    store %6, %5
+    %7:__frexp_result_vec4_f32 = load %3
+    %8:vec4<f32> = access %7, 0u
+    %9:vec4<i32> = access %7, 1u
+    %10:vec4<f32> = convert %9
+    %11:vec4<f32> = add %8, %10
+    ret %11
   }
 }
 )";
@@ -1248,15 +1246,14 @@ __modf_result_f32 = struct @align(4) {
   $B1: {
     %3:ptr<function, __modf_result_f32, read_write> = var
     %4:ptr<function, f32, read_write> = access %3, 1u
-    %5:f32 = load %4
-    %6:f32 = msl.modf %value, %5
-    %7:ptr<function, f32, read_write> = access %3, 0u
-    store %7, %6
-    %8:__modf_result_f32 = load %3
-    %9:f32 = access %8, 0u
-    %10:f32 = access %8, 1u
-    %11:f32 = add %9, %10
-    ret %11
+    %5:f32 = msl.modf %value, %4
+    %6:ptr<function, f32, read_write> = access %3, 0u
+    store %6, %5
+    %7:__modf_result_f32 = load %3
+    %8:f32 = access %7, 0u
+    %9:f32 = access %7, 1u
+    %10:f32 = add %8, %9
+    ret %10
   }
 }
 )";
@@ -1306,15 +1303,14 @@ __modf_result_vec4_f32 = struct @align(16) {
   $B1: {
     %3:ptr<function, __modf_result_vec4_f32, read_write> = var
     %4:ptr<function, vec4<f32>, read_write> = access %3, 1u
-    %5:vec4<f32> = load %4
-    %6:vec4<f32> = msl.modf %value, %5
-    %7:ptr<function, vec4<f32>, read_write> = access %3, 0u
-    store %7, %6
-    %8:__modf_result_vec4_f32 = load %3
-    %9:vec4<f32> = access %8, 0u
-    %10:vec4<f32> = access %8, 1u
-    %11:vec4<f32> = add %9, %10
-    ret %11
+    %5:vec4<f32> = msl.modf %value, %4
+    %6:ptr<function, vec4<f32>, read_write> = access %3, 0u
+    store %6, %5
+    %7:__modf_result_vec4_f32 = load %3
+    %8:vec4<f32> = access %7, 0u
+    %9:vec4<f32> = access %7, 1u
+    %10:vec4<f32> = add %8, %9
+    ret %10
   }
 }
 )";
