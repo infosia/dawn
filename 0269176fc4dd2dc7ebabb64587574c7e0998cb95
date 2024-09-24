@@ -39,6 +39,30 @@
       },
       "revId": "0269176fc4dd2dc7ebabb64587574c7e0998cb95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93f93021_1a03f631",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-24T14:41:38Z",
+      "side": 1,
+      "message": "No, not in golang AFAICT.",
+      "parentUuid": "b7dd7ff0_ef3e92c4",
+      "range": {
+        "startLine": 740,
+        "startChar": 0,
+        "endLine": 742,
+        "endChar": 17
+      },
+      "revId": "0269176fc4dd2dc7ebabb64587574c7e0998cb95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
