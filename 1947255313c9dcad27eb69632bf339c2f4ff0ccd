@@ -51,6 +51,24 @@
       "message": "The change needed here is more than just a rename - sorry I didn\u0027t include that detail in the bug. Please see https://github.com/webgpu-native/webgpu-headers/pull/348 for info.",
       "revId": "1947255313c9dcad27eb69632bf339c2f4ff0ccd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0bc67c2_20b7f2d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2024-09-24T01:37:18Z",
+      "side": 1,
+      "message": "Thank you for providing me with more information.\n\nConsidering the actual situation, I revised this CL again, mainly to fix some errors. Please review it again, thank you!",
+      "parentUuid": "4311fa8f_a5b8c021",
+      "revId": "1947255313c9dcad27eb69632bf339c2f4ff0ccd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
