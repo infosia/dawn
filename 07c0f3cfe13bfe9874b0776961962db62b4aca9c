@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ecde3ef_7da585ea",
+        "filename": "src/dawn/native/utils/WGPUHelpers.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T21:38:20Z",
+      "side": 1,
+      "message": "Ahh, I see, it was hard to find because TraceLabel isn\u0027t named :)\n\nNo strong feeling about whether we have a constructor, I just didn\u0027t realize it was used.",
+      "parentUuid": "ae7078c1_3199afab",
+      "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df4bc482_cfd502e9",
