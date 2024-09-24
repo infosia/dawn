@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce3e9210_4fc2b2bb",
+        "filename": "src/dawn/native/utils/WGPUHelpers.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T14:08:17Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d3831bd_15a3dc0a",
@@ -18,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fe17f82_cd3905b8",
+        "filename": "src/dawn/native/utils/WGPUHelpers.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T14:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d3831bd_15a3dc0a",
+      "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec4fcb6b_05286ed6",
@@ -31,6 +66,24 @@
       "writtenOn": "2024-09-24T02:33:31Z",
       "side": 1,
       "message": "nit: constructor seems unused?",
+      "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae7078c1_3199afab",
+        "filename": "src/dawn/native/utils/WGPUHelpers.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T14:08:17Z",
+      "side": 1,
+      "message": "It was used at [1], because NonCopyable\u0027s default constructor was not public. Fixed by making it public, but it means we need an extra `{}` at [1] which looks mildly weird.",
+      "parentUuid": "ec4fcb6b_05286ed6",
       "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f64deae7_1028d47e",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T14:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df4bc482_cfd502e9",
+      "range": {
+        "startLine": 1768,
+        "startChar": 24,
+        "endLine": 1768,
+        "endChar": 36
+      },
+      "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57822112_ac4cf015",
@@ -71,6 +148,24 @@
       "writtenOn": "2024-09-24T02:33:31Z",
       "side": 1,
       "message": "Test also that `ext-\u003ecode.length \u003d\u003d strlen(clientExt.code)` if possible",
+      "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd9292b8_e95e0336",
+        "filename": "src/dawn/tests/unittests/wire/WireExtensionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T14:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57822112_ac4cf015",
       "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
