@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0d241e7_a88f46a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T08:40:50Z",
+      "side": 1,
+      "message": "PTAL! This is blocking the roll in Chromium",
+      "revId": "a7a64baf6978a98a098f6ab57cc4f4d8c9262e72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
