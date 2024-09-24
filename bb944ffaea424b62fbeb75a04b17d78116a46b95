@@ -83,6 +83,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bda4f41_9c8ececd",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-24T18:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eea8522_3fec7034",
+      "revId": "bb944ffaea424b62fbeb75a04b17d78116a46b95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45c44e6d_ae2817f1",
@@ -124,6 +142,24 @@
           ]
         }
       ],
+      "revId": "bb944ffaea424b62fbeb75a04b17d78116a46b95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60ab8b24_3b5cc844",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-24T18:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c44e6d_ae2817f1",
       "revId": "bb944ffaea424b62fbeb75a04b17d78116a46b95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
