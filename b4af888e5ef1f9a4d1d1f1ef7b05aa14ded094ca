@@ -35,6 +35,70 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e8c1f73_332edc5d",
+        "filename": "src/dawn/native/vulkan/SharedTextureMemoryVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-24T20:48:59Z",
+      "side": 1,
+      "message": "Just for my understanding, is there any value in moving the concept of `SharedTextureMemoryTexture` up to the frontend and changing this to take that instead? Probably depends on how much specialization we have in the other backends to handle STMTextures in those places?",
+      "range": {
+        "startLine": 1002,
+        "startChar": 4,
+        "endLine": 1002,
+        "endChar": 15
+      },
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7af87eed_423ef061",
+        "filename": "src/dawn/native/vulkan/SwapChainVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-24T20:48:59Z",
+      "side": 1,
+      "message": "Just curious, was this change actually necessary? I thought that `Ref`s converted the types properly so we wouldn\u0027t need to change the typing given `SwapChainTexture` inherits `Texture`",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 24
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "02aabbcf_dcc0fe21",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/vulkan/SwapChainVk.h",
+              "range": {
+                "startLine": 104,
+                "startChar": 0,
+                "endLine": 105,
+                "endChar": 0
+              },
+              "replacement": "    Ref\u003cTexture\u003e mTexture;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "0cbf2deb_cfdc89e4",
@@ -48,6 +112,191 @@
       "writtenOn": "2024-09-24T16:30:57Z",
       "side": 1,
       "message": "This is changed in a follow-up commit to return the layout of a specific subresource, so swapchain-specific code doesn\u0027t linger here.",
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49c6bb4d_01e5bce6",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-24T20:48:59Z",
+      "side": 1,
+      "message": "I\u0027m slightly worried about the naming since we have a concept of `ExternalTexture` in the frontend. Is there a way to reconcile this with that instead of being it\u0027s own thing?",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 44
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5fad4aa6_de35ce10",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/vulkan/TextureVk.h",
+              "range": {
+                "startLine": 190,
+                "startChar": 0,
+                "endLine": 191,
+                "endChar": 0
+              },
+              "replacement": "class ExternalTexture : public Texture {\n"
+            },
+            {
+              "path": "src/dawn/native/vulkan/TextureVk.h",
+              "range": {
+                "startLine": 217,
+                "startChar": 0,
+                "endLine": 218,
+                "endChar": 0
+              },
+              "replacement": "    ~ExternalTexture() override;\n"
+            },
+            {
+              "path": "src/dawn/native/vulkan/TextureVk.h",
+              "range": {
+                "startLine": 252,
+                "startChar": 0,
+                "endLine": 253,
+                "endChar": 0
+              },
+              "replacement": "class ExternalTextureImpl final : public ExternalTexture {\n"
+            },
+            {
+              "path": "src/dawn/native/vulkan/TextureVk.h",
+              "range": {
+                "startLine": 254,
+                "startChar": 0,
+                "endLine": 255,
+                "endChar": 0
+              },
+              "replacement": "    static ResultOrError\u003cRef\u003cExternalTextureImpl\u003e\u003e Create(\n"
+            },
+            {
+              "path": "src/dawn/native/vulkan/TextureVk.h",
+              "range": {
+                "startLine": 274,
+                "startChar": 0,
+                "endLine": 275,
+                "endChar": 0
+              },
+              "replacement": "    using ExternalTexture::ExternalTexture;\n"
+            },
+            {
+              "path": "src/dawn/native/vulkan/TextureVk.h",
+              "range": {
+                "startLine": 284,
+                "startChar": 0,
+                "endLine": 285,
+                "endChar": 0
+              },
+              "replacement": "class STMTexture final : public ExternalTexture {\n"
+            },
+            {
+              "path": "src/dawn/native/vulkan/TextureVk.h",
+              "range": {
+                "startLine": 294,
+                "startChar": 0,
+                "endLine": 295,
+                "endChar": 0
+              },
+              "replacement": "    using ExternalTexture::ExternalTexture;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "175b550d_6a2615a5",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-24T20:48:59Z",
+      "side": 1,
+      "message": "nit. Probably don\u0027t need this one anymore since this is split into only external textures now?",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 20
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a26ccd63_79eb8e63",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/vulkan/TextureVk.h",
+              "range": {
+                "startLine": 219,
+                "startChar": 0,
+                "endLine": 220,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/dawn/native/vulkan/TextureVk.h",
+              "range": {
+                "startLine": 226,
+                "startChar": 0,
+                "endLine": 227,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/dawn/native/vulkan/TextureVk.h",
+              "range": {
+                "startLine": 232,
+                "startChar": 0,
+                "endLine": 234,
+                "endChar": 0
+              },
+              "replacement": "    ExternalState mExternalState \u003d ExternalState::PendingAcquire;\n    ExternalState mLastExternalState \u003d ExternalState::PendingAcquire;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "083edb1f_b1833b9b",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-24T20:48:59Z",
+      "side": 1,
+      "message": "nit. Thoughts on just writing `SharedTextureMemory` out here? Or maybe `SharedTexture`? Just a little easier without the acronyms.",
+      "range": {
+        "startLine": 284,
+        "startChar": 6,
+        "endLine": 284,
+        "endChar": 16
+      },
       "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
