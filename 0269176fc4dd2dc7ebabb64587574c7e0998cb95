@@ -87,6 +87,30 @@
       },
       "revId": "0269176fc4dd2dc7ebabb64587574c7e0998cb95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff66e175_11974d34",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-09-24T17:05:55Z",
+      "side": 1,
+      "message": "Yea, I got it from the golang docs, so it should work I think.",
+      "parentUuid": "488ee7c7_f3a3a4fa",
+      "range": {
+        "startLine": 740,
+        "startChar": 0,
+        "endLine": 742,
+        "endChar": 17
+      },
+      "revId": "0269176fc4dd2dc7ebabb64587574c7e0998cb95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
