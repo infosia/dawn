@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ba19cd7_622e3fad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2024-09-24T05:23:49Z",
+      "side": 1,
+      "message": "Oops I thought the import from GitHub was a one time thing so I kept on commiting on the same branch. Added a build targetting macOS-x64 (the macos-13 runner is x64, macos-latest a.k.a. macos-14 is aarch64), and install .pdb files in Windows debug builds are these are part of the Debug artifacts. Let me know if I should split up this CL!",
+      "revId": "3c109047a4df3acfd457b98f1b45e8b23a1d2586",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
