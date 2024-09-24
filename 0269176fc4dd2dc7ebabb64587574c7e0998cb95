@@ -63,6 +63,30 @@
       },
       "revId": "0269176fc4dd2dc7ebabb64587574c7e0998cb95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "488ee7c7_f3a3a4fa",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-24T16:51:24Z",
+      "side": 1,
+      "message": "The docs says this is supported?\nhttps://go.dev/wiki/Switch\nSee \"Multiple cases\".",
+      "parentUuid": "93f93021_1a03f631",
+      "range": {
+        "startLine": 740,
+        "startChar": 0,
+        "endLine": 742,
+        "endChar": 17
+      },
+      "revId": "0269176fc4dd2dc7ebabb64587574c7e0998cb95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
