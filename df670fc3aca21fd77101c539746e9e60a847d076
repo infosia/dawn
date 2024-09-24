@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f982a71_064a3911",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T16:30:57Z",
+      "side": 0,
+      "message": "[2]",
+      "revId": "df670fc3aca21fd77101c539746e9e60a847d076",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b8b3f01_e7a01702",
+        "filename": "src/dawn/tests/white_box/VulkanImageWrappingTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T16:30:57Z",
+      "side": 0,
+      "message": "This was removed because it fails after we just static_cast at [1] instead of calling into `ExportExternalTexture` that would report an error at [2]. Given that code path is deprecated and we want to nuke it sooner than later, I didn\u0027t bother with adding some form of `IsExternalTexture` virtual method.",
+      "revId": "df670fc3aca21fd77101c539746e9e60a847d076",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

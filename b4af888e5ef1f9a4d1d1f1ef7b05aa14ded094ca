@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "840903de_95fceaab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T16:30:57Z",
+      "side": 1,
+      "message": "PTAL! This is mostly just moving code around for future changes. Hopefully it also groups logic together in a way that makes the whole STM / ExternalTexture paths more understandable. I also added a bunch of comments when things didn\u0027t seem clear.",
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ab9841c_2d18b759",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T16:30:57Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cbf2deb_cfdc89e4",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T16:30:57Z",
+      "side": 1,
+      "message": "This is changed in a follow-up commit to return the layout of a specific subresource, so swapchain-specific code doesn\u0027t linger here.",
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
