@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e180f3ae_41a7c855",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-24T14:35:07Z",
+      "side": 1,
+      "message": "PTAL! Chromium side needs https://chromium-review.googlesource.com/c/chromium/src/+/5887171 to compile",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
