@@ -68,6 +68,10 @@ class Adapter final : public ObjectWithEventsBase {
   private:
     LimitsAndFeatures mLimitsAndFeatures;
     WGPUAdapterInfo mInfo;
+    std::string mVendor;
+    std::string mArchitecture;
+    std::string mDeviceName;
+    std::string mDescription;
     std::vector<WGPUMemoryHeapInfo> mMemoryHeapInfo;
     WGPUAdapterPropertiesD3D mD3DProperties;
     WGPUAdapterPropertiesVk mVkProperties;
