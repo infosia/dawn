@@ -33,6 +33,24 @@
       "message": "Hmm, still failed in https://ci.chromium.org/ui/p/chromium/builders/try/dawn-try-mac-amd-exp/1317/overview, wonder what I\u0027ve missed.",
       "revId": "b5a4b302143a3a91d9a72066d64187cad8ef6cf2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08b65b35_5953fd24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-09-24T18:03:01Z",
+      "side": 1,
+      "message": "Ah, I\u0027ve looked in the wrong place in the switch in gpu_info::GetArchitecture().\nShould be good now.",
+      "parentUuid": "cdbf21b7_e9d25576",
+      "revId": "b5a4b302143a3a91d9a72066d64187cad8ef6cf2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
