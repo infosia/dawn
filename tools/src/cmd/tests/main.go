@@ -738,18 +738,21 @@ func (j job) run(cfg runConfig) {
 			args = append(args, "--validate") // spirv-val and glslang are statically linked, always available
 			validate = true
 		case hlslDXC:
+			fallthrough
 		case hlslDXCIR:
 			if cfg.dxcPath != "" {
 				args = append(args, "--dxc", cfg.dxcPath)
 				validate = true
 			}
 		case hlslFXC:
+			fallthrough
 		case hlslFXCIR:
 			if cfg.fxcPath != "" {
 				args = append(args, "--fxc", cfg.fxcPath)
 				validate = true
 			}
 		case msl:
+			fallthrough
 		case mslIR:
 			if cfg.xcrunPath != "" {
 				args = append(args, "--xcrun", cfg.xcrunPath)
