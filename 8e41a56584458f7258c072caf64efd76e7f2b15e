@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "8e41a56584458f7258c072caf64efd76e7f2b15e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c28f79fe_258f7682",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-24T21:00:45Z",
+      "side": 1,
+      "message": "Hm, this seems to produce MSL errors as MSL has real pointers, we end up with `\u0026`s where we don\u0027t want them. I think this should probably be abandonded ....",
+      "revId": "8e41a56584458f7258c072caf64efd76e7f2b15e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
