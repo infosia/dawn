@@ -1,0 +1,131 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a47b4d5a_3559c08d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-24T17:56:38Z",
+      "side": 1,
+      "message": "LGTM with bot fix.",
+      "revId": "bb944ffaea424b62fbeb75a04b17d78116a46b95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9eea8522_3fec7034",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-24T17:56:38Z",
+      "side": 1,
+      "message": "übernit: You have the `options`, so this could just be a local declaration rather than something that is passed in.",
+      "fixSuggestions": [
+        {
+          "fixId": "b6e203e4_8db266f9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/tint/main.cc",
+              "range": {
+                "startLine": 915,
+                "startChar": 0,
+                "endLine": 916,
+                "endChar": 0
+              },
+              "replacement": "bool GenerateHlsl(const tint::Program\u0026 program, const Options\u0026 options) {\n"
+            },
+            {
+              "path": "src/tint/cmd/tint/main.cc",
+              "range": {
+                "startLine": 927,
+                "startChar": 0,
+                "endLine": 929,
+                "endChar": 0
+              },
+              "replacement": "    gen_options.compiler \u003d options.format \u003d\u003d Format::kHlslFxc\n                               ? tint::hlsl::writer::Options::Compiler::kFXC\n                               : tint::hlsl::writer::Options::Compiler::kDXC;\n"
+            },
+            {
+              "path": "src/tint/cmd/tint/main.cc",
+              "range": {
+                "startLine": 961,
+                "startChar": 0,
+                "endLine": 962,
+                "endChar": 0
+              },
+              "replacement": "        if (options.format \u003d\u003d Format::kHlsl) {\n"
+            },
+            {
+              "path": "src/tint/cmd/tint/main.cc",
+              "range": {
+                "startLine": 997,
+                "startChar": 0,
+                "endLine": 998,
+                "endChar": 0
+              },
+              "replacement": "        if (options.format \u003d\u003d Format::kHlslFxc) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "bb944ffaea424b62fbeb75a04b17d78116a46b95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45c44e6d_ae2817f1",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-24T17:56:38Z",
+      "side": 1,
+      "message": "These macros need to guard the call to `ValidateUsingFXC`.",
+      "fixSuggestions": [
+        {
+          "fixId": "0ef6d438_75922589",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/tint/main.cc",
+              "range": {
+                "startLine": 998,
+                "startChar": 0,
+                "endLine": 1002,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/cmd/tint/main.cc",
+              "range": {
+                "startLine": 1006,
+                "startChar": 0,
+                "endLine": 1006,
+                "endChar": 0
+              },
+              "replacement": "#ifndef _WIN32\n                std::cerr \u003c\u003c \"FXC can only be used on Windows.\\n\";\n                return false;\n#endif\n"
+            }
+          ]
+        }
+      ],
+      "revId": "bb944ffaea424b62fbeb75a04b17d78116a46b95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
