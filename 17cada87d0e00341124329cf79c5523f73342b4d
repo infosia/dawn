@@ -67,6 +67,24 @@
       "message": "We won\u0027t want to do this for all strings. For `entryPoint` for example we want `\"main\\0bogus\"` to always be an error, not the same as `\"main\"`.\nMaybe the name could be more specialized like `NormalizeMessageString` or something? Or just a note in the comment, about when to use this, is probably fine.",
       "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3589b6b_f3d13e1b",
+        "filename": "src/dawn/native/utils/WGPUHelpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T22:10:05Z",
+      "side": 1,
+      "message": "BTW this change may mean we can get rid of the special-casing for strings containing `\\0` in Blink!",
+      "parentUuid": "d28da5cb_88d52d0c",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
