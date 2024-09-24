@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d39d2059_b9a6ecc8",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T02:00:31Z",
+      "side": 1,
+      "message": "nit: old code, but I think it would be nice to rewrite this to just have one call to the really long function name:\n\n```suggestion\n      var status \u003d\n        pipelineError.reason \u003d\u003d\u003d \u0027validation\u0027 ? {{{ gpu.CreatePipelineAsyncStatus.ValidationError }}} :\n        pipelineError.reason \u003d\u003d\u003d \u0027internal\u0027 ? {{{ gpu.CreatePipelineAsyncStatus.InternalError }}} :\n        {{{ gpu.CreatePipelineAsyncStatus.Unknown }}};\n      _emwgpuOnDeviceCreateComputePipelineCompleted(futureIdL, futureIdH, status, 0, messagePtr);\n```",
+      "range": {
+        "startLine": 1467,
+        "startChar": 0,
+        "endLine": 1473,
+        "endChar": 7
+      },
+      "revId": "821e0b09516d2cee39701d2336953b9a5f78d523",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "209d8997_479c972d",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T02:00:31Z",
+      "side": 1,
+      "message": "nit: since these are async-specific, they should have Async in the name (because there\u0027s also the non-\"async\" version of CreateComputePipeline)",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 52
+      },
+      "revId": "821e0b09516d2cee39701d2336953b9a5f78d523",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
