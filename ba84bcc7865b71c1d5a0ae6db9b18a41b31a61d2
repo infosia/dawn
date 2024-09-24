@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7615157_07c422a7",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-24T17:49:49Z",
+      "side": 1,
+      "message": "Nit: Could use `b.LoadWithResult()`",
+      "fixSuggestions": [
+        {
+          "fixId": "6a36e649_58af7da3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+              "range": {
+                "startLine": 249,
+                "startChar": 0,
+                "endLine": 250,
+                "endChar": 0
+              },
+              "replacement": "            call-\u003eResult(0)-\u003eReplaceAllUsesWith(b.LoadWithResult(result));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ba84bcc7865b71c1d5a0ae6db9b18a41b31a61d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
