@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6430cab4_7174bacc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-09-24T14:32:50Z",
+      "side": 1,
+      "message": "Thankfully this only affected the non-IR path, and that hasn\u0027t changed much, so no validation failures. Phew!",
+      "revId": "0269176fc4dd2dc7ebabb64587574c7e0998cb95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
