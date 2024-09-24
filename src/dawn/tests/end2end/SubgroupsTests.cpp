@@ -970,7 +970,10 @@ fn main(
 };
 
 TEST_P(SubgroupsShaderInclusiveTest, InclusiveExecution) {
+    fprintf(stderr, "vendorID=%x deviceID=%x\n", GetParam().adapterProperties.vendorID,
+            GetParam().adapterProperties.deviceID);
     if (GetParam().mSubgroupOpDataType == SubgroupOpDataType::F16) {
+        fprintf(stderr, "SubgroupOpDataType::F16\n");
         DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsF16SupportedByBackend());
 
         // TODO(361330160): The f16 implementation does not seem produce correct values in
@@ -980,8 +983,8 @@ TEST_P(SubgroupsShaderInclusiveTest, InclusiveExecution) {
         DAWN_SUPPRESS_TEST_IF(gpu_info::IsNvidiaTuring(GetParam().adapterProperties.vendorID,
                                                        GetParam().adapterProperties.deviceID));
         // TODO(361330160): Also fails on MacBookPro16,1 with AMD Radeon Pro 5300M
-        DAWN_SUPPRESS_TEST_IF(gpu_info::IsAMDGCN5(GetParam().adapterProperties.vendorID,
-                                                  GetParam().adapterProperties.deviceID));
+        DAWN_SUPPRESS_TEST_IF(gpu_info::IsAMDRDNA1(GetParam().adapterProperties.vendorID,
+                                                   GetParam().adapterProperties.deviceID));
 
         DAWN_ASSERT(IsShaderF16EnabledInWGSL() && IsSubgroupsEnabledInWGSL() &&
                     IsSubgroupsF16EnabledInWGSL());
