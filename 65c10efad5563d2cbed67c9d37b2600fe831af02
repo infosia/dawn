@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3186a9b_cbe4263b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T02:37:28Z",
+      "side": 1,
+      "message": "nit: This sounds like it refers to code comments, rather than CL comments.\nEither specify \"code review comments\" or just include those example errors in the commit message. (I prefer including them in the commit message because it\u0027s kind of hard to find them in Gerrit.)",
+      "range": {
+        "startLine": 9,
+        "startChar": 37,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "65c10efad5563d2cbed67c9d37b2600fe831af02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
