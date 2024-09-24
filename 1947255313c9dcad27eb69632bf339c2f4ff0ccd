@@ -87,6 +87,24 @@
       "parentUuid": "b0bc67c2_20b7f2d1",
       "revId": "1947255313c9dcad27eb69632bf339c2f4ff0ccd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e093d2d_c5f5e1f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2024-09-24T02:06:22Z",
+      "side": 1,
+      "message": "Is it caused by different args parameters and the specified target?\n\nQuoting my experience when compiling webrtc, when defining target as `all`, some things belonging to chromium will be compiled, and these things are not used in webrtc.\n\nI think the same is true for dawn.",
+      "parentUuid": "17ff27bd_b8aad28f",
+      "revId": "1947255313c9dcad27eb69632bf339c2f4ff0ccd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
