@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7915694e_8e2c99d7",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-24T17:46:23Z",
+      "side": 1,
+      "message": "As discussed offline, consider adding a GLSL intrinsic for floating point dot and replacing all builtins, as done in the equivalent MSL polyfill.",
+      "revId": "948b8908aa7d8bad339f463168fd99c5c3ad6c16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
