@@ -16,6 +16,57 @@
       "message": "PTAL! Chromium side needs https://chromium-review.googlesource.com/c/chromium/src/+/5887171 to compile",
       "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ec8cf64_777b56c7",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T22:09:01Z",
+      "side": 1,
+      "message": "I built this patch locally to see what it does - in C, this generates `WGPU_NULLABLE WGPUStringView label`, which seems incorrect.\n\n(In C++, I thought this would also accept `bg.SetLabel()` without args, but apparently it doesn\u0027t.)",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91a8cd9e_24d7069d",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T22:09:01Z",
+      "side": 1,
+      "message": "What does optional mean here? I assume optional\u003dtrue means \"convert to `std::optional\u003cstd::string_view\u003e`\" and optional\u003dfalse means \"convert to `std::string_view`\".\n\nLabels should be non-nullable though (defaulting to `\"\"`) so these shouldn\u0027t need to be optional. Maybe this is not true in Dawn yet, in which case this is OK.",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d28da5cb_88d52d0c",
+        "filename": "src/dawn/native/utils/WGPUHelpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T22:09:01Z",
+      "side": 1,
+      "message": "We won\u0027t want to do this for all strings. For `entryPoint` for example we want `\"main\\0bogus\"` to always be an error, not the same as `\"main\"`.\nMaybe the name could be more specialized like `NormalizeMessageString` or something? Or just a note in the comment, about when to use this, is probably fine.",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
