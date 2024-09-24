@@ -970,7 +970,10 @@ fn main(
 };
 
 TEST_P(SubgroupsShaderInclusiveTest, InclusiveExecution) {
+    fprintf(stderr, "vendorID=%x deviceID=%x\n", GetParam().adapterProperties.vendorID,
+            GetParam().adapterProperties.deviceID);
     if (GetParam().mSubgroupOpDataType == SubgroupOpDataType::F16) {
+        fprintf(stderr, "SubgroupOpDataType::F16\n");
         DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsF16SupportedByBackend());
 
         // TODO(361330160): The f16 implementation does not seem produce correct values in
