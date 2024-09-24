@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d3831bd_15a3dc0a",
+        "filename": "src/dawn/native/utils/WGPUHelpers.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T02:33:31Z",
+      "side": 1,
+      "message": "nit: use `c_str()` to self-document that it will be null terminated, even though that\u0027s the same as `data()` starting with C++11",
+      "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec4fcb6b_05286ed6",
+        "filename": "src/dawn/native/utils/WGPUHelpers.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T02:33:31Z",
+      "side": 1,
+      "message": "nit: constructor seems unused?",
+      "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df4bc482_cfd502e9",
+        "filename": "src/dawn/node/binding/Converter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T02:33:31Z",
+      "side": 1,
+      "message": "should be `length`?",
+      "range": {
+        "startLine": 1768,
+        "startChar": 24,
+        "endLine": 1768,
+        "endChar": 36
+      },
+      "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57822112_ac4cf015",
+        "filename": "src/dawn/tests/unittests/wire/WireExtensionTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-24T02:33:31Z",
+      "side": 1,
+      "message": "Test also that `ext-\u003ecode.length \u003d\u003d strlen(clientExt.code)` if possible",
+      "revId": "07c0f3cfe13bfe9874b0776961962db62b4aca9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
