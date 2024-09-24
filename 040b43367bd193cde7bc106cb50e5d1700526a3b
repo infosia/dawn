@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52c4d5d4_9b65aaf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-24T18:41:19Z",
+      "side": 1,
+      "message": "Please also remove handling of the core builtin `dot` from the printer, so that we rightfully ICE if we see it there.",
+      "revId": "040b43367bd193cde7bc106cb50e5d1700526a3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
