@@ -68,19 +68,17 @@ MaybeError ProgrammableEncoder::ValidateProgrammableEncoderEnd() const {
     return {};
 }
 
-void ProgrammableEncoder::APIInsertDebugMarker2(std::string_view groupLabel) {
-    groupLabel = utils::NormalizeLabel(groupLabel);
+void ProgrammableEncoder::APIInsertDebugMarker2(StringView marker) {
     mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
             InsertDebugMarkerCmd* cmd =
                 allocator->Allocate<InsertDebugMarkerCmd>(Command::InsertDebugMarker);
-            cmd->length = groupLabel.length();
-            allocator->CopyAsNullTerminatedString(groupLabel);
+            AddNullTerminatedString(allocator, marker, &cmd->length);
 
             return {};
         },
-        "encoding %s.InsertDebugMarker(\"%s\").", this, groupLabel);
+        "encoding %s.InsertDebugMarker(%s).", this, marker);
 }
 
 void ProgrammableEncoder::APIPopDebugGroup() {
@@ -100,22 +98,20 @@ void ProgrammableEncoder::APIPopDebugGroup() {
         "encoding %s.PopDebugGroup().", this);
 }
 
-void ProgrammableEncoder::APIPushDebugGroup2(std::string_view groupLabel) {
-    groupLabel = utils::NormalizeLabel(groupLabel);
+void ProgrammableEncoder::APIPushDebugGroup2(StringView groupLabel) {
     mEncodingContext->TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
             PushDebugGroupCmd* cmd =
                 allocator->Allocate<PushDebugGroupCmd>(Command::PushDebugGroup);
-            cmd->length = groupLabel.length();
-            const char* label = allocator->CopyAsNullTerminatedString(groupLabel);
+            const char* label = AddNullTerminatedString(allocator, groupLabel, &cmd->length);
 
             mDebugGroupStackSize++;
             mEncodingContext->PushDebugGroupLabel(std::string_view(label, cmd->length));
 
             return {};
         },
-        "encoding %s.PushDebugGroup(\"%s\").", this, groupLabel);
+        "encoding %s.PushDebugGroup(%s).", this, groupLabel);
 }
 
 MaybeError ProgrammableEncoder::ValidateSetBindGroup(BindGroupIndex index,
