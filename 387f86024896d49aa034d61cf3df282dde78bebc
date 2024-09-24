@@ -16,6 +16,23 @@
       "message": "James can you help get this in",
       "revId": "387f86024896d49aa034d61cf3df282dde78bebc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ca3c4db_26089592",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-24T18:07:03Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "387f86024896d49aa034d61cf3df282dde78bebc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
