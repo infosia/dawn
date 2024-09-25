@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "333d5002_336a253f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-25T18:56:11Z",
+      "side": 1,
+      "message": "LGTM! Not sure if what we talked about offline changes anything about the constructors though, i.e. instead of removing StringView-\u003estd::string, what if we removed StringView-\u003estd::optional\u003cstd::string\u003e\u003e.",
+      "revId": "b3d96a6af1b9effcc736b64eda2925a858eaf7ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
