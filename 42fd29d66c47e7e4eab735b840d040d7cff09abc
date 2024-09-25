@@ -70,6 +70,24 @@
       "parentUuid": "e06f146f_8fc8db81",
       "revId": "42fd29d66c47e7e4eab735b840d040d7cff09abc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e4b4679_64929b00",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-25T17:17:28Z",
+      "side": 1,
+      "message": "I see, I guess this is fine then.\n\nI was surprised because we\u0027ve been doing this sort of thing:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/glsl/writer/raise/bitcast_polyfill.cc;l\u003d167?q\u003dbitcast_polyfill.cc\u0026ss\u003dchromium\nwhich I assumed was because of this issue.",
+      "parentUuid": "b8e554f8_68633ac4",
+      "revId": "42fd29d66c47e7e4eab735b840d040d7cff09abc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
