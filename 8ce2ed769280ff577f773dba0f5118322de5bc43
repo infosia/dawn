@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a30451c_7e6e3021",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-25T14:47:35Z",
+      "side": 0,
+      "message": "This message was removed, because it is duplicated in CheckResult.\nThis if-block is here to prevent `CheckType(res-\u003eType()...` from doing a null deference.",
+      "revId": "8ce2ed769280ff577f773dba0f5118322de5bc43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
