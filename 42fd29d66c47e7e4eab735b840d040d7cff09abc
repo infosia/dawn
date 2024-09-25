@@ -88,6 +88,24 @@
       "parentUuid": "b8e554f8_68633ac4",
       "revId": "42fd29d66c47e7e4eab735b840d040d7cff09abc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b513d68_b8ae7c23",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-25T17:25:06Z",
+      "side": 1,
+      "message": "Hm, I\u0027m not sure why I did it that way. I\u0027m nothing if not inconsitent, heh.",
+      "parentUuid": "0e4b4679_64929b00",
+      "revId": "42fd29d66c47e7e4eab735b840d040d7cff09abc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
