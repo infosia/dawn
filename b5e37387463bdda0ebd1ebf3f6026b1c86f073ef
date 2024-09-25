@@ -70,6 +70,24 @@
       "parentUuid": "dd6db215_985f2cf8",
       "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e84bbc9_1f0630ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-09-25T19:49:34Z",
+      "side": 1,
+      "message": "(I misspoke, BTW: my fix was for bool vector `cond`; Ben\u0027s was for integer vector `t` and `f`.)\n\nYou\u0027re right; integer `mix()` showed up in GLSL ES 3.1, so it should be ok to use. I\u0027m not sure what Ben\u0027s polyfill was trying to achieve, then. There\u0027s no bug ID or fixed Tint WGSL bug. Maybe we just never thought of doing the splatting. That should be fine.",
+      "parentUuid": "3f335e6c_47c6f38c",
+      "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
