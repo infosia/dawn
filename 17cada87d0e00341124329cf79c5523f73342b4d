@@ -54,6 +54,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "60b6a39a_7509b614",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T11:56:13Z",
+      "side": 1,
+      "message": "I\u0027ll do header fixes in a follow-up to try to land this and unblock the rest of wgpu::StringView work. I\u0027m having trouble landing things with the timezone roundtrips for code review and it makes the patch stacks longer and harder to manage.",
+      "parentUuid": "2ec8cf64_777b56c7",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ed0ee76_2165a18f",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T11:56:13Z",
+      "side": 1,
+      "message": "That\u0027s basically what `optional` means. Labels are optional in descriptors and I believe that Austin chose to use `NullableStringView` in `SetLabel` to match what\u0027s in the descriptor, even if handling in Dawn always decays the nil string to `\"\"`. If that\u0027s something that we want to change (either making these not `optional`, or handling the `nil` string to unset the label), I\u0027d like to do it in a follow-up to unblock other CLs.\n\nIt\u0027s also useful in the Kotlin bindings to generate `String?` instead of `String`,",
+      "parentUuid": "91a8cd9e_24d7069d",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d28da5cb_88d52d0c",
         "filename": "src/dawn/native/utils/WGPUHelpers.h",
         "patchSetId": 1
@@ -83,6 +119,24 @@
       "side": 1,
       "message": "BTW this change may mean we can get rid of the special-casing for strings containing `\\0` in Blink!",
       "parentUuid": "d28da5cb_88d52d0c",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55c96ac0_606d155c",
+        "filename": "src/dawn/native/utils/WGPUHelpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T11:56:13Z",
+      "side": 1,
+      "message": "Yes this is only for message strings, and actually I\u0027ll do minor changes to this CL to add it to more message strings where I inadvertently removed it. However it\u0027s only used in a few places (you can see all call sites in this CL as I renamed the function), and in particular isn\u0027t used for handling of `entryPoint`. On a CL up on the stack that handles `entryPoint` is landed we can remove the Blink special casing and I filed issue 369045913 for this.",
+      "parentUuid": "a3589b6b_f3d13e1b",
       "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
