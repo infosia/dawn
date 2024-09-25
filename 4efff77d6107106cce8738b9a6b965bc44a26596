@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54d52ee3_587003d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T16:20:10Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "4efff77d6107106cce8738b9a6b965bc44a26596",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63249f60_a481a72b",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T16:20:10Z",
+      "side": 1,
+      "message": "FYI Dawn wraps line at 100, though I imagine this is done automatically by your VIM config.",
+      "revId": "4efff77d6107106cce8738b9a6b965bc44a26596",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7a99f58_05e3dd9d",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T16:20:10Z",
+      "side": 1,
+      "message": "```suggestion\n                // how to actually pass the Android external format to that API. However,\n```",
+      "revId": "4efff77d6107106cce8738b9a6b965bc44a26596",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
