@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4182c97c_d9f163e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-09-25T08:08:11Z",
+      "side": 1,
+      "message": "Whitespace cleanup and a filename fix",
+      "revId": "e0aeff9d9ccd3333c2351b74241304740e9e9f7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
