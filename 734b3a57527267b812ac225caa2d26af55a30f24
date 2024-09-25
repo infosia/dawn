@@ -61,6 +61,48 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "06a8d65c_35fb80f2",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-09-25T12:29:46Z",
+      "side": 1,
+      "message": "I\u0027m disinclined to inline the macro in order to reduce complexity in the calling code, because for now the macro encapsulates that surprise recursion call; but I don\u0027t feel strongly about this.  I\u0027ll inline it in this CL if you want me to.  Want me to?",
+      "parentUuid": "6ab1c89f_7305cbbd",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b67f32c4_a5a9ab9e",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-09-25T12:29:46Z",
+      "side": 1,
+      "message": "I\u0027ll chase that up with dawn team, see if it\u0027s something that they would fix",
+      "parentUuid": "1387fc0c_f84eb434",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 77
+      },
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cae502b7_01f1fab1",
         "filename": "generator/templates/art/kotlin_record_conversion.cpp",
         "patchSetId": 2
@@ -72,6 +114,24 @@
       "writtenOn": "2024-09-25T08:44:56Z",
       "side": 1,
       "message": "Gerrit\u0027s diff report seems to be confused by the change; is it just changes to whitespace in the generated code?",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76d1adc8_40aced07",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-09-25T12:29:46Z",
+      "side": 1,
+      "message": "Just whitespace changes.  Indents across the whole section of code, multiple blank lines removed, and some manual padding on line 174.",
+      "parentUuid": "cae502b7_01f1fab1",
       "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
