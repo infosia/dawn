@@ -33,6 +33,24 @@
       "message": "Hm, this seems to produce MSL errors as MSL has real pointers, we end up with `\u0026`s where we don\u0027t want them. I think this should probably be abandonded ....",
       "revId": "8e41a56584458f7258c072caf64efd76e7f2b15e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9039b14a_c722feab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-25T14:26:18Z",
+      "side": 1,
+      "message": "Yeah, I forgot about the way we handled these builtins. Agree we should abandon this for now.",
+      "parentUuid": "c28f79fe_258f7682",
+      "revId": "8e41a56584458f7258c072caf64efd76e7f2b15e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
