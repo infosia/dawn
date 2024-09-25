@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4644e264_f3188a16",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-25T14:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33b8f8c6_0c6aee92",
+      "revId": "15e21e3a460d126a71d8ca05abde0a6d10ec5d82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec9b8d2d_d7c490fc",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-09-25T04:02:03Z",
       "side": 1,
       "message": "Why is this `CheckType` special? Like, we don\u0027t do this early return for the call on 1197?",
+      "revId": "15e21e3a460d126a71d8ca05abde0a6d10ec5d82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84d92a44_b669bce0",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-09-25T14:45:05Z",
+      "side": 1,
+      "message": "I had changed this while prototyping, and apparently copied in a discarded idea instead of just reverting the changes.\n\nI have restored the original code.",
+      "parentUuid": "ec9b8d2d_d7c490fc",
       "revId": "15e21e3a460d126a71d8ca05abde0a6d10ec5d82",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
