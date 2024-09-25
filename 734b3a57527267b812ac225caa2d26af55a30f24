@@ -101,6 +101,48 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb8ed699_92045643",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-09-25T13:36:19Z",
+      "side": 1,
+      "message": "It\u0027s fine like this, we can inline it later.",
+      "parentUuid": "06a8d65c_35fb80f2",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4675aed6_b263922c",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-09-25T13:36:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b67f32c4_a5a9ab9e",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 77
+      },
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cae502b7_01f1fab1",
