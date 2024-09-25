@@ -395,6 +395,30 @@
       },
       "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58353a71_6e490e03",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T10:43:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "083edb1f_b1833b9b",
+      "range": {
+        "startLine": 284,
+        "startChar": 6,
+        "endLine": 284,
+        "endChar": 16
+      },
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
