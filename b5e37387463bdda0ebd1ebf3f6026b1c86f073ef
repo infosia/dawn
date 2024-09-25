@@ -124,6 +124,24 @@
       "parentUuid": "00c63214_ed16545d",
       "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15b12267_8310e6b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-09-25T20:14:44Z",
+      "side": 1,
+      "message": "Actually, it\u0027s only 102 tests, not too bad. Given that it\u0027s only snorm formats that are failing, my guess is that it\u0027s this workaround in `BlitTextureToBuffer`:\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlitTextureToBuffer.cpp?q\u003dBlitTextureToBuffer\u0026ss\u003dchromium\n\nIn `CopyTests_T2B`, I think you could suppress where `IsANGLED3D11() \u0026\u0026 \u003csnorm texture format checks\u003e`.",
+      "parentUuid": "00c63214_ed16545d",
+      "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
