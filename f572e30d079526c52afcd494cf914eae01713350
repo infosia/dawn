@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "f572e30d079526c52afcd494cf914eae01713350",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82c9f167_49ebeb61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-25T23:32:24Z",
+      "side": 1,
+      "message": "Realized Chrome had a CL that depended on this, so waiting for that revert to land before submitting this. https://chromium-review.googlesource.com/c/chromium/src/+/5892396",
+      "revId": "f572e30d079526c52afcd494cf914eae01713350",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
