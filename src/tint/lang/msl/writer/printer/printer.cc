@@ -117,6 +117,9 @@ class Printer : public tint::TextGenerator {
 
     /// @returns the generated MSL shader
     tint::Result<PrintResult> Generate() {
+        // Force validation to happen even if the IR happened to be clean.
+        ir_.SetDirty();
+
         auto valid =
             core::ir::ValidateAndDumpIfNeeded(ir_, "MSL writer",
                                               core::ir::Capabilities{

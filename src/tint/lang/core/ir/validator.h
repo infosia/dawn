@@ -68,7 +68,7 @@ Result<SuccessType> Validate(const Module& mod, Capabilities capabilities = {});
 /// @param msg the msg to accompany the output
 /// @param capabilities the optional capabilities that are allowed
 /// @returns success or failure
-Result<SuccessType> ValidateAndDumpIfNeeded(const Module& ir,
+Result<SuccessType> ValidateAndDumpIfNeeded(Module& ir,
                                             const char* msg,
                                             Capabilities capabilities = {});
 

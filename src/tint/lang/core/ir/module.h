@@ -84,6 +84,7 @@ class Module {
     /// @returns the pointer to the instruction
     template <typename TYPE, typename... ARGS>
     TYPE* CreateInstruction(ARGS&&... args) {
+        SetDirty();
         return allocators_.instructions.Create<TYPE>(NextInstructionId(),
                                                      std::forward<ARGS>(args)...);
     }
@@ -94,6 +95,7 @@ class Module {
     /// @returns the pointer to the value
     template <typename TYPE, typename... ARGS>
     TYPE* CreateValue(ARGS&&... args) {
+        SetDirty();
         return allocators_.values.Create<TYPE>(std::forward<ARGS>(args)...);
     }
 
@@ -154,6 +156,13 @@ class Module {
     /// @returns the functions in the module, in dependency order
     Vector<const Function*, 16> DependencyOrderedFunctions() const;
 
+    /// Sets the module dirty
+    void SetDirty() { is_dirty_ = true; }
+    /// Sets the module as not-dirty
+    void SetClean() { is_dirty_ = false; }
+    /// @returns true if the module is dirty
+    bool IsDirty() { return is_dirty_; }
+
     /// The block allocator
     BlockAllocator<Block> blocks;
 
@@ -186,6 +195,8 @@ class Module {
     } allocators_;
 
     Instruction::Id next_instruction_id_ = 0;
+
+    bool is_dirty_ = false;
 };
 
 }  // namespace tint::core::ir

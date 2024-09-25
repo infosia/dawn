@@ -115,6 +115,9 @@ class Printer : public tint::TextGenerator {
 
     /// @returns the generated GLSL shader
     tint::Result<std::string> Generate() {
+        // Force validation to happen even if the IR happened to be clean.
+        ir_.SetDirty();
+
         auto valid = core::ir::ValidateAndDumpIfNeeded(ir_, "GLSL writer");
         if (valid != Success) {
             return std::move(valid.Failure());

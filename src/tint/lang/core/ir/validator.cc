@@ -2314,7 +2314,7 @@ Result<SuccessType> Validate(const Module& mod, Capabilities capabilities) {
     return v.Run();
 }
 
-Result<SuccessType> ValidateAndDumpIfNeeded([[maybe_unused]] const Module& ir,
+Result<SuccessType> ValidateAndDumpIfNeeded([[maybe_unused]] Module& ir,
                                             [[maybe_unused]] const char* msg,
                                             [[maybe_unused]] Capabilities capabilities) {
 #if TINT_DUMP_IR_WHEN_VALIDATING
@@ -2326,6 +2326,12 @@ Result<SuccessType> ValidateAndDumpIfNeeded([[maybe_unused]] const Module& ir,
 #endif
 
 #ifndef NDEBUG
+    // If the module is not dirty, skip validation
+    if (!ir.IsDirty()) {
+        return Success;
+    }
+
+    ir.SetClean();
     auto result = Validate(ir, capabilities);
     if (result != Success) {
         return result.Failure();

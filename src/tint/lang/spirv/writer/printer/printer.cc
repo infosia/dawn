@@ -278,6 +278,9 @@ class Printer {
 
     /// Builds the SPIR-V from the IR
     Result<SuccessType> Generate() {
+        // Force validation to happen even if the IR happened to be clean.
+        ir_.SetDirty();
+
         auto valid = core::ir::ValidateAndDumpIfNeeded(ir_, "SPIR-V writer");
         if (valid != Success) {
             return valid.Failure();

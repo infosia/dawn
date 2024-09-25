@@ -158,6 +158,10 @@ class Printer : public tint::TextGenerator {
             core::ir::Capability::kAllowModuleScopeLets,
             core::ir::Capability::kAllowVectorElementPointer,
         };
+
+        // Force validation to happen even if the IR happened to be clean.
+        ir_.SetDirty();
+
         auto valid = core::ir::ValidateAndDumpIfNeeded(ir_, "HLSL writer", capabilities);
         if (valid != Success) {
             return std::move(valid.Failure());
