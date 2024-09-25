@@ -106,6 +106,24 @@
       "parentUuid": "6e84bbc9_1f0630ba",
       "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "005aa893_2c4c1466",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-25T20:06:25Z",
+      "side": 1,
+      "message": "Oh, the irony that some of it\u0027s in our float-to-uint conversion polyfilll, where we get a float and cast it to a uint and call mix.\n\n`return mix(4294967295u, mix(uint(v), 0u, (v \u003c 0.0f)), (v \u003c\u003d 4294967040.0f));`\n\n\nHow bad of an idea would it be, that I change mix to cast to a float? so we\u0027d end up with something wonky like:\n\n`return uint(mix(float(4294967295u), mix(float(uint(v)),float(0u), (v \u003c 0.0f)), (v \u003c\u003d 4294967040.0f)));`\n\nWe could do this just in IR, and leave AST doing as it does now as it\u0027s, probably, Ok?",
+      "parentUuid": "00c63214_ed16545d",
+      "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
