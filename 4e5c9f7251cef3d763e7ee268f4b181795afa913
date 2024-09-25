@@ -16,6 +16,23 @@
       "message": "PTAL. I realized that the work to hide the allocators inside the IR module made simple dirty tracking trivial.",
       "revId": "4e5c9f7251cef3d763e7ee268f4b181795afa913",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0aa28fae_a85514ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-25T03:52:20Z",
+      "side": 1,
+      "message": "I\u0027d be curious if you see similar speedups as me Antonio to compare to your original numbers.",
+      "revId": "4e5c9f7251cef3d763e7ee268f4b181795afa913",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
