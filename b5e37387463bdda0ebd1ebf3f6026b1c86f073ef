@@ -52,6 +52,24 @@
       "parentUuid": "dd6db215_985f2cf8",
       "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f335e6c_47c6f38c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-25T18:52:41Z",
+      "side": 1,
+      "message": "I think the AST backend is probably OK to use ternaries since we unconditionally hoist side-effecting expressions out to their own statement, so there\u0027s no danger that we would not evaluate something that actually matters.\n\nThe IR backend inlines expressions in more scenarios so ternaries don\u0027t work.",
+      "parentUuid": "dd6db215_985f2cf8",
+      "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
