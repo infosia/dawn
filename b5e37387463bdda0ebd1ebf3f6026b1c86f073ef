@@ -88,6 +88,24 @@
       "parentUuid": "3f335e6c_47c6f38c",
       "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00c63214_ed16545d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-09-25T19:54:10Z",
+      "side": 1,
+      "message": "Ohhh, maybe the Win failures are telling us the answer: ANGLE D3D11 (which is only complete up to ES 3.0) never implemented integer mix(). We could disable the tests, but there are a lot of them...",
+      "parentUuid": "6e84bbc9_1f0630ba",
+      "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
