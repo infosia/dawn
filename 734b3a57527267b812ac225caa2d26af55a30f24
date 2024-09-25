@@ -43,6 +43,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6ab1c89f_7305cbbd",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-09-25T08:49:29Z",
+      "side": 1,
+      "message": "OK looking again, since it\u0027s only called from the context below, which gives it a new scope, it\u0027s safe in practice as it is now. Perhaps we should inline the macro though, as we considered the other day.",
+      "parentUuid": "d52ce927_4501e44d",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cae502b7_01f1fab1",
         "filename": "generator/templates/art/kotlin_record_conversion.cpp",
         "patchSetId": 2
