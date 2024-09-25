@@ -178,6 +178,24 @@
       "parentUuid": "9b66b4d4_03a31e9e",
       "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6128397a_f73c27b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-09-25T20:24:02Z",
+      "side": 1,
+      "message": "I\u0027m confused about which tests are failing. The gerrit summary only shows the CopyTests_T2B failures, but the actual run actually shows tens of thousands (many unexpectedly skipped?). Maybe it\u0027s worth suppressing the T2B tests and seeing if that cleans things up?\n\nYou could leave the AST path as-is, but if we\u0027re going to switch over the dawn_end2end_tests at some point to use GLSL IR, we\u0027ll hit the same problem when that happens.\n\nWe could consider just shutting down the ANGLE/D3D11 step altogether, if it\u0027s too much hassle. Alternatively, if some kind soul feels like implementing integer `mix()` in ANGLE/D3D11, that\u0027d fix this whole mess.",
+      "parentUuid": "9b66b4d4_03a31e9e",
+      "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
