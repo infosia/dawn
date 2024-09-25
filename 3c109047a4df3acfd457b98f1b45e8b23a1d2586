@@ -67,6 +67,23 @@
       "message": "FWIW I don\u0027t have Submit Rights here for some reason, somebody else will have to do it!",
       "revId": "3c109047a4df3acfd457b98f1b45e8b23a1d2586",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd431dd2_564ba39f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T15:35:07Z",
+      "side": 1,
+      "message": "Ah yes it\u0027s special because it is an imported Github PR.",
+      "revId": "3c109047a4df3acfd457b98f1b45e8b23a1d2586",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
