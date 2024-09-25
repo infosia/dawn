@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a0870be_b4d132c4",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-25T16:22:18Z",
+      "side": 1,
+      "message": "The names will clash if there are two different calls with different times in the same module.\n\nThis sort of thing could happen to lots of builtins, and we should maybe try and think of a way to get better automated E2E test coverage (e.g. have the test generator combine different overloads of each builtin into the same file).",
+      "revId": "42fd29d66c47e7e4eab735b840d040d7cff09abc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
