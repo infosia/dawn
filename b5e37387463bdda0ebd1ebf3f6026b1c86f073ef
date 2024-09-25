@@ -196,6 +196,24 @@
       "parentUuid": "9b66b4d4_03a31e9e",
       "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8c6c3a1_da082626",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-09-25T20:48:18Z",
+      "side": 1,
+      "message": "I think we just need to fix this in ANGLE. It\u0027s a bug in the emulated function generation in the HLSL backend not handling this variant of mix with the last argument being a bool.",
+      "parentUuid": "6128397a_f73c27b3",
+      "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
