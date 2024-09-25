@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2e7f9c18_d554d3df",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T14:56:06Z",
+      "side": 1,
+      "message": "Turns out fixing in C++ is complex because adding ` \u003d {}` in args requires that `StringView`\u0027s definition be visible earlier, but we define structures after objects so that we can use objects in structures.",
+      "parentUuid": "60b6a39a_7509b614",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d28da5cb_88d52d0c",
         "filename": "src/dawn/native/utils/WGPUHelpers.h",
         "patchSetId": 1
