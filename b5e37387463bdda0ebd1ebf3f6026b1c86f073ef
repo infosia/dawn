@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dba798a_841ad8dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-09-25T18:38:53Z",
+      "side": 1,
+      "message": "Here are the results of my spelunking: GLSL inherited the ternary from HLSL, which still appears to do the same (at least in the ast_printer). I haven\u0027t looked into what HLSL semantics are for ternaries (if it evaluates both sides). \n\nI added a mix() workaround for bool vectors here:\n\nhttps://dawn-review.googlesource.com/c/tint/+/80660/2/src/writer/glsl/generator_impl.cc\n\nBut it turns out mix() doesn\u0027t work with bvec until later GLSL versions (3.2?), so Ben added a workaround here that uses ternaries internally:\n\nhttps://dawn-review.googlesource.com/c/dawn/+/123240",
+      "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
