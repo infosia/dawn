@@ -34,6 +34,24 @@
       "parentUuid": "6dba798a_841ad8dd",
       "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88fadc76_66bac11f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-25T18:51:50Z",
+      "side": 1,
+      "message": "(At least, until a newer HLSL where they changed it I think, but we don\u0027t use that later HLSL version)",
+      "parentUuid": "dd6db215_985f2cf8",
+      "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
