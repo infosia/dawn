@@ -106,6 +106,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "affa6548_07ebaced",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-25T19:03:58Z",
+      "side": 1,
+      "message": "Sorry I should have been clearer, `SetLabel()` without args doesn\u0027t need to be valid (probably shouldn\u0027t be valid), since labels are non-nullable in the WebIDL.\n\nBut `SetLabel({})` should work (nil defaults to empty string somewhere, but it doesn\u0027t matter what layer that defaulting happens at).",
+      "parentUuid": "2e7f9c18_d554d3df",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce1adbb4_fffef4f8",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-25T19:03:58Z",
+      "side": 1,
+      "message": "I think we should change it in Dawn eventually, but it definitely doesn\u0027t need to be now. (I just wasn\u0027t sure whether Dawn still internally allowed labels to be null or not.)\n\nIn the Kotlin bindings I wouldn\u0027t expect `SetLabel(null)` to work, e.g. you can\u0027t `.label \u003d null` or `.label \u003d undefined` in JS. (those will set the label to `\"null\"` or `\"undefined\"` due to IDL conversion rules)\n\nI don\u0027t know what the Kotlin looks like for descriptors but they should behave similarly to JS, where omitting a label sets the label to `\"\"`. (In JS `label: undefined` also defaults to `\"\"` but that\u0027s a JS-ism.)\n\nAnyway pretty sure no change is necessary in this CL.",
+      "parentUuid": "8ed0ee76_2165a18f",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d28da5cb_88d52d0c",
@@ -155,6 +191,24 @@
       "side": 1,
       "message": "Yes this is only for message strings, and actually I\u0027ll do minor changes to this CL to add it to more message strings where I inadvertently removed it. However it\u0027s only used in a few places (you can see all call sites in this CL as I renamed the function), and in particular isn\u0027t used for handling of `entryPoint`. On a CL up on the stack that handles `entryPoint` is landed we can remove the Blink special casing and I filed issue 369045913 for this.",
       "parentUuid": "a3589b6b_f3d13e1b",
+      "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7ac0f40_0fd4155d",
+        "filename": "src/dawn/native/utils/WGPUHelpers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-25T19:03:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "55c96ac0_606d155c",
       "revId": "17cada87d0e00341124329cf79c5523f73342b4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
