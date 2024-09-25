@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33b8f8c6_0c6aee92",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-25T04:02:03Z",
+      "side": 1,
+      "message": "nit: the `else` isn\u0027t needed in each of these as they all return",
+      "revId": "15e21e3a460d126a71d8ca05abde0a6d10ec5d82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec9b8d2d_d7c490fc",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-25T04:02:03Z",
+      "side": 1,
+      "message": "Why is this `CheckType` special? Like, we don\u0027t do this early return for the call on 1197?",
+      "revId": "15e21e3a460d126a71d8ca05abde0a6d10ec5d82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
