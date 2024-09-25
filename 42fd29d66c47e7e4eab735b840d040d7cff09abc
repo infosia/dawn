@@ -52,6 +52,24 @@
       "parentUuid": "8aef670b_df55e9f2",
       "revId": "42fd29d66c47e7e4eab735b840d040d7cff09abc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8e554f8_68633ac4",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-25T17:14:05Z",
+      "side": 1,
+      "message": "The disassembler already handles that case:\n\n```\n%foo \u003d func():void {\n  $B1: {\n    %x:ptr\u003cfunction, f32, read_write\u003e \u003d var, 1.0f\n    %y:ptr\u003cfunction, vec2\u003cf32\u003e, read_write\u003e \u003d var, vec2\u003cf32\u003e(2.0f)\n    %4:f32 \u003d load %x\n    %5:f32 \u003d call %tint_quantize_to_f16, %4\n    %a:f32 \u003d let %5\n    %8:vec2\u003cf32\u003e \u003d load %y\n    %9:vec2\u003cf32\u003e \u003d call %tint_quantize_to_f16_1, %8\n    %b:vec2\u003cf32\u003e \u003d let %9\n    ret\n  }\n}\n%tint_quantize_to_f16 \u003d func(%val:f32):f32 {\n  $B2: {\n    %13:vec2\u003cf32\u003e \u003d construct %val\n    %14:u32 \u003d pack2x16float %13\n    %15:vec2\u003cf32\u003e \u003d unpack2x16float %14\n    %16:f32 \u003d swizzle %15, x\n    ret %16\n  }\n}\n%tint_quantize_to_f16_1 \u003d func(%val_1:vec2\u003cf32\u003e):vec2\u003cf32\u003e {  # %val_1: \u0027val\u0027\n  $B3: {\n    %18:u32 \u003d pack2x16float %val_1\n    %19:vec2\u003cf32\u003e \u003d unpack2x16float %18\n    ret %19\n  }\n}\n```",
+      "parentUuid": "e06f146f_8fc8db81",
+      "revId": "42fd29d66c47e7e4eab735b840d040d7cff09abc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
