@@ -160,6 +160,24 @@
       "parentUuid": "15b12267_8310e6b6",
       "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ba46c54_c683b972",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-25T20:19:45Z",
+      "side": 1,
+      "message": "There are a bunch of others as well, `ExternalTextureTests.RotateAndOrFlipTextureLoadSinglePlaneNotSquare`, `NonzeroNonrenderableTextureCreationTests`, `ShaderTests.ComputeLog2`, etc.\n\nAre you saying they should all have some kind of suppression? (Like the ComputeLog2 test I\u0027m guessing are due to the tint float to uint conversion code inserting a select call, so they just need to always be suppressed.)",
+      "parentUuid": "9b66b4d4_03a31e9e",
+      "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
