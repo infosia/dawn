@@ -34,6 +34,24 @@
       "parentUuid": "9a0870be_b4d132c4",
       "revId": "42fd29d66c47e7e4eab735b840d040d7cff09abc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e06f146f_8fc8db81",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-25T16:42:06Z",
+      "side": 1,
+      "message": "The IR builder doesn\u0027t do that: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/core/ir/builder.cc;l\u003d68\n\nBut the GLSL printer does when it emits names, so maybe it\u0027s OK? I guess we don\u0027t care that much about uniqueness of names in the intermediate IR, although disassemblies might get confusing.",
+      "parentUuid": "8aef670b_df55e9f2",
+      "revId": "42fd29d66c47e7e4eab735b840d040d7cff09abc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
