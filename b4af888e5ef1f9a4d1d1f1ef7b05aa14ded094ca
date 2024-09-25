@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6332f645_804b0605",
+        "filename": "src/dawn/native/vulkan/SharedTextureMemoryVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T10:41:18Z",
+      "side": 1,
+      "message": "At the moment the link between Texture and STM is done by making TextureBase inherit from [SharedResource](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/SharedResourceMemory.h;drc\u003df522344e45882da4c7f7cb1b3a0a7bd747d654bb;l\u003d47) which just adds a SharedResourceContents member. I believe this is done to avoid the diamond inheritance problem as otherwise we\u0027d need:\n\n - `TextureBase`\n - `SharedTextureMemoryTextureBase` inheriting from TextureBase\n - `vulkan::TextureBase` inheriting from TextureBase\n - `vulkan::SharedTexture` inheriting from both `vulkan::TextureBase` and `SharedTextureMemoryTextureBase` (diamond inheritance, bad)\n \nIt is a general issue where it\u0027s hard to make frontend class hierarchies in Dawn because of the way we structure backends to inherit from the frontend. We deal with the same issues with Render/Compute pipelines for examples where some backends have their own Pipeline object common to both compute and render, but doesn\u0027t inherit from PipelineBase to avoid a diamond.",
+      "parentUuid": "7e8c1f73_332edc5d",
+      "range": {
+        "startLine": 1002,
+        "startChar": 4,
+        "endLine": 1002,
+        "endChar": 15
+      },
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7af87eed_423ef061",
@@ -95,6 +119,30 @@
           ]
         }
       ],
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2d5b0f3_90c5af00",
+        "filename": "src/dawn/native/vulkan/SwapChainVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T10:41:18Z",
+      "side": 1,
+      "message": "This was just to make it more clear in the header where textures are coming from but isn\u0027t really needed. Done.",
+      "parentUuid": "7af87eed_423ef061",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 24
+      },
       "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -217,6 +265,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f2a6f18_9067fc67",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T10:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49c6bb4d_01e5bce6",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 44
+      },
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "175b550d_6a2615a5",
@@ -274,6 +346,30 @@
           ]
         }
       ],
+      "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7daa9e69_b21a8078",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-25T10:41:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "175b550d_6a2615a5",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 20
+      },
       "revId": "b4af888e5ef1f9a4d1d1f1ef7b05aa14ded094ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
