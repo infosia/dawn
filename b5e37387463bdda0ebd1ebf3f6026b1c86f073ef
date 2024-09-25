@@ -16,6 +16,24 @@
       "message": "Here are the results of my spelunking: GLSL inherited the ternary from HLSL, which still appears to do the same (at least in the ast_printer). I haven\u0027t looked into what HLSL semantics are for ternaries (if it evaluates both sides). \n\nI added a mix() workaround for bool vectors here:\n\nhttps://dawn-review.googlesource.com/c/tint/+/80660/2/src/writer/glsl/generator_impl.cc\n\nBut it turns out mix() doesn\u0027t work with bvec until later GLSL versions (3.2?), so Ben added a workaround here that uses ternaries internally:\n\nhttps://dawn-review.googlesource.com/c/dawn/+/123240",
       "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd6db215_985f2cf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-25T18:50:03Z",
+      "side": 1,
+      "message": "`mix` is listed in the ES 3.10 spec as accepting bools, and I think we\u0027re 3.10 yea?\n\n```\ngenFType mix (genFType x, genFType y, genBType a)\ngenIType mix (genIType x, genIType y, genBType a)\ngenUType mix (genUType x, genUType y, genBType a)\ngenBType mix (genBType x, genBType y, genBType a)\n```\n\nhttps://registry.khronos.org/OpenGL/specs/es/3.1/GLSL_ES_Specification_3.10.pdf\n\nIn HLSL a ternary evaluates both sides regardless of the condition, so does the semantics we expected from `select`.",
+      "parentUuid": "6dba798a_841ad8dd",
+      "revId": "b5e37387463bdda0ebd1ebf3f6026b1c86f073ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
