@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d52ce927_4501e44d",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-09-25T08:44:56Z",
+      "side": 1,
+      "message": "As we\u0027re getting rid of the new scope there\u0027s a danger that \u0027init\u0027 could be reused. Do you want to take that risk, inline the definition or retain the scope?",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1387fc0c_f84eb434",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-09-25T08:44:56Z",
+      "side": 1,
+      "message": "Shall we make a bug to track fixing the indenter?",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 77
+      },
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cae502b7_01f1fab1",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-09-25T08:44:56Z",
+      "side": 1,
+      "message": "Gerrit\u0027s diff report seems to be confused by the change; is it just changes to whitespace in the generated code?",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
