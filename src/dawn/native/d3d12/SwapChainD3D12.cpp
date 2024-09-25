@@ -87,7 +87,7 @@ MaybeError SwapChain::CollectSwapChainBuffers() {
     return {};
 }
 
-MaybeError SwapChain::PresentImpl() {
+MaybeError SwapChain::PresentImpl(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
     Queue* queue = ToBackend(GetDevice()->GetQueue());
 
     // Transition the texture to the present state as required by IDXGISwapChain1::Present()
@@ -98,7 +98,7 @@ MaybeError SwapChain::PresentImpl() {
                                             mApiTexture->GetAllSubresources());
     DAWN_TRY(queue->SubmitPendingCommands());
 
-    DAWN_TRY(PresentDXGISwapChain());
+    DAWN_TRY(PresentDXGISwapChain(x, y, width, height));
 
     // Record that "new" is the last time the buffer has been used.
     DAWN_TRY(queue->NextSerial());

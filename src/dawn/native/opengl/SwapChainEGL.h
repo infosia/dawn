@@ -60,7 +60,7 @@ class SwapChainEGL final : public SwapChainBase {
     Ref<Texture> mTexture;
     Ref<TextureView> mTextureView;
 
-    MaybeError PresentImpl() override;
+    MaybeError PresentImpl(uint32_t x, uint32_t y, uint32_t width, uint32_t height) override;
     ResultOrError<SwapChainTextureInfo> GetCurrentTextureImpl() override;
     void DetachFromSurfaceImpl() override;
 };

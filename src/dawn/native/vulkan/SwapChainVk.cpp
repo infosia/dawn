@@ -374,7 +374,7 @@ ResultOrError<SwapChain::Config> SwapChain::ChooseConfig(
     return config;
 }
 
-MaybeError SwapChain::PresentImpl() {
+MaybeError SwapChain::PresentImpl(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
     Device* device = ToBackend(GetDevice());
 
     Queue* queue = ToBackend(device->GetQueue());

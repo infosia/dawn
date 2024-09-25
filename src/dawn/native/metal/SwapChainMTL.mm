@@ -94,7 +94,7 @@ MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
     return {};
 }
 
-MaybeError SwapChain::PresentImpl() {
+MaybeError SwapChain::PresentImpl(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
     DAWN_ASSERT(mCurrentDrawable != nullptr);
     [*mCurrentDrawable present];
 

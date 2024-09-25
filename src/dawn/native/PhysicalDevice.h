@@ -55,6 +55,7 @@ struct PhysicalDeviceSurfaceCapabilities {
     std::vector<wgpu::TextureFormat> formats;
     std::vector<wgpu::PresentMode> presentModes;
     std::vector<wgpu::CompositeAlphaMode> alphaModes;
+    bool partialSwap = false;
 };
 
 struct FeatureValidationResult {

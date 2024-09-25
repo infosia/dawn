@@ -40,6 +40,8 @@
 #include "dawn/native/d3d11/PlatformFunctionsD3D11.h"
 #include "dawn/native/d3d11/UtilsD3D11.h"
 
+#include "dawn/native/d3d/PhysicalDeviceD3D.h"
+
 namespace dawn::native::d3d11 {
 
 PhysicalDevice::PhysicalDevice(Backend* backend,
@@ -353,6 +355,16 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) c
     if (auto* d3dProperties = info.Get<AdapterPropertiesD3D>()) {
         d3dProperties->shaderModel = GetDeviceInfo().shaderModel;
     }
+}
+
+ResultOrError<PhysicalDeviceSurfaceCapabilities> PhysicalDevice::GetSurfaceCapabilities(
+    InstanceBase* instance,
+    const Surface* surface) const {
+    PhysicalDeviceSurfaceCapabilities caps;
+    DAWN_TRY_ASSIGN(caps,
+                    dawn::native::d3d::PhysicalDevice::GetSurfaceCapabilities(instance, surface));
+    caps.partialSwap = true;
+    return caps;
 }
 
 }  // namespace dawn::native::d3d11

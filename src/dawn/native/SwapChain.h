@@ -86,7 +86,7 @@ class SwapChainBase : public ApiObjectBase {
                       uint32_t height);
     TextureBase* APIGetCurrentTexture();
     TextureViewBase* APIGetCurrentTextureView();
-    void APIPresent();
+    void APIPresent(uint32_t x = 0, uint32_t y = 0, uint32_t width = 0, uint32_t height = 0);
 
     // TODO(crbug.com/dawn/831):
     // APIRelease() can be called without any synchronization guarantees so we need to use a Release
@@ -103,6 +103,7 @@ class SwapChainBase : public ApiObjectBase {
     wgpu::TextureUsage GetUsage() const;
     wgpu::PresentMode GetPresentMode() const;
     wgpu::CompositeAlphaMode GetAlphaMode() const;
+    bool GetPartialSwap() const;
     Surface* GetSurface() const;
     bool IsAttached() const;
     wgpu::BackendType GetBackendType() const;
@@ -131,6 +132,7 @@ class SwapChainBase : public ApiObjectBase {
     // descriptor returned by GetSwapChainBaseTextureDescriptor():
     std::vector<wgpu::TextureFormat> mViewFormats;
     wgpu::CompositeAlphaMode mAlphaMode;
+    bool mPartialSwap = false;
 
     // This is a weak reference to the surface. If the surface is destroyed it will call
     // DetachFromSurface and mSurface will be updated to nullptr.
@@ -148,7 +150,7 @@ class SwapChainBase : public ApiObjectBase {
     ResultOrError<Ref<TextureViewBase>> GetCurrentTextureView();
 
     // The call to present must destroy the current texture so further access to it are invalid.
-    virtual MaybeError PresentImpl() = 0;
+    virtual MaybeError PresentImpl(uint32_t x, uint32_t y, uint32_t width, uint32_t height) = 0;
 
     // Guaranteed to be called exactly once during the lifetime of the SwapChain. After it is
     // called no other virtual method can be called.

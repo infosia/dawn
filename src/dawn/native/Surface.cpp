@@ -520,6 +520,7 @@ MaybeError Surface::GetCapabilities(AdapterBase* adapter, SurfaceCapabilities* c
         [&capabilities](const PhysicalDeviceSurfaceCapabilities& caps) -> MaybeError {
             capabilities->nextInChain = nullptr;
             capabilities->usages = caps.usages;
+            capabilities->partialSwap = caps.partialSwap;
             utils::AllocateApiSeqFromStdVector(&capabilities->formats, &capabilities->formatCount,
                                                caps.formats);
             utils::AllocateApiSeqFromStdVector(&capabilities->presentModes,
@@ -577,12 +578,12 @@ ResultOrError<wgpu::TextureFormat> Surface::GetPreferredFormat(AdapterBase* adap
     return format;
 }
 
-MaybeError Surface::Present() {
+MaybeError Surface::Present(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
     DAWN_INVALID_IF(IsError(), "%s is invalid.", this);
     DAWN_INVALID_IF(!mSwapChain.Get(), "%s is not configured.", this);
 
     auto deviceLock(GetCurrentDevice()->GetScopedLock());
-    mSwapChain->APIPresent();
+    mSwapChain->APIPresent(x, y, width, height);
 
     return {};
 }
@@ -639,8 +640,8 @@ wgpu::TextureFormat Surface::APIGetPreferredFormat(AdapterBase* adapter) const {
     return format;
 }
 
-void Surface::APIPresent() {
-    MaybeError maybeError = Present();
+void Surface::APIPresent(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
+    MaybeError maybeError = Present(x, y, width, height);
     if (!GetCurrentDevice()) {
         [[maybe_unused]] bool error = mInstance->ConsumedError(std::move(maybeError));
     } else {

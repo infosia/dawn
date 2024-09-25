@@ -79,6 +79,16 @@ UINT PresentModeToSwapChainFlags(wgpu::PresentMode mode) {
     return flags;
 }
 
+UINT PresentModeToPresentFlags(wgpu::PresentMode mode) {
+    UINT flags = 0;
+
+    if (mode == wgpu::PresentMode::Immediate) {
+        flags |= DXGI_PRESENT_ALLOW_TEARING;
+    }
+
+    return flags;
+}
+
 DXGI_USAGE ToDXGIUsage(DeviceBase* device, wgpu::TextureFormat format, wgpu::TextureUsage usage) {
     DXGI_USAGE dxgiUsage = DXGI_CPU_ACCESS_NONE;
     if (usage & wgpu::TextureUsage::TextureBinding) {
@@ -200,7 +210,8 @@ MaybeError SwapChain::InitializeSwapChainFromScratch() {
     swapChainDesc.BufferUsage = mConfig.usage;
     swapChainDesc.BufferCount = mConfig.bufferCount;
     swapChainDesc.Scaling = DXGI_SCALING_STRETCH;
-    swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+    swapChainDesc.SwapEffect =
+        GetPartialSwap() ? DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL : DXGI_SWAP_EFFECT_FLIP_DISCARD;
     swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_IGNORE;
     swapChainDesc.Flags = mConfig.swapChainFlags;
 
@@ -250,10 +261,25 @@ MaybeError SwapChain::InitializeSwapChainFromScratch() {
     return CollectSwapChainBuffers();
 }
 
-MaybeError SwapChain::PresentDXGISwapChain() {
+MaybeError SwapChain::PresentDXGISwapChain(uint32_t x,
+                                           uint32_t y,
+                                           uint32_t width,
+                                           uint32_t height) {
     // Do the actual present. DXGI_STATUS_OCCLUDED is a valid return value that's just a
     // message to the application that it could stop rendering.
-    HRESULT presentResult = mDXGISwapChain->Present(PresentModeToSwapInterval(GetPresentMode()), 0);
+    UINT interval = PresentModeToSwapInterval(GetPresentMode());
+    UINT flags = PresentModeToPresentFlags(GetPresentMode());
+    HRESULT presentResult = S_OK;
+    if (GetPartialSwap()) {
+        DXGI_PRESENT_PARAMETERS params{};
+        // RECT dirtyRect(0, 0, GetWidth(), GetHeight());
+        RECT dirtyRect(x, y, x + width, y + height);
+        params.DirtyRectsCount = 1;
+        params.pDirtyRects = &dirtyRect;
+        presentResult = mDXGISwapChain->Present1(interval, flags, &params);
+    } else {
+        presentResult = mDXGISwapChain->Present(interval, flags);
+    }
     if (presentResult != DXGI_STATUS_OCCLUDED) {
         DAWN_TRY(CheckHRESULT(presentResult, "IDXGISwapChain::Present"));
     }

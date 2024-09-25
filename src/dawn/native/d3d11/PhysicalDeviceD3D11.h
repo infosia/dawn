@@ -49,6 +49,10 @@ class PhysicalDevice : public d3d::PhysicalDevice {
 
     bool SupportsFeatureLevel(FeatureLevel featureLevel) const override;
 
+    ResultOrError<PhysicalDeviceSurfaceCapabilities> GetSurfaceCapabilities(
+        InstanceBase* instance,
+        const Surface* surface) const override;
+
     const DeviceInfo& GetDeviceInfo() const;
     ResultOrError<ComPtr<ID3D11Device>> CreateD3D11Device(bool enableDebugLayer);
 

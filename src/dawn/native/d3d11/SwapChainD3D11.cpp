@@ -58,25 +58,16 @@ IUnknown* SwapChain::GetD3DDeviceForCreatingSwapChain() {
 }
 
 void SwapChain::ReuseBuffers(SwapChainBase* previousSwapChain) {
-    SwapChain* previousD3DSwapChain = ToBackend(previousSwapChain);
-    mBuffer = std::move(previousD3DSwapChain->mBuffer);
 }
 
 MaybeError SwapChain::CollectSwapChainBuffers() {
     DAWN_ASSERT(GetDXGISwapChain() != nullptr);
-    DAWN_ASSERT(!mBuffer);
-
-    // https://learn.microsoft.com/en-us/windows/win32/api/dxgi/ne-dxgi-dxgi_swap_effect
-    // DXGISwapChain is created with DXGI_SWAP_EFFECT_FLIP_DISCARD, we can read and write to the
-    // buffer 0 only for D3D11.
-    DAWN_TRY(CheckHRESULT(GetDXGISwapChain()->GetBuffer(0, IID_PPV_ARGS(&mBuffer)),
-                          "Getting IDXGISwapChain buffer"));
 
     return {};
 }
 
-MaybeError SwapChain::PresentImpl() {
-    DAWN_TRY(PresentDXGISwapChain());
+MaybeError SwapChain::PresentImpl(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
+    DAWN_TRY(PresentDXGISwapChain(x, y, width, height));
 
     mApiTexture->APIDestroy();
     mApiTexture = nullptr;
@@ -87,8 +78,12 @@ MaybeError SwapChain::PresentImpl() {
 ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
     // Create the API side objects for this use of the swapchain's buffer.
     TextureDescriptor descriptor = GetSwapChainBaseTextureDescriptor(this);
+    ComPtr<ID3D11Texture2D> buffer;
+    DAWN_TRY(CheckHRESULT(GetDXGISwapChain()->GetBuffer(0, IID_PPV_ARGS(&buffer)),
+                          "Getting IDXGISwapChain buffer"));
+
     DAWN_TRY_ASSIGN(mApiTexture,
-                    Texture::Create(ToBackend(GetDevice()), Unpack(&descriptor), mBuffer));
+                    Texture::Create(ToBackend(GetDevice()), Unpack(&descriptor), buffer));
     SwapChainTextureInfo info;
     info.texture = mApiTexture;
     info.status = wgpu::SurfaceGetCurrentTextureStatus::Success;
@@ -108,7 +103,6 @@ void SwapChain::DetachFromSurfaceImpl() {
         mApiTexture = nullptr;
     }
 
-    mBuffer = nullptr;
     ReleaseDXGISwapChain();
 }
 

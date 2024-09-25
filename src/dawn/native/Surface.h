@@ -126,7 +126,7 @@ class Surface final : public ErrorMonad {
     wgpu::Status APIGetCapabilities(AdapterBase* adapter, SurfaceCapabilities* capabilities) const;
     void APIGetCurrentTexture(SurfaceTexture* surfaceTexture) const;
     wgpu::TextureFormat APIGetPreferredFormat(AdapterBase* adapter) const;
-    void APIPresent();
+    void APIPresent(uint32_t x = 0, uint32_t y = 0, uint32_t width = 0, uint32_t height = 0);
     void APIUnconfigure();
     // TODO(crbug.com/42241188): Remove const char* version of the method.
     void APISetLabel(const char* label);
@@ -142,7 +142,7 @@ class Surface final : public ErrorMonad {
     MaybeError GetCapabilities(AdapterBase* adapter, SurfaceCapabilities* capabilities) const;
     MaybeError GetCurrentTexture(SurfaceTexture* surfaceTexture) const;
     ResultOrError<wgpu::TextureFormat> GetPreferredFormat(AdapterBase* adapter) const;
-    MaybeError Present();
+    MaybeError Present(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
 
     Ref<InstanceBase> mInstance;
     Type mType;

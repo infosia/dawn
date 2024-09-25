@@ -476,7 +476,8 @@
             {"name": "present mode count", "type": "size_t"},
             {"name": "present modes", "type": "present mode", "annotation": "const*", "length": "present mode count"},
             {"name": "alpha mode count", "type": "size_t"},
-            {"name": "alpha modes", "type": "composite alpha mode", "annotation": "const*", "length": "alpha mode count"}
+            {"name": "alpha modes", "type": "composite alpha mode", "annotation": "const*", "length": "alpha mode count"},
+            {"name": "partial swap", "type": "bool", "default": "false"}
         ],
         "methods": [
             {
@@ -498,7 +499,8 @@
             {"name": "alpha mode", "type": "composite alpha mode", "default": "auto"},
             {"name": "width", "type": "uint32_t"},
             {"name": "height", "type": "uint32_t"},
-            {"name": "present mode", "type": "present mode", "default": "fifo"}
+            {"name": "present mode", "type": "present mode", "default": "fifo"},
+            {"name": "partial swap", "type": "bool", "default": "false"}
         ]
     },
     "external texture binding entry": {
@@ -4080,7 +4082,12 @@
             {
                 "name": "present",
                 "returns": "void",
-                "args": []
+                "args": [
+                    {"name": "x", "type": "uint32_t", "default": 0, "optional": true},
+                    {"name": "y", "type": "uint32_t", "default": 0, "optional": true},
+                    {"name": "width", "type": "uint32_t", "default": 0, "optional": true},
+                    {"name": "height", "type": "uint32_t", "default": 0, "optional": true}
+                ]
             },
             {
                 "name": "unconfigure",

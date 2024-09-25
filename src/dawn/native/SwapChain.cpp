@@ -49,7 +49,9 @@ class ErrorSwapChain final : public SwapChainBase {
 
   private:
     ResultOrError<SwapChainTextureInfo> GetCurrentTextureImpl() override { DAWN_UNREACHABLE(); }
-    MaybeError PresentImpl() override { DAWN_UNREACHABLE(); }
+    MaybeError PresentImpl(uint32_t x, uint32_t y, uint32_t width, uint32_t height) override {
+        DAWN_UNREACHABLE();
+    }
     void DetachFromSurfaceImpl() override { DAWN_UNREACHABLE(); }
 };
 
@@ -131,6 +133,7 @@ SwapChainBase::SwapChainBase(DeviceBase* device,
       mUsage(config->usage),
       mPresentMode(config->presentMode),
       mAlphaMode(config->alphaMode),
+      mPartialSwap(config->partialSwap),
       mSurface(surface) {
     GetObjectTrackingList()->Track(this);
     for (uint32_t i = 0; i < config->viewFormatCount; ++i) {
@@ -255,12 +258,12 @@ ResultOrError<Ref<TextureViewBase>> SwapChainBase::GetCurrentTextureView() {
     return surfaceTexture.texture->CreateView();
 }
 
-void SwapChainBase::APIPresent() {
+void SwapChainBase::APIPresent(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
     if (GetDevice()->ConsumedError(ValidatePresent())) {
         return;
     }
 
-    if (GetDevice()->ConsumedError(PresentImpl())) {
+    if (GetDevice()->ConsumedError(PresentImpl(x, y, width, height))) {
         return;
     }
 
@@ -294,6 +297,10 @@ wgpu::PresentMode SwapChainBase::GetPresentMode() const {
 
 wgpu::CompositeAlphaMode SwapChainBase::GetAlphaMode() const {
     return mAlphaMode;
+}
+
+bool SwapChainBase::GetPartialSwap() const {
+    return mPartialSwap;
 }
 
 Surface* SwapChainBase::GetSurface() const {

@@ -101,7 +101,7 @@ MaybeError SwapChainEGL::Initialize(SwapChainBase* previousSwapChain) {
     return {};
 }
 
-MaybeError SwapChainEGL::PresentImpl() {
+MaybeError SwapChainEGL::PresentImpl(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
     Device* device = ToBackend(GetDevice());
     EGLDisplay display = device->GetEGLDisplay();
     const EGLFunctions& egl = device->GetEGL(false);

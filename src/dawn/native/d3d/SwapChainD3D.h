@@ -62,7 +62,7 @@ class SwapChain : public SwapChainBase {
     // swapchain and buffers are removed, as that's a constraint for some DXGI operations.
     virtual MaybeError DetachAndWaitForDeallocation() = 0;
 
-    MaybeError PresentDXGISwapChain();
+    MaybeError PresentDXGISwapChain(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
     void ReleaseDXGISwapChain();
 
     IDXGISwapChain3* GetDXGISwapChain() const;
