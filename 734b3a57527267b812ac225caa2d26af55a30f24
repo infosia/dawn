@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bbecd76_091e3275",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-26T12:58:35Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d52ce927_4501e44d",
@@ -145,6 +162,64 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2af19502_f46062af",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-26T12:58:35Z",
+      "side": 1,
+      "message": "I don\u0027t think that we can easily fix this as it is because the indenter cannot indent macros since it doesn\u0027t know where they will be used. The fix we used in other places is to add `| indent(N)` after the macro invocation.\n\nThat or you could manually run clang-format. Unresolving to add `| indent(8)` at the invocation, or making a proper TODO(issue number) for the comment please.",
+      "parentUuid": "4675aed6_b263922c",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 77
+      },
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dfbb6cf_f84fa3c4",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-26T12:58:35Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3c62d8c_7110259d",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-26T12:58:35Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cae502b7_01f1fab1",
         "filename": "generator/templates/art/kotlin_record_conversion.cpp",
         "patchSetId": 2
@@ -174,6 +249,29 @@
       "side": 1,
       "message": "Just whitespace changes.  Indents across the whole section of code, multiple blank lines removed, and some manual padding on line 174.",
       "parentUuid": "cae502b7_01f1fab1",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff5e644c_085fdd5a",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-26T12:58:35Z",
+      "side": 1,
+      "message": "It\u0027s weird that the `{{\u0027   \u0027}}` is necessary instead of just `   ` since the Jinja directive just before doesn\u0027t have `-%}`. Does for formatting look correct with `{{\u0027   \u0027}}` replaced?",
+      "range": {
+        "startLine": 174,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 18
+      },
       "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
