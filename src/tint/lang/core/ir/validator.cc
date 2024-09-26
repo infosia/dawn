@@ -1176,6 +1176,13 @@ void Validator::CheckFunction(const Function* func) {
             return;
         }
 
+        if (!param->Type()->IsConstructible() && !param->Type()->Is<type::Pointer>() &&
+            !param->Type()->Is<type::Texture>() && !param->Type()->Is<type::Sampler>()) {
+            AddError(param) << "function parameter type must be constructible, a pointer, a "
+                               "texture, or a sampler";
+            return;
+        }
+
         if (HasLocationAndBuiltin(param->Attributes())) {
             AddError(param) << "a builtin and location cannot be both declared for a param";
             return;
