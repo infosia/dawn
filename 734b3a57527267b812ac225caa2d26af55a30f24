@@ -184,6 +184,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac6de10e_5b912985",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-09-26T14:34:05Z",
+      "side": 1,
+      "message": "Done -- I\u0027ve added indent(4)\u0027s where needed.",
+      "parentUuid": "2af19502_f46062af",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 77
+      },
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0dfbb6cf_f84fa3c4",
@@ -201,6 +225,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a40e194d_33bbbf8f",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-09-26T14:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dfbb6cf_f84fa3c4",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3c62d8c_7110259d",
@@ -214,6 +256,24 @@
       "writtenOn": "2024-09-26T12:58:35Z",
       "side": 1,
       "message": "ditto",
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0047351_1b6ea078",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-09-26T14:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c62d8c_7110259d",
       "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -266,6 +326,30 @@
       "writtenOn": "2024-09-26T12:58:35Z",
       "side": 1,
       "message": "It\u0027s weird that the `{{\u0027   \u0027}}` is necessary instead of just `   ` since the Jinja directive just before doesn\u0027t have `-%}`. Does for formatting look correct with `{{\u0027   \u0027}}` replaced?",
+      "range": {
+        "startLine": 174,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 18
+      },
+      "revId": "734b3a57527267b812ac225caa2d26af55a30f24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a7ce76b_968bb368",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-09-26T14:34:05Z",
+      "side": 1,
+      "message": "Tried spaces and it\u0027s fine -- perhaps this was an artifact from earlier changes, but it works fine now. I\u0027ve removed the {{\u0027    \u0027}}.",
+      "parentUuid": "ff5e644c_085fdd5a",
       "range": {
         "startLine": 174,
         "startChar": 8,
