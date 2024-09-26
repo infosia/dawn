@@ -1171,12 +1171,44 @@ void Validator::CheckFunction(const Function* func) {
             return;
         }
 
+        if (param->Attributes().builtin.has_value() && param->Attributes().location.has_value()) {
+            AddError(param) << "a builtin and location cannot be both declared for a param";
+            return;
+        }
+
+        if (auto* s = param->Type()->As<core::type::Struct>()) {
+            for (auto* mem : s->Members()) {
+                if (mem->Attributes().builtin.has_value() &&
+                    mem->Attributes().location.has_value()) {
+                    AddError(param)
+                        << "a builtin and location cannot be both declared for a struct member";
+                    return;
+                }
+            }
+        }
+
         // References not allowed on function signatures even with Capability::kAllowRefTypes.
         CheckType(
             param->Type(), [&]() -> diag::Diagnostic& { return AddError(param); },
             Capabilities{Capability::kAllowRefTypes});
 
         scope_stack_.Add(param);
+    }
+
+    if (func->ReturnAttributes().builtin.has_value() &&
+        func->ReturnAttributes().location.has_value()) {
+        AddError(func) << "a builtin and location cannot be both declared for a function return";
+        return;
+    }
+
+    if (auto* s = func->ReturnType()->As<core::type::Struct>()) {
+        for (auto* mem : s->Members()) {
+            if (mem->Attributes().builtin.has_value() && mem->Attributes().location.has_value()) {
+                AddError(func)
+                    << "a builtin and location cannot be both declared for a struct member";
+                return;
+            }
+        }
     }
 
     if (func->Stage() == Function::PipelineStage::kCompute) {
@@ -1477,6 +1509,21 @@ void Validator::CheckVar(const Var* var) {
     if (var->InputAttachmentIndex().has_value() && mv->AddressSpace() != AddressSpace::kHandle) {
         AddError(var) << "'@input_attachment_index' is not valid for non-handle var";
         return;
+    }
+
+    if (var->Attributes().builtin.has_value() && var->Attributes().location.has_value()) {
+        AddError(var) << "a builtin and location cannot be both declared for a var";
+        return;
+    }
+
+    if (auto* s = var->Result(0)->Type()->UnwrapPtrOrRef()->As<core::type::Struct>()) {
+        for (auto* mem : s->Members()) {
+            if (mem->Attributes().builtin.has_value() && mem->Attributes().location.has_value()) {
+                AddError(var)
+                    << "a builtin and location cannot be both declared for a struct member";
+                return;
+            }
+        }
     }
 }
 
