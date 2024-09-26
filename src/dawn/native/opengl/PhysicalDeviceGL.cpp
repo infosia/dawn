@@ -415,6 +415,10 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
 
     // Use T2B and B2T copies to emulate a T2T copy between sRGB and non-sRGB textures.
     deviceToggles->Default(Toggle::UseT2B2TForSRGBTextureCopy, true);
+
+    // Modify depth bias value by * 0.5 on certain GL drivers.
+    deviceToggles->Default(Toggle::GLDepthBiasModifier,
+                           gl.GetVersion().IsDesktop() || IsANGLEDesktopGL(mName));
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
