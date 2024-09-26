@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8deccc2f_878c775c",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-26T19:07:37Z",
+      "side": 1,
+      "message": "This feels like a helper given it\u0027s here like 6 time. I think you should be able to just have something like:\n\n```\nbool has_builtin_and_location(const IOAttributes\u0026 ttrs) {\n  ...\n}\n```\n\nThen all these just become `has_builtin_and_location(params-\u003eAttributes())`, etc",
+      "revId": "e79a0e9e9b5ce176b1c67836c2080a5eb9973709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
