@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a08e6aca_a75f94ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-26T13:50:37Z",
+      "side": 1,
+      "message": "I see that this follows the design outlined in the issue, but the discussion in the D3D12 prototype seems like it was so much more relevant and recent.\n\nDoesn\u0027t it work to handle everything in the Vulkan backend by\n\n - Adding some map in PipelineLayout from push constant bytes to VkPipelineLayout.\n - Dirtying bindgroups if the immediate data range changed, similar to what we do in [d3d12](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/CommandBufferD3D12.cpp;drc\u003df522344e45882da4c7f7cb1b3a0a7bd747d654bb;l\u003d481)\n \nIt seems like it would be much less invasive than the suggestion in this CL. WDYT?",
+      "revId": "e9b5adf8dc0bb5223348d77b0fcdc78c8f3f41be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
