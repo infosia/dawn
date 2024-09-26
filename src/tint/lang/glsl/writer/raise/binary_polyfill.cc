@@ -51,6 +51,9 @@ struct State {
     /// The type manager.
     core::type::Manager& ty{ir.Types()};
 
+    /// Float modulo polyfills
+    Hashmap<const core::type::Type*, core::ir::Function*, 4> float_modulo_funcs_{};
+
     /// Process the module.
     void Process() {
         // Find the binary instructions that need replacing.
@@ -61,6 +64,12 @@ struct State {
                     case core::BinaryOp::kAnd:
                     case core::BinaryOp::kOr: {
                         if (binary->LHS()->Type()->IsBoolScalarOrVector()) {
+                            binary_worklist.Push(binary);
+                        }
+                        break;
+                    }
+                    case core::BinaryOp::kModulo: {
+                        if (binary->LHS()->Type()->IsFloatScalarOrVector()) {
                             binary_worklist.Push(binary);
                         }
                         break;
@@ -88,6 +97,9 @@ struct State {
                 case core::BinaryOp::kAnd:
                 case core::BinaryOp::kOr:
                     BitwiseBoolean(binary);
+                    break;
+                case core::BinaryOp::kModulo:
+                    FloatModulo(binary);
                     break;
                 case core::BinaryOp::kEqual:
                 case core::BinaryOp::kNotEqual:
@@ -152,6 +164,34 @@ struct State {
                     TINT_UNREACHABLE();
             }
             b.ConvertWithResult(binary->DetachResult(), result);
+        });
+        binary->Destroy();
+    }
+
+    core::ir::Function* CreateFloatModuloPolyfill(const core::type::Type* type) {
+        return float_modulo_funcs_.GetOrAdd(type, [&]() -> core::ir::Function* {
+            auto* f = b.Function("tint_float_modulo", type);
+            auto* x = b.FunctionParam("x", type);
+            auto* y = b.FunctionParam("y", type);
+            f->SetParams({x, y});
+
+            b.Append(f->Block(), [&] {
+                core::ir::Value* ret = nullptr;
+
+                ret = b.Divide(type, x, y)->Result(0);
+                ret = b.Call(type, core::BuiltinFn::kTrunc, ret)->Result(0);
+                ret = b.Multiply(type, y, ret)->Result(0);
+                ret = b.Subtract(type, x, ret)->Result(0);
+                b.Return(f, ret);
+            });
+            return f;
+        });
+    }
+
+    void FloatModulo(core::ir::Binary* binary) {
+        b.InsertBefore(binary, [&] {
+            auto* func = CreateFloatModuloPolyfill(binary->Result(0)->Type());
+            b.CallWithResult(binary->DetachResult(), func, binary->LHS(), binary->RHS());
         });
         binary->Destroy();
     }
