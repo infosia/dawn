@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33d23fbd_1b06e97a",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-09-26T11:39:58Z",
+      "side": 1,
+      "message": "Done by momentarily changing my .vimrc at wrap at 100 :).",
+      "parentUuid": "63249f60_a481a72b",
+      "revId": "4efff77d6107106cce8738b9a6b965bc44a26596",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7a99f58_05e3dd9d",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-09-25T16:20:10Z",
       "side": 1,
       "message": "```suggestion\n                // how to actually pass the Android external format to that API. However,\n```",
+      "revId": "4efff77d6107106cce8738b9a6b965bc44a26596",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00c4e6ae_626f344d",
+        "filename": "src/dawn/native/vulkan/BindGroupLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-09-26T11:39:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7a99f58_05e3dd9d",
       "revId": "4efff77d6107106cce8738b9a6b965bc44a26596",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
