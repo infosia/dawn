@@ -130,8 +130,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(raise::BinaryPolyfill, module);
     // Must come after zero-init as it will add builtins
     RUN_TRANSFORM(raise::BuiltinPolyfill, module);
-    // Must come after BuiltinPolyfill as builtins can add bitcasts
-    RUN_TRANSFORM(raise::BitcastPolyfill, module);
 
     RUN_TRANSFORM(core::ir::transform::PreservePadding, module);
     RUN_TRANSFORM(core::ir::transform::VectorizeScalarMatrixConstructors, module);
@@ -140,6 +138,9 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(core::ir::transform::AddEmptyEntryPoint, module);
 
     RUN_TRANSFORM(raise::ShaderIO, module, raise::ShaderIOConfig{options.depth_range_offsets});
+
+    // Must come after BuiltinPolyfill and ShaderIO
+    RUN_TRANSFORM(raise::BitcastPolyfill, module);
 
     RUN_TRANSFORM(core::ir::transform::Std140, module);
 
