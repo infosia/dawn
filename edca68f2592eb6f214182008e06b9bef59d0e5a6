@@ -16,6 +16,23 @@
       "message": "cwallez@: Please take a look and pls add another proper reviewer for this CL, thanks!",
       "revId": "edca68f2592eb6f214182008e06b9bef59d0e5a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ce89459_9c9cfdca",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-26T07:50:51Z",
+      "side": 1,
+      "message": "This class seems non-necessary. Maybe we could consider remove all derived class in each backends after using physicalPipelineLayout. WDYT?",
+      "revId": "edca68f2592eb6f214182008e06b9bef59d0e5a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
