@@ -571,8 +571,6 @@ struct State {
 
     void Barrier(core::ir::CoreBuiltinCall* call) {
         b.InsertBefore(call, [&] {
-            b.Call<glsl::ir::BuiltinCall>(ty.void_(), glsl::BuiltinFn::kBarrier);
-
             switch (call->Func()) {
                 case core::BuiltinFn::kStorageBarrier:
                     b.Call<glsl::ir::BuiltinCall>(ty.void_(),
@@ -584,6 +582,7 @@ struct State {
                 default:
                     break;
             }
+            b.Call<glsl::ir::BuiltinCall>(ty.void_(), glsl::BuiltinFn::kBarrier);
         });
 
         call->Destroy();
