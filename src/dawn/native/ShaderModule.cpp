@@ -1560,14 +1560,14 @@ Future ShaderModuleBase::APIGetCompilationInfo2(
         void Complete(EventCompletionType completionType) override {
             WGPUCompilationInfoRequestStatus status =
                 WGPUCompilationInfoRequestStatus_InstanceDropped;
-            const WGPUCompilationInfo* compilationInfo = nullptr;
+            const wgpu::CompilationInfo* compilationInfo = nullptr;
             if (completionType == EventCompletionType::Ready) {
                 status = WGPUCompilationInfoRequestStatus_Success;
                 compilationInfo = mShaderModule->mCompilationMessages->GetCompilationInfo();
             }
 
-            mCallback(status, compilationInfo, mUserdata1.ExtractAsDangling(),
-                      mUserdata2.ExtractAsDangling());
+            mCallback(status, reinterpret_cast<const WGPUCompilationInfo*>(compilationInfo),
+                      mUserdata1.ExtractAsDangling(), mUserdata2.ExtractAsDangling());
         }
     };
     FutureID futureID = GetDevice()->GetInstance()->GetEventManager()->TrackEvent(
