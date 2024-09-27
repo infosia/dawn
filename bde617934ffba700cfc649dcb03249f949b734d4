@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc9d7611_f926b2c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-27T17:47:08Z",
+      "side": 1,
+      "message": "LGTM, maybe we should move this to the generic BinaryPolyfill transform and use it for HLSL too.",
+      "revId": "bde617934ffba700cfc649dcb03249f949b734d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
