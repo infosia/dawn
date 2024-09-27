@@ -16,6 +16,63 @@
       "message": "PTAL.",
       "revId": "3b802221ae9b6b67a27516941c0229f27bdde183",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91beef94_97ca3bf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-27T17:34:11Z",
+      "side": 1,
+      "message": "LGTM with a couple of small suggestions.",
+      "revId": "3b802221ae9b6b67a27516941c0229f27bdde183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4233fb7_c8dc7451",
+        "filename": "src/tint/lang/glsl/writer/raise/raise.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-27T17:34:11Z",
+      "side": 1,
+      "message": "I think you could avoid this new transform dependency by using `convert` instead of `bitcast`.",
+      "revId": "3b802221ae9b6b67a27516941c0229f27bdde183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca735f27_90d5ffb7",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-27T17:34:11Z",
+      "side": 1,
+      "message": "You could just extract from the array that you\u0027ve already loaded (`b.Access\u003ci32\u003e(value, 0_u)`), which I think would result in the same output GLSL and avoid the extra `load` instruction that shows up in the unit tests.",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 89
+      },
+      "revId": "3b802221ae9b6b67a27516941c0229f27bdde183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
