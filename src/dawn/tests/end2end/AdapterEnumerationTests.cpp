@@ -154,10 +154,10 @@ TEST_F(AdapterEnumerationTests, MatchingDXGIAdapterD3D11) {
         wgpu::AdapterInfo infoAgain;
         adaptersAgain[0].GetInfo(&infoAgain);
 
-        EXPECT_STREQ(info.vendor, infoAgain.vendor);
-        EXPECT_STREQ(info.architecture, infoAgain.architecture);
-        EXPECT_STREQ(info.device, infoAgain.device);
-        EXPECT_STREQ(info.description, infoAgain.description);
+        EXPECT_EQ(std::string_view(info.vendor), std::string_view(infoAgain.vendor));
+        EXPECT_EQ(std::string_view(info.architecture), std::string_view(infoAgain.architecture));
+        EXPECT_EQ(std::string_view(info.device), std::string_view(infoAgain.device));
+        EXPECT_EQ(std::string_view(info.description), std::string_view(infoAgain.description));
         EXPECT_EQ(info.backendType, infoAgain.backendType);
         EXPECT_EQ(info.adapterType, infoAgain.adapterType);
         EXPECT_EQ(info.vendorID, infoAgain.vendorID);
@@ -228,10 +228,10 @@ TEST_F(AdapterEnumerationTests, MatchingDXGIAdapterD3D12) {
         wgpu::AdapterInfo infoAgain;
         adaptersAgain[0].GetInfo(&infoAgain);
 
-        EXPECT_STREQ(info.vendor, infoAgain.vendor);
-        EXPECT_STREQ(info.architecture, infoAgain.architecture);
-        EXPECT_STREQ(info.device, infoAgain.device);
-        EXPECT_STREQ(info.description, infoAgain.description);
+        EXPECT_EQ(std::string_view(info.vendor), std::string_view(infoAgain.vendor));
+        EXPECT_EQ(std::string_view(info.architecture), std::string_view(infoAgain.architecture));
+        EXPECT_EQ(std::string_view(info.device), std::string_view(infoAgain.device));
+        EXPECT_EQ(std::string_view(info.description), std::string_view(infoAgain.description));
         EXPECT_EQ(info.backendType, infoAgain.backendType);
         EXPECT_EQ(info.adapterType, infoAgain.adapterType);
         EXPECT_EQ(info.vendorID, infoAgain.vendorID);

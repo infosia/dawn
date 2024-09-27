@@ -100,10 +100,10 @@ void WireTest::SetUp() {
         EXPECT_CALL(api, AdapterGetInfo(apiAdapter, NotNull()))
             .WillOnce(WithArg<1>(Invoke([&](WGPUAdapterInfo* info) {
                 *info = {};
-                info->vendor = "";
-                info->architecture = "";
-                info->device = "";
-                info->description = "";
+                info->vendor = {nullptr, 0};
+                info->architecture = {nullptr, 0};
+                info->device = {nullptr, 0};
+                info->description = {nullptr, 0};
                 return WGPUStatus_Success;
             })));
 
