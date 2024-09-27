@@ -1,0 +1,86 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5a7619a_071618b7",
+        "filename": "generator/templates/dawn/native/api_StreamImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-27T20:33:58Z",
+      "side": 1,
+      "message": "nit. space",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 2
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "cc0d39af_e94a0dde",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/dawn/native/api_StreamImpl.cpp",
+              "range": {
+                "startLine": 107,
+                "startChar": 0,
+                "endLine": 108,
+                "endChar": 0
+              },
+              "replacement": "// Custom stream operator for StringView.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "deb247821c42ae9f7c0e73494450e1f476094637",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0496708_2f475013",
+        "filename": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-27T20:33:58Z",
+      "side": 1,
+      "message": "nit. I think this assumes that it\u0027s a null terminated string. Probably fine for this, but could also use the equality operators on `std::string_view` to be safe.",
+      "range": {
+        "startLine": 169,
+        "startChar": 31,
+        "endLine": 169,
+        "endChar": 59
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "3ea204f5_e01dc83f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
+              "range": {
+                "startLine": 169,
+                "startChar": 0,
+                "endLine": 170,
+                "endChar": 0
+              },
+              "replacement": "                        return desc-\u003evertex.entryPoint.data \u003d\u003d std::string_view(\"main\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "deb247821c42ae9f7c0e73494450e1f476094637",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
