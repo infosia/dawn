@@ -40,6 +40,7 @@
 #include "src/tint/lang/core/ir/transform/multiplanar_external_texture.h"
 #include "src/tint/lang/core/ir/transform/preserve_padding.h"
 #include "src/tint/lang/core/ir/transform/remove_continue_in_switch.h"
+#include "src/tint/lang/core/ir/transform/remove_pointer_lets.h"
 #include "src/tint/lang/core/ir/transform/remove_terminator_args.h"
 #include "src/tint/lang/core/ir/transform/rename_conflicts.h"
 #include "src/tint/lang/core/ir/transform/robustness.h"
@@ -148,6 +149,9 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(core::ir::transform::RemoveTerminatorArgs, module);
     RUN_TRANSFORM(core::ir::transform::RenameConflicts, module);
     RUN_TRANSFORM(core::ir::transform::ValueToLet, module);
+
+    // Must come after ValueToLet
+    RUN_TRANSFORM(core::ir::transform::RemovePointerLets, module);
 
     return Success;
 }
