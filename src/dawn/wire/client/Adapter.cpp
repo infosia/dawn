@@ -243,17 +243,17 @@ WGPUStatus Adapter::GetInfo(WGPUAdapterInfo* info) const {
     *info = mInfo;
 
     // Get lengths, with null terminators.
-    size_t vendorCLen = strlen(mInfo.vendor) + 1;
-    size_t architectureCLen = strlen(mInfo.architecture) + 1;
-    size_t deviceCLen = strlen(mInfo.device) + 1;
-    size_t descriptionCLen = strlen(mInfo.description) + 1;
+    size_t vendorLen = mVendor.length();
+    size_t architectureLen = mArchitecture.length();
+    size_t deviceLen = mDeviceName.length();
+    size_t descriptionLen = mDescription.length();
 
     // Allocate space for all strings.
-    char* ptr = new char[vendorCLen + architectureCLen + deviceCLen + descriptionCLen];
+    char* ptr = new char[vendorLen + architectureLen + deviceLen + descriptionLen];
 
-    info->vendor = ptr;
-    memcpy(ptr, mInfo.vendor, vendorCLen);
-    ptr += vendorCLen;
+    info->vendor = {ptr, vendorLen};
+    memcpy(ptr, mInfo.vendor, vendorLen);
+    ptr += vendorLen;
 
     info->architecture = ptr;
     memcpy(ptr, mInfo.architecture, architectureCLen);
