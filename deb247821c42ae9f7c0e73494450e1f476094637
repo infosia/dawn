@@ -122,6 +122,30 @@
       },
       "revId": "deb247821c42ae9f7c0e73494450e1f476094637",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce2b72da_d5847242",
+        "filename": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-27T23:25:16Z",
+      "side": 1,
+      "message": "Yea, if we have implicit conversion from `StringView` to `std::string_view` already, what Kai suggested is fine. Otherwise, we can also just use the explicit `std::string_view` ctor that takes the data and the size.",
+      "parentUuid": "946509f2_831d2b72",
+      "range": {
+        "startLine": 169,
+        "startChar": 31,
+        "endLine": 169,
+        "endChar": 59
+      },
+      "revId": "deb247821c42ae9f7c0e73494450e1f476094637",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
