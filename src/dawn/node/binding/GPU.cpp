@@ -219,8 +219,8 @@ interop::Promise<std::optional<interop::Interface<interop::GPUAdapter>>> GPU::re
     for (auto& a : adapters) {
         wgpu::AdapterInfo info;
         a.GetInfo(&info);
-        if (!deviceName.empty() && info.device &&
-            std::string(info.device).find(deviceName) == std::string::npos) {
+        if (!deviceName.empty() && !info.device.IsUndefined() &&
+            std::string_view(info.device).find(deviceName) == std::string::npos) {
             continue;
         }
         adapter = &a;
@@ -257,7 +257,7 @@ interop::Promise<std::optional<interop::Interface<interop::GPUAdapter>>> GPU::re
     if (flags_.Get("verbose")) {
         wgpu::AdapterInfo info;
         adapter->GetInfo(&info);
-        printf("using GPU adapter: %s\n", info.device);
+        printf("using GPU adapter: %.*s\n", static_cast<int>(info.device.length), info.device.data);
     }
 
     auto gpuAdapter = GPUAdapter::Create<GPUAdapter>(env, *adapter, flags_, async_);

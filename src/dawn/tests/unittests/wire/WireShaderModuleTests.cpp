@@ -67,7 +67,8 @@ class WireShaderModuleTests : public WireShaderModuleTestBase {
 
     // Default responses.
     WGPUCompilationMessage mMessage = {
-        nullptr, "Test Message", WGPUCompilationMessageType_Info, 2, 4, 6, 8, 4, 6, 8};
+        nullptr, {"Test Message", WGPU_STRLEN}, WGPUCompilationMessageType_Info, 2, 4, 6, 8, 4, 6,
+        8};
     WGPUCompilationInfo mCompilationInfo = {nullptr, 1, &mMessage};
 };
 
@@ -92,7 +93,10 @@ TEST_P(WireShaderModuleTests, GetCompilationInfo) {
                                          return false;
                                      }
                                      const WGPUCompilationMessage* infoMessage = &info->messages[0];
-                                     return strcmp(infoMessage->message, mMessage.message) == 0 &&
+                                     EXPECT_NE(infoMessage->message.length, WGPU_STRLEN);
+                                     return strncmp(infoMessage->message.data,
+                                                    mMessage.message.data,
+                                                    infoMessage->message.length) == 0 &&
                                             infoMessage->nextInChain == mMessage.nextInChain &&
                                             infoMessage->type == mMessage.type &&
                                             infoMessage->lineNum == mMessage.lineNum &&

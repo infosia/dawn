@@ -62,12 +62,18 @@ class ShaderModule::CompilationInfoEvent final : public TrackedEvent {
         }
 
         mStatus = status;
+
+        // Deep copy the WGPUCompilationInfo
         mShader->mMessageStrings.reserve(info->messageCount);
         mShader->mMessages.reserve(info->messageCount);
         for (size_t i = 0; i < info->messageCount; i++) {
-            mShader->mMessageStrings.push_back(info->messages[i].message);
+            DAWN_ASSERT(info->messages[i].length != WGPU_STRLEN);
+            std::string messageCopy{info->messages[i].message.data,
+                                    info->messages[i].message.length};
+            mShader->mMessageStrings.push_back(messageCopy);
             mShader->mMessages.push_back(info->messages[i]);
-            mShader->mMessages[i].message = mShader->mMessageStrings[i].c_str();
+            mShader->mMessages[i].message = {mShader->mMessageStrings[i].c_str(),
+                                             mShader->mMessageStrings[i].length()};
         }
         mShader->mCompilationInfo = {nullptr, mShader->mMessages.size(), mShader->mMessages.data()};
 
