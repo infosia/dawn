@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "7b7eb6f678b9ea0c300d85f1502d01fa9784ae24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9848002_d6573f55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-27T18:54:07Z",
+      "side": 1,
+      "message": "Unfortunately I don\u0027t think it\u0027s this simple, because now you\u0027re inlining expressions in ways that change the semantics of the module.\n\nConsider for example:\n```\nfn f() -\u003e i32 { return 0; }\nfn g() -\u003e i32 { return 0; }\n\nfn foo(cond : bool) {\n  var arr : array\u003ci32, 4\u003e;\n  let p \u003d \u0026(arr[f()]);\n  let y \u003d g();\n  let x \u003d *p;\n}\n```\n\nWith this CL, we generate:\n```\nvoid foo(bool cond) {\n  int arr[4] \u003d int[4](0, 0, 0, 0);\n  int y \u003d g();\n  int x \u003d arr[f()];\n}\n```\nNotice that the order of the `f()` and `g()` function calls has been swapped.\n\nOne way to address this would be to look at the initializer of the `let` and if it\u0027s an `access` then add a `let` for each of the indices (recursively back through chains of `access` instructions). This would aggressively un-inline lots of indices that can safely be inlined though, unless you add extra logic to recursively check for side-effects.\n\nAnother potential approach would be to do this transform as part of the `ValueToLet` transform instead. I haven\u0027t tried it, but it might be enough to just check for `access` instructions that produce pointers when we propagate an operand\u0027s side-effects to an instruction that uses it.",
+      "revId": "7b7eb6f678b9ea0c300d85f1502d01fa9784ae24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
