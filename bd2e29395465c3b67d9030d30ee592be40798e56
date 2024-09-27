@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe6f549a_856d78e7",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-27T17:40:55Z",
+      "side": 1,
+      "message": "Nit: Missing word?",
+      "range": {
+        "startLine": 644,
+        "startChar": 32,
+        "endLine": 644,
+        "endChar": 49
+      },
+      "revId": "bd2e29395465c3b67d9030d30ee592be40798e56",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
