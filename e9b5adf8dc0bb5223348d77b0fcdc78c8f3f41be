@@ -34,6 +34,24 @@
       "parentUuid": "a08e6aca_a75f94ab",
       "revId": "e9b5adf8dc0bb5223348d77b0fcdc78c8f3f41be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f68315f8_9fb67513",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-09-27T01:28:53Z",
+      "side": 1,
+      "message": "Because above suggestion is a totally different design which has less impact. I\u0027d like to use another CL and abandon this one.",
+      "parentUuid": "6bfc5c1c_06c243e3",
+      "revId": "e9b5adf8dc0bb5223348d77b0fcdc78c8f3f41be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
