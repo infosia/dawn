@@ -177,30 +177,30 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
 
     mPhysicalDevice->PopulateBackendProperties(unpacked);
 
-    // Get lengths, with null terminators.
-    size_t vendorCLen = mPhysicalDevice->GetVendorName().length() + 1;
-    size_t architectureCLen = mPhysicalDevice->GetArchitectureName().length() + 1;
-    size_t deviceCLen = mPhysicalDevice->GetName().length() + 1;
-    size_t descriptionCLen = mPhysicalDevice->GetDriverDescription().length() + 1;
+    // Get lengths
+    size_t vendorLen = mPhysicalDevice->GetVendorName().length();
+    size_t architectureLen = mPhysicalDevice->GetArchitectureName().length();
+    size_t deviceLen = mPhysicalDevice->GetName().length();
+    size_t descriptionLen = mPhysicalDevice->GetDriverDescription().length();
 
     // Allocate space for all strings.
-    char* ptr = new char[vendorCLen + architectureCLen + deviceCLen + descriptionCLen];
+    char* ptr = new char[vendorLen + architectureLen + deviceLen + descriptionLen];
 
-    info->vendor = ptr;
-    memcpy(ptr, mPhysicalDevice->GetVendorName().c_str(), vendorCLen);
-    ptr += vendorCLen;
+    info->vendor = {ptr, vendorLen};
+    memcpy(ptr, mPhysicalDevice->GetVendorName().c_str(), vendorLen);
+    ptr += vendorLen;
 
-    info->architecture = ptr;
-    memcpy(ptr, mPhysicalDevice->GetArchitectureName().c_str(), architectureCLen);
-    ptr += architectureCLen;
+    info->architecture = {ptr, architectureLen};
+    memcpy(ptr, mPhysicalDevice->GetArchitectureName().c_str(), architectureLen);
+    ptr += architectureLen;
 
-    info->device = ptr;
-    memcpy(ptr, mPhysicalDevice->GetName().c_str(), deviceCLen);
-    ptr += deviceCLen;
+    info->device = {ptr, deviceLen};
+    memcpy(ptr, mPhysicalDevice->GetName().c_str(), deviceLen);
+    ptr += deviceLen;
 
-    info->description = ptr;
-    memcpy(ptr, mPhysicalDevice->GetDriverDescription().c_str(), descriptionCLen);
-    ptr += descriptionCLen;
+    info->description = {ptr, descriptionLen};
+    memcpy(ptr, mPhysicalDevice->GetDriverDescription().c_str(), descriptionLen);
+    ptr += descriptionLen;
 
     info->backendType = mPhysicalDevice->GetBackendType();
     info->adapterType = mPhysicalDevice->GetAdapterType();
@@ -213,7 +213,7 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
 
 void APIAdapterInfoFreeMembers(WGPUAdapterInfo info) {
     // This single delete is enough because everything is a single allocation.
-    delete[] info.vendor;
+    delete[] info.vendor.data;
 }
 
 void APIAdapterPropertiesMemoryHeapsFreeMembers(
