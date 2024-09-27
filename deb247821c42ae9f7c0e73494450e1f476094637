@@ -44,6 +44,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "de7789ea_54f39680",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-27T21:30:23Z",
+      "side": 1,
+      "message": "nit: Since this previously defaulted to `\"\"` then seems like it should be non-optional. No problem though if there\u0027s some reason not to do that now.\n\n(Tried to figure out where this was actually used in Dawn to see how it was handling it, but I couldn\u0027t find it.)",
+      "revId": "deb247821c42ae9f7c0e73494450e1f476094637",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b0496708_2f475013",
         "filename": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
         "patchSetId": 9
@@ -79,6 +96,30 @@
           ]
         }
       ],
+      "revId": "deb247821c42ae9f7c0e73494450e1f476094637",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "946509f2_831d2b72",
+        "filename": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-09-27T21:30:23Z",
+      "side": 1,
+      "message": "It is null terminated since that\u0027s how it\u0027s initialized above, but I had the same thought, this code seemed wrong at first.\n\nI think the suggested change would still use `entryPoint` as null-terminated but maybe `std::string_view(desc-\u003evertex.entryPoint) \u003d\u003d \"main\"` or something",
+      "parentUuid": "b0496708_2f475013",
+      "range": {
+        "startLine": 169,
+        "startChar": 31,
+        "endLine": 169,
+        "endChar": 59
+      },
       "revId": "deb247821c42ae9f7c0e73494450e1f476094637",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
