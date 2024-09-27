@@ -191,7 +191,7 @@ int SampleBase::Run(unsigned int delay) {
     }
     wgpu::AdapterInfo info;
     sample->adapter.GetInfo(&info);
-    dawn::InfoLog() << "Using adapter \"" << info.device << "\"";
+    dawn::InfoLog() << "Using adapter \"" << std::string_view(info.device) << "\"";
 
     // Set device callbacks
     wgpu::DeviceDescriptor deviceDesc = {};
