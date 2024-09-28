@@ -33,6 +33,24 @@
       "message": "Unfortunately I don\u0027t think it\u0027s this simple, because now you\u0027re inlining expressions in ways that change the semantics of the module.\n\nConsider for example:\n```\nfn f() -\u003e i32 { return 0; }\nfn g() -\u003e i32 { return 0; }\n\nfn foo(cond : bool) {\n  var arr : array\u003ci32, 4\u003e;\n  let p \u003d \u0026(arr[f()]);\n  let y \u003d g();\n  let x \u003d *p;\n}\n```\n\nWith this CL, we generate:\n```\nvoid foo(bool cond) {\n  int arr[4] \u003d int[4](0, 0, 0, 0);\n  int y \u003d g();\n  int x \u003d arr[f()];\n}\n```\nNotice that the order of the `f()` and `g()` function calls has been swapped.\n\nOne way to address this would be to look at the initializer of the `let` and if it\u0027s an `access` then add a `let` for each of the indices (recursively back through chains of `access` instructions). This would aggressively un-inline lots of indices that can safely be inlined though, unless you add extra logic to recursively check for side-effects.\n\nAnother potential approach would be to do this transform as part of the `ValueToLet` transform instead. I haven\u0027t tried it, but it might be enough to just check for `access` instructions that produce pointers when we propagate an operand\u0027s side-effects to an instruction that uses it.",
       "revId": "7b7eb6f678b9ea0c300d85f1502d01fa9784ae24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be360052_0d23a5ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-28T04:35:33Z",
+      "side": 1,
+      "message": "The frustrating part is, RemovePointerLets makes the right IR:\n\n```\n%f \u003d func():i32 {\n  $B1: {\n    ret 0i\n  }\n}\n%g \u003d func():i32 {\n  $B2: {\n    ret 0i\n  }\n}\n%fpp \u003d func():void {\n  $B3: {\n    %arr:ptr\u003cfunction, array\u003ci32, 4\u003e, read_write\u003e \u003d var\n    %5:i32 \u003d call %f\n    %6:ptr\u003cfunction, i32, read_write\u003e \u003d access %arr, %5\n    %7:i32 \u003d call %g\n    %y:i32 \u003d let %7\n    %9:i32 \u003d load %6\n    %x:i32 \u003d let %9\n    ret\n  }\n}\n```\n\nBut, because the backends inline all `access` it goes wonky. I wonder if `ValueToLet` can be made smarter to deal with access indices in a nicer fashion.",
+      "parentUuid": "a9848002_d6573f55",
+      "revId": "7b7eb6f678b9ea0c300d85f1502d01fa9784ae24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
