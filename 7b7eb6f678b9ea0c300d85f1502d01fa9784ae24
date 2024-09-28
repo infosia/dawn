@@ -51,6 +51,24 @@
       "parentUuid": "a9848002_d6573f55",
       "revId": "7b7eb6f678b9ea0c300d85f1502d01fa9784ae24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "324b65a8_0278c686",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-28T19:13:23Z",
+      "side": 1,
+      "message": "What do you think of this approach? The `ValueToLet` transform is updated to let-ify any argument which has a non-empty Access. This pulls the function calls out to the place where the access chain is inserted. We can then inline the access chain later, and the `RemovePointerLet` transform works as expected.",
+      "parentUuid": "be360052_0d23a5ea",
+      "revId": "7b7eb6f678b9ea0c300d85f1502d01fa9784ae24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
