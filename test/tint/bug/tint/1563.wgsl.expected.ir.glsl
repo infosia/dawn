@@ -2,7 +2,8 @@
 
 float foo() {
   int oob = 99;
-  float b = vec4(0.0f)[min(uint(oob), 3u)];
+  uint v_1 = min(uint(oob), 3u);
+  float b = vec4(0.0f)[v_1];
   vec4 v = vec4(0.0f);
   v[min(uint(oob), 3u)] = b;
   return b;

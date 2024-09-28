@@ -24,26 +24,27 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   int v_2 = i();
   f16mat2x3 v_3 = f16mat2x3(v.tint_symbol[v_2].col0, v.tint_symbol[v_2].col1);
-  f16vec3 v_4 = v_3[i()];
-  mat2x3_f16_std140 v_5[4] = v.tint_symbol;
-  f16mat2x3 v_6[4] = f16mat2x3[4](f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)), f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)), f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)), f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)));
+  int v_4 = i();
+  f16vec3 v_5 = v_3[v_4];
+  mat2x3_f16_std140 v_6[4] = v.tint_symbol;
+  f16mat2x3 v_7[4] = f16mat2x3[4](f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)), f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)), f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)), f16mat2x3(f16vec3(0.0hf), f16vec3(0.0hf)));
   {
-    uint v_7 = 0u;
-    v_7 = 0u;
+    uint v_8 = 0u;
+    v_8 = 0u;
     while(true) {
-      uint v_8 = v_7;
-      if ((v_8 >= 4u)) {
+      uint v_9 = v_8;
+      if ((v_9 >= 4u)) {
         break;
       }
-      v_6[v_8] = f16mat2x3(v_5[v_8].col0, v_5[v_8].col1);
+      v_7[v_9] = f16mat2x3(v_6[v_9].col0, v_6[v_9].col1);
       {
-        v_7 = (v_8 + 1u);
+        v_8 = (v_9 + 1u);
       }
       continue;
     }
   }
-  f16mat2x3 l_a[4] = v_6;
+  f16mat2x3 l_a[4] = v_7;
   f16mat2x3 l_a_i = v_3;
-  f16vec3 l_a_i_i = v_4;
-  v_1.tint_symbol_2 = (((v_4[0u] + l_a[0][0][0u]) + l_a_i[0][0u]) + l_a_i_i[0u]);
+  f16vec3 l_a_i_i = v_5;
+  v_1.tint_symbol_2 = (((v_5[0u] + l_a[0][0][0u]) + l_a_i[0][0u]) + l_a_i_i[0u]);
 }

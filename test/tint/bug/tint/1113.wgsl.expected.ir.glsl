@@ -97,7 +97,8 @@ void main_count_inner(uvec3 GlobalInvocationID) {
   vec3 center = (((p0 + p1) + p2) / 3.0f);
   vec3 voxelPos = toVoxelPos(center);
   uint voxelIndex = toIndex1D(v.tint_symbol.gridSize, voxelPos);
-  uint acefg = atomicAdd(counters.values[voxelIndex], 1u);
+  uint v_5 = voxelIndex;
+  uint acefg = atomicAdd(counters.values[v_5], 1u);
   if ((triangleIndex == 0u)) {
     v_1.tint_symbol_2.value0 = v.tint_symbol.gridSize;
     v_1.tint_symbol_2.value_f32_0 = center.x;
@@ -175,12 +176,14 @@ void main_create_lut_inner(uvec3 GlobalInvocationID) {
   if ((voxelIndex >= maxVoxels)) {
     return;
   }
-  uint numTriangles = atomicOr(counters.values[voxelIndex], 0u);
+  uint v_2 = voxelIndex;
+  uint numTriangles = atomicOr(counters.values[v_2], 0u);
   int offset = -1;
   if ((numTriangles > 0u)) {
     offset = int(atomicAdd(v_1.tint_symbol_2.offsetCounter, numTriangles));
   }
-  atomicExchange(LUT.values[voxelIndex], offset);
+  uint v_3 = voxelIndex;
+  atomicExchange(LUT.values[v_3], offset);
 }
 layout(local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
 void main() {
@@ -285,7 +288,8 @@ void main_sort_triangles_inner(uvec3 GlobalInvocationID) {
   vec3 center = (((p0 + p1) + p2) / 3.0f);
   vec3 voxelPos = toVoxelPos(center);
   uint voxelIndex = toIndex1D(v.tint_symbol.gridSize, voxelPos);
-  int triangleOffset = atomicAdd(LUT.values[voxelIndex], 1);
+  uint v_5 = voxelIndex;
+  int triangleOffset = atomicAdd(LUT.values[v_5], 1);
 }
 layout(local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
 void main() {
