@@ -74,8 +74,10 @@ void comp_main_inner(uint3 gl_GlobalInvocationID, tint_module_vars_struct tint_m
   if ((index >= 5u)) {
     return;
   }
-  float2 vPos = (*tint_module_vars.particlesA).particles[index].pos;
-  float2 vVel = (*tint_module_vars.particlesA).particles[index].vel;
+  uint const v_3 = index;
+  float2 vPos = (*tint_module_vars.particlesA).particles[v_3].pos;
+  uint const v_4 = index;
+  float2 vVel = (*tint_module_vars.particlesA).particles[v_4].vel;
   float2 cMass = float2(0.0f);
   float2 cVel = float2(0.0f);
   float2 colVel = float2(0.0f);
@@ -96,19 +98,21 @@ void comp_main_inner(uint3 gl_GlobalInvocationID, tint_module_vars_struct tint_m
         }
         continue;
       }
-      pos = (*tint_module_vars.particlesA).particles[i].pos.xy;
-      vel = (*tint_module_vars.particlesA).particles[i].vel.xy;
-      float const v_3 = distance(pos, vPos);
-      if ((v_3 < (*tint_module_vars.params).rule1Distance)) {
+      uint const v_5 = i;
+      pos = (*tint_module_vars.particlesA).particles[v_5].pos.xy;
+      uint const v_6 = i;
+      vel = (*tint_module_vars.particlesA).particles[v_6].vel.xy;
+      float const v_7 = distance(pos, vPos);
+      if ((v_7 < (*tint_module_vars.params).rule1Distance)) {
         cMass = (cMass + pos);
         cMassCount = as_type<int>((as_type<uint>(cMassCount) + as_type<uint>(1)));
       }
-      float const v_4 = distance(pos, vPos);
-      if ((v_4 < (*tint_module_vars.params).rule2Distance)) {
+      float const v_8 = distance(pos, vPos);
+      if ((v_8 < (*tint_module_vars.params).rule2Distance)) {
         colVel = (colVel - (pos - vPos));
       }
-      float const v_5 = distance(pos, vPos);
-      if ((v_5 < (*tint_module_vars.params).rule3Distance)) {
+      float const v_9 = distance(pos, vPos);
+      if ((v_9 < (*tint_module_vars.params).rule3Distance)) {
         cVel = (cVel + vel);
         cVelCount = as_type<int>((as_type<uint>(cVelCount) + as_type<uint>(1)));
       }
@@ -119,19 +123,19 @@ void comp_main_inner(uint3 gl_GlobalInvocationID, tint_module_vars_struct tint_m
     }
   }
   if ((cMassCount > 0)) {
-    float2 const v_6 = cMass;
-    float const v_7 = float(cMassCount);
-    float2 const v_8 = (v_6 / float2(v_7, float(cMassCount)));
-    cMass = (v_8 - vPos);
+    float2 const v_10 = cMass;
+    float const v_11 = float(cMassCount);
+    float2 const v_12 = (v_10 / float2(v_11, float(cMassCount)));
+    cMass = (v_12 - vPos);
   }
   if ((cVelCount > 0)) {
-    float2 const v_9 = cVel;
-    float const v_10 = float(cVelCount);
-    cVel = (v_9 / float2(v_10, float(cVelCount)));
+    float2 const v_13 = cVel;
+    float const v_14 = float(cVelCount);
+    cVel = (v_13 / float2(v_14, float(cVelCount)));
   }
   vVel = (((vVel + (cMass * (*tint_module_vars.params).rule1Scale)) + (colVel * (*tint_module_vars.params).rule2Scale)) + (cVel * (*tint_module_vars.params).rule3Scale));
-  float2 const v_11 = normalize(vVel);
-  vVel = (v_11 * clamp(length(vVel), 0.0f, 0.10000000149011611938f));
+  float2 const v_15 = normalize(vVel);
+  vVel = (v_15 * clamp(length(vVel), 0.0f, 0.10000000149011611938f));
   vPos = (vPos + (vVel * (*tint_module_vars.params).deltaT));
   if ((vPos[0u] < -1.0f)) {
     vPos[0u] = 1.0f;
@@ -145,8 +149,10 @@ void comp_main_inner(uint3 gl_GlobalInvocationID, tint_module_vars_struct tint_m
   if ((vPos[1u] > 1.0f)) {
     vPos[1u] = -1.0f;
   }
-  (*tint_module_vars.particlesB).particles[index].pos = vPos;
-  (*tint_module_vars.particlesB).particles[index].vel = vVel;
+  uint const v_16 = index;
+  (*tint_module_vars.particlesB).particles[v_16].pos = vPos;
+  uint const v_17 = index;
+  (*tint_module_vars.particlesB).particles[v_17].vel = vVel;
 }
 
 vertex vert_main_outputs vert_main(vert_main_inputs inputs [[stage_in]]) {

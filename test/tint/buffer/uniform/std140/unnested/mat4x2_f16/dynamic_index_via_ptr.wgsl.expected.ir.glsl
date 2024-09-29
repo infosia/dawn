@@ -16,6 +16,7 @@ int i() {
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   f16mat4x2 v_1 = f16mat4x2(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2, v.tint_symbol_col3);
+  int v_2 = i();
   f16mat4x2 l_m = v_1;
-  f16vec2 l_m_i = v_1[i()];
+  f16vec2 l_m_i = v_1[v_2];
 }

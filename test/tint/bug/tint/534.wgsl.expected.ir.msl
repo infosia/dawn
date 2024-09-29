@@ -80,9 +80,11 @@ void tint_symbol_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_mo
   }
   uint outputIndex = ((GlobalInvocationID[1u] * uint(size[0u])) + GlobalInvocationID[0u]);
   if (success) {
-    (*tint_module_vars.output).result[outputIndex] = 1u;
+    uint const v_3 = outputIndex;
+    (*tint_module_vars.output).result[v_3] = 1u;
   } else {
-    (*tint_module_vars.output).result[outputIndex] = 0u;
+    uint const v_4 = outputIndex;
+    (*tint_module_vars.output).result[v_4] = 0u;
   }
 }
 

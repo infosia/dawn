@@ -92,7 +92,8 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
       } else {
         break;
       }
-      acc[index] = 0.0f;
+      uint v_6 = index;
+      acc[v_6] = 0.0f;
       {
         index = (index + 1u);
       }
@@ -155,8 +156,9 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               }
               uint inputRow = (tileRowB + innerRow);
               uint inputCol = (tileCol + innerCol);
-              float v_6 = mm_Bsub[innerCol][inputCol];
-              v_6 = mm_readB(((t * 64u) + inputRow), (globalCol + innerCol));
+              uint v_7 = innerCol;
+              float v_8 = mm_Bsub[v_7][inputCol];
+              v_8 = mm_readB(((t * 64u) + inputRow), (globalCol + innerCol));
               {
                 innerCol = (innerCol + 1u);
               }
@@ -184,7 +186,9 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               } else {
                 break;
               }
-              BCached[inner] = mm_Bsub[k][(tileCol + inner)];
+              uint v_9 = inner;
+              uint v_10 = k;
+              BCached[v_9] = mm_Bsub[v_10][(tileCol + inner)];
               {
                 inner = (inner + 1u);
               }
@@ -198,7 +202,8 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
               } else {
                 break;
               }
-              ACached = mm_Asub[(tileRow + innerRow)][k];
+              uint v_11 = k;
+              ACached = mm_Asub[(tileRow + innerRow)][v_11];
               {
                 uint innerCol = 0u;
                 while(true) {
@@ -207,7 +212,8 @@ void main_inner(uint3 local_id, uint3 global_id, uint tint_local_index) {
                     break;
                   }
                   uint index = ((innerRow * 4u) + innerCol);
-                  acc[index] = (acc[index] + (ACached * BCached[innerCol]));
+                  uint v_12 = innerCol;
+                  acc[index] = (acc[index] + (ACached * BCached[v_12]));
                   {
                     innerCol = (innerCol + 1u);
                   }

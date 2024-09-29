@@ -143,18 +143,30 @@ struct State {
             // The memory accesses of this instruction
             auto accesses = AccessesFor(inst);
 
-            for (auto* operand : inst->Operands()) {
+            auto operands = inst->Operands();
+            for (size_t i = 0; i < operands.Length(); ++i) {
                 // If the operand is in pending_resolution, then we know it has a single use and
                 // because it hasn't been removed with put_pending_in_lets(), we know its safe to
                 // inline without breaking access ordering. By inlining the operand, we are pulling
                 // the operand's instruction into the same statement as this instruction, so this
                 // instruction adopts the access of the operand.
-                if (auto* result = As<InstructionResult>(operand)) {
+                if (auto* result = As<InstructionResult>(operands[i])) {
                     if (pending_resolution.Remove(result)) {
                         // Var and Let are always statements, and so can never be inlined. As such,
                         // they do not need to propagate the pending resolution through them.
                         if (!inst->IsAnyOf<Var, Let>()) {
                             accesses.Add(pending_access);
+                        }
+
+                        // Access instructions always get inlined by the backends, so if any of the
+                        // operands to the access need different controls, pull them to lets. We
+                        // skip the first operand because it's the thing being accessed. We care
+                        // about the access chain indices in this case.
+                        if (inst->Is<core::ir::Access>() && i > 0) {
+                            auto a = AccessesFor(result->Instruction());
+                            if (!a.Empty()) {
+                                PutInLet(result);
+                            }
                         }
                     }
                 }

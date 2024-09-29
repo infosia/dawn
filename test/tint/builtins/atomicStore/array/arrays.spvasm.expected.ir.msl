@@ -48,7 +48,8 @@ void compute_main_inner(uint local_invocation_index_2, tint_module_vars_struct t
       uint const x_35 = idx;
       uint const v_1 = tint_div_u32(x_31, 2u);
       uint const v_2 = tint_mod_u32(x_33, 2u);
-      atomic_store_explicit((&(*tint_module_vars.wg)[v_1][v_2][tint_mod_u32(x_35, 1u)]), 0u, memory_order_relaxed);
+      uint const v_3 = tint_mod_u32(x_35, 1u);
+      atomic_store_explicit((&(*tint_module_vars.wg)[v_1][v_2][v_3]), 0u, memory_order_relaxed);
       {
         idx = (idx + 1u);
       }
@@ -66,16 +67,16 @@ void compute_main_1(tint_module_vars_struct tint_module_vars) {
 
 void compute_main_inner_1(uint local_invocation_index_1_param, tint_module_vars_struct tint_module_vars) {
   {
-    uint v_3 = 0u;
-    v_3 = local_invocation_index_1_param;
+    uint v_4 = 0u;
+    v_4 = local_invocation_index_1_param;
     TINT_ISOLATE_UB(tint_volatile_true_1) while(true) {
-      uint const v_4 = v_3;
-      if ((v_4 >= 6u)) {
+      uint const v_5 = v_4;
+      if ((v_5 >= 6u)) {
         break;
       }
-      atomic_store_explicit((&(*tint_module_vars.wg)[(v_4 / 2u)][(v_4 % 2u)][0u]), 0u, memory_order_relaxed);
+      atomic_store_explicit((&(*tint_module_vars.wg)[(v_5 / 2u)][(v_5 % 2u)][0u]), 0u, memory_order_relaxed);
       {
-        v_3 = (v_4 + 1u);
+        v_4 = (v_5 + 1u);
       }
       continue;
     }
@@ -85,8 +86,8 @@ void compute_main_inner_1(uint local_invocation_index_1_param, tint_module_vars_
   compute_main_1(tint_module_vars);
 }
 
-kernel void compute_main(uint local_invocation_index_1_param [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_5 [[threadgroup(0)]]) {
+kernel void compute_main(uint local_invocation_index_1_param [[thread_index_in_threadgroup]], threadgroup tint_symbol_1* v_6 [[threadgroup(0)]]) {
   thread uint local_invocation_index_1 = 0u;
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.local_invocation_index_1=(&local_invocation_index_1), .wg=(&(*v_5).tint_symbol)};
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.local_invocation_index_1=(&local_invocation_index_1), .wg=(&(*v_6).tint_symbol)};
   compute_main_inner_1(local_invocation_index_1_param, tint_module_vars);
 }

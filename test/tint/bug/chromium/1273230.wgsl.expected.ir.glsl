@@ -97,7 +97,8 @@ void main_count_inner(uvec3 GlobalInvocationID) {
   vec3 center = (((p0 + p2) + p1) / 3.0f);
   vec3 voxelPos = toVoxelPos(p1);
   uint lIndex = toIndex1D(v.tint_symbol.gridSize, p0);
-  int triangleOffset = atomicAdd(LUT.values[i1], 1);
+  uint v_5 = i1;
+  int triangleOffset = atomicAdd(LUT.values[v_5], 1);
 }
 layout(local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
 void main() {

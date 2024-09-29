@@ -24,7 +24,8 @@ int foo() {
 fragment void tint_symbol() {
   tint_array<float, 4> arr = tint_array<float, 4>{};
   {
-    thread float* const a = (&arr[foo()]);
+    int const v = foo();
+    thread float* const a = (&arr[v]);
     TINT_ISOLATE_UB(tint_volatile_true) while(true) {
       float const x = (*a);
       break;
