@@ -77,9 +77,13 @@ class BindGroupTrackerBase {
     void OnSetPipeline(PipelineBase* pipeline) { mPipelineLayout = pipeline->GetLayout(); }
 
   protected:
+    virtual bool IsPipelineLayoutCompatible() {
+        return mLastAppliedPipelineLayout == mPipelineLayout;
+    }
+
     // The Derived class should call this before it applies bind groups.
     void BeforeApply() {
-        if (mLastAppliedPipelineLayout == mPipelineLayout) {
+        if (IsPipelineLayoutCompatible()) {
             return;
         }
 

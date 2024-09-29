@@ -52,16 +52,23 @@ Ref<ComputePipeline> ComputePipeline::CreateUninitialized(
 
 MaybeError ComputePipeline::InitializeImpl() {
     Device* device = ToBackend(GetDevice());
-    const PipelineLayout* layout = ToBackend(GetLayout());
+    PipelineLayout* layout = ToBackend(GetLayout());
 
     // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
     StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
+
+    // Compute pipeline doesn't have clamp depth feature.
+    // TODO(crbug.com/366291600): Remove static allocated interal immediate data range.
+    mInternalImmediateDataRangeByteSize = 0;
+
+    DAWN_TRY_ASSIGN(mVkPipelineLayoutObject,
+                    layout->GetOrCreateVkLayoutObject(mInternalImmediateDataRangeByteSize));
 
     VkComputePipelineCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
-    createInfo.layout = layout->GetHandle();
+    createInfo.layout = mVkPipelineLayoutObject->GetLayout();
     createInfo.basePipelineHandle = VkPipeline{};
     createInfo.basePipelineIndex = -1;
 
@@ -114,7 +121,7 @@ MaybeError ComputePipeline::InitializeImpl() {
     }
 
     // Record cache key information now since the createInfo is not stored.
-    StreamIn(&mCacheKey, createInfo, layout,
+    StreamIn(&mCacheKey, createInfo, mVkPipelineLayoutObject->GetCacheKey(),
              stream::Iterable(moduleAndSpirv.spirv, moduleAndSpirv.wordCount));
 
     // Try to see if we have anything in the blob cache.
@@ -155,10 +162,20 @@ void ComputePipeline::DestroyImpl() {
         ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mHandle);
         mHandle = VK_NULL_HANDLE;
     }
+
+    mVkPipelineLayoutObject = nullptr;
 }
 
 VkPipeline ComputePipeline::GetHandle() const {
     return mHandle;
+}
+
+VkPipelineLayout ComputePipeline::GetVkLayout() const {
+    return mVkPipelineLayoutObject->GetLayout();
+}
+
+uint32_t ComputePipeline::GetInternalImmediateDataRangeByteSize() const {
+    return mInternalImmediateDataRangeByteSize;
 }
 
 }  // namespace dawn::native::vulkan

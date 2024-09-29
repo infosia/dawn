@@ -331,7 +331,7 @@ Ref<RenderPipeline> RenderPipeline::CreateUninitialized(
 
 MaybeError RenderPipeline::InitializeImpl() {
     Device* device = ToBackend(GetDevice());
-    const PipelineLayout* layout = ToBackend(GetLayout());
+    PipelineLayout* layout = ToBackend(GetLayout());
 
     // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
     StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
@@ -539,6 +539,12 @@ MaybeError RenderPipeline::InitializeImpl() {
         DAWN_TRY_ASSIGN(renderPassInfo, device->GetRenderPassCache()->GetRenderPass(query));
     }
 
+    // TODO(crbug.com/366291600): Remove static allocated interal immediate data range.
+    mInternalImmediateDataRangeByteSize = kClampFragDepthArgsSize;
+
+    DAWN_TRY_ASSIGN(mVkPipelineLayoutObject,
+                    layout->GetOrCreateVkLayoutObject(mInternalImmediateDataRangeByteSize));
+
     // The create info chains in a bunch of things created on the stack here or inside state
     // objects.
     VkGraphicsPipelineCreateInfo createInfo;
@@ -557,7 +563,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     createInfo.pColorBlendState =
         (GetStageMask() & wgpu::ShaderStage::Fragment) ? &colorBlend : nullptr;
     createInfo.pDynamicState = &dynamic;
-    createInfo.layout = ToBackend(GetLayout())->GetHandle();
+    createInfo.layout = mVkPipelineLayoutObject->GetLayout();
     createInfo.renderPass = renderPassInfo.renderPass;
     createInfo.basePipelineHandle = VkPipeline{};
     createInfo.basePipelineIndex = -1;
@@ -571,7 +577,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     createInfo.subpass = mHasInputAttachment ? 0 : renderPassInfo.mainSubpass;
 
     // Record cache key information now since createInfo is not stored.
-    StreamIn(&mCacheKey, createInfo, layout->GetCacheKey());
+    StreamIn(&mCacheKey, createInfo, mVkPipelineLayoutObject->GetCacheKey());
 
     // Try to see if we have anything in the blob cache.
     platform::metrics::DawnHistogramTimer cacheTimer(GetDevice()->GetPlatform());
@@ -699,10 +705,19 @@ void RenderPipeline::DestroyImpl() {
         ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mHandle);
         mHandle = VK_NULL_HANDLE;
     }
+    mVkPipelineLayoutObject = nullptr;
 }
 
 VkPipeline RenderPipeline::GetHandle() const {
     return mHandle;
+}
+
+VkPipelineLayout RenderPipeline::GetVkLayout() const {
+    return mVkPipelineLayoutObject->GetLayout();
+}
+
+uint32_t RenderPipeline::GetInternalImmediateDataRangeByteSize() const {
+    return mInternalImmediateDataRangeByteSize;
 }
 
 }  // namespace dawn::native::vulkan

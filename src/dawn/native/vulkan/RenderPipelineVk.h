@@ -36,6 +36,7 @@
 namespace dawn::native::vulkan {
 
 class Device;
+struct VkPipelineLayoutObject;
 
 class RenderPipeline final : public RenderPipelineBase {
   public:
@@ -46,6 +47,10 @@ class RenderPipeline final : public RenderPipelineBase {
     VkPipeline GetHandle() const;
 
     MaybeError InitializeImpl() override;
+
+    VkPipelineLayout GetVkLayout() const;
+
+    uint32_t GetInternalImmediateDataRangeByteSize() const;
 
     // Dawn API
     void SetLabelImpl() override;
@@ -67,6 +72,11 @@ class RenderPipeline final : public RenderPipelineBase {
 
     // Whether the pipeline has any input attachment being used in the frag shader.
     bool mHasInputAttachment = false;
+
+    // Internal immediate data is decided by shader modules and might be different from
+    // pipelines created with same pipeline layout object.
+    uint32_t mInternalImmediateDataRangeByteSize = 0;
+    VkPipelineLayoutObject* mVkPipelineLayoutObject = nullptr;
 };
 
 }  // namespace dawn::native::vulkan

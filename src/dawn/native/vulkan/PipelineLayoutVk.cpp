@@ -27,6 +27,9 @@
 
 #include "dawn/native/vulkan/PipelineLayoutVk.h"
 
+#include <string>
+#include <utility>
+
 #include "dawn/common/BitSetIterator.h"
 #include "dawn/native/vulkan/BindGroupLayoutVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
@@ -50,7 +53,7 @@ MaybeError PipelineLayout::Initialize() {
     // TODO(crbug.com/dawn/277) Vulkan doesn't allow holes in this array, should we expose
     // this constraints at the Dawn level?
     uint32_t numSetLayouts = 0;
-    std::array<VkDescriptorSetLayout, kMaxBindGroups> setLayouts;
+    auto& setLayouts = mPipelineLayoutInfo.setLayouts;
     std::array<const CachedObject*, kMaxBindGroups> cachedObjects;
     for (BindGroupIndex setIndex : IterateBitSet(GetBindGroupLayoutsMask())) {
         const BindGroupLayoutInternalBase* bindGroupLayout = GetBindGroupLayout(setIndex);
@@ -59,50 +62,94 @@ MaybeError PipelineLayout::Initialize() {
         numSetLayouts++;
     }
 
-    // Always reserve push constant space for the ClampFragDepthArgs.
-    VkPushConstantRange depthClampArgsRange;
-    depthClampArgsRange.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
-    depthClampArgsRange.offset = kClampFragDepthArgsOffset;
-    depthClampArgsRange.size = kClampFragDepthArgsSize;
+    mPipelineLayoutInfo.vkCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+    mPipelineLayoutInfo.vkCreateInfo.pNext = nullptr;
+    mPipelineLayoutInfo.vkCreateInfo.flags = 0;
+    mPipelineLayoutInfo.vkCreateInfo.setLayoutCount = numSetLayouts;
+    mPipelineLayoutInfo.vkCreateInfo.pSetLayouts = AsVkArray(setLayouts.data());
+    mPipelineLayoutInfo.vkCreateInfo.pushConstantRangeCount = 0;
 
-    VkPipelineLayoutCreateInfo createInfo;
-    createInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-    createInfo.pNext = nullptr;
-    createInfo.flags = 0;
-    createInfo.setLayoutCount = numSetLayouts;
-    createInfo.pSetLayouts = AsVkArray(setLayouts.data());
-    createInfo.pushConstantRangeCount = 1;
-    createInfo.pPushConstantRanges = &depthClampArgsRange;
+    uint32_t immediateDataRangeByteSize = GetImmediateDataRangeByteSize();
 
-    // Record cache key information now since the createInfo is not stored.
-    StreamIn(&mCacheKey, stream::Iterable(cachedObjects.data(), numSetLayouts), createInfo);
+    // Initialize VkPushConstantRange for non-zero immediate data range size.
+    if (immediateDataRangeByteSize > 0) {
+        // Customer immediate data range is unique among shader stages
+        mPipelineLayoutInfo.InitializePushConstantRange(immediateDataRangeByteSize);
+    }
+
+    // Record cache key information now since the cachedObjects are not stored.
+    StreamIn(&mCacheKey, stream::Iterable(cachedObjects.data(), numSetLayouts));  //, createInfo);
+
+    std::unique_ptr<VkPipelineLayoutObject> vkLayoutObject =
+        std::make_unique<VkPipelineLayoutObject>();
+
+    VkPipelineLayout vkPipelineLayout;
+    Device* device = ToBackend(GetDevice());
+    DAWN_TRY(CheckVkSuccess(
+        device->fn.CreatePipelineLayout(device->GetVkDevice(), &mPipelineLayoutInfo.vkCreateInfo,
+                                        nullptr, &*vkPipelineLayout),
+        "CreatePipelineLayout"));
+
+    vkLayoutObject->layout =
+        AcquireRef(new RefCountedVkHandle<VkPipelineLayout>(device, vkPipelineLayout));
+
+    StreamIn(&vkLayoutObject->cacheKey, GetCacheKey(), mPipelineLayoutInfo.vkCreateInfo);
+
+    mVkPipelineLayouts.insert({0, std::move(vkLayoutObject)});
+
+    return {};
+}
+
+ResultOrError<VkPipelineLayoutObject*> PipelineLayout::GetOrCreateVkLayoutObject(
+    uint32_t internalImmediateDataRangeByteSize) {
+    // Check cache
+    if (mVkPipelineLayouts.contains(internalImmediateDataRangeByteSize)) {
+        return mVkPipelineLayouts[internalImmediateDataRangeByteSize].get();
+    }
+
+    uint32_t immediateDataRangeByteSize =
+        GetImmediateDataRangeByteSize() + internalImmediateDataRangeByteSize;
+    if (mPipelineLayoutInfo.vkCreateInfo.pushConstantRangeCount == 0) {
+        mPipelineLayoutInfo.InitializePushConstantRange(immediateDataRangeByteSize);
+    } else {
+        // Update exist push constant range.
+        mPipelineLayoutInfo.pushConstantRange.size = immediateDataRangeByteSize;
+    }
+
+    std::unique_ptr<VkPipelineLayoutObject> vkLayoutObject =
+        std::make_unique<VkPipelineLayoutObject>();
+    VkPipelineLayout vkPipelineLayout;
 
     Device* device = ToBackend(GetDevice());
     DAWN_TRY(CheckVkSuccess(
-        device->fn.CreatePipelineLayout(device->GetVkDevice(), &createInfo, nullptr, &*mHandle),
+        device->fn.CreatePipelineLayout(device->GetVkDevice(), &mPipelineLayoutInfo.vkCreateInfo,
+                                        nullptr, &*vkPipelineLayout),
         "CreatePipelineLayout"));
 
-    SetLabelImpl();
+    vkLayoutObject->layout =
+        AcquireRef(new RefCountedVkHandle<VkPipelineLayout>(device, vkPipelineLayout));
 
-    return {};
+    StreamIn(&vkLayoutObject->cacheKey, GetCacheKey(), mPipelineLayoutInfo.vkCreateInfo);
+
+    mVkPipelineLayouts.insert({internalImmediateDataRangeByteSize, std::move(vkLayoutObject)});
+
+    return mVkPipelineLayouts[internalImmediateDataRangeByteSize].get();
 }
 
 PipelineLayout::~PipelineLayout() = default;
 
 void PipelineLayout::DestroyImpl() {
     PipelineLayoutBase::DestroyImpl();
-    if (mHandle != VK_NULL_HANDLE) {
-        ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mHandle);
-        mHandle = VK_NULL_HANDLE;
-    }
-}
-
-VkPipelineLayout PipelineLayout::GetHandle() const {
-    return mHandle;
+    mVkPipelineLayouts.clear();
 }
 
 void PipelineLayout::SetLabelImpl() {
-    SetDebugName(ToBackend(GetDevice()), mHandle, "Dawn_PipelineLayout", GetLabel());
+    Device* device = ToBackend(GetDevice());
+    const std::string& label = GetLabel();
+
+    for (const auto& pair : mVkPipelineLayouts) {
+        SetDebugName(device, pair.second->GetLayout(), "Dawn_PipelineLayout", label);
+    }
 }
 
 }  // namespace dawn::native::vulkan

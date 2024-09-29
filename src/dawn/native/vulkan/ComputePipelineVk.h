@@ -37,6 +37,7 @@
 namespace dawn::native::vulkan {
 
 class Device;
+struct VkPipelineLayoutObject;
 
 class ComputePipeline final : public ComputePipelineBase {
   public:
@@ -48,6 +49,10 @@ class ComputePipeline final : public ComputePipelineBase {
 
     MaybeError InitializeImpl() override;
 
+    VkPipelineLayout GetVkLayout() const;
+
+    uint32_t GetInternalImmediateDataRangeByteSize() const;
+
     // Dawn API
     void SetLabelImpl() override;
 
@@ -57,6 +62,11 @@ class ComputePipeline final : public ComputePipelineBase {
     using ComputePipelineBase::ComputePipelineBase;
 
     VkPipeline mHandle = VK_NULL_HANDLE;
+
+    // Internal immediate data is decided by shader modules and might be different from
+    // pipelines created with same pipeline layout object.
+    int32_t mInternalImmediateDataRangeByteSize = 0;
+    VkPipelineLayoutObject* mVkPipelineLayoutObject = nullptr;
 };
 
 }  // namespace dawn::native::vulkan

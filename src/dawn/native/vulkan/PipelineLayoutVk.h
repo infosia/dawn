@@ -28,10 +28,14 @@
 #ifndef SRC_DAWN_NATIVE_VULKAN_PIPELINELAYOUTVK_H_
 #define SRC_DAWN_NATIVE_VULKAN_PIPELINELAYOUTVK_H_
 
-#include "dawn/native/PipelineLayout.h"
+#include <memory>
 
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/Error.h"
+
+#include "dawn/native/PipelineLayout.h"
+
+#include "dawn/native/vulkan/RefCountedVkHandle.h"
 
 namespace dawn::native::vulkan {
 
@@ -48,13 +52,26 @@ constexpr size_t kClampFragDepthArgsOffset = 0u;
 constexpr size_t kClampFragDepthArgsSize = sizeof(ClampFragDepthArgs);
 static_assert(kClampFragDepthArgsSize == 8u);
 
+struct VkPipelineLayoutObject {
+    const CacheKey& GetCacheKey() const { return cacheKey; }
+
+    VkPipelineLayout GetLayout() const { return layout->Get(); }
+
+    CacheKey cacheKey;
+    Ref<RefCountedVkHandle<VkPipelineLayout>> layout;
+};
+
 class PipelineLayout final : public PipelineLayoutBase {
   public:
     static ResultOrError<Ref<PipelineLayout>> Create(
         Device* device,
         const UnpackedPtr<PipelineLayoutDescriptor>& descriptor);
 
-    VkPipelineLayout GetHandle() const;
+    // Pipeline might use different immediate data internally which cause difference in
+    // VkPipelineLayout push constant range part. Pass internalImmediateDataRangeByteSize to
+    // get correct VkPipelineLayout.
+    ResultOrError<VkPipelineLayoutObject*> GetOrCreateVkLayoutObject(
+        uint32_t internalImmediateDataRangeByteSize);
 
     // Friend definition of StreamIn which can be found by ADL to override stream::StreamIn<T>.
     friend void StreamIn(stream::Sink* sink, const PipelineLayout& obj) {
@@ -62,6 +79,22 @@ class PipelineLayout final : public PipelineLayoutBase {
     }
 
   private:
+    struct PipelineLayoutInfo {
+        VkPipelineLayoutCreateInfo vkCreateInfo;
+        std::array<VkDescriptorSetLayout, kMaxBindGroups> setLayouts;
+        VkPushConstantRange pushConstantRange;
+
+        void InitializePushConstantRange(uint32_t size) {
+            pushConstantRange.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT |
+                                           VK_SHADER_STAGE_COMPUTE_BIT | VK_SHADER_STAGE_VERTEX_BIT;
+            pushConstantRange.offset = 0;
+            pushConstantRange.size = size;
+
+            vkCreateInfo.pushConstantRangeCount = 1;
+            vkCreateInfo.pPushConstantRanges = &pushConstantRange;
+        }
+    };
+
     ~PipelineLayout() override;
     void DestroyImpl() override;
 
@@ -71,7 +104,12 @@ class PipelineLayout final : public PipelineLayoutBase {
     // Dawn API
     void SetLabelImpl() override;
 
-    VkPipelineLayout mHandle = VK_NULL_HANDLE;
+    // Multiple VkPipelieLayouts is possible because variant internal immediate data range size.
+    // Using map to manage 1 PipelieLayout to N VkPipelieLayouts relationship with
+    // total immediate data rage size as key.
+    absl::flat_hash_map<int, std::unique_ptr<VkPipelineLayoutObject>> mVkPipelineLayouts;
+
+    PipelineLayoutInfo mPipelineLayoutInfo;
 };
 
 }  // namespace dawn::native::vulkan
