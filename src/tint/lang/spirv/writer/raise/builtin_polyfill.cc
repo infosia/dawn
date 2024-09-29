@@ -110,7 +110,7 @@ struct State {
                         worklist.Push(builtin);
                         break;
                     case core::BuiltinFn::kQuantizeToF16:
-                        if (builtin->Result(0)->Type()->Is<core::type::Vector>()) {
+                        if (builtin->Result()->Type()->Is<core::type::Vector>()) {
                             worklist.Push(builtin);
                         }
                         break;
@@ -228,7 +228,7 @@ struct State {
     /// Handle an atomic*() builtin.
     /// @param builtin the builtin call instruction
     void Atomic(core::ir::CoreBuiltinCall* builtin) {
-        auto* result_ty = builtin->Result(0)->Type();
+        auto* result_ty = builtin->Result()->Type();
 
         auto* pointer = builtin->Args()[0];
         auto* memory = [&]() -> core::ir::Value* {
@@ -273,13 +273,13 @@ struct State {
                 call->InsertBefore(builtin);
 
                 // Compare the original value to the comparator to see if an exchange happened.
-                auto* original = call->Result(0);
+                auto* original = call->Result();
                 auto* compare = b.Equal(ty.bool_(), original, cmp);
                 compare->InsertBefore(builtin);
 
                 // Construct the atomicCompareExchange result structure.
                 call = b.ConstructWithResult(builtin->DetachResult(),
-                                             Vector{original, compare->Result(0)});
+                                             Vector{original, compare->Result()});
                 break;
             }
             case core::BuiltinFn::kAtomicExchange:
@@ -334,7 +334,7 @@ struct State {
     void Dot(core::ir::CoreBuiltinCall* builtin) {
         // OpDot only supports floating point operands, so we need to polyfill the integer case.
         // TODO(crbug.com/tint/1267): If SPV_KHR_integer_dot_product is supported, use that instead.
-        if (builtin->Result(0)->Type()->IsIntegerScalar()) {
+        if (builtin->Result()->Type()->IsIntegerScalar()) {
             core::ir::Instruction* sum = nullptr;
 
             auto* v1 = builtin->Args()[0];
@@ -395,14 +395,14 @@ struct State {
         // If the condition is scalar and the objects are vectors, we need to splat the condition
         // into a vector of the same size.
         // TODO(jrprice): We don't need to do this if we're targeting SPIR-V 1.4 or newer.
-        auto* vec = builtin->Result(0)->Type()->As<core::type::Vector>();
+        auto* vec = builtin->Result()->Type()->As<core::type::Vector>();
         if (vec && args[0]->Type()->Is<core::type::Scalar>()) {
             Vector<core::ir::Value*, 4> elements;
             elements.Resize(vec->Width(), args[0]);
 
             auto* construct = b.Construct(ty.vec(ty.bool_(), vec->Width()), std::move(elements));
             construct->InsertBefore(builtin);
-            args[0] = construct->Result(0);
+            args[0] = construct->Result();
         }
 
         // Replace the builtin call with a call to the spirv.select intrinsic.
@@ -466,7 +466,7 @@ struct State {
             if (requires_float_lod && operands.lod->Type()->IsIntegerScalar()) {
                 auto* convert = b.Convert(ty.f32(), operands.lod);
                 convert->InsertBefore(insertion_point);
-                operands.lod = convert->Result(0);
+                operands.lod = convert->Result();
             }
             args.Push(operands.lod);
         }
@@ -503,7 +503,7 @@ struct State {
         if (array_idx->Type() != element_ty) {
             auto* array_idx_converted = b.Convert(element_ty, array_idx);
             array_idx_converted->InsertBefore(insertion_point);
-            array_idx = array_idx_converted->Result(0);
+            array_idx = array_idx_converted->Result();
         }
 
         // Construct a new coordinate vector.
@@ -511,7 +511,7 @@ struct State {
         auto* coord_ty = ty.vec(element_ty, num_coords + 1);
         auto* construct = b.Construct(coord_ty, Vector{coords, array_idx});
         construct->InsertBefore(insertion_point);
-        return construct->Result(0);
+        return construct->Result();
     }
 
     /// Handle a textureSample*() builtin.
@@ -584,7 +584,7 @@ struct State {
         // The first two operands are always the sampled image and then the coordinates, followed by
         // the depth reference if used.
         Vector<core::ir::Value*, 8> function_args;
-        function_args.Push(sampled_image->Result(0));
+        function_args.Push(sampled_image->Result());
         function_args.Push(coords);
         if (depth) {
             function_args.Push(depth);
@@ -667,7 +667,7 @@ struct State {
         // The first two operands are always the sampled image and then the coordinates, followed by
         // either the depth reference or the component.
         Vector<core::ir::Value*, 8> function_args;
-        function_args.Push(sampled_image->Result(0));
+        function_args.Push(sampled_image->Result());
         function_args.Push(coords);
         if (depth) {
             function_args.Push(depth);
@@ -722,7 +722,7 @@ struct State {
 
         // Call the builtin.
         // The result is always a vec4 in SPIR-V.
-        auto* result_ty = builtin->Result(0)->Type();
+        auto* result_ty = builtin->Result()->Type();
         bool expects_scalar_result = result_ty->Is<core::type::Scalar>();
         if (expects_scalar_result) {
             result_ty = ty.vec4(result_ty);
@@ -813,7 +813,7 @@ struct State {
         }
 
         // Add an extra component to the result vector for arrayed textures.
-        auto* result_ty = builtin->Result(0)->Type();
+        auto* result_ty = builtin->Result()->Type();
         if (core::type::IsTextureArray(texture_ty->Dim())) {
             auto* vec = result_ty->As<core::type::Vector>();
             result_ty = ty.vec(vec->Type(), vec->Width() + 1);
@@ -826,7 +826,7 @@ struct State {
 
         // Swizzle the first two components from the result for arrayed textures.
         if (core::type::IsTextureArray(texture_ty->Dim())) {
-            result = b.Swizzle(builtin->Result(0)->Type(), result, {0, 1});
+            result = b.Swizzle(builtin->Result()->Type(), result, {0, 1});
             result->InsertBefore(builtin);
         }
 
@@ -860,7 +860,7 @@ struct State {
         texture_call->InsertBefore(builtin);
 
         // Extract the third component to get the number of array layers.
-        auto* extract = b.AccessWithResult(builtin->DetachResult(), texture_call->Result(0), 2_u);
+        auto* extract = b.AccessWithResult(builtin->DetachResult(), texture_call->Result(), 2_u);
         extract->InsertBefore(builtin);
         builtin->Destroy();
     }
@@ -878,7 +878,7 @@ struct State {
         for (uint32_t i = 0; i < vec->Width(); i++) {
             auto* el = b.Access(ty.f32(), arg, u32(i));
             auto* scalar_call = b.Call(ty.f32(), core::BuiltinFn::kQuantizeToF16, el);
-            args.Push(scalar_call->Result(0));
+            args.Push(scalar_call->Result());
             el->InsertBefore(builtin);
             scalar_call->InsertBefore(builtin);
         }
@@ -904,7 +904,7 @@ struct State {
 
         // Call the builtin.
         // The result is always a vec4 in SPIR-V.
-        auto* result_ty = builtin->Result(0)->Type();
+        auto* result_ty = builtin->Result()->Type();
         TINT_ASSERT(result_ty->Is<core::type::Vector>());
 
         core::ir::Instruction* result = b.Call<spirv::ir::BuiltinCall>(
@@ -925,7 +925,7 @@ struct State {
         if (id->Type()->IsSignedIntegerScalar()) {
             auto* cast = b.Bitcast(ty.u32(), id);
             cast->InsertBefore(builtin);
-            builtin->SetArg(1, cast->Result(0));
+            builtin->SetArg(1, cast->Result());
         }
     }
 

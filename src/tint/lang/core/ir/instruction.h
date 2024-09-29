@@ -87,6 +87,36 @@ class Instruction : public Castable<Instruction> {
     /// @returns the result values for this instruction
     virtual VectorRef<const InstructionResult*> Results() const = 0;
 
+    /// @returns the result value. There must only be one result for this instruction.
+    InstructionResult* Result() {
+        auto res = Results();
+        TINT_ASSERT(res.Length() == 1);
+        return res[0];
+    }
+
+    /// @returns the result value. There must only be one result for this instruction.
+    const InstructionResult* Result() const {
+        auto res = Results();
+        TINT_ASSERT(res.Length() == 1);
+        return res[0];
+    }
+
+    /// @param idx the index of the result
+    /// @returns the result with index @p idx, or `nullptr` if there are no results or the index is
+    /// out of bounds.
+    InstructionResult* Results(size_t idx) {
+        auto res = Results();
+        return idx < res.Length() ? res[idx] : nullptr;
+    }
+
+    /// @param idx the index of the result
+    /// @returns the result with index @p idx, or `nullptr` if there are no results or the index is
+    /// out of bounds.
+    const InstructionResult* Results(size_t idx) const {
+        auto res = Results();
+        return idx < res.Length() ? res[idx] : nullptr;
+    }
+
     /// Removes the instruction from the block, and destroys all the result values.
     /// The result values must not be in use.
     virtual void Destroy();
@@ -144,22 +174,6 @@ class Instruction : public Castable<Instruction> {
     /// is out of bounds.
     const Value* Operand(size_t idx) const {
         auto res = Operands();
-        return idx < res.Length() ? res[idx] : nullptr;
-    }
-
-    /// @param idx the index of the result
-    /// @returns the result with index @p idx, or `nullptr` if there are no results or the index is
-    /// out of bounds.
-    InstructionResult* Result(size_t idx) {
-        auto res = Results();
-        return idx < res.Length() ? res[idx] : nullptr;
-    }
-
-    /// @param idx the index of the result
-    /// @returns the result with index @p idx, or `nullptr` if there are no results or the index is
-    /// out of bounds.
-    const InstructionResult* Result(size_t idx) const {
-        auto res = Results();
         return idx < res.Length() ? res[idx] : nullptr;
     }
 

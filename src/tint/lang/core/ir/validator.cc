@@ -892,7 +892,7 @@ StyledText Validator::NameOf(const Block* block) {
 }
 
 bool Validator::CheckResult(const Instruction* inst, size_t idx) {
-    auto* result = inst->Result(idx);
+    auto* result = inst->Results(idx);
     if (DAWN_UNLIKELY(result == nullptr)) {
         AddResultError(inst, idx) << "result is undefined";
         return false;
@@ -1285,7 +1285,7 @@ void Validator::CheckVertexEntryPoint(const Function* ep) {
     }
 
     for (auto var : referenced_module_vars_.TransitiveReferences(ep)) {
-        const auto* res_type = var->Result(0)->Type()->UnwrapPtrOrRef();
+        const auto* res_type = var->Result()->Type()->UnwrapPtrOrRef();
         const auto* res_struct = res_type->As<core::type::Struct>();
         if (res_struct) {
             for (auto* mem : res_struct->Members()) {
@@ -1314,7 +1314,7 @@ void Validator::CheckVertexEntryPoint(const Function* ep) {
                     CheckBuiltinPosition(ep, res_type);
                 } break;
                 case BuiltinValue::kClipDistances:
-                    CheckBuiltinClipDistances(ep, var->Result(0)->Type()->UnwrapPtrOrRef());
+                    CheckBuiltinClipDistances(ep, var->Result()->Type()->UnwrapPtrOrRef());
                     break;
                 default:
                     break;
@@ -1474,16 +1474,16 @@ void Validator::CheckVar(const Var* var) {
             return;
         }
 
-        if (var->Initializer()->Type() != var->Result(0)->Type()->UnwrapPtrOrRef()) {
+        if (var->Initializer()->Type() != var->Result()->Type()->UnwrapPtrOrRef()) {
             AddError(var) << "initializer type "
                           << style::Type(var->Initializer()->Type()->FriendlyName())
                           << " does not match store type "
-                          << style::Type(var->Result(0)->Type()->UnwrapPtrOrRef()->FriendlyName());
+                          << style::Type(var->Result()->Type()->UnwrapPtrOrRef()->FriendlyName());
             return;
         }
     }
 
-    auto* result_type = var->Result(0)->Type();
+    auto* result_type = var->Result()->Type();
     if (result_type == nullptr) {
         AddError(var) << "result type is undefined";
         return;
@@ -1519,7 +1519,7 @@ void Validator::CheckVar(const Var* var) {
         return;
     }
 
-    if (auto* s = var->Result(0)->Type()->UnwrapPtrOrRef()->As<core::type::Struct>()) {
+    if (auto* s = var->Result()->Type()->UnwrapPtrOrRef()->As<core::type::Struct>()) {
         for (auto* mem : s->Members()) {
             if (HasLocationAndBuiltin(mem->Attributes())) {
                 AddError(var)
@@ -1535,9 +1535,9 @@ void Validator::CheckLet(const Let* l) {
         return;
     }
 
-    if (l->Result(0) && l->Value()) {
-        if (l->Result(0)->Type() != l->Value()->Type()) {
-            AddError(l) << "result type " << style::Type(l->Result(0)->Type()->FriendlyName())
+    if (l->Result() && l->Value()) {
+        if (l->Result()->Type() != l->Value()->Type()) {
+            AddError(l) << "result type " << style::Type(l->Result()->Type()->FriendlyName())
                         << " does not match value type "
                         << style::Type(l->Value()->Type()->FriendlyName());
         }
@@ -1598,12 +1598,12 @@ void Validator::CheckBuiltinCall(const BuiltinCall* call) {
 
     TINT_ASSERT(builtin->return_type);
 
-    if (call->Result(0) == nullptr) {
+    if (call->Result() == nullptr) {
         AddError(call) << "call to builtin does not have a return type";
         return;
     }
 
-    if (builtin->return_type != call->Result(0)->Type()) {
+    if (builtin->return_type != call->Result()->Type()) {
         AddError(call) << "call result type does not match builtin return type";
         return;
     }
@@ -1628,7 +1628,7 @@ void Validator::CheckMemberBuiltinCall(const MemberBuiltinCall* call) {
         return;
     }
 
-    if (result->return_type != call->Result(0)->Type()) {
+    if (result->return_type != call->Result()->Type()) {
         AddError(call) << "member call result type does not match builtin return type";
     }
 }
@@ -1644,7 +1644,7 @@ void Validator::CheckConstruct(const Construct* construct) {
         return;
     }
 
-    if (auto* str = As<type::Struct>(construct->Result(0)->Type())) {
+    if (auto* str = As<type::Struct>(construct->Result()->Type())) {
         auto members = str->Members();
         if (args.Length() != str->Members().Length()) {
             AddError(construct) << "structure has " << members.Length()
@@ -1798,7 +1798,7 @@ void Validator::CheckAccess(const Access* a) {
         }
     }
 
-    auto* want = a->Result(0)->Type();
+    auto* want = a->Result()->Type();
     auto* want_view = want->As<type::MemoryView>();
     bool ok = true;
     if (obj_view) {
@@ -1836,7 +1836,7 @@ void Validator::CheckBinary(const Binary* b) {
             return;
         }
 
-        if (auto* result = b->Result(0)) {
+        if (auto* result = b->Result()) {
             if (overload->return_type != result->Type()) {
                 AddError(b) << "result value type " << style::Type(result->Type()->FriendlyName())
                             << " does not match "
@@ -1862,7 +1862,7 @@ void Validator::CheckUnary(const Unary* u) {
             return;
         }
 
-        if (auto* result = u->Result(0)) {
+        if (auto* result = u->Result()) {
             if (overload->return_type != result->Type()) {
                 AddError(u) << "result value type " << style::Type(result->Type()->FriendlyName())
                             << " does not match "
@@ -2228,9 +2228,9 @@ void Validator::CheckLoad(const Load* l) {
             AddError(l, Load::kFromOperandOffset) << "load source operand is not a memory view";
             return;
         }
-        if (l->Result(0)->Type() != mv->StoreType()) {
+        if (l->Result()->Type() != mv->StoreType()) {
             AddError(l, Load::kFromOperandOffset)
-                << "result type " << style::Type(l->Result(0)->Type()->FriendlyName())
+                << "result type " << style::Type(l->Result()->Type()->FriendlyName())
                 << " does not match source store type "
                 << style::Type(mv->StoreType()->FriendlyName());
         }
@@ -2266,7 +2266,7 @@ void Validator::CheckLoadVectorElement(const LoadVectorElement* l) {
         return;
     }
 
-    if (auto* res = l->Result(0)) {
+    if (auto* res = l->Result()) {
         if (auto* el_ty = GetVectorPtrElementType(l, LoadVectorElement::kFromOperandOffset)) {
             if (res->Type() != el_ty) {
                 AddResultError(l, 0) << "result type " << style::Type(res->Type()->FriendlyName())

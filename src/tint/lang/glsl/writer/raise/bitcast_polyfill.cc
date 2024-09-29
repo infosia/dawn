@@ -72,7 +72,7 @@ struct State {
 
         for (auto* bitcast : bitcast_worklist) {
             auto* src_type = bitcast->Val()->Type();
-            auto* dst_type = bitcast->Result(0)->Type();
+            auto* dst_type = bitcast->Result()->Type();
             auto* dst_deepest = dst_type->DeepestElement();
 
             if (src_type == dst_type) {
@@ -92,7 +92,7 @@ struct State {
     }
 
     void ReplaceBitcastWithValue(core::ir::Bitcast* bitcast) {
-        bitcast->Result(0)->ReplaceAllUsesWith(bitcast->Val());
+        bitcast->Result()->ReplaceAllUsesWith(bitcast->Val());
         bitcast->Destroy();
     }
 
@@ -106,17 +106,16 @@ struct State {
             [&](const core::type::U32*) { fn = BuiltinFn::kFloatBitsToUint; },  //
             TINT_ICE_ON_NO_MATCH);
 
-        return b.Call<glsl::ir::BuiltinCall>(result_type, fn, val)->Result(0);
+        return b.Call<glsl::ir::BuiltinCall>(result_type, fn, val)->Result();
     }
 
     void ReplaceBitcastFromF32(core::ir::Bitcast* bitcast) {
-        auto* dst_type = bitcast->Result(0)->Type();
+        auto* dst_type = bitcast->Result()->Type();
         auto* dst_deepest = dst_type->DeepestElement();
 
         b.InsertBefore(bitcast, [&] {
-            auto* bc =
-                CreateBitcastFromF32(dst_deepest, bitcast->Result(0)->Type(), bitcast->Val());
-            bitcast->Result(0)->ReplaceAllUsesWith(bc);
+            auto* bc = CreateBitcastFromF32(dst_deepest, bitcast->Result()->Type(), bitcast->Val());
+            bitcast->Result()->ReplaceAllUsesWith(bc);
         });
         bitcast->Destroy();
     }
@@ -131,7 +130,7 @@ struct State {
             [&](const core::type::U32*) { fn = BuiltinFn::kUintBitsToFloat; },  //
             TINT_ICE_ON_NO_MATCH);
 
-        return b.Call<glsl::ir::BuiltinCall>(dst_type, fn, val)->Result(0);
+        return b.Call<glsl::ir::BuiltinCall>(dst_type, fn, val)->Result();
     }
 
     void ReplaceBitcastToF32(core::ir::Bitcast* bitcast) {
@@ -139,8 +138,8 @@ struct State {
         auto* src_deepest = src_type->DeepestElement();
 
         b.InsertBefore(bitcast, [&] {
-            auto* bc = CreateBitcastToF32(src_deepest, bitcast->Result(0)->Type(), bitcast->Val());
-            bitcast->Result(0)->ReplaceAllUsesWith(bc);
+            auto* bc = CreateBitcastToF32(src_deepest, bitcast->Result()->Type(), bitcast->Val());
+            bitcast->Result()->ReplaceAllUsesWith(bc);
         });
         bitcast->Destroy();
     }
@@ -177,7 +176,7 @@ struct State {
                     if (src_vec->Width() == 2) {
                         packed = b.Call<glsl::ir::BuiltinCall>(ty.u32(),
                                                                glsl::BuiltinFn::kPackFloat2X16, src)
-                                     ->Result(0);
+                                     ->Result();
                     } else if (src_vec->Width() == 4) {
                         auto* left =
                             b.Call<glsl::ir::BuiltinCall>(ty.u32(), glsl::BuiltinFn::kPackFloat2X16,
@@ -185,7 +184,7 @@ struct State {
                         auto* right =
                             b.Call<glsl::ir::BuiltinCall>(ty.u32(), glsl::BuiltinFn::kPackFloat2X16,
                                                           b.Swizzle(ty.vec2<f16>(), src, {2, 3}));
-                        packed = b.Construct(ty.vec2<u32>(), left, right)->Result(0);
+                        packed = b.Construct(ty.vec2<u32>(), left, right)->Result();
                     } else {
                         TINT_UNREACHABLE();
                     }
@@ -194,7 +193,7 @@ struct State {
                         packed =
                             CreateBitcastToF32(packed->Type()->DeepestElement(), dst_type, packed);
                     } else {
-                        packed = b.Convert(dst_type, packed)->Result(0);
+                        packed = b.Convert(dst_type, packed)->Result();
                     }
 
                     b.Return(f, packed);
@@ -205,7 +204,7 @@ struct State {
 
     void ReplaceBitcastWithFromF16Polyfill(core::ir::Bitcast* bitcast) {
         auto* src_type = bitcast->Val()->Type();
-        auto* dst_type = bitcast->Result(0)->Type();
+        auto* dst_type = bitcast->Result()->Type();
 
         auto* f = CreateBitcastFromF16(src_type, dst_type);
         b.InsertBefore(bitcast,
@@ -240,7 +239,7 @@ struct State {
                         conv =
                             CreateBitcastFromF32(ty.u32(), ty.MatchWidth(ty.u32(), src_type), src);
                     } else {
-                        conv = b.Convert(ty.MatchWidth(ty.u32(), src->Type()), src)->Result(0);
+                        conv = b.Convert(ty.MatchWidth(ty.u32(), src->Type()), src)->Result();
                     }
 
                     core::ir::Value* val = nullptr;
@@ -252,11 +251,11 @@ struct State {
                             ty.vec2<f16>(), glsl::BuiltinFn::kUnpackFloat2X16,
                             b.Swizzle(ty.u32(), conv, {1}));
 
-                        val = b.Construct(dst_type, left, right)->Result(0);
+                        val = b.Construct(dst_type, left, right)->Result();
                     } else {
                         val = b.Call<glsl::ir::BuiltinCall>(ty.vec2<f16>(),
                                                             glsl::BuiltinFn::kUnpackFloat2X16, conv)
-                                  ->Result(0);
+                                  ->Result();
                     }
                     b.Return(f, val);
                 });
@@ -266,7 +265,7 @@ struct State {
 
     void ReplaceBitcastWithToF16Polyfill(core::ir::Bitcast* bitcast) {
         auto* src_type = bitcast->Val()->Type();
-        auto* dst_type = bitcast->Result(0)->Type();
+        auto* dst_type = bitcast->Result()->Type();
 
         auto* f = CreateBitcastToF16(src_type, dst_type);
         b.InsertBefore(bitcast,

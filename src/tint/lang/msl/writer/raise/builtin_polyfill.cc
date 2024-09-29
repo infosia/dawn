@@ -302,20 +302,20 @@ struct State {
             auto* ptr = b.FunctionParam("atomic_ptr", atomic_ptr);
             auto* cmp = b.FunctionParam("cmp", builtin->Args()[1]->Type());
             auto* val = b.FunctionParam("val", builtin->Args()[2]->Type());
-            auto* func = b.Function(builtin->Result(0)->Type());
+            auto* func = b.Function(builtin->Result()->Type());
             func->SetParams({ptr, cmp, val});
             b.Append(func->Block(), [&] {
-                auto* old_value = b.Var<function>("old_value", cmp)->Result(0);
+                auto* old_value = b.Var<function>("old_value", cmp)->Result();
                 auto* order = ir.CreateValue<msl::ir::MemoryOrder>(
                     b.ConstantValue(u32(std::memory_order_relaxed)));
                 auto* call = b.Call<msl::ir::BuiltinCall>(
                     ty.bool_(), BuiltinFn::kAtomicCompareExchangeWeakExplicit,
                     Vector{ptr, old_value, val, order, order});
                 auto* result =
-                    b.Construct(builtin->Result(0)->Type(), Vector{
-                                                                b.Load(old_value)->Result(0),
-                                                                call->Result(0),
-                                                            });
+                    b.Construct(builtin->Result()->Type(), Vector{
+                                                               b.Load(old_value)->Result(),
+                                                               call->Result(),
+                                                           });
                 b.Return(func, result);
             });
             return func;
@@ -336,7 +336,7 @@ struct State {
             auto* arg1 = builtin->Args()[1];
             if (arg0->Type()->Is<core::type::Scalar>()) {
                 // Calls to `distance` with a scalar argument are replaced with `abs(a - b)`.
-                auto* sub = b.Subtract(builtin->Result(0)->Type(), arg0, arg1);
+                auto* sub = b.Subtract(builtin->Result()->Type(), arg0, arg1);
                 b.CallWithResult(builtin->DetachResult(), core::BuiltinFn::kAbs, sub);
             } else {
                 b.CallWithResult<msl::ir::BuiltinCall>(builtin->DetachResult(),
@@ -369,9 +369,9 @@ struct State {
                     func->SetParams({lhs, rhs});
                     b.Append(func->Block(), [&] {
                         auto* mul = b.Multiply(vec, lhs, rhs);
-                        auto* sum = b.Access(el_ty, mul, u32(0))->Result(0);
+                        auto* sum = b.Access(el_ty, mul, u32(0))->Result();
                         for (uint32_t i = 1; i < vec->Width(); i++) {
-                            sum = b.Add(el_ty, sum, b.Access(el_ty, mul, u32(i)))->Result(0);
+                            sum = b.Add(el_ty, sum, b.Access(el_ty, mul, u32(i)))->Result();
                         }
                         b.Return(func, sum);
                     });
@@ -400,16 +400,16 @@ struct State {
             // printer will just fold away the load, which achieves the pass-by-reference semantics
             // that we want.
             //
-            auto* result_type = builtin->Result(0)->Type();
+            auto* result_type = builtin->Result()->Type();
             auto* float_type = result_type->Element(0);
             auto* i32_type = result_type->Element(1);
             auto* result = b.Var(ty.ptr(function, result_type));
             auto* exp = b.Access(ty.ptr(function, i32_type), result, u32(1));
-            auto args = Vector<core::ir::Value*, 2>{builtin->Args()[0], b.Load(exp)->Result(0)};
+            auto args = Vector<core::ir::Value*, 2>{builtin->Args()[0], b.Load(exp)->Result()};
             auto* call =
                 b.Call<msl::ir::BuiltinCall>(float_type, msl::BuiltinFn::kFrexp, std::move(args));
             b.Store(b.Access(ty.ptr(function, float_type), result, u32(0)), call);
-            builtin->Result(0)->ReplaceAllUsesWith(b.Load(result)->Result(0));
+            builtin->Result()->ReplaceAllUsesWith(b.Load(result)->Result());
         });
         builtin->Destroy();
     }
@@ -444,15 +444,15 @@ struct State {
             // printer will just fold away the load, which achieves the pass-by-reference semantics
             // that we want.
             //
-            auto* result_type = builtin->Result(0)->Type();
+            auto* result_type = builtin->Result()->Type();
             auto* element_type = result_type->Element(0);
             auto* result = b.Var(ty.ptr(function, result_type));
             auto* whole = b.Access(ty.ptr(function, element_type), result, u32(1));
-            auto args = Vector<core::ir::Value*, 2>{builtin->Args()[0], b.Load(whole)->Result(0)};
+            auto args = Vector<core::ir::Value*, 2>{builtin->Args()[0], b.Load(whole)->Result()};
             auto* call =
                 b.Call<msl::ir::BuiltinCall>(element_type, msl::BuiltinFn::kModf, std::move(args));
             b.Store(b.Access(ty.ptr(function, element_type), result, u32(0)), call);
-            builtin->Result(0)->ReplaceAllUsesWith(b.Load(result)->Result(0));
+            builtin->Result()->ReplaceAllUsesWith(b.Load(result)->Result());
         });
         builtin->Destroy();
     }
@@ -525,7 +525,7 @@ struct State {
                 } else {
                     lod = builtin->Args()[1];
                     if (lod->Type()->IsSignedIntegerScalar()) {
-                        lod = b.Convert<u32>(lod)->Result(0);
+                        lod = b.Convert<u32>(lod)->Result();
                     }
                 }
             }
@@ -537,7 +537,7 @@ struct State {
                 if (lod) {
                     call->AppendArg(lod);
                 }
-                values.Push(call->Result(0));
+                values.Push(call->Result());
             };
             get_dim(msl::BuiltinFn::kGetWidth);
             if (type->Dim() != core::type::TextureDimension::k1d) {
@@ -629,7 +629,7 @@ struct State {
         b.InsertBefore(builtin, [&] {
             // Convert the coordinates to unsigned integers if necessary.
             if (coords->Type()->IsSignedIntegerScalarOrVector()) {
-                coords = b.Convert(ty.MatchWidth(ty.u32(), coords->Type()), coords)->Result(0);
+                coords = b.Convert(ty.MatchWidth(ty.u32(), coords->Type()), coords)->Result();
             }
 
             // Call the `read()` member function.
@@ -672,7 +672,7 @@ struct State {
                 if (index_arg->Type()->IsSignedIntegerScalar()) {
                     builtin->SetArg(kArrayIndex, b.Call(ty.i32(), core::BuiltinFn::kMax, index_arg,
                                                         b.Zero<i32>())
-                                                     ->Result(0));
+                                                     ->Result());
                 }
             }
         });
@@ -723,7 +723,7 @@ struct State {
                 tex_type->Dim() == core::type::TextureDimension::kCubeArray) {
                 bias_idx = 3;
             }
-            args[bias_idx] = b.Construct(ty.Get<msl::type::Bias>(), args[bias_idx])->Result(0);
+            args[bias_idx] = b.Construct(ty.Get<msl::type::Bias>(), args[bias_idx])->Result();
         });
         // Call the `sample()` member function.
         auto* call = b.MemberCallWithResult<msl::ir::MemberBuiltinCall>(
@@ -759,7 +759,7 @@ struct State {
         b.InsertBefore(builtin, [&] {
             // Insert a constant zero LOD argument.
             // The LOD goes before the offset if there is one, otherwise at the end.
-            auto* lod = b.Construct(ty.Get<msl::type::Level>(), u32(0))->Result(0);
+            auto* lod = b.Construct(ty.Get<msl::type::Level>(), u32(0))->Result();
             if (has_offset) {
                 args.Insert(args.Length() - 1, lod);
             } else {
@@ -810,7 +810,7 @@ struct State {
                 case core::type::TextureDimension::kNone:
                     TINT_UNREACHABLE();
             }
-            args[grad_idx] = b.Construct(ty.Get<msl::type::Gradient>(dim), ddx, ddy)->Result(0);
+            args[grad_idx] = b.Construct(ty.Get<msl::type::Gradient>(dim), ddx, ddy)->Result();
 
             // Resize the argument list as the gradient argument only takes up one argument.
             // Move the offset argument back one place if present.
@@ -843,7 +843,7 @@ struct State {
                 tex_type->Dim() == core::type::TextureDimension::kCubeArray) {
                 lod_idx = 3;
             }
-            args[lod_idx] = b.Construct(ty.Get<msl::type::Level>(), args[lod_idx])->Result(0);
+            args[lod_idx] = b.Construct(ty.Get<msl::type::Level>(), args[lod_idx])->Result();
             // Call the `sample()` member function.
             auto* call = b.MemberCallWithResult<msl::ir::MemberBuiltinCall>(
                 builtin->DetachResult(), msl::BuiltinFn::kSample, tex, std::move(args));
@@ -872,7 +872,7 @@ struct State {
         b.InsertBefore(builtin, [&] {
             // Convert the coordinates to unsigned integers if necessary.
             if (coords->Type()->IsSignedIntegerScalarOrVector()) {
-                coords = b.Convert(ty.MatchWidth(ty.u32(), coords->Type()), coords)->Result(0);
+                coords = b.Convert(ty.MatchWidth(ty.u32(), coords->Type()), coords)->Result();
             }
 
             // Call the `write()` member function.

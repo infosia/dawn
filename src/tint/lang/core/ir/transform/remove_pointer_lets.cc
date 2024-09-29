@@ -56,7 +56,7 @@ struct State {
         // Loop over every instruction looking for control instructions.
         for (auto* inst : ir.Instructions()) {
             if (auto* l = inst->As<ir::Let>()) {
-                if (l->Result(0)->Type()->Is<core::type::Pointer>()) {
+                if (l->Result()->Type()->Is<core::type::Pointer>()) {
                     worklist.Push(l);
                 }
             }
@@ -68,7 +68,7 @@ struct State {
     }
 
     void ReplaceLetWithValue(core::ir::Let* l) {
-        l->Result(0)->ReplaceAllUsesWith(l->Value());
+        l->Result()->ReplaceAllUsesWith(l->Value());
         l->Destroy();
     }
 };

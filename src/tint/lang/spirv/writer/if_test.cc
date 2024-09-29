@@ -280,7 +280,7 @@ TEST_F(SpirvWriterTest, If_Phi_MultipleValue_0) {
         b.Append(i->False(), [&] {  //
             b.ExitIf(i, 20_i, false);
         });
-        b.Return(func, i->Result(0));
+        b.Return(func, i->Result());
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -310,7 +310,7 @@ TEST_F(SpirvWriterTest, If_Phi_MultipleValue_1) {
         b.Append(i->False(), [&] {  //
             b.ExitIf(i, 20_i, false);
         });
-        b.Return(func, i->Result(1));
+        b.Return(func, i->Results(1));
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -343,7 +343,7 @@ TEST_F(SpirvWriterTest, If_Phi_Nested) {
             b.Append(inner->False(), [&] {  //
                 b.ExitIf(inner, 20_i);
             });
-            b.ExitIf(outer, inner->Result(0));
+            b.ExitIf(outer, inner->Result());
         });
         b.Append(outer->False(), [&] {  //
             b.ExitIf(outer, 30_i);

@@ -382,7 +382,7 @@ void Disassembler::EmitFunction(const Function* func) {
 
 void Disassembler::EmitValueWithType(const Instruction* val) {
     SourceMarker sm(this);
-    EmitValueWithType(val->Result(0));
+    EmitValueWithType(val->Result());
     sm.StoreResult(IndexedValue{val, 0});
 }
 

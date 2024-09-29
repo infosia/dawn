@@ -154,7 +154,7 @@ struct State {
                         b.InsertBefore(call, [&] {
                             call->SetArg(1,
                                          b.Construct(ty.vec2(arg->Type()), arg, b.Zero(arg->Type()))
-                                             ->Result(0));
+                                             ->Result());
                         });
                         break;
                     }
@@ -163,7 +163,7 @@ struct State {
                         auto arg = call->Args()[1];
                         b.InsertBefore(call, [&] {
                             call->SetArg(1,
-                                         b.Construct(ty.vec2(arg->Type()), arg, 0.5_f)->Result(0));
+                                         b.Construct(ty.vec2(arg->Type()), arg, 0.5_f)->Result());
                         });
                         break;
                     }
@@ -185,11 +185,11 @@ struct State {
             if (!var) {
                 continue;
             }
-            auto [is_1d, new_type] = UpgradeTexture1D(var->Result(0));
+            auto [is_1d, new_type] = UpgradeTexture1D(var->Result());
             if (!is_1d) {
                 continue;
             }
-            var->Result(0)->SetType(new_type);
+            var->Result()->SetType(new_type);
         }
     }
 
@@ -211,11 +211,11 @@ struct State {
             if (!ld) {
                 continue;
             }
-            auto [is_1d, new_type] = UpgradeTexture1D(ld->Result(0));
+            auto [is_1d, new_type] = UpgradeTexture1D(ld->Result());
             if (!is_1d) {
                 continue;
             }
-            ld->Result(0)->SetType(new_type);
+            ld->Result()->SetType(new_type);
         }
     }
 
@@ -244,32 +244,32 @@ struct State {
                     new_args.Push(b.Constant(0_i));
                 } else {
                     // Make sure the LOD is a i32
-                    new_args.Push(b.Bitcast(ty.i32(), args[1])->Result(0));
+                    new_args.Push(b.Bitcast(ty.i32(), args[1])->Result());
                 }
             }
 
-            auto ret_type = call->Result(0)->Type();
+            auto ret_type = call->Result()->Type();
 
             // In GLSL the array dimensions return a 3rd parameter.
             if (tex->Dim() == core::type::TextureDimension::k2dArray ||
                 tex->Dim() == core::type::TextureDimension::kCubeArray) {
                 ret_type = ty.vec(ty.i32(), 3);
             } else {
-                ret_type = ty.MatchWidth(ty.i32(), call->Result(0)->Type());
+                ret_type = ty.MatchWidth(ty.i32(), call->Result()->Type());
             }
 
             core::ir::Value* result =
-                b.Call<glsl::ir::BuiltinCall>(ret_type, func, new_args)->Result(0);
+                b.Call<glsl::ir::BuiltinCall>(ret_type, func, new_args)->Result();
 
             // `textureSize` on array samplers returns the array size in the final component, WGSL
             // requires a 2 component response, so drop the array size
             if (tex->Dim() == core::type::TextureDimension::k2dArray ||
                 tex->Dim() == core::type::TextureDimension::kCubeArray) {
-                ret_type = ty.MatchWidth(ty.i32(), call->Result(0)->Type());
-                result = b.Swizzle(ret_type, result, {0, 1})->Result(0);
+                ret_type = ty.MatchWidth(ty.i32(), call->Result()->Type());
+                result = b.Swizzle(ret_type, result, {0, 1})->Result();
             }
 
-            b.BitcastWithResult(call->DetachResult(), result)->Result(0);
+            b.BitcastWithResult(call->DetachResult(), result)->Result();
         });
         call->Destroy();
     }
@@ -300,7 +300,7 @@ struct State {
             auto* new_call = b.Call<glsl::ir::BuiltinCall>(ty.vec(ty.i32(), 3), func, new_args);
 
             auto* swizzle = b.Swizzle(ty.i32(), new_call, {2});
-            b.BitcastWithResult(call->DetachResult(), swizzle->Result(0));
+            b.BitcastWithResult(call->DetachResult(), swizzle->Result());
         });
         call->Destroy();
     }
@@ -327,19 +327,19 @@ struct State {
             Vector<core::ir::Value*, 3> call_args{tex};
             switch (tex_type->Dim()) {
                 case core::type::TextureDimension::k1d: {
-                    call_args.Push(b.Convert(ty.i32(), args[1])->Result(0));
+                    call_args.Push(b.Convert(ty.i32(), args[1])->Result());
                     if (!is_storage) {
-                        call_args.Push(b.Convert(ty.i32(), args[2])->Result(0));
+                        call_args.Push(b.Convert(ty.i32(), args[2])->Result());
                     }
                     break;
                 }
                 case core::type::TextureDimension::k2d: {
-                    call_args.Push(b.Convert(ty.vec2<i32>(), args[1])->Result(0));
+                    call_args.Push(b.Convert(ty.vec2<i32>(), args[1])->Result());
                     if (is_ms) {
-                        call_args.Push(b.Convert(ty.i32(), args[2])->Result(0));
+                        call_args.Push(b.Convert(ty.i32(), args[2])->Result());
                     } else {
                         if (!is_storage) {
-                            call_args.Push(b.Convert(ty.i32(), args[2])->Result(0));
+                            call_args.Push(b.Convert(ty.i32(), args[2])->Result());
                         }
                     }
                     break;
@@ -347,18 +347,18 @@ struct State {
                 case core::type::TextureDimension::k2dArray: {
                     auto* coord = b.Convert(ty.vec2<i32>(), args[1]);
                     auto* ary_idx = b.Convert(ty.i32(), args[2]);
-                    call_args.Push(b.Construct(ty.vec3<i32>(), coord, ary_idx)->Result(0));
+                    call_args.Push(b.Construct(ty.vec3<i32>(), coord, ary_idx)->Result());
 
                     if (!is_storage) {
-                        call_args.Push(b.Convert(ty.i32(), args[3])->Result(0));
+                        call_args.Push(b.Convert(ty.i32(), args[3])->Result());
                     }
                     break;
                 }
                 case core::type::TextureDimension::k3d: {
-                    call_args.Push(b.Convert(ty.vec3<i32>(), args[1])->Result(0));
+                    call_args.Push(b.Convert(ty.vec3<i32>(), args[1])->Result());
 
                     if (!is_storage) {
-                        call_args.Push(b.Convert(ty.i32(), args[2])->Result(0));
+                        call_args.Push(b.Convert(ty.i32(), args[2])->Result());
                     }
                     break;
                 }
@@ -391,7 +391,7 @@ struct State {
 
                 auto* new_coords = b.Construct(ty.vec3(coords_ty->Type()), coords,
                                                b.Convert(coords_ty->Type(), array_idx));
-                new_args.Push(new_coords->Result(0));
+                new_args.Push(new_coords->Result());
 
                 new_args.Push(args[3]);
             } else {

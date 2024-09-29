@@ -407,7 +407,7 @@ class Parser {
         current_block_->Append(inst);
         if (result_id != 0) {
             TINT_ASSERT(inst->Results().Length() == 1u);
-            AddValue(result_id, inst->Result(0));
+            AddValue(result_id, inst->Result());
         }
     }
 

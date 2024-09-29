@@ -71,7 +71,7 @@ struct State {
                 switch (builtin->Func()) {
                     case core::BuiltinFn::kClamp:
                         if (config.clamp_int &&
-                            builtin->Result(0)->Type()->IsIntegerScalarOrVector()) {
+                            builtin->Result()->Type()->IsIntegerScalarOrVector()) {
                             worklist.Push(builtin);
                         }
                         break;
@@ -236,7 +236,7 @@ struct State {
     /// Polyfill a `clamp()` builtin call for integers.
     /// @param call the builtin call instruction
     void ClampInt(ir::CoreBuiltinCall* call) {
-        auto* type = call->Result(0)->Type();
+        auto* type = call->Result()->Type();
         auto* e = call->Args()[0];
         auto* low = call->Args()[1];
         auto* high = call->Args()[2];
@@ -278,20 +278,20 @@ struct State {
 
             auto* x = input;
             if (result_ty->IsSignedIntegerScalarOrVector()) {
-                x = b.Bitcast(uint_ty, x)->Result(0);
+                x = b.Bitcast(uint_ty, x)->Result();
             }
             auto* b16 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(16),
                                b.LessThanEqual(bool_ty, x, V(0x0000ffff)));
-            x = b.ShiftLeft(uint_ty, x, b16)->Result(0);
+            x = b.ShiftLeft(uint_ty, x, b16)->Result();
             auto* b8 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(8),
                               b.LessThanEqual(bool_ty, x, V(0x00ffffff)));
-            x = b.ShiftLeft(uint_ty, x, b8)->Result(0);
+            x = b.ShiftLeft(uint_ty, x, b8)->Result();
             auto* b4 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(4),
                               b.LessThanEqual(bool_ty, x, V(0x0fffffff)));
-            x = b.ShiftLeft(uint_ty, x, b4)->Result(0);
+            x = b.ShiftLeft(uint_ty, x, b4)->Result();
             auto* b2 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(2),
                               b.LessThanEqual(bool_ty, x, V(0x3fffffff)));
-            x = b.ShiftLeft(uint_ty, x, b2)->Result(0);
+            x = b.ShiftLeft(uint_ty, x, b2)->Result();
             auto* b1 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(1),
                               b.LessThanEqual(bool_ty, x, V(0x7fffffff)));
             auto* b0 =
@@ -340,20 +340,20 @@ struct State {
 
             auto* x = input;
             if (result_ty->IsSignedIntegerScalarOrVector()) {
-                x = b.Bitcast(uint_ty, x)->Result(0);
+                x = b.Bitcast(uint_ty, x)->Result();
             }
             auto* b16 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(16),
                                b.Equal(bool_ty, b.And(uint_ty, x, V(0x0000ffff)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b16)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b16)->Result();
             auto* b8 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(8),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x000000ff)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b8)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b8)->Result();
             auto* b4 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(4),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x0000000f)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b4)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b4)->Result();
             auto* b2 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(2),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x00000003)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b2)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b2)->Result();
             auto* b1 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(1),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x00000001)), V(0)));
             auto* b0 =
@@ -405,8 +405,8 @@ struct State {
                     auto* o = b.Call(ty.u32(), core::BuiltinFn::kMin, offset, 32_u);
                     auto* c = b.Call(ty.u32(), core::BuiltinFn::kMin, count,
                                      b.Subtract(ty.u32(), 32_u, o));
-                    call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 1, o->Result(0));
-                    call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 2, c->Result(0));
+                    call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 1, o->Result());
+                    call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 2, c->Result());
                 });
             } break;
             case BuiltinPolyfillLevel::kFull: {
@@ -476,24 +476,24 @@ struct State {
 
             auto* x = input;
             if (result_ty->IsSignedIntegerScalarOrVector()) {
-                x = b.Bitcast(uint_ty, x)->Result(0);
+                x = b.Bitcast(uint_ty, x)->Result();
                 auto* inverted = b.Complement(uint_ty, x);
                 x = b.Call(uint_ty, core::BuiltinFn::kSelect, inverted, x,
                            b.LessThan(bool_ty, x, V(0x80000000)))
-                        ->Result(0);
+                        ->Result();
             }
             auto* b16 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(16), V(0),
                                b.Equal(bool_ty, b.And(uint_ty, x, V(0xffff0000)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b16)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b16)->Result();
             auto* b8 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(8), V(0),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x0000ff00)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b8)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b8)->Result();
             auto* b4 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(4), V(0),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x000000f0)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b4)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b4)->Result();
             auto* b2 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(2), V(0),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x0000000c)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b2)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b2)->Result();
             auto* b1 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(1), V(0),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x00000002)), V(0)));
             Instruction* result =
@@ -538,20 +538,20 @@ struct State {
 
             auto* x = input;
             if (result_ty->IsSignedIntegerScalarOrVector()) {
-                x = b.Bitcast(uint_ty, x)->Result(0);
+                x = b.Bitcast(uint_ty, x)->Result();
             }
             auto* b16 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(16),
                                b.Equal(bool_ty, b.And(uint_ty, x, V(0x0000ffff)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b16)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b16)->Result();
             auto* b8 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(8),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x000000ff)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b8)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b8)->Result();
             auto* b4 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(4),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x0000000f)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b4)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b4)->Result();
             auto* b2 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(2),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x00000003)), V(0)));
-            x = b.ShiftRight(uint_ty, x, b2)->Result(0);
+            x = b.ShiftRight(uint_ty, x, b2)->Result();
             auto* b1 = b.Call(uint_ty, core::BuiltinFn::kSelect, V(0), V(1),
                               b.Equal(bool_ty, b.And(uint_ty, x, V(0x00000001)), V(0)));
             Instruction* result =
@@ -577,7 +577,7 @@ struct State {
             auto* abs_dpdx = b.Call(type, core::BuiltinFn::kAbs, dpdx);
             auto* abs_dpdy = b.Call(type, core::BuiltinFn::kAbs, dpdy);
             auto* result = b.Add(type, abs_dpdx, abs_dpdy);
-            call->Result(0)->ReplaceAllUsesWith(result->Result(0));
+            call->Result()->ReplaceAllUsesWith(result->Result());
         });
         call->Destroy();
     }
@@ -600,8 +600,8 @@ struct State {
                     auto* o = b.Call(ty.u32(), core::BuiltinFn::kMin, offset, 32_u);
                     auto* c = b.Call(ty.u32(), core::BuiltinFn::kMin, count,
                                      b.Subtract(ty.u32(), 32_u, o));
-                    call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 2, o->Result(0));
-                    call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 3, c->Result(0));
+                    call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 2, o->Result());
+                    call->SetOperand(ir::CoreBuiltinCall::kArgsOperandOffset + 3, c->Result());
                 });
             } break;
             case BuiltinPolyfillLevel::kFull: {
@@ -667,7 +667,7 @@ struct State {
     /// @param call the builtin call instruction
     void Saturate(ir::CoreBuiltinCall* call) {
         // Replace `saturate(x)` with `clamp(x, 0., 1.)`.
-        auto* type = call->Result(0)->Type();
+        auto* type = call->Result()->Type();
         ir::Constant* zero = nullptr;
         ir::Constant* one = nullptr;
         if (type->DeepestElement()->Is<core::type::F32>()) {

@@ -564,12 +564,12 @@ class State {
     }
 
     void Var(const core::ir::Var* var) {
-        auto* val = var->Result(0);
+        auto* val = var->Result();
         auto* ref = As<core::type::Reference>(val->Type());
         TINT_ASSERT(ref /* converted by PtrToRef */);
         auto ty = Type(ref->StoreType());
-        Symbol name = NameFor(var->Result(0));
-        Bind(var->Result(0), name);
+        Symbol name = NameFor(var->Result());
+        Bind(var->Result(), name);
 
         Vector<const ast::Attribute*, 4> attrs;
         if (auto bp = var->BindingPoint()) {
@@ -602,7 +602,7 @@ class State {
     }
 
     void Let(const core::ir::Let* let) {
-        auto* result = let->Result(0);
+        auto* result = let->Result();
         if (mod.NameOf(result).IsValid() || result->NumUsages() > 0) {
             Symbol name = NameFor(result);
             Append(b.Decl(b.Let(name, Expr(let->Value()))));
@@ -633,11 +633,11 @@ class State {
             call,  //
             [&](const core::ir::UserCall* c) {
                 auto* expr = b.Call(NameFor(c->Target()), std::move(args));
-                if (call->Results().IsEmpty() || !call->Result(0)->IsUsed()) {
+                if (call->Results().IsEmpty() || !call->Result()->IsUsed()) {
                     Append(b.CallStmt(expr));
                     return;
                 }
-                Bind(c->Result(0), expr);
+                Bind(c->Result(), expr);
             },
             [&](const wgsl::ir::BuiltinCall* c) {
                 if (!disabled_derivative_uniformity_ && RequiresDerivativeUniformity(c->Func())) {
@@ -680,33 +680,33 @@ class State {
                 }
 
                 auto* expr = b.Call(c->Func(), std::move(args));
-                if (call->Results().IsEmpty() || !call->Result(0)->IsUsed()) {
+                if (call->Results().IsEmpty() || !call->Result()->IsUsed()) {
                     Append(b.CallStmt(expr));
                     return;
                 }
-                Bind(c->Result(0), expr);
+                Bind(c->Result(), expr);
             },
             [&](const core::ir::Construct* c) {
-                auto ty = Type(c->Result(0)->Type());
-                Bind(c->Result(0), b.Call(ty, std::move(args)));
+                auto ty = Type(c->Result()->Type());
+                Bind(c->Result(), b.Call(ty, std::move(args)));
             },
             [&](const core::ir::Convert* c) {
-                auto ty = Type(c->Result(0)->Type());
-                Bind(c->Result(0), b.Call(ty, std::move(args)));
+                auto ty = Type(c->Result()->Type());
+                Bind(c->Result(), b.Call(ty, std::move(args)));
             },
             [&](const core::ir::Bitcast* c) {
-                auto ty = Type(c->Result(0)->Type());
-                Bind(c->Result(0), b.Bitcast(ty, args[0]));
+                auto ty = Type(c->Result()->Type());
+                Bind(c->Result(), b.Bitcast(ty, args[0]));
             },
             [&](const core::ir::Discard*) { Append(b.Discard()); },  //
             TINT_ICE_ON_NO_MATCH);
     }
 
-    void Load(const core::ir::Load* l) { Bind(l->Result(0), Expr(l->From())); }
+    void Load(const core::ir::Load* l) { Bind(l->Result(), Expr(l->From())); }
 
     void LoadVectorElement(const core::ir::LoadVectorElement* l) {
         auto* vec = Expr(l->From());
-        Bind(l->Result(0), VectorMemberAccess(vec, l->Index()));
+        Bind(l->Result(), VectorMemberAccess(vec, l->Index()));
     }
 
     void Unary(const core::ir::Unary* u) {
@@ -728,7 +728,7 @@ class State {
                 expr = b.Deref(Expr(u->Val()));
                 break;
         }
-        Bind(u->Result(0), expr);
+        Bind(u->Result(), expr);
     }
 
     void Access(const core::ir::Access* a) {
@@ -762,7 +762,7 @@ class State {
                 },  //
                 TINT_ICE_ON_NO_MATCH);
         }
-        Bind(a->Result(0), expr);
+        Bind(a->Result(), expr);
     }
 
     void Swizzle(const core::ir::Swizzle* s) {
@@ -776,7 +776,7 @@ class State {
         }
         auto* swizzle =
             b.MemberAccessor(vec, std::string_view(components.begin(), components.Length()));
-        Bind(s->Result(0), swizzle);
+        Bind(s->Result(), swizzle);
     }
 
     void Binary(const core::ir::Binary* e) {
@@ -785,7 +785,7 @@ class State {
             if (rhs && rhs->Type()->Is<core::type::Bool>() &&
                 rhs->Value()->ValueAs<bool>() == false) {
                 // expr == false
-                Bind(e->Result(0), b.Not(Expr(e->LHS())));
+                Bind(e->Result(), b.Not(Expr(e->LHS())));
                 return;
             }
         }
@@ -848,7 +848,7 @@ class State {
                 expr = b.LogicalOr(lhs, rhs);
                 break;
         }
-        Bind(e->Result(0), expr);
+        Bind(e->Result(), expr);
     }
 
     TINT_BEGIN_DISABLE_WARNING(UNREACHABLE_CODE);
@@ -1149,7 +1149,7 @@ class State {
         if (i->Results().IsEmpty()) {
             return false;
         }
-        auto* result = i->Result(0);
+        auto* result = i->Result();
         if (!result->Type()->Is<core::type::Bool>()) {
             return false;  // Wrong result type
         }

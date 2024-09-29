@@ -301,7 +301,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             num_wg_var->SetBindingPoint(group, 0);
         }
         auto* load = builder.Load(num_wg_var);
-        return load->Result(0);
+        return load->Result();
     }
 
     /// @copydoc ShaderIO::BackendState::GetInput
@@ -309,12 +309,12 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         if (subgroup_invocation_id_index == idx) {
             return builder
                 .Call<hlsl::ir::BuiltinCall>(ty.u32(), hlsl::BuiltinFn::kWaveGetLaneIndex)
-                ->Result(0);
+                ->Result();
         }
         if (subgroup_size_index == idx) {
             return builder
                 .Call<hlsl::ir::BuiltinCall>(ty.u32(), hlsl::BuiltinFn::kWaveGetLaneCount)
-                ->Result(0);
+                ->Result();
         }
         if (num_workgroups_index == idx) {
             return GetInputForNumWorkgroups(builder);
@@ -322,7 +322,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
         auto index = input_indices[idx];
 
-        core::ir::Value* v = builder.Access(inputs[idx].type, input_param, u32(index))->Result(0);
+        core::ir::Value* v = builder.Access(inputs[idx].type, input_param, u32(index))->Result();
 
         // If this is an input position builtin we need to invert the 'w' component of the vector.
         if (inputs[idx].attributes.builtin == core::BuiltinValue::kPosition) {
@@ -346,7 +346,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         if (!output_struct) {
             return nullptr;
         }
-        return builder.Construct(output_struct, std::move(output_values))->Result(0);
+        return builder.Construct(output_struct, std::move(output_values))->Result();
     }
 };
 }  // namespace

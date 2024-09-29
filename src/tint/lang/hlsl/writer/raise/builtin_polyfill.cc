@@ -158,7 +158,7 @@ struct State {
         // Replace the bitcasts that we found.
         for (auto* bitcast : bitcast_worklist) {
             auto* src_type = bitcast->Val()->Type();
-            auto* dst_type = bitcast->Result(0)->Type();
+            auto* dst_type = bitcast->Result()->Type();
             auto* dst_deepest = dst_type->DeepestElement();
 
             if (src_type == dst_type) {
@@ -348,7 +348,7 @@ struct State {
 
     void Acosh(core::ir::CoreBuiltinCall* call) {
         auto args = call->Args();
-        auto* result_ty = call->Result(0)->Type();
+        auto* result_ty = call->Result()->Type();
 
         // log(x + sqrt(x*x - 1));
         b.InsertBefore(call, [&] {
@@ -367,7 +367,7 @@ struct State {
 
     void Asinh(core::ir::CoreBuiltinCall* call) {
         auto args = call->Args();
-        auto* result_ty = call->Result(0)->Type();
+        auto* result_ty = call->Result()->Type();
 
         // log(x + sqrt(x*x + 1));
         b.InsertBefore(call, [&] {
@@ -386,7 +386,7 @@ struct State {
 
     void Atanh(core::ir::CoreBuiltinCall* call) {
         auto args = call->Args();
-        auto* result_ty = call->Result(0)->Type();
+        auto* result_ty = call->Result()->Type();
 
         // log((1+x) / (1-x)) * 0.5
         b.InsertBefore(call, [&] {
@@ -403,7 +403,7 @@ struct State {
             auto* log = b.Call(result_ty, core::BuiltinFn::kLog, div);
             auto* mul = b.Multiply(result_ty, log, half);
 
-            call->Result(0)->ReplaceAllUsesWith(mul->Result(0));
+            call->Result()->ReplaceAllUsesWith(mul->Result());
         });
         call->Destroy();
     }
@@ -417,7 +417,7 @@ struct State {
             original_value->SetInitializer(b.Zero(type));
 
             b.Call<hlsl::ir::BuiltinCall>(ty.void_(), fn, args[0], args[1], original_value);
-            b.LoadWithResult(call->DetachResult(), original_value)->Result(0);
+            b.LoadWithResult(call->DetachResult(), original_value)->Result();
         });
         call->Destroy();
     }
@@ -459,7 +459,7 @@ struct State {
             auto* val = b.Subtract(type, b.Zero(type), args[1]);
             b.Call<hlsl::ir::BuiltinCall>(ty.void_(), BuiltinFn::kInterlockedAdd, args[0], val,
                                           original_value);
-            b.LoadWithResult(call->DetachResult(), original_value)->Result(0);
+            b.LoadWithResult(call->DetachResult(), original_value)->Result();
         });
         call->Destroy();
     }
@@ -484,14 +484,14 @@ struct State {
     // An atomic load is an Or with 0
     void AtomicLoad(core::ir::CoreBuiltinCall* call) {
         auto args = call->Args();
-        auto* type = call->Result(0)->Type();
+        auto* type = call->Result()->Type();
         b.InsertBefore(call, [&] {
             auto* original_value = b.Var(ty.ptr(function, type));
             original_value->SetInitializer(b.Zero(type));
 
             b.Call<hlsl::ir::BuiltinCall>(ty.void_(), BuiltinFn::kInterlockedOr, args[0],
                                           b.Zero(type), original_value);
-            b.LoadWithResult(call->DetachResult(), original_value)->Result(0);
+            b.LoadWithResult(call->DetachResult(), original_value)->Result();
         });
         call->Destroy();
     }
@@ -525,12 +525,12 @@ struct State {
     void Trunc(core::ir::CoreBuiltinCall* call) {
         auto* val = call->Args()[0];
 
-        auto* type = call->Result(0)->Type();
+        auto* type = call->Result()->Type();
         Vector<core::ir::Value*, 4> args;
         b.InsertBefore(call, [&] {
-            args.Push(b.Call(type, core::BuiltinFn::kFloor, val)->Result(0));
-            args.Push(b.Call(type, core::BuiltinFn::kCeil, val)->Result(0));
-            args.Push(b.LessThan(ty.MatchWidth(ty.bool_(), type), val, b.Zero(type))->Result(0));
+            args.Push(b.Call(type, core::BuiltinFn::kFloor, val)->Result());
+            args.Push(b.Call(type, core::BuiltinFn::kCeil, val)->Result());
+            args.Push(b.LessThan(ty.MatchWidth(ty.bool_(), type), val, b.Zero(type))->Result());
         });
         auto* trunc = b.ir.CreateInstruction<hlsl::ir::Ternary>(call->DetachResult(), args);
         trunc->InsertBefore(call);
@@ -540,12 +540,12 @@ struct State {
 
     /// Replaces an identity bitcast result with the value.
     void ReplaceBitcastWithValue(core::ir::Bitcast* bitcast) {
-        bitcast->Result(0)->ReplaceAllUsesWith(bitcast->Val());
+        bitcast->Result()->ReplaceAllUsesWith(bitcast->Val());
         bitcast->Destroy();
     }
 
     void ReplaceBitcastWithAs(core::ir::Bitcast* bitcast) {
-        auto* dst_type = bitcast->Result(0)->Type();
+        auto* dst_type = bitcast->Result()->Type();
         auto* dst_deepest = dst_type->DeepestElement();
 
         BuiltinFn fn = BuiltinFn::kNone;
@@ -570,7 +570,7 @@ struct State {
         b.InsertBefore(bitcast, [&] {
             auto* source = bitcast->Val();
             if (castToSrcType) {
-                source = b.Construct(src_type, source)->Result(0);
+                source = b.Construct(src_type, source)->Result();
             }
             b.CallWithResult<hlsl::ir::BuiltinCall>(bitcast->DetachResult(), fn, source);
         });
@@ -616,7 +616,7 @@ struct State {
 
                     switch (src_vec->Width()) {
                         case 2: {
-                            result = s->Result(0);
+                            result = s->Result();
                             break;
                         }
                         case 4: {
@@ -627,7 +627,7 @@ struct State {
 
                             auto* t = b.Or(ty.u32(), z, w);
                             auto* cons = b.Construct(ty.vec2<u32>(), s, t);
-                            result = cons->Result(0);
+                            result = cons->Result();
                             break;
                         }
                         default:
@@ -654,7 +654,7 @@ struct State {
     /// Replaces a bitcast with a call to the FromF16 polyfill for the given types
     void ReplaceBitcastWithFromF16Polyfill(core::ir::Bitcast* bitcast) {
         auto* src_type = bitcast->Val()->Type();
-        auto* dst_type = bitcast->Result(0)->Type();
+        auto* dst_type = bitcast->Result()->Type();
 
         auto* f = CreateBitcastFromF16(src_type, dst_type);
         b.InsertBefore(bitcast,
@@ -709,8 +709,8 @@ struct State {
                     core::ir::Value* mask = nullptr;
                     core::ir::Value* shift = nullptr;
                     if (src_vec) {
-                        mask = b.Let("mask", b.Splat(uint_ty, 0xffff_u))->Result(0);
-                        shift = b.Let("shift", b.Splat(uint_ty, 16_u))->Result(0);
+                        mask = b.Let("mask", b.Splat(uint_ty, 0xffff_u))->Result();
+                        shift = b.Let("shift", b.Splat(uint_ty, 16_u))->Result();
                     } else {
                         mask = b.Value(b.Constant(0xffff_u));
                         shift = b.Value(b.Constant(16_u));
@@ -757,7 +757,7 @@ struct State {
     void Sign(core::ir::BuiltinCall* call) {
         b.InsertBefore(call, [&] {
             const core::type::Type* result_ty = ty.i32();
-            if (auto* vec = call->Result(0)->Type()->As<core::type::Vector>()) {
+            if (auto* vec = call->Result()->Type()->As<core::type::Vector>()) {
                 result_ty = ty.vec(result_ty, vec->Width());
             }
 
@@ -772,7 +772,7 @@ struct State {
     /// Replaces a bitcast with a call to the ToF16 polyfill for the given types
     void ReplaceBitcastWithToF16Polyfill(core::ir::Bitcast* bitcast) {
         auto* src_type = bitcast->Val()->Type();
-        auto* dst_type = bitcast->Result(0)->Type();
+        auto* dst_type = bitcast->Result()->Type();
 
         auto* f = CreateBitcastToF16(src_type, dst_type);
         b.InsertBefore(bitcast,
@@ -793,13 +793,12 @@ struct State {
 
             b.MemberCall<hlsl::ir::MemberBuiltinCall>(
                 ty.void_(), hlsl::BuiltinFn::kGetDimensions, tex,
-                Vector<core::ir::Value*, 3>{
-                    b.Access(ty.ptr<function, u32>(), out, 0_u)->Result(0),
-                    b.Access(ty.ptr<function, u32>(), out, 1_u)->Result(0),
-                    b.Access(ty.ptr<function, u32>(), out, 2_u)->Result(0)});
+                Vector<core::ir::Value*, 3>{b.Access(ty.ptr<function, u32>(), out, 0_u)->Result(),
+                                            b.Access(ty.ptr<function, u32>(), out, 1_u)->Result(),
+                                            b.Access(ty.ptr<function, u32>(), out, 2_u)->Result()});
 
             out = b.Swizzle(ty.u32(), out, {2_u});
-            call->Result(0)->ReplaceAllUsesWith(out->Result(0));
+            call->Result()->ReplaceAllUsesWith(out->Result());
         });
         call->Destroy();
     }
@@ -838,14 +837,14 @@ struct State {
 
             core::ir::Instruction* out = b.Var(ty.ptr(function, query_ty));
             for (uint32_t i = 0; i < query_size; ++i) {
-                args.Push(b.Access(ty.ptr<function, u32>(), out, u32(i))->Result(0));
+                args.Push(b.Access(ty.ptr<function, u32>(), out, u32(i))->Result());
             }
 
             b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), hlsl::BuiltinFn::kGetDimensions,
                                                       tex, args);
 
             out = b.Swizzle(ty.u32(), out, swizzle);
-            call->Result(0)->ReplaceAllUsesWith(out->Result(0));
+            call->Result()->ReplaceAllUsesWith(out->Result());
         });
         call->Destroy();
     }
@@ -912,15 +911,15 @@ struct State {
 
             // Push the level if needed
             if (has_level) {
-                args.Push(b.Convert(ty.u32(), call->Args()[1])->Result(0));
+                args.Push(b.Convert(ty.u32(), call->Args()[1])->Result());
             }
 
             core::ir::Instruction* query = b.Var(ty.ptr(function, query_ty));
             if (query_size == 1) {
-                args.Push(query->Result(0));
+                args.Push(query->Result());
             } else {
                 for (uint32_t i = 0; i < query_size; ++i) {
-                    args.Push(b.Access(ty.ptr<function, u32>(), query, u32(i))->Result(0));
+                    args.Push(b.Access(ty.ptr<function, u32>(), query, u32(i))->Result());
                 }
             }
 
@@ -931,7 +930,7 @@ struct State {
                 query = b.Swizzle(ty.vec(ty.u32(), static_cast<uint32_t>(swizzle.Length())), query,
                                   swizzle);
             }
-            call->Result(0)->ReplaceAllUsesWith(query->Result(0));
+            call->Result()->ReplaceAllUsesWith(query->Result());
         });
         call->Destroy();
     }
@@ -950,13 +949,12 @@ struct State {
 
             b.MemberCall<hlsl::ir::MemberBuiltinCall>(
                 ty.void_(), hlsl::BuiltinFn::kGetDimensions, tex,
-                Vector<core::ir::Value*, 3>{
-                    b.Access(ty.ptr<function, u32>(), out, 0_u)->Result(0),
-                    b.Access(ty.ptr<function, u32>(), out, 1_u)->Result(0),
-                    b.Access(ty.ptr<function, u32>(), out, 2_u)->Result(0)});
+                Vector<core::ir::Value*, 3>{b.Access(ty.ptr<function, u32>(), out, 0_u)->Result(),
+                                            b.Access(ty.ptr<function, u32>(), out, 1_u)->Result(),
+                                            b.Access(ty.ptr<function, u32>(), out, 2_u)->Result()});
 
             out = b.Swizzle(ty.u32(), out, {2_u});
-            call->Result(0)->ReplaceAllUsesWith(out->Result(0));
+            call->Result()->ReplaceAllUsesWith(out->Result());
         });
         call->Destroy();
     }
@@ -994,25 +992,25 @@ struct State {
                     if (is_storage) {
                         lvl = b.Constant(0_i);
                     } else {
-                        lvl = b.Convert(ty.i32(), args[2])->Result(0);
+                        lvl = b.Convert(ty.i32(), args[2])->Result();
                     }
-                    call_args.Push(b.Construct(ty.vec2<i32>(), coord, lvl)->Result(0));
+                    call_args.Push(b.Construct(ty.vec2<i32>(), coord, lvl)->Result());
                     break;
                 }
                 case core::type::TextureDimension::k2d: {
                     auto* coord = b.Convert(ty.vec2<i32>(), args[1]);
                     if (is_ms) {
                         // Pass coords and sample index as separate parameters
-                        call_args.Push(coord->Result(0));
-                        call_args.Push(b.Convert(ty.i32(), args[2])->Result(0));
+                        call_args.Push(coord->Result());
+                        call_args.Push(b.Convert(ty.i32(), args[2])->Result());
                     } else {
                         core::ir::Value* lvl = nullptr;
                         if (is_storage) {
                             lvl = b.Constant(0_i);
                         } else {
-                            lvl = b.Convert(ty.i32(), args[2])->Result(0);
+                            lvl = b.Convert(ty.i32(), args[2])->Result();
                         }
-                        call_args.Push(b.Construct(ty.vec3<i32>(), coord, lvl)->Result(0));
+                        call_args.Push(b.Construct(ty.vec3<i32>(), coord, lvl)->Result());
                     }
                     break;
                 }
@@ -1023,9 +1021,9 @@ struct State {
                     if (is_storage) {
                         lvl = b.Constant(0_i);
                     } else {
-                        lvl = b.Convert(ty.i32(), args[3])->Result(0);
+                        lvl = b.Convert(ty.i32(), args[3])->Result();
                     }
-                    call_args.Push(b.Construct(ty.vec4<i32>(), coord, ary_idx, lvl)->Result(0));
+                    call_args.Push(b.Construct(ty.vec4<i32>(), coord, ary_idx, lvl)->Result());
                     break;
                 }
                 case core::type::TextureDimension::k3d: {
@@ -1034,9 +1032,9 @@ struct State {
                     if (is_storage) {
                         lvl = b.Constant(0_i);
                     } else {
-                        lvl = b.Convert(ty.i32(), args[2])->Result(0);
+                        lvl = b.Convert(ty.i32(), args[2])->Result();
                     }
-                    call_args.Push(b.Construct(ty.vec4<i32>(), coord, lvl)->Result(0));
+                    call_args.Push(b.Construct(ty.vec4<i32>(), coord, lvl)->Result());
                     break;
                 }
                 default:
@@ -1048,9 +1046,9 @@ struct State {
             if (!swizzle.IsEmpty()) {
                 builtin = b.Swizzle(ty.f32(), builtin, swizzle);
             } else {
-                builtin = b.Convert(call->Result(0)->Type(), builtin);
+                builtin = b.Convert(call->Result()->Type(), builtin);
             }
-            call->Result(0)->ReplaceAllUsesWith(builtin->Result(0));
+            call->Result()->ReplaceAllUsesWith(builtin->Result());
         });
 
         call->Destroy();
@@ -1077,7 +1075,7 @@ struct State {
 
                 auto* new_coords = b.Construct(ty.vec3(coords_ty->Type()), coords,
                                                b.Convert(coords_ty->Type(), array_idx));
-                new_args.Push(new_coords->Result(0));
+                new_args.Push(new_coords->Result());
 
                 new_args.Push(args[3]);
             } else {
@@ -1142,16 +1140,16 @@ struct State {
                     offset_idx = is_depth ? 3 : 4;
                     break;
                 case core::type::TextureDimension::k2dArray:
-                    params.Push(b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[idx++]))
-                                    ->Result(0));
+                    params.Push(
+                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[idx++]))->Result());
                     offset_idx = is_depth ? 4 : 5;
                     break;
                 case core::type::TextureDimension::kCube:
                     params.Push(coords);
                     break;
                 case core::type::TextureDimension::kCubeArray:
-                    params.Push(b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[idx++]))
-                                    ->Result(0));
+                    params.Push(
+                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[idx++]))->Result());
                     break;
                 default:
                     TINT_UNREACHABLE();
@@ -1190,7 +1188,7 @@ struct State {
                     break;
                 case core::type::TextureDimension::k2dArray:
                     params.Push(
-                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
+                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(args[4]);
                     if (args.Length() > 5) {
                         params.Push(args[5]);
@@ -1202,7 +1200,7 @@ struct State {
                     break;
                 case core::type::TextureDimension::kCubeArray:
                     params.Push(
-                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
+                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(args[4]);
                     break;
                 default:
@@ -1239,7 +1237,7 @@ struct State {
                     break;
                 case core::type::TextureDimension::k2dArray:
                     params.Push(
-                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
+                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     if (args.Length() > 4) {
                         params.Push(args[4]);
                     }
@@ -1253,7 +1251,7 @@ struct State {
                     break;
                 case core::type::TextureDimension::kCubeArray:
                     params.Push(
-                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
+                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     break;
                 default:
                     TINT_UNREACHABLE();
@@ -1289,7 +1287,7 @@ struct State {
                     break;
                 case core::type::TextureDimension::k2dArray:
                     params.Push(
-                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
+                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(args[4]);
 
                     if (args.Length() > 5) {
@@ -1307,7 +1305,7 @@ struct State {
                     break;
                 case core::type::TextureDimension::kCubeArray:
                     params.Push(
-                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
+                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(args[4]);
                     break;
                 default:
@@ -1348,7 +1346,7 @@ struct State {
                     break;
                 case core::type::TextureDimension::k2dArray:
                     params.Push(
-                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
+                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(args[4]);
 
                     if (args.Length() > 5) {
@@ -1365,7 +1363,7 @@ struct State {
                     break;
                 case core::type::TextureDimension::kCubeArray:
                     params.Push(
-                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
+                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(args[4]);
                     break;
                 default:
@@ -1403,7 +1401,7 @@ struct State {
                     break;
                 case core::type::TextureDimension::k2dArray:
                     params.Push(
-                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
+                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(args[4]);
                     params.Push(args[5]);
 
@@ -1423,7 +1421,7 @@ struct State {
                     break;
                 case core::type::TextureDimension::kCubeArray:
                     params.Push(
-                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
+                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result());
                     params.Push(args[4]);
                     params.Push(args[5]);
                     break;
@@ -1453,7 +1451,7 @@ struct State {
             switch (tex_type->Dim()) {
                 case core::type::TextureDimension::k2d:
                     params.Push(coords);
-                    params.Push(b.Convert<f32>(args[3])->Result(0));  // Level
+                    params.Push(b.Convert<f32>(args[3])->Result());  // Level
 
                     if (args.Length() > 4) {
                         params.Push(args[4]);
@@ -1461,8 +1459,8 @@ struct State {
                     break;
                 case core::type::TextureDimension::k2dArray:
                     params.Push(
-                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
-                    params.Push(b.Convert<f32>(args[4])->Result(0));  // Level
+                        b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[3]))->Result());
+                    params.Push(b.Convert<f32>(args[4])->Result());  // Level
                     if (args.Length() > 5) {
                         params.Push(args[5]);
                     }
@@ -1470,7 +1468,7 @@ struct State {
                 case core::type::TextureDimension::k3d:
                 case core::type::TextureDimension::kCube:
                     params.Push(coords);
-                    params.Push(b.Convert<f32>(args[3])->Result(0));  // Level
+                    params.Push(b.Convert<f32>(args[3])->Result());  // Level
 
                     if (args.Length() > 4) {
                         params.Push(args[4]);
@@ -1478,8 +1476,8 @@ struct State {
                     break;
                 case core::type::TextureDimension::kCubeArray:
                     params.Push(
-                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
-                    params.Push(b.Convert<f32>(args[4])->Result(0));  // Level
+                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result());
+                    params.Push(b.Convert<f32>(args[4])->Result());  // Level
                     break;
                 default:
                     TINT_UNREACHABLE();
@@ -1501,7 +1499,7 @@ struct State {
             auto* lower = b.Swizzle(ty.u32(), bc, {0});
             auto* upper = b.ShiftLeft(ty.u32(), b.Swizzle(ty.u32(), bc, {1}), 16_u);
             auto* res = b.Or(ty.u32(), lower, upper);
-            call->Result(0)->ReplaceAllUsesWith(res->Result(0));
+            call->Result()->ReplaceAllUsesWith(res->Result());
         });
         call->Destroy();
     }
@@ -1572,7 +1570,7 @@ struct State {
             auto* lower = b.Swizzle(ty.u32(), conv, {0});
             auto* upper = b.ShiftLeft(ty.u32(), b.Swizzle(ty.u32(), conv, {1}), 16_u);
             auto* result = b.Or(ty.u32(), lower, upper);
-            call->Result(0)->ReplaceAllUsesWith(result->Result(0));
+            call->Result()->ReplaceAllUsesWith(result->Result());
         });
         call->Destroy();
     }
@@ -1586,7 +1584,7 @@ struct State {
             auto* flt_conv = b.Convert(ty.vec2<f32>(), conv);
             auto* scale = b.Divide(ty.vec2<f32>(), flt_conv, 0xffff_f);
 
-            call->Result(0)->ReplaceAllUsesWith(scale->Result(0));
+            call->Result()->ReplaceAllUsesWith(scale->Result());
         });
         call->Destroy();
     }
@@ -1648,7 +1646,7 @@ struct State {
             auto* w = b.ShiftLeft(ty.u32(), b.Swizzle(ty.u32(), conv, {3}), 24_u);
             auto* res = b.Or(ty.u32(), x, b.Or(ty.u32(), y, b.Or(ty.u32(), z, w)));
 
-            call->Result(0)->ReplaceAllUsesWith(res->Result(0));
+            call->Result()->ReplaceAllUsesWith(res->Result());
         });
         call->Destroy();
     }
@@ -1665,7 +1663,7 @@ struct State {
             auto* conv = b.Convert(ty.vec4<f32>(), cons);
             auto* scale = b.Divide(ty.vec4<f32>(), conv, 255_f);
 
-            call->Result(0)->ReplaceAllUsesWith(scale->Result(0));
+            call->Result()->ReplaceAllUsesWith(scale->Result());
         });
         call->Destroy();
     }
@@ -1677,7 +1675,7 @@ struct State {
             auto* packed = b.Call<hlsl::ir::BuiltinCall>(type, hlsl::BuiltinFn::kPackS8, args[0]);
             auto* conv = b.Convert(ty.u32(), packed);
 
-            call->Result(0)->ReplaceAllUsesWith(conv->Result(0));
+            call->Result()->ReplaceAllUsesWith(conv->Result());
         });
         call->Destroy();
     }
@@ -1701,7 +1699,7 @@ struct State {
             auto* packed = b.Call<hlsl::ir::BuiltinCall>(type, hlsl::BuiltinFn::kPackU8, args[0]);
             auto* conv = b.Convert(ty.u32(), packed);
 
-            call->Result(0)->ReplaceAllUsesWith(conv->Result(0));
+            call->Result()->ReplaceAllUsesWith(conv->Result());
         });
         call->Destroy();
     }
@@ -1726,7 +1724,7 @@ struct State {
                 b.Call<hlsl::ir::BuiltinCall>(type, hlsl::BuiltinFn::kPackClampS8, args[0]);
             auto* conv = b.Convert(ty.u32(), packed);
 
-            call->Result(0)->ReplaceAllUsesWith(conv->Result(0));
+            call->Result()->ReplaceAllUsesWith(conv->Result());
         });
         call->Destroy();
     }
@@ -1752,7 +1750,7 @@ struct State {
     }
 
     void QuantizeToF16(core::ir::CoreBuiltinCall* call) {
-        auto* u32_type = ty.MatchWidth(ty.u32(), call->Result(0)->Type());
+        auto* u32_type = ty.MatchWidth(ty.u32(), call->Result()->Type());
         b.InsertBefore(call, [&] {
             auto* inner = b.Call<hlsl::ir::BuiltinCall>(u32_type, hlsl::BuiltinFn::kF32Tof16,
                                                         call->Args()[0]);
@@ -1770,14 +1768,14 @@ struct State {
         auto* arg = call->Args()[0];
         auto* arg_type = arg->Type()->UnwrapRef();
         if (arg_type->IsSignedIntegerScalarOrVector()) {
-            auto* result_ty = call->Result(0)->Type();
+            auto* result_ty = call->Result()->Type();
             auto* u32_type = ty.MatchWidth(ty.u32(), result_ty);
             b.InsertBefore(call, [&] {
                 core::ir::Value* val = arg;
                 // Bitcast of literal int vectors fails in DXC so extract arg to a var. See
                 // github.com/microsoft/DirectXShaderCompiler/issues/6851.
                 if (arg_type->IsSignedIntegerVector() && arg->Is<core::ir::Constant>()) {
-                    val = b.Let("arg", arg)->Result(0);
+                    val = b.Let("arg", arg)->Result();
                 }
                 auto* inner =
                     b.Call<hlsl::ir::BuiltinCall>(u32_type, hlsl::BuiltinFn::kAsuint, val);
@@ -1862,7 +1860,7 @@ struct State {
                 default:
                     TINT_UNREACHABLE();
             }
-            call->Result(0)->ReplaceAllUsesWith(inst->Result(0));
+            call->Result()->ReplaceAllUsesWith(inst->Result());
         });
         call->Destroy();
     }

@@ -1323,7 +1323,7 @@ class Builder {
         }
         auto* var = Var(name, ir.Types().ptr(SPACE, val->Type(), ACCESS));
         var->SetInitializer(val);
-        ir.SetName(var->Result(0), name);
+        ir.SetName(var->Result(), name);
         return var;
     }
 
@@ -1377,7 +1377,7 @@ class Builder {
             return nullptr;
         }
         auto* let = Append(ir.CreateInstruction<ir::Let>(InstructionResult(val->Type()), val));
-        ir.SetName(let->Result(0), name);
+        ir.SetName(let->Result(), name);
         return let;
     }
 

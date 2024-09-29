@@ -133,20 +133,33 @@ class OperandInstruction : public Castable<OperandInstruction<N, R>, Instruction
     VectorRef<InstructionResult*> Results() override { return results_; }
 
     /// @returns the result values for this instruction
+
     VectorRef<const InstructionResult*> Results() const override { return results_; }
 
     /// @param idx the index of the result
     /// @returns the result with index @p idx, or `nullptr` if there are no results or the index is
     /// out of bounds.
-    InstructionResult* Result(size_t idx) {
+    InstructionResult* Results(size_t idx) {
         return idx < results_.Length() ? results_[idx] : nullptr;
     }
 
     /// @param idx the index of the result
     /// @returns the result with index @p idx, or `nullptr` if there are no results or the index is
     /// out of bounds.
-    const InstructionResult* Result(size_t idx) const {
+    const InstructionResult* Results(size_t idx) const {
         return idx < results_.Length() ? results_[idx] : nullptr;
+    }
+
+    /// @returns the result, asserts there is only one result
+    InstructionResult* Result() {
+        TINT_ASSERT(results_.Length() == 1);
+        return results_[0];
+    }
+
+    /// @returns the result, asserts there is only one result
+    const InstructionResult* Result() const {
+        TINT_ASSERT(results_.Length() == 1);
+        return results_[0];
     }
 
   protected:

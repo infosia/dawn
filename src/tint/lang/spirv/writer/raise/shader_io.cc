@@ -144,18 +144,18 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     core::ir::Value* GetInput(core::ir::Builder& builder, uint32_t idx) override {
         // Load the input from the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kIn, inputs[idx].type, core::Access::kRead);
-        auto* from = input_vars[idx]->Result(0);
+        auto* from = input_vars[idx]->Result();
 
         // SampleMask becomes an array for SPIR-V, so load from the first element.
         if (inputs[idx].attributes.builtin == core::BuiltinValue::kSampleMask) {
-            from = builder.Access(ptr, input_vars[idx], 0_u)->Result(0);
+            from = builder.Access(ptr, input_vars[idx], 0_u)->Result();
         }
 
-        auto* value = builder.Load(from)->Result(0);
+        auto* value = builder.Load(from)->Result();
 
         // Convert f32 values to f16 values if needed.
         if (config.polyfill_f16_io && inputs[idx].type->DeepestElement()->Is<core::type::F16>()) {
-            value = builder.Convert(inputs[idx].type, value)->Result(0);
+            value = builder.Convert(inputs[idx].type, value)->Result();
         }
 
         return value;
@@ -165,11 +165,11 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     void SetOutput(core::ir::Builder& builder, uint32_t idx, core::ir::Value* value) override {
         // Store the output to the global variable declared earlier.
         auto* ptr = ty.ptr(core::AddressSpace::kOut, outputs[idx].type, core::Access::kWrite);
-        auto* to = output_vars[idx]->Result(0);
+        auto* to = output_vars[idx]->Result();
 
         // SampleMask becomes an array for SPIR-V, so store to the first element.
         if (outputs[idx].attributes.builtin == core::BuiltinValue::kSampleMask) {
-            to = builder.Access(ptr, to, 0_u)->Result(0);
+            to = builder.Access(ptr, to, 0_u)->Result();
         }
 
         // Clamp frag_depth values if necessary.
@@ -179,7 +179,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
         // Convert f16 values to f32 values if needed.
         if (config.polyfill_f16_io && value->Type()->DeepestElement()->Is<core::type::F16>()) {
-            value = builder.Convert(to->Type()->UnwrapPtr(), value)->Result(0);
+            value = builder.Convert(to->Type()->UnwrapPtr(), value)->Result();
         }
 
         builder.Store(to, value);
@@ -199,7 +199,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             // Check that there are no push constants in the module already.
             for (auto* inst : *ir.root_block) {
                 if (auto* var = inst->As<core::ir::Var>()) {
-                    auto* ptr = var->Result(0)->Type()->As<core::type::Pointer>();
+                    auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
                     if (ptr->AddressSpace() == core::AddressSpace::kPushConstant) {
                         TINT_ICE() << "cannot clamp frag_depth with pre-existing push constants";
                     }
@@ -217,7 +217,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             // Declare the variable.
             auto* var = b.Var("tint_frag_depth_clamp_args", ty.ptr(push_constant, str));
             ir.root_block->Append(var);
-            module_state.frag_depth_clamp_args = var->Result(0);
+            module_state.frag_depth_clamp_args = var->Result();
         }
 
         // Clamp the value.
@@ -226,7 +226,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         auto* frag_depth_max = builder.Access(ty.f32(), args, 1_u);
         return builder
             .Call(ty.f32(), core::BuiltinFn::kClamp, frag_depth, frag_depth_min, frag_depth_max)
-            ->Result(0);
+            ->Result();
     }
 
     /// @copydoc ShaderIO::BackendState::NeedsVertexPointSize

@@ -93,10 +93,10 @@ class ReferencedModuleVars {
             }
             if (auto* var = inst->template As<VarT>()) {
                 if (pred(var)) {
-                    if (!var->Result(0)) {
+                    if (!var->Result()) {
                         continue;
                     }
-                    var->Result(0)->ForEachUseUnsorted([&](const Usage& use) {
+                    var->Result()->ForEachUseUnsorted([&](const Usage& use) {
                         block_to_direct_vars_.GetOrAddZero(use.instruction->Block()).Add(var);
                     });
                 }

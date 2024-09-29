@@ -40,7 +40,7 @@ bool CanRun(const core::ir::Module& module) {
     // Check for push constants and input attachments, which the MSL writer does not support.
     for (auto* inst : *module.root_block) {
         auto* var = inst->As<core::ir::Var>();
-        auto* ptr = var->Result(0)->Type()->As<core::type::Pointer>();
+        auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
         if (ptr->AddressSpace() == core::AddressSpace::kPushConstant) {
             return false;
         }
@@ -63,7 +63,7 @@ void IRFuzzer(core::ir::Module& module, Options options) {
     std::unordered_set<tint::BindingPoint> storage_bindings;
     for (auto* inst : *module.root_block) {
         auto* var = inst->As<core::ir::Var>();
-        if (!var->Result(0)->Type()->UnwrapPtr()->HasFixedFootprint()) {
+        if (!var->Result()->Type()->UnwrapPtr()->HasFixedFootprint()) {
             if (auto bp = var->BindingPoint()) {
                 if (storage_bindings.insert(bp.value()).second) {
                     options.array_length_from_uniform.bindpoint_to_size_index.emplace(

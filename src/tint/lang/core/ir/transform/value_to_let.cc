@@ -101,7 +101,7 @@ struct State {
         };
 
         auto maybe_put_in_let = [&](auto* inst, Accesses& accesses) {
-            if (auto* result = inst->Result(0)) {
+            if (auto* result = inst->Result()) {
                 auto& usages = result->UsagesUnsorted();
                 switch (result->NumUsages()) {
                     case 0:  // No usage
@@ -193,11 +193,11 @@ struct State {
     ir::Let* PutInLet(ir::InstructionResult* value) {
         auto* inst = value->Instruction();
         auto* let = b.Let(value->Type());
-        value->ReplaceAllUsesWith(let->Result(0));
+        value->ReplaceAllUsesWith(let->Result());
         let->SetValue(value);
         let->InsertAfter(inst);
         if (auto name = b.ir.NameOf(value); name.IsValid()) {
-            b.ir.SetName(let->Result(0), name);
+            b.ir.SetName(let->Result(), name);
             b.ir.ClearName(value);
         }
         return let;

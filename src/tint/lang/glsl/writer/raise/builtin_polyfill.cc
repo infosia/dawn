@@ -168,7 +168,7 @@ struct State {
 
         if (args[0]->Type()->DeepestElement()->IsUnsignedIntegerScalarOrVector()) {
             // GLSL does not support `abs` on unsigned arguments, replace it with the arg.
-            call->Result(0)->ReplaceAllUsesWith(args[0]);
+            call->Result()->ReplaceAllUsesWith(args[0]);
         } else {
             b.InsertBefore(call, [&] {
                 b.CallWithResult<glsl::ir::BuiltinCall>(call->DetachResult(), glsl::BuiltinFn::kAbs,
@@ -183,7 +183,7 @@ struct State {
 
         if (args[0]->Type()->Is<core::type::Scalar>()) {
             // GLSL has no scalar `any`, replace it with the arg.
-            call->Result(0)->ReplaceAllUsesWith(args[0]);
+            call->Result()->ReplaceAllUsesWith(args[0]);
         } else {
             b.InsertBefore(call, [&] {
                 b.CallWithResult<glsl::ir::BuiltinCall>(call->DetachResult(), glsl::BuiltinFn::kAny,
@@ -198,7 +198,7 @@ struct State {
 
         if (args[0]->Type()->Is<core::type::Scalar>()) {
             // GLSL has no scalar `all`, replace it with the arg.
-            call->Result(0)->ReplaceAllUsesWith(args[0]);
+            call->Result()->ReplaceAllUsesWith(args[0]);
         } else {
             b.InsertBefore(call, [&] {
                 b.CallWithResult<glsl::ir::BuiltinCall>(call->DetachResult(), glsl::BuiltinFn::kAll,
@@ -212,7 +212,7 @@ struct State {
         b.InsertBefore(call, [&] {
             auto* len = b.MemberCall<glsl::ir::MemberBuiltinCall>(ty.i32(), BuiltinFn::kLength,
                                                                   call->Args()[0]);
-            b.ConvertWithResult(call->DetachResult(), len->Result(0));
+            b.ConvertWithResult(call->DetachResult(), len->Result());
         });
         call->Destroy();
     }
@@ -235,9 +235,9 @@ struct State {
                     auto* v = b.Multiply(ret_ty, lhs, rhs);
 
                     if (ret != nullptr) {
-                        ret = b.Add(ret_ty, ret, v)->Result(0);
+                        ret = b.Add(ret_ty, ret, v)->Result();
                     } else {
-                        ret = v->Result(0);
+                        ret = v->Result();
                     }
                 }
 
@@ -274,12 +274,12 @@ struct State {
             // Polyfill it by declaring the result struct and then setting the values:
             //   __frexp_result result = {};
             //   result.fract = frexp(arg, result.exp);
-            auto* result_type = call->Result(0)->Type();
+            auto* result_type = call->Result()->Type();
             auto* float_type = result_type->Element(0);
             auto* i32_type = result_type->Element(1);
             auto* result = b.Var(ty.ptr(function, result_type));
             auto* exp = b.Access(ty.ptr(function, i32_type), result, u32(1));
-            auto args = Vector<core::ir::Value*, 2>{call->Args()[0], exp->Result(0)};
+            auto args = Vector<core::ir::Value*, 2>{call->Args()[0], exp->Result()};
             auto* res =
                 b.Call<glsl::ir::BuiltinCall>(float_type, glsl::BuiltinFn::kFrexp, std::move(args));
             b.Store(b.Access(ty.ptr(function, float_type), result, u32(0)), res);
@@ -294,11 +294,11 @@ struct State {
             // Polyfill it by declaring the result struct and then setting the values:
             //   __modf_result result = {};
             //   result.fract = modf(arg, result.whole);
-            auto* result_type = call->Result(0)->Type();
+            auto* result_type = call->Result()->Type();
             auto* element_type = result_type->Element(0);
             auto* result = b.Var(ty.ptr(function, result_type));
             auto* whole = b.Access(ty.ptr(function, element_type), result, u32(1));
-            auto args = Vector<core::ir::Value*, 2>{call->Args()[0], whole->Result(0)};
+            auto args = Vector<core::ir::Value*, 2>{call->Args()[0], whole->Result()};
             auto* res = b.Call<glsl::ir::BuiltinCall>(element_type, glsl::BuiltinFn::kModf,
                                                       std::move(args));
             b.Store(b.Access(ty.ptr(function, element_type), result, u32(0)), res);
@@ -339,7 +339,7 @@ struct State {
         auto args = call->Args();
 
         b.InsertBefore(call, [&] {
-            auto* res_ty = call->Result(0)->Type();
+            auto* res_ty = call->Result()->Type();
             auto* mul = b.Multiply(res_ty, args[0], args[1]);
             b.AddWithResult(call->DetachResult(), mul, args[2]);
         });
@@ -349,7 +349,7 @@ struct State {
     // GLSL `bitCount` always returns an `i32` so we need to convert it. Convert to a `bitCount`
     // call to make it clear this isn't `countOneBits`.
     void CountOneBits(core::ir::Call* call) {
-        auto* result_ty = call->Result(0)->Type();
+        auto* result_ty = call->Result()->Type();
 
         b.InsertBefore(call, [&] {
             auto* c = b.Call<glsl::ir::BuiltinCall>(ty.MatchWidth(ty.i32(), result_ty),
@@ -367,7 +367,7 @@ struct State {
         auto* compare_value = args[1];
         auto* value = args[2];
 
-        auto* result_type = call->Result(0)->Type();
+        auto* result_type = call->Result()->Type();
 
         b.InsertBefore(call, [&] {
             auto* bitcast_cmp_value = b.Bitcast(type, compare_value);
@@ -375,13 +375,13 @@ struct State {
 
             auto* swap = b.Call<glsl::ir::BuiltinCall>(
                 type, glsl::BuiltinFn::kAtomicCompSwap,
-                Vector<core::ir::Value*, 3>{dest, bitcast_cmp_value->Result(0),
-                                            bitcast_value->Result(0)});
+                Vector<core::ir::Value*, 3>{dest, bitcast_cmp_value->Result(),
+                                            bitcast_value->Result()});
 
             auto* exchanged = b.Equal(ty.bool_(), swap, compare_value);
 
-            auto* result = b.Construct(result_type, swap, exchanged)->Result(0);
-            call->Result(0)->ReplaceAllUsesWith(result);
+            auto* result = b.Construct(result_type, swap, exchanged)->Result();
+            call->Result()->ReplaceAllUsesWith(result);
         });
         call->Destroy();
     }
@@ -447,7 +447,7 @@ struct State {
         b.InsertBefore(call, [&] {
             core::ir::Value* cond = args[2];
             if (val_ty->Is<core::type::Vector>() && !bool_ty->Is<core::type::Vector>()) {
-                cond = b.Construct(ty.MatchWidth(ty.bool_(), val_ty), cond)->Result(0);
+                cond = b.Construct(ty.MatchWidth(ty.bool_(), val_ty), cond)->Result();
             }
 
             b.CallWithResult<glsl::ir::BuiltinCall>(call->DetachResult(), glsl::BuiltinFn::kMix,
@@ -469,8 +469,8 @@ struct State {
                 auto* v2 = ty.vec2(inner_ty);
 
                 auto pack_unpack = [&](core::ir::Value* item) {
-                    auto* r = b.Call(ty.u32(), core::BuiltinFn::kPack2X16Float, item)->Result(0);
-                    return b.Call(v2, core::BuiltinFn::kUnpack2X16Float, r)->Result(0);
+                    auto* r = b.Call(ty.u32(), core::BuiltinFn::kPack2X16Float, item)->Result();
+                    return b.Call(v2, core::BuiltinFn::kUnpack2X16Float, r)->Result();
                 };
 
                 if (auto* vec = type->As<core::type::Vector>()) {
@@ -480,31 +480,31 @@ struct State {
                             break;
                         }
                         case 3: {
-                            core::ir::Value* lhs = b.Swizzle(v2, val, {0, 1})->Result(0);
+                            core::ir::Value* lhs = b.Swizzle(v2, val, {0, 1})->Result();
                             lhs = pack_unpack(lhs);
 
-                            core::ir::Value* rhs = b.Swizzle(v2, val, {2, 2})->Result(0);
+                            core::ir::Value* rhs = b.Swizzle(v2, val, {2, 2})->Result();
                             rhs = pack_unpack(rhs);
-                            rhs = b.Swizzle(inner_ty, rhs, {0})->Result(0);
+                            rhs = b.Swizzle(inner_ty, rhs, {0})->Result();
 
-                            ret = b.Construct(type, lhs, rhs)->Result(0);
+                            ret = b.Construct(type, lhs, rhs)->Result();
                             break;
                         }
                         default: {
-                            core::ir::Value* lhs = b.Swizzle(v2, val, {0, 1})->Result(0);
+                            core::ir::Value* lhs = b.Swizzle(v2, val, {0, 1})->Result();
                             lhs = pack_unpack(lhs);
 
-                            core::ir::Value* rhs = b.Swizzle(v2, val, {2, 3})->Result(0);
+                            core::ir::Value* rhs = b.Swizzle(v2, val, {2, 3})->Result();
                             rhs = pack_unpack(rhs);
 
-                            ret = b.Construct(type, lhs, rhs)->Result(0);
+                            ret = b.Construct(type, lhs, rhs)->Result();
                             break;
                         }
                     }
                 } else {
-                    ret = b.Construct(v2, val)->Result(0);
+                    ret = b.Construct(v2, val)->Result();
                     ret = pack_unpack(ret);
-                    ret = b.Swizzle(type, ret, {0})->Result(0);
+                    ret = b.Swizzle(type, ret, {0})->Result();
                 }
                 b.Return(f, ret);
             });

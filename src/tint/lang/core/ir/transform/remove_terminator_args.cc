@@ -90,7 +90,7 @@ struct State {
     void RemoveExitArgs(ControlInstruction* ci) {
         // Loop over all of the instruction results.
         for (size_t i = 0; i < ci->Results().Length(); i++) {
-            auto* result = ci->Result(i);
+            auto* result = ci->Results(i);
 
             // Create a variable to hold the result, and insert it before the control instruction.
             auto* var = b.Var(ty.ptr<function>(result->Type()));
@@ -150,7 +150,7 @@ struct State {
             // Replace the original result with a load from the variable that we created above.
             auto* load = b.Load(var);
             load->InsertBefore(block->Front());
-            param->ReplaceAllUsesWith(load->Result(0));
+            param->ReplaceAllUsesWith(load->Result());
         }
 
         // Remove the arguments from the branches and the parameters from the block.

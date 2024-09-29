@@ -176,8 +176,8 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
 
     /// @copydoc ShaderIO::BackendState::GetInput
     core::ir::Value* GetInput(core::ir::Builder& builder, uint32_t idx) override {
-        auto* from = input_vars[idx]->Result(0);
-        auto* value = builder.Load(from)->Result(0);
+        auto* from = input_vars[idx]->Result();
+        auto* value = builder.Load(from)->Result();
 
         auto& builtin = inputs[idx].attributes.builtin;
         if (builtin.has_value()) {
@@ -186,14 +186,14 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 case core::BuiltinValue::kInstanceIndex:
                 case core::BuiltinValue::kSampleIndex: {
                     // GLSL uses i32 for these, so convert to u32.
-                    value = builder.Convert(ty.u32(), value)->Result(0);
+                    value = builder.Convert(ty.u32(), value)->Result();
                     break;
                 }
                 case core::BuiltinValue::kSampleMask: {
                     // gl_SampleMaskIn is an array of i32. Retrieve the first element and
                     // convert it to u32.
                     auto* elem = builder.Access(ty.i32(), value, 0_u);
-                    value = builder.Convert(ty.u32(), elem)->Result(0);
+                    value = builder.Convert(ty.u32(), elem)->Result();
                     break;
                 }
                 default:
@@ -212,12 +212,12 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         }
 
         // Store the output to the global variable declared earlier.
-        auto* to = output_vars[idx]->Result(0);
+        auto* to = output_vars[idx]->Result();
 
         if (outputs[idx].attributes.builtin == core::BuiltinValue::kSampleMask) {
             auto* ptr = ty.ptr(core::AddressSpace::kOut, ty.i32(), core::Access::kWrite);
-            to = builder.Access(ptr, to, 0_u)->Result(0);
-            value = builder.Convert(ty.i32(), value)->Result(0);
+            to = builder.Access(ptr, to, 0_u)->Result();
+            value = builder.Convert(ty.i32(), value)->Result();
         }
 
         builder.Store(to, value);

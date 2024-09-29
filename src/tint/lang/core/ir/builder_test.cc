@@ -124,7 +124,7 @@ TEST_F(IR_BuilderTest, InsertAfter_InstructionResult) {
         ip = b.Let("b", 2_u);
         b.Let("c", 3_u);
     });
-    b.InsertAfter(ip->Result(0), [&] {
+    b.InsertAfter(ip->Result(), [&] {
         b.Let("d", 4_u);
         b.Let("e", 5_u);
         b.Let("f", 6_u);

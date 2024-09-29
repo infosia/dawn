@@ -85,7 +85,7 @@ TEST_F(Wgslreader_LowerTest, WorkgroupUniformLoad) {
     b.Append(f->Block(), [&] {  //
         auto* result = b.InstructionResult(ty.i32());
         b.Append(b.ir.CreateInstruction<wgsl::ir::BuiltinCall>(
-            result, wgsl::BuiltinFn::kWorkgroupUniformLoad, Vector{wgvar->Result(0)}));
+            result, wgsl::BuiltinFn::kWorkgroupUniformLoad, Vector{wgvar->Result()}));
         b.Return(f, result);
     });
 

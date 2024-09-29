@@ -321,7 +321,7 @@ TEST_F(SpirvWriterTest, Switch_Phi_MultipleValue_0) {
             b.ExitSwitch(s, 20_i, false);
         });
 
-        b.Return(func, s->Result(0));
+        b.Return(func, s->Result());
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -356,7 +356,7 @@ TEST_F(SpirvWriterTest, Switch_Phi_MultipleValue_1) {
             b.ExitSwitch(s, 20_i, false);
         });
 
-        b.Return(func, s->Result(1));
+        b.Return(func, s->Results(1));
     });
 
     ASSERT_TRUE(Generate()) << Error() << output_;
@@ -392,7 +392,7 @@ TEST_F(SpirvWriterTest, Switch_Phi_NestedIf) {
                 b.ExitIf(inner, 20_i);
             });
 
-            b.ExitSwitch(s, inner->Result(0));
+            b.ExitSwitch(s, inner->Result());
         });
 
         auto* case_b = b.Case(s, Vector{b.Constant(2_i)});

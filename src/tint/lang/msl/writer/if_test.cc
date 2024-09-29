@@ -184,7 +184,7 @@ TEST_F(MslWriterTest, IfWithMultiPhiReturn1) {
         b.Append(i->False(), [&] {  //
             b.ExitIf(i, 20_i, false);
         });
-        b.Return(func, i->Result(0));
+        b.Return(func, i->Result());
     });
 
     ASSERT_TRUE(Generate()) << err_ << output_.msl;
@@ -215,7 +215,7 @@ TEST_F(MslWriterTest, IfWithMultiPhiReturn2) {
         b.Append(i->False(), [&] {  //
             b.ExitIf(i, 20_i, false);
         });
-        b.Return(func, i->Result(1));
+        b.Return(func, i->Results(1));
     });
 
     ASSERT_TRUE(Generate()) << err_ << output_.msl;
