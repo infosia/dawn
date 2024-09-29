@@ -391,4 +391,20 @@ ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversionCreateInfo(
     return samplerYCbCrConversion;
 }
 
+VkShaderStageFlags VulkanShaderStageFlags(wgpu::ShaderStage stages) {
+    VkShaderStageFlags flags = 0;
+
+    if (stages & wgpu::ShaderStage::Vertex) {
+        flags |= VK_SHADER_STAGE_VERTEX_BIT;
+    }
+    if (stages & wgpu::ShaderStage::Fragment) {
+        flags |= VK_SHADER_STAGE_FRAGMENT_BIT;
+    }
+    if (stages & wgpu::ShaderStage::Compute) {
+        flags |= VK_SHADER_STAGE_COMPUTE_BIT;
+    }
+
+    return flags;
+}
+
 }  // namespace dawn::native::vulkan

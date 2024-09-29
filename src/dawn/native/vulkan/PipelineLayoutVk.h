@@ -28,10 +28,12 @@
 #ifndef SRC_DAWN_NATIVE_VULKAN_PIPELINELAYOUTVK_H_
 #define SRC_DAWN_NATIVE_VULKAN_PIPELINELAYOUTVK_H_
 
-#include "dawn/native/PipelineLayout.h"
+#include <memory>
 
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/PipelineLayout.h"
+#include "dawn/native/vulkan/RefCountedVkHandle.h"
 
 namespace dawn::native::vulkan {
 
@@ -54,7 +56,10 @@ class PipelineLayout final : public PipelineLayoutBase {
         Device* device,
         const UnpackedPtr<PipelineLayoutDescriptor>& descriptor);
 
-    VkPipelineLayout GetHandle() const;
+    // Pipeline might use different amounts of immediate data internally which cause difference in
+    // VkPipelineLayout push constant range part. Pass internalImmediateDataSize to
+    // get correct VkPipelineLayout.
+    ResultOrError<VkPipelineLayout> GetOrCreateVkLayoutObject(uint32_t internalImmediateDataSize);
 
     // Friend definition of StreamIn which can be found by ADL to override stream::StreamIn<T>.
     friend void StreamIn(stream::Sink* sink, const PipelineLayout& obj) {
@@ -62,6 +67,12 @@ class PipelineLayout final : public PipelineLayoutBase {
     }
 
   private:
+    struct PipelineLayoutInfo {
+        VkPipelineLayoutCreateInfo layout;
+        std::array<VkDescriptorSetLayout, kMaxBindGroups> setLayouts;
+        VkPushConstantRange pushConstantRange;
+    };
+
     ~PipelineLayout() override;
     void DestroyImpl() override;
 
@@ -71,7 +82,12 @@ class PipelineLayout final : public PipelineLayoutBase {
     // Dawn API
     void SetLabelImpl() override;
 
-    VkPipelineLayout mHandle = VK_NULL_HANDLE;
+    // Multiple VkPipelineLayouts is possible because variant internal immediate data size.
+    // Using map to manage 1 PipelineLayout to N VkPipelineLayouts relationship with
+    // total immediate data size as key.
+    absl::flat_hash_map<int, Ref<RefCountedVkHandle<VkPipelineLayout>>> mVkPipelineLayouts;
+
+    PipelineLayoutInfo mCachedCreateInfo;
 };
 
 }  // namespace dawn::native::vulkan

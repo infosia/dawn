@@ -190,6 +190,8 @@ ResultOrError<VkSamplerYcbcrConversion> CreateSamplerYCbCrConversionCreateInfo(
     YCbCrVkDescriptor yCbCrDescriptor,
     Device* device);
 
+VkShaderStageFlags VulkanShaderStageFlags(wgpu::ShaderStage stages);
+
 }  // namespace dawn::native::vulkan
 
 #endif  // SRC_DAWN_NATIVE_VULKAN_UTILSVULKAN_H_
