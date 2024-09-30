@@ -46639,6 +46639,7 @@ webgpu:shader,execution,expression,call,builtin,smoothstep:f16:inputSource="stor
 webgpu:shader,execution,expression,call,builtin,smoothstep:f16:inputSource="storage_rw";vectorize=2
 webgpu:shader,execution,expression,call,builtin,smoothstep:f16:inputSource="storage_rw";vectorize=3
 webgpu:shader,execution,expression,call,builtin,smoothstep:f16:inputSource="storage_rw";vectorize=4
+webgpu:shader,execution,expression,call,builtin,smoothstep:negative:
 webgpu:shader,execution,expression,call,builtin,sqrt:abstract_float:inputSource="const";vectorize="_undef_"
 webgpu:shader,execution,expression,call,builtin,sqrt:abstract_float:inputSource="const";vectorize=2
 webgpu:shader,execution,expression,call,builtin,sqrt:abstract_float:inputSource="const";vectorize=3
