@@ -59,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f152621_bf927af3",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T20:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c704a8e_63da058c",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 86
+      },
+      "revId": "928f76f71b642b6b8c8f69d6868da420abb8cfe3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "caecfeb1_e4fb4f61",
@@ -82,6 +106,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34a0c46f_da6cf697",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T20:29:43Z",
+      "side": 1,
+      "message": "The joys of interative development, heh. Switched to optional as I think it makes it pretty clear.",
+      "parentUuid": "caecfeb1_e4fb4f61",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 44
+      },
+      "revId": "928f76f71b642b6b8c8f69d6868da420abb8cfe3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7955033b_b6e65164",
@@ -95,6 +143,24 @@
       "writtenOn": "2024-09-30T17:56:56Z",
       "side": 1,
       "message": "Instead of iterating over all instructions, it\u0027d be more efficient to do this by looking at the usages of the var in `UpgradeTexture1DVars()`. The only usages should be `load`. This would also help catch any unexpected non-load usages in the future, which would also need to be updated.",
+      "revId": "928f76f71b642b6b8c8f69d6868da420abb8cfe3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce6b5f16_dc5aa12f",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T20:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7955033b_b6e65164",
       "revId": "928f76f71b642b6b8c8f69d6868da420abb8cfe3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -134,6 +200,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d6b4250_a5b238a3",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T20:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba7c79e_c6035a98",
+      "revId": "928f76f71b642b6b8c8f69d6868da420abb8cfe3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d714b30_a191f0be",
@@ -148,6 +232,24 @@
       "side": 1,
       "message": "\u003e no definition found for \u0027Texture\u0027, but a definition with the same name \u0027Texture\u0027 found in another namespace \u0027tint::core::type\u0027 (https://clang.llvm.org/extra/clang-tidy/checks/bugprone/forward-declaration-namespace.html)\n\u003e \n\u003e (Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)\n\nPlease fix (doesn\u0027t look like you need this).",
       "parentUuid": "981b8cd3_4a64eac7",
+      "revId": "928f76f71b642b6b8c8f69d6868da420abb8cfe3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd3e6056_09cc1ea4",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T20:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d714b30_a191f0be",
       "revId": "928f76f71b642b6b8c8f69d6868da420abb8cfe3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
