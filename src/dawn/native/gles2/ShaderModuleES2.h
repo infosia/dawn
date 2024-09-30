@@ -30,9 +30,16 @@
 
 #include "dawn/native/ShaderModule.h"
 
+namespace dawn::native {
+class ProgrammableStage;
+}
+
 namespace dawn::native::gles2 {
 
 class Device;
+struct InputDeclaration;
+class PipelineLayout;
+struct UniformDeclaration;
 
 class ShaderModule final : public ShaderModuleBase {
   public:
@@ -44,6 +51,13 @@ class ShaderModule final : public ShaderModuleBase {
         OwnedCompilationMessages* compilationMessages);
 
     ~ShaderModule() override = default;
+
+    ResultOrError<std::string> GenerateSource(
+        const ProgrammableStage& stage,
+        SingleShaderStage stageType,
+        const PipelineLayout* layout,
+        std::vector<InputDeclaration>* vertexInputs,
+        std::vector<UniformDeclaration>* uniforms) const;
 
   private:
     ShaderModule(DeviceBase* device,
