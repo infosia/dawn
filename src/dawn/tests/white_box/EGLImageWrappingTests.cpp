@@ -32,7 +32,7 @@
 #include "dawn/common/DynamicLib.h"
 #include "dawn/common/egl_platform.h"
 #include "dawn/native/OpenGLBackend.h"
-#include "dawn/native/opengl/DeviceGL.h"
+#include "dawn/native/gl/DeviceGL.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
@@ -149,9 +149,9 @@ class EGLImageTestBase : public DawnTest {
                                   GLenum format,
                                   GLenum type,
                                   void* data) {
-        native::opengl::Device* openglDevice =
-            native::opengl::ToBackend(native::FromAPI(device.Get()));
-        const native::opengl::OpenGLFunctions& gl = openglDevice->GetGL();
+        native::gl::Device* openglDevice =
+            native::gl::ToBackend(native::FromAPI(device.Get()));
+        const native::gl::OpenGLFunctions& gl = openglDevice->GetGL();
         GLuint tex;
         gl.GenTextures(1, &tex);
         gl.BindTexture(GL_TEXTURE_2D, tex);
@@ -168,11 +168,11 @@ class EGLImageTestBase : public DawnTest {
     wgpu::Texture WrapEGLImage(const wgpu::TextureDescriptor* descriptor,
                                EGLImage eglImage,
                                bool isInitialized = false) {
-        native::opengl::ExternalImageDescriptorEGLImage externDesc;
+        native::gl::ExternalImageDescriptorEGLImage externDesc;
         externDesc.cTextureDescriptor = reinterpret_cast<const WGPUTextureDescriptor*>(descriptor);
         externDesc.image = eglImage;
         externDesc.isInitialized = isInitialized;
-        WGPUTexture texture = native::opengl::WrapExternalEGLImage(device.Get(), &externDesc);
+        WGPUTexture texture = native::gl::WrapExternalEGLImage(device.Get(), &externDesc);
         return wgpu::Texture::Acquire(texture);
     }
     EGLFunctions egl;
@@ -317,9 +317,9 @@ class EGLImageUsageTests : public EGLImageTestBase {
                      GLenum glType,
                      void* data,
                      size_t dataSize) {
-        native::opengl::Device* openglDevice =
-            native::opengl::ToBackend(native::FromAPI(device.Get()));
-        const native::opengl::OpenGLFunctions& gl = openglDevice->GetGL();
+        native::gl::Device* openglDevice =
+            native::gl::ToBackend(native::FromAPI(device.Get()));
+        const native::gl::OpenGLFunctions& gl = openglDevice->GetGL();
 
         // Get a texture view for the eglImage
         wgpu::TextureDescriptor textureDescriptor;

@@ -31,9 +31,9 @@
 #include <unordered_set>
 
 #include "dawn/native/Error.h"
-#include "dawn/native/opengl/opengl_platform.h"
+#include "dawn/native/gl/opengl_platform.h"
 
-namespace dawn::native::opengl {
+namespace dawn::native::gl {
 
     struct OpenGLFunctionsBase {
       public:
@@ -63,6 +63,6 @@ namespace dawn::native::opengl {
         std::unordered_set<std::string> mSupportedGLExtensionsSet;
     };
 
-}  // namespace dawn::native::opengl
+}  // namespace dawn::native::gl
 
 #endif // DAWNNATIVE_OPENGL_OPENGLFUNCTIONSBASE_H_

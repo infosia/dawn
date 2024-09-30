@@ -90,7 +90,7 @@ BackendConnection* Connect(InstanceBase* instance);
 }
 #endif  // defined(DAWN_ENABLE_BACKEND_NULL)
 #if defined(DAWN_ENABLE_BACKEND_OPENGL)
-namespace opengl {
+namespace gl {
 BackendConnection* Connect(InstanceBase* instance, wgpu::BackendType backendType);
 }
 #endif  // defined(DAWN_ENABLE_BACKEND_OPENGL)
@@ -435,13 +435,13 @@ BackendConnection* InstanceBase::GetBackendConnection(wgpu::BackendType backendT
 
 #if defined(DAWN_ENABLE_BACKEND_DESKTOP_GL)
         case wgpu::BackendType::OpenGL:
-            Register(opengl::Connect(this, wgpu::BackendType::OpenGL), wgpu::BackendType::OpenGL);
+            Register(gl::Connect(this, wgpu::BackendType::OpenGL), wgpu::BackendType::OpenGL);
             break;
 #endif  // defined(DAWN_ENABLE_BACKEND_DESKTOP_GL)
 
 #if defined(DAWN_ENABLE_BACKEND_OPENGLES)
         case wgpu::BackendType::OpenGLES:
-            Register(opengl::Connect(this, wgpu::BackendType::OpenGLES),
+            Register(gl::Connect(this, wgpu::BackendType::OpenGLES),
                      wgpu::BackendType::OpenGLES);
             break;
 #endif  // defined(DAWN_ENABLE_BACKEND_OPENGLES)

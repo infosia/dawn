@@ -31,7 +31,7 @@
 #include "dawn/native/DawnNative.h"
 #include "webgpu/webgpu_cpp_chained_struct.h"
 
-namespace dawn::native::opengl {
+namespace dawn::native::gl {
 
 using EGLDisplay = void*;
 using EGLImage = void*;
@@ -77,6 +77,6 @@ struct DAWN_NATIVE_EXPORT ExternalImageDescriptorGLTexture : ExternalImageDescri
 DAWN_NATIVE_EXPORT WGPUTexture
 WrapExternalGLTexture(WGPUDevice device, const ExternalImageDescriptorGLTexture* descriptor);
 
-}  // namespace dawn::native::opengl
+}  // namespace dawn::native::gl
 
 #endif  // INCLUDE_DAWN_NATIVE_OPENGLBACKEND_H_

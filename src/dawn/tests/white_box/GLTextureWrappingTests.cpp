@@ -30,7 +30,7 @@
 
 #include "dawn/common/DynamicLib.h"
 #include "dawn/native/OpenGLBackend.h"
-#include "dawn/native/opengl/DeviceGL.h"
+#include "dawn/native/gl/DeviceGL.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
@@ -87,7 +87,7 @@ class GLTextureTestBase : public DawnTest {
 
         // Create a second GL device from which we can vend textures.
         mSecondDevice = CreateDevice();
-        mSecondDeviceGL = native::opengl::ToBackend(native::FromAPI(mSecondDevice.Get()));
+        mSecondDeviceGL = native::gl::ToBackend(native::FromAPI(mSecondDevice.Get()));
     }
 
   public:
@@ -97,7 +97,7 @@ class GLTextureTestBase : public DawnTest {
                                     GLenum format,
                                     GLenum type,
                                     void* data) {
-        const native::opengl::OpenGLFunctions& gl = mSecondDeviceGL->GetGL();
+        const native::gl::OpenGLFunctions& gl = mSecondDeviceGL->GetGL();
         GLuint tex;
         gl.GenTextures(1, &tex);
         gl.BindTexture(GL_TEXTURE_2D, tex);
@@ -108,17 +108,17 @@ class GLTextureTestBase : public DawnTest {
     wgpu::Texture WrapGLTexture(const wgpu::TextureDescriptor* descriptor,
                                 GLuint texture,
                                 bool isInitialized = false) {
-        native::opengl::ExternalImageDescriptorGLTexture externDesc;
+        native::gl::ExternalImageDescriptorGLTexture externDesc;
         externDesc.cTextureDescriptor = reinterpret_cast<const WGPUTextureDescriptor*>(descriptor);
         externDesc.isInitialized = isInitialized;
         externDesc.texture = texture;
         return wgpu::Texture::Acquire(
-            native::opengl::WrapExternalGLTexture(device.Get(), &externDesc));
+            native::gl::WrapExternalGLTexture(device.Get(), &externDesc));
     }
 
   protected:
     wgpu::Device mSecondDevice;
-    raw_ptr<native::opengl::Device> mSecondDeviceGL;  // Depends on `mSecondDevice`.
+    raw_ptr<native::gl::Device> mSecondDeviceGL;  // Depends on `mSecondDevice`.
 };
 
 // A small fixture used to initialize default data for the GLTexture validation tests.
@@ -264,7 +264,7 @@ class GLTextureUsageTests : public GLTextureTestBase {
                      GLenum glType,
                      void* data,
                      size_t dataSize) {
-        const native::opengl::OpenGLFunctions& gl = mSecondDeviceGL->GetGL();
+        const native::gl::OpenGLFunctions& gl = mSecondDeviceGL->GetGL();
 
         // Get a texture view for the GL texture.
         wgpu::TextureDescriptor textureDescriptor;

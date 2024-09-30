@@ -274,13 +274,13 @@ class OpenGLLoaderGenerator(Generator):
         renders = [
             FileRender(
                 'opengl/OpenGLFunctionsBase.cpp',
-                'src/dawn/native/opengl/OpenGLFunctionsBase_autogen.cpp',
+                'src/dawn/native/gl/OpenGLFunctionsBase_autogen.cpp',
                 [params]),
             FileRender('opengl/OpenGLFunctionsBase.h',
-                       'src/dawn/native/opengl/OpenGLFunctionsBase_autogen.h',
+                       'src/dawn/native/gl/OpenGLFunctionsBase_autogen.h',
                        [params]),
             FileRender('opengl/opengl_platform.h',
-                       'src/dawn/native/opengl/opengl_platform_autogen.h',
+                       'src/dawn/native/gl/opengl_platform_autogen.h',
                        [params]),
         ]
         return GeneratorOutput(renders=renders, imported_templates=[])

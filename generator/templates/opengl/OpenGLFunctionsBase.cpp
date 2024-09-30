@@ -25,9 +25,9 @@
 //* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 //* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "dawn/native/opengl/OpenGLFunctionsBase_autogen.h"
+#include "dawn/native/gl/OpenGLFunctionsBase_autogen.h"
 
-namespace dawn::native::opengl {
+namespace dawn::native::gl {
 
 template<typename T>
 MaybeError OpenGLFunctionsBase::LoadProc(GLGetProcProc getProc, T* memberProc, const char* name) {
@@ -107,4 +107,4 @@ bool OpenGLFunctionsBase::IsGLExtensionSupported(const char* extension) const {
     return mSupportedGLExtensionsSet.count(extension) != 0;
 }
 
-}  // namespace dawn::native::opengl
+}  // namespace dawn::native::gl
