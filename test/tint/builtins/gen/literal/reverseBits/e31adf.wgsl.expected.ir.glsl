@@ -11,7 +11,8 @@ uint reverseBits_e31adf() {
   return res;
 }
 void main() {
-  v.tint_symbol = reverseBits_e31adf();
+  uint v_1 = reverseBits_e31adf();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ uint reverseBits_e31adf() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = reverseBits_e31adf();
+  uint v_1 = reverseBits_e31adf();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

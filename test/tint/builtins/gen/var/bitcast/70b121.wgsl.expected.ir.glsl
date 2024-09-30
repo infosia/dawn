@@ -11,7 +11,8 @@ uvec2 bitcast_70b121() {
   return res;
 }
 void main() {
-  v.tint_symbol = bitcast_70b121();
+  uvec2 v_1 = bitcast_70b121();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ uvec2 bitcast_70b121() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = bitcast_70b121();
+  uvec2 v_1 = bitcast_70b121();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

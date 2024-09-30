@@ -11,5 +11,6 @@ vec4 dpdy_699a05() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdy_699a05();
+  vec4 v_1 = dpdy_699a05();
+  v.tint_symbol = v_1;
 }

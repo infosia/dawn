@@ -21,8 +21,10 @@ uniform tint_symbol_5_std140_1_ubo {
 } v_1;
 vec4 tint_symbol_inner(uint tint_symbol_1) {
   vec2 indexable[3] = vec2[3](vec2(0.0f), vec2(0.0f), vec2(0.0f));
-  mat2 x_23 = mat2(v.tint_symbol_2.transform1_col0, v.tint_symbol_2.transform1_col1);
-  mat2 x_28 = mat2(v_1.tint_symbol_4.transform2_col0, v_1.tint_symbol_4.transform2_col1);
+  vec2 v_2 = v.tint_symbol_2.transform1_col0;
+  mat2 x_23 = mat2(v_2, v.tint_symbol_2.transform1_col1);
+  vec2 v_3 = v_1.tint_symbol_4.transform2_col0;
+  mat2 x_28 = mat2(v_3, v_1.tint_symbol_4.transform2_col1);
   uint x_46 = tint_symbol_1;
   indexable = vec2[3](vec2(-1.0f, 1.0f), vec2(1.0f), vec2(-1.0f));
   vec2 x_51 = indexable[x_46];

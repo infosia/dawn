@@ -17,5 +17,6 @@ uint main2_inner() {
   return 1u;
 }
 void main() {
-  gl_SampleMask[0u] = int(main2_inner());
+  uint v = main2_inner();
+  gl_SampleMask[0u] = int(v);
 }

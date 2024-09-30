@@ -12,7 +12,8 @@ f16vec4 saturate_dcde71() {
   return res;
 }
 void main() {
-  v.tint_symbol = saturate_dcde71();
+  f16vec4 v_1 = saturate_dcde71();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -27,7 +28,8 @@ f16vec4 saturate_dcde71() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = saturate_dcde71();
+  f16vec4 v_1 = saturate_dcde71();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

@@ -11,5 +11,6 @@ float dpdyCoarse_870a7e() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdyCoarse_870a7e();
+  float v_1 = dpdyCoarse_870a7e();
+  v.tint_symbol = v_1;
 }

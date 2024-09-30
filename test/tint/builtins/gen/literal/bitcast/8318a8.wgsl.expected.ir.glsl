@@ -11,7 +11,8 @@ uvec3 bitcast_8318a8() {
   return res;
 }
 void main() {
-  v.tint_symbol = bitcast_8318a8();
+  uvec3 v_1 = bitcast_8318a8();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ uvec3 bitcast_8318a8() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = bitcast_8318a8();
+  uvec3 v_1 = bitcast_8318a8();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

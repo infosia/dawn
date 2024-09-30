@@ -11,7 +11,8 @@ int all_353d6a() {
   return mix(0, 1, (res == false));
 }
 void main() {
-  v.tint_symbol = all_353d6a();
+  int v_1 = all_353d6a();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ int all_353d6a() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = all_353d6a();
+  int v_1 = all_353d6a();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

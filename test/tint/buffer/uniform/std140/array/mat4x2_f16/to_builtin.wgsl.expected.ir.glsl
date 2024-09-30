@@ -19,9 +19,13 @@ buffer tint_symbol_3_1_ssbo {
 } v_1;
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  f16mat2x4 t = transpose(f16mat4x2(v.tint_symbol[2].col0, v.tint_symbol[2].col1, v.tint_symbol[2].col2, v.tint_symbol[2].col3));
+  f16vec2 v_2 = v.tint_symbol[2].col0;
+  f16vec2 v_3 = v.tint_symbol[2].col1;
+  f16vec2 v_4 = v.tint_symbol[2].col2;
+  f16mat2x4 t = transpose(f16mat4x2(v_2, v_3, v_4, v.tint_symbol[2].col3));
   float16_t l = length(v.tint_symbol[0].col1.yx);
   float16_t a = abs(v.tint_symbol[0].col1.yx[0u]);
-  float16_t v_2 = (t[0][0u] + float16_t(l));
-  v_1.tint_symbol_2 = (v_2 + float16_t(a));
+  float16_t v_5 = (t[0][0u] + float16_t(l));
+  float16_t v_6 = (v_5 + float16_t(a));
+  v_1.tint_symbol_2 = v_6;
 }

@@ -12,7 +12,8 @@ vec4 ldexp_65a7bd() {
   return res;
 }
 void main() {
-  v.tint_symbol = ldexp_65a7bd();
+  vec4 v_1 = ldexp_65a7bd();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ vec4 ldexp_65a7bd() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = ldexp_65a7bd();
+  vec4 v_1 = ldexp_65a7bd();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

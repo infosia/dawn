@@ -19,7 +19,8 @@ uvec3 countLeadingZeros_ab6345() {
   return res;
 }
 void main() {
-  v.tint_symbol = countLeadingZeros_ab6345();
+  uvec3 v_8 = countLeadingZeros_ab6345();
+  v.tint_symbol = v_8;
 }
 #version 310 es
 
@@ -41,7 +42,8 @@ uvec3 countLeadingZeros_ab6345() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = countLeadingZeros_ab6345();
+  uvec3 v_8 = countLeadingZeros_ab6345();
+  v.tint_symbol = v_8;
 }
 #version 310 es
 

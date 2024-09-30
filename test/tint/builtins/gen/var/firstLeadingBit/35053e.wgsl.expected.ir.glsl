@@ -19,7 +19,8 @@ ivec3 firstLeadingBit_35053e() {
   return res;
 }
 void main() {
-  v.tint_symbol = firstLeadingBit_35053e();
+  ivec3 v_8 = firstLeadingBit_35053e();
+  v.tint_symbol = v_8;
 }
 #version 310 es
 
@@ -41,7 +42,8 @@ ivec3 firstLeadingBit_35053e() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = firstLeadingBit_35053e();
+  ivec3 v_8 = firstLeadingBit_35053e();
+  v.tint_symbol = v_8;
 }
 #version 310 es
 

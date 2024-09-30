@@ -11,7 +11,8 @@ void main() {
   float runtime_in = 1.25f;
   frexp_result_f32 res = frexp_result_f32(0.625f, 1);
   frexp_result_f32 v = frexp_result_f32(0.0f, 0);
-  v.fract = frexp(runtime_in, v.exp);
+  float v_1 = frexp(runtime_in, v.exp);
+  v.fract = v_1;
   res = v;
   res = frexp_result_f32(0.625f, 1);
   float tint_symbol_1 = res.fract;

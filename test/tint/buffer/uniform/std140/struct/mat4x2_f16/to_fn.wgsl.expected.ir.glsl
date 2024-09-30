@@ -55,7 +55,10 @@ void main() {
   }
   a(v_3);
   b(tint_convert_S(v_1.tint_symbol[2]));
-  c(f16mat4x2(v_1.tint_symbol[2].m_col0, v_1.tint_symbol[2].m_col1, v_1.tint_symbol[2].m_col2, v_1.tint_symbol[2].m_col3));
+  f16vec2 v_6 = v_1.tint_symbol[2].m_col0;
+  f16vec2 v_7 = v_1.tint_symbol[2].m_col1;
+  f16vec2 v_8 = v_1.tint_symbol[2].m_col2;
+  c(f16mat4x2(v_6, v_7, v_8, v_1.tint_symbol[2].m_col3));
   d(v_1.tint_symbol[0].m_col1.yx);
   e(v_1.tint_symbol[0].m_col1.yx[0u]);
 }

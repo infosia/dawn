@@ -11,7 +11,8 @@ float tan_2f030e() {
   return res;
 }
 void main() {
-  v.tint_symbol = tan_2f030e();
+  float v_1 = tan_2f030e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ float tan_2f030e() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = tan_2f030e();
+  float v_1 = tan_2f030e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

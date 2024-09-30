@@ -19,7 +19,8 @@ ivec3 extractBits_e04f5d() {
   return res;
 }
 void main() {
-  v.tint_symbol = extractBits_e04f5d();
+  ivec3 v_6 = extractBits_e04f5d();
+  v.tint_symbol = v_6;
 }
 #version 310 es
 
@@ -41,7 +42,8 @@ ivec3 extractBits_e04f5d() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = extractBits_e04f5d();
+  ivec3 v_6 = extractBits_e04f5d();
+  v.tint_symbol = v_6;
 }
 #version 310 es
 

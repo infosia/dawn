@@ -20,8 +20,21 @@ void tint_store_and_preserve_padding(inout f16mat4x3 target, f16mat4x3 value_par
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  tint_store_and_preserve_padding(v_1.tint_symbol_2, f16mat4x3(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2, v.tint_symbol_col3));
-  v_1.tint_symbol_2[1] = f16mat4x3(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2, v.tint_symbol_col3)[0];
-  v_1.tint_symbol_2[1] = f16mat4x3(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2, v.tint_symbol_col3)[0].zxy;
-  v_1.tint_symbol_2[0][1] = f16mat4x3(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2, v.tint_symbol_col3)[1][0];
+  f16vec3 v_2 = v.tint_symbol_col0;
+  f16vec3 v_3 = v.tint_symbol_col1;
+  f16vec3 v_4 = v.tint_symbol_col2;
+  f16mat4x3 v_5 = f16mat4x3(v_2, v_3, v_4, v.tint_symbol_col3);
+  tint_store_and_preserve_padding(v_1.tint_symbol_2, v_5);
+  f16vec3 v_6 = v.tint_symbol_col0;
+  f16vec3 v_7 = v.tint_symbol_col1;
+  f16vec3 v_8 = v.tint_symbol_col2;
+  v_1.tint_symbol_2[1] = f16mat4x3(v_6, v_7, v_8, v.tint_symbol_col3)[0];
+  f16vec3 v_9 = v.tint_symbol_col0;
+  f16vec3 v_10 = v.tint_symbol_col1;
+  f16vec3 v_11 = v.tint_symbol_col2;
+  v_1.tint_symbol_2[1] = f16mat4x3(v_9, v_10, v_11, v.tint_symbol_col3)[0].zxy;
+  f16vec3 v_12 = v.tint_symbol_col0;
+  f16vec3 v_13 = v.tint_symbol_col1;
+  f16vec3 v_14 = v.tint_symbol_col2;
+  v_1.tint_symbol_2[0][1] = f16mat4x3(v_12, v_13, v_14, v.tint_symbol_col3)[1][0];
 }

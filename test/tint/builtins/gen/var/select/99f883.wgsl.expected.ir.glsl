@@ -14,7 +14,8 @@ uint select_99f883() {
   return res;
 }
 void main() {
-  v.tint_symbol = select_99f883();
+  uint v_1 = select_99f883();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -31,7 +32,8 @@ uint select_99f883() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = select_99f883();
+  uint v_1 = select_99f883();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

@@ -12,7 +12,8 @@ vec4 atanh_f3e01b() {
   return res;
 }
 void main() {
-  v.tint_symbol = atanh_f3e01b();
+  vec4 v_1 = atanh_f3e01b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ vec4 atanh_f3e01b() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = atanh_f3e01b();
+  vec4 v_1 = atanh_f3e01b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

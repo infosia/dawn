@@ -14,7 +14,9 @@ int i() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  f16mat3x2 v_1 = f16mat3x2(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2);
-  f16mat3x2 l_m = v_1;
-  f16vec2 l_m_i = v_1[i()];
+  f16vec2 v_1 = v.tint_symbol_col0;
+  f16vec2 v_2 = v.tint_symbol_col1;
+  f16mat3x2 v_3 = f16mat3x2(v_1, v_2, v.tint_symbol_col2);
+  f16mat3x2 l_m = v_3;
+  f16vec2 l_m_i = v_3[i()];
 }

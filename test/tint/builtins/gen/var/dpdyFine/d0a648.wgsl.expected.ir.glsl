@@ -12,5 +12,6 @@ vec4 dpdyFine_d0a648() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdyFine_d0a648();
+  vec4 v_1 = dpdyFine_d0a648();
+  v.tint_symbol = v_1;
 }

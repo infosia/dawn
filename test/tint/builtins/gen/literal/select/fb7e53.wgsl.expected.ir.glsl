@@ -11,7 +11,8 @@ int select_fb7e53() {
   return mix(0, 1, all(equal(res, bvec2(false))));
 }
 void main() {
-  v.tint_symbol = select_fb7e53();
+  int v_1 = select_fb7e53();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ int select_fb7e53() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = select_fb7e53();
+  int v_1 = select_fb7e53();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

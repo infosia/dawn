@@ -22,5 +22,6 @@ int f(S3 s3) {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol_2 = f(S3(S2(S1(42))));
+  int v_1 = f(S3(S2(S1(42))));
+  v.tint_symbol_2 = v_1;
 }

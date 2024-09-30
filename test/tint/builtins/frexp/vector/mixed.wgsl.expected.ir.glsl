@@ -11,7 +11,8 @@ void main() {
   vec2 runtime_in = vec2(1.25f, 3.75f);
   frexp_result_vec2_f32 res = frexp_result_vec2_f32(vec2(0.625f, 0.9375f), ivec2(1, 2));
   frexp_result_vec2_f32 v = frexp_result_vec2_f32(vec2(0.0f), ivec2(0));
-  v.fract = frexp(runtime_in, v.exp);
+  vec2 v_1 = frexp(runtime_in, v.exp);
+  v.fract = v_1;
   res = v;
   res = frexp_result_vec2_f32(vec2(0.625f, 0.9375f), ivec2(1, 2));
   vec2 tint_symbol_1 = res.fract;

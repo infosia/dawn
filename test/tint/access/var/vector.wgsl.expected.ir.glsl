@@ -11,5 +11,6 @@ void main() {
   vec2 swizzle2 = v.xz;
   vec3 swizzle3 = v.xzy;
   vec3 v_2 = vec3(scalar);
-  v_1.tint_symbol_1 = ((v_2 + vec3(swizzle2, 1.0f)) + swizzle3);
+  vec3 v_3 = ((v_2 + vec3(swizzle2, 1.0f)) + swizzle3);
+  v_1.tint_symbol_1 = v_3;
 }

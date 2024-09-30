@@ -16,7 +16,8 @@ frexp_result_f32 a = frexp_result_f32(0.0f);
 frexp_result_f32_1 b = frexp_result_f32_1(0.5f, 1);
 layout(location = 0) out vec4 tint_symbol_loc0_Output;
 vec4 tint_symbol_inner() {
-  return vec4(a.f, b.fract, 0.0f, 0.0f);
+  float v = a.f;
+  return vec4(v, b.fract, 0.0f, 0.0f);
 }
 void main() {
   tint_symbol_loc0_Output = tint_symbol_inner();

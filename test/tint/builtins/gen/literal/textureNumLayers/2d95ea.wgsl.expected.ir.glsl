@@ -12,7 +12,8 @@ uint textureNumLayers_2d95ea() {
   return res;
 }
 void main() {
-  v.tint_symbol = textureNumLayers_2d95ea();
+  uint v_1 = textureNumLayers_2d95ea();
+  v.tint_symbol = v_1;
 }
 #version 460
 
@@ -27,7 +28,8 @@ uint textureNumLayers_2d95ea() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = textureNumLayers_2d95ea();
+  uint v_1 = textureNumLayers_2d95ea();
+  v.tint_symbol = v_1;
 }
 #version 460
 

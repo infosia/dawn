@@ -11,5 +11,6 @@ float dpdxCoarse_029152() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdxCoarse_029152();
+  float v_1 = dpdxCoarse_029152();
+  v.tint_symbol = v_1;
 }

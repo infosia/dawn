@@ -6,7 +6,8 @@ buffer tint_symbol_2_1_ssbo {
 } v;
 void tint_symbol() {
   {
-    v.tint_symbol_1 = (v.tint_symbol_1 - 1u);
+    uint v_1 = (v.tint_symbol_1 - 1u);
+    v.tint_symbol_1 = v_1;
     while(true) {
       if ((v.tint_symbol_1 < 10u)) {
       } else {

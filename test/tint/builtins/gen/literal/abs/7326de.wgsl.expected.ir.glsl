@@ -11,7 +11,8 @@ uvec3 abs_7326de() {
   return res;
 }
 void main() {
-  v.tint_symbol = abs_7326de();
+  uvec3 v_1 = abs_7326de();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ uvec3 abs_7326de() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = abs_7326de();
+  uvec3 v_1 = abs_7326de();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

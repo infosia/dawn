@@ -13,7 +13,8 @@ vec4 textureLoad_bdc67a() {
   return res;
 }
 void main() {
-  v.tint_symbol = textureLoad_bdc67a();
+  vec4 v_2 = textureLoad_bdc67a();
+  v.tint_symbol = v_2;
 }
 #version 460
 
@@ -29,5 +30,6 @@ vec4 textureLoad_bdc67a() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = textureLoad_bdc67a();
+  vec4 v_2 = textureLoad_bdc67a();
+  v.tint_symbol = v_2;
 }

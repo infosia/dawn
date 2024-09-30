@@ -11,7 +11,8 @@ ivec3 countTrailingZeros_acfacb() {
   return res;
 }
 void main() {
-  v.tint_symbol = countTrailingZeros_acfacb();
+  ivec3 v_1 = countTrailingZeros_acfacb();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ ivec3 countTrailingZeros_acfacb() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = countTrailingZeros_acfacb();
+  ivec3 v_1 = countTrailingZeros_acfacb();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

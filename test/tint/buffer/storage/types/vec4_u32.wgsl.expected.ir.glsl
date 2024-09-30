@@ -10,5 +10,6 @@ buffer tint_symbol_6_1_ssbo {
 } v_1;
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v_1.tint_symbol_5 = v.tint_symbol_3;
+  uvec4 v_2 = v.tint_symbol_3;
+  v_1.tint_symbol_5 = v_2;
 }

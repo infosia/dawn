@@ -36,8 +36,11 @@ void main() {
     }
   }
   p = v_3;
-  p[1] = mat3(v.tint_symbol[2].col0, v.tint_symbol[2].col1, v.tint_symbol[2].col2);
+  vec3 v_6 = v.tint_symbol[2].col0;
+  vec3 v_7 = v.tint_symbol[2].col1;
+  p[1] = mat3(v_6, v_7, v.tint_symbol[2].col2);
   p[1][0] = v.tint_symbol[0].col1.zxy;
   p[1][0][0u] = v.tint_symbol[0].col1.x;
-  v_1.tint_symbol_2 = p[1][0].x;
+  float v_8 = p[1][0].x;
+  v_1.tint_symbol_2 = v_8;
 }

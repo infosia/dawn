@@ -12,7 +12,8 @@ vec2 normalize_fc2ef1() {
   return res;
 }
 void main() {
-  v.tint_symbol = normalize_fc2ef1();
+  vec2 v_1 = normalize_fc2ef1();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ vec2 normalize_fc2ef1() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = normalize_fc2ef1();
+  vec2 v_1 = normalize_fc2ef1();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

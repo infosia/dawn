@@ -10,9 +10,11 @@ struct modf_result_vec4_f32 {
 
 void modf_4bfced() {
   vec4 arg_0 = vec4(-1.5f);
-  modf_result_vec4_f32 v = modf_result_vec4_f32(vec4(0.0f), vec4(0.0f));
-  v.fract = modf(arg_0, v.whole);
-  modf_result_vec4_f32 res = v;
+  vec4 v = arg_0;
+  modf_result_vec4_f32 v_1 = modf_result_vec4_f32(vec4(0.0f), vec4(0.0f));
+  vec4 v_2 = modf(v, v_1.whole);
+  v_1.fract = v_2;
+  modf_result_vec4_f32 res = v_1;
 }
 void main() {
   modf_4bfced();
@@ -27,9 +29,11 @@ struct modf_result_vec4_f32 {
 
 void modf_4bfced() {
   vec4 arg_0 = vec4(-1.5f);
-  modf_result_vec4_f32 v = modf_result_vec4_f32(vec4(0.0f), vec4(0.0f));
-  v.fract = modf(arg_0, v.whole);
-  modf_result_vec4_f32 res = v;
+  vec4 v = arg_0;
+  modf_result_vec4_f32 v_1 = modf_result_vec4_f32(vec4(0.0f), vec4(0.0f));
+  vec4 v_2 = modf(v, v_1.whole);
+  v_1.fract = v_2;
+  modf_result_vec4_f32 res = v_1;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
@@ -49,9 +53,11 @@ struct VertexOutput {
 
 void modf_4bfced() {
   vec4 arg_0 = vec4(-1.5f);
-  modf_result_vec4_f32 v = modf_result_vec4_f32(vec4(0.0f), vec4(0.0f));
-  v.fract = modf(arg_0, v.whole);
-  modf_result_vec4_f32 res = v;
+  vec4 v = arg_0;
+  modf_result_vec4_f32 v_1 = modf_result_vec4_f32(vec4(0.0f), vec4(0.0f));
+  vec4 v_2 = modf(v, v_1.whole);
+  v_1.fract = v_2;
+  modf_result_vec4_f32 res = v_1;
 }
 VertexOutput vertex_main_inner() {
   VertexOutput tint_symbol = VertexOutput(vec4(0.0f));

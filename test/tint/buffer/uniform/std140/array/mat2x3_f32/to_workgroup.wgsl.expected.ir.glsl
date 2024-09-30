@@ -46,7 +46,8 @@ void f_inner(uint tint_local_index) {
     }
   }
   w = v_4;
-  w[1] = mat2x3(v.tint_symbol[2].col0, v.tint_symbol[2].col1);
+  vec3 v_7 = v.tint_symbol[2].col0;
+  w[1] = mat2x3(v_7, v.tint_symbol[2].col1);
   w[1][0] = v.tint_symbol[0].col1.zxy;
   w[1][0][0u] = v.tint_symbol[0].col1.x;
 }

@@ -14,7 +14,8 @@ void compute_main_inner(uint tint_local_index) {
     atomicExchange(arg_0, 0);
   }
   barrier();
-  v.tint_symbol = atomicLoad_afcc03();
+  int v_1 = atomicLoad_afcc03();
+  v.tint_symbol = v_1;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {

@@ -11,5 +11,6 @@ vec2 fwidthCoarse_e653f7() {
   return res;
 }
 void main() {
-  v.tint_symbol = fwidthCoarse_e653f7();
+  vec2 v_1 = fwidthCoarse_e653f7();
+  v.tint_symbol = v_1;
 }

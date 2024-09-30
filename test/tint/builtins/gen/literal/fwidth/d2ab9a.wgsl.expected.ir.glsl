@@ -11,5 +11,6 @@ vec4 fwidth_d2ab9a() {
   return res;
 }
 void main() {
-  v.tint_symbol = fwidth_d2ab9a();
+  vec4 v_1 = fwidth_d2ab9a();
+  v.tint_symbol = v_1;
 }

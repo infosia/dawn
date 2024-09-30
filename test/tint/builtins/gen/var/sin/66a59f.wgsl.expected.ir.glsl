@@ -13,7 +13,8 @@ float16_t sin_66a59f() {
   return res;
 }
 void main() {
-  v.tint_symbol = sin_66a59f();
+  float16_t v_1 = sin_66a59f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -29,7 +30,8 @@ float16_t sin_66a59f() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = sin_66a59f();
+  float16_t v_1 = sin_66a59f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

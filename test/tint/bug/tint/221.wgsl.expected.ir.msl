@@ -39,7 +39,8 @@ kernel void tint_symbol(device Buf* b [[buffer(0)]]) {
       if ((i >= (*tint_module_vars.b).count)) {
         break;
       }
-      device uint* const p = (&(*tint_module_vars.b).data[i]);
+      uint const v_1 = i;
+      device uint* const p = (&(*tint_module_vars.b).data[v_1]);
       if ((tint_mod_u32(i, 2u) == 0u)) {
         {
           (*p) = ((*p) * 2u);

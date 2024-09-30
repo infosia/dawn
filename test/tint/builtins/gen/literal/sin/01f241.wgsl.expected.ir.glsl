@@ -11,7 +11,8 @@ vec3 sin_01f241() {
   return res;
 }
 void main() {
-  v.tint_symbol = sin_01f241();
+  vec3 v_1 = sin_01f241();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec3 sin_01f241() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = sin_01f241();
+  vec3 v_1 = sin_01f241();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

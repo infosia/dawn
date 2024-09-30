@@ -151,10 +151,11 @@ kernel void tint_symbol(device tint_array<tint_packed_vec3_f32_array_element, 3>
       } else {
         break;
       }
-      thread float3* const v_6 = (&m[c]);
-      float const v_7 = float(((c * 3u) + 1u));
-      float const v_8 = float(((c * 3u) + 2u));
-      (*v_6) = float3(v_7, v_8, float(((c * 3u) + 3u)));
+      uint const v_6 = c;
+      thread float3* const v_7 = (&m[v_6]);
+      float const v_8 = float(((c * 3u) + 1u));
+      float const v_9 = float(((c * 3u) + 2u));
+      (*v_7) = float3(v_8, v_9, float(((c * 3u) + 3u)));
       {
         c = (c + 1u);
       }

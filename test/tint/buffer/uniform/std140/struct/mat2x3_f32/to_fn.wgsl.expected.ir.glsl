@@ -52,7 +52,8 @@ void main() {
   }
   a(v_3);
   b(tint_convert_S(v_1.tint_symbol[2]));
-  c(mat2x3(v_1.tint_symbol[2].m_col0, v_1.tint_symbol[2].m_col1));
+  vec3 v_6 = v_1.tint_symbol[2].m_col0;
+  c(mat2x3(v_6, v_1.tint_symbol[2].m_col1));
   d(v_1.tint_symbol[0].m_col1.zxy);
   e(v_1.tint_symbol[0].m_col1.zxy[0u]);
 }

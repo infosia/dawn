@@ -20,7 +20,8 @@ uint atomicMax_51b9be() {
   return res;
 }
 void main() {
-  v.tint_symbol = atomicMax_51b9be();
+  uint v_2 = atomicMax_51b9be();
+  v.tint_symbol = v_2;
 }
 #version 310 es
 
@@ -43,5 +44,6 @@ uint atomicMax_51b9be() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = atomicMax_51b9be();
+  uint v_2 = atomicMax_51b9be();
+  v.tint_symbol = v_2;
 }

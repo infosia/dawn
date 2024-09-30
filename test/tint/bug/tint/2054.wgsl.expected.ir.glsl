@@ -20,5 +20,6 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   float param = 0.0f;
   bar(param);
-  v.tint_symbol_1 = param;
+  float v_2 = param;
+  v.tint_symbol_1 = v_2;
 }

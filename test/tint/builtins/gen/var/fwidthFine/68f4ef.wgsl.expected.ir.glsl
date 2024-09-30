@@ -12,5 +12,6 @@ vec4 fwidthFine_68f4ef() {
   return res;
 }
 void main() {
-  v.tint_symbol = fwidthFine_68f4ef();
+  vec4 v_1 = fwidthFine_68f4ef();
+  v.tint_symbol = v_1;
 }

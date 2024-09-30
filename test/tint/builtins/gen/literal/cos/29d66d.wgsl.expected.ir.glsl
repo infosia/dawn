@@ -11,7 +11,8 @@ vec4 cos_29d66d() {
   return res;
 }
 void main() {
-  v.tint_symbol = cos_29d66d();
+  vec4 v_1 = cos_29d66d();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec4 cos_29d66d() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = cos_29d66d();
+  vec4 v_1 = cos_29d66d();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

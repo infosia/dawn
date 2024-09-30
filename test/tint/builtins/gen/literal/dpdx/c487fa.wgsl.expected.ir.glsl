@@ -11,5 +11,6 @@ vec4 dpdx_c487fa() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdx_c487fa();
+  vec4 v_1 = dpdx_c487fa();
+  v.tint_symbol = v_1;
 }

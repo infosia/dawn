@@ -12,7 +12,8 @@ vec2 degrees_1ad5df() {
   return res;
 }
 void main() {
-  v.tint_symbol = degrees_1ad5df();
+  vec2 v_1 = degrees_1ad5df();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ vec2 degrees_1ad5df() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = degrees_1ad5df();
+  vec2 v_1 = degrees_1ad5df();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

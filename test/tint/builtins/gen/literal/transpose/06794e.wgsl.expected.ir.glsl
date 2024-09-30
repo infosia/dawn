@@ -12,7 +12,8 @@ int transpose_06794e() {
   return mix(0, 1, (res[0].x == 0.0hf));
 }
 void main() {
-  v.tint_symbol = transpose_06794e();
+  int v_1 = transpose_06794e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -27,7 +28,8 @@ int transpose_06794e() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = transpose_06794e();
+  int v_1 = transpose_06794e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

@@ -14,5 +14,6 @@ void main() {
   float l = length(v.tint_symbol[0][1].ywxz);
   float a = abs(v.tint_symbol[0][1].ywxz[0u]);
   float v_2 = (t[0][0u] + float(l));
-  v_1.tint_symbol_2 = (v_2 + float(a));
+  float v_3 = (v_2 + float(a));
+  v_1.tint_symbol_2 = v_3;
 }

@@ -14,7 +14,8 @@ ivec4 select_a2860e() {
   return res;
 }
 void main() {
-  v.tint_symbol = select_a2860e();
+  ivec4 v_1 = select_a2860e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -31,7 +32,8 @@ ivec4 select_a2860e() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = select_a2860e();
+  ivec4 v_1 = select_a2860e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

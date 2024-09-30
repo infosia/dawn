@@ -12,7 +12,8 @@ ivec2 abs_7faa9e() {
   return res;
 }
 void main() {
-  v.tint_symbol = abs_7faa9e();
+  ivec2 v_1 = abs_7faa9e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ ivec2 abs_7faa9e() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = abs_7faa9e();
+  ivec2 v_1 = abs_7faa9e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

@@ -16,7 +16,8 @@ uint bitcast_a58b50() {
   return res;
 }
 void main() {
-  v.tint_symbol = bitcast_a58b50();
+  uint v_1 = bitcast_a58b50();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -35,7 +36,8 @@ uint bitcast_a58b50() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = bitcast_a58b50();
+  uint v_1 = bitcast_a58b50();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

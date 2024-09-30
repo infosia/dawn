@@ -12,7 +12,8 @@ f16vec3 cross_9857cb() {
   return res;
 }
 void main() {
-  v.tint_symbol = cross_9857cb();
+  f16vec3 v_1 = cross_9857cb();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -27,7 +28,8 @@ f16vec3 cross_9857cb() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = cross_9857cb();
+  f16vec3 v_1 = cross_9857cb();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

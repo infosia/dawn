@@ -12,7 +12,8 @@ int transpose_ed4bdc() {
   return mix(0, 1, (res[0].x == 0.0f));
 }
 void main() {
-  v.tint_symbol = transpose_ed4bdc();
+  int v_1 = transpose_ed4bdc();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ int transpose_ed4bdc() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = transpose_ed4bdc();
+  int v_1 = transpose_ed4bdc();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

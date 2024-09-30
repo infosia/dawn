@@ -12,5 +12,6 @@ vec3 dpdx_0763f7() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdx_0763f7();
+  vec3 v_1 = dpdx_0763f7();
+  v.tint_symbol = v_1;
 }

@@ -12,5 +12,6 @@ vec2 dpdyFine_df33aa() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdyFine_df33aa();
+  vec2 v_1 = dpdyFine_df33aa();
+  v.tint_symbol = v_1;
 }

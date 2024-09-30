@@ -11,7 +11,8 @@ vec3 fma_e17c5c() {
   return res;
 }
 void main() {
-  v.tint_symbol = fma_e17c5c();
+  vec3 v_1 = fma_e17c5c();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec3 fma_e17c5c() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = fma_e17c5c();
+  vec3 v_1 = fma_e17c5c();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

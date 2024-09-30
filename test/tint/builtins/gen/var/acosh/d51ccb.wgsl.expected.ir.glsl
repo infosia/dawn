@@ -12,7 +12,8 @@ vec4 acosh_d51ccb() {
   return res;
 }
 void main() {
-  v.tint_symbol = acosh_d51ccb();
+  vec4 v_1 = acosh_d51ccb();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ vec4 acosh_d51ccb() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = acosh_d51ccb();
+  vec4 v_1 = acosh_d51ccb();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

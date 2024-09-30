@@ -11,7 +11,8 @@ vec4 saturate_a5b571() {
   return res;
 }
 void main() {
-  v.tint_symbol = saturate_a5b571();
+  vec4 v_1 = saturate_a5b571();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec4 saturate_a5b571() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = saturate_a5b571();
+  vec4 v_1 = saturate_a5b571();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

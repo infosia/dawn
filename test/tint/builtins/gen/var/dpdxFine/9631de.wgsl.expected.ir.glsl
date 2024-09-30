@@ -12,5 +12,6 @@ vec2 dpdxFine_9631de() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdxFine_9631de();
+  vec2 v_1 = dpdxFine_9631de();
+  v.tint_symbol = v_1;
 }

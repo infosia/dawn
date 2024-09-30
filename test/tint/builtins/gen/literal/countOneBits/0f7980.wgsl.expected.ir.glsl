@@ -11,7 +11,8 @@ ivec4 countOneBits_0f7980() {
   return res;
 }
 void main() {
-  v.tint_symbol = countOneBits_0f7980();
+  ivec4 v_1 = countOneBits_0f7980();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ ivec4 countOneBits_0f7980() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = countOneBits_0f7980();
+  ivec4 v_1 = countOneBits_0f7980();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

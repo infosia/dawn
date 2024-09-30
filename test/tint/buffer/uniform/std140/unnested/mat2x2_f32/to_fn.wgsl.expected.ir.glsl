@@ -13,9 +13,14 @@ void c(float f) {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  a(mat2(v_1.tint_symbol_col0, v_1.tint_symbol_col1));
-  b(mat2(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1]);
-  b(mat2(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1].yx);
-  c(mat2(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1][0u]);
-  c(mat2(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1].yx[0u]);
+  vec2 v_2 = v_1.tint_symbol_col0;
+  a(mat2(v_2, v_1.tint_symbol_col1));
+  vec2 v_3 = v_1.tint_symbol_col0;
+  b(mat2(v_3, v_1.tint_symbol_col1)[1]);
+  vec2 v_4 = v_1.tint_symbol_col0;
+  b(mat2(v_4, v_1.tint_symbol_col1)[1].yx);
+  vec2 v_5 = v_1.tint_symbol_col0;
+  c(mat2(v_5, v_1.tint_symbol_col1)[1][0u]);
+  vec2 v_6 = v_1.tint_symbol_col0;
+  c(mat2(v_6, v_1.tint_symbol_col1)[1].yx[0u]);
 }

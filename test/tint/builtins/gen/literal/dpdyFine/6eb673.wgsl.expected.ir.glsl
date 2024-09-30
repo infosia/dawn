@@ -11,5 +11,6 @@ float dpdyFine_6eb673() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdyFine_6eb673();
+  float v_1 = dpdyFine_6eb673();
+  v.tint_symbol = v_1;
 }

@@ -25,27 +25,30 @@ int i() {
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   int v_2 = i();
-  f16mat4x3 v_3 = f16mat4x3(v.tint_symbol[v_2].col0, v.tint_symbol[v_2].col1, v.tint_symbol[v_2].col2, v.tint_symbol[v_2].col3);
-  f16vec3 v_4 = v_3[i()];
-  mat4x3_f16_std140 v_5[4] = v.tint_symbol;
-  f16mat4x3 v_6[4] = f16mat4x3[4](f16mat4x3(f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf)), f16mat4x3(f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf)), f16mat4x3(f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf)), f16mat4x3(f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf)));
+  f16vec3 v_3 = v.tint_symbol[v_2].col0;
+  f16vec3 v_4 = v.tint_symbol[v_2].col1;
+  f16vec3 v_5 = v.tint_symbol[v_2].col2;
+  f16mat4x3 v_6 = f16mat4x3(v_3, v_4, v_5, v.tint_symbol[v_2].col3);
+  f16vec3 v_7 = v_6[i()];
+  mat4x3_f16_std140 v_8[4] = v.tint_symbol;
+  f16mat4x3 v_9[4] = f16mat4x3[4](f16mat4x3(f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf)), f16mat4x3(f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf)), f16mat4x3(f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf)), f16mat4x3(f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf), f16vec3(0.0hf)));
   {
-    uint v_7 = 0u;
-    v_7 = 0u;
+    uint v_10 = 0u;
+    v_10 = 0u;
     while(true) {
-      uint v_8 = v_7;
-      if ((v_8 >= 4u)) {
+      uint v_11 = v_10;
+      if ((v_11 >= 4u)) {
         break;
       }
-      v_6[v_8] = f16mat4x3(v_5[v_8].col0, v_5[v_8].col1, v_5[v_8].col2, v_5[v_8].col3);
+      v_9[v_11] = f16mat4x3(v_8[v_11].col0, v_8[v_11].col1, v_8[v_11].col2, v_8[v_11].col3);
       {
-        v_7 = (v_8 + 1u);
+        v_10 = (v_11 + 1u);
       }
       continue;
     }
   }
-  f16mat4x3 l_a[4] = v_6;
-  f16mat4x3 l_a_i = v_3;
-  f16vec3 l_a_i_i = v_4;
-  v_1.tint_symbol_2 = (((v_4[0u] + l_a[0][0][0u]) + l_a_i[0][0u]) + l_a_i_i[0u]);
+  f16mat4x3 l_a[4] = v_9;
+  f16mat4x3 l_a_i = v_6;
+  f16vec3 l_a_i_i = v_7;
+  v_1.tint_symbol_2 = (((v_7[0u] + l_a[0][0][0u]) + l_a_i[0][0u]) + l_a_i_i[0u]);
 }

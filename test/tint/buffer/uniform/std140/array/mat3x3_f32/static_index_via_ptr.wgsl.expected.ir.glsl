@@ -17,26 +17,28 @@ buffer tint_symbol_3_1_ssbo {
 } v_1;
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  mat3 v_2 = mat3(v.tint_symbol[2].col0, v.tint_symbol[2].col1, v.tint_symbol[2].col2);
-  mat3x3_f32_std140 v_3[4] = v.tint_symbol;
-  mat3 v_4[4] = mat3[4](mat3(vec3(0.0f), vec3(0.0f), vec3(0.0f)), mat3(vec3(0.0f), vec3(0.0f), vec3(0.0f)), mat3(vec3(0.0f), vec3(0.0f), vec3(0.0f)), mat3(vec3(0.0f), vec3(0.0f), vec3(0.0f)));
+  vec3 v_2 = v.tint_symbol[2].col0;
+  vec3 v_3 = v.tint_symbol[2].col1;
+  mat3 v_4 = mat3(v_2, v_3, v.tint_symbol[2].col2);
+  mat3x3_f32_std140 v_5[4] = v.tint_symbol;
+  mat3 v_6[4] = mat3[4](mat3(vec3(0.0f), vec3(0.0f), vec3(0.0f)), mat3(vec3(0.0f), vec3(0.0f), vec3(0.0f)), mat3(vec3(0.0f), vec3(0.0f), vec3(0.0f)), mat3(vec3(0.0f), vec3(0.0f), vec3(0.0f)));
   {
-    uint v_5 = 0u;
-    v_5 = 0u;
+    uint v_7 = 0u;
+    v_7 = 0u;
     while(true) {
-      uint v_6 = v_5;
-      if ((v_6 >= 4u)) {
+      uint v_8 = v_7;
+      if ((v_8 >= 4u)) {
         break;
       }
-      v_4[v_6] = mat3(v_3[v_6].col0, v_3[v_6].col1, v_3[v_6].col2);
+      v_6[v_8] = mat3(v_5[v_8].col0, v_5[v_8].col1, v_5[v_8].col2);
       {
-        v_5 = (v_6 + 1u);
+        v_7 = (v_8 + 1u);
       }
       continue;
     }
   }
-  mat3 l_a[4] = v_4;
-  mat3 l_a_i = v_2;
-  vec3 l_a_i_i = v_2[1];
-  v_1.tint_symbol_2 = (((v_2[1][0u] + l_a[0][0][0u]) + l_a_i[0][0u]) + l_a_i_i[0u]);
+  mat3 l_a[4] = v_6;
+  mat3 l_a_i = v_4;
+  vec3 l_a_i_i = v_4[1];
+  v_1.tint_symbol_2 = (((v_4[1][0u] + l_a[0][0][0u]) + l_a_i[0][0u]) + l_a_i_i[0u]);
 }

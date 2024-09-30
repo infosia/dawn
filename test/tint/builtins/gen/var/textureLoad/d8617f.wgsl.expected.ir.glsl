@@ -16,7 +16,8 @@ ivec4 textureLoad_d8617f() {
   return res;
 }
 void main() {
-  v.tint_symbol = textureLoad_d8617f();
+  ivec4 v_3 = textureLoad_d8617f();
+  v.tint_symbol = v_3;
 }
 #version 460
 
@@ -35,7 +36,8 @@ ivec4 textureLoad_d8617f() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = textureLoad_d8617f();
+  ivec4 v_3 = textureLoad_d8617f();
+  v.tint_symbol = v_3;
 }
 #version 460
 

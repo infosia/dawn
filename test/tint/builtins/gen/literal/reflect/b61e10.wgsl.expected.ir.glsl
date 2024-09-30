@@ -11,7 +11,8 @@ vec2 reflect_b61e10() {
   return res;
 }
 void main() {
-  v.tint_symbol = reflect_b61e10();
+  vec2 v_1 = reflect_b61e10();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec2 reflect_b61e10() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = reflect_b61e10();
+  vec2 v_1 = reflect_b61e10();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

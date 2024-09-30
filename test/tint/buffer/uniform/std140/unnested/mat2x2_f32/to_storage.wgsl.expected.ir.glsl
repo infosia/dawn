@@ -11,8 +11,13 @@ buffer tint_symbol_3_1_ssbo {
 } v_1;
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v_1.tint_symbol_2 = mat2(v.tint_symbol_col0, v.tint_symbol_col1);
-  v_1.tint_symbol_2[1] = mat2(v.tint_symbol_col0, v.tint_symbol_col1)[0];
-  v_1.tint_symbol_2[1] = mat2(v.tint_symbol_col0, v.tint_symbol_col1)[0].yx;
-  v_1.tint_symbol_2[0][1] = mat2(v.tint_symbol_col0, v.tint_symbol_col1)[1][0];
+  vec2 v_2 = v.tint_symbol_col0;
+  mat2 v_3 = mat2(v_2, v.tint_symbol_col1);
+  v_1.tint_symbol_2 = v_3;
+  vec2 v_4 = v.tint_symbol_col0;
+  v_1.tint_symbol_2[1] = mat2(v_4, v.tint_symbol_col1)[0];
+  vec2 v_5 = v.tint_symbol_col0;
+  v_1.tint_symbol_2[1] = mat2(v_5, v.tint_symbol_col1)[0].yx;
+  vec2 v_6 = v.tint_symbol_col0;
+  v_1.tint_symbol_2[0][1] = mat2(v_6, v.tint_symbol_col1)[1][0];
 }

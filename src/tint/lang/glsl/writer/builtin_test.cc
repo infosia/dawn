@@ -1554,9 +1554,10 @@ struct modf_result_f32 {
 
 float foo(float value) {
   modf_result_f32 v = modf_result_f32(0.0f, 0.0f);
-  v.fract = modf(value, v.whole);
-  modf_result_f32 v_1 = v;
-  return (v_1.fract + v_1.whole);
+  float v_1 = modf(value, v.whole);
+  v.fract = v_1;
+  modf_result_f32 v_2 = v;
+  return (v_2.fract + v_2.whole);
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
@@ -1586,9 +1587,10 @@ struct modf_result_vec4_f32 {
 
 vec4 foo(vec4 value) {
   modf_result_vec4_f32 v = modf_result_vec4_f32(vec4(0.0f), vec4(0.0f));
-  v.fract = modf(value, v.whole);
-  modf_result_vec4_f32 v_1 = v;
-  return (v_1.fract + v_1.whole);
+  vec4 v_1 = modf(value, v.whole);
+  v.fract = v_1;
+  modf_result_vec4_f32 v_2 = v;
+  return (v_2.fract + v_2.whole);
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
@@ -1618,9 +1620,10 @@ struct frexp_result_f32 {
 
 float foo(float value) {
   frexp_result_f32 v = frexp_result_f32(0.0f, 0);
-  v.fract = frexp(value, v.exp);
-  frexp_result_f32 v_1 = v;
-  return (v_1.fract + float(v_1.exp));
+  float v_1 = frexp(value, v.exp);
+  v.fract = v_1;
+  frexp_result_f32 v_2 = v;
+  return (v_2.fract + float(v_2.exp));
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
@@ -1650,9 +1653,10 @@ struct frexp_result_vec4_f32 {
 
 vec4 foo(vec4 value) {
   frexp_result_vec4_f32 v = frexp_result_vec4_f32(vec4(0.0f), ivec4(0));
-  v.fract = frexp(value, v.exp);
-  frexp_result_vec4_f32 v_1 = v;
-  return (v_1.fract + vec4(v_1.exp));
+  vec4 v_1 = frexp(value, v.exp);
+  v.fract = v_1;
+  frexp_result_vec4_f32 v_2 = v;
+  return (v_2.fract + vec4(v_2.exp));
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {

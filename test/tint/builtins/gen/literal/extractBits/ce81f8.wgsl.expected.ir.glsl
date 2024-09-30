@@ -11,7 +11,8 @@ uint extractBits_ce81f8() {
   return res;
 }
 void main() {
-  v.tint_symbol = extractBits_ce81f8();
+  uint v_1 = extractBits_ce81f8();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ uint extractBits_ce81f8() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = extractBits_ce81f8();
+  uint v_1 = extractBits_ce81f8();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

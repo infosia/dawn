@@ -11,7 +11,8 @@ int firstTrailingBit_3a2acc() {
   return res;
 }
 void main() {
-  v.tint_symbol = firstTrailingBit_3a2acc();
+  int v_1 = firstTrailingBit_3a2acc();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ int firstTrailingBit_3a2acc() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = firstTrailingBit_3a2acc();
+  int v_1 = firstTrailingBit_3a2acc();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

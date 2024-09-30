@@ -11,5 +11,6 @@ vec3 dpdy_feb40f() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdy_feb40f();
+  vec3 v_1 = dpdy_feb40f();
+  v.tint_symbol = v_1;
 }

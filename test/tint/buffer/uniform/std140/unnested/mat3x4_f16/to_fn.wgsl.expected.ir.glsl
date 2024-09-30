@@ -15,9 +15,19 @@ void c(float16_t f) {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  a(f16mat3x4(v_1.tint_symbol_col0, v_1.tint_symbol_col1, v_1.tint_symbol_col2));
-  b(f16mat3x4(v_1.tint_symbol_col0, v_1.tint_symbol_col1, v_1.tint_symbol_col2)[1]);
-  b(f16mat3x4(v_1.tint_symbol_col0, v_1.tint_symbol_col1, v_1.tint_symbol_col2)[1].ywxz);
-  c(f16mat3x4(v_1.tint_symbol_col0, v_1.tint_symbol_col1, v_1.tint_symbol_col2)[1][0u]);
-  c(f16mat3x4(v_1.tint_symbol_col0, v_1.tint_symbol_col1, v_1.tint_symbol_col2)[1].ywxz[0u]);
+  f16vec4 v_2 = v_1.tint_symbol_col0;
+  f16vec4 v_3 = v_1.tint_symbol_col1;
+  a(f16mat3x4(v_2, v_3, v_1.tint_symbol_col2));
+  f16vec4 v_4 = v_1.tint_symbol_col0;
+  f16vec4 v_5 = v_1.tint_symbol_col1;
+  b(f16mat3x4(v_4, v_5, v_1.tint_symbol_col2)[1]);
+  f16vec4 v_6 = v_1.tint_symbol_col0;
+  f16vec4 v_7 = v_1.tint_symbol_col1;
+  b(f16mat3x4(v_6, v_7, v_1.tint_symbol_col2)[1].ywxz);
+  f16vec4 v_8 = v_1.tint_symbol_col0;
+  f16vec4 v_9 = v_1.tint_symbol_col1;
+  c(f16mat3x4(v_8, v_9, v_1.tint_symbol_col2)[1][0u]);
+  f16vec4 v_10 = v_1.tint_symbol_col0;
+  f16vec4 v_11 = v_1.tint_symbol_col1;
+  c(f16mat3x4(v_10, v_11, v_1.tint_symbol_col2)[1].ywxz[0u]);
 }

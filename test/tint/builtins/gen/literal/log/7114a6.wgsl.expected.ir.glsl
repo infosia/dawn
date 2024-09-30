@@ -11,7 +11,8 @@ float log_7114a6() {
   return res;
 }
 void main() {
-  v.tint_symbol = log_7114a6();
+  float v_1 = log_7114a6();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ float log_7114a6() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = log_7114a6();
+  float v_1 = log_7114a6();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

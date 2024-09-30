@@ -11,7 +11,8 @@ uvec3 select_28a27e() {
   return res;
 }
 void main() {
-  v.tint_symbol = select_28a27e();
+  uvec3 v_1 = select_28a27e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ uvec3 select_28a27e() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = select_28a27e();
+  uvec3 v_1 = select_28a27e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

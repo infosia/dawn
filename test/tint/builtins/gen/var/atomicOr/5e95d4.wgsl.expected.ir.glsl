@@ -21,7 +21,8 @@ uint atomicOr_5e95d4() {
   return res;
 }
 void main() {
-  v.tint_symbol = atomicOr_5e95d4();
+  uint v_2 = atomicOr_5e95d4();
+  v.tint_symbol = v_2;
 }
 #version 310 es
 
@@ -45,5 +46,6 @@ uint atomicOr_5e95d4() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = atomicOr_5e95d4();
+  uint v_2 = atomicOr_5e95d4();
+  v.tint_symbol = v_2;
 }

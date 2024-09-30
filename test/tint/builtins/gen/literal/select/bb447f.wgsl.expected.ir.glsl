@@ -11,7 +11,8 @@ ivec2 select_bb447f() {
   return res;
 }
 void main() {
-  v.tint_symbol = select_bb447f();
+  ivec2 v_1 = select_bb447f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ ivec2 select_bb447f() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = select_bb447f();
+  ivec2 v_1 = select_bb447f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

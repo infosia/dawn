@@ -17,7 +17,8 @@ uvec2 bitcast_81c5f5() {
   return res;
 }
 void main() {
-  v.tint_symbol = bitcast_81c5f5();
+  uvec2 v_2 = bitcast_81c5f5();
+  v.tint_symbol = v_2;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -37,7 +38,8 @@ uvec2 bitcast_81c5f5() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = bitcast_81c5f5();
+  uvec2 v_2 = bitcast_81c5f5();
+  v.tint_symbol = v_2;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

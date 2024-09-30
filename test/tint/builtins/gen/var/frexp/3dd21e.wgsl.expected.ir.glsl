@@ -11,9 +11,11 @@ struct frexp_result_vec4_f16 {
 
 void frexp_3dd21e() {
   f16vec4 arg_0 = f16vec4(1.0hf);
-  frexp_result_vec4_f16 v = frexp_result_vec4_f16(f16vec4(0.0hf), ivec4(0));
-  v.fract = frexp(arg_0, v.exp);
-  frexp_result_vec4_f16 res = v;
+  f16vec4 v = arg_0;
+  frexp_result_vec4_f16 v_1 = frexp_result_vec4_f16(f16vec4(0.0hf), ivec4(0));
+  f16vec4 v_2 = frexp(v, v_1.exp);
+  v_1.fract = v_2;
+  frexp_result_vec4_f16 res = v_1;
 }
 void main() {
   frexp_3dd21e();
@@ -29,9 +31,11 @@ struct frexp_result_vec4_f16 {
 
 void frexp_3dd21e() {
   f16vec4 arg_0 = f16vec4(1.0hf);
-  frexp_result_vec4_f16 v = frexp_result_vec4_f16(f16vec4(0.0hf), ivec4(0));
-  v.fract = frexp(arg_0, v.exp);
-  frexp_result_vec4_f16 res = v;
+  f16vec4 v = arg_0;
+  frexp_result_vec4_f16 v_1 = frexp_result_vec4_f16(f16vec4(0.0hf), ivec4(0));
+  f16vec4 v_2 = frexp(v, v_1.exp);
+  v_1.fract = v_2;
+  frexp_result_vec4_f16 res = v_1;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
@@ -52,9 +56,11 @@ struct VertexOutput {
 
 void frexp_3dd21e() {
   f16vec4 arg_0 = f16vec4(1.0hf);
-  frexp_result_vec4_f16 v = frexp_result_vec4_f16(f16vec4(0.0hf), ivec4(0));
-  v.fract = frexp(arg_0, v.exp);
-  frexp_result_vec4_f16 res = v;
+  f16vec4 v = arg_0;
+  frexp_result_vec4_f16 v_1 = frexp_result_vec4_f16(f16vec4(0.0hf), ivec4(0));
+  f16vec4 v_2 = frexp(v, v_1.exp);
+  v_1.fract = v_2;
+  frexp_result_vec4_f16 res = v_1;
 }
 VertexOutput vertex_main_inner() {
   VertexOutput tint_symbol = VertexOutput(vec4(0.0f));

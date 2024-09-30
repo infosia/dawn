@@ -123,7 +123,8 @@ void tint_symbol_inner(uint idx) {
   int v_29 = (v_28 + tint_f16_to_i32(mat4x3_f16[0][0u]));
   int v_30 = (v_29 + tint_f16_to_i32(mat4x4_f16[0][0u]));
   int v_31 = (v_30 + tint_f16_to_i32(arr2_mat4x2_f16[0][0][0u]));
-  v.tint_symbol_1 = (v_31 + tint_f32_to_i32(arr2_vec3_f32[0][0u]));
+  int v_32 = (v_31 + tint_f32_to_i32(arr2_vec3_f32[0][0u]));
+  v.tint_symbol_1 = v_32;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {

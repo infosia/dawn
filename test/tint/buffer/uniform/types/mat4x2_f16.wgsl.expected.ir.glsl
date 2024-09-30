@@ -14,6 +14,9 @@ buffer tint_symbol_4_1_ssbo {
 } v_1;
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  f16mat4x2 x = f16mat4x2(v.tint_symbol_1_col0, v.tint_symbol_1_col1, v.tint_symbol_1_col2, v.tint_symbol_1_col3);
+  f16vec2 v_2 = v.tint_symbol_1_col0;
+  f16vec2 v_3 = v.tint_symbol_1_col1;
+  f16vec2 v_4 = v.tint_symbol_1_col2;
+  f16mat4x2 x = f16mat4x2(v_2, v_3, v_4, v.tint_symbol_1_col3);
   v_1.tint_symbol_3 = x;
 }

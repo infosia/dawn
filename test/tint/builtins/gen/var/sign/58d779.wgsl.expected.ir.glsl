@@ -12,7 +12,8 @@ ivec4 sign_58d779() {
   return res;
 }
 void main() {
-  v.tint_symbol = sign_58d779();
+  ivec4 v_1 = sign_58d779();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ ivec4 sign_58d779() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = sign_58d779();
+  ivec4 v_1 = sign_58d779();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

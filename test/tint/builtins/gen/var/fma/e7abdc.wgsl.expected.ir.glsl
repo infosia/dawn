@@ -15,7 +15,8 @@ f16vec3 fma_e7abdc() {
   return res;
 }
 void main() {
-  v.tint_symbol = fma_e7abdc();
+  f16vec3 v_1 = fma_e7abdc();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -33,7 +34,8 @@ f16vec3 fma_e7abdc() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = fma_e7abdc();
+  f16vec3 v_1 = fma_e7abdc();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

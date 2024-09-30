@@ -12,7 +12,8 @@ vec4 sign_b8f634() {
   return res;
 }
 void main() {
-  v.tint_symbol = sign_b8f634();
+  vec4 v_1 = sign_b8f634();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ vec4 sign_b8f634() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = sign_b8f634();
+  vec4 v_1 = sign_b8f634();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

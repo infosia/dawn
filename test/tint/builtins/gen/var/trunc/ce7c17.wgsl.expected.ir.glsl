@@ -13,7 +13,8 @@ f16vec4 trunc_ce7c17() {
   return res;
 }
 void main() {
-  v.tint_symbol = trunc_ce7c17();
+  f16vec4 v_1 = trunc_ce7c17();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -29,7 +30,8 @@ f16vec4 trunc_ce7c17() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = trunc_ce7c17();
+  f16vec4 v_1 = trunc_ce7c17();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

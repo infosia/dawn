@@ -22,16 +22,20 @@ VertexOutputs vs_main_inner(uint VertexIndex) {
   tint_symbol.position = vec4(((texcoord[VertexIndex] * 2.0f) - vec2(1.0f)), 0.0f, 1.0f);
   bool flipY = (v.tint_symbol_1.u_scale.y < 0.0f);
   if (flipY) {
-    tint_symbol.texcoords = ((((texcoord[VertexIndex] * v.tint_symbol_1.u_scale) + v.tint_symbol_1.u_offset) * vec2(1.0f, -1.0f)) + vec2(0.0f, 1.0f));
+    vec2 v_1 = texcoord[VertexIndex];
+    vec2 v_2 = (v_1 * v.tint_symbol_1.u_scale);
+    tint_symbol.texcoords = (((v_2 + v.tint_symbol_1.u_offset) * vec2(1.0f, -1.0f)) + vec2(0.0f, 1.0f));
   } else {
-    tint_symbol.texcoords = ((((texcoord[VertexIndex] * vec2(1.0f, -1.0f)) + vec2(0.0f, 1.0f)) * v.tint_symbol_1.u_scale) + v.tint_symbol_1.u_offset);
+    vec2 v_3 = ((texcoord[VertexIndex] * vec2(1.0f, -1.0f)) + vec2(0.0f, 1.0f));
+    vec2 v_4 = (v_3 * v.tint_symbol_1.u_scale);
+    tint_symbol.texcoords = (v_4 + v.tint_symbol_1.u_offset);
   }
   return tint_symbol;
 }
 void main() {
-  VertexOutputs v_1 = vs_main_inner(uint(gl_VertexID));
-  vs_main_loc0_Output = v_1.texcoords;
-  gl_Position = v_1.position;
+  VertexOutputs v_5 = vs_main_inner(uint(gl_VertexID));
+  vs_main_loc0_Output = v_5.texcoords;
+  gl_Position = v_5.position;
   gl_Position[1u] = -(gl_Position.y);
   gl_Position[2u] = ((2.0f * gl_Position.z) - gl_Position.w);
   gl_PointSize = 1.0f;

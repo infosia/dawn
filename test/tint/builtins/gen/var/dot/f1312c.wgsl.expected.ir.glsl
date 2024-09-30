@@ -16,7 +16,8 @@ int dot_f1312c() {
   return res;
 }
 void main() {
-  v.tint_symbol = dot_f1312c();
+  int v_1 = dot_f1312c();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -35,7 +36,8 @@ int dot_f1312c() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = dot_f1312c();
+  int v_1 = dot_f1312c();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

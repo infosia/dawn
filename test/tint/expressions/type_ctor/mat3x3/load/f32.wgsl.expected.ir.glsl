@@ -12,5 +12,6 @@ void tint_store_and_preserve_padding(inout mat3 target, mat3 value_param) {
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   mat3 m = mat3(vec3(0.0f), vec3(0.0f), vec3(0.0f));
-  tint_store_and_preserve_padding(v.tint_symbol_1, mat3(m));
+  mat3 v_1 = mat3(m);
+  tint_store_and_preserve_padding(v.tint_symbol_1, v_1);
 }

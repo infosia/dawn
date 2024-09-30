@@ -14,7 +14,8 @@ vec2 refract_cd905f() {
   return res;
 }
 void main() {
-  v.tint_symbol = refract_cd905f();
+  vec2 v_1 = refract_cd905f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -31,7 +32,8 @@ vec2 refract_cd905f() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = refract_cd905f();
+  vec2 v_1 = refract_cd905f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

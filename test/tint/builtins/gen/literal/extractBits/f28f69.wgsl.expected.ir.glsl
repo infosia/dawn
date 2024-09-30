@@ -11,7 +11,8 @@ uvec2 extractBits_f28f69() {
   return res;
 }
 void main() {
-  v.tint_symbol = extractBits_f28f69();
+  uvec2 v_1 = extractBits_f28f69();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ uvec2 extractBits_f28f69() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = extractBits_f28f69();
+  uvec2 v_1 = extractBits_f28f69();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

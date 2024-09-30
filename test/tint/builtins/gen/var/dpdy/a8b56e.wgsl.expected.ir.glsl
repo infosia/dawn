@@ -12,5 +12,6 @@ vec2 dpdy_a8b56e() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdy_a8b56e();
+  vec2 v_1 = dpdy_a8b56e();
+  v.tint_symbol = v_1;
 }

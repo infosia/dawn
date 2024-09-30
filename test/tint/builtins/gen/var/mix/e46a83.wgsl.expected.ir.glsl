@@ -15,7 +15,8 @@ f16vec2 mix_e46a83() {
   return res;
 }
 void main() {
-  v.tint_symbol = mix_e46a83();
+  f16vec2 v_1 = mix_e46a83();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -33,7 +34,8 @@ f16vec2 mix_e46a83() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = mix_e46a83();
+  f16vec2 v_1 = mix_e46a83();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

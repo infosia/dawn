@@ -14,7 +14,8 @@ f16vec3 ldexp_7485ce() {
   return res;
 }
 void main() {
-  v.tint_symbol = ldexp_7485ce();
+  f16vec3 v_1 = ldexp_7485ce();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -31,7 +32,8 @@ f16vec3 ldexp_7485ce() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = ldexp_7485ce();
+  f16vec3 v_1 = ldexp_7485ce();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

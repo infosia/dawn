@@ -12,5 +12,6 @@ float dpdx_e263de() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdx_e263de();
+  float v_1 = dpdx_e263de();
+  v.tint_symbol = v_1;
 }

@@ -71,8 +71,10 @@ void main() {
       continue;
     }
   }
-  tint_store_and_preserve_padding(v_1.tint_symbol_2, v_5);
+  S v_8[4] = v_5;
+  tint_store_and_preserve_padding(v_1.tint_symbol_2, v_8);
   tint_store_and_preserve_padding_1(v_1.tint_symbol_2[1], tint_convert_S(v.tint_symbol[2]));
-  tint_store_and_preserve_padding_2(v_1.tint_symbol_2[3].m, f16mat2x3(v.tint_symbol[2].m_col0, v.tint_symbol[2].m_col1));
+  f16vec3 v_9 = v.tint_symbol[2].m_col0;
+  tint_store_and_preserve_padding_2(v_1.tint_symbol_2[3].m, f16mat2x3(v_9, v.tint_symbol[2].m_col1));
   v_1.tint_symbol_2[1].m[0] = v.tint_symbol[0].m_col1.zxy;
 }

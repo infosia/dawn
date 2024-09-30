@@ -12,5 +12,6 @@ float dpdxFine_f401a2() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdxFine_f401a2();
+  float v_1 = dpdxFine_f401a2();
+  v.tint_symbol = v_1;
 }

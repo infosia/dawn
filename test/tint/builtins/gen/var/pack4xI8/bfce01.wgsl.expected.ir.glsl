@@ -19,7 +19,8 @@ uint pack4xI8_bfce01() {
   return res;
 }
 void main() {
-  v.tint_symbol = pack4xI8_bfce01();
+  uint v_5 = pack4xI8_bfce01();
+  v.tint_symbol = v_5;
 }
 #version 310 es
 
@@ -41,7 +42,8 @@ uint pack4xI8_bfce01() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = pack4xI8_bfce01();
+  uint v_5 = pack4xI8_bfce01();
+  v.tint_symbol = v_5;
 }
 #version 310 es
 

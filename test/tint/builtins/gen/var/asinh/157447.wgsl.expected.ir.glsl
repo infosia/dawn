@@ -12,7 +12,8 @@ float asinh_157447() {
   return res;
 }
 void main() {
-  v.tint_symbol = asinh_157447();
+  float v_1 = asinh_157447();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ float asinh_157447() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = asinh_157447();
+  float v_1 = asinh_157447();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

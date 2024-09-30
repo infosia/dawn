@@ -13,7 +13,8 @@ int max_ce7c30() {
   return res;
 }
 void main() {
-  v.tint_symbol = max_ce7c30();
+  int v_1 = max_ce7c30();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -29,7 +30,8 @@ int max_ce7c30() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = max_ce7c30();
+  int v_1 = max_ce7c30();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

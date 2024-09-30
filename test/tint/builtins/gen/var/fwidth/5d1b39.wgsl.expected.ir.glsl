@@ -12,5 +12,6 @@ vec3 fwidth_5d1b39() {
   return res;
 }
 void main() {
-  v.tint_symbol = fwidth_5d1b39();
+  vec3 v_1 = fwidth_5d1b39();
+  v.tint_symbol = v_1;
 }
