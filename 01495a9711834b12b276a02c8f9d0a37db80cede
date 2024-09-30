@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef957fce_940160cd",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-09-30T18:16:34Z",
+      "side": 1,
+      "message": "Just removed it.",
+      "parentUuid": "97640caa_7a4c0c03",
+      "revId": "01495a9711834b12b276a02c8f9d0a37db80cede",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7561ea7c_9167c108",
@@ -65,6 +83,24 @@
       "writtenOn": "2024-09-30T12:26:15Z",
       "side": 1,
       "message": "u-nit: Could we have TODO(....) for code that needs to be changed when we end the deprecation period?",
+      "revId": "01495a9711834b12b276a02c8f9d0a37db80cede",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7452c43_741013d4",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-09-30T18:16:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7561ea7c_9167c108",
       "revId": "01495a9711834b12b276a02c8f9d0a37db80cede",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
