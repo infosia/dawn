@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "278169ba_754d10ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T13:47:35Z",
+      "side": 1,
+      "message": "LGTM overall",
+      "revId": "33d86b14281cd4fc6e9d3bdb4a0cde8e58d8cb57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a41f9f5_ea879351",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T13:47:35Z",
+      "side": 1,
+      "message": "To help code internally, we could have some getters in this struct like `GetBufferOffset(direction)`, `GetTextureOffset(direction)`, `GetCopySize()`. WDYT?\n\nRight now one of `textureOffset/bufferOffset` is redundant with the origin of the `sourceRegion`.",
+      "revId": "33d86b14281cd4fc6e9d3bdb4a0cde8e58d8cb57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50054a18_97f4a654",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T13:47:35Z",
+      "side": 1,
+      "message": "nit: then we could do \"destinationOffset\" instead of `textureOffset/bufferOffset`. WDYT?",
+      "range": {
+        "startLine": 204,
+        "startChar": 66,
+        "endLine": 204,
+        "endChar": 79
+      },
+      "revId": "33d86b14281cd4fc6e9d3bdb4a0cde8e58d8cb57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cc58edd_827e45ea",
+        "filename": "src/dawn/tests/unittests/d3d12/CopySplitTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T13:47:35Z",
+      "side": 1,
+      "message": "optional nit: we could add parametrization for 1D if it is not too much work.",
+      "revId": "33d86b14281cd4fc6e9d3bdb4a0cde8e58d8cb57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
