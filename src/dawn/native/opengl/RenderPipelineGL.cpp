@@ -301,7 +301,7 @@ void RenderPipeline::ApplyNow(PersistentPipelineState& persistentPipelineState) 
         // bias value by 0.5 gives results in line with other backends.
         // See: https://gitlab.khronos.org/Tracker/vk-gl-cts/-/issues/4169
         // See also the GL ES 3.1 spec, section "13.5.2 Depth Offset".
-        float depthBias = GetDepthBias() * 0.5f;
+        float depthBias = GetDepthBias();
         float slopeScale = GetDepthBiasSlopeScale();
         if (gl.PolygonOffsetClamp != nullptr) {
             gl.PolygonOffsetClamp(slopeScale, depthBias, GetDepthBiasClamp());
