@@ -875,8 +875,7 @@ if (DAWN_BUILD_MONOLITHIC_LIBRARY)
         OUTPUT_SOURCES WEBGPU_DAWN_NATIVE_PROC_GEN_SOURCES
     )
     # Bundle all objects of dawn_native, it's public dependencies and private dependencies.
-    include(BundleLibraries)
-    bundle_libraries(webgpu_dawn dawn::dawn_native_objects)
+    add_library(webgpu_dawn)
     add_library(dawn::webgpu_dawn ALIAS webgpu_dawn)
     # Compile backend specific sources along with webgpu_dawn_native_proc sources for export macros to get applied.
     target_sources(webgpu_dawn
@@ -897,6 +896,7 @@ if (DAWN_BUILD_MONOLITHIC_LIBRARY)
         PUBLIC
             dawn_public_config
         PRIVATE
+            dawn::dawn_native_objects
             dawn_internal_config
             ${dawn_native_public_depends}
             ${dawn_native_private_depends}
