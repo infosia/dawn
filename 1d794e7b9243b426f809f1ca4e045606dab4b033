@@ -70,6 +70,24 @@
       "parentUuid": "973de241_b20f7503",
       "revId": "1d794e7b9243b426f809f1ca4e045606dab4b033",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ce418bd_62a48c0e",
+        "filename": "src/tint/lang/core/ir/transform/value_to_let.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T19:19:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2d903b1_d51710e0",
+      "revId": "1d794e7b9243b426f809f1ca4e045606dab4b033",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
