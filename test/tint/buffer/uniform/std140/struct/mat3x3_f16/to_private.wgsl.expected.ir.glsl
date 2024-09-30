@@ -45,6 +45,8 @@ void main() {
   }
   p = v_2;
   p[1] = tint_convert_S(v.tint_symbol[2]);
-  p[3].m = f16mat3(v.tint_symbol[2].m_col0, v.tint_symbol[2].m_col1, v.tint_symbol[2].m_col2);
+  f16vec3 v_5 = v.tint_symbol[2].m_col0;
+  f16vec3 v_6 = v.tint_symbol[2].m_col1;
+  p[3].m = f16mat3(v_5, v_6, v.tint_symbol[2].m_col2);
   p[1].m[0] = v.tint_symbol[0].m_col1.zxy;
 }

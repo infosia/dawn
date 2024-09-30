@@ -11,7 +11,8 @@ uvec4 firstTrailingBit_110f2c() {
   return res;
 }
 void main() {
-  v.tint_symbol = firstTrailingBit_110f2c();
+  uvec4 v_1 = firstTrailingBit_110f2c();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ uvec4 firstTrailingBit_110f2c() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = firstTrailingBit_110f2c();
+  uvec4 v_1 = firstTrailingBit_110f2c();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

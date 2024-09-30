@@ -18,7 +18,8 @@ ivec4 firstTrailingBit_86551b() {
   return res;
 }
 void main() {
-  v.tint_symbol = firstTrailingBit_86551b();
+  ivec4 v_7 = firstTrailingBit_86551b();
+  v.tint_symbol = v_7;
 }
 #version 310 es
 
@@ -39,7 +40,8 @@ ivec4 firstTrailingBit_86551b() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = firstTrailingBit_86551b();
+  ivec4 v_7 = firstTrailingBit_86551b();
+  v.tint_symbol = v_7;
 }
 #version 310 es
 

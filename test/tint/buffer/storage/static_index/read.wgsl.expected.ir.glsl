@@ -87,5 +87,6 @@ void main() {
   int v_16 = (v_15 + tint_f32_to_i32(mat4x2_f32[0][0u]));
   int v_17 = (v_16 + tint_f32_to_i32(mat4x3_f32[0][0u]));
   int v_18 = (v_17 + tint_f32_to_i32(mat4x4_f32[0][0u]));
-  v_1.tint_symbol_3 = (((v_18 + tint_f32_to_i32(arr2_vec3_f32[0][0u])) + struct_inner.scalar_i32) + array_struct_inner[0].scalar_i32);
+  int v_19 = (((v_18 + tint_f32_to_i32(arr2_vec3_f32[0][0u])) + struct_inner.scalar_i32) + array_struct_inner[0].scalar_i32);
+  v_1.tint_symbol_3 = v_19;
 }

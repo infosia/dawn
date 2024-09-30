@@ -13,7 +13,8 @@ vec4 textureLoad_4951bb() {
   return res;
 }
 void main() {
-  v.tint_symbol = textureLoad_4951bb();
+  vec4 v_2 = textureLoad_4951bb();
+  v.tint_symbol = v_2;
 }
 #version 460
 
@@ -29,7 +30,8 @@ vec4 textureLoad_4951bb() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = textureLoad_4951bb();
+  vec4 v_2 = textureLoad_4951bb();
+  v.tint_symbol = v_2;
 }
 #version 460
 

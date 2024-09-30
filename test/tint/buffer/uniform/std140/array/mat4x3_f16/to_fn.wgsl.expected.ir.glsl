@@ -49,7 +49,11 @@ void main() {
     }
   }
   float16_t v_7 = a(v_4);
-  float16_t v_8 = (v_7 + b(f16mat4x3(v_1.tint_symbol[1].col0, v_1.tint_symbol[1].col1, v_1.tint_symbol[1].col2, v_1.tint_symbol[1].col3)));
-  float16_t v_9 = (v_8 + c(v_1.tint_symbol[1].col0.zxy));
-  v_2.tint_symbol_2 = (v_9 + d(v_1.tint_symbol[1].col0.zxy[0u]));
+  f16vec3 v_8 = v_1.tint_symbol[1].col0;
+  f16vec3 v_9 = v_1.tint_symbol[1].col1;
+  f16vec3 v_10 = v_1.tint_symbol[1].col2;
+  float16_t v_11 = (v_7 + b(f16mat4x3(v_8, v_9, v_10, v_1.tint_symbol[1].col3)));
+  float16_t v_12 = (v_11 + c(v_1.tint_symbol[1].col0.zxy));
+  float16_t v_13 = (v_12 + d(v_1.tint_symbol[1].col0.zxy[0u]));
+  v_2.tint_symbol_2 = v_13;
 }

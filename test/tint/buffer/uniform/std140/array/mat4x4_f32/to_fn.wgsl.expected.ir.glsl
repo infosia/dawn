@@ -25,5 +25,6 @@ void main() {
   float v_3 = a(v_1.tint_symbol);
   float v_4 = (v_3 + b(v_1.tint_symbol[1]));
   float v_5 = (v_4 + c(v_1.tint_symbol[1][0].ywxz));
-  v_2.tint_symbol_2 = (v_5 + d(v_1.tint_symbol[1][0].ywxz[0u]));
+  float v_6 = (v_5 + d(v_1.tint_symbol[1][0].ywxz[0u]));
+  v_2.tint_symbol_2 = v_6;
 }

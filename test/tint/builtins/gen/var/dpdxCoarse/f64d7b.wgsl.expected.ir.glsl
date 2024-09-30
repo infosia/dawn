@@ -12,5 +12,6 @@ vec3 dpdxCoarse_f64d7b() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdxCoarse_f64d7b();
+  vec3 v_1 = dpdxCoarse_f64d7b();
+  v.tint_symbol = v_1;
 }

@@ -19,26 +19,29 @@ buffer tint_symbol_3_1_ssbo {
 } v_1;
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  f16mat4 v_2 = f16mat4(v.tint_symbol[2].col0, v.tint_symbol[2].col1, v.tint_symbol[2].col2, v.tint_symbol[2].col3);
-  mat4x4_f16_std140 v_3[4] = v.tint_symbol;
-  f16mat4 v_4[4] = f16mat4[4](f16mat4(f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf)), f16mat4(f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf)), f16mat4(f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf)), f16mat4(f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf)));
+  f16vec4 v_2 = v.tint_symbol[2].col0;
+  f16vec4 v_3 = v.tint_symbol[2].col1;
+  f16vec4 v_4 = v.tint_symbol[2].col2;
+  f16mat4 v_5 = f16mat4(v_2, v_3, v_4, v.tint_symbol[2].col3);
+  mat4x4_f16_std140 v_6[4] = v.tint_symbol;
+  f16mat4 v_7[4] = f16mat4[4](f16mat4(f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf)), f16mat4(f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf)), f16mat4(f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf)), f16mat4(f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf)));
   {
-    uint v_5 = 0u;
-    v_5 = 0u;
+    uint v_8 = 0u;
+    v_8 = 0u;
     while(true) {
-      uint v_6 = v_5;
-      if ((v_6 >= 4u)) {
+      uint v_9 = v_8;
+      if ((v_9 >= 4u)) {
         break;
       }
-      v_4[v_6] = f16mat4(v_3[v_6].col0, v_3[v_6].col1, v_3[v_6].col2, v_3[v_6].col3);
+      v_7[v_9] = f16mat4(v_6[v_9].col0, v_6[v_9].col1, v_6[v_9].col2, v_6[v_9].col3);
       {
-        v_5 = (v_6 + 1u);
+        v_8 = (v_9 + 1u);
       }
       continue;
     }
   }
-  f16mat4 l_a[4] = v_4;
-  f16mat4 l_a_i = v_2;
-  f16vec4 l_a_i_i = v_2[1];
-  v_1.tint_symbol_2 = (((v_2[1][0u] + l_a[0][0][0u]) + l_a_i[0][0u]) + l_a_i_i[0u]);
+  f16mat4 l_a[4] = v_7;
+  f16mat4 l_a_i = v_5;
+  f16vec4 l_a_i_i = v_5[1];
+  v_1.tint_symbol_2 = (((v_5[1][0u] + l_a[0][0][0u]) + l_a_i[0][0u]) + l_a_i_i[0u]);
 }

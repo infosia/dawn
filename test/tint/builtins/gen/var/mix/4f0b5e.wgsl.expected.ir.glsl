@@ -14,7 +14,8 @@ float mix_4f0b5e() {
   return res;
 }
 void main() {
-  v.tint_symbol = mix_4f0b5e();
+  float v_1 = mix_4f0b5e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -31,7 +32,8 @@ float mix_4f0b5e() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = mix_4f0b5e();
+  float v_1 = mix_4f0b5e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

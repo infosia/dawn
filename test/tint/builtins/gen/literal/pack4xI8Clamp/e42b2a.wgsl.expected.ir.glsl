@@ -11,7 +11,8 @@ uint pack4xI8Clamp_e42b2a() {
   return res;
 }
 void main() {
-  v.tint_symbol = pack4xI8Clamp_e42b2a();
+  uint v_1 = pack4xI8Clamp_e42b2a();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ uint pack4xI8Clamp_e42b2a() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = pack4xI8Clamp_e42b2a();
+  uint v_1 = pack4xI8Clamp_e42b2a();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

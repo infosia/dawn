@@ -11,7 +11,8 @@ vec2 tanh_5724b3() {
   return res;
 }
 void main() {
-  v.tint_symbol = tanh_5724b3();
+  vec2 v_1 = tanh_5724b3();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec2 tanh_5724b3() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = tanh_5724b3();
+  vec2 v_1 = tanh_5724b3();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

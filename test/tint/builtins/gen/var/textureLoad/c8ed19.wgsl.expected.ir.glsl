@@ -16,7 +16,8 @@ uvec4 textureLoad_c8ed19() {
   return res;
 }
 void main() {
-  v.tint_symbol = textureLoad_c8ed19();
+  uvec4 v_3 = textureLoad_c8ed19();
+  v.tint_symbol = v_3;
 }
 #version 460
 
@@ -35,7 +36,8 @@ uvec4 textureLoad_c8ed19() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = textureLoad_c8ed19();
+  uvec4 v_3 = textureLoad_c8ed19();
+  v.tint_symbol = v_3;
 }
 #version 460
 

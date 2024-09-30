@@ -13,7 +13,8 @@ float max_44a39d() {
   return res;
 }
 void main() {
-  v.tint_symbol = max_44a39d();
+  float v_1 = max_44a39d();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -29,7 +30,8 @@ float max_44a39d() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = max_44a39d();
+  float v_1 = max_44a39d();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

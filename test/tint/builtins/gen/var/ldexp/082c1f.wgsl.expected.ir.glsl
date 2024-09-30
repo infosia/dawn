@@ -13,7 +13,8 @@ float16_t ldexp_082c1f() {
   return res;
 }
 void main() {
-  v.tint_symbol = ldexp_082c1f();
+  float16_t v_1 = ldexp_082c1f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -29,7 +30,8 @@ float16_t ldexp_082c1f() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = ldexp_082c1f();
+  float16_t v_1 = ldexp_082c1f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

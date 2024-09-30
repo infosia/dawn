@@ -39,7 +39,8 @@ kernel void tint_symbol(const constant Uniforms* uniforms [[buffer(0)]]) {
   OuterS s1 = {};
   int i = 0;
   {
-    s1.a1[(*tint_module_vars.uniforms).i] = v;
+    uint const v_1 = (*tint_module_vars.uniforms).i;
+    s1.a1[v_1] = v;
     TINT_ISOLATE_UB(tint_volatile_true) while(true) {
       if ((i < 4)) {
       } else {

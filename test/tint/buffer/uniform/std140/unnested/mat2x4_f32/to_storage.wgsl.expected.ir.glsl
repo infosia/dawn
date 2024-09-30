@@ -10,7 +10,8 @@ buffer tint_symbol_3_1_ssbo {
 } v_1;
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v_1.tint_symbol_2 = v.tint_symbol;
+  mat2x4 v_2 = v.tint_symbol;
+  v_1.tint_symbol_2 = v_2;
   v_1.tint_symbol_2[1] = v.tint_symbol[0];
   v_1.tint_symbol_2[1] = v.tint_symbol[0].ywxz;
   v_1.tint_symbol_2[0][1] = v.tint_symbol[1].x;

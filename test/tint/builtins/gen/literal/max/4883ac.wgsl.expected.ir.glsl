@@ -11,7 +11,8 @@ vec3 max_4883ac() {
   return res;
 }
 void main() {
-  v.tint_symbol = max_4883ac();
+  vec3 v_1 = max_4883ac();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec3 max_4883ac() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = max_4883ac();
+  vec3 v_1 = max_4883ac();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

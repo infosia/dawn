@@ -15,7 +15,8 @@ uvec4 unpack4xU8_a5ea55() {
   return res;
 }
 void main() {
-  v.tint_symbol = unpack4xU8_a5ea55();
+  uvec4 v_4 = unpack4xU8_a5ea55();
+  v.tint_symbol = v_4;
 }
 #version 310 es
 
@@ -33,7 +34,8 @@ uvec4 unpack4xU8_a5ea55() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = unpack4xU8_a5ea55();
+  uvec4 v_4 = unpack4xU8_a5ea55();
+  v.tint_symbol = v_4;
 }
 #version 310 es
 

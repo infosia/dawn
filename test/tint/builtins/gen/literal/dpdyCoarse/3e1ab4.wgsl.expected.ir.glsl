@@ -11,5 +11,6 @@ vec2 dpdyCoarse_3e1ab4() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdyCoarse_3e1ab4();
+  vec2 v_1 = dpdyCoarse_3e1ab4();
+  v.tint_symbol = v_1;
 }

@@ -10,8 +10,20 @@ uniform tint_symbol_1_std140_1_ubo {
 mat4x2 p = mat4x2(vec2(0.0f), vec2(0.0f), vec2(0.0f), vec2(0.0f));
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  p = mat4x2(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2, v.tint_symbol_col3);
-  p[1] = mat4x2(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2, v.tint_symbol_col3)[0];
-  p[1] = mat4x2(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2, v.tint_symbol_col3)[0].yx;
-  p[0][1] = mat4x2(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2, v.tint_symbol_col3)[1][0];
+  vec2 v_1 = v.tint_symbol_col0;
+  vec2 v_2 = v.tint_symbol_col1;
+  vec2 v_3 = v.tint_symbol_col2;
+  p = mat4x2(v_1, v_2, v_3, v.tint_symbol_col3);
+  vec2 v_4 = v.tint_symbol_col0;
+  vec2 v_5 = v.tint_symbol_col1;
+  vec2 v_6 = v.tint_symbol_col2;
+  p[1] = mat4x2(v_4, v_5, v_6, v.tint_symbol_col3)[0];
+  vec2 v_7 = v.tint_symbol_col0;
+  vec2 v_8 = v.tint_symbol_col1;
+  vec2 v_9 = v.tint_symbol_col2;
+  p[1] = mat4x2(v_7, v_8, v_9, v.tint_symbol_col3)[0].yx;
+  vec2 v_10 = v.tint_symbol_col0;
+  vec2 v_11 = v.tint_symbol_col1;
+  vec2 v_12 = v.tint_symbol_col2;
+  p[0][1] = mat4x2(v_10, v_11, v_12, v.tint_symbol_col3)[1][0];
 }

@@ -15,7 +15,8 @@ ivec2 clamp_6c1749() {
   return res;
 }
 void main() {
-  v.tint_symbol = clamp_6c1749();
+  ivec2 v_2 = clamp_6c1749();
+  v.tint_symbol = v_2;
 }
 #version 310 es
 
@@ -33,7 +34,8 @@ ivec2 clamp_6c1749() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = clamp_6c1749();
+  ivec2 v_2 = clamp_6c1749();
+  v.tint_symbol = v_2;
 }
 #version 310 es
 

@@ -12,5 +12,6 @@ float fwidthCoarse_159c8a() {
   return res;
 }
 void main() {
-  v.tint_symbol = fwidthCoarse_159c8a();
+  float v_1 = fwidthCoarse_159c8a();
+  v.tint_symbol = v_1;
 }

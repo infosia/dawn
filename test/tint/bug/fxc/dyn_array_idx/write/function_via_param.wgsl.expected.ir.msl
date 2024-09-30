@@ -31,7 +31,8 @@ struct tint_module_vars_struct {
 };
 
 void x(thread S* const p, tint_module_vars_struct tint_module_vars) {
-  (*p).data[(*tint_module_vars.ubo).dynamic_idx] = 1;
+  int const v = (*tint_module_vars.ubo).dynamic_idx;
+  (*p).data[v] = 1;
 }
 
 kernel void f(const constant UBO* ubo [[buffer(0)]], device Result* result [[buffer(1)]]) {

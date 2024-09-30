@@ -11,5 +11,6 @@ vec2 dpdx_99edb1() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdx_99edb1();
+  vec2 v_1 = dpdx_99edb1();
+  v.tint_symbol = v_1;
 }

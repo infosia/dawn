@@ -12,7 +12,8 @@ vec2 log_b2ce28() {
   return res;
 }
 void main() {
-  v.tint_symbol = log_b2ce28();
+  vec2 v_1 = log_b2ce28();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ vec2 log_b2ce28() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = log_b2ce28();
+  vec2 v_1 = log_b2ce28();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

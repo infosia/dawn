@@ -11,7 +11,8 @@ vec2 faceForward_e6908b() {
   return res;
 }
 void main() {
-  v.tint_symbol = faceForward_e6908b();
+  vec2 v_1 = faceForward_e6908b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec2 faceForward_e6908b() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = faceForward_e6908b();
+  vec2 v_1 = faceForward_e6908b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

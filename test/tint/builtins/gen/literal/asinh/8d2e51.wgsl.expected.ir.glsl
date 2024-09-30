@@ -11,7 +11,8 @@ vec4 asinh_8d2e51() {
   return res;
 }
 void main() {
-  v.tint_symbol = asinh_8d2e51();
+  vec4 v_1 = asinh_8d2e51();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec4 asinh_8d2e51() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = asinh_8d2e51();
+  vec4 v_1 = asinh_8d2e51();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

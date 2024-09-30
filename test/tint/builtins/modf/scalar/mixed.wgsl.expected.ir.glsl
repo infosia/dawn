@@ -11,7 +11,8 @@ void main() {
   float runtime_in = 1.25f;
   modf_result_f32 res = modf_result_f32(0.25f, 1.0f);
   modf_result_f32 v = modf_result_f32(0.0f, 0.0f);
-  v.fract = modf(runtime_in, v.whole);
+  float v_1 = modf(runtime_in, v.whole);
+  v.fract = v_1;
   res = v;
   res = modf_result_f32(0.25f, 1.0f);
   float tint_symbol_1 = res.fract;

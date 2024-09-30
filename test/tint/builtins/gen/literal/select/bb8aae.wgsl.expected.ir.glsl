@@ -11,7 +11,8 @@ vec4 select_bb8aae() {
   return res;
 }
 void main() {
-  v.tint_symbol = select_bb8aae();
+  vec4 v_1 = select_bb8aae();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec4 select_bb8aae() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = select_bb8aae();
+  vec4 v_1 = select_bb8aae();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

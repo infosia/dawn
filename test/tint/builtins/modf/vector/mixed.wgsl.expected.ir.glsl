@@ -11,7 +11,8 @@ void main() {
   vec2 runtime_in = vec2(1.25f, 3.75f);
   modf_result_vec2_f32 res = modf_result_vec2_f32(vec2(0.25f, 0.75f), vec2(1.0f, 3.0f));
   modf_result_vec2_f32 v = modf_result_vec2_f32(vec2(0.0f), vec2(0.0f));
-  v.fract = modf(runtime_in, v.whole);
+  vec2 v_1 = modf(runtime_in, v.whole);
+  v.fract = v_1;
   res = v;
   res = modf_result_vec2_f32(vec2(0.25f, 0.75f), vec2(1.0f, 3.0f));
   vec2 tint_symbol_1 = res.fract;

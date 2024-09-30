@@ -12,7 +12,8 @@ float tanh_c15fdb() {
   return res;
 }
 void main() {
-  v.tint_symbol = tanh_c15fdb();
+  float v_1 = tanh_c15fdb();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ float tanh_c15fdb() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = tanh_c15fdb();
+  float v_1 = tanh_c15fdb();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

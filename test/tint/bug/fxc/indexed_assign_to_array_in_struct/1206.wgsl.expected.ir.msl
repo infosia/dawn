@@ -68,5 +68,7 @@ Particle tint_load_struct_packed_vec3(const device Particle_packed_vec3* const f
 kernel void tint_symbol(const device Particles_packed_vec3* particles [[buffer(1)]], const constant Simulation* sim [[buffer(0)]]) {
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.particles=particles, .sim=sim};
   Particle particle = tint_load_struct_packed_vec3((&(*tint_module_vars.particles).p[0]));
-  particle.position[(*tint_module_vars.sim).i] = particle.position[(*tint_module_vars.sim).i];
+  uint const v_10 = (*tint_module_vars.sim).i;
+  uint const v_11 = (*tint_module_vars.sim).i;
+  particle.position[v_10] = particle.position[v_11];
 }

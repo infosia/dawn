@@ -12,7 +12,8 @@ vec3 inverseSqrt_b197b1() {
   return res;
 }
 void main() {
-  v.tint_symbol = inverseSqrt_b197b1();
+  vec3 v_1 = inverseSqrt_b197b1();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ vec3 inverseSqrt_b197b1() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = inverseSqrt_b197b1();
+  vec3 v_1 = inverseSqrt_b197b1();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

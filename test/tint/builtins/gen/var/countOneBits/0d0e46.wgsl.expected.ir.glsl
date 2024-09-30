@@ -12,7 +12,8 @@ uvec4 countOneBits_0d0e46() {
   return res;
 }
 void main() {
-  v.tint_symbol = countOneBits_0d0e46();
+  uvec4 v_1 = countOneBits_0d0e46();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ uvec4 countOneBits_0d0e46() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = countOneBits_0d0e46();
+  uvec4 v_1 = countOneBits_0d0e46();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

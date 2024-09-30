@@ -11,7 +11,8 @@ float quantizeToF16_12e50e() {
   return res;
 }
 void main() {
-  v.tint_symbol = quantizeToF16_12e50e();
+  float v_1 = quantizeToF16_12e50e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ float quantizeToF16_12e50e() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = quantizeToF16_12e50e();
+  float v_1 = quantizeToF16_12e50e();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

@@ -15,7 +15,8 @@ vec2 quantizeToF16_2cddf3() {
   return res;
 }
 void main() {
-  v.tint_symbol = quantizeToF16_2cddf3();
+  vec2 v_1 = quantizeToF16_2cddf3();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -33,7 +34,8 @@ vec2 quantizeToF16_2cddf3() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = quantizeToF16_2cddf3();
+  vec2 v_1 = quantizeToF16_2cddf3();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

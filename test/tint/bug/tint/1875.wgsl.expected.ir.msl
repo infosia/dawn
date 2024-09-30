@@ -23,7 +23,8 @@ struct tint_module_vars_struct {
 };
 
 void push_output(uint value, tint_module_vars_struct tint_module_vars) {
-  (*tint_module_vars.outputs).data[(*tint_module_vars.count)] = value;
+  uint const v = (*tint_module_vars.count);
+  (*tint_module_vars.outputs).data[v] = value;
   (*tint_module_vars.count) = ((*tint_module_vars.count) + 1u);
 }
 

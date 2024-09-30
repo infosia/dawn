@@ -19,6 +19,9 @@ void tint_store_and_preserve_padding(inout mat4x3 target, mat4x3 value_param) {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  mat4x3 x = mat4x3(v.tint_symbol_1_col0, v.tint_symbol_1_col1, v.tint_symbol_1_col2, v.tint_symbol_1_col3);
+  vec3 v_2 = v.tint_symbol_1_col0;
+  vec3 v_3 = v.tint_symbol_1_col1;
+  vec3 v_4 = v.tint_symbol_1_col2;
+  mat4x3 x = mat4x3(v_2, v_3, v_4, v.tint_symbol_1_col3);
   tint_store_and_preserve_padding(v_1.tint_symbol_3, x);
 }

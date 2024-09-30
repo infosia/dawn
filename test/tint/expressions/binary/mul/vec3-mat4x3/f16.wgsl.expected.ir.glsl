@@ -18,5 +18,8 @@ uniform tint_symbol_2_std140_1_ubo {
 } v;
 void main() {
   f16vec3 v_1 = v.tint_symbol_1.vector;
-  f16vec4 x = (v_1 * f16mat4x3(v.tint_symbol_1.matrix_col0, v.tint_symbol_1.matrix_col1, v.tint_symbol_1.matrix_col2, v.tint_symbol_1.matrix_col3));
+  f16vec3 v_2 = v.tint_symbol_1.matrix_col0;
+  f16vec3 v_3 = v.tint_symbol_1.matrix_col1;
+  f16vec3 v_4 = v.tint_symbol_1.matrix_col2;
+  f16vec4 x = (v_1 * f16mat4x3(v_2, v_3, v_4, v.tint_symbol_1.matrix_col3));
 }

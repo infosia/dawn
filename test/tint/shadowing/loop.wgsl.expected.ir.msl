@@ -26,9 +26,11 @@ kernel void foo(device tint_array<int, 10>* output [[buffer(0)]]) {
   int i = 0;
   {
     TINT_ISOLATE_UB(tint_volatile_true) while(true) {
-      int x = (*tint_module_vars.output)[i];
+      int const v = i;
+      int x = (*tint_module_vars.output)[v];
       {
-        int x = (*tint_module_vars.output)[x];
+        int const v_1 = x;
+        int x = (*tint_module_vars.output)[v_1];
         i = as_type<int>((as_type<uint>(i) + as_type<uint>(x)));
         if ((i > 10)) { break; }
       }

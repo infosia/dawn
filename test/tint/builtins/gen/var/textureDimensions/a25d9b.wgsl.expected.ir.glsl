@@ -12,7 +12,8 @@ uvec3 textureDimensions_a25d9b() {
   return res;
 }
 void main() {
-  v.tint_symbol = textureDimensions_a25d9b();
+  uvec3 v_1 = textureDimensions_a25d9b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ uvec3 textureDimensions_a25d9b() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = textureDimensions_a25d9b();
+  uvec3 v_1 = textureDimensions_a25d9b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

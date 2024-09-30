@@ -13,7 +13,8 @@ vec4 textureLoad_1fde63() {
   return res;
 }
 void main() {
-  v.tint_symbol = textureLoad_1fde63();
+  vec4 v_1 = textureLoad_1fde63();
+  v.tint_symbol = v_1;
 }
 #version 460
 
@@ -29,5 +30,6 @@ vec4 textureLoad_1fde63() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = textureLoad_1fde63();
+  vec4 v_1 = textureLoad_1fde63();
+  v.tint_symbol = v_1;
 }

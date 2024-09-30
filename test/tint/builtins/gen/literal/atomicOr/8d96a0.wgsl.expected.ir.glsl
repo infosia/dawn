@@ -20,7 +20,8 @@ int atomicOr_8d96a0() {
   return res;
 }
 void main() {
-  v.tint_symbol = atomicOr_8d96a0();
+  int v_2 = atomicOr_8d96a0();
+  v.tint_symbol = v_2;
 }
 #version 310 es
 
@@ -43,5 +44,6 @@ int atomicOr_8d96a0() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = atomicOr_8d96a0();
+  int v_2 = atomicOr_8d96a0();
+  v.tint_symbol = v_2;
 }

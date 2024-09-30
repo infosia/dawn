@@ -12,5 +12,6 @@ vec2 dpdxCoarse_9581cf() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdxCoarse_9581cf();
+  vec2 v_1 = dpdxCoarse_9581cf();
+  v.tint_symbol = v_1;
 }

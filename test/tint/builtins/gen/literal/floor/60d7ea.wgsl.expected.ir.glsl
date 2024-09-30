@@ -11,7 +11,8 @@ vec3 floor_60d7ea() {
   return res;
 }
 void main() {
-  v.tint_symbol = floor_60d7ea();
+  vec3 v_1 = floor_60d7ea();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec3 floor_60d7ea() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = floor_60d7ea();
+  vec3 v_1 = floor_60d7ea();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

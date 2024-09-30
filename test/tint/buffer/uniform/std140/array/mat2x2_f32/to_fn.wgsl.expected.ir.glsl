@@ -46,7 +46,9 @@ void main() {
     }
   }
   float v_7 = a(v_4);
-  float v_8 = (v_7 + b(mat2(v_1.tint_symbol[1].col0, v_1.tint_symbol[1].col1)));
-  float v_9 = (v_8 + c(v_1.tint_symbol[1].col0.yx));
-  v_2.tint_symbol_2 = (v_9 + d(v_1.tint_symbol[1].col0.yx[0u]));
+  vec2 v_8 = v_1.tint_symbol[1].col0;
+  float v_9 = (v_7 + b(mat2(v_8, v_1.tint_symbol[1].col1)));
+  float v_10 = (v_9 + c(v_1.tint_symbol[1].col0.yx));
+  float v_11 = (v_10 + d(v_1.tint_symbol[1].col0.yx[0u]));
+  v_2.tint_symbol_2 = v_11;
 }

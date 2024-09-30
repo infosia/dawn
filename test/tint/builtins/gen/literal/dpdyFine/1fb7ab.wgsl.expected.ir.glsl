@@ -11,5 +11,6 @@ vec3 dpdyFine_1fb7ab() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdyFine_1fb7ab();
+  vec3 v_1 = dpdyFine_1fb7ab();
+  v.tint_symbol = v_1;
 }

@@ -12,5 +12,6 @@ vec4 fwidthCoarse_4e4fc4() {
   return res;
 }
 void main() {
-  v.tint_symbol = fwidthCoarse_4e4fc4();
+  vec4 v_1 = fwidthCoarse_4e4fc4();
+  v.tint_symbol = v_1;
 }

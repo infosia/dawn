@@ -12,7 +12,8 @@ float saturate_270da5() {
   return res;
 }
 void main() {
-  v.tint_symbol = saturate_270da5();
+  float v_1 = saturate_270da5();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ float saturate_270da5() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = saturate_270da5();
+  float v_1 = saturate_270da5();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

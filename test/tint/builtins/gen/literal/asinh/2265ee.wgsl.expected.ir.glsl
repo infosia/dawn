@@ -11,7 +11,8 @@ vec3 asinh_2265ee() {
   return res;
 }
 void main() {
-  v.tint_symbol = asinh_2265ee();
+  vec3 v_1 = asinh_2265ee();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec3 asinh_2265ee() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = asinh_2265ee();
+  vec3 v_1 = asinh_2265ee();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

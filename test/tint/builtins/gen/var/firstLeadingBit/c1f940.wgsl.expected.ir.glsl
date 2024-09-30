@@ -19,7 +19,8 @@ ivec4 firstLeadingBit_c1f940() {
   return res;
 }
 void main() {
-  v.tint_symbol = firstLeadingBit_c1f940();
+  ivec4 v_8 = firstLeadingBit_c1f940();
+  v.tint_symbol = v_8;
 }
 #version 310 es
 
@@ -41,7 +42,8 @@ ivec4 firstLeadingBit_c1f940() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = firstLeadingBit_c1f940();
+  ivec4 v_8 = firstLeadingBit_c1f940();
+  v.tint_symbol = v_8;
 }
 #version 310 es
 

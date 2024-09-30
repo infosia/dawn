@@ -12,5 +12,6 @@ float fwidthFine_f1742d() {
   return res;
 }
 void main() {
-  v.tint_symbol = fwidthFine_f1742d();
+  float v_1 = fwidthFine_f1742d();
+  v.tint_symbol = v_1;
 }

@@ -43,19 +43,20 @@ void tint_symbol_1_inner(uvec3 GlobalInvocationID) {
   {
     uint i = 0u;
     while(true) {
-      if ((i < v.tint_symbol_2.channelCount)) {
+      uint v_5 = i;
+      if ((v_5 < v.tint_symbol_2.channelCount)) {
       } else {
         break;
       }
-      uint v_5 = i;
-      srcColorBits[v_5] = ConvertToFp16FloatValue(srcColor[i]);
-      bool v_6 = false;
+      uint v_6 = i;
+      srcColorBits[v_6] = ConvertToFp16FloatValue(srcColor[i]);
+      bool v_7 = false;
       if (success) {
-        v_6 = (srcColorBits[i] == dstColorBits[i]);
+        v_7 = (srcColorBits[i] == dstColorBits[i]);
       } else {
-        v_6 = false;
+        v_7 = false;
       }
-      success = v_6;
+      success = v_7;
       {
         i = (i + 1u);
       }
@@ -64,9 +65,11 @@ void tint_symbol_1_inner(uvec3 GlobalInvocationID) {
   }
   uint outputIndex = ((GlobalInvocationID[1u] * uint(size.x)) + GlobalInvocationID[0u]);
   if (success) {
-    tint_symbol.result[outputIndex] = 1u;
+    uint v_8 = outputIndex;
+    tint_symbol.result[v_8] = 1u;
   } else {
-    tint_symbol.result[outputIndex] = 0u;
+    uint v_9 = outputIndex;
+    tint_symbol.result[v_9] = 0u;
   }
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;

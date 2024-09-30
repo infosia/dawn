@@ -16,7 +16,8 @@ vec4 textureLoad_89620b() {
   return res;
 }
 void main() {
-  v.tint_symbol = textureLoad_89620b();
+  vec4 v_3 = textureLoad_89620b();
+  v.tint_symbol = v_3;
 }
 #version 310 es
 
@@ -35,7 +36,8 @@ vec4 textureLoad_89620b() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = textureLoad_89620b();
+  vec4 v_3 = textureLoad_89620b();
+  v.tint_symbol = v_3;
 }
 #version 310 es
 

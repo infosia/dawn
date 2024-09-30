@@ -912,7 +912,8 @@ void main() {
   uint x = 1u;
   f16vec4 a = v_1.tint_symbol;
   float16_t b = v_1.tint_symbol.x;
-  float16_t c = v_1.tint_symbol[min(x, 3u)];
+  uint v_2 = min(x, 3u);
+  float16_t c = v_1.tint_symbol[v_2];
   float16_t d = v_1.tint_symbol.z;
   float16_t e = v_1.tint_symbol.w;
 }
@@ -973,9 +974,12 @@ uniform tint_symbol_1_std140_1_ubo {
   vec3 tint_symbol_col1;
 } v_1;
 void main() {
-  mat2x3 a = mat2x3(v_1.tint_symbol_col0, v_1.tint_symbol_col1);
-  vec3 b = mat2x3(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1u];
-  float c = mat2x3(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1u][2u];
+  vec3 v_2 = v_1.tint_symbol_col0;
+  mat2x3 a = mat2x3(v_2, v_1.tint_symbol_col1);
+  vec3 v_3 = v_1.tint_symbol_col0;
+  vec3 b = mat2x3(v_3, v_1.tint_symbol_col1)[1u];
+  vec3 v_4 = v_1.tint_symbol_col0;
+  float c = mat2x3(v_4, v_1.tint_symbol_col1)[1u][2u];
 }
 )");
 }
@@ -1004,9 +1008,12 @@ uniform tint_symbol_1_std140_1_ubo {
   f16vec3 tint_symbol_col1;
 } v_1;
 void main() {
-  f16mat2x3 a = f16mat2x3(v_1.tint_symbol_col0, v_1.tint_symbol_col1);
-  f16vec3 b = f16mat2x3(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1u];
-  float16_t c = f16mat2x3(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1u][2u];
+  f16vec3 v_2 = v_1.tint_symbol_col0;
+  f16mat2x3 a = f16mat2x3(v_2, v_1.tint_symbol_col1);
+  f16vec3 v_3 = v_1.tint_symbol_col0;
+  f16vec3 b = f16mat2x3(v_3, v_1.tint_symbol_col1)[1u];
+  f16vec3 v_4 = v_1.tint_symbol_col0;
+  float16_t c = f16mat2x3(v_4, v_1.tint_symbol_col1)[1u][2u];
 }
 )");
 }
@@ -1036,9 +1043,15 @@ uniform tint_symbol_1_std140_1_ubo {
   vec2 tint_symbol_col2;
 } v_1;
 void main() {
-  mat3x2 a = mat3x2(v_1.tint_symbol_col0, v_1.tint_symbol_col1, v_1.tint_symbol_col2);
-  vec2 b = mat3x2(v_1.tint_symbol_col0, v_1.tint_symbol_col1, v_1.tint_symbol_col2)[1u];
-  float c = mat3x2(v_1.tint_symbol_col0, v_1.tint_symbol_col1, v_1.tint_symbol_col2)[1u][1u];
+  vec2 v_2 = v_1.tint_symbol_col0;
+  vec2 v_3 = v_1.tint_symbol_col1;
+  mat3x2 a = mat3x2(v_2, v_3, v_1.tint_symbol_col2);
+  vec2 v_4 = v_1.tint_symbol_col0;
+  vec2 v_5 = v_1.tint_symbol_col1;
+  vec2 b = mat3x2(v_4, v_5, v_1.tint_symbol_col2)[1u];
+  vec2 v_6 = v_1.tint_symbol_col0;
+  vec2 v_7 = v_1.tint_symbol_col1;
+  float c = mat3x2(v_6, v_7, v_1.tint_symbol_col2)[1u][1u];
 }
 )");
 }
@@ -1067,9 +1080,12 @@ uniform tint_symbol_1_std140_1_ubo {
   vec2 tint_symbol_col1;
 } v_1;
 void main() {
-  mat2 a = mat2(v_1.tint_symbol_col0, v_1.tint_symbol_col1);
-  vec2 b = mat2(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1u];
-  float c = mat2(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1u][1u];
+  vec2 v_2 = v_1.tint_symbol_col0;
+  mat2 a = mat2(v_2, v_1.tint_symbol_col1);
+  vec2 v_3 = v_1.tint_symbol_col0;
+  vec2 b = mat2(v_3, v_1.tint_symbol_col1)[1u];
+  vec2 v_4 = v_1.tint_symbol_col0;
+  float c = mat2(v_4, v_1.tint_symbol_col1)[1u][1u];
 }
 )");
 }
@@ -1099,9 +1115,12 @@ uniform tint_symbol_1_std140_1_ubo {
   f16vec2 tint_symbol_col1;
 } v_1;
 void main() {
-  f16mat2 a = f16mat2(v_1.tint_symbol_col0, v_1.tint_symbol_col1);
-  f16vec2 b = f16mat2(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1u];
-  float16_t c = f16mat2(v_1.tint_symbol_col0, v_1.tint_symbol_col1)[1u][1u];
+  f16vec2 v_2 = v_1.tint_symbol_col0;
+  f16mat2 a = f16mat2(v_2, v_1.tint_symbol_col1);
+  f16vec2 v_3 = v_1.tint_symbol_col0;
+  f16vec2 b = f16mat2(v_3, v_1.tint_symbol_col1)[1u];
+  f16vec2 v_4 = v_1.tint_symbol_col0;
+  float16_t c = f16mat2(v_4, v_1.tint_symbol_col1)[1u][1u];
 }
 )");
 }
@@ -2124,6 +2143,85 @@ uniform tint_symbol_1_1_ubo {
 void main() {
   float b = v_1.tint_symbol.d.y;
   float c = v_1.tint_symbol.d.z;
+}
+)");
+}
+
+TEST_F(GlslWriterTest, AccessToLetWithFunctionParams) {
+    auto* f = b.Function("f", ty.i32());
+    b.Append(f->Block(), [&] { b.Return(f, 0_i); });
+
+    auto* g = b.Function("g", ty.i32());
+    b.Append(g->Block(), [&] { b.Return(f, 0_i); });
+
+    auto* foo = b.Function("foo", ty.void_());
+    b.Append(foo->Block(), [&] {
+        auto* arr = b.Var("arr", ty.ptr<function, array<i32, 4>, read_write>());
+        auto* c = b.Call(ty.i32(), f);
+        auto* access = b.Access(ty.ptr<function, i32, read_write>(), arr, c);
+        auto* p = b.Let("p", access);
+        auto* c2 = b.Call(ty.i32(), g);
+        b.Let("y", c2);
+        b.Let("x", b.Load(p));
+        b.Return(foo);
+    });
+
+    ASSERT_TRUE(Generate()) << err_ << output_.glsl;
+    EXPECT_EQ(output_.glsl, GlslHeader() + R"(
+int f() {
+  return 0;
+}
+int g() {
+  return 0;
+}
+void foo() {
+  int arr[4] = int[4](0, 0, 0, 0);
+  uint v = min(uint(f()), 3u);
+  int y = g();
+  int x = arr[v];
+}
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+void main() {
+}
+)");
+}
+
+TEST_F(GlslWriterTest, AccessToLetWithNestedFunctionParams) {
+    auto* f = b.Function("f", ty.i32());
+    b.Append(f->Block(), [&] { b.Return(f, 0_i); });
+
+    auto* g = b.Function("g", ty.i32());
+    b.Append(g->Block(), [&] { b.Return(f, 0_i); });
+
+    auto* foo = b.Function("foo", ty.void_());
+    b.Append(foo->Block(), [&] {
+        auto* arr = b.Var("arr", ty.ptr<function, array<i32, 4>, read_write>());
+        auto* c = b.Call(ty.i32(), f);
+        auto* d = b.Add(ty.i32(), c, 1_i);
+        auto* access = b.Access(ty.ptr<function, i32, read_write>(), arr, d);
+        auto* p = b.Let("p", access);
+        auto* c2 = b.Call(ty.i32(), g);
+        b.Let("y", c2);
+        b.Let("x", b.Load(p));
+        b.Return(foo);
+    });
+
+    ASSERT_TRUE(Generate()) << err_ << output_.glsl;
+    EXPECT_EQ(output_.glsl, GlslHeader() + R"(
+int f() {
+  return 0;
+}
+int g() {
+  return 0;
+}
+void foo() {
+  int arr[4] = int[4](0, 0, 0, 0);
+  uint v = min(uint((f() + 1)), 3u);
+  int y = g();
+  int x = arr[v];
+}
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+void main() {
 }
 )");
 }

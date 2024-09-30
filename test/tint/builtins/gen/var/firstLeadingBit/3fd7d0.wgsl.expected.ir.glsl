@@ -18,7 +18,8 @@ uvec3 firstLeadingBit_3fd7d0() {
   return res;
 }
 void main() {
-  v.tint_symbol = firstLeadingBit_3fd7d0();
+  uvec3 v_7 = firstLeadingBit_3fd7d0();
+  v.tint_symbol = v_7;
 }
 #version 310 es
 
@@ -39,7 +40,8 @@ uvec3 firstLeadingBit_3fd7d0() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = firstLeadingBit_3fd7d0();
+  uvec3 v_7 = firstLeadingBit_3fd7d0();
+  v.tint_symbol = v_7;
 }
 #version 310 es
 

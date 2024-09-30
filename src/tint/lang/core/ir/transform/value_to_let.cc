@@ -71,6 +71,9 @@ struct State {
     /// The IR module.
     Module& ir;
 
+    /// The configuration
+    const ValueToLetConfig& cfg;
+
     /// The IR builder.
     Builder b{ir};
 
@@ -87,6 +90,9 @@ struct State {
 
   private:
     void Process(ir::Block* block) {
+        // Replace all pointer lets with the value they point too.
+        ReplacePointerLetsWithValues();
+
         // A set of possibly-inlinable values returned by a instructions that has not yet been
         // marked-for or ruled-out-for inlining.
         Hashset<ir::InstructionResult*, 32> pending_resolution;
@@ -130,7 +136,10 @@ struct State {
                         break;
                     }
                     default:  // Value has multiple usages. Cannot inline.
-                        inst = PutInLet(result);
+                        // Access instructions always get inlined by backends.
+                        if (!inst->template Is<core::ir::Access>()) {
+                            inst = PutInLet(result);
+                        }
                         break;
                 }
             }
@@ -142,6 +151,26 @@ struct State {
 
             // The memory accesses of this instruction
             auto accesses = AccessesFor(inst);
+
+            // A pointer access chain will be inlined by the backends. For backends which don't
+            // provide pointer lets we need to force any arguments into lets such the occur in the
+            // correct order. Without this it's possible to shift function calls around if they're
+            // only used in the access.
+            //
+            // e.g.
+            // ```
+            // var arr : array<i32, 4>;
+            // let p = val[f() + 1];
+            // g();
+            // let x = p;
+            // ```
+            //
+            //  If the access at `p` is inlined to `x` then the function `f()` will be called after
+            //  `g()` instead of before as is required. So, we pessimize and for all access operands
+            //  to lets to maintain ordering.
+            if (cfg.replace_pointer_lets && IsPointerAccess(inst)) {
+                put_pending_in_lets();
+            }
 
             for (auto* operand : inst->Operands()) {
                 // If the operand is in pending_resolution, then we know it has a single use and
@@ -174,12 +203,21 @@ struct State {
         }
     }
 
+    bool IsPointerAccess(core::ir::Instruction* inst) {
+        return inst->Is<core::ir::Access>() && inst->Result(0)->Type()->Is<core::type::Pointer>();
+    }
+
     /// PutInLet places the value into a new 'let' instruction, immediately after the value's
     /// instruction
     /// @param value the value to place into the 'let'
     /// @return the created 'let' instruction.
-    ir::Let* PutInLet(ir::InstructionResult* value) {
+    ir::Instruction* PutInLet(ir::InstructionResult* value) {
         auto* inst = value->Instruction();
+
+        if (cfg.replace_pointer_lets && IsPointerAccess(inst)) {
+            return inst;
+        }
+
         auto* let = b.Let(value->Type());
         value->ReplaceAllUsesWith(let->Result(0));
         let->SetValue(value);
@@ -190,11 +228,32 @@ struct State {
         }
         return let;
     }
+
+    void ReplacePointerLetsWithValues() {
+        if (!cfg.replace_pointer_lets) {
+            return;
+        }
+
+        Vector<ir::Let*, 4> worklist;
+        // Loop over every instruction looking for control instructions.
+        for (auto* inst : ir.Instructions()) {
+            if (auto* l = inst->As<ir::Let>()) {
+                if (l->Result(0)->Type()->Is<core::type::Pointer>()) {
+                    worklist.Push(l);
+                }
+            }
+        }
+
+        for (auto* l : worklist) {
+            l->Result(0)->ReplaceAllUsesWith(l->Value());
+            l->Destroy();
+        }
+    }
 };
 
 }  // namespace
 
-Result<SuccessType> ValueToLet(Module& ir) {
+Result<SuccessType> ValueToLet(Module& ir, const ValueToLetConfig& cfg) {
     auto result = ValidateAndDumpIfNeeded(ir, "ValueToLet transform",
                                           core::ir::Capabilities{
                                               core::ir::Capability::kAllow8BitIntegers,
@@ -205,7 +264,7 @@ Result<SuccessType> ValueToLet(Module& ir) {
         return result;
     }
 
-    State{ir}.Process();
+    State{ir, cfg}.Process();
 
     return Success;
 }

@@ -11,7 +11,8 @@ int dot_ef6b1d() {
   return res;
 }
 void main() {
-  v.tint_symbol = dot_ef6b1d();
+  int v_1 = dot_ef6b1d();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ int dot_ef6b1d() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = dot_ef6b1d();
+  int v_1 = dot_ef6b1d();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

@@ -12,5 +12,6 @@ vec3 dpdxFine_f92fb6() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdxFine_f92fb6();
+  vec3 v_1 = dpdxFine_f92fb6();
+  v.tint_symbol = v_1;
 }

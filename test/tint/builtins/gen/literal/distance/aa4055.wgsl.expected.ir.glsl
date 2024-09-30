@@ -11,7 +11,8 @@ float distance_aa4055() {
   return res;
 }
 void main() {
-  v.tint_symbol = distance_aa4055();
+  float v_1 = distance_aa4055();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ float distance_aa4055() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = distance_aa4055();
+  float v_1 = distance_aa4055();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

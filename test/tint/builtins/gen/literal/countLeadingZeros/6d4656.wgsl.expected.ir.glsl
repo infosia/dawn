@@ -11,7 +11,8 @@ int countLeadingZeros_6d4656() {
   return res;
 }
 void main() {
-  v.tint_symbol = countLeadingZeros_6d4656();
+  int v_1 = countLeadingZeros_6d4656();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ int countLeadingZeros_6d4656() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = countLeadingZeros_6d4656();
+  int v_1 = countLeadingZeros_6d4656();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

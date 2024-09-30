@@ -12,7 +12,8 @@ ivec4 bitcast_6de2bd() {
   return res;
 }
 void main() {
-  v.tint_symbol = bitcast_6de2bd();
+  ivec4 v_1 = bitcast_6de2bd();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ ivec4 bitcast_6de2bd() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = bitcast_6de2bd();
+  ivec4 v_1 = bitcast_6de2bd();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

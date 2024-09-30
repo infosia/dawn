@@ -11,7 +11,8 @@ uint dot4U8Packed_fbed7b() {
   return res;
 }
 void main() {
-  v.tint_symbol = dot4U8Packed_fbed7b();
+  uint v_1 = dot4U8Packed_fbed7b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ uint dot4U8Packed_fbed7b() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = dot4U8Packed_fbed7b();
+  uint v_1 = dot4U8Packed_fbed7b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

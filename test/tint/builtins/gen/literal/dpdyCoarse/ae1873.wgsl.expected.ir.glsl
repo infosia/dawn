@@ -11,5 +11,6 @@ vec3 dpdyCoarse_ae1873() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdyCoarse_ae1873();
+  vec3 v_1 = dpdyCoarse_ae1873();
+  v.tint_symbol = v_1;
 }

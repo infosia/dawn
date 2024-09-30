@@ -15,5 +15,6 @@ void main() {
   p[1] = v.tint_symbol[2];
   p[1][0] = v.tint_symbol[0][1].ywxz;
   p[1][0][0u] = v.tint_symbol[0][1].x;
-  v_1.tint_symbol_2 = p[1][0].x;
+  float v_2 = p[1][0].x;
+  v_1.tint_symbol_2 = v_2;
 }

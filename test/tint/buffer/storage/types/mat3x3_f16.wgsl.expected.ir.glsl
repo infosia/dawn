@@ -16,5 +16,6 @@ void tint_store_and_preserve_padding(inout f16mat3 target, f16mat3 value_param) 
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  tint_store_and_preserve_padding(v_1.tint_symbol_5, v.tint_symbol_3);
+  f16mat3 v_2 = v.tint_symbol_3;
+  tint_store_and_preserve_padding(v_1.tint_symbol_5, v_2);
 }

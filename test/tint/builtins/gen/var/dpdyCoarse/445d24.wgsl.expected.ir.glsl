@@ -12,5 +12,6 @@ vec4 dpdyCoarse_445d24() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdyCoarse_445d24();
+  vec4 v_1 = dpdyCoarse_445d24();
+  v.tint_symbol = v_1;
 }

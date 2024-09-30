@@ -11,7 +11,8 @@ float bitcast_ca5c3f() {
   return res;
 }
 void main() {
-  v.tint_symbol = bitcast_ca5c3f();
+  float v_1 = bitcast_ca5c3f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ float bitcast_ca5c3f() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = bitcast_ca5c3f();
+  float v_1 = bitcast_ca5c3f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

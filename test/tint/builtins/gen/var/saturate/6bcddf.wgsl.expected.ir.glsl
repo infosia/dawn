@@ -12,7 +12,8 @@ vec3 saturate_6bcddf() {
   return res;
 }
 void main() {
-  v.tint_symbol = saturate_6bcddf();
+  vec3 v_1 = saturate_6bcddf();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ vec3 saturate_6bcddf() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = saturate_6bcddf();
+  vec3 v_1 = saturate_6bcddf();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

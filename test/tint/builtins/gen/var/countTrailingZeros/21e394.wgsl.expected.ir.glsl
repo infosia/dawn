@@ -18,7 +18,8 @@ uint countTrailingZeros_21e394() {
   return res;
 }
 void main() {
-  v.tint_symbol = countTrailingZeros_21e394();
+  uint v_7 = countTrailingZeros_21e394();
+  v.tint_symbol = v_7;
 }
 #version 310 es
 
@@ -39,7 +40,8 @@ uint countTrailingZeros_21e394() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = countTrailingZeros_21e394();
+  uint v_7 = countTrailingZeros_21e394();
+  v.tint_symbol = v_7;
 }
 #version 310 es
 

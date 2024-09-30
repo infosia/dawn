@@ -31,7 +31,8 @@ struct tint_module_vars_struct {
 
 void f(thread OuterS* const p, tint_module_vars_struct tint_module_vars) {
   InnerS v = {};
-  (*p).a1[(*tint_module_vars.uniforms).i] = v;
+  uint const v_1 = (*tint_module_vars.uniforms).i;
+  (*p).a1[v_1] = v;
 }
 
 kernel void tint_symbol(const constant Uniforms* uniforms [[buffer(0)]]) {

@@ -13,7 +13,8 @@ float pow_46e029() {
   return res;
 }
 void main() {
-  v.tint_symbol = pow_46e029();
+  float v_1 = pow_46e029();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -29,7 +30,8 @@ float pow_46e029() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = pow_46e029();
+  float v_1 = pow_46e029();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

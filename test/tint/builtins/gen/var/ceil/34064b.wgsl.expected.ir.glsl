@@ -12,7 +12,8 @@ vec3 ceil_34064b() {
   return res;
 }
 void main() {
-  v.tint_symbol = ceil_34064b();
+  vec3 v_1 = ceil_34064b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ vec3 ceil_34064b() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = ceil_34064b();
+  vec3 v_1 = ceil_34064b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

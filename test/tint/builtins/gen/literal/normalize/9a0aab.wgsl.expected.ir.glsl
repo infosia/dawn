@@ -11,7 +11,8 @@ vec4 normalize_9a0aab() {
   return res;
 }
 void main() {
-  v.tint_symbol = normalize_9a0aab();
+  vec4 v_1 = normalize_9a0aab();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec4 normalize_9a0aab() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = normalize_9a0aab();
+  vec4 v_1 = normalize_9a0aab();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

@@ -13,7 +13,8 @@ ivec4 textureLoad_53378a() {
   return res;
 }
 void main() {
-  v.tint_symbol = textureLoad_53378a();
+  ivec4 v_1 = textureLoad_53378a();
+  v.tint_symbol = v_1;
 }
 #version 460
 
@@ -29,7 +30,8 @@ ivec4 textureLoad_53378a() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = textureLoad_53378a();
+  ivec4 v_1 = textureLoad_53378a();
+  v.tint_symbol = v_1;
 }
 #version 460
 

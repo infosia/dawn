@@ -21,7 +21,8 @@ int atomicAnd_152966() {
   return res;
 }
 void main() {
-  v.tint_symbol = atomicAnd_152966();
+  int v_2 = atomicAnd_152966();
+  v.tint_symbol = v_2;
 }
 #version 310 es
 
@@ -45,5 +46,6 @@ int atomicAnd_152966() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = atomicAnd_152966();
+  int v_2 = atomicAnd_152966();
+  v.tint_symbol = v_2;
 }

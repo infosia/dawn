@@ -11,7 +11,8 @@ int abs_4ad288() {
   return res;
 }
 void main() {
-  v.tint_symbol = abs_4ad288();
+  int v_1 = abs_4ad288();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ int abs_4ad288() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = abs_4ad288();
+  int v_1 = abs_4ad288();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

@@ -134,5 +134,6 @@ void main() {
   int v_30 = (v_29 + tint_f16_to_i32(mat4x3_f16[0][0u]));
   int v_31 = (v_30 + tint_f16_to_i32(mat4x4_f16[0][0u]));
   int v_32 = (v_31 + tint_f32_to_i32(arr2_vec3_f32[0][0u]));
-  v_1.tint_symbol_3 = (((v_32 + tint_f16_to_i32(arr2_mat4x2_f16[0][0][0u])) + struct_inner.scalar_i32) + array_struct_inner[0].scalar_i32);
+  int v_33 = (((v_32 + tint_f16_to_i32(arr2_mat4x2_f16[0][0][0u])) + struct_inner.scalar_i32) + array_struct_inner[0].scalar_i32);
+  v_1.tint_symbol_3 = v_33;
 }

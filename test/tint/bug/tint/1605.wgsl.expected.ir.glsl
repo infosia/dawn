@@ -8,7 +8,8 @@ bool func_3() {
   {
     int i = 0;
     while(true) {
-      if ((i < v.tint_symbol_1)) {
+      int v_1 = i;
+      if ((v_1 < v.tint_symbol_1)) {
       } else {
         break;
       }

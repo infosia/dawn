@@ -60,7 +60,10 @@ void f_inner(uint tint_local_index) {
   }
   w = v_4;
   w[1] = tint_convert_S(v.tint_symbol[2]);
-  w[3].m = mat4x2(v.tint_symbol[2].m_col0, v.tint_symbol[2].m_col1, v.tint_symbol[2].m_col2, v.tint_symbol[2].m_col3);
+  vec2 v_7 = v.tint_symbol[2].m_col0;
+  vec2 v_8 = v.tint_symbol[2].m_col1;
+  vec2 v_9 = v.tint_symbol[2].m_col2;
+  w[3].m = mat4x2(v_7, v_8, v_9, v.tint_symbol[2].m_col3);
   w[1].m[0] = v.tint_symbol[0].m_col1.yx;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;

@@ -18,7 +18,8 @@ ivec3 firstTrailingBit_7496d6() {
   return res;
 }
 void main() {
-  v.tint_symbol = firstTrailingBit_7496d6();
+  ivec3 v_7 = firstTrailingBit_7496d6();
+  v.tint_symbol = v_7;
 }
 #version 310 es
 
@@ -39,7 +40,8 @@ ivec3 firstTrailingBit_7496d6() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = firstTrailingBit_7496d6();
+  ivec3 v_7 = firstTrailingBit_7496d6();
+  v.tint_symbol = v_7;
 }
 #version 310 es
 

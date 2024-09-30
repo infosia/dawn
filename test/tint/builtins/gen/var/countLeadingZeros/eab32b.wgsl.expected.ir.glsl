@@ -19,7 +19,8 @@ ivec4 countLeadingZeros_eab32b() {
   return res;
 }
 void main() {
-  v.tint_symbol = countLeadingZeros_eab32b();
+  ivec4 v_8 = countLeadingZeros_eab32b();
+  v.tint_symbol = v_8;
 }
 #version 310 es
 
@@ -41,7 +42,8 @@ ivec4 countLeadingZeros_eab32b() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = countLeadingZeros_eab32b();
+  ivec4 v_8 = countLeadingZeros_eab32b();
+  v.tint_symbol = v_8;
 }
 #version 310 es
 

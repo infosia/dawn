@@ -20,7 +20,8 @@ int atomicXor_c1b78c() {
   return res;
 }
 void main() {
-  v.tint_symbol = atomicXor_c1b78c();
+  int v_2 = atomicXor_c1b78c();
+  v.tint_symbol = v_2;
 }
 #version 310 es
 
@@ -43,5 +44,6 @@ int atomicXor_c1b78c() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = atomicXor_c1b78c();
+  int v_2 = atomicXor_c1b78c();
+  v.tint_symbol = v_2;
 }

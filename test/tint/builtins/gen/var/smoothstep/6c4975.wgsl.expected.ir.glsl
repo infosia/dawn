@@ -14,7 +14,8 @@ float smoothstep_6c4975() {
   return res;
 }
 void main() {
-  v.tint_symbol = smoothstep_6c4975();
+  float v_1 = smoothstep_6c4975();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -31,7 +32,8 @@ float smoothstep_6c4975() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = smoothstep_6c4975();
+  float v_1 = smoothstep_6c4975();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

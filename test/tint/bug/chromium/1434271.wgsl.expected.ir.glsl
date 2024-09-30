@@ -69,22 +69,23 @@ layout(location = 2) in vec2 vs_main_loc2_Input;
 layout(location = 0) out vec4 vs_main_loc0_Output;
 layout(location = 1) out vec2 vs_main_loc1_Output;
 VertexOutput vs_main_inner(VertexInput tint_symbol) {
-  vec3 quad_pos = (mat2x3(v.tint_symbol_2.right, v.tint_symbol_2.up) * tint_symbol.quad_pos);
+  vec3 v_1 = v.tint_symbol_2.right;
+  vec3 quad_pos = (mat2x3(v_1, v.tint_symbol_2.up) * tint_symbol.quad_pos);
   vec3 position = (tint_symbol.position - (quad_pos + 0.00999999977648258209f));
   VertexOutput tint_symbol_1 = VertexOutput(vec4(0.0f), vec4(0.0f), vec2(0.0f));
-  mat4 v_1 = v.tint_symbol_2.modelViewProjectionMatrix;
-  tint_symbol_1.position = (v_1 * vec4(position, 1.0f));
+  mat4 v_2 = v.tint_symbol_2.modelViewProjectionMatrix;
+  tint_symbol_1.position = (v_2 * vec4(position, 1.0f));
   tint_symbol_1.color = tint_symbol.color;
   tint_symbol_1.quad_pos = tint_symbol.quad_pos;
   return tint_symbol_1;
 }
 void main() {
-  VertexOutput v_2 = vs_main_inner(VertexInput(vs_main_loc0_Input, vs_main_loc1_Input, vs_main_loc2_Input));
-  gl_Position = v_2.position;
+  VertexOutput v_3 = vs_main_inner(VertexInput(vs_main_loc0_Input, vs_main_loc1_Input, vs_main_loc2_Input));
+  gl_Position = v_3.position;
   gl_Position[1u] = -(gl_Position.y);
   gl_Position[2u] = ((2.0f * gl_Position.z) - gl_Position.w);
-  vs_main_loc0_Output = v_2.color;
-  vs_main_loc1_Output = v_2.quad_pos;
+  vs_main_loc0_Output = v_3.color;
+  vs_main_loc1_Output = v_3.quad_pos;
   gl_PointSize = 1.0f;
 }
 #version 310 es
@@ -158,12 +159,14 @@ void export_level_inner(uvec3 coord) {
     uint src_offset = ((coord[0u] - 2u) + ((coord[1u] >> (2u & 31u)) * v.tint_symbol.width));
     float a = buf_in.weights[(src_offset << (0u & 31u))];
     float b = buf_in.weights[(src_offset + 1u)];
-    float c = buf_in.weights[((src_offset + 1u) + v.tint_symbol.width)];
-    float d = buf_in.weights[((src_offset + 1u) + v.tint_symbol.width)];
+    uint v_1 = ((src_offset + 1u) + v.tint_symbol.width);
+    float c = buf_in.weights[v_1];
+    uint v_2 = ((src_offset + 1u) + v.tint_symbol.width);
+    float d = buf_in.weights[v_2];
     float sum = dot(vec4(a, b, c, d), vec4(1.0f));
     buf_out.weights[dst_offset] = tint_float_modulo(sum, 4.0f);
-    vec4 v_1 = vec4(a, (a * b), ((a / b) + c), sum);
-    vec4 probabilities = (v_1 + max(sum, 0.0f));
+    vec4 v_3 = vec4(a, (a * b), ((a / b) + c), sum);
+    vec4 probabilities = (v_3 + max(sum, 0.0f));
     imageStore(tex_out, ivec2(coord.xy), probabilities);
   }
 }

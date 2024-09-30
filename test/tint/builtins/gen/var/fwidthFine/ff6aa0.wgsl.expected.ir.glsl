@@ -12,5 +12,6 @@ vec2 fwidthFine_ff6aa0() {
   return res;
 }
 void main() {
-  v.tint_symbol = fwidthFine_ff6aa0();
+  vec2 v_1 = fwidthFine_ff6aa0();
+  v.tint_symbol = v_1;
 }

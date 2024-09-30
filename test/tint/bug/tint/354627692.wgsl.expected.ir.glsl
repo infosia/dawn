@@ -27,5 +27,6 @@ void main() {
       continue;
     }
   }
-  v.tint_symbol_2 = i;
+  int v_1 = i;
+  v.tint_symbol_2 = v_1;
 }

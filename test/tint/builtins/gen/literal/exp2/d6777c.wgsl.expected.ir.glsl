@@ -11,7 +11,8 @@ vec2 exp2_d6777c() {
   return res;
 }
 void main() {
-  v.tint_symbol = exp2_d6777c();
+  vec2 v_1 = exp2_d6777c();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec2 exp2_d6777c() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = exp2_d6777c();
+  vec2 v_1 = exp2_d6777c();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

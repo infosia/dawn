@@ -16,5 +16,10 @@ void main() {
   signed_constant = signed_literal;
   unsigned_constant = signed_literal;
   shr_const_expr = signed_literal;
-  v.tint_symbol_1 = ((((signed_literal[0] + unsigned_literal[0]) + signed_constant[0]) + unsigned_constant[0]) + shr_const_expr[0]);
+  float v_1 = signed_literal[0];
+  float v_2 = (v_1 + unsigned_literal[0]);
+  float v_3 = (v_2 + signed_constant[0]);
+  float v_4 = (v_3 + unsigned_constant[0]);
+  float v_5 = (v_4 + shr_const_expr[0]);
+  v.tint_symbol_1 = v_5;
 }

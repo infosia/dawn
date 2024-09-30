@@ -12,7 +12,8 @@ uint textureDimensions_284c27() {
   return res;
 }
 void main() {
-  v.tint_symbol = textureDimensions_284c27();
+  uint v_1 = textureDimensions_284c27();
+  v.tint_symbol = v_1;
 }
 #version 460
 
@@ -27,7 +28,8 @@ uint textureDimensions_284c27() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = textureDimensions_284c27();
+  uint v_1 = textureDimensions_284c27();
+  v.tint_symbol = v_1;
 }
 #version 460
 

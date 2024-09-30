@@ -11,7 +11,8 @@ uvec2 select_1e960b() {
   return res;
 }
 void main() {
-  v.tint_symbol = select_1e960b();
+  uvec2 v_1 = select_1e960b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ uvec2 select_1e960b() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = select_1e960b();
+  uvec2 v_1 = select_1e960b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

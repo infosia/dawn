@@ -13,7 +13,8 @@ vec2 step_19accd() {
   return res;
 }
 void main() {
-  v.tint_symbol = step_19accd();
+  vec2 v_1 = step_19accd();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -29,7 +30,8 @@ vec2 step_19accd() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = step_19accd();
+  vec2 v_1 = step_19accd();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

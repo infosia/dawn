@@ -11,7 +11,8 @@ vec3 reflect_f47fdb() {
   return res;
 }
 void main() {
-  v.tint_symbol = reflect_f47fdb();
+  vec3 v_1 = reflect_f47fdb();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -25,7 +26,8 @@ vec3 reflect_f47fdb() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = reflect_f47fdb();
+  vec3 v_1 = reflect_f47fdb();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

@@ -77,7 +77,8 @@ void tint_symbol_inner(uint idx) {
   int v_15 = (v_14 + tint_f32_to_i32(mat4x2_f32[0][0u]));
   int v_16 = (v_15 + tint_f32_to_i32(mat4x3_f32[0][0u]));
   int v_17 = (v_16 + tint_f32_to_i32(mat4x4_f32[0][0u]));
-  v.tint_symbol_1 = (v_17 + tint_f32_to_i32(arr2_vec3_f32[0][0u]));
+  int v_18 = (v_17 + tint_f32_to_i32(arr2_vec3_f32[0][0u]));
+  v.tint_symbol_1 = v_18;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {

@@ -36,8 +36,12 @@ void main() {
       continue;
     }
   }
-  v_1.tint_symbol_2 = v_3;
-  v_1.tint_symbol_2[1] = f16mat4x2(v.tint_symbol[2].col0, v.tint_symbol[2].col1, v.tint_symbol[2].col2, v.tint_symbol[2].col3);
+  f16mat4x2 v_6[4] = v_3;
+  v_1.tint_symbol_2 = v_6;
+  f16vec2 v_7 = v.tint_symbol[2].col0;
+  f16vec2 v_8 = v.tint_symbol[2].col1;
+  f16vec2 v_9 = v.tint_symbol[2].col2;
+  v_1.tint_symbol_2[1] = f16mat4x2(v_7, v_8, v_9, v.tint_symbol[2].col3);
   v_1.tint_symbol_2[1][0] = v.tint_symbol[0].col1.yx;
   v_1.tint_symbol_2[1][0][0u] = v.tint_symbol[0].col1.x;
 }

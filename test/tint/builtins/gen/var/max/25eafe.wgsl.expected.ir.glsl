@@ -13,7 +13,8 @@ ivec3 max_25eafe() {
   return res;
 }
 void main() {
-  v.tint_symbol = max_25eafe();
+  ivec3 v_1 = max_25eafe();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -29,7 +30,8 @@ ivec3 max_25eafe() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = max_25eafe();
+  ivec3 v_1 = max_25eafe();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

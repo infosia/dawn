@@ -9,8 +9,12 @@ uniform tint_symbol_1_std140_1_ubo {
 f16mat2 p = f16mat2(f16vec2(0.0hf), f16vec2(0.0hf));
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  p = f16mat2(v.tint_symbol_col0, v.tint_symbol_col1);
-  p[1] = f16mat2(v.tint_symbol_col0, v.tint_symbol_col1)[0];
-  p[1] = f16mat2(v.tint_symbol_col0, v.tint_symbol_col1)[0].yx;
-  p[0][1] = f16mat2(v.tint_symbol_col0, v.tint_symbol_col1)[1][0];
+  f16vec2 v_1 = v.tint_symbol_col0;
+  p = f16mat2(v_1, v.tint_symbol_col1);
+  f16vec2 v_2 = v.tint_symbol_col0;
+  p[1] = f16mat2(v_2, v.tint_symbol_col1)[0];
+  f16vec2 v_3 = v.tint_symbol_col0;
+  p[1] = f16mat2(v_3, v.tint_symbol_col1)[0].yx;
+  f16vec2 v_4 = v.tint_symbol_col0;
+  p[0][1] = f16mat2(v_4, v.tint_symbol_col1)[1][0];
 }

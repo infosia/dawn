@@ -13,10 +13,18 @@ void f_inner(uint tint_local_index) {
     w = f16mat3x2(f16vec2(0.0hf), f16vec2(0.0hf), f16vec2(0.0hf));
   }
   barrier();
-  w = f16mat3x2(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2);
-  w[1] = f16mat3x2(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2)[0];
-  w[1] = f16mat3x2(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2)[0].yx;
-  w[0][1] = f16mat3x2(v.tint_symbol_col0, v.tint_symbol_col1, v.tint_symbol_col2)[1][0];
+  f16vec2 v_1 = v.tint_symbol_col0;
+  f16vec2 v_2 = v.tint_symbol_col1;
+  w = f16mat3x2(v_1, v_2, v.tint_symbol_col2);
+  f16vec2 v_3 = v.tint_symbol_col0;
+  f16vec2 v_4 = v.tint_symbol_col1;
+  w[1] = f16mat3x2(v_3, v_4, v.tint_symbol_col2)[0];
+  f16vec2 v_5 = v.tint_symbol_col0;
+  f16vec2 v_6 = v.tint_symbol_col1;
+  w[1] = f16mat3x2(v_5, v_6, v.tint_symbol_col2)[0].yx;
+  f16vec2 v_7 = v.tint_symbol_col0;
+  f16vec2 v_8 = v.tint_symbol_col1;
+  w[0][1] = f16mat3x2(v_7, v_8, v.tint_symbol_col2)[1][0];
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {

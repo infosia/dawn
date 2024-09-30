@@ -37,7 +37,9 @@ void tint_symbol_inner(uvec3 global_id) {
       }
       uint a = (i + (resultCell[0u] * dimInner));
       uint b = (resultCell[1u] + (i * dimOutter));
-      result = (result + (firstMatrix.numbers[a] * secondMatrix.numbers[b]));
+      uint v_1 = result;
+      uint v_2 = firstMatrix.numbers[a];
+      result = (v_1 + (v_2 * secondMatrix.numbers[b]));
       {
         i = (i + 1u);
       }

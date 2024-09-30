@@ -17,7 +17,8 @@ uint firstTrailingBit_47d475() {
   return res;
 }
 void main() {
-  v.tint_symbol = firstTrailingBit_47d475();
+  uint v_6 = firstTrailingBit_47d475();
+  v.tint_symbol = v_6;
 }
 #version 310 es
 
@@ -37,7 +38,8 @@ uint firstTrailingBit_47d475() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = firstTrailingBit_47d475();
+  uint v_6 = firstTrailingBit_47d475();
+  v.tint_symbol = v_6;
 }
 #version 310 es
 

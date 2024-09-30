@@ -11,5 +11,6 @@ float fwidth_df38ef() {
   return res;
 }
 void main() {
-  v.tint_symbol = fwidth_df38ef();
+  float v_1 = fwidth_df38ef();
+  v.tint_symbol = v_1;
 }

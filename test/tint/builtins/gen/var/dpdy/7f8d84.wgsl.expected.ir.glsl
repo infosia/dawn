@@ -12,5 +12,6 @@ float dpdy_7f8d84() {
   return res;
 }
 void main() {
-  v.tint_symbol = dpdy_7f8d84();
+  float v_1 = dpdy_7f8d84();
+  v.tint_symbol = v_1;
 }

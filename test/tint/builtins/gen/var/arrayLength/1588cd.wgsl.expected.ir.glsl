@@ -15,7 +15,8 @@ uint arrayLength_1588cd() {
   return res;
 }
 void main() {
-  v.tint_symbol = arrayLength_1588cd();
+  uint v_1 = arrayLength_1588cd();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -33,7 +34,8 @@ uint arrayLength_1588cd() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = arrayLength_1588cd();
+  uint v_1 = arrayLength_1588cd();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

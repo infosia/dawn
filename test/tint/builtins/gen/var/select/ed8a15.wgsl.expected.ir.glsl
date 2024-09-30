@@ -14,7 +14,8 @@ int select_ed8a15() {
   return res;
 }
 void main() {
-  v.tint_symbol = select_ed8a15();
+  int v_1 = select_ed8a15();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -31,7 +32,8 @@ int select_ed8a15() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = select_ed8a15();
+  int v_1 = select_ed8a15();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

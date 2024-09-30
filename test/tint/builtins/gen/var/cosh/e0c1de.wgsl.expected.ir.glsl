@@ -12,7 +12,8 @@ vec4 cosh_e0c1de() {
   return res;
 }
 void main() {
-  v.tint_symbol = cosh_e0c1de();
+  vec4 v_1 = cosh_e0c1de();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ vec4 cosh_e0c1de() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = cosh_e0c1de();
+  vec4 v_1 = cosh_e0c1de();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

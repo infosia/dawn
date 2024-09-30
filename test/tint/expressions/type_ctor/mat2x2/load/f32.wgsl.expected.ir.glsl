@@ -7,5 +7,6 @@ buffer tint_symbol_2_1_ssbo {
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   mat2 m = mat2(vec2(0.0f), vec2(0.0f));
-  v.tint_symbol_1 = mat2(m);
+  mat2 v_1 = mat2(m);
+  v.tint_symbol_1 = v_1;
 }

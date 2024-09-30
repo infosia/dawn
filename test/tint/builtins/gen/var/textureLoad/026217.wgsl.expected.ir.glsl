@@ -19,7 +19,8 @@ uvec4 textureLoad_026217() {
   return res;
 }
 void main() {
-  v.tint_symbol = textureLoad_026217();
+  uvec4 v_5 = textureLoad_026217();
+  v.tint_symbol = v_5;
 }
 #version 310 es
 
@@ -41,7 +42,8 @@ uvec4 textureLoad_026217() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = textureLoad_026217();
+  uvec4 v_5 = textureLoad_026217();
+  v.tint_symbol = v_5;
 }
 #version 310 es
 

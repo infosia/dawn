@@ -13,7 +13,8 @@ float step_0b073b() {
   return res;
 }
 void main() {
-  v.tint_symbol = step_0b073b();
+  float v_1 = step_0b073b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -29,7 +30,8 @@ float step_0b073b() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = step_0b073b();
+  float v_1 = step_0b073b();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

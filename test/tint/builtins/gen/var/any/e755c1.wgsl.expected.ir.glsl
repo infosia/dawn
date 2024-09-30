@@ -12,7 +12,8 @@ int any_e755c1() {
   return mix(0, 1, (res == false));
 }
 void main() {
-  v.tint_symbol = any_e755c1();
+  int v_1 = any_e755c1();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -27,7 +28,8 @@ int any_e755c1() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = any_e755c1();
+  int v_1 = any_e755c1();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 

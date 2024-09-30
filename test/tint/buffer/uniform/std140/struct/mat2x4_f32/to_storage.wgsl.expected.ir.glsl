@@ -39,7 +39,8 @@ void tint_store_and_preserve_padding(inout S target[4], S value_param[4]) {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  tint_store_and_preserve_padding(v_1.tint_symbol_2, v.tint_symbol);
+  S v_4[4] = v.tint_symbol;
+  tint_store_and_preserve_padding(v_1.tint_symbol_2, v_4);
   tint_store_and_preserve_padding_1(v_1.tint_symbol_2[1], v.tint_symbol[2]);
   v_1.tint_symbol_2[3].m = v.tint_symbol[2].m;
   v_1.tint_symbol_2[1].m[0] = v.tint_symbol[0].m[1].ywxz;

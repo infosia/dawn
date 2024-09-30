@@ -12,7 +12,8 @@ float16_t abs_fd247f() {
   return res;
 }
 void main() {
-  v.tint_symbol = abs_fd247f();
+  float16_t v_1 = abs_fd247f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
@@ -27,7 +28,8 @@ float16_t abs_fd247f() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = abs_fd247f();
+  float16_t v_1 = abs_fd247f();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require

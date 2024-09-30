@@ -14,7 +14,8 @@ vec2 mix_2fadab() {
   return res;
 }
 void main() {
-  v.tint_symbol = mix_2fadab();
+  vec2 v_1 = mix_2fadab();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
@@ -31,7 +32,8 @@ vec2 mix_2fadab() {
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
-  v.tint_symbol = mix_2fadab();
+  vec2 v_1 = mix_2fadab();
+  v.tint_symbol = v_1;
 }
 #version 310 es
 
