@@ -52,6 +52,9 @@ struct State {
     /// The IR module.
     core::ir::Module& ir;
 
+    /// The configuration
+    const TexturePolyfillConfig& cfg;
+
     /// The IR builder.
     core::ir::Builder b{ir};
 
@@ -62,6 +65,16 @@ struct State {
     Hashmap<const core::type::Type*, core::ir::Function*, 4> dot_funcs_{};
     /// Quantize polyfills
     Hashmap<const core::type::Type*, core::ir::Function*, 4> quantize_to_f16_funcs_{};
+
+    /// The global var for texture uniform information
+    core::ir::Var* texture_uniform_data_ = nullptr;
+
+    /// Map from binding point to index into uniform structure
+    Hashmap<BindingPoint, uint32_t, 2> binding_point_to_uniform_idx_{};
+
+    /// Maps from a function parameter to the replacement function parameter for texture uniform
+    /// data
+    Hashmap<core::ir::FunctionParam*, core::ir::FunctionParam*, 2> texture_param_replacement_{};
 
     /// Process the module.
     void Process() {
@@ -79,6 +92,8 @@ struct State {
                     case core::BuiltinFn::kTextureDimensions:
                     case core::BuiltinFn::kTextureLoad:
                     case core::BuiltinFn::kTextureNumLayers:
+                    case core::BuiltinFn::kTextureNumLevels:
+                    case core::BuiltinFn::kTextureNumSamples:
                     case core::BuiltinFn::kTextureStore:
                         call_worklist.Push(call);
                         break;
@@ -100,6 +115,10 @@ struct State {
                     break;
                 case core::BuiltinFn::kTextureNumLayers:
                     TextureNumLayers(call);
+                    break;
+                case core::BuiltinFn::kTextureNumLevels:
+                case core::BuiltinFn::kTextureNumSamples:
+                    TextureFromUniform(call);
                     break;
                 case core::BuiltinFn::kTextureStore:
                     TextureStore(call);
@@ -219,6 +238,135 @@ struct State {
             }
             ld->Result(0)->SetType(new_type);
         }
+    }
+
+    void MakeTextureUniformStructure() {
+        if (texture_uniform_data_ != nullptr) {
+            return;
+        }
+
+        auto count = cfg.texture_builtins_from_uniform.ubo_bindingpoint_ordering.size();
+
+        Vector<core::type::Manager::StructMemberDesc, 2> members;
+        members.Reserve(count);
+        for (uint32_t i = 0; i < count; ++i) {
+            members.Push({ir.symbols.New("tint_builtin_value_" + std::to_string(i)), ty.u32()});
+            binding_point_to_uniform_idx_.Add(
+                cfg.texture_builtins_from_uniform.ubo_bindingpoint_ordering[i], i);
+        }
+
+        auto* strct =
+            ir.Types().Struct(ir.symbols.New("TintTextureUniformData"), std::move(members));
+
+        b.Append(ir.root_block, [&] {
+            texture_uniform_data_ = b.Var(ty.ptr(uniform, strct, read));
+            texture_uniform_data_->SetBindingPoint(
+                cfg.texture_builtins_from_uniform.ubo_binding.group,
+                cfg.texture_builtins_from_uniform.ubo_binding.binding);
+        });
+    }
+
+    // Note, assumes is called inside an insert block
+    core::ir::Access* GetUniformValue(const BindingPoint& binding) {
+        TINT_ASSERT(binding_point_to_uniform_idx_.Contains(binding));
+
+        uint32_t idx = *binding_point_to_uniform_idx_.Get(binding);
+        return b.Access(ty.ptr<uniform, u32, read>(), texture_uniform_data_, u32(idx));
+    }
+
+    core::ir::Value* FindSource(core::ir::Value* tex) {
+        core::ir::Value* res = nullptr;
+        while (true) {
+            tint::Switch(
+                tex,
+                [&](core::ir::InstructionResult* r) {
+                    tint::Switch(
+                        r->Instruction(),                               //
+                        [&](core::ir::Var* v) { res = v->Result(0); },  //
+                        [&](core::ir::Load* l) { tex = l->From(); },    //
+                        TINT_ICE_ON_NO_MATCH);
+                },
+                [&](core::ir::FunctionParam* fp) { res = fp; },
+
+                TINT_ICE_ON_NO_MATCH);
+            if (res != nullptr) {
+                break;
+            }
+        }
+        return res;
+    }
+
+    void AddUniformArgToCallSites(core::ir::Function* func, uint32_t tex_idx) {
+        for (auto usage : func->UsagesUnsorted()) {
+            auto* call = usage->instruction->As<core::ir::UserCall>();
+            if (!call) {
+                continue;
+            }
+
+            auto* src = FindSource(call->Args()[tex_idx]);
+            tint::Switch(
+                src,
+                [&](core::ir::InstructionResult* r) {
+                    tint::Switch(
+                        r->Instruction(),  //
+                        [&](core::ir::Var* v) {
+                            b.InsertBefore(call, [&] {
+                                auto* access = GetUniformValue(v->BindingPoint().value());
+                                auto* val = b.Load(access);
+                                call->AppendArg(val->Result(0));
+                            });
+                        },
+                        TINT_ICE_ON_NO_MATCH);
+                },
+                [&](core::ir::FunctionParam* fp) {
+                    auto* val = ReplaceFunctionParam(fp);
+                    call->AppendArg(val);
+                },
+                TINT_ICE_ON_NO_MATCH);
+        }
+    }
+
+    core::ir::Value* ReplaceFunctionParam(core::ir::FunctionParam* fp) {
+        core::ir::Value* replacement = nullptr;
+        if (texture_param_replacement_.Contains(fp)) {
+            replacement = *texture_param_replacement_.Get(fp);
+        } else {
+            auto* new_param = b.FunctionParam("tint_tex_value", ty.u32());
+            fp->Function()->AppendParam(new_param);
+            texture_param_replacement_.Add(fp, new_param);
+
+            AddUniformArgToCallSites(fp->Function(), fp->Index());
+            replacement = new_param;
+        }
+        return replacement;
+    }
+
+    void TextureFromUniform(core::ir::BuiltinCall* call) {
+        MakeTextureUniformStructure();
+
+        auto* tex = FindSource(call->Args()[0]);
+        TINT_ASSERT(tex);
+
+        tint::Switch(
+            tex,
+            [&](core::ir::InstructionResult* r) {
+                tint::Switch(
+                    r->Instruction(),  //
+                    [&](core::ir::Var* v) {
+                        b.InsertBefore(call, [&] {
+                            auto* access = GetUniformValue(v->BindingPoint().value());
+                            b.LoadWithResult(call->DetachResult(), access);
+                        });
+                    },
+                    TINT_ICE_ON_NO_MATCH);
+            },
+            [&](core::ir::FunctionParam* fp) {
+                auto* replacement = ReplaceFunctionParam(fp);
+                call->Result(0)->ReplaceAllUsesWith(replacement);
+            },
+            TINT_ICE_ON_NO_MATCH);
+
+        call->Destroy();
     }
 
     // `textureDimensions` returns an unsigned scalar / vector in WGSL. `textureSize` and
@@ -410,13 +558,13 @@ struct State {
 
 }  // namespace
 
-Result<SuccessType> TexturePolyfill(core::ir::Module& ir) {
+Result<SuccessType> TexturePolyfill(core::ir::Module& ir, const TexturePolyfillConfig& cfg) {
     auto result = ValidateAndDumpIfNeeded(ir, "glsl.TexturePolyfill transform");
     if (result != Success) {
         return result.Failure();
     }
 
-    State{ir}.Process();
+    State{ir, cfg}.Process();
 
     return Success;
 }
