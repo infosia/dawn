@@ -52,6 +52,24 @@
       "parentUuid": "ad29e31b_6983c94a",
       "revId": "1d794e7b9243b426f809f1ca4e045606dab4b033",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2d903b1_d51710e0",
+        "filename": "src/tint/lang/core/ir/transform/value_to_let.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-09-30T15:54:56Z",
+      "side": 1,
+      "message": "Right, the point is to push the operands into lets.\n\nAlso, I\u0027m wondering if the `RemovePointerLets` logic should be folded into this transform as well, to keep the logic in one place. I don\u0027t like having this three-way coupling of logic between `ValueToLet`, `RemovePointerLets`, and the printer.\n\nCould be a transform option that controls whether pointer lets are OK or not.",
+      "parentUuid": "973de241_b20f7503",
+      "revId": "1d794e7b9243b426f809f1ca4e045606dab4b033",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
