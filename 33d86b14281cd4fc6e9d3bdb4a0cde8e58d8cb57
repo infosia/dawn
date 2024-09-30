@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5f68e96_a90dda83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-30T20:11:20Z",
+      "side": 1,
+      "message": "LGTM modulo Corentin\u0027s comments!",
+      "revId": "33d86b14281cd4fc6e9d3bdb4a0cde8e58d8cb57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a41f9f5_ea879351",
