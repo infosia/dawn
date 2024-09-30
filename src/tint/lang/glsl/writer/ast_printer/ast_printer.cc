@@ -280,8 +280,8 @@ SanitizedResult Sanitize(const Program& in,
     return result;
 }
 
-ASTPrinter::ASTPrinter(const Program& program, const Version& version)
-    : builder_(ProgramBuilder::Wrap(program)), version_(version) {}
+ASTPrinter::ASTPrinter(const Program& program, const Version& version, ast::PipelineStage stage)
+    : builder_(ProgramBuilder::Wrap(program)), version_(version), stage_(stage) {}
 
 ASTPrinter::~ASTPrinter() = default;
 
@@ -1936,7 +1936,9 @@ void ASTPrinter::EmitUniformVariable(const ast::Var* var, const sem::GlobalVaria
     {
         auto out = Line();
         out << "layout(binding = " << bp.binding << ", std140";
-        out << ") uniform " << UniqueIdentifier(StructName(str) + "_ubo") << " {";
+        out << ") uniform " << UniqueIdentifier(StructName(str) + "_ubo" +
+                               (stage_ == ast::PipelineStage::kVertex ? "_vert" :
+                                stage_ == ast::PipelineStage::kFragment ? "_frag" : "")) << " {";
     }
     EmitStructMembers(current_buffer_, str);
     auto name = var->name->symbol.Name();

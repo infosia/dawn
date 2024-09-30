@@ -56,7 +56,8 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options, const std:
 
 Result<Output> Generate(const Program& program,
                         const Options& options,
-                        const std::string& entry_point) {
+                        const std::string& entry_point,
+                        ast::PipelineStage stage) {
     if (!program.IsValid()) {
         return Failure{program.Diagnostics()};
     }
@@ -70,7 +71,7 @@ Result<Output> Generate(const Program& program,
     }
 
     // Generate the GLSL code.
-    auto impl = std::make_unique<ASTPrinter>(sanitized_result.program, options.version);
+    auto impl = std::make_unique<ASTPrinter>(sanitized_result.program, options.version, stage);
     if (!impl->Generate()) {
         return Failure{impl->Diagnostics()};
     }

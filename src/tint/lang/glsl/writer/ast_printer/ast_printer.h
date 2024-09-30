@@ -83,7 +83,7 @@ class ASTPrinter : public tint::TextGenerator {
     /// Constructor
     /// @param program the program to generate
     /// @param version the GLSL version to use
-    ASTPrinter(const Program& program, const Version& version);
+    ASTPrinter(const Program& program, const Version& version, ast::PipelineStage);
     ~ASTPrinter() override;
 
     /// Generates the GLSL shader
@@ -492,6 +492,8 @@ class ASTPrinter : public tint::TextGenerator {
     bool requires_f16_extension_ = false;
     bool requires_dual_source_blending_extension_ = false;
     Version version_;
+
+    ast::PipelineStage stage_ = ast::PipelineStage::kNone;
 };
 
 }  // namespace tint::glsl::writer

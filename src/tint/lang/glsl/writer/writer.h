@@ -65,7 +65,8 @@ Result<Output> Generate(core::ir::Module& ir,
 /// @returns the resulting GLSL and supplementary information, or failure
 Result<Output> Generate(const Program& program,
                         const Options& options,
-                        const std::string& entry_point);
+                        const std::string& entry_point,
+                        ast::PipelineStage stage);
 
 }  // namespace tint::glsl::writer
 

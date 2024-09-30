@@ -568,12 +568,27 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
                                        /* fullSubgroups */ {}));
             }
 
+            tint::ast::PipelineStage tint_stage = tint::ast::PipelineStage::kNone;
+            switch (r.stage) {
+                case SingleShaderStage::Vertex:
+                    tint_stage = tint::ast::PipelineStage::kVertex;
+                    break;
+                case SingleShaderStage::Fragment:
+                    tint_stage = tint::ast::PipelineStage::kFragment;
+                    break;
+                case SingleShaderStage::Compute:
+                    tint_stage = tint::ast::PipelineStage::kCompute;
+                    break;
+                default:
+                    break;
+            }
+
             // Intentionally assign entry point to empty to avoid a redundant 'SingleEntryPoint'
             // transform in Tint.
             // TODO(crbug.com/356424898): In the long run, we want to move SingleEntryPoint to Tint,
             // but that has interactions with SubstituteOverrides which need to be handled first.
             remappedEntryPoint = "";
-            auto result = tint::glsl::writer::Generate(program, r.tintOptions, remappedEntryPoint);
+            auto result = tint::glsl::writer::Generate(program, r.tintOptions, remappedEntryPoint, tint_stage);
             DAWN_INVALID_IF(result != tint::Success, "An error occurred while generating GLSL:\n%s",
                             result.Failure().reason.Str());
 
