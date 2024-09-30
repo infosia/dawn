@@ -45,11 +45,10 @@ struct TextureCopySubresource {
     static constexpr unsigned int kMaxTextureCopyRegions = 4;
 
     struct CopyInfo {
-        uint64_t alignedOffset = 0;
         Origin3D textureOffset;
         Origin3D bufferOffset;
-        Extent3D bufferSize;
 
+        D3D12_TEXTURE_COPY_LOCATION bufferLocation;
         D3D12_BOX sourceRegion;
     };
 
@@ -88,6 +87,8 @@ struct TextureCopySplits {
 //   - Every pixel accessed by every copy region should not be out of the bound of the copied
 //     texture and buffer.
 TextureCopySubresource Compute2DTextureCopySubresource(BufferTextureCopyDirection direction,
+                                                       ID3D12Resource* bufferResource,
+                                                       DXGI_FORMAT dxgiFormat,
                                                        Origin3D origin,
                                                        Extent3D copySize,
                                                        const TexelBlockInfo& blockInfo,
@@ -95,6 +96,8 @@ TextureCopySubresource Compute2DTextureCopySubresource(BufferTextureCopyDirectio
                                                        uint32_t bytesPerRow);
 
 TextureCopySplits Compute2DTextureCopySplits(BufferTextureCopyDirection direction,
+                                             ID3D12Resource* bufferResource,
+                                             DXGI_FORMAT dxgiFormat,
                                              Origin3D origin,
                                              Extent3D copySize,
                                              const TexelBlockInfo& blockInfo,
@@ -103,6 +106,8 @@ TextureCopySplits Compute2DTextureCopySplits(BufferTextureCopyDirection directio
                                              uint32_t rowsPerImage);
 
 TextureCopySubresource Compute3DTextureCopySplits(BufferTextureCopyDirection direction,
+                                                  ID3D12Resource* bufferResource,
+                                                  DXGI_FORMAT dxgiFormat,
                                                   Origin3D origin,
                                                   Extent3D copySize,
                                                   const TexelBlockInfo& blockInfo,
