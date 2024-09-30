@@ -179,14 +179,6 @@ SanitizedResult Sanitize(const Program& in,
 
     manager.Add<ast::transform::RemovePhonies>();
 
-    // TextureBuiltinsFromUniform must come before CombineSamplers to preserve texture binding point
-    // info, instead of combined sampler binding point. As a result, TextureBuiltinsFromUniform also
-    // comes before BindingRemapper so the binding point info it reflects is before remapping.
-    manager.Add<TextureBuiltinsFromUniform>();
-    data.Add<TextureBuiltinsFromUniform::Config>(
-        options.bindings.texture_builtins_from_uniform.ubo_binding,
-        options.bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering);
-
     tint::transform::multiplanar::BindingsMap multiplanar_map{};
     RemapperData remapper_data{};
     PopulateBindingInfo(options, remapper_data, multiplanar_map);
@@ -254,6 +246,13 @@ SanitizedResult Sanitize(const Program& in,
     }
 
     manager.Add<ast::transform::DirectVariableAccess>();
+
+    // TextureBuiltinsFromUniform must come before CombineSamplers to preserve texture binding point
+    // info, instead of combined sampler binding point.
+    manager.Add<TextureBuiltinsFromUniform>();
+    data.Add<TextureBuiltinsFromUniform::Config>(
+        options.bindings.texture_builtins_from_uniform.ubo_binding,
+        options.bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering);
 
     // Must come after builtin polyfills (specifically texture_sample_base_clamp_to_edge_2d_f32)
     data.Add<Bindings>(options.bindings);

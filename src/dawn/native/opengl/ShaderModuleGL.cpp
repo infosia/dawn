@@ -213,16 +213,14 @@ bool generateTextureBuiltinFromUniformData(tint::inspector::Inspector& inspector
     for (size_t i = 0; i < textureBuiltinsFromUniformData.size(); ++i) {
         const auto& info = textureBuiltinsFromUniformData[i];
 
-        // This is the unmodified binding point from the WGSL shader.
-        tint::BindingPoint srcBindingPoint{info.group, info.binding};
-        bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering.emplace_back(
-            srcBindingPoint);
-
         // The remapped binding point is inserted into the Dawn data structure.
         const BindGroupLayoutInternalBase* bgl =
             layout->GetBindGroupLayout(BindGroupIndex{info.group});
         tint::BindingPoint dstBindingPoint = tint::BindingPoint{
             info.group, static_cast<uint32_t>(bgl->GetBindingIndex(BindingNumber{info.binding}))};
+
+        bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering.emplace_back(
+            dstBindingPoint);
 
         BindPointFunction type = BindPointFunction::kTextureNumLevels;
         switch (info.type) {
@@ -430,13 +428,8 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     bindings.placeholder_sampler_bind_point = {static_cast<uint32_t>(kMaxBindGroupsTyped), 0};
 
     // Some texture builtin functions are unsupported on GLSL ES. These are emulated with internal
-    // uniforms.
-    bindings.texture_builtins_from_uniform.ubo_binding = {kMaxBindGroups + 1, 0};
-
-    // Remap the internal ubo binding as well.
-    bindings.uniform.emplace(
-        bindings.texture_builtins_from_uniform.ubo_binding,
-        tint::glsl::writer::binding::Uniform{layout->GetInternalUniformBinding()});
+    // uniforms. Set this to the post-remapping value.
+    bindings.texture_builtins_from_uniform.ubo_binding = layout->GetInternalUniformBinding();
 
     *needsPlaceholderSampler = false;
     CombinedSamplerInfo combinedSamplerInfo =
