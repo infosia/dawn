@@ -698,7 +698,11 @@ AbslFormatConvert(StringView value, const absl::FormatConversionSpec& spec, absl
     std::optional<std::string_view> sv = value;
     if (sv) {
         s->Append("\"");
+#ifdef ABSL_USES_STD_STRING_VIEW
         s->Append(*sv);
+#else
+        s->Append(absl::string_view(sv->data(), sv->length()));
+#endif
         s->Append("\"");
     } else {
         s->Append("[undefined]");
