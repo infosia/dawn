@@ -37,6 +37,8 @@ class CommandBuffer final : public CommandBufferBase {
     CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor);
 
     ~CommandBuffer() override = default;
+
+    MaybeError Execute();
 };
 
 }  // namespace dawn::native::gles2

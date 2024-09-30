@@ -27,7 +27,10 @@
 
 #include "dawn/native/gles2/RenderPipelineES2.h"
 
+#include "dawn/native/gles2/Forward.h"
 #include "dawn/native/gles2/DeviceES2.h"
+#include "dawn/native/gles2/GLSLData.h"
+#include "dawn/native/gles2/ShaderModuleES2.h"
 
 namespace dawn::native::gles2 {
 
@@ -36,6 +39,24 @@ RenderPipeline::RenderPipeline(Device* device,
     : RenderPipelineBase(device, descriptor) {}
 
 MaybeError RenderPipeline::InitializeImpl() {
+    const PerStage<ProgrammableStage>& stages = GetAllStages();
+
+    for (SingleShaderStage stageType : IterateStages(kAllStages)) {
+        const ProgrammableStage& stage = stages[stageType];
+        const ShaderModule* shaderModule = ToBackend(stage.module.Get());
+        if (!shaderModule) {
+            continue;
+        }
+
+        if (!(stageType == SingleShaderStage::Vertex || stageType == SingleShaderStage::Fragment)) {
+            return DAWN_INTERNAL_ERROR("Pipeline unexpectedly has compute shader module.\n");
+        }
+
+        const PipelineLayout* layout = ToBackend(GetLayout());
+        std::string& src = stageType == SingleShaderStage::Vertex ? mVertexSrc : mFragmentSrc;
+        DAWN_TRY_ASSIGN(src, shaderModule->GenerateSource(stage, stageType, layout, &mVertexInputs, &mUniforms));
+    }
+
     return {};
 }
 

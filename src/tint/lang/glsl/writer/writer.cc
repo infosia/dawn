@@ -33,10 +33,73 @@
 #include "src/tint/lang/glsl/writer/ast_printer/ast_printer.h"
 #include "src/tint/lang/glsl/writer/raise/raise.h"
 
+#include "src/tint/lang/core/type/reference.h"
+
 namespace tint::glsl::writer {
 
+namespace {
+
+void GetInputDeclarations(const Program& program, std::vector<InputDeclaration>* inputs) {
+    for (const tint::ast::Variable* var : program.AST().GlobalVariables()) {
+        const tint::sem::GlobalVariable* sem = program.Sem().Get<tint::sem::GlobalVariable>(var);
+        if (!sem || sem->AddressSpace() != tint::core::AddressSpace::kIn) {
+            continue;
+        }
+        const std::optional<uint32_t>& location = sem->Attributes().location;
+        if (!location) {
+            continue;
+        }
+
+        const core::type::Type* type = sem->Type()->As<core::type::Reference>()->StoreType();
+        inputs->push_back({
+            static_cast<int>(*location),
+            type->FriendlyName(),
+            var->name->symbol.Name(),
+        });
+    }
+}
+
+void AddNonStructFields(const core::type::Type* type,
+                        int group,
+                        int binding,
+                        Vector<std::string, 4>& prefix,
+                        std::vector<UniformDeclaration>* uniforms) {
+    if (const core::type::Struct* str = type->As<core::type::Struct>()) {
+        for (const core::type::StructMember* member : str->Members()) {
+            prefix.Push(member->Name().Name());
+            AddNonStructFields(member->Type(), group, binding, prefix, uniforms);
+            prefix.Pop();
+        }
+
+    } else {
+        uniforms->push_back({ group, binding, type->FriendlyName(), Join(prefix, ".") });
+    }
+}
+
+void GetUniformDeclarations(const Program& program, std::vector<UniformDeclaration>* uniforms) {
+    for (const tint::ast::Variable* var : program.AST().GlobalVariables()) {
+        const tint::sem::GlobalVariable* sem = program.Sem().Get<tint::sem::GlobalVariable>(var);
+        if (!sem || sem->AddressSpace() != tint::core::AddressSpace::kUniform) {
+            continue;
+        }
+        const std::optional<tint::BindingPoint>& bindingPoint = sem->Attributes().binding_point;
+        if (!bindingPoint) {
+            continue;
+        }
+
+        // Recursively add non-struct fields to uniforms.
+        const core::type::Type* type = sem->Type()->As<core::type::Reference>()->StoreType();
+        Vector<std::string, 4> prefix{ var->name->symbol.Name() };
+        AddNonStructFields(type, bindingPoint->group, bindingPoint->binding, prefix, uniforms);
+    }
+}
+
+}  // anonymous namespace
+
 Result<Output> Generate(core::ir::Module& ir, const Options& options, const std::string&,
-                        core::ir::Function::PipelineStage stage) {
+                        core::ir::Function::PipelineStage stage,
+                        std::vector<InputDeclaration>* inputs,
+                        std::vector<UniformDeclaration>* uniforms) {
     Output output;
 
     // Raise from core-dialect to GLSL-dialect.
@@ -45,7 +108,7 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options, const std:
     }
 
     // Generate the GLSL code.
-    auto result = Print(ir, options.version, stage);
+    auto result = Print(ir, options.version, stage, inputs, uniforms);
     if (result != Success) {
         return result.Failure();
     }
@@ -57,7 +120,9 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options, const std:
 Result<Output> Generate(const Program& program,
                         const Options& options,
                         const std::string& entry_point,
-                        ast::PipelineStage stage) {
+                        ast::PipelineStage stage,
+                        std::vector<InputDeclaration> *inputs,
+                        std::vector<UniformDeclaration> *uniforms) {
     if (!program.IsValid()) {
         return Failure{program.Diagnostics()};
     }
@@ -74,6 +139,13 @@ Result<Output> Generate(const Program& program,
     auto impl = std::make_unique<ASTPrinter>(sanitized_result.program, options.version, stage);
     if (!impl->Generate()) {
         return Failure{impl->Diagnostics()};
+    }
+
+    if (inputs) {
+        GetInputDeclarations(sanitized_result.program, inputs);
+    }
+    if (uniforms) {
+        GetUniformDeclarations(sanitized_result.program, uniforms);
     }
 
     output.glsl = impl->Result();

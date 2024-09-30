@@ -30,6 +30,8 @@
 
 #include "dawn/native/Buffer.h"
 
+#include "dawn/native/gl/opengl_platform.h"
+
 namespace dawn::native::gles2 {
 
 class Device;
@@ -40,6 +42,15 @@ class Buffer final : public BufferBase {
 
     void* GetMappedPointer() override;
 
+    GLuint GetHandle() const { return mBuffer; }
+
+    MaybeError MapSync(size_t offset, size_t size);
+    void UnmapSync();
+    void* GetOffsetPointer();
+
+  protected:
+    void DestroyImpl() override;
+
   private:
     ~Buffer() override = default;
 
@@ -48,6 +59,7 @@ class Buffer final : public BufferBase {
     void UnmapImpl() override;
     bool IsCPUWritableAtCreation() const override;
 
+    GLuint mBuffer = 0;
     std::vector<uint8_t> mBufferData;
     size_t mMappedOffset = 0;
     size_t mMappedSize = 0;

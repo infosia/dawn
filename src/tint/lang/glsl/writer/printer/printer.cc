@@ -116,8 +116,74 @@ class Printer : public tint::TextGenerator {
             core::ir::Function::PipelineStage stage)
         : ir_(module), version_(version), stage_(stage) {}
 
+    void GetInputDeclarations(const core::ir::Module& ir, std::vector<InputDeclaration>* inputs) {
+        for (const core::ir::Instruction* inst : *ir.root_block) {
+            const core::ir::Var* var = inst->As<core::ir::Var>();
+            if (!var) {
+                continue;
+            }
+            const core::ir::InstructionResult* result = var->Result(0);
+            const core::type::Pointer* ptr = result->Type()->As<core::type::Pointer>();
+            if (ptr->AddressSpace() != core::AddressSpace::kIn) {
+                continue;
+            }
+            const std::optional<uint32_t>& location = var->Attributes().location;
+            if (!location) {
+                continue;
+            }
+
+            inputs->push_back({
+                static_cast<int>(*location),
+                ptr->StoreType()->FriendlyName(),
+                NameOf(result),
+            });
+        }
+    }
+
+    void AddNonStructFields(const core::type::Type* type,
+                            int group,
+                            int binding,
+                            Vector<std::string, 4>& prefix,
+                            std::vector<UniformDeclaration>* uniforms) {
+        if (const core::type::Struct* str = type->As<core::type::Struct>()) {
+            for (const core::type::StructMember* member : str->Members()) {
+                prefix.Push(member->Name().Name());
+                AddNonStructFields(member->Type(), group, binding, prefix, uniforms);
+                prefix.Pop();
+            }
+
+        } else {
+            uniforms->push_back({group, binding, type->FriendlyName(), Join(prefix, ".")});
+        }
+    }
+
+    void GetUniformDeclarations(const core::ir::Module& ir,
+                                std::vector<UniformDeclaration>* uniforms) {
+        for (const core::ir::Instruction* inst : *ir.root_block) {
+            const core::ir::Var* var = inst->As<core::ir::Var>();
+            if (!var) {
+                continue;
+            }
+            const core::ir::InstructionResult* result = var->Result(0);
+            const core::type::Pointer* ptr = result->Type()->As<core::type::Pointer>();
+            if (ptr->AddressSpace() != core::AddressSpace::kUniform) {
+                continue;
+            }
+            const std::optional<BindingPoint> bindingPoint = var->BindingPoint();
+            if (!bindingPoint) {
+                continue;
+            }
+
+            // Recursively add non-struct fields to uniforms.
+            Vector<std::string, 4> prefix{NameOf(result)};
+            AddNonStructFields(ptr->StoreType(), bindingPoint->group, bindingPoint->binding, prefix,
+                               uniforms);
+        }
+    }
+
     /// @returns the generated GLSL shader
-    tint::Result<std::string> Generate() {
+    tint::Result<std::string> Generate(std::vector<InputDeclaration>* inputs,
+                                       std::vector<UniformDeclaration>* uniforms) {
         auto valid = core::ir::ValidateAndDumpIfNeeded(ir_, "GLSL writer");
         if (valid != Success) {
             return std::move(valid.Failure());
@@ -153,6 +219,13 @@ class Printer : public tint::TextGenerator {
             ss << preamble << "\n";
         }
         ss << main_buffer_.String();
+
+        if (inputs) {
+            GetInputDeclarations(ir_, inputs);
+        }
+        if (uniforms) {
+            GetUniformDeclarations(ir_, uniforms);
+        }
 
         return ss.str();
     }
@@ -1617,8 +1690,10 @@ class Printer : public tint::TextGenerator {
 }  // namespace
 
 Result<std::string> Print(core::ir::Module& module, const Version& version,
-                          core::ir::Function::PipelineStage stage) {
-    return Printer{module, version, stage}.Generate();
+                          core::ir::Function::PipelineStage stage,
+                          std::vector<InputDeclaration> *inputs,
+                          std::vector<UniformDeclaration> *uniforms) {
+    return Printer{module, version, stage}.Generate(inputs, uniforms);
 }
 
 }  // namespace tint::glsl::writer

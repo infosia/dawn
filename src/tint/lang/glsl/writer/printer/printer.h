@@ -43,11 +43,29 @@ struct Version;
 
 namespace tint::glsl::writer {
 
+// TODO not sure the best place for this stuff
+// Information needed to map a client shader input to an OpenGL attribute.
+struct InputDeclaration {
+    int mLocation;
+    std::string mTypeName;
+    std::string mName;
+};
+
+// Information needed to map a client uniform binding to an OpenGL uniform location.
+struct UniformDeclaration {
+    int mGroup;
+    int mBinding;
+    std::string mTypeName;
+    std::string mName;
+};
+
 /// @returns the generated GLSL shader on success, or failure
 /// @param module the Tint IR module to generate
 /// @param version the GLSL version information
 Result<std::string> Print(core::ir::Module& module, const Version& version,
-                          core::ir::Function::PipelineStage stage);
+                          core::ir::Function::PipelineStage stage,
+                          std::vector<InputDeclaration> *inputs,
+                          std::vector<UniformDeclaration> *uniforms);
 
 }  // namespace tint::glsl::writer
 

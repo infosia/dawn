@@ -281,6 +281,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::Snorm16TextureFormats);
         EnableFeature(Feature::Norm16TextureFormats);
     }
+
+    // Buffers in ES2 are always managed on the client, so we do whatever with them.
+    if (!mFunctions.IsAtLeastGLES(3, 0)) {
+        EnableFeature(Feature::BufferMapExtendedUsages);
+    }
 }
 
 namespace {
@@ -448,7 +453,7 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
         return Device::Create(adapter, descriptor, mFunctions, std::move(context), deviceToggles,
                               std::move(lostEvent));
     } else {
-        return gles2::Device::Create(adapter, descriptor, deviceToggles,
+        return gles2::Device::Create(adapter, descriptor, mFunctions, std::move(context), deviceToggles,
                                      std::move(lostEvent));
     }
 }
