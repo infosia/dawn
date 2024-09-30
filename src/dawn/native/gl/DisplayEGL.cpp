@@ -61,6 +61,10 @@ DisplayEGL::DisplayEGL(wgpu::BackendType backend) : egl(mFunctions) {
             mApiBit = EGL_OPENGL_ES3_BIT;
             mRenderableBit = EGL_OPENGL_ES2_BIT;
             break;
+        case wgpu::BackendType::OpenGLES2_0:
+            mApiEnum = EGL_OPENGL_ES_API;
+            mApiBit = EGL_OPENGL_ES2_BIT;
+            break;
         default:
             DAWN_UNREACHABLE();
     }

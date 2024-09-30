@@ -43,6 +43,12 @@ struct OpenGLFunctions : OpenGLFunctionsBase {
     bool IsAtLeastGL(uint32_t majorVersion, uint32_t minorVersion) const;
     bool IsAtLeastGLES(uint32_t majorVersion, uint32_t minorVersion) const;
 
+    void CheckErrors(const char* op) const {
+        for (GLenum error; (error = GetError()); ) {
+            printf("!! after %s: %X\n", op, error);
+        }
+    }
+
   private:
     OpenGLVersion mVersion;
 };

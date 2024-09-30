@@ -439,6 +439,7 @@ BindGroupBase::BindGroupBase(DeviceBase* device,
     for (BindingIndex i{0}; i < layout->GetBindingCount(); ++i) {
         // TODO(enga): Shouldn't be needed when bindings are tightly packed.
         // This is to fill Ref<ObjectBase> holes with nullptrs.
+        DAWN_ASSERT(i < mBindingData.bindings.size());
         new (&mBindingData.bindings[i]) Ref<ObjectBase>();
     }
 

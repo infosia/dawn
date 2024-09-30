@@ -41,6 +41,8 @@
 #include "dawn/native/gl/DisplayEGL.h"
 #include "dawn/native/gl/SwapChainEGL.h"
 
+#include "dawn/native/gles2/DeviceES2.h"
+
 namespace dawn::native::gl {
 
 namespace {
@@ -145,6 +147,9 @@ MaybeError PhysicalDevice::InitializeImpl() {
     // In some cases (like like of EGL_KHR_create_context) we don't know before this point that we
     // got a GL context that supports the required version. Check it now.
     switch (GetBackendType()) {
+        case wgpu::BackendType::OpenGLES2_0:
+            DAWN_INVALID_IF(!mFunctions.IsAtLeastGLES(2, 0), "OpenGL ES 2.0 is required.");
+            break;
         case wgpu::BackendType::OpenGLES:
             DAWN_INVALID_IF(!mFunctions.IsAtLeastGLES(3, 1), "OpenGL ES 3.1 is required.");
             break;
@@ -156,7 +161,9 @@ MaybeError PhysicalDevice::InitializeImpl() {
     }
 
     if (mFunctions.GetVersion().IsES()) {
-        DAWN_ASSERT(GetBackendType() == wgpu::BackendType::OpenGLES);
+        DAWN_ASSERT(
+            (GetBackendType() == wgpu::BackendType::OpenGLES && mFunctions.IsAtLeastGLES(3, 0)) ||
+            (GetBackendType() == wgpu::BackendType::OpenGLES2_0 && mFunctions.IsAtLeastGLES(2, 0)));
 
         // WebGPU requires being able to render to f16 and being able to blend f16
         // which EXT_color_buffer_half_float provides.
@@ -164,8 +171,8 @@ MaybeError PhysicalDevice::InitializeImpl() {
                         "GL_EXT_color_buffer_half_float is required");
 
         // WebGPU requires being able to render to f32 but does not require being able to blend f32
-        DAWN_INVALID_IF(!mFunctions.IsGLExtensionSupported("GL_EXT_color_buffer_float"),
-                        "GL_EXT_color_buffer_float is required");
+        // DAWN_INVALID_IF(!mFunctions.IsGLExtensionSupported("GL_EXT_color_buffer_float"),
+        //                 "GL_EXT_color_buffer_float is required");
     } else {
         DAWN_ASSERT(GetBackendType() == wgpu::BackendType::OpenGL);
     }
@@ -437,8 +444,13 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     DAWN_TRY_ASSIGN(context, ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
                                                 useANGLETextureSharing));
 
-    return Device::Create(adapter, descriptor, mFunctions, std::move(context), deviceToggles,
-                          std::move(lostEvent));
+    if (mFunctions.IsAtLeastGLES(3, 0)) {
+        return Device::Create(adapter, descriptor, mFunctions, std::move(context), deviceToggles,
+                              std::move(lostEvent));
+    } else {
+        return gles2::Device::Create(adapter, descriptor, deviceToggles,
+                                     std::move(lostEvent));
+    }
 }
 
 bool PhysicalDevice::SupportsFeatureLevel(FeatureLevel featureLevel) const {
