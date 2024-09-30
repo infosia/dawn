@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "062f1e6d_43fdf7f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T14:41:00Z",
+      "side": 1,
+      "message": "u-nit: Leave a blank line between the commit title and the rest of the description.\n\nAlso if there\u0027s an issue for this, can you add `Bug: b/.....` to associate the commit with it?",
+      "revId": "ab5ac541f6ec3122df83a6169bfba3218596c024",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af50e762_016163c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T14:41:00Z",
+      "side": 1,
+      "message": "LGTM! It\u0027s a bit surprising that `decltype` produces artifact that require the corresponding NDK but that\u0027s fine.",
+      "revId": "ab5ac541f6ec3122df83a6169bfba3218596c024",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
