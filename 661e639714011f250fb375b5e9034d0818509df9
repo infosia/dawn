@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "637b516b_5e369f34",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T13:50:52Z",
+      "side": 1,
+      "message": "The utility doesn\u0027t seem to strictly need the resource / format except to fill the CopyInfo correctly. We could have a helper method on `CopyInfo` to return the `D3D12_` structures that need more info instead of piping somewhat irrelevant data through the already very complicated splitting algorithms.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "661e639714011f250fb375b5e9034d0818509df9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
