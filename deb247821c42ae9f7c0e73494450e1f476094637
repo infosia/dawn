@@ -42,6 +42,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dc96464_1d899b1e",
+        "filename": "generator/templates/dawn/native/api_StreamImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T15:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a7619a_071618b7",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 2
+      },
+      "revId": "deb247821c42ae9f7c0e73494450e1f476094637",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de7789ea_54f39680",
@@ -55,6 +79,24 @@
       "writtenOn": "2024-09-27T21:30:23Z",
       "side": 1,
       "message": "nit: Since this previously defaulted to `\"\"` then seems like it should be non-optional. No problem though if there\u0027s some reason not to do that now.\n\n(Tried to figure out where this was actually used in Dawn to see how it was handling it, but I couldn\u0027t find it.)",
+      "revId": "deb247821c42ae9f7c0e73494450e1f476094637",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "deefb21b_8a14d70c",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T15:00:25Z",
+      "side": 1,
+      "message": "It actually doesn\u0027t seem used in Dawn? Making it non-optional since the only use in Chromium is always non-empty anyway. Opening an issue to sort out what\u0027s supposed to happen.",
+      "parentUuid": "de7789ea_54f39680",
       "revId": "deb247821c42ae9f7c0e73494450e1f476094637",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -138,6 +180,30 @@
       "side": 1,
       "message": "Yea, if we have implicit conversion from `StringView` to `std::string_view` already, what Kai suggested is fine. Otherwise, we can also just use the explicit `std::string_view` ctor that takes the data and the size.",
       "parentUuid": "946509f2_831d2b72",
+      "range": {
+        "startLine": 169,
+        "startChar": 31,
+        "endLine": 169,
+        "endChar": 59
+      },
+      "revId": "deb247821c42ae9f7c0e73494450e1f476094637",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acf98fe7_0d16a784",
+        "filename": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T15:00:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce2b72da_d5847242",
       "range": {
         "startLine": 169,
         "startChar": 31,
