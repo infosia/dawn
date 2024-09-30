@@ -16,6 +16,24 @@
       "message": "This doesn\u0027t work, because it only considers the side effects caused directly by the instruction, which doesn\u0027t include transitive side effects that are pulled in by that instruction\u0027s operands which themselves are inlined.\n\ne.g. `arr[f() + 1]` - the instruction used as the access index is a binary add, which has no direct side effects.\n\nI\u0027m wondering if we should actually just `put_pending_in_lets()` when we see an `access` instruction that produces a pointer.",
       "revId": "1d794e7b9243b426f809f1ca4e045606dab4b033",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad29e31b_6983c94a",
+        "filename": "src/tint/lang/core/ir/transform/value_to_let.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T15:48:52Z",
+      "side": 1,
+      "message": "That wont\u0027 really work here. Removing pointer lets happens after this, so this would put the access pointer into a let, and then removing pointer lets would remove the let again.\n\nWe\u0027d need to backend to see an access which returns a pointer and not inline it as it is now. Which, could work.",
+      "parentUuid": "782882a9_f7fc69b0",
+      "revId": "1d794e7b9243b426f809f1ca4e045606dab4b033",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
