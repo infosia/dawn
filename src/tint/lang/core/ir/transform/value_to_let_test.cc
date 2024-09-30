@@ -46,7 +46,7 @@ TEST_F(IR_ValueToLetTest, Empty) {
     auto* expect = R"(
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -66,7 +66,7 @@ TEST_F(IR_ValueToLetTest, NoModify_Blah) {
 
     auto* expect = src;
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -95,7 +95,7 @@ TEST_F(IR_ValueToLetTest, NoModify_Unsequenced) {
 
     auto* expect = src;
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -121,7 +121,7 @@ TEST_F(IR_ValueToLetTest, NoModify_Bitcast) {
 
     auto* expect = src;
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -173,7 +173,7 @@ $B1: {  # root
 
     auto* expect = src;
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -226,7 +226,7 @@ $B1: {  # root
 
     auto* expect = src;
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -279,7 +279,7 @@ $B1: {  # root
 
     auto* expect = src;
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -321,7 +321,7 @@ TEST_F(IR_ValueToLetTest, NoModify_VarUsedTwice) {
 
     auto* expect = src;
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -358,7 +358,7 @@ TEST_F(IR_ValueToLetTest, VarLoadUsedTwice) {
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -396,7 +396,7 @@ TEST_F(IR_ValueToLetTest, VarLoad_ThenStore_ThenUse) {
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -463,7 +463,7 @@ $B1: {  # root
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -530,7 +530,7 @@ $B1: {  # root
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -594,7 +594,7 @@ $B1: {  # root
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -658,7 +658,7 @@ $B1: {  # root
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -722,7 +722,7 @@ $B1: {  # root
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 }
@@ -798,11 +798,11 @@ $B1: {  # root
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 
-    Run(ValueToLet);  // running a second time should be no-op
+    Run(ValueToLet, ValueToLetConfig{});  // running a second time should be no-op
 
     EXPECT_EQ(str(), expect);
 }
@@ -886,11 +886,11 @@ $B1: {  # root
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 
-    Run(ValueToLet);  // running a second time should be no-op
+    Run(ValueToLet, ValueToLetConfig{});  // running a second time should be no-op
 
     EXPECT_EQ(str(), expect);
 }
@@ -931,11 +931,11 @@ TEST_F(IR_ValueToLetTest, NameMe1) {
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
 
     EXPECT_EQ(str(), expect);
 
-    Run(ValueToLet);  // running a second time should be no-op
+    Run(ValueToLet, ValueToLetConfig{});  // running a second time should be no-op
 
     EXPECT_EQ(str(), expect);
 }
@@ -982,10 +982,10 @@ TEST_F(IR_ValueToLetTest, NameMe2) {
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
     EXPECT_EQ(str(), expect);
 
-    Run(ValueToLet);  // running a second time should be no-op
+    Run(ValueToLet, ValueToLetConfig{});  // running a second time should be no-op
     EXPECT_EQ(str(), expect);
 }
 
@@ -1049,10 +1049,10 @@ $B1: {  # root
 }
 )";
 
-    Run(ValueToLet);
+    Run(ValueToLet, ValueToLetConfig{});
     EXPECT_EQ(str(), expect);
 
-    Run(ValueToLet);  // running a second time should be no-op
+    Run(ValueToLet, ValueToLetConfig{});  // running a second time should be no-op
     EXPECT_EQ(str(), expect);
 }
 
