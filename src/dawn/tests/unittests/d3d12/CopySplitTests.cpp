@@ -64,6 +64,12 @@ Extent3D GetCopySize(D3D12_BOX sourceRegion) {
             sourceRegion.back - sourceRegion.front};
 }
 
+Extent3D GetBufferSize(D3D12_TEXTURE_COPY_LOCATION bufferLocation) {
+    return {bufferLocation.PlacedFootprint.Footprint.Width,
+            bufferLocation.PlacedFootprint.Footprint.Height,
+            bufferLocation.PlacedFootprint.Footprint.Depth};
+}
+
 // Check that each copy region fits inside the buffer footprint
 void ValidateFootprints(const TextureSpec& textureSpec,
                         const BufferSpec& bufferSpec,
@@ -72,10 +78,10 @@ void ValidateFootprints(const TextureSpec& textureSpec,
     for (uint32_t i = 0; i < copySplit.count; ++i) {
         const auto& copy = copySplit.copies[i];
         Extent3D copySize = GetCopySize(copy.sourceRegion);
-        ASSERT_LE(copy.bufferOffset.x + copySize.width, copy.bufferSize.width);
-        ASSERT_LE(copy.bufferOffset.y + copySize.height, copy.bufferSize.height);
-        ASSERT_LE(copy.bufferOffset.z + copySize.depthOrArrayLayers,
-                  copy.bufferSize.depthOrArrayLayers);
+        Extent3D bufferSize = GetBufferSize(copy.bufferLocation);
+        ASSERT_LE(copy.bufferOffset.x + copySize.width, bufferSize.width);
+        ASSERT_LE(copy.bufferOffset.y + copySize.height, bufferSize.height);
+        ASSERT_LE(copy.bufferOffset.z + copySize.depthOrArrayLayers, bufferSize.depthOrArrayLayers);
 
         // If there are multiple layers, 2D texture splitter actually splits each layer
         // independently. See the details in Compute2DTextureCopySplits(). As a result,
@@ -109,10 +115,10 @@ void ValidateFootprints(const TextureSpec& textureSpec,
             uint32_t footprintHeightInBlocks = footprintHeight / textureSpec.blockHeight;
 
             uint64_t bufferSizeForFootprint =
-                copy.alignedOffset +
-                utils::RequiredBytesInCopy(bufferSpec.bytesPerRow, copy.bufferSize.height,
+                copy.bufferLocation.PlacedFootprint.Offset +
+                utils::RequiredBytesInCopy(bufferSpec.bytesPerRow, bufferSize.height,
                                            footprintWidthInBlocks, footprintHeightInBlocks,
-                                           copy.bufferSize.depthOrArrayLayers,
+                                           bufferSize.depthOrArrayLayers,
                                            textureSpec.texelBlockSizeInBytes);
 
             // The buffer footprint of each copy region should not exceed the minimum
@@ -125,9 +131,8 @@ void ValidateFootprints(const TextureSpec& textureSpec,
 // Check that the offset is aligned
 void ValidateOffset(const TextureCopySubresource& copySplit) {
     for (uint32_t i = 0; i < copySplit.count; ++i) {
-        ASSERT_TRUE(
-            Align(copySplit.copies[i].alignedOffset, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT) ==
-            copySplit.copies[i].alignedOffset);
+        uint64_t alignedOffset = copySplit.copies[i].bufferLocation.PlacedFootprint.Offset;
+        ASSERT_TRUE(Align(alignedOffset, D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT) == alignedOffset);
     }
 }
 
@@ -223,7 +228,8 @@ void ValidateBufferOffset(const TextureSpec& textureSpec,
         uint32_t slicePitchInTexels =
             bytesPerRowInTexels * (bufferSpec.rowsPerImage / textureSpec.blockHeight);
         uint32_t absoluteTexelOffset =
-            copy.alignedOffset / textureSpec.texelBlockSizeInBytes * texelsPerBlock +
+            copy.bufferLocation.PlacedFootprint.Offset / textureSpec.texelBlockSizeInBytes *
+                texelsPerBlock +
             copy.bufferOffset.x / textureSpec.blockWidth * texelsPerBlock +
             copy.bufferOffset.y / textureSpec.blockHeight * bytesPerRowInTexels;
 
@@ -280,14 +286,15 @@ std::ostream& operator<<(std::ostream& os, const TextureCopySubresource& copySpl
     os << "CopySplit\n";
     for (uint32_t i = 0; i < copySplit.count; ++i) {
         const auto& copy = copySplit.copies[i];
+        Extent3D bufferSize = GetBufferSize(copy.bufferLocation);
         os << "  " << i << ": Texture at (" << copy.textureOffset.x << ", " << copy.textureOffset.y
            << ", " << copy.textureOffset.z << "), sourceRegion (" << copy.sourceRegion.left << ", "
            << copy.sourceRegion.top << ", " << copy.sourceRegion.front << ", "
            << copy.sourceRegion.right << ", " << copy.sourceRegion.bottom << ", "
            << copy.sourceRegion.back << ")\n";
         os << "  " << i << ": Buffer at (" << copy.bufferOffset.x << ", " << copy.bufferOffset.y
-           << ", " << copy.bufferOffset.z << "), footprint (" << copy.bufferSize.width << ", "
-           << copy.bufferSize.height << ", " << copy.bufferSize.depthOrArrayLayers << ")\n";
+           << ", " << copy.bufferOffset.z << "), footprint (" << bufferSize.width << ", "
+           << bufferSize.height << ", " << bufferSize.depthOrArrayLayers << ")\n";
     }
     return os;
 }
@@ -406,10 +413,13 @@ class CopySplitTest : public testing::TestWithParam<CopySplitTestParam> {
         wgpu::TextureDimension dimension = GetParam().dimension;
         BufferTextureCopyDirection direction = GetParam().direction;
         TextureCopySubresource copySplit;
+        DXGI_FORMAT kDXGIFormat = DXGI_FORMAT_R8_UINT;
+        ID3D12Resource* kNullBufferResource = nullptr;
         switch (dimension) {
             case wgpu::TextureDimension::e2D: {
                 copySplit = Compute2DTextureCopySubresource(
-                    direction, {textureSpec.x, textureSpec.y, textureSpec.z},
+                    direction, kNullBufferResource, kDXGIFormat,
+                    {textureSpec.x, textureSpec.y, textureSpec.z},
                     {textureSpec.width, textureSpec.height, textureSpec.depthOrArrayLayers},
                     {textureSpec.texelBlockSizeInBytes, textureSpec.blockWidth,
                      textureSpec.blockHeight},
@@ -418,7 +428,8 @@ class CopySplitTest : public testing::TestWithParam<CopySplitTestParam> {
             }
             case wgpu::TextureDimension::e3D: {
                 copySplit = Compute3DTextureCopySplits(
-                    direction, {textureSpec.x, textureSpec.y, textureSpec.z},
+                    direction, kNullBufferResource, kDXGIFormat,
+                    {textureSpec.x, textureSpec.y, textureSpec.z},
                     {textureSpec.width, textureSpec.height, textureSpec.depthOrArrayLayers},
                     {textureSpec.texelBlockSizeInBytes, textureSpec.blockWidth,
                      textureSpec.blockHeight},
