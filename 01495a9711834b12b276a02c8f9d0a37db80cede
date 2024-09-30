@@ -16,6 +16,57 @@
       "message": "PTAL at the reland. See diff from patchset 1 for the diff between original CL and reland.",
       "revId": "01495a9711834b12b276a02c8f9d0a37db80cede",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c3582bb_0dbcdf98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T12:26:15Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "01495a9711834b12b276a02c8f9d0a37db80cede",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97640caa_7a4c0c03",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T12:26:15Z",
+      "side": 1,
+      "message": "This might trigger an ASSERT if one of the two validation calls fails because `Result\u003cT, E\u003e` ASSERTs that the error is acquired before going out of scope. https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/Result.h;drc\u003ddc128893559ea64da2072e8e63a34d889a63155e;l\u003d265\n\nWe could have a helper that\u0027s `bool ConsumedErrorForAssert(MaybeError)` or remove this ASSERT and feel somewhat safe because we\u0027ll remove the deprecation soonish.",
+      "revId": "01495a9711834b12b276a02c8f9d0a37db80cede",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7561ea7c_9167c108",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-09-30T12:26:15Z",
+      "side": 1,
+      "message": "u-nit: Could we have TODO(....) for code that needs to be changed when we end the deprecation period?",
+      "revId": "01495a9711834b12b276a02c8f9d0a37db80cede",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
