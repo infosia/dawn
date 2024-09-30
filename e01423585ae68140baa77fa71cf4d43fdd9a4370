@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaad0ce3_1972dfcf",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T21:15:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d90955eb_a66c3820",
+      "revId": "e01423585ae68140baa77fa71cf4d43fdd9a4370",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b4a857b_e88f2899",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-09-30T18:38:16Z",
       "side": 1,
       "message": "Nit: Switch with only one case maybe simpler as an -\u003eAs() with a TINT_ASSERT?",
+      "revId": "e01423585ae68140baa77fa71cf4d43fdd9a4370",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67d7efef_dcc44942",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T21:15:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b4a857b_e88f2899",
       "revId": "e01423585ae68140baa77fa71cf4d43fdd9a4370",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ae33af0_8dd810f1",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T21:15:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b564c51_ec88fa1a",
+      "range": {
+        "startLine": 330,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 16
+      },
+      "revId": "e01423585ae68140baa77fa71cf4d43fdd9a4370",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98344269_62a78041",
@@ -88,6 +148,24 @@
       "writtenOn": "2024-09-30T18:38:16Z",
       "side": 1,
       "message": "This whole Switch block is almost identical to the one in `AddUniformArgToCallSites`. Feels like there\u0027s maybe a slight refactor here that could clean this up? e.g. have this function return the `ir::Value*` that is either the `load` or the `FunctionParam`, and then the callsites can either `AppendArg` or `ReplaceAllUsesWith` as necessary.",
+      "revId": "e01423585ae68140baa77fa71cf4d43fdd9a4370",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54c26b0d_8c5011e5",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T21:15:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98344269_62a78041",
       "revId": "e01423585ae68140baa77fa71cf4d43fdd9a4370",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -109,6 +187,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ded6d23_0a5e5dd9",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T21:15:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a818f0c5_42f18354",
+      "revId": "e01423585ae68140baa77fa71cf4d43fdd9a4370",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb1eb312_60b86d65",
@@ -122,6 +218,24 @@
       "writtenOn": "2024-09-30T18:38:16Z",
       "side": 1,
       "message": "Nit: The name `ReplaceFunctionParam` is misleading, because you\u0027re keeping the original parameter too. I was briefly confused because it sounded like you were removing the original.",
+      "revId": "e01423585ae68140baa77fa71cf4d43fdd9a4370",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d06bb906_2cd6b3e0",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T21:15:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb1eb312_60b86d65",
       "revId": "e01423585ae68140baa77fa71cf4d43fdd9a4370",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
