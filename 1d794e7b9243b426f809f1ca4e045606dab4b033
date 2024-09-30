@@ -34,6 +34,24 @@
       "parentUuid": "782882a9_f7fc69b0",
       "revId": "1d794e7b9243b426f809f1ca4e045606dab4b033",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "973de241_b20f7503",
+        "filename": "src/tint/lang/core/ir/transform/value_to_let.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-09-30T15:52:55Z",
+      "side": 1,
+      "message": "Oh, maybe it would work, I was thinking it would put the access in a let, but this would force the operands to lets.",
+      "parentUuid": "ad29e31b_6983c94a",
+      "revId": "1d794e7b9243b426f809f1ca4e045606dab4b033",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
