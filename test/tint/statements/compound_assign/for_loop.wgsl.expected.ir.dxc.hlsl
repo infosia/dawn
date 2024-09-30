@@ -19,16 +19,19 @@ int idx3() {
 void foo() {
   float a[4] = (float[4])0;
   {
-    float v_1 = a[idx1()];
-    v_1 = (v_1 * 2.0f);
+    int v_1 = idx1();
+    float v_2 = a[v_1];
+    v_2 = (v_2 * 2.0f);
     while(true) {
-      if ((a[idx2()] < 10.0f)) {
+      int v_3 = idx2();
+      if ((a[v_3] < 10.0f)) {
       } else {
         break;
       }
       {
-        float v_2 = a[idx3()];
-        v_2 = (v_2 + 1.0f);
+        int v_4 = idx3();
+        float v_5 = a[v_4];
+        v_5 = (v_5 + 1.0f);
       }
       continue;
     }

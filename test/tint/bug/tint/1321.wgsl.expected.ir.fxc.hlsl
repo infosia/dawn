@@ -6,7 +6,8 @@ int foo() {
 void main() {
   float arr[4] = (float[4])0;
   {
-    float a = arr[foo()];
+    int v = foo();
+    float a = arr[v];
     while(true) {
       float x = a;
       break;

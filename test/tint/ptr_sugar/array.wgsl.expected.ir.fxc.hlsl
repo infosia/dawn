@@ -33,7 +33,8 @@ void deref_var() {
   int a[10] = (int[10])0;
   int p[10] = a;
   int i = int(0);
-  int b = p[i];
+  int v = i;
+  int b = p[v];
   p[int(0)] = int(42);
 }
 
@@ -41,7 +42,8 @@ void no_deref_var() {
   int a[10] = (int[10])0;
   int p[10] = a;
   int i = int(0);
-  int b = p[i];
+  int v_1 = i;
+  int b = p[v_1];
   p[int(0)] = int(42);
 }
 

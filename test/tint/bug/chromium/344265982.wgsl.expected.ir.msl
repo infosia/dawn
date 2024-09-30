@@ -29,8 +29,9 @@ void foo(device tint_array<int, 4>* const arg) {
       } else {
         break;
       }
+      int const v = i;
       bool tint_continue = false;
-      switch((*arg)[i]) {
+      switch((*arg)[v]) {
         case 1:
         {
           tint_continue = true;
@@ -38,7 +39,8 @@ void foo(device tint_array<int, 4>* const arg) {
         }
         default:
         {
-          (*arg)[i] = 2;
+          int const v_1 = i;
+          (*arg)[v_1] = 2;
           break;
         }
       }

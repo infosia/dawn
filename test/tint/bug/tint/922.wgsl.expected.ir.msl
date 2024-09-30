@@ -267,7 +267,8 @@ void main1(tint_module_vars_struct tint_module_vars) {
   Mat4x3_ t_PosMtx = {};
   float2 t_TexSpaceCoord = 0.0f;
   float const x_e15 = (*tint_module_vars.a_PosMtxIdx1);
-  Mat4x3_ const x_e18 = (*tint_module_vars.global2).u_PosMtx[tint_f32_to_i32(x_e15)];
+  int const v_10 = tint_f32_to_i32(x_e15);
+  Mat4x3_ const x_e18 = (*tint_module_vars.global2).u_PosMtx[v_10];
   t_PosMtx = x_e18;
   Mat4x3_ const x_e23 = t_PosMtx;
   Mat4x4_ const x_e24 = x_Mat4x4_1(x_e23);
@@ -330,10 +331,10 @@ vertex tint_symbol_outputs tint_symbol(tint_symbol_inputs inputs [[stage_in]], c
   thread float2 v_TexCoord = 0.0f;
   thread float4 gl_Position = 0.0f;
   tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.global=global, .global1=global1, .global2=global2, .a_Position1=(&a_Position1), .a_UV1=(&a_UV1), .a_Color1=(&a_Color1), .a_Normal1=(&a_Normal1), .a_PosMtxIdx1=(&a_PosMtxIdx1), .v_Color=(&v_Color), .v_TexCoord=(&v_TexCoord), .gl_Position=(&gl_Position)};
-  VertexOutput const v_10 = tint_symbol_inner(inputs.a_Position, inputs.a_UV, inputs.a_Color, inputs.a_Normal, inputs.a_PosMtxIdx, tint_module_vars);
+  VertexOutput const v_11 = tint_symbol_inner(inputs.a_Position, inputs.a_UV, inputs.a_Color, inputs.a_Normal, inputs.a_PosMtxIdx, tint_module_vars);
   tint_symbol_outputs tint_wrapper_result = {};
-  tint_wrapper_result.VertexOutput_v_Color = v_10.v_Color;
-  tint_wrapper_result.VertexOutput_v_TexCoord = v_10.v_TexCoord;
-  tint_wrapper_result.VertexOutput_member = v_10.member;
+  tint_wrapper_result.VertexOutput_v_Color = v_11.v_Color;
+  tint_wrapper_result.VertexOutput_v_TexCoord = v_11.v_TexCoord;
+  tint_wrapper_result.VertexOutput_member = v_11.member;
   return tint_wrapper_result;
 }

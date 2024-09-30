@@ -17,9 +17,10 @@ int bar() {
 void main() {
   S x = (S)0;
   S p = x;
-  int4 v = p.a[foo()];
-  int v_1 = bar();
-  v[v_1] = (v[v_1] + int(5));
+  int v = foo();
+  int4 v_1 = p.a[v];
+  int v_2 = bar();
+  v_1[v_2] = (v_1[v_2] + int(5));
 }
 
 [numthreads(1, 1, 1)]
