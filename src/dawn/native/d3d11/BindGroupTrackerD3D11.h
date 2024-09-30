@@ -47,18 +47,44 @@ class ScopedSwapStateCommandRecordingContext;
 class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/true, uint64_t> {
   public:
     BindGroupTracker(const ScopedSwapStateCommandRecordingContext* commandContext,
-                     bool isRenderPass,
-                     std::vector<ComPtr<ID3D11UnorderedAccessView>> pixelLocalStorageUAVs = {});
-    ~BindGroupTracker();
-    MaybeError Apply();
+                     const wgpu::ShaderStage visibleStages);
+    virtual ~BindGroupTracker();
+
+    virtual MaybeError Apply() = 0;
+
+    wgpu::ShaderStage GetVisibleStages() const;
+    const ScopedSwapStateCommandRecordingContext* GetCommandContext() const;
+
+  protected:
+    MaybeError ApplyBindGroup(BindGroupIndex index);
 
   private:
-    MaybeError ApplyBindGroup(BindGroupIndex index);
-    void UnapplyComputeBindings(BindGroupIndex index);
-
     raw_ptr<const ScopedSwapStateCommandRecordingContext> mCommandContext;
-    const bool mIsRenderPass;
     const wgpu::ShaderStage mVisibleStages;
+};
+
+class ComputePassBindGroupTracker final : public BindGroupTracker {
+  public:
+    explicit ComputePassBindGroupTracker(
+        const ScopedSwapStateCommandRecordingContext* commandContext);
+    ~ComputePassBindGroupTracker() override;
+
+    MaybeError Apply() override;
+
+  private:
+    void UnapplyComputeBindings(BindGroupIndex index);
+};
+
+class RenderPassBindGroupTracker final : public BindGroupTracker {
+  public:
+    explicit RenderPassBindGroupTracker(
+        const ScopedSwapStateCommandRecordingContext* commandContext,
+        std::vector<ComPtr<ID3D11UnorderedAccessView>> pixelLocalStorageUAVs = {});
+    ~RenderPassBindGroupTracker() override;
+
+    MaybeError Apply() override;
+
+  private:
     // All the pixel local storage UAVs
     const std::vector<ComPtr<ID3D11UnorderedAccessView>> mPixelLocalStorageUAVs;
 };

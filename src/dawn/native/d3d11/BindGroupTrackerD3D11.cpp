@@ -132,156 +132,14 @@ void ResetAllRenderSlots(const ScopedSwapStateCommandRecordingContext* commandCo
 
 }  // namespace
 
-BindGroupTracker::BindGroupTracker(
-    const ScopedSwapStateCommandRecordingContext* commandContext,
-    bool isRenderPass,
-    std::vector<ComPtr<ID3D11UnorderedAccessView>> pixelLocalStorageUAVs)
-    : mCommandContext(commandContext),
-      mIsRenderPass(isRenderPass),
-      mVisibleStages(isRenderPass ? wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment
-                                  : wgpu::ShaderStage::Compute),
-      mPixelLocalStorageUAVs(std::move(pixelLocalStorageUAVs)) {
+BindGroupTracker::BindGroupTracker(const ScopedSwapStateCommandRecordingContext* commandContext,
+                                   const wgpu::ShaderStage visibleStages)
+    : mCommandContext(commandContext), mVisibleStages(visibleStages) {
     mLastAppliedPipelineLayout = mCommandContext->GetDevice()->GetEmptyPipelineLayout();
 }
 
 BindGroupTracker::~BindGroupTracker() {
-    if (mIsRenderPass) {
-        ResetAllRenderSlots(mCommandContext);
-    } else {
-        for (BindGroupIndex index :
-             IterateBitSet(mLastAppliedPipelineLayout->GetBindGroupLayoutsMask())) {
-            UnapplyComputeBindings(index);
-        }
-    }
-    // All slots should be unbound here.
     DAWN_ASSERT(CheckAllSlotsAreEmpty(mCommandContext));
-}
-
-MaybeError BindGroupTracker::Apply() {
-    BeforeApply();
-
-    if (mIsRenderPass) {
-        // As D3d11 requires to bind all UAVs slots at the same time for pixel shaders, we record
-        // all UAV slot assignments in the bind groups, and then bind them all together.
-        const BindGroupMask uavBindGroups =
-            ToBackend(mPipelineLayout)->GetUAVBindGroupLayoutsMask();
-        std::vector<ComPtr<ID3D11UnorderedAccessView>> uavsInBindGroup;
-        for (BindGroupIndex index : IterateBitSet(uavBindGroups)) {
-            BindGroupBase* group = mBindGroups[index];
-            const ityp::vector<BindingIndex, uint64_t>& dynamicOffsets = mDynamicOffsets[index];
-
-            for (BindingIndex bindingIndex : Range(group->GetLayout()->GetBindingCount())) {
-                const BindingInfo& bindingInfo = group->GetLayout()->GetBindingInfo(bindingIndex);
-
-                DAWN_TRY(MatchVariant(
-                    bindingInfo.bindingLayout,
-                    [&](const BufferBindingInfo& layout) -> MaybeError {
-                        BufferBinding binding = group->GetBindingAsBufferBinding(bindingIndex);
-                        auto offset = binding.offset;
-                        if (layout.hasDynamicOffset) {
-                            // Dynamic buffers are packed at the front of BindingIndices.
-                            offset += dynamicOffsets[bindingIndex];
-                        }
-
-                        switch (layout.type) {
-                            case wgpu::BufferBindingType::Storage:
-                            case kInternalStorageBufferBinding: {
-                                DAWN_ASSERT(IsSubset(
-                                    bindingInfo.visibility,
-                                    wgpu::ShaderStage::Fragment | wgpu::ShaderStage::Compute));
-                                ComPtr<ID3D11UnorderedAccessView> d3d11UAV;
-                                DAWN_TRY_ASSIGN(d3d11UAV, ToGPUUsableBuffer(binding.buffer)
-                                                              ->UseAsUAV(mCommandContext, offset,
-                                                                         binding.size));
-                                uavsInBindGroup.insert(uavsInBindGroup.begin(),
-                                                       std::move(d3d11UAV));
-                                break;
-                            }
-                            case wgpu::BufferBindingType::Uniform:
-                            case wgpu::BufferBindingType::ReadOnlyStorage:
-                            case wgpu::BufferBindingType::Undefined: {
-                                break;
-                            }
-                        }
-                        return {};
-                    },
-                    [&](const StorageTextureBindingInfo& layout) -> MaybeError {
-                        switch (layout.access) {
-                            case wgpu::StorageTextureAccess::WriteOnly:
-                            case wgpu::StorageTextureAccess::ReadWrite: {
-                                ComPtr<ID3D11UnorderedAccessView> d3d11UAV;
-                                TextureView* view =
-                                    ToBackend(group->GetBindingAsTextureView(bindingIndex));
-                                DAWN_TRY_ASSIGN(d3d11UAV,
-                                                view->GetOrCreateD3D11UnorderedAccessView());
-                                uavsInBindGroup.insert(uavsInBindGroup.begin(),
-                                                       std::move(d3d11UAV));
-                                break;
-                            }
-                            case wgpu::StorageTextureAccess::ReadOnly:
-                                break;
-                            default:
-                                DAWN_UNREACHABLE();
-                                break;
-                        }
-                        return {};
-                    },
-                    [](const TextureBindingInfo&) -> MaybeError { return {}; },
-                    [](const SamplerBindingInfo&) -> MaybeError { return {}; },
-                    [](const StaticSamplerBindingInfo&) -> MaybeError {
-                        // Static samplers are implemented in the frontend on
-                        // D3D11.
-                        DAWN_UNREACHABLE();
-                        return {};
-                    },
-                    [](const InputAttachmentBindingInfo&) -> MaybeError {
-                        DAWN_UNREACHABLE();
-                        return {};
-                    }));
-            }
-        }
-
-        uint32_t uavSlotCount = ToBackend(mPipelineLayout->GetDevice())->GetUAVSlotCount();
-        std::vector<ID3D11UnorderedAccessView*> views;
-        views.reserve(uavsInBindGroup.size() + mPixelLocalStorageUAVs.size());
-        for (auto& uav : uavsInBindGroup) {
-            views.push_back(uav.Get());
-        }
-        for (auto& uav : mPixelLocalStorageUAVs) {
-            views.push_back(uav.Get());
-        }
-        if (!views.empty()) {
-            DAWN_ASSERT(uavSlotCount >= views.size());
-            mCommandContext->GetD3D11DeviceContext4()->OMSetRenderTargetsAndUnorderedAccessViews(
-                D3D11_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL, nullptr, nullptr,
-                uavSlotCount - views.size(), views.size(), views.data(), nullptr);
-        }
-    } else {
-        BindGroupMask inheritedGroups =
-            mPipelineLayout->InheritedGroupsMask(mLastAppliedPipelineLayout);
-        BindGroupMask previousGroups = mLastAppliedPipelineLayout->GetBindGroupLayoutsMask();
-
-        // To avoid UAV / SRV conflicts with bindings in previously bind groups, we unset the bind
-        // groups that aren't reused by the current pipeline.
-        // We also need to unset the inherited bind groups which are dirty as the group may have
-        // both SRV and UAV, and the same resource may change its binding from UAV to SRV next
-        // dispatch in the same group.
-        //
-        // Note: WebGPU API guarantees that resources are not used both as UAV and SRV in the same
-        // render pass. So we don't need to do this inside render passes.
-        BindGroupMask groupsToUnset = previousGroups & (~inheritedGroups | mDirtyBindGroups);
-        for (BindGroupIndex index : IterateBitSet(groupsToUnset)) {
-            UnapplyComputeBindings(index);
-        }
-    }
-
-    for (BindGroupIndex index : IterateBitSet(mDirtyBindGroupsObjectChangedOrIsDynamic)) {
-        DAWN_TRY(ApplyBindGroup(index));
-    }
-
-    AfterApply();
-
-    return {};
 }
 
 MaybeError BindGroupTracker::ApplyBindGroup(BindGroupIndex index) {
@@ -456,9 +314,27 @@ MaybeError BindGroupTracker::ApplyBindGroup(BindGroupIndex index) {
     return {};
 }
 
-void BindGroupTracker::UnapplyComputeBindings(BindGroupIndex index) {
-    DAWN_ASSERT(!mIsRenderPass);
-    auto* deviceContext = mCommandContext->GetD3D11DeviceContext4();
+wgpu::ShaderStage BindGroupTracker::GetVisibleStages() const {
+    return mVisibleStages;
+}
+
+const ScopedSwapStateCommandRecordingContext* BindGroupTracker::GetCommandContext() const {
+    return mCommandContext.get();
+}
+
+ComputePassBindGroupTracker::ComputePassBindGroupTracker(
+    const ScopedSwapStateCommandRecordingContext* commandContext)
+    : BindGroupTracker(commandContext, wgpu::ShaderStage::Compute) {}
+
+ComputePassBindGroupTracker::~ComputePassBindGroupTracker() {
+    for (BindGroupIndex index :
+         IterateBitSet(mLastAppliedPipelineLayout->GetBindGroupLayoutsMask())) {
+        UnapplyComputeBindings(index);
+    }
+}
+
+void ComputePassBindGroupTracker::UnapplyComputeBindings(BindGroupIndex index) {
+    auto* deviceContext = GetCommandContext()->GetD3D11DeviceContext4();
     BindGroupLayoutInternalBase* groupLayout =
         mLastAppliedPipelineLayout->GetBindGroupLayout(index);
     const auto& indices = ToBackend(mLastAppliedPipelineLayout)->GetBindingIndexInfo()[index];
@@ -466,7 +342,7 @@ void BindGroupTracker::UnapplyComputeBindings(BindGroupIndex index) {
     for (BindingIndex bindingIndex : Range(groupLayout->GetBindingCount())) {
         const BindingInfo& bindingInfo = groupLayout->GetBindingInfo(bindingIndex);
         const uint32_t bindingSlot = indices[bindingIndex];
-        const auto bindingVisibility = bindingInfo.visibility & mVisibleStages;
+        const auto bindingVisibility = bindingInfo.visibility & GetVisibleStages();
         if (!(bindingVisibility & wgpu::ShaderStage::Compute)) {
             continue;
         }
@@ -531,6 +407,149 @@ void BindGroupTracker::UnapplyComputeBindings(BindGroupIndex index) {
             },
             [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
     }
+}
+
+MaybeError ComputePassBindGroupTracker::Apply() {
+    BeforeApply();
+
+    BindGroupMask inheritedGroups =
+        mPipelineLayout->InheritedGroupsMask(mLastAppliedPipelineLayout);
+    BindGroupMask previousGroups = mLastAppliedPipelineLayout->GetBindGroupLayoutsMask();
+
+    // To avoid UAV / SRV conflicts with bindings in previously bind groups, we unset the bind
+    // groups that aren't reused by the current pipeline.
+    // We also need to unset the inherited bind groups which are dirty as the group may have
+    // both SRV and UAV, and the same resource may change its binding from UAV to SRV next
+    // dispatch in the same group.
+    //
+    // Note: WebGPU API guarantees that resources are not used both as UAV and SRV in the same
+    // render pass. So we don't need to do this inside render passes.
+    BindGroupMask groupsToUnset = previousGroups & (~inheritedGroups | mDirtyBindGroups);
+    for (BindGroupIndex index : IterateBitSet(groupsToUnset)) {
+        UnapplyComputeBindings(index);
+    }
+
+    for (BindGroupIndex index : IterateBitSet(mDirtyBindGroupsObjectChangedOrIsDynamic)) {
+        DAWN_TRY(ApplyBindGroup(index));
+    }
+
+    AfterApply();
+
+    return {};
+}
+
+RenderPassBindGroupTracker::RenderPassBindGroupTracker(
+    const ScopedSwapStateCommandRecordingContext* commandContext,
+    std::vector<ComPtr<ID3D11UnorderedAccessView>> pixelLocalStorageUAVs)
+    : BindGroupTracker(commandContext, wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment),
+      mPixelLocalStorageUAVs(std::move(pixelLocalStorageUAVs)) {}
+
+RenderPassBindGroupTracker::~RenderPassBindGroupTracker() {
+    ResetAllRenderSlots(GetCommandContext());
+}
+
+MaybeError RenderPassBindGroupTracker::Apply() {
+    BeforeApply();
+
+    // As D3d11 requires to bind all UAVs slots at the same time for pixel shaders, we record
+    // all UAV slot assignments in the bind groups, and then bind them all together.
+    const BindGroupMask uavBindGroups = ToBackend(mPipelineLayout)->GetUAVBindGroupLayoutsMask();
+    std::vector<ComPtr<ID3D11UnorderedAccessView>> uavsInBindGroup;
+    for (BindGroupIndex index : IterateBitSet(uavBindGroups)) {
+        BindGroupBase* group = mBindGroups[index];
+        const ityp::vector<BindingIndex, uint64_t>& dynamicOffsets = mDynamicOffsets[index];
+
+        for (BindingIndex bindingIndex : Range(group->GetLayout()->GetBindingCount())) {
+            const BindingInfo& bindingInfo = group->GetLayout()->GetBindingInfo(bindingIndex);
+
+            DAWN_TRY(MatchVariant(
+                bindingInfo.bindingLayout,
+                [&](const BufferBindingInfo& layout) -> MaybeError {
+                    BufferBinding binding = group->GetBindingAsBufferBinding(bindingIndex);
+                    auto offset = binding.offset;
+                    if (layout.hasDynamicOffset) {
+                        // Dynamic buffers are packed at the front of BindingIndices.
+                        offset += dynamicOffsets[bindingIndex];
+                    }
+
+                    switch (layout.type) {
+                        case wgpu::BufferBindingType::Storage:
+                        case kInternalStorageBufferBinding: {
+                            DAWN_ASSERT(
+                                IsSubset(bindingInfo.visibility,
+                                         wgpu::ShaderStage::Fragment | wgpu::ShaderStage::Compute));
+                            ComPtr<ID3D11UnorderedAccessView> d3d11UAV;
+                            DAWN_TRY_ASSIGN(d3d11UAV, ToGPUUsableBuffer(binding.buffer)
+                                                          ->UseAsUAV(GetCommandContext(), offset,
+                                                                     binding.size));
+                            uavsInBindGroup.insert(uavsInBindGroup.begin(), std::move(d3d11UAV));
+                            break;
+                        }
+                        case wgpu::BufferBindingType::Uniform:
+                        case wgpu::BufferBindingType::ReadOnlyStorage:
+                        case wgpu::BufferBindingType::Undefined: {
+                            break;
+                        }
+                    }
+                    return {};
+                },
+                [&](const StorageTextureBindingInfo& layout) -> MaybeError {
+                    switch (layout.access) {
+                        case wgpu::StorageTextureAccess::WriteOnly:
+                        case wgpu::StorageTextureAccess::ReadWrite: {
+                            ComPtr<ID3D11UnorderedAccessView> d3d11UAV;
+                            TextureView* view =
+                                ToBackend(group->GetBindingAsTextureView(bindingIndex));
+                            DAWN_TRY_ASSIGN(d3d11UAV, view->GetOrCreateD3D11UnorderedAccessView());
+                            uavsInBindGroup.insert(uavsInBindGroup.begin(), std::move(d3d11UAV));
+                            break;
+                        }
+                        case wgpu::StorageTextureAccess::ReadOnly:
+                            break;
+                        default:
+                            DAWN_UNREACHABLE();
+                            break;
+                    }
+                    return {};
+                },
+                [](const TextureBindingInfo&) -> MaybeError { return {}; },
+                [](const SamplerBindingInfo&) -> MaybeError { return {}; },
+                [](const StaticSamplerBindingInfo&) -> MaybeError {
+                    // Static samplers are implemented in the frontend on
+                    // D3D11.
+                    DAWN_UNREACHABLE();
+                    return {};
+                },
+                [](const InputAttachmentBindingInfo&) -> MaybeError {
+                    DAWN_UNREACHABLE();
+                    return {};
+                }));
+        }
+    }
+
+    uint32_t uavSlotCount = ToBackend(mPipelineLayout->GetDevice())->GetUAVSlotCount();
+    std::vector<ID3D11UnorderedAccessView*> views;
+    views.reserve(uavsInBindGroup.size() + mPixelLocalStorageUAVs.size());
+    for (auto& uav : uavsInBindGroup) {
+        views.push_back(uav.Get());
+    }
+    for (auto& uav : mPixelLocalStorageUAVs) {
+        views.push_back(uav.Get());
+    }
+    if (!views.empty()) {
+        DAWN_ASSERT(uavSlotCount >= views.size());
+        GetCommandContext()->GetD3D11DeviceContext4()->OMSetRenderTargetsAndUnorderedAccessViews(
+            D3D11_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL, nullptr, nullptr,
+            uavSlotCount - views.size(), views.size(), views.data(), nullptr);
+    }
+
+    for (BindGroupIndex index : IterateBitSet(mDirtyBindGroupsObjectChangedOrIsDynamic)) {
+        DAWN_TRY(ApplyBindGroup(index));
+    }
+
+    AfterApply();
+
+    return {};
 }
 
 }  // namespace dawn::native::d3d11
