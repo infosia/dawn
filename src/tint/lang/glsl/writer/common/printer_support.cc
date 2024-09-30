@@ -47,11 +47,13 @@ void PrintI32(StringStream& out, int32_t value) {
 
 void PrintF32(StringStream& out, float value) {
     if (std::isinf(value)) {
-        out << "0.0f " << (value >= 0 ? "/* inf */" : "/* -inf */");
+        // out << "0.0f " << (value >= 0 ? "/* inf */" : "/* -inf */");
+        out << "0.0 " << (value >= 0 ? "/* inf */" : "/* -inf */");
     } else if (std::isnan(value)) {
-        out << "0.0f /* nan */";
+        // out << "0.0f /* nan */";
+        out << "0.0 /* nan */";
     } else {
-        out << tint::strconv::FloatToString(value) << "f";
+        out << tint::strconv::FloatToString(value)/* << "f"*/;
     }
 }
 

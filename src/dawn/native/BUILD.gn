@@ -770,6 +770,39 @@ source_set("sources") {
     include_dirs = [ "//third_party/khronos" ]
   }
 
+  if (dawn_enable_gles2) {
+    sources += [
+      "gles2/BackendES2.cpp",
+      "gles2/BackendES2.h",
+      "gles2/BindGroupES2.cpp",
+      "gles2/BindGroupES2.h",
+      "gles2/BindGroupLayoutES2.cpp",
+      "gles2/BindGroupLayoutES2.h",
+      "gles2/BufferES2.cpp",
+      "gles2/BufferES2.h",
+      "gles2/CommandBufferES2.cpp",
+      "gles2/CommandBufferES2.h",
+      "gles2/ComputePipelineES2.h",
+      "gles2/DeviceES2.cpp",
+      "gles2/DeviceES2.h",
+      "gles2/Forward.h",
+      "gles2/PipelineLayoutES2.cpp",
+      "gles2/PipelineLayoutES2.h",
+      "gles2/QuerySetES2.cpp",
+      "gles2/QuerySetES2.h",
+      "gles2/QueueES2.cpp",
+      "gles2/QueueES2.h",
+      "gles2/RenderPipelineES2.cpp",
+      "gles2/RenderPipelineES2.h",
+      "gles2/SamplerES2.cpp",
+      "gles2/SamplerES2.h",
+      "gles2/ShaderModuleES2.cpp",
+      "gles2/ShaderModuleES2.h",
+      "gles2/TextureES2.cpp",
+      "gles2/TextureES2.h",
+    ]
+  }
+
   if (dawn_enable_vulkan) {
     configs += [ ":vulkan_utility_libraries_include" ]
     public_deps += [ "${dawn_vulkan_headers_dir}:vulkan_headers" ]

@@ -497,12 +497,14 @@ std::vector<Ref<AdapterBase>> SortAdapters(std::vector<Ref<AdapterBase>> adapter
                 return 2;
             case wgpu::BackendType::OpenGLES:
                 return 3;
-            case wgpu::BackendType::OpenGL:
+            case wgpu::BackendType::OpenGLES2_0:
                 return 4;
-            case wgpu::BackendType::WebGPU:
+            case wgpu::BackendType::OpenGL:
                 return 5;
-            case wgpu::BackendType::Null:
+            case wgpu::BackendType::WebGPU:
                 return 6;
+            case wgpu::BackendType::Null:
+                return 7;
             case wgpu::BackendType::Undefined:
                 break;
         }

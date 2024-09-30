@@ -57,7 +57,8 @@ class Robustness final : public Castable<Robustness, Transform> {
         kPredicate,
 
         /// The default action
-        kDefault = kClamp,
+        // kDefault = kClamp,
+        kDefault = kIgnore,
     };
 
     /// Configuration options for the transform

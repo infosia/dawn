@@ -446,6 +446,13 @@ BackendConnection* InstanceBase::GetBackendConnection(wgpu::BackendType backendT
             break;
 #endif  // defined(DAWN_ENABLE_BACKEND_OPENGLES)
 
+#if defined(DAWN_ENABLE_BACKEND_OPENGLES)
+        case wgpu::BackendType::OpenGLES2_0:
+            Register(gl::Connect(this, wgpu::BackendType::OpenGLES2_0),
+                     wgpu::BackendType::OpenGLES2_0);
+            break;
+#endif  // defined(DAWN_ENABLE_BACKEND_OPENGLES)
+
         default:
             break;
     }

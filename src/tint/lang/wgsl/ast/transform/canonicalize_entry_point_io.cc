@@ -430,6 +430,12 @@ struct CanonicalizeEntryPointIO::State {
                                            core::AddressSpace::kOut);
                 value = ToGLSLBuiltin(builtin_attr, value, type);
             }
+            // HACK
+            if (func_ast->PipelineStage() == PipelineStage::kFragment &&
+                location && *location == 0 &&
+                type->IsFloatVector() && type->As<core::type::Vector>()->Width() == 4) {
+                name = "gl_FragColor";
+            }
         }
 
         ast::Type ast_type;

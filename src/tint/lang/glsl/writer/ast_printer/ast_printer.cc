@@ -298,7 +298,8 @@ bool ASTPrinter::Generate() {
         return false;
     }
 
-    {
+    // If we're generating GLSL for ES2, the GLSL version is 100 and the directive can be omitted.
+    if (version_.major_version >= 3) {
         auto out = Line();
         out << "#version " << version_.major_version << version_.minor_version << "0";
         if (version_.IsES()) {
@@ -980,7 +981,7 @@ void ASTPrinter::EmitWorkgroupAtomicCall(StringStream& out,
                 EmitExpression(out, expr->args[0]);
                 out << ", 0";
                 if (builtin->ReturnType()->Is<core::type::U32>()) {
-                    out << "u";
+                    // out << "u";
                 }
             }
             return;
@@ -1933,16 +1934,20 @@ void ASTPrinter::EmitUniformVariable(const ast::Var* var, const sem::GlobalVaria
         TINT_ICE() << "storage variable must be of struct type";
     }
     auto bp = *sem->Attributes().binding_point;
+    std::string type_name = UniqueIdentifier(StructName(str) + "_ubo");
     {
         auto out = Line();
-        out << "layout(binding = " << bp.binding << ", std140";
-        out << ") uniform " << UniqueIdentifier(StructName(str) + "_ubo" +
-                               (stage_ == ast::PipelineStage::kVertex ? "_vert" :
-                                stage_ == ast::PipelineStage::kFragment ? "_frag" : "")) << " {";
+        // out << "layout(binding = " << bp.binding << ", std140";
+        // out << ") uniform " << UniqueIdentifier(StructName(str) + "_ubo" +
+        //                        (stage_ == ast::PipelineStage::kVertex ? "_vert" :
+        //                         stage_ == ast::PipelineStage::kFragment ? "_frag" : "")) << " {";
+        out << "struct "  << type_name << " {";
     }
     EmitStructMembers(current_buffer_, str);
     auto name = var->name->symbol.Name();
-    Line() << "} " << name << ";";
+    // Line() << "} " << name << ";";
+    Line() << "};";
+    Line() << "uniform " << type_name << " " << name << ";";
     Line();
 }
 
@@ -2081,6 +2086,7 @@ void ASTPrinter::EmitIOVariable(const sem::GlobalVariable* var) {
             requires_oes_sample_variables_ = true;
         }
         // Do not emit builtin (gl_) variables.
+        // printf("!! found builtin i/o var: %s\n", decl->name->symbol.Name().c_str());
         return;
     }
 
@@ -2090,6 +2096,11 @@ void ASTPrinter::EmitIOVariable(const sem::GlobalVariable* var) {
 
     auto name = decl->name->symbol.Name();
     auto* type = var->Type()->UnwrapRef();
+        // TODO should be a builtin and handled above
+        if (var->AddressSpace() == core::AddressSpace::kOut && stage_ == ast::PipelineStage::kFragment) {
+            // printf("!! found fragment output: %s\n", name.c_str());
+            return;
+        }
     EmitTypeAndName(out, type, var->AddressSpace(), var->Access(), name);
 
     if (auto* initializer = decl->initializer) {
@@ -2106,7 +2117,7 @@ void ASTPrinter::EmitPushConstant(const sem::GlobalVariable* var) {
 
     auto name = decl->name->symbol.Name();
     auto* type = var->Type()->UnwrapRef();
-    out << "layout(location=0) ";
+    // out << "layout(location=0) ";
     EmitTypeAndName(out, type, var->AddressSpace(), var->Access(), name);
     out << ";";
 }
@@ -2141,6 +2152,7 @@ void ASTPrinter::EmitInterpolationQualifiers(StringStream& out,
 }
 
 void ASTPrinter::EmitAttributes(StringStream& out, const sem::GlobalVariable* var) {
+    return;
     auto& attrs = var->Attributes();
 
     bool first = true;
@@ -2242,7 +2254,7 @@ void ASTPrinter::EmitConstant(StringStream& out, const core::constant::Value* co
         [&](const core::type::F32*) { PrintF32(out, constant->ValueAs<f32>()); },
         [&](const core::type::F16*) { PrintF16(out, constant->ValueAs<f16>()); },
         [&](const core::type::I32*) { PrintI32(out, constant->ValueAs<i32>()); },
-        [&](const core::type::U32*) { out << constant->ValueAs<AInt>() << "u"; },
+        [&](const core::type::U32*) { out << constant->ValueAs<AInt>()/* << "u"*/; },
         [&](const core::type::Vector* v) {
             EmitType(out, v, core::AddressSpace::kUndefined, core::Access::kUndefined, "");
 
@@ -2326,7 +2338,7 @@ void ASTPrinter::EmitLiteral(StringStream& out, const ast::LiteralExpression* li
                     return;
                 }
                 case ast::IntLiteralExpression::Suffix::kU: {
-                    out << i->value << "u";
+                    out << i->value/* << "u"*/;
                     return;
                 }
             }
@@ -2339,13 +2351,13 @@ void ASTPrinter::EmitZeroValue(StringStream& out, const core::type::Type* type) 
     if (type->Is<core::type::Bool>()) {
         out << "false";
     } else if (type->Is<core::type::F32>()) {
-        out << "0.0f";
+        out << "0.0";
     } else if (type->Is<core::type::F16>()) {
         out << "0.0hf";
     } else if (type->Is<core::type::I32>()) {
         out << "0";
     } else if (type->Is<core::type::U32>()) {
-        out << "0u";
+        out << "0";
     } else if (auto* vec = type->As<core::type::Vector>()) {
         EmitType(out, type, core::AddressSpace::kUndefined, core::Access::kReadWrite, "");
         ScopedParen sp(out);
@@ -2643,11 +2655,25 @@ void ASTPrinter::EmitType(StringStream& out,
     }
     switch (address_space) {
         case core::AddressSpace::kIn: {
-            out << "in ";
+            // out << "in ";
+            if (stage_ == ast::PipelineStage::kVertex) {
+                out << "attribute ";
+            } else if (stage_ == ast::PipelineStage::kFragment) {
+                out << "varying ";
+            } else {
+                diagnostics_.AddError(Source{}) << "bad i/o, input in stage " << stage_;
+                return;
+            }
             break;
         }
         case core::AddressSpace::kOut: {
-            out << "out ";
+            // out << "out ";
+            if (stage_ == ast::PipelineStage::kVertex) {
+                out << "varying ";
+            } else {
+                diagnostics_.AddError(Source{}) << "bad i/o, output in stage " << stage_;
+                return;
+            }
             break;
         }
         case core::AddressSpace::kUniform:
@@ -2767,7 +2793,7 @@ void ASTPrinter::EmitType(StringStream& out,
         } else if (subtype->Is<core::type::I32>()) {
             out << "i";
         } else if (DAWN_LIKELY(subtype->Is<core::type::U32>())) {
-            out << "u";
+            // out << "u";
         } else {
             TINT_ICE() << "Unsupported texture type";
         }
@@ -2800,7 +2826,8 @@ void ASTPrinter::EmitType(StringStream& out,
             out << "Shadow";
         }
     } else if (type->Is<core::type::U32>()) {
-        out << "uint";
+        // out << "uint";
+        out << "int";
     } else if (auto* vec = type->As<core::type::Vector>()) {
         auto width = vec->Width();
         if (vec->Type()->Is<core::type::F32>() && width >= 1 && width <= 4) {
