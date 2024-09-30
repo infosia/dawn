@@ -56,6 +56,22 @@ Result<Output> Generate(core::ir::Module& ir,
                         const Options& options,
                         const std::string& entry_point);
 
+// TODO not sure the best place for this stuff
+// Information needed to map a client uniform binding to an OpenGL uniform location.
+struct UniformDeclaration {
+    int mGroup;
+    int mBinding;
+    std::string mTypeName;
+    std::string mName;
+};
+
+// Information needed to map a client shader input to an OpenGL attribute.
+struct InputDeclaration {
+    int mLocation;
+    std::string mTypeName;
+    std::string mName;
+};
+
 /// Generate GLSL for a program, according to a set of configuration options.
 /// The result will contain the GLSL and supplementary information, or failure.
 /// information.
@@ -66,7 +82,9 @@ Result<Output> Generate(core::ir::Module& ir,
 Result<Output> Generate(const Program& program,
                         const Options& options,
                         const std::string& entry_point,
-                        ast::PipelineStage stage);
+                        ast::PipelineStage stage,
+                        std::vector<InputDeclaration> *inputs = nullptr,
+                        std::vector<UniformDeclaration> *uniforms = nullptr);
 
 }  // namespace tint::glsl::writer
 

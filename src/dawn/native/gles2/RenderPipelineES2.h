@@ -33,14 +33,27 @@
 namespace dawn::native::gles2 {
 
 class Device;
+struct InputDeclaration;
+struct UniformDeclaration;
 
 class RenderPipeline final : public RenderPipelineBase {
   public:
     RenderPipeline(Device* device, const UnpackedPtr<RenderPipelineDescriptor>& descriptor);
     ~RenderPipeline() override = default;
 
+    const char* VertexSource() const { return mVertexSrc.c_str(); }
+    const char* FragmentSource() const { return mFragmentSrc.c_str(); }
+
+    const std::vector<InputDeclaration>& VertexInputs() const { return mVertexInputs; }
+    const std::vector<UniformDeclaration>& Uniforms() const { return mUniforms; }
+
   private:
     MaybeError InitializeImpl() override;
+
+    std::string mVertexSrc;
+    std::string mFragmentSrc;
+    std::vector<InputDeclaration> mVertexInputs;
+    std::vector<UniformDeclaration> mUniforms;
 };
 
 }  // namespace dawn::native::gles2

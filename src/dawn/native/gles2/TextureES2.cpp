@@ -28,13 +28,45 @@
 #include "dawn/native/gles2/TextureES2.h"
 
 #include "dawn/native/gles2/DeviceES2.h"
+#include "dawn/native/gles2/Forward.h"
 
 namespace dawn::native::gles2 {
 
 Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor)
-    : TextureBase(device, descriptor) {}
+    : TextureBase(device, descriptor) {
+    const gl::OpenGLFunctions& gl = device->GetGL();
+    gl.GenTextures(1, &mHandle);
+    gl.CheckErrors("GenTextures");
+    gl.BindTexture(GL_TEXTURE_2D, mHandle);
+    gl.CheckErrors("BindTexture");
+
+    // TODO format options are much more limited in es2 than es3
+    // TODO not sure what type (byte packing) to use
+    // TODO clear texture
+    const Extent3D& size = GetBaseSize();
+    gl.TexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, size.width, size.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    gl.CheckErrors("TexImage2D");
+}
+
+void Texture::DestroyImpl() {
+    TextureBase::DestroyImpl();
+
+    const gl::OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    gl.DeleteTextures(1, &mHandle);
+    gl.CheckErrors("DeleteTextures");
+    mHandle = 0;
+}
+
+GLuint Texture::GetHandle() const {
+    return mHandle;
+}
 
 TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor)
-    : TextureViewBase(texture, descriptor) {}
+    : TextureViewBase(texture, descriptor) {
+}
+
+GLuint TextureView::GetHandle() const {
+    return ToBackend(GetTexture())->GetHandle();
+}
 
 }  // namespace dawn::native::gles2

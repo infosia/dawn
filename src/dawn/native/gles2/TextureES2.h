@@ -30,6 +30,8 @@
 
 #include "dawn/native/Texture.h"
 
+#include "dawn/native/gl/opengl_platform.h"
+
 namespace dawn::native::gles2 {
 
 class Device;
@@ -38,12 +40,21 @@ class Texture final : public TextureBase {
   public:
     Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor);
     ~Texture() override = default;
+
+    GLuint GetHandle() const;
+
+  private:
+    void DestroyImpl() override;
+
+    GLuint mHandle;
 };
 
 class TextureView final : public TextureViewBase {
   public:
     TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor);
     ~TextureView() override = default;
+
+    GLuint GetHandle() const;
 };
 
 }  // namespace dawn::native::gles2

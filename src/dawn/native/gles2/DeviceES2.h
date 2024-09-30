@@ -30,16 +30,26 @@
 
 #include "dawn/native/Device.h"
 
+#include "dawn/native/gl/ContextEGL.h"
+#include "dawn/native/gl/OpenGLFunctions.h"
+#include "dawn/native/gles2/QueueES2.h"
+
 namespace dawn::native::gles2 {
 
 class Device final : public DeviceBase {
   public:
     static ResultOrError<Ref<Device>> Create(AdapterBase* adapter,
                                              const UnpackedPtr<DeviceDescriptor>& descriptor,
+                                             const gl::OpenGLFunctions& functions,
+                                             std::unique_ptr<gl::ContextEGL> context,
                                              const TogglesState& deviceToggles,
                                              Ref<DeviceBase::DeviceLostEvent>&& lostEvent);
 
     ~Device() override = default;
+
+    // Returns all the OpenGL entry points and ensures that the associated
+    // Context is current.
+    const gl::OpenGLFunctions& GetGL() const;
 
     ResultOrError<Ref<CommandBufferBase>> CreateCommandBuffer(
         CommandEncoder* encoder,
@@ -50,9 +60,25 @@ class Device final : public DeviceBase {
 
     float GetTimestampPeriodInNS() const override;
 
+    MaybeError StartFrameCapture() override {
+        if (!mContext) {
+            return {};
+        }
+        return mContext->StartFrameCapture();
+    }
+
+    MaybeError StopFrameCapture() override {
+        if (!mContext) {
+            return {};
+        }
+        return mContext->StartFrameCapture();
+    }
+
   private:
     Device(AdapterBase* adapter,
            const UnpackedPtr<DeviceDescriptor>& descriptor,
+           const gl::OpenGLFunctions& functions,
+           std::unique_ptr<gl::ContextEGL> context,
            const TogglesState& deviceToggles,
            Ref<DeviceBase::DeviceLostEvent>&& lostEvent);
 
@@ -102,6 +128,10 @@ class Device final : public DeviceBase {
                                             const TextureDataLayout& src,
                                             const TextureCopy& dst,
                                             const Extent3D& copySizePixels) override;
+
+    // TODO share
+    const gl::OpenGLFunctions mGL;
+    std::unique_ptr<gl::ContextEGL> mContext = nullptr;
 };
 
 }  // namespace dawn::native::gles2

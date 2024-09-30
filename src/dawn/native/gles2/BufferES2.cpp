@@ -27,7 +27,9 @@
 
 #include "dawn/native/gles2/BufferES2.h"
 
+#include "dawn/native/gl/OpenGLFunctions.h"
 #include "dawn/native/gles2/DeviceES2.h"
+#include "dawn/native/gles2/Forward.h"
 
 namespace dawn::native::gles2 {
 
@@ -36,10 +38,40 @@ Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor)
     // TODO see history of BufferGL.cpp for context about how zero-length allocations are a problem
     mAllocatedSize = GetSize();
     mBufferData.resize(mAllocatedSize);
+
+    // Create uninitialized buffer.
+    const gl::OpenGLFunctions& gl = device->GetGL();
+    gl.GenBuffers(1, &mBuffer);
+    gl.CheckErrors("GenBuffers");
+    gl.BindBuffer(GL_ARRAY_BUFFER, mBuffer);
+    gl.CheckErrors("BindBuffer");
+    gl.BufferData(GL_ARRAY_BUFFER, mAllocatedSize, nullptr, GL_STATIC_DRAW);
+    gl.CheckErrors("BufferData");
+}
+
+MaybeError Buffer::MapSync(size_t offset, size_t size) {
+    if (offset + size > mBufferData.size()) {
+        return DAWN_INTERNAL_ERROR("Invalid buffer mapping");
+    }
+    mMappedOffset = offset;
+    mMappedSize = size;
+    return {};
+}
+
+void Buffer::UnmapSync() {
+    const gl::OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    gl.BindBuffer(GL_ARRAY_BUFFER, mBuffer);
+    gl.CheckErrors("BindBuffer");
+    gl.BufferSubData(GL_ARRAY_BUFFER, mMappedOffset, mMappedSize, mBufferData.data() + mMappedOffset);
+    gl.CheckErrors("BufferSubData");
+}
+
+void* Buffer::GetOffsetPointer() {
+    return mBufferData.data() + mMappedOffset;
 }
 
 void* Buffer::GetMappedPointer() {
-    return mBufferData.data() + mMappedOffset;
+    return mBufferData.data();
 }
 
 MaybeError Buffer::MapAtCreationImpl() {
@@ -49,16 +81,22 @@ MaybeError Buffer::MapAtCreationImpl() {
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
-    // TODO dbg
-    if (offset + size > mBufferData.size()) {
-        return DAWN_INTERNAL_ERROR("!! invalid buffer mapping");
-    }
-    mMappedOffset = offset;
-    mMappedSize = size;
-    return {};
+    // TODO how will this work if this is supposed to be async? multithreading concern here?
+    return MapSync(offset, size);
 }
 
-void Buffer::UnmapImpl() {}
+void Buffer::UnmapImpl() {
+    UnmapSync();
+}
+
+void Buffer::DestroyImpl() {
+    BufferBase::DestroyImpl();
+
+    const gl::OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    gl.DeleteBuffers(1, &mBuffer);
+    gl.CheckErrors("DeleteBuffers");
+    mBuffer = 0;
+}
 
 bool Buffer::IsCPUWritableAtCreation() const {
     return true;

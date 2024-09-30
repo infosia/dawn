@@ -27,7 +27,9 @@
 
 #include "dawn/native/gles2/QueueES2.h"
 
+#include "dawn/native/gles2/CommandBufferES2.h"
 #include "dawn/native/gles2/DeviceES2.h"
+#include "dawn/native/gles2/Forward.h"
 
 namespace dawn::native::gles2 {
 
@@ -37,7 +39,11 @@ ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* d
 
 Queue::Queue(Device* device, const QueueDescriptor* descriptor) : QueueBase(device, descriptor) {}
 
+// TODO share?
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
+    for (uint32_t i = 0; i < commandCount; ++i) {
+        DAWN_TRY(ToBackend(commands[i])->Execute());
+    }
     return {};
 }
 

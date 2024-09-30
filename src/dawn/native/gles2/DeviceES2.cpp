@@ -33,6 +33,7 @@
 #include "dawn/native/gles2/BufferES2.h"
 #include "dawn/native/gles2/CommandBufferES2.h"
 #include "dawn/native/gles2/ComputePipelineES2.h"
+#include "dawn/native/gles2/Forward.h"
 #include "dawn/native/gles2/PipelineLayoutES2.h"
 #include "dawn/native/gles2/QuerySetES2.h"
 #include "dawn/native/gles2/QueueES2.h"
@@ -45,9 +46,11 @@ namespace dawn::native::gles2 {
 
 ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
                                           const UnpackedPtr<DeviceDescriptor>& descriptor,
+                                          const gl::OpenGLFunctions& functions,
+                                          std::unique_ptr<gl::ContextEGL> context,
                                           const TogglesState& deviceToggles,
                                           Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
-    Ref<Device> device = AcquireRef(new Device(adapter, descriptor,
+    Ref<Device> device = AcquireRef(new Device(adapter, descriptor, functions, std::move(context),
                                                deviceToggles, std::move(lostEvent)));
     DAWN_TRY(device->Initialize(descriptor));
     return device;
@@ -55,14 +58,25 @@ ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
 
 Device::Device(AdapterBase* adapter,
                const UnpackedPtr<DeviceDescriptor>& descriptor,
+               const gl::OpenGLFunctions& functions,
+               std::unique_ptr<gl::ContextEGL> context,
                const TogglesState& deviceToggles,
                Ref<DeviceBase::DeviceLostEvent>&& lostEvent)
-    : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)) {}
+    : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)),
+      mGL(functions),
+      mContext(std::move(context)) {}
 
 MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     Ref<Queue> queue;
     DAWN_TRY_ASSIGN(queue, Queue::Create(this, &descriptor->defaultQueue));
     return DeviceBase::Initialize(std::move(queue));
+}
+
+const gl::OpenGLFunctions& Device::GetGL() const {
+    // TODO share
+    mContext->MakeCurrent();
+    // ToBackend(GetQueue())->OnGLUsed();
+    return mGL;
 }
 
 ResultOrError<Ref<CommandBufferBase>> Device::CreateCommandBuffer(
@@ -146,7 +160,11 @@ MaybeError Device::CopyFromStagingToBufferImpl(BufferBase* source,
                                                BufferBase* destination,
                                                uint64_t destinationOffset,
                                                uint64_t size) {
-    return DAWN_UNIMPLEMENTED_ERROR("Device unable to copy from staging buffer.");
+    // TODO need to queue this here and only execute on submit?
+    const uint8_t* srcMapped = static_cast<const uint8_t*>(ToBackend(source)->GetMappedPointer());
+    uint8_t* dstMapped = static_cast<uint8_t*>(ToBackend(destination)->GetMappedPointer());
+    memcpy(dstMapped + destinationOffset, srcMapped + sourceOffset, size);
+    return {};
 }
 
 MaybeError Device::CopyFromStagingToTextureImpl(const BufferBase* source,
