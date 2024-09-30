@@ -342,16 +342,18 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
     // TODO(crbug.com/dawn/1834): determine if GL has an equivalent value here.
     //    limits->v1.maxColorAttachmentBytesPerSample = WGPU_LIMIT_U32_UNDEFINED;
 
-    limits->v1.maxComputeWorkgroupStorageSize = Get(gl, GL_MAX_COMPUTE_SHARED_MEMORY_SIZE);
-    limits->v1.maxComputeInvocationsPerWorkgroup = Get(gl, GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS);
-    limits->v1.maxComputeWorkgroupSizeX = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_SIZE, 0);
-    limits->v1.maxComputeWorkgroupSizeY = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_SIZE, 1);
-    limits->v1.maxComputeWorkgroupSizeZ = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_SIZE, 2);
-    GLint v[3];
-    v[0] = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_COUNT, 0);
-    v[1] = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_COUNT, 1);
-    v[2] = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_COUNT, 2);
-    limits->v1.maxComputeWorkgroupsPerDimension = std::min(v[0], std::min(v[1], v[2]));
+    if (gl.IsAtLeastGLES(3, 1) || gl.IsAtLeastGL(4, 3)) {
+        limits->v1.maxComputeWorkgroupStorageSize = Get(gl, GL_MAX_COMPUTE_SHARED_MEMORY_SIZE);
+        limits->v1.maxComputeInvocationsPerWorkgroup = Get(gl, GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS);
+        limits->v1.maxComputeWorkgroupSizeX = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_SIZE, 0);
+        limits->v1.maxComputeWorkgroupSizeY = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_SIZE, 1);
+        limits->v1.maxComputeWorkgroupSizeZ = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_SIZE, 2);
+        GLint v[3];
+        v[0] = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_COUNT, 0);
+        v[1] = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_COUNT, 1);
+        v[2] = GetIndexed(gl, GL_MAX_COMPUTE_WORK_GROUP_COUNT, 2);
+        limits->v1.maxComputeWorkgroupsPerDimension = std::min(v[0], std::min(v[1], v[2]));
+    }
     return {};
 }
 
