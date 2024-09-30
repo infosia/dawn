@@ -16,6 +16,29 @@
       "message": "PTAL, thanks!",
       "revId": "a79e6c0d116778db45a555fe991a92a642d9ab9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6164127a_4aa0aef5",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-09-30T22:10:26Z",
+      "side": 1,
+      "message": "Would it make sense to directly pass in the `D3D12_TEXTURE_COPY_LOCATION\u0026` instead of the pointer to the `CopyInfo` here? I don\u0027t see any use of the `CopyInfo` aside from getting the `BufferLocation`.\n\nAlso, would a name like `FillBufferLocation` or `SetBufferLocation` be more appropriate since we aren\u0027t really computing anything in this helper, just assigning the appropriate values.",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 88,
+        "endChar": 59
+      },
+      "revId": "a79e6c0d116778db45a555fe991a92a642d9ab9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
