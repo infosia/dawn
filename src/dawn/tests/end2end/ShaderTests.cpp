@@ -2509,6 +2509,51 @@ fn main() {
     EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), output, 0, expected.size());
 }
 
+TEST_P(ShaderTests, WorkgroupAtomic) {
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(R"(
+@binding(0) @group(0) var<storage, read_write> output : array<u32>;
+var<workgroup> workgroup_buffer : array<atomic<u32>, 1024>;
+
+@compute @workgroup_size(2)
+fn main(@builtin(local_invocation_index) local_invocation_index: u32,
+        @builtin(workgroup_id) workgroup_id : vec3<u32>){
+  if (local_invocation_index == 0) {
+     atomicStore(&workgroup_buffer[workgroup_id.x], 0);
+  }
+
+  workgroupBarrier();
+  atomicAdd(&workgroup_buffer[0], 1);
+  workgroupBarrier();
+
+  if (local_invocation_index == 0) {
+     output[0] = atomicLoad(&workgroup_buffer[workgroup_id.x]);
+  }
+}
+)");
+
+    std::vector<uint32_t> expected{2};
+
+    wgpu::Buffer output = CreateBuffer(2);
+
+    wgpu::BindGroup bindGroup =
+        utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0), {{0, output}});
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        commands = encoder.Finish();
+    }
+
+    queue.Submit(1, &commands);
+
+    EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), output, 0, 1);
+}
 // A regression test for chromium:341282611. Test that Vulkan shader module cache should take the
 // primitive type into account because for `PointList` we should generate `PointSize` in the SPIRV
 // of the vertex shader.
