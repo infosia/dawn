@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5f75c3a_00d38fae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-09-30T12:11:53Z",
+      "side": 1,
+      "message": "PTAL at the reland. See diff from patchset 1 for the diff between original CL and reland.",
+      "revId": "01495a9711834b12b276a02c8f9d0a37db80cede",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
