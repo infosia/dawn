@@ -93,12 +93,25 @@ MaybeError OpenGLFunctionsBase::LoadDesktopGLProcs(GLGetProcProc getProc, int ma
 #endif
 
 void OpenGLFunctionsBase::InitializeSupportedGLExtensions() {
-    int32_t numExtensions;
-    GetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
+    if (GetStringi) {
+        int32_t numExtensions;
+        GetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
 
-    for (int32_t i = 0; i < numExtensions; ++i) {
-        const char* extensionName = reinterpret_cast<const char*>(GetStringi(GL_EXTENSIONS, i));
-        mSupportedGLExtensionsSet.insert(extensionName);
+        for (int32_t i = 0; i < numExtensions; ++i) {
+            const char* extensionName = reinterpret_cast<const char*>(GetStringi(GL_EXTENSIONS, i));
+            mSupportedGLExtensionsSet.insert(extensionName);
+        }
+
+    } else {
+        const char* extensionNames = reinterpret_cast<const char*>(GetString(GL_EXTENSIONS));
+        if (extensionNames && strlen(extensionNames) > 0) {
+            for (const char* next; (next = strchr(extensionNames, ' ')); ) {
+                int len = next - extensionNames;
+                mSupportedGLExtensionsSet.insert(std::string(extensionNames, len));
+                extensionNames = next + 1;
+            }
+            mSupportedGLExtensionsSet.insert(std::string(extensionNames));
+        }
     }
 }
 
