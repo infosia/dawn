@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "absl/container/flat_hash_set.h"
+#include "absl/strings/string_view.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/Device.h"
@@ -58,7 +59,7 @@ ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* devi
     DAWN_TRY(device->ValidateObject(module));
 
     if (!entryPointName.IsUndefined()) {
-        DAWN_INVALID_IF(!module->HasEntryPoint(entryPointName),
+        DAWN_INVALID_IF(!module->HasEntryPoint(absl::string_view(entryPointName.data)),
                         "Entry point \"%s\" doesn't exist in the shader module %s.", entryPointName,
                         module);
     } else {
@@ -105,7 +106,7 @@ ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* devi
     // Keep an initialized constants sets to handle duplicate initialization cases
     absl::flat_hash_set<std::string_view> stageInitializedConstantIdentifiers;
     for (uint32_t i = 0; i < constantCount; i++) {
-        std::string_view key = constants[i].key;
+        absl::string_view key = {constants[i].key.data};
         double value = constants[i].value;
 
         DAWN_INVALID_IF(metadata.overrides.count(key) == 0,
