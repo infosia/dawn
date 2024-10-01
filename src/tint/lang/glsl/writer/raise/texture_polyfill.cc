@@ -74,8 +74,17 @@ struct State {
             if (auto* call = inst->As<core::ir::CoreBuiltinCall>()) {
                 switch (call->Func()) {
                     case core::BuiltinFn::kTextureDimensions:
+                    case core::BuiltinFn::kTextureGather:
+                    case core::BuiltinFn::kTextureGatherCompare:
                     case core::BuiltinFn::kTextureLoad:
                     case core::BuiltinFn::kTextureNumLayers:
+                    case core::BuiltinFn::kTextureNumLevels:
+                    case core::BuiltinFn::kTextureSample:
+                    case core::BuiltinFn::kTextureSampleBias:
+                    case core::BuiltinFn::kTextureSampleCompare:
+                    case core::BuiltinFn::kTextureSampleCompareLevel:
+                    case core::BuiltinFn::kTextureSampleGrad:
+                    case core::BuiltinFn::kTextureSampleLevel:
                     case core::BuiltinFn::kTextureStore:
                         call_worklist.Push(call);
                         break;
@@ -92,6 +101,9 @@ struct State {
                 case core::BuiltinFn::kTextureDimensions:
                     TextureDimensions(call);
                     break;
+                case core::BuiltinFn::kTextureGather:
+                    TextureGather(call);
+                    break;
                 case core::BuiltinFn::kTextureLoad:
                     TextureLoad(call);
                     break;
@@ -101,6 +113,14 @@ struct State {
                 case core::BuiltinFn::kTextureStore:
                     TextureStore(call);
                     break;
+                case core::BuiltinFn::kTextureGatherCompare:
+                case core::BuiltinFn::kTextureNumLevels:
+                case core::BuiltinFn::kTextureSample:
+                case core::BuiltinFn::kTextureSampleBias:
+                case core::BuiltinFn::kTextureSampleCompare:
+                case core::BuiltinFn::kTextureSampleCompareLevel:
+                case core::BuiltinFn::kTextureSampleGrad:
+                case core::BuiltinFn::kTextureSampleLevel:
                 default:
                     TINT_UNREACHABLE();
             }
@@ -396,6 +416,75 @@ struct State {
 
             b.CallWithResult<glsl::ir::BuiltinCall>(
                 call->DetachResult(), glsl::BuiltinFn::kImageStore, std::move(new_args));
+        });
+        call->Destroy();
+    }
+
+    void TextureGather(core::ir::BuiltinCall* call) {
+        auto args = call->Args();
+        b.InsertBefore(call, [&] {
+            core::ir::Value* tex = nullptr;
+
+            core::ir::Value* coords = nullptr;
+            Vector<core::ir::Value*, 4> params;
+
+            uint32_t idx = 0;
+            core::ir::Value* component = nullptr;
+            if (!args[idx]->Type()->Is<core::type::Texture>()) {
+                component = args[idx++];
+                TINT_ASSERT(component);
+            }
+
+            tex = args[idx++];
+            params.Push(tex);
+
+            auto* tex_type = tex->Type()->As<core::type::Texture>();
+            TINT_ASSERT(tex_type);
+
+            bool is_depth = tex_type->Is<core::type::DepthTexture>();
+
+            idx++;  // Skip the sampler
+            coords = args[idx++];
+
+            uint32_t offset_idx = 0;
+
+            switch (tex_type->Dim()) {
+                case core::type::TextureDimension::k2d:
+                    params.Push(coords);
+                    offset_idx = is_depth ? 3 : 4;
+                    break;
+                case core::type::TextureDimension::k2dArray:
+                    params.Push(b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[idx++]))
+                                    ->Result(0));
+                    offset_idx = is_depth ? 4 : 5;
+                    break;
+                case core::type::TextureDimension::kCube:
+                    params.Push(coords);
+                    break;
+                case core::type::TextureDimension::kCubeArray:
+                    params.Push(b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[idx++]))
+                                    ->Result(0));
+                    break;
+                default:
+                    TINT_UNREACHABLE();
+            }
+            // Depth gather requires a `refz` param in GLSL.
+            if (is_depth) {
+                params.Push(b.Constant(0.0_f));
+            }
+
+            auto fn = glsl::BuiltinFn::kTextureGather;
+            if (offset_idx > 0 && args.Length() > offset_idx) {
+                fn = glsl::BuiltinFn::kTextureGatherOffset;
+                params.Push(args[offset_idx]);
+            }
+
+            // Push the component onto the end of the list if needed.
+            if (component != nullptr) {
+                params.Push(component);
+            }
+
+            b.CallWithResult<glsl::ir::BuiltinCall>(call->DetachResult(), fn, params);
         });
         call->Destroy();
     }
