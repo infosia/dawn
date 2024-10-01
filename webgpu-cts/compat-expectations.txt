@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-09-23 10:58:37PM
+# Last rolled: 2024-10-01 09:18:13PM
 
 # Flaky on all platforms
 crbug.com/42251085 webgpu:shader,validation,expression,call,builtin,log:values:stage="override";type="f32" [ RetryOnFailure ]
@@ -1641,6 +1641,7 @@ crbug.com/dawn/0000 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,bu
 ################################################################################
 crbug.com/dawn/0000 webgpu:api,operation,adapter,requestDevice:always_returns_device:compatibilityMode=false [ Failure ]
 crbug.com/dawn/0000 webgpu:api,operation,uncapturederror:iff_uncaptured:errorType="out-of-memory" [ Failure ]
+crbug.com/dawn/0000 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:* [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,abs:f32:inputSource="const";vectorize="_undef_" [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,abs:f32:inputSource="const";vectorize=2 [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,abs:f32:inputSource="const";vectorize=3 [ Failure ]
@@ -1673,6 +1674,8 @@ crbug.com/dawn/0000 webgpu:shader,execution,expression,unary,f32_conversion:f32:
 crbug.com/dawn/0000 webgpu:shader,execution,expression,unary,f32_conversion:f32:inputSource="const";vectorize=3 [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,unary,f32_conversion:f32:inputSource="const";vectorize=4 [ Failure ]
 crbug.com/dawn/0000 webgpu:web_platform,external_texture,video:importExternalTexture,cameraCapture:* [ Failure ]
+crbug.com/dawn/0000 [ angle-opengl dawn-no-backend-validation desktop display-server-x graphite-disabled intel-0x9bc5 no-asan no-clang-coverage oop-c passthrough release renderer-skia-gl target-cpu-64 ubuntu webgpu-adapter-default webgpu-no-worker ] webgpu:shader,execution,limits:switch_case_selectors: [ Failure ]
+crbug.com/dawn/0000 [ intel-0x4680 ] webgpu:api,validation,createView:texture_view_usage:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,dpdxFine:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,dpdyFine:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_2d_coords:* [ Failure ]
@@ -1682,8 +1685,10 @@ crbug.com/dawn/0000 [ intel-0x4680 ] webgpu:shader,execution,expression,call,bui
 crbug.com/dawn/0000 [ intel-0x4680 ] webgpu:shader,execution,robust_access_vertex:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x4680 ] webgpu:web_platform,canvas,configure:viewFormats:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x4680 ] webgpu:web_platform,canvas,getCurrentTexture:resize:canvasType="offscreen" [ Failure ]
+crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:api,validation,createView:texture_view_usage:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,fwidthFine:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_2d_coords:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_3d_coords:* [ Failure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_array_2d_coords:format="depth16unorm";minFilter="nearest" [ Failure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_array_2d_coords:format="depth32float";minFilter="nearest" [ Failure ]
+crbug.com/dawn/0000 [ nvidia-0x2184 ] webgpu:api,validation,createView:texture_view_usage:* [ Failure ]
