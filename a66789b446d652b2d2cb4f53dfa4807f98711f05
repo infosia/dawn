@@ -112,6 +112,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e21419b8_3474ea46",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-01T15:09:49Z",
+      "side": 1,
+      "message": "In the case I showed we never call `Apply` so `mImmediateSize` is never copied in `mLastAppliedImmediateDataSize`. But in the example `mImmediateDataRangeDirty` would still end up as false. We might not technically need it because as you pointed out the layouts would be different, but that\u0027s assumptions that we could avoid with my suggestion.",
+      "parentUuid": "4a020987_aecbb91b",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "88888333_9361f234",
         "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
         "patchSetId": 1
@@ -223,6 +241,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9a2f686d_152a4d3b",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-01T15:09:49Z",
+      "side": 1,
+      "message": "It\u0027s cheap to have a `RefCountedVkHandle`, but the point is that we also don\u0027t need a specific CacheKey per amount of immediates.",
+      "parentUuid": "51b5470e_24ce694d",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4be44f84_4aad0f31",
         "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
         "patchSetId": 1
@@ -299,6 +335,24 @@
       "side": 1,
       "message": "I remembered that validation layer take this behaviour as an issue? Let me try again",
       "parentUuid": "dcd30648_956675bf",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46368be3_879a6864",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-01T15:09:49Z",
+      "side": 1,
+      "message": "Indeed that\u0027s a Vulkan validation requirement. Vulkan is so annoying https://registry.khronos.org/vulkan/specs/1.3-khr-extensions/html/vkspec.html#VUID-VkPushConstantRange-size-00296",
+      "parentUuid": "98ac5fdc_d5fbf61d",
       "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
