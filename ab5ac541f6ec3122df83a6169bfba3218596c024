@@ -68,6 +68,24 @@
       "message": "Is there a Bug ID for this?",
       "revId": "ab5ac541f6ec3122df83a6169bfba3218596c024",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94c27b03_358fa641",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-10-01T09:42:33Z",
+      "side": 1,
+      "message": "Comment was a draft left in error from the first time I saw it (before Corentin\u0027s review). Please ignore.",
+      "parentUuid": "f77cd450_7057d80f",
+      "revId": "ab5ac541f6ec3122df83a6169bfba3218596c024",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
