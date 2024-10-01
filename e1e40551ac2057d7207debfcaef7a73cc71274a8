@@ -52,6 +52,24 @@
       "parentUuid": "bc5d0ead_6448f0e0",
       "revId": "e1e40551ac2057d7207debfcaef7a73cc71274a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c460c19_6f1a071e",
+        "filename": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-01T17:03:45Z",
+      "side": 1,
+      "message": "As discussed offline, the case of \"struct of array of array of dynamic index\" wasn\u0027t handled, and would break FXC. This is now fixed, and I\u0027ve added a test. This case breaks in the non-IR path. Nice catch!",
+      "parentUuid": "6fcd737f_a86437de",
+      "revId": "e1e40551ac2057d7207debfcaef7a73cc71274a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
