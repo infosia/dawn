@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4ea23fb_d8bec20b",
+        "filename": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-01T16:01:12Z",
+      "side": 1,
+      "message": "Looks like this wouldn\u0027t replace `struct.array[0].array[dynamic]` - is that an issue for FXC?",
+      "revId": "e1e40551ac2057d7207debfcaef7a73cc71274a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a531bf3a_e55e605d",
+        "filename": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-01T16:01:12Z",
+      "side": 1,
+      "message": "übernit: Prefer `-\u003eStoreType()` in this case, since you know you have a pointer already.",
+      "revId": "d990603e44fe5e348aa4da3f3aa3d4db8db442ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

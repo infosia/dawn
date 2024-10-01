@@ -1,0 +1,91 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7778cd47_68d62ec8",
+        "filename": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-01T16:01:12Z",
+      "side": 1,
+      "message": "Nit: unused",
+      "fixSuggestions": [
+        {
+          "fixId": "a2fcabaf_5151f466",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.h",
+              "range": {
+                "startLine": 31,
+                "startChar": 0,
+                "endLine": 33,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "b96d3d52a8cb1c72f34f354e0f2c821c3780430f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39d97e58_68787ee5",
+        "filename": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-01T16:01:12Z",
+      "side": 1,
+      "message": "Nit: transform",
+      "revId": "b96d3d52a8cb1c72f34f354e0f2c821c3780430f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36cbe12e_0cb4fb42",
+        "filename": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-01T16:01:12Z",
+      "side": 1,
+      "message": "Nit: indexable",
+      "fixSuggestions": [
+        {
+          "fixId": "955a0ff4_53e519a0",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.h",
+              "range": {
+                "startLine": 53,
+                "startChar": 0,
+                "endLine": 54,
+                "endChar": 0
+              },
+              "replacement": "/// mapped to the indexable register space by FXC.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b96d3d52a8cb1c72f34f354e0f2c821c3780430f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
