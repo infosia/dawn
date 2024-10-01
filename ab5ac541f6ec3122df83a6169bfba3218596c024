@@ -51,6 +51,23 @@
       "message": "LGTM! It\u0027s a bit surprising that `decltype` produces artifact that require the corresponding NDK but that\u0027s fine.",
       "revId": "ab5ac541f6ec3122df83a6169bfba3218596c024",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f77cd450_7057d80f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-10-01T09:36:23Z",
+      "side": 1,
+      "message": "Is there a Bug ID for this?",
+      "revId": "ab5ac541f6ec3122df83a6169bfba3218596c024",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
