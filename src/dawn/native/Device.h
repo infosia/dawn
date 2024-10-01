@@ -226,10 +226,6 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
         const ShaderModuleDescriptor* descriptor,
         const std::vector<tint::wgsl::Extension>& internalExtensions = {},
         std::unique_ptr<OwnedCompilationMessages>* compilationMessages = nullptr);
-    // Deprecated: this was the way to create a SwapChain when it was explicitly manipulated by the
-    // end user.
-    ResultOrError<Ref<SwapChainBase>> CreateSwapChain(Surface* surface,
-                                                      const SwapChainDescriptor* descriptor);
     ResultOrError<Ref<SwapChainBase>> CreateSwapChain(Surface* surface,
                                                       SwapChainBase* previousSwapChain,
                                                       const SurfaceConfiguration* config);
