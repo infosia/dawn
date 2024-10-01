@@ -94,6 +94,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4a020987_aecbb91b",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-01T01:26:27Z",
+      "side": 1,
+      "message": "Sry but I think I might not understand this comment correctly. The dirty only tracks immediate data range. And we need to combined with  BindGroupTrackerBase::IsPipelineLayoutCompatible() to decide whether we need to apply bind group changes.\n\nbtw, I think with `mLastAppliedImmediateDataSize` and `mImmediateSize` we still find the equal in the case \n```\nSetPipeline(with0Immediates)\nSetPipeline(with0ImmediatesAsWell)\n```\n\nSo what am I missed?",
+      "parentUuid": "8d1add83_8421eca2",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "88888333_9361f234",
         "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
         "patchSetId": 1
@@ -135,6 +153,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fcd8bb98_c8844d1e",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-01T01:26:27Z",
+      "side": 1,
+      "message": "lol",
+      "parentUuid": "561551d6_ed04b039",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "deb6acbf_48667fa1",
         "filename": "src/dawn/native/vulkan/ComputePipelineVk.h",
         "patchSetId": 1
@@ -169,6 +205,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "51b5470e_24ce694d",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-01T01:26:27Z",
+      "side": 1,
+      "message": "Yes. I leave the raw ptr here as the note \"Pipeline doesn\u0027t hold the lifecycle\". But I\u0027m Ok to keep only RefCountedVkHandle\u003cVkPipelineLayout\u003e instead.",
+      "parentUuid": "1b9f90d1_2f3401d1",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4be44f84_4aad0f31",
         "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
         "patchSetId": 1
@@ -180,6 +234,30 @@
       "writtenOn": "2024-09-30T14:47:12Z",
       "side": 1,
       "message": "?",
+      "range": {
+        "startLine": 81,
+        "startChar": 81,
+        "endLine": 81,
+        "endChar": 98
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e26dfd24_cff87804",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-01T01:26:27Z",
+      "side": 1,
+      "message": "😞",
+      "parentUuid": "4be44f84_4aad0f31",
       "range": {
         "startLine": 81,
         "startChar": 81,
@@ -209,6 +287,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "98ac5fdc_d5fbf61d",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-01T01:26:27Z",
+      "side": 1,
+      "message": "I remembered that validation layer take this behaviour as an issue? Let me try again",
+      "parentUuid": "dcd30648_956675bf",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0c135e6c_5af44a98",
         "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
         "patchSetId": 1
@@ -220,6 +316,24 @@
       "writtenOn": "2024-09-30T14:47:12Z",
       "side": 1,
       "message": "We don\u0027t need a special cache key for the various internal layouts as the pipeline\u0027s key will contain 1) the key for the layout for application immediates 2) the various pipeline compilation options / WGSL code, etc which determines how many internal immediates we need.\n\nSo the map can just contain `RefCountedVkHandle\u003cVkPipelineLayout\u003e` directly!",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1699755_fb475fcb",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-01T01:26:27Z",
+      "side": 1,
+      "message": "lol (Let me think how to do the cache in PipelineLayout instead of cache vkcreateInfo).",
+      "parentUuid": "0c135e6c_5af44a98",
       "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -381,6 +495,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "57979dc7_29170c4a",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-01T01:26:27Z",
+      "side": 1,
+      "message": "I find my keyboard \"n\" key is not work that smoothly in this CL.(And I double checked) It\u0027s time to get a new one!",
+      "parentUuid": "85b3df15_b6db07a5",
+      "range": {
+        "startLine": 107,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 45
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6cb5d169_2bd58494",
         "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
         "patchSetId": 1
@@ -392,6 +530,30 @@
       "writtenOn": "2024-09-30T14:47:12Z",
       "side": 1,
       "message": "nit: mCachedCreateInfo to explain this is just to speed up computations, though IMHO Pipeline compilation is cold code so we could recompute all the time.",
+      "range": {
+        "startLine": 112,
+        "startChar": 23,
+        "endLine": 112,
+        "endChar": 42
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f626cf66_396e7de2",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-01T01:26:27Z",
+      "side": 1,
+      "message": "Got it. Let us do the recompute always to remove such non-necessary cache.",
+      "parentUuid": "6cb5d169_2bd58494",
       "range": {
         "startLine": 112,
         "startChar": 23,
@@ -421,6 +583,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f7275a2_b945bbc9",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-01T01:26:27Z",
+      "side": 1,
+      "message": "Exactly. Let me try another words.",
+      "parentUuid": "d3181c6e_295727d5",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a681246d_af346ce9",
         "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
         "patchSetId": 1
@@ -432,6 +612,24 @@
       "writtenOn": "2024-09-30T14:47:12Z",
       "side": 1,
       "message": "u-nit: since assert seems slightly unnecessary (even previously)",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01b8655a_02119165",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-01T01:26:27Z",
+      "side": 1,
+      "message": "Super!",
+      "parentUuid": "a681246d_af346ce9",
       "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
