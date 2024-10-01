@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "489d2ef3_07f5dddc",
+        "filename": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-01T16:21:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7778cd47_68d62ec8",
+      "revId": "b96d3d52a8cb1c72f34f354e0f2c821c3780430f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39d97e58_68787ee5",
@@ -49,6 +67,24 @@
       "writtenOn": "2024-10-01T16:01:12Z",
       "side": 1,
       "message": "Nit: transform",
+      "revId": "b96d3d52a8cb1c72f34f354e0f2c821c3780430f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fa87703_c8cd2eba",
+        "filename": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-01T16:21:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39d97e58_68787ee5",
       "revId": "b96d3d52a8cb1c72f34f354e0f2c821c3780430f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -84,6 +120,24 @@
           ]
         }
       ],
+      "revId": "b96d3d52a8cb1c72f34f354e0f2c821c3780430f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7ad8c28_859115bb",
+        "filename": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-01T16:21:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36cbe12e_0cb4fb42",
       "revId": "b96d3d52a8cb1c72f34f354e0f2c821c3780430f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
