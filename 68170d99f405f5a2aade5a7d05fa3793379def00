@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4565d7b_2bcdde71",
+        "filename": "src/dawn/native/webgpu_absl_format.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-01T23:47:03Z",
+      "side": 1,
+      "message": "Note since I was fixing a similar issue in https://dawn-review.googlesource.com/c/dawn/+/208955, I think that this might get the wrong thing if its a `const char*` overload that assumes we should be using `strlen`. I think we need to figure out this issue with a more robust solution, i.e. have a ctor from `wgpu::StringView` to `absl::string_view` and use `absl::string_view` everywhere? or something else that will allow us to roll into Google3 a bit easier?",
+      "range": {
+        "startLine": 707,
+        "startChar": 4,
+        "endLine": 707,
+        "endChar": 59
+      },
+      "revId": "68170d99f405f5a2aade5a7d05fa3793379def00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
