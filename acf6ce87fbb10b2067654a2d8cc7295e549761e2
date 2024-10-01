@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce467fa6_e145403d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-01T15:34:53Z",
+      "side": 1,
+      "message": "LGTM, would just like to see some more unit tests for the transform specifically.",
+      "revId": "acf6ce87fbb10b2067654a2d8cc7295e549761e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb7996b4_ee43c510",
+        "filename": "src/tint/lang/core/ir/transform/value_to_let.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-01T15:34:53Z",
+      "side": 1,
+      "message": "Nit: Comment is incorrect",
+      "revId": "acf6ce87fbb10b2067654a2d8cc7295e549761e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4965f0b_3c2e425e",
+        "filename": "src/tint/lang/core/ir/transform/value_to_let.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-01T15:34:53Z",
+      "side": 1,
+      "message": "Nit: Could just do this inline in the loop above instead of via a worklist, since there\u0027s nothing here that adds instructions to the module.",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 25
+      },
+      "revId": "acf6ce87fbb10b2067654a2d8cc7295e549761e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2177864e_cc676322",
+        "filename": "src/tint/lang/core/ir/transform/value_to_let_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-01T15:34:53Z",
+      "side": 1,
+      "message": "We should add some unit tests that exercise the `replace_pointer_lets` option, as it\u0027s easier to see and verify the expected behaviour here then in the GLSL output.",
+      "revId": "acf6ce87fbb10b2067654a2d8cc7295e549761e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25128597_b0487589",
+        "filename": "src/tint/lang/glsl/writer/raise/raise.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-01T15:34:53Z",
+      "side": 1,
+      "message": "Remove.",
+      "fixSuggestions": [
+        {
+          "fixId": "df3e094c_98588ae1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/raise/raise.cc",
+              "range": {
+                "startLine": 158,
+                "startChar": 0,
+                "endLine": 159,
+                "endChar": 0
+              },
+              "replacement": "    RUN_TRANSFORM(core::ir::transform::RemovePointerLets, module);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "acf6ce87fbb10b2067654a2d8cc7295e549761e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
