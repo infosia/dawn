@@ -34,6 +34,24 @@
       "parentUuid": "f4ea23fb_d8bec20b",
       "revId": "e1e40551ac2057d7207debfcaef7a73cc71274a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fcd737f_a86437de",
+        "filename": "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-01T16:24:20Z",
+      "side": 1,
+      "message": "Actually, I already had a test for this, see:\n```\nTEST_F(HlslWriterLocalizeStructArrayAssignmentTest, StructArrayStructArray_DynIndexSecondAccess) {\n```",
+      "parentUuid": "bc5d0ead_6448f0e0",
+      "revId": "e1e40551ac2057d7207debfcaef7a73cc71274a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
