@@ -33,6 +33,24 @@
       "message": "Nit: Our Vector container has an `Any` method which makes this a little nicer.",
       "revId": "80834d0856a9e814bbe02d3730b46907b67c7992",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b4ea1b8_3808582f",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-01T20:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ed25bb6_25018a74",
+      "revId": "80834d0856a9e814bbe02d3730b46907b67c7992",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
