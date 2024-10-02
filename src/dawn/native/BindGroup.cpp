@@ -147,6 +147,30 @@ MaybeError ValidateTextureBindGroupEntry(DeviceBase* device, const BindGroupEntr
     return {};
 }
 
+MaybeError ValidateCompatibilityModeTextureView(DeviceBase* device,
+                                                const TextureViewBase* view,
+                                                const TextureBase* texture) {
+    if (!device->IsCompatibilityMode()) {
+        return {};
+    }
+
+    DAWN_INVALID_IF(view->GetDimension() != texture->GetCompatibilityTextureBindingViewDimension(),
+                    "Dimension (%s) of %s must match textureBindingViewDimension (%s) of "
+                    "%s in compatibility mode.",
+                    view->GetDimension(), view,
+                    texture->GetCompatibilityTextureBindingViewDimension(), texture);
+
+    DAWN_INVALID_IF(view->GetBaseArrayLayer() != 0,
+                    "baseArrayLayer of %s must be zero in compatibility mode.", view);
+
+    DAWN_INVALID_IF(view->GetLayerCount() != 0,
+                    "arrayLayerCount (%u) of %s must equal to the depthOrArrayLayers (%u) of %s in "
+                    "compatibility mode.",
+                    view->GetLayerCount(), view, texture->GetArrayLayers(), texture);
+
+    return {};
+}
+
 MaybeError ValidateSampledTextureBinding(DeviceBase* device,
                                          const BindGroupEntry& entry,
                                          const TextureBindingInfo& layout,
@@ -190,13 +214,7 @@ MaybeError ValidateSampledTextureBinding(DeviceBase* device,
                     "Dimension (%s) of %s doesn't match the expected dimension (%s).",
                     entry.textureView->GetDimension(), entry.textureView, layout.viewDimension);
 
-    DAWN_INVALID_IF(
-        device->IsCompatibilityMode() && entry.textureView->GetDimension() !=
-                                             texture->GetCompatibilityTextureBindingViewDimension(),
-        "Dimension (%s) of %s must match textureBindingViewDimension (%s) of "
-        "%s in compatibility mode.",
-        entry.textureView->GetDimension(), entry.textureView,
-        texture->GetCompatibilityTextureBindingViewDimension(), texture);
+    DAWN_TRY(ValidateCompatibilityModeTextureView(device, view, texture));
 
     return {};
 }
@@ -224,6 +242,8 @@ MaybeError ValidateStorageTextureBinding(DeviceBase* device,
 
     DAWN_INVALID_IF(view->GetLevelCount() != 1, "mipLevelCount (%u) of %s expected to be 1.",
                     view->GetLevelCount(), view);
+
+    DAWN_TRY(ValidateCompatibilityModeTextureView(device, view, texture));
 
     return {};
 }
