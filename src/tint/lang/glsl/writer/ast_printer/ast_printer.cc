@@ -1490,6 +1490,7 @@ void ASTPrinter::EmitTextureCall(StringStream& out,
     uint32_t glsl_ret_width = 4u;
     bool append_depth_ref_to_coords = true;
     bool is_depth = texture_type->Is<core::type::DepthTexture>();
+    bool is_array = IsTextureArray(texture_type->Dim());
 
     switch (builtin->Fn()) {
         case wgsl::BuiltinFn::kTextureSample:
@@ -1532,7 +1533,14 @@ void ASTPrinter::EmitTextureCall(StringStream& out,
             TINT_ICE() << "Unhandled texture builtin '" << std::string(builtin->str()) << "'";
     }
 
+    bool supplyDerivativesAsGradients = false;
     if (builtin->Signature().IndexOf(core::ParameterUsage::kOffset) >= 0) {
+        if ((builtin->Fn() == wgsl::BuiltinFn::kTextureSample ||
+             builtin->Fn() == wgsl::BuiltinFn::kTextureSampleCompare) &&
+            is_depth && is_array) {
+            out << "Grad";
+            supplyDerivativesAsGradients = true;
+        }
         out << "Offset";
     }
 
@@ -1570,6 +1578,14 @@ void ASTPrinter::EmitTextureCall(StringStream& out,
 
     emit_expr_as_signed(param_coords);
 
+    if (supplyDerivativesAsGradients) {
+        auto* coords = arg(Usage::kCoords);
+        out << ", dFdx(";
+        EmitExpression(out, coords);
+        out << "), dFdy(";
+        EmitExpression(out, coords);
+        out << ")";
+    }
     for (auto usage : {Usage::kLevel, Usage::kDdx, Usage::kDdy, Usage::kSampleIndex}) {
         if (auto* e = arg(usage)) {
             out << ", ";
