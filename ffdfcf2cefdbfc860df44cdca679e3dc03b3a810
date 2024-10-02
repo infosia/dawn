@@ -34,6 +34,24 @@
       "parentUuid": "0adef250_261860fa",
       "revId": "ffdfcf2cefdbfc860df44cdca679e3dc03b3a810",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a26571aa_70cbd7b6",
+        "filename": "tools/src/cmd/run-cts/node/cmd.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-10-02T13:34:08Z",
+      "side": 1,
+      "message": "Yea, I know, but outside the scripts which were setup that way, do people use `out/active`?",
+      "parentUuid": "9ce1c139_5f636fd1",
+      "revId": "ffdfcf2cefdbfc860df44cdca679e3dc03b3a810",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
