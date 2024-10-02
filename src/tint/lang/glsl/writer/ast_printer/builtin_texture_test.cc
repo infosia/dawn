@@ -154,7 +154,7 @@ ExpectedResult expected_texture_overload(ast::test::ValidTextureOverload overloa
         case ValidTextureOverload::kSampleDepth2dArrayF32:
             return R"(texture(Texture_Sampler, vec4(1.0f, 2.0f, float(3), 0.0f));)";
         case ValidTextureOverload::kSampleDepth2dArrayOffsetF32:
-            return R"(textureOffset(Texture_Sampler, vec4(1.0f, 2.0f, float(3), 0.0f), ivec2(4, 5));)";
+            return R"(textureGradOffset(Texture_Sampler, vec4(1.0f, 2.0f, float(3), 0.0f), dFdx(vec2(1.0f, 2.0f)), dFdy(vec2(1.0f, 2.0f)), ivec2(4, 5));)";
         case ValidTextureOverload::kSampleDepthCubeF32:
             return R"(texture(Texture_Sampler, vec4(1.0f, 2.0f, 3.0f, 0.0f));)";
         case ValidTextureOverload::kSampleDepthCubeArrayF32:
