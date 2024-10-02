@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86bcbe5f_637e48b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-02T22:12:59Z",
+      "side": 1,
+      "message": "Not sure what\u0027s up with the builder config but feel free to land with `No-Try: true`",
+      "revId": "db118b323f238acf40741cefcc0976d381f39a6c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
