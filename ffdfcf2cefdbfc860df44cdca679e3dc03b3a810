@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0adef250_261860fa",
+        "filename": "tools/src/cmd/run-cts/node/cmd.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-10-02T01:51:40Z",
+      "side": 1,
+      "message": "I\u0027m always curious what percent of people use `out/active` vs the (what I believe is typical) `out/Debug` or `out/Release` from Chrome-land.",
+      "revId": "ffdfcf2cefdbfc860df44cdca679e3dc03b3a810",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
