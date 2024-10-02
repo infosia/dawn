@@ -50,33 +50,7 @@ struct SwapChainTextureInfo {
 class SwapChainBase : public RefCounted {
   public:
     SwapChainBase(DeviceBase* device, Surface* surface, const SurfaceConfiguration* config);
-
-    // This is called when the swapchain is detached when one of the following happens:
-    //
-    //  - The surface it is attached to is being destroyed.
-    //  - The swapchain is being replaced by another one on the surface.
-    //
-    // Note that the surface has a Ref on the last swapchain that was used on it so the
-    // SwapChain destructor will only be called after one of the things above happens.
-    //
-    // The call for the detaching previous swapchain should be called inside the backend
-    // implementation of SwapChains. This is to allow them to acquire any resources before
-    // calling detach to make a seamless transition from the previous swapchain.
-    //
-    // Likewise the call for the swapchain being destroyed must be done in the backend's
-    // swapchain's destructor since C++ says it is UB to call virtual methods in the base class
-    // destructor.
-    void DetachFromSurface();
-
-    void SetIsAttached();
-
-    // TODO(crbug.com/dawn/831):
-    // APIRelease() can be called without any synchronization guarantees so we need to use a Release
-    // method that will call LockAndDeleteThis() on destruction.
-    // This is because losing the last reference to the SwapChain will detach its surface which
-    // explicitly destroys the current texture. Explicit destruction of textures is not thread safe
-    // yet.
-    void APIRelease() { ReleaseAndLockBeforeDestroy(); }
+    ~SwapChainBase() override;
 
     DeviceBase* GetDevice() const;
     uint32_t GetWidth() const;
@@ -87,25 +61,19 @@ class SwapChainBase : public RefCounted {
     wgpu::PresentMode GetPresentMode() const;
     wgpu::CompositeAlphaMode GetAlphaMode() const;
     Surface* GetSurface() const;
-    bool IsAttached() const;
     wgpu::BackendType GetBackendType() const;
 
-    // The returned texture must match the swapchain descriptor exactly.
-    ResultOrError<SurfaceTexture> GetCurrentTexture();
-    MaybeError Present();
-
-  protected:
-    ~SwapChainBase() override;
-
-  private:
-    void SetChildLabel(ApiObjectBase* child) const;
     // Get a format set from mViewFormats (equivalent information, but easier to validate the
     // current texture)
     FormatSet ComputeViewFormatSet() const;
 
+    // The returned texture must match the swapchain descriptor exactly.
+    virtual ResultOrError<SwapChainTextureInfo> GetCurrentTexture() = 0;
+    virtual MaybeError Present() = 0;
+
+  private:
     Ref<DeviceBase> mDevice;
 
-    bool mAttached = false;
     uint32_t mWidth;
     uint32_t mHeight;
     wgpu::TextureFormat mFormat;
@@ -116,24 +84,8 @@ class SwapChainBase : public RefCounted {
     std::vector<wgpu::TextureFormat> mViewFormats;
     wgpu::CompositeAlphaMode mAlphaMode;
 
-    // This is a weak reference to the surface. If the surface is destroyed it will call
-    // DetachFromSurface and mSurface will be updated to nullptr.
+    // Swapchains are owned by their parent wgpu::Surface so it is safe to store a raw_ptr.
     raw_ptr<Surface> mSurface = nullptr;
-    SwapChainTextureInfo mCurrentTextureInfo;
-
-    MaybeError ValidatePresent() const;
-    MaybeError ValidateGetCurrentTexture() const;
-
-    // GetCurrentTextureImpl and PresentImpl are guaranteed to be called in an interleaved manner,
-    // starting with GetCurrentTextureImpl.
-    virtual ResultOrError<SwapChainTextureInfo> GetCurrentTextureImpl() = 0;
-
-    // The call to present must destroy the current texture so further access to it are invalid.
-    virtual MaybeError PresentImpl() = 0;
-
-    // Guaranteed to be called exactly once during the lifetime of the SwapChain. After it is
-    // called no other virtual method can be called.
-    virtual void DetachFromSurfaceImpl() = 0;
 };
 
 }  // namespace dawn::native

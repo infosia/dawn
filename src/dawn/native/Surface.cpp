@@ -338,16 +338,7 @@ Surface::Surface(InstanceBase* instance, const UnpackedPtr<SurfaceDescriptor>& d
     }
 }
 
-Surface::~Surface() {
-    if (mSwapChain != nullptr) {
-        [[maybe_unused]] bool error = mInstance->ConsumedError(Unconfigure());
-    }
-
-    if (mRecycledSwapChain != nullptr) {
-        mRecycledSwapChain->DetachFromSurface();
-        mRecycledSwapChain = nullptr;
-    }
-}
+Surface::~Surface() = default;
 
 InstanceBase* Surface::GetInstance() const {
     return mInstance.Get();
@@ -452,37 +443,26 @@ MaybeError Surface::Configure(const SurfaceConfiguration* configIn) {
 
     {
         auto deviceLock(GetCurrentDevice()->GetScopedLock());
-        ResultOrError<Ref<SwapChainBase>> maybeNewSwapChain =
+        auto maybeNewSwapChain =
             GetCurrentDevice()->CreateSwapChain(this, previousSwapChain, &config);
 
         // Don't keep swap chains older than 1 call to Configure
-        if (mRecycledSwapChain) {
-            mRecycledSwapChain->DetachFromSurface();
-            mRecycledSwapChain = nullptr;
-        }
+        mRecycledSwapChain = nullptr;
 
-        if (mSwapChain && maybeNewSwapChain.IsSuccess()) {
-            mSwapChain->DetachFromSurface();
-        }
+        InvalidateCurrentFrame();
+
+        // This will keep mSwapChain unchanged if an error happened.
         DAWN_TRY_ASSIGN(mSwapChain, std::move(maybeNewSwapChain));
-
-        mSwapChain->SetIsAttached();
     }
 
     return {};
 }
 
 MaybeError Surface::Unconfigure() {
-    DAWN_INVALID_IF(IsError(), "%s is invalid.", this);
-    DAWN_INVALID_IF(!mSwapChain.Get(), "%s is not configured.", this);
+    InvalidateCurrentFrame();
 
     if (mSwapChain != nullptr) {
-        if (mRecycledSwapChain != nullptr) {
-            mRecycledSwapChain->DetachFromSurface();
-            mRecycledSwapChain = nullptr;
-        }
-        mRecycledSwapChain = mSwapChain;
-        mSwapChain = nullptr;
+        mRecycledSwapChain = std::move(mSwapChain);
     }
 
     return {};
@@ -514,13 +494,14 @@ void APISurfaceCapabilitiesFreeMembers(WGPUSurfaceCapabilities capabilities) {
     utils::FreeApiSeq(&capabilities.alphaModes, &capabilities.alphaModeCount);
 }
 
-MaybeError Surface::GetCurrentTexture(SurfaceTexture* surfaceTexture) const {
+MaybeError Surface::GetCurrentTexture(SurfaceTexture* surfaceTexture) {
     surfaceTexture->texture = nullptr;
     surfaceTexture->suboptimal = false;
 
     surfaceTexture->status = wgpu::SurfaceGetCurrentTextureStatus::Error;
     DAWN_INVALID_IF(IsError(), "%s is invalid.", this);
-    DAWN_INVALID_IF(!mSwapChain.Get(), "%s is not configured.", this);
+    DAWN_INVALID_IF(mSwapChain.Get() == nullptr, "%s is not configured.", this);
+    DAWN_INVALID_IF(mCurrentFrame.Get() == nullptr, "%s already has a frame current.", this);
 
     surfaceTexture->status = wgpu::SurfaceGetCurrentTextureStatus::DeviceLost;
     DAWN_TRY(GetCurrentDevice()->ValidateIsAlive());
@@ -529,20 +510,54 @@ MaybeError Surface::GetCurrentTexture(SurfaceTexture* surfaceTexture) const {
     // specific error.
     surfaceTexture->status = wgpu::SurfaceGetCurrentTextureStatus::Error;
 
-    auto deviceLock(GetCurrentDevice()->GetScopedLock());
-    DAWN_TRY_ASSIGN(*surfaceTexture, mSwapChain->GetCurrentTexture());
+    SwapChainTextureInfo textureInfo;
+    {
+        auto deviceLock(GetCurrentDevice()->GetScopedLock());
+        DAWN_TRY_ASSIGN(textureInfo, mSwapChain->GetCurrentTexture());
+    }
+
+    mCurrentFrame = std::move(textureInfo.texture);
+    if (mCurrentFrame.Get() != nullptr) {
+        mCurrentFrame->SetLabel(absl::StrFormat("of %s", this));
+
+        // Check that the return texture matches exactly what was given for this descriptor.
+        DAWN_ASSERT(mCurrentFrame->GetFormat().format == mSwapChain->GetFormat());
+        DAWN_ASSERT(mCurrentFrame->GetUsage() == mSwapChain->GetUsage());
+        DAWN_ASSERT(mCurrentFrame->GetDimension() == wgpu::TextureDimension::e2D);
+        DAWN_ASSERT(mCurrentFrame->GetWidth(Aspect::Color) == mSwapChain->GetWidth());
+        DAWN_ASSERT(mCurrentFrame->GetHeight(Aspect::Color) == mSwapChain->GetHeight());
+        DAWN_ASSERT(mCurrentFrame->GetNumMipLevels() == 1);
+        DAWN_ASSERT(mCurrentFrame->GetArrayLayers() == 1);
+        DAWN_ASSERT(mCurrentFrame->GetViewFormats() == mSwapChain->ComputeViewFormatSet());
+    }
+
+    // Calling GetCurrentTexture always returns a new reference.
+    surfaceTexture->texture = Ref<TextureBase>(mCurrentFrame).Detach();
+    surfaceTexture->suboptimal = textureInfo.suboptimal;
+    surfaceTexture->status = textureInfo.status;
 
     return {};
 }
 
 MaybeError Surface::Present() {
     DAWN_INVALID_IF(IsError(), "%s is invalid.", this);
-    DAWN_INVALID_IF(!mSwapChain.Get(), "%s is not configured.", this);
+    DAWN_INVALID_IF(mSwapChain.Get() == nullptr, "%s is not configured.", this);
+    DAWN_INVALID_IF(mCurrentFrame.Get() != nullptr, "%s doesn't have a frame current.", this);
 
     auto deviceLock(GetCurrentDevice()->GetScopedLock());
-    DAWN_TRY(mSwapChain->Present());
 
-    return {};
+    // Invalidate the current texture even in the case the backend have an unexpected error.
+    MaybeError backendPresentError = mSwapChain->Present();
+    InvalidateCurrentFrame();
+
+    return backendPresentError;
+}
+
+void Surface::InvalidateCurrentFrame() {
+    if (mCurrentFrame.Get() != nullptr) {
+        mCurrentFrame->Destroy();
+    }
+    mCurrentFrame = nullptr;
 }
 
 const std::string& Surface::GetLabel() const {
@@ -573,7 +588,7 @@ wgpu::Status Surface::APIGetCapabilities(AdapterBase* adapter,
     }
 }
 
-void Surface::APIGetCurrentTexture(SurfaceTexture* surfaceTexture) const {
+void Surface::APIGetCurrentTexture(SurfaceTexture* surfaceTexture) {
     MaybeError maybeError = GetCurrentTexture(surfaceTexture);
     if (!GetCurrentDevice()) {
         [[maybe_unused]] bool error = mInstance->ConsumedError(std::move(maybeError));

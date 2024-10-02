@@ -59,9 +59,8 @@ class SwapChain final : public SwapChainBase {
     NSPRef<id<CAMetalDrawable>> mCurrentDrawable;
     Ref<Texture> mTexture;
 
-    MaybeError PresentImpl() override;
-    ResultOrError<SwapChainTextureInfo> GetCurrentTextureImpl() override;
-    void DetachFromSurfaceImpl() override;
+    MaybeError Present() override;
+    ResultOrError<SwapChainTextureInfo> GetCurrentTexture() override;
 };
 
 }  // namespace dawn::native::metal

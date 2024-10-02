@@ -534,27 +534,18 @@ MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
 
 SwapChain::~SwapChain() = default;
 
-MaybeError SwapChain::PresentImpl() {
-    mTexture->APIDestroy();
-    mTexture = nullptr;
+MaybeError SwapChain::Present() {
     return {};
 }
 
-ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
+ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTexture() {
     TextureDescriptor textureDesc = GetSwapChainBaseTextureDescriptor(this);
-    mTexture = AcquireRef(new Texture(GetDevice(), Unpack(&textureDesc)));
+
     SwapChainTextureInfo info;
-    info.texture = mTexture;
+    info.texture = AcquireRef(new Texture(GetDevice(), Unpack(&textureDesc)));
     info.status = wgpu::SurfaceGetCurrentTextureStatus::Success;
     info.suboptimal = false;
     return info;
-}
-
-void SwapChain::DetachFromSurfaceImpl() {
-    if (mTexture != nullptr) {
-        mTexture->APIDestroy();
-        mTexture = nullptr;
-    }
 }
 
 // ShaderModule

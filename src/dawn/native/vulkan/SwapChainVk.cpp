@@ -118,7 +118,31 @@ ResultOrError<Ref<SwapChain>> SwapChain::Create(Device* device,
     return swapchain;
 }
 
-SwapChain::~SwapChain() = default;
+SwapChain::~SwapChain() {
+    if (mTexture != nullptr) {
+        mTexture->APIDestroy();
+        mTexture = nullptr;
+    }
+
+    if (mBlitTexture != nullptr) {
+        mBlitTexture->APIDestroy();
+        mBlitTexture = nullptr;
+    }
+
+    mImages.clear();
+
+    // The swapchain images are destroyed with the swapchain.
+    if (mSwapChain != VK_NULL_HANDLE) {
+        ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mSwapChain);
+        mSwapChain = VK_NULL_HANDLE;
+    }
+
+    if (mVkSurface != VK_NULL_HANDLE) {
+        ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mVkSurface);
+        mVkSurface = VK_NULL_HANDLE;
+    }
+}
+
 
 // Note that when we need to re-create the swapchain because it is out of date,
 // previousSwapChain can be set to `this`.
@@ -376,7 +400,7 @@ ResultOrError<SwapChain::Config> SwapChain::ChooseConfig(
     return config;
 }
 
-MaybeError SwapChain::PresentImpl() {
+MaybeError SwapChain::Present() {
     Device* device = ToBackend(GetDevice());
 
     Queue* queue = ToBackend(device->GetQueue());
@@ -413,7 +437,6 @@ MaybeError SwapChain::PresentImpl() {
         // TODO(crbug.com/dawn/269): Find a way to reuse the blit texture between frames
         // instead of creating a new one every time. This will involve "un-destroying" the
         // texture or making the blit texture "external".
-        mBlitTexture->APIDestroy();
         mBlitTexture = nullptr;
     }
 
@@ -440,7 +463,6 @@ MaybeError SwapChain::PresentImpl() {
     presentInfo.pResults = nullptr;
 
     // Free the texture before present so error handling doesn't skip that step.
-    mTexture->APIDestroy();
     mTexture = nullptr;
 
     VkResult result = VkResult::WrapUnsafe(
@@ -466,7 +488,7 @@ MaybeError SwapChain::PresentImpl() {
     }
 }
 
-ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
+ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTexture() {
     return GetCurrentTextureInternal();
 }
 
@@ -564,31 +586,6 @@ ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureInternal(bool is
                                                           VK_IMAGE_USAGE_TRANSFER_SRC_BIT));
     swapChainTextureInfo.texture = mBlitTexture;
     return swapChainTextureInfo;
-}
-
-void SwapChain::DetachFromSurfaceImpl() {
-    if (mTexture != nullptr) {
-        mTexture->APIDestroy();
-        mTexture = nullptr;
-    }
-
-    if (mBlitTexture != nullptr) {
-        mBlitTexture->APIDestroy();
-        mBlitTexture = nullptr;
-    }
-
-    mImages.clear();
-
-    // The swapchain images are destroyed with the swapchain.
-    if (mSwapChain != VK_NULL_HANDLE) {
-        ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mSwapChain);
-        mSwapChain = VK_NULL_HANDLE;
-    }
-
-    if (mVkSurface != VK_NULL_HANDLE) {
-        ToBackend(GetDevice())->GetFencedDeleter()->DeleteWhenUnused(mVkSurface);
-        mVkSurface = VK_NULL_HANDLE;
-    }
 }
 
 ResultOrError<VkSurfaceKHR> CreateVulkanSurface(InstanceBase* instance,

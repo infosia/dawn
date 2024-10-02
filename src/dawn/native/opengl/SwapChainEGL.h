@@ -58,9 +58,8 @@ class SwapChainEGL final : public SwapChainBase {
     Ref<Texture> mTexture;
     Ref<TextureView> mTextureView;
 
-    MaybeError PresentImpl() override;
-    ResultOrError<SwapChainTextureInfo> GetCurrentTextureImpl() override;
-    void DetachFromSurfaceImpl() override;
+    MaybeError Present() override;
+    ResultOrError<SwapChainTextureInfo> GetCurrentTexture() override;
 };
 
 }  // namespace dawn::native::opengl

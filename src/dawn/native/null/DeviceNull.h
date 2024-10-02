@@ -333,11 +333,8 @@ class SwapChain final : public SwapChainBase {
     using SwapChainBase::SwapChainBase;
     MaybeError Initialize(SwapChainBase* previousSwapChain);
 
-    Ref<Texture> mTexture;
-
-    MaybeError PresentImpl() override;
-    ResultOrError<SwapChainTextureInfo> GetCurrentTextureImpl() override;
-    void DetachFromSurfaceImpl() override;
+    MaybeError Present() override;
+    ResultOrError<SwapChainTextureInfo> GetCurrentTexture() override;
 };
 
 class Texture : public TextureBase {

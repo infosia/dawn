@@ -52,7 +52,19 @@ ResultOrError<Ref<SwapChainEGL>> SwapChainEGL::Create(Device* device,
 SwapChainEGL::SwapChainEGL(DeviceBase* dev, Surface* sur, const SurfaceConfiguration* config)
     : SwapChainBase(dev, sur, config) {}
 
-SwapChainEGL::~SwapChainEGL() = default;
+SwapChainEGL::~SwapChainEGL() {
+    if (mEGLSurface != EGL_NO_SURFACE) {
+        Device* device = ToBackend(GetDevice());
+        device->GetEGL(false).DestroySurface(device->GetEGLDisplay(), mEGLSurface);
+        mEGLSurface = EGL_NO_SURFACE;
+    }
+
+    if (mTexture != nullptr) {
+        mTexture->APIDestroy();
+        mTexture = nullptr;
+        mTextureView = nullptr;
+    }
+}
 
 MaybeError SwapChainEGL::Initialize(SwapChainBase* previousSwapChain) {
     const Device* device = ToBackend(GetDevice());
@@ -79,8 +91,6 @@ MaybeError SwapChainEGL::Initialize(SwapChainBase* previousSwapChain) {
                 reinterpret_cast<SwapChainEGL*>(ToBackend(previousSwapChain));
             std::swap(previousEGLSwapChain->mEGLSurface, mEGLSurface);
         }
-
-        previousSwapChain->DetachFromSurface();
     }
 
     const DisplayEGL* display = ToBackend(device->GetPhysicalDevice())->GetDisplay();
@@ -96,7 +106,7 @@ MaybeError SwapChainEGL::Initialize(SwapChainBase* previousSwapChain) {
     return {};
 }
 
-MaybeError SwapChainEGL::PresentImpl() {
+MaybeError SwapChainEGL::Present() {
     Device* device = ToBackend(GetDevice());
     EGLDisplay display = device->GetEGLDisplay();
     const EGLFunctions& egl = device->GetEGL(false);
@@ -135,7 +145,7 @@ MaybeError SwapChainEGL::PresentImpl() {
     return {};
 }
 
-ResultOrError<SwapChainTextureInfo> SwapChainEGL::GetCurrentTextureImpl() {
+ResultOrError<SwapChainTextureInfo> SwapChainEGL::GetCurrentTexture() {
     // Create the fake surface texture that we'll blit from.
     TextureDescriptor desc = GetSwapChainBaseTextureDescriptor(this);
     Ref<TextureBase> texture;
@@ -152,20 +162,6 @@ ResultOrError<SwapChainTextureInfo> SwapChainEGL::GetCurrentTextureImpl() {
     // TODO(dawn:2320): Check for optimality
     info.suboptimal = false;
     return info;
-}
-
-void SwapChainEGL::DetachFromSurfaceImpl() {
-    if (mEGLSurface != EGL_NO_SURFACE) {
-        Device* device = ToBackend(GetDevice());
-        device->GetEGL(false).DestroySurface(device->GetEGLDisplay(), mEGLSurface);
-        mEGLSurface = EGL_NO_SURFACE;
-    }
-
-    if (mTexture != nullptr) {
-        mTexture->APIDestroy();
-        mTexture = nullptr;
-        mTextureView = nullptr;
-    }
 }
 
 MaybeError SwapChainEGL::CreateEGLSurface(const DisplayEGL* display) {

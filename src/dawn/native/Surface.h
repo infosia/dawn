@@ -119,7 +119,7 @@ class Surface final : public ErrorMonad {
     // Dawn API
     void APIConfigure(const SurfaceConfiguration* config);
     wgpu::Status APIGetCapabilities(AdapterBase* adapter, SurfaceCapabilities* capabilities) const;
-    void APIGetCurrentTexture(SurfaceTexture* surfaceTexture) const;
+    void APIGetCurrentTexture(SurfaceTexture* surfaceTexture);
     void APIPresent();
     void APIUnconfigure();
     // TODO(crbug.com/42241188): Remove const char* version of the method.
@@ -134,8 +134,10 @@ class Surface final : public ErrorMonad {
     MaybeError Unconfigure();
 
     MaybeError GetCapabilities(AdapterBase* adapter, SurfaceCapabilities* capabilities) const;
-    MaybeError GetCurrentTexture(SurfaceTexture* surfaceTexture) const;
+    MaybeError GetCurrentTexture(SurfaceTexture* surfaceTexture);
     MaybeError Present();
+
+    void InvalidateCurrentFrame();
 
     Ref<InstanceBase> mInstance;
     Type mType;
@@ -143,6 +145,9 @@ class Surface final : public ErrorMonad {
 
     // The surface has an associated device only when it is configured
     Ref<DeviceBase> mCurrentDevice;
+
+    // The texture for the current frame.
+    Ref<TextureBase> mCurrentFrame;
 
     // The swapchain is created when configuring the surface.
     Ref<SwapChainBase> mSwapChain;

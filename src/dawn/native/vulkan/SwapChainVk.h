@@ -79,9 +79,8 @@ class SwapChain : public SwapChainBase {
     ResultOrError<SwapChainTextureInfo> GetCurrentTextureInternal(bool isReentrant = false);
 
     // SwapChainBase implementation
-    MaybeError PresentImpl() override;
-    ResultOrError<SwapChainTextureInfo> GetCurrentTextureImpl() override;
-    void DetachFromSurfaceImpl() override;
+    MaybeError Present() override;
+    ResultOrError<SwapChainTextureInfo> GetCurrentTexture() override;
 
     Config mConfig;
 

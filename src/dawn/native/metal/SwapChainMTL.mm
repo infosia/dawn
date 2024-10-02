@@ -51,6 +51,7 @@ SwapChain::SwapChain(DeviceBase* dev, Surface* sur, const SurfaceConfiguration* 
 
 SwapChain::~SwapChain() = default;
 
+
 MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
     DAWN_ASSERT(GetSurface()->GetType() == Surface::Type::MetalLayer);
 
@@ -61,8 +62,6 @@ MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
         DAWN_INVALID_IF(previousSwapChain->GetBackendType() != wgpu::BackendType::Metal,
                         "Metal SwapChain cannot switch backend types from %s to %s.",
                         previousSwapChain->GetBackendType(), wgpu::BackendType::Metal);
-
-        previousSwapChain->DetachFromSurface();
     }
 
     mLayer = static_cast<CAMetalLayer*>(GetSurface()->GetMetalLayer());
@@ -89,45 +88,28 @@ MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
     return {};
 }
 
-MaybeError SwapChain::PresentImpl() {
+MaybeError SwapChain::Present() {
     DAWN_ASSERT(mCurrentDrawable != nullptr);
     [*mCurrentDrawable present];
-
-    mTexture->APIDestroy();
-    mTexture = nullptr;
-
     mCurrentDrawable = nullptr;
 
     return {};
 }
 
-ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
+ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTexture() {
     @autoreleasepool {
         DAWN_ASSERT(mCurrentDrawable == nullptr);
         mCurrentDrawable = [*mLayer nextDrawable];
 
         TextureDescriptor textureDesc = GetSwapChainBaseTextureDescriptor(this);
 
-        mTexture = Texture::CreateWrapping(ToBackend(GetDevice()), Unpack(&textureDesc),
-                                           NSPRef<id<MTLTexture>>([*mCurrentDrawable texture]));
-
         SwapChainTextureInfo info;
-        info.texture = mTexture;
+        info.texture = Texture::CreateWrapping(ToBackend(GetDevice()), Unpack(&textureDesc),
+                                           NSPRef<id<MTLTexture>>([*mCurrentDrawable texture]));
         info.status = wgpu::SurfaceGetCurrentTextureStatus::Success;
         // TODO(dawn:2320): Check for optimality
         info.suboptimal = false;
         return info;
-    }
-}
-
-void SwapChain::DetachFromSurfaceImpl() {
-    DAWN_ASSERT((mTexture == nullptr) == (mCurrentDrawable == nullptr));
-
-    if (mTexture != nullptr) {
-        mTexture->APIDestroy();
-        mTexture = nullptr;
-
-        mCurrentDrawable = nullptr;
     }
 }
 
