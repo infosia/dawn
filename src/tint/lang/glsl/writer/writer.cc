@@ -34,9 +34,7 @@
 #include "src/tint/lang/glsl/writer/printer/printer.h"
 #include "src/tint/lang/glsl/writer/raise/raise.h"
 
-#include "src/tint/lang/wgsl/ast/transform/canonicalize_entry_point_io.h"
-#include "src/tint/lang/wgsl/ast/transform/manager.h"
-#include "src/tint/lang/wgsl/sem/module.h"
+#include "src/tint/lang/core/type/reference.h"
 
 namespace tint::glsl::writer {
 
@@ -44,78 +42,56 @@ namespace {
 
 void GetInputDeclarations(const Program& program, std::vector<InputDeclaration>* inputs) {
     for (const tint::ast::Variable* var : program.AST().GlobalVariables()) {
-        const auto* sem = program.Sem().Get<tint::sem::GlobalVariable>(var);
+        const tint::sem::GlobalVariable* sem = program.Sem().Get<tint::sem::GlobalVariable>(var);
         if (!sem || sem->AddressSpace() != tint::core::AddressSpace::kIn) {
             continue;
         }
-        int location = -1;
-        for (const tint::ast::Attribute* attr : var->attributes) {
-            if (const auto* locAttr = attr->As<tint::ast::LocationAttribute>()) {
-                if (const auto* expr = locAttr->expr->As<tint::ast::IntLiteralExpression>()) {
-                    location = expr->value;
-                }
-            }
+        const std::optional<uint32_t>& location = sem->Attributes().location;
+        if (!location) {
+            continue;
         }
+
+        const core::type::Type* type = sem->Type()->As<core::type::Reference>()->StoreType();
         inputs->push_back({
-            location,
-            var->type->identifier->symbol.Name(),
+            static_cast<int>(*location),
+            type->FriendlyName(),
             var->name->symbol.Name(),
         });
     }
 }
 
-// TODO need to do something similar for attributes?
-void AddNonStructFields(const Program& program, const tint::ast::Struct* structDecl, int group, int binding, Vector<std::string, 4>& prefix, std::vector<UniformDeclaration>* uniforms) {
-    for (const tint::ast::StructMember* member : structDecl->members) {
-        const tint::Symbol& typeSymbol = member->type->identifier->symbol;
-        const tint::Symbol& nameSymbol = member->name->symbol;
-        prefix.Push(nameSymbol.Name());
-
-        if (const tint::ast::TypeDecl* typeDecl = program.AST().LookupType(typeSymbol)) {
-            if (const tint::ast::Struct* nestedStructDecl = typeDecl->As<tint::ast::Struct>()) {
-                AddNonStructFields(program, nestedStructDecl, group, binding, prefix, uniforms);
-                prefix.Pop();
-                continue;
-            }
+void AddNonStructFields(const core::type::Type* type,
+                        int group,
+                        int binding,
+                        Vector<std::string, 4>& prefix,
+                        std::vector<UniformDeclaration>* uniforms) {
+    if (const core::type::Struct* str = type->As<core::type::Struct>()) {
+        for (const core::type::StructMember* member : str->Members()) {
+            prefix.Push(member->Name().Name());
+            AddNonStructFields(member->Type(), group, binding, prefix, uniforms);
+            prefix.Pop();
         }
 
-        uniforms->push_back({ group, binding, typeSymbol.Name(), Join(prefix, ".") });
-        prefix.Pop();
+    } else {
+        uniforms->push_back({ group, binding, type->FriendlyName(), Join(prefix, ".") });
     }
 }
 
 void GetUniformDeclarations(const Program& program, std::vector<UniformDeclaration>* uniforms) {
     for (const tint::ast::Variable* var : program.AST().GlobalVariables()) {
-        if (!var->HasBindingPoint()) {
+        const tint::sem::GlobalVariable* sem = program.Sem().Get<tint::sem::GlobalVariable>(var);
+        if (!sem || sem->AddressSpace() != tint::core::AddressSpace::kUniform) {
             continue;
         }
-        const tint::ast::TypeDecl* typeDecl = program.AST().LookupType(var->type->identifier->symbol);
-        if (!typeDecl) {
+        const std::optional<tint::BindingPoint>& bindingPoint = sem->Attributes().binding_point;
+        if (!bindingPoint) {
             continue;
         }
-        const tint::ast::Struct* structDecl = typeDecl->As<tint::ast::Struct>();
-        if (!structDecl) {
-            continue;
-        }
-
-        int group = -1;
-        int binding = -1;
-        for (const tint::ast::Attribute* attr : var->attributes) {
-            if (const auto* groupAttr = attr->As<tint::ast::GroupAttribute>()) {
-                if (const auto* expr = groupAttr->expr->As<tint::ast::IntLiteralExpression>()) {
-                    group = expr->value;
-                }
-            } else if (const auto* bindingAttr = attr->As<tint::ast::BindingAttribute>()) {
-                if (const auto* expr = bindingAttr->expr->As<tint::ast::IntLiteralExpression>()) {
-                    binding = expr->value;
-                }
-            }
-        }
-        TINT_ASSERT(group >= 0 && binding >= 0);
 
         // Recursively add non-struct fields to uniforms.
+        const core::type::Type* type = sem->Type()->As<core::type::Reference>()->StoreType();
         Vector<std::string, 4> prefix{ var->name->symbol.Name() };
-        AddNonStructFields(program, structDecl, group, binding, prefix, uniforms);
+        AddNonStructFields(type, bindingPoint->group, bindingPoint->binding, prefix, uniforms);
     }
 }
 

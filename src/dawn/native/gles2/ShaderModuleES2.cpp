@@ -40,14 +40,14 @@ namespace {
 GLSLType WGSLTypeNameToGLSLType(const std::string& name) {
     if (name == "f32") {
         return GLSLType::kFloat;
-    } else if (name == "vec2") {
+    } else if (name == "vec2<f32>") {
         return GLSLType::kFloat2;
-    } else if (name == "vec4") {
+    } else if (name == "vec4<f32>") {
         return GLSLType::kFloat4;
     // TODO try not to allow unsigned types to show up here
     } else if (name == "u32") {
         return GLSLType::kInt;
-    } else if (name == "mat4x4") {
+    } else if (name == "mat4x4<f32>") {
         return GLSLType::kMatrix4;
     } else {
         printf("!! unsupported wgsl type: %s\n", name.c_str());
