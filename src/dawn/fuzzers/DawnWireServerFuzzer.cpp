@@ -123,19 +123,20 @@ int DawnWireServerFuzzer::Run(const uint8_t* data,
             if (sAdapterSupported(adapter)) {
                 WGPUAdapter cAdapter = adapter.Get();
                 dawn::native::GetProcs().adapterAddRef(cAdapter);
-                callback(WGPURequestAdapterStatus_Success, cAdapter, nullptr, userdata1, userdata2);
+                callback(WGPURequestAdapterStatus_Success, cAdapter, {nullptr, 0}, userdata1,
+                         userdata2);
                 return {};
             }
         }
-        callback(WGPURequestAdapterStatus_Unavailable, nullptr, "No supported adapter.", userdata1,
-                 userdata2);
+        callback(WGPURequestAdapterStatus_Unavailable, nullptr,
+                 {"No supported adapter.", WGPU_STRLEN}, userdata1, userdata2);
         return {};
     };
     procs.instanceRequestAdapter = [](WGPUInstance cInstance, const WGPURequestAdapterOptions*,
                                       WGPURequestAdapterCallback callback, void* userdata) {
         RequestAdapter(
             cInstance,
-            [](WGPURequestAdapterStatus status, WGPUAdapter adapter, const char* message,
+            [](WGPURequestAdapterStatus status, WGPUAdapter adapter, WGPUStringView message,
                void* callback, void* userdata) {
                 auto cb = reinterpret_cast<WGPURequestAdapterCallback>(callback);
                 cb(status, adapter, message, userdata);
@@ -146,7 +147,7 @@ int DawnWireServerFuzzer::Run(const uint8_t* data,
                                        WGPURequestAdapterCallbackInfo callbackInfo) -> WGPUFuture {
         return RequestAdapter(
             cInstance,
-            [](WGPURequestAdapterStatus status, WGPUAdapter adapter, const char* message,
+            [](WGPURequestAdapterStatus status, WGPUAdapter adapter, WGPUStringView message,
                void* callback, void* userdata) {
                 auto cb = reinterpret_cast<WGPURequestAdapterCallback>(callback);
                 cb(status, adapter, message, userdata);
