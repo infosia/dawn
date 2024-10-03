@@ -958,9 +958,11 @@ TEST_P(GlslWriterStorageTextureNonESTest, Emit) {
     }
     auto s = ty.Get<core::type::StorageTexture>(params.dim, core::TexelFormat::kR32Float,
                                                 params.access, subtype);
+    auto* var = b.Var("v", handle, s, core::Access::kReadWrite);
+    var->SetBindingPoint(0, 0);
+    b.ir.root_block->Append(var);
+
     auto* func = b.Function("foo", ty.void_());
-    auto* param = b.FunctionParam("a", s);
-    func->SetParams({param});
     b.Append(func->Block(), [&] { b.Return(func); });
 
     Options opts{};
