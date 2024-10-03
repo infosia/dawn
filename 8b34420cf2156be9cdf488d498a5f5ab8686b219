@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2007079a_38d02b91",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T13:29:56Z",
+      "side": 1,
+      "message": "I\u0027m confused by this. If the call argument is coming from a function parameter, then we re-add that argument? Where does this argument get removed later when we\u0027ve figured out the originating module-scope variable?\n\nOr does this case never actually happen because we\u0027ve already figured out the module-scope variable by now?",
+      "range": {
+        "startLine": 336,
+        "startChar": 0,
+        "endLine": 338,
+        "endChar": 25
+      },
+      "revId": "8b34420cf2156be9cdf488d498a5f5ab8686b219",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "147d80df_b83d9e1c",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T13:29:56Z",
+      "side": 1,
+      "message": "Nit: We do have an `IsHandle()`.",
+      "revId": "8b34420cf2156be9cdf488d498a5f5ab8686b219",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e8f8ccf_c4179157",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T13:29:56Z",
+      "side": 1,
+      "message": "Nit: These are not sub-objects or pointers. Maybe just \"handle type arguments\".",
+      "revId": "8b34420cf2156be9cdf488d498a5f5ab8686b219",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
