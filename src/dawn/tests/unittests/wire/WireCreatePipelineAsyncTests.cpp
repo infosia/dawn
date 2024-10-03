@@ -318,7 +318,7 @@ TEST(WireCreatePipelineAsyncTestNullBackend, ServerDeletedBeforeCallback) {
     WGPUAdapter adapter;
     wgpuInstanceRequestAdapter(
         instance, &adapterOptions,
-        [](WGPURequestAdapterStatus status, WGPUAdapter adapter, const char*, void* userdata) {
+        [](WGPURequestAdapterStatus status, WGPUAdapter adapter, WGPUStringView, void* userdata) {
             *static_cast<WGPUAdapter*>(userdata) = adapter;
         },
         &adapter);
@@ -329,7 +329,7 @@ TEST(WireCreatePipelineAsyncTestNullBackend, ServerDeletedBeforeCallback) {
     WGPUDevice device;
     wgpuAdapterRequestDevice(
         adapter, &deviceDesc,
-        [](WGPURequestDeviceStatus status, WGPUDevice device, const char*, void* userdata) {
+        [](WGPURequestDeviceStatus status, WGPUDevice device, WGPUStringView, void* userdata) {
             *static_cast<WGPUDevice*>(userdata) = device;
         },
         &device);

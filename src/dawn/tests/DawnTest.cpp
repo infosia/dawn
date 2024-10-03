@@ -754,7 +754,7 @@ DawnTestBase::DawnTestBase(const AdapterTestParam& param) : mParam(param) {
         WGPUAdapter cAdapter = it->Get();
         DAWN_ASSERT(cAdapter);
         native::GetProcs().adapterAddRef(cAdapter);
-        callbackInfo.callback(WGPURequestAdapterStatus_Success, cAdapter, nullptr,
+        callbackInfo.callback(WGPURequestAdapterStatus_Success, cAdapter, {nullptr, 0},
                               callbackInfo.userdata1, callbackInfo.userdata2);
 
         // Returning a placeholder future that we should never be waiting on.
@@ -778,7 +778,7 @@ DawnTestBase::DawnTestBase(const AdapterTestParam& param) : mParam(param) {
         DAWN_ASSERT(cDevice != nullptr);
 
         gCurrentTest->mLastCreatedBackendDevice = cDevice;
-        callbackInfo.callback(WGPURequestDeviceStatus_Success, cDevice, nullptr,
+        callbackInfo.callback(WGPURequestDeviceStatus_Success, cDevice, {nullptr, 0},
                               callbackInfo.userdata1, callbackInfo.userdata2);
 
         // Returning a placeholder future that we should never be waiting on.

@@ -62,7 +62,7 @@ TEST_F(WireInjectInstanceTests, CallAfterReserveInject) {
 
     EXPECT_CALL(api, OnInstanceRequestAdapter2(apiInstance, _, _)).WillOnce([&]() {
         api.CallInstanceRequestAdapter2Callback(apiInstance, WGPURequestAdapterStatus_Error,
-                                                nullptr, "Some error message.");
+                                                nullptr, {"Some error message.", WGPU_STRLEN});
     });
     FlushClient();
 
