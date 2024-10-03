@@ -95,9 +95,13 @@ MaybeError PlatformFunctions::LoadFXCompiler() {
     d3dDisassemble = &D3DDisassemble;
 #else
     std::string error;
-    if (!mFXCompilerLib.Open("d3dcompiler_47.dll", &error) ||
-        !mFXCompilerLib.GetProc(&d3dCompile, "D3DCompile", &error) ||
+    if (!mFXCompilerLib.Open("d3dcompiler_47.dll", &error)) {
+        error = ("Error loading dll " + error);
+        return DAWN_INTERNAL_ERROR(error.c_str());
+    }
+    if (!mFXCompilerLib.GetProc(&d3dCompile, "D3DCompile", &error) ||
         !mFXCompilerLib.GetProc(&d3dDisassemble, "D3DDisassemble", &error)) {
+        error = ("Error loading proc " + error);
         return DAWN_INTERNAL_ERROR(error.c_str());
     }
 #endif
