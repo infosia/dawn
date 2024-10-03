@@ -38,6 +38,7 @@
 #include "dawn/native/Adapter.h"
 #include "dawn/native/NullBackend.h"
 #include "dawn/tests/PartitionAllocSupport.h"
+#include "dawn/tests/StringViewMatchers.h"
 #include "dawn/tests/ToggleParser.h"
 #include "dawn/tests/unittests/validation/ValidationTest.h"
 #include "dawn/utils/WireHelper.h"
@@ -116,7 +117,7 @@ ValidationTest::ValidationTest() {
         return dawn::native::GetProcs().instanceRequestAdapter2(
             self, options,
             {nullptr, WGPUCallbackMode_AllowSpontaneous,
-             [](WGPURequestAdapterStatus status, WGPUAdapter cAdapter, char const* message,
+             [](WGPURequestAdapterStatus status, WGPUAdapter cAdapter, WGPUStringView message,
                 void* userdata, void*) {
                  gCurrentTest->mBackendAdapter = dawn::native::FromAPI(cAdapter);
 
@@ -162,7 +163,7 @@ ValidationTest::ValidationTest() {
         return dawn::native::GetProcs().adapterRequestDevice2(
             self, reinterpret_cast<WGPUDeviceDescriptor*>(&deviceDesc),
             {nullptr, WGPUCallbackMode_AllowSpontaneous,
-             [](WGPURequestDeviceStatus status, WGPUDevice cDevice, const char* message,
+             [](WGPURequestDeviceStatus status, WGPUDevice cDevice, WGPUStringView message,
                 void* userdata, void*) {
                  gCurrentTest->mLastCreatedBackendDevice = cDevice;
 
@@ -374,27 +375,29 @@ void ValidationTest::SetUp(const wgpu::InstanceDescriptor* nativeDesc,
     wgpu::DeviceDescriptor deviceDescriptor = {};
     deviceDescriptor.SetDeviceLostCallback(
         wgpu::CallbackMode::AllowSpontaneous,
-        [this](const wgpu::Device&, wgpu::DeviceLostReason reason, const char* message) {
+        [this](const wgpu::Device&, wgpu::DeviceLostReason reason, wgpu::StringView message) {
             if (mExpectDestruction) {
                 EXPECT_EQ(reason, wgpu::DeviceLostReason::Destroyed);
                 return;
             }
-            ADD_FAILURE() << "Device lost during test: " << message;
+            ADD_FAILURE() << "Device lost during test: " << std::string_view(message);
             DAWN_ASSERT(false);
         });
     deviceDescriptor.SetUncapturedErrorCallback(
-        [](const wgpu::Device&, wgpu::ErrorType type, const char* message, ValidationTest* self) {
+        [](const wgpu::Device&, wgpu::ErrorType type, wgpu::StringView message,
+           ValidationTest* self) {
             DAWN_ASSERT(type != wgpu::ErrorType::NoError);
 
-            ASSERT_TRUE(self->mExpectError) << "Got unexpected device error: " << message;
+            ASSERT_TRUE(self->mExpectError)
+                << "Got unexpected device error: " << std::string_view(message);
             ASSERT_FALSE(self->mError) << "Got two errors in expect block, first one is:\n"  //
                                        << self->mDeviceErrorMessage                          //
                                        << "\nsecond one is:\n"                               //
-                                       << message;
+                                       << std::string_view(message);
 
             self->mDeviceErrorMessage = message;
             if (self->mExpectError) {
-                ASSERT_THAT(message, self->mErrorMatcher);
+                ASSERT_THAT(message, testing::SizedStringMatches(self->mErrorMatcher));
             }
             self->mError = true;
         },

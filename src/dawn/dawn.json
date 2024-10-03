@@ -85,7 +85,7 @@
         "args": [
             {"name": "status", "type": "request adapter status"},
             {"name": "adapter", "type": "adapter", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -94,7 +94,7 @@
         "args": [
             {"name": "status", "type": "request adapter status"},
             {"name": "adapter", "type": "adapter", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
+            {"name": "message", "type": "string view"}
         ]
     },
     "request adapter callback info": {
@@ -719,7 +719,7 @@
         "category": "callback function",
         "args": [
             {"name": "status", "type": "map async status"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
+            {"name": "message", "type": "string view"}
         ]
     },
     "buffer map callback info": {
@@ -1226,7 +1226,7 @@
         "args": [
             {"name": "status", "type": "create pipeline async status"},
             {"name": "pipeline", "type": "compute pipeline", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -1235,7 +1235,7 @@
         "args": [
             {"name": "status", "type": "create pipeline async status"},
             {"name": "pipeline", "type": "compute pipeline", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
+            {"name": "message", "type": "string view"}
         ]
     },
     "create compute pipeline async callback info": {
@@ -1272,7 +1272,7 @@
         "args": [
             {"name": "status", "type": "create pipeline async status"},
             {"name": "pipeline", "type": "render pipeline", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -1281,7 +1281,7 @@
         "args": [
             {"name": "status", "type": "create pipeline async status"},
             {"name": "pipeline", "type": "render pipeline", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
+            {"name": "message", "type": "string view"}
         ]
     },
     "create render pipeline async callback info": {
@@ -1668,7 +1668,7 @@
         "category": "function pointer",
         "args": [
             {"name": "reason", "type": "device lost reason"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -1677,7 +1677,7 @@
         "args": [
             {"name": "device", "type": "device", "annotation": "const*", "length": 1},
             {"name": "reason", "type": "device lost reason"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -1686,7 +1686,7 @@
         "args": [
             {"name": "device", "type": "device", "annotation": "const*", "length": 1},
             {"name": "reason", "type": "device lost reason"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
+            {"name": "message", "type": "string view"}
         ]
     },
     "device lost callback info": {
@@ -1724,7 +1724,7 @@
         "category": "function pointer",
         "args": [
             {"name": "type", "type": "error type"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -1733,7 +1733,7 @@
         "args": [
             {"name": "device", "type": "device", "annotation": "const*", "length": 1},
             {"name": "type", "type": "error type"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
+            {"name": "message", "type": "string view"}
         ]
     },
     "uncaptured error callback info": {
@@ -1763,7 +1763,7 @@
         "args": [
             {"name": "status", "type": "pop error scope status"},
             {"name": "type", "type": "error type"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -1772,7 +1772,7 @@
         "args": [
             {"name": "status", "type": "pop error scope status"},
             {"name": "type", "type": "error type"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
+            {"name": "message", "type": "string view"}
         ]
     },
     "pop error scope callback info": {
@@ -1867,7 +1867,7 @@
         "tags": ["dawn"],
         "args": [
             {"name": "type", "type": "logging type"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -3495,7 +3495,7 @@
         "args": [
             {"name": "status", "type": "request device status"},
             {"name": "device", "type": "device", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -3505,7 +3505,7 @@
         "args": [
             {"name": "status", "type": "request device status"},
             {"name": "device", "type": "device", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
+            {"name": "message", "type": "string view"}
         ]
     },
     "request device callback info": {

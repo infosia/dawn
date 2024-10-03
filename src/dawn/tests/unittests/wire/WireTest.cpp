@@ -43,6 +43,7 @@ using testing::MockCallback;
 using testing::NotNull;
 using testing::Return;
 using testing::SaveArg;
+using testing::StrEq;
 using testing::WithArg;
 
 WireTest::WireTest() {}
@@ -118,10 +119,10 @@ void WireTest::SetUp() {
             .WillOnce(Return(0));
 
         api.CallInstanceRequestAdapter2Callback(apiInstance, WGPURequestAdapterStatus_Success,
-                                                apiAdapter, nullptr);
+                                                apiAdapter, {nullptr, 0});
     });
     FlushClient();
-    EXPECT_CALL(adapterCb, Call(wgpu::RequestAdapterStatus::Success, NotNull(), nullptr, this))
+    EXPECT_CALL(adapterCb, Call(wgpu::RequestAdapterStatus::Success, NotNull(), StrEq(""), this))
         .WillOnce(SaveArg<1>(&adapter));
     FlushServer();
     EXPECT_NE(adapter, nullptr);
@@ -166,10 +167,10 @@ void WireTest::SetUp() {
                 .WillOnce(Return(0));
 
             api.CallAdapterRequestDevice2Callback(apiAdapter, WGPURequestDeviceStatus_Success,
-                                                  apiDevice, nullptr);
+                                                  apiDevice, {nullptr, 0});
         }));
     FlushClient();
-    EXPECT_CALL(deviceCb, Call(wgpu::RequestDeviceStatus::Success, NotNull(), nullptr, this))
+    EXPECT_CALL(deviceCb, Call(wgpu::RequestDeviceStatus::Success, NotNull(), StrEq(""), this))
         .WillOnce(SaveArg<1>(&device));
     FlushServer();
     EXPECT_NE(device, nullptr);
