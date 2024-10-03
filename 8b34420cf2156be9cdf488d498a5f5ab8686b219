@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6550b7d3_d8e7477f",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T18:09:46Z",
+      "side": 1,
+      "message": "The non-handle path has to cope with the possibility of there being no module-scope var, because that will happen when dealing with `function` variables. But for handle, there should *always* be a module-scope variable.",
+      "parentUuid": "08e0e476_dec8d0e2",
+      "range": {
+        "startLine": 336,
+        "startChar": 0,
+        "endLine": 338,
+        "endChar": 25
+      },
+      "revId": "8b34420cf2156be9cdf488d498a5f5ab8686b219",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "147d80df_b83d9e1c",
         "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
         "patchSetId": 2
