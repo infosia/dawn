@@ -116,7 +116,7 @@ ValidationTest::ValidationTest() {
         return dawn::native::GetProcs().instanceRequestAdapter2(
             self, options,
             {nullptr, WGPUCallbackMode_AllowSpontaneous,
-             [](WGPURequestAdapterStatus status, WGPUAdapter cAdapter, char const* message,
+             [](WGPURequestAdapterStatus status, WGPUAdapter cAdapter, WGPUStringView message,
                 void* userdata, void*) {
                  gCurrentTest->mBackendAdapter = dawn::native::FromAPI(cAdapter);
 
@@ -162,7 +162,7 @@ ValidationTest::ValidationTest() {
         return dawn::native::GetProcs().adapterRequestDevice2(
             self, reinterpret_cast<WGPUDeviceDescriptor*>(&deviceDesc),
             {nullptr, WGPUCallbackMode_AllowSpontaneous,
-             [](WGPURequestDeviceStatus status, WGPUDevice cDevice, const char* message,
+             [](WGPURequestDeviceStatus status, WGPUDevice cDevice, WGPUStringView message,
                 void* userdata, void*) {
                  gCurrentTest->mLastCreatedBackendDevice = cDevice;
 

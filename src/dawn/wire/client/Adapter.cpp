@@ -61,15 +61,13 @@ class RequestDeviceEvent : public TrackedEvent {
 
     WireResult ReadyHook(FutureID futureID,
                          WGPURequestDeviceStatus status,
-                         const char* message,
+                         WGPUStringView message,
                          const WGPUSupportedLimits* limits,
                          uint32_t featuresCount,
                          const WGPUFeatureName* features) {
         DAWN_ASSERT(mDevice != nullptr);
         mStatus = status;
-        if (message != nullptr) {
-            mMessage = message;
-        }
+        mMessage = {message.data, message.length};
         if (status == WGPURequestDeviceStatus_Success) {
             mDevice->SetLimits(limits);
             mDevice->SetFeatures(features, featuresCount);
@@ -90,13 +88,13 @@ class RequestDeviceEvent : public TrackedEvent {
             mCallback(mStatus,
                       mStatus == WGPURequestDeviceStatus_Success ? ReturnToAPI(std::move(device))
                                                                  : nullptr,
-                      mMessage ? mMessage->c_str() : nullptr, mUserdata1.ExtractAsDangling());
+                      {mMessage.data(), mMessage.length()}, mUserdata1.ExtractAsDangling());
         } else if (mCallback2) {
             Ref<Device> device = mDevice;
             mCallback2(mStatus,
                        mStatus == WGPURequestDeviceStatus_Success ? ReturnToAPI(std::move(device))
                                                                   : nullptr,
-                       mMessage ? mMessage->c_str() : nullptr, mUserdata1.ExtractAsDangling(),
+                       {mMessage.data(), mMessage.length()}, mUserdata1.ExtractAsDangling(),
                        mUserdata2.ExtractAsDangling());
         }
 
@@ -127,7 +125,7 @@ class RequestDeviceEvent : public TrackedEvent {
     // Note that the message is optional because we want to return nullptr when it wasn't set
     // instead of a pointer to an empty string.
     WGPURequestDeviceStatus mStatus;
-    std::optional<std::string> mMessage;
+    std::string mMessage;
 
     // The device is created when we call RequestDevice(F). It is guaranteed to be alive
     // throughout the duration of a RequestDeviceEvent because the Event essentially takes
@@ -349,7 +347,7 @@ WGPUFuture Adapter::RequestDevice2(const WGPUDeviceDescriptor* descriptor,
 WireResult Client::DoAdapterRequestDeviceCallback(ObjectHandle eventManager,
                                                   WGPUFuture future,
                                                   WGPURequestDeviceStatus status,
-                                                  const char* message,
+                                                  WGPUStringView message,
                                                   const WGPUSupportedLimits* limits,
                                                   uint32_t featuresCount,
                                                   const WGPUFeatureName* features) {
