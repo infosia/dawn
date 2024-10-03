@@ -57,17 +57,6 @@
 
 namespace {{metadata.namespace}} {
 
-namespace detail {
-constexpr size_t ConstexprMax(size_t a, size_t b) {
-    return a > b ? a : b;
-}
-
-template <typename T>
-static T& AsNonConstReference(const T& value) {
-    return const_cast<T&>(value);
-}
-}  // namespace detail
-
 {% set c_prefix = metadata.c_prefix %}
 {% for constant in by_category["constant"] %}
     {% set type = as_cppType(constant.type.name) %}
@@ -340,13 +329,27 @@ class ObjectBase {
     //* TODO: crbug.com/dawn/2509 - Remove name handling once old APIs are deprecated.
     {% set CallbackInfoType = (method.arguments|last).type %}
     {% set CallbackType = find_by_name(CallbackInfoType.members, "callback").type %}
-    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<F, Cb*>>" if not dfn else "" %}
+    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<F, Cb*> || std::is_convertible_v<F, CbChar*>>" if not dfn else "" %}
     template <typename F, typename T,
               typename Cb
                 {%- if not dfn -%}
                     {{" "}}= void (
                         {%- for arg in CallbackType.arguments -%}
                             {{as_annotated_cppType(arg)}}{{", "}}
+                        {%- endfor -%}
+                    T userdata)
+                {%- endif -%},
+              //* The Callback fnptr with const char* instead of StringView.
+              //* TODO(42241188): Remove once all clients use StringView versions of the callbacks
+              typename CbChar
+                {%- if not dfn -%}
+                    {{" "}}= void (
+                        {%- for arg in CallbackType.arguments -%}
+                            {%- if arg.type.name.canonical_case() == "string view" -%}
+                                const char* {{as_varName(arg.name)}}{{", "}}
+                            {%- else -%}
+                                {{as_annotated_cppType(arg)}}{{", "}}
+                            {%- endif -%}
                         {%- endfor -%}
                     T userdata)
                 {%- endif -%},
@@ -372,7 +375,7 @@ class ObjectBase {
     //* TODO: crbug.com/dawn/2509 - Remove name handling once old APIs are deprecated.
     {% set CallbackInfoType = (method.arguments|last).type %}
     {% set CallbackType = find_by_name(CallbackInfoType.members, "callback").type %}
-    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<L, Cb>>" if not dfn else "" %}
+    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<L, Cb> || std::is_convertible_v<L, CbChar>>" if not dfn else "" %}
     template <typename L,
               typename Cb
                 {%- if not dfn -%}
@@ -380,6 +383,21 @@ class ObjectBase {
                         {%- for arg in CallbackType.arguments -%}
                             {%- if not loop.first %}, {% endif -%}
                             {{as_annotated_cppType(arg)}}
+                        {%- endfor -%}
+                    )>
+                {%- endif -%},
+              //* The Callback fnptr with const char* instead of StringView.
+              //* TODO(42241188): Remove once all clients use StringView versions of the callbacks
+              typename CbChar
+                {%- if not dfn -%}
+                    {{" "}}= std::function<void(
+                        {%- for arg in CallbackType.arguments -%}
+                            {%- if not loop.first %}, {% endif -%}
+                            {%- if arg.type.name.canonical_case() == "string view" -%}
+                                const char* {{as_varName(arg.name)}}
+                            {%- else -%}
+                                {{as_annotated_cppType(arg)}}
+                            {%- endif -%}
                         {%- endfor -%}
                     )>
                 {%- endif -%},
@@ -440,24 +458,85 @@ class ObjectBase {
     struct {{as_cppType(type.name)}};
 {% endfor %}
 
+struct StringView {
+    char const * data = nullptr;
+    size_t length = WGPU_STRLEN;
+
+    {{wgpu_string_members("StringView") | indent(4)}}
+};
+
+namespace detail {
+constexpr size_t ConstexprMax(size_t a, size_t b) {
+    return a > b ? a : b;
+}
+
+template <typename T>
+static T& AsNonConstReference(const T& value) {
+    return const_cast<T&>(value);
+}
+
+// A wrapper around StringView that can be implicitly converted to const char* with temporary
+// storage that adds the \0 for output strings that are all explicitly-sized.
+// TODO(42241188): Remove once all clients use StringView versions of the callbacks.
+struct StringViewAdapter {
+    WGPUStringView sv;
+    char* nullTerminated = nullptr;
+
+    StringViewAdapter(WGPUStringView sv) : sv(sv) {}
+    ~StringViewAdapter() { delete[] nullTerminated; }
+    operator ::WGPUStringView() { return sv; }
+    operator StringView() { return {sv.data, sv.length}; }
+    operator const char*() {
+        assert(sv.length != WGPU_STRLEN);
+        assert(nullTerminated == nullptr);
+        nullTerminated = new char[sv.length + 1];
+        memcpy(nullTerminated, sv.data, sv.length);
+        nullTerminated[sv.length] = 0;
+        return nullTerminated;
+    }
+};
+}  // namespace detail
+
 {% macro render_cpp_callback_info_template_method_impl(type, method) %}
     {{render_cpp_callback_info_template_method_declaration(type, method, dfn=True)}} {
         {% set CallbackInfoType = (method.arguments|last).type %}
         {% set CallbackType = find_by_name(CallbackInfoType.members, "callback").type %}
         {{as_cType(CallbackInfoType.name)}} callbackInfo = {};
         callbackInfo.mode = static_cast<{{as_cType(types["callback mode"].name)}}>(callbackMode);
-        callbackInfo.callback = [](
-            {%- for arg in CallbackType.arguments -%}
-                {{as_annotated_cType(arg)}}{{", "}}
-            {%- endfor -%}
-        void* callback, void* userdata) {
-            auto cb = reinterpret_cast<Cb*>(callback);
-            (*cb)(
+        if constexpr (std::is_convertible_v<F, Cb*>) {
+            callbackInfo.callback = [](
                 {%- for arg in CallbackType.arguments -%}
-                    {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}{{", "}}
+                    {{as_annotated_cType(arg)}}{{", "}}
                 {%- endfor -%}
-            static_cast<T>(userdata));
-        };
+            void* callback, void* userdata) {
+                auto cb = reinterpret_cast<Cb*>(callback);
+                (*cb)(
+                    {%- for arg in CallbackType.arguments -%}
+                        {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}{{", "}}
+                    {%- endfor -%}
+                static_cast<T>(userdata));
+            };
+        } else {
+            //* Handle functors that take in const char* instead of StringView.
+            //* TODO(42241188): Remove once all clients use StringView versions of the callbacks
+            //* and also remove CbChar at the same time.
+            callbackInfo.callback = [](
+                {%- for arg in CallbackType.arguments -%}
+                    {{as_annotated_cType(arg)}}{{", "}}
+                {%- endfor -%}
+            void* callback, void* userdata) {
+                auto cb = reinterpret_cast<CbChar*>(callback);
+                (*cb)(
+                    {%- for arg in CallbackType.arguments -%}
+                        {%- if arg.type.name.canonical_case() == "string view" -%}
+                            {detail::StringViewAdapter({{as_varName(arg.name)}})}{{", "}}
+                        {%- else -%}
+                            {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}{{", "}}
+                        {%- endif -%}
+                    {%- endfor -%}
+                static_cast<T>(userdata));
+            };
+        }
         callbackInfo.userdata1 = reinterpret_cast<void*>(+callback);
         callbackInfo.userdata2 = reinterpret_cast<void*>(userdata);
         auto result = {{as_cMethodNamespaced(type.name, method.name, c_namespace)}}(Get(){{", "}}
@@ -514,7 +593,14 @@ class ObjectBase {
                 (*lambda)(
                     {%- for arg in CallbackType.arguments -%}
                         {%- if not loop.first %}, {% endif -%}
-                        {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}
+                        //* Handle functors that take in const char* instead of StringView.
+                        //* TODO(42241188): Remove once all clients use StringView versions of the callbacks
+                        //* and also remove CbChar at the same time.
+                        {%- if arg.type.name.canonical_case() == "string view" -%}
+                            {detail::StringViewAdapter({{as_varName(arg.name)}})}
+                        {%- else -%}
+                            {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}
+                        {%- endif -%}
                     {%- endfor -%});
             };
             callbackInfo.userdata1 = reinterpret_cast<void*>(lambda);
@@ -584,7 +670,7 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
     "offsetof mismatch for ChainedStruct::sType");
 
 //* Special structures that require some custom code generation.
-{% set SpecialStructures = ["device descriptor"] %}
+{% set SpecialStructures = ["device descriptor", "string view"] %}
 
 {% for type in by_category["structure"] if type.name.get() not in SpecialStructures %}
     {% set Out = "Out" if type.output else "" %}
@@ -627,18 +713,10 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
                 {{member_declaration}};
             {% endif %}
         {% endfor %}
-
-        //* Custom string constructors
-        {% if type.name.get() == "string view" %}
-            {{wgpu_string_members(as_cppType(type.name)) | indent(4)}}
-        {% endif %}
-
         {% if type.has_free_members_function %}
 
           private:
-        {% if type.has_free_members_function %}
-                inline void FreeMembers();
-        {% endif %}
+            inline void FreeMembers();
             static inline void Reset({{as_cppType(type.name)}}& value);
         {% endif %}
     };
@@ -747,7 +825,7 @@ struct {{CppType}} : protected detail::{{CppType}} {
             }
             FreeMembers();
             {% for member in type.members %}
-                ::{{metadata.namespace}}::detail::AsNonConstReference(this->{{member.name.camelCase()}}) = std::move(rhs.{{member.name.camelCase()}});
+                detail::AsNonConstReference(this->{{member.name.camelCase()}}) = std::move(rhs.{{member.name.camelCase()}});
             {% endfor %}
             Reset(rhs);
             return *this;
@@ -773,7 +851,7 @@ struct {{CppType}} : protected detail::{{CppType}} {
         void {{CppType}}::Reset({{CppType}}& value) {
             {{CppType}} defaultValue{};
             {% for member in type.members %}
-                ::{{metadata.namespace}}::detail::AsNonConstReference(value.{{member.name.camelCase()}}) = defaultValue.{{member.name.camelCase()}};
+                detail::AsNonConstReference(value.{{member.name.camelCase()}}) = defaultValue.{{member.name.camelCase()}};
             {% endfor %}
         }
     {% endif %}

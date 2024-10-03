@@ -85,7 +85,7 @@
         "args": [
             {"name": "status", "type": "request adapter status"},
             {"name": "adapter", "type": "adapter", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -94,7 +94,7 @@
         "args": [
             {"name": "status", "type": "request adapter status"},
             {"name": "adapter", "type": "adapter", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
+            {"name": "message", "type": "string view"}
         ]
     },
     "request adapter callback info": {
@@ -3710,7 +3710,7 @@
         "args": [
             {"name": "status", "type": "request device status"},
             {"name": "device", "type": "device", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -3720,7 +3720,7 @@
         "args": [
             {"name": "status", "type": "request device status"},
             {"name": "device", "type": "device", "optional": true},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true}
+            {"name": "message", "type": "string view"}
         ]
     },
     "request device callback info": {
