@@ -274,7 +274,7 @@ Future InstanceBase::APIRequestAdapterF(const RequestAdapterOptions* options,
                                         const RequestAdapterCallbackInfo& callbackInfo) {
     return APIRequestAdapter2(
         options, {ToAPI(callbackInfo.nextInChain), ToAPI(callbackInfo.mode),
-                  [](WGPURequestAdapterStatus status, WGPUAdapter adapter, char const* message,
+                  [](WGPURequestAdapterStatus status, WGPUAdapter adapter, WGPUStringView message,
                      void* callback, void* userdata) {
                       auto cb = reinterpret_cast<WGPURequestAdapterCallback>(callback);
                       cb(status, adapter, message, userdata);
@@ -303,17 +303,19 @@ Future InstanceBase::APIRequestAdapter2(const RequestAdapterOptions* options,
 
         void Complete(EventCompletionType completionType) override {
             if (completionType == EventCompletionType::Shutdown) {
-                mCallback(WGPURequestAdapterStatus_InstanceDropped, nullptr, nullptr,
+                mCallback(WGPURequestAdapterStatus_InstanceDropped, nullptr, {nullptr, 0},
                           mUserdata1.ExtractAsDangling(), mUserdata2.ExtractAsDangling());
                 return;
             }
 
             WGPUAdapter adapter = ToAPI(ReturnToAPI(std::move(mAdapter)));
             if (adapter == nullptr) {
-                mCallback(WGPURequestAdapterStatus_Unavailable, nullptr, "No supported adapters",
-                          mUserdata1.ExtractAsDangling(), mUserdata2.ExtractAsDangling());
+                std::string_view message = "No supported adapters";
+                mCallback(WGPURequestAdapterStatus_Unavailable, nullptr,
+                          {message.data(), message.length()}, mUserdata1.ExtractAsDangling(),
+                          mUserdata2.ExtractAsDangling());
             } else {
-                mCallback(WGPURequestAdapterStatus_Success, adapter, nullptr,
+                mCallback(WGPURequestAdapterStatus_Success, adapter, {nullptr, 0},
                           mUserdata1.ExtractAsDangling(), mUserdata2.ExtractAsDangling());
             }
         }

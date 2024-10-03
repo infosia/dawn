@@ -128,6 +128,10 @@ MATCHER_P(CHandleIs, cType, "") {
     return arg.Get() == cType;
 }
 
+MATCHER_P(SizedString, expected, "") {
+    return arg.length != WGPU_STRLEN && std::string_view(arg.data, arg.length) == expected;
+}
+
 #define ASSERT_DEVICE_ERROR_MSG_ON(device, statement, matcher)                                  \
     FlushWire();                                                                                \
     EXPECT_CALL(mDeviceErrorCallback,                                                           \

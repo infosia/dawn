@@ -353,7 +353,7 @@ Future AdapterBase::APIRequestDeviceF(const DeviceDescriptor* descriptor,
                                       const RequestDeviceCallbackInfo& callbackInfo) {
     return APIRequestDevice2(
         descriptor, {ToAPI(callbackInfo.nextInChain), ToAPI(callbackInfo.mode),
-                     [](WGPURequestDeviceStatus status, WGPUDevice device, char const* message,
+                     [](WGPURequestDeviceStatus status, WGPUDevice device, WGPUStringView message,
                         void* callback, void* userdata) {
                          auto cb = reinterpret_cast<WGPURequestDeviceCallback>(callback);
                          cb(status, device, message, userdata);
@@ -401,7 +401,7 @@ Future AdapterBase::APIRequestDevice2(const DeviceDescriptor* descriptor,
                 mMessage = "A valid external Instance reference no longer exists.";
             }
             mCallback(mStatus, ToAPI(ReturnToAPI(std::move(mDevice))),
-                      mMessage.empty() ? nullptr : mMessage.c_str(), mUserdata1.ExtractAsDangling(),
+                      {mMessage.data(), mMessage.length()}, mUserdata1.ExtractAsDangling(),
                       mUserdata2.ExtractAsDangling());
         }
     };

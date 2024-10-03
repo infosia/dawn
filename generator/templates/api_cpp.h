@@ -340,13 +340,26 @@ class ObjectBase {
     //* TODO: crbug.com/dawn/2509 - Remove name handling once old APIs are deprecated.
     {% set CallbackInfoType = (method.arguments|last).type %}
     {% set CallbackType = find_by_name(CallbackInfoType.members, "callback").type %}
-    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<F, Cb*>>" if not dfn else "" %}
+    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<F, Cb*> || std::is_convertible_v<F, CbChar*>>" if not dfn else "" %}
     template <typename F, typename T,
               typename Cb
                 {%- if not dfn -%}
                     {{" "}}= void (
                         {%- for arg in CallbackType.arguments -%}
                             {{as_annotated_cppType(arg)}}{{", "}}
+                        {%- endfor -%}
+                    T userdata)
+                {%- endif -%},
+                //* XXX LOLOL HACK
+              typename CbChar
+                {%- if not dfn -%}
+                    {{" "}}= void (
+                        {%- for arg in CallbackType.arguments -%}
+                            {%- if arg.type.name.canonical_case() == "string view" -%}
+                                const char* {{as_varName(arg.name)}}{{", "}}
+                            {%- else -%}
+                                {{as_annotated_cppType(arg)}}{{", "}}
+                            {%- endif -%}
                         {%- endfor -%}
                     T userdata)
                 {%- endif -%},
@@ -372,7 +385,7 @@ class ObjectBase {
     //* TODO: crbug.com/dawn/2509 - Remove name handling once old APIs are deprecated.
     {% set CallbackInfoType = (method.arguments|last).type %}
     {% set CallbackType = find_by_name(CallbackInfoType.members, "callback").type %}
-    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<L, Cb>>" if not dfn else "" %}
+    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<L, Cb> || std::is_convertible_v<L, CbChar>>" if not dfn else "" %}
     template <typename L,
               typename Cb
                 {%- if not dfn -%}
@@ -380,6 +393,20 @@ class ObjectBase {
                         {%- for arg in CallbackType.arguments -%}
                             {%- if not loop.first %}, {% endif -%}
                             {{as_annotated_cppType(arg)}}
+                        {%- endfor -%}
+                    )>
+                {%- endif -%},
+                //* XXX LOLOL HACK
+              typename CbChar
+                {%- if not dfn -%}
+                    {{" "}}= std::function<void(
+                        {%- for arg in CallbackType.arguments -%}
+                            {%- if not loop.first %}, {% endif -%}
+                            {%- if arg.type.name.canonical_case() == "string view" -%}
+                                const char* {{as_varName(arg.name)}}
+                            {%- else -%}
+                                {{as_annotated_cppType(arg)}}
+                            {%- endif -%}
                         {%- endfor -%}
                     )>
                 {%- endif -%},
@@ -440,24 +467,71 @@ class ObjectBase {
     struct {{as_cppType(type.name)}};
 {% endfor %}
 
+struct StringView {
+    char const * data = nullptr;
+    size_t length = WGPU_STRLEN;
+
+    {{wgpu_string_members("StringView") | indent(4)}}
+};
+
+namespace detail {
+//* XXX LOLOL HACK
+struct StringViewAdapter {
+    WGPUStringView sv;
+    char* nullTerminated = nullptr;
+
+    StringViewAdapter(WGPUStringView sv) : sv(sv) {}
+    ~StringViewAdapter() { delete[] nullTerminated; }
+    operator ::WGPUStringView() { return sv; }
+    operator const char*() {
+        assert(sv.length != WGPU_STRLEN);
+        assert(nullTerminated == nullptr);
+        nullTerminated = new char[sv.length + 1];
+        memcpy(nullTerminated, sv.data, sv.length);
+        nullTerminated[sv.length] = 0;
+        return nullTerminated;
+    }
+};
+}  // namespace detail
+
 {% macro render_cpp_callback_info_template_method_impl(type, method) %}
     {{render_cpp_callback_info_template_method_declaration(type, method, dfn=True)}} {
         {% set CallbackInfoType = (method.arguments|last).type %}
         {% set CallbackType = find_by_name(CallbackInfoType.members, "callback").type %}
         {{as_cType(CallbackInfoType.name)}} callbackInfo = {};
         callbackInfo.mode = static_cast<{{as_cType(types["callback mode"].name)}}>(callbackMode);
-        callbackInfo.callback = [](
-            {%- for arg in CallbackType.arguments -%}
-                {{as_annotated_cType(arg)}}{{", "}}
-            {%- endfor -%}
-        void* callback, void* userdata) {
-            auto cb = reinterpret_cast<Cb*>(callback);
-            (*cb)(
+        if constexpr (std::is_convertible_v<F, Cb*>) {
+            callbackInfo.callback = [](
                 {%- for arg in CallbackType.arguments -%}
-                    {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}{{", "}}
+                    {{as_annotated_cType(arg)}}{{", "}}
                 {%- endfor -%}
-            static_cast<T>(userdata));
-        };
+            void* callback, void* userdata) {
+                auto cb = reinterpret_cast<Cb*>(callback);
+                (*cb)(
+                    {%- for arg in CallbackType.arguments -%}
+                        {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}{{", "}}
+                    {%- endfor -%}
+                static_cast<T>(userdata));
+            };
+        } else {
+            //* XXX LOLOL HACK
+            callbackInfo.callback = [](
+                {%- for arg in CallbackType.arguments -%}
+                    {{as_annotated_cType(arg)}}{{", "}}
+                {%- endfor -%}
+            void* callback, void* userdata) {
+                auto cb = reinterpret_cast<CbChar*>(callback);
+                (*cb)(
+                    {%- for arg in CallbackType.arguments -%}
+                        {%- if arg.type.name.canonical_case() == "string view" -%}
+                            {detail::StringViewAdapter({{as_varName(arg.name)}})}{{", "}}
+                        {%- else -%}
+                            {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}{{", "}}
+                        {%- endif -%}
+                    {%- endfor -%}
+                static_cast<T>(userdata));
+            };
+        }
         callbackInfo.userdata1 = reinterpret_cast<void*>(+callback);
         callbackInfo.userdata2 = reinterpret_cast<void*>(userdata);
         auto result = {{as_cMethodNamespaced(type.name, method.name, c_namespace)}}(Get(){{", "}}
@@ -514,7 +588,12 @@ class ObjectBase {
                 (*lambda)(
                     {%- for arg in CallbackType.arguments -%}
                         {%- if not loop.first %}, {% endif -%}
-                        {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}
+                        //* XXX LOLOL HACK
+                        {%- if arg.type.name.canonical_case() == "string view" -%}
+                            {detail::StringViewAdapter({{as_varName(arg.name)}})}
+                        {%- else -%}
+                            {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}
+                        {%- endif -%}
                     {%- endfor -%});
             };
             callbackInfo.userdata1 = reinterpret_cast<void*>(lambda);
@@ -584,7 +663,7 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
     "offsetof mismatch for ChainedStruct::sType");
 
 //* Special structures that require some custom code generation.
-{% set SpecialStructures = ["device descriptor"] %}
+{% set SpecialStructures = ["device descriptor", "string view"] %}
 
 {% for type in by_category["structure"] if type.name.get() not in SpecialStructures %}
     {% set Out = "Out" if type.output else "" %}
@@ -627,18 +706,10 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
                 {{member_declaration}};
             {% endif %}
         {% endfor %}
-
-        //* Custom string constructors
-        {% if type.name.get() == "string view" %}
-            {{wgpu_string_members(as_cppType(type.name)) | indent(4)}}
-        {% endif %}
-
         {% if type.has_free_members_function %}
 
           private:
-        {% if type.has_free_members_function %}
-                inline void FreeMembers();
-        {% endif %}
+            inline void FreeMembers();
             static inline void Reset({{as_cppType(type.name)}}& value);
         {% endif %}
     };

@@ -83,7 +83,7 @@ WireResult Server::DoAdapterRequestDevice(Known<WGPUAdapter> adapter,
 void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
                                      WGPURequestDeviceStatus status,
                                      WGPUDevice device,
-                                     const char* message) {
+                                     WGPUStringView message) {
     ReturnAdapterRequestDeviceCallbackCmd cmd = {};
     cmd.eventManager = data->eventManager;
     cmd.future = data->future;
@@ -113,7 +113,7 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
             device = nullptr;
 
             cmd.status = WGPURequestDeviceStatus_Error;
-            cmd.message = "Requested feature not supported.";
+            cmd.message = {"Requested feature not supported.", WGPU_STRLEN};
             SerializeCommand(cmd);
             return;
         }
@@ -143,7 +143,7 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
     Known<WGPUDevice> reservation;
     if (FillReservation(data->deviceObjectId, device, &reservation) == WireResult::FatalError) {
         cmd.status = WGPURequestDeviceStatus_Unknown;
-        cmd.message = "Destroyed before request was fulfilled.";
+        cmd.message = {"Destroyed before request was fulfilled.", WGPU_STRLEN};
         SerializeCommand(cmd);
         return;
     }

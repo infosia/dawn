@@ -118,7 +118,7 @@ void WireTest::SetUp() {
             .WillOnce(Return(0));
 
         api.CallInstanceRequestAdapter2Callback(apiInstance, WGPURequestAdapterStatus_Success,
-                                                apiAdapter, nullptr);
+                                                apiAdapter, {nullptr, 0});
     });
     FlushClient();
     EXPECT_CALL(adapterCb, Call(wgpu::RequestAdapterStatus::Success, NotNull(), nullptr, this))
@@ -166,7 +166,7 @@ void WireTest::SetUp() {
                 .WillOnce(Return(0));
 
             api.CallAdapterRequestDevice2Callback(apiAdapter, WGPURequestDeviceStatus_Success,
-                                                  apiDevice, nullptr);
+                                                  apiDevice, {nullptr, 0});
         }));
     FlushClient();
     EXPECT_CALL(deviceCb, Call(wgpu::RequestDeviceStatus::Success, NotNull(), nullptr, this))

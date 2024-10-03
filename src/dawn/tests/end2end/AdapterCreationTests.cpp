@@ -128,7 +128,7 @@ TEST_P(AdapterCreationTest, DefaultAdapter) {
     MockCallback<WGPURequestAdapterCallback> cb;
 
     WGPUAdapter cAdapter = nullptr;
-    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
         .WillOnce(SaveArg<1>(&cAdapter));
     RequestAdapter(instance, &options, cb.Callback(), cb.MakeUserdata(this));
 
@@ -143,14 +143,14 @@ TEST_P(AdapterCreationTest, NullGivesDefaultAdapter) {
     MockCallback<WGPURequestAdapterCallback> cb;
 
     WGPUAdapter cAdapter = nullptr;
-    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
         .WillOnce(SaveArg<1>(&cAdapter));
     RequestAdapter(instance, &options, cb.Callback(), cb.MakeUserdata(this));
 
     wgpu::Adapter adapter = wgpu::Adapter::Acquire(cAdapter);
     EXPECT_EQ(adapter != nullptr, anyAdapterAvailable);
 
-    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this + 1))
+    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this + 1))
         .WillOnce(SaveArg<1>(&cAdapter));
     RequestAdapter(instance, nullptr, cb.Callback(), cb.MakeUserdata(this + 1));
 
@@ -167,7 +167,7 @@ TEST_P(AdapterCreationTest, FallbackAdapter) {
 
     WGPUAdapter cAdapter = nullptr;
     if (swiftShaderAvailable) {
-        EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+        EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
             .WillOnce(SaveArg<1>(&cAdapter));
     } else {
         EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Unavailable, nullptr, _, this))
@@ -195,7 +195,7 @@ TEST_P(AdapterCreationTest, PreferHighPerformance) {
 
     WGPUAdapter cAdapter = nullptr;
     if (anyAdapterAvailable) {
-        EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+        EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
             .WillOnce(SaveArg<1>(&cAdapter));
     } else {
         EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Unavailable, nullptr, _, this))
@@ -224,7 +224,7 @@ TEST_P(AdapterCreationTest, PreferLowPower) {
 
     WGPUAdapter cAdapter = nullptr;
     if (anyAdapterAvailable) {
-        EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+        EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
             .WillOnce(SaveArg<1>(&cAdapter));
     } else {
         EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Unavailable, nullptr, _, this))
@@ -252,7 +252,7 @@ TEST_P(AdapterCreationTest, Compatibility) {
     MockCallback<WGPURequestAdapterCallback> cb;
 
     WGPUAdapter cAdapter = nullptr;
-    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
         .WillOnce(SaveArg<1>(&cAdapter));
     RequestAdapter(instance, &options, cb.Callback(), cb.MakeUserdata(this));
 
@@ -271,7 +271,7 @@ TEST_P(AdapterCreationTest, NonCompatibility) {
     MockCallback<WGPURequestAdapterCallback> cb;
 
     WGPUAdapter cAdapter = nullptr;
-    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
         .WillOnce(SaveArg<1>(&cAdapter));
     RequestAdapter(instance, &options, cb.Callback(), cb.MakeUserdata(this));
 
@@ -290,7 +290,7 @@ TEST_P(AdapterCreationTest, GetInstance) {
     MockCallback<WGPURequestAdapterCallback> cb;
 
     WGPUAdapter cAdapter = nullptr;
-    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
         .WillOnce(SaveArg<1>(&cAdapter));
     RequestAdapter(instance, &options, cb.Callback(), cb.MakeUserdata(this));
 
@@ -308,7 +308,7 @@ TEST_P(AdapterCreationTest, InfoUnique) {
     MockCallback<WGPURequestAdapterCallback> cb;
 
     WGPUAdapter cAdapter = nullptr;
-    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
         .WillOnce(SaveArg<1>(&cAdapter));
     RequestAdapter(instance, &options, cb.Callback(), cb.MakeUserdata(this));
 
@@ -340,7 +340,7 @@ TEST_P(AdapterCreationTest, InfoMoveAssign) {
     MockCallback<WGPURequestAdapterCallback> cb;
 
     WGPUAdapter cAdapter = nullptr;
-    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
         .WillOnce(SaveArg<1>(&cAdapter));
     RequestAdapter(instance, &options, cb.Callback(), cb.MakeUserdata(this));
 
@@ -401,7 +401,7 @@ TEST_P(AdapterCreationTest, InfoMoveConstruct) {
     MockCallback<WGPURequestAdapterCallback> cb;
 
     WGPUAdapter cAdapter = nullptr;
-    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
         .WillOnce(SaveArg<1>(&cAdapter));
     RequestAdapter(instance, &options, cb.Callback(), cb.MakeUserdata(this));
 
@@ -460,7 +460,7 @@ TEST_P(AdapterCreationTest, InfoOutliveAdapter) {
     MockCallback<WGPURequestAdapterCallback> cb;
 
     WGPUAdapter cAdapter = nullptr;
-    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, nullptr, this))
+    EXPECT_CALL(cb, Call(WGPURequestAdapterStatus_Success, _, SizedString(""), this))
         .WillOnce(SaveArg<1>(&cAdapter));
     RequestAdapter(instance, &options, cb.Callback(), cb.MakeUserdata(this));
 
