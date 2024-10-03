@@ -47,10 +47,6 @@ WGPUStringView ToOutputStringView(const std::string_view& s) {
     return {s.data(), s.size()};
 }
 
-WGPUStringView ToOutputStringView(const char* s) {
-    return {s, std::strlen(s)};
-}
-
 std::string ToString(WGPUStringView s) {
     if (s.length == WGPU_STRLEN) {
         if (s.data == nullptr) {
