@@ -16,6 +16,190 @@
       "message": "PTAL.",
       "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b16709a_5f1a83e9",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T21:04:58Z",
+      "side": 1,
+      "message": "Nit: `ir.Instructions()` already filters for `!alive`.",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 13
+      },
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08808bbb_adc94d9f",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T21:04:58Z",
+      "side": 1,
+      "message": "Nit: Shouldn\u0027t need this check, because a call that involves a storage texture wouldn\u0027t have had a sampler in it and is therefore covered by the above check.",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 281,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "51956dbd_ac157b6c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+              "range": {
+                "startLine": 277,
+                "startChar": 0,
+                "endLine": 282,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba033cd8_78933b3b",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T21:04:58Z",
+      "side": 1,
+      "message": "You should always have a sampler here, as per the above check?",
+      "fixSuggestions": [
+        {
+          "fixId": "6d5a7e6c_ed86ee61",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+              "range": {
+                "startLine": 284,
+                "startChar": 0,
+                "endLine": 286,
+                "endChar": 0
+              },
+              "replacement": "            BindingPoint samp_bp \u003d sampler-\u003eBindingPoint().value();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e95c065f_f9fac59e",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T21:04:58Z",
+      "side": 1,
+      "message": "Is there a reason we can\u0027t use this same map for the texture-without-a-sampler case?\ni.e. remove the `!sampler` case and create the var with the placeholder sampler for that scenario here as well. That way we only have one map, which I think would make the `GetReplacement()` function simpler (maybe?).",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "031c8a98_1f588b0b",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T21:04:58Z",
+      "side": 1,
+      "message": "Which `else` block?",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "478e3c11_349b8caf",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T21:04:58Z",
+      "side": 1,
+      "message": "Maybe `if (replacement \u003d\u003d tex) { return; }` here, for the storage texture case?",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95300e9b_20eda049",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T21:04:58Z",
+      "side": 1,
+      "message": "Isn\u0027t this handled by the deletion at the end of `Process()`?",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d6786a1_f4ab1580",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-03T21:04:58Z",
+      "side": 1,
+      "message": "Likewise?",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
