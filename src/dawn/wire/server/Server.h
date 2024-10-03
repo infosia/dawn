@@ -273,11 +273,11 @@ class Server : public ServerBase {
     void OnRequestAdapterCallback(RequestAdapterUserdata* userdata,
                                   WGPURequestAdapterStatus status,
                                   WGPUAdapter adapter,
-                                  const char* message);
+                                  WGPUStringView message);
     void OnRequestDeviceCallback(RequestDeviceUserdata* userdata,
                                  WGPURequestDeviceStatus status,
                                  WGPUDevice device,
-                                 const char* message);
+                                 WGPUStringView message);
 
 #include "dawn/wire/server/ServerPrototypes_autogen.inc"
 

@@ -33,6 +33,7 @@
 #include "dawn/common/FutureUtils.h"
 #include "dawn/common/GPUInfo.h"
 #include "dawn/common/Log.h"
+#include "dawn/common/StringViewUtils.h"
 #include "dawn/common/SystemUtils.h"
 #include "dawn/common/WGSLFeatureMapping.h"
 #include "dawn/native/CallbackTaskManager.h"
@@ -274,7 +275,7 @@ Future InstanceBase::APIRequestAdapterF(const RequestAdapterOptions* options,
                                         const RequestAdapterCallbackInfo& callbackInfo) {
     return APIRequestAdapter2(
         options, {ToAPI(callbackInfo.nextInChain), ToAPI(callbackInfo.mode),
-                  [](WGPURequestAdapterStatus status, WGPUAdapter adapter, char const* message,
+                  [](WGPURequestAdapterStatus status, WGPUAdapter adapter, WGPUStringView message,
                      void* callback, void* userdata) {
                       auto cb = reinterpret_cast<WGPURequestAdapterCallback>(callback);
                       cb(status, adapter, message, userdata);
@@ -303,17 +304,19 @@ Future InstanceBase::APIRequestAdapter2(const RequestAdapterOptions* options,
 
         void Complete(EventCompletionType completionType) override {
             if (completionType == EventCompletionType::Shutdown) {
-                mCallback(WGPURequestAdapterStatus_InstanceDropped, nullptr, nullptr,
+                mCallback(WGPURequestAdapterStatus_InstanceDropped, nullptr, kEmptyOutputStringView,
                           mUserdata1.ExtractAsDangling(), mUserdata2.ExtractAsDangling());
                 return;
             }
 
             WGPUAdapter adapter = ToAPI(ReturnToAPI(std::move(mAdapter)));
             if (adapter == nullptr) {
-                mCallback(WGPURequestAdapterStatus_Unavailable, nullptr, "No supported adapters",
-                          mUserdata1.ExtractAsDangling(), mUserdata2.ExtractAsDangling());
+                std::string_view message = "No supported adapters";
+                mCallback(WGPURequestAdapterStatus_Unavailable, nullptr,
+                          ToOutputStringView(message), mUserdata1.ExtractAsDangling(),
+                          mUserdata2.ExtractAsDangling());
             } else {
-                mCallback(WGPURequestAdapterStatus_Success, adapter, nullptr,
+                mCallback(WGPURequestAdapterStatus_Success, adapter, kEmptyOutputStringView,
                           mUserdata1.ExtractAsDangling(), mUserdata2.ExtractAsDangling());
             }
         }
