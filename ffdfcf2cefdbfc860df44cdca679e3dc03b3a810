@@ -87,6 +87,24 @@
       "parentUuid": "a26571aa_70cbd7b6",
       "revId": "ffdfcf2cefdbfc860df44cdca679e3dc03b3a810",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9390b716_e3b2f319",
+        "filename": "tools/src/cmd/run-cts/node/cmd.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-03T01:42:51Z",
+      "side": 1,
+      "message": "This was orthogonal to this CL. I think this is the right thing to do as I\u0027ve tripped over this as well. What the folder is is unrelated to making this better.",
+      "parentUuid": "363d70a5_3d68dd3a",
+      "revId": "ffdfcf2cefdbfc860df44cdca679e3dc03b3a810",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
