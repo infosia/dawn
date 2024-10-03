@@ -95,9 +95,79 @@ MaybeError PlatformFunctions::LoadFXCompiler() {
     d3dDisassemble = &D3DDisassemble;
 #else
     std::string error;
-    if (!mFXCompilerLib.Open("d3dcompiler_47.dll", &error) ||
-        !mFXCompilerLib.GetProc(&d3dCompile, "D3DCompile", &error) ||
+    if (!mFXCompilerLib.Open("api-ms-win-crt-string-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-crt-string-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-crt-math-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-crt-math-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-crt-runtime-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-crt-runtime-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-crt-private-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-crt-private-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-libraryloader-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-libraryloader-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-string-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-string-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-synch-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-synch-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-debug-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-debug-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-heap-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-heap-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-file-l1-2-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-file-l1-2-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-errorhandling-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-errorhandling-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-file-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-file-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-handle-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-handle-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-synch-l1-2-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-synch-l1-2-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-processthreads-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-processthreads-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-processenvironment-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-processenvironment-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-memory-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-memory-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-sysinfo-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-sysinfo-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-rtlsupport-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-rtlsupport-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-processthreads-l1-1-1.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-processthreads-l1-1-1.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-profile-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-profile-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-interlocked-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-interlocked-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-heap-obsolete-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-heap-obsolete-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-registry-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-registry-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-localization-l1-2-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-localization-l1-2-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-io-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-io-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-kernel32-legacy-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-kernel32-legacy-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("RPCRT4.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading RPCRT4.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-crt-time-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-crt-time-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-string-obsolete-l1-1-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-string-obsolete-l1-1-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-threadpool-l1-2-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-threadpool-l1-2-0.dll"); }
+
+if (!mFXCompilerLib.Open("api-ms-win-core-sysinfo-l1-2-0.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading api-ms-win-core-sysinfo-l1-2-0.dll"); }
+
+if (!mFXCompilerLib.Open("CRYPTSP.dll", &error)) { return DAWN_INTERNAL_ERROR("Error loading CRYPTSP.dll"); }
+
+    if (!mFXCompilerLib.Open("d3dcompiler_47.dll", &error)) {
+        error = ("Error loading dll " + error);
+        return DAWN_INTERNAL_ERROR(error.c_str());
+    }
+    if (!mFXCompilerLib.GetProc(&d3dCompile, "D3DCompile", &error) ||
         !mFXCompilerLib.GetProc(&d3dDisassemble, "D3DDisassemble", &error)) {
+        error = ("Error loading proc " + error);
         return DAWN_INTERNAL_ERROR(error.c_str());
     }
 #endif
