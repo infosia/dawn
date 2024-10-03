@@ -52,6 +52,24 @@
       "parentUuid": "9ce1c139_5f636fd1",
       "revId": "ffdfcf2cefdbfc860df44cdca679e3dc03b3a810",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "363d70a5_3d68dd3a",
+        "filename": "tools/src/cmd/run-cts/node/cmd.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-10-03T00:41:08Z",
+      "side": 1,
+      "message": "@amaiorano@chromium.org uses out/active I believe. But in any case, if you want to review this CL I\u0027m happy change it to anything that tells me what I have to fix. As it is now it says nothing. It spews out the help list but doesn\u0027t tell me what I need to fix to get things to run. That\u0027s what I\u0027m trying to fix. I\u0027m happy to fix it any way you\u0027d prefer",
+      "parentUuid": "a26571aa_70cbd7b6",
+      "revId": "ffdfcf2cefdbfc860df44cdca679e3dc03b3a810",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
