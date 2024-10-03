@@ -92,7 +92,6 @@ struct State {
                     case core::BuiltinFn::kTextureGatherCompare:
                     case core::BuiltinFn::kTextureLoad:
                     case core::BuiltinFn::kTextureNumLayers:
-                    case core::BuiltinFn::kTextureNumLevels:
                     case core::BuiltinFn::kTextureSample:
                     case core::BuiltinFn::kTextureSampleBias:
                     case core::BuiltinFn::kTextureSampleCompare:
@@ -118,6 +117,9 @@ struct State {
                 case core::BuiltinFn::kTextureGather:
                     TextureGather(call);
                     break;
+                case core::BuiltinFn::kTextureGatherCompare:
+                    TextureGatherCompare(call);
+                    break;
                 case core::BuiltinFn::kTextureLoad:
                     TextureLoad(call);
                     break;
@@ -127,8 +129,6 @@ struct State {
                 case core::BuiltinFn::kTextureStore:
                     TextureStore(call);
                     break;
-                case core::BuiltinFn::kTextureGatherCompare:
-                case core::BuiltinFn::kTextureNumLevels:
                 case core::BuiltinFn::kTextureSample:
                 case core::BuiltinFn::kTextureSampleBias:
                 case core::BuiltinFn::kTextureSampleCompare:
@@ -706,6 +706,63 @@ struct State {
             // Push the component onto the end of the list if needed.
             if (component != nullptr) {
                 params.Push(b.Convert(ty.i32(), component)->Result(0));
+            }
+
+            b.CallWithResult<glsl::ir::BuiltinCall>(call->DetachResult(), fn, params);
+        });
+        call->Destroy();
+    }
+
+    void TextureGatherCompare(core::ir::BuiltinCall* call) {
+        auto args = call->Args();
+        b.InsertBefore(call, [&] {
+            uint32_t idx = 0;
+            uint32_t tex_arg = idx++;
+            uint32_t sampler_arg = idx++;
+
+            auto* tex = GetNewTexture(args[tex_arg], args[sampler_arg]);
+            auto* tex_type = tex->Type()->As<core::type::Texture>();
+            TINT_ASSERT(tex_type);
+
+            Vector<core::ir::Value*, 4> params;
+            params.Push(tex);
+
+            auto* coords = args[idx++];
+
+            uint32_t depth_ref_idx = 0;
+            uint32_t offset_idx = 0;
+
+            switch (tex_type->Dim()) {
+                case core::type::TextureDimension::k2d:
+                    params.Push(coords);
+                    offset_idx = 4;
+                    depth_ref_idx = 3;
+                    break;
+                case core::type::TextureDimension::k2dArray:
+                    params.Push(b.Construct(ty.vec3<f32>(), coords, b.Convert<f32>(args[idx++]))
+                                    ->Result(0));
+                    offset_idx = 5;
+                    depth_ref_idx = 4;
+                    break;
+                case core::type::TextureDimension::kCube:
+                    params.Push(coords);
+                    depth_ref_idx = 3;
+                    break;
+                case core::type::TextureDimension::kCubeArray:
+                    params.Push(b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[idx++]))
+                                    ->Result(0));
+                    depth_ref_idx = 4;
+                    break;
+                default:
+                    TINT_UNREACHABLE();
+            }
+
+            params.Push(args[depth_ref_idx]);
+
+            auto fn = glsl::BuiltinFn::kTextureGather;
+            if (offset_idx > 0 && args.Length() > offset_idx) {
+                fn = glsl::BuiltinFn::kTextureGatherOffset;
+                params.Push(args[offset_idx]);
             }
 
             b.CallWithResult<glsl::ir::BuiltinCall>(call->DetachResult(), fn, params);
