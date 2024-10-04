@@ -220,6 +220,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "127cdbe2_3ec74ca8",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T23:15:31Z",
+      "side": 1,
+      "message": "I found the reason when doing `textureSampleLevel`. The reason being, if there is a texture with a sampler, I can share that with a texture without a sampler. But if my lookup as always double key\u0027d, I can\u0027t \"see\" the texture,sampler where I could re-use the texture. So, I end up creating an extra sampler in the program when it isn\u0027t necessary. \n\n(We just didn\u0027t have any tests I passed until I got `textureSampleLevel` working as that unlocked the `textureSamplebaseClampToEdge` tests which exhibit this behaviour in `9ca02c.wgsl`.)\n\nSo, I\u0027ve removed this here, but will end up putting it back in the `textureSampleLevel` CL in order to fixup the test issue.",
+      "parentUuid": "6e3ef365_d8ea86df",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "031c8a98_1f588b0b",
         "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
         "patchSetId": 2
