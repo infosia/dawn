@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75293a2c_d71a5b80",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T22:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b16709a_5f1a83e9",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 13
+      },
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08808bbb_adc94d9f",
@@ -82,6 +106,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f26523b5_14904692",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T22:33:07Z",
+      "side": 1,
+      "message": "Needed due to changes to how the map works.",
+      "parentUuid": "08808bbb_adc94d9f",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 281,
+        "endChar": 13
+      },
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba033cd8_78933b3b",
@@ -117,6 +165,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc404d39_db7f6d7d",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T22:33:07Z",
+      "side": 1,
+      "message": "Nack, went with change below.",
+      "parentUuid": "ba033cd8_78933b3b",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e95c065f_f9fac59e",
@@ -130,6 +196,24 @@
       "writtenOn": "2024-10-03T21:04:58Z",
       "side": 1,
       "message": "Is there a reason we can\u0027t use this same map for the texture-without-a-sampler case?\ni.e. remove the `!sampler` case and create the var with the placeholder sampler for that scenario here as well. That way we only have one map, which I think would make the `GetReplacement()` function simpler (maybe?).",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e3ef365_d8ea86df",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T22:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e95c065f_f9fac59e",
       "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -151,6 +235,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d5bd5c4_ee5acd8e",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T22:33:07Z",
+      "side": 1,
+      "message": "The one I deleted while simplifying how this code works, heh.",
+      "parentUuid": "031c8a98_1f588b0b",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "478e3c11_349b8caf",
@@ -164,6 +266,24 @@
       "writtenOn": "2024-10-03T21:04:58Z",
       "side": 1,
       "message": "Maybe `if (replacement \u003d\u003d tex) { return; }` here, for the storage texture case?",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c56802fb_926d271a",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T22:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "478e3c11_349b8caf",
       "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -185,6 +305,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1de3e2dd_03271193",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T22:33:07Z",
+      "side": 1,
+      "message": "I was getting duplicate loads in the output, but it may have been something else. Removed, we\u0027ll see what happens.",
+      "parentUuid": "95300e9b_20eda049",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d6786a1_f4ab1580",
@@ -198,6 +336,24 @@
       "writtenOn": "2024-10-03T21:04:58Z",
       "side": 1,
       "message": "Likewise?",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea1ce7d4_d69874fe",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T22:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d6786a1_f4ab1580",
       "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
