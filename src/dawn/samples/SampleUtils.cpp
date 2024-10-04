@@ -43,6 +43,7 @@
 #include "dawn/utils/CommandLineParser.h"
 #include "dawn/utils/SystemUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "dawn/webgpu_cpp_print.h"
 
 #ifndef __EMSCRIPTEN__
 #include "GLFW/glfw3.h"
@@ -197,7 +198,7 @@ int SampleBase::Run(unsigned int delay) {
     wgpu::DeviceDescriptor deviceDesc = {};
     deviceDesc.SetDeviceLostCallback(
         wgpu::CallbackMode::AllowSpontaneous,
-        [](const wgpu::Device&, wgpu::DeviceLostReason reason, const char* message) {
+        [](const wgpu::Device&, wgpu::DeviceLostReason reason, wgpu::StringView message) {
             const char* reasonName = "";
             switch (reason) {
                 case wgpu::DeviceLostReason::Unknown:
@@ -218,7 +219,7 @@ int SampleBase::Run(unsigned int delay) {
             dawn::ErrorLog() << "Device lost because of " << reasonName << ": " << message;
         });
     deviceDesc.SetUncapturedErrorCallback(
-        [](const wgpu::Device&, wgpu::ErrorType type, const char* message) {
+        [](const wgpu::Device&, wgpu::ErrorType type, wgpu::StringView message) {
             const char* errorTypeName = "";
             switch (type) {
                 case wgpu::ErrorType::Validation:
@@ -243,7 +244,7 @@ int SampleBase::Run(unsigned int delay) {
     sample->instance.WaitAny(
         sample->adapter.RequestDevice(
             &deviceDesc, wgpu::CallbackMode::WaitAnyOnly,
-            [](wgpu::RequestDeviceStatus status, wgpu::Device device, const char* message) {
+            [](wgpu::RequestDeviceStatus status, wgpu::Device device, wgpu::StringView message) {
                 if (status != wgpu::RequestDeviceStatus::Success) {
                     dawn::ErrorLog() << "Failed to get an device:" << message;
                     return;

@@ -28,6 +28,8 @@
 #ifndef SRC_DAWN_TESTS_STRINGVIEWMATCHERS_H_
 #define SRC_DAWN_TESTS_STRINGVIEWMATCHERS_H_
 
+#include <string_view>
+
 #include "dawn/webgpu_cpp.h"
 #include "gmock/gmock.h"
 
@@ -43,6 +45,14 @@ MATCHER(NonEmptySizedString, "") {
 
 MATCHER_P(SizedString, expected, "") {
     return arg.length != WGPU_STRLEN && std::string_view(arg.data, arg.length) == expected;
+}
+
+MATCHER_P(SizedStringMatches, matcher, "") {
+    if (arg.length == WGPU_STRLEN) {
+        return false;
+    }
+    std::string_view v = {arg.data, arg.length};
+    return Matches(matcher)(v);
 }
 
 }  // namespace testing

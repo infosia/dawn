@@ -457,7 +457,7 @@ int main(int argc, const char* argv[]) {
     }
 
     device.SetUncapturedErrorCallback(
-        [](WGPUErrorType errorType, const char* message, void*) {
+        [](WGPUErrorType errorType, WGPUStringView message, void*) {
             const char* errorTypeName = "";
             switch (errorType) {
                 case WGPUErrorType_Validation:
@@ -476,7 +476,8 @@ int main(int argc, const char* argv[]) {
                     DAWN_UNREACHABLE();
                     return;
             }
-            dawn::ErrorLog() << errorTypeName << " error: " << message;
+            std::string_view messageView = {message.data, message.length};
+            dawn::ErrorLog() << errorTypeName << " error: " << messageView;
             DAWN_ASSERT(false);
         },
         nullptr);
