@@ -740,7 +740,7 @@
         "category": "callback function",
         "args": [
             {"name": "status", "type": "map async status"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
+            {"name": "message", "type": "string view"}
         ]
     },
     "buffer map callback info": {
