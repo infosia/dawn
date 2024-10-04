@@ -1377,7 +1377,7 @@ void DeviceBase::APICreateComputePipelineAsync(const ComputePipelineDescriptor* 
     APICreateComputePipelineAsync2(
         descriptor, {nullptr, WGPUCallbackMode_AllowProcessEvents,
                      [](WGPUCreatePipelineAsyncStatus status, WGPUComputePipeline pipeline,
-                        char const* message, void* callback, void* userdata) {
+                        WGPUStringView message, void* callback, void* userdata) {
                          auto cb =
                              reinterpret_cast<WGPUCreateComputePipelineAsyncCallback>(callback);
                          cb(status, pipeline, message, userdata);
@@ -1393,7 +1393,7 @@ Future DeviceBase::APICreateComputePipelineAsyncF(
     return APICreateComputePipelineAsync2(
         descriptor, {ToAPI(callbackInfo.nextInChain), ToAPI(callbackInfo.mode),
                      [](WGPUCreatePipelineAsyncStatus status, WGPUComputePipeline pipeline,
-                        char const* message, void* callback, void* userdata) {
+                        WGPUStringView message, void* callback, void* userdata) {
                          auto cb =
                              reinterpret_cast<WGPUCreateComputePipelineAsyncCallback>(callback);
                          cb(status, pipeline, message, userdata);
@@ -1479,7 +1479,7 @@ void DeviceBase::APICreateRenderPipelineAsync(const RenderPipelineDescriptor* de
     APICreateRenderPipelineAsync2(
         descriptor, {nullptr, WGPUCallbackMode_AllowProcessEvents,
                      [](WGPUCreatePipelineAsyncStatus status, WGPURenderPipeline pipeline,
-                        char const* message, void* callback, void* userdata) {
+                        WGPUStringView message, void* callback, void* userdata) {
                          auto cb =
                              reinterpret_cast<WGPUCreateRenderPipelineAsyncCallback>(callback);
                          cb(status, pipeline, message, userdata);
@@ -1495,7 +1495,7 @@ Future DeviceBase::APICreateRenderPipelineAsyncF(
     return APICreateRenderPipelineAsync2(
         descriptor, {ToAPI(callbackInfo.nextInChain), ToAPI(callbackInfo.mode),
                      [](WGPUCreatePipelineAsyncStatus status, WGPURenderPipeline pipeline,
-                        char const* message, void* callback, void* userdata) {
+                        WGPUStringView message, void* callback, void* userdata) {
                          auto cb =
                              reinterpret_cast<WGPUCreateRenderPipelineAsyncCallback>(callback);
                          cb(status, pipeline, message, userdata);

@@ -262,11 +262,11 @@ class Server : public ServerBase {
     void OnCreateComputePipelineAsyncCallback(CreatePipelineAsyncUserData* userdata,
                                               WGPUCreatePipelineAsyncStatus status,
                                               WGPUComputePipeline pipeline,
-                                              const char* message);
+                                              WGPUStringView message);
     void OnCreateRenderPipelineAsyncCallback(CreatePipelineAsyncUserData* userdata,
                                              WGPUCreatePipelineAsyncStatus status,
                                              WGPURenderPipeline pipeline,
-                                             const char* message);
+                                             WGPUStringView message);
     void OnShaderModuleGetCompilationInfo(ShaderModuleGetCompilationInfoUserdata* userdata,
                                           WGPUCompilationInfoRequestStatus status,
                                           const WGPUCompilationInfo* info);

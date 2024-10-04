@@ -143,13 +143,13 @@
             { "name": "event manager", "type": "ObjectHandle" },
             { "name": "future", "type": "future" },
             { "name": "status", "type": "create pipeline async status" },
-            { "name": "message", "type": "char", "annotation": "const*", "length": "strlen" }
+            { "name": "message", "type": "string view"}
         ],
         "device create render pipeline async callback": [
             { "name": "event manager", "type": "ObjectHandle" },
             { "name": "future", "type": "future" },
             { "name": "status", "type": "create pipeline async status" },
-            { "name": "message", "type": "char", "annotation": "const*", "length": "strlen" }
+            { "name": "message", "type": "string view"}
         ],
         "device uncaptured error callback": [
             { "name": "device", "type": "ObjectHandle", "handle_type": "device" },
