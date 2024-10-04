@@ -33,6 +33,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Log.h"
+#include "dawn/common/StringViewUtils.h"
 #include "dawn/wire/client/ApiObjects_autogen.h"
 #include "dawn/wire/client/Client.h"
 #include "dawn/wire/client/EventManager.h"
@@ -104,12 +105,10 @@ class CreatePipelineEventBase : public TrackedEvent {
 
     WireResult ReadyHook(FutureID futureID,
                          WGPUCreatePipelineAsyncStatus status,
-                         const char* message) {
+                         WGPUStringView message) {
         DAWN_ASSERT(mPipeline != nullptr);
         mStatus = status;
-        if (message != nullptr) {
-            mMessage = message;
-        }
+        mMessage = ToString(message);
         return WireResult::Success;
     }
 
@@ -131,7 +130,7 @@ class CreatePipelineEventBase : public TrackedEvent {
                   mStatus == WGPUCreatePipelineAsyncStatus_Success
                       ? ReturnToAPI(std::move(mPipeline))
                       : nullptr,
-                  mMessage ? mMessage->c_str() : nullptr, userdata1, userdata2);
+                  ToOutputStringView(mMessage), userdata1, userdata2);
     }
 
     using Callback = decltype(std::declval<CallbackInfo>().callback);
@@ -142,7 +141,7 @@ class CreatePipelineEventBase : public TrackedEvent {
     // Note that the message is optional because we want to return nullptr when it wasn't set
     // instead of a pointer to an empty string.
     WGPUCreatePipelineAsyncStatus mStatus = WGPUCreatePipelineAsyncStatus_Success;
-    std::optional<std::string> mMessage;
+    std::string mMessage;
 
     Ref<Pipeline> mPipeline;
 };
@@ -537,7 +536,7 @@ void Device::CreateComputePipelineAsync(WGPUComputePipelineDescriptor const* des
     CreateComputePipelineAsync2(
         descriptor, {nullptr, WGPUCallbackMode_AllowSpontaneous,
                      [](WGPUCreatePipelineAsyncStatus status, WGPUComputePipeline pipeline,
-                        char const* message, void* callback, void* userdata) {
+                        WGPUStringView message, void* callback, void* userdata) {
                          auto cb =
                              reinterpret_cast<WGPUCreateComputePipelineAsyncCallback>(callback);
                          cb(status, pipeline, message, userdata);
@@ -551,7 +550,7 @@ WGPUFuture Device::CreateComputePipelineAsyncF(
     return CreateComputePipelineAsync2(
         descriptor, {callbackInfo.nextInChain, callbackInfo.mode,
                      [](WGPUCreatePipelineAsyncStatus status, WGPUComputePipeline pipeline,
-                        char const* message, void* callback, void* userdata) {
+                        WGPUStringView message, void* callback, void* userdata) {
                          auto cb =
                              reinterpret_cast<WGPUCreateComputePipelineAsyncCallback>(callback);
                          cb(status, pipeline, message, userdata);
@@ -569,7 +568,7 @@ WGPUFuture Device::CreateComputePipelineAsync2(
 WireResult Client::DoDeviceCreateComputePipelineAsyncCallback(ObjectHandle eventManager,
                                                               WGPUFuture future,
                                                               WGPUCreatePipelineAsyncStatus status,
-                                                              const char* message) {
+                                                              WGPUStringView message) {
     return GetEventManager(eventManager)
         .SetFutureReady<CreateComputePipelineEvent>(future.id, status, message);
 }
@@ -580,7 +579,7 @@ void Device::CreateRenderPipelineAsync(WGPURenderPipelineDescriptor const* descr
     CreateRenderPipelineAsync2(
         descriptor, {nullptr, WGPUCallbackMode_AllowSpontaneous,
                      [](WGPUCreatePipelineAsyncStatus status, WGPURenderPipeline pipeline,
-                        char const* message, void* callback, void* userdata) {
+                        WGPUStringView message, void* callback, void* userdata) {
                          auto cb =
                              reinterpret_cast<WGPUCreateRenderPipelineAsyncCallback>(callback);
                          cb(status, pipeline, message, userdata);
@@ -594,7 +593,7 @@ WGPUFuture Device::CreateRenderPipelineAsyncF(
     return CreateRenderPipelineAsync2(
         descriptor, {callbackInfo.nextInChain, callbackInfo.mode,
                      [](WGPUCreatePipelineAsyncStatus status, WGPURenderPipeline pipeline,
-                        char const* message, void* callback, void* userdata) {
+                        WGPUStringView message, void* callback, void* userdata) {
                          auto cb =
                              reinterpret_cast<WGPUCreateRenderPipelineAsyncCallback>(callback);
                          cb(status, pipeline, message, userdata);
@@ -612,7 +611,7 @@ WGPUFuture Device::CreateRenderPipelineAsync2(
 WireResult Client::DoDeviceCreateRenderPipelineAsyncCallback(ObjectHandle eventManager,
                                                              WGPUFuture future,
                                                              WGPUCreatePipelineAsyncStatus status,
-                                                             const char* message) {
+                                                             WGPUStringView message) {
     return GetEventManager(eventManager)
         .SetFutureReady<CreateRenderPipelineEvent>(future.id, status, message);
 }

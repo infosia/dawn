@@ -27,6 +27,7 @@
 
 #include "dawn/wire/server/Server.h"
 
+#include "dawn/common/StringViewUtils.h"
 #include "dawn/wire/Wire.h"
 #include "dawn/wire/WireResult.h"
 
@@ -117,7 +118,7 @@ WireResult Server::DoDeviceCreateComputePipelineAsync(
 void Server::OnCreateComputePipelineAsyncCallback(CreatePipelineAsyncUserData* data,
                                                   WGPUCreatePipelineAsyncStatus status,
                                                   WGPUComputePipeline pipeline,
-                                                  const char* message) {
+                                                  WGPUStringView message) {
     ReturnDeviceCreateComputePipelineAsyncCallbackCmd cmd;
     cmd.eventManager = data->eventManager;
     cmd.future = data->future;
@@ -127,7 +128,7 @@ void Server::OnCreateComputePipelineAsyncCallback(CreatePipelineAsyncUserData* d
     if (status == WGPUCreatePipelineAsyncStatus_Success &&
         FillReservation(data->pipelineObjectID, pipeline) == WireResult::FatalError) {
         cmd.status = WGPUCreatePipelineAsyncStatus_Unknown;
-        cmd.message = "Destroyed before request was fulfilled.";
+        cmd.message = ToOutputStringView("Destroyed before request was fulfilled.");
     }
     SerializeCommand(cmd);
 }
@@ -159,7 +160,7 @@ WireResult Server::DoDeviceCreateRenderPipelineAsync(
 void Server::OnCreateRenderPipelineAsyncCallback(CreatePipelineAsyncUserData* data,
                                                  WGPUCreatePipelineAsyncStatus status,
                                                  WGPURenderPipeline pipeline,
-                                                 const char* message) {
+                                                 WGPUStringView message) {
     ReturnDeviceCreateRenderPipelineAsyncCallbackCmd cmd;
     cmd.eventManager = data->eventManager;
     cmd.future = data->future;
@@ -169,7 +170,7 @@ void Server::OnCreateRenderPipelineAsyncCallback(CreatePipelineAsyncUserData* da
     if (status == WGPUCreatePipelineAsyncStatus_Success &&
         FillReservation(data->pipelineObjectID, pipeline) == WireResult::FatalError) {
         cmd.status = WGPUCreatePipelineAsyncStatus_Unknown;
-        cmd.message = "Destroyed before request was fulfilled.";
+        cmd.message = ToOutputStringView("Destroyed before request was fulfilled.");
     }
     SerializeCommand(cmd);
 }

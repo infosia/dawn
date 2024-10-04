@@ -29,7 +29,7 @@
 #define SRC_DAWN_TESTS_STRINGVIEWMATCHERS_H_
 
 #include "dawn/webgpu_cpp.h"
-#include "gtest/gtest.h"
+#include "gmock/gmock.h"
 
 namespace testing {
 
