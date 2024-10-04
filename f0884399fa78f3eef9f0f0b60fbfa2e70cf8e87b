@@ -33,6 +33,23 @@
       "message": "Niice what a cleanup. This had its tendrils in everything.",
       "revId": "f0884399fa78f3eef9f0f0b60fbfa2e70cf8e87b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a76d5f1_f543baa6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-04T08:35:04Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "f0884399fa78f3eef9f0f0b60fbfa2e70cf8e87b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
