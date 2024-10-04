@@ -86,6 +86,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "124a405e_f7267e9e",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-10-04T18:31:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b279b457_f42d29ef",
+      "revId": "38bfc3c88b7445c5f3a4a1f13825f8d1a119b29d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e616d6cd_60b08bb0",
@@ -99,6 +117,30 @@
       "writtenOn": "2024-10-04T17:07:05Z",
       "side": 1,
       "message": "nit: \"must be equal\"\n\nor combine these two checks into one check: \"Texture binding uses a view with baseArrayLayer %u and arrayLayerCount %u, but must use all %u layers of the texture in compatibility mode.\"",
+      "range": {
+        "startLine": 167,
+        "startChar": 48,
+        "endLine": 167,
+        "endChar": 58
+      },
+      "revId": "38bfc3c88b7445c5f3a4a1f13825f8d1a119b29d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d76d173_4148337e",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-10-04T18:31:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e616d6cd_60b08bb0",
       "range": {
         "startLine": 167,
         "startChar": 48,
@@ -126,6 +168,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1851ade_e39fcd31",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-10-04T18:31:19Z",
+      "side": 1,
+      "message": "Thanks for catching this. (Restore textureBindingViewDimension change; Remove suppressions for texture_intra_invocation_coherence)",
+      "parentUuid": "b658812f_c5977f67",
+      "revId": "38bfc3c88b7445c5f3a4a1f13825f8d1a119b29d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4b7ce75_6becfed7",
@@ -139,6 +199,30 @@
       "writtenOn": "2024-10-04T17:07:05Z",
       "side": 1,
       "message": "If possible use \"Failure\" instead of \"Skip\", that way the Unexpected Pass Finder can find and remove obsolete expectations.",
+      "range": {
+        "startLine": 177,
+        "startChar": 110,
+        "endLine": 177,
+        "endChar": 114
+      },
+      "revId": "38bfc3c88b7445c5f3a4a1f13825f8d1a119b29d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93492070_7fcab9ba",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-10-04T18:31:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4b7ce75_6becfed7",
       "range": {
         "startLine": 177,
         "startChar": 110,
