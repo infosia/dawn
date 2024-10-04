@@ -16,6 +16,29 @@
       "message": "Forget to add owner.",
       "revId": "bc82f0555c9e6a1e9ac76548803b8be5b4c7b099",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31c59e3a_99161c3c",
+        "filename": "src/dawn/native/opengl/RenderPipelineGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-04T17:09:22Z",
+      "side": 1,
+      "message": "Just wondering, have we verified that Vulkan doesn\u0027t have the same issue on the same devices? Might need this workaround in Vulkan too.",
+      "range": {
+        "startLine": 299,
+        "startChar": 51,
+        "endLine": 299,
+        "endChar": 57
+      },
+      "revId": "bc82f0555c9e6a1e9ac76548803b8be5b4c7b099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
