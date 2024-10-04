@@ -129,10 +129,12 @@ struct State {
                 case core::BuiltinFn::kTextureSample:
                     TextureSample(call);
                     break;
+                case core::BuiltinFn::kTextureSampleBias:
+                    TextureSampleBias(call);
+                    break;
                 case core::BuiltinFn::kTextureStore:
                     TextureStore(call);
                     break;
-                case core::BuiltinFn::kTextureSampleBias:
                 case core::BuiltinFn::kTextureSampleCompare:
                 case core::BuiltinFn::kTextureSampleCompareLevel:
                 case core::BuiltinFn::kTextureSampleGrad:
@@ -790,7 +792,6 @@ struct State {
 
             core::ir::Value* coords = args[2];
             switch (tex_type->Dim()) {
-                case core::type::TextureDimension::k1d:
                 case core::type::TextureDimension::k2d:
                     if (is_depth) {
                         coords = b.Construct(ty.vec3<f32>(), coords, depth_ref)->Result(0);
@@ -858,6 +859,79 @@ struct State {
 
                 params.Push(args[offset_arg]);
             }
+
+            b.CallWithResult<glsl::ir::BuiltinCall>(call->DetachResult(), fn, params);
+        });
+        call->Destroy();
+    }
+
+    void TextureSampleBias(core::ir::BuiltinCall* call) {
+        auto args = call->Args();
+        b.InsertBefore(call, [&] {
+            Vector<core::ir::Value*, 4> params;
+
+            uint32_t idx = 0;
+            uint32_t tex_arg = idx++;
+            uint32_t sampler_arg = idx++;
+
+            auto* tex = GetNewTexture(args[tex_arg], args[sampler_arg]);
+            auto* tex_type = tex->Type()->As<core::type::Texture>();
+            TINT_ASSERT(tex_type);
+
+            params.Push(tex);
+
+            uint32_t offset_arg = 0;
+            uint32_t bias_arg = 0;
+
+            core::ir::Value* coords = args[2];
+            switch (tex_type->Dim()) {
+                case core::type::TextureDimension::k2d:
+                    params.Push(coords);
+
+                    bias_arg = 3;
+                    if (args.Length() > 4) {
+                        offset_arg = 4;
+                    }
+                    break;
+                case core::type::TextureDimension::k2dArray: {
+                    Vector<core::ir::Value*, 3> new_coords;
+                    new_coords.Push(coords);
+                    new_coords.Push(b.Convert<f32>(args[3])->Result(0));
+
+                    params.Push(b.Construct(ty.vec3<f32>(), new_coords)->Result(0));
+
+                    bias_arg = 4;
+                    if (args.Length() > 5) {
+                        offset_arg = 5;
+                    }
+                    break;
+                }
+                case core::type::TextureDimension::k3d:
+                case core::type::TextureDimension::kCube:
+                    params.Push(coords);
+
+                    bias_arg = 3;
+                    if (args.Length() > 4) {
+                        offset_arg = 4;
+                    }
+                    break;
+                case core::type::TextureDimension::kCubeArray:
+                    bias_arg = 4;
+                    params.Push(
+                        b.Construct(ty.vec4<f32>(), coords, b.Convert<f32>(args[3]))->Result(0));
+                    break;
+                default:
+                    TINT_UNREACHABLE();
+            }
+
+            auto fn = glsl::BuiltinFn::kTexture;
+            if (offset_arg > 0) {
+                fn = glsl::BuiltinFn::kTextureOffset;
+
+                params.Push(args[offset_arg]);
+            }
+
+            params.Push(args[bias_arg]);
 
             b.CallWithResult<glsl::ir::BuiltinCall>(call->DetachResult(), fn, params);
         });
