@@ -51,7 +51,6 @@ using testing::NotNull;
 using testing::Return;
 using testing::SaveArg;
 using testing::SizedString;
-using testing::StrEq;
 using testing::WithArg;
 
 using WireAdapterTestBase = WireFutureTestWithParams<WGPURequestDeviceCallback,
@@ -120,7 +119,7 @@ TEST_P(WireAdapterTests, RequestDeviceNullDescriptor) {
 
 static void DeviceLostCallback(const wgpu::Device&,
                                wgpu::DeviceLostReason reason,
-                               const char* message) {}
+                               wgpu::StringView message) {}
 
 // Test that the DeviceDescriptor is not allowed to pass a device lost callback from the client to
 // the server.

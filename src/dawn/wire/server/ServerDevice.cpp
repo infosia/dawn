@@ -33,7 +33,7 @@
 
 namespace dawn::wire::server {
 
-void Server::OnUncapturedError(ObjectHandle device, WGPUErrorType type, const char* message) {
+void Server::OnUncapturedError(ObjectHandle device, WGPUErrorType type, WGPUStringView message) {
     ReturnDeviceUncapturedErrorCallbackCmd cmd;
     cmd.device = device;
     cmd.type = type;
@@ -45,7 +45,7 @@ void Server::OnUncapturedError(ObjectHandle device, WGPUErrorType type, const ch
 void Server::OnDeviceLost(DeviceLostUserdata* userdata,
                           WGPUDevice const* device,
                           WGPUDeviceLostReason reason,
-                          const char* message) {
+                          WGPUStringView message) {
     ReturnDeviceLostCallbackCmd cmd;
     cmd.eventManager = userdata->eventManager;
     cmd.future = userdata->future;
@@ -55,7 +55,7 @@ void Server::OnDeviceLost(DeviceLostUserdata* userdata,
     SerializeCommand(cmd);
 }
 
-void Server::OnLogging(ObjectHandle device, WGPULoggingType type, const char* message) {
+void Server::OnLogging(ObjectHandle device, WGPULoggingType type, WGPUStringView message) {
     ReturnDeviceLoggingCallbackCmd cmd;
     cmd.device = device;
     cmd.type = type;
@@ -81,7 +81,7 @@ WireResult Server::DoDevicePopErrorScope(Known<WGPUDevice> device,
 void Server::OnDevicePopErrorScope(ErrorScopeUserdata* userdata,
                                    WGPUPopErrorScopeStatus status,
                                    WGPUErrorType type,
-                                   const char* message) {
+                                   WGPUStringView message) {
     ReturnDevicePopErrorScopeCallbackCmd cmd;
     cmd.eventManager = userdata->eventManager;
     cmd.future = userdata->future;

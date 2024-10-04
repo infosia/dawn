@@ -62,7 +62,7 @@ WireResult Server::DoAdapterRequestDevice(Known<WGPUAdapter> adapter,
                                     deviceLostUserdata.release(), nullptr};
     desc.uncapturedErrorCallbackInfo2 = {
         nullptr,
-        [](WGPUDevice const*, WGPUErrorType type, const char* message, void*, void* userdata) {
+        [](WGPUDevice const*, WGPUErrorType type, WGPUStringView message, void*, void* userdata) {
             DeviceInfo* info = static_cast<DeviceInfo*>(userdata);
             info->server->OnUncapturedError(info->self, type, message);
         },

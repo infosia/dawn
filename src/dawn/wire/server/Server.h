@@ -242,18 +242,18 @@ class Server : public ServerBase {
     void ClearDeviceCallbacks(WGPUDevice device);
 
     // Error callbacks
-    void OnUncapturedError(ObjectHandle device, WGPUErrorType type, const char* message);
-    void OnLogging(ObjectHandle device, WGPULoggingType type, const char* message);
+    void OnUncapturedError(ObjectHandle device, WGPUErrorType type, WGPUStringView message);
+    void OnLogging(ObjectHandle device, WGPULoggingType type, WGPUStringView message);
 
     // Async event callbacks
     void OnDeviceLost(DeviceLostUserdata* userdata,
                       WGPUDevice const* device,
                       WGPUDeviceLostReason reason,
-                      const char* message);
+                      WGPUStringView message);
     void OnDevicePopErrorScope(ErrorScopeUserdata* userdata,
                                WGPUPopErrorScopeStatus status,
                                WGPUErrorType type,
-                               const char* message);
+                               WGPUStringView message);
     void OnBufferMapAsyncCallback(MapUserdata* userdata, WGPUBufferMapAsyncStatus status);
     void OnBufferMapAsyncCallback2(MapUserdata* userdata,
                                    WGPUMapAsyncStatus status,
