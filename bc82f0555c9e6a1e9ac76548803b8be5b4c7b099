@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1ed22cb_fad2cbb5",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-10-04T23:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbede43a_cff2821e",
+      "revId": "bc82f0555c9e6a1e9ac76548803b8be5b4c7b099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a311d4ed_56316f12",
@@ -65,6 +83,24 @@
       "writtenOn": "2024-10-04T22:03:17Z",
       "side": 1,
       "message": "```suggestion\n    // Scale depth bias value by * 0.5 on certain GL drivers.\n```",
+      "revId": "bc82f0555c9e6a1e9ac76548803b8be5b4c7b099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d736de4_f9c38c85",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-10-04T23:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a311d4ed_56316f12",
       "revId": "bc82f0555c9e6a1e9ac76548803b8be5b4c7b099",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
