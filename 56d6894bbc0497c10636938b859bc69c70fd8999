@@ -16,6 +16,24 @@
       "message": "Nit: Again, I think bias_arg is always `idx++` and then `offset_arg` is the next `idx++`.",
       "revId": "56d6894bbc0497c10636938b859bc69c70fd8999",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba3976c8_de0cb24d",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T23:06:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03cb9ef8_f1cc8c7d",
+      "revId": "56d6894bbc0497c10636938b859bc69c70fd8999",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
