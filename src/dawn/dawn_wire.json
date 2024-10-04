@@ -134,7 +134,7 @@
             { "name": "future", "type": "future" },
             { "name": "status", "type": "buffer map async status" },
             { "name": "status2", "type": "map async status" },
-            { "name": "message", "type": "char", "annotation": "const*", "length": "strlen", "optional": true },
+            { "name": "message", "type": "string view" },
             { "name": "userdata count", "type": "uint8_t", "_comment": "TODO(crbug.com/dawn/2509): Remove this once Chromium overrides the correct functions in the proc table."},
             { "name": "read data update info length", "type": "uint64_t" },
             { "name": "read data update info", "type": "uint8_t", "annotation": "const*", "length": "read data update info length", "skip_serialize": true }
