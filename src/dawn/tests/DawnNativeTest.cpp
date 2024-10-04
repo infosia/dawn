@@ -90,9 +90,9 @@ std::unique_ptr<dawn::platform::Platform> DawnNativeTest::CreateTestPlatform() {
 WGPUDevice DawnNativeTest::CreateTestDevice() {
     wgpu::DeviceDescriptor desc = {};
     desc.SetUncapturedErrorCallback(
-        [](const wgpu::Device&, wgpu::ErrorType type, const char* message) {
+        [](const wgpu::Device&, wgpu::ErrorType type, wgpu::StringView message) {
             DAWN_ASSERT(type != wgpu::ErrorType::NoError);
-            FAIL() << "Unexpected error: " << message;
+            FAIL() << "Unexpected error: " << std::string_view(message);
         });
 
     return adapter.CreateDevice(&desc);

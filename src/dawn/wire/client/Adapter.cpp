@@ -103,11 +103,12 @@ class RequestDeviceEvent : public TrackedEvent {
             // If there was an error and we didn't return a device, we need to call the device lost
             // callback and reclaim the device allocation.
             if (mStatus == WGPURequestDeviceStatus_InstanceDropped) {
-                mDevice->HandleDeviceLost(WGPUDeviceLostReason_InstanceDropped,
-                                          "A valid external Instance reference no longer exists.");
+                mDevice->HandleDeviceLost(
+                    WGPUDeviceLostReason_InstanceDropped,
+                    ToOutputStringView("A valid external Instance reference no longer exists."));
             } else {
                 mDevice->HandleDeviceLost(WGPUDeviceLostReason_FailedCreation,
-                                          "Device failed at creation.");
+                                          ToOutputStringView("Device failed at creation."));
             }
         }
 

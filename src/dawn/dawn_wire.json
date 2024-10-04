@@ -154,24 +154,24 @@
         "device uncaptured error callback": [
             { "name": "device", "type": "ObjectHandle", "handle_type": "device" },
             { "name": "type", "type": "error type"},
-            { "name": "message", "type": "char", "annotation": "const*", "length": "strlen" }
+            { "name": "message", "type": "string view"}
         ],
         "device logging callback": [
             { "name": "device", "type": "ObjectHandle", "handle_type": "device" },
             { "name": "type", "type": "logging type"},
-            { "name": "message", "type": "char", "annotation": "const*", "length": "strlen" }
+            { "name": "message", "type": "string view" }
         ],
         "device lost callback" : [
             { "name": "event manager", "type": "ObjectHandle" },
             { "name": "future", "type": "future" },
             { "name": "reason", "type": "device lost reason" },
-            { "name": "message", "type": "char", "annotation": "const*", "length": "strlen" }
+            { "name": "message", "type": "string view"}
         ],
         "device pop error scope callback": [
             { "name": "event manager", "type": "ObjectHandle" },
             { "name": "future", "type": "future" },
             { "name": "type", "type": "error type" },
-            { "name": "message", "type": "char", "annotation": "const*", "length": "strlen" }
+            { "name": "message", "type": "string view"}
         ],
         "queue work done callback": [
             { "name": "event manager", "type": "ObjectHandle" },

@@ -1788,7 +1788,7 @@
         "category": "function pointer",
         "args": [
             {"name": "reason", "type": "device lost reason"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -1797,7 +1797,7 @@
         "args": [
             {"name": "device", "type": "device", "annotation": "const*", "length": 1},
             {"name": "reason", "type": "device lost reason"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -1806,7 +1806,7 @@
         "args": [
             {"name": "device", "type": "device", "annotation": "const*", "length": 1},
             {"name": "reason", "type": "device lost reason"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
+            {"name": "message", "type": "string view"}
         ]
     },
     "device lost callback info": {
@@ -1844,7 +1844,7 @@
         "category": "function pointer",
         "args": [
             {"name": "type", "type": "error type"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -1853,7 +1853,7 @@
         "args": [
             {"name": "device", "type": "device", "annotation": "const*", "length": 1},
             {"name": "type", "type": "error type"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
+            {"name": "message", "type": "string view"}
         ]
     },
     "uncaptured error callback info": {
@@ -1883,7 +1883,7 @@
         "args": [
             {"name": "status", "type": "pop error scope status"},
             {"name": "type", "type": "error type"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },
@@ -1892,7 +1892,7 @@
         "args": [
             {"name": "status", "type": "pop error scope status"},
             {"name": "type", "type": "error type"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"}
+            {"name": "message", "type": "string view"}
         ]
     },
     "pop error scope callback info": {
@@ -1987,7 +1987,7 @@
         "tags": ["dawn"],
         "args": [
             {"name": "type", "type": "logging type"},
-            {"name": "message", "type": "char", "annotation": "const*", "length": "strlen"},
+            {"name": "message", "type": "string view"},
             {"name": "userdata", "type": "void *"}
         ]
     },

@@ -227,19 +227,20 @@ MaybeError InstanceBase::Initialize(const UnpackedPtr<InstanceDescriptor>& descr
     }
 
     if (!mLoggingCallback) {
-        mLoggingCallback = [](WGPULoggingType type, char const* message, void*) {
+        mLoggingCallback = [](WGPULoggingType type, WGPUStringView message, void*) {
+            std::string_view view = {message.data, message.length};
             switch (static_cast<wgpu::LoggingType>(type)) {
                 case wgpu::LoggingType::Verbose:
-                    dawn::DebugLog() << message;
+                    dawn::DebugLog() << view;
                     break;
                 case wgpu::LoggingType::Info:
-                    dawn::InfoLog() << message;
+                    dawn::InfoLog() << view;
                     break;
                 case wgpu::LoggingType::Warning:
-                    dawn::WarningLog() << message;
+                    dawn::WarningLog() << view;
                     break;
                 case wgpu::LoggingType::Error:
-                    dawn::ErrorLog() << message;
+                    dawn::ErrorLog() << view;
                     break;
             }
         };
@@ -491,7 +492,8 @@ bool InstanceBase::ConsumedErrorAndWarnOnce(MaybeError maybeErr) {
     }
     std::string message = maybeErr.AcquireError()->GetFormattedMessage();
     if (mWarningMessages.insert(message).second && mLoggingCallback) {
-        mLoggingCallback(WGPULoggingType_Warning, message.c_str(), mLoggingCallbackUserdata);
+        mLoggingCallback(WGPULoggingType_Warning, ToOutputStringView(message),
+                         mLoggingCallbackUserdata);
     }
     return true;
 }
@@ -598,7 +600,8 @@ void InstanceBase::ConsumeError(std::unique_ptr<ErrorData> error,
     DAWN_ASSERT(error != nullptr);
     if (mLoggingCallback) {
         std::string messageStr = error->GetFormattedMessage();
-        mLoggingCallback(WGPULoggingType_Error, messageStr.c_str(), mLoggingCallbackUserdata);
+        mLoggingCallback(WGPULoggingType_Error, ToOutputStringView(messageStr),
+                         mLoggingCallbackUserdata);
     }
 }
 

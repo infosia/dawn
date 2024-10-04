@@ -756,20 +756,20 @@ struct {{CppType}} : protected detail::{{CppType}} {
     inline {{CppType}}(Init&& init);
 
     template <typename F, typename T,
-              typename Cb = void (const Device& device, DeviceLostReason reason, const char * message, T userdata),
+              typename Cb = void (const Device& device, DeviceLostReason reason, StringView message, T userdata),
               typename = std::enable_if_t<std::is_convertible_v<F, Cb*>>>
     void SetDeviceLostCallback(CallbackMode callbackMode, F callback, T userdata);
     template <typename L,
-              typename Cb = std::function<void(const Device& device, DeviceLostReason reason, const char * message)>,
+              typename Cb = std::function<void(const Device& device, DeviceLostReason reason, StringView message)>,
               typename = std::enable_if_t<std::is_convertible_v<L, Cb>>>
     void SetDeviceLostCallback(CallbackMode callbackMode, L callback);
 
     template <typename F, typename T,
-              typename Cb = void (const Device& device, ErrorType type, const char * message, T userdata),
+              typename Cb = void (const Device& device, ErrorType type, StringView message, T userdata),
               typename = std::enable_if_t<std::is_convertible_v<F, Cb*>>>
     void SetUncapturedErrorCallback(F callback, T userdata);
     template <typename L,
-              typename Cb = std::function<void(const Device& device, ErrorType type, const char * message)>,
+              typename Cb = std::function<void(const Device& device, ErrorType type, StringView message)>,
               typename = std::enable_if_t<std::is_convertible_v<L, Cb>>>
     void SetUncapturedErrorCallback(L callback);
 };
@@ -916,7 +916,7 @@ void {{CppType}}::SetDeviceLostCallback(CallbackMode callbackMode, F callback, T
     assert(deviceLostCallbackInfo2.callback == nullptr);
 
     deviceLostCallbackInfo2.mode = static_cast<WGPUCallbackMode>(callbackMode);
-    deviceLostCallbackInfo2.callback = [](WGPUDevice const * device, WGPUDeviceLostReason reason, char const * message, void* callback, void* userdata) {
+    deviceLostCallbackInfo2.callback = [](WGPUDevice const * device, WGPUDeviceLostReason reason, WGPUStringView message, void* callback, void* userdata) {
         auto cb = reinterpret_cast<Cb*>(callback);
         // We manually acquire and release the device to avoid changing any ref counts.
         auto apiDevice = Device::Acquire(*device);
@@ -930,11 +930,11 @@ void {{CppType}}::SetDeviceLostCallback(CallbackMode callbackMode, F callback, T
 template <typename L, typename Cb, typename>
 void {{CppType}}::SetDeviceLostCallback(CallbackMode callbackMode, L callback) {
     assert(deviceLostCallbackInfo2.callback == nullptr);
-    using F = void (const Device& device, DeviceLostReason reason, const char * message);
+    using F = void (const Device& device, DeviceLostReason reason, StringView message);
 
     deviceLostCallbackInfo2.mode = static_cast<WGPUCallbackMode>(callbackMode);
     if constexpr (std::is_convertible_v<L, F*>) {
-        deviceLostCallbackInfo2.callback = [](WGPUDevice const * device, WGPUDeviceLostReason reason, char const * message, void* callback, void*) {
+        deviceLostCallbackInfo2.callback = [](WGPUDevice const * device, WGPUDeviceLostReason reason, WGPUStringView message, void* callback, void*) {
             auto cb = reinterpret_cast<F*>(callback);
             // We manually acquire and release the device to avoid changing any ref counts.
             auto apiDevice = Device::Acquire(*device);
@@ -945,7 +945,7 @@ void {{CppType}}::SetDeviceLostCallback(CallbackMode callbackMode, L callback) {
         deviceLostCallbackInfo2.userdata2 = nullptr;
     } else {
         auto* lambda = new L(std::move(callback));
-        deviceLostCallbackInfo2.callback = [](WGPUDevice const * device, WGPUDeviceLostReason reason, char const * message, void* callback, void*) {
+        deviceLostCallbackInfo2.callback = [](WGPUDevice const * device, WGPUDeviceLostReason reason, WGPUStringView message, void* callback, void*) {
             std::unique_ptr<L> lambda(reinterpret_cast<L*>(callback));
             // We manually acquire and release the device to avoid changing any ref counts.
             auto apiDevice = Device::Acquire(*device);
@@ -959,7 +959,7 @@ void {{CppType}}::SetDeviceLostCallback(CallbackMode callbackMode, L callback) {
 
 template <typename F, typename T, typename Cb, typename>
 void {{CppType}}::SetUncapturedErrorCallback(F callback, T userdata) {
-    uncapturedErrorCallbackInfo2.callback = [](WGPUDevice const * device, WGPUErrorType type, char const * message, void* callback, void* userdata) {
+    uncapturedErrorCallbackInfo2.callback = [](WGPUDevice const * device, WGPUErrorType type, WGPUStringView message, void* callback, void* userdata) {
         auto cb = reinterpret_cast<Cb*>(callback);
         // We manually acquire and release the device to avoid changing any ref counts.
         auto apiDevice = Device::Acquire(*device);
@@ -972,10 +972,10 @@ void {{CppType}}::SetUncapturedErrorCallback(F callback, T userdata) {
 
 template <typename L, typename Cb, typename>
 void {{CppType}}::SetUncapturedErrorCallback(L callback) {
-    using F = void (const Device& device, ErrorType type, const char * message);
+    using F = void (const Device& device, ErrorType type, StringView message);
     static_assert(std::is_convertible_v<L, F*>, "Uncaptured error callback cannot be a binding lambda");
 
-    uncapturedErrorCallbackInfo2.callback = [](WGPUDevice const * device, WGPUErrorType type, char const * message, void* callback, void*) {
+    uncapturedErrorCallbackInfo2.callback = [](WGPUDevice const * device, WGPUErrorType type, WGPUStringView message, void* callback, void*) {
         auto cb = reinterpret_cast<F*>(callback);
         // We manually acquire and release the device to avoid changing any ref counts.
         auto apiDevice = Device::Acquire(*device);

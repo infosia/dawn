@@ -1190,19 +1190,20 @@ wgpu::Device DawnTestBase::CreateDevice(std::string isolationKey) {
         .Times(AtMost(1));
 
     apiDevice.SetLoggingCallback(
-        [](WGPULoggingType type, char const* message, void*) {
+        [](WGPULoggingType type, WGPUStringView message, void*) {
+            std::string_view view = {message.data, message.length};
             switch (type) {
                 case WGPULoggingType_Verbose:
-                    DebugLog() << message;
+                    DebugLog() << view;
                     break;
                 case WGPULoggingType_Warning:
-                    WarningLog() << message;
+                    WarningLog() << view;
                     break;
                 case WGPULoggingType_Error:
-                    ErrorLog() << message;
+                    ErrorLog() << view;
                     break;
                 default:
-                    InfoLog() << message;
+                    InfoLog() << view;
                     break;
             }
         },
