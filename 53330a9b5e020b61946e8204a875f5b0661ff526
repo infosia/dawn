@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d45ea0a6_40f56a70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-04T23:00:26Z",
+      "side": 1,
+      "message": "With these changes patched into google3, I was able to switch some of the internal folks over to the new APIs, see cl/663925092.",
+      "revId": "53330a9b5e020b61946e8204a875f5b0661ff526",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
