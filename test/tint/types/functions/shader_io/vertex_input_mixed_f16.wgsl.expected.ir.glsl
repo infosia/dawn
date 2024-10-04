@@ -2,6 +2,14 @@
 #extension GL_AMD_gpu_shader_half_float: require
 
 
+struct tint_push_constant_struct {
+  uint tint_first_instance;
+};
+
+struct tint_symbol_2 {
+  tint_push_constant_struct tint_symbol_1;
+};
+
 struct VertexInputs0 {
   uint vertex_index;
   int loc0;
@@ -13,6 +21,7 @@ struct VertexInputs1 {
   f16vec3 loc5;
 };
 
+layout(location = 0) uniform tint_symbol_2 v_1;
 layout(location = 0) in int tint_symbol_loc0_Input;
 layout(location = 1) in uint tint_symbol_loc1_Input;
 layout(location = 2) in float tint_symbol_loc2_Input;
@@ -30,12 +39,12 @@ vec4 tint_symbol_inner(VertexInputs0 inputs0, uint loc1, uint instance_index, Ve
   return vec4(0.0f);
 }
 void main() {
-  uint v_1 = uint(gl_VertexID);
-  VertexInputs0 v_2 = VertexInputs0(v_1, tint_symbol_loc0_Input);
-  uint v_3 = tint_symbol_loc1_Input;
-  uint v_4 = uint(gl_InstanceID);
-  VertexInputs1 v_5 = VertexInputs1(tint_symbol_loc2_Input, tint_symbol_loc3_Input, tint_symbol_loc5_Input);
-  gl_Position = tint_symbol_inner(v_2, v_3, v_4, v_5, tint_symbol_loc4_Input);
+  uint v_2 = uint(gl_VertexID);
+  VertexInputs0 v_3 = VertexInputs0(v_2, tint_symbol_loc0_Input);
+  uint v_4 = tint_symbol_loc1_Input;
+  uint v_5 = uint(gl_InstanceID);
+  VertexInputs1 v_6 = VertexInputs1(tint_symbol_loc2_Input, tint_symbol_loc3_Input, tint_symbol_loc5_Input);
+  gl_Position = tint_symbol_inner(v_3, v_4, v_5, v_6, tint_symbol_loc4_Input);
   gl_Position[1u] = -(gl_Position.y);
   gl_Position[2u] = ((2.0f * gl_Position.z) - gl_Position.w);
   gl_PointSize = 1.0f;

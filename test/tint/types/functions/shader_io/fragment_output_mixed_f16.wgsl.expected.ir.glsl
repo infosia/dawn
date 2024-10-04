@@ -5,6 +5,15 @@ precision highp float;
 precision highp int;
 
 
+struct tint_push_constant_struct {
+  uint tint_frag_depth_min;
+  uint tint_frag_depth_max;
+};
+
+struct tint_symbol_2 {
+  tint_push_constant_struct tint_symbol_1;
+};
+
 struct FragmentOutputs {
   int loc0;
   float frag_depth;
@@ -16,6 +25,7 @@ struct FragmentOutputs {
   f16vec3 loc5;
 };
 
+layout(location = 0) uniform tint_symbol_2 v;
 layout(location = 0) out int tint_symbol_loc0_Output;
 layout(location = 1) out uint tint_symbol_loc1_Output;
 layout(location = 2) out float tint_symbol_loc2_Output;
@@ -26,13 +36,13 @@ FragmentOutputs tint_symbol_inner() {
   return FragmentOutputs(1, 2.0f, 1u, 1.0f, 2u, vec4(1.0f, 2.0f, 3.0f, 4.0f), 2.25hf, f16vec3(3.0hf, 5.0hf, 8.0hf));
 }
 void main() {
-  FragmentOutputs v = tint_symbol_inner();
-  tint_symbol_loc0_Output = v.loc0;
-  gl_FragDepth = v.frag_depth;
-  tint_symbol_loc1_Output = v.loc1;
-  tint_symbol_loc2_Output = v.loc2;
-  gl_SampleMask[0u] = int(v.sample_mask);
-  tint_symbol_loc3_Output = v.loc3;
-  tint_symbol_loc4_Output = v.loc4;
-  tint_symbol_loc5_Output = v.loc5;
+  FragmentOutputs v_1 = tint_symbol_inner();
+  tint_symbol_loc0_Output = v_1.loc0;
+  gl_FragDepth = v_1.frag_depth;
+  tint_symbol_loc1_Output = v_1.loc1;
+  tint_symbol_loc2_Output = v_1.loc2;
+  gl_SampleMask[0u] = int(v_1.sample_mask);
+  tint_symbol_loc3_Output = v_1.loc3;
+  tint_symbol_loc4_Output = v_1.loc4;
+  tint_symbol_loc5_Output = v_1.loc5;
 }

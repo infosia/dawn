@@ -2,6 +2,17 @@
 precision highp float;
 precision highp int;
 
+
+struct tint_push_constant_struct {
+  uint tint_frag_depth_min;
+  uint tint_frag_depth_max;
+};
+
+struct tint_symbol_1 {
+  tint_push_constant_struct tint_symbol;
+};
+
+layout(location = 0) uniform tint_symbol_1 v;
 float main1_inner() {
   return 1.0f;
 }

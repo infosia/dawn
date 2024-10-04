@@ -1,13 +1,18 @@
 #version 310 es
 
 
+struct tint_push_constant_struct {
+  float user_constant;
+  uint tint_first_instance;
+};
+
 struct tint_symbol_2 {
-  float tint_symbol_1;
+  tint_push_constant_struct tint_symbol_1;
 };
 
 layout(location = 0) uniform tint_symbol_2 v;
 vec4 tint_symbol_inner(uint b) {
-  float v_1 = v.tint_symbol_1;
+  float v_1 = v.tint_symbol_1.user_constant;
   return vec4((v_1 + float(b)));
 }
 void main() {

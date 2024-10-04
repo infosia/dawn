@@ -1,5 +1,15 @@
 #version 310 es
 
+
+struct tint_push_constant_struct {
+  uint tint_first_instance;
+};
+
+struct tint_symbol_2 {
+  tint_push_constant_struct tint_symbol_1;
+};
+
+layout(location = 0) uniform tint_symbol_2 v;
 vec4 tint_symbol_inner(uint b) {
   return vec4(float(b));
 }

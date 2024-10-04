@@ -1,11 +1,20 @@
 #version 310 es
 
 
+struct tint_push_constant_struct {
+  uint tint_first_instance;
+};
+
+struct tint_symbol_3 {
+  tint_push_constant_struct tint_symbol_2;
+};
+
 struct Output {
   vec4 Position;
   vec4 color;
 };
 
+layout(location = 0) uniform tint_symbol_3 v;
 layout(location = 0) out vec4 tint_symbol_loc0_Output;
 Output tint_symbol_inner(uint VertexIndex, uint InstanceIndex) {
   vec2 zv[4] = vec2[4](vec2(0.20000000298023223877f), vec2(0.30000001192092895508f), vec2(-0.10000000149011611938f), vec2(1.10000002384185791016f));
@@ -17,11 +26,11 @@ Output tint_symbol_inner(uint VertexIndex, uint InstanceIndex) {
   return tint_symbol_1;
 }
 void main() {
-  uint v = uint(gl_VertexID);
-  Output v_1 = tint_symbol_inner(v, uint(gl_InstanceID));
-  gl_Position = v_1.Position;
+  uint v_1 = uint(gl_VertexID);
+  Output v_2 = tint_symbol_inner(v_1, uint(gl_InstanceID));
+  gl_Position = v_2.Position;
   gl_Position[1u] = -(gl_Position.y);
   gl_Position[2u] = ((2.0f * gl_Position.z) - gl_Position.w);
-  tint_symbol_loc0_Output = v_1.color;
+  tint_symbol_loc0_Output = v_2.color;
   gl_PointSize = 1.0f;
 }
