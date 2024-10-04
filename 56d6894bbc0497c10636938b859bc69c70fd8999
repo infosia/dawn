@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03cb9ef8_f1cc8c7d",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-04T17:48:14Z",
+      "side": 1,
+      "message": "Nit: Again, I think bias_arg is always `idx++` and then `offset_arg` is the next `idx++`.",
+      "revId": "56d6894bbc0497c10636938b859bc69c70fd8999",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
