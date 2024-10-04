@@ -39,6 +39,30 @@
       },
       "revId": "bc82f0555c9e6a1e9ac76548803b8be5b4c7b099",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f861cab9_69cc5fb6",
+        "filename": "src/dawn/native/opengl/RenderPipelineGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-10-04T17:25:02Z",
+      "side": 1,
+      "message": "The only 4 `webgpu:api,operation,rendering,depth_bias:depth_bias:` suppressions in `expectations.txt` are on ubuntu. I think vulkan on android should behave as expected like spec.",
+      "parentUuid": "31c59e3a_99161c3c",
+      "range": {
+        "startLine": 299,
+        "startChar": 51,
+        "endLine": 299,
+        "endChar": 57
+      },
+      "revId": "bc82f0555c9e6a1e9ac76548803b8be5b4c7b099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
