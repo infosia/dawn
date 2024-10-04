@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9727fa54_27883253",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T21:52:36Z",
+      "side": 1,
+      "message": "I\u0027ll try removing it but i\u0027m not sure. It returns this value when it hits a `FunctionParam` so I was thinking it did this when walking up and then replaced the function params later. We\u0027ll see what happens if I remove this.",
+      "parentUuid": "6550b7d3_d8e7477f",
+      "range": {
+        "startLine": 336,
+        "startChar": 0,
+        "endLine": 338,
+        "endChar": 25
+      },
+      "revId": "8b34420cf2156be9cdf488d498a5f5ab8686b219",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "147d80df_b83d9e1c",
@@ -89,6 +113,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce4108b9_0450bda5",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T21:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "147d80df_b83d9e1c",
+      "revId": "8b34420cf2156be9cdf488d498a5f5ab8686b219",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e8f8ccf_c4179157",
@@ -102,6 +144,24 @@
       "writtenOn": "2024-10-03T13:29:56Z",
       "side": 1,
       "message": "Nit: These are not sub-objects or pointers. Maybe just \"handle type arguments\".",
+      "revId": "8b34420cf2156be9cdf488d498a5f5ab8686b219",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e8ca050_d7b3e80d",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T21:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e8f8ccf_c4179157",
       "revId": "8b34420cf2156be9cdf488d498a5f5ab8686b219",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
