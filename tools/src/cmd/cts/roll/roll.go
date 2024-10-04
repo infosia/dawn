@@ -451,6 +451,14 @@ func (r *roller) roll(ctx context.Context) error {
 			updateExpectationUpdateTimestamp(&exInfo.newExpectations)
 			editedFiles[exInfo.path] = exInfo.newExpectations.String()
 		}
+		// We re-create the Gerrit client every patchset to avoid session expirations if there are a
+		// lot of attempts/patchsets. See crbug.com/371501714.
+		newClient, err := gerrit.New(context.Background(), r.auth, r.cfg.Gerrit.Host)
+		if err != nil {
+			log.Printf("failed to create new Gerrit client, re-using old one: %v", err)
+		} else {
+			r.gerrit = newClient
+		}
 		ps, err = r.gerrit.EditFiles(changeID, msg, editedFiles, nil)
 		if err != nil {
 			return fmt.Errorf("failed to update change '%v': %v", changeID, err)
