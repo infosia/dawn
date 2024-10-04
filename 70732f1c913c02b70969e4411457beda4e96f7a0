@@ -33,6 +33,24 @@
       "message": "Nit: Just use `idx++` here and for the offset for consistency?",
       "revId": "70732f1c913c02b70969e4411457beda4e96f7a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5b274de_b207ce88",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T22:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6998ecc_37656f7b",
+      "revId": "70732f1c913c02b70969e4411457beda4e96f7a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
