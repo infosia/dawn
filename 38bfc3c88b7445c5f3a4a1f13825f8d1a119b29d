@@ -67,6 +67,86 @@
       "message": "Forget to add owner. Adding Kai to review\nGregg I think you accidentally unset the +1",
       "revId": "38bfc3c88b7445c5f3a4a1f13825f8d1a119b29d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b279b457_f42d29ef",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-04T17:07:05Z",
+      "side": 1,
+      "message": "nit: I think I would move this check outside the function (to the call site) so the logic of ValidateSampledTextureBinding is a little easier to read",
+      "revId": "38bfc3c88b7445c5f3a4a1f13825f8d1a119b29d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e616d6cd_60b08bb0",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-04T17:07:05Z",
+      "side": 1,
+      "message": "nit: \"must be equal\"\n\nor combine these two checks into one check: \"Texture binding uses a view with baseArrayLayer %u and arrayLayerCount %u, but must use all %u layers of the texture in compatibility mode.\"",
+      "range": {
+        "startLine": 167,
+        "startChar": 48,
+        "endLine": 167,
+        "endChar": 58
+      },
+      "revId": "38bfc3c88b7445c5f3a4a1f13825f8d1a119b29d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b658812f_c5977f67",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-04T17:07:05Z",
+      "side": 1,
+      "message": "I think this applies the `textureBindingViewDimension` validation to storage as well. If that\u0027s correct, we should update the proposal here:\nhttps://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md#1-texture-view-dimension-may-be-specified\nIt only mentions binding for sampling.",
+      "revId": "38bfc3c88b7445c5f3a4a1f13825f8d1a119b29d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4b7ce75_6becfed7",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-04T17:07:05Z",
+      "side": 1,
+      "message": "If possible use \"Failure\" instead of \"Skip\", that way the Unexpected Pass Finder can find and remove obsolete expectations.",
+      "range": {
+        "startLine": 177,
+        "startChar": 110,
+        "endLine": 177,
+        "endChar": 114
+      },
+      "revId": "38bfc3c88b7445c5f3a4a1f13825f8d1a119b29d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
