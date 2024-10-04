@@ -33,6 +33,24 @@
       "message": "Nit: I think `offset_idx` is just the next `idx` value, so you don\u0027t really need to do these ternaries. Just use `idx` in the `if` block below.",
       "revId": "11d3ad87a961918210496f8b520ae322ad70f47e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d39b7841_df79aca1",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-04T22:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d3f54c5_82dd1393",
+      "revId": "11d3ad87a961918210496f8b520ae322ad70f47e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
