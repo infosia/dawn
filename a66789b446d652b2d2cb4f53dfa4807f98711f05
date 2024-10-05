@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "766a25fb_3240ae06",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25b8cce7_e44881d4",
+      "range": {
+        "startLine": 157,
+        "startChar": 9,
+        "endLine": 157,
+        "endChar": 35
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cec91843_d16886b9",
@@ -71,6 +95,24 @@
       "writtenOn": "2024-09-30T14:47:12Z",
       "side": 1,
       "message": "The templating wouldn\u0027t be needed with a parent class as mentioned in another comment.",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "253e98e9_34d50ed0",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Sry but what I find is that even after adding `PipelineVk` we still need to pass the renderpipeline/computepipeline due to the requirement of `PipelineLayoutBase` which lives in PipelineBase :(",
+      "parentUuid": "cec91843_d16886b9",
       "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -128,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99d32ef0_4b50d034",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Thanks for details. Done.",
+      "parentUuid": "e21419b8_3474ea46",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88888333_9361f234",
@@ -142,6 +202,30 @@
       "side": 1,
       "message": "\u003e \"interal\" is a possible misspelling of \"internal\", \"interval\", or \"integral\".\n\nPlease fix.",
       "parentUuid": "a77eb520_9436e583",
+      "range": {
+        "startLine": 61,
+        "startChar": 58,
+        "endLine": 61,
+        "endChar": 65
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9137266_ab37ceb4",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88888333_9361f234",
       "range": {
         "startLine": 61,
         "startChar": 58,
@@ -187,6 +271,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b9ddd4a_de438ffc",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcd8bb98_c8844d1e",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "deb6acbf_48667fa1",
@@ -200,6 +302,24 @@
       "writtenOn": "2024-09-30T14:47:12Z",
       "side": 1,
       "message": "nit: Could we move these two members and the getters to a dawn::native::vulkan::Pipeline that\u0027s a parent class of both Compute/RenderPipeline?",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "943af24e_e70c53a2",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deb6acbf_48667fa1",
       "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -259,6 +379,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eb7c0eb6_8d9d0f91",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "It\u0027s strange that when I tried to hold `Ref\u003cRefCountedVkHandle\u003e` here, I hit a delete-on-a-deleted-object issue. (Destructor chain: Destroy PipelineLayoutVk first \n and then PipelineVk, my expectation is that clear map content in PipelineLayoutVk shouldn\u0027t delete the handle but seems not).\n Holding `VkPipelineLayout` here avoid this issue.",
+      "parentUuid": "9a2f686d_152a4d3b",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4be44f84_4aad0f31",
         "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
         "patchSetId": 1
@@ -294,6 +432,30 @@
       "side": 1,
       "message": "😞",
       "parentUuid": "4be44f84_4aad0f31",
+      "range": {
+        "startLine": 81,
+        "startChar": 81,
+        "endLine": 81,
+        "endChar": 98
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8ad013a_ef731eec",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e26dfd24_cff87804",
       "range": {
         "startLine": 81,
         "startChar": 81,
@@ -357,6 +519,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff5af36a_a9e674a9",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Ack. Done",
+      "parentUuid": "46368be3_879a6864",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c135e6c_5af44a98",
@@ -394,6 +574,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bc6eeae0_e9a00247",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Pls review the cachekey.",
+      "parentUuid": "d1699755_fb475fcb",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "50585ebc_7a41bf24",
         "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
         "patchSetId": 1
@@ -405,6 +603,30 @@
       "writtenOn": "2024-09-30T14:47:12Z",
       "side": 1,
       "message": "nit: `for (const auto\u0026 [_, vkLayout] : mVkPipelineLayouts) {` is slightly more clear.",
+      "range": {
+        "startLine": 150,
+        "startChar": 9,
+        "endLine": 150,
+        "endChar": 25
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10e2484e_ff60065f",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50585ebc_7a41bf24",
       "range": {
         "startLine": 150,
         "startChar": 9,
@@ -438,6 +660,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "104a4c8e_a30ee6cf",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aebce3f4_d224e8cb",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7929bea2_d03ab467",
@@ -451,6 +697,30 @@
       "writtenOn": "2024-09-30T14:47:12Z",
       "side": 1,
       "message": "nit: `different amounts of immediate data` maybe?",
+      "range": {
+        "startLine": 70,
+        "startChar": 36,
+        "endLine": 70,
+        "endChar": 50
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15efa5e5_299e7c9b",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7929bea2_d03ab467",
       "range": {
         "startLine": 70,
         "startChar": 36,
@@ -484,6 +754,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b475543d_015ec2f5",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0c198f6_de60a100",
+      "range": {
+        "startLine": 74,
+        "startChar": 17,
+        "endLine": 74,
+        "endChar": 51
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f67e2928_1a12bcd9",
@@ -497,6 +791,24 @@
       "writtenOn": "2024-09-30T14:47:12Z",
       "side": 1,
       "message": "nit: implementation should be in the .cpp and since this is only used in `GetOrCreateVkLayoutObject` we could just set the members there directly.",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9293f317_3b8995a3",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f67e2928_1a12bcd9",
       "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -571,6 +883,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c5a9252_f6b686e7",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57979dc7_29170c4a",
+      "range": {
+        "startLine": 107,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 45
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6cb5d169_2bd58494",
@@ -620,6 +956,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fe69af98_bf475e9c",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Still use `mCachedCreateInfo` because it is easy to create `PipelineLayout` cache.",
+      "parentUuid": "f626cf66_396e7de2",
+      "range": {
+        "startLine": 112,
+        "startChar": 23,
+        "endLine": 112,
+        "endChar": 42
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d3181c6e_295727d5",
         "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
         "patchSetId": 1
@@ -649,6 +1009,24 @@
       "side": 1,
       "message": "Exactly. Let me try another words.",
       "parentUuid": "d3181c6e_295727d5",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6af83f42_bc647378",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-05T15:26:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f7275a2_b945bbc9",
       "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
