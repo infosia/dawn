@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f7a0736_05c199d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-05T00:10:54Z",
+      "side": 1,
+      "message": "PTAL.\n\nThis differs slightly from the AST version in that it adds the needed extension for some of the `Lod` calls. The AST version currently generates invalid GLSL as without the extension you can do the Lod calls on `depth_2d_array`, `depth_cube` and `depth_cube_array` textures.\n\nThe extension is only added if required for the Lod calls.",
+      "revId": "da2f47694c0d9ce61369bcc46ea123cfa235c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
