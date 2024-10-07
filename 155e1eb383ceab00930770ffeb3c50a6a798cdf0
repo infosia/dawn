@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12776db4_a06dc43e",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:16:57Z",
+      "side": 1,
+      "message": "Does this mean that there will be a hashmap lookup for every WebGPU call?",
+      "revId": "155e1eb383ceab00930770ffeb3c50a6a798cdf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d5cc6d2_d7d8fb55",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:16:57Z",
+      "side": 1,
+      "message": "Maybe to shield implementation details if we decide to split tables, this should be split into a per-object function as well. Otherwise we wouldn\u0027t know which table to address (or would need a GetType() virtual method, but maybe we don\u0027t want that in emscripten).",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 15
+      },
+      "revId": "155e1eb383ceab00930770ffeb3c50a6a798cdf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c5db665_e0943eee",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:16:57Z",
+      "side": 1,
+      "message": "nit: maybe this defaulting could be done in `EventSource::EventSource`.",
+      "range": {
+        "startLine": 948,
+        "startChar": 18,
+        "endLine": 948,
+        "endChar": 68
+      },
+      "revId": "155e1eb383ceab00930770ffeb3c50a6a798cdf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
