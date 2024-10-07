@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "770e1dd5_cb029444",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-07T17:47:36Z",
+      "side": 1,
+      "message": "These two functions, `FlattenAccessChain` and `GetElementType` are copied from `LocalizeStructArrayAssignment`. I would like to make them utility functions, but I\u0027m not exactly sure what that should look like. Should we have a `transform/common/utils.h` with a bunch of utility functions? Should we have a separate file for `access_chain_utils` and `type_utils`?",
+      "revId": "ee434ccd301e8fa3ed4540b9584a3b00968d3909",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "587ea357_28c7600f",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-07T17:47:36Z",
+      "side": 1,
+      "message": "This is also repeated from `LocalizeStructArrayAssignment`, and I believe it appears in other transforms. We should probably make this a utility as well. Maybe a `InlinePointerLets` function that loops over instructions and calls another helper `InlinePointerLet`. This way we can either call the first one when we want to run it as a separate pass, or the second one when we already have a loop.",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 281,
+        "endChar": 13
+      },
+      "revId": "ee434ccd301e8fa3ed4540b9584a3b00968d3909",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
