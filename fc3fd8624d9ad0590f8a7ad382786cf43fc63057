@@ -16,6 +16,161 @@
       "message": "PTAL!",
       "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2af6ceb3_c5950257",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T20:19:39Z",
+      "side": 1,
+      "message": "W.r.t all the comments about adding operators on `wgpu::StringView`, feel free to do them in a separate change if you want, but I definitely think we should try to make `wgpu::StringView` as easily compatible with `std::string_view` and `const char *` as possible.",
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c3baf71_f60ba05a",
+        "filename": "src/dawn/common/StringViewUtils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T20:19:39Z",
+      "side": 1,
+      "message": "nit. 2024",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "524ca1ff_6ce21602",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1569,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T20:19:39Z",
+      "side": 1,
+      "message": "nit. I think this could be a `ToAPI` call.",
+      "range": {
+        "startLine": 1569,
+        "startChar": 30,
+        "endLine": 1569,
+        "endChar": 46
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73fe2961_66de42d3",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T20:19:39Z",
+      "side": 1,
+      "message": "nit. Existing, but couldn\u0027t we use something like a `std::stringstream` here also so we can rely on the `\u003c\u003c` operator (if we implement one), for `wgpu::StringView`?",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 260,
+        "endChar": 100
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f5950b6_2efb189c",
+        "filename": "src/dawn/samples/SampleUtils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T20:19:39Z",
+      "side": 1,
+      "message": "nit. Maybe don\u0027t need to explicit converter if we add the `\u003c\u003c` operator to `wgpu::StringView`.",
+      "range": {
+        "startLine": 194,
+        "startChar": 45,
+        "endLine": 194,
+        "endChar": 74
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1687ad15_1cd8951b",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T20:19:39Z",
+      "side": 1,
+      "message": "Maybe we could also add `\u003d\u003d` operators for `wgpu::StringView`? I think making the C++ bindings as easy to use would be nice!",
+      "range": {
+        "startLine": 749,
+        "startChar": 24,
+        "endLine": 749,
+        "endChar": 85
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9192090d_00132948",
+        "filename": "src/dawn/tests/end2end/AdapterCreationTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T20:19:39Z",
+      "side": 1,
+      "message": "nit. A lot of the code in these tests could be simplified if we add `\u003d\u003d` operators for `wgpu::StringView`.",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 78
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
