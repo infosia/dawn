@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14a928b6_438066eb",
+        "filename": "test/tint/bug/chromium/1251009.wgsl.expected.ir.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-07T20:07:18Z",
+      "side": 1,
+      "message": "The push_constant struct is getting a `location` of `0`, is that expected, as it\u0027s the same as other `in` vars.\n\nShould we be setting this based on what Dawn is telling us (or do we and it\u0027s just not getting done by `tint` ?)",
+      "revId": "b4209d87f20e5b2690ee33ef5e0d059e7c0dc3c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
