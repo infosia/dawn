@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0341d8f_982184c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T07:54:36Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "c70a7328d99a6e6efafb0c2313af3fde3bb8fe05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ed4c9dc_b68ef032",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T07:54:36Z",
+      "side": 1,
+      "message": "Maybe static assert that the statuses are in that order?",
+      "revId": "c70a7328d99a6e6efafb0c2313af3fde3bb8fe05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "291b7bb0_9e6c8523",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T07:54:36Z",
+      "side": 1,
+      "message": "Note that with WGPUStringView `mMessage` will be just an `std::string` and no longer optional.",
+      "revId": "c70a7328d99a6e6efafb0c2313af3fde3bb8fe05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96fa3de4_fff53265",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T07:54:36Z",
+      "side": 1,
+      "message": "optional nit: Maybe we could use a sentinel future value to avoid the need to wrap in an optional\u003c\u003e.",
+      "revId": "c70a7328d99a6e6efafb0c2313af3fde3bb8fe05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17f4e7be_0cf1ae9b",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T07:54:36Z",
+      "side": 1,
+      "message": "nit: We could also make it `MapAsync` without the `2` to ease future migration.",
+      "range": {
+        "startLine": 1329,
+        "startChar": 11,
+        "endLine": 1329,
+        "endChar": 30
+      },
+      "revId": "c70a7328d99a6e6efafb0c2313af3fde3bb8fe05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
