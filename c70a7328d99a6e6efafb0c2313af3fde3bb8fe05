@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e19d4a66_c8494320",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T21:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ed4c9dc_b68ef032",
+      "revId": "c70a7328d99a6e6efafb0c2313af3fde3bb8fe05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "291b7bb0_9e6c8523",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-10-07T07:54:36Z",
       "side": 1,
       "message": "Note that with WGPUStringView `mMessage` will be just an `std::string` and no longer optional.",
+      "revId": "c70a7328d99a6e6efafb0c2313af3fde3bb8fe05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "957d8419_e174c5cc",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T21:28:31Z",
+      "side": 1,
+      "message": "Ack, I\u0027ll update them once the StringView changes land cause the other already implemented entry points, i.e. `RequestDevice`/`RequestAdapter` also have this problem and I don\u0027t want to add too much noise to this change.",
+      "parentUuid": "291b7bb0_9e6c8523",
       "revId": "c70a7328d99a6e6efafb0c2313af3fde3bb8fe05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de331781_2f38621d",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T21:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96fa3de4_fff53265",
+      "revId": "c70a7328d99a6e6efafb0c2313af3fde3bb8fe05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17f4e7be_0cf1ae9b",
@@ -82,6 +136,30 @@
       "writtenOn": "2024-10-07T07:54:36Z",
       "side": 1,
       "message": "nit: We could also make it `MapAsync` without the `2` to ease future migration.",
+      "range": {
+        "startLine": 1329,
+        "startChar": 11,
+        "endLine": 1329,
+        "endChar": 30
+      },
+      "revId": "c70a7328d99a6e6efafb0c2313af3fde3bb8fe05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "211633ff_cab7f4c4",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T21:28:31Z",
+      "side": 1,
+      "message": "I don\u0027t think I can do that atm because this is the name/signature in the header. I\u0027ll probably just plan to change these all at once when we deprecate the old entry points!",
+      "parentUuid": "17f4e7be_0cf1ae9b",
       "range": {
         "startLine": 1329,
         "startChar": 11,
