@@ -120,7 +120,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     // TODO(dsinclair): OffsetFirstIndex
     // TODO(dsinclair): CombineSamplers
-    // TODO(dsinclair): PadStructs
 
     RUN_TRANSFORM(core::ir::transform::DirectVariableAccess, module,
                   core::ir::transform::DirectVariableAccessOptions{});
