@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7321387b_96eb36f6",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:34:52Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2e38cea_265a699e",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:34:52Z",
+      "side": 1,
+      "message": "We could set this only once, but still need to Link/Unlink based on `pushConstantRangeCount \u003d\u003d 0`.\n\nHere the state I\u0027m pretty sure makes the logic fall over in some cases. So at init we\u0027d do:\n\n```\n mCachedCreateInfo.pushConstantRange.stageFlags \u003d\n            VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT | VK_SHADER_STAGE_VERTEX_BIT;\n        mCachedCreateInfo.pushConstantRange.offset \u003d 0;\n```\n\nThen here:\n\n```\nif (immediateDataSize \u003d\u003d 0) {\n  mCachedCreateInfo.layout.pPushConstantRanges \u003d nullptr;\n} else {\n  mCachedCreateInfo.pushConstantRange.size \u003d internalImmediateDataSize;\n  mCachedCreateInfo.layout.pPushConstantRanges \u003d \u0026mCachedCreateInfo.pushConstantRange;\n}\n```\n\nAlthough now I have a concern about that cache for future multithreading. I guess we\u0027ll see about it then.",
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e7af15f_932b943c",
+        "filename": "src/dawn/native/vulkan/PipelineVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:34:52Z",
+      "side": 1,
+      "message": "nit: Can you trim the includes?",
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80e291b1_ca7ab37f",
+        "filename": "src/dawn/native/vulkan/PipelineVk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:34:52Z",
+      "side": 1,
+      "message": "```suggestion\n\n#include \"dawn/common/vulkan_platform.h\"\n#include \"dawn/native/Error.h\"\n#include \"dawn/native/PipelineLayout.h\"\n#include \"dawn/native/vulkan/RefCountedVkHandle.h\"\n```",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 1
+      },
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36dabe32_79a67033",
+        "filename": "src/dawn/native/vulkan/PipelineVk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:34:52Z",
+      "side": 1,
+      "message": "nit: It would be better if it were private to more encapsulate the lofic.",
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cf4953a_1f18d48b",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:34:52Z",
+      "side": 1,
+      "message": "nit: This could be move in PipelineVk to avoid setting mVkPipelineLayout directly here.",
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

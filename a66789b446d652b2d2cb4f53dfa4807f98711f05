@@ -117,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0ac0a50_efcb19d5",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:34:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "253e98e9_34d50ed0",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d1add83_8421eca2",
@@ -397,6 +415,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04348c19_d453ef47",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:34:52Z",
+      "side": 1,
+      "message": "That\u0027s weird, `Ref\u003cRefCOunted\u003e` shouldn\u0027t do a double free if the refcount reaches 0 only once. Can you investigate why it does this?",
+      "parentUuid": "eb7c0eb6_8d9d0f91",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4be44f84_4aad0f31",
         "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
         "patchSetId": 1
@@ -586,6 +622,24 @@
       "side": 1,
       "message": "Pls review the cachekey.",
       "parentUuid": "d1699755_fb475fcb",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b952b0c8_a13396e4",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:34:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bc6eeae0_e9a00247",
       "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -836,6 +890,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c04d7dbf_773db4a8",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:34:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed13b80f_10323a04",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 66
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85b3df15_b6db07a5",
@@ -1062,6 +1140,24 @@
       "side": 1,
       "message": "Super!",
       "parentUuid": "a681246d_af346ce9",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1380e05_3a76696e",
+        "filename": "src/dawn/native/vulkan/ResolveTextureLoadingUtilsVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-07T08:34:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01b8655a_02119165",
       "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
