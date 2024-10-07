@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "086df8ec_fbd43a11",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-07T18:58:47Z",
+      "side": 1,
+      "message": "Nit: Probably worth a comment about why we need to do this particular polyfill in this case (as I\u0027ve already forgotten).",
+      "revId": "8d9bfa5835940a51d9c7b14fd53bc3dc02a294bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
