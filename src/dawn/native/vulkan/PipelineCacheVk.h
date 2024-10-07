@@ -47,6 +47,12 @@ class PipelineCache final : public PipelineCacheBase {
     DeviceBase* GetDevice() const;
     VkPipelineCache GetHandle() const;
 
+    // Trigger serializing VkPipelineCache to BlobCache if necessary. Will only
+    // serialize if there have been changes since last time it was serialized.
+    MaybeError SerializeOnIdle();
+
+    MaybeError DidCompilePipeline() override;
+
   private:
     explicit PipelineCache(DeviceBase* device, const CacheKey& key);
     ~PipelineCache() override;
@@ -56,6 +62,9 @@ class PipelineCache final : public PipelineCacheBase {
 
     raw_ptr<DeviceBase> mDevice;
     VkPipelineCache mHandle = VK_NULL_HANDLE;
+
+    bool mNeedsSerialize = false;
+    size_t mStoredDataSize = 0;
 };
 
 }  // namespace dawn::native::vulkan
