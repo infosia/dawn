@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27fb4ea3_41d2c006",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T21:28:49Z",
+      "side": 1,
+      "message": "For WebGPU calls that need access to the JS object, yea. We will almost certainly change the implementation here in some way in following changes, but this is just the simplest way to do it atm.",
+      "parentUuid": "12776db4_a06dc43e",
+      "revId": "155e1eb383ceab00930770ffeb3c50a6a798cdf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d5cc6d2_d7d8fb55",
@@ -43,6 +61,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b3114877_2d769ed4",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T21:28:49Z",
+      "side": 1,
+      "message": "Hmm, that\u0027s a good discussion point... I\u0027ve been thinking about that and I think that we could make this work even if we split the tables.\n\nTo elaborate a bit, I think that keeping the `WGPU*` types as pointers to actual backing structs instead of just an integer will probably be the better route for extensibility, otherwise, it could force us to need to keep two tables, one in JS and one in C as well. That said, if these tables/hashmaps become flat arrays and we want to use simple indices, I think we would bake in the index into a field on the `WGPU*Impl` structs and maybe directly access the heap memory directly via offset with something like `makeGetU32`. I was thinking that we would probably want to use a `uint64_t` to actually hold the indexing information, at which point we could use the top 10ish bits to hold additional table information (since the JS indexing couldn\u0027t go past 53 bits anyways).",
+      "parentUuid": "2d5cc6d2_d7d8fb55",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 15
+      },
+      "revId": "155e1eb383ceab00930770ffeb3c50a6a798cdf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2c5db665_e0943eee",
         "filename": "third_party/emdawnwebgpu/webgpu.cpp",
         "patchSetId": 4
@@ -54,6 +96,30 @@
       "writtenOn": "2024-10-07T08:16:57Z",
       "side": 1,
       "message": "nit: maybe this defaulting could be done in `EventSource::EventSource`.",
+      "range": {
+        "startLine": 948,
+        "startChar": 18,
+        "endLine": 948,
+        "endChar": 68
+      },
+      "revId": "155e1eb383ceab00930770ffeb3c50a6a798cdf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8e5d422_69a5b8d7",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-07T21:28:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c5db665_e0943eee",
       "range": {
         "startLine": 948,
         "startChar": 18,
