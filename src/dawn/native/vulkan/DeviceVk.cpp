@@ -30,6 +30,7 @@
 #include "dawn/common/Log.h"
 #include "dawn/common/NonCopyable.h"
 #include "dawn/common/Platform.h"
+#include "dawn/common/Version_autogen.h"
 #include "dawn/native/BackendConnection.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
@@ -233,6 +234,18 @@ ResultOrError<Ref<TextureViewBase>> Device::CreateTextureViewImpl(
     return TextureView::Create(texture, descriptor);
 }
 Ref<PipelineCacheBase> Device::GetOrCreatePipelineCacheImpl(const CacheKey& key) {
+    if (IsToggleEnabled(Toggle::VulkanMonolithicPipelineCache)) {
+        if (!mMonolithicPipelineCache) {
+            auto& deviceProperties = GetDeviceInfo().properties;
+            CacheKey cacheKey;
+            StreamIn(&cacheKey, kDawnVersion, deviceProperties.deviceID, deviceProperties.vendorID,
+                     deviceProperties.driverVersion, deviceProperties.pipelineCacheUUID);
+
+            mMonolithicPipelineCache = PipelineCache::Create(this, cacheKey);
+        }
+        return mMonolithicPipelineCache;
+    }
+
     return PipelineCache::Create(this, key);
 }
 void Device::InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event) {
@@ -992,6 +1005,17 @@ float Device::GetTimestampPeriodInNS() const {
 
 void Device::SetLabelImpl() {
     SetDebugName(this, VK_OBJECT_TYPE_DEVICE, mVkDevice, "Dawn_Device", GetLabel());
+}
+
+void Device::PerformIdleCleanupImpl() {
+    if (mMonolithicPipelineCache) {
+        MaybeError maybeError = mMonolithicPipelineCache->SerializeOnIdle();
+        if (maybeError.IsError()) {
+            std::unique_ptr<ErrorData> error = maybeError.AcquireError();
+            EmitLog(WGPULoggingType_Error, error->GetFormattedMessage().c_str());
+            return;
+        }
+    }
 }
 
 }  // namespace dawn::native::vulkan
