@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5ff78be_cb8824c2",
+        "filename": "src/tint/lang/core/ir/transform/prepare_push_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-07T20:46:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04021c60_d9732c46",
+      "revId": "125b80d78703db5e6e6a78d7c488ec0d0093a7ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7f9b49f_02181917",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "40e07662_23782099",
+        "filename": "src/tint/lang/core/ir/transform/prepare_push_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-07T20:46:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7f9b49f_02181917",
+      "revId": "125b80d78703db5e6e6a78d7c488ec0d0093a7ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd705a62_f2867751",
@@ -65,6 +101,24 @@
       "writtenOn": "2024-10-07T20:02:28Z",
       "side": 1,
       "message": "```suggestion\n                    // Assume that user-defined constants always start at offset 0 until Dawn tells\n```",
+      "revId": "125b80d78703db5e6e6a78d7c488ec0d0093a7ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11c8701e_a85f0de2",
+        "filename": "src/tint/lang/core/ir/transform/prepare_push_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-07T20:46:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd705a62_f2867751",
       "revId": "125b80d78703db5e6e6a78d7c488ec0d0093a7ec",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
