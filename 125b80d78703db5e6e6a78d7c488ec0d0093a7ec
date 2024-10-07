@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5ab535c_4bf33bef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-07T20:02:28Z",
+      "side": 1,
+      "message": "lgtm w/ nits.",
+      "revId": "125b80d78703db5e6e6a78d7c488ec0d0093a7ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04021c60_d9732c46",
+        "filename": "src/tint/lang/core/ir/transform/prepare_push_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-07T20:02:28Z",
+      "side": 1,
+      "message": "nit: `if (!var) { continue; }`",
+      "revId": "125b80d78703db5e6e6a78d7c488ec0d0093a7ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7f9b49f_02181917",
+        "filename": "src/tint/lang/core/ir/transform/prepare_push_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-07T20:02:28Z",
+      "side": 1,
+      "message": "nit: `if (ptr-\u003eAddressSpace() !\u003d core::AddressSpace::kPushConstant) { continue; }`",
+      "revId": "125b80d78703db5e6e6a78d7c488ec0d0093a7ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd705a62_f2867751",
+        "filename": "src/tint/lang/core/ir/transform/prepare_push_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-07T20:02:28Z",
+      "side": 1,
+      "message": "```suggestion\n                    // Assume that user-defined constants always start at offset 0 until Dawn tells\n```",
+      "revId": "125b80d78703db5e6e6a78d7c488ec0d0093a7ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
