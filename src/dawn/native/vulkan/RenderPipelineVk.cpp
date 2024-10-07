@@ -333,8 +333,12 @@ MaybeError RenderPipeline::InitializeImpl() {
     Device* device = ToBackend(GetDevice());
     const PipelineLayout* layout = ToBackend(GetLayout());
 
+    bool generateCacheKey = !device->IsToggleEnabled(Toggle::VulkanMonolithicPipelineCache);
+
     // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
-    StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
+    if (generateCacheKey) {
+        StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
+    }
 
     // There are at most 2 shader stages in render pipeline, i.e. vertex and fragment
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
@@ -350,8 +354,10 @@ MaybeError RenderPipeline::InitializeImpl() {
                                                                 clampFragDepth, emitPointSize,
                                                                 /* fullSubgroups */ {}));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
-        // Record cache key for each shader since it will become inaccessible later on.
-        StreamIn(&mCacheKey, stream::Iterable(moduleAndSpirv.spirv, moduleAndSpirv.wordCount));
+        if (generateCacheKey) {
+            // Record cache key for each shader since it will become inaccessible later on.
+            StreamIn(&mCacheKey, stream::Iterable(moduleAndSpirv.spirv, moduleAndSpirv.wordCount));
+        }
 
         VkPipelineShaderStageCreateInfo* shaderStage = &shaderStages[stageCount];
         shaderStage->module = moduleAndSpirv.module;
@@ -535,7 +541,9 @@ MaybeError RenderPipeline::InitializeImpl() {
 
         query.SetSampleCount(GetSampleCount());
 
-        StreamIn(&mCacheKey, query);
+        if (generateCacheKey) {
+            StreamIn(&mCacheKey, query);
+        }
         DAWN_TRY_ASSIGN(renderPassInfo, device->GetRenderPassCache()->GetRenderPass(query));
     }
 
@@ -570,8 +578,10 @@ MaybeError RenderPipeline::InitializeImpl() {
     //   That also means mHasInputAttachment would be removed in future.
     createInfo.subpass = mHasInputAttachment ? 0 : renderPassInfo.mainSubpass;
 
-    // Record cache key information now since createInfo is not stored.
-    StreamIn(&mCacheKey, createInfo, layout->GetCacheKey());
+    if (generateCacheKey) {
+        // Record cache key information now since createInfo is not stored.
+        StreamIn(&mCacheKey, createInfo, layout->GetCacheKey());
+    }
 
     // Try to see if we have anything in the blob cache.
     platform::metrics::DawnHistogramTimer cacheTimer(GetDevice()->GetPlatform());
@@ -591,8 +601,7 @@ MaybeError RenderPipeline::InitializeImpl() {
         cacheTimer.RecordMicroseconds("Vulkan.CreateGraphicsPipelines.CacheMiss");
     }
 
-    // TODO(dawn:549): Flush is currently in the same thread, but perhaps deferrable.
-    DAWN_TRY(cache->FlushIfNeeded());
+    DAWN_TRY(cache->DidCompilePipeline());
 
     SetLabelImpl();
 
