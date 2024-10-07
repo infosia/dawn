@@ -31,6 +31,7 @@
 
 #include "dawn/native/Device.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/Toggles.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/VulkanError.h"
@@ -64,24 +65,47 @@ VkPipelineCache PipelineCache::GetHandle() const {
     return mHandle;
 }
 
+MaybeError PipelineCache::DidCompilePipeline() {
+    if (GetDevice()->IsToggleEnabled(Toggle::VulkanMonolithicPipelineCache)) {
+        // Assume VkPipelineCache was modified by compiling a pipeline. It will be serialized to
+        // BlobCache at some later point in SerializeOnIdle() if the cache data size has changed.
+        mNeedsSerialize = true;
+        return {};
+    }
+    return PipelineCacheBase::DidCompilePipeline();
+}
+
+MaybeError PipelineCache::SerializeOnIdle() {
+    if (mNeedsSerialize) {
+        mNeedsSerialize = false;
+        DAWN_TRY(Flush());
+    }
+    return {};
+}
+
 MaybeError PipelineCache::SerializeToBlobImpl(Blob* blob) {
     if (mHandle == VK_NULL_HANDLE) {
         // Pipeline cache isn't created successfully
         return {};
     }
 
+    mNeedsSerialize = false;
     size_t bufferSize;
     Device* device = ToBackend(GetDevice());
     DAWN_TRY(CheckVkSuccess(
         device->fn.GetPipelineCacheData(device->GetVkDevice(), mHandle, &bufferSize, nullptr),
         "GetPipelineCacheData"));
-    if (bufferSize == 0) {
+
+    if (bufferSize == 0 || bufferSize == mStoredDataSize) {
+        // If current VkPipelineCache data size is same as `mCachedDataSize` assume nothing has
+        // changed vs what is stored in the BlobCache.
         return {};
     }
     *blob = CreateBlob(bufferSize);
     DAWN_TRY(CheckVkSuccess(
         device->fn.GetPipelineCacheData(device->GetVkDevice(), mHandle, &bufferSize, blob->Data()),
         "GetPipelineCacheData"));
+    mStoredDataSize = bufferSize;
     return {};
 }
 
@@ -107,7 +131,10 @@ void PipelineCache::Initialize() {
     if (maybeError.IsError()) {
         std::unique_ptr<ErrorData> error = maybeError.AcquireError();
         GetDevice()->EmitLog(WGPULoggingType_Info, error->GetFormattedMessage().c_str());
+        return;
     }
+
+    mStoredDataSize = blob.Size();
 }
 
 }  // namespace dawn::native::vulkan

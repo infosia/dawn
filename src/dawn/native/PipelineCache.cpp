@@ -57,8 +57,10 @@ MaybeError PipelineCacheBase::Flush() {
     return {};
 }
 
-MaybeError PipelineCacheBase::FlushIfNeeded() {
+MaybeError PipelineCacheBase::DidCompilePipeline() {
     DAWN_ASSERT(mInitialized);
+    // TODO(dawn:549): Flush is currently synchronously happening on the same thread as pipeline
+    // compilation, but it's perhaps deferrable.
     if (!CacheHit()) {
         return Flush();
     }
