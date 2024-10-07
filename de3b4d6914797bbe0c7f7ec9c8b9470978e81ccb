@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd65c3e2_9f71fbdd",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-07T20:28:28Z",
+      "side": 1,
+      "message": "Nit: Just `IsAny\u003c\u003e`. Or does this need to cover `DepthMultisampledTexture` as well?\n\nübernit: Also I prefer `StoreType()` instead of `UnwrapPtr()` when the base type is already pointer.",
+      "fixSuggestions": [
+        {
+          "fixId": "556b4ed1_66afa5a1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+              "range": {
+                "startLine": 460,
+                "startChar": 0,
+                "endLine": 461,
+                "endChar": 0
+              },
+              "replacement": "            if (tex_ty-\u003eStoreType()-\u003eIsAnyOf\u003ccore::type::DepthTexture\u003e()) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "de3b4d6914797bbe0c7f7ec9c8b9470978e81ccb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
