@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "baf7cd58_f3c53746",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-07T17:25:55Z",
+      "side": 1,
+      "message": "Am running a manual roll. Will submit this when that one is done.",
+      "revId": "598f0bdb945e76e1b961704e03f0f2fca22f4bf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
