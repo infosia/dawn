@@ -236,6 +236,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb3906c9_935ca482",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-07T15:36:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "127cdbe2_3ec74ca8",
+      "revId": "ba769f35f4bc4042e8d97ab9ab6c334dbab657ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "031c8a98_1f588b0b",
