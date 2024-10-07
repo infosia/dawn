@@ -453,6 +453,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     void DumpMemoryStatistics(dawn::native::MemoryDump* dump) const;
     uint64_t ComputeEstimatedMemoryUsage() const;
     void ReduceMemoryUsage();
+    void PerformIdleCleanup();
 
     ResultOrError<Ref<BufferBase>> GetOrCreateTemporaryUniformBuffer(size_t size);
 
@@ -520,6 +521,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     virtual ResultOrError<Ref<SharedFenceBase>> ImportSharedFenceImpl(
         const SharedFenceDescriptor* descriptor);
     virtual void SetLabelImpl();
+    virtual void PerformIdleCleanupImpl();
 
     virtual MaybeError TickImpl() = 0;
     void FlushCallbackTaskQueue();
