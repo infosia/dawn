@@ -47,9 +47,10 @@ class PipelineCacheBase : public RefCounted {
     // with more monolithic-like caches where we expect overwriting sometimes.
     MaybeError Flush();
 
-    // Serializes and writes the current contents of the backend cache object into the backing
-    // blob cache iff the initial read from the backend cache did not result in a hit.
-    MaybeError FlushIfNeeded();
+    // Called after pipeline was compiled. The default implementation serializes and writes the
+    // current contents of the backend cache object into the backing blob cache iff the initial read
+    // from the backend cache did not result in a hit.
+    virtual MaybeError DidCompilePipeline();
 
   protected:
     PipelineCacheBase(BlobCache* cache, const CacheKey& key);

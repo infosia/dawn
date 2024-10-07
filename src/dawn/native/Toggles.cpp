@@ -558,6 +558,11 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "COPY_SOURCE too on Nvidia since the shader resource states seem to miss flushing all caches "
       "and layout transitions causing rendering corruption.",
       "https://crbug.com/356905061", ToggleStage::Device}},
+    {Toggle::VulkanMonolithicPipelineCache,
+     {"vulkan_monolithic_pipeline_cache",
+      "Use a monolithic VkPipelineCache per device. The platform is responsible for calling "
+      "PerformIdleCleanup() on the device to serialize VkPipelineCache to BlobCache if needed.",
+      "crbug.com/370343334", ToggleStage::Device}},
     {Toggle::NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
      {"no_workaround_sample_mask_becomes_zero_for_all_but_last_color_target",
       "MacOS 12.0+ Intel has a bug where the sample mask is only applied for the last color "

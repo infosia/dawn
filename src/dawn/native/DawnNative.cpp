@@ -312,4 +312,9 @@ void ReduceMemoryUsage(WGPUDevice device) {
     FromAPI(device)->ReduceMemoryUsage();
 }
 
+void PerformIdleCleanup(WGPUDevice device) {
+    auto deviceLock(FromAPI(device)->GetScopedLock());
+    FromAPI(device)->PerformIdleCleanup();
+}
+
 }  // namespace dawn::native

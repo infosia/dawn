@@ -308,6 +308,9 @@ DAWN_NATIVE_EXPORT uint64_t ComputeEstimatedMemoryUsage(WGPUDevice device);
 // Free any unused GPU memory like staging buffers, cached resources, etc.
 DAWN_NATIVE_EXPORT void ReduceMemoryUsage(WGPUDevice device);
 
+// Perform cleanup that is appropriate to when device is idle and not being used to draw.
+DAWN_NATIVE_EXPORT void PerformIdleCleanup(WGPUDevice device);
+
 }  // namespace dawn::native
 
 #endif  // INCLUDE_DAWN_NATIVE_DAWNNATIVE_H_
