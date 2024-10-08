@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47815aef_171f7151",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-08T01:03:17Z",
+      "side": 1,
+      "message": "lgtm w/ question",
+      "revId": "c6f43d3c0f97da81eba63d279c06aec99cfec285",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d391a84b_5b84a97a",
+        "filename": "src/tint/lang/glsl/writer/raise/offset_first_index.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-08T01:03:17Z",
+      "side": 1,
+      "message": "If there is only one, do you really need to `UsagesSorted` here? If not, `UsagesUnsorted` is cheaper.",
+      "revId": "c6f43d3c0f97da81eba63d279c06aec99cfec285",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
