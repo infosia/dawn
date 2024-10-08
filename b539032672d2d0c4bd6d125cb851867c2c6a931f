@@ -16,6 +16,24 @@
       "message": "This seems like it would be simpler if we just passed in the length instead of the whole vector?",
       "revId": "b539032672d2d0c4bd6d125cb851867c2c6a931f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f3355d9_04a3ebed",
+        "filename": "src/tint/lang/core/type/manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-08T13:38:05Z",
+      "side": 1,
+      "message": "I was thinking this is like the other `MatchWidth` in that it matches the width of the vector to determine the return type. I think this is a pretty common use-case, as we have builder functions that take vectors of indices (Swizzle, Access, etc).\n\nIf I make it take a length, then I guess we should rename it to something else. Maybe `VectorOrScaler(Type*, size_t len)` ?",
+      "parentUuid": "256454cc_93da3975",
+      "revId": "b539032672d2d0c4bd6d125cb851867c2c6a931f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
