@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abbebac0_504ddc7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:20:07Z",
+      "side": 1,
+      "message": "Geoff PTAL as well!",
+      "revId": "ef17bb99ec64a35957ac52926f923a0fbca4f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1a6cd39_4348f852",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:20:07Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "ef17bb99ec64a35957ac52926f923a0fbca4f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c586ed2_d550ef08",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:20:07Z",
+      "side": 1,
+      "message": "operator -\u003e locks the mutex already, we could do:\n\n```\nRef\u003cRefCountedVkHandle\u003cVkPipelineLayout\u003e\u003e pipelineLayoutVk;\nmVkPipelineLayouts.Use([\u0026](auto vkPipelineLayouts) {\n   auto it \u003d vkPipelineLayouts-\u003efind(internalImmediateDataSize);\n   if (it !\u003d vkPipelineLayouts.end()) {\n     pipelineLayoutVk \u003d *it;\n   }\n});\n\nif (pipelineLayoutVk !\u003d nullptr) {\n  return pipelineLayoutVk;\n}\n\nDAWN_TRY_ASSIGN(pipelineLayoutVk, CreateVkPipelineLayout(internalImmediateDataSize));\n    return mVkPipelineLayouts.Use([\u0026](auto vkPipelineLayouts) {\n        vkPipelineLayouts-\u003einsert({internalImmediateDataSize, std::move(pipelineLayoutVk)}).second;\n    });\n```",
+      "revId": "ef17bb99ec64a35957ac52926f923a0fbca4f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

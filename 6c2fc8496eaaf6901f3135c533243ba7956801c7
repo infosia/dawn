@@ -174,6 +174,24 @@
       "parentUuid": "1832e5c1_3a234265",
       "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0132d3ab_c0bd16a1",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:20:07Z",
+      "side": 1,
+      "message": "If you mean at [1], then we don\u0027t use this constexpr variable but only the getter, so this variable can still be hidden in the .cpp",
+      "parentUuid": "2454a138_1962e193",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
