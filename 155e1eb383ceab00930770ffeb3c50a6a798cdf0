@@ -85,6 +85,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5521d784_582bcf76",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T09:03:51Z",
+      "side": 1,
+      "message": "It makes sense that we could keep the `WGPU*` actual pointers and store the index in the object. However it\u0027s not immediately clear that we\u0027d want a u64 index, do we expect to go above 4 billion objects of the same type? I agree that the solution as it is right now could be made to work with some magic, but it seems to just be more regular and future proof to have multiple entrypoints and I don\u0027t see any obvious drawbacks. Are we worried about the binary size of the generated library_webgpu.js or are developers going to use `getJsObject` a ton such that typing the type would be annoying?",
+      "parentUuid": "b3114877_2d769ed4",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 15
+      },
+      "revId": "155e1eb383ceab00930770ffeb3c50a6a798cdf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2c5db665_e0943eee",
         "filename": "third_party/emdawnwebgpu/webgpu.cpp",
         "patchSetId": 4
