@@ -41,7 +41,9 @@
 #include "src/tint/lang/core/type/subgroup_matrix.h"
 #include "src/tint/lang/core/type/type.h"
 #include "src/tint/lang/core/type/unique_node.h"
+#include "src/tint/lang/core/type/vector.h"
 #include "src/tint/utils/containers/unique_allocator.h"
+#include "src/tint/utils/containers/vector.h"
 #include "src/tint/utils/symbol/symbol.h"
 
 // Forward declarations
@@ -60,7 +62,6 @@ class Pointer;
 class Reference;
 class U8;
 class U32;
-class Vector;
 class Void;
 }  // namespace tint::core::type
 
@@ -250,13 +251,27 @@ class Manager final {
     /// @returns a vec4 type with the element type @p inner
     const core::type::Vector* vec4(const core::type::Type* inner);
 
-    /// Return a type with element type `type` that has the same number of vector components as
-    /// `match`. If `match` is scalar just return `type`.
+    /// Return a type with element type `el_ty` that has the same number of vector components as
+    /// `match`. If `match` is scalar just return `el_ty`.
     /// @param el_ty the type to extend
     /// @param match the type to match the component count of
     /// @returns a type with the same number of vector components as `match`
     const core::type::Type* MatchWidth(const core::type::Type* el_ty,
                                        const core::type::Type* match);
+
+    // Return a type with element type `el_ty` that has the same number of vector components as
+    // `match`. If `match` is of length 1, just return `el_ty`.
+    /// @param el_ty the type to extend
+    /// @param match the vector to match the component count of
+    /// @returns a type with the same number of vector components as `match`
+    template <typename T, size_t N>
+    const core::type::Type* MatchWidth(const core::type::Type* el_ty,
+                                       const tint::Vector<T, N>& match) {
+        if (match.Length() > 1) {
+            return vec(el_ty, static_cast<uint32_t>(match.Length()));
+        }
+        return el_ty;
+    }
 
     /// @tparam T the element type
     /// @tparam N the vector width
