@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ced0c85a_f8bc28d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T08:59:18Z",
+      "side": 1,
+      "message": "Still LGTM, though I think this CL warrants a second review (Kai should be available today right?)",
+      "revId": "f716787cc3bcb2aeadc5f1815c446b9b07783e27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13eea3aa_9b9055b4",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T08:59:18Z",
+      "side": 1,
+      "message": "u-nit: maybe comment that this is used as a sentinel value.",
+      "revId": "f716787cc3bcb2aeadc5f1815c446b9b07783e27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
