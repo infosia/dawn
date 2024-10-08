@@ -30,6 +30,7 @@
 #include <string>
 #include <tuple>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -270,6 +271,24 @@ TEST(SerializeTests, StdUnorderedMap) {
              std::make_pair(uint32_t(7), m[7]));
 
     EXPECT_CACHE_KEY_EQ(m, expected);
+}
+
+// Test that std::unordered_set serializes/deserializes as expected.
+TEST(SerializeTests, StdUnorderedSet) {
+    const std::unordered_set<int> input = {99, 4, 6, 1};
+
+    // Expect the number of entries, followed by values sorted in order of key.
+    ByteVectorSink expected;
+    StreamIn(&expected, size_t(4), 1, 4, 6, 99);
+
+    EXPECT_CACHE_KEY_EQ(input, expected);
+
+    BlobSource source(CreateBlob(std::move(expected)));
+    std::unordered_set<int> output;
+    auto err = StreamOut(&source, &output);
+    ASSERT_FALSE(err.IsError());
+
+    EXPECT_EQ(input, output);
 }
 
 // Test that ByteVectorSink serializes tint::BindingPoint as expected.
