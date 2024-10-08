@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb45f8e0_de14322c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-10-08T19:04:30Z",
+      "side": 1,
+      "message": "Somehow I didn\u0027t remove this suppression.\nThis shall close the bug as fixed",
+      "revId": "c500b3d8651db1192f9444816a82f4b83597d243",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
