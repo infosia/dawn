@@ -151,7 +151,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(core::ir::transform::BlockDecoratedStructs, module);
 
     // TODO(dsinclair): CombineSamplers
-    // TODO(dsinclair): PadStructs
 
     {
         core::ir::transform::DirectVariableAccessOptions dva_config{};
