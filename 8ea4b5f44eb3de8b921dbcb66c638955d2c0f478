@@ -18,6 +18,41 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f24b275_0e0de2f5",
+        "filename": "src/dawn/native/PipelineCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-08T14:59:19Z",
+      "side": 1,
+      "message": "I don\u0027t *think* size of the binary blob to store is a limitation here. This pretty much mimics the existing Ganesh/Vulkan GrShaderCache logic which stores the monolithic VkPipelineCache to disk as one entry.",
+      "parentUuid": "acc7554d_d19ac0ac",
+      "revId": "8ea4b5f44eb3de8b921dbcb66c638955d2c0f478",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53cb86b6_e81a22c9",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-08T14:59:19Z",
+      "side": 1,
+      "message": "Should the result of this toggle check be stored as a member variable? Not sure how efficient that lookup is dawn and what is typically done.",
+      "revId": "8ea4b5f44eb3de8b921dbcb66c638955d2c0f478",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f95ff19_71f39434",
@@ -31,6 +66,24 @@
       "writtenOn": "2024-10-08T02:01:40Z",
       "side": 1,
       "message": "At some point this will stabilize, and the flushes become wasted effort (a liability even, if syncing to the Android blob cache and the app gets killed in the middle).\n\n\u003e There is no way of knowing if VkPipelineCache was modified by compiling a pipeline\n\nLuckily there _is_ a way 😊 Here, check if the pipeline cache size has changed since last `Flush()`, and skip if it hasn\u0027t.",
+      "revId": "8ea4b5f44eb3de8b921dbcb66c638955d2c0f478",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e37830bb_a425a3be",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-08T14:59:19Z",
+      "side": 1,
+      "message": "I guess it\u0027s unlikely the size of VkPipelineCache would remain the same if it\u0027s been modified.. Good point, done.",
+      "parentUuid": "1f95ff19_71f39434",
       "revId": "8ea4b5f44eb3de8b921dbcb66c638955d2c0f478",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "380cca05_f7586579",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-08T14:59:19Z",
+      "side": 1,
+      "message": "cwallez@ can you review? Open to suggestions given I\u0027m not familiar with dawn code.",
+      "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1369b91a_df883ab1",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-08T14:59:19Z",
+      "side": 1,
+      "message": "This is going to be called at the same time as ReduceMemoryUsage() so it\u0027s possible we could merge them? The serializing pipeline cache logic I\u0027m adding isn\u0027t reducing memory usage though so just triggering it from ReduceMemoryUsage() seems misleading.",
+      "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "003d7f06_4e739e0c",
+        "filename": "src/dawn/native/PipelineCache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-08T14:59:19Z",
+      "side": 1,
+      "message": "Do we want to split up the logic in PipelineCacheBase vs PipelineCache differently? PipelineCacheBase was already pretty specific to the VkPipelineCache per pipeline idea. I made it work for the new use case fine but we could move more logic down into the implementation pretty easily.",
+      "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88a73588_20360952",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-08T14:59:19Z",
+      "side": 1,
+      "message": "deviceID+vendorID is probably redundant since a different GPU should have a different piplineCacheUUID but it doesn\u0027t seem harmful to include them in the cache key.",
+      "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
