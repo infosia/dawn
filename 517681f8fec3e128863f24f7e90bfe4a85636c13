@@ -33,6 +33,24 @@
       "message": "nit: it seems a previous commit missed formatting. Is the formatting done by a tool? If not it\u0027s fine to keep it in this CL as it would be a hassle to merge back in a previous CL.",
       "revId": "517681f8fec3e128863f24f7e90bfe4a85636c13",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "007a78f7_5836921f",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-08T19:12:12Z",
+      "side": 1,
+      "message": "It\u0027s unfortunately not done by a tool... The formatting tools all kinda explode because of all the custom syntax that Emscripten uses for JS code, i.e the #-preprocessor stuff and {{{}}} generator stuff...\n\nThis was also landed a while back in an entirely separate change so yea, TLDR, will just keep here, and sorry for the noise heh...",
+      "parentUuid": "e0a7fe38_9ee92373",
+      "revId": "517681f8fec3e128863f24f7e90bfe4a85636c13",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
