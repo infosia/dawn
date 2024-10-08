@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45ed0bc4_565cd26d",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T10:35:51Z",
+      "side": 1,
+      "message": "Thanks for your helps on iterations! A bit strange about only android bots fail but linux not(Maybe it is multithreading). However, adding `MutexProtected\u003c\u003e` is good.",
+      "parentUuid": "5f535bda_9c8b3870",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5769b1e2_fc88dd64",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-10-08T09:24:30Z",
       "side": 1,
       "message": "Maybe that could be an explicit bool that defaults to false so that we only set true at [1]",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07c6644f_fa8c148b",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T10:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5769b1e2_fc88dd64",
       "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a2bb48a_0ab7f802",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T10:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d6ea8f0_5de7b409",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b215edfc_ce77b801",
@@ -69,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f4a0b8d_bfcbd85d",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T10:35:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b215edfc_ce77b801",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1832e5c1_3a234265",
@@ -82,6 +154,24 @@
       "writtenOn": "2024-10-08T09:24:30Z",
       "side": 1,
       "message": "Is this every used outside of PipelineLayoutVk.cpp?",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2454a138_1962e193",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T10:35:51Z",
+      "side": 1,
+      "message": "In the CommandBufferVk.cpp, where we call `CmdPushConstants`. Validate layer requires the both places should have the same shader stage flags.",
+      "parentUuid": "1832e5c1_3a234265",
       "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
