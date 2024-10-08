@@ -16,6 +16,24 @@
       "message": "Nit: Probably worth a comment about why we need to do this particular polyfill in this case (as I\u0027ve already forgotten).",
       "revId": "8d9bfa5835940a51d9c7b14fd53bc3dc02a294bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89d5a744_a2cff151",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-08T01:47:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "086df8ec_fbd43a11",
+      "revId": "8d9bfa5835940a51d9c7b14fd53bc3dc02a294bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
