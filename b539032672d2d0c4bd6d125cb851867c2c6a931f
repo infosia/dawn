@@ -52,6 +52,24 @@
       "parentUuid": "5f3355d9_04a3ebed",
       "revId": "b539032672d2d0c4bd6d125cb851867c2c6a931f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b7eb489_92e607cf",
+        "filename": "src/tint/lang/core/type/manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-08T15:14:22Z",
+      "side": 1,
+      "message": "I think that `MatchWidth(Type*, size_t)` would be good here and I suspect has more use cases across the codebase. In fact we could use it for this snippet which is in the same polyfill function that you\u0027re modifying:\n```\nconst core::type::Type* query_ty \u003d ty.u32();\nif (query_size \u003e 1) {\n    query_ty \u003d ty.vec(query_ty, query_size);\n}\n```",
+      "parentUuid": "cfce0bb7_68f0db7b",
+      "revId": "b539032672d2d0c4bd6d125cb851867c2c6a931f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
