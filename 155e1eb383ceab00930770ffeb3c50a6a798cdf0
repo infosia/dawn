@@ -109,6 +109,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fec347e3_3b516670",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-08T19:09:13Z",
+      "side": 1,
+      "message": "Hmm that\u0027s true that we probably wouldn\u0027t be able to support that many objects of the same type anyways... but one other concern is that since `getJsObject` is called from JS, there\u0027s no way for us to enforce users to pass the \"right\" typing of `WGPUObject` to it, i.e. users could potentially call `getJsDevice(bufferPtr)` which would result in some wildly invalid code that won\u0027t necessarily fail until later on when the user uses the result. In order to prevent this, we would need to have some typing information inside the object pointer anyways at which point it would probably be easier to only support one entry point to get the objects.\n\nAlso, if we didn\u0027t want to use a u64 for the index, I think using 2 separate pieces of data for for typing and indexing would be fine also, i.e. a u32 for indexing and something like a u8 for typing.\n\nThat said, I\u0027m actually not too opposed to splitting into per-object functions either, aside from the error handling cases. Will wait to see what Kai thinks about this as well.",
+      "parentUuid": "5521d784_582bcf76",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 15
+      },
+      "revId": "155e1eb383ceab00930770ffeb3c50a6a798cdf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2c5db665_e0943eee",
         "filename": "third_party/emdawnwebgpu/webgpu.cpp",
         "patchSetId": 4
