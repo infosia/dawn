@@ -272,6 +272,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "72e4d60a_b87fe0be",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-08T19:21:36Z",
+      "side": 1,
+      "message": "Yea, I agree that it probably wouldn\u0027t be that useful outside of our stuff... We can maybe implement the operator in the same namespace but not on the object then? I\u0027m pretty sure `EXPECT_EQ` will still be able to find the operator if it\u0027s in the same namespace. We could put it in our tests only, that way we can change it if we decide on something different between nil/empty?",
+      "parentUuid": "08755653_77721324",
+      "range": {
+        "startLine": 749,
+        "startChar": 24,
+        "endLine": 749,
+        "endChar": 85
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9192090d_00132948",
         "filename": "src/dawn/tests/end2end/AdapterCreationTests.cpp",
         "patchSetId": 11
