@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d175e6c_0b1b0bfb",
+        "filename": "src/dawn/common/StringViewUtils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T12:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c3baf71_f60ba05a",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "524ca1ff_6ce21602",
@@ -71,6 +95,30 @@
       "writtenOn": "2024-10-07T20:19:39Z",
       "side": 1,
       "message": "nit. I think this could be a `ToAPI` call.",
+      "range": {
+        "startLine": 1569,
+        "startChar": 30,
+        "endLine": 1569,
+        "endChar": 46
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab55a34c_69e5bfc1",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1569,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T12:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "524ca1ff_6ce21602",
       "range": {
         "startLine": 1569,
         "startChar": 30,
@@ -104,6 +152,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89c7c265_e1a6d3a8",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T12:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73fe2961_66de42d3",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 260,
+        "endChar": 100
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f5950b6_2efb189c",
@@ -127,6 +199,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92a1a275_243a466e",
+        "filename": "src/dawn/samples/SampleUtils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T12:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f5950b6_2efb189c",
+      "range": {
+        "startLine": 194,
+        "startChar": 45,
+        "endLine": 194,
+        "endChar": 74
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1687ad15_1cd8951b",
@@ -140,6 +236,30 @@
       "writtenOn": "2024-10-07T20:19:39Z",
       "side": 1,
       "message": "Maybe we could also add `\u003d\u003d` operators for `wgpu::StringView`? I think making the C++ bindings as easy to use would be nice!",
+      "range": {
+        "startLine": 749,
+        "startChar": 24,
+        "endLine": 749,
+        "endChar": 85
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08755653_77721324",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T12:39:31Z",
+      "side": 1,
+      "message": "This means that we\u0027d have to cement the handling for nil vs. empty strings in that operator, but also it doesn\u0027t seem very useful for developers outside of our tests?",
+      "parentUuid": "1687ad15_1cd8951b",
       "range": {
         "startLine": 749,
         "startChar": 24,
