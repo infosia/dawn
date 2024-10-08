@@ -70,6 +70,24 @@
       "parentUuid": "cfce0bb7_68f0db7b",
       "revId": "b539032672d2d0c4bd6d125cb851867c2c6a931f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19efb58b_2146aa0e",
+        "filename": "src/tint/lang/core/type/manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-08T15:44:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b7eb489_92e607cf",
+      "revId": "b539032672d2d0c4bd6d125cb851867c2c6a931f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
