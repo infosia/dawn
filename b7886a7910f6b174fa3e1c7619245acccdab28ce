@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b294c05c_72dfa335",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T05:49:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7321387b_96eb36f6",
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2e38cea_265a699e",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2496db24_0e1a25bd",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T05:49:29Z",
+      "side": 1,
+      "message": "Ah, multithreading. Thanks for pointing. I\u0027ve removed the cached object.",
+      "parentUuid": "e2e38cea_265a699e",
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e7af15f_932b943c",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-10-07T08:34:52Z",
       "side": 1,
       "message": "nit: Can you trim the includes?",
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58929cd5_a1fcf2da",
+        "filename": "src/dawn/native/vulkan/PipelineVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T05:49:29Z",
+      "side": 1,
+      "message": "Sry. Done.",
+      "parentUuid": "8e7af15f_932b943c",
       "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +129,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d1b6839_9603f423",
+        "filename": "src/dawn/native/vulkan/PipelineVk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T05:49:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80e291b1_ca7ab37f",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 1
+      },
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36dabe32_79a67033",
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce103e95_5f7b25ff",
+        "filename": "src/dawn/native/vulkan/PipelineVk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T05:49:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36dabe32_79a67033",
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6cf4953a_1f18d48b",
@@ -105,6 +201,24 @@
       "writtenOn": "2024-10-07T08:34:52Z",
       "side": 1,
       "message": "nit: This could be move in PipelineVk to avoid setting mVkPipelineLayout directly here.",
+      "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "671e812f_cee5973a",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T05:49:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf4953a_1f18d48b",
       "revId": "b7886a7910f6b174fa3e1c7619245acccdab28ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

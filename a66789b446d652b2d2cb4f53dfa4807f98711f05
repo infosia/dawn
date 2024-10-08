@@ -431,6 +431,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d81a3d6_64f24b4b",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T05:49:29Z",
+      "side": 1,
+      "message": "The root cause is that I relied on destructor of `PipelineVk` to release the `Ref\u003cRefCountedVkHandle\u003e`. In that time, the deleter in `Device` has already been `nullptr`.\n\nAdding a `DestroyImpl()` function and call it in `Render/ComputePipeline::DestroyImpl()` resolves the issue.",
+      "parentUuid": "04348c19_d453ef47",
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4be44f84_4aad0f31",
@@ -1046,6 +1064,30 @@
       "side": 1,
       "message": "Still use `mCachedCreateInfo` because it is easy to create `PipelineLayout` cache.",
       "parentUuid": "f626cf66_396e7de2",
+      "range": {
+        "startLine": 112,
+        "startChar": 23,
+        "endLine": 112,
+        "endChar": 42
+      },
+      "revId": "a66789b446d652b2d2cb4f53dfa4807f98711f05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "100e3ec1_b2a0ec7c",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-08T05:49:29Z",
+      "side": 1,
+      "message": "Out dated. Done.",
+      "parentUuid": "fe69af98_bf475e9c",
       "range": {
         "startLine": 112,
         "startChar": 23,
