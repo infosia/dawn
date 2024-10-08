@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e8640b8_90dc4188",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T09:08:29Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "517681f8fec3e128863f24f7e90bfe4a85636c13",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0a7fe38_9ee92373",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T09:08:29Z",
+      "side": 1,
+      "message": "nit: it seems a previous commit missed formatting. Is the formatting done by a tool? If not it\u0027s fine to keep it in this CL as it would be a hassle to merge back in a previous CL.",
+      "revId": "517681f8fec3e128863f24f7e90bfe4a85636c13",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
