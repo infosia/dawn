@@ -16,6 +16,199 @@
       "message": "This is a clean-up CL. Not sure whether this is needed. PTAL if you feel necessary, thanks!",
       "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdd8b26b_ef845264",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:57:52Z",
+      "side": 1,
+      "message": "This is a bit complex and moves a lot of code around. Can you choose a second reviewer as well?",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e0c528c_514e806c",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:57:52Z",
+      "side": 1,
+      "message": "If we monomorphize this function by templating it on some kVisibleStage then we could skip a bunch of conditions like [a] by first introducing:\n\n```\n// \u003cSome comment to explain why we do this\u003e\nconstexpr wgpu::ShaderStage kVisibleFragment \u003d wgpu::ShaderStage::Fragment \u0026 kVisibleStage;\n\nThen in the condition:\nif (bindingVisibility \u0026 kVisibleFragment) {\n  ...\n}\n```\n\nIt would also get rid of mVisibleStages since that info is always passed by the child class.",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c50e9677_d0a0a7bd",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:57:52Z",
+      "side": 1,
+      "message": "[a]",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43fa1069_c0238cd6",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:57:52Z",
+      "side": 1,
+      "message": "```suggestion\n        if (!(bindingInfo.visibility \u0026 wgpu::ShaderStage::Compute)) {\n            continue;\n        }\n```",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 9
+      },
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "643ad963_a9a8c381",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:57:52Z",
+      "side": 1,
+      "message": "Here we should check just for the visibility containing fragment to do the set, we don\u0027t care about setting compute UAVs I\u0027d imagine? Or is the pipeline layout reserving a slot for them?",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "015dfd92_f07b05f0",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:57:52Z",
+      "side": 1,
+      "message": "Inserting at the start of the vector like this will cause O(N^2) behavior when there are multiple UAVs. Likewise we should change the pipeline layout to lists them in a better order.",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3020198c_fcb20d08",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:57:52Z",
+      "side": 1,
+      "message": "We should be able to have a getter on the pipeline layout \"GetRenderUAVCount\" that lets use size the vector once at the beginning of the method, instead of gathering in a temp vector, then copying that data.",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "722aa38b_088c37d5",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:57:52Z",
+      "side": 1,
+      "message": "virtual method shouldn\u0027t be needed since we use the new types in CommandBufferD3D11",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cf996e4_5427206a",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:57:52Z",
+      "side": 1,
+      "message": "Why are these std::enable_if needed? We could do an `if constexpr` inside the body of the function instead, like so:\n\n```\nEarlier as a class members\nconstexpr bool kIsGraphicsPipeline \u003d std::is_same_v\u003cPipelineType, RenderPipeline\u003e\n\nFunction body:\nif constexpr (kIsRenderPipeline) {\n    commandList-\u003eSetGraphicsRootSignature(ToBackend(layout)-\u003eGetRootSignature());\n} else {\n    commandList-\u003eSetComputeRootSignature(ToBackend(layout)-\u003eGetRootSignature());\n}\n```\n\nditto in all the other places",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c5e3b23_e4ac5293",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:57:52Z",
+      "side": 1,
+      "message": "nit: the lambdas are call only once so they could be inlined in the switch imho.",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "567a313c_1ae8eea8",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T11:57:52Z",
+      "side": 1,
+      "message": "This could be grouped with the rest of the `BindGroupStateTracker` implementation",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
