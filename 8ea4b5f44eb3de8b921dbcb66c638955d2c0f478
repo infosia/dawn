@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acc7554d_d19ac0ac",
+        "filename": "src/dawn/native/PipelineCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2024-10-08T02:01:40Z",
+      "side": 1,
+      "message": "Lots of code to be taken here from ANGLE, including splitting the now large cache into pieces that can fit in Android\u0027s blob cache (but maybe you don\u0027t have to bear that limitation with Chrome)",
+      "revId": "8ea4b5f44eb3de8b921dbcb66c638955d2c0f478",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f95ff19_71f39434",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002296
+      },
+      "writtenOn": "2024-10-08T02:01:40Z",
+      "side": 1,
+      "message": "At some point this will stabilize, and the flushes become wasted effort (a liability even, if syncing to the Android blob cache and the app gets killed in the middle).\n\n\u003e There is no way of knowing if VkPipelineCache was modified by compiling a pipeline\n\nLuckily there _is_ a way 😊 Here, check if the pipeline cache size has changed since last `Flush()`, and skip if it hasn\u0027t.",
+      "revId": "8ea4b5f44eb3de8b921dbcb66c638955d2c0f478",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
