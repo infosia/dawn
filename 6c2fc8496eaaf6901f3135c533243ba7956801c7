@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f535bda_9c8b3870",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T09:24:30Z",
+      "side": 1,
+      "message": "The `MultithreadCachingTests` seems to point at the need for a Mutex here. We could add a `MutexProtected\u003c\u003e` around `mVkPipelineLayouts`.\n\nAfter this I believe that the CL should be good to go. Thank you for your patience!",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5769b1e2_fc88dd64",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T09:24:30Z",
+      "side": 1,
+      "message": "Maybe that could be an explicit bool that defaults to false so that we only set true at [1]",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d6ea8f0_5de7b409",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T09:24:30Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b215edfc_ce77b801",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T09:24:30Z",
+      "side": 1,
+      "message": "nit: this argument seems required as it is the one important piece of data we pass in.",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1832e5c1_3a234265",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-08T09:24:30Z",
+      "side": 1,
+      "message": "Is this every used outside of PipelineLayoutVk.cpp?",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
