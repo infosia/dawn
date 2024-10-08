@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a74fa62_6d3431f1",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-08T08:23:52Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "f4b036d1dd11b967880d23da52ec93cafb49cd64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
