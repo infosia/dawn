@@ -37,6 +37,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9cf59d80_02bc22d6",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-10-08T14:17:21Z",
+      "side": 1,
+      "message": "We create a pipeline layout with an `internalImmediateDataSize` of 0 here every time a new PipelineLayout is created which seems useful to pre-initialize the cache.  Every `(Render|Compute)Pipeline::InitializeImpl` also initializes the layout with an `internalImmediateDataSize` of `kClampFragDepthArgsSize`. I think this would result in a minimum of 2 `VkPipelineLayout`s being created every time.\n\nYou could add a `constexpr size_t kDefaultInternalImmediateDataSize \u003d kClampFragDepthArgsSize + ...`. You can also assert that when the user push constant size is 0, the default matches the size that `*Pipeline::InitializeImpl` uses:\n\n```\n    // TODO(crbug.com/366291600): Add internal immediate data size when needed.\n    constexpr uint32_t userImmediateDataSize \u003d 0;\n    constexpr uint32_t internalImmediateDataSize \u003d kClampFragDepthArgsSize;\n    DAWN_ASSERT(internalImmediateDataSize \u003d\u003d kDefaultInternalImmediateDataSize);\n    DAWN_TRY(InitializeBase(layout, internalImmediateDataSize + userImmediateDataSize));\n```",
+      "range": {
+        "startLine": 114,
+        "startChar": 61,
+        "endLine": 114,
+        "endChar": 62
+      },
+      "revId": "ef17bb99ec64a35957ac52926f923a0fbca4f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c586ed2_d550ef08",
         "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
         "patchSetId": 5
@@ -48,6 +71,47 @@
       "writtenOn": "2024-10-08T11:20:07Z",
       "side": 1,
       "message": "operator -\u003e locks the mutex already, we could do:\n\n```\nRef\u003cRefCountedVkHandle\u003cVkPipelineLayout\u003e\u003e pipelineLayoutVk;\nmVkPipelineLayouts.Use([\u0026](auto vkPipelineLayouts) {\n   auto it \u003d vkPipelineLayouts-\u003efind(internalImmediateDataSize);\n   if (it !\u003d vkPipelineLayouts.end()) {\n     pipelineLayoutVk \u003d *it;\n   }\n});\n\nif (pipelineLayoutVk !\u003d nullptr) {\n  return pipelineLayoutVk;\n}\n\nDAWN_TRY_ASSIGN(pipelineLayoutVk, CreateVkPipelineLayout(internalImmediateDataSize));\n    return mVkPipelineLayouts.Use([\u0026](auto vkPipelineLayouts) {\n        vkPipelineLayouts-\u003einsert({internalImmediateDataSize, std::move(pipelineLayoutVk)}).second;\n    });\n```",
+      "revId": "ef17bb99ec64a35957ac52926f923a0fbca4f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6065a3c_508ea295",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-10-08T14:17:21Z",
+      "side": 1,
+      "message": "uint32_t to match the types used to access the layouts.",
+      "range": {
+        "startLine": 89,
+        "startChar": 39,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "fe69ab08_b23d5380",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+              "range": {
+                "startLine": 89,
+                "startChar": 0,
+                "endLine": 90,
+                "endChar": 0
+              },
+              "replacement": "    MutexProtected\u003cabsl::flat_hash_map\u003cuint32_t, Ref\u003cRefCountedVkHandle\u003cVkPipelineLayout\u003e\u003e\u003e\u003e\n"
+            }
+          ]
+        }
+      ],
       "revId": "ef17bb99ec64a35957ac52926f923a0fbca4f2bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
