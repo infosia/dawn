@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "0787c42b518d49606bf006b641cea89cc1974ed1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d6bf79f_d1c4d3d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-08T16:05:29Z",
+      "side": 1,
+      "message": "Thanks for doing this!\n\nThere are two SPIR-V readers at the moment (one that goes via WGSL AST and one that goes to Tint IR). The IR version which you\u0027ve modified here is still a long way from being usable for many shaders, so I\u0027d hesitate to call chromium:371367697 fixed since most people are still using the AST version.\n\nOtherwise LGTM!",
+      "revId": "0787c42b518d49606bf006b641cea89cc1974ed1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
