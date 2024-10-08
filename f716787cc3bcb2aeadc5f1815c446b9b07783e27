@@ -33,6 +33,24 @@
       "message": "u-nit: maybe comment that this is used as a sentinel value.",
       "revId": "f716787cc3bcb2aeadc5f1815c446b9b07783e27",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3704db7f_ec6c36e5",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-08T19:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13eea3aa_9b9055b4",
+      "revId": "f716787cc3bcb2aeadc5f1815c446b9b07783e27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
