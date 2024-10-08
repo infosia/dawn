@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3096e1c4_7bf48c8d",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-08T21:26:24Z",
+      "side": 1,
+      "message": "`FlattenAccessChain` is gone. But same question about `GetElementType`.",
+      "parentUuid": "770e1dd5_cb029444",
+      "revId": "ee434ccd301e8fa3ed4540b9584a3b00968d3909",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "587ea357_28c7600f",
         "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
         "patchSetId": 3
