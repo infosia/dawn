@@ -1650,8 +1650,7 @@ var LibraryWebGPU = {
     return ptr;
   },
 
-  wgpuDeviceCreateShaderModule__deps: ['emwgpuCreateShaderModule'],
-  wgpuDeviceCreateShaderModule: (devicePtr, descriptor) => {
+  emwgpuDeviceCreateShaderModule: (devicePtr, descriptor, shaderModulePtr) => {
     {{{ gpu.makeCheck('descriptor') }}}
     var nextInChainPtr = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUShaderModuleDescriptor.nextInChain, '*') }}};
 #if ASSERTIONS
@@ -1692,9 +1691,7 @@ var LibraryWebGPU = {
     }
 
     var device = WebGPU.getJsObject(devicePtr);
-    var ptr = _emwgpuCreateShaderModule();
-    WebGPU.Internals.jsObjectInsert(ptr, device.createShaderModule(desc));
-    return ptr;
+    WebGPU.Internals.jsObjectInsert(shaderModulePtr, device.createShaderModule(desc));
   },
 
   wgpuDeviceCreateTexture__deps: ['emwgpuCreateTexture'],
@@ -2258,47 +2255,55 @@ var LibraryWebGPU = {
   // Methods of ShaderModule
   // --------------------------------------------------------------------------
 
-  wgpuShaderModuleGetCompilationInfo__deps: ['$callUserCallback', '$stringToUTF8', '$lengthBytesUTF8', 'malloc', 'free'],
-  wgpuShaderModuleGetCompilationInfo: (shaderModulePtr, callback, userdata) => {
+  emwgpuShaderModuleGetCompilationInfo__i53abi: false,
+  emwgpuShaderModuleGetCompilationInfo__deps: ['emwgpuOnCompilationInfoCompleted', '$stringToUTF8', '$lengthBytesUTF8', 'malloc'],
+  emwgpuShaderModuleGetCompilationInfo: (shaderModulePtr, futureIdL, futureIdH, compilationInfoPtr) => {
     var shaderModule = WebGPU.getJsObject(shaderModulePtr);
     {{{ runtimeKeepalivePush() }}}
-    shaderModule.getCompilationInfo().then((compilationInfo) => {
+    WebGPU.Internals.futureInsert(futureIdL, futureIdH, shaderModule.getCompilationInfo().then((compilationInfo) => {
       {{{ runtimeKeepalivePop() }}}
-      callUserCallback(() => {
-        var compilationMessagesPtr = _malloc({{{ C_STRUCTS.WGPUCompilationMessage.__size__ }}} * compilationInfo.messages.length);
-        var messageStringPtrs = []; // save these to free later
-        for (var i = 0; i < compilationInfo.messages.length; ++i) {
-          var compilationMessage = compilationInfo.messages[i];
-          var compilationMessagePtr = compilationMessagesPtr + {{{ C_STRUCTS.WGPUCompilationMessage.__size__ }}} * i;
-          var messageSize = lengthBytesUTF8(compilationMessage.message) + 1;
-          var messagePtr = _malloc(messageSize);
-          messageStringPtrs.push(messagePtr);
-          stringToUTF8(compilationMessage.message, messagePtr, messageSize);
-          {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.message, 'messagePtr', '*') }}};
-          {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.type, 'WebGPU.Int_CompilationMessageType[compilationMessage.type]', 'i32') }}};
-          {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.lineNum, 'compilationMessage.lineNum', 'i64') }}};
-          {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.linePos, 'compilationMessage.linePos', 'i64') }}};
-          {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.offset, 'compilationMessage.offset', 'i64') }}};
-          {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.length, 'compilationMessage.length', 'i64') }}};
-          // TODO: Convert JavaScript's UTF-16-code-unit offsets to UTF-8-code-unit offsets.
-          // https://github.com/webgpu-native/webgpu-headers/issues/246
-          {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.utf16LinePos, 'compilationMessage.linePos', 'i64') }}};
-          {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.utf16Offset, 'compilationMessage.offset', 'i64') }}};
-          {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.utf16Length, 'compilationMessage.length', 'i64') }}};
-        }
-        var compilationInfoPtr = _malloc({{{ C_STRUCTS.WGPUCompilationInfo.__size__ }}});
-        {{{ makeSetValue('compilationInfoPtr', C_STRUCTS.WGPUCompilationInfo.messageCount, 'compilationInfo.messages.length', '*') }}}
-        {{{ makeSetValue('compilationInfoPtr', C_STRUCTS.WGPUCompilationInfo.messages, 'compilationMessagesPtr', '*') }}};
+      // Calculate the total length of strings and offsets here to malloc them all at once.
+      var totalMessagesSize = 0;
+      var messageLengths = [];
+      for (var i = 0; i < compilationInfo.messages.length; ++i) {
+        var messageLength = lengthBytesUTF8(compilationInfo.messages[i].message) + 1;
+        totalMessagesSize += messageLength;
+        messageLengths.push(messageLength);
+      }
+      var messagesPtr = _malloc(totalMessagesSize);
 
-        {{{ makeDynCall('vipp', 'callback') }}}({{{ gpu.CompilationInfoRequestStatus.Success }}}, compilationInfoPtr, userdata);
+      // Allocate and fill out each CompilationMessage.
+      var compilationMessagesPtr = _malloc({{{ C_STRUCTS.WGPUCompilationMessage.__size__ }}} * compilationInfo.messages.length);
+      for (var i = 0; i < compilationInfo.messages.length; ++i) {
+        var compilationMessage = compilationInfo.messages[i];
+        var compilationMessagePtr = compilationMessagesPtr + {{{ C_STRUCTS.WGPUCompilationMessage.__size__ }}} * i;
 
-        messageStringPtrs.forEach((ptr) => {
-          _free(ptr);
-        });
-        _free(compilationMessagesPtr);
-        _free(compilationInfoPtr);
-      });
-    });
+        // Write out the values to the CompilationMessage.
+        {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.message, 'messagesPtr', '*') }}};
+        {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.type, 'WebGPU.Int_CompilationMessageType[compilationMessage.type]', 'i32') }}};
+        {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.lineNum, 'compilationMessage.lineNum', 'i64') }}};
+        {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.linePos, 'compilationMessage.linePos', 'i64') }}};
+        {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.offset, 'compilationMessage.offset', 'i64') }}};
+        {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.length, 'compilationMessage.length', 'i64') }}};
+        // TODO: Convert JavaScript's UTF-16-code-unit offsets to UTF-8-code-unit offsets.
+        // https://github.com/webgpu-native/webgpu-headers/issues/246
+        {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.utf16LinePos, 'compilationMessage.linePos', 'i64') }}};
+        {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.utf16Offset, 'compilationMessage.offset', 'i64') }}};
+        {{{ makeSetValue('compilationMessagePtr', C_STRUCTS.WGPUCompilationMessage.utf16Length, 'compilationMessage.length', 'i64') }}};
+
+        // Write the string out to the allocated buffer.
+        stringToUTF8(compilationMessage.message, messagesPtr, messageLengths[i]);
+        messagesPtr += messageLengths[i];
+      }
+
+      // Allocate and fill out the wrapping CompilationInfo struct.
+      {{{ makeSetValue('compilationInfoPtr', C_STRUCTS.WGPUCompilationInfo.messageCount, 'compilationInfo.messages.length', '*') }}}
+      {{{ makeSetValue('compilationInfoPtr', C_STRUCTS.WGPUCompilationInfo.messages, 'compilationMessagesPtr', '*') }}};
+
+      _emwgpuOnCompilationInfoCompleted(futureIdL, futureIdH, {{{ gpu.CompilationInfoRequestStatus.Success }}}, compilationInfoPtr);
+    }, () => {
+      _emwgpuOnCompilationInfoCompleted(futureIdL, futureIdH, {{{ gpu.CompilationInfoRequestStatus.Error }}}, compilationInfoPtr);
+    }));
   },
 
   wgpuShaderModuleSetLabel: (shaderModulePtr, labelPtr) => {
