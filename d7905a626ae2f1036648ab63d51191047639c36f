@@ -1,0 +1,74 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3589c6c4_9139017c",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-08T16:19:20Z",
+      "side": 1,
+      "message": "Nit: Maybe just `out \u003c\u003c \"0u\"` here to avoid the map lookup on the type manager and the `tint::Switch` in `EmitZeroValue`?",
+      "fixSuggestions": [
+        {
+          "fixId": "2521c1d5_c6e11844",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 1340,
+                "startChar": 0,
+                "endLine": 1341,
+                "endChar": 0
+              },
+              "replacement": "                            out \u003c\u003c \"0u\";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d7905a626ae2f1036648ab63d51191047639c36f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6b12275_cf3f5c33",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-08T16:19:20Z",
+      "side": 1,
+      "message": "Ditto.",
+      "fixSuggestions": [
+        {
+          "fixId": "db7e3ba1_b97e1805",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 1663,
+                "startChar": 0,
+                "endLine": 1664,
+                "endChar": 0
+              },
+              "replacement": "                    out \u003c\u003c \"0u\";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d7905a626ae2f1036648ab63d51191047639c36f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
