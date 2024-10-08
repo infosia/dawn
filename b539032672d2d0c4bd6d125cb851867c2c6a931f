@@ -34,6 +34,24 @@
       "parentUuid": "256454cc_93da3975",
       "revId": "b539032672d2d0c4bd6d125cb851867c2c6a931f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfce0bb7_68f0db7b",
+        "filename": "src/tint/lang/core/type/manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-08T14:31:20Z",
+      "side": 1,
+      "message": "I think the name `MatchWidth` is fine, you\u0027re either matching 1 which is scalar or a vector. We could do `MatchLength` but I think the consistency of `MatchWidth` is better.\n\nThose other builder functions all use the vectors to pass the values through.",
+      "parentUuid": "5f3355d9_04a3ebed",
+      "revId": "b539032672d2d0c4bd6d125cb851867c2c6a931f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
