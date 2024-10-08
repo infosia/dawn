@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e58a212b_57ce2070",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-08T16:47:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3589c6c4_9139017c",
+      "revId": "d7905a626ae2f1036648ab63d51191047639c36f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6b12275_cf3f5c33",
@@ -67,6 +85,24 @@
           ]
         }
       ],
+      "revId": "d7905a626ae2f1036648ab63d51191047639c36f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2dcb8e3_28c3c384",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-08T16:47:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6b12275_cf3f5c33",
       "revId": "d7905a626ae2f1036648ab63d51191047639c36f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
