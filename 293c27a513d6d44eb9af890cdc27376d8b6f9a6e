@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f1edaa3_be793bff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T23:32:04Z",
+      "side": 1,
+      "message": "I can probably just transfer it to that folder. I actually originally had it in there, but was worried that there may be stuff that shouldn\u0027t be public, hence moved it.",
+      "parentUuid": "61e45664_c4c8802f",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 135
+      },
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "181cb6eb_aababeae",
@@ -43,6 +67,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "17c5498b_3e22b744",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T23:32:04Z",
+      "side": 1,
+      "message": "It needs to be a part of the public interface though? In the doc, Corentin also suggesting making it required instead of optional.",
+      "parentUuid": "181cb6eb_aababeae",
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a306fc22_33b73cf2",
         "filename": "third_party/emdawnwebgpu/library_webgpu.js",
         "patchSetId": 7
@@ -54,6 +96,24 @@
       "writtenOn": "2024-10-09T22:59:02Z",
       "side": 1,
       "message": "Probably should assert that `ptr` was a valid index, i.e. that we\u0027re going to return non-`undefined`. (though I\u0027m sure there\u0027s some reason we need to return undefined or null when `ptr` is `0`)",
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38626408_a7369496",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T23:32:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a306fc22_33b73cf2",
       "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -81,6 +141,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89a0e8a2_31c3e400",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T23:32:04Z",
+      "side": 1,
+      "message": "Yup! I intend to do that, but I need to land this API first so that I can migrate users to it and remove the html5 code entirely!",
+      "parentUuid": "48a5dc32_c3f9218b",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 18
+      },
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68782092_97be6f49",
@@ -98,6 +182,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a257ed4a_e43f84ec",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T23:32:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68782092_97be6f49",
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b0c0129_e234aae3",
@@ -111,6 +213,24 @@
       "writtenOn": "2024-10-09T22:59:02Z",
       "side": 1,
       "message": "nit: move outside of the `if` to avoid looking it up twice",
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3524186b_baa3c92d",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T23:32:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b0c0129_e234aae3",
       "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -151,6 +271,30 @@
       "writtenOn": "2024-10-09T22:59:02Z",
       "side": 1,
       "message": "Future ID used as an instance ID?",
+      "range": {
+        "startLine": 355,
+        "startChar": 55,
+        "endLine": 355,
+        "endChar": 68
+      },
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "929428f1_ca0afd7e",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T23:32:04Z",
+      "side": 1,
+      "message": "Oops! Good catch!",
+      "parentUuid": "6bad2c93_a468dbca",
       "range": {
         "startLine": 355,
         "startChar": 55,
