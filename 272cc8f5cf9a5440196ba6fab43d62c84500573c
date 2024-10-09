@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac50e81b_48da70bb",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T15:57:55Z",
+      "side": 1,
+      "message": "This change makes me a bit uneasy because it makes the splitter code a bunch more complicated when all we could have is a helper that shuffles data around right when the code that uses the splitter needs it. So I have a preference for reverting most updates here and just doing the helper function. Happy to discuss though.",
+      "revId": "272cc8f5cf9a5440196ba6fab43d62c84500573c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
