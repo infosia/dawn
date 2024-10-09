@@ -22,6 +22,30 @@
       },
       "revId": "bc8851e942f44afe00d7015c81dec295dd93a320",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8f32e67_1e58d22a",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-09T18:36:43Z",
+      "side": 1,
+      "message": "This is an instance of the marker being less accurate that I mentioned in the change description, it is still the correct function being cited.\n\nThe issue is that there isn\u0027t a general AddError message anchor \u0027type\u0027 that can be passed down into the handlers to correctly mark the location here, it is just a pile of overrides for different types. \n\nSo I am using function as the anchor for both the param testing and return testing checks.\n\nThere might be something smart with templating that could be done, so that return lambda\u0027s first parameter is templated to be either a Function or FunctionParam.\nI will take a crack at that.",
+      "parentUuid": "dc30e754_74c6e294",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 8
+      },
+      "revId": "bc8851e942f44afe00d7015c81dec295dd93a320",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
