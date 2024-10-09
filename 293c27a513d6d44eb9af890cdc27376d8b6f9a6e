@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61e45664_c4c8802f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T22:59:02Z",
+      "side": 1,
+      "message": "Is this a doc we could transfer to chromium.org and make public in https://drive.google.com/drive/folders/1jT9BhhKID8gi9_0mACPT5R8m7rAFY_MR ?",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 135
+      },
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "181cb6eb_aababeae",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T22:59:02Z",
+      "side": 1,
+      "message": "parentPtr is available to the public interface, is there a way we can avoid that?\nAlso would be useful to have a comment somewhere that parentPtr is an `EventSource`",
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a306fc22_33b73cf2",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T22:59:02Z",
+      "side": 1,
+      "message": "Probably should assert that `ptr` was a valid index, i.e. that we\u0027re going to return non-`undefined`. (though I\u0027m sure there\u0027s some reason we need to return undefined or null when `ptr` is `0`)",
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48a5dc32_c3f9218b",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T22:59:02Z",
+      "side": 1,
+      "message": "Since importJsDevice is in the public API, I think it will be able to replace preinitializedWebGPUDevice!",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 18
+      },
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68782092_97be6f49",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T22:59:02Z",
+      "side": 1,
+      "message": "We don\u0027t normally makeCheckDefined for other objects, only for this one because it was a wrapper. This is because all objects used to have wrappers (to hold the refcount) and we had a helper that was returning the object itself (that did makeCheckDefined) except for buffers where we needed to get the wrapper.\n\nAnyway if we have a check of some kind in getJsObject then we don\u0027t need one here, and in fact it seems we can get rid of `makeCheckDefined` entirely.",
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b0c0129_e234aae3",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T22:59:02Z",
+      "side": 1,
+      "message": "nit: move outside of the `if` to avoid looking it up twice",
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4cebf3f_13823bc7",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T22:59:02Z",
+      "side": 1,
+      "message": "Not relevant to this CL but I suspect we can move these into webgpu.cpp.",
+      "range": {
+        "startLine": 799,
+        "startChar": 30,
+        "endLine": 799,
+        "endChar": 44
+      },
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bad2c93_a468dbca",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T22:59:02Z",
+      "side": 1,
+      "message": "Future ID used as an instance ID?",
+      "range": {
+        "startLine": 355,
+        "startChar": 55,
+        "endLine": 355,
+        "endChar": 68
+      },
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
