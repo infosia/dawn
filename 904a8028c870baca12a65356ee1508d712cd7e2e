@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2e7eed0_76c4dcdf",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T20:11:08Z",
+      "side": 1,
+      "message": "I think it would, but I was reading https://stackoverflow.com/questions/19053351/how-do-i-use-a-custom-deleter-with-a-stdunique-ptr-member when doing this, and it seems like the suggestion is to use a struct when possible because then the `std::unique_ptr` doesn\u0027t need to store the lambda pointer.",
+      "parentUuid": "58282a2e_141b1cd5",
+      "range": {
+        "startLine": 726,
+        "startChar": 43,
+        "endLine": 726,
+        "endChar": 69
+      },
+      "revId": "904a8028c870baca12a65356ee1508d712cd7e2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee2f5a1e_b0785e55",
