@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2322107c_73af49be",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-09T19:52:47Z",
+      "side": 1,
+      "message": "I think `ir/transform/utils.h` would be a good place for these sorts of utilities.",
+      "parentUuid": "3096e1c4_7bf48c8d",
+      "revId": "ee434ccd301e8fa3ed4540b9584a3b00968d3909",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "587ea357_28c7600f",
         "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
         "patchSetId": 3
