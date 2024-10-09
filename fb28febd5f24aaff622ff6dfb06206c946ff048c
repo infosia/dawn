@@ -16,6 +16,23 @@
       "message": "Part 2 fix: https://chromium-review.googlesource.com/c/chromium/src/+/5922353",
       "revId": "fb28febd5f24aaff622ff6dfb06206c946ff048c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3517ca08_30717471",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-10-09T23:16:06Z",
+      "side": 1,
+      "message": "Oops missing owner reviewer again. Adding Kai",
+      "revId": "fb28febd5f24aaff622ff6dfb06206c946ff048c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
