@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d90cde0d_02ec8606",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-09T01:47:02Z",
+      "side": 1,
+      "message": "So what\u0027s in my mind is that:\n- For compute pipeline : we don\u0027t need any internal push constants\n- For render pipeline: we might need kClampFragDepthArgsSize. After we have more logics to detect whether we indeed need them through shader moudule reflection and tint option, we might also emit these push constants.\n\nSo we assume that only user defined immediate data is always needed. All internal immediate data are optional.",
+      "parentUuid": "209c9903_e22e410b",
+      "range": {
+        "startLine": 114,
+        "startChar": 61,
+        "endLine": 114,
+        "endChar": 62
+      },
+      "revId": "ef17bb99ec64a35957ac52926f923a0fbca4f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c586ed2_d550ef08",
         "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
         "patchSetId": 5
