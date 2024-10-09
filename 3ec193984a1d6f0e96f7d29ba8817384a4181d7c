@@ -33,6 +33,23 @@
       "message": "LGTM, not sure if Antonio wanted to take another look.",
       "revId": "3ec193984a1d6f0e96f7d29ba8817384a4181d7c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76cbe992_deff5e22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-09T20:00:42Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "3ec193984a1d6f0e96f7d29ba8817384a4181d7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
