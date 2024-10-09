@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0c89c74_688855ba",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-09T21:32:24Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll do as a follow up.",
+      "parentUuid": "2322107c_73af49be",
+      "revId": "ee434ccd301e8fa3ed4540b9584a3b00968d3909",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "587ea357_28c7600f",
         "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
         "patchSetId": 3
