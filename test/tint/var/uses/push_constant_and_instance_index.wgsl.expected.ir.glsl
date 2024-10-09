@@ -1,20 +1,60 @@
-#version 310 es
+SKIP: FAILED
 
 
-struct tint_push_constant_struct {
-  float user_constant;
-  uint tint_first_instance;
-};
+enable chromium_experimental_push_constant;
 
-layout(location = 0) uniform tint_push_constant_struct tint_push_constants;
-vec4 tint_symbol_inner(uint b) {
-  float v = tint_push_constants.user_constant;
-  return vec4((v + float(b)));
+var<push_constant> a : f32;
+
+@vertex
+fn tint_symbol(@builtin(instance_index) b : u32) -> @builtin(position) vec4<f32> {
+  return vec4<f32>((a + f32(b)));
 }
-void main() {
-  uint v_1 = uint(gl_InstanceID);
-  gl_Position = tint_symbol_inner((v_1 + tint_push_constants.tint_first_instance));
-  gl_Position[1u] = -(gl_Position.y);
-  gl_Position[2u] = ((2.0f * gl_Position.z) - gl_Position.w);
-  gl_PointSize = 1.0f;
+
+Failed to generate: :23:1 error: error: instance_index must be an u32
+%tint_symbol = @vertex func():void {
+^^^^^^^^^^^^
+
+note: # Disassembly
+tint_push_constant_struct = struct @align(4), @block {
+  user_constant:f32 @offset(0)
+  tint_first_instance:u32 @offset(4)
 }
+
+$B1: {  # root
+  %tint_push_constants:ptr<push_constant, tint_push_constant_struct, read> = var
+  %gl_InstanceID:ptr<__in, i32, read> = var @builtin(instance_index)
+  %gl_Position:ptr<__out, vec4<f32>, write> = var @builtin(position)
+  %gl_PointSize:ptr<__out, f32, write> = var @builtin(__point_size)
+}
+
+%tint_symbol_inner = func(%b:u32):vec4<f32> {
+  $B2: {
+    %7:ptr<push_constant, f32, read> = access %tint_push_constants, 0u
+    %8:f32 = load %7
+    %9:f32 = convert %b
+    %10:f32 = add %8, %9
+    %11:vec4<f32> = construct %10
+    ret %11
+  }
+}
+%tint_symbol = @vertex func():void {
+  $B3: {
+    %13:i32 = load %gl_InstanceID
+    %14:u32 = convert %13
+    %15:vec4<f32> = call %tint_symbol_inner, %14
+    store %gl_Position, %15
+    %16:f32 = swizzle %gl_Position, y
+    %17:f32 = negation %16
+    store_vector_element %gl_Position, 1u, %17
+    %18:f32 = swizzle %gl_Position, z
+    %19:f32 = swizzle %gl_Position, w
+    %20:f32 = mul 2.0f, %18
+    %21:f32 = sub %20, %19
+    store_vector_element %gl_Position, 2u, %21
+    store %gl_PointSize, 1.0f
+    ret
+  }
+}
+
+
+tint executable returned error: exit status 1

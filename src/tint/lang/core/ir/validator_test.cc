@@ -321,8 +321,9 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_Param_BothLocationAndBuiltin) {
-    auto* f = b.Function("my_func", ty.void_());
-    auto* p = b.FunctionParam("my_param", ty.f32());
+    auto* f = b.Function("my_func", ty.void_(), Function::PipelineStage::kFragment);
+
+    auto* p = b.FunctionParam("my_param", ty.vec4<f32>());
     IOAttributes attr;
     attr.builtin = BuiltinValue::kPosition;
     attr.location = 0;
@@ -334,12 +335,12 @@ TEST_F(IR_ValidatorTest, Function_Param_BothLocationAndBuiltin) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:17 error: a builtin and location cannot be both declared for a param
-%my_func = func(%my_param:f32 [@location(0), @position]):void {
-                ^^^^^^^^^^^^^
+              R"(:1:27 error: a builtin and location cannot be both declared for a param
+%my_func = @fragment func(%my_param:vec4<f32> [@location(0), @position]):void {
+                          ^^^^^^^^^^^^^^^^^^^
 
 note: # Disassembly
-%my_func = func(%my_param:f32 [@location(0), @position]):void {
+%my_func = @fragment func(%my_param:vec4<f32> [@location(0), @position]):void {
   $B1: {
     ret
   }
@@ -348,16 +349,15 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_Param_Struct_BothLocationAndBuiltin) {
+    auto* f = b.Function("my_func", ty.void_(), Function::PipelineStage::kFragment);
+
     IOAttributes attr;
     attr.builtin = BuiltinValue::kPosition;
     attr.location = 0;
-
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {
-                                                   {mod.symbols.New("a"), ty.f32(), attr},
+                                                   {mod.symbols.New("a"), ty.vec4<f32>(), attr},
                                                });
-
-    auto* f = b.Function("my_func", ty.void_());
     auto* p = b.FunctionParam("my_param", str_ty);
     f->SetParams({p});
 
@@ -366,16 +366,16 @@ TEST_F(IR_ValidatorTest, Function_Param_Struct_BothLocationAndBuiltin) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:5:17 error: a builtin and location cannot be both declared for a struct member
-%my_func = func(%my_param:MyStruct):void {
-                ^^^^^^^^^^^^^^^^^^
+              R"(:5:27 error: a builtin and location cannot be both declared for a struct member
+%my_func = @fragment func(%my_param:MyStruct):void {
+                          ^^^^^^^^^^^^^^^^^^
 
 note: # Disassembly
-MyStruct = struct @align(4) {
-  a:f32 @offset(0), @location(0), @builtin(position)
+MyStruct = struct @align(16) {
+  a:vec4<f32> @offset(0), @location(0), @builtin(position)
 }
 
-%my_func = func(%my_param:MyStruct):void {
+%my_func = @fragment func(%my_param:MyStruct):void {
   $B1: {
     ret
   }
@@ -447,7 +447,8 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_Param_InvariantWithPosition) {
-    auto* f = b.Function("my_func", ty.void_());
+    auto* f = b.Function("my_func", ty.void_(), Function::PipelineStage::kFragment);
+
     auto* p = b.FunctionParam("my_param", ty.vec4<f32>());
     IOAttributes attr;
     attr.builtin = BuiltinValue::kPosition;
@@ -489,16 +490,15 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_Param_Struct_InvariantWithPosition) {
+    auto* f = b.Function("my_func", ty.void_(), Function::PipelineStage::kFragment);
+
     IOAttributes attr;
     attr.invariant = true;
     attr.builtin = BuiltinValue::kPosition;
-
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {
                                                    {mod.symbols.New("pos"), ty.vec4<f32>(), attr},
                                                });
-
-    auto* f = b.Function("my_func", ty.void_());
     auto* p = b.FunctionParam("my_param", str_ty);
     f->SetParams({p});
 
@@ -545,8 +545,7 @@ MyStruct = struct @align(16) {
 }
 
 TEST_F(IR_ValidatorTest, Function_Return_BothLocationAndBuiltin) {
-    auto* f = b.Function("my_func", ty.f32());
-
+    auto* f = b.Function("my_func", ty.vec4<f32>(), Function::PipelineStage::kVertex);
     IOAttributes attr;
     attr.builtin = BuiltinValue::kPosition;
     attr.location = 0;
@@ -558,11 +557,11 @@ TEST_F(IR_ValidatorTest, Function_Return_BothLocationAndBuiltin) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: a builtin and location cannot be both declared for a function return
-%my_func = func():f32 [@location(0), @position] {
+%my_func = @vertex func():vec4<f32> [@location(0), @position] {
 ^^^^^^^^
 
 note: # Disassembly
-%my_func = func():f32 [@location(0), @position] {
+%my_func = @vertex func():vec4<f32> [@location(0), @position] {
   $B1: {
     unreachable
   }
@@ -574,29 +573,26 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_BothLocationAndBuiltin) {
     IOAttributes attr;
     attr.builtin = BuiltinValue::kPosition;
     attr.location = 0;
-
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {
-                                                   {mod.symbols.New("a"), ty.f32(), attr},
+                                                   {mod.symbols.New("a"), ty.vec4<f32>(), attr},
                                                });
-
-    auto* f = b.Function("my_func", str_ty);
-
+    auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kVertex);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:5:1 error: a builtin and location cannot be both declared for a struct member
-%my_func = func():MyStruct {
+%my_func = @vertex func():MyStruct {
 ^^^^^^^^
 
 note: # Disassembly
-MyStruct = struct @align(4) {
-  a:f32 @offset(0), @location(0), @builtin(position)
+MyStruct = struct @align(16) {
+  a:vec4<f32> @offset(0), @location(0), @builtin(position)
 }
 
-%my_func = func():MyStruct {
+%my_func = @vertex func():MyStruct {
   $B1: {
     unreachable
   }
@@ -605,8 +601,7 @@ MyStruct = struct @align(4) {
 }
 
 TEST_F(IR_ValidatorTest, Function_Return_NonVoid_MissingLocationAndBuiltin) {
-    auto* f = b.Function("my_func", ty.f32());
-    f->SetStage(Function::PipelineStage::kFragment);
+    auto* f = b.Function("my_func", ty.f32(), Function::PipelineStage::kFragment);
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
@@ -632,9 +627,7 @@ TEST_F(IR_ValidatorTest, Function_Return_NonVoid_Struct_MissingLocationAndBuilti
                                                               {mod.symbols.New("a"), ty.f32(), {}},
                                                           });
 
-    auto* f = b.Function("my_func", str_ty);
-    f->SetStage(Function::PipelineStage::kFragment);
-
+    auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kFragment);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     auto res = ir::Validate(mod);
@@ -663,7 +656,7 @@ TEST_F(IR_ValidatorTest, Function_Return_InvariantWithPosition) {
     attr.builtin = BuiltinValue::kPosition;
     attr.invariant = true;
 
-    auto* f = b.Function("my_func", ty.vec4<f32>());
+    auto* f = b.Function("my_func", ty.vec4<f32>(), Function::PipelineStage::kVertex);
     f->SetReturnAttributes(attr);
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
@@ -701,14 +694,12 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_InvariantWithPosition) {
     IOAttributes attr;
     attr.invariant = true;
     attr.builtin = BuiltinValue::kPosition;
-
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {
                                                    {mod.symbols.New("pos"), ty.vec4<f32>(), attr},
                                                });
 
-    auto* f = b.Function("my_func", str_ty);
-
+    auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kVertex);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     auto res = ir::Validate(mod);
@@ -725,7 +716,6 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_InvariantWithoutPosition) {
                                                });
 
     auto* f = b.Function("my_func", str_ty);
-
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     auto res = ir::Validate(mod);
@@ -770,9 +760,8 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_UnnamedEntryPoint) {
-    auto* f = b.Function(ty.void_());
-    f->SetWorkgroupSize(0, 0, 0);
-    f->SetStage(Function::PipelineStage::kCompute);
+    auto* f = b.Function(ty.void_(), Function::PipelineStage::kCompute,
+                         std::array<uint32_t, 3>({0, 0, 0}));
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
@@ -860,19 +849,21 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_UnexpectedFragDepth) {
-    auto* f = b.Function("my_func", ty.void_());
+    auto* f = b.Function("my_func", ty.void_(), Function::PipelineStage::kCompute,
+                         std::array<uint32_t, 3>({0, 0, 0}));
     f->SetReturnBuiltin(BuiltinValue::kFragDepth);
+
     b.Append(f->Block(), [&] { b.Return(f); });
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:1 error: frag_depth can only be declared for fragment entry points
-%my_func = func():void [@frag_depth] {
+              R"(:1:1 error: error: frag_depth must used in a fragment shader entry point
+%my_func = @compute @workgroup_size(0, 0, 0) func():void [@frag_depth] {
 ^^^^^^^^
 
 note: # Disassembly
-%my_func = func():void [@frag_depth] {
+%my_func = @compute @workgroup_size(0, 0, 0) func():void [@frag_depth] {
   $B1: {
     ret
   }
@@ -881,20 +872,20 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_ComputeNonVoidReturn) {
-    auto* f = b.Function("my_func", ty.f32());
-    f->SetStage(Function::PipelineStage::kCompute);
-    f->SetWorkgroupSize(1, 1, 1);
+    auto* f = b.Function("my_func", ty.f32(), Function::PipelineStage::kCompute,
+                         std::array<uint32_t, 3>({0, 0, 0}));
+
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: compute entry point must not have a return type
-%my_func = @compute @workgroup_size(1, 1, 1) func():f32 {
+%my_func = @compute @workgroup_size(0, 0, 0) func():f32 {
 ^^^^^^^^
 
 note: # Disassembly
-%my_func = @compute @workgroup_size(1, 1, 1) func():f32 {
+%my_func = @compute @workgroup_size(0, 0, 0) func():f32 {
   $B1: {
     unreachable
   }
@@ -903,8 +894,7 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_VertexBasicPosition) {
-    auto* f = b.Function("my_func", ty.vec4<f32>());
-    f->SetStage(Function::PipelineStage::kVertex);
+    auto* f = b.Function("my_func", ty.vec4<f32>(), Function::PipelineStage::kVertex);
     f->SetReturnBuiltin(BuiltinValue::kPosition);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
@@ -922,8 +912,7 @@ TEST_F(IR_ValidatorTest, Function_VertexStructPosition) {
                                                    {mod.symbols.New("pos"), pos_ty, pos_attr},
                                                });
 
-    auto* f = b.Function("my_func", str_ty);
-    f->SetStage(Function::PipelineStage::kVertex);
+    auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kVertex);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     auto res = ir::Validate(mod);
@@ -945,8 +934,7 @@ TEST_F(IR_ValidatorTest, Function_VertexStructPositionAndClipDistances) {
                                                    {mod.symbols.New("clip"), clip_ty, clip_attr},
                                                });
 
-    auto* f = b.Function("my_func", str_ty);
-    f->SetStage(Function::PipelineStage::kVertex);
+    auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kVertex);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     auto res = ir::Validate(mod);
@@ -963,8 +951,7 @@ TEST_F(IR_ValidatorTest, Function_VertexStructOnlyClipDistances) {
                                                    {mod.symbols.New("clip"), clip_ty, clip_attr},
                                                });
 
-    auto* f = b.Function("my_func", str_ty);
-    f->SetStage(Function::PipelineStage::kVertex);
+    auto* f = b.Function("my_func", str_ty, Function::PipelineStage::kVertex);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     auto res = ir::Validate(mod);
@@ -988,8 +975,7 @@ MyStruct = struct @align(4) {
 }
 
 TEST_F(IR_ValidatorTest, Function_VertexMissingPosition) {
-    auto* f = b.Function("my_func", ty.vec4<f32>());
-    f->SetStage(Function::PipelineStage::kVertex);
+    auto* f = b.Function("my_func", ty.vec4<f32>(), Function::PipelineStage::kVertex);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     auto res = ir::Validate(mod);
@@ -1009,8 +995,7 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_VertexPositionWrongType) {
-    auto* f = b.Function("my_func", ty.void_());
-    f->SetStage(Function::PipelineStage::kVertex);
+    auto* f = b.Function("my_func", ty.void_(), Function::PipelineStage::kVertex);
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     auto res = ir::Validate(mod);
@@ -1022,6 +1007,95 @@ TEST_F(IR_ValidatorTest, Function_VertexPositionWrongType) {
 
 note: # Disassembly
 %my_func = @vertex func():void {
+  $B1: {
+    unreachable
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Builtin_PointSize_WrongStage) {
+    auto* f = b.Function("f", ty.f32(), Function::PipelineStage::kFragment);
+    IOAttributes attr;
+    attr.builtin = BuiltinValue::kPointSize;
+    f->SetReturnAttributes(attr);
+
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:1:1 error: error: __point_size must used in a vertex shader entry point
+%f = @fragment func():f32 [@__point_size] {
+^^
+
+note: # Disassembly
+%f = @fragment func():f32 [@__point_size] {
+  $B1: {
+    unreachable
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Builtin_PointSize_WrongIODirection) {
+    auto* f = b.Function("f", ty.vec4<f32>(), Function::PipelineStage::kVertex);
+    IOAttributes ret_attr;
+    ret_attr.builtin = BuiltinValue::kPosition;
+    f->SetReturnAttributes(ret_attr);
+
+    IOAttributes param_attr;
+    param_attr.builtin = BuiltinValue::kPointSize;
+    auto* p = b.FunctionParam("size", ty.f32());
+    p->SetAttributes(param_attr);
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:1:19 error: error: __point_size must be an output of a shader entry point
+%f = @vertex func(%size:f32 [@__point_size]):vec4<f32> [@position] {
+                  ^^^^^^^^^
+
+note: # Disassembly
+%f = @vertex func(%size:f32 [@__point_size]):vec4<f32> [@position] {
+  $B1: {
+    unreachable
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Builtin_PointSize_WrongType) {
+    IOAttributes pos_attr;
+    pos_attr.builtin = BuiltinValue::kPosition;
+    IOAttributes size_attr;
+    size_attr.builtin = BuiltinValue::kPointSize;
+    auto* str_ty = ty.Struct(mod.symbols.New("VertexOutput"),
+                             {
+                                 {mod.symbols.New("pos"), ty.vec4<f32>(), pos_attr},
+                                 {mod.symbols.New("size"), ty.u32(), size_attr},
+                             });
+    auto* f = b.Function("f", str_ty, Function::PipelineStage::kVertex);
+
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:6:1 error: error: __point_size must be a f32
+%f = @vertex func():VertexOutput {
+^^
+
+note: # Disassembly
+VertexOutput = struct @align(16) {
+  pos:vec4<f32> @offset(0), @builtin(position)
+  size:u32 @offset(16), @builtin(__point_size)
+}
+
+%f = @vertex func():VertexOutput {
   $B1: {
     unreachable
   }
@@ -1063,8 +1137,8 @@ note: # Disassembly
 
 TEST_F(IR_ValidatorTest, CallToEntryPointFunction) {
     auto* f = b.Function("f", ty.void_());
-    auto* g = b.Function("g", ty.void_(), Function::PipelineStage::kCompute);
-    g->SetWorkgroupSize(1, 1, 1);
+    auto* g = b.Function("g", ty.void_(), Function::PipelineStage::kCompute,
+                         std::array<uint32_t, 3>({0, 0, 0}));
 
     b.Append(f->Block(), [&] {
         b.Call(g);
@@ -1090,7 +1164,7 @@ note: # Disassembly
     ret
   }
 }
-%g = @compute @workgroup_size(1, 1, 1) func():void {
+%g = @compute @workgroup_size(0, 0, 0) func():void {
   $B2: {
     ret
   }
@@ -2009,8 +2083,7 @@ TEST_F(IR_ValidatorTest, Discard_TooManyOperands) {
         b.Return(func);
     });
 
-    auto* ep = b.Function("ep", ty.void_());
-    ep->SetStage(Function::PipelineStage::kFragment);
+    auto* ep = b.Function("ep", ty.void_(), Function::PipelineStage::kFragment);
     b.Append(ep->Block(), [&] {
         b.Call(func);
         b.Return(ep);
@@ -2051,8 +2124,7 @@ TEST_F(IR_ValidatorTest, Discard_TooManyResults) {
         b.Return(func);
     });
 
-    auto* ep = b.Function("ep", ty.void_());
-    ep->SetStage(Function::PipelineStage::kFragment);
+    auto* ep = b.Function("ep", ty.void_(), Function::PipelineStage::kFragment);
     b.Append(ep->Block(), [&] {
         b.Call(func);
         b.Return(ep);
@@ -2092,9 +2164,9 @@ TEST_F(IR_ValidatorTest, Discard_NotInFragment) {
         b.Return(func);
     });
 
-    auto* ep = b.Function("ep", ty.void_());
-    ep->SetStage(Function::PipelineStage::kCompute);
-    ep->SetWorkgroupSize(0, 0, 0);
+    auto* ep = b.Function("ep", ty.void_(), Function::PipelineStage::kCompute,
+                          std::array<uint32_t, 3>({0, 0, 0}));
+
     b.Append(ep->Block(), [&] {
         b.Call(func);
         b.Return(ep);
