@@ -192,6 +192,24 @@
       "parentUuid": "2454a138_1962e193",
       "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "466b5934_801a9acb",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-09T01:48:19Z",
+      "side": 1,
+      "message": "Thanks for pointing it out. Done.",
+      "parentUuid": "0132d3ab_c0bd16a1",
+      "revId": "6c2fc8496eaaf6901f3135c533243ba7956801c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
