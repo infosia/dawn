@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6987b78a_2e96ea05",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-09T13:50:52Z",
+      "side": 1,
+      "message": "Nit: `Enable(wgsl::Extension::kClipDistances)` will do all of this.",
+      "range": {
+        "startLine": 1737,
+        "startChar": 20,
+        "endLine": 1740,
+        "endChar": 21
+      },
+      "revId": "1ad874ee321fb0bfd0dc9c24e97a0c963542ffa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72515566_f9069fae",
         "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser_test.cc",
         "patchSetId": 1
@@ -14,6 +37,30 @@
       "writtenOn": "2024-10-09T07:15:19Z",
       "side": 1,
       "message": "Hi @jrprice@google.com,\n\nCurrently this test fails because I failed to find a way to eliminate this `bitcast\u003cArr\u003e`. Could you help me?",
+      "range": {
+        "startLine": 475,
+        "startChar": 40,
+        "endLine": 475,
+        "endChar": 52
+      },
+      "revId": "1ad874ee321fb0bfd0dc9c24e97a0c963542ffa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17f1f81d_1226e3ca",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-09T13:50:52Z",
+      "side": 1,
+      "message": "I think this is coming from `FunctionEmitter::EmitPipelineOutput` in `function.cc`, which flattens the array into separate elements. This is what we want to do for `@location()` decorated arrays, but I think we need to add a special-case for `@builtin(clip_distance)` to skip the flattening and just use the whole array.\n\nSo check for the `clip_distances` attribute, and then load the whole array into `return_exprs`. LMK if that makes sense or if you still need help.",
+      "parentUuid": "72515566_f9069fae",
       "range": {
         "startLine": 475,
         "startChar": 40,
