@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fa6a9d6_fac24922",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1882,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-09T13:30:32Z",
+      "side": 1,
+      "message": "Nit: This can just be `Enable(wgsl::Extension::kDualSourceBlending)`, which does these steps for you.",
+      "range": {
+        "startLine": 1879,
+        "startChar": 0,
+        "endLine": 1882,
+        "endChar": 17
+      },
+      "revId": "a3bce7a43c3a7381bb05a9c76c46da1bfc391a64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
