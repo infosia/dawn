@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f59b310f_7e192a5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T10:03:56Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "904a8028c870baca12a65356ee1508d712cd7e2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58282a2e_141b1cd5",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T10:03:56Z",
+      "side": 1,
+      "message": "Out of curiosity, does passing a lambda here work?",
+      "range": {
+        "startLine": 726,
+        "startChar": 43,
+        "endLine": 726,
+        "endChar": 69
+      },
+      "revId": "904a8028c870baca12a65356ee1508d712cd7e2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee2f5a1e_b0785e55",
