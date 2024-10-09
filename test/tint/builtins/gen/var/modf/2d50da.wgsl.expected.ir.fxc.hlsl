@@ -1,5 +1,3 @@
-SKIP: FAILED
-
 struct modf_result_vec2_f32 {
   float2 fract;
   float2 whole;
@@ -16,7 +14,10 @@ struct vertex_main_outputs {
 
 void modf_2d50da() {
   float2 arg_0 = (-1.5f).xx;
-  modf_result_vec2_f32 res = modf(arg_0);
+  float2 v = (0.0f).xx;
+  float2 v_1 = modf(arg_0, v);
+  modf_result_vec2_f32 v_2 = {v_1, v};
+  modf_result_vec2_f32 res = v_2;
 }
 
 void fragment_main() {
@@ -32,20 +33,13 @@ VertexOutput vertex_main_inner() {
   VertexOutput tint_symbol = (VertexOutput)0;
   tint_symbol.pos = (0.0f).xxxx;
   modf_2d50da();
-  VertexOutput v = tint_symbol;
-  return v;
+  VertexOutput v_3 = tint_symbol;
+  return v_3;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_1 = vertex_main_inner();
-  vertex_main_outputs v_2 = {v_1.pos};
-  return v_2;
+  VertexOutput v_4 = vertex_main_inner();
+  vertex_main_outputs v_5 = {v_4.pos};
+  return v_5;
 }
 
-FXC validation failure:
-<scrubbed_path>(17,30-40): error X3013: 'modf': no matching 1 parameter intrinsic function
-<scrubbed_path>(17,30-40): error X3013: Possible intrinsic functions are:
-<scrubbed_path>(17,30-40): error X3013:     modf(float|half|min10float|min16float, out float|half|min10float|min16float ip)
-
-
-tint executable returned error: exit status 1

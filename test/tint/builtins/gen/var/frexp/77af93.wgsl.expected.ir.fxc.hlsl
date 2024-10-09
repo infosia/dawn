@@ -1,5 +1,3 @@
-SKIP: FAILED
-
 struct frexp_result_vec4_f32 {
   float4 fract;
   int4 exp;
@@ -16,7 +14,13 @@ struct vertex_main_outputs {
 
 void frexp_77af93() {
   float4 arg_0 = (1.0f).xxxx;
-  frexp_result_vec4_f32 res = frexp(arg_0);
+  float4 v = arg_0;
+  float4 v_1 = (0.0f).xxxx;
+  float4 v_2 = frexp(v, v_1);
+  float4 v_3 = float4(sign(v));
+  v_1 = (v_3 * v_1);
+  frexp_result_vec4_f32 v_4 = {v_2, int4(v_1)};
+  frexp_result_vec4_f32 res = v_4;
 }
 
 void fragment_main() {
@@ -32,20 +36,13 @@ VertexOutput vertex_main_inner() {
   VertexOutput tint_symbol = (VertexOutput)0;
   tint_symbol.pos = (0.0f).xxxx;
   frexp_77af93();
-  VertexOutput v = tint_symbol;
-  return v;
+  VertexOutput v_5 = tint_symbol;
+  return v_5;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_1 = vertex_main_inner();
-  vertex_main_outputs v_2 = {v_1.pos};
-  return v_2;
+  VertexOutput v_6 = vertex_main_inner();
+  vertex_main_outputs v_7 = {v_6.pos};
+  return v_7;
 }
 
-FXC validation failure:
-<scrubbed_path>(17,31-42): error X3013: 'frexp': no matching 1 parameter intrinsic function
-<scrubbed_path>(17,31-42): error X3013: Possible intrinsic functions are:
-<scrubbed_path>(17,31-42): error X3013:     frexp(float|half, out float|half exp)
-
-
-tint executable returned error: exit status 1
