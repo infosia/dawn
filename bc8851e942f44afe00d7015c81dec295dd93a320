@@ -46,6 +46,30 @@
       },
       "revId": "bc8851e942f44afe00d7015c81dec295dd93a320",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d9febf1_5bb9c43c",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-09T18:42:20Z",
+      "side": 1,
+      "message": "I\u0027m fine with landing this as-is. You can follow up with better highlighting. Sorry for missing that you called this out in your CL comment.",
+      "parentUuid": "d8f32e67_1e58d22a",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 8
+      },
+      "revId": "bc8851e942f44afe00d7015c81dec295dd93a320",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
