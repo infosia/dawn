@@ -1156,10 +1156,6 @@ const Type* ASTParser::ConvertStructType(uint32_t type_id) {
                         builtin_position_.pointsize_member_index = member_index;
                         create_ast_member = false;  // Not part of the WGSL structure.
                         break;
-                    case spv::BuiltIn::ClipDistance:  // not supported in WGSL
-                    case spv::BuiltIn::CullDistance:  // not supported in WGSL
-                        create_ast_member = false;    // Not part of the WGSL structure.
-                        break;
                     default:
                         Fail() << "unrecognized builtin " << decoration[1];
                         return nullptr;
@@ -1737,6 +1733,12 @@ bool ASTParser::ConvertDecorationsForVariable(uint32_t id,
                     }
                     break;
                 }
+                case spv::BuiltIn::ClipDistance:
+                    if (!enabled_extensions_.Contains(wgsl::Extension::kClipDistances)) {
+                        Enable(wgsl::Extension::kClipDistances);
+                        enabled_extensions_.Add(wgsl::Extension::kClipDistances);
+                    }
+
                 default:
                     break;
             }
