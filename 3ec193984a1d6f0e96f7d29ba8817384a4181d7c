@@ -16,6 +16,23 @@
       "message": "Antonio, PTAL",
       "revId": "3ec193984a1d6f0e96f7d29ba8817384a4181d7c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92bc2229_4edf04a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-09T19:58:25Z",
+      "side": 1,
+      "message": "LGTM, not sure if Antonio wanted to take another look.",
+      "revId": "3ec193984a1d6f0e96f7d29ba8817384a4181d7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
