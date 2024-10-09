@@ -196,6 +196,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "86bf5357_fef16a4b",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-09T05:22:57Z",
+      "side": 1,
+      "message": "The `std::enable_if` tries to ensure that we don\u0027t pass error `PipelineType` (non ComputePipeline nor RenderPipeline).",
+      "parentUuid": "7cf996e4_5427206a",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8c5e3b23_e4ac5293",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 1
