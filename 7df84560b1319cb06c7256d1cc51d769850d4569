@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3a9ea4d_667abfbe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T22:11:30Z",
+      "side": 1,
+      "message": "Sorry for the delay. LGTM\n\nThere\u0027s once again more weight in webgpu.cpp than I expected... in particular that we have to reimplement a lot of logic that the browser is already implementing (e.g. early unmapping). Maybe there\u0027s a way we can avoid it, but needing to manage future IDs definitely makes it nontrivial.",
+      "revId": "7df84560b1319cb06c7256d1cc51d769850d4569",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67e66110_0e16168b",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T22:11:30Z",
+      "side": 1,
+      "message": "nit: if there\u0027s a new status without a message, don\u0027t we still want to overwrite (clear) the message?",
+      "range": {
+        "startLine": 808,
+        "startChar": 6,
+        "endLine": 808,
+        "endChar": 18
+      },
+      "revId": "7df84560b1319cb06c7256d1cc51d769850d4569",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92692d6f_eaffde27",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T22:11:30Z",
+      "side": 1,
+      "message": "nit: move above the `if` and reuse",
+      "revId": "7df84560b1319cb06c7256d1cc51d769850d4569",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
