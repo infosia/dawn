@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a454119d_ffc6e99b",
+        "filename": "src/dawn/samples/ManualSurfaceTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T20:53:18Z",
+      "side": 1,
+      "message": "nit. would it work to use the uncaptured error callback on the device descriptor here since this is technically deprecated code-path anyways? That way you don\u0027t need to use the C types.",
+      "range": {
+        "startLine": 459,
+        "startChar": 4,
+        "endLine": 483,
+        "endChar": 17
+      },
+      "revId": "3bec474259065305ce0040102aea909ceb2157a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69d6f8d6_bf4a89c5",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T20:53:18Z",
+      "side": 1,
+      "message": "nit. `kEmptyOutputStringView`",
+      "range": {
+        "startLine": 757,
+        "startChar": 74,
+        "endLine": 757,
+        "endChar": 86
+      },
+      "revId": "3bec474259065305ce0040102aea909ceb2157a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "527efb5a_9559076d",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T20:53:18Z",
+      "side": 1,
+      "message": "nit. `kEmptyOutputStringView`",
+      "range": {
+        "startLine": 781,
+        "startChar": 72,
+        "endLine": 781,
+        "endChar": 84
+      },
+      "revId": "3bec474259065305ce0040102aea909ceb2157a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adc40564_26a308ae",
+        "filename": "src/dawn/tests/unittests/wire/WireTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T20:53:18Z",
+      "side": 1,
+      "message": "Hmm, just realized why you had to do this... Maybe we should put the testing infra in `dawn` namespace, or something like `dawn::test`? (I think `DawnTest` would also need that in order to avoid having to use `dawn::kEmptyOutputStringView` vs just `kEmptyOutputStringView` in my previous comments.",
+      "range": {
+        "startLine": 123,
+        "startChar": 60,
+        "endLine": 123,
+        "endChar": 88
+      },
+      "revId": "3bec474259065305ce0040102aea909ceb2157a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
