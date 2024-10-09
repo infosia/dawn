@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "daae9586_aa30c9b8",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-09T15:02:14Z",
+      "side": 1,
+      "message": "You can scope the declaration of `ty_struct` in the if condition:\n```\nif (auto* ty_struct \u003d ty-\u003eAs\u003ccore::type::Struct\u003e())\n```",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 20
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "49f8599e_7d4be1c3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 175,
+                "startChar": 0,
+                "endLine": 177,
+                "endChar": 0
+              },
+              "replacement": "    if (auto* ty_struct \u003d ty-\u003eAs\u003ccore::type::Struct\u003e()) {\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 226,
+                "startChar": 0,
+                "endLine": 228,
+                "endChar": 0
+              },
+              "replacement": "    if (auto* ty_struct \u003d ty-\u003eAs\u003ccore::type::Struct\u003e()) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00cfb9be_a2502e6b",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-09T15:02:14Z",
+      "side": 1,
+      "message": "Here, and in all other places where you pass forward the r-value parameter, you want to use `std::forward\u003cTYPE\u003e` to ensure it doesn\u0027t turn into an l-value, and end up copying the function. So for instance, here you\u0027d do:\n\n```\n    CheckIOAttributes(func, func-\u003eReturnAttributes(), func-\u003eReturnType(), std::forward\u003cIS_NOT_STRUCT\u003e(is_not_struct_impl),\n                      std::forward\u003cIS_STRUCT\u003e(is_struct_impl));\n```",
+      "range": {
+        "startLine": 192,
+        "startChar": 74,
+        "endLine": 193,
+        "endChar": 36
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "491c643c_0146094d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 192,
+                "startChar": 0,
+                "endLine": 194,
+                "endChar": 0
+              },
+              "replacement": "    CheckIOAttributes(func, func-\u003eReturnAttributes(), func-\u003eReturnType(),\n                       is_not_struct_impl, is_struct_impl);\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 203,
+                "startChar": 0,
+                "endLine": 205,
+                "endChar": 0
+              },
+              "replacement": "    CheckIOAttributes(param-\u003eFunction(), param-\u003eAttributes(), param-\u003eType(),\n                       is_not_struct_impl, is_struct_impl);\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 243,
+                "startChar": 0,
+                "endLine": 245,
+                "endChar": 0
+              },
+              "replacement": "    CheckIOAttributesAndType(func, func-\u003eReturnAttributes(), func-\u003eReturnType(),\n                              is_not_struct_impl, is_struct_impl);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85a7dfbc_be1b5fa5",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-09T15:02:14Z",
+      "side": 1,
+      "message": "You can scope the declaration of `ty_struct` in the if condition:\n```\nif (auto* ty_struct \u003d ty-\u003eAs\u003ccore::type::Struct\u003e())\n```",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 20
+      },
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "331718d6_46367a69",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-09T15:02:14Z",
+      "side": 1,
+      "message": "Are these called \u0027Builder\u0027 because they build a function and return it? Perhaps instead of \u0027Builder\u0027, use \u0027Func\u0027?",
+      "range": {
+        "startLine": 1447,
+        "startChar": 25,
+        "endLine": 1447,
+        "endChar": 32
+      },
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bdfe7c9_bd10bc3f",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-09T15:02:14Z",
+      "side": 1,
+      "message": "Make this parameter, and those of the other Check* functions below, a const ref parameter (`const std::string\u0026`). This avoid potential copies.\n\nHaving said that, it\u0027s good that you make sure to explicitly capture `err` by value in the lambdas so that the lambda object doesn\u0027t end up with a dangling reference.",
+      "range": {
+        "startLine": 1447,
+        "startChar": 33,
+        "endLine": 1447,
+        "endChar": 48
+      },
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c719b14_c501f5b0",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-09T15:02:14Z",
+      "side": 1,
+      "message": "If we care about keeping the Validator optimal, we could avoid the extra cost of `std::function` storage by inlining these in the header file, and using an \u0027auto\u0027 return type to have them return the lambda object directly. This, combined with the r-value forwarded Check functions above, would result in the compiler being able to inline the calls directly, rather than doing an indirect call via the function pointer.",
+      "range": {
+        "startLine": 1455,
+        "startChar": 0,
+        "endLine": 1455,
+        "endChar": 67
+      },
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
