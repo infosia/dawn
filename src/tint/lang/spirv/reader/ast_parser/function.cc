@@ -1164,6 +1164,19 @@ bool FunctionEmitter::EmitPipelineOutput(std::string var_name,
                 return Fail() << "runtime-size array not allowed on pipeline IO";
             }
             index_prefix.Push(0);
+
+            const ast::BuiltinAttribute* builtin_attribute = attrs.Get<ast::BuiltinAttribute>();
+            if (builtin_attribute != nullptr &&
+                builtin_attribute->builtin == core::BuiltinValue::kClipDistances) {
+                const Type* member_type = forced_member_type;
+                const auto member_name = namer_.MakeDerivedName(var_name);
+                return_members.Push(
+                    builder_.Member(member_name, member_type->Build(builder_), attrs.list));
+                const ast::Expression* load_source = builder_.Expr(var_name);
+                return_exprs.Push(load_source);
+                return success();
+            }
+
             const Type* elem_ty = array_type->type;
             for (int i = 0; i < static_cast<int>(array_type->size); i++) {
                 index_prefix.Back() = i;
