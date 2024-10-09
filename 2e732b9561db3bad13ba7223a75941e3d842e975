@@ -128,6 +128,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fcd46794_a11f9509",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-09T08:40:17Z",
+      "side": 1,
+      "message": "Yes, we don\u0027t care about this on compute pipeline because there is no RTV,DSV conflict issue.",
+      "parentUuid": "643ad963_a9a8c381",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "015dfd92_f07b05f0",
         "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
         "patchSetId": 1
