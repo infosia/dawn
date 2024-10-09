@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "209c9903_e22e410b",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-09T01:34:35Z",
+      "side": 1,
+      "message": "Thanks Geoff@ for reviewing!\n\n\u003e(Render|Compute)Pipeline::InitializeImpl also initializes the layout with an internalImmediateDataSize of kClampFragDepthArgsSize\n\nSry but I find that the logic of ComputePipelineVk could be optimized. Only RenderPipeline initializes the layout with `kClampFragDepthArgsSize` internalImmediateDataSize and ComputePipeline doesn\u0027t need it.",
+      "parentUuid": "9cf59d80_02bc22d6",
+      "range": {
+        "startLine": 114,
+        "startChar": 61,
+        "endLine": 114,
+        "endChar": 62
+      },
+      "revId": "ef17bb99ec64a35957ac52926f923a0fbca4f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c586ed2_d550ef08",
         "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
         "patchSetId": 5
