@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd8af2b3_b50a225d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T15:53:05Z",
+      "side": 1,
+      "message": "PTAL, I\u0027d like to start iterating on this while the last two dependency CLs (that I know of) are landing in Chromium.",
+      "revId": "4509f93c5f06ad44b69f67a69ec6d0ae822e6a6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
