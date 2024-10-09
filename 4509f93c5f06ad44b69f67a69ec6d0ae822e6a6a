@@ -39,6 +39,30 @@
       },
       "revId": "4509f93c5f06ad44b69f67a69ec6d0ae822e6a6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63b02331_e399e059",
+        "filename": "src/dawn/fuzzers/DawnWireServerFuzzer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T17:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc1bc111_82c35b6a",
+      "range": {
+        "startLine": 132,
+        "startChar": 43,
+        "endLine": 132,
+        "endChar": 54
+      },
+      "revId": "4509f93c5f06ad44b69f67a69ec6d0ae822e6a6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
