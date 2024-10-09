@@ -1196,7 +1196,8 @@ bool FunctionEmitter::EmitPipelineOutput(std::string var_name,
             return success();
         },
         [&](Default) {
-            const bool is_builtin = attrs.Has<ast::BuiltinAttribute>();
+            const ast::BuiltinAttribute* builtin_attribute = attrs.Get<ast::BuiltinAttribute>();
+            const bool is_builtin = builtin_attribute != nullptr;
 
             const Type* member_type = is_builtin ? forced_member_type : tip_type;
             // Derive the member name directly from the variable name.  They can't
@@ -1214,6 +1215,16 @@ bool FunctionEmitter::EmitPipelineOutput(std::string var_name,
             // Create an expression to evaluate the part of the variable indexed by
             // the index_prefix.
             const ast::Expression* load_source = builder_.Expr(var_name);
+
+            // Builtin(clip_distances) is an array so we should do assignment with the whole array.
+            const bool is_clip_distances =
+                is_builtin && builtin_attribute->builtin == core::BuiltinValue::kClipDistances;
+            if (is_clip_distances) {
+                return_exprs.Push(load_source);
+                // Increment the location attribute, in case more parameters will follow.
+                IncrementLocation(attrs);
+                return success();
+            }
 
             // Index into the variable as needed to pick out the flattened member.
             auto* current_type = var_type->UnwrapAlias()->UnwrapRef()->UnwrapAlias();
