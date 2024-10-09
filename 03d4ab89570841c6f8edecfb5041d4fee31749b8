@@ -52,6 +52,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cc40f40_ce2309bb",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-09T16:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daae9586_aa30c9b8",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 20
+      },
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00cfb9be_a2502e6b",
@@ -113,6 +137,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "624c1668_b7a71547",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-09T16:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00cfb9be_a2502e6b",
+      "range": {
+        "startLine": 192,
+        "startChar": 74,
+        "endLine": 193,
+        "endChar": 36
+      },
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85a7dfbc_be1b5fa5",
@@ -126,6 +174,30 @@
       "writtenOn": "2024-10-09T15:02:14Z",
       "side": 1,
       "message": "You can scope the declaration of `ty_struct` in the if condition:\n```\nif (auto* ty_struct \u003d ty-\u003eAs\u003ccore::type::Struct\u003e())\n```",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 20
+      },
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce8e8a84_66540faf",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-09T16:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85a7dfbc_be1b5fa5",
       "range": {
         "startLine": 226,
         "startChar": 0,
@@ -182,6 +254,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3b9af21_4d6f3118",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-09T16:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bdfe7c9_bd10bc3f",
+      "range": {
+        "startLine": 1447,
+        "startChar": 33,
+        "endLine": 1447,
+        "endChar": 48
+      },
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b0d9c1c_728b13c0",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-09T16:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "331718d6_46367a69",
+      "range": {
+        "startLine": 1447,
+        "startChar": 25,
+        "endLine": 1447,
+        "endChar": 32
+      },
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c719b14_c501f5b0",
@@ -195,6 +315,30 @@
       "writtenOn": "2024-10-09T15:02:14Z",
       "side": 1,
       "message": "If we care about keeping the Validator optimal, we could avoid the extra cost of `std::function` storage by inlining these in the header file, and using an \u0027auto\u0027 return type to have them return the lambda object directly. This, combined with the r-value forwarded Check functions above, would result in the compiler being able to inline the calls directly, rather than doing an indirect call via the function pointer.",
+      "range": {
+        "startLine": 1455,
+        "startChar": 0,
+        "endLine": 1455,
+        "endChar": 67
+      },
+      "revId": "03d4ab89570841c6f8edecfb5041d4fee31749b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb5501c8_e0e317d3",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-09T16:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c719b14_c501f5b0",
       "range": {
         "startLine": 1455,
         "startChar": 0,
