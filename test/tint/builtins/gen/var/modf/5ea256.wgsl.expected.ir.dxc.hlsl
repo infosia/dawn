@@ -1,5 +1,3 @@
-SKIP: FAILED
-
 struct modf_result_vec3_f32 {
   float3 fract;
   float3 whole;
@@ -16,7 +14,10 @@ struct vertex_main_outputs {
 
 void modf_5ea256() {
   float3 arg_0 = (-1.5f).xxx;
-  modf_result_vec3_f32 res = modf(arg_0);
+  float3 v = (0.0f).xxx;
+  float3 v_1 = modf(arg_0, v);
+  modf_result_vec3_f32 v_2 = {v_1, v};
+  modf_result_vec3_f32 res = v_2;
 }
 
 void fragment_main() {
@@ -32,20 +33,13 @@ VertexOutput vertex_main_inner() {
   VertexOutput tint_symbol = (VertexOutput)0;
   tint_symbol.pos = (0.0f).xxxx;
   modf_5ea256();
-  VertexOutput v = tint_symbol;
-  return v;
+  VertexOutput v_3 = tint_symbol;
+  return v_3;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_1 = vertex_main_inner();
-  vertex_main_outputs v_2 = {v_1.pos};
-  return v_2;
+  VertexOutput v_4 = vertex_main_inner();
+  vertex_main_outputs v_5 = {v_4.pos};
+  return v_5;
 }
 
-DXC validation failure:
-hlsl.hlsl:17:30: error: use of undeclared identifier 'modf'
-  modf_result_vec3_f32 res = modf(arg_0);
-                             ^
-
-
-tint executable returned error: exit status 1
