@@ -16,6 +16,29 @@
       "message": "PTAL, I\u0027d like to start iterating on this while the last two dependency CLs (that I know of) are landing in Chromium.",
       "revId": "4509f93c5f06ad44b69f67a69ec6d0ae822e6a6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc1bc111_82c35b6a",
+        "filename": "src/dawn/fuzzers/DawnWireServerFuzzer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T16:54:31Z",
+      "side": 1,
+      "message": "Should have explicit size since this is an \"output\" string IIUC",
+      "range": {
+        "startLine": 132,
+        "startChar": 43,
+        "endLine": 132,
+        "endChar": 54
+      },
+      "revId": "4509f93c5f06ad44b69f67a69ec6d0ae822e6a6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
