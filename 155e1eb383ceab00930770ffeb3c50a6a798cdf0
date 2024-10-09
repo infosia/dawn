@@ -133,6 +133,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3aac8955_01d81bf1",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T09:57:08Z",
+      "side": 1,
+      "message": "Good point about the lack of typing information when coming from JS. Maybe we could store the pointer in the WASM heap on the JS object and check its value is the argument pass to `get*`. But that doesn\u0027t work if there are multiple WASM apps using the same object.\n\nWe could also add the typing information to objects only in debug for example if we are worried about the overhead, then `getJsDevice` would `assert` that the type is correct.\n\nLet\u0027s try to find a way forward in the meeting later today. I\u0027d rather not block this CL too long since it is a blocker for the rest of the stack.",
+      "parentUuid": "fec347e3_3b516670",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 15
+      },
+      "revId": "155e1eb383ceab00930770ffeb3c50a6a798cdf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2c5db665_e0943eee",
         "filename": "third_party/emdawnwebgpu/webgpu.cpp",
         "patchSetId": 4
