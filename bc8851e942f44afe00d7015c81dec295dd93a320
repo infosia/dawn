@@ -70,6 +70,30 @@
       },
       "revId": "bc8851e942f44afe00d7015c81dec295dd93a320",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9c1eba0_303cb864",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-09T18:43:06Z",
+      "side": 1,
+      "message": "\u003e You can follow up with better highlighting.\nAlso, this doesn\u0027t seem high priority at the moment, in case you have more important stuff to work on.",
+      "parentUuid": "4d9febf1_5bb9c43c",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 8
+      },
+      "revId": "bc8851e942f44afe00d7015c81dec295dd93a320",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
