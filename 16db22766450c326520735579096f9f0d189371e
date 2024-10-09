@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b0b6f5c_57f8b250",
+        "filename": "src/dawn/common/StringViewUtils.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T15:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57a2ad0b_2bc48e3e",
+      "range": {
+        "startLine": 44,
+        "startChar": 70,
+        "endLine": 44,
+        "endChar": 72
+      },
+      "revId": "16db22766450c326520735579096f9f0d189371e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "424f4254_6e3bc64a",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba91c295_64877cf8",
+        "filename": "src/dawn/common/StringViewUtils.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T15:49:45Z",
+      "side": 1,
+      "message": "Nice catch, it works with the `\u0026` (and not without as `std::string` vs. `std::string_view` is ambiguous). I removed the const char* overload just to make sure.",
+      "parentUuid": "424f4254_6e3bc64a",
+      "revId": "16db22766450c326520735579096f9f0d189371e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c75c186_d743f94b",
@@ -54,6 +96,30 @@
       "writtenOn": "2024-10-09T15:30:31Z",
       "side": 1,
       "message": "nit: I think this could be asserted, info.device shouldn\u0027t be nullable.",
+      "range": {
+        "startLine": 222,
+        "startChar": 35,
+        "endLine": 222,
+        "endChar": 61
+      },
+      "revId": "16db22766450c326520735579096f9f0d189371e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f78a41e8_1f2678b3",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T15:49:45Z",
+      "side": 1,
+      "message": "I opted to remove it, `std::string_view()` already does the defaulting if it is nullable.",
+      "parentUuid": "4c75c186_d743f94b",
       "range": {
         "startLine": 222,
         "startChar": 35,
@@ -87,6 +153,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26806c71_5858c5f7",
+        "filename": "src/dawn/tests/end2end/AdapterCreationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T15:49:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2a5a68f2_ee1187fa",
+      "range": {
+        "startLine": 384,
+        "startChar": 35,
+        "endLine": 384,
+        "endChar": 48
+      },
+      "revId": "16db22766450c326520735579096f9f0d189371e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3bff73fe_61a9572c",
@@ -100,6 +190,30 @@
       "writtenOn": "2024-10-09T15:30:31Z",
       "side": 1,
       "message": "nit: could this be `{mVendor}` or similar?",
+      "range": {
+        "startLine": 170,
+        "startChar": 19,
+        "endLine": 170,
+        "endChar": 53
+      },
+      "revId": "16db22766450c326520735579096f9f0d189371e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "179254d2_e823ca66",
+        "filename": "src/dawn/wire/client/Adapter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T15:49:45Z",
+      "side": 1,
+      "message": "It can\u0027t because it is the C API, however I\u0027ll use the StringViewUtils here.",
+      "parentUuid": "3bff73fe_61a9572c",
       "range": {
         "startLine": 170,
         "startChar": 19,
