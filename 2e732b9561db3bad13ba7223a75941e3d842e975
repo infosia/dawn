@@ -232,6 +232,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "86b4a2d1_c5771922",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T09:49:28Z",
+      "side": 1,
+      "message": "We can do that with a single static_assert\u003c\u003e somewhere in the class body instead of duplicating the enable_if everywhere.",
+      "parentUuid": "86bf5357_fef16a4b",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8c5e3b23_e4ac5293",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 1
