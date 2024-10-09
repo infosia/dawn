@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0df61a14_6b922bb0",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-09T13:34:18Z",
+      "side": 1,
+      "message": "Just for reference https://crrev.com/c/5914392 is the Chromium CL so far.",
+      "parentUuid": "1369b91a_df883ab1",
+      "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "003d7f06_4e739e0c",
         "filename": "src/dawn/native/PipelineCache.h",
         "patchSetId": 4
