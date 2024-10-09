@@ -33,6 +33,24 @@
       "message": "LGTM, with the caveat that most people are still using the AST version of the SPIR-V reader so they won\u0027t be able to use this yet (same as I commented on the dual source blending CL).",
       "revId": "02861c091b19e2cd26ebce1cc2f9cc1e57738e9a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a83480f_c3dd9069",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-09T01:08:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2f2d78d_1b9aa98a",
+      "revId": "02861c091b19e2cd26ebce1cc2f9cc1e57738e9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
