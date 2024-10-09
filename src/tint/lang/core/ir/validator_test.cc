@@ -322,7 +322,9 @@ note: # Disassembly
 
 TEST_F(IR_ValidatorTest, Function_Param_BothLocationAndBuiltin) {
     auto* f = b.Function("my_func", ty.void_());
-    auto* p = b.FunctionParam("my_param", ty.f32());
+    f->SetStage(Function::PipelineStage::kFragment);
+
+    auto* p = b.FunctionParam("my_param", ty.vec4<f32>());
     IOAttributes attr;
     attr.builtin = BuiltinValue::kPosition;
     attr.location = 0;
@@ -334,12 +336,12 @@ TEST_F(IR_ValidatorTest, Function_Param_BothLocationAndBuiltin) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:17 error: a builtin and location cannot be both declared for a param
-%my_func = func(%my_param:f32 [@location(0), @position]):void {
-                ^^^^^^^^^^^^^
+              R"(:1:27 error: a builtin and location cannot be both declared for a param
+%my_func = @fragment func(%my_param:vec4<f32> [@location(0), @position]):void {
+                          ^^^^^^^^^^^^^^^^^^^
 
 note: # Disassembly
-%my_func = func(%my_param:f32 [@location(0), @position]):void {
+%my_func = @fragment func(%my_param:vec4<f32> [@location(0), @position]):void {
   $B1: {
     ret
   }
@@ -348,16 +350,16 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_Param_Struct_BothLocationAndBuiltin) {
+    auto* f = b.Function("my_func", ty.void_());
+    f->SetStage(Function::PipelineStage::kFragment);
+
     IOAttributes attr;
     attr.builtin = BuiltinValue::kPosition;
     attr.location = 0;
-
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {
-                                                   {mod.symbols.New("a"), ty.f32(), attr},
+                                                   {mod.symbols.New("a"), ty.vec4<f32>(), attr},
                                                });
-
-    auto* f = b.Function("my_func", ty.void_());
     auto* p = b.FunctionParam("my_param", str_ty);
     f->SetParams({p});
 
@@ -366,16 +368,16 @@ TEST_F(IR_ValidatorTest, Function_Param_Struct_BothLocationAndBuiltin) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:5:17 error: a builtin and location cannot be both declared for a struct member
-%my_func = func(%my_param:MyStruct):void {
-                ^^^^^^^^^^^^^^^^^^
+              R"(:5:27 error: a builtin and location cannot be both declared for a struct member
+%my_func = @fragment func(%my_param:MyStruct):void {
+                          ^^^^^^^^^^^^^^^^^^
 
 note: # Disassembly
-MyStruct = struct @align(4) {
-  a:f32 @offset(0), @location(0), @builtin(position)
+MyStruct = struct @align(16) {
+  a:vec4<f32> @offset(0), @location(0), @builtin(position)
 }
 
-%my_func = func(%my_param:MyStruct):void {
+%my_func = @fragment func(%my_param:MyStruct):void {
   $B1: {
     ret
   }
@@ -448,6 +450,8 @@ note: # Disassembly
 
 TEST_F(IR_ValidatorTest, Function_Param_InvariantWithPosition) {
     auto* f = b.Function("my_func", ty.void_());
+    f->SetStage(Function::PipelineStage::kFragment);
+
     auto* p = b.FunctionParam("my_param", ty.vec4<f32>());
     IOAttributes attr;
     attr.builtin = BuiltinValue::kPosition;
@@ -489,16 +493,16 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_Param_Struct_InvariantWithPosition) {
+    auto* f = b.Function("my_func", ty.void_());
+    f->SetStage(Function::PipelineStage::kFragment);
+
     IOAttributes attr;
     attr.invariant = true;
     attr.builtin = BuiltinValue::kPosition;
-
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {
                                                    {mod.symbols.New("pos"), ty.vec4<f32>(), attr},
                                                });
-
-    auto* f = b.Function("my_func", ty.void_());
     auto* p = b.FunctionParam("my_param", str_ty);
     f->SetParams({p});
 
@@ -545,24 +549,24 @@ MyStruct = struct @align(16) {
 }
 
 TEST_F(IR_ValidatorTest, Function_Return_BothLocationAndBuiltin) {
-    auto* f = b.Function("my_func", ty.f32());
+    auto* f = b.Function("my_func", ty.vec4<f32>());
+    f->SetStage(Function::PipelineStage::kVertex);
 
     IOAttributes attr;
     attr.builtin = BuiltinValue::kPosition;
     attr.location = 0;
     f->SetReturnAttributes(attr);
-
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: a builtin and location cannot be both declared for a function return
-%my_func = func():f32 [@location(0), @position] {
+%my_func = @vertex func():vec4<f32> [@location(0), @position] {
 ^^^^^^^^
 
 note: # Disassembly
-%my_func = func():f32 [@location(0), @position] {
+%my_func = @vertex func():vec4<f32> [@location(0), @position] {
   $B1: {
     unreachable
   }
@@ -574,13 +578,12 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_BothLocationAndBuiltin) {
     IOAttributes attr;
     attr.builtin = BuiltinValue::kPosition;
     attr.location = 0;
-
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {
-                                                   {mod.symbols.New("a"), ty.f32(), attr},
+                                                   {mod.symbols.New("a"), ty.vec4<f32>(), attr},
                                                });
-
     auto* f = b.Function("my_func", str_ty);
+    f->SetStage(Function::PipelineStage::kVertex);
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
@@ -588,15 +591,15 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_BothLocationAndBuiltin) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:5:1 error: a builtin and location cannot be both declared for a struct member
-%my_func = func():MyStruct {
+%my_func = @vertex func():MyStruct {
 ^^^^^^^^
 
 note: # Disassembly
-MyStruct = struct @align(4) {
-  a:f32 @offset(0), @location(0), @builtin(position)
+MyStruct = struct @align(16) {
+  a:vec4<f32> @offset(0), @location(0), @builtin(position)
 }
 
-%my_func = func():MyStruct {
+%my_func = @vertex func():MyStruct {
   $B1: {
     unreachable
   }
@@ -664,6 +667,7 @@ TEST_F(IR_ValidatorTest, Function_Return_InvariantWithPosition) {
     attr.invariant = true;
 
     auto* f = b.Function("my_func", ty.vec4<f32>());
+    f->SetStage(Function::PipelineStage::kVertex);
     f->SetReturnAttributes(attr);
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
@@ -701,13 +705,13 @@ TEST_F(IR_ValidatorTest, Function_Return_Struct_InvariantWithPosition) {
     IOAttributes attr;
     attr.invariant = true;
     attr.builtin = BuiltinValue::kPosition;
-
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {
                                                    {mod.symbols.New("pos"), ty.vec4<f32>(), attr},
                                                });
 
     auto* f = b.Function("my_func", str_ty);
+    f->SetStage(Function::PipelineStage::kVertex);
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
@@ -861,18 +865,21 @@ note: # Disassembly
 
 TEST_F(IR_ValidatorTest, Function_UnexpectedFragDepth) {
     auto* f = b.Function("my_func", ty.void_());
+    f->SetStage(Function::PipelineStage::kCompute);
+    f->SetWorkgroupSize(1, 1, 1);
     f->SetReturnBuiltin(BuiltinValue::kFragDepth);
+
     b.Append(f->Block(), [&] { b.Return(f); });
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:1 error: frag_depth can only be declared for fragment entry points
-%my_func = func():void [@frag_depth] {
+              R"(:1:1 error: error: frag_depth must used in a fragment shader entry point
+%my_func = @compute @workgroup_size(1, 1, 1) func():void [@frag_depth] {
 ^^^^^^^^
 
 note: # Disassembly
-%my_func = func():void [@frag_depth] {
+%my_func = @compute @workgroup_size(1, 1, 1) func():void [@frag_depth] {
   $B1: {
     ret
   }
