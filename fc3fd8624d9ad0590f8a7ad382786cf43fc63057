@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2315936_a2beca77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T12:00:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af6ceb3_c5950257",
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c3baf71_f60ba05a",
@@ -294,6 +312,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7492625b_dc78910c",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T12:00:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e4d60a_b87fe0be",
+      "range": {
+        "startLine": 749,
+        "startChar": 24,
+        "endLine": 749,
+        "endChar": 85
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9192090d_00132948",
@@ -307,6 +349,30 @@
       "writtenOn": "2024-10-07T20:19:39Z",
       "side": 1,
       "message": "nit. A lot of the code in these tests could be simplified if we add `\u003d\u003d` operators for `wgpu::StringView`.",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 78
+      },
+      "revId": "fc3fd8624d9ad0590f8a7ad382786cf43fc63057",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d40be1f_15005c16",
+        "filename": "src/dawn/tests/end2end/AdapterCreationTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T12:00:14Z",
+      "side": 1,
+      "message": "Done, tried to simplify as much as I could with `operator \u003d\u003d (StringView, StringView)`",
+      "parentUuid": "9192090d_00132948",
       "range": {
         "startLine": 327,
         "startChar": 4,
