@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ab04f29_2ccbbfa4",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T16:26:30Z",
+      "side": 1,
+      "message": "Maybe PerformIdleTasks, IMHO it\u0027s ok to keep it as a separate entrypoint because it doesn\u0027t necessarily have to be called at the same time.\n\nCould it take a `const wgpu::Device\u0026` since both Skia and Chromium use the C++ API?",
+      "parentUuid": "1369b91a_df883ab1",
+      "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "003d7f06_4e739e0c",
         "filename": "src/dawn/native/PipelineCache.h",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c045ba8e_24a49632",
+        "filename": "src/dawn/native/PipelineCache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T16:26:30Z",
+      "side": 1,
+      "message": "It seems that `PipelineCacheBase` is only used by the Vulkan backend so we",
+      "parentUuid": "003d7f06_4e739e0c",
+      "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "88a73588_20360952",
         "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
         "patchSetId": 4
@@ -83,6 +119,24 @@
       "writtenOn": "2024-10-08T14:59:19Z",
       "side": 1,
       "message": "deviceID+vendorID is probably redundant since a different GPU should have a different piplineCacheUUID but it doesn\u0027t seem harmful to include them in the cache key.",
+      "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98df8d03_2741a105",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T16:26:30Z",
+      "side": 1,
+      "message": "Maybe comment that! However the `driverVersion` is definitely not needed.",
+      "parentUuid": "88a73588_20360952",
       "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

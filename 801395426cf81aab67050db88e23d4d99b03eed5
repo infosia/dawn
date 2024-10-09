@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ffb2c76_18e25b5d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T16:26:30Z",
+      "side": 1,
+      "message": "nit: monolithic, maybe mention that it is a toggle as well?",
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca48aaaf_75dc4fd5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T16:26:30Z",
+      "side": 1,
+      "message": "nit: Bug: \u003cissue number\u003e\n\nThis will help track what work goes towards which issues.",
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "534236e6_e0f732aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T16:26:30Z",
+      "side": 1,
+      "message": "Loko PTAL as well.",
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7377a0ec_f0b0b15e",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T16:26:30Z",
+      "side": 1,
+      "message": "nit: platform is a bit weird here as it sounds like it is dawn::platform. \"The embedder\" (?)",
+      "range": {
+        "startLine": 569,
+        "startChar": 56,
+        "endLine": 569,
+        "endChar": 64
+      },
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18f98325_7f60c4b7",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T16:26:30Z",
+      "side": 1,
+      "message": "nit: Maybe we could create the cache on device creation, and just have this be `GetGlobalPipelineCache`? Then each pipeline would call `PipelineCache::Create` if needed. Overall it seems that our hierarchy of classes for caches is both too abstract, or not finished enough.",
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dce6d98_4c900486",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T16:26:30Z",
+      "side": 1,
+      "message": "Note: in the future it could be better to have a set of caches to flush on the device, and iterate it when performing idle tasks.",
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1532b607_b3531fb7",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-09T16:26:30Z",
+      "side": 1,
+      "message": "IMHO we could generate the key even when using the monolithic cache, it isn\u0027t that expensive. But also we should be able to generate the key in the frontend RenderPipelineBase since we already have a memory cache. Maybe something to look at when we improve caching a bunch.",
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
