@@ -1,5 +1,3 @@
-SKIP: FAILED
-
 struct modf_result_vec4_f16 {
   vector<float16_t, 4> fract;
   vector<float16_t, 4> whole;
@@ -16,7 +14,10 @@ struct vertex_main_outputs {
 
 void modf_995934() {
   vector<float16_t, 4> arg_0 = (float16_t(-1.5h)).xxxx;
-  modf_result_vec4_f16 res = modf(arg_0);
+  vector<float16_t, 4> v = (float16_t(0.0h)).xxxx;
+  vector<float16_t, 4> v_1 = modf(arg_0, v);
+  modf_result_vec4_f16 v_2 = {v_1, v};
+  modf_result_vec4_f16 res = v_2;
 }
 
 void fragment_main() {
@@ -32,20 +33,13 @@ VertexOutput vertex_main_inner() {
   VertexOutput tint_symbol = (VertexOutput)0;
   tint_symbol.pos = (0.0f).xxxx;
   modf_995934();
-  VertexOutput v = tint_symbol;
-  return v;
+  VertexOutput v_3 = tint_symbol;
+  return v_3;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_1 = vertex_main_inner();
-  vertex_main_outputs v_2 = {v_1.pos};
-  return v_2;
+  VertexOutput v_4 = vertex_main_inner();
+  vertex_main_outputs v_5 = {v_4.pos};
+  return v_5;
 }
 
-DXC validation failure:
-hlsl.hlsl:17:30: error: use of undeclared identifier 'modf'
-  modf_result_vec4_f16 res = modf(arg_0);
-                             ^
-
-
-tint executable returned error: exit status 1
