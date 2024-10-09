@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a00b7db9_5973b738",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T22:54:35Z",
+      "side": 1,
+      "message": "Given the ordering of the status values, any overrides would be Error or Abort which necessarily should have a message, so probably a non-problem.",
+      "parentUuid": "67e66110_0e16168b",
+      "range": {
+        "startLine": 808,
+        "startChar": 6,
+        "endLine": 808,
+        "endChar": 18
+      },
+      "revId": "7df84560b1319cb06c7256d1cc51d769850d4569",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92692d6f_eaffde27",
@@ -54,6 +78,24 @@
       "writtenOn": "2024-10-09T22:11:30Z",
       "side": 1,
       "message": "nit: move above the `if` and reuse",
+      "revId": "7df84560b1319cb06c7256d1cc51d769850d4569",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7a374bd_57dc7dd2",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T22:54:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92692d6f_eaffde27",
       "revId": "7df84560b1319cb06c7256d1cc51d769850d4569",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
