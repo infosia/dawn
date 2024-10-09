@@ -16,6 +16,24 @@
       "message": "Code LGTM, but are we sure this is the semantic we want? I looked at Blink and we persistently wrap the buffer so that\u0027s fine there. However in general in webgpu.h dropping the last ref to the buffer still leaves it usable by various kinds of commands (like queue.Submit()) so it\u0027s a bit weird that the mapping fails early. I agree though that if you dropped the last ref to the buffer, then you can\u0027t call `GetMappedRange` so it\u0027s not very useful that the mapping succeeds.",
       "revId": "d9ba6cd13dbb9d68c2a1e2f556cd4f12928f3ce4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1168e9e_b6b7b2d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-09T18:03:57Z",
+      "side": 1,
+      "message": "Yup, the last point is sort of the main key. Given that the user can\u0027t do anything with the mapping anyways, we can just fail it and then proceed.",
+      "parentUuid": "dd4026d6_b1773d09",
+      "revId": "d9ba6cd13dbb9d68c2a1e2f556cd4f12928f3ce4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
