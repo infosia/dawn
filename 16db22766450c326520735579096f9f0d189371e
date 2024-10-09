@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57a2ad0b_2bc48e3e",
+        "filename": "src/dawn/common/StringViewUtils.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T15:30:31Z",
+      "side": 1,
+      "message": "ot -\u003e it",
+      "range": {
+        "startLine": 44,
+        "startChar": 70,
+        "endLine": 44,
+        "endChar": 72
+      },
+      "revId": "16db22766450c326520735579096f9f0d189371e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "424f4254_6e3bc64a",
+        "filename": "src/dawn/common/StringViewUtils.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T15:30:31Z",
+      "side": 1,
+      "message": "nit: does this need to be `const char (\u0026s)[N]`? I\u0027m unsure whether `s` will be passed by value or by reference.\n\nI\u0027m also not sure if this is being used at all, because (from experimenting on godbolt.org) it seems that string literals can\u0027t be passed into this, and I don\u0027t know what _can_ be. Usages with string literals may be using the `const char*` overload.",
+      "revId": "16db22766450c326520735579096f9f0d189371e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c75c186_d743f94b",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T15:30:31Z",
+      "side": 1,
+      "message": "nit: I think this could be asserted, info.device shouldn\u0027t be nullable.",
+      "range": {
+        "startLine": 222,
+        "startChar": 35,
+        "endLine": 222,
+        "endChar": 61
+      },
+      "revId": "16db22766450c326520735579096f9f0d189371e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a5a68f2_ee1187fa",
+        "filename": "src/dawn/tests/end2end/AdapterCreationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T15:30:31Z",
+      "side": 1,
+      "message": "aside: interesting that these fields can be Undefined (when default-initialized or moved-from) even though it\u0027s normally a non-nullable string. Not sure there\u0027s anything we can do to improve that.",
+      "range": {
+        "startLine": 384,
+        "startChar": 35,
+        "endLine": 384,
+        "endChar": 48
+      },
+      "revId": "16db22766450c326520735579096f9f0d189371e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bff73fe_61a9572c",
+        "filename": "src/dawn/wire/client/Adapter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-09T15:30:31Z",
+      "side": 1,
+      "message": "nit: could this be `{mVendor}` or similar?",
+      "range": {
+        "startLine": 170,
+        "startChar": 19,
+        "endLine": 170,
+        "endChar": 53
+      },
+      "revId": "16db22766450c326520735579096f9f0d189371e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
