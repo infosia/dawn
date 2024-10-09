@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72515566_f9069fae",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-09T07:15:19Z",
+      "side": 1,
+      "message": "Hi @jrprice@google.com,\n\nCurrently this test fails because I failed to find a way to eliminate this `bitcast\u003cArr\u003e`. Could you help me?",
+      "range": {
+        "startLine": 475,
+        "startChar": 40,
+        "endLine": 475,
+        "endChar": 52
+      },
+      "revId": "1ad874ee321fb0bfd0dc9c24e97a0c963542ffa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
