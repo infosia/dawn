@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8ba543a_789281ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-10-10T18:19:38Z",
+      "side": 1,
+      "message": "If we still want to make this information accessible, I can file a bug to add a new command to get stats from a CL/patchset.",
+      "range": {
+        "startLine": 16,
+        "startChar": 28,
+        "endLine": 17,
+        "endChar": 58
+      },
+      "revId": "3963c8d3ad2a3492cadfe217bbb18f3daafa9bec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71f3a101_1e4352f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-10-10T18:19:38Z",
+      "side": 1,
+      "message": "PTAL\n\nThis should fix the issues you were running into with manual rolls after a few patchsets.",
+      "revId": "3963c8d3ad2a3492cadfe217bbb18f3daafa9bec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
