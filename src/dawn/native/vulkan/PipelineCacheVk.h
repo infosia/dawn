@@ -44,17 +44,15 @@ class PipelineCache final : public PipelineCacheBase {
   public:
     static Ref<PipelineCache> Create(DeviceBase* device, const CacheKey& key);
 
+    // Creates a pipeline cache that is intended to be monolithic. The cache will only be serialized
+    // and stored to BlobCache when StoreOnIdle() is called.
+    static Ref<PipelineCache> CreateMonolithic(DeviceBase* device, const CacheKey& key);
+
     DeviceBase* GetDevice() const;
     VkPipelineCache GetHandle() const;
 
-    // Trigger serializing VkPipelineCache to BlobCache if necessary. Will only
-    // serialize if there have been changes since last time it was serialized.
-    MaybeError SerializeOnIdle();
-
-    MaybeError DidCompilePipeline() override;
-
   private:
-    explicit PipelineCache(DeviceBase* device, const CacheKey& key);
+    explicit PipelineCache(DeviceBase* device, const CacheKey& key, bool isMonolithicCache);
     ~PipelineCache() override;
 
     void Initialize();
@@ -63,7 +61,6 @@ class PipelineCache final : public PipelineCacheBase {
     raw_ptr<DeviceBase> mDevice;
     VkPipelineCache mHandle = VK_NULL_HANDLE;
 
-    bool mNeedsSerialize = false;
     size_t mStoredDataSize = 0;
 };
 

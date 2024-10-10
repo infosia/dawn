@@ -40,13 +40,22 @@ namespace dawn::native::vulkan {
 
 // static
 Ref<PipelineCache> PipelineCache::Create(DeviceBase* device, const CacheKey& key) {
-    Ref<PipelineCache> cache = AcquireRef(new PipelineCache(device, key));
+    Ref<PipelineCache> cache =
+        AcquireRef(new PipelineCache(device, key, /*isMonolithicCache=*/false));
     cache->Initialize();
     return cache;
 }
 
-PipelineCache::PipelineCache(DeviceBase* device, const CacheKey& key)
-    : PipelineCacheBase(device->GetBlobCache(), key), mDevice(device) {}
+// static
+Ref<PipelineCache> PipelineCache::CreateMonolithic(DeviceBase* device, const CacheKey& key) {
+    Ref<PipelineCache> cache =
+        AcquireRef(new PipelineCache(device, key, /*isMonolithicCache=*/true));
+    cache->Initialize();
+    return cache;
+}
+
+PipelineCache::PipelineCache(DeviceBase* device, const CacheKey& key, bool isMonolithicCache)
+    : PipelineCacheBase(device->GetBlobCache(), key, isMonolithicCache), mDevice(device) {}
 
 PipelineCache::~PipelineCache() {
     if (mHandle == VK_NULL_HANDLE) {
@@ -65,31 +74,12 @@ VkPipelineCache PipelineCache::GetHandle() const {
     return mHandle;
 }
 
-MaybeError PipelineCache::DidCompilePipeline() {
-    if (GetDevice()->IsToggleEnabled(Toggle::VulkanMonolithicPipelineCache)) {
-        // Assume VkPipelineCache was modified by compiling a pipeline. It will be serialized to
-        // BlobCache at some later point in SerializeOnIdle() if the cache data size has changed.
-        mNeedsSerialize = true;
-        return {};
-    }
-    return PipelineCacheBase::DidCompilePipeline();
-}
-
-MaybeError PipelineCache::SerializeOnIdle() {
-    if (mNeedsSerialize) {
-        mNeedsSerialize = false;
-        DAWN_TRY(Flush());
-    }
-    return {};
-}
-
 MaybeError PipelineCache::SerializeToBlobImpl(Blob* blob) {
     if (mHandle == VK_NULL_HANDLE) {
         // Pipeline cache isn't created successfully
         return {};
     }
 
-    mNeedsSerialize = false;
     size_t bufferSize;
     Device* device = ToBackend(GetDevice());
     DAWN_TRY(CheckVkSuccess(
@@ -106,6 +96,7 @@ MaybeError PipelineCache::SerializeToBlobImpl(Blob* blob) {
         device->fn.GetPipelineCacheData(device->GetVkDevice(), mHandle, &bufferSize, blob->Data()),
         "GetPipelineCacheData"));
     mStoredDataSize = bufferSize;
+
     return {};
 }
 

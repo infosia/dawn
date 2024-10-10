@@ -242,7 +242,7 @@ Ref<PipelineCacheBase> Device::GetOrCreatePipelineCacheImpl(const CacheKey& key)
             auto& deviceProperties = GetDeviceInfo().properties;
             StreamIn(&cacheKey, deviceProperties.pipelineCacheUUID);
 
-            mMonolithicPipelineCache = PipelineCache::Create(this, cacheKey);
+            mMonolithicPipelineCache = PipelineCache::CreateMonolithic(this, cacheKey);
         }
         return mMonolithicPipelineCache;
     }
@@ -1010,7 +1010,7 @@ void Device::SetLabelImpl() {
 
 void Device::PerformIdleTasksImpl() {
     if (mMonolithicPipelineCache) {
-        MaybeError maybeError = mMonolithicPipelineCache->SerializeOnIdle();
+        MaybeError maybeError = mMonolithicPipelineCache->StoreOnIdle();
         if (maybeError.IsError()) {
             std::unique_ptr<ErrorData> error = maybeError.AcquireError();
             EmitLog(WGPULoggingType_Error, error->GetFormattedMessage().c_str());
