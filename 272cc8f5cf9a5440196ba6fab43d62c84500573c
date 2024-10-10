@@ -34,6 +34,24 @@
       "parentUuid": "ac50e81b_48da70bb",
       "revId": "272cc8f5cf9a5440196ba6fab43d62c84500573c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f793029_cf29352b",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-10T16:23:26Z",
+      "side": 1,
+      "message": "I feel like I\u0027m missing something. Why do we have to store the data as exactly a `D3D12_TEXTURE_COPY_LOCATION` here? Can\u0027t we just convert it as needed with a helper function?",
+      "parentUuid": "933b191d_868d0658",
+      "revId": "272cc8f5cf9a5440196ba6fab43d62c84500573c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
