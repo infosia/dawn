@@ -56,6 +56,23 @@
       "message": "@chromium.org -\u003e @google.com",
       "revId": "3963c8d3ad2a3492cadfe217bbb18f3daafa9bec",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c454f57e_9e7911b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-10T18:21:32Z",
+      "side": 1,
+      "message": "Thanks, Brian. I\u0027ll run a manual roll again with this patch.",
+      "revId": "3963c8d3ad2a3492cadfe217bbb18f3daafa9bec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
