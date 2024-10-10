@@ -16,6 +16,63 @@
       "message": "LGTM, though I\u0027ll be reverting the output struct StringView change now because it breaks the roll, so this CL might need to wait for a reland.",
       "revId": "069ea48193c70b17dfa94fb373da7b5b05daeedd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc1b041a_989897ea",
+        "filename": "generator/templates/api_cpp_print.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T20:21:50Z",
+      "side": 1,
+      "message": "This will change the dawn version from including `dawn/webgpu_cpp.h` to `webgpu/webgpu_cpp.h`, which I think is fine since we have that (it just forwards to `dawn/webgpu_cpp.h`, but just a note in case it causes some problem).",
+      "revId": "069ea48193c70b17dfa94fb373da7b5b05daeedd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9df7a1cd_c03d6938",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T20:21:50Z",
+      "side": 1,
+      "message": "`length` is `size_t` so the type should also be `*` (for wasm memory64)",
+      "range": {
+        "startLine": 112,
+        "startChar": 74,
+        "endLine": 112,
+        "endChar": 77
+      },
+      "revId": "069ea48193c70b17dfa94fb373da7b5b05daeedd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2de7fec_b88bf2d4",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T20:21:50Z",
+      "side": 1,
+      "message": "nit: comment why we only free one",
+      "revId": "069ea48193c70b17dfa94fb373da7b5b05daeedd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
