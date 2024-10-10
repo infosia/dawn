@@ -42,13 +42,15 @@ namespace dawn::native::vulkan {
 
 class PipelineCache final : public PipelineCacheBase {
   public:
-    static Ref<PipelineCache> Create(DeviceBase* device, const CacheKey& key);
+    static Ref<PipelineCache> Create(DeviceBase* device,
+                                     const CacheKey& key,
+                                     bool isMonolithicCache);
 
     DeviceBase* GetDevice() const;
     VkPipelineCache GetHandle() const;
 
   private:
-    explicit PipelineCache(DeviceBase* device, const CacheKey& key);
+    explicit PipelineCache(DeviceBase* device, const CacheKey& key, bool isMonolithicCache);
     ~PipelineCache() override;
 
     void Initialize();
@@ -56,6 +58,8 @@ class PipelineCache final : public PipelineCacheBase {
 
     raw_ptr<DeviceBase> mDevice;
     VkPipelineCache mHandle = VK_NULL_HANDLE;
+
+    size_t mStoredDataSize = 0;
 };
 
 }  // namespace dawn::native::vulkan
