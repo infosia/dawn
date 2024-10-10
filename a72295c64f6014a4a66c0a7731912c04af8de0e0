@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4ae43a5b_f96e3cff",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-10T20:11:04Z",
+      "side": 1,
+      "message": "Maybe we could find another attribute to bucket on later on, but I think in the meantime, using the same monolithic cache should still be a better strategy than the naive implementation we had before.",
+      "parentUuid": "cb771cee_cbd12f78",
+      "revId": "a72295c64f6014a4a66c0a7731912c04af8de0e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d01df0a_8ef34b4d",
         "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
         "patchSetId": 6
@@ -31,6 +49,70 @@
       "writtenOn": "2024-10-10T18:13:46Z",
       "side": 1,
       "message": "Is it possible that two concurrently existing dawn devices have the same cache key? If so we\u0027d have multiple devices writing to the same cache key and overwriting one another. I guess WebGPU and graphite dawn devices will have different toggles so there is little risk there.",
+      "revId": "a72295c64f6014a4a66c0a7731912c04af8de0e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abf484a3_a038085a",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-10T20:11:04Z",
+      "side": 1,
+      "message": "I think that it would probably be better to cache this value on the device since it doesn\u0027t change and this makes a copy every time.",
+      "range": {
+        "startLine": 239,
+        "startChar": 12,
+        "endLine": 239,
+        "endChar": 43
+      },
+      "revId": "a72295c64f6014a4a66c0a7731912c04af8de0e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f77656be_7c836326",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-10T20:11:04Z",
+      "side": 1,
+      "message": "It\u0027s definitely possible, i.e. Chrome could have two separate tabs that are on the same domain/isolation key, which would result in the same cache key and potentially hit this issue. I think it only matters when we write out to disk though. Maybe we need a lock on writing out to make sure we don\u0027t have concurrent writes that could corrupt the disk file (I think the Blob cache might already handle this)? But otherwise, it\u0027s not TOO big a deal... we might lose some cached information on disk, but I think that\u0027s acceptable.",
+      "parentUuid": "8d01df0a_8ef34b4d",
+      "revId": "a72295c64f6014a4a66c0a7731912c04af8de0e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55b050fe_58701cc1",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-10T20:11:04Z",
+      "side": 1,
+      "message": "Thoughts on just having two entry points, `Create` and `CreateMonolithic`? It makes it more clear what the difference is in calling code where it isn\u0027t obvious what the bool is for. (The ctor can stay the same with the bool though since its internal)",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 66
+      },
       "revId": "a72295c64f6014a4a66c0a7731912c04af8de0e0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
