@@ -57,7 +57,7 @@ wire::client::MemoryTransferService* WireTest::GetClientMemoryTransferService() 
     return nullptr;
 }
 
-wire::server::MemoryTransferService* WireTest::GetServerMemoryTransferService() {
+dawn::wire::server::MemoryTransferService* WireTest::GetServerMemoryTransferService() {
     return nullptr;
 }
 
@@ -66,25 +66,25 @@ void WireTest::SetUp() {
     api.GetProcTable(&mockProcs);
     SetupIgnoredCallExpectations();
 
-    mS2cBuf = std::make_unique<utils::TerribleCommandBuffer>();
-    mC2sBuf = std::make_unique<utils::TerribleCommandBuffer>(mWireServer.get());
+    mS2cBuf = std::make_unique<dawn::utils::TerribleCommandBuffer>();
+    mC2sBuf = std::make_unique<dawn::utils::TerribleCommandBuffer>(mWireServer.get());
 
-    wire::WireServerDescriptor serverDesc = {};
+    dawn::wire::WireServerDescriptor serverDesc = {};
     serverDesc.procs = &mockProcs;
     serverDesc.serializer = mS2cBuf.get();
     serverDesc.memoryTransferService = GetServerMemoryTransferService();
 
-    mWireServer.reset(new wire::WireServer(serverDesc));
+    mWireServer.reset(new dawn::wire::WireServer(serverDesc));
     mC2sBuf->SetHandler(mWireServer.get());
 
-    wire::WireClientDescriptor clientDesc = {};
+    dawn::wire::WireClientDescriptor clientDesc = {};
     clientDesc.serializer = mC2sBuf.get();
     clientDesc.memoryTransferService = GetClientMemoryTransferService();
 
-    mWireClient.reset(new wire::WireClient(clientDesc));
+    mWireClient.reset(new dawn::wire::WireClient(clientDesc));
     mS2cBuf->SetHandler(mWireClient.get());
 
-    dawnProcSetProcs(&wire::client::GetProcs());
+    dawnProcSetProcs(&dawn::wire::client::GetProcs());
 
     auto reservedInstance = GetWireClient()->ReserveInstance();
     instance = wgpu::Instance::Acquire(reservedInstance.instance);
@@ -94,7 +94,8 @@ void WireTest::SetUp() {
 
     // Create the adapter for testing.
     apiAdapter = api.GetNewAdapter();
-    MockCallback<void (*)(wgpu::RequestAdapterStatus, wgpu::Adapter, const char*, void*)> adapterCb;
+    MockCallback<void (*)(wgpu::RequestAdapterStatus, wgpu::Adapter, wgpu::StringView, void*)>
+        adapterCb;
     instance.RequestAdapter(nullptr, wgpu::CallbackMode::AllowSpontaneous, adapterCb.Callback(),
                             adapterCb.MakeUserdata(this));
 
@@ -104,10 +105,10 @@ void WireTest::SetUp() {
         EXPECT_CALL(api, AdapterGetInfo(apiAdapter, NotNull()))
             .WillOnce(WithArg<1>(Invoke([&](WGPUAdapterInfo* info) {
                 *info = {};
-                info->vendor = kEmptyOutputStringView;
-                info->architecture = kEmptyOutputStringView;
-                info->device = kEmptyOutputStringView;
-                info->description = kEmptyOutputStringView;
+                info->vendor = dawn::kEmptyOutputStringView;
+                info->architecture = dawn::kEmptyOutputStringView;
+                info->device = dawn::kEmptyOutputStringView;
+                info->description = dawn::kEmptyOutputStringView;
                 return WGPUStatus_Success;
             })));
 
@@ -122,7 +123,7 @@ void WireTest::SetUp() {
             .WillOnce(Return(0));
 
         api.CallInstanceRequestAdapter2Callback(apiInstance, WGPURequestAdapterStatus_Success,
-                                                apiAdapter, kEmptyOutputStringView);
+                                                apiAdapter, dawn::kEmptyOutputStringView);
     });
     FlushClient();
     EXPECT_CALL(adapterCb, Call(wgpu::RequestAdapterStatus::Success, NotNull(), StrEq(""), this))
@@ -140,7 +141,8 @@ void WireTest::SetUp() {
                                               uncapturedErrorCallback.MakeUserdata(this)};
     EXPECT_CALL(deviceLostCallback, Call).Times(AtMost(1));
 
-    MockCallback<void (*)(wgpu::RequestDeviceStatus, wgpu::Device, const char*, void*)> deviceCb;
+    MockCallback<void (*)(wgpu::RequestDeviceStatus, wgpu::Device, wgpu::StringView, void*)>
+        deviceCb;
     adapter.RequestDevice(&deviceDesc, wgpu::CallbackMode::AllowSpontaneous, deviceCb.Callback(),
                           deviceCb.MakeUserdata(this));
     EXPECT_CALL(api, OnAdapterRequestDevice2(apiAdapter, NotNull(), _))
@@ -170,7 +172,7 @@ void WireTest::SetUp() {
                 .WillOnce(Return(0));
 
             api.CallAdapterRequestDevice2Callback(apiAdapter, WGPURequestDeviceStatus_Success,
-                                                  apiDevice, kEmptyOutputStringView);
+                                                  apiDevice, dawn::kEmptyOutputStringView);
         }));
     FlushClient();
     EXPECT_CALL(deviceCb, Call(wgpu::RequestDeviceStatus::Success, NotNull(), StrEq(""), this))
@@ -235,11 +237,11 @@ void WireTest::FlushServer(bool success) {
     ASSERT_EQ(mS2cBuf->Flush(), success);
 }
 
-wire::WireServer* WireTest::GetWireServer() {
+dawn::wire::WireServer* WireTest::GetWireServer() {
     return mWireServer.get();
 }
 
-wire::WireClient* WireTest::GetWireClient() {
+dawn::wire::WireClient* WireTest::GetWireClient() {
     return mWireClient.get();
 }
 
