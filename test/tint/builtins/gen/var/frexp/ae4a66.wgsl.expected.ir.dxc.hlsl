@@ -19,8 +19,7 @@ void frexp_ae4a66() {
   vector<float16_t, 3> v_2 = frexp(v, v_1);
   vector<float16_t, 3> v_3 = vector<float16_t, 3>(sign(v));
   v_1 = (v_3 * v_1);
-  frexp_result_vec3_f16 v_4 = {v_2, int3(v_1)};
-  frexp_result_vec3_f16 res = v_4;
+  frexp_result_vec3_f16 res = {v_2, int3(v_1)};
 }
 
 void fragment_main() {
@@ -36,13 +35,13 @@ VertexOutput vertex_main_inner() {
   VertexOutput tint_symbol = (VertexOutput)0;
   tint_symbol.pos = (0.0f).xxxx;
   frexp_ae4a66();
-  VertexOutput v_5 = tint_symbol;
-  return v_5;
+  VertexOutput v_4 = tint_symbol;
+  return v_4;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_6 = vertex_main_inner();
-  vertex_main_outputs v_7 = {v_6.pos};
-  return v_7;
+  VertexOutput v_5 = vertex_main_inner();
+  vertex_main_outputs v_6 = {v_5.pos};
+  return v_6;
 }
 

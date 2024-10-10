@@ -16,8 +16,7 @@ void modf_4bfced() {
   float4 arg_0 = (-1.5f).xxxx;
   float4 v = (0.0f).xxxx;
   float4 v_1 = modf(arg_0, v);
-  modf_result_vec4_f32 v_2 = {v_1, v};
-  modf_result_vec4_f32 res = v_2;
+  modf_result_vec4_f32 res = {v_1, v};
 }
 
 void fragment_main() {
@@ -33,13 +32,13 @@ VertexOutput vertex_main_inner() {
   VertexOutput tint_symbol = (VertexOutput)0;
   tint_symbol.pos = (0.0f).xxxx;
   modf_4bfced();
-  VertexOutput v_3 = tint_symbol;
-  return v_3;
+  VertexOutput v_2 = tint_symbol;
+  return v_2;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_4 = vertex_main_inner();
-  vertex_main_outputs v_5 = {v_4.pos};
-  return v_5;
+  VertexOutput v_3 = vertex_main_inner();
+  vertex_main_outputs v_4 = {v_3.pos};
+  return v_4;
 }
 

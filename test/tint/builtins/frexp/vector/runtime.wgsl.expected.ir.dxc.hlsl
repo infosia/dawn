@@ -12,10 +12,9 @@ void main() {
   float2 v_2 = float2(sign(tint_symbol));
   v = (v_2 * v);
   frexp_result_vec2_f32 v_3 = {v_1, int2(v)};
-  frexp_result_vec2_f32 v_4 = v_3;
-  frexp_result_vec2_f32 res = v_4;
+  frexp_result_vec2_f32 res = v_3;
   float2 fract = res.fract;
-  frexp_result_vec2_f32 v_5 = v_4;
-  int2 exp = v_5.exp;
+  frexp_result_vec2_f32 v_4 = v_3;
+  int2 exp = v_4.exp;
 }
 
