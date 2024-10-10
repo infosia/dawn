@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "316f0fde_83731e4b",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1758,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-10T15:43:02Z",
+      "side": 1,
+      "message": "übernit: Maybe `auto arg \u003d call-\u003eArgs()[0]`, since you only ever use `args[0]` below. Same in `Modf`.",
+      "revId": "cff838afa27c0820c500bc8869365e32312f2cbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2fc8dc6_1bc19e4a",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1783,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-10T15:43:02Z",
+      "side": 1,
+      "message": "I think you can actually skip all of this and just use the construct result.\ne.g. `b.ConstructWithResult(call-\u003eDetachResult(), ...)` should be enough here.",
+      "range": {
+        "startLine": 1779,
+        "startChar": 0,
+        "endLine": 1783,
+        "endChar": 65
+      },
+      "revId": "cff838afa27c0820c500bc8869365e32312f2cbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d35a84c5_9cc73339",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1805,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-10T15:43:02Z",
+      "side": 1,
+      "message": "As above, I think you can skip this `var` and just use `ConstructWithResult`.",
+      "range": {
+        "startLine": 1800,
+        "startChar": 0,
+        "endLine": 1805,
+        "endChar": 0
+      },
+      "revId": "cff838afa27c0820c500bc8869365e32312f2cbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
