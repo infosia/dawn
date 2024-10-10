@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68757c98_504f2bf9",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T22:26:36Z",
+      "side": 1,
+      "message": "(aside; can be a followup)\nThis should be the string `gpuError.message` (as long as `gpuError` isn\u0027t null).",
+      "range": {
+        "startLine": 1775,
+        "startChar": 107,
+        "endLine": 1775,
+        "endChar": 108
+      },
+      "revId": "958d94b0bb366d77da9c4652cf3cd57aaf2e6756",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0774ad81_a67d6fe7",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T22:26:36Z",
+      "side": 1,
+      "message": "this made me think of a question; fyi: https://github.com/webgpu-native/webgpu-headers/issues/369",
+      "range": {
+        "startLine": 1780,
+        "startChar": 119,
+        "endLine": 1780,
+        "endChar": 126
+      },
+      "revId": "958d94b0bb366d77da9c4652cf3cd57aaf2e6756",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33a549b0_88a967a3",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T22:26:36Z",
+      "side": 1,
+      "message": "nit: either:\n- If message is null, clear mMessage\n- somehow assert that ReadyHook is only called once\n\nprobably applies to other events too, but just thought of it here. Can be a followup",
+      "range": {
+        "startLine": 820,
+        "startChar": 6,
+        "endLine": 820,
+        "endChar": 14
+      },
+      "revId": "958d94b0bb366d77da9c4652cf3cd57aaf2e6756",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
