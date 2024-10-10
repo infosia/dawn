@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89edaebf_09be6b06",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "Keeping a separate PerformIdleTasks() sgtm. I also made it take const wgpu::Device\u0026 if that is preferable, I had just copied the existing ReduceMemoryUsage() function.",
+      "parentUuid": "69a11fcf_26352167",
+      "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "003d7f06_4e739e0c",
@@ -173,6 +191,24 @@
       "side": 1,
       "message": "Maybe comment that! However the `driverVersion` is definitely not needed.",
       "parentUuid": "88a73588_20360952",
+      "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79e045cd_0f8f03d5",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "I changed this to be based on Device::GetCache() as per the above comment. I removed driver version but..\n\nI know pipelineCacheUUID is supposed to change if the driver changes in a way that requires pipeline cache to be cleared., I\u0027m kinda skeptical if driver version ever changed and the pipelineCacheUUID wasn\u0027t updated so including driverVersion seems like cheap insurance?",
+      "parentUuid": "98df8d03_2741a105",
       "revId": "ca961e003264acf1b1574d3b0b92a1ef2ce73ed2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

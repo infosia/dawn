@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb771cee_cbd12f78",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "This isn\u0027t really relevant for graphite today but should compute pipelines use a different pipeline cache strategy? I guess they could have a separate monolithic cache or they can be bucketed on some other attribute.",
+      "revId": "a72295c64f6014a4a66c0a7731912c04af8de0e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d01df0a_8ef34b4d",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "Is it possible that two concurrently existing dawn devices have the same cache key? If so we\u0027d have multiple devices writing to the same cache key and overwriting one another. I guess WebGPU and graphite dawn devices will have different toggles so there is little risk there.",
+      "revId": "a72295c64f6014a4a66c0a7731912c04af8de0e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

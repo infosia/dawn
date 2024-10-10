@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12fd4ed7_410ec73f",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "Not relevant in latest patch.",
+      "parentUuid": "53cb86b6_e81a22c9",
+      "revId": "8ea4b5f44eb3de8b921dbcb66c638955d2c0f478",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f95ff19_71f39434",

@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19fae8bf_be0b445c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ffb2c76_18e25b5d",
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca48aaaf_75dc4fd5",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-10-09T16:26:30Z",
       "side": 1,
       "message": "nit: Bug: \u003cissue number\u003e\n\nThis will help track what work goes towards which issues.",
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cb2904b_87156561",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca48aaaf_75dc4fd5",
       "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c725c08e_6c8bffed",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure on terminology here. Done.",
+      "parentUuid": "7377a0ec_f0b0b15e",
+      "range": {
+        "startLine": 569,
+        "startChar": 56,
+        "endLine": 569,
+        "endChar": 64
+      },
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18f98325_7f60c4b7",
@@ -94,6 +154,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8da6ea74_8988290d",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "It\u0027s actually sort of beneficial to leave the pipeline cache creation as late as possible. That gives more time data in disk cache to be loaded into BlobCache on startup. Let me know if there is something you want me to change here though.",
+      "parentUuid": "18f98325_7f60c4b7",
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1521a6c8_ad817343",
         "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
         "patchSetId": 5
@@ -105,6 +183,30 @@
       "writtenOn": "2024-10-09T20:03:54Z",
       "side": 1,
       "message": "Should start with `Device::GetCacheKey` because that includes everything here already plus the isolation key that is required, then maybe add ` deviceProperties.pipelineCacheUUID` which I don\u0027t think is included.\n\nIn fact, I think we should probably just include the `deviceProperties.pipelineCacheUUID` in the Vulkan device cache key. Probably would require moving this field https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.h;l\u003d611;bpv\u003d1;bpt\u003d1 into the `protected` and then doing something like:\n\n```\nvulkan::Device::Initialize {\n  ...\n  StreamIn(\u0026mDeviceCacheKey, deviceProperties.pipelineCacheUUID)\n  ...\n}\n```",
+      "range": {
+        "startLine": 240,
+        "startChar": 12,
+        "endLine": 240,
+        "endChar": 30
+      },
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa7bfade_9d930e87",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "I changed this to be based on Device::GetCacheKey().\n\nI think WGSL-\u003eSPRIV caches use Device::GetCacheKey() based on code search. If so, those cache entries are not invalidated if pipelineCacheUUID changes so we shouldn\u0027t include it in the device key.",
+      "parentUuid": "1521a6c8_ad817343",
       "range": {
         "startLine": 240,
         "startChar": 12,
@@ -155,6 +257,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f4067c6_0d78ea58",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db78b858_20bc1f38",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 23
+      },
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1532b607_b3531fb7",
@@ -168,6 +294,24 @@
       "writtenOn": "2024-10-09T16:26:30Z",
       "side": 1,
       "message": "IMHO we could generate the key even when using the monolithic cache, it isn\u0027t that expensive. But also we should be able to generate the key in the frontend RenderPipelineBase since we already have a memory cache. Maybe something to look at when we improve caching a bunch.",
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4bea65c_ca916182",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "I left this generating cache key. Not sure I understand how RenderPipelineBase would include the backend specifics data in the key though?",
+      "parentUuid": "1532b607_b3531fb7",
       "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -195,6 +339,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b0bae9b_ee9ed13c",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94a34b03_c3724168",
+      "range": {
+        "startLine": 339,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 5
+      },
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb5da614_fadb2cb0",
@@ -208,6 +376,30 @@
       "writtenOn": "2024-10-09T20:03:54Z",
       "side": 1,
       "message": "[1]\n\nChange this to be something like:\n```\nRef\u003cPipelineCache\u003e cache;\nif (!device-\u003eIsToggleEnabled(Toggle::VulkanMonolithicPipelineCache)) {\n  cache \u003d ToBackend(GetDevice()-\u003eGetOrCreatePipelineCache(GetCacheKey()));\n} else {\n  cache \u003d ToBackend(GetDevice()-\u003eGetOrCreatePipelineCache(GetDevice()-\u003eGetCacheKey()));\n}\n```",
+      "range": {
+        "startLine": 588,
+        "startChar": 4,
+        "endLine": 588,
+        "endChar": 95
+      },
+      "revId": "801395426cf81aab67050db88e23d4d99b03eed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "626e9f3d_350596a2",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T18:13:46Z",
+      "side": 1,
+      "message": "Since pipelineCacheUUID isn\u0027t included in device cache key I left this as is.  DeviceVk will ignore pipeline cache key and select the monolithic cache based on the toggle.",
+      "parentUuid": "eb5da614_fadb2cb0",
       "range": {
         "startLine": 588,
         "startChar": 4,
