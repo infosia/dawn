@@ -179,6 +179,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8314390_6fe4afe1",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T21:24:01Z",
+      "side": 1,
+      "message": "SGTM to have a single entry point. I forgot to read this yesterday, I understand the issue now!\n\nYou mentioned using tagged pointers if needed. Not sure if that\u0027s enough bits by default, though it seems to be 4 in practice in Emscripten\u0027s allocator and we can always custom-allocate with extra alignment. Anyway I think it makes more sense to store the type inside the heap object anyway, since we also need to store some kind of dense IDs for indices into Wasm tables (for the Wasm-to-Blink fast calls I was working on with ahaas@; definitely can be 32 bit, but it\u0027s flexible anyway), while I think continuing to use the pointers for the public interface.",
+      "parentUuid": "4758c2fe_4158d55f",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 15
+      },
+      "revId": "155e1eb383ceab00930770ffeb3c50a6a798cdf0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c5db665_e0943eee",

@@ -83,6 +83,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cd685fa_a726f730",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T21:24:01Z",
+      "side": 1,
+      "message": "Ahh I see, sorry, didn\u0027t spend enough time to look at it yesterday. Ack.",
+      "parentUuid": "17c5498b_3e22b744",
+      "revId": "293c27a513d6d44eb9af890cdc27376d8b6f9a6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a306fc22_33b73cf2",

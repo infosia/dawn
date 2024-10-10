@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "225abc3c_01f8f5ec",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T21:24:01Z",
+      "side": 1,
+      "message": "I think this should also assert (in debug) that ptr actually exists in jsObjects.",
+      "revId": "99c75e27eb9d89ff4b5b9ce3301149691b9819ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16d63584_2141aab8",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T21:24:01Z",
+      "side": 1,
+      "message": "As a middle ground is it possible to assert if, later, we end up needing an EventSource, but one wasn\u0027t set?",
+      "range": {
+        "startLine": 128,
+        "startChar": 38,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "99c75e27eb9d89ff4b5b9ce3301149691b9819ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64793362_d3ab4a30",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T21:24:01Z",
+      "side": 1,
+      "message": "This default is probably never used? I don\u0027t think it would take effect when calling from JS.",
+      "range": {
+        "startLine": 1138,
+        "startChar": 57,
+        "endLine": 1138,
+        "endChar": 67
+      },
+      "revId": "99c75e27eb9d89ff4b5b9ce3301149691b9819ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
