@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4442efb7_a1493d22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-10T13:14:29Z",
+      "side": 1,
+      "message": "Forgot to do the factoring out of \"Sign\" handling in hlsl polyfill.",
+      "revId": "48d51db8ac09a4731f5d74fe760626764309e52a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
