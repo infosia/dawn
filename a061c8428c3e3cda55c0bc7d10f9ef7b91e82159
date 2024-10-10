@@ -34,6 +34,24 @@
       "parentUuid": "98a01aef_fa84d982",
       "revId": "a061c8428c3e3cda55c0bc7d10f9ef7b91e82159",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d53b755_0d95709f",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-10T19:16:20Z",
+      "side": 1,
+      "message": "I can see that it _also_ could be on the original function, but since that one forwards to this helper now, I think it should be okay.",
+      "parentUuid": "cdfeca34_9cfb118e",
+      "revId": "a061c8428c3e3cda55c0bc7d10f9ef7b91e82159",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
