@@ -367,6 +367,9 @@ MaybeError RenderPipeline::InitializeImpl() {
                                   &vertexData, 0xFFFFFFFF, this));
 
     descriptorMTL.vertexFunction = vertexData.function.Get();
+    DAWN_ASSERT(!descriptorMTL.vertexFunction);
+    DAWN_INVALID_IF(!descriptorMTL.vertexFunction, "vertexFunction is nil for descriptor label %s",
+                    [descriptorMTL.label UTF8String]);
     if (vertexData.needsStorageBufferLength) {
         mStagesRequiringStorageBufferLength |= wgpu::ShaderStage::Vertex;
     }
