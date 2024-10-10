@@ -494,6 +494,13 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     req.tintOptions.disable_polyfill_integer_div_mod =
         GetDevice()->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
 
+    // Pass matrices to user functions by pointer on Qualcomm devices to workaround a known bug.
+    // See crbug.com/tint/2045.
+    // TODO(jrprice): make this conditional on Qualcomm?
+    // if (ToBackend(GetDevice()->GetPhysicalDevice())->IsAndroidQualcomm()) {
+    req.tintOptions.pass_matrix_by_pointer = true;
+    // }
+
     CacheResult<GLSLCompilation> compilationResult;
     DAWN_TRY_LOAD_OR_RUN(
         compilationResult, GetDevice(), std::move(req), GLSLCompilation::FromBlob,

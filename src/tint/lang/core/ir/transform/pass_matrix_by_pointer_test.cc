@@ -25,21 +25,21 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/tint/lang/spirv/writer/raise/pass_matrix_by_pointer.h"
+#include "src/tint/lang/core/ir/transform/pass_matrix_by_pointer.h"
 
 #include <utility>
 
 #include "src/tint/lang/core/ir/transform/helper_test.h"
 
-namespace tint::spirv::writer::raise {
+namespace tint::core::ir::transform {
 namespace {
 
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
 
-using SpirvWriter_PassMatrixByPointerTest = core::ir::transform::TransformTest;
+using IR_PassMatrixByPointerTest = core::ir::transform::TransformTest;
 
-TEST_F(SpirvWriter_PassMatrixByPointerTest, NoModify_ArrayValue) {
+TEST_F(IR_PassMatrixByPointerTest, NoModify_ArrayValue) {
     auto* arr_ty = ty.array<f32, 4u>();
     auto* arr = mod.root_block->Append(b.Var("var", ty.ptr(private_, arr_ty)));
 
@@ -85,7 +85,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvWriter_PassMatrixByPointerTest, NoModify_MatrixPointer) {
+TEST_F(IR_PassMatrixByPointerTest, NoModify_MatrixPointer) {
     auto* mat_ty = ty.mat3x3<f32>();
     auto* mat = mod.root_block->Append(b.Var("var", ty.ptr(private_, mat_ty)));
 
@@ -131,7 +131,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvWriter_PassMatrixByPointerTest, MatrixValuePassedToBuiltin) {
+TEST_F(IR_PassMatrixByPointerTest, MatrixValuePassedToBuiltin) {
     auto* mat_ty = ty.mat3x3<f32>();
     auto* mat = mod.root_block->Append(b.Var("var", ty.ptr(private_, mat_ty)));
 
@@ -163,7 +163,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvWriter_PassMatrixByPointerTest, SingleMatrixValue) {
+TEST_F(IR_PassMatrixByPointerTest, SingleMatrixValue) {
     auto* mat_ty = ty.mat3x3<f32>();
     auto* mat = mod.root_block->Append(b.Var("var", ty.ptr(private_, mat_ty)));
 
@@ -229,7 +229,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvWriter_PassMatrixByPointerTest, MultipleMatrixValues) {
+TEST_F(IR_PassMatrixByPointerTest, MultipleMatrixValues) {
     auto* mat_ty = ty.mat3x3<f32>();
     auto* arr = mod.root_block->Append(b.Var("var", ty.ptr(private_, ty.array(mat_ty, 4))));
 
@@ -311,7 +311,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvWriter_PassMatrixByPointerTest, MultipleParamUses) {
+TEST_F(IR_PassMatrixByPointerTest, MultipleParamUses) {
     auto* mat_ty = ty.mat3x3<f32>();
     auto* mat = mod.root_block->Append(b.Var("var", ty.ptr(private_, mat_ty)));
 
@@ -380,7 +380,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvWriter_PassMatrixByPointerTest, MultipleCallsites) {
+TEST_F(IR_PassMatrixByPointerTest, MultipleCallsites) {
     auto* mat_ty = ty.mat3x3<f32>();
     auto* mat = mod.root_block->Append(b.Var("var", ty.ptr(private_, mat_ty)));
 
@@ -489,7 +489,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvWriter_PassMatrixByPointerTest, MatrixInArray) {
+TEST_F(IR_PassMatrixByPointerTest, MatrixInArray) {
     auto* mat_ty = ty.mat3x3<f32>();
     auto* arr_ty = ty.array(mat_ty, 2);
     auto* arr = mod.root_block->Append(b.Var("var", ty.ptr(private_, arr_ty)));
@@ -562,7 +562,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvWriter_PassMatrixByPointerTest, MatrixInStruct) {
+TEST_F(IR_PassMatrixByPointerTest, MatrixInStruct) {
     auto* mat_ty = ty.mat3x3<f32>();
     auto* str_ty = ty.Struct(mod.symbols.New("MyStruct"), {
                                                               {mod.symbols.New("m"), mat_ty},
@@ -648,7 +648,7 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvWriter_PassMatrixByPointerTest, MatrixArrayOfStructOfArray) {
+TEST_F(IR_PassMatrixByPointerTest, MatrixArrayOfStructOfArray) {
     auto* mat_ty = ty.mat3x3<f32>();
     auto* str_ty =
         ty.Struct(mod.symbols.New("MyStruct"), {
@@ -743,4 +743,4 @@ $B1: {  # root
 }
 
 }  // namespace
-}  // namespace tint::spirv::writer::raise
+}  // namespace tint::core::ir::transform

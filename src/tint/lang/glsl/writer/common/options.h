@@ -255,6 +255,9 @@ struct Options {
     /// Set to `true` to disable the polyfills on integer division and modulo.
     bool disable_polyfill_integer_div_mod = false;
 
+    /// Set to `true` to always pass matrices to user functions by pointer instead of by value.
+    bool pass_matrix_by_pointer = false;
+
     /// The GLSL version to emit
     Version version;
 

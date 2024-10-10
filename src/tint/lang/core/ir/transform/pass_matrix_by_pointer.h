@@ -25,8 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_TINT_LANG_SPIRV_WRITER_RAISE_PASS_MATRIX_BY_POINTER_H_
-#define SRC_TINT_LANG_SPIRV_WRITER_RAISE_PASS_MATRIX_BY_POINTER_H_
+#ifndef SRC_TINT_LANG_CORE_IR_TRANSFORM_RAISE_PASS_MATRIX_BY_POINTER_H_
+#define SRC_TINT_LANG_CORE_IR_TRANSFORM_RAISE_PASS_MATRIX_BY_POINTER_H_
 
 #include "src/tint/utils/result/result.h"
 
@@ -35,7 +35,7 @@ namespace tint::core::ir {
 class Module;
 }
 
-namespace tint::spirv::writer::raise {
+namespace tint::core::ir::transform {
 
 /// PassMatrixByPointer is a transform that modifies function calls that pass values that contain
 /// matrices to pass them by pointer instead.
@@ -44,6 +44,6 @@ namespace tint::spirv::writer::raise {
 /// @returns success or failure
 Result<SuccessType> PassMatrixByPointer(core::ir::Module& module);
 
-}  // namespace tint::spirv::writer::raise
+}  // namespace tint::core::ir::transform
 
-#endif  // SRC_TINT_LANG_SPIRV_WRITER_RAISE_PASS_MATRIX_BY_POINTER_H_
+#endif  // SRC_TINT_LANG_CORE_IR_TRANSFORM_RAISE_PASS_MATRIX_BY_POINTER_H_

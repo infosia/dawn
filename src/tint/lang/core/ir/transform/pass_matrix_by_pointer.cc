@@ -25,7 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/tint/lang/spirv/writer/raise/pass_matrix_by_pointer.h"
+#include "src/tint/lang/core/ir/transform/pass_matrix_by_pointer.h"
 
 #include <utility>
 
@@ -36,7 +36,7 @@
 using namespace tint::core::number_suffixes;  // NOLINT
 using namespace tint::core::fluent_types;     // NOLINT
 
-namespace tint::spirv::writer::raise {
+namespace tint::core::ir::transform {
 
 namespace {
 
@@ -138,4 +138,4 @@ Result<SuccessType> PassMatrixByPointer(core::ir::Module& ir) {
     return Success;
 }
 
-}  // namespace tint::spirv::writer::raise
+}  // namespace tint::core::ir::transform
