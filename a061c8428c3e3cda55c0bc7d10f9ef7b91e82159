@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98a01aef_fa84d982",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-10-10T19:14:20Z",
+      "side": 1,
+      "message": "I think this comment is attached to the wrong function now?",
+      "revId": "a061c8428c3e3cda55c0bc7d10f9ef7b91e82159",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
