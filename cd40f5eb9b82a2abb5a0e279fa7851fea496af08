@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52facb22_f783296d",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/function.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-10T20:49:46Z",
+      "side": 1,
+      "message": "I think you need to do the `clip_distance` check here. Otherwise, the loop below will call `EmitPipelineOutput` once for every element of the array.\n\nPlease add a test (or modify the one you have) with an array size larger than 1 to cover this.",
+      "revId": "cd40f5eb9b82a2abb5a0e279fa7851fea496af08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
