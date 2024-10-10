@@ -13,10 +13,9 @@ void main() {
   float2 v_2 = float2(sign(runtime_in));
   v = (v_2 * v);
   frexp_result_vec2_f32 v_3 = {v_1, int2(v)};
-  frexp_result_vec2_f32 v_4 = v_3;
+  res = v_3;
+  frexp_result_vec2_f32 v_4 = {float2(0.625f, 0.9375f), int2(int(1), int(2))};
   res = v_4;
-  frexp_result_vec2_f32 v_5 = {float2(0.625f, 0.9375f), int2(int(1), int(2))};
-  res = v_5;
   float2 fract = res.fract;
   int2 exp = res.exp;
 }

@@ -11,10 +11,9 @@ void main() {
   float2 v = (0.0f).xx;
   float2 v_1 = modf(runtime_in, v);
   modf_result_vec2_f32 v_2 = {v_1, v};
-  modf_result_vec2_f32 v_3 = v_2;
+  res = v_2;
+  modf_result_vec2_f32 v_3 = {float2(0.25f, 0.75f), float2(1.0f, 3.0f)};
   res = v_3;
-  modf_result_vec2_f32 v_4 = {float2(0.25f, 0.75f), float2(1.0f, 3.0f)};
-  res = v_4;
   float2 fract = res.fract;
   float2 whole = res.whole;
 }
