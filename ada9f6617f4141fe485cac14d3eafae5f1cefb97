@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b672729_0b462cea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-10T17:00:36Z",
+      "side": 1,
+      "message": "LGTM once you\u0027ve fixed the mldrift problem",
+      "revId": "ada9f6617f4141fe485cac14d3eafae5f1cefb97",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
