@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edb14799_46647f91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-10T09:01:07Z",
+      "side": 1,
+      "message": "LGTM, though I\u0027ll be reverting the output struct StringView change now because it breaks the roll, so this CL might need to wait for a reland.",
+      "revId": "069ea48193c70b17dfa94fb373da7b5b05daeedd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
