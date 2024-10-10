@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9986535_34e688b1",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-10T03:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6987b78a_2e96ea05",
+      "range": {
+        "startLine": 1737,
+        "startChar": 20,
+        "endLine": 1740,
+        "endChar": 21
+      },
+      "revId": "1ad874ee321fb0bfd0dc9c24e97a0c963542ffa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72515566_f9069fae",
@@ -61,6 +85,30 @@
       "side": 1,
       "message": "I think this is coming from `FunctionEmitter::EmitPipelineOutput` in `function.cc`, which flattens the array into separate elements. This is what we want to do for `@location()` decorated arrays, but I think we need to add a special-case for `@builtin(clip_distance)` to skip the flattening and just use the whole array.\n\nSo check for the `clip_distances` attribute, and then load the whole array into `return_exprs`. LMK if that makes sense or if you still need help.",
       "parentUuid": "72515566_f9069fae",
+      "range": {
+        "startLine": 475,
+        "startChar": 40,
+        "endLine": 475,
+        "endChar": 52
+      },
+      "revId": "1ad874ee321fb0bfd0dc9c24e97a0c963542ffa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "504a020c_9d2c0f2f",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-10T03:18:16Z",
+      "side": 1,
+      "message": "Done\n\nNow I need to handle gl_PerVertex as gl_ClipDistance[] is part of gl_PerVertex. I will do it in the next CL.",
+      "parentUuid": "17f1f81d_1226e3ca",
       "range": {
         "startLine": 475,
         "startChar": 40,
