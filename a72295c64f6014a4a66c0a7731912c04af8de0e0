@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71f9c851_e30e0dde",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T20:39:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4ae43a5b_f96e3cff",
+      "revId": "a72295c64f6014a4a66c0a7731912c04af8de0e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d01df0a_8ef34b4d",
@@ -96,6 +114,48 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f62d129_f1080e91",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T20:39:43Z",
+      "side": 1,
+      "message": "We should only hit this code creates the key once since `mMonolithicPipelineCache` will be non-null every subsequent time.",
+      "parentUuid": "abf484a3_a038085a",
+      "range": {
+        "startLine": 239,
+        "startChar": 12,
+        "endLine": 239,
+        "endChar": 43
+      },
+      "revId": "a72295c64f6014a4a66c0a7731912c04af8de0e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1a005eb_7afd1913",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T20:39:43Z",
+      "side": 1,
+      "message": "\u003e Maybe we need a lock on writing out to make sure we don\u0027t have concurrent writes that could corrupt the disk file\n\nThis part should already be fine. BlobCache store/load pointers go to DawnCachingBackend and that is [thread safe](https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/dawn_caching_interface.cc;l\u003d180-209;drc\u003d7b12b4fd45f1a2570d0f29041c74f8497095bf28). The store to disk goes through [this](https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/dawn_caching_interface.cc;l\u003d44-49;drc\u003d7b12b4fd45f1a2570d0f29041c74f8497095bf28) which sends an IPC so that guarantees the stores to disk happen sequentially.",
+      "parentUuid": "f77656be_7c836326",
+      "revId": "a72295c64f6014a4a66c0a7731912c04af8de0e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "55b050fe_58701cc1",
         "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
         "patchSetId": 6
@@ -107,6 +167,30 @@
       "writtenOn": "2024-10-10T20:11:04Z",
       "side": 1,
       "message": "Thoughts on just having two entry points, `Create` and `CreateMonolithic`? It makes it more clear what the difference is in calling code where it isn\u0027t obvious what the bool is for. (The ctor can stay the same with the bool though since its internal)",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 66
+      },
+      "revId": "a72295c64f6014a4a66c0a7731912c04af8de0e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15910ee5_e412ef3d",
+        "filename": "src/dawn/native/vulkan/PipelineCacheVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-10-10T20:39:43Z",
+      "side": 1,
+      "message": "Sounds good to me. I\u0027ll update with next patch set.",
+      "parentUuid": "55b050fe_58701cc1",
       "range": {
         "startLine": 42,
         "startChar": 0,
