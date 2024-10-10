@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b12b1f9_24768ac6",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1758,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-10T16:09:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "316f0fde_83731e4b",
+      "revId": "cff838afa27c0820c500bc8869365e32312f2cbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2fc8dc6_1bc19e4a",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8092e940_e42c6d55",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1783,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-10T16:09:19Z",
+      "side": 1,
+      "message": "Thanks, that\u0027s much better!",
+      "parentUuid": "e2fc8dc6_1bc19e4a",
+      "range": {
+        "startLine": 1779,
+        "startChar": 0,
+        "endLine": 1783,
+        "endChar": 65
+      },
+      "revId": "cff838afa27c0820c500bc8869365e32312f2cbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d35a84c5_9cc73339",
@@ -54,6 +96,30 @@
       "writtenOn": "2024-10-10T15:43:02Z",
       "side": 1,
       "message": "As above, I think you can skip this `var` and just use `ConstructWithResult`.",
+      "range": {
+        "startLine": 1800,
+        "startChar": 0,
+        "endLine": 1805,
+        "endChar": 0
+      },
+      "revId": "cff838afa27c0820c500bc8869365e32312f2cbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fe98025_c548912b",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1805,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-10T16:09:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d35a84c5_9cc73339",
       "range": {
         "startLine": 1800,
         "startChar": 0,
