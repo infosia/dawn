@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e9f4612_a7b44300",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 2301,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-11T05:04:40Z",
+      "side": 1,
+      "message": "I was wondering something else about this function so I looked at the definition of this function. Oddly, according to the documentation it seems to prioritize writing the null terminator over writing the last character. So in order to do this I think we need to either reserve space for null terminators in the string; or add 1 to the length, overwrite each null terminator in the next string, and reserve space for _one_ null terminator at the end.\nhttps://github.com/emscripten-core/emscripten/blob/cd60934138cc5372caee170cbc2a9e42302c35d4/src/library_strings.js#L135",
+      "range": {
+        "startLine": 2301,
+        "startChar": 8,
+        "endLine": 2301,
+        "endChar": 20
+      },
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1273efb0_199559ea",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-11T05:04:40Z",
+      "side": 1,
+      "message": "nit: use `[0].` instead of `-\u003e`",
+      "range": {
+        "startLine": 717,
+        "startChar": 56,
+        "endLine": 717,
+        "endChar": 58
+      },
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aceed6e1_c0413c28",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-11T05:04:40Z",
+      "side": 1,
+      "message": "This was allocated with `new`, so needs to be freed with `delete` rather than `free`.",
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb34e171_6966668f",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-11T05:04:40Z",
+      "side": 1,
+      "message": "nit: I think make this `WGPUShaderModuleImpl::CompilationInfo\u0026\u0026` (if possible) so that the construction of the `CompilationInfo` object can be one layer closer to where it\u0027s allocated.",
+      "range": {
+        "startLine": 746,
+        "startChar": 17,
+        "endLine": 746,
+        "endChar": 37
+      },
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93d53aad_7866e773",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-11T05:04:40Z",
+      "side": 1,
+      "message": "nit: I think Adapter, Queue, and ShaderModule can be\n`DEFINE_EMWGPU_DEFAULT_CREATE(Adapter)`\netc.",
+      "range": {
+        "startLine": 1131,
+        "startChar": 0,
+        "endLine": 1133,
+        "endChar": 1
+      },
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
