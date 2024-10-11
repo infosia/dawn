@@ -16,6 +16,23 @@
       "message": "LGTM once you\u0027ve fixed the mldrift problem",
       "revId": "ada9f6617f4141fe485cac14d3eafae5f1cefb97",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38333189_83e0c53c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-11T11:08:45Z",
+      "side": 1,
+      "message": "Both the MLDrift CLs and Skia fixup landed (no need to wait for the Skia roll in Chromium as it\u0027s a target only built in standalone Skia)",
+      "revId": "ada9f6617f4141fe485cac14d3eafae5f1cefb97",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
