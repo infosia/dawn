@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1a21c0e_8296dee5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-11T07:26:56Z",
+      "side": 1,
+      "message": "I have this change up in https://dawn-review.googlesource.com/c/dawn/+/210495, sorry I should have been more clear that I was on it.",
+      "revId": "be4670fc40bd551e6ae3199e5fa114807a3ff82f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
