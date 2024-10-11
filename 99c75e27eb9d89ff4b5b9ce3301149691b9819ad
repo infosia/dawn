@@ -152,6 +152,30 @@
       },
       "revId": "99c75e27eb9d89ff4b5b9ce3301149691b9819ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47290ed6_8bc13ff9",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-11T02:13:32Z",
+      "side": 1,
+      "message": "Likely the same thing I mentioned on the other thread; it pads the arguments out with `undefined` and then coerces `undefined` to the u32 and gets 0.",
+      "parentUuid": "d6b14cd0_7717b67b",
+      "range": {
+        "startLine": 1138,
+        "startChar": 57,
+        "endLine": 1138,
+        "endChar": 67
+      },
+      "revId": "99c75e27eb9d89ff4b5b9ce3301149691b9819ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
