@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "312030b3_68351210",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-10-11T11:21:54Z",
+      "side": 1,
+      "message": "getCurrentTexture on Surface is one.\n\nRe. status here\u0027s an example fragment from `Adapter.getInfo()`\n\n```\n//...\nargs.info \u003d \u0026out;\nauto result \u003d wgpuAdapterGetInfo(handle, args.info);\nif (env-\u003eExceptionCheck()) {\n    return 0;\n}\nif (result !\u003d WGPUStatus_Success) {\n    env-\u003eThrowNew(env-\u003eFindClass(\"java/lang/Error\"), \"Method failed\");\n    return 0;\n}\njobject result_kt \u003d ToKotlin(env, args.info);\n// ...\n\n```\n\nSo we\u0027re never returning status but converting it to an exception if the method fails.",
+      "parentUuid": "7f679808_8f34a331",
+      "revId": "d1ed39271934b98e6bb73843baa0f9cc816fcc52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "db90b4af_9d6859b0",
