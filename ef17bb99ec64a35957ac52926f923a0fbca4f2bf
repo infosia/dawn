@@ -108,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "38cbbc43_f830d24f",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-11T08:18:25Z",
+      "side": 1,
+      "message": "I think I\u0027ve partially resolved this by moving cache stream in from pipelineLayout creation phase to initialize phase and defer all real creating work in ComputePipeline/RenderPipeline initialization.\n\ncwallez@ and geoff@, PTAL, thanks!",
+      "parentUuid": "d90cde0d_02ec8606",
+      "range": {
+        "startLine": 114,
+        "startChar": 61,
+        "endLine": 114,
+        "endChar": 62
+      },
+      "revId": "ef17bb99ec64a35957ac52926f923a0fbca4f2bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c586ed2_d550ef08",
         "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
         "patchSetId": 5
