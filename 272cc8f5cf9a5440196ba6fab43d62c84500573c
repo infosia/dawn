@@ -52,6 +52,24 @@
       "parentUuid": "933b191d_868d0658",
       "revId": "272cc8f5cf9a5440196ba6fab43d62c84500573c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1930eff6_800e0caf",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-11T01:44:16Z",
+      "side": 1,
+      "message": "The original idea was that actually we can get D3D12_TEXTURE_COPY_LOCATION directly in the splitting algorithm like what I did in [1] in patchset 2 instead of first computing the necessary values then filling  D3D12_TEXTURE_COPY_LOCATION again before calling CopyTextureRegion().\n\nIf you don\u0027t like the idea now I think we can just abandon this CL and just remove that TODO.",
+      "parentUuid": "8f793029_cf29352b",
+      "revId": "272cc8f5cf9a5440196ba6fab43d62c84500573c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
