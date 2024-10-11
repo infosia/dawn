@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a832011_c028c787",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-11T00:16:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "225abc3c_01f8f5ec",
+      "revId": "99c75e27eb9d89ff4b5b9ce3301149691b9819ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16d63584_2141aab8",
@@ -43,6 +61,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fe33282d_4d070d62",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-11T00:16:29Z",
+      "side": 1,
+      "message": "That might be harder to implement than to just make an `EventSource` be required? I\u0027m leaning towards maybe just making it required?",
+      "parentUuid": "16d63584_2141aab8",
+      "range": {
+        "startLine": 128,
+        "startChar": 38,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "99c75e27eb9d89ff4b5b9ce3301149691b9819ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "64793362_d3ab4a30",
         "filename": "third_party/emdawnwebgpu/webgpu.cpp",
         "patchSetId": 11
@@ -54,6 +96,30 @@
       "writtenOn": "2024-10-10T21:24:01Z",
       "side": 1,
       "message": "This default is probably never used? I don\u0027t think it would take effect when calling from JS.",
+      "range": {
+        "startLine": 1138,
+        "startChar": 57,
+        "endLine": 1138,
+        "endChar": 67
+      },
+      "revId": "99c75e27eb9d89ff4b5b9ce3301149691b9819ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6b14cd0_7717b67b",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-11T00:16:29Z",
+      "side": 1,
+      "message": "We do call these functions from JS without an argument atm though. I\u0027m not sure what happens in those cases, and whether the default arg is used or not though... I\u0027m inclined to keep the defaulting for now. Can always remove it later on.",
+      "parentUuid": "64793362_d3ab4a30",
       "range": {
         "startLine": 1138,
         "startChar": 57,
