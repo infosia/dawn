@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dc12303_33393b5a",
+        "filename": "src/dawn/samples/ManualSurfaceTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-11T09:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a454119d_ffc6e99b",
+      "range": {
+        "startLine": 459,
+        "startChar": 4,
+        "endLine": 483,
+        "endChar": 17
+      },
+      "revId": "3bec474259065305ce0040102aea909ceb2157a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69d6f8d6_bf4a89c5",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-10-09T20:53:18Z",
       "side": 1,
       "message": "nit. `kEmptyOutputStringView`",
+      "range": {
+        "startLine": 757,
+        "startChar": 74,
+        "endLine": 757,
+        "endChar": 86
+      },
+      "revId": "3bec474259065305ce0040102aea909ceb2157a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a7921ac_a6f90bc3",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-11T09:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69d6f8d6_bf4a89c5",
       "range": {
         "startLine": 757,
         "startChar": 74,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b39e6e1b_0c823d90",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-11T09:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "527efb5a_9559076d",
+      "range": {
+        "startLine": 781,
+        "startChar": 72,
+        "endLine": 781,
+        "endChar": 84
+      },
+      "revId": "3bec474259065305ce0040102aea909ceb2157a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "adc40564_26a308ae",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-10-09T20:53:18Z",
       "side": 1,
       "message": "Hmm, just realized why you had to do this... Maybe we should put the testing infra in `dawn` namespace, or something like `dawn::test`? (I think `DawnTest` would also need that in order to avoid having to use `dawn::kEmptyOutputStringView` vs just `kEmptyOutputStringView` in my previous comments.",
+      "range": {
+        "startLine": 123,
+        "startChar": 60,
+        "endLine": 123,
+        "endChar": 88
+      },
+      "revId": "3bec474259065305ce0040102aea909ceb2157a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78f4bfd0_c340cf5e",
+        "filename": "src/dawn/tests/unittests/wire/WireTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-11T09:13:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adc40564_26a308ae",
       "range": {
         "startLine": 123,
         "startChar": 60,
