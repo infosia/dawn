@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "715100b8_9a35ae0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-11T16:28:48Z",
+      "side": 1,
+      "message": "Apologies, I thought this had passed CQ once previously, but clearly it didn\u0027t. I\u0027m still iterating a bit.",
+      "revId": "53e2e09f70a14944d12c7cd109f7ac1170b39878",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
