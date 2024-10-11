@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a03084ea_6145ad83",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-11T07:24:59Z",
+      "side": 1,
+      "message": "Hi @jrprice@google.com,\n\nSorry I have no idea about how to handle gl_ClipDistance[] in gl_PerVertex based on current code. Could you give me some advice on how to do it?",
+      "revId": "ed32b5d6451d6d4db92c5391002e1417513a9522",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
