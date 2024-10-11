@@ -70,6 +70,24 @@
       "parentUuid": "8f793029_cf29352b",
       "revId": "272cc8f5cf9a5440196ba6fab43d62c84500573c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e627d779_8c8bf666",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-11T16:33:38Z",
+      "side": 1,
+      "message": "Ok, I\u0027m a bit worried about the tradeoff in readability, but the comprehensive test coverage means that hopefully this helper never has to change so LGTM",
+      "parentUuid": "1930eff6_800e0caf",
+      "revId": "272cc8f5cf9a5440196ba6fab43d62c84500573c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
