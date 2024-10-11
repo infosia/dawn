@@ -1,11 +1,8 @@
 SKIP: FAILED
 
-..\..\src\tint\lang\hlsl\writer\printer\printer.cc:1063 internal compiler error: TINT_UNREACHABLE unhandled: inputAttachmentLoad
-********************************************************************
-*  The tint shader compiler has encountered an unexpected error.   *
-*                                                                  *
-*  Please help us fix this issue by submitting a bug report at     *
-*  crbug.com/tint with the source program that triggered the bug.  *
-********************************************************************
+Failed to generate IR: failure: <dawn>/test/tint/builtins/gen/literal/inputAttachmentLoad/fc4d97.wgsl:38:8 error: HLSL backend does not support extension 'chromium_internal_input_attachments'
+enable chromium_internal_input_attachments;
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-tint executable returned error: exit status 0xc000001d
+
+tint executable returned error: exit status 1

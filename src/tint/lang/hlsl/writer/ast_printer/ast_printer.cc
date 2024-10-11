@@ -77,7 +77,6 @@
 #include "src/tint/lang/wgsl/ast/transform/zero_init_workgroup_memory.h"
 #include "src/tint/lang/wgsl/ast/variable_decl_statement.h"
 #include "src/tint/lang/wgsl/helpers/append_vector.h"
-#include "src/tint/lang/wgsl/helpers/check_supported_extensions.h"
 #include "src/tint/lang/wgsl/sem/block_statement.h"
 #include "src/tint/lang/wgsl/sem/call.h"
 #include "src/tint/lang/wgsl/sem/function.h"
@@ -389,23 +388,6 @@ ASTPrinter::ASTPrinter(const Program& program) : builder_(ProgramBuilder::Wrap(p
 ASTPrinter::~ASTPrinter() = default;
 
 bool ASTPrinter::Generate() {
-    if (!tint::wgsl::CheckSupportedExtensions(
-            "HLSL", builder_.AST(), diagnostics_,
-            Vector{
-                wgsl::Extension::kChromiumDisableUniformityAnalysis,
-                wgsl::Extension::kChromiumExperimentalPixelLocal,
-                wgsl::Extension::kChromiumExperimentalPushConstant,
-                wgsl::Extension::kChromiumExperimentalSubgroups,
-                wgsl::Extension::kChromiumInternalGraphite,
-                wgsl::Extension::kClipDistances,
-                wgsl::Extension::kF16,
-                wgsl::Extension::kDualSourceBlending,
-                wgsl::Extension::kSubgroups,
-                wgsl::Extension::kSubgroupsF16,
-            })) {
-        return false;
-    }
-
     const tint::TypeInfo* last_kind = nullptr;
     size_t last_padding_line = 0;
 

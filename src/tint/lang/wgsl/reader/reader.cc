@@ -34,6 +34,7 @@
 #include "src/tint/lang/wgsl/reader/parser/parser.h"
 #include "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.h"
 #include "src/tint/lang/wgsl/resolver/resolve.h"
+#include "src/tint/lang/wgsl/helpers/check_supported_extensions.h"
 
 namespace tint::wgsl::reader {
 
@@ -63,6 +64,24 @@ Result<core::ir::Module> WgslToIR(const Source::File* file, const Options& optio
 }
 
 tint::Result<core::ir::Module> ProgramToLoweredIR(const Program& program) {
+    tint::diag::List diag;
+    if (!tint::wgsl::CheckSupportedExtensions(
+            "HLSL", program.AST(), diag,
+            tint::Vector{
+                tint::wgsl::Extension::kChromiumDisableUniformityAnalysis,
+                tint::wgsl::Extension::kChromiumExperimentalPixelLocal,
+                tint::wgsl::Extension::kChromiumExperimentalPushConstant,
+                tint::wgsl::Extension::kChromiumExperimentalSubgroups,
+                tint::wgsl::Extension::kChromiumInternalGraphite,
+                tint::wgsl::Extension::kClipDistances,
+                tint::wgsl::Extension::kF16,
+                tint::wgsl::Extension::kDualSourceBlending,
+                tint::wgsl::Extension::kSubgroups,
+                tint::wgsl::Extension::kSubgroupsF16,
+            })) {
+        return Failure{diag};
+    }
+
     auto ir = tint::wgsl::reader::ProgramToIR(program);
     if (ir != Success) {
         return ir.Failure();

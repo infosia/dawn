@@ -37,6 +37,7 @@
 #include "src/tint/lang/hlsl/writer/raise/raise.h"
 #include "src/tint/lang/wgsl/ast/pipeline_stage.h"
 #include "src/tint/utils/ice/ice.h"
+#include "src/tint/lang/wgsl/helpers/check_supported_extensions.h"
 
 namespace tint::hlsl::writer {
 namespace {
@@ -86,6 +87,24 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options) {
 Result<Output> Generate(const Program& program, const Options& options) {
     if (!program.IsValid()) {
         return Failure{program.Diagnostics()};
+    }
+
+    tint::diag::List diag;
+    if (!tint::wgsl::CheckSupportedExtensions(
+            "HLSL", program.AST(), diag,
+            tint::Vector{
+                tint::wgsl::Extension::kChromiumDisableUniformityAnalysis,
+                tint::wgsl::Extension::kChromiumExperimentalPixelLocal,
+                tint::wgsl::Extension::kChromiumExperimentalPushConstant,
+                tint::wgsl::Extension::kChromiumExperimentalSubgroups,
+                tint::wgsl::Extension::kChromiumInternalGraphite,
+                tint::wgsl::Extension::kClipDistances,
+                tint::wgsl::Extension::kF16,
+                tint::wgsl::Extension::kDualSourceBlending,
+                tint::wgsl::Extension::kSubgroups,
+                tint::wgsl::Extension::kSubgroupsF16,
+            })) {
+        return Failure{diag};
     }
 
     // Sanitize the program.

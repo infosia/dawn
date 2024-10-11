@@ -1,35 +1,8 @@
 SKIP: FAILED
 
-struct FBF {
-  float4 c1;
-  int4 c3;
-};
-
-struct f_inputs {
-  float4 FBF_c1;
-  int4 FBF_c3;
-  precise float4 pos : SV_Position;
-};
-
-
-void g(float a, float b, int c) {
-}
-
-void f_inner(float4 pos, FBF fbf) {
-  g(fbf.c1[0u], pos[1u], fbf.c3[2u]);
-}
-
-void f(f_inputs inputs) {
-  float4 v = float4(inputs.pos.xyz, (1.0f / inputs.pos[3u]));
-  FBF v_1 = {inputs.FBF_c1, inputs.FBF_c3};
-  f_inner(v, v_1);
-}
-
-DXC validation failure:
-hlsl.hlsl:20:1: error: Semantic must be defined for all parameters of an entry function or patch constant function
-void f(f_inputs inputs) {
-^
-hlsl.hlsl:20:1: error: Semantic must be defined for all parameters of an entry function or patch constant function
+Failed to generate IR: failure: <dawn>/test/tint/extensions/texel_fetch/additional_params/h.wgsl:1:8 error: HLSL backend does not support extension 'chromium_experimental_framebuffer_fetch'
+enable chromium_experimental_framebuffer_fetch;
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 tint executable returned error: exit status 1
