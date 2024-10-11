@@ -85,6 +85,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f6b2d2cf_d4b5bd11",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-11T02:12:19Z",
+      "side": 1,
+      "message": "Now that I think about it, it probably won\u0027t make much of a difference if any. In JS if you call a function with too few parameters, the missing parameters will just be `undefined`. Probably if you call into a Wasm export it will coerce `undefined` to the appropriate type (u32) and we\u0027ll get 0 anyway.",
+      "parentUuid": "fe33282d_4d070d62",
+      "range": {
+        "startLine": 128,
+        "startChar": 38,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "99c75e27eb9d89ff4b5b9ce3301149691b9819ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "64793362_d3ab4a30",
         "filename": "third_party/emdawnwebgpu/webgpu.cpp",
         "patchSetId": 11
