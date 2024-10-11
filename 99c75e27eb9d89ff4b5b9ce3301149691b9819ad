@@ -107,6 +107,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be868f73_19ed794d",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-11T20:13:30Z",
+      "side": 1,
+      "message": "As per our conversation, leaving the `\u003d 0` then given that it would be the default anyways and having it explicit here is better.",
+      "parentUuid": "f6b2d2cf_d4b5bd11",
+      "range": {
+        "startLine": 128,
+        "startChar": 38,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "99c75e27eb9d89ff4b5b9ce3301149691b9819ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "64793362_d3ab4a30",
