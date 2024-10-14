@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b1444f4_52f10d97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-14T12:07:14Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "fa9b9e1c148527de6a1a6c93b642911233033385",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6c23203_363c1256",
+        "filename": "src/dawn/tests/unittests/validation/RenderPipelineValidationTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-14T12:07:14Z",
+      "side": 1,
+      "message": "u-nit: Maybe we can have a control case with `.blend \u003d nullptr` that succeeds.",
+      "revId": "fa9b9e1c148527de6a1a6c93b642911233033385",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
