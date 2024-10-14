@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36ea3768_c56d2124",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 2301,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-14T23:00:07Z",
+      "side": 1,
+      "message": "Oh great catch 😮! Fixed!",
+      "parentUuid": "6e9f4612_a7b44300",
+      "range": {
+        "startLine": 2301,
+        "startChar": 8,
+        "endLine": 2301,
+        "endChar": 20
+      },
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1273efb0_199559ea",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-10-11T05:04:40Z",
       "side": 1,
       "message": "nit: use `[0].` instead of `-\u003e`",
+      "range": {
+        "startLine": 717,
+        "startChar": 56,
+        "endLine": 717,
+        "endChar": 58
+      },
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f88078e5_afee2662",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-14T23:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1273efb0_199559ea",
       "range": {
         "startLine": 717,
         "startChar": 56,
@@ -64,6 +112,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0206e605_48225cde",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-14T23:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aceed6e1_c0413c28",
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb34e171_6966668f",
@@ -87,6 +153,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c43d9fc6_9fab603c",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-14T23:00:07Z",
+      "side": 1,
+      "message": "I wasn\u0027t able to do this because it seems like `std::unique_ptr` doesn\u0027t allow implicit casting. It would just mean I need to do the cast in `emwgpuOnCompilationInfoCompleted` before calling `SetFutureReady` instead of just doing it here. I like it here a bit more so that the `emwgpu*Completed` functions can generally be a simple call to `SetFutureReady` without any additional logic.\n\nIt would also require making `WGPUShaderModuleImpl::CompilationInfo` a public type which is just a little less nice.",
+      "parentUuid": "fb34e171_6966668f",
+      "range": {
+        "startLine": 746,
+        "startChar": 17,
+        "endLine": 746,
+        "endChar": 37
+      },
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93d53aad_7866e773",
@@ -100,6 +190,30 @@
       "writtenOn": "2024-10-11T05:04:40Z",
       "side": 1,
       "message": "nit: I think Adapter, Queue, and ShaderModule can be\n`DEFINE_EMWGPU_DEFAULT_CREATE(Adapter)`\netc.",
+      "range": {
+        "startLine": 1131,
+        "startChar": 0,
+        "endLine": 1133,
+        "endChar": 1
+      },
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d00e125_cdcb0e5c",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-14T23:00:07Z",
+      "side": 1,
+      "message": "They can\u0027t rn because not all object types extend `EventSource` so the default ctor doesn\u0027t pass along the `source` argument to the inner class, i.e the difference between:\n\n```\nWGPUAdapterImpl(source) : EventSource(source) {}\n```\nvs\n```\nWGPUAdapterImpl(source) {}\n```",
+      "parentUuid": "93d53aad_7866e773",
       "range": {
         "startLine": 1131,
         "startChar": 0,
