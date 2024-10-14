@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11a05c21_e382eeb8",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-14T12:57:36Z",
+      "side": 1,
+      "message": "nit: this include can be grouped with the others.",
+      "revId": "3e7e938b60ee38c211241c6f20e39efb584428d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac813886_2a1fdd1c",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-14T12:57:36Z",
+      "side": 1,
+      "message": "We could be more precise WDYT of the follwing: `\"\u003ccurrent text\u003e. Enabling blendability with %s was an implementation bug and is deprecated.\", Feature::Float32Filterable`",
+      "revId": "3e7e938b60ee38c211241c6f20e39efb584428d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36c54ac9_c84975f9",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-14T12:57:36Z",
+      "side": 1,
+      "message": "IIRC the ToAPI is no longer necessary to format features.",
+      "range": {
+        "startLine": 522,
+        "startChar": 44,
+        "endLine": 522,
+        "endChar": 49
+      },
+      "revId": "3e7e938b60ee38c211241c6f20e39efb584428d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
