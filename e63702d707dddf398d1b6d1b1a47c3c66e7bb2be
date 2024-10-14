@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ecb0253_7e7babf4",
+        "filename": "src/dawn/native/Format.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-14T11:49:22Z",
+      "side": 1,
+      "message": "We should have a small validation test for this but IMHO an operation test in the CTS is enough, no need to make a Dawn end2end test.",
+      "revId": "e63702d707dddf398d1b6d1b1a47c3c66e7bb2be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9ce6d2c_0531dc0c",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-14T11:49:22Z",
+      "side": 1,
+      "message": "Can you also check for GL what would allow enabling the extension? Or create an issue to investigate it.",
+      "revId": "e63702d707dddf398d1b6d1b1a47c3c66e7bb2be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a2521e5_0a7cd4bb",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-14T11:49:22Z",
+      "side": 1,
+      "message": "My understanding is that we don\u0027t need to gate on `supports32BitFloatFiltering` but we should check with Kai.",
+      "revId": "e63702d707dddf398d1b6d1b1a47c3c66e7bb2be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31451e8f_3c24039b",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-14T11:49:22Z",
+      "side": 1,
+      "message": "This should be gated on `VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT` instead.",
+      "revId": "e63702d707dddf398d1b6d1b1a47c3c66e7bb2be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
