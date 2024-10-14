@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "728d16e3_aa689d33",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-14T11:59:05Z",
+      "side": 1,
+      "message": "nit: Could we have more descriptive error messages for future CLs? It helps folks filter commits easily instead of having to open them to see what the actual change is.\n\nFor example:\n\n\u003e [kotlin] Update ImageTests.kt for ShaderModuleDescriptor member rename.",
+      "revId": "7ae4839da49d8567dc7cb10f95352c8293e92df5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
