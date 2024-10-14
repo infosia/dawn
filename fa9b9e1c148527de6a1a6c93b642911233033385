@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5970da6c_7f25146a",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-14T12:09:54Z",
+      "side": 1,
+      "message": "Actually now that I think about it, we should do a graceful deprecation, so this would be:\n\n```\n// TODO ...\nif (descriptor.blend \u0026\u0026 !format-\u003eisBlendable) {\n       DAWN_INVALID_IF(\n            !(format-\u003eGetAspectInfo(Aspect::Color).supportedSampleTypes \u0026 SampleTypeBit::Float),\n        \"Blending is enabled but color format (%s) is not blendable.\", format-\u003eformat);\n        \n        EmitDeprecationWarning(...);\n}\n```\n\nAnd tests will have to be updated to allow the incorrect behavior temporarily.",
+      "revId": "fa9b9e1c148527de6a1a6c93b642911233033385",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e6c23203_363c1256",
         "filename": "src/dawn/tests/unittests/validation/RenderPipelineValidationTests.cpp",
         "patchSetId": 11
