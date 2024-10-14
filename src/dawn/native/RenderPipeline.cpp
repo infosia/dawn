@@ -510,8 +510,7 @@ MaybeError ValidateColorTargetState(
                     "Color format (%s) is not color renderable.", format->format);
 
     DAWN_INVALID_IF(
-        descriptor.blend &&
-            !(format->GetAspectInfo(Aspect::Color).supportedSampleTypes & SampleTypeBit::Float),
+        descriptor.blend && !format->isBlendable,
         "Blending is enabled but color format (%s) is not blendable.", format->format);
 
     if (!fragmentWritten) {
