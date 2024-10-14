@@ -32,6 +32,7 @@
 
 #include "src/tint/lang/glsl/writer/common/options.h"
 #include "src/tint/lang/glsl/writer/output.h"
+#include "src/tint/lang/glsl/writer/printer/printer.h"
 #include "src/tint/utils/diagnostic/diagnostic.h"
 #include "src/tint/utils/result/result.h"
 
@@ -54,7 +55,8 @@ namespace tint::glsl::writer {
 /// @returns the resulting GLSL and supplementary information, or failure
 Result<Output> Generate(core::ir::Module& ir,
                         const Options& options,
-                        const std::string& entry_point);
+                        const std::string& entry_point,
+                        core::ir::Function::PipelineStage stage);
 
 /// Generate GLSL for a program, according to a set of configuration options.
 /// The result will contain the GLSL and supplementary information, or failure.

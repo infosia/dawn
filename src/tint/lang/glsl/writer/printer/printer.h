@@ -30,6 +30,7 @@
 
 #include <string>
 
+#include "src/tint/lang/core/ir/function.h"
 #include "src/tint/utils/result/result.h"
 
 // Forward declarations
@@ -45,7 +46,8 @@ namespace tint::glsl::writer {
 /// @returns the generated GLSL shader on success, or failure
 /// @param module the Tint IR module to generate
 /// @param version the GLSL version information
-Result<std::string> Print(core::ir::Module& module, const Version& version);
+Result<std::string> Print(core::ir::Module& module, const Version& version,
+                          core::ir::Function::PipelineStage stage);
 
 }  // namespace tint::glsl::writer
 

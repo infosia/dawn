@@ -111,7 +111,10 @@ class Printer : public tint::TextGenerator {
     /// Constructor
     /// @param module the Tint IR module to generate
     /// @param version the GLSL version information
-    Printer(core::ir::Module& module, const Version& version) : ir_(module), version_(version) {}
+    Printer(core::ir::Module& module,
+            const Version& version,
+            core::ir::Function::PipelineStage stage)
+        : ir_(module), version_(version), stage_(stage) {}
 
     /// @returns the generated GLSL shader
     tint::Result<std::string> Generate() {
@@ -120,7 +123,9 @@ class Printer : public tint::TextGenerator {
             return std::move(valid.Failure());
         }
 
-        {
+        // If we're generating GLSL for ES2, the GLSL version is 100 and the directive can be
+        // omitted.
+        if (version_.major_version >= 3) {
             TINT_SCOPED_ASSIGNMENT(current_buffer_, &header_buffer_);
 
             auto out = Line();
@@ -157,6 +162,8 @@ class Printer : public tint::TextGenerator {
 
     const Version& version_;
 
+    core::ir::Function::PipelineStage stage_ = core::ir::Function::PipelineStage::kUndefined;
+
     /// The buffer holding header text
     TextBuffer header_buffer_;
 
@@ -187,7 +194,12 @@ class Printer : public tint::TextGenerator {
     std::string NameOf(const core::ir::Value* value) {
         return names_.GetOrAdd(value, [&] {
             auto sym = ir_.NameOf(value);
-            return sym.IsValid() ? sym.Name() : UniqueIdentifier("v");
+            // Since these names are only unique to this stage, and uniforms can't share names
+            // between stages in GLES2, use a stage-specific prefix for everything.
+            std::string prefix = stage_ == core::ir::Function::PipelineStage::kVertex     ? "v_vert"
+                                 : stage_ == core::ir::Function::PipelineStage::kFragment ? "v_frag"
+                                                                                          : "v";
+            return sym.IsValid() ? sym.Name() : UniqueIdentifier(prefix);
         });
     }
 
@@ -573,11 +585,25 @@ class Printer : public tint::TextGenerator {
         if (auto* ptr = type->As<core::type::MemoryView>()) {
             switch (ptr->AddressSpace()) {
                 case core::AddressSpace::kIn: {
-                    out << "in ";
+                    // out << "in ";
+                    if (stage_ == core::ir::Function::PipelineStage::kVertex) {
+                        out << "attribute ";
+                    } else if (stage_ == core::ir::Function::PipelineStage::kFragment) {
+                        out << "varying ";
+                    } else {
+                        out << "<error>";
+                        return;
+                    }
                     break;
                 }
                 case core::AddressSpace::kOut: {
-                    out << "out ";
+                    // out << "out ";
+                    if (stage_ == core::ir::Function::PipelineStage::kVertex) {
+                        out << "varying ";
+                    } else {
+                        out << "<error>";
+                        return;
+                    }
                     break;
                 }
                 case core::AddressSpace::kUniform:
@@ -922,6 +948,7 @@ class Printer : public tint::TextGenerator {
             }
 
             // Do not emit builtin (gl_) variables.
+            // printf("!! found builtin i/o var: %s\n", NameOf(var->Result(0)).c_str());
             return;
         }
 
@@ -930,6 +957,13 @@ class Printer : public tint::TextGenerator {
         if (attrs.interpolation.has_value()) {
             EmitInterpolation(out, attrs.interpolation.value());
         }
+            if (const core::type::Pointer* ptr = var->Result(0)->Type()->As<core::type::Pointer>()) {
+                if (ptr->AddressSpace() == core::AddressSpace::kOut &&
+                    stage_ == core::ir::Function::PipelineStage::kFragment) {
+                    // printf("!! found fragment output: %s\n", NameOf(var->Result(0)).c_str());
+                    return;
+                }
+            }
         EmitVar(out, var);
     }
 
@@ -939,7 +973,9 @@ class Printer : public tint::TextGenerator {
                        const core::type::Struct* str) {
         TINT_ASSERT(str);
 
-        Line() << kind << " " << UniqueIdentifier(StructName(str)) << "_" << type_suffix << " {";
+        // Line() << kind << " " << UniqueIdentifier(StructName(str)) << "_" << type_suffix << " {";
+        std::string type_name = UniqueIdentifier(StructName(str)) + "_" + std::string(type_suffix);
+        Line() << "struct " << type_name << " {";
 
         {
             ScopedIndent si(current_buffer_);
@@ -951,12 +987,15 @@ class Printer : public tint::TextGenerator {
             }
         }
 
-        Line() << "} " << name << ";";
+        // Line() << "} " << name << ";";
+        Line() << "};";
+        Line() << kind << " " << type_name << " " << name << ";";
     }
 
     void EmitLayoutLocation(StringStream& out,
                             std::optional<uint32_t> location,
                             std::optional<uint32_t> blend_src) {
+        return;
         if (location.has_value()) {
             out << "layout(location = " << location.value();
             if (blend_src.has_value()) {
@@ -972,6 +1011,7 @@ class Printer : public tint::TextGenerator {
                            const tint::BindingPoint& bp,
                            std::optional<core::TexelFormat> texel_format,
                            std::optional<LayoutFormat> layout_format) {
+        return;
         TINT_ASSERT(!(texel_format.has_value() && layout_format.has_value()));
 
         out << "layout(binding = " << bp.binding;
@@ -1494,7 +1534,7 @@ class Printer : public tint::TextGenerator {
             [&](const core::type::Array* ary) { EmitConstantArray(out, ary, c); },
             [&](const core::type::Bool*) { out << (c->ValueAs<AInt>() ? "true" : "false"); },
             [&](const core::type::I32*) { PrintI32(out, c->ValueAs<i32>()); },
-            [&](const core::type::U32*) { out << c->ValueAs<AInt>() << "u"; },
+            [&](const core::type::U32*) { out << c->ValueAs<AInt>()/* << "u"*/; },
             [&](const core::type::F32*) { PrintF32(out, c->ValueAs<f32>()); },
             [&](const core::type::F16*) { PrintF16(out, c->ValueAs<f16>()); },
             [&](const core::type::Vector* v) { EmitConstantVector(out, v, c); },
@@ -1576,8 +1616,9 @@ class Printer : public tint::TextGenerator {
 
 }  // namespace
 
-Result<std::string> Print(core::ir::Module& module, const Version& version) {
-    return Printer{module, version}.Generate();
+Result<std::string> Print(core::ir::Module& module, const Version& version,
+                          core::ir::Function::PipelineStage stage) {
+    return Printer{module, version, stage}.Generate();
 }
 
 }  // namespace tint::glsl::writer

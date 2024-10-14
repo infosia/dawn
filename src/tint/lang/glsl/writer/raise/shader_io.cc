@@ -142,6 +142,12 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                         break;
                 }
             } else {
+                // HACK
+                if (addrspace == core::AddressSpace::kOut &&
+                    io.attributes.location && *io.attributes.location == 0 &&
+                    func->Stage() == core::ir::Function::PipelineStage::kFragment) {
+                    name << "gl_FragColor";
+                } else {
                 name << ir.NameOf(func).Name();
 
                 if (io.attributes.location) {
@@ -151,6 +157,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                     }
                 }
                 name << name_suffix;
+                }
                 ptr = ty.ptr(addrspace, io.type, access);
             }
 

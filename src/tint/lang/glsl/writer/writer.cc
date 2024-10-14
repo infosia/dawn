@@ -31,12 +31,12 @@
 #include <utility>
 
 #include "src/tint/lang/glsl/writer/ast_printer/ast_printer.h"
-#include "src/tint/lang/glsl/writer/printer/printer.h"
 #include "src/tint/lang/glsl/writer/raise/raise.h"
 
 namespace tint::glsl::writer {
 
-Result<Output> Generate(core::ir::Module& ir, const Options& options, const std::string&) {
+Result<Output> Generate(core::ir::Module& ir, const Options& options, const std::string&,
+                        core::ir::Function::PipelineStage stage) {
     Output output;
 
     // Raise from core-dialect to GLSL-dialect.
@@ -45,7 +45,7 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options, const std:
     }
 
     // Generate the GLSL code.
-    auto result = Print(ir, options.version);
+    auto result = Print(ir, options.version, stage);
     if (result != Success) {
         return result.Failure();
     }
