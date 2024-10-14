@@ -564,10 +564,12 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     (defined(__IPHONE_14_0) && __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_14_0)
     if ([*mDevice supports32BitFloatFiltering]) {
         EnableFeature(Feature::Float32Filterable);
+        EnableFeature(Feature::Float32Blendable);
     }
 #elif DAWN_PLATFORM_IS(MACOS)
     if ([*mDevice supportsFamily:MTLGPUFamilyMac2]) {
         EnableFeature(Feature::Float32Filterable);
+        EnableFeature(Feature::Float32Blendable);
     }
 #endif
 

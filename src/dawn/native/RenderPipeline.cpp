@@ -38,10 +38,13 @@
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/InternalPipelineStore.h"
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/ValidationUtils_autogen.h"
+
+#include "absl/strings/str_format.h"
 
 namespace dawn::native {
 
@@ -509,10 +512,15 @@ MaybeError ValidateColorTargetState(
     DAWN_INVALID_IF(!format->IsColor() || !format->isRenderable,
                     "Color format (%s) is not color renderable.", format->format);
 
-    DAWN_INVALID_IF(
-        descriptor.blend &&
+    if (descriptor.blend && !format->isBlendable) {
+        DAWN_INVALID_IF(
             !(format->GetAspectInfo(Aspect::Color).supportedSampleTypes & SampleTypeBit::Float),
-        "Blending is enabled but color format (%s) is not blendable.", format->format);
+            "Blending is enabled but color format (%s) is not blendable.", format->format);
+
+        device->GetInstance()->EmitDeprecationWarning(
+            absl::StrFormat("Blending for color format (%s) requires the %s feature.",
+                            format->format, ToAPI(Feature::Float32Blendable)));
+    }
 
     if (!fragmentWritten) {
         DAWN_INVALID_IF(
