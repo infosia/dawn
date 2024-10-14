@@ -1481,6 +1481,9 @@ bool Converter::Convert(wgpu::FeatureName& out, interop::GPUFeatureName in) {
         case interop::GPUFeatureName::kFloat32Filterable:
             out = wgpu::FeatureName::Float32Filterable;
             return true;
+        case interop::GPUFeatureName::kFloat32Blendable:
+            out = wgpu::FeatureName::Float32Blendable;
+            return true;
         case interop::GPUFeatureName::kSubgroups:
             out = wgpu::FeatureName::Subgroups;
             return true;
