@@ -351,6 +351,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
          VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT)) {
         EnableFeature(Feature::Float32Filterable);
     }
+    EnableFeature(Feature::Float32Blendable);
 
     // Multiplanar formats.
     constexpr VkFormat multiplanarFormats[] = {
