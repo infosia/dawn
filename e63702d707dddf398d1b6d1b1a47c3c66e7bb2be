@@ -126,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9b6205b6_68d2a58c",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-14T14:18:31Z",
+      "side": 1,
+      "message": "According to https://github.com/gpuweb/gpuweb/issues/3556#issuecomment-2375427571, \n\u003e anywhere r32float or rg32float blending is supported, rgba32float blending is supported, which is all GPU families from the Metal feature sets table.\n\nI\u0027m not sure though how it translates to `(defined(__MAC_11_0) \u0026\u0026 __MAC_OS_X_VERSION_MIN_REQUIRED \u003e\u003d __MAC_11_0)`, `(defined(__IPHONE_14_0) \u0026\u0026 __IPHONE_OS_VERSION_MIN_REQUIRED \u003e\u003d __IPHONE_14_0)`, and `DAWN_PLATFORM_IS(MACOS)`",
+      "parentUuid": "8a073472_5691e626",
+      "revId": "e63702d707dddf398d1b6d1b1a47c3c66e7bb2be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "31451e8f_3c24039b",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
         "patchSetId": 7
