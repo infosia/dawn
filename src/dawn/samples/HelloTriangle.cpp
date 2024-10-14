@@ -55,6 +55,7 @@ class HelloTriangleSample : public SampleBase {
     )");
 
         dawn::utils::ComboRenderPipelineDescriptor descriptor;
+        descriptor.label = "null-terminated label";
         descriptor.layout = nullptr;
         descriptor.vertex.module = module;
         descriptor.vertex.bufferCount = 1;
