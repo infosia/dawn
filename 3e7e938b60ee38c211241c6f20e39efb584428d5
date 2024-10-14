@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "047c12b4_cc2bb230",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-14T14:09:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a05c21_e382eeb8",
+      "revId": "3e7e938b60ee38c211241c6f20e39efb584428d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac813886_2a1fdd1c",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b938be1_3f444dc3",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-14T14:09:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac813886_2a1fdd1c",
+      "revId": "3e7e938b60ee38c211241c6f20e39efb584428d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36c54ac9_c84975f9",
@@ -48,6 +84,30 @@
       "writtenOn": "2024-10-14T12:57:36Z",
       "side": 1,
       "message": "IIRC the ToAPI is no longer necessary to format features.",
+      "range": {
+        "startLine": 522,
+        "startChar": 44,
+        "endLine": 522,
+        "endChar": 49
+      },
+      "revId": "3e7e938b60ee38c211241c6f20e39efb584428d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6254328c_28c3ef24",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-14T14:09:53Z",
+      "side": 1,
+      "message": "I get the following error without ToAPI:\n\n```\n../../third_party/dawn/src/dawn/native/RenderPipeline.cpp:520:29: error: \u0027FormatSpecTemplate\u003cvoid\u003e\u0027 is unavailable: Format specified does not match the arguments passed.\n  520 |             absl::StrFormat(\"Blending for color format (%s) requires the %s feature. Enabling \"\n      |                             ^\n../../third_party/abseil-cpp/absl/strings/internal/str_format/bind.h:141:3: note: \u0027FormatSpecTemplate\u003cvoid\u003e\u0027 has been explicitly marked unavailable here\n  141 |   FormatSpecTemplate(const char* s)  // NOLINT\n      |   ^\n1 error generated.\n```",
+      "parentUuid": "36c54ac9_c84975f9",
       "range": {
         "startLine": 522,
         "startChar": 44,
