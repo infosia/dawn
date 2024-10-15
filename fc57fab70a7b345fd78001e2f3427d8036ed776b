@@ -50,6 +50,24 @@
       "message": "Sorry! Just back from vacation. LGTM!",
       "revId": "fc57fab70a7b345fd78001e2f3427d8036ed776b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "970c633d_f903a2f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T13:57:57Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "cb631cc8_69ffad04",
+      "revId": "fc57fab70a7b345fd78001e2f3427d8036ed776b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
