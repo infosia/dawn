@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3bfee3f1_14590e78",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T18:24:41Z",
+      "side": 1,
+      "message": "I\u0027m sure UTF8ToString can handle empty strings, but true we don\u0027t need to worry about the exact value of WGPU_STRLEN. I think we can just do `if (length \u0026\u0026 !ptr) { return undefined; }`\n\nthough it would be nice to crash if it\u0027s nullptr + an invalid length. I think `assert(ptr \u003e 0 || length \u003d\u003d 0 || length \u003e\u003d 0xffff_ffff)` since that should work for both values of WGPU_STRLEN",
+      "parentUuid": "cf510e85_06c5058c",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7a5a1fd0_ee34a752",
         "filename": "third_party/emdawnwebgpu/library_webgpu.js",
         "patchSetId": 2
