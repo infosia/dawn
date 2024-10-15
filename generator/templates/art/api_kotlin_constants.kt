@@ -33,7 +33,7 @@ public object Constants {
     private val SIZE_MAX = UINT64_MAX
 
     {% for constant in by_category['constant'] %}
-        public val {{ as_ktName(constant.name.SNAKE_CASE() ) }}:{{ ' ' }}
+        @JvmField public val {{ as_ktName(constant.name.SNAKE_CASE() ) }}:{{ ' ' }}
             {{- kotlin_declaration(constant) }} = {{ constant.value }}
     {% endfor %}
 }
