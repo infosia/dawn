@@ -16,6 +16,23 @@
       "message": "Kai, please review.",
       "revId": "5abf346b757ff899c43995a8677fafa492c385fb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99ddb4df_10ee3c92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T18:06:46Z",
+      "side": 1,
+      "message": "lgtm!",
+      "revId": "5abf346b757ff899c43995a8677fafa492c385fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
