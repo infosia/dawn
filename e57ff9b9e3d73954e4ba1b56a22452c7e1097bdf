@@ -16,6 +16,23 @@
       "message": "Francois PTAL!",
       "revId": "e57ff9b9e3d73954e4ba1b56a22452c7e1097bdf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d68ca0aa_9a3a6f92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-15T12:50:00Z",
+      "side": 1,
+      "message": "Dan PTAL as well",
+      "revId": "e57ff9b9e3d73954e4ba1b56a22452c7e1097bdf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
