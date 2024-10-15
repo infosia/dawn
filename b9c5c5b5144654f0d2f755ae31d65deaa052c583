@@ -177,6 +177,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f119180_c78bc06b",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T04:23:45Z",
+      "side": 1,
+      "message": "Doing it before SetFutureReady is what I was suggesting, because it would be closer in the call stack to the JS code where the thing was allocated (with its special convention about how the strings are allocated. Ack about not wanting to make it a public type though, that is a bit less nice (even if its implementation still has to match the JS so it\u0027s not really encapsulated).",
+      "parentUuid": "c43d9fc6_9fab603c",
+      "range": {
+        "startLine": 746,
+        "startChar": 17,
+        "endLine": 746,
+        "endChar": 37
+      },
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93d53aad_7866e773",
@@ -214,6 +238,30 @@
       "side": 1,
       "message": "They can\u0027t rn because not all object types extend `EventSource` so the default ctor doesn\u0027t pass along the `source` argument to the inner class, i.e the difference between:\n\n```\nWGPUAdapterImpl(source) : EventSource(source) {}\n```\nvs\n```\nWGPUAdapterImpl(source) {}\n```",
       "parentUuid": "93d53aad_7866e773",
+      "range": {
+        "startLine": 1131,
+        "startChar": 0,
+        "endLine": 1133,
+        "endChar": 1
+      },
+      "revId": "b9c5c5b5144654f0d2f755ae31d65deaa052c583",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65be8d81_197189c9",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T04:23:45Z",
+      "side": 1,
+      "message": "They can\u0027t be passthrough objects but I think you could still explicitly call `DEFINE_EMWGPU_DEFAULT_CREATE`? Just saves a few lines though (/makes it clear there\u0027s nothing different about them), so not important.",
+      "parentUuid": "6d00e125_cdcb0e5c",
       "range": {
         "startLine": 1131,
         "startChar": 0,
