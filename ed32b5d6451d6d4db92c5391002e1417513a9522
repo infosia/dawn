@@ -16,6 +16,24 @@
       "message": "Hi @jrprice@google.com,\n\nSorry I have no idea about how to handle gl_ClipDistance[] in gl_PerVertex based on current code. Could you give me some advice on how to do it?",
       "revId": "ed32b5d6451d6d4db92c5391002e1417513a9522",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2359bd2_37ad410a",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-15T21:36:30Z",
+      "side": 1,
+      "message": "Changes are needed in `FunctionEmitter::MakeAccessChain()` in `function.cc`. There\u0027s logic in there that checks for `gl_PerVertex` and handles `gl_Position` (and skips `gl_PointSize`).\n\nI think you need to track the index of the `clip_distance` member in the `BuiltInPositionInfo` structure (set by `ASTParser::ConvertStructType`), and store the pointer type too (done for `gl_Position` in `ASTParser::RegisterTypes`).\nThen use this index and type in `FunctionEmitter::MakeAccessChain()` to recognize that we are dealing with `clip_distance` and to set `ptr_ty_id`.",
+      "parentUuid": "a03084ea_6145ad83",
+      "revId": "ed32b5d6451d6d4db92c5391002e1417513a9522",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
