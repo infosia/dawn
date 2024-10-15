@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5063117_91c08992",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-15T14:18:36Z",
+      "side": 1,
+      "message": "LGTM thank you for the iteration, I think we\u0027re close.",
+      "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "facf5a10_5eee9e44",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-15T14:18:36Z",
+      "side": 1,
+      "message": "Could we have a comment here that we skip fragment on purpose because render passes need to do everything in a single `OMSetRenderTargetsAndUnorderedAccessViews` and it\u0027s handled in `RenderPassBindGroupTracker::Apply`.\n\nAlso maybe ASSERT that the visibility doesn\u0027t contain vertex. This way we can have all various cases in this function handle/mention vertex/fragment/compute. Just that this one case handles them specially.",
+      "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f044557_1206f8d6",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-15T14:18:36Z",
+      "side": 1,
+      "message": "This assert might trigger if we have a `Fragment | Compute` visibility in the BGL. IMHO we can just remove this ASSERT.",
+      "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0660bdca_6981d235",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-15T14:18:36Z",
+      "side": 1,
+      "message": "This got me super confused, the logic for D3D11 is very weird. IMHO we should remove these two getters (`GetTotalUAVBindingCount` and `GetUnusedUAVBindingCount`) and have `GetUAVCount` and `GetUAVStartSlot` WDYT? Feel free to do it as a follow-up.",
+      "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22f0d730_5d9f0a83",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-15T14:18:36Z",
+      "side": 1,
+      "message": "Could we reserve the allocation for this vector in the constructor since we know how long it will be?",
+      "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b5a9acf_c6891b0d",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-15T14:18:36Z",
+      "side": 1,
+      "message": "Would the following work? It avoids mixing a constexpr check with a runtime one.\n\n```\n        if constexpr (kIsRenderPipeline) {\n            commandList-\u003eSetGraphicsRootSignature(ToBackend(layout)-\u003eGetRootSignature());\n        } else {\n            static_assert(kIsComputePipeline);\n            commandList-\u003eSetComputeRootSignature(ToBackend(layout)-\u003eGetRootSignature());\n        }\n```\n\nDitto in others.",
+      "range": {
+        "startLine": 492,
+        "startChar": 8,
+        "endLine": 492,
+        "endChar": 19
+      },
+      "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
