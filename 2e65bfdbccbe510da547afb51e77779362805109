@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d02444d5_18c779db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-15T21:15:54Z",
+      "side": 1,
+      "message": "LGTM, but I assume we can\u0027t yet add Validator code to ensure this is the case?",
+      "revId": "2e65bfdbccbe510da547afb51e77779362805109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
