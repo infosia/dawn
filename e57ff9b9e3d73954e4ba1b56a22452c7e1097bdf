@@ -33,6 +33,23 @@
       "message": "Dan PTAL as well",
       "revId": "e57ff9b9e3d73954e4ba1b56a22452c7e1097bdf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88af81ad_e16ca1e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-15T14:19:36Z",
+      "side": 1,
+      "message": "Switching reviewers! Geoff PTAL",
+      "revId": "e57ff9b9e3d73954e4ba1b56a22452c7e1097bdf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
