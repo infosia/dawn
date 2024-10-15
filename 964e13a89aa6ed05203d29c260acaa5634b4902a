@@ -16,6 +16,23 @@
       "message": "Could you check that this commit fixes your issue locally?",
       "revId": "964e13a89aa6ed05203d29c260acaa5634b4902a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6ca0fa3_79f283a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-15T11:42:28Z",
+      "side": 1,
+      "message": "Francois PTAL",
+      "revId": "964e13a89aa6ed05203d29c260acaa5634b4902a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
