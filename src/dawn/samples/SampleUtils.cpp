@@ -146,9 +146,6 @@ int SampleBase::Run(unsigned int delay) {
             break;
     }
 
-#ifndef __EMSCRIPTEN__
-    dawnProcSetProcs(&dawn::native::GetProcs());
-
     // Create the instance with the toggles
     std::vector<const char*> enableToggleNames;
     std::vector<const char*> disabledToggleNames;
@@ -165,6 +162,9 @@ int SampleBase::Run(unsigned int delay) {
     toggles.disabledToggles = disabledToggleNames.data();
     toggles.disabledToggleCount = disabledToggleNames.size();
 
+#ifndef __EMSCRIPTEN__
+    dawnProcSetProcs(&dawn::native::GetProcs());
+
     wgpu::InstanceDescriptor instanceDescriptor = {};
     instanceDescriptor.nextInChain = &toggles;
     instanceDescriptor.features.timedWaitAnyEnable = true;
@@ -175,6 +175,7 @@ int SampleBase::Run(unsigned int delay) {
 #endif  // __EMSCRIPTEN__
 
     // Synchronously create the adapter
+    adapterOptions.nextInChain = &toggles;
     sample->instance.WaitAny(
         sample->instance.RequestAdapter(
             &adapterOptions, wgpu::CallbackMode::WaitAnyOnly,
@@ -195,6 +196,7 @@ int SampleBase::Run(unsigned int delay) {
 
     // Set device callbacks
     wgpu::DeviceDescriptor deviceDesc = {};
+    deviceDesc.nextInChain = &toggles;
     deviceDesc.SetDeviceLostCallback(
         wgpu::CallbackMode::AllowSpontaneous,
         [](const wgpu::Device&, wgpu::DeviceLostReason reason, const char* message) {
