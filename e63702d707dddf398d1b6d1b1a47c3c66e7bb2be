@@ -144,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0c2d273c_f0161681",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T06:00:20Z",
+      "side": 1,
+      "message": "I am pretty sure we can enable it unconditionally on Metal, at least according to Mike\u0027s investigation. I don\u0027t think we need to gate on any OS versions or anything.",
+      "parentUuid": "9b6205b6_68d2a58c",
+      "revId": "e63702d707dddf398d1b6d1b1a47c3c66e7bb2be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "31451e8f_3c24039b",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
         "patchSetId": 7
