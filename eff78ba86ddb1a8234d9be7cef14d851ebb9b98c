@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cf510e85_06c5058c",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-15T07:55:34Z",
+      "side": 1,
+      "message": "Maybe for Emscripten we could have logic like:\n\n```\nif (!ptr) {\n    if (length \u003d\u003d 0) {\n        return \"\";\n    } else {\n        return undefined;\n    }\n}\nreturn UTF8ToString(ptr, length);\n```",
+      "parentUuid": "014920d3_c2010537",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7a5a1fd0_ee34a752",
         "filename": "third_party/emdawnwebgpu/library_webgpu.js",
         "patchSetId": 2
@@ -122,6 +140,23 @@
         "endLine": 1175,
         "endChar": 67
       },
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a71697db_50e4be52",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-15T07:55:34Z",
+      "side": 1,
+      "message": "I\u0027ll put https://dawn-review.googlesource.com/c/dawn/+/209497 for review soon, so maybe we can just only use `SetLabel(WGPUStringView)` and remove `SetLabel2`?",
       "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
