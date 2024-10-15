@@ -16,6 +16,23 @@
       "message": "Also tested with CTS args:  --use-ir webgpu:shader,execution,flow_control,\"*\"",
       "revId": "4941761ff6197b882503c4548b09b61e19fd9915",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "803acd64_c21304d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-15T15:40:29Z",
+      "side": 1,
+      "message": "Needs E2E test updates",
+      "revId": "4941761ff6197b882503c4548b09b61e19fd9915",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
