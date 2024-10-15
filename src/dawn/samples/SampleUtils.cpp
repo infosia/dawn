@@ -125,8 +125,25 @@ int SampleBase::Run(unsigned int delay) {
         angleDefaultPlatform.Set("ANGLE_DEFAULT_PLATFORM", "swiftshader");
     }
 
-    // Setup base adapter options.
+    // Create the toggles descriptor
+    std::vector<const char*> enableToggleNames;
+    std::vector<const char*> disabledToggleNames;
+    for (const std::string& toggle : enableToggles) {
+        enableToggleNames.push_back(toggle.c_str());
+    }
+
+    for (const std::string& toggle : disableToggles) {
+        disabledToggleNames.push_back(toggle.c_str());
+    }
+    wgpu::DawnTogglesDescriptor toggles = {};
+    toggles.enabledToggles = enableToggleNames.data();
+    toggles.enabledToggleCount = enableToggleNames.size();
+    toggles.disabledToggles = disabledToggleNames.data();
+    toggles.disabledToggleCount = disabledToggleNames.size();
+
+    // Setup base adapter options with toggles.
     wgpu::RequestAdapterOptions adapterOptions = {};
+    adapterOptions.nextInChain = &toggles;
     adapterOptions.backendType = backendType;
     if (backendType != wgpu::BackendType::Undefined) {
         adapterOptions.compatibilityMode = dawn::utils::BackendRequiresCompat(backendType);
@@ -150,21 +167,6 @@ int SampleBase::Run(unsigned int delay) {
     dawnProcSetProcs(&dawn::native::GetProcs());
 
     // Create the instance with the toggles
-    std::vector<const char*> enableToggleNames;
-    std::vector<const char*> disabledToggleNames;
-    for (const std::string& toggle : enableToggles) {
-        enableToggleNames.push_back(toggle.c_str());
-    }
-
-    for (const std::string& toggle : disableToggles) {
-        disabledToggleNames.push_back(toggle.c_str());
-    }
-    wgpu::DawnTogglesDescriptor toggles = {};
-    toggles.enabledToggles = enableToggleNames.data();
-    toggles.enabledToggleCount = enableToggleNames.size();
-    toggles.disabledToggles = disabledToggleNames.data();
-    toggles.disabledToggleCount = disabledToggleNames.size();
-
     wgpu::InstanceDescriptor instanceDescriptor = {};
     instanceDescriptor.nextInChain = &toggles;
     instanceDescriptor.features.timedWaitAnyEnable = true;
@@ -193,8 +195,9 @@ int SampleBase::Run(unsigned int delay) {
     sample->adapter.GetInfo(&info);
     dawn::InfoLog() << "Using adapter \"" << info.device << "\"";
 
-    // Set device callbacks
+    // Create device descriptor with callbacks and toggles
     wgpu::DeviceDescriptor deviceDesc = {};
+    deviceDesc.nextInChain = &toggles;
     deviceDesc.SetDeviceLostCallback(
         wgpu::CallbackMode::AllowSpontaneous,
         [](const wgpu::Device&, wgpu::DeviceLostReason reason, const char* message) {
