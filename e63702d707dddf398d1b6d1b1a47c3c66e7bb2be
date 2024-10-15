@@ -160,6 +160,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d4c41ac_e2cd433f",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-15T07:23:47Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "0c2d273c_f0161681",
+      "revId": "e63702d707dddf398d1b6d1b1a47c3c66e7bb2be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31451e8f_3c24039b",
