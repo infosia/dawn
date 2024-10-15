@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4f9f8bf_904eed8b",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T04:56:11Z",
+      "side": 1,
+      "message": "Technically the wrong behavior for `code`, `entryPoint`, and `key` (nulls in strings should cause errors, rather than cut off at the null) but I think it\u0027s OK.\n\n(It\u0027s allowed for labels because they\u0027re sort of \"best effort\".)",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "014920d3_c2010537",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T04:56:11Z",
+      "side": 1,
+      "message": "this should only happen if `length` is also `WGPU_STRLEN`, otherwise it could be an empty string (`{nullptr, 0}`).\n\nUnfortunately `WGPU_STRLEN` has a variable value because of Memory64, and I do not know what value you will get if you read a `SIZE_MAX` as a `*` type... probably a BigInt `0xFFFF_FFFF_FFFF_FFFFn`?",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a5a1fd0_ee34a752",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T04:56:11Z",
+      "side": 1,
+      "message": "Empty string is falsy, but if it\u0027s an empty string we want to set `entryPoint` to `\"\"`, not `undefined`.\n\nI think you can just do it unconditionally now, in the `desc`, instead of afterward:\n`\"entryPoint\": WebGPU.make...`\n\nSame for other 2.",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8afa30a_c6661534",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T04:56:11Z",
+      "side": 1,
+      "message": "Since this is no longer conditional, it can be done in the `desc` instead of `\"label\": undefined`.\n\nSame for others.",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9a4a881_723d5bda",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T04:56:11Z",
+      "side": 1,
+      "message": "nit:\n```\nvar defaultQueueDesc \u003d {\n  \"label\": WebGPU.make...,\n};\n```",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92b2748a_ead0f0c2",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T04:56:11Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38e207e5_1a128f01",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T04:56:11Z",
+      "side": 1,
+      "message": "I am not sure, in the calling convention, whether this is actually going to be a pointer to the WGPUStringView struct, or if it is going to get inlined in some messy way. Pointer (to data stack) seems likely, I just don\u0027t know. Have you checked this works?\n\n(We were going to have this problem for FreeMembers, but then we just implemented those in webgpu.cpp so didn\u0027t have to find out.)",
+      "range": {
+        "startLine": 1175,
+        "startChar": 53,
+        "endLine": 1175,
+        "endChar": 67
+      },
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
