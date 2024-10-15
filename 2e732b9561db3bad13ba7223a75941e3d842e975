@@ -466,6 +466,24 @@
       "parentUuid": "567a313c_1ae8eea8",
       "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e42a921_57704a43",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T05:16:16Z",
+      "side": 1,
+      "message": "This is not resolved because:\nBindGroupStateTracker holds a raw_ptr of DescriptorHeapState and DescriptorHeapState holds raw_ptr of BindGroupStateTrackers. Using forward declaration of DescritorHeapState but this function invoke implementation of DescritporHeapState.",
+      "parentUuid": "2df2313f_3321c648",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
