@@ -69,6 +69,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6c9f2a3_74f54359",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T01:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e0c528c_514e806c",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c50e9677_d0a0a7bd",
@@ -86,6 +104,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a608e25f_eadb3bd4",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T01:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c50e9677_d0a0a7bd",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43fa1069_c0238cd6",
@@ -99,6 +135,30 @@
       "writtenOn": "2024-10-08T11:57:52Z",
       "side": 1,
       "message": "```suggestion\n        if (!(bindingInfo.visibility \u0026 wgpu::ShaderStage::Compute)) {\n            continue;\n        }\n```",
+      "range": {
+        "startLine": 345,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 9
+      },
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d704ad29_057c19bb",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T01:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43fa1069_c0238cd6",
       "range": {
         "startLine": 345,
         "startChar": 0,
@@ -144,6 +204,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5917607_47c59e85",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T01:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcd46794_a11f9509",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "015dfd92_f07b05f0",
@@ -157,6 +235,24 @@
       "writtenOn": "2024-10-08T11:57:52Z",
       "side": 1,
       "message": "Inserting at the start of the vector like this will cause O(N^2) behavior when there are multiple UAVs. Likewise we should change the pipeline layout to lists them in a better order.",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2faca082_691f2fac",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T01:06:02Z",
+      "side": 1,
+      "message": "see below reply.",
+      "parentUuid": "015dfd92_f07b05f0",
       "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -180,6 +276,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "24e078d0_67f4d8db",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T01:06:02Z",
+      "side": 1,
+      "message": "Dig this a bit and find some block issue to remove this copy-copy vectors, pls correct me if I\u0027m wrong:\n- Each OMSetRenderTargetsAndUnorderedAccessViews override previous setting uavs(clear the previous uavs if new uav range doesn\u0027t cover).\n- Uav has been created in above MatchVariant lambdas. Using ComPtr and a container(The first vector) to keep them alive.\n- OMSetRenderTargetsAndUnorderedAccessViews uses raw pointers instead of ComPtr, so we need a extract step. That\u0027s why second vector requires.\n\nHowever, we could do some small opt in this time:\n- I removed insert at the beginning of vector logic (Considering the vector size, this change is more like a good coding style opt) by addressing the comment that calculate used uavs before allocating vector space.",
+      "parentUuid": "3020198c_fcb20d08",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "722aa38b_088c37d5",
         "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.h",
         "patchSetId": 1
@@ -191,6 +305,24 @@
       "writtenOn": "2024-10-08T11:57:52Z",
       "side": 1,
       "message": "virtual method shouldn\u0027t be needed since we use the new types in CommandBufferD3D11",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af71a6ac_30ebaf37",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T01:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "722aa38b_088c37d5",
       "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -248,6 +380,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a7dd253_5f6e0a81",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T01:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b4a2d1_c5771922",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c5e3b23_e4ac5293",
@@ -265,6 +415,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c36cf89c_634b6192",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T01:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c5e3b23_e4ac5293",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "567a313c_1ae8eea8",
@@ -278,6 +446,24 @@
       "writtenOn": "2024-10-08T11:57:52Z",
       "side": 1,
       "message": "This could be grouped with the rest of the `BindGroupStateTracker` implementation",
+      "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2df2313f_3321c648",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T01:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "567a313c_1ae8eea8",
       "revId": "2e732b9561db3bad13ba7223a75941e3d842e975",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

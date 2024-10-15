@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0118faf_24c7d70a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-15T01:06:02Z",
+      "side": 1,
+      "message": "Fix the bots and address most comments, remain one for further discussion.",
+      "revId": "55d3d1989265cdcc0acd54f46d4912a76f720b37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
