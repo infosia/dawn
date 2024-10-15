@@ -32,14 +32,12 @@
 
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/Error.h"
-#include "dawn/native/vulkan/PipelineVk.h"
 
 namespace dawn::native::vulkan {
 
 class Device;
-struct VkPipelineLayoutObject;
 
-class RenderPipeline final : public RenderPipelineBase, public PipelineVk {
+class RenderPipeline final : public RenderPipelineBase {
   public:
     static Ref<RenderPipeline> CreateUninitialized(
         Device* device,

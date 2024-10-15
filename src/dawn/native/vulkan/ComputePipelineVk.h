@@ -33,14 +33,12 @@
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
 #include "dawn/native/Error.h"
-#include "dawn/native/vulkan/PipelineVk.h"
 
 namespace dawn::native::vulkan {
 
 class Device;
-struct VkPipelineLayoutObject;
 
-class ComputePipeline final : public ComputePipelineBase, public PipelineVk {
+class ComputePipeline final : public ComputePipelineBase {
   public:
     static Ref<ComputePipeline> CreateUninitialized(
         Device* device,
