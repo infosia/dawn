@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df85a5e9_caccc54a",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T22:26:06Z",
+      "side": 1,
+      "message": "The assert would catch null pointer dereferences (strings where the pointer is null but there is an explicit length \u003e 0) though come to think of it, that doesn\u0027t need to be our responsibility, UTF8ToString could check it when SAFE_HEAP is enabled (though it doesn\u0027t currently).",
+      "parentUuid": "929d3ac9_16ebd835",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a5a1fd0_ee34a752",
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "I actually started with doing it unconditionally, but it didn\u0027t work? I think it might be the way that Blink handles the descriptor.. but not something that I could fix in this change. (I can investigate a bit more into that side afterwards.)\n\nTbf, it also doesn\u0027t make sense for `\"\"` to be an `entryPoint` anyways right? We only default if it\u0027s strictly `undefined` right now, i.e. it doesn\u0027t even work if we set `entryPoint \u003d undefined`, as per what I said above. Is it possible for `\"\"` to be a valid entry point?",
       "parentUuid": "7a5a1fd0_ee34a752",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acce4089_9a228cf3",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T22:26:06Z",
+      "side": 1,
+      "message": "`\"\"` can\u0027t be valid, though the error will be different (IDL error vs validation error).\n\nWe can be loose with things like that if it saves us code size, but in this case I think the minimal code size is probably actually just `\"entryPoint\": WebGPU.make...`. I\u0027m not sure why it didn\u0027t work, `entryPoint: undefined` should be the same as not specifying the entryPoint.",
+      "parentUuid": "169dc256_32791c86",
       "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -266,6 +302,30 @@
       "side": 1,
       "message": "Based on https://stackoverflow.com/a/56405899 it\u0027s supposed to be a stack pointer. I also tried it manually to confirm just now that it does seem to work.",
       "parentUuid": "38e207e5_1a128f01",
+      "range": {
+        "startLine": 1175,
+        "startChar": 53,
+        "endLine": 1175,
+        "endChar": 67
+      },
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b754898_312520ba",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-15T22:26:06Z",
+      "side": 1,
+      "message": "Great!",
+      "parentUuid": "42c6dbb8_ea737ec6",
       "range": {
         "startLine": 1175,
         "startChar": 53,
