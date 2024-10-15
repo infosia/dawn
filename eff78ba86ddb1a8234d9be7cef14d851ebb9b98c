@@ -160,6 +160,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2a789f6_02bbc5e0",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-15T22:40:48Z",
+      "side": 1,
+      "message": "Hmm.. I tried it again now it and it seems to work... So updated it. Probably some build caching issue from before or some compound effect from something else I had wrong. Sorry!",
+      "parentUuid": "acce4089_9a228cf3",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8afa30a_c6661534",
