@@ -16,6 +16,24 @@
       "message": "This also need to be in the `#ifndef __EMSCRIPTEN__` as this extension struct doesn\u0027t exist in emscripten.\n\nMaybe we could have:\n\n```\nwgpu::ChainedStruct* togglesChain \u003d nullptr;\n\n#ifndef __EMSCRIPTEN__\n// Create toggles descriptor\n....\ntogglesChain \u003d \u0026toggles;\n#endif // __EMSCRIPTEN__\n```\n\nThen later we do `adapterOptions.nextInChain \u003d togglesChain` etc.",
       "revId": "39706067ccd7422b763e02173c9a7e9302371e7e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c429524b_7a196172",
+        "filename": "src/dawn/samples/SampleUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-15T18:39:20Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "64212784_03bb9e0f",
+      "revId": "39706067ccd7422b763e02173c9a7e9302371e7e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
