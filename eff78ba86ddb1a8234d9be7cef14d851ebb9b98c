@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "929d3ac9_16ebd835",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-15T20:44:19Z",
+      "side": 1,
+      "message": "I updated it to Corentin\u0027s suggestion, but given that length is variable depending on the build, I don\u0027t see much value in the assert at this time so leaving it out.",
+      "parentUuid": "3bfee3f1_14590e78",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a5a1fd0_ee34a752",
@@ -84,6 +102,24 @@
       "writtenOn": "2024-10-15T04:56:11Z",
       "side": 1,
       "message": "Empty string is falsy, but if it\u0027s an empty string we want to set `entryPoint` to `\"\"`, not `undefined`.\n\nI think you can just do it unconditionally now, in the `desc`, instead of afterward:\n`\"entryPoint\": WebGPU.make...`\n\nSame for other 2.",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "169dc256_32791c86",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-15T20:44:19Z",
+      "side": 1,
+      "message": "I actually started with doing it unconditionally, but it didn\u0027t work? I think it might be the way that Blink handles the descriptor.. but not something that I could fix in this change. (I can investigate a bit more into that side afterwards.)\n\nTbf, it also doesn\u0027t make sense for `\"\"` to be an `entryPoint` anyways right? We only default if it\u0027s strictly `undefined` right now, i.e. it doesn\u0027t even work if we set `entryPoint \u003d undefined`, as per what I said above. Is it possible for `\"\"` to be a valid entry point?",
+      "parentUuid": "7a5a1fd0_ee34a752",
       "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -105,6 +141,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d90d4419_328a43b7",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-15T20:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8afa30a_c6661534",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9a4a881_723d5bda",
@@ -122,6 +176,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fb4acd0_c2a89be8",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-15T20:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9a4a881_723d5bda",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92b2748a_ead0f0c2",
@@ -135,6 +207,24 @@
       "writtenOn": "2024-10-15T04:56:11Z",
       "side": 1,
       "message": "unused",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae5c826a_847fd4c4",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-15T20:44:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92b2748a_ead0f0c2",
       "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -162,6 +252,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42c6dbb8_ea737ec6",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-15T20:44:19Z",
+      "side": 1,
+      "message": "Based on https://stackoverflow.com/a/56405899 it\u0027s supposed to be a stack pointer. I also tried it manually to confirm just now that it does seem to work.",
+      "parentUuid": "38e207e5_1a128f01",
+      "range": {
+        "startLine": 1175,
+        "startChar": 53,
+        "endLine": 1175,
+        "endChar": 67
+      },
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a71697db_50e4be52",
@@ -175,6 +289,24 @@
       "writtenOn": "2024-10-15T07:55:34Z",
       "side": 1,
       "message": "I\u0027ll put https://dawn-review.googlesource.com/c/dawn/+/209497 for review soon, so maybe we can just only use `SetLabel(WGPUStringView)` and remove `SetLabel2`?",
+      "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "827335da_0dcb8a19",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-15T20:44:19Z",
+      "side": 1,
+      "message": "Done! Yup I did it like this since I suspected that the removal of them will happen soon so it was easy for me to switch between w.e worked!",
+      "parentUuid": "a71697db_50e4be52",
       "revId": "eff78ba86ddb1a8234d9be7cef14d851ebb9b98c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
