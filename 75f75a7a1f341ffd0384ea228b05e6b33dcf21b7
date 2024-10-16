@@ -33,6 +33,24 @@
       "message": "LGTM, but do we want to make this configurable? E.g. increase it to the old default on 64-bit desktop platforms?",
       "revId": "75f75a7a1f341ffd0384ea228b05e6b33dcf21b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b37d834b_c52f359f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-16T20:23:45Z",
+      "side": 1,
+      "message": "I strongly suspect that the performance difference between 100 and 500 will be minimal, though IIRC Austin did pick 500 based on some rough benchmarking. I\u0027ll try to look at the test times on CQ for this change to see if there\u0027s any large scale effect.",
+      "parentUuid": "230fb65b_bd69f3e3",
+      "revId": "75f75a7a1f341ffd0384ea228b05e6b33dcf21b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
