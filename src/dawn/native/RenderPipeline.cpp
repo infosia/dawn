@@ -516,7 +516,7 @@ MaybeError ValidateColorTargetState(
             !(format->GetAspectInfo(Aspect::Color).supportedSampleTypes & SampleTypeBit::Float),
             "Blending is enabled but color format (%s) is not blendable.", format->format);
 
-        device->GetInstance()->EmitDeprecationWarning(absl::StrFormat(
+        device->EmitWarningOnce(absl::StrFormat(
             "Blending for color format (%s) requires the %s feature. Enabling "
             "blendability with %s was an implementation bug and is deprecated.",
             format->format, ToAPI(Feature::Float32Blendable), ToAPI(Feature::Float32Filterable)));

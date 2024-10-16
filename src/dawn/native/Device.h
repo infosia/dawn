@@ -355,7 +355,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
 
     size_t GetLazyClearCountForTesting();
     void IncrementLazyClearCountForTesting();
-    void EmitWarningOnce(const std::string& message);
+    void EmitWarningOnce(std::string_view message);
     void EmitLog(std::string_view message);
     void EmitLog(WGPULoggingType loggingType, std::string_view message);
     void EmitCompilationLog(const ShaderModuleBase* module);
@@ -567,7 +567,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
 
     std::atomic<uint32_t> mEmittedCompilationLogCount = 0;
 
-    absl::flat_hash_set<std::string> mWarnings;
+    absl::flat_hash_set<std::string_view> mWarnings;
 
     State mState = State::BeingCreated;
 
