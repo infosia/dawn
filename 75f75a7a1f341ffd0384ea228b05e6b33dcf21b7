@@ -16,6 +16,23 @@
       "message": "+dneto for OWNERS",
       "revId": "75f75a7a1f341ffd0384ea228b05e6b33dcf21b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "230fb65b_bd69f3e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-10-16T20:20:12Z",
+      "side": 1,
+      "message": "LGTM, but do we want to make this configurable? E.g. increase it to the old default on 64-bit desktop platforms?",
+      "revId": "75f75a7a1f341ffd0384ea228b05e6b33dcf21b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
