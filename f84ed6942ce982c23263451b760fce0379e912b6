@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09e3b083_f9d220f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-16T20:35:30Z",
+      "side": 1,
+      "message": "Note that this caused the breakage for the Dawn-\u003egoogle3 roll that I most recently reverted.",
+      "revId": "f84ed6942ce982c23263451b760fce0379e912b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
