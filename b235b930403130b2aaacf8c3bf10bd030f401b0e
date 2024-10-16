@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2feb47b3_633c1a13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-16T06:20:32Z",
+      "side": 1,
+      "message": "Bug: chromium:373474042",
+      "revId": "b235b930403130b2aaacf8c3bf10bd030f401b0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "34f23c24_ce0de93c",
