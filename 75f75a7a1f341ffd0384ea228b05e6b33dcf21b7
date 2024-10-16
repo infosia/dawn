@@ -51,6 +51,24 @@
       "parentUuid": "230fb65b_bd69f3e3",
       "revId": "75f75a7a1f341ffd0384ea228b05e6b33dcf21b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "110839d7_9242ae50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-16T23:10:54Z",
+      "side": 1,
+      "message": "android-dawn-arm64-rel: 222 -\u003e 219\nmac-dawn-rel intel: 88 -\u003e 91\nmac-arm64-dawn-rel: 47 -\u003e 51\nwin-dawn-rel nvidia: 39 -\u003e 41\nlinux-dawn-rel intel: 34 -\u003e 34\n\nSo it seems like it probably makes it a bit slower though it\u0027s hard to tell for sure. Filed https://crbug.com/373899207",
+      "parentUuid": "b37d834b_c52f359f",
+      "revId": "75f75a7a1f341ffd0384ea228b05e6b33dcf21b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
