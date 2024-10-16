@@ -34,6 +34,24 @@
       "parentUuid": "a03084ea_6145ad83",
       "revId": "ed32b5d6451d6d4db92c5391002e1417513a9522",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "400369ee_8e8158c2",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-16T08:31:41Z",
+      "side": 1,
+      "message": "Thanks! Can we I implement these in another CL and just land this one?",
+      "parentUuid": "d2359bd2_37ad410a",
+      "revId": "ed32b5d6451d6d4db92c5391002e1417513a9522",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
