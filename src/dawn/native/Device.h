@@ -36,6 +36,7 @@
 #include <vector>
 
 #include "absl/container/flat_hash_set.h"
+#include "absl/strings/string_view.h"
 #include "dawn/common/ContentLessObjectCache.h"
 #include "dawn/common/Mutex.h"
 #include "dawn/common/NonMovable.h"
@@ -355,7 +356,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
 
     size_t GetLazyClearCountForTesting();
     void IncrementLazyClearCountForTesting();
-    void EmitWarningOnce(const std::string& message);
+    void EmitWarningOnce(std::string_view message);
     void EmitLog(std::string_view message);
     void EmitLog(WGPULoggingType loggingType, std::string_view message);
     void EmitCompilationLog(const ShaderModuleBase* module);
