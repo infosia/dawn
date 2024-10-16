@@ -227,4 +227,19 @@ if (${DAWN_ENABLE_EMSCRIPTEN})
             emdawnwebgpu_c
     )
 
+    if (${DAWN_BUILD_TESTS})
+        set(emdawnwebgpu_test_sources
+            "tests/FuturesTests.cpp"
+        )
+        add_executable(emdawnwebgpu_tests ${emdawnwebgpu_test_sources})
+        set_target_properties(emdawnwebgpu_tests PROPERTIES
+            SUFFIX ".html")
+        target_link_libraries(
+            emdawnwebgpu_tests
+            PUBLIC
+                emdawnwebgpu_cpp
+                gtest_main
+        )
+    endif()
+
 endif()
