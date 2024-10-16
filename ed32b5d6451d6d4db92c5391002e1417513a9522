@@ -52,6 +52,24 @@
       "parentUuid": "d2359bd2_37ad410a",
       "revId": "ed32b5d6451d6d4db92c5391002e1417513a9522",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "403f2d69_3dfb6e82",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/ast_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1559,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-16T15:05:43Z",
+      "side": 1,
+      "message": "Sure, SGTM.",
+      "parentUuid": "400369ee_8e8158c2",
+      "revId": "ed32b5d6451d6d4db92c5391002e1417513a9522",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
