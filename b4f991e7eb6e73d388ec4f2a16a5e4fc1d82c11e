@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f75fe081_c2a6db56",
+        "filename": "src/dawn/tests/white_box/EGLImageWrappingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-16T09:00:48Z",
+      "side": 0,
+      "message": "Can you check we Geoff how soon we are switching to EGL SharedTextureMemory instead of this? If there\u0027s a risk we ship compat without, then it would be ideal to have a small test that using the texture as Storage works.",
+      "revId": "b4f991e7eb6e73d388ec4f2a16a5e4fc1d82c11e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
