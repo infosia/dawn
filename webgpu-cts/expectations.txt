@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-10-15 07:53:47PM
+# Last rolled: 2024-10-17 07:44:28AM
 
 # conflicts_allowed: true
 
@@ -1694,8 +1694,8 @@ crbug.com/373485785 [ target-cpu-32 ] webgpu:shader,validation,expression,call,b
 crbug.com/373485785 [ target-cpu-32 ] webgpu:shader,validation,expression,call,builtin,saturate:values:* [ RetryOnFailure ]
 crbug.com/373485785 [ target-cpu-32 ] webgpu:shader,validation,expression,call,builtin,transpose:values:* [ RetryOnFailure ]
 
-crbug.com/373664083 [ win10 dawn-backend-validation nvidia-0x2184 ] webgpu:api,operation,command_buffer,image_copy:offsets_and_sizes:initMethod="CopyB2T";checkMethod="FullCopyT2B";* [ RetryOnFailure ]
-crbug.com/373664084 [ win10 dawn-backend-validation intel-0x4680 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:* [ RetryOnFailure ]
+crbug.com/373664083 [ dawn-backend-validation nvidia-0x2184 win10 ] webgpu:api,operation,command_buffer,image_copy:offsets_and_sizes:initMethod="CopyB2T";checkMethod="FullCopyT2B";* [ RetryOnFailure ]
+crbug.com/373664084 [ dawn-backend-validation intel-0x4680 win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:* [ RetryOnFailure ]
 
 crbug.com/373670513 [ android-pixel-6 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
 
@@ -2252,14 +2252,14 @@ crbug.com/dawn/0000 [ dawn-no-backend-validation nvidia-0x2184 win10 ] webgpu:sh
 crbug.com/dawn/0000 [ dawn-no-backend-validation nvidia-0x2184 win10 ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_2d_coords:stage="vertex";format="rg32float";offset=false [ Failure ]
 
 # timeouts
-crbug.com/dawn/0000 [ win intel ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_3d_coords:stage="compute";format="rgba16float" [ Failure ]
-crbug.com/dawn/0000 [ win intel ] webgpu:api,validation,capability_checks,limits,maxSampledTexturesPerShaderStage:createPipelineLayout,at_over:limitTest="betweenDefaultAndMaximum";testValueName="atLimit";visibility=1;order="forward" [ Failure ]
-crbug.com/dawn/0000 [ win intel ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="none";orientation="flipY";colorSpaceConversion="default";srcFlipYInCopy=false;dstFormat="r16float";dstPremultiplied=false [ Failure ]
-crbug.com/dawn/0000 [ win intel ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="none";orientation="flipY";colorSpaceConversion="default";srcFlipYInCopy=false;dstFormat="r16float";dstPremultiplied=true [ Failure ]
+crbug.com/dawn/0000 [ intel win ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_3d_coords:stage="compute";format="rgba16float" [ Failure ]
+crbug.com/dawn/0000 [ intel win ] webgpu:api,validation,capability_checks,limits,maxSampledTexturesPerShaderStage:createPipelineLayout,at_over:limitTest="betweenDefaultAndMaximum";testValueName="atLimit";visibility=1;order="forward" [ Failure ]
+crbug.com/dawn/0000 [ intel win ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="none";orientation="flipY";colorSpaceConversion="default";srcFlipYInCopy=false;dstFormat="r16float";dstPremultiplied=false [ Failure ]
+crbug.com/dawn/0000 [ intel win ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="none";orientation="flipY";colorSpaceConversion="default";srcFlipYInCopy=false;dstFormat="r16float";dstPremultiplied=true [ Failure ]
 crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_3d_coords:stage="fragment";format="rgba16float" [ Failure ]
 
 # dead - bot failed - no device
-crbug.com/dawn/0000 [ win intel ] webgpu:shader,execution,expression,unary,af_arithmetic:negation:inputSource="const";vectorize=3 [ Failure ]
+crbug.com/dawn/0000 [ intel win ] webgpu:shader,execution,expression,unary,af_arithmetic:negation:inputSource="const";vectorize=3 [ Failure ]
 
 crbug.com/dawn/0000 [ intel-0x3e9b ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_2d_coords:stage="compute";format="depth16unorm";minFilter="linear";offset=false [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_2d_coords:stage="compute";format="depth16unorm";minFilter="linear";offset=true [ Failure ]
