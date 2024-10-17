@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bab351b7_a5f9e8db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T11:33:29Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "12f1e4e4e656e1885e38623265044d1f0a6941b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b4f9aa6_ebfd473b",
+        "filename": "src/dawn/native/vulkan/QueueVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T11:33:29Z",
+      "side": 1,
+      "message": "nit: Could we have a TODO on 344798087 to handle timeout more properly higher in the callgraph?",
+      "revId": "12f1e4e4e656e1885e38623265044d1f0a6941b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
