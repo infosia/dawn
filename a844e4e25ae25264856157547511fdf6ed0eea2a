@@ -16,6 +16,454 @@
       "message": "This CL is now ready for review. I understand there will be changes requested but I think it\u0027s in a state where we can see things we like/dislike. Thanks in advance!",
       "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf3dbe24_abbf127b",
+        "filename": "docs/dawn/features/buffer_map_extended_usages.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "I don\u0027t know about this convention TBH. The _ is used in the C API to distinguish the enum type name for the enum value\u0027s name, but that looks weird from a C++ standpoint.\n\nAlso `WGPUMyEnumType_Dawn_MyValue` is not clear what the `Dawn` tag is attached to. IMHO it would be clear enough to folks if we didn\u0027t add the `_` and had `WGPUMyEnumTypeDawn_MyValue` `WGPUMyEnumType_MyValueDawn` `wgpu::MyEnumTypeDawn::MyValue` or `wgpu::MyEnumType::MyValueDawn`. Without going full Khronos with caps trigrams at the end of methods we still get things clear and somewhat concise.\n\nOr putting the block name in the front. `wgpu::DawnSharedTextureMemory` makes a lot of sense as \"Dawn\" here is some form of additional namespace so we can from general to specific.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2744a4e_a3f45cc4",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 28
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "Ditto, could we have a TODO to remove this afterwards?",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eebb366a_c59dbfc3",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 28
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "What do you all think about having a concept of \"namespace\" or \"block\" in the dawn.json which gets automatically added to the name at the end, adds tags, and for enums offsets the value? It would avoid the need to do this validation and add all the `_Dawn` in the dawn.json.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd921c19_c92d5818",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 28
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "Can we have a TODO to remove when everything is updated?",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "190dc3e8_4cb2ae4d",
+        "filename": "generator/templates/api_cpp_print.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can add a helper for this so the code looks like:\n\n```suggestion\n            {% for value in type.values if is_enum_value_proxy(value) %}\n```",
+      "range": {
+        "startLine": 46,
+        "startChar": 40,
+        "endLine": 46,
+        "endChar": 143
+      },
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6483fb4b_975c1772",
+        "filename": "generator/templates/dawn/native/Features.inl",
+        "patchSetId": 28
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "This `default` shouldn\u0027t be needed as all value should be handled (the conflicting ones have at least one version that\u0027s not deprecated and would be generated)",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63296471_7627a281",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "To rename in other projects I would suggest generating a sed script that outputs a bunch of lines of the form:\n\n```\ns/wgpu::DeprecatedName/wgpu::NewName/g\ns/WGPUDeprecatedName/WGPUNewName/g\ns/MyEnumType_Foo/DawnMyEnumType_Foo/g\ns/MyEnumType::Foo/DawnMyEnumType::Foo/g\n```",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb35be34_084566a5",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "Can we add \"deprecated\" in the tags for the typedef in this CL as well so that we know we want to remove them?",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92730ce3_2409ca39",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1f9888a_84ca6759",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "099cdd74_7c289ebd",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb10bc16_dd16daf1",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37551974_3a3cb3e3",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58ed319c_a6a91448",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19aa7941_bf0f1db4",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 2684,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef644fc7_4eb88de4",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 2686,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c8d3e38_78231036",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 2688,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02b599e1_ad685beb",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 2790,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb53d8f0_c4922fd0",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 2793,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fee9795_92208b71",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 3028,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bed95ee_fec35fbd",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 3541,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54da4b3a_f3124829",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 4106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc941539_bd4ea67b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 5006,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d284492b_1a3a15cc",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 5020,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b585dbd1_7de3a349",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 5034,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3336780_244cadf3",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 5120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T12:10:46Z",
+      "side": 1,
+      "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
