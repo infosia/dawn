@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eabe03f1_48c0afb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-17T08:51:12Z",
+      "side": 1,
+      "message": "This CL is now ready for review. I understand there will be changes requested but I think it\u0027s in a state where we can see things we like/dislike. Thanks in advance!",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
