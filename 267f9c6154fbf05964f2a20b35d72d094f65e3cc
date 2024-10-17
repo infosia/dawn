@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78a8a32e_ebea9085",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-10-17T18:55:36Z",
+      "side": 1,
+      "message": "I\u0027m tempted to make it the default.  :-)",
+      "revId": "267f9c6154fbf05964f2a20b35d72d094f65e3cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
