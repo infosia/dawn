@@ -16,6 +16,63 @@
       "message": "PTAL, this is ready for a full review now, I have added unittests covering all of the new builtin checks I have added",
       "revId": "0876ab18d8e252fdb9097e47290eb25a30ccf934",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "729b0df2_108365f3",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-17T21:42:59Z",
+      "side": 1,
+      "message": "I\u0027m surprised this doesn\u0027t cause issues for the SPIR-V and GLSL backends, which rewrite the type to be `array\u003cu32, 1\u003e`.\n\nAh, looks like the module-scope variables part of the check is only done for vertex shaders at present. This is also why you see the GLSL E2E test failures that you suppressed, and the Dawn E2E failures on CQ. These tests are actually doing The Right Thing, it\u0027s just that GLSL has different rules about what the types should be (i32 instead of u32).\n\nFor the purposes of bringing up the fuzzers, we could skip the validation of these things when dealing with module-scope variables (as they are deviating from the core IR rules in backend-specific ways).\n\nAlternatively, we add some \"shader IO style\" capability/enum that indicates which language\u0027s validation rules we should be applying. This has come up before but is a bunch of extra effort.",
+      "range": {
+        "startLine": 525,
+        "startChar": 0,
+        "endLine": 527,
+        "endChar": 5
+      },
+      "revId": "0876ab18d8e252fdb9097e47290eb25a30ccf934",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37514726_edc55da1",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-17T21:42:59Z",
+      "side": 1,
+      "message": "Nit: Should be able to just use `result.Failure().Str()` here and below.",
+      "revId": "0876ab18d8e252fdb9097e47290eb25a30ccf934",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2a616f1_03528875",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-17T21:42:59Z",
+      "side": 1,
+      "message": "übernit: must *be* used",
+      "revId": "0876ab18d8e252fdb9097e47290eb25a30ccf934",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
