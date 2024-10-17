@@ -16,6 +16,23 @@
       "message": "Added a test which fails prior to this change.",
       "revId": "d0c8c776451b762ac128e649a334295e8edde0aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40217de7_4e5f924e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-10-17T20:53:50Z",
+      "side": 1,
+      "message": "Thank you!",
+      "revId": "d0c8c776451b762ac128e649a334295e8edde0aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
