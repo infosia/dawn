@@ -16,6 +16,40 @@
       "message": "PTAL! Had to add some manual expectations for some CTS tests that shouldn\u0027t actually be running on compat (see the Dawn issue noted in the comment).\n\nKeeping the AST path alive for now just in case we need to revert or use as a reference.",
       "revId": "75aec1c047e397941b051ffa22ae418f43f20157",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33329873_3abe3b8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-10-17T17:35:27Z",
+      "side": 1,
+      "message": "LGTM. Congrats!",
+      "revId": "75aec1c047e397941b051ffa22ae418f43f20157",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89b33d06_404539e2",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-10-17T17:35:27Z",
+      "side": 1,
+      "message": "Note to self: Looks like the spec is missing a clause for excluding cube arrays. I\u0027m pretty sure we discussed it; will check notes. Might need to be API-side as well.",
+      "revId": "75aec1c047e397941b051ffa22ae418f43f20157",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
