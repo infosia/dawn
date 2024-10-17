@@ -50,6 +50,24 @@
       "message": "Note to self: Looks like the spec is missing a clause for excluding cube arrays. I\u0027m pretty sure we discussed it; will check notes. Might need to be API-side as well.",
       "revId": "75aec1c047e397941b051ffa22ae418f43f20157",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3c0d8de_0a2e2ba0",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-17T17:39:00Z",
+      "side": 1,
+      "message": "The proposal already has `Disallow GPUTextureViewDimension \"CubeArray\" via validation`, but that doesn\u0027t cover the shader side.",
+      "parentUuid": "89b33d06_404539e2",
+      "revId": "75aec1c047e397941b051ffa22ae418f43f20157",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
