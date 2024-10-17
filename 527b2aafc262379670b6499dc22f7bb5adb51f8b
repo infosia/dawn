@@ -33,6 +33,24 @@
       "message": "Is the multi-stage the only reason for the special casing for these subgroup inputs?\n\nIf so, I\u0027m wondering if we could use an `EnumSet\u003cFunction::PipelineStage\u003e` for the allowed stages in the `BuiltinChecker` to allow it to work for these two cases too.",
       "revId": "527b2aafc262379670b6499dc22f7bb5adb51f8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dca0683_545e5745",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-17T20:26:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "902637ff_18185da2",
+      "revId": "527b2aafc262379670b6499dc22f7bb5adb51f8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
