@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89101ecb_a53169b3",
+        "filename": "tools/src/cmd/fix-tests/main.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-10-17T01:20:37Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 271,
+        "startChar": 2,
+        "endLine": 276,
+        "endChar": 51
+      },
+      "revId": "ba9323166f8a6d45f5fa36b7a6e79472bf59dfc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
