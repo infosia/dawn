@@ -81,9 +81,9 @@ struct State {
             }
 
             // Skip entry points with no inputs or outputs.
-            if (func->Params().IsEmpty() && func->ReturnType()->Is<core::type::Void>()) {
-                continue;
-            }
+            // if (func->Params().IsEmpty() && func->ReturnType()->Is<core::type::Void>()) {
+            //     continue;
+            // }
 
             ProcessEntryPoint(func, make_backend_state(ir, func));
         }

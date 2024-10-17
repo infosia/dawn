@@ -178,6 +178,7 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     Vector<core::ir::FunctionParam*, 4> FinalizeInputs() override {
         Vector<core::type::Manager::StructMemberDesc, 4> input_struct_members;
 
+        bool has_position_member = false;
         Vector<MemberInfo, 4> input_data;
         for (uint32_t i = 0; i < inputs.Length(); ++i) {
             // If subgroup invocation id or size, save the index for GetInput
@@ -191,10 +192,20 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 } else if (*builtin == core::BuiltinValue::kNumWorkgroups) {
                     num_workgroups_index = i;
                     continue;
+                } else if (*builtin == core::BuiltinValue::kPosition) {
+                    has_position_member = true;
                 }
             }
 
             input_data.Push(MemberInfo{inputs[i], i});
+        }
+
+        if (config.add_input_position_member && !has_position_member) {
+            core::type::Manager::StructMemberDesc desc;
+            desc.name = ir.symbols.New("pos");
+            desc.type = ty.vec4<f32>();
+            desc.attributes.builtin = core::BuiltinValue::kPosition;
+            input_data.Push(MemberInfo{desc, static_cast<uint32_t>(inputs.Length())});
         }
 
         input_indices.Resize(input_data.Length());
