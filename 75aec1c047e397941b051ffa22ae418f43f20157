@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9f1c238_f933dc8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-17T13:36:21Z",
+      "side": 1,
+      "message": "PTAL! Had to add some manual expectations for some CTS tests that shouldn\u0027t actually be running on compat (see the Dawn issue noted in the comment).\n\nKeeping the AST path alive for now just in case we need to revert or use as a reference.",
+      "revId": "75aec1c047e397941b051ffa22ae418f43f20157",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
