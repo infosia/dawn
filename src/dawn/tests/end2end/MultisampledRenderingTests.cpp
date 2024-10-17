@@ -1304,6 +1304,61 @@ TEST_P(MultisampledRenderingTest, ResolveInto2DTextureWithAlphaToCoverageAndRast
     }
 }
 
+// Test that setting a scissor rect does not affect multisample resolve.
+TEST_P(MultisampledRenderingTest, ResolveInto2DTextureWithScissor) {
+    constexpr bool kTestDepth = false;
+    wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
+    wgpu::RenderPipeline pipeline = CreateRenderPipelineWithOneOutputForTest(kTestDepth);
+
+    constexpr wgpu::Color kRed = {1.0f, 0.0f, 0.0f, 1.0f};
+    constexpr wgpu::Color kGreen = {0.0f, 1.0f, 0.0f, 1.0f};
+
+    // Draw a green triangle, set a scissor for the bottom row of pixels, then draw a red triangle.
+    {
+        utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
+            {mMultisampledColorView}, {mResolveView}, wgpu::LoadOp::Clear, wgpu::LoadOp::Clear,
+            kTestDepth);
+
+        const float redUniformData[4] = {1.0f, 0.0f, 0.0f, 1.0f};
+        const float greenUniformData[4] = {0.0f, 1.0f, 0.0f, 1.0f};
+        const size_t uniformSize = sizeof(float) * 4;
+
+        wgpu::Buffer redUniformBuffer = utils::CreateBufferFromData(
+            device, redUniformData, uniformSize, wgpu::BufferUsage::Uniform);
+        wgpu::Buffer greenUniformBuffer = utils::CreateBufferFromData(
+            device, greenUniformData, uniformSize, wgpu::BufferUsage::Uniform);
+
+        wgpu::BindGroup redBindGroup = utils::MakeBindGroup(
+            device, pipeline.GetBindGroupLayout(0), {{0, redUniformBuffer, 0, uniformSize}});
+        wgpu::BindGroup greenBindGroup = utils::MakeBindGroup(
+            device, pipeline.GetBindGroupLayout(0), {{0, greenUniformBuffer, 0, uniformSize}});
+
+        wgpu::RenderPassEncoder pass = commandEncoder.BeginRenderPass(&renderPass);
+        pass.SetPipeline(pipeline);
+
+        pass.SetBindGroup(0, greenBindGroup);
+        pass.Draw(3);
+
+        pass.SetScissorRect(0, 0, 3, 1);
+        pass.SetBindGroup(0, redBindGroup);
+        pass.Draw(3);
+
+        pass.End();
+    }
+
+    wgpu::CommandBuffer commandBuffer = commandEncoder.Finish();
+    queue.Submit(1, &commandBuffer);
+
+    // The bottom-right pixel should be red, but the pixel just above it should be green.
+    constexpr float kMSAACoverage = 1.0f;
+    constexpr uint32_t kRedX = 2;
+    constexpr uint32_t kRedY = 0;
+    constexpr uint32_t kGreenX = 2;
+    constexpr uint32_t kGreenY = 1;
+    VerifyResolveTarget(kRed, mResolveTexture, 0, 0, kMSAACoverage, kRedX, kRedY);
+    VerifyResolveTarget(kGreen, mResolveTexture, 0, 0, kMSAACoverage, kGreenX, kGreenY);
+}
+
 class MultisampledRenderingWithTransientAttachmentTest : public MultisampledRenderingTest {
     void SetUp() override {
         MultisampledRenderingTest::SetUp();
