@@ -25,10 +25,16 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <dawn/webgpu_cpp_print.h>
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <webgpu/webgpu_cpp.h>
 
+#include <iostream>
+
 namespace {
+
+using testing::_;
 
 class InstanceLevelTests : public testing::Test {
   public:
@@ -110,6 +116,40 @@ TEST_F(AdapterLevelTests, RequestDeviceThenDrop) {
     RequestDevice(&descriptor);
 
     EXPECT_EQ(reason, wgpu::DeviceLostReason::Destroyed);
+}
+
+class DeviceLevelTests : public AdapterLevelTests {
+  public:
+    void SetUp() override {
+        AdapterLevelTests::SetUp();
+
+        wgpu::DeviceDescriptor descriptor = {};
+        // descriptor.SetUncapturedErrorCallback(
+        //     [](const wgpu::Device& d, wgpu::ErrorType t, wgpu::StringView m,
+        //        DeviceLevelTests* self) { self->uncapturedErrorCb.Call(d, t, m); },
+        //     this);
+        descriptor.SetUncapturedErrorCallback(
+            [](const wgpu::Device& d, wgpu::ErrorType t, wgpu::StringView m) { std::cout << m; });
+        device = RequestDevice(&descriptor);
+    }
+
+  protected:
+    wgpu::Device device;
+
+    // Mock callback used for uncaptured errors so that test writers can add expectations on this
+    // callback which will enforce the expectations at teardown of the test.
+    // testing::StrictMock<
+    //     testing::MockFunction<void(const wgpu::Device&, wgpu::ErrorType, wgpu::StringView)>>
+    //     uncapturedErrorCb;
+};
+
+TEST_F(DeviceLevelTests, UncapturedValidationError) {
+    // EXPECT_CALL(uncapturedErrorCb, Call(_, wgpu::ErrorType::Validation, _)).Times(1);
+
+    wgpu::BufferDescriptor desc = {};
+    desc.size = 1024;
+    desc.usage = static_cast<wgpu::BufferUsage>(UINT64_MAX);
+    wgpu::Buffer buffer = device.CreateBuffer(&desc);
 }
 
 }  // namespace
