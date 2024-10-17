@@ -16,6 +16,24 @@
       "message": "@cwallez@chromium.org Float32FilterableValidationTest.Float32BlendableFormatsWithoutFeature test is now failing when using `device-\u003eEmitWarningOnce()`",
       "revId": "b6d91fd49ab1d78d9c280ab1b640512aee3f919e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc2e2573_d22736a5",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-17T13:56:48Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bec8b111_f04cda4e",
+      "revId": "b6d91fd49ab1d78d9c280ab1b640512aee3f919e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
