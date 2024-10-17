@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef1ac5b9_58504c2e",
+        "filename": "tools/src/cmd/fix-tests/main.go",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-10-17T01:22:35Z",
+      "side": 1,
+      "message": "Remove this printing.",
+      "range": {
+        "startLine": 191,
+        "startChar": 3,
+        "endLine": 191,
+        "endChar": 55
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "bf6c3712_50e455ba",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/src/cmd/fix-tests/main.go",
+              "range": {
+                "startLine": 191,
+                "startChar": 0,
+                "endLine": 192,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "ca17b582025296cd3efc11c9fd9e37814ce478e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
