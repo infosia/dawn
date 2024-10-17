@@ -168,7 +168,7 @@ globalTestConfig.noRaceWithRejectOnTimeout = true;
 
 // Avoid doing too many things at once (e.g. creating 500 pipelines
 // simultaneously on a 32-bit system easily runs out of memory).
-globalTestConfig.maxSubcasesInFlight = 100;
+globalTestConfig.maxSubcasesInFlight = 20;
 
 // FXC is very slow to compile unrolled const-eval loops, where the metal shader
 // compiler (Intel GPU) is very slow to compile rolled loops. Intel drivers for
