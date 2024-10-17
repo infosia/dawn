@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95b2cffc_ef55b0a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-10-17T17:30:37Z",
+      "side": 1,
+      "message": "IWBN to have a test for this. But LGTM either way.",
+      "revId": "1d410aa12cddd7a315a09d5ef0144430299fe636",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
