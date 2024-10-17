@@ -242,6 +242,13 @@ typedef struct {{API}}ChainedStructOut {
     typedef {{as_cType(typeDef.type.name)}} {{as_cType(typeDef.name)}};
 
 {% endfor %}
+
+// TODO(374150686): Remove these Emscripten specific declarations from the
+// header once they are fully deprecated.
+#ifdef __EMSCRIPTEN__
+WGPUDevice emscripten_webgpu_get_device(void);
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
