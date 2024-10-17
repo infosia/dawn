@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e992105f_8c080013",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3002,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-10-17T22:54:04Z",
+      "side": 1,
+      "message": "Add comment or bug link?",
+      "range": {
+        "startLine": 3002,
+        "startChar": 12,
+        "endLine": 3002,
+        "endChar": 40
+      },
+      "revId": "2321ecefedcb3937c7407778919dde1537edf6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
