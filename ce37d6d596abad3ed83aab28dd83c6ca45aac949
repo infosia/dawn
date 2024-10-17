@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbf7926a_21409499",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-10-17T15:37:50Z",
+      "side": 1,
+      "message": "This suppresses ~2200 failing tests.\nI\u0027m surprised that you\u0027d want to roll in so much failures.",
+      "revId": "ce37d6d596abad3ed83aab28dd83c6ca45aac949",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
