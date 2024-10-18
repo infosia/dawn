@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63619843_65694dfb",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-18T01:06:10Z",
+      "side": 1,
+      "message": "Done. And also add comments in above code block.",
+      "parentUuid": "facf5a10_5eee9e44",
+      "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f044557_1206f8d6",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-10-15T14:18:36Z",
       "side": 1,
       "message": "This assert might trigger if we have a `Fragment | Compute` visibility in the BGL. IMHO we can just remove this ASSERT.",
+      "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e7b4ff7_4064bc6e",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-18T01:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f044557_1206f8d6",
       "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75dca2d3_84bad925",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-18T01:06:10Z",
+      "side": 1,
+      "message": "Yes, so many getters and an extra vector is annoying. I need to back to this in another CL. But have GetUAVCount and GetUAVStartSlot should be enough, validation which validate ununsedUAVCount should be calculated easily.\n\nAdded a TODO for this.",
+      "parentUuid": "0660bdca_6981d235",
+      "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22f0d730_5d9f0a83",
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fceb0d27_f9d13501",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-18T01:06:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22f0d730_5d9f0a83",
+      "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b5a9acf_c6891b0d",
@@ -99,6 +171,30 @@
       "writtenOn": "2024-10-15T14:18:36Z",
       "side": 1,
       "message": "Would the following work? It avoids mixing a constexpr check with a runtime one.\n\n```\n        if constexpr (kIsRenderPipeline) {\n            commandList-\u003eSetGraphicsRootSignature(ToBackend(layout)-\u003eGetRootSignature());\n        } else {\n            static_assert(kIsComputePipeline);\n            commandList-\u003eSetComputeRootSignature(ToBackend(layout)-\u003eGetRootSignature());\n        }\n```\n\nDitto in others.",
+      "range": {
+        "startLine": 492,
+        "startChar": 8,
+        "endLine": 492,
+        "endChar": 19
+      },
+      "revId": "36afb391b3be40fee5c1b2a05d84150c1fe20502",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df49690c_868ce4ad",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-18T01:06:10Z",
+      "side": 1,
+      "message": "Done by wrapping compute root signature API in else block to make compiler happy.",
+      "parentUuid": "3b5a9acf_c6891b0d",
       "range": {
         "startLine": 492,
         "startChar": 8,
