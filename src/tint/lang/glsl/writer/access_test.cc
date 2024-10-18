@@ -150,8 +150,7 @@ void main() {
 )");
 }
 
-// TODO(dsinclair): Needs ir::Convert
-TEST_F(GlslWriterTest, DISABLED_AccessStoreVectorElementDynamicIndex) {
+TEST_F(GlslWriterTest, AccessStoreVectorElementDynamicIndex) {
     auto* idx = b.FunctionParam("idx", ty.i32());
     auto* func = b.Function("foo", ty.void_());
     func->SetParams({idx});
@@ -163,7 +162,7 @@ TEST_F(GlslWriterTest, DISABLED_AccessStoreVectorElementDynamicIndex) {
 
     ASSERT_TRUE(Generate()) << err_ << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(
-
+12345
 )");
 }
 
