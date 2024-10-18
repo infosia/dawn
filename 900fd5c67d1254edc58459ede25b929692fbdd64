@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a26c89b_dbb2f2ab",
+        "filename": "src/tint/lang/core/ir/transform/rename_conflicts.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T00:22:04Z",
+      "side": 1,
+      "message": "nit: `decl-\u003evalue`",
+      "range": {
+        "startLine": 273,
+        "startChar": 20,
+        "endLine": 273,
+        "endChar": 31
+      },
+      "revId": "900fd5c67d1254edc58459ede25b929692fbdd64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
