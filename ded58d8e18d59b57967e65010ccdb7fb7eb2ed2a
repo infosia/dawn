@@ -16,6 +16,24 @@
       "message": "Any particular reason you do this twice? Could just make the coord once at the top of the function and use it in both places?",
       "revId": "ded58d8e18d59b57967e65010ccdb7fb7eb2ed2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05ebdc1c_8a9ed80a",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6320657d_6d5c4912",
+      "revId": "ded58d8e18d59b57967e65010ccdb7fb7eb2ed2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

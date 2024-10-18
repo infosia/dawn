@@ -709,6 +709,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77483e8e_c220c4b2",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:37:54Z",
+      "side": 1,
+      "message": "ACK, will keep as-is for now.",
+      "parentUuid": "1c71bae1_6f557c42",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d922e6d5_363d6ffe",
