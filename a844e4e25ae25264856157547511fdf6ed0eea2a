@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "129c0373_37833cd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-18T00:27:23Z",
+      "side": 1,
+      "message": "No other real comments but we definitely need to figure out what our naming strategy is. I reopened https://github.com/webgpu-native/webgpu-headers/issues/212#issuecomment-2420927446",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf3dbe24_abbf127b",
@@ -31,6 +48,24 @@
       "writtenOn": "2024-10-17T12:10:46Z",
       "side": 1,
       "message": "I don\u0027t know about this convention TBH. The _ is used in the C API to distinguish the enum type name for the enum value\u0027s name, but that looks weird from a C++ standpoint.\n\nAlso `WGPUMyEnumType_Dawn_MyValue` is not clear what the `Dawn` tag is attached to. IMHO it would be clear enough to folks if we didn\u0027t add the `_` and had `WGPUMyEnumTypeDawn_MyValue` `WGPUMyEnumType_MyValueDawn` `wgpu::MyEnumTypeDawn::MyValue` or `wgpu::MyEnumType::MyValueDawn`. Without going full Khronos with caps trigrams at the end of methods we still get things clear and somewhat concise.\n\nOr putting the block name in the front. `wgpu::DawnSharedTextureMemory` makes a lot of sense as \"Dawn\" here is some form of additional namespace so we can from general to specific.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2490e442_47c09d5c",
+        "filename": "docs/dawn/features/buffer_map_extended_usages.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-18T00:27:23Z",
+      "side": 1,
+      "message": "We never talked about how enums should be named, but I think what would make sense is `WGPUMyEnumType_Dawn` `WGPUMyEnumType_MyValue_Dawn` to avoid sticking the \"suffix\" in the middle.\n\nUnfortunately of course it\u0027s extra work in the generator because we\u0027re putting the suffixes directly in the name, but probably we can detect the redundant suffix and remove it when generating enum value names, or something. Or move the suffixes into a separate `dawn.json` field so know what to do with them.\n\nIn C++ we can do whatever we want. Personally I\u0027m OK with the underscore, though maybe(?) it would be nice if we had a _real_ namespace, `wgpu::dawn::` or `dawn::` or `wgpudawn::`. But that could be a pain....",
+      "parentUuid": "bf3dbe24_abbf127b",
       "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -65,6 +100,24 @@
       "writtenOn": "2024-10-17T12:10:46Z",
       "side": 1,
       "message": "What do you all think about having a concept of \"namespace\" or \"block\" in the dawn.json which gets automatically added to the name at the end, adds tags, and for enums offsets the value? It would avoid the need to do this validation and add all the `_Dawn` in the dawn.json.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "855a978a_75111089",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 28
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-18T00:27:23Z",
+      "side": 1,
+      "message": "I think it would be nice, it\u0027s kind of similar to how the yaml generator works where the namespace is per-yml-file. No need to do it in this CL though, unless needed to get the naming we want for c++.",
+      "parentUuid": "eebb366a_c59dbfc3",
       "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -462,6 +515,23 @@
       "writtenOn": "2024-10-17T12:10:46Z",
       "side": 1,
       "message": "We can remove the starting \"dawn\" as it is redundant.",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9433aaa5_b76029aa",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-18T00:27:23Z",
+      "side": 1,
+      "message": "Similar issue with the naming for methods etc., maybe it should be `AdapterPropertiesMemoryHeapsFreeMembers_Dawn`",
       "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
