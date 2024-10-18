@@ -709,6 +709,11 @@ func (j job) run(cfg runConfig) {
 			invalid_test = true
 		}
 
+		timeout_test := false
+		if strings.HasPrefix(expected, "SKIP: TIMEOUT") { // Special timeout test case token
+			timeout_test = true
+		}
+
 		expected = strings.ReplaceAll(expected, "\r\n", "\n")
 
 		outputFormat := strings.Split(string(j.format), "-")[0] // 'hlsl-fxc-ir' -> 'hlsl', etc.
@@ -767,14 +772,15 @@ func (j job) run(cfg runConfig) {
 		var out string
 		args = append(args, j.flags...)
 
+		timedOut := false
 		start := time.Now()
-		ok, out = invoke(cfg.tintPath, args...)
+		ok, out, timedOut = invoke(cfg.tintPath, args...)
 		timeTaken := time.Since(start)
 
 		out = strings.ReplaceAll(out, "\r\n", "\n")
 		out = strings.ReplaceAll(out, filepath.ToSlash(dawnRoot), "<dawn>")
 		out, hashes := extractValidationHashes(out)
-		matched := expected == "" || expected == out
+		matched := expected == "" || expected == out || timeout_test
 
 		canEmitPassExpectationFile := true
 		for _, noPass := range dirsWithNoPassExpectations {
@@ -788,7 +794,8 @@ func (j job) run(cfg runConfig) {
 			return os.WriteFile(path, []byte(content), 0666)
 		}
 
-		if ok && cfg.generateExpected && (validate || !skipped) {
+		// Do not update the expected if this test times out.
+		if ok && cfg.generateExpected && !timeout_test && (validate || !skipped) {
 			// User requested to update PASS expectations, and test passed.
 			if canEmitPassExpectationFile {
 				saveExpectedFile(expectedFilePath, out)
@@ -806,6 +813,10 @@ func (j job) run(cfg runConfig) {
 			skip_str = "INVALID"
 		}
 
+		if timedOut {
+			skip_str = "TIMEOUT"
+		}
+
 		passed := ok && matched
 		if !passed {
 			if j.format == hlslFXC || j.format == hlslFXCIR {
@@ -814,13 +825,14 @@ func (j job) run(cfg runConfig) {
 		}
 
 		switch {
-		case ok && matched:
+		case passed:
 			// Test passed
 			return status{code: pass, timeTaken: timeTaken, passHashes: hashes}
 
 			//       --- Below this point the test has failed ---
 		case skipped:
-			if cfg.generateSkip {
+			// Do not update expected if timout test actually timed out.
+			if cfg.generateSkip && !(timeout_test && timedOut) {
 				saveExpectedFile(expectedFilePath, "SKIP: "+skip_str+"\n\n"+out)
 			}
 			if invalid_test {
@@ -957,7 +969,7 @@ func percentage(n, total int) string {
 }
 
 // invoke runs the executable 'exe' with the provided arguments.
-func invoke(exe string, args ...string) (ok bool, output string) {
+func invoke(exe string, args ...string) (ok bool, output string, timedout bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), testTimeout)
 	defer cancel()
 
@@ -966,15 +978,15 @@ func invoke(exe string, args ...string) (ok bool, output string) {
 	str := string(out)
 	if err != nil {
 		if ctx.Err() == context.DeadlineExceeded {
-			return false, fmt.Sprintf("test timed out after %v", testTimeout)
+			return false, fmt.Sprintf("test timed out after %v", testTimeout), true
 		}
 		if str != "" {
 			str += fmt.Sprintf("\ntint executable returned error: %v\n", err.Error())
-			return false, str
+			return false, str, false
 		}
-		return false, err.Error()
+		return false, err.Error(), false
 	}
-	return true, str
+	return true, str, false
 }
 
 var reFlags = regexp.MustCompile(`^\s*(?:\/\/|;)\s*(\[[\w-]+\])?\s*flags:(.*)`)
