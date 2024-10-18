@@ -22,6 +22,30 @@
       },
       "revId": "900fd5c67d1254edc58459ede25b929692fbdd64",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30b29c05_9ddadf2e",
+        "filename": "src/tint/lang/core/ir/transform/rename_conflicts.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T00:39:03Z",
+      "side": 1,
+      "message": "`decl` isn\u0027t a pointer. This is `*(decl.value)`, not `(*decl).value`.",
+      "parentUuid": "4a26c89b_dbb2f2ab",
+      "range": {
+        "startLine": 273,
+        "startChar": 20,
+        "endLine": 273,
+        "endChar": 31
+      },
+      "revId": "900fd5c67d1254edc58459ede25b929692fbdd64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
