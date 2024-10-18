@@ -1,0 +1,417 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d93f5ae_cdf5443f",
+        "filename": "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "Remove commented line.",
+      "fixSuggestions": [
+        {
+          "fixId": "d5d6954a_059f2187",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.cc",
+              "range": {
+                "startLine": 55,
+                "startChar": 0,
+                "endLine": 56,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b3296a6_373bc462",
+        "filename": "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "Remove commented line.",
+      "fixSuggestions": [
+        {
+          "fixId": "7b02ee9d_923d63aa",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.h",
+              "range": {
+                "startLine": 33,
+                "startChar": 0,
+                "endLine": 34,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11d2c60e_6c1135d7",
+        "filename": "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "Nit: Doesn\u0027t need pointer.",
+      "fixSuggestions": [
+        {
+          "fixId": "d344fdcd_193442cd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.h",
+              "range": {
+                "startLine": 35,
+                "startChar": 0,
+                "endLine": 36,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "996b5852_b524b875",
+        "filename": "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "Could we remove the format and just store the subtype, since that seems to be the one we actually care about everything I could see? I think it\u0027d simplify various parts of this CL (e.g. no need for `SubtypeFor`).\n\nWe know the mapping from the PLS texel format provided in the options to the subtype (e.g. `kR32Sint` -\u003e `vec4\u003ci32\u003e`).",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccd18ee9_784d2f1d",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "There\u0027s always a root block, even if it\u0027s empty.",
+      "fixSuggestions": [
+        {
+          "fixId": "5f815034_e9d60820",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+              "range": {
+                "startLine": 82,
+                "startChar": 0,
+                "endLine": 85,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a14c9e4a_8e6686ba",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "PLS does not apply to vertex shaders.",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f005a8b_7fbd0ebf",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "Could just assert that there exactly one parameter and use that, since that\u0027s a guarantee you get from ShaderIO.",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e2f7b3d_b9f0aae7",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s guaranteed to be the last member of the struct. If there are other builtins (e.g. `frag_depth`, `sample_index`, ...), they will get ordered after `position`.\n\nWorth adding a unit test for this, and maybe an E2E test if we don\u0027t already have one.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 60
+      },
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "481986bf_ab1747b3",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "Looks like this transform assumes there is only one entry point that uses PLS. That\u0027s fine from a Dawn perspective since it always runs `SingleEntryPoint`.\n\nIt\u0027d be fairly straightforward to make it work for multiple entry points (by just calling a function that does the per-entry-point work from the loop above). If you want to keep the single-entry-point assumption though that\u0027s fine, maybe just add an assertion so that we know we what fuzzer preconditions we\u0027ll need to add later.",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a8db666_ebfb3802",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "Nit: vertex is n/a",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b7d7b82_011e4a46",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "Nit: Could do `for (auto* mem : pixel_local_struct-\u003eMembers()) {` and then use `mem-\u003eIndex()` instead of `static_cast\u003cuint32_t\u003e(i)` below.",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6781131_9a93dab8",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "I think this check is redundant. We don\u0027t have any instructions that can change the address space (we\u0027re only dealing with `access` instructions here).",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f6ffbdc_5166ad0b",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "Again, can\u0027t assume it\u0027s the last member here.",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d52bf475_f0bf5646",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "This is creating `vec2\u003cvec3\u003cf32\u003e\u003e` in your test outputs. I\u0027d just do `ty.vec2\u003cf32\u003e()` here, since we already know what the type of `@builtin(position)` is.",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbeaec04_52963554",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "Nit: No use for hashmap or texel_format here.",
+      "fixSuggestions": [
+        {
+          "fixId": "9faabdc5_a1076c95",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/pixel_local.h",
+              "range": {
+                "startLine": 33,
+                "startChar": 0,
+                "endLine": 34,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b5db24b_f21c9d8c",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "I think you could just pass this directly rather than wrapping it in a new struct, since there\u0027s nothing else needed.",
+      "fixSuggestions": [
+        {
+          "fixId": "34d62427_3afad0ee",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/pixel_local.h",
+              "range": {
+                "startLine": 43,
+                "startChar": 0,
+                "endLine": 48,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/pixel_local.h",
+              "range": {
+                "startLine": 51,
+                "startChar": 0,
+                "endLine": 52,
+                "endChar": 0
+              },
+              "replacement": "Result\u003cSuccessType\u003e PixelLocal(core::ir::Module\u0026 module, const PixelLocalOptions\u0026 options);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d922e6d5_363d6ffe",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T16:48:07Z",
+      "side": 1,
+      "message": "`vec4` for `position` (Ryan is adding validation for this soon)",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
