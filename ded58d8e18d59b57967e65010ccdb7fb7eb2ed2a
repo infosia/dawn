@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6320657d_6d5c4912",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T20:18:27Z",
+      "side": 1,
+      "message": "Any particular reason you do this twice? Could just make the coord once at the top of the function and use it in both places?",
+      "revId": "ded58d8e18d59b57967e65010ccdb7fb7eb2ed2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

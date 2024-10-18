@@ -693,6 +693,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1c71bae1_6f557c42",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-18T20:18:27Z",
+      "side": 1,
+      "message": "\u003e all our transforms that accept input do so via a \"Config\" struct declared in the header,\n\nThis isn\u0027t true, e.g. `MultiplanarExternalTexture`, `BindingRemapper`, ...\n\nBut this is fine too. Just an observation.",
+      "parentUuid": "13082f56_1960e48c",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d922e6d5_363d6ffe",
         "filename": "src/tint/lang/hlsl/writer/raise/pixel_local_test.cc",
         "patchSetId": 6
