@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cffaf10c_3a0f81c6",
+        "filename": "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d93f5ae_cdf5443f",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b3296a6_373bc462",
@@ -67,6 +85,24 @@
           ]
         }
       ],
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97e9a293_e9a99c87",
+        "filename": "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3296a6_373bc462",
       "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -106,6 +142,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c57bd45_6a13623c",
+        "filename": "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11d2c60e_6c1135d7",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "996b5852_b524b875",
@@ -119,6 +173,24 @@
       "writtenOn": "2024-10-18T16:48:07Z",
       "side": 1,
       "message": "Could we remove the format and just store the subtype, since that seems to be the one we actually care about everything I could see? I think it\u0027d simplify various parts of this CL (e.g. no need for `SubtypeFor`).\n\nWe know the mapping from the PLS texel format provided in the options to the subtype (e.g. `kR32Sint` -\u003e `vec4\u003ci32\u003e`).",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "566ed01f_723131d2",
+        "filename": "src/tint/lang/hlsl/type/rasterizer_ordered_texture_2d.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "As discussed in chat, `RasterizerOrderedTexture2D` is very similar to a `texture_storage_2d`, so it makes sense to store the texel format like this. I iterated on this many times before settling on this.",
+      "parentUuid": "996b5852_b524b875",
       "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -158,6 +230,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95da0439_c9f8bcf6",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccd18ee9_784d2f1d",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a14c9e4a_8e6686ba",
@@ -175,6 +265,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1416f6c_cbc380a2",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a14c9e4a_8e6686ba",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f005a8b_7fbd0ebf",
@@ -188,6 +296,24 @@
       "writtenOn": "2024-10-18T16:48:07Z",
       "side": 1,
       "message": "Could just assert that there exactly one parameter and use that, since that\u0027s a guarantee you get from ShaderIO.",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78c2504f_a894757e",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f005a8b_7fbd0ebf",
       "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -215,6 +341,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5b69127_90ee79ed",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e2f7b3d_b9f0aae7",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 60
+      },
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "481986bf_ab1747b3",
@@ -228,6 +378,24 @@
       "writtenOn": "2024-10-18T16:48:07Z",
       "side": 1,
       "message": "Looks like this transform assumes there is only one entry point that uses PLS. That\u0027s fine from a Dawn perspective since it always runs `SingleEntryPoint`.\n\nIt\u0027d be fairly straightforward to make it work for multiple entry points (by just calling a function that does the per-entry-point work from the loop above). If you want to keep the single-entry-point assumption though that\u0027s fine, maybe just add an assertion so that we know we what fuzzer preconditions we\u0027ll need to add later.",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec9793b8_2d456373",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "481986bf_ab1747b3",
       "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -249,6 +417,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25ba04c0_e5f55b36",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a8db666_ebfb3802",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b7d7b82_011e4a46",
@@ -262,6 +448,24 @@
       "writtenOn": "2024-10-18T16:48:07Z",
       "side": 1,
       "message": "Nit: Could do `for (auto* mem : pixel_local_struct-\u003eMembers()) {` and then use `mem-\u003eIndex()` instead of `static_cast\u003cuint32_t\u003e(i)` below.",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e470edb_e2292ed2",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b7d7b82_011e4a46",
       "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -283,6 +487,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fad7af57_bd32758d",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6781131_9a93dab8",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f6ffbdc_5166ad0b",
@@ -300,6 +522,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bb88a41_d11e5ad9",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f6ffbdc_5166ad0b",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d52bf475_f0bf5646",
@@ -313,6 +553,24 @@
       "writtenOn": "2024-10-18T16:48:07Z",
       "side": 1,
       "message": "This is creating `vec2\u003cvec3\u003cf32\u003e\u003e` in your test outputs. I\u0027d just do `ty.vec2\u003cf32\u003e()` here, since we already know what the type of `@builtin(position)` is.",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8fcc4e8_25f42a64",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d52bf475_f0bf5646",
       "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -348,6 +606,24 @@
           ]
         }
       ],
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91324f18_514dc024",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbeaec04_52963554",
       "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -399,6 +675,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "13082f56_1960e48c",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Yes, I know, but all our transforms that accept input do so via a \"Config\" struct declared in the header, so I felt this was more inline with that. It also allows us to easily add more config vars in the future.",
+      "parentUuid": "1b5db24b_f21c9d8c",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d922e6d5_363d6ffe",
         "filename": "src/tint/lang/hlsl/writer/raise/pixel_local_test.cc",
         "patchSetId": 6
@@ -410,6 +704,24 @@
       "writtenOn": "2024-10-18T16:48:07Z",
       "side": 1,
       "message": "`vec4` for `position` (Ryan is adding validation for this soon)",
+      "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f102d0c_69b633ad",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-18T20:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d922e6d5_363d6ffe",
       "revId": "abaa5f33c75e70db63aa699ce8f0b1d62d1a5b23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
