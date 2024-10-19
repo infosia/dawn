@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-10-17 07:44:28AM
+# Last rolled: 2024-10-19 05:05:05AM
 
 # conflicts_allowed: true
 
@@ -1742,7 +1742,7 @@ crbug.com/373664083 [ dawn-backend-validation nvidia-0x2184 win10 ] webgpu:api,o
 crbug.com/373664084 [ dawn-backend-validation intel-0x4680 win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:* [ RetryOnFailure ]
 
 crbug.com/373670513 [ android-pixel-6 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
-crbug.com/373485785 [ win10 intel ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
+crbug.com/373485785 [ intel win10 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
 crbug.com/373485785 [ target-cpu-32 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
 
 ################################################################################
