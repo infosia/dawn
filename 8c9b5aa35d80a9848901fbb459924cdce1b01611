@@ -16,6 +16,40 @@
       "message": "Corentin, I don\u0027t get why win-clang-dbg-x86 Dawn unittests fail. I\u0027ve tried multiple things but I still get the same error. Any idea by any chance?",
       "revId": "8c9b5aa35d80a9848901fbb459924cdce1b01611",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c054afb_8fe2a96d",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-20T11:41:30Z",
+      "side": 1,
+      "message": "This must still be an std::string, sorry I didn\u0027t catch it earlier. Otherwise the std::string_view can point at contents that\u0027s freed. It should fix the Windows failures.",
+      "revId": "8c9b5aa35d80a9848901fbb459924cdce1b01611",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f36a657_acb3cbf5",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-20T11:41:30Z",
+      "side": 1,
+      "message": "/b/s/w/ir/cache/builder/presubmit/dawn/src/dawn/native/RenderPipeline.cpp:519:  (cpplint) Add #include \u003cstring\u003e for string  [build/include_what_you_use] [4]",
+      "revId": "8c9b5aa35d80a9848901fbb459924cdce1b01611",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
