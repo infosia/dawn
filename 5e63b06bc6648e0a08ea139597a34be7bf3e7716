@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e224c8bc_1b2b0597",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-20T11:48:37Z",
+      "side": 1,
+      "message": "LGTM with these last comments, Jiawei can you TAL again?",
+      "revId": "5e63b06bc6648e0a08ea139597a34be7bf3e7716",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "245a9971_c10a5cf1",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-20T11:48:37Z",
+      "side": 1,
+      "message": "ditto for both ASSERTs",
+      "revId": "5e63b06bc6648e0a08ea139597a34be7bf3e7716",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e02b69b_84f90793",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-20T11:48:37Z",
+      "side": 1,
+      "message": "This ASSERT can be moved out of the if, as we really should never have that happening.",
+      "revId": "5e63b06bc6648e0a08ea139597a34be7bf3e7716",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af1d7f98_49716606",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-20T11:48:37Z",
+      "side": 1,
+      "message": "This ASSERT about the fragment will trigger if the visibility is Compute|Fragment, same as the comment in the previous round of comments. We should remove it.",
+      "revId": "5e63b06bc6648e0a08ea139597a34be7bf3e7716",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
