@@ -69,6 +69,24 @@
       "parentUuid": "db6fa1b8_d13e0e09",
       "revId": "becd79bfa61be79b05d2c8d0bffce16d11665762",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e304a075_c40063e2",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-21T19:41:38Z",
+      "side": 1,
+      "message": "Or at least open a specific bug for it, it\u0027s fine to land this as is, as long as it\u0027s tracked",
+      "parentUuid": "a86a15d4_c0d9288c",
+      "revId": "becd79bfa61be79b05d2c8d0bffce16d11665762",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
