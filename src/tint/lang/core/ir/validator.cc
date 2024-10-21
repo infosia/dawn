@@ -1472,8 +1472,17 @@ void Validator::CheckBuiltinPosition(const Function* ep, const core::type::Type*
 }
 
 void Validator::CheckBuiltinClipDistances(const Function* ep, const core::type::Type* type) {
-    const auto elems = type->Elements();
-    if (!elems.type || !elems.type->Is<core::type::F32>() || elems.count > 8) {
+    auto is_valid_array = [&] {
+        const auto elems = type->Elements();
+        return elems.type && elems.type->Is<core::type::F32>() && elems.count <= 8;
+    };
+
+    if (capabilities_.Contains(Capability::kAllowClipDistancesOnF32)) {
+        if (!type->Is<core::type::F32>() && !is_valid_array()) {
+            AddError(ep) << "clip_distances must be an f32 or an array<f32, N>, where N <= 8";
+            AddNote(ep) << "type: " << type->FriendlyName();
+        }
+    } else if (!is_valid_array()) {
         AddError(ep) << "clip_distances must be an array<f32, N>, where N <= 8";
     }
 }
