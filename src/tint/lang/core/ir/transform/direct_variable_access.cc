@@ -23,7 +23,7 @@
 // SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 // CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE..
 
 #include "src/tint/lang/core/ir/transform/direct_variable_access.h"
 
@@ -704,7 +704,10 @@ struct State {
 }  // namespace
 
 Result<SuccessType> DirectVariableAccess(Module& ir, const DirectVariableAccessOptions& options) {
-    auto result = ValidateAndDumpIfNeeded(ir, "DirectVariableAccess transform");
+    auto result = ValidateAndDumpIfNeeded(ir, "DirectVariableAccess transform",
+                                          core::ir::Capabilities{
+                                              core::ir::Capability::kAllowClipDistancesOnF32,
+                                          });
     if (result != Success) {
         return result;
     }
