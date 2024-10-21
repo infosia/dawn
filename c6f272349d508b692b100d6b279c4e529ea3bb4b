@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39dd5e2a_8ed19ab8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-21T18:16:18Z",
+      "side": 1,
+      "message": "Requires https://chromium-review.googlesource.com/c/chromium/tools/build/+/5948250 to land first.",
+      "revId": "c6f272349d508b692b100d6b279c4e529ea3bb4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
