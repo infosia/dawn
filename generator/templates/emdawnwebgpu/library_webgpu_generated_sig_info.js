@@ -49,6 +49,25 @@
     ',
 {%- endmacro -%}
 const webgpuSigs = {
+    // emwgpu*
+    emwgpuDelete__sig: 'vp',
+    emwgpuSetLabel__sig: 'vppi',
+    emwgpuWaitAny__sig: 'jpip',
+    emwgpuGetPreferredFormat__sig: 'i',
+    emwgpuDeviceCreateBuffer__sig: 'vppp',
+    emwgpuDeviceCreateShaderModule__sig: 'vppp',
+    emwgpuBufferDestroy__sig: 'vp',
+    emwgpuBufferGetConstMappedRange__sig: 'ppii',
+    emwgpuBufferGetMappedRange__sig: 'ppii',
+    emwgpuBufferUnmap__sig: 'vp',
+    emwgpuAdapterRequestDevice__sig: 'vpjjppp',
+    emwgpuBufferMapAsync__sig: 'vpjjii',
+    emwgpuDeviceCreateComputePipelineAsync__sig: 'vpjp',
+    emwgpuDeviceCreateRenderPipelineAsync__sig: 'vpjp',
+    emwgpuDevicePopErrorScope__sig: 'vpj',
+    emwgpuInstanceRequestAdapter__sig: 'vpjp',
+    emwgpuQueueOnSubmittedWorkDone__sig: 'vpj',
+    emwgpuShaderModuleGetCompilationInfo__sig: 'vpjp',
     // emscripten_webgpu_*
     emscripten_webgpu_get_device__sig: 'p',
     emscripten_webgpu_release_js_handle__sig: 'vi',
