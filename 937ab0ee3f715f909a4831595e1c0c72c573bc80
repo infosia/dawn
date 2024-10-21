@@ -16,6 +16,24 @@
       "message": "Can this go in `dawn.json` as a `function` with the `emscripten` tag so that it doesn\u0027t get generated in native at all?",
       "revId": "937ab0ee3f715f909a4831595e1c0c72c573bc80",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7e417ac_89c7091a",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-21T23:47:03Z",
+      "side": 1,
+      "message": "I just tried this... but it\u0027s a bit more annoying than I think it\u0027s worth because of the default `wgpu` prefixes along with the default camel casing. If you feel strongly about it I could probably modify the generator to do it, but I\u0027m hopeful to delete it soon, so leaning towards just keeping it as is.",
+      "parentUuid": "86899467_069f50d5",
+      "revId": "937ab0ee3f715f909a4831595e1c0c72c573bc80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
