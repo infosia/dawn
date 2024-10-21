@@ -552,11 +552,13 @@ var LibraryWebGPU = {
   //   library_html5_html.js)
   // ----------------------------------------------------------------------------
 
+  emwgpuDelete__sig: 'vp',
   emwgpuDelete: (ptr) => {
     delete WebGPU.Internals.jsObjects[ptr];
   },
 
   emwgpuSetLabel__deps: ['$UTF8ToString'],
+  emwgpuSetLabel__sig: 'vppi',
   emwgpuSetLabel: (ptr, data, length) => {
     var obj = WebGPU.getJsObject(ptr);
     obj.label = UTF8ToString(data, length);
@@ -565,6 +567,8 @@ var LibraryWebGPU = {
 #if ASYNCIFY
   // Returns a FutureID that was resolved, or kNullFutureId if timed out.
   emwgpuWaitAny__async: true,
+  emwgpuWaitAny__i53abi: false,
+  emwgpuWaitAny__sig: 'jpip',
   emwgpuWaitAny: (futurePtr, futureCount, timeoutNSPtr) => {
     var promises = WebGPU.Internals.waitAnyPromisesList;
     if (timeoutNSPtr) {
@@ -595,6 +599,7 @@ var LibraryWebGPU = {
   },
 #endif
 
+  emwgpuGetPreferredFormat__sig: 'i',
   emwgpuGetPreferredFormat: () => {
     var format = navigator["gpu"]["getPreferredCanvasFormat"]();
     return WebGPU.Int_PreferredFormat[format];
@@ -684,6 +689,7 @@ var LibraryWebGPU = {
 
   emwgpuAdapterRequestDevice__i53abi: false,
   emwgpuAdapterRequestDevice__deps: ['emwgpuCreateQueue', 'emwgpuOnDeviceLostCompleted', 'emwgpuOnRequestDeviceCompleted', 'emwgpuOnUncapturedError'],
+  emwgpuAdapterRequestDevice__sig: 'vpjjppp',
   emwgpuAdapterRequestDevice: (
     adapterPtr,
     futureIdL, futureIdH,
@@ -833,6 +839,7 @@ var LibraryWebGPU = {
   // Methods of Buffer
   // --------------------------------------------------------------------------
 
+  emwgpuBufferDestroy__sig: 'vp',
   emwgpuBufferDestroy: (bufferPtr) => {
     var buffer = WebGPU.getJsObject(bufferPtr);
     var onUnmap = WebGPU.Internals.bufferOnUnmaps[bufferPtr];
@@ -849,6 +856,7 @@ var LibraryWebGPU = {
   // In webgpu.h offset and size are passed in as size_t.
   // And library_webgpu assumes that size_t is always 32bit in emscripten.
   emwgpuBufferGetConstMappedRange__deps: ['$warnOnce', 'memalign', 'free'],
+  emwgpuBufferGetConstMappedRange__sig: 'ppii',
   emwgpuBufferGetConstMappedRange: (bufferPtr, offset, size) => {
     var buffer = WebGPU.getJsObject(bufferPtr);
 
@@ -875,6 +883,7 @@ var LibraryWebGPU = {
   // In webgpu.h offset and size are passed in as size_t.
   // And library_webgpu assumes that size_t is always 32bit in emscripten.
   emwgpuBufferGetMappedRange__deps: ['$warnOnce', 'memalign', 'free'],
+  emwgpuBufferGetMappedRange__sig: 'ppii',
   emwgpuBufferGetMappedRange: (bufferPtr, offset, size) => {
     var buffer = WebGPU.getJsObject(bufferPtr);
 
@@ -917,6 +926,7 @@ var LibraryWebGPU = {
   // And library_webgpu assumes that size_t is always 32bit in emscripten.
   emwgpuBufferMapAsync__i53abi: false,
   emwgpuBufferMapAsync__deps: ['emwgpuOnMapAsyncCompleted'],
+  emwgpuBufferMapAsync__sig: 'vpjjii',
   emwgpuBufferMapAsync: (bufferPtr, futureIdL, futureIdH, mode, offset, size) => {
     var buffer = WebGPU.getJsObject(bufferPtr);
     WebGPU.Internals.bufferOnUnmaps[bufferPtr] = [];
@@ -940,6 +950,7 @@ var LibraryWebGPU = {
     }));
   },
 
+  emwgpuBufferUnmap__sig: 'vp',
   emwgpuBufferUnmap: (bufferPtr) => {
     var buffer = WebGPU.getJsObject(bufferPtr);
 
@@ -1434,6 +1445,7 @@ var LibraryWebGPU = {
     return ptr;
   },
 
+  emwgpuDeviceCreateBuffer__sig: 'vppp',
   emwgpuDeviceCreateBuffer: (devicePtr, descriptor, bufferPtr) => {
     {{{ gpu.makeCheckDescriptor('descriptor') }}}
 
@@ -1481,6 +1493,7 @@ var LibraryWebGPU = {
 
   emwgpuDeviceCreateComputePipelineAsync__i53abi: false,
   emwgpuDeviceCreateComputePipelineAsync__deps: ['emwgpuCreateComputePipeline', 'emwgpuOnCreateComputePipelineCompleted'],
+  emwgpuDeviceCreateComputePipelineAsync__sig: 'vpjp',
   emwgpuDeviceCreateComputePipelineAsync: (devicePtr, futureIdL, futureIdH, descriptor) => {
     var desc = WebGPU.makeComputePipelineDesc(descriptor);
     var device = WebGPU.getJsObject(devicePtr);
@@ -1589,6 +1602,7 @@ var LibraryWebGPU = {
 
   emwgpuDeviceCreateRenderPipelineAsync__i53abi: false,
   emwgpuDeviceCreateRenderPipelineAsync__deps: ['emwgpuCreateRenderPipeline', 'emwgpuOnCreateRenderPipelineCompleted'],
+  emwgpuDeviceCreateRenderPipelineAsync__sig: 'vpjp',
   emwgpuDeviceCreateRenderPipelineAsync: (devicePtr, futureIdL, futureIdH, descriptor) => {
     var desc = WebGPU.makeRenderPipelineDesc(descriptor);
     var device = WebGPU.getJsObject(devicePtr);
@@ -1645,6 +1659,7 @@ var LibraryWebGPU = {
     return ptr;
   },
 
+  emwgpuDeviceCreateShaderModule__sig: 'vppp',
   emwgpuDeviceCreateShaderModule: (devicePtr, descriptor, shaderModulePtr) => {
     {{{ gpu.makeCheck('descriptor') }}}
     var nextInChainPtr = {{{ makeGetValue('descriptor', C_STRUCTS.WGPUShaderModuleDescriptor.nextInChain, '*') }}};
@@ -1736,6 +1751,7 @@ var LibraryWebGPU = {
 
   emwgpuDevicePopErrorScope__i53abi: false,
   emwgpuDevicePopErrorScope__deps: ['emwgpuOnPopErrorScopeCompleted'],
+  emwgpuDevicePopErrorScope__sig: 'vpj',
   emwgpuDevicePopErrorScope: (devicePtr, futureIdL, futureIdH) => {
     var device = WebGPU.getJsObject(devicePtr);
     {{{ runtimeKeepalivePush() }}}
@@ -1837,6 +1853,7 @@ var LibraryWebGPU = {
 
   emwgpuInstanceRequestAdapter__i53abi: false,
   emwgpuInstanceRequestAdapter__deps: ['emwgpuCreateAdapter', 'emwgpuOnRequestAdapterCompleted'],
+  emwgpuInstanceRequestAdapter__sig: 'vpjp',
   emwgpuInstanceRequestAdapter: (instancePtr, futureIdL, futureIdH, options) => {
     var opts;
     if (options) {
@@ -1907,6 +1924,7 @@ var LibraryWebGPU = {
 
   emwgpuQueueOnSubmittedWorkDone__i53abi: false,
   emwgpuQueueOnSubmittedWorkDone__deps: ['emwgpuOnWorkDoneCompleted'],
+  emwgpuQueueOnSubmittedWorkDone__sig: 'vpj',
   emwgpuQueueOnSubmittedWorkDone: (queuePtr, futureIdL, futureIdH) => {
     var queue = WebGPU.getJsObject(queuePtr);
 
@@ -2197,6 +2215,7 @@ var LibraryWebGPU = {
 
   emwgpuShaderModuleGetCompilationInfo__i53abi: false,
   emwgpuShaderModuleGetCompilationInfo__deps: ['emwgpuOnCompilationInfoCompleted', '$stringToUTF8', '$lengthBytesUTF8', 'malloc'],
+  emwgpuShaderModuleGetCompilationInfo__sig: 'vpjp',
   emwgpuShaderModuleGetCompilationInfo: (shaderModulePtr, futureIdL, futureIdH, compilationInfoPtr) => {
     var shaderModule = WebGPU.getJsObject(shaderModulePtr);
     {{{ runtimeKeepalivePush() }}}
@@ -2416,12 +2435,14 @@ for (var value in LibraryWebGPU.$WebGPU.FeatureName) {
   LibraryWebGPU.$WebGPU.FeatureNameString2Enum[LibraryWebGPU.$WebGPU.FeatureName[value]] = value;
 }
 
+// Add and assume __i53abi as true for functions with 64-bit value in their
+// signatures, if not explicitly set otherwise.
 for (const key of Object.keys(LibraryWebGPU)) {
-  if (typeof LibraryWebGPU[key] === 'function') {
-    if (!(key + '__i53abi' in LibraryWebGPU)) {
-      LibraryWebGPU[key + '__i53abi'] = true;
-    }
-  }
+  if (typeof LibraryWebGPU[key] !== 'function') continue;
+  if (key + '__sig' in LibraryWebGPU) continue;
+  const sig = LibraryWebGPU[key + '__sig'];
+  if (!sig?.includes('j')) continue;
+  LibraryWebGPU[key + '__i53abi'] = true;
 }
 
 // Based on autoAddDeps, this helper iterates the object and moves the
