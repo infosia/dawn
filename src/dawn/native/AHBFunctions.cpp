@@ -29,6 +29,51 @@
 
 namespace dawn::native {
 
+namespace {
+wgpu::TextureFormat FormatFromAHardwareBufferFormat(uint32_t ahbFormat) {
+    switch (ahbFormat) {
+        case AHARDWAREBUFFER_FORMAT_R8G8B8A8_UNORM:
+            return wgpu::TextureFormat::RGBA8Unorm;
+        case AHARDWAREBUFFER_FORMAT_R8G8B8X8_UNORM:
+            return wgpu::TextureFormat::RGBA8Unorm;
+        case AHARDWAREBUFFER_FORMAT_R16G16B16A16_FLOAT:
+            return wgpu::TextureFormat::RGBA16Float;
+        case AHARDWAREBUFFER_FORMAT_R10G10B10A2_UNORM:
+            return wgpu::TextureFormat::RGB10A2Unorm;
+        case AHARDWAREBUFFER_FORMAT_D16_UNORM:
+            return wgpu::TextureFormat::Depth16Unorm;
+        case AHARDWAREBUFFER_FORMAT_D24_UNORM:
+            return wgpu::TextureFormat::Depth24Plus;
+        case AHARDWAREBUFFER_FORMAT_D24_UNORM_S8_UINT:
+            return wgpu::TextureFormat::Depth24PlusStencil8;
+        case AHARDWAREBUFFER_FORMAT_D32_FLOAT:
+            return wgpu::TextureFormat::Depth32Float;
+        case AHARDWAREBUFFER_FORMAT_D32_FLOAT_S8_UINT:
+            return wgpu::TextureFormat::Depth32FloatStencil8;
+        case AHARDWAREBUFFER_FORMAT_S8_UINT:
+            return wgpu::TextureFormat::Stencil8;
+        case AHARDWAREBUFFER_FORMAT_Y8Cb8Cr8_420:
+            return wgpu::TextureFormat::Undefined;
+        case AHARDWAREBUFFER_FORMAT_YCbCr_P010:
+            return wgpu::TextureFormat::Undefined;
+        case AHARDWAREBUFFER_FORMAT_R8_UNORM:
+            return wgpu::TextureFormat::R8Unorm;
+        case AHARDWAREBUFFER_FORMAT_R16_UINT:
+            return wgpu::TextureFormat::R16Uint;
+        case AHARDWAREBUFFER_FORMAT_R16G16_UINT:
+            return wgpu::TextureFormat::RG16Uint;
+
+        case AHARDWAREBUFFER_FORMAT_R8G8B8_UNORM:
+        case AHARDWAREBUFFER_FORMAT_R5G6B5_UNORM:
+        case AHARDWAREBUFFER_FORMAT_BLOB:
+        case AHARDWAREBUFFER_FORMAT_R10G10B10A10_UNORM:
+        default:
+            return wgpu::TextureFormat::External;
+    }
+}
+
+}  // anonymous namespace
+
 AHBFunctions::AHBFunctions() {
     if (!mNativeWindowLib.Open("libnativewindow.so") ||
         !mNativeWindowLib.GetProc(&Acquire, "AHardwareBuffer_acquire") ||
@@ -42,6 +87,30 @@ AHBFunctions::~AHBFunctions() = default;
 
 bool AHBFunctions::IsValid() const {
     return mNativeWindowLib.Valid();
+}
+
+SharedTextureMemoryProperties GetAHBSharedTextureMemoryProperties(
+    const AHBFunctions* ahbFunctions,
+    ::AHardwareBuffer* aHardwareBuffer) {
+    AHardwareBuffer_Desc aHardwareBufferDesc{};
+    ahbFunctions->Describe(aHardwareBuffer, &aHardwareBufferDesc);
+
+    SharedTextureMemoryProperties properties;
+    properties.size = {aHardwareBufferDesc.width, aHardwareBufferDesc.height,
+                       aHardwareBufferDesc.layers};
+    properties.usage = wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst;
+    if (aHardwareBufferDesc.usage & AHARDWAREBUFFER_USAGE_GPU_FRAMEBUFFER) {
+        properties.usage |= wgpu::TextureUsage::RenderAttachment;
+    }
+    if (aHardwareBufferDesc.usage & AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE) {
+        properties.usage |= wgpu::TextureUsage::TextureBinding;
+    }
+    if (aHardwareBufferDesc.usage & AHARDWAREBUFFER_USAGE_GPU_DATA_BUFFER) {
+        properties.usage |= wgpu::TextureUsage::StorageBinding;
+    }
+    properties.format = FormatFromAHardwareBufferFormat(aHardwareBufferDesc.format);
+
+    return properties;
 }
 
 }  // namespace dawn::native
