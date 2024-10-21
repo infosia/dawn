@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "482e4662_53a4f0a1",
+        "filename": "generator/templates/emdawnwebgpu/library_webgpu_generated_sig_info.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-21T21:28:56Z",
+      "side": 1,
+      "message": "Hmm, for these, maybe we could have them in the JS file for now. There\u0027s probably going to be more `emwgpu` functions to be added as we implement more stuff over there, and it\u0027s gonna be harder to remember to add these when they are in another file.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 54
+      },
+      "revId": "687bbc363c8645d85fee0252f9de30cc4c84527f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "664352ab_3cfb8320",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 2422,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-21T21:28:56Z",
+      "side": 1,
+      "message": "nit. I think this might be too aggressive? I think we might need to explicitly check if `sig` exists already first then do the `\u0027j\u0027` check. For example, imagine if we explicitly wanted to disable `__i53abi` for a function whose signature has a `\u0027j\u0027` in it.",
+      "range": {
+        "startLine": 2422,
+        "startChar": 4,
+        "endLine": 2422,
+        "endChar": 27
+      },
+      "revId": "687bbc363c8645d85fee0252f9de30cc4c84527f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
