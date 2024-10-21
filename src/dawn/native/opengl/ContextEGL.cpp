@@ -167,6 +167,10 @@ void ContextEGL::MakeCurrent() {
     IgnoreErrors(CheckEGL(mDisplay->egl, success == EGL_TRUE, "eglMakeCurrent"));
 }
 
+EGLContext ContextEGL::GetEGLContext() {
+    return mContext;
+}
+
 // ScopedMakeSurfaceCurrent
 
 [[nodiscard]] ContextEGL::ScopedMakeSurfaceCurrent ContextEGL::MakeSurfaceCurrentScope(
