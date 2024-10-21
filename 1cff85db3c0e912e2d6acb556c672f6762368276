@@ -50,6 +50,24 @@
       "message": "We should probably use the global cache instead of `seen` here now too. Otherwise a struct nested inside two other different structures will still be validated twice.",
       "revId": "1cff85db3c0e912e2d6acb556c672f6762368276",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f8b6c59_60906af3",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-21T19:19:37Z",
+      "side": 1,
+      "message": "There are additional checks that happen for nested types, like the nested poinetr check and the handling of nested reference types. So, while this does some duplicate checking, I think in general it\u0027s better as it reduces it by a large margin.\n\nGoing to leave the `seen` check alone for now.",
+      "parentUuid": "80c1e4e4_b57075a1",
+      "revId": "1cff85db3c0e912e2d6acb556c672f6762368276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
