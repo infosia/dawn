@@ -37,11 +37,19 @@ namespace dawn::native::opengl {
 class Device;
 struct GLFormat;
 
+enum class OwnsHandle {
+    Yes,
+    No,
+};
+
 class Texture final : public TextureBase {
   public:
     static ResultOrError<Ref<Texture>> Create(Device* device,
                                               const UnpackedPtr<TextureDescriptor>& descriptor);
-    Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor, GLuint handle);
+    Texture(Device* device,
+            const UnpackedPtr<TextureDescriptor>& descriptor,
+            GLuint handle,
+            OwnsHandle ownsHandle);
 
     GLuint GetHandle() const;
     GLenum GetGLTarget() const;
@@ -57,7 +65,7 @@ class Texture final : public TextureBase {
     MaybeError ClearTexture(const SubresourceRange& range, TextureBase::ClearValue clearValue);
 
     GLuint mHandle;
-    bool mOwnsHandle = false;
+    OwnsHandle mOwnsHandle = OwnsHandle::No;
     GLenum mTarget;
 };
 
