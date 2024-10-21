@@ -68,6 +68,8 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     std::optional<uint32_t> subgroup_invocation_id_index;
     std::optional<uint32_t> subgroup_size_index;
     std::optional<uint32_t> num_workgroups_index;
+    std::optional<uint32_t> first_clip_distance_index;
+    std::optional<uint32_t> second_clip_distance_index;
 
     /// Constructor
     StateImpl(core::ir::Module& mod, core::ir::Function* f, const ShaderIOConfig& c)
@@ -106,6 +108,8 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 return 12;
             case core::BuiltinValue::kPointSize:
                 return 13;
+            case core::BuiltinValue::kClipDistances:
+                return 14;
             default:
                 break;
         }
@@ -241,6 +245,46 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         return tint::Empty;
     }
 
+    uint32_t AddClipDistanceOutput(Symbol name,
+                                   const core::type::Type* type,
+                                   const core::IOAttributes& attributes) {
+        // When adding a ClipDistance output, we add one or two outputs depending on the array size.
+        // The new outputs maintain the ClipDistance attribute, which is translated to
+        // SV_ClipDistanceN in the printer.
+        auto* arr = type->As<core::type::Array>();
+        uint32_t arr_count = *arr->ConstantCount();
+        TINT_ASSERT(arr_count >= 1 && arr_count <= 8);
+        uint32_t count0, count1;
+        if (arr_count >= 4) {
+            count0 = 4;
+            count1 = arr_count - 4;
+        } else {
+            count0 = arr_count;
+            count1 = 0;
+        }
+        auto* ty0 = ty.MatchWidth(ty.f32(), count0);
+        auto name0 = ir.symbols.New(name.Name() + std::to_string(0));
+        first_clip_distance_index =
+            core::ir::transform::ShaderIOBackendState::AddOutput(name0, ty0, attributes);
+        if (count1 > 0) {
+            auto* ty1 = ty.MatchWidth(ty.f32(), count1);
+            auto name1 = ir.symbols.New(name.Name() + std::to_string(1));
+            second_clip_distance_index =
+                core::ir::transform::ShaderIOBackendState::AddOutput(name1, ty1, attributes);
+        }
+        return *first_clip_distance_index;
+    }
+
+    uint32_t AddOutput(Symbol name,
+                       const core::type::Type* type,
+                       core::IOAttributes attributes) override {
+        if (attributes.builtin == core::BuiltinValue::kClipDistances) {
+            return AddClipDistanceOutput(name, type, attributes);
+        }
+
+        return core::ir::transform::ShaderIOBackendState::AddOutput(name, type, attributes);
+    }
+
     /// @copydoc ShaderIO::BackendState::FinalizeOutputs
     const core::type::Type* FinalizeOutputs() override {
         if (outputs.IsEmpty()) {
@@ -345,8 +389,47 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
         return v;
     }
 
+    core::ir::Value* BuildClipDistanceInitValue(core::ir::Builder& builder,
+                                                uint32_t output_index,
+                                                core::ir::Value* src_array,
+                                                uint32_t src_array_first_index) {
+        // Copy from the array `src_array`
+        auto* src_array_ty = src_array->Type()->As<core::type::Array>();
+        auto* elem_ty = src_array_ty->ElemType();
+        TINT_ASSERT(src_array_ty);
+
+        core::ir::Value* dst_value;
+        if (auto* dst_vec_ty = outputs[output_index].type->As<core::type::Vector>()) {
+            // Create a vector and copy array elements to it
+            Vector<core::ir::Value*, 4> init;
+            for (size_t i = 0; i < dst_vec_ty->Elements().count; ++i) {
+                init.Push(
+                    builder.Access(elem_ty, src_array, u32(src_array_first_index + i))->Result(0));
+            }
+            dst_value = builder.Construct(dst_vec_ty, init)->Result(0);
+        } else {
+            TINT_ASSERT(outputs[output_index].type->As<core::type::Scalar>());
+            dst_value = builder.Access(elem_ty, src_array, u32(src_array_first_index))->Result(0);
+        }
+        return dst_value;
+    }
+
     /// @copydoc ShaderIO::BackendState::SetOutput
-    void SetOutput(core::ir::Builder&, uint32_t idx, core::ir::Value* value) override {
+    void SetOutput(core::ir::Builder& builder, uint32_t idx, core::ir::Value* value) override {
+        // If setting a ClipDistance output, we build the initial value for one or both output
+        // values.
+        if (idx == first_clip_distance_index) {
+            auto index = output_indices[idx];
+            output_values[index] = BuildClipDistanceInitValue(builder, idx, value, 0);
+
+            if (second_clip_distance_index) {
+                TINT_ASSERT(second_clip_distance_index == idx + 1);
+                index = output_indices[idx + 1];
+                output_values[index] = BuildClipDistanceInitValue(builder, idx + 1, value, 4);
+            }
+            return;
+        }
+
         auto index = output_indices[idx];
         output_values[index] = value;
     }
