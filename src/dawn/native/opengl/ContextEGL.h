@@ -68,6 +68,8 @@ class ContextEGL : NonMovable {
 
     void MakeCurrent();
 
+    EGLContext GetEGLContext();
+
   private:
     Ref<DisplayEGL> mDisplay;
     EGLContext mContext = EGL_NO_CONTEXT;
