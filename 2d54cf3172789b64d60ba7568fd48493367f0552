@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e9e166f_fa7f5611",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a0e4a3_7016a4f6",
+      "revId": "2d54cf3172789b64d60ba7568fd48493367f0552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "921c37e4_e1ed6867",
@@ -106,6 +124,30 @@
       "writtenOn": "2024-06-26T08:50:57Z",
       "side": 1,
       "message": "Acknowledged",
+      "parentUuid": "921c37e4_e1ed6867",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 1
+      },
+      "revId": "2d54cf3172789b64d60ba7568fd48493367f0552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdd13035_45c4a910",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
+      "side": 1,
+      "message": "Fix applied.",
       "parentUuid": "921c37e4_e1ed6867",
       "range": {
         "startLine": 30,

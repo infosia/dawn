@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f393a91_d79a9873",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72ba85c7_853cb0a5",
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f755de7_e7d6e24d",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "604ab711_8288e9d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
+      "side": 1,
+      "message": "I can\u0027t seem to make the sample work. It only cycles between \"Opaque\" and \"Premultiplied\", and becomes blank the first time I change the alpha mode. I also can\u0027t resize it and it sometimes looses the device.\nHowever, I tested on my own project, and also have made a minimal example here: https://gist.github.com/martinfouilleul/2bdea843d709d1fa53560c515d6516e9\n\nedit: the problem with ManualSurfaceTest comes from my changes, something\u0027s going wrong when changing the surface config. I\u0027ll try to track that down and report back.\nedit2: ok I was not copying the dcomp resources when reusing the swapchain, will submit new changes shortly",
+      "parentUuid": "5f755de7_e7d6e24d",
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e9b9b84_66b55eec",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-06-12T10:32:49Z",
       "side": 1,
       "message": "nit: Add a Bug: XXXXXX annotation to link this CL to the issue you reported.",
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69e6f860_7a749500",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e9b9b84_66b55eec",
       "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -82,6 +136,24 @@
       "writtenOn": "2024-06-12T10:32:49Z",
       "side": 1,
       "message": "LGTM overall, thank you for the contribution!",
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79409cbb_a7e317df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
+      "side": 1,
+      "message": "Thanks! I applied changes as per your comments below, but I\u0027m not sure how Gerrit\u0027s supposed to work. I pushed new commits but it seem to have created a new CL?",
+      "parentUuid": "32c330ca_671c5fee",
       "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -121,6 +193,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d064e863_4bb911bb",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
+      "side": 1,
+      "message": "I moved that to src/dawn/native/CMakeLists.txt. I have no idea how gn works though...",
+      "parentUuid": "b6c720da_3af751b9",
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e619a776_a8380576",
@@ -149,6 +239,24 @@
         "id": 1000002
       },
       "writtenOn": "2024-06-19T08:23:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e619a776_a8380576",
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d21c2579_928c79bb",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "e619a776_a8380576",
@@ -214,6 +322,30 @@
         "id": 1000002
       },
       "writtenOn": "2024-06-19T08:23:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a7091e9_7c759dc8",
+      "range": {
+        "startLine": 106,
+        "startChar": 19,
+        "endLine": 106,
+        "endChar": 44
+      },
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "574c013b_c4d41b70",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "6a7091e9_7c759dc8",
@@ -370,6 +502,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88e25edc_37c77496",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd21e91f_882786e6",
+      "range": {
+        "startLine": 217,
+        "startChar": 31,
+        "endLine": 217,
+        "endChar": 60
+      },
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22cafb75_6d7e2ff5",
@@ -405,6 +561,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dc7488e_93fe6f64",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "22cafb75_6d7e2ff5",
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52ce7542_217baba4",
@@ -433,6 +607,24 @@
         "id": 1000002
       },
       "writtenOn": "2024-06-19T08:23:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ce7542_217baba4",
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13b38b68_831c7542",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "52ce7542_217baba4",
@@ -558,6 +750,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17a9219a_77c39759",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97d72a6b_ae207de3",
+      "range": {
+        "startLine": 247,
+        "startChar": 1,
+        "endLine": 249,
+        "endChar": 40
+      },
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d50f008a_2c2b48ee",
@@ -605,6 +821,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b23fa36_9fe7f233",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50f008a_2c2b48ee",
+      "range": {
+        "startLine": 251,
+        "startChar": 12,
+        "endLine": 251,
+        "endChar": 29
+      },
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a72015b9_dad96cba",
@@ -639,6 +879,30 @@
         "id": 1000002
       },
       "writtenOn": "2024-06-19T08:23:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a72015b9_dad96cba",
+      "range": {
+        "startLine": 297,
+        "startChar": 16,
+        "endLine": 297,
+        "endChar": 36
+      },
+      "revId": "18b0affb50bf63300e6fb61a7e78b88b75ea78d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f48db53_11cd4aa5",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 3471636
+      },
+      "writtenOn": "2024-10-21T08:27:23Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "a72015b9_dad96cba",
