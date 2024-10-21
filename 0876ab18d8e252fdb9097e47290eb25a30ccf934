@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19c43419_eaf20024",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-21T16:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "729b0df2_108365f3",
+      "range": {
+        "startLine": 525,
+        "startChar": 0,
+        "endLine": 527,
+        "endChar": 5
+      },
+      "revId": "0876ab18d8e252fdb9097e47290eb25a30ccf934",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37514726_edc55da1",
@@ -58,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a7022f0_6dd7d948",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-21T16:02:54Z",
+      "side": 1,
+      "message": "Failure doesn\u0027t define a .Str().\nI previous was using the `\u003c\u003c` operator, but that produces a string prefaced with `error: `, which when passed into `AddError(...)` will create a preface of `error: error: `\n\nI switched this to using a `Result\u003cSuccess, std::string\u003e` instead of the default `Failure` type, since an error string is actually what I want.",
+      "parentUuid": "37514726_edc55da1",
+      "revId": "0876ab18d8e252fdb9097e47290eb25a30ccf934",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2a616f1_03528875",
@@ -71,6 +113,24 @@
       "writtenOn": "2024-10-17T21:42:59Z",
       "side": 1,
       "message": "übernit: must *be* used",
+      "revId": "0876ab18d8e252fdb9097e47290eb25a30ccf934",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaffb13f_5dc456b8",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-21T16:02:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2a616f1_03528875",
       "revId": "0876ab18d8e252fdb9097e47290eb25a30ccf934",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
