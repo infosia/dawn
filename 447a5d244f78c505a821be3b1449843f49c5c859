@@ -16,6 +16,24 @@
       "message": "Oh, I guess if we were already triggering OnDeviceLost here then we can also destroy the JS device.\n\nDo we require this in Dawn? I can\u0027t remember if webgpu.h is supposed to destroy when the device is dropped, or not.",
       "revId": "447a5d244f78c505a821be3b1449843f49c5c859",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ca0b940_cebe737f",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-21T20:44:11Z",
+      "side": 1,
+      "message": "In native it does, which is why I just did the same here.",
+      "parentUuid": "aba34c1f_fba8bfd2",
+      "revId": "447a5d244f78c505a821be3b1449843f49c5c859",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
