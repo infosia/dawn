@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "1cff85db3c0e912e2d6acb556c672f6762368276",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7688adf0_89ef7ce5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-21T15:19:14Z",
+      "side": 1,
+      "message": "LGTM with once suggestion that could be done separately if you rather.",
+      "revId": "1cff85db3c0e912e2d6acb556c672f6762368276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80c1e4e4_b57075a1",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-21T15:19:14Z",
+      "side": 1,
+      "message": "We should probably use the global cache instead of `seen` here now too. Otherwise a struct nested inside two other different structures will still be validated twice.",
+      "revId": "1cff85db3c0e912e2d6acb556c672f6762368276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
