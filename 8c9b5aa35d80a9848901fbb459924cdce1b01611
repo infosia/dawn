@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c00e00f_426634b2",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-21T08:00:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c054afb_8fe2a96d",
+      "revId": "8c9b5aa35d80a9848901fbb459924cdce1b01611",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f36a657_acb3cbf5",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-10-20T11:41:30Z",
       "side": 1,
       "message": "/b/s/w/ir/cache/builder/presubmit/dawn/src/dawn/native/RenderPipeline.cpp:519:  (cpplint) Add #include \u003cstring\u003e for string  [build/include_what_you_use] [4]",
+      "revId": "8c9b5aa35d80a9848901fbb459924cdce1b01611",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df1f85e7_c547269e",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-21T08:00:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f36a657_acb3cbf5",
       "revId": "8c9b5aa35d80a9848901fbb459924cdce1b01611",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
