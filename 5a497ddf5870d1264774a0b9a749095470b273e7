@@ -33,6 +33,162 @@
       "message": "These changes were tested. Each permutation (timeout/failed/passed).",
       "revId": "5a497ddf5870d1264774a0b9a749095470b273e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68b4aea4_09b8e3ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-22T00:51:39Z",
+      "side": 1,
+      "message": "I\u0027m still thinking through this one. I made a couple of small rename suggestions, but am not done the review.",
+      "revId": "5a497ddf5870d1264774a0b9a749095470b273e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "390ce308_f7917ec9",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-22T00:51:39Z",
+      "side": 1,
+      "message": "To make this code less confusing, I\u0027m thinking maybe we should rename:\n\n`skipped` to `isSkipTest`\n`invalid_test` to `isSkipInvalidTest`\n`timeout_test` to `isSkipTimeoutTest`\n\nProbably best to do as a follow-up, though.",
+      "range": {
+        "startLine": 703,
+        "startChar": 2,
+        "endLine": 703,
+        "endChar": 9
+      },
+      "revId": "5a497ddf5870d1264774a0b9a749095470b273e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e60db8f_9b244834",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-22T00:51:39Z",
+      "side": 1,
+      "message": "I know what you mean, but this part of the comment is confusing because initially I thought it meant that if we ran the test, and it timed out, then we don\u0027t update expectations. I suggest:\n\n// Do not update expected if test is marked as SKIP: TIMEOUT",
+      "range": {
+        "startLine": 797,
+        "startChar": 32,
+        "endLine": 797,
+        "endChar": 55
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "123bc2ba_01cc95ce",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 797,
+                "startChar": 0,
+                "endLine": 798,
+                "endChar": 0
+              },
+              "replacement": "\t\t// Do not update expected if test is marked as SKIP: TIMEOUT\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5a497ddf5870d1264774a0b9a749095470b273e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "594366b7_f3766539",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-22T00:51:39Z",
+      "side": 1,
+      "message": "\u003e \"timout\" is a possible misspelling of \"timeout\".\n\nPlease fix.",
+      "parentUuid": "111f5ef7_a177bb7c",
+      "range": {
+        "startLine": 834,
+        "startChar": 32,
+        "endLine": 834,
+        "endChar": 38
+      },
+      "revId": "5a497ddf5870d1264774a0b9a749095470b273e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "729e7373_c8325d18",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-22T00:51:39Z",
+      "side": 1,
+      "message": "rename `timedOut`",
+      "range": {
+        "startLine": 972,
+        "startChar": 65,
+        "endLine": 972,
+        "endChar": 73
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c8f65f99_df7597e1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 777,
+                "startChar": 0,
+                "endLine": 778,
+                "endChar": 0
+              },
+              "replacement": "\t\tok, out, timedOut \u003d invoke(cfg.tintPath, args)\n"
+            },
+            {
+              "path": "tools/src/cmd/tests/main.go",
+              "range": {
+                "startLine": 972,
+                "startChar": 0,
+                "endLine": 973,
+                "endChar": 0
+              },
+              "replacement": "func invoke(exe string, args []string) (ok bool, output string, timedout bool) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5a497ddf5870d1264774a0b9a749095470b273e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
