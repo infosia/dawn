@@ -69,6 +69,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f027a6e_4582ffbc",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-22T19:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6a5c7d_5dc25b70",
+      "revId": "e84ef8048227af9e93f23fbcb0b9ccffbb0d1c0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d869e86_f5790d33",
@@ -100,6 +118,24 @@
           ]
         }
       ],
+      "revId": "e84ef8048227af9e93f23fbcb0b9ccffbb0d1c0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bee7016_e6088569",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-22T19:16:05Z",
+      "side": 1,
+      "message": "At the moment, `std::move` here doesn\u0027t actually help with performance because the current Builder functions don\u0027t ever take ownership of an input Vector. I think we could make it do so by adding an overload of `Values()` that accepts a `Vector\u003cValue*\u003e\u0026\u0026` that returns a std::move\u0027d version of the input vector. This should result in r-value constructors being called, such as in this case:\n```\n    template \u003ctypename... ARGS\u003e\n    ir::Construct* ConstructWithResult(ir::InstructionResult* result, ARGS\u0026\u0026... args) {\n        return Append(\n            ir.CreateInstruction\u003cir::Construct\u003e(result, Values(std::forward\u003cARGS\u003e(args)...)));\n    }\n```\n\nI\u0027ll still make the change so that in the future, if we fix this, we\u0027ll get the perf benefits.",
+      "parentUuid": "0d869e86_f5790d33",
       "revId": "e84ef8048227af9e93f23fbcb0b9ccffbb0d1c0a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
