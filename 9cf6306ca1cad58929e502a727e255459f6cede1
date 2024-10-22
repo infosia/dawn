@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7d7c164_b30b59d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2024-10-22T23:35:50Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org, please help to review this change required by ONNX Runtime WebGPU native Execution Provider.",
+      "revId": "9cf6306ca1cad58929e502a727e255459f6cede1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
