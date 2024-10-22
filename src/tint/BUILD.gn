@@ -57,6 +57,11 @@ config("tint_common_config") {
   if (!is_clang && is_win) {
     cflags = [ "/wd4715" ]
   }
+
+  # Disable below C++20 warning to enable the build with Skia which still uses C++17
+  if (is_clang) {
+    cflags = [ "-Wno-deprecated-this-capture" ]
+  }
 }
 
 config("tint_public_config") {
