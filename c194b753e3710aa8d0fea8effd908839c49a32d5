@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc7778cc_dc77f70a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-22T18:08:02Z",
+      "side": 1,
+      "message": "PTAL. This builds for me, I see tint wasm files in the output folder, although I don\u0027t know how to use it ....",
+      "revId": "c194b753e3710aa8d0fea8effd908839c49a32d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
