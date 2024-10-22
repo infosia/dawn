@@ -23,7 +23,7 @@
 // SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 // CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE..
 
 #include "src/tint/lang/core/ir/binary/decode.h"
 
@@ -44,6 +44,7 @@
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/core/type/vector.h"
+#include "src/tint/utils/constants/internal_limits.h"
 #include "src/tint/utils/containers/hashset.h"
 #include "src/tint/utils/containers/transform.h"
 #include "src/tint/utils/diagnostic/diagnostic.h"
@@ -832,6 +833,12 @@ struct Decoder {
             Error() << "array element stride is smaller than the implicit stride";
             return mod_out_.Types().invalid();
         }
+        if (count >= internal_limits::kMaxArrayElementCount) {
+            Error() << "array count (" << count << ") must be less than "
+                    << internal_limits::kMaxArrayElementCount;
+            return mod_out_.Types().invalid();
+        }
+
         return count > 0 ? mod_out_.Types().array(element, count, stride)
                          : mod_out_.Types().runtime_array(element, stride);
     }
@@ -1098,6 +1105,11 @@ struct Decoder {
         uint32_t num_elements = type->Elements().count;
         if (DAWN_UNLIKELY(num_elements == 0)) {
             Error() << "cannot create a splat of type " << type->FriendlyName();
+            return b.InvalidConstant()->Value();
+        }
+        if (DAWN_UNLIKELY(num_elements > internal_limits::kMaxArrayConstructorElements)) {
+            Error() << "array constructor has excessive number of elements (>"
+                    << internal_limits::kMaxArrayConstructorElements << ")";
             return b.InvalidConstant()->Value();
         }
         auto* value = ConstantValue(splat_in.elements());
