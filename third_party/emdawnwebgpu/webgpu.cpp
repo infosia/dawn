@@ -676,7 +676,7 @@ struct WGPUDeviceImpl final : public EventSource,
 
   void Destroy();
   WGPUQueue GetQueue() const;
-  WGPUFuture GetDeviceLostFuture() const;
+  WGPUFuture GetLostFuture() const;
 
   void OnDeviceLost(WGPUDeviceLostReason reason, const char* message);
   void OnUncapturedError(WGPUErrorType type, char const* message);
@@ -1369,8 +1369,6 @@ WGPUDeviceImpl::WGPUDeviceImpl(const EventSource* source, WGPUQueue queue)
 
 void WGPUDeviceImpl::Destroy() {
   emwgpuDeviceDestroy(this);
-  // TODO(374803367): Remove this when we can get the device lost future.
-  OnDeviceLost(WGPUDeviceLostReason_Destroyed, "Device was destroyed.");
 }
 
 WGPUQueue WGPUDeviceImpl::GetQueue() const {
@@ -1378,7 +1376,7 @@ WGPUQueue WGPUDeviceImpl::GetQueue() const {
   return ReturnToAPI(std::move(queue));
 }
 
-WGPUFuture WGPUDeviceImpl::GetDeviceLostFuture() const {
+WGPUFuture WGPUDeviceImpl::GetLostFuture() const {
   return WGPUFuture{mDeviceLostFutureId};
 }
 
@@ -1563,7 +1561,7 @@ WGPUFuture wgpuAdapterRequestDevice2(
   // Device is also immediately associated with the DeviceLostEvent.
   WGPUQueue queue = new WGPUQueueImpl(adapter);
   WGPUDevice device = new WGPUDeviceImpl(adapter, descriptor, queue);
-  auto deviceLostFutureId = device->GetDeviceLostFuture().id;
+  auto deviceLostFutureId = device->GetLostFuture().id;
 
   emwgpuAdapterRequestDevice(adapter, futureId, deviceLostFutureId, device,
                              queue, descriptor);
@@ -1718,6 +1716,10 @@ WGPUShaderModule wgpuDeviceCreateShaderModule(
 
 void wgpuDeviceDestroy(WGPUDevice device) {
   device->Destroy();
+}
+
+WGPUFuture wgpuDeviceGetLostFuture(WGPUDevice device) {
+  return device->GetLostFuture();
 }
 
 WGPUQueue wgpuDeviceGetQueue(WGPUDevice device) {
