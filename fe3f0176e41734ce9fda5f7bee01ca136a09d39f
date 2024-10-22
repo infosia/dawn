@@ -42,6 +42,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46a1c31d_7690a95f",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-10-22T17:44:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1320fc07_9fa1f832",
+      "range": {
+        "startLine": 50,
+        "startChar": 48,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4bef541_ce8058de",
@@ -55,6 +79,24 @@
       "writtenOn": "2024-10-22T17:19:38Z",
       "side": 1,
       "message": "Do we need this tag? aren\u0027t we just going to end up with a bunch of them or does it combine them all? What happens if we remove it during gardening?",
+      "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a708b5f8_af121a01",
+        "filename": "tools/src/cts/expectations/update_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-10-22T17:44:46Z",
+      "side": 1,
+      "message": "The tag isn\u0027t strictly necessary, as we could just append new expectations to the bottom of the file. This allows us to keep all the untriaged/auto-generated expectations together and sorted, though.\n\nThere will only ever be one of these in the file at a time - the tool adds expectations to the existing one, and if it finds more than one, it raises an error. If a chunk with this comment doesn\u0027t exist (e.g. if it gets removed during gardening), the tool will automatically create one at the end of the file.",
+      "parentUuid": "e4bef541_ce8058de",
       "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
