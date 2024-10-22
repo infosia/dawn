@@ -99,6 +99,24 @@
       "parentUuid": "e4bef541_ce8058de",
       "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "732a2d18_92fbcf1c",
+        "filename": "tools/src/cts/expectations/update_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-22T17:56:48Z",
+      "side": 1,
+      "message": "So, that means we end up with two sorted blocks, one for roller added and one for gardeners? It seems like it would be more useful if it all sorted together?",
+      "parentUuid": "a708b5f8_af121a01",
+      "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
