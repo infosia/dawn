@@ -36,7 +36,13 @@
 namespace dawn::native {
 
 bool InheritsFromCAMetalLayer(void* obj) {
-    id<NSObject> object = static_cast<id>(obj);
+    id<NSObject> object =
+#if TARGET_OS_IOS
+        (__bridge id)obj;
+#else
+        static_cast<id>(obj);
+#endif
+
     return [object isKindOfClass:[CAMetalLayer class]];
 }
 
