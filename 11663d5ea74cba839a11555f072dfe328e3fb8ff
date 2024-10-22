@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42e43983_860e7121",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-22T14:28:08Z",
+      "side": 1,
+      "message": "Is this really the right place for this condition? I feel like we should leave \u0027matched\u0027 to mean that the expected matches the output, and we should be checking this condition on line 817:\n```\n// Consider timeout tests that succeed without timing out as a pass\npassed :\u003d ok \u0026\u0026 (matched || isSkipTimeoutTest)\n```",
+      "range": {
+        "startLine": 780,
+        "startChar": 47,
+        "endLine": 780,
+        "endChar": 67
+      },
+      "revId": "11663d5ea74cba839a11555f072dfe328e3fb8ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
