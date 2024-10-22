@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "669c23d0_bd2210a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-22T14:24:21Z",
+      "side": 1,
+      "message": "LGTM (other than nits) from a validator perspective, will leave to James to fully approve.",
+      "revId": "f5dbe3718821949378e340936490a23d078825b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f8616a8_04cac334",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-22T14:24:21Z",
+      "side": 1,
+      "message": "nit: Missing documentation comment",
+      "revId": "f5dbe3718821949378e340936490a23d078825b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4521da19_0373bc35",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2081,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-22T14:24:21Z",
+      "side": 1,
+      "message": "nit: can we keep the //s aligned (this might be a subtle different clang-format between machined or something)",
+      "revId": "f5dbe3718821949378e340936490a23d078825b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
