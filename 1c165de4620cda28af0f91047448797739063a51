@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "135ec5a9_9d442206",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-22T21:42:35Z",
+      "side": 1,
+      "message": "Note that for WGSL we only apply this limit for non-storage address spaces, as storage buffers are allowed to have very large fixed size arrays. The equivalent way to capture that here would be to do this check in the various places that actually declare arrays (var, let, param).\n\nThis is probably fine for now though, as we don\u0027t (currently) need to be able to successfully encode/decode any all valid WGSL program. Might become an issue in the future if we start using the format for more general serialization of IR though.",
+      "revId": "1c165de4620cda28af0f91047448797739063a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
