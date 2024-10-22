@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bc5eeda_ed4b685b",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-22T18:45:24Z",
+      "side": 1,
+      "message": "Should this check be up higher in the function, before the for loop over values so that Tint doesn\u0027t iterate over a bunch of values before rejecting them due the to number of them?",
+      "range": {
+        "startLine": 2209,
+        "startChar": 5,
+        "endLine": 2213,
+        "endChar": 5
+      },
+      "revId": "ca683bea64d5ebc64adbde913b321d6b49cabac3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
