@@ -135,6 +135,24 @@
       "parentUuid": "732a2d18_92fbcf1c",
       "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6f6fdf4_1da648c4",
+        "filename": "tools/src/cts/expectations/update_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-22T18:10:15Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "c9eb9e22_d87f14fd",
+      "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
