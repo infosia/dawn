@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4905a8f3_642b22a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-10-22T14:20:22Z",
+      "side": 1,
+      "message": "These need to be suppressed in compat expectations, uploaded https://dawn-review.googlesource.com/c/dawn/+/211678 instead.",
+      "revId": "e2730b1bfc248b9d799f36bc914606ccdbefc6cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
