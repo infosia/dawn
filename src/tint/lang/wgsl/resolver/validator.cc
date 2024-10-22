@@ -83,6 +83,7 @@
 #include "src/tint/lang/wgsl/sem/value_conversion.h"
 #include "src/tint/lang/wgsl/sem/variable.h"
 #include "src/tint/lang/wgsl/sem/while_statement.h"
+#include "src/tint/utils/constants/internal_limits.h"
 #include "src/tint/utils/containers/map.h"
 #include "src/tint/utils/containers/reverse.h"
 #include "src/tint/utils/containers/transform.h"
@@ -99,7 +100,6 @@ using namespace tint::core::fluent_types;  // NOLINT
 namespace tint::resolver {
 namespace {
 
-constexpr size_t kMaxArrayConstructorElements = 32767;
 constexpr size_t kMaxFunctionParameters = 255;
 constexpr size_t kMaxSwitchCaseSelectors = 16383;
 constexpr size_t kMaxClipDistancesSize = 8;
@@ -2206,9 +2206,9 @@ bool Validator::ArrayConstructor(const ast::CallExpression* ctor,
                                << count << ", found " << values.Length();
         return false;
     }
-    if (values.Length() > kMaxArrayConstructorElements) {
+    if (values.Length() > internal_limits::kMaxArrayConstructorElements) {
         AddError(ctor->target->source) << "array constructor has excessive number of elements (>"
-                                       << kMaxArrayConstructorElements << ")";
+                                       << internal_limits::kMaxArrayConstructorElements << ")";
         return false;
     }
     return true;
