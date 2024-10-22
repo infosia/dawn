@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b698017f_92c7add5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-22T19:55:19Z",
+      "side": 1,
+      "message": "The Cl has been edited. Please undo the last PR.",
+      "revId": "35a8fc6f695de1e4f6f11faca3cb43886bdd8164",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
