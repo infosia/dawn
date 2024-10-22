@@ -56,7 +56,7 @@ vars = {
   'reclient_version': 're_client_version:0.143.0.518e369-gomaip',
 
   # 'magic' text to tell depot_tools that git submodules should be accepted
-  # but parity with DEPS file is expected.
+  # but parity with DEPS file is expected..
   'SUBMODULE_MIGRATION': 'True',
 
   'fetch_cmake': False,
@@ -338,7 +338,7 @@ deps = {
   },
 
   'third_party/dxc': {
-    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@c72be81fff3d4ae560e3336f42db2bdb529983ce',
+    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@a023a95f73618e8ca1791147d3722a3e1ea7608f',
   },
 
   'third_party/dxheaders': {
