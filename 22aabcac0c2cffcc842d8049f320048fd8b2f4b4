@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36a9df7f_ed8f9604",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 3685196
+      },
+      "writtenOn": "2024-10-22T19:22:39Z",
+      "side": 1,
+      "message": "Ah good point, I added a static_assert while building to make sure of the size, but I didn\u0027t try building with MEMORY64. Updated here and elsewhere.",
+      "parentUuid": "b2112162_d56e48dc",
+      "range": {
+        "startLine": 561,
+        "startChar": 27,
+        "endLine": 561,
+        "endChar": 28
+      },
+      "revId": "22aabcac0c2cffcc842d8049f320048fd8b2f4b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fae272b1_b87f78b3",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-10-22T18:23:19Z",
       "side": 1,
       "message": "\u0027p\u0027 see comment above for any `size_t` types",
+      "range": {
+        "startLine": 571,
+        "startChar": 25,
+        "endLine": 571,
+        "endChar": 26
+      },
+      "revId": "22aabcac0c2cffcc842d8049f320048fd8b2f4b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b417b3d5_8580f350",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 3685196
+      },
+      "writtenOn": "2024-10-22T19:22:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fae272b1_b87f78b3",
       "range": {
         "startLine": 571,
         "startChar": 25,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bb7e127_0ff241fc",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 3685196
+      },
+      "writtenOn": "2024-10-22T19:22:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac40492d_b26ca4f0",
+      "range": {
+        "startLine": 859,
+        "startChar": 43,
+        "endLine": 859,
+        "endChar": 45
+      },
+      "revId": "22aabcac0c2cffcc842d8049f320048fd8b2f4b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "358045ad_0a01f33e",
@@ -93,6 +165,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4108f112_9e30e92e",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 3685196
+      },
+      "writtenOn": "2024-10-22T19:22:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "358045ad_0a01f33e",
+      "range": {
+        "startLine": 886,
+        "startChar": 38,
+        "endLine": 886,
+        "endChar": 40
+      },
+      "revId": "22aabcac0c2cffcc842d8049f320048fd8b2f4b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2aa0eef_f8ac38e9",
@@ -106,6 +202,30 @@
       "writtenOn": "2024-10-22T18:23:19Z",
       "side": 1,
       "message": "vpjipp",
+      "range": {
+        "startLine": 929,
+        "startChar": 30,
+        "endLine": 929,
+        "endChar": 36
+      },
+      "revId": "22aabcac0c2cffcc842d8049f320048fd8b2f4b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed7bc284_8c0a25ac",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 3685196
+      },
+      "writtenOn": "2024-10-22T19:22:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2aa0eef_f8ac38e9",
       "range": {
         "startLine": 929,
         "startChar": 30,
