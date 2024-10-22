@@ -16,6 +16,47 @@
       "message": "PTAL",
       "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1320fc07_9fa1f832",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-22T17:19:38Z",
+      "side": 1,
+      "message": "\u003e \"explict\" is a possible misspelling of \"explicit\".\n\nPlease fix.",
+      "parentUuid": "79a5df8b_d9bdf298",
+      "range": {
+        "startLine": 50,
+        "startChar": 48,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4bef541_ce8058de",
+        "filename": "tools/src/cts/expectations/update_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-22T17:19:38Z",
+      "side": 1,
+      "message": "Do we need this tag? aren\u0027t we just going to end up with a bunch of them or does it combine them all? What happens if we remove it during gardening?",
+      "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
