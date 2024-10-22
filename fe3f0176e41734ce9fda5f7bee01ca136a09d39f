@@ -117,6 +117,24 @@
       "parentUuid": "a708b5f8_af121a01",
       "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9eb9e22_d87f14fd",
+        "filename": "tools/src/cts/expectations/update_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-10-22T18:09:24Z",
+      "side": 1,
+      "message": "Gardeners are free to add expectations to this block if they want. I thought the process was that auto-generated expectations would be moved out, grouped together, and bugs updated based on having the same root cause once someone actually got around to taking a look, but there\u0027s nothing that actually enforces that. People can add any expectations in this block and the tool will happily keep them/sort them the next time it is run.\n\nReally all this comment does is tell the tool \"add any new expectations here\".",
+      "parentUuid": "732a2d18_92fbcf1c",
+      "revId": "fe3f0176e41734ce9fda5f7bee01ca136a09d39f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
