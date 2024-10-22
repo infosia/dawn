@@ -215,6 +215,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f6b792c_b6740093",
+        "filename": "generator/templates/api_cpp_print.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-22T07:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "190dc3e8_4cb2ae4d",
+      "range": {
+        "startLine": 46,
+        "startChar": 40,
+        "endLine": 46,
+        "endChar": 143
+      },
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9818102c_f9ddba59",
+        "filename": "generator/templates/api_cpp_print.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-22T07:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "190dc3e8_4cb2ae4d",
+      "range": {
+        "startLine": 46,
+        "startChar": 40,
+        "endLine": 46,
+        "endChar": 143
+      },
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6483fb4b_975c1772",
@@ -945,6 +993,24 @@
       "writtenOn": "2024-10-18T00:27:23Z",
       "side": 1,
       "message": "Similar issue with the naming for methods etc., maybe it should be `AdapterPropertiesMemoryHeapsFreeMembers_Dawn`",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4652fdc5_244048c0",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-22T07:10:29Z",
+      "side": 1,
+      "message": "With latest patch, this method is named `APIDawnAdapterPropertiesMemoryHeapsFreeMembers`",
+      "parentUuid": "9433aaa5_b76029aa",
       "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
