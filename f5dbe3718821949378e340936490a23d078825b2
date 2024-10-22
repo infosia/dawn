@@ -50,6 +50,24 @@
       "message": "nit: can we keep the //s aligned (this might be a subtle different clang-format between machined or something)",
       "revId": "f5dbe3718821949378e340936490a23d078825b2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66143b1b_5f648171",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2081,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-22T14:30:31Z",
+      "side": 1,
+      "message": "I don\u0027t know why this is happening, but `git cl format` is doing this for me.",
+      "parentUuid": "4521da19_0373bc35",
+      "revId": "f5dbe3718821949378e340936490a23d078825b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
