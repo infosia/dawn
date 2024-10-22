@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b0e366d_a9ac72fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-22T19:48:15Z",
+      "side": 1,
+      "message": "This CL has been edited, please undo the last patchset before committing.",
+      "revId": "915d3d2de45cda74ea60391174c59c8bc9e39769",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
