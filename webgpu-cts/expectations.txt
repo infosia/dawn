@@ -1461,6 +1461,10 @@ crbug.com/dawn/366000875 webgpu:shader,validation,decl,var:var_access_mode_bad_o
 # specific subtest case: samplePoints="spiral";addressModeU="clamp-to-edge";addressModeV="mirror-repeat";minFilter="linear"
 crbug.com/dawn/371033198 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:sampled_2d_coords:format="bc1-rgba-unorm";offset=true [ Failure ]
 
+crbug.com/374783358 [ android ] webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:source_image,crossOrigin:sourceImage="canvas";isOriginClean=true [ Failure ]
+crbug.com/374783358 [ android ] webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:source_image,crossOrigin:sourceImage="imageBitmap";isOriginClean=true [ Failure ]
+crbug.com/374783358 [ android ] webgpu:api,validation,queue,copyToTexture,CopyExternalImageToTexture:source_offscreenCanvas,state:state="valid" [ Failure ]
+
 ################################################################################
 # AMD Macbook 16" Qualification (NEEDS TRIAGE)
 ################################################################################
