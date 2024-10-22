@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ccc1cc7_e6cccdd7",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 3685196
+      },
+      "writtenOn": "2024-10-22T10:46:57Z",
+      "side": 1,
+      "message": "On that note, now that the loop only adds (or leaves) the i53abi decorator if needed, for functions that don\u0027t have the decorator nor use 64-bit values, should we bother including the sigs (Emscripten won\u0027t complain and will autogenerate), or should we leave them in for consistency?",
+      "revId": "03c243cdb3ae531efa38fd2ed1f40797640f4ef7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
