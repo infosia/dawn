@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae3b14e3_eb972041",
+        "filename": "src/tint/lang/core/ir/validator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-22T18:52:20Z",
+      "side": 1,
+      "message": "This is fine for now. I feel like we\u0027ll probably want to have a more general shader IO style that we validate against eventually (e.g. SPIR-V vs HLSL vs ...)",
+      "revId": "471721600852fe32a63b74c05d42d16cea49b71c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

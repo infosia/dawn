@@ -16,6 +16,92 @@
       "message": "Validator changes still look good",
       "revId": "e84ef8048227af9e93f23fbcb0b9ccffbb0d1c0a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "659f458b_a3be15f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-22T18:52:20Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "e84ef8048227af9e93f23fbcb0b9ccffbb0d1c0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0cfd6ca_88b7d191",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-22T18:52:20Z",
+      "side": 1,
+      "message": "Note: This incorrectly allows `vector` types for the non-HLSL case. We were already doing that before though, so we can fix this up later.",
+      "revId": "e84ef8048227af9e93f23fbcb0b9ccffbb0d1c0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c6a5c7d_5dc25b70",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-22T18:52:20Z",
+      "side": 1,
+      "message": "übernit: You know it\u0027s always `f32`, so could do `Access\u003cf32\u003e()` and drop the need to declare `elem_ty`.",
+      "revId": "e84ef8048227af9e93f23fbcb0b9ccffbb0d1c0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d869e86_f5790d33",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-22T18:52:20Z",
+      "side": 1,
+      "message": "Nit: `std::move(init)`",
+      "fixSuggestions": [
+        {
+          "fixId": "8e091160_9bdef235",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+              "range": {
+                "startLine": 404,
+                "startChar": 0,
+                "endLine": 405,
+                "endChar": 0
+              },
+              "replacement": "            dst_value \u003d builder.Construct(dst_vec_ty, std::move(init))-\u003eResult(0);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e84ef8048227af9e93f23fbcb0b9ccffbb0d1c0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
