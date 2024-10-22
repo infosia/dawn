@@ -155,7 +155,10 @@ crbug.com/368087174 webgpu:shader,execution,expression,call,builtin,textureNumLa
 crbug.com/368087174 webgpu:shader,execution,expression,call,builtin,textureNumLayers:storage:* [ Failure ]
 
 # depth_bias validation failures (also failing in Core)
-crbug.com/365922174 webgpu:api,validation,render_pipeline,depth_stencil_state:depth_bias:* [ Failure ]
+crbug.com/365922174 webgpu:api,validation,render_pipeline,depth_stencil_state:depth_bias:isAsync=true;topology="triangle-list" [ Failure ]
+crbug.com/365922174 webgpu:api,validation,render_pipeline,depth_stencil_state:depth_bias:isAsync=true;topology="triangle-strip" [ Failure ]
+crbug.com/365922174 webgpu:api,validation,render_pipeline,depth_stencil_state:depth_bias:isAsync=false;topology="triangle-list" [ Failure ]
+crbug.com/365922174 webgpu:api,validation,render_pipeline,depth_stencil_state:depth_bias:isAsync=false;topology="triangle-strip" [ Failure ]
 
 # error_scope validation tests with errorType="out-of-memory" are failing on all platforms
 # On NVidia, crashes in PartitionAlloc due to the NV GL driver malloc()ing 2GB+ blocks
@@ -200,19 +203,34 @@ crbug.com/dawn/0000 [ android arm ] webgpu:api,validation,error_scope:simple:err
 crbug.com/dawn/0000 [ android arm ] webgpu:api,validation,error_scope:simple:errorType="out-of-memory";errorFilter="validation" [ Skip ]
 crbug.com/dawn/0000 [ android arm ] webgpu:api,validation,error_scope:simple:errorType="validation";errorFilter="out-of-memory" [ Skip ]
 
-# CTS tests need update to fit compat mode restriction on texture view array layers or binding view dimension.
-crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_common:subresources,color_attachment_and_bind_group:* [ Failure ]
-crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_common:subresources,depth_stencil_attachment_and_bind_group:* [ Failure ]
-crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_common:subresources,depth_stencil_texture_in_bind_groups:* [ Failure ]
-crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_common:subresources,multiple_bind_groups:* [ Failure ]
-crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,set_bind_group_on_same_index_color_texture:* [ Failure ]
-crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,set_unused_bind_group:* [ Failure ]
-crbug.com/dawn/367440985 webgpu:shader,execution,expression,call,builtin,textureStore:out_of_bounds_array:* [ Failure ]
-
 ### This section represents tests which may require CTS changes.
 ### This section represents things that will require Compat validation
 ### These tests will never pass, but should be skipped in CTS once Compat
 ### validation has been added
+
+# CTS tests need update to fit compat mode restriction on texture view array layers or binding view dimension.
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,set_bind_group_on_same_index_color_texture:* [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,set_unused_bind_group:* [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="color-attachment";viewUsage=1 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="readwrite-storage-texture";viewUsage=2 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="readonly-storage-texture";viewUsage=2 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="sampled-texture";viewUsage=8 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="writeonly-storage-texture";viewUsage=1 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="writeonly-storage-texture";viewUsage=16 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="writeonly-storage-texture";viewUsage=4 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="readwrite-storage-texture";viewUsage=16 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="color-attachment";viewUsage=4 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="sampled-texture";viewUsage=1 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="color-attachment";viewUsage=8 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="sampled-texture";viewUsage=16 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="readwrite-storage-texture";viewUsage=4 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="color-attachment";viewUsage=2 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="writeonly-storage-texture";viewUsage=2 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="readwrite-storage-texture";viewUsage=1 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="readonly-storage-texture";viewUsage=16 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="readonly-storage-texture";viewUsage=4 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="readonly-storage-texture";viewUsage=1 [ Failure ]
+crbug.com/dawn/367440985 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:bindingType="sampled-texture";viewUsage=2 [ Failure ]
 
 ### This section represents unimplemented features in Tint, Chrome or core WebGPU
 
@@ -2060,11 +2078,9 @@ crbug.com/dawn/374167797 [ android arm ] webgpu:shader,execution,expression,call
 # New failures. Please triage - will be discarded/regenerated by the next roll:
 # ##ROLLER_DISCARD_AND_REWRITE##
 ################################################################################
-crbug.com/dawn/0000 webgpu:api,validation,resource_usages,texture,in_render_misc:subresources,texture_view_usages:* [ Failure ]
-crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,bitcast:af_to_f32:* [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureLoad:external:stage="vertex" [ Failure ]
-crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureLoad:sampled_1d:* [ Failure ]
-crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureLoad:sampled_3d:* [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureLoad:sampled_1d:stage="vertex";* [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureLoad:sampled_3d:stage="vertex";* [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:* [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSample:depth_3d_coords:format="depth16unorm";viewDimension="cube" [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSample:depth_3d_coords:format="depth32float";viewDimension="cube" [ Failure ]
@@ -2079,7 +2095,18 @@ crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampl
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth16unorm";minFilter="linear";offset=true [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth32float";minFilter="linear";offset=false [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth32float";minFilter="linear";offset=true [ Failure ]
-crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:* [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="fragment";format="depth16unorm";minFilter="linear";offset=false [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="vertex";format="depth16unorm";minFilter="linear";offset=false [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="compute";format="depth32float";minFilter="linear";offset=false [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="compute";format="depth32float";minFilter="linear";offset=true [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="vertex";format="depth32float";minFilter="linear";offset=true [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="fragment";format="depth32float";minFilter="linear";offset=false [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="fragment";format="depth32float";minFilter="linear";offset=true [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="fragment";format="depth16unorm";minFilter="linear";offset=true [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="vertex";format="depth32float";minFilter="linear";offset=false [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="compute";format="depth16unorm";minFilter="linear";offset=true [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="vertex";format="depth16unorm";minFilter="linear";offset=true [ Failure ]
+crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:2d_coords:stage="compute";format="depth16unorm";minFilter="linear";offset=false [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:3d_coords:stage="compute";format="depth16unorm";minFilter="linear" [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:3d_coords:stage="compute";format="depth32float";minFilter="linear" [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:3d_coords:stage="fragment";format="depth16unorm";minFilter="linear" [ Failure ]
@@ -2096,7 +2123,6 @@ crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampl
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_3d_coords:stage="vertex";format="depth32float";viewDimension="cube" [ Failure ]
 crbug.com/dawn/0000 webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:* [ Failure ]
 crbug.com/dawn/0000 webgpu:web_platform,external_texture,video:importExternalTexture,cameraCapture:* [ Failure ]
-crbug.com/dawn/0000 webgpu:api,validation,capability_checks,features,texture_formats:canvas_configuration:* [ Failure ]
 crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:2d_coords:format="depth16unorm";minFilter="nearest";offset=true [ Failure ]
 crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:2d_coords:format="depth32float";minFilter="nearest";offset=true [ Failure ]
 crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth16unorm";minFilter="nearest";offset=true [ Failure ]
