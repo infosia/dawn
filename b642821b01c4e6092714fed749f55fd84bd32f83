@@ -16,6 +16,40 @@
       "message": "Hi Corentin,\n\nI\u0027ve verified with this CL the build of Skia can still succeed.\n\nPTAL, thanks!",
       "revId": "b642821b01c4e6092714fed749f55fd84bd32f83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f482cbe9_2aff3b9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-23T14:08:51Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "b642821b01c4e6092714fed749f55fd84bd32f83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "811cf23c_1d9cafe5",
+        "filename": "third_party/libdrm/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-23T14:08:51Z",
+      "side": 1,
+      "message": "Is there any way to avoid adding `libdrm`?",
+      "revId": "b642821b01c4e6092714fed749f55fd84bd32f83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
