@@ -9468,5 +9468,98 @@ note: # Disassembly
 )");
 }
 
+TEST_F(IR_ValidatorTest, OverrideNoCapability) {
+    mod.root_block->Append(b.Overridable(ty.i32()));
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(
+        res.Failure().reason.Str(),
+        R"(:2:12 error: overridable: root block: invalid instruction: tint::core::ir::Overridable
+  %1:i32 = overridable
+           ^^^^^^^^^^^
+
+:1:1 note: in block
+$B1: {  # root
+^^^
+
+note: # Disassembly
+$B1: {  # root
+  %1:i32 = overridable
+}
+
+)");
+}
+
+TEST_F(IR_ValidatorTest, OverrideNoInit) {
+    mod.root_block->Append(b.Overridable(ty.i32()));
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    ASSERT_EQ(res, Success);
+}
+
+TEST_F(IR_ValidatorTest, OverrideInstructionNotUsedInOverride) {
+    b.Append(mod.root_block, [&] {
+        b.Add(ty.i32(), 1_i, 2_i);
+        b.Overridable(ty.i32());
+    });
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(), R"(
+)");
+}
+
+TEST_F(IR_ValidatorTest, OverrideConstantInit) {
+    b.Append(mod.root_block, [&] { b.Overridable("o", b.Constant(1_f)); });
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    ASSERT_EQ(res, Success);
+}
+
+TEST_F(IR_ValidatorTest, OverrideInstructionInit) {
+    b.Append(mod.root_block, [&] {
+        auto* init = b.Add(ty.i32(), b.Constant(2_i), b.Constant(3_i));
+        b.Overridable("o", init);
+    });
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    ASSERT_EQ(res, Success);
+}
+
+TEST_F(IR_ValidatorTest, OverrideFunctionInit) {
+    b.Append(mod.root_block, [&] {
+        auto* init = b.Call(ty.f32(), BuiltinFn::kAbs, 1_f);
+        b.Overridable("o", init);
+    });
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    ASSERT_EQ(res, Success);
+}
+
+TEST_F(IR_ValidatorTest, OverrideComplex) {
+    b.Append(mod.root_block, [&] {
+        auto* x = b.Overridable("x", 4_i);
+        auto* y = b.Overridable("y", 5_i);
+        auto* z = b.Overridable(ty.i32());
+        mod.SetName(z->Result(0), "z");
+
+        auto* max = b.Call(ty.i32(), BuiltinFn::kMax, y, z);
+        auto* init = b.Add(ty.i32(), x, max);
+        b.Overridable("o", init);
+    });
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowOverrides});
+    ASSERT_EQ(res, Success);
+}
+
+TEST_F(IR_ValidatorTest, OverrideUseNonConstOverrideValue) {
+    // Assign a var to an override should fail
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(), R"()");
+}
+
+TEST_F(IR_ValidatorTest, OverrideCallNonConstFunction) {
+    // Calling a non-const function (dpdx) should fail
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(), R"()");
+}
+
 }  // namespace
 }  // namespace tint::core::ir
