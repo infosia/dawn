@@ -86,12 +86,11 @@ namespace wgpu::binding {
 GPUAdapter::GPUAdapter(dawn::native::Adapter a,
                        const Flags& flags,
                        std::shared_ptr<AsyncRunner> async)
-    : adapter_(a), flags_(flags), async_(async) {}
+    : nativeAdapter_(a), adapter_(a.Get()), flags_(flags), async_(async) {}
 
 interop::Interface<interop::GPUSupportedFeatures> GPUAdapter::getFeatures(Napi::Env env) {
-    wgpu::Adapter wgpuAdapter = adapter_.Get();
     wgpu::SupportedFeatures features{};
-    wgpuAdapter.GetFeatures(&features);
+    adapter_.GetFeatures(&features);
     return interop::GPUSupportedFeatures::Create<GPUSupportedFeatures>(env, env, features);
 }
 
@@ -100,8 +99,6 @@ interop::Interface<interop::GPUSupportedLimits> GPUAdapter::getLimits(Napi::Env 
     wgpu::DawnExperimentalSubgroupLimits subgroupLimits{};
     wgpu::DawnExperimentalImmediateDataLimits immediateDataLimits{};
 
-    wgpu::Adapter wgpuAdapter = adapter_.Get();
-
     auto InsertInChain = [&](wgpu::ChainedStructOut* node) {
         node->nextInChain = limits.nextInChain;
         limits.nextInChain = node;
@@ -109,17 +106,17 @@ interop::Interface<interop::GPUSupportedLimits> GPUAdapter::getLimits(Napi::Env 
 
     wgpu::ChainedStructOut** limitsListTail = &limits.nextInChain;
     // Query the subgroup limits only if subgroups feature is available on the adapter.
-    if (wgpuAdapter.HasFeature(FeatureName::Subgroups)) {
+    if (adapter_.HasFeature(FeatureName::Subgroups)) {
         InsertInChain(&subgroupLimits);
     }
 
     // Query the immediate data limits only if ChromiumExperimentalImmediateData feature
     // is available on adapter.
-    if (wgpuAdapter.HasFeature(FeatureName::ChromiumExperimentalImmediateData)) {
+    if (adapter_.HasFeature(FeatureName::ChromiumExperimentalImmediateData)) {
         InsertInChain(&immediateDataLimits);
     }
 
-    if (!wgpuAdapter.GetLimits(&limits)) {
+    if (!adapter_.GetLimits(&limits)) {
         Napi::Error::New(env, "failed to get adapter limits").ThrowAsJavaScriptException();
     }
 
@@ -134,13 +131,13 @@ interop::Interface<interop::GPUAdapterInfo> GPUAdapter::getInfo(Napi::Env env) {
 }
 
 bool GPUAdapter::getIsFallbackAdapter(Napi::Env) {
-    WGPUAdapterInfo adapterInfo = {};
+    wgpu::AdapterInfo adapterInfo = {};
     adapter_.GetInfo(&adapterInfo);
-    return adapterInfo.adapterType == WGPUAdapterType_CPU;
+    return adapterInfo.adapterType == wgpu::AdapterType::CPU;
 }
 
 bool GPUAdapter::getIsCompatibilityMode(Napi::Env) {
-    WGPUAdapterInfo adapterInfo = {};
+    wgpu::AdapterInfo adapterInfo = {};
     adapter_.GetInfo(&adapterInfo);
     return adapterInfo.compatibilityMode;
 }
@@ -273,7 +270,7 @@ interop::Promise<interop::Interface<interop::GPUDevice>> GPUAdapter::requestDevi
     DawnTogglesDescriptor deviceTogglesDesc = togglesLoader.GetDescriptor();
     desc.nextInChain = &deviceTogglesDesc;
 
-    auto wgpu_device = adapter_.CreateDevice(&desc);
+    auto wgpu_device = nativeAdapter_.CreateDevice(&desc);
     if (wgpu_device == nullptr) {
         promise.Reject(binding::Errors::OperationError(env, "failed to create device"));
         return promise;

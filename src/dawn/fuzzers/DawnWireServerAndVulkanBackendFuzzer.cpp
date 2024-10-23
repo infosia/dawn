@@ -29,7 +29,6 @@
 
 #include "DawnWireServerFuzzer.h"
 #include "dawn/common/GPUInfo.h"
-#include "dawn/native/DawnNative.h"
 #include "testing/libfuzzer/libfuzzer_exports.h"
 
 extern "C" int LLVMFuzzerInitialize(int* argc, char*** argv) {
@@ -39,7 +38,7 @@ extern "C" int LLVMFuzzerInitialize(int* argc, char*** argv) {
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
     return DawnWireServerFuzzer::Run(
         data, size,
-        [](const dawn::native::Adapter& adapter) {
+        [](WGPUAdapter adapter) {
             wgpu::AdapterInfo info;
             adapter.GetInfo(&info);
 

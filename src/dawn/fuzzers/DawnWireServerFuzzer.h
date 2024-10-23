@@ -45,7 +45,7 @@ int Initialize(int* argc, char*** argv);
 
 int Run(const uint8_t* data,
         size_t size,
-        bool (*AdapterSupported)(const dawn::native::Adapter&),
+        bool (*AdapterSupported)(WGPUAdapter),
         bool supportsErrorInjection);
 
 }  // namespace DawnWireServerFuzzer
