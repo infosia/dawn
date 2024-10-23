@@ -84,6 +84,16 @@ size_t LimitsAndFeatures::EnumerateFeatures(WGPUFeatureName* features) const {
     return mFeatures.size();
 }
 
+void LimitsAndFeatures::ToSupportedFeatures(WGPUSupportedFeatures* supportedFeatures) const {
+    WGPUFeatureName* features = nullptr;
+    for (WGPUFeatureName f : mFeatures) {
+        *features = f;
+        ++features;
+    }
+    supportedFeatures->featuresCount = mFeatures.size();
+    supportedFeatures->features = features;
+}
+
 void LimitsAndFeatures::SetLimits(const WGPUSupportedLimits* limits) {
     DAWN_ASSERT(limits != nullptr);
     mLimits = *limits;

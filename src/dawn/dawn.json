@@ -162,6 +162,13 @@
                 ]
             },
             {
+                "name": "get features",
+                "returns": "status",
+                "args": [
+                    {"name": "features", "type": "supported features", "annotation": "*"}
+                ]
+            },
+            {
                 "name": "request device",
                 "args": [
                     {"name": "descriptor", "type": "device descriptor", "annotation": "const*", "optional": true, "no_default": true},
@@ -1561,6 +1568,13 @@
                 ]
             },
             {
+                "name": "get features",
+                "returns": "status",
+                "args": [
+                    {"name": "features", "type": "supported features", "annotation": "*"}
+                ]
+            },
+            {
                 "name": "get adapter",
                 "returns": "adapter",
                 "tags": ["dawn"]
@@ -1860,6 +1874,21 @@
         "extensible": "out",
         "members": [
             {"name": "limits", "type": "limits"}
+        ]
+    },
+    "supported features": {
+        "category": "structure",
+        "extensible": "out",
+        "members": [
+            {"name": "features count", "type": "size_t"},
+            {"name": "features", "type": "feature name", "annotation": "const*", "length": "features count"}
+        ],
+        "methods": [
+            {
+                "name": "free members",
+                "returns": "void",
+                "args": []
+            }
         ]
     },
     "logging callback": {
