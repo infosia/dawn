@@ -224,6 +224,15 @@ size_t AdapterBase::APIEnumerateFeatures(wgpu::FeatureName* features) const {
     return mSupportedFeatures.EnumerateFeatures(features);
 }
 
+wgpu::Status AdapterBase::APIGetFeatures(SupportedFeatures* features) const {
+    mSupportedFeatures.ToSupportedFeatures(features);
+    return wgpu::Status::Success;
+}
+
+void APISupportedFeaturesFreeMembers(WGPUSupportedFeatures supportedFeatures) {
+    delete[] supportedFeatures.features;
+}
+
 // TODO(https://crbug.com/dawn/2465) Could potentially re-implement via AllowSpontaneous async mode.
 DeviceBase* AdapterBase::APICreateDevice(const DeviceDescriptor* descriptor) {
     if (descriptor == nullptr) {
