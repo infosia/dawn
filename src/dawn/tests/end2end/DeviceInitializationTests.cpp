@@ -87,7 +87,8 @@ TEST_F(DeviceInitializationTest, DeviceOutlivesInstance) {
     std::vector<wgpu::AdapterInfo> availableAdapterInfo;
     {
         auto instance = std::make_unique<native::Instance>();
-        for (const native::Adapter& adapter : instance->EnumerateAdapters()) {
+        for (const native::Adapter& nativeAdapter : instance->EnumerateAdapters()) {
+            wgpu::Adapter adapter = wgpu::Adapter(nativeAdapter.Get());
             wgpu::AdapterInfo info;
             adapter.GetInfo(&info);
 
@@ -103,7 +104,8 @@ TEST_F(DeviceInitializationTest, DeviceOutlivesInstance) {
         wgpu::Device device;
 
         auto instance = std::make_unique<native::Instance>();
-        for (native::Adapter& adapter : instance->EnumerateAdapters()) {
+        for (native::Adapter& nativeAdapter : instance->EnumerateAdapters()) {
+            wgpu::Adapter adapter = wgpu::Adapter(nativeAdapter.Get());
             wgpu::AdapterInfo info;
             adapter.GetInfo(&info);
 
@@ -111,7 +113,7 @@ TEST_F(DeviceInitializationTest, DeviceOutlivesInstance) {
                 info.adapterType == desiredInfo.adapterType &&
                 info.backendType == desiredInfo.backendType) {
                 // Create the device, destroy the instance, and break out of the loop.
-                device = wgpu::Device::Acquire(adapter.CreateDevice());
+                device = wgpu::Device::Acquire(nativeAdapter.CreateDevice());
                 instance.reset();
                 break;
             }
@@ -131,7 +133,8 @@ TEST_F(DeviceInitializationTest, AdapterOutlivesInstance) {
     std::vector<wgpu::AdapterInfo> availableAdapterInfo;
     {
         auto instance = std::make_unique<native::Instance>();
-        for (const native::Adapter& adapter : instance->EnumerateAdapters()) {
+        for (const native::Adapter& nativeAdapter : instance->EnumerateAdapters()) {
+            wgpu::Adapter adapter = wgpu::Adapter(nativeAdapter.Get());
             wgpu::AdapterInfo info;
             adapter.GetInfo(&info);
 
@@ -148,7 +151,7 @@ TEST_F(DeviceInitializationTest, AdapterOutlivesInstance) {
         auto instance = std::make_unique<native::Instance>();
         for (native::Adapter& nativeAdapter : instance->EnumerateAdapters()) {
             wgpu::AdapterInfo info;
-            nativeAdapter.GetInfo(&info);
+            wgpu::Adapter(nativeAdapter.Get()).GetInfo(&info);
 
             if (info.deviceID == desiredInfo.deviceID && info.vendorID == desiredInfo.vendorID &&
                 info.adapterType == desiredInfo.adapterType &&

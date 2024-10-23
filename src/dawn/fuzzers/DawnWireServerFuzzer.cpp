@@ -85,7 +85,7 @@ int DawnWireServerFuzzer::Initialize(int* argc, char*** argv) {
 
 int DawnWireServerFuzzer::Run(const uint8_t* data,
                               size_t size,
-                              bool (*AdapterSupported)(const dawn::native::Adapter&),
+                              bool (*AdapterSupported)(wgpu::Adapter),
                               bool supportsErrorInjection) {
     std::unique_ptr<dawn::native::Instance> instance = std::make_unique<dawn::native::Instance>();
 
@@ -120,9 +120,10 @@ int DawnWireServerFuzzer::Run(const uint8_t* data,
         std::vector<dawn::native::Adapter> adapters =
             dawn::native::Instance(reinterpret_cast<dawn::native::InstanceBase*>(cInstance))
                 .EnumerateAdapters();
-        for (dawn::native::Adapter adapter : adapters) {
+        for (dawn::native::Adapter nativeAdapter : adapters) {
+            WGPUAdapter cAdapter = adapter.Get();
+            wgpu::Adapter adapter = wgpu::Adapter::Acquire(cAdapter);
             if (sAdapterSupported(adapter)) {
-                WGPUAdapter cAdapter = adapter.Get();
                 dawn::native::GetProcs().adapterAddRef(cAdapter);
                 callback(WGPURequestAdapterStatus_Success, cAdapter, dawn::kEmptyOutputStringView,
                          userdata1, userdata2);
