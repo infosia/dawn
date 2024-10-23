@@ -16,6 +16,29 @@
       "message": "I\u0027ll run the trybots once https://chromium-review.googlesource.com/c/chromium/src/+/5952855 lands",
       "revId": "ea3a9654f7fba857b55c4610e9a055ff1c4d7590",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3d49c53_2faa6cf1",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-23T14:50:19Z",
+      "side": 1,
+      "message": "We should use ToAPI(nativeAdapter) ditto in other places.",
+      "range": {
+        "startLine": 463,
+        "startChar": 44,
+        "endLine": 463,
+        "endChar": 78
+      },
+      "revId": "ea3a9654f7fba857b55c4610e9a055ff1c4d7590",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
