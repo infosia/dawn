@@ -39,7 +39,7 @@ extern "C" int LLVMFuzzerInitialize(int* argc, char*** argv) {
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
     return DawnWireServerFuzzer::Run(
         data, size,
-        [](const dawn::native::Adapter& adapter) {
+        [](const WGPUAdapter& adapter) {
             wgpu::AdapterInfo info;
             adapter.GetInfo(&info);
 
