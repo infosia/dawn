@@ -1214,9 +1214,29 @@ class Impl {
                 // Store the results of the initialization
                 scopes_.Set(l->name->symbol, let->Result(0));
             },
-            [&](const ast::Override*) {
-                AddError(var->source) << "found an `Override` variable. The SubstituteOverrides "
-                                         "transform must be run before converting to IR";
+            [&](const ast::Override* o) {
+                auto* o_sem = program_.Sem().Get(o);
+                auto* ty = sem->Type();
+
+                auto* override = builder_.Overridable(ty);
+                if (o->initializer) {
+                    auto init = EmitValueExpression(o->initializer);
+                    if (!init) {
+                        return;
+                    }
+                    override->SetInitializer(init);
+                }
+                current_block_->Append(override);
+
+                if (o_sem->Attributes().override_id.has_value()) {
+                    override->SetOverrideID(o_sem->Attributes().override_id.value());
+                }
+
+                // Store the declaration so we can get the instruction to store too
+                scopes_.Set(o->name->symbol, override->Result(0));
+
+                // Record the original name of the var
+                builder_.ir.SetName(override, o->name->symbol.Name());
             },
             [&](const ast::Const*) {
                 // Skip. This should be handled by const-eval already, so the const will be a

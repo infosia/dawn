@@ -119,6 +119,10 @@ tint_add_target(tint_lang_core_ir lib
   lang/core/ir/next_iteration.h
   lang/core/ir/operand_instruction.cc
   lang/core/ir/operand_instruction.h
+  lang/core/ir/overridable.cc
+  lang/core/ir/overridable.h
+  lang/core/ir/override.cc
+  lang/core/ir/override.h
   lang/core/ir/referenced_module_vars.h
   lang/core/ir/return.cc
   lang/core/ir/return.h
@@ -212,6 +216,8 @@ tint_add_target(tint_lang_core_ir_test test
   lang/core/ir/multi_in_block_test.cc
   lang/core/ir/next_iteration_test.cc
   lang/core/ir/operand_instruction_test.cc
+  lang/core/ir/overridable_test.cc
+  lang/core/ir/override_test.cc
   lang/core/ir/referenced_module_vars_test.cc
   lang/core/ir/return_test.cc
   lang/core/ir/store_test.cc
