@@ -215,21 +215,22 @@ interop::Promise<std::optional<interop::Interface<interop::GPUAdapter>>> GPU::re
         deviceName = *f;
     }
 
-    dawn::native::Adapter* adapter = nullptr;
+    dawn::native::Adapter* nativeAdapter = nullptr;
     for (auto& a : adapters) {
+        wgpu::Adapter adapter = wgpu::Adapter(a.Get());
         wgpu::AdapterInfo info;
-        a.GetInfo(&info);
+        adapter.GetInfo(&info);
 
         if (!deviceName.empty() &&
             std::string_view(info.device).find(deviceName) == std::string::npos) {
             continue;
         }
 
-        adapter = &a;
+        nativeAdapter = &a;
         break;
     }
 
-    if (!adapter) {
+    if (!nativeAdapter) {
         std::stringstream msg;
         if (!forceBackend.empty() || deviceName.empty()) {
             msg << "no adapter ";
@@ -247,8 +248,9 @@ interop::Promise<std::optional<interop::Interface<interop::GPUAdapter>>> GPU::re
         }
         msg << "\nAvailable adapters:";
         for (auto& a : adapters) {
+            wgpu::Adapter adapter = wgpu::Adapter(a.Get());
             wgpu::AdapterInfo info;
-            a.GetInfo(&info);
+            adapter.GetInfo(&info);
             msg << "\n * backend: '" << BackendName(info.backendType) << "', name: '" << info.device
                 << "'";
         }
@@ -257,12 +259,13 @@ interop::Promise<std::optional<interop::Interface<interop::GPUAdapter>>> GPU::re
     }
 
     if (flags_.Get("verbose")) {
+        wgpu::Adapter adapter = wgpu::Adapter(nativeAdapter->Get());
         wgpu::AdapterInfo info;
-        adapter->GetInfo(&info);
+        adapter.GetInfo(&info);
         std::cout << "using GPU adapter: " << info.device << "\n";
     }
 
-    auto gpuAdapter = GPUAdapter::Create<GPUAdapter>(env, *adapter, flags_, async_);
+    auto gpuAdapter = GPUAdapter::Create<GPUAdapter>(env, *nativeAdapter, flags_, async_);
     promise.Resolve(std::optional<interop::Interface<interop::GPUAdapter>>(gpuAdapter));
     return promise;
 }
