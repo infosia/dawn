@@ -753,8 +753,7 @@ TEST_F(HlslWriterPromoteInitializersTest, DuplicateConstant) {
     EXPECT_EQ(expect, str());
 }
 
-// TODO(dsinclair): Fixup duplicate let creation
-TEST_F(HlslWriterPromoteInitializersTest, DISABLED_DuplicateAccess) {
+TEST_F(HlslWriterPromoteInitializersTest, DuplicateAccess) {
     capabilities = core::ir::Capabilities{core::ir::Capability::kAllowModuleScopeLets};
 
     auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);

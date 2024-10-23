@@ -48,6 +48,9 @@ struct State {
     /// The type manager.
     core::type::Manager& ty{ir.Types()};
 
+    /// Map of values to the new let versions
+    Hashmap<core::ir::Value*, core::ir::Let*, 8> values_in_lets{};
+
     /// Process the module.
     void Process() {
         for (auto* block : ir.blocks.Objects()) {
@@ -98,7 +101,7 @@ struct State {
             if (auto* res = As<core::ir::InstructionResult>(item.val)) {
                 // If the value isn't already a `let`, put it into a `let`.
                 if (!res->Instruction()->Is<core::ir::Let>()) {
-                    PutInLet(item.inst, item.index, res);
+                    PutInLetCached(item.inst, item.index, res);
                 }
             } else if (auto* val = As<core::ir::Constant>(item.val)) {
                 auto* let = PutInLet(item.inst, item.index, val);
@@ -211,8 +214,24 @@ struct State {
     }
 
     core::ir::Let* PutInLet(core::ir::Instruction* inst, size_t index, core::ir::Value* value) {
-        auto* let = MakeLet(value);
+        core::ir::Let* let = let = MakeLet(value);
         let->InsertBefore(inst);
+
+        inst->SetOperand(index, let->Result(0));
+        return let;
+    }
+
+    core::ir::Let* PutInLetCached(core::ir::Instruction* inst,
+                                  size_t index,
+                                  core::ir::Value* value) {
+        core::ir::Let* let = nullptr;
+        if (auto res = values_in_lets.Get(value); res) {
+            let = *res;
+        } else {
+            let = MakeLet(value);
+            let->InsertBefore(inst);
+            values_in_lets.Add(value, let);
+        }
 
         inst->SetOperand(index, let->Result(0));
         return let;
