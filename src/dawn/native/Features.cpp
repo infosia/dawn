@@ -432,18 +432,6 @@ size_t FeaturesSet::EnumerateFeatures(wgpu::FeatureName* features) const {
     return featuresBitSet.count();
 }
 
-std::vector<const char*> FeaturesSet::GetEnabledFeatureNames() const {
-    std::vector<const char*> enabledFeatureNames(featuresBitSet.count());
-
-    uint32_t index = 0;
-    for (Feature feature : IterateBitSet(featuresBitSet)) {
-        DAWN_ASSERT(feature != Feature::InvalidEnum);
-        enabledFeatureNames[index] = kFeatureNameAndInfoList[feature].name;
-        ++index;
-    }
-    return enabledFeatureNames;
-}
-
 }  // namespace dawn::native
 
 #include "dawn/native/Features_autogen.inl"
