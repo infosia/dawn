@@ -31,8 +31,6 @@
 #include <webgpu/webgpu_cpp.h>
 
 #include <bitset>
-#include <string>
-#include <vector>
 
 #include "dawn/common/ityp_bitset.h"
 #include "dawn/native/DawnNative.h"
@@ -59,7 +57,6 @@ struct FeaturesSet {
     // Returns |count|, the number of features. Writes out all |count| values if |features| is
     // non-null.
     size_t EnumerateFeatures(wgpu::FeatureName* features) const;
-    std::vector<const char*> GetEnabledFeatureNames() const;
 };
 
 }  // namespace dawn::native
