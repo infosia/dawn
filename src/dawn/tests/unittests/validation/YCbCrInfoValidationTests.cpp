@@ -132,7 +132,7 @@ TEST_F(YCbCrInfoWithFeatureValidationTest, YCbCrSamplerSupported) {
 TEST_F(YCbCrInfoWithFeatureValidationTest, CreateBindGroupWithYCbCrSamplerSupported) {
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
 
     wgpu::SamplerDescriptor samplerDesc = {};
     wgpu::YCbCrVkDescriptor yCbCrDesc = {};
@@ -166,7 +166,7 @@ TEST_F(YCbCrInfoWithFeatureValidationTest, CreateBindGroupWithSamplerAndStaticSa
 
     wgpu::BindGroupLayoutEntry binding1 = {};
     binding1.binding = 1;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
 
     wgpu::SamplerDescriptor samplerDesc = {};
     wgpu::YCbCrVkDescriptor yCbCrDesc = {};
@@ -200,7 +200,7 @@ TEST_F(YCbCrInfoWithFeatureValidationTest, BindGroupCreationForSamplerBindingTyp
 
     wgpu::BindGroupLayoutEntry binding1 = {};
     binding1.binding = 1;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
 
     wgpu::SamplerDescriptor samplerDesc = {};
     wgpu::YCbCrVkDescriptor yCbCrDesc = {};

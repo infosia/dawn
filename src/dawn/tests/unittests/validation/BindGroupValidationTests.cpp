@@ -1770,7 +1770,7 @@ TEST_F(BindGroupLayoutValidationTest, MultisampledTextureSampleType) {
 TEST_F(BindGroupLayoutValidationTest, StaticSamplerNotSupportedWithoutFeatureEnabled) {
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     staticSamplerBinding.sampler = device.CreateSampler();
     binding.nextInChain = &staticSamplerBinding;
 
@@ -1792,7 +1792,7 @@ class BindGroupLayoutWithStaticSamplersValidationTest : public BindGroupLayoutVa
 TEST_F(BindGroupLayoutWithStaticSamplersValidationTest, StaticSamplerSupportedWhenFeatureEnabled) {
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     staticSamplerBinding.sampler = device.CreateSampler();
     binding.nextInChain = &staticSamplerBinding;
 
@@ -1808,7 +1808,7 @@ TEST_F(BindGroupLayoutWithStaticSamplersValidationTest, StaticSamplerSupportedWh
 TEST_F(BindGroupLayoutWithStaticSamplersValidationTest, StaticSamplerWithInvalidSamplerObject) {
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
 
     wgpu::SamplerDescriptor samplerDesc;
     samplerDesc.minFilter = static_cast<wgpu::FilterMode>(0xFFFFFFFF);
@@ -1831,7 +1831,7 @@ TEST_F(BindGroupLayoutWithStaticSamplersValidationTest, StaticSamplerWithInvalid
 TEST_F(BindGroupLayoutWithStaticSamplersValidationTest, CreateBindGroupWithStaticSamplerSupported) {
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     staticSamplerBinding.sampler = device.CreateSampler();
     binding.nextInChain = &staticSamplerBinding;
 
@@ -1856,7 +1856,7 @@ TEST_F(BindGroupLayoutWithStaticSamplersValidationTest,
 
     wgpu::BindGroupLayoutEntry binding0 = {};
     binding0.binding = 0;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     staticSamplerBinding.sampler = device.CreateSampler();
     binding0.nextInChain = &staticSamplerBinding;
     entries.push_back(binding0);
@@ -1890,7 +1890,7 @@ TEST_F(BindGroupLayoutWithStaticSamplersValidationTest,
 
     wgpu::BindGroupLayoutEntry binding1 = {};
     binding1.binding = 1;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     staticSamplerBinding.sampler = device.CreateSampler();
     binding1.nextInChain = &staticSamplerBinding;
     entries.push_back(binding1);
@@ -1912,7 +1912,7 @@ TEST_F(BindGroupLayoutWithStaticSamplersValidationTest,
        EntryForStaticSamplerInBindGroupCausesError) {
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     staticSamplerBinding.sampler = device.CreateSampler();
     binding.nextInChain = &staticSamplerBinding;
 
@@ -1942,7 +1942,7 @@ TEST_F(BindGroupLayoutWithStaticSamplersValidationTest,
 
     wgpu::BindGroupLayoutEntry binding1 = {};
     binding1.binding = 1;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     staticSamplerBinding.sampler = device.CreateSampler();
     binding1.nextInChain = &staticSamplerBinding;
     entries.push_back(binding1);
@@ -1968,7 +1968,7 @@ TEST_F(BindGroupLayoutWithStaticSamplersValidationTest,
 
     wgpu::BindGroupLayoutEntry binding0 = {};
     binding0.binding = 0;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     staticSamplerBinding.sampler = device.CreateSampler();
     binding0.nextInChain = &staticSamplerBinding;
     entries.push_back(binding0);
@@ -2638,7 +2638,7 @@ TEST_F(SetBindGroupValidationTest, StaticSamplerAccessedFromShader) {
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
     binding.visibility = wgpu::ShaderStage::Compute;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     staticSamplerBinding.sampler = device.CreateSampler();
     binding.nextInChain = &staticSamplerBinding;
 
@@ -2667,7 +2667,7 @@ TEST_F(SetBindGroupValidationTest, StaticSamplerAccessedFromShaderAsNonSamplerTy
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
     binding.visibility = wgpu::ShaderStage::Compute;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     staticSamplerBinding.sampler = device.CreateSampler();
     binding.nextInChain = &staticSamplerBinding;
 

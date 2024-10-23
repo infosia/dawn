@@ -100,7 +100,7 @@ void IncrementBindingCounts(BindingCounts* bindingCounts,
         perStageBindingCountMember = &PerStageBindingCounts::storageTextureCount;
     } else if (entry.Get<ExternalTextureBindingLayout>()) {
         perStageBindingCountMember = &PerStageBindingCounts::externalTextureCount;
-    } else if (entry.Get<StaticSamplerBindingLayout>()) {
+    } else if (entry.Get<DawnStaticSamplerBindingLayout>()) {
         ++bindingCounts->staticSamplerCount;
         perStageBindingCountMember = &PerStageBindingCounts::staticSamplerCount;
     }
@@ -260,7 +260,7 @@ SamplerBindingInfo::SamplerBindingInfo() = default;
 SamplerBindingInfo::SamplerBindingInfo(const SamplerBindingLayout& apiLayout)
     : type(apiLayout.type) {}
 
-StaticSamplerBindingInfo::StaticSamplerBindingInfo(const StaticSamplerBindingLayout& apiLayout)
+StaticSamplerBindingInfo::StaticSamplerBindingInfo(const DawnStaticSamplerBindingLayout& apiLayout)
     : sampler(apiLayout.sampler),
       sampledTextureBinding(BindingNumber{apiLayout.sampledTextureBinding}),
       isUsedForSingleTextureBinding(apiLayout.sampledTextureBinding < WGPU_LIMIT_U32_UNDEFINED) {}

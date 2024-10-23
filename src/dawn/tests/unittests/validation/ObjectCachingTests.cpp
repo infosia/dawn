@@ -123,7 +123,7 @@ TEST_F(ObjectCachingTest, BindGroupLayoutViewDimension) {
 TEST_F(ObjectCachingTest, BindGroupLayoutStaticSamplerDeduplication) {
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     wgpu::SamplerDescriptor samplerDesc;
     samplerDesc.addressModeU = wgpu::AddressMode::ClampToEdge;
     staticSamplerBinding.sampler = device.CreateSampler(&samplerDesc);
@@ -141,7 +141,7 @@ TEST_F(ObjectCachingTest, BindGroupLayoutStaticSamplerDeduplication) {
 
     wgpu::BindGroupLayoutEntry otherBinding = {};
     otherBinding.binding = 0;
-    wgpu::StaticSamplerBindingLayout otherStaticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout otherStaticSamplerBinding = {};
     otherStaticSamplerBinding.sampler = otherSampler;
     otherBinding.nextInChain = &otherStaticSamplerBinding;
 
@@ -169,7 +169,7 @@ TEST_F(ObjectCachingTest, BindGroupLayoutKeepsRefToStaticSampler) {
     auto sampler1 = device.CreateSampler();
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
-    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
     staticSamplerBinding.sampler = sampler1;
     binding.nextInChain = &staticSamplerBinding;
 

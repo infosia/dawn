@@ -287,7 +287,7 @@ class StaticSamplerTest : public SamplerTest {
         wgpu::BindGroupLayoutEntry binding = {};
         binding.binding = 0;
         binding.visibility = wgpu::ShaderStage::Fragment;
-        wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+        wgpu::DawnStaticSamplerBindingLayout staticSamplerBinding = {};
         staticSamplerBinding.sampler = sampler;
         binding.nextInChain = &staticSamplerBinding;
         entries.push_back(binding);

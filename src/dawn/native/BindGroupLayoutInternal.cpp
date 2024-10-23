@@ -194,7 +194,7 @@ MaybeError ValidateBindGroupLayoutEntry(DeviceBase* device,
         }
     }
 
-    if (auto* staticSamplerBindingLayout = entry.Get<StaticSamplerBindingLayout>()) {
+    if (auto* staticSamplerBindingLayout = entry.Get<DawnStaticSamplerBindingLayout>()) {
         bindingMemberCount++;
 
         DAWN_INVALID_IF(!device->HasFeature(Feature::DawnStaticSamplers),
@@ -420,7 +420,7 @@ BindingInfo CreateBindGroupLayoutInfo(const UnpackedPtr<BindGroupLayoutEntry>& b
     } else if (binding->storageTexture.access != wgpu::StorageTextureAccess::Undefined) {
         bindingInfo.bindingLayout =
             StorageTextureBindingInfo(binding->storageTexture.WithTrivialFrontendDefaults());
-    } else if (auto* staticSamplerBindingLayout = binding.Get<StaticSamplerBindingLayout>()) {
+    } else if (auto* staticSamplerBindingLayout = binding.Get<DawnStaticSamplerBindingLayout>()) {
         bindingInfo.bindingLayout = StaticSamplerBindingInfo(*staticSamplerBindingLayout);
     } else {
         DAWN_UNREACHABLE();

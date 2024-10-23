@@ -413,11 +413,6 @@
             {"name": "type", "type": "sampler binding type", "default": "undefined"}
         ]
     },
-    "static sampler binding layout": {
-        "tags": ["dawn", "deprecated"],
-        "category": "typedef",
-        "type": "dawn static sampler binding layout"
-    },
     "dawn static sampler binding layout": {
         "category": "structure",
         "chained": "in",
@@ -4443,8 +4438,7 @@
             {"value": 53, "name": "dawn shared fence MTL shared event export info", "conflicts": true, "tags": ["dawn", "native"]},
             {"value": 54, "name": "shared buffer memory D3D12 resource descriptor", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},
             {"value": 54, "name": "dawn shared buffer memory D3D12 resource descriptor", "conflicts": true, "tags": ["dawn", "native"]},
-            {"value": 55, "name": "static sampler binding layout", "conflicts": true, "tags": ["dawn", "deprecated"]},
-            {"value": 55, "name": "dawn static sampler binding layout", "conflicts": true, "tags": ["dawn"]},
+            {"value": 55, "name": "dawn static sampler binding layout", "tags": ["dawn"]},
             {"value": 56, "name": "y cb cr vk descriptor", "conflicts": true, "tags": ["dawn", "deprecated"]},
             {"value": 56, "name": "dawn y cb cr vk descriptor", "conflicts": true, "tags": ["dawn"]},
             {"value": 57, "name": "shared texture memory a hardware buffer properties", "conflicts": true, "tags": ["dawn", "native", "deprecated"]},

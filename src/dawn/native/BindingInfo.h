@@ -111,9 +111,9 @@ struct SamplerBindingInfo {
     wgpu::SamplerBindingType type;
 };
 
-// A mirror of wgpu::StaticSamplerBindingLayout for use inside dawn::native.
+// A mirror of wgpu::DawnStaticSamplerBindingLayout for use inside dawn::native.
 struct StaticSamplerBindingInfo {
-    explicit StaticSamplerBindingInfo(const StaticSamplerBindingLayout& apiLayout);
+    explicit StaticSamplerBindingInfo(const DawnStaticSamplerBindingLayout& apiLayout);
 
     // Holds a ref instead of an unowned pointer.
     Ref<SamplerBase> sampler;
