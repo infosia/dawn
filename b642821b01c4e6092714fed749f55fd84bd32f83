@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7438224_15a46b15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-23T07:36:02Z",
+      "side": 1,
+      "message": "Hi Corentin,\n\nI\u0027ve verified with this CL the build of Skia can still succeed.\n\nPTAL, thanks!",
+      "revId": "b642821b01c4e6092714fed749f55fd84bd32f83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
