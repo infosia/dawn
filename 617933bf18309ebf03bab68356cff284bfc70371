@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ac9d3e8_32db7655",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-23T13:47:41Z",
+      "side": 1,
+      "message": "LGTM, could we cherry-pick to M131 as well?",
+      "revId": "617933bf18309ebf03bab68356cff284bfc70371",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42ba9bff_4896f28f",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-23T13:47:41Z",
+      "side": 1,
+      "message": "Do we have a driver version after which we know it\u0027s fixed?",
+      "revId": "617933bf18309ebf03bab68356cff284bfc70371",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
