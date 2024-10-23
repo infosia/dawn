@@ -63,7 +63,8 @@ class AdapterCreationTest : public ::testing::TestWithParam<std::optional<wgpu::
                 anyAdapterAvailable = true;
 
                 wgpu::AdapterInfo info;
-                nativeAdapter.GetInfo(&info);
+                wgpu::Adapter adapter = wgpu::Adapter(nativeAdapter.Get());
+                adapter.GetInfo(&info);
                 if (info.compatibilityMode) {
                     continue;
                 }
