@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84d80c3b_0cb4161f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-10-23T23:03:16Z",
+      "side": 1,
+      "message": "Fantastic! Thank you Jiawei for finding this workaround!\n\nlgtm+2 and I support backporting this to earlier Chrome releases.",
+      "revId": "617933bf18309ebf03bab68356cff284bfc70371",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "42ba9bff_4896f28f",
