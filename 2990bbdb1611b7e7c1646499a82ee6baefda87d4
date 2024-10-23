@@ -33,6 +33,24 @@
       "message": "Why don\u0027t we want to to use the cached version here too?",
       "revId": "2990bbdb1611b7e7c1646499a82ee6baefda87d4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0ff1f8c_e3423eda",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-23T22:34:31Z",
+      "side": 1,
+      "message": "Turns out we can, but it was a early warning for a scoping issue I realize I have with this code. I need to verify that the given value is still visible in the scope I\u0027m in.\n\nWith these values, it was jumping over functions, probably because shared construct happens more often. The scoping issue isn\u0027t seen at the moment with the current code because only the clip distance triggers it and it\u0027s constrained, but I think I can make a test that breaks where one access is inside an if and the second outside.",
+      "parentUuid": "f04c140e_f5bc2c00",
+      "revId": "2990bbdb1611b7e7c1646499a82ee6baefda87d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
