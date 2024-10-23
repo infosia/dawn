@@ -127,21 +127,26 @@ interop::Interface<interop::GPUSupportedLimits> GPUAdapter::getLimits(Napi::Env 
 }
 
 interop::Interface<interop::GPUAdapterInfo> GPUAdapter::getInfo(Napi::Env env) {
+    wgpu::Adapter adapter(adapter_.Get());
     wgpu::AdapterInfo info = {};
-    adapter_.GetInfo(&info);
+    adapter.GetInfo(&info);
 
     return interop::GPUAdapterInfo::Create<GPUAdapterInfo>(env, info);
 }
 
 bool GPUAdapter::getIsFallbackAdapter(Napi::Env) {
-    WGPUAdapterInfo adapterInfo = {};
-    adapter_.GetInfo(&adapterInfo);
-    return adapterInfo.adapterType == WGPUAdapterType_CPU;
+    wgpu::Adapter adapter(adapter_.Get());
+    wgpu::AdapterInfo adapterInfo = {};
+    adapter.GetInfo(&adapterInfo);
+
+    return adapterInfo.adapterType == wgpu::AdapterType::CPU;
 }
 
 bool GPUAdapter::getIsCompatibilityMode(Napi::Env) {
-    WGPUAdapterInfo adapterInfo = {};
-    adapter_.GetInfo(&adapterInfo);
+    wgpu::Adapter adapter(adapter_.Get());
+    wgpu::AdapterInfo adapterInfo = {};
+    adapter.GetInfo(&adapterInfo);
+
     return adapterInfo.compatibilityMode;
 }
 
