@@ -51,6 +51,24 @@
       "parentUuid": "f04c140e_f5bc2c00",
       "revId": "2990bbdb1611b7e7c1646499a82ee6baefda87d4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e34e9390_04ab79c0",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-23T23:30:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0ff1f8c_e3423eda",
+      "revId": "2990bbdb1611b7e7c1646499a82ee6baefda87d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
