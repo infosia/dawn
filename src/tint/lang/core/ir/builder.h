@@ -59,6 +59,8 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/multi_in_block.h"
 #include "src/tint/lang/core/ir/next_iteration.h"
+#include "src/tint/lang/core/ir/overridable.h"
+#include "src/tint/lang/core/ir/override.h"
 #include "src/tint/lang/core/ir/return.h"
 #include "src/tint/lang/core/ir/store.h"
 #include "src/tint/lang/core/ir/store_vector_element.h"
@@ -1717,6 +1719,48 @@ class Builder {
             auto* new_idx = Add(idx->Type(), idx, step_value);
             NextIteration(loop, new_idx);
         });
+    }
+
+    /// Creates a new override value
+    /// @param type the return type
+    /// @returns the value
+    ir::Override* Override(const core::type::Type* type) {
+        return ir.CreateValue<ir::Override>(type);
+    }
+
+    /// Creates a new override value
+    /// @tparam TYPE the return type
+    /// @returns the value
+    template <typename TYPE>
+    ir::Override* Override() {
+        auto* type = ir.Types().Get<TYPE>();
+        return Override(type);
+    }
+
+    /// Creates a new `overridable` declaration
+    /// @param name the override name
+    /// @param value the override value
+    /// @returns the instruction
+    template <typename VALUE>
+    ir::Overridable* Overridable(std::string_view name, VALUE&& value) {
+        auto* val = Value(std::forward<VALUE>(value));
+        if (DAWN_UNLIKELY(!val)) {
+            TINT_ASSERT(val);
+            return nullptr;
+        }
+        auto* override = Append(ir.CreateInstruction<ir::Overridable>(Override(val->Type())));
+        override->SetInitializer(val);
+        ir.SetName(override->Result(0), name);
+        return override;
+    }
+
+    /// Creates a new `overridable` declaration, with an unassigned value
+    /// @param type the override type
+    /// @returns the instruction
+    ir::Overridable* Overridable(const type::Type* type) {
+        auto* override = ir.CreateInstruction<ir::Overridable>(Override(type));
+        Append(override);
+        return override;
     }
 
     /// The IR module.
