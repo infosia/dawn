@@ -57,6 +57,7 @@ struct FeaturesSet {
     // Returns |count|, the number of features. Writes out all |count| values if |features| is
     // non-null.
     size_t EnumerateFeatures(wgpu::FeatureName* features) const;
+    void ToSupportedFeatures(SupportedFeatures* supportedFeatures) const;
 };
 
 }  // namespace dawn::native
