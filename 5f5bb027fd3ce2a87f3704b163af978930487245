@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff9e89ff_54e6a9f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-23T14:01:35Z",
+      "side": 1,
+      "message": "LGTM though it might be possible to simplify things",
+      "revId": "5f5bb027fd3ce2a87f3704b163af978930487245",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69814dd2_819fa7c9",
+        "filename": "src/dawn/native/Surface_metal.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-23T14:01:35Z",
+      "side": 1,
+      "message": "nit: Can we do the following pattern:\n\n```\n#include \"dawn/common/Platform.h\"\n\n\n#if DAWN_PLATFORM_IS(IOS)\n#else // DAWN_PLATFORM_IS(IOS)\n#endif // DAWN_PLATFORM_IS(IOS)\n```\n\nAlso can we use static_cast\u003c\u003e instead of C style casts if that works for `__bridge`? Finally would it work to do `static_cast\u003c__bridge id\u003e(obj)` everywhere so that we don\u0027t even need to `#if`?",
+      "revId": "5f5bb027fd3ce2a87f3704b163af978930487245",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "513c08f1_21d1b20f",
+        "filename": "src/dawn/native/metal/SharedFenceMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-23T14:01:35Z",
+      "side": 1,
+      "message": "Same comment as for the other file.",
+      "revId": "5f5bb027fd3ce2a87f3704b163af978930487245",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
