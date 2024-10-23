@@ -757,7 +757,10 @@ class DawnTestWithParams : public DawnTestBase, public ::testing::TestWithParam<
     DawnTestWithParams();
     ~DawnTestWithParams() override = default;
 
-    void SetUp() override { DawnTestBase::SetUp(); }
+    void SetUp() override {
+        DAWN_TEST_UNSUPPORTED_IF(UsesWire());
+        DawnTestBase::SetUp();
+    }
 
     void TearDown() override { DawnTestBase::TearDown(); }
 };
