@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "2990bbdb1611b7e7c1646499a82ee6baefda87d4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f04c140e_f5bc2c00",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-23T20:45:47Z",
+      "side": 1,
+      "message": "Why don\u0027t we want to to use the cached version here too?",
+      "revId": "2990bbdb1611b7e7c1646499a82ee6baefda87d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
