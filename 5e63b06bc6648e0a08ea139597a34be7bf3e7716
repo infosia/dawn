@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30061aec_8c0214e0",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-23T01:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "245a9971_c10a5cf1",
+      "revId": "5e63b06bc6648e0a08ea139597a34be7bf3e7716",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e02b69b_84f90793",
@@ -69,6 +87,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c690ecb4_6311b656",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-23T01:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e02b69b_84f90793",
+      "revId": "5e63b06bc6648e0a08ea139597a34be7bf3e7716",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af1d7f98_49716606",
@@ -82,6 +118,24 @@
       "writtenOn": "2024-10-20T11:48:37Z",
       "side": 1,
       "message": "This ASSERT about the fragment will trigger if the visibility is Compute|Fragment, same as the comment in the previous round of comments. We should remove it.",
+      "revId": "5e63b06bc6648e0a08ea139597a34be7bf3e7716",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23658657_071f3508",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-23T01:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af1d7f98_49716606",
       "revId": "5e63b06bc6648e0a08ea139597a34be7bf3e7716",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

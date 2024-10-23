@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e506e40_74c6d8f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2024-10-23T01:40:29Z",
+      "side": 1,
+      "message": "Have to switch to another machine to resolve the proxy issue...Finally...\n\nThanks for your review and patience.",
+      "revId": "a3a610ac137f6ddef44f19ace774935ee3888dcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
