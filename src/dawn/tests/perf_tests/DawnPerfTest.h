@@ -139,8 +139,9 @@ class DawnPerfTestWithParams : public DawnTestWithParams<Params>, public DawnPer
     void SetUp() override {
         DawnTestWithParams<Params>::SetUp();
 
+        wgpu::Adapter adapter = wgpu::Adapter(this->GetAdapter().Get());
         wgpu::AdapterInfo info;
-        this->GetAdapter().GetInfo(&info);
+        adapter.GetInfo(&info);
         DAWN_TEST_UNSUPPORTED_IF(info.adapterType == wgpu::AdapterType::CPU);
 
         if (mSupportsTimestampQuery) {
