@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9c9e388_3afe8cac",
+        "filename": "src/dawn/native/Surface_metal.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2024-10-24T06:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69814dd2_819fa7c9",
+      "revId": "5f5bb027fd3ce2a87f3704b163af978930487245",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "513c08f1_21d1b20f",
@@ -65,6 +83,24 @@
       "writtenOn": "2024-10-23T14:01:35Z",
       "side": 1,
       "message": "Same comment as for the other file.",
+      "revId": "5f5bb027fd3ce2a87f3704b163af978930487245",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e74fc9e9_a3eb8221",
+        "filename": "src/dawn/native/metal/SharedFenceMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2024-10-24T06:05:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "513c08f1_21d1b20f",
       "revId": "5f5bb027fd3ce2a87f3704b163af978930487245",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

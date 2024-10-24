@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18494d8a_8f0a7b0c",
+        "filename": "src/dawn/native/Surface_metal.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2024-10-24T06:05:50Z",
+      "side": 1,
+      "message": "It seems that `static_cast\u003c__bridge id\u003e(obj)` does not compile.\n\n```\nSurface_metal.mm:39:39: error: type name requires a specifier or qualifier\n    id\u003cNSObject\u003e object \u003d static_cast\u003c__bridge id\u003e(obj);\n                                      ^\n```\n\nI am going to revert to `#ifdef`.\n\nEDIT: applied in patch 4\nEDIT: applied code format in patch 5",
+      "range": {
+        "startLine": 39,
+        "startChar": 26,
+        "endLine": 39,
+        "endChar": 50
+      },
+      "revId": "492281245b351099d08443044e2d7c100a1be4de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
