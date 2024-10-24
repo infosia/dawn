@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "651e076b_5ea85de5",
+        "filename": "src/tint/lang/core/ir/referenced_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T15:20:26Z",
+      "side": 1,
+      "message": "```suggestion\n/// Utility that helps guarantee the same const-ness is applied to both types\n```",
+      "revId": "72b8235fa490e5613912c18d3c336655cdee1e67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c980017_8659bd65",
+        "filename": "src/tint/lang/core/ir/referenced_functions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T15:20:26Z",
+      "side": 1,
+      "message": "```suggestion\n                        if (!functions.Add(callee)) {\n                            continue;\n                        }\n\n                        // Add functions transitively referenced by the callee.\n                        const auto\u0026 callee_functions \u003d TransitiveReferences(callee);\n                        for (auto\u0026 transitive_func : callee_functions) {\n                            functions.Add(transitive_func);\n                        }\n```",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "72b8235fa490e5613912c18d3c336655cdee1e67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
