@@ -16,6 +16,24 @@
       "message": "Dawn wire tests currently fail because `EnumerateAdapters` return an adapter with invalid/unitialized info. Do you know why it\u0027s happening by any chance?",
       "revId": "fc9656e73220536abb75377153bf86a92a60dacc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ecb5d52_163f3d03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-24T11:38:25Z",
+      "side": 1,
+      "message": "These tests shouldn\u0027t be running on the wire, because the C++ bindings will call into the wire instead of dawn::native as you expect.",
+      "parentUuid": "4bb31810_c0180749",
+      "revId": "fc9656e73220536abb75377153bf86a92a60dacc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

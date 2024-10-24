@@ -81,6 +81,30 @@
       },
       "revId": "ea3a9654f7fba857b55c4610e9a055ff1c4d7590",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7f0476a_397751a5",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-24T11:38:25Z",
+      "side": 1,
+      "message": "Dammit that\u0027s the DawnNative.h Adapter not the dawn::native::AdapterBase.",
+      "parentUuid": "be474127_19addf24",
+      "range": {
+        "startLine": 463,
+        "startChar": 44,
+        "endLine": 463,
+        "endChar": 78
+      },
+      "revId": "ea3a9654f7fba857b55c4610e9a055ff1c4d7590",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
