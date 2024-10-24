@@ -34,6 +34,24 @@
       "parentUuid": "1b4d1af3_c1ea0e01",
       "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6613cff_b15c3eea",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-24T01:33:17Z",
+      "side": 1,
+      "message": "It would only need to be added as an argument to two functions: `Process(Block*, etc.)` and `PutInLet`, as far as I can tell. I\u0027m not a fan of \"global\" state cache that needs careful invalidation.",
+      "parentUuid": "451a06b3_64d38960",
+      "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
