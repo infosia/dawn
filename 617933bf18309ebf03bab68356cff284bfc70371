@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2016551_b3f6ad63",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-24T01:15:39Z",
+      "side": 1,
+      "message": "That would be great! Thanks a lot for Ken\u0027s help!",
+      "parentUuid": "84d80c3b_0cb4161f",
+      "revId": "617933bf18309ebf03bab68356cff284bfc70371",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "42ba9bff_4896f28f",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-10-23T13:47:41Z",
       "side": 1,
       "message": "Do we have a driver version after which we know it\u0027s fixed?",
+      "revId": "617933bf18309ebf03bab68356cff284bfc70371",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c98a359_987ba780",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-24T01:15:39Z",
+      "side": 1,
+      "message": "Unfortunately no. The issue exists on all Intel Gen11 GPUs.\nWe will try to work with our driver team to fix this issue on Intel Gen11 GPUs.",
+      "parentUuid": "42ba9bff_4896f28f",
       "revId": "617933bf18309ebf03bab68356cff284bfc70371",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
