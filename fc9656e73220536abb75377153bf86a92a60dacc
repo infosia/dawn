@@ -52,6 +52,24 @@
       "parentUuid": "8ecb5d52_163f3d03",
       "revId": "fc9656e73220536abb75377153bf86a92a60dacc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19c3231c_81403096",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-24T12:12:46Z",
+      "side": 1,
+      "message": "Adding `DAWN_TEST_UNSUPPORTED_IF(UsesWire());` to the 6286 failing tests doesn\u0027t seem the good way to fix them ;)",
+      "parentUuid": "51d9fcc6_3d1a3d30",
+      "revId": "fc9656e73220536abb75377153bf86a92a60dacc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
