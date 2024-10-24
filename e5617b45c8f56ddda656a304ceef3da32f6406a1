@@ -33,6 +33,24 @@
       "message": "Hmm, I\u0027m not so sure about this as it\u0027s not technically invalid, just not implemented yet. Also, I wasn\u0027t too worried about these tests being marked as FAIL because it was the case for both AST and IR.",
       "revId": "e5617b45c8f56ddda656a304ceef3da32f6406a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07c71366_e2c56b0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T01:36:08Z",
+      "side": 1,
+      "message": "For GLSL, we mark them as `INVALID` because they aren\u0027t implemented. When we add push constants to HLSL then we can remove the INVALID marking.\n\nThey aren\u0027t a failure because they just aren\u0027t supported.",
+      "parentUuid": "58f5bd54_b04c6151",
+      "revId": "e5617b45c8f56ddda656a304ceef3da32f6406a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
