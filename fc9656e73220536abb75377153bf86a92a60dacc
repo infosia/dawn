@@ -70,6 +70,24 @@
       "parentUuid": "51d9fcc6_3d1a3d30",
       "revId": "fc9656e73220536abb75377153bf86a92a60dacc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8625faeb_93963c05",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-24T13:10:01Z",
+      "side": 1,
+      "message": "I\u0027ve tried adding `DAWN_TEST_UNSUPPORTED_IF(UsesWire());` before DawnTestBase::SetUp().",
+      "parentUuid": "19c3231c_81403096",
+      "revId": "fc9656e73220536abb75377153bf86a92a60dacc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
