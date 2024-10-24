@@ -52,6 +52,24 @@
       "parentUuid": "451a06b3_64d38960",
       "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16428dfd_c6f01167",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T01:37:18Z",
+      "side": 1,
+      "message": "Except that ends up being more costly as the hashmap gets destroyed and re-created each time. So you pay the cost of reallocating the hashmap. The `Clear` will maintain the capacity over each block, saving the reallocations.",
+      "parentUuid": "b6613cff_b15c3eea",
+      "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
