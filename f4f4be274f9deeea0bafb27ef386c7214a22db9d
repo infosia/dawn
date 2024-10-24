@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb7b36b6_84687e94",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-24T01:23:27Z",
+      "side": 1,
+      "message": "I would suggest adding an assert in `PutInLet` that the input instruction is not a `let`.",
+      "revId": "f4f4be274f9deeea0bafb27ef386c7214a22db9d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
