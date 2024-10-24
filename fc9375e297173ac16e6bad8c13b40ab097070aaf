@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b65e311_99420485",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-24T20:59:50Z",
+      "side": 1,
+      "message": "u",
+      "revId": "fc9375e297173ac16e6bad8c13b40ab097070aaf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cf1dfa1_61b86f4e",
+        "filename": "src/emdawnwebgpu/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-24T20:59:50Z",
+      "side": 1,
+      "message": "This maybe assumes dawn_emscripten_dir is set to something starting with `//`. I don\u0027t know if there is a better way to handle it.",
+      "range": {
+        "startLine": 79,
+        "startChar": 15,
+        "endLine": 79,
+        "endChar": 34
+      },
+      "revId": "fc9375e297173ac16e6bad8c13b40ab097070aaf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
