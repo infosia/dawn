@@ -88,6 +88,24 @@
       "parentUuid": "16428dfd_c6f01167",
       "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efe3c442_bba9102e",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T01:58:54Z",
+      "side": 1,
+      "message": "I think that\u0027s less clear what\u0027s happening, but done.",
+      "parentUuid": "bb2f748e_0f570a58",
+      "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
