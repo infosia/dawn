@@ -48,6 +48,9 @@ struct State {
     /// The type manager.
     core::type::Manager& ty{ir.Types()};
 
+    /// Map of values to the new let versions
+    Hashmap<core::ir::Value*, core::ir::Let*, 8> values_in_lets{};
+
     /// Process the module.
     void Process() {
         for (auto* block : ir.blocks.Objects()) {
@@ -55,6 +58,7 @@ struct State {
             bool is_root_block = block == ir.root_block;
 
             Process(block, is_root_block);
+            values_in_lets.Clear();
         }
     }
 
@@ -211,8 +215,14 @@ struct State {
     }
 
     core::ir::Let* PutInLet(core::ir::Instruction* inst, size_t index, core::ir::Value* value) {
-        auto* let = MakeLet(value);
-        let->InsertBefore(inst);
+        core::ir::Let* let = nullptr;
+        if (auto res = values_in_lets.Get(value); res) {
+            let = *res;
+        } else {
+            let = MakeLet(value);
+            let->InsertBefore(inst);
+            values_in_lets.Add(value, let);
+        }
 
         inst->SetOperand(index, let->Result(0));
         return let;
