@@ -64,13 +64,8 @@ class AdapterBase : public RefCounted, public WeakRefSupport<AdapterBase> {
     wgpu::Status APIGetInfo(AdapterInfo* info) const;
     bool APIHasFeature(wgpu::FeatureName feature) const;
     size_t APIEnumerateFeatures(wgpu::FeatureName* features) const;
-    void APIRequestDevice(const DeviceDescriptor* descriptor,
-                          WGPURequestDeviceCallback callback,
-                          void* userdata);
-    Future APIRequestDeviceF(const DeviceDescriptor* descriptor,
-                             const RequestDeviceCallbackInfo& callbackInfo);
-    Future APIRequestDevice2(const DeviceDescriptor* descriptor,
-                             const WGPURequestDeviceCallbackInfo2& callbackInfo);
+    Future APIRequestDevice(const DeviceDescriptor* descriptor,
+                            const WGPURequestDeviceCallbackInfo& callbackInfo);
     DeviceBase* APICreateDevice(const DeviceDescriptor* descriptor = nullptr);
     wgpu::Status APIGetFormatCapabilities(wgpu::TextureFormat format,
                                           FormatCapabilities* capabilities);

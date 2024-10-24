@@ -1528,24 +1528,7 @@ void wgpuSurfaceCapabilitiesFreeMembers(WGPUSurfaceCapabilities) {
 // Methods of Adapter
 // ----------------------------------------------------------------------------
 
-void wgpuAdapterRequestDevice(WGPUAdapter adapter,
-                              const WGPUDeviceDescriptor* descriptor,
-                              WGPURequestDeviceCallback callback,
-                              void* userdata) {
-  WGPURequestDeviceCallbackInfo2 callbackInfo = {};
-  callbackInfo.mode = WGPUCallbackMode_AllowSpontaneous;
-  callbackInfo.callback = [](WGPURequestDeviceStatus status, WGPUDevice device,
-                             WGPUStringView message, void* callback,
-                             void* userdata) {
-    auto cb = reinterpret_cast<WGPURequestDeviceCallback>(callback);
-    cb(status, device, message, userdata);
-  };
-  callbackInfo.userdata1 = reinterpret_cast<void*>(callback);
-  callbackInfo.userdata2 = userdata;
-  wgpuAdapterRequestDevice2(adapter, descriptor, callbackInfo);
-}
-
-WGPUFuture wgpuAdapterRequestDevice2(
+WGPUFuture wgpuAdapterRequestDevice(
     WGPUAdapter adapter,
     const WGPUDeviceDescriptor* descriptor,
     WGPURequestDeviceCallbackInfo2 callbackInfo) {

@@ -47,12 +47,6 @@ class RequestDeviceEvent : public TrackedEvent {
 
     RequestDeviceEvent(const WGPURequestDeviceCallbackInfo& callbackInfo, Ref<Device> device)
         : TrackedEvent(callbackInfo.mode),
-          mCallback(callbackInfo.callback),
-          mUserdata1(callbackInfo.userdata),
-          mDevice(std::move(device)) {}
-
-    RequestDeviceEvent(const WGPURequestDeviceCallbackInfo2& callbackInfo, Ref<Device> device)
-        : TrackedEvent(callbackInfo.mode),
           mCallback2(callbackInfo.callback),
           mUserdata1(callbackInfo.userdata1),
           mUserdata2(callbackInfo.userdata2),
@@ -264,54 +258,8 @@ WGPUStatus Adapter::GetInfo(WGPUAdapterInfo* info) const {
     return WGPUStatus_Success;
 }
 
-void Adapter::RequestDevice(const WGPUDeviceDescriptor* descriptor,
-                            WGPURequestDeviceCallback callback,
-                            void* userdata) {
-    WGPURequestDeviceCallbackInfo callbackInfo = {};
-    callbackInfo.mode = WGPUCallbackMode_AllowSpontaneous;
-    callbackInfo.callback = callback;
-    callbackInfo.userdata = userdata;
-    RequestDeviceF(descriptor, callbackInfo);
-}
-
-WGPUFuture Adapter::RequestDeviceF(const WGPUDeviceDescriptor* descriptor,
-                                   const WGPURequestDeviceCallbackInfo& callbackInfo) {
-    Client* client = GetClient();
-    Ref<Device> device = client->Make<Device>(GetEventManagerHandle(), this, descriptor);
-    auto [futureIDInternal, tracked] =
-        GetEventManager().TrackEvent(std::make_unique<RequestDeviceEvent>(callbackInfo, device));
-    if (!tracked) {
-        return {futureIDInternal};
-    }
-
-    // Ensure callbacks are not serialized as part of the command, as they cannot be passed between
-    // processes.
-    WGPUDeviceDescriptor wireDescriptor = {};
-    if (descriptor) {
-        wireDescriptor = *descriptor;
-        wireDescriptor.deviceLostCallback = nullptr;
-        wireDescriptor.deviceLostUserdata = nullptr;
-        wireDescriptor.deviceLostCallbackInfo.callback = nullptr;
-        wireDescriptor.deviceLostCallbackInfo.userdata = nullptr;
-        wireDescriptor.uncapturedErrorCallbackInfo.callback = nullptr;
-        wireDescriptor.uncapturedErrorCallbackInfo.userdata = nullptr;
-    }
-
-    AdapterRequestDeviceCmd cmd;
-    cmd.adapterId = GetWireId();
-    cmd.eventManagerHandle = GetEventManagerHandle();
-    cmd.future = {futureIDInternal};
-    cmd.deviceObjectHandle = device->GetWireHandle();
-    cmd.deviceLostFuture = device->GetDeviceLostFuture();
-    cmd.descriptor = &wireDescriptor;
-    cmd.userdataCount = 1;
-
-    client->SerializeCommand(cmd);
-    return {futureIDInternal};
-}
-
-WGPUFuture Adapter::RequestDevice2(const WGPUDeviceDescriptor* descriptor,
-                                   const WGPURequestDeviceCallbackInfo2& callbackInfo) {
+WGPUFuture Adapter::RequestDevice(const WGPUDeviceDescriptor* descriptor,
+                                  const WGPURequestDeviceCallbackInfo& callbackInfo) {
     Client* client = GetClient();
     Ref<Device> device = client->Make<Device>(GetEventManagerHandle(), this, descriptor);
     auto [futureIDInternal, tracked] =

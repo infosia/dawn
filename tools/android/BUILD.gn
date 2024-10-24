@@ -162,8 +162,6 @@ dawn_json_generator("kotlin_gen") {
     "java/android/dawn/RequestAdapterCallbackInfo.kt",
     "java/android/dawn/RequestAdapterOptions.kt",
     "java/android/dawn/RequestAdapterStatus.kt",
-    "java/android/dawn/RequestDeviceCallback.kt",
-    "java/android/dawn/RequestDeviceCallbackInfo.kt",
     "java/android/dawn/RequestDeviceStatus.kt",
     "java/android/dawn/RequiredLimits.kt",
     "java/android/dawn/SType.kt",
