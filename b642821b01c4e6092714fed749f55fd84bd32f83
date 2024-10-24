@@ -50,6 +50,24 @@
       "message": "Is there any way to avoid adding `libdrm`?",
       "revId": "b642821b01c4e6092714fed749f55fd84bd32f83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5053556e_3202d19f",
+        "filename": "third_party/libdrm/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-24T01:22:36Z",
+      "side": 1,
+      "message": "I\u0027m afraid no...\n\nAccording to https://chromium-review.googlesource.com/c/chromium/src/+/5941361 now Chromium always uses third_party libdrm instead of system libdrm by default and this CL is landed later than the one to use the Windows SDK version 26100. We have to follow this change as long as we are using the same //build file.",
+      "parentUuid": "811cf23c_1d9cafe5",
+      "revId": "b642821b01c4e6092714fed749f55fd84bd32f83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
