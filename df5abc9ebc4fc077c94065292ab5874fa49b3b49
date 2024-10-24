@@ -106,6 +106,24 @@
       "parentUuid": "bb2f748e_0f570a58",
       "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8afb4064_b45c7c3b",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-24T02:01:02Z",
+      "side": 1,
+      "message": "Maybe a little less clear, but also less error prone. Thanks.",
+      "parentUuid": "efe3c442_bba9102e",
+      "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
