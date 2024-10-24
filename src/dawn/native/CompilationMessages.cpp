@@ -193,7 +193,7 @@ MaybeError OwnedCompilationMessages::AddMessage(const tint::diag::Diagnostic& di
 
 void OwnedCompilationMessages::AddMessage(const CompilationMessage& message) {
     // Cannot add messages after GetCompilationInfo has been called.
-    DAWN_ASSERT(mCompilationInfo.messages == nullptr);
+    DAWN_ASSERT(!mFlushed.load());
 
     DAWN_ASSERT(message.nextInChain == nullptr);
 
@@ -208,7 +208,7 @@ void OwnedCompilationMessages::AddMessage(const CompilationMessage& message) {
 
 MaybeError OwnedCompilationMessages::AddMessages(const tint::diag::List& diagnostics) {
     // Cannot add messages after GetCompilationInfo has been called.
-    DAWN_ASSERT(mCompilationInfo.messages == nullptr);
+    DAWN_ASSERT(!mFlushed.load());
 
     for (const auto& diag : diagnostics) {
         DAWN_TRY(AddMessage(diag));
@@ -221,16 +221,18 @@ MaybeError OwnedCompilationMessages::AddMessages(const tint::diag::List& diagnos
 
 void OwnedCompilationMessages::ClearMessages() {
     // Cannot clear messages after GetCompilationInfo has been called.
-    DAWN_ASSERT(mCompilationInfo.messages == nullptr);
+    DAWN_ASSERT(!mFlushed.load());
 
     mMessageStrings.clear();
     mMessages.clear();
 }
 
 const CompilationInfo* OwnedCompilationMessages::GetCompilationInfo() {
-    mCompilationInfo.messageCount = mMessages.size();
-    mCompilationInfo.messages = mMessages.data();
-
+    bool alreadyFlushed = mFlushed.exchange(true);
+    if (!alreadyFlushed) {
+        mCompilationInfo.messageCount = mMessages.size();
+        mCompilationInfo.messages = mMessages.data();
+    }
     return &mCompilationInfo;
 }
 

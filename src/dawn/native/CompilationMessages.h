@@ -76,6 +76,9 @@ class OwnedCompilationMessages : public NonCopyable {
     void AddMessage(const CompilationMessage& message);
     void AddFormattedTintMessages(const tint::diag::List& diagnostics);
 
+    // Once GetCompilationInfo has been called, the messages are considered "flushed" we can no
+    // longer add messages.
+    std::atomic<bool> mFlushed = false;
     CompilationInfo mCompilationInfo;
     std::vector<std::unique_ptr<std::string>> mMessageStrings;
     std::vector<CompilationMessage> mMessages;
