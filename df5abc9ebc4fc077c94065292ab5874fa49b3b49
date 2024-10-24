@@ -16,6 +16,24 @@
       "message": "I would recommend making the Hashmap a local variable in this for loop, and passing it into `Process(Block*,...)`. Less error-prone.",
       "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "451a06b3_64d38960",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T01:30:16Z",
+      "side": 1,
+      "message": "It will need to get passed through multiple functions in order for that to work. The module scoped variable is a lot clearer that it can be used anywhere without having to pass it along all the time.",
+      "parentUuid": "1b4d1af3_c1ea0e01",
+      "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
