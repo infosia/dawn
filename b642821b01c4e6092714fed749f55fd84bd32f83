@@ -68,6 +68,24 @@
       "parentUuid": "811cf23c_1d9cafe5",
       "revId": "b642821b01c4e6092714fed749f55fd84bd32f83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "495572d1_44ac2633",
+        "filename": "third_party/libdrm/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-24T11:12:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5053556e_3202d19f",
+      "revId": "b642821b01c4e6092714fed749f55fd84bd32f83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
