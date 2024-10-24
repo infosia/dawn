@@ -70,6 +70,24 @@
       "parentUuid": "b6613cff_b15c3eea",
       "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb2f748e_0f570a58",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-24T01:38:41Z",
+      "side": 1,
+      "message": "In that case, I would declare it just above the loop, and Clear it as you are inside the loop - could even be done right at the top of the loop. Then there is good local reasoning for this map.",
+      "parentUuid": "16428dfd_c6f01167",
+      "revId": "df5abc9ebc4fc077c94065292ab5874fa49b3b49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
