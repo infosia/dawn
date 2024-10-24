@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe38557c_afebdee8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T01:15:21Z",
+      "side": 1,
+      "message": "PTAL, this fixes 2 of the failed FXC Tint e2e tests.",
+      "revId": "d02c82c248efec0350f44dc32350d74a25fb33c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
