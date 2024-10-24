@@ -16,6 +16,24 @@
       "message": "I would suggest adding an assert in `PutInLet` that the input instruction is not a `let`.",
       "revId": "f4f4be274f9deeea0bafb27ef386c7214a22db9d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c03420c_f93ce651",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T01:27:33Z",
+      "side": 1,
+      "message": "It\u0027s not the input instruction, it\u0027s the instruction on `res`. The problem is, I\u0027d need to duplicate a bunch of this `if` to do so because `res` is a `Value` in `PutInLet`. So, first I\u0027d need to see if it\u0027s an `InstructionResult` and then, if so I could `ASSERT` on the `Instruction()` the result passes too.\n\nNot sure it\u0027s worth the effort.",
+      "parentUuid": "cb7b36b6_84687e94",
+      "revId": "f4f4be274f9deeea0bafb27ef386c7214a22db9d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
