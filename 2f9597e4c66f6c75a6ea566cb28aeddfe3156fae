@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "257c70e6_2fccfe93",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T15:28:59Z",
+      "side": 1,
+      "message": "this seems unrelated?",
+      "revId": "2f9597e4c66f6c75a6ea566cb28aeddfe3156fae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18a568c1_61bee387",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T15:28:59Z",
+      "side": 1,
+      "message": "You\u0027 erasing from the list you\u0027re iterating, doesn\u0027t that mean you\u0027re going to a) skip elements as we shift the further elements down and b) walk off the end of the list?\n\nShould this iterate the vector the in the opposite order so you remove from the end first?",
+      "revId": "2f9597e4c66f6c75a6ea566cb28aeddfe3156fae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39cb883c_962be860",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T15:28:59Z",
+      "side": 1,
+      "message": "```suggestion\n        if (referenced_vars.Contains(var)) {\n            continue;\n        }\n        \n        // There shouldn\u0027t be any remaining references to the variable.\n        // This will not always be the case once we have override support.\n        TINT_ASSERT(var-\u003eResult(0)-\u003eNumUsages() \u003d\u003d 0);\n        var-\u003eDestroy();\n```",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 9
+      },
+      "revId": "2f9597e4c66f6c75a6ea566cb28aeddfe3156fae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "059d757e_780460c5",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-24T15:28:59Z",
+      "side": 1,
+      "message": "Can you make a similar test with something like:\n\n```\nauto* f1 \u003d Func(\"f1\");\nauto* f2 \u003d Func(\"f2\");\nauto* f3 \u003d Func(\"f3\");\n\nEntryPoint(\"foo\", {f1});\n```\n\nI _think_ currently it would skip removing `f3` due to the deleting while iterating but would be good to get a test.",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 28
+      },
+      "revId": "2f9597e4c66f6c75a6ea566cb28aeddfe3156fae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
