@@ -36,39 +36,31 @@ namespace wgpu::binding {
 ////////////////////////////////////////////////////////////////////////////////
 
 GPUSupportedFeatures::GPUSupportedFeatures(Napi::Env env,
-                                           const std::vector<wgpu::FeatureName>& features) {
+                                           const wgpuSupportedFeatures& supportedFeatures) {
     Converter conv(env);
 
     // Add all known GPUFeatureNames that are known by dawn.node and skip the other ones are they
     // may be native-only extension, Dawn-specific or other special cases.
-    for (wgpu::FeatureName feature : features) {
+    for (uint32_t i = 0; i < supportedFeatures.featureCount; ++i) {
+        wgpu::FeatureName feature = supportedFeatures.features[i];
         interop::GPUFeatureName gpuFeature;
         if (conv(gpuFeature, feature)) {
-            enabled_.emplace(gpuFeature);
+            features_.emplace(gpuFeature);
         }
     }
 }
 
-bool GPUSupportedFeatures::has(Napi::Env, std::string name) {
-    interop::GPUFeatureName feature;
-    if (!interop::Converter<interop::GPUFeatureName>::FromString(name, feature)) {
-        return false;
-    }
-
-    return enabled_.count(feature);
-}
-
-std::vector<std::string> GPUSupportedFeatures::keys(Napi::Env) {
+std::vector<std::string> GPUSupportedFeatures::getFeatures(Napi::Env) {
     std::vector<std::string> out;
-    out.reserve(enabled_.size());
-    for (auto feature : enabled_) {
+    out.reserve(feature_count_);
+    for (auto feature : features_) {
         out.push_back(interop::Converter<interop::GPUFeatureName>::ToString(feature));
     }
     return out;
 }
 
-size_t GPUSupportedFeatures::getSize(Napi::Env) {
-    return enabled_.size();
+size_t GPUSupportedFeatures::getFeatureCount(Napi::Env) {
+    return feature_count_;
 }
 
 }  // namespace wgpu::binding

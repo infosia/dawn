@@ -42,15 +42,14 @@ namespace wgpu::binding {
 // GPUSupportedLFeatures is an implementation of interop::GPUSupportedFeatures.
 class GPUSupportedFeatures final : public interop::GPUSupportedFeatures {
   public:
-    GPUSupportedFeatures(Napi::Env env, const std::vector<wgpu::FeatureName>& features);
+    GPUSupportedFeatures(Napi::Env env, const SupportedFeatures& features);
 
     // interop::GPUSupportedFeatures interface compliance
-    bool has(Napi::Env, std::string name) override;
-    std::vector<std::string> keys(Napi::Env) override;
-    size_t getSize(Napi::Env) override;
+    std::vector<std::string> getFeatures(Napi::Env) override;
+    size_t getFeatureCount(Napi::Env) override;
 
   private:
-    std::unordered_set<interop::GPUFeatureName> enabled_;
+    std::unordered_set<interop::GPUFeatureName> features_;
 };
 
 }  // namespace wgpu::binding
