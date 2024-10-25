@@ -90,8 +90,7 @@ TEST_F(SpirvWriterTest, Function_DeduplicateType) {
 }
 
 TEST_F(SpirvWriterTest, Function_EntryPoint_Compute) {
-    auto* func =
-        b.Function("main", ty.void_(), core::ir::Function::PipelineStage::kCompute, {{32, 4, 1}});
+    auto* func = b.ComputeFunction("main", 32, 4, 1);
     b.Append(func->Block(), [&] {  //
         b.Return(func);
     });
@@ -194,14 +193,12 @@ TEST_F(SpirvWriterTest, Function_EntryPoint_Vertex) {
 }
 
 TEST_F(SpirvWriterTest, Function_EntryPoint_Multiple) {
-    auto* f1 =
-        b.Function("main1", ty.void_(), core::ir::Function::PipelineStage::kCompute, {{32, 4, 1}});
+    auto* f1 = b.ComputeFunction("main1", 32, 4, 1);
     b.Append(f1->Block(), [&] {  //
         b.Return(f1);
     });
 
-    auto* f2 =
-        b.Function("main2", ty.void_(), core::ir::Function::PipelineStage::kCompute, {{8, 2, 16}});
+    auto* f2 = b.ComputeFunction("main2", 8, 2, 16);
     b.Append(f2->Block(), [&] {  //
         b.Return(f2);
     });
