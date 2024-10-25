@@ -99,6 +99,7 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
 
     std::vector<WGPUFeatureName> features;
 
+    // TODO(crbug.com/368672123): Use GetFeatures once we remove EnumerateFeatures.
     size_t featuresCount = mProcs.deviceEnumerateFeatures(device, nullptr);
     features.resize(featuresCount);
     mProcs.deviceEnumerateFeatures(device, features.data());
