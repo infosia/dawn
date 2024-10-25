@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "072b711e_0f532feb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-10-25T17:14:24Z",
+      "side": 1,
+      "message": "Loko: could you please review? CC\u0027ing Corentin as FYI.",
+      "revId": "406417a09e1bc4eab4a0509e34c2fefb0d1c4a3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
