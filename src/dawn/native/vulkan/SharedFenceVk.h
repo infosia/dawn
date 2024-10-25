@@ -47,7 +47,7 @@ class SharedFence final : public SharedFenceBase {
     static ResultOrError<Ref<SharedFence>> Create(
         Device* device,
         StringView label,
-        const SharedFenceVkSemaphoreSyncFDDescriptor* descriptor);
+        const SharedFenceSyncFDDescriptor* descriptor);
 
     static ResultOrError<Ref<SharedFence>> Create(
         Device* device,
