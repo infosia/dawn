@@ -167,9 +167,11 @@ void WireTest::SetUp() {
                     return WGPUStatus_Success;
                 })));
 
-            EXPECT_CALL(api, DeviceEnumerateFeatures(apiDevice, nullptr))
-                .WillOnce(Return(0))
-                .WillOnce(Return(0));
+            EXPECT_CALL(api, DeviceGetFeatures(apiDevice, NotNull()))
+                .WillOnce(WithArg<1>(Invoke([&](WGPUSupportedFeatures* features) {
+                    features->featureCount = 0;
+                    return WGPUStatus_Success;
+                })));
 
             api.CallAdapterRequestDevice2Callback(apiAdapter, WGPURequestDeviceStatus_Success,
                                                   apiDevice, kEmptyOutputStringView);
