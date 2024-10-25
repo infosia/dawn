@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47e69d13_8ffd130f",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1396,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T18:15:30Z",
+      "side": 1,
+      "message": "Removed entirely and just calls `SetFutureReady` there now.",
+      "parentUuid": "17bc95d2_4c9d4a70",
+      "range": {
+        "startLine": 1396,
+        "startChar": 21,
+        "endLine": 1396,
+        "endChar": 33
+      },
+      "revId": "7b80df3f278fba8fc702aee448e2d700669a9033",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ebaa0984_88bb82aa",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-10-25T03:50:52Z",
       "side": 1,
       "message": "Would this ever be false?",
+      "range": {
+        "startLine": 1398,
+        "startChar": 6,
+        "endLine": 1398,
+        "endChar": 42
+      },
+      "revId": "7b80df3f278fba8fc702aee448e2d700669a9033",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca6e769d_1aa4b46d",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1398,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T18:15:30Z",
+      "side": 1,
+      "message": "It could if an invalid callback mode was passed for the device lost callback info. Remove this though and moved it to an assert in `SetFutureReady`.",
+      "parentUuid": "ebaa0984_88bb82aa",
       "range": {
         "startLine": 1398,
         "startChar": 6,
