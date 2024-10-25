@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "218027fa_0a30785a",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T17:51:32Z",
+      "side": 1,
+      "message": "These are all supposed to be \u0027j\u0027 since they are being passed a uint64_t from WASM. WASM-\u003eJS is always int right now, but JS-\u003eWASM is always double.",
+      "parentUuid": "f053e08b_981fe111",
+      "range": {
+        "startLine": 703,
+        "startChar": 38,
+        "endLine": 703,
+        "endChar": 40
+      },
+      "revId": "7b002ccd955cafc739434b90c77bf468388bec8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd0c3dca_8339a53b",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-10-25T03:45:42Z",
       "side": 1,
       "message": "`d`",
+      "range": {
+        "startLine": 933,
+        "startChar": 32,
+        "endLine": 933,
+        "endChar": 33
+      },
+      "revId": "7b002ccd955cafc739434b90c77bf468388bec8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02422113_49089a92",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T17:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd0c3dca_8339a53b",
       "range": {
         "startLine": 933,
         "startChar": 32,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "96a02f3c_d44aa096",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T17:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c3585ef_f6015d48",
+      "range": {
+        "startLine": 1499,
+        "startChar": 50,
+        "endLine": 1499,
+        "endChar": 51
+      },
+      "revId": "7b002ccd955cafc739434b90c77bf468388bec8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d259102_dd8c35ad",
@@ -100,6 +172,30 @@
       "writtenOn": "2024-10-25T03:45:42Z",
       "side": 1,
       "message": "`d`",
+      "range": {
+        "startLine": 1607,
+        "startChar": 49,
+        "endLine": 1607,
+        "endChar": 50
+      },
+      "revId": "7b002ccd955cafc739434b90c77bf468388bec8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39ec10e9_98bc9290",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T17:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d259102_dd8c35ad",
       "range": {
         "startLine": 1607,
         "startChar": 49,
@@ -133,6 +229,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98b0527c_487051fb",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1755,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T17:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86008fd9_7f9f46dd",
+      "range": {
+        "startLine": 1755,
+        "startChar": 37,
+        "endLine": 1755,
+        "endChar": 38
+      },
+      "revId": "7b002ccd955cafc739434b90c77bf468388bec8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f99f8f1_75a98fc8",
@@ -156,6 +276,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3865cd3e_688dda26",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1856,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T17:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f99f8f1_75a98fc8",
+      "range": {
+        "startLine": 1856,
+        "startChar": 40,
+        "endLine": 1856,
+        "endChar": 41
+      },
+      "revId": "7b002ccd955cafc739434b90c77bf468388bec8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "96693d4f_ae4614dd",
@@ -169,6 +313,30 @@
       "writtenOn": "2024-10-25T03:45:42Z",
       "side": 1,
       "message": "`d`",
+      "range": {
+        "startLine": 1926,
+        "startChar": 42,
+        "endLine": 1926,
+        "endChar": 43
+      },
+      "revId": "7b002ccd955cafc739434b90c77bf468388bec8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b7cde8b_3e570c9d",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1926,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T17:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96693d4f_ae4614dd",
       "range": {
         "startLine": 1926,
         "startChar": 42,
