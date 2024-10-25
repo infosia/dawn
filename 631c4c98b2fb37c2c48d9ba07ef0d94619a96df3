@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b709355d_c088d496",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-25T18:26:05Z",
+      "side": 1,
+      "message": "FYI I\u0027ve forked this into https://dawn-review.googlesource.com/c/dawn/+/212435 and attempted to merge in the changes (essentially dropping anything that conflicted with this CL).",
+      "revId": "631c4c98b2fb37c2c48d9ba07ef0d94619a96df3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
