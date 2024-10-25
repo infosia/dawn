@@ -289,6 +289,8 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     wgpu::Status APIGetLimits(SupportedLimits* limits) const;
     bool APIHasFeature(wgpu::FeatureName feature) const;
     size_t APIEnumerateFeatures(wgpu::FeatureName* features) const;
+    wgpu::Status APIGetFeatures(wgpu::SupportedFeatures* features) const;
+    wgpu::Status APIGetFeatures(SupportedFeatures* features) const;
     void APIInjectError(wgpu::ErrorType type, StringView message);
     bool APITick();
     void APIValidateTextureDescriptor(const TextureDescriptor* desc);

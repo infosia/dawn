@@ -87,18 +87,28 @@ void Server::OnRequestAdapterCallback(RequestAdapterUserdata* data,
     }
 
     // Query and report the adapter supported features.
-    std::vector<WGPUFeatureName> features;
-
-    size_t featuresCount = mProcs.adapterEnumerateFeatures(adapter, nullptr);
-    features.resize(featuresCount);
-    mProcs.adapterEnumerateFeatures(adapter, features.data());
+    WGPUSupportedFeatures supportedFeatures;
+    mProcs.adapterGetFeatures(adapter, &supportedFeatures);
 
     // Hide features the wire cannot support.
-    auto it = std::partition(features.begin(), features.end(), IsFeatureSupported);
+    // std::vector<WGPUFeatureName> wireFeatures;
+    // uint32_t index = 0;
+    // for (uint32_t i = 0; i < supportedFeatures.featureCount; ++i) {
+    //     WGPUFeatureName f = supportedFeatures.features[i];
+    //     if (IsFeatureSupported(f)) {
+    //         wireFeatures.push_back(f);
+    //     }
+    // }
+    // WGPUSupportedFeatures wireSupportedFeatures;
+    // const size_t count = wireFeatures.size();
+    // wireSupportedFeatures.featureCount = count;
+    // wireSupportedFeatures.features = new wgpu::FeatureName[count];
+    // for (WGPUFeatureName f : wireFeatures) {
+    //     wireSupportedFeatures.features[index++] = f;
+    // }
 
-    cmd.featuresCount = std::distance(features.begin(), it);
-    cmd.features = features.data();
-
+    cmd.featuresCount = supportedFeatures.featureCount;
+    cmd.features = supportedFeatures.features;
     // Query and report the adapter info.
     WGPUAdapterInfo info = {};
     WGPUChainedStructOut** propertiesChain = &info.nextInChain;
@@ -149,6 +159,7 @@ void Server::OnRequestAdapterCallback(RequestAdapterUserdata* data,
     SerializeCommand(cmd);
     mProcs.adapterInfoFreeMembers(info);
     mProcs.adapterPropertiesMemoryHeapsFreeMembers(memoryHeapProperties);
+    // mProcs.supportedFeaturesFreeMembers(supportedFeatures);
 }
 
 }  // namespace dawn::wire::server

@@ -176,13 +176,11 @@ void GPUDevice::ForceLoss(wgpu::DeviceLostReason reason, const char* message) {
 }
 
 interop::Interface<interop::GPUSupportedFeatures> GPUDevice::getFeatures(Napi::Env env) {
-    size_t count = device_.EnumerateFeatures(nullptr);
-    std::vector<wgpu::FeatureName> features(count);
-    if (count > 0) {
-        device_.EnumerateFeatures(features.data());
+    wgpu::SupportedFeatures features{};
+    if (!device_.GetFeatures(&features)) {
+        Napi::Error::New(env, "failed to get device features").ThrowAsJavaScriptException();
     }
-    return interop::GPUSupportedFeatures::Create<GPUSupportedFeatures>(env, env,
-                                                                       std::move(features));
+    return interop::GPUSupportedFeatures::Create<GPUSupportedFeatures>(env, env, features);
 }
 
 interop::Interface<interop::GPUSupportedLimits> GPUDevice::getLimits(Napi::Env env) {
