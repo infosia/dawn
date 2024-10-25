@@ -55,10 +55,7 @@ using namespace tint::core::number_suffixes;  // NOLINT
 class IR_ValidatorTest : public IRTestHelper {
   public:
     /// Builds and returns a basic 'compute' entry point function, named @p name
-    Function* ComputeEntryPoint(const std::string& name = "f") {
-        return b.Function(name, ty.void_(), Function::PipelineStage::kCompute,
-                          std::array<uint32_t, 3>({0, 0, 0}));
-    }
+    Function* ComputeEntryPoint(const std::string& name = "f") { return b.ComputeFunction(name); }
 
     /// Builds and returns a basic 'fragment' entry point function, named @p name
     Function* FragmentEntryPoint(const std::string& name = "f") {
@@ -828,8 +825,7 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_UnnamedEntryPoint) {
-    auto* f = b.Function(ty.void_(), Function::PipelineStage::kCompute,
-                         std::array<uint32_t, 3>({0, 0, 0}));
+    auto* f = b.ComputeFunction();
 
     b.Append(f->Block(), [&] { b.Return(f); });
 
@@ -837,11 +833,11 @@ TEST_F(IR_ValidatorTest, Function_UnnamedEntryPoint) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: entry points must have names
-%1 = @compute @workgroup_size(0, 0, 0) func():void {
+%1 = @compute @workgroup_size(1u, 1u, 1u) func():void {
 ^^
 
 note: # Disassembly
-%1 = @compute @workgroup_size(0, 0, 0) func():void {
+%1 = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
     ret
   }
@@ -917,8 +913,8 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Function_Compute_NonVoidReturn) {
-    auto* f = b.Function("my_func", ty.f32(), Function::PipelineStage::kCompute,
-                         std::array<uint32_t, 3>({0, 0, 0}));
+    auto* f = b.Function("my_func", ty.f32(), core::ir::Function::PipelineStage::kCompute);
+    f->SetWorkgroupSize(b.Constant(0_u), b.Constant(0_u), b.Constant(0_u));
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
@@ -926,11 +922,11 @@ TEST_F(IR_ValidatorTest, Function_Compute_NonVoidReturn) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: compute entry point must not have a return type
-%my_func = @compute @workgroup_size(0, 0, 0) func():f32 {
+%my_func = @compute @workgroup_size(0u, 0u, 0u) func():f32 {
 ^^^^^^^^
 
 note: # Disassembly
-%my_func = @compute @workgroup_size(0, 0, 0) func():f32 {
+%my_func = @compute @workgroup_size(0u, 0u, 0u) func():f32 {
   $B1: {
     unreachable
   }
@@ -940,7 +936,7 @@ note: # Disassembly
 
 TEST_F(IR_ValidatorTest, Function_WorkspaceSizeOnlyOnCompute) {
     auto* f = FragmentEntryPoint();
-    f->SetWorkgroupSize(0, 0, 0);
+    f->SetWorkgroupSize(b.Constant(1_u), b.Constant(1_u), b.Constant(1_u));
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
@@ -948,11 +944,11 @@ TEST_F(IR_ValidatorTest, Function_WorkspaceSizeOnlyOnCompute) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: workgroup size attribute only valid on compute entry point
-%f = @fragment @workgroup_size(0, 0, 0) func():void {
+%f = @fragment @workgroup_size(1u, 1u, 1u) func():void {
 ^^
 
 note: # Disassembly
-%f = @fragment @workgroup_size(0, 0, 0) func():void {
+%f = @fragment @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
     unreachable
   }
@@ -1373,15 +1369,15 @@ TEST_F(IR_ValidatorTest, Builtin_GlobalInvocationId_WrongIODirection) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: global_invocation_id must be an input of a shader entry point
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@global_invocation_id] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@global_invocation_id] {
 ^^
 
 :1:1 error: compute entry point must not have a return type
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@global_invocation_id] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@global_invocation_id] {
 ^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@global_invocation_id] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@global_invocation_id] {
   $B1: {
     unreachable
   }
@@ -1398,12 +1394,12 @@ TEST_F(IR_ValidatorTest, Builtin_GlobalInvocationId_WrongType) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:45 error: global_invocation_id must be an vec3<u32>
-%f = @compute @workgroup_size(0, 0, 0) func(%invocation:u32 [@global_invocation_id]):void {
-                                            ^^^^^^^^^^^^^^^
+              R"(:1:48 error: global_invocation_id must be an vec3<u32>
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%invocation:u32 [@global_invocation_id]):void {
+                                               ^^^^^^^^^^^^^^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func(%invocation:u32 [@global_invocation_id]):void {
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%invocation:u32 [@global_invocation_id]):void {
   $B1: {
     unreachable
   }
@@ -1515,15 +1511,15 @@ TEST_F(IR_ValidatorTest, Builtin_LocalInvocationId_WrongIODirection) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: local_invocation_id must be an input of a shader entry point
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@local_invocation_id] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@local_invocation_id] {
 ^^
 
 :1:1 error: compute entry point must not have a return type
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@local_invocation_id] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@local_invocation_id] {
 ^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@local_invocation_id] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@local_invocation_id] {
   $B1: {
     unreachable
   }
@@ -1540,12 +1536,12 @@ TEST_F(IR_ValidatorTest, Builtin_LocalInvocationId_WrongType) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:45 error: local_invocation_id must be an vec3<u32>
-%f = @compute @workgroup_size(0, 0, 0) func(%id:u32 [@local_invocation_id]):void {
-                                            ^^^^^^^
+              R"(:1:48 error: local_invocation_id must be an vec3<u32>
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%id:u32 [@local_invocation_id]):void {
+                                               ^^^^^^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func(%id:u32 [@local_invocation_id]):void {
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%id:u32 [@local_invocation_id]):void {
   $B1: {
     unreachable
   }
@@ -1586,15 +1582,15 @@ TEST_F(IR_ValidatorTest, Builtin_LocalInvocationIndex_WrongIODirection) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: local_invocation_index must be an input of a shader entry point
-%f = @compute @workgroup_size(0, 0, 0) func():u32 [@local_invocation_index] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():u32 [@local_invocation_index] {
 ^^
 
 :1:1 error: compute entry point must not have a return type
-%f = @compute @workgroup_size(0, 0, 0) func():u32 [@local_invocation_index] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():u32 [@local_invocation_index] {
 ^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func():u32 [@local_invocation_index] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():u32 [@local_invocation_index] {
   $B1: {
     unreachable
   }
@@ -1611,12 +1607,12 @@ TEST_F(IR_ValidatorTest, Builtin_LocalInvocationIndex_WrongType) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:45 error: local_invocation_index must be an u32
-%f = @compute @workgroup_size(0, 0, 0) func(%index:i32 [@local_invocation_index]):void {
-                                            ^^^^^^^^^^
+              R"(:1:48 error: local_invocation_index must be an u32
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%index:i32 [@local_invocation_index]):void {
+                                               ^^^^^^^^^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func(%index:i32 [@local_invocation_index]):void {
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%index:i32 [@local_invocation_index]):void {
   $B1: {
     unreachable
   }
@@ -1657,15 +1653,15 @@ TEST_F(IR_ValidatorTest, Builtin_NumWorkgroups_WrongIODirection) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: num_workgroups must be an input of a shader entry point
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@num_workgroups] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@num_workgroups] {
 ^^
 
 :1:1 error: compute entry point must not have a return type
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@num_workgroups] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@num_workgroups] {
 ^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@num_workgroups] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@num_workgroups] {
   $B1: {
     unreachable
   }
@@ -1682,12 +1678,12 @@ TEST_F(IR_ValidatorTest, Builtin_NumWorkgroups_WrongType) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:45 error: num_workgroups must be an vec3<u32>
-%f = @compute @workgroup_size(0, 0, 0) func(%num:u32 [@num_workgroups]):void {
-                                            ^^^^^^^^
+              R"(:1:48 error: num_workgroups must be an vec3<u32>
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%num:u32 [@num_workgroups]):void {
+                                               ^^^^^^^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func(%num:u32 [@num_workgroups]):void {
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%num:u32 [@num_workgroups]):void {
   $B1: {
     unreachable
   }
@@ -1865,15 +1861,15 @@ TEST_F(IR_ValidatorTest, Builtin_WorkgroupId_WrongIODirection) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: workgroup_id must be an input of a shader entry point
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@workgroup_id] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@workgroup_id] {
 ^^
 
 :1:1 error: compute entry point must not have a return type
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@workgroup_id] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@workgroup_id] {
 ^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func():vec3<u32> [@workgroup_id] {
+%f = @compute @workgroup_size(1u, 1u, 1u) func():vec3<u32> [@workgroup_id] {
   $B1: {
     unreachable
   }
@@ -1890,12 +1886,12 @@ TEST_F(IR_ValidatorTest, Builtin_WorkgroupId_WrongType) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:45 error: workgroup_id must be an vec3<u32>
-%f = @compute @workgroup_size(0, 0, 0) func(%id:u32 [@workgroup_id]):void {
-                                            ^^^^^^^
+              R"(:1:48 error: workgroup_id must be an vec3<u32>
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%id:u32 [@workgroup_id]):void {
+                                               ^^^^^^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func(%id:u32 [@workgroup_id]):void {
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%id:u32 [@workgroup_id]):void {
   $B1: {
     unreachable
   }
@@ -1912,12 +1908,12 @@ TEST_F(IR_ValidatorTest, Builtin_Position_WrongStage) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:45 error: position must be used in a fragment or vertex shader entry point
-%f = @compute @workgroup_size(0, 0, 0) func(%pos:vec4<f32> [@position]):void {
-                                            ^^^^^^^^^^^^^^
+              R"(:1:48 error: position must be used in a fragment or vertex shader entry point
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%pos:vec4<f32> [@position]):void {
+                                               ^^^^^^^^^^^^^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func(%pos:vec4<f32> [@position]):void {
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%pos:vec4<f32> [@position]):void {
   $B1: {
     unreachable
   }
@@ -2108,12 +2104,12 @@ TEST_F(IR_ValidatorTest, Builtin_SubgroupSize_WrongType) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:45 error: subgroup_size must be an u32
-%f = @compute @workgroup_size(0, 0, 0) func(%size:i32 [@subgroup_size]):void {
-                                            ^^^^^^^^^
+              R"(:1:48 error: subgroup_size must be an u32
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%size:i32 [@subgroup_size]):void {
+                                               ^^^^^^^^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func(%size:i32 [@subgroup_size]):void {
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%size:i32 [@subgroup_size]):void {
   $B1: {
     unreachable
   }
@@ -2175,12 +2171,12 @@ TEST_F(IR_ValidatorTest, Builtin_SubgroupInvocationId_WrongType) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:45 error: subgroup_invocation_id must be an u32
-%f = @compute @workgroup_size(0, 0, 0) func(%id:i32 [@subgroup_invocation_id]):void {
-                                            ^^^^^^^
+              R"(:1:48 error: subgroup_invocation_id must be an u32
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%id:i32 [@subgroup_invocation_id]):void {
+                                               ^^^^^^^
 
 note: # Disassembly
-%f = @compute @workgroup_size(0, 0, 0) func(%id:i32 [@subgroup_invocation_id]):void {
+%f = @compute @workgroup_size(1u, 1u, 1u) func(%id:i32 [@subgroup_invocation_id]):void {
   $B1: {
     unreachable
   }
@@ -2222,8 +2218,7 @@ note: # Disassembly
 
 TEST_F(IR_ValidatorTest, CallToEntryPointFunction) {
     auto* f = b.Function("f", ty.void_());
-    auto* g = b.Function("g", ty.void_(), Function::PipelineStage::kCompute,
-                         std::array<uint32_t, 3>({0, 0, 0}));
+    auto* g = b.ComputeFunction("g");
 
     b.Append(f->Block(), [&] {
         b.Call(g);
@@ -2249,7 +2244,7 @@ note: # Disassembly
     ret
   }
 }
-%g = @compute @workgroup_size(0, 0, 0) func():void {
+%g = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     ret
   }
@@ -3249,8 +3244,7 @@ TEST_F(IR_ValidatorTest, Discard_NotInFragment) {
         b.Return(func);
     });
 
-    auto* ep = b.Function("ep", ty.void_(), Function::PipelineStage::kCompute,
-                          std::array<uint32_t, 3>({0, 0, 0}));
+    auto* ep = b.ComputeFunction("ep");
 
     b.Append(ep->Block(), [&] {
         b.Call(func);
@@ -3271,7 +3265,7 @@ note: # Disassembly
     ret
   }
 }
-%ep = @compute @workgroup_size(0, 0, 0) func():void {
+%ep = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:void = call %foo
     ret
@@ -9386,7 +9380,7 @@ TEST_F(IR_ValidatorTest, Swizzle_NoIndices) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:4:20 error: swizzle: expected at least 1 indices
-    %3:vec4<f32> = swizzle %2, 
+    %3:vec4<f32> = swizzle %2,
                    ^^^^^^^
 
 :2:3 note: in block
@@ -9397,7 +9391,7 @@ note: # Disassembly
 %my_func = func():void {
   $B1: {
     %2:ptr<function, vec4<f32>, read_write> = var
-    %3:vec4<f32> = swizzle %2, 
+    %3:vec4<f32> = swizzle %2,
     ret
   }
 }

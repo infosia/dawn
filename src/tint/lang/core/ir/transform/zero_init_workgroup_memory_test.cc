@@ -43,8 +43,7 @@ class IR_ZeroInitWorkgroupMemoryTest : public TransformTest {
                              uint32_t wgsize_x,
                              uint32_t wgsize_y,
                              uint32_t wgsize_z) {
-        auto* func = b.Function(name, ty.void_(), Function::PipelineStage::kCompute);
-        func->SetWorkgroupSize(wgsize_x, wgsize_y, wgsize_z);
+        auto* func = b.ComputeFunction(name, wgsize_x, wgsize_y, wgsize_z);
         return func;
     }
 
@@ -62,7 +61,7 @@ TEST_F(IR_ZeroInitWorkgroupMemoryTest, NoRootBlock) {
     });
 
     auto* expect = R"(
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
     ret
   }
@@ -87,7 +86,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, i32, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     ret
   }
@@ -117,7 +116,7 @@ $B1: {  # root
   %pvar:ptr<private, bool, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:bool = load %pvar
     ret
@@ -131,7 +130,7 @@ $B1: {  # root
   %pvar:ptr<private, bool, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:bool = load %pvar
     ret
@@ -158,7 +157,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, bool, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:bool = load %wgvar
     ret
@@ -172,7 +171,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, bool, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -207,7 +206,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, i32, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:i32 = load %wgvar
     ret
@@ -221,7 +220,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, i32, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -256,7 +255,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, u32, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:u32 = load %wgvar
     ret
@@ -270,7 +269,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, u32, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -305,7 +304,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, f32, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:f32 = load %wgvar
     ret
@@ -319,7 +318,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, f32, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -354,7 +353,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, f16, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:f16 = load %wgvar
     ret
@@ -368,7 +367,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, f16, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -403,7 +402,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, atomic<i32>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:i32 = atomicLoad %wgvar
     ret
@@ -417,7 +416,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, atomic<i32>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -452,7 +451,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, atomic<u32>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:u32 = atomicLoad %wgvar
     ret
@@ -466,7 +465,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, atomic<u32>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -501,7 +500,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<i32, 4>, read_write> = var
 }
 
-%main = @compute @workgroup_size(11, 2, 3) func():void {
+%main = @compute @workgroup_size(11u, 2u, 3u) func():void {
   $B2: {
     %3:array<i32, 4> = load %wgvar
     ret
@@ -515,30 +514,32 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<i32, 4>, read_write> = var
 }
 
-%main = @compute @workgroup_size(11, 2, 3) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(11u, 2u, 3u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
+    %4:u32 = mul 2u, 3u
+    %5:u32 = mul 11u, %4
     loop [i: $B3, b: $B4, c: $B5] {  # loop_1
       $B3: {  # initializer
         next_iteration %tint_local_index  # -> $B4
       }
       $B4 (%idx:u32): {  # body
-        %5:bool = gte %idx, 4u
-        if %5 [t: $B6] {  # if_1
+        %7:bool = gte %idx, 4u
+        if %7 [t: $B6] {  # if_1
           $B6: {  # true
             exit_loop  # loop_1
           }
         }
-        %6:ptr<workgroup, i32, read_write> = access %wgvar, %idx
-        store %6, 0i
+        %8:ptr<workgroup, i32, read_write> = access %wgvar, %idx
+        store %8, 0i
         continue  # -> $B5
       }
       $B5: {  # continuing
-        %7:u32 = add %idx, 66u
-        next_iteration %7  # -> $B4
+        %9:u32 = add %idx, %5
+        next_iteration %9  # -> $B4
       }
     }
-    %8:void = workgroupBarrier
-    %9:array<i32, 4> = load %wgvar
+    %10:void = workgroupBarrier
+    %11:array<i32, 4> = load %wgvar
     ret
   }
 }
@@ -563,7 +564,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<u32, 5>, 7>, read_write> = var
 }
 
-%main = @compute @workgroup_size(11, 2, 3) func():void {
+%main = @compute @workgroup_size(11u, 2u, 3u) func():void {
   $B2: {
     %3:array<array<u32, 5>, 7> = load %wgvar
     ret
@@ -577,32 +578,34 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<u32, 5>, 7>, read_write> = var
 }
 
-%main = @compute @workgroup_size(11, 2, 3) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(11u, 2u, 3u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
+    %4:u32 = mul 2u, 3u
+    %5:u32 = mul 11u, %4
     loop [i: $B3, b: $B4, c: $B5] {  # loop_1
       $B3: {  # initializer
         next_iteration %tint_local_index  # -> $B4
       }
       $B4 (%idx:u32): {  # body
-        %5:bool = gte %idx, 35u
-        if %5 [t: $B6] {  # if_1
+        %7:bool = gte %idx, 35u
+        if %7 [t: $B6] {  # if_1
           $B6: {  # true
             exit_loop  # loop_1
           }
         }
-        %6:u32 = mod %idx, 5u
-        %7:u32 = div %idx, 5u
-        %8:ptr<workgroup, u32, read_write> = access %wgvar, %7, %6
-        store %8, 0u
+        %8:u32 = mod %idx, 5u
+        %9:u32 = div %idx, 5u
+        %10:ptr<workgroup, u32, read_write> = access %wgvar, %9, %8
+        store %10, 0u
         continue  # -> $B5
       }
       $B5: {  # continuing
-        %9:u32 = add %idx, 66u
-        next_iteration %9  # -> $B4
+        %11:u32 = add %idx, %5
+        next_iteration %11  # -> $B4
       }
     }
-    %10:void = workgroupBarrier
-    %11:array<array<u32, 5>, 7> = load %wgvar
+    %12:void = workgroupBarrier
+    %13:array<array<u32, 5>, 7> = load %wgvar
     ret
   }
 }
@@ -627,7 +630,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<array<i32, 7>, 5>, 3>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:array<array<array<i32, 7>, 5>, 3> = load %wgvar
     ret
@@ -641,34 +644,36 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<array<i32, 7>, 5>, 3>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
+    %4:u32 = mul 1u, 1u
+    %5:u32 = mul 1u, %4
     loop [i: $B3, b: $B4, c: $B5] {  # loop_1
       $B3: {  # initializer
         next_iteration %tint_local_index  # -> $B4
       }
       $B4 (%idx:u32): {  # body
-        %5:bool = gte %idx, 105u
-        if %5 [t: $B6] {  # if_1
+        %7:bool = gte %idx, 105u
+        if %7 [t: $B6] {  # if_1
           $B6: {  # true
             exit_loop  # loop_1
           }
         }
-        %6:u32 = mod %idx, 7u
-        %7:u32 = div %idx, 7u
-        %8:u32 = mod %7, 5u
-        %9:u32 = div %idx, 35u
-        %10:ptr<workgroup, i32, read_write> = access %wgvar, %9, %8, %6
-        store %10, 0i
+        %8:u32 = mod %idx, 7u
+        %9:u32 = div %idx, 7u
+        %10:u32 = mod %9, 5u
+        %11:u32 = div %idx, 35u
+        %12:ptr<workgroup, i32, read_write> = access %wgvar, %11, %10, %8
+        store %12, 0i
         continue  # -> $B5
       }
       $B5: {  # continuing
-        %11:u32 = add %idx, 1u
-        next_iteration %11  # -> $B4
+        %13:u32 = add %idx, %5
+        next_iteration %13  # -> $B4
       }
     }
-    %12:void = workgroupBarrier
-    %13:array<array<array<i32, 7>, 5>, 3> = load %wgvar
+    %14:void = workgroupBarrier
+    %15:array<array<array<i32, 7>, 5>, 3> = load %wgvar
     ret
   }
 }
@@ -693,7 +698,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<array<i32, 1>, 5>, 3>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:array<array<array<i32, 1>, 5>, 3> = load %wgvar
     ret
@@ -707,32 +712,34 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<array<i32, 1>, 5>, 3>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
+    %4:u32 = mul 1u, 1u
+    %5:u32 = mul 1u, %4
     loop [i: $B3, b: $B4, c: $B5] {  # loop_1
       $B3: {  # initializer
         next_iteration %tint_local_index  # -> $B4
       }
       $B4 (%idx:u32): {  # body
-        %5:bool = gte %idx, 15u
-        if %5 [t: $B6] {  # if_1
+        %7:bool = gte %idx, 15u
+        if %7 [t: $B6] {  # if_1
           $B6: {  # true
             exit_loop  # loop_1
           }
         }
-        %6:u32 = mod %idx, 5u
-        %7:u32 = div %idx, 5u
-        %8:ptr<workgroup, i32, read_write> = access %wgvar, %7, %6, 0u
-        store %8, 0i
+        %8:u32 = mod %idx, 5u
+        %9:u32 = div %idx, 5u
+        %10:ptr<workgroup, i32, read_write> = access %wgvar, %9, %8, 0u
+        store %10, 0i
         continue  # -> $B5
       }
       $B5: {  # continuing
-        %9:u32 = add %idx, 1u
-        next_iteration %9  # -> $B4
+        %11:u32 = add %idx, %5
+        next_iteration %11  # -> $B4
       }
     }
-    %10:void = workgroupBarrier
-    %11:array<array<array<i32, 1>, 5>, 3> = load %wgvar
+    %12:void = workgroupBarrier
+    %13:array<array<array<i32, 1>, 5>, 3> = load %wgvar
     ret
   }
 }
@@ -757,7 +764,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<array<i32, 3>, 1>, 5>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:array<array<array<i32, 3>, 1>, 5> = load %wgvar
     ret
@@ -771,32 +778,34 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<array<i32, 3>, 1>, 5>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
+    %4:u32 = mul 1u, 1u
+    %5:u32 = mul 1u, %4
     loop [i: $B3, b: $B4, c: $B5] {  # loop_1
       $B3: {  # initializer
         next_iteration %tint_local_index  # -> $B4
       }
       $B4 (%idx:u32): {  # body
-        %5:bool = gte %idx, 15u
-        if %5 [t: $B6] {  # if_1
+        %7:bool = gte %idx, 15u
+        if %7 [t: $B6] {  # if_1
           $B6: {  # true
             exit_loop  # loop_1
           }
         }
-        %6:u32 = mod %idx, 3u
-        %7:u32 = div %idx, 3u
-        %8:ptr<workgroup, i32, read_write> = access %wgvar, %7, 0u, %6
-        store %8, 0i
+        %8:u32 = mod %idx, 3u
+        %9:u32 = div %idx, 3u
+        %10:ptr<workgroup, i32, read_write> = access %wgvar, %9, 0u, %8
+        store %10, 0i
         continue  # -> $B5
       }
       $B5: {  # continuing
-        %9:u32 = add %idx, 1u
-        next_iteration %9  # -> $B4
+        %11:u32 = add %idx, %5
+        next_iteration %11  # -> $B4
       }
     }
-    %10:void = workgroupBarrier
-    %11:array<array<array<i32, 3>, 1>, 5> = load %wgvar
+    %12:void = workgroupBarrier
+    %13:array<array<array<i32, 3>, 1>, 5> = load %wgvar
     ret
   }
 }
@@ -821,7 +830,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<array<i32, 3>, 5>, 1>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:array<array<array<i32, 3>, 5>, 1> = load %wgvar
     ret
@@ -835,32 +844,34 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<array<i32, 3>, 5>, 1>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
+    %4:u32 = mul 1u, 1u
+    %5:u32 = mul 1u, %4
     loop [i: $B3, b: $B4, c: $B5] {  # loop_1
       $B3: {  # initializer
         next_iteration %tint_local_index  # -> $B4
       }
       $B4 (%idx:u32): {  # body
-        %5:bool = gte %idx, 15u
-        if %5 [t: $B6] {  # if_1
+        %7:bool = gte %idx, 15u
+        if %7 [t: $B6] {  # if_1
           $B6: {  # true
             exit_loop  # loop_1
           }
         }
-        %6:u32 = mod %idx, 3u
-        %7:u32 = div %idx, 3u
-        %8:ptr<workgroup, i32, read_write> = access %wgvar, 0u, %7, %6
-        store %8, 0i
+        %8:u32 = mod %idx, 3u
+        %9:u32 = div %idx, 3u
+        %10:ptr<workgroup, i32, read_write> = access %wgvar, 0u, %9, %8
+        store %10, 0i
         continue  # -> $B5
       }
       $B5: {  # continuing
-        %9:u32 = add %idx, 1u
-        next_iteration %9  # -> $B4
+        %11:u32 = add %idx, %5
+        next_iteration %11  # -> $B4
       }
     }
-    %10:void = workgroupBarrier
-    %11:array<array<array<i32, 3>, 5>, 1> = load %wgvar
+    %12:void = workgroupBarrier
+    %13:array<array<array<i32, 3>, 5>, 1> = load %wgvar
     ret
   }
 }
@@ -885,7 +896,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<i32, 1>, 1>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:array<array<i32, 1>, 1> = load %wgvar
     ret
@@ -899,7 +910,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<array<i32, 1>, 1>, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -946,7 +957,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, MyStruct, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:MyStruct = load %wgvar
     ret
@@ -966,7 +977,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, MyStruct, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -1021,7 +1032,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, Outer, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:Outer = load %wgvar
     ret
@@ -1046,7 +1057,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, Outer, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -1101,7 +1112,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, Outer, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %3:Outer = load %wgvar
     ret
@@ -1126,7 +1137,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, Outer, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -1189,7 +1200,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<Outer, 7>, read_write> = var
 }
 
-%main = @compute @workgroup_size(7, 3, 2) func():void {
+%main = @compute @workgroup_size(7u, 3u, 2u) func():void {
   $B2: {
     %3:array<Outer, 7> = load %wgvar
     ret
@@ -1214,58 +1225,62 @@ $B1: {  # root
   %wgvar:ptr<workgroup, array<Outer, 7>, read_write> = var
 }
 
-%main = @compute @workgroup_size(7, 3, 2) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(7u, 3u, 2u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
+    %4:u32 = mul 3u, 2u
+    %5:u32 = mul 7u, %4
     loop [i: $B3, b: $B4, c: $B5] {  # loop_1
       $B3: {  # initializer
         next_iteration %tint_local_index  # -> $B4
       }
       $B4 (%idx:u32): {  # body
-        %5:bool = gte %idx, 7u
-        if %5 [t: $B6] {  # if_1
+        %7:bool = gte %idx, 7u
+        if %7 [t: $B6] {  # if_1
           $B6: {  # true
             exit_loop  # loop_1
           }
         }
-        %6:ptr<workgroup, f32, read_write> = access %wgvar, %idx, 0u
-        store %6, 0.0f
-        %7:ptr<workgroup, bool, read_write> = access %wgvar, %idx, 2u
-        store %7, false
+        %8:ptr<workgroup, f32, read_write> = access %wgvar, %idx, 0u
+        store %8, 0.0f
+        %9:ptr<workgroup, bool, read_write> = access %wgvar, %idx, 2u
+        store %9, false
         continue  # -> $B5
       }
       $B5: {  # continuing
-        %8:u32 = add %idx, 42u
-        next_iteration %8  # -> $B4
+        %10:u32 = add %idx, %5
+        next_iteration %10  # -> $B4
       }
     }
+    %11:u32 = mul 3u, 2u
+    %12:u32 = mul 7u, %11
     loop [i: $B7, b: $B8, c: $B9] {  # loop_2
       $B7: {  # initializer
         next_iteration %tint_local_index  # -> $B8
       }
       $B8 (%idx_1:u32): {  # body
-        %10:bool = gte %idx_1, 91u
-        if %10 [t: $B10] {  # if_2
+        %14:bool = gte %idx_1, 91u
+        if %14 [t: $B10] {  # if_2
           $B10: {  # true
             exit_loop  # loop_2
           }
         }
-        %11:u32 = mod %idx_1, 13u
-        %12:u32 = div %idx_1, 13u
-        %13:ptr<workgroup, i32, read_write> = access %wgvar, %12, 1u, %11, 0u
-        store %13, 0i
-        %14:u32 = mod %idx_1, 13u
-        %15:u32 = div %idx_1, 13u
-        %16:ptr<workgroup, atomic<u32>, read_write> = access %wgvar, %15, 1u, %14, 1u
-        %17:void = atomicStore %16, 0u
+        %15:u32 = mod %idx_1, 13u
+        %16:u32 = div %idx_1, 13u
+        %17:ptr<workgroup, i32, read_write> = access %wgvar, %16, 1u, %15, 0u
+        store %17, 0i
+        %18:u32 = mod %idx_1, 13u
+        %19:u32 = div %idx_1, 13u
+        %20:ptr<workgroup, atomic<u32>, read_write> = access %wgvar, %19, 1u, %18, 1u
+        %21:void = atomicStore %20, 0u
         continue  # -> $B9
       }
       $B9: {  # continuing
-        %18:u32 = add %idx_1, 42u
-        next_iteration %18  # -> $B8
+        %22:u32 = add %idx_1, %12
+        next_iteration %22  # -> $B8
       }
     }
-    %19:void = workgroupBarrier
-    %20:array<Outer, 7> = load %wgvar
+    %23:void = workgroupBarrier
+    %24:array<Outer, 7> = load %wgvar
     ret
   }
 }
@@ -1296,7 +1311,7 @@ $B1: {  # root
   %var_c:ptr<workgroup, array<array<u32, 5>, 7>, read_write> = var
 }
 
-%main = @compute @workgroup_size(11, 2, 3) func():void {
+%main = @compute @workgroup_size(11u, 2u, 3u) func():void {
   $B2: {
     %5:bool = load %var_a
     %6:array<i32, 4> = load %var_b
@@ -1314,7 +1329,7 @@ $B1: {  # root
   %var_c:ptr<workgroup, array<array<u32, 5>, 7>, read_write> = var
 }
 
-%main = @compute @workgroup_size(11, 2, 3) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(11u, 2u, 3u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %6:bool = eq %tint_local_index, 0u
     if %6 [t: $B3] {  # if_1
@@ -1323,52 +1338,56 @@ $B1: {  # root
         exit_if  # if_1
       }
     }
+    %7:u32 = mul 2u, 3u
+    %8:u32 = mul 11u, %7
     loop [i: $B4, b: $B5, c: $B6] {  # loop_1
       $B4: {  # initializer
         next_iteration %tint_local_index  # -> $B5
       }
       $B5 (%idx:u32): {  # body
-        %8:bool = gte %idx, 4u
-        if %8 [t: $B7] {  # if_2
+        %10:bool = gte %idx, 4u
+        if %10 [t: $B7] {  # if_2
           $B7: {  # true
             exit_loop  # loop_1
           }
         }
-        %9:ptr<workgroup, i32, read_write> = access %var_b, %idx
-        store %9, 0i
+        %11:ptr<workgroup, i32, read_write> = access %var_b, %idx
+        store %11, 0i
         continue  # -> $B6
       }
       $B6: {  # continuing
-        %10:u32 = add %idx, 66u
-        next_iteration %10  # -> $B5
+        %12:u32 = add %idx, %8
+        next_iteration %12  # -> $B5
       }
     }
+    %13:u32 = mul 2u, 3u
+    %14:u32 = mul 11u, %13
     loop [i: $B8, b: $B9, c: $B10] {  # loop_2
       $B8: {  # initializer
         next_iteration %tint_local_index  # -> $B9
       }
       $B9 (%idx_1:u32): {  # body
-        %12:bool = gte %idx_1, 35u
-        if %12 [t: $B11] {  # if_3
+        %16:bool = gte %idx_1, 35u
+        if %16 [t: $B11] {  # if_3
           $B11: {  # true
             exit_loop  # loop_2
           }
         }
-        %13:u32 = mod %idx_1, 5u
-        %14:u32 = div %idx_1, 5u
-        %15:ptr<workgroup, u32, read_write> = access %var_c, %14, %13
-        store %15, 0u
+        %17:u32 = mod %idx_1, 5u
+        %18:u32 = div %idx_1, 5u
+        %19:ptr<workgroup, u32, read_write> = access %var_c, %18, %17
+        store %19, 0u
         continue  # -> $B10
       }
       $B10: {  # continuing
-        %16:u32 = add %idx_1, 66u
-        next_iteration %16  # -> $B9
+        %20:u32 = add %idx_1, %14
+        next_iteration %20  # -> $B9
       }
     }
-    %17:void = workgroupBarrier
-    %18:bool = load %var_a
-    %19:array<i32, 4> = load %var_b
-    %20:array<array<u32, 5>, 7> = load %var_c
+    %21:void = workgroupBarrier
+    %22:bool = load %var_a
+    %23:array<i32, 4> = load %var_b
+    %24:array<array<u32, 5>, 7> = load %var_c
     ret
   }
 }
@@ -1402,7 +1421,7 @@ $B1: {  # root
   %var_d:ptr<workgroup, array<array<u32, 6>, 7>, read_write> = var
 }
 
-%main = @compute @workgroup_size(11, 2, 3) func():void {
+%main = @compute @workgroup_size(11u, 2u, 3u) func():void {
   $B2: {
     %6:bool = load %var_a
     %7:i32 = load %var_b
@@ -1422,7 +1441,7 @@ $B1: {  # root
   %var_d:ptr<workgroup, array<array<u32, 6>, 7>, read_write> = var
 }
 
-%main = @compute @workgroup_size(11, 2, 3) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(11u, 2u, 3u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %7:bool = eq %tint_local_index, 0u
     if %7 [t: $B3] {  # if_1
@@ -1432,35 +1451,37 @@ $B1: {  # root
         exit_if  # if_1
       }
     }
+    %8:u32 = mul 2u, 3u
+    %9:u32 = mul 11u, %8
     loop [i: $B4, b: $B5, c: $B6] {  # loop_1
       $B4: {  # initializer
         next_iteration %tint_local_index  # -> $B5
       }
       $B5 (%idx:u32): {  # body
-        %9:bool = gte %idx, 42u
-        if %9 [t: $B7] {  # if_2
+        %11:bool = gte %idx, 42u
+        if %11 [t: $B7] {  # if_2
           $B7: {  # true
             exit_loop  # loop_1
           }
         }
-        %10:ptr<workgroup, i32, read_write> = access %var_c, %idx
-        store %10, 0i
-        %11:u32 = mod %idx, 6u
-        %12:u32 = div %idx, 6u
-        %13:ptr<workgroup, u32, read_write> = access %var_d, %12, %11
-        store %13, 0u
+        %12:ptr<workgroup, i32, read_write> = access %var_c, %idx
+        store %12, 0i
+        %13:u32 = mod %idx, 6u
+        %14:u32 = div %idx, 6u
+        %15:ptr<workgroup, u32, read_write> = access %var_d, %14, %13
+        store %15, 0u
         continue  # -> $B6
       }
       $B6: {  # continuing
-        %14:u32 = add %idx, 66u
-        next_iteration %14  # -> $B5
+        %16:u32 = add %idx, %9
+        next_iteration %16  # -> $B5
       }
     }
-    %15:void = workgroupBarrier
-    %16:bool = load %var_a
-    %17:i32 = load %var_b
-    %18:array<i32, 42> = load %var_c
-    %19:array<array<u32, 6>, 7> = load %var_d
+    %17:void = workgroupBarrier
+    %18:bool = load %var_a
+    %19:i32 = load %var_b
+    %20:array<i32, 42> = load %var_c
+    %21:array<array<u32, 6>, 7> = load %var_d
     ret
   }
 }
@@ -1490,7 +1511,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, bool, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%global_id:vec3<u32> [@global_invocation_id], %index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%global_id:vec3<u32> [@global_invocation_id], %index:u32 [@local_invocation_index]):void {
   $B2: {
     %5:bool = load %wgvar
     ret
@@ -1504,7 +1525,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, bool, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%global_id:vec3<u32> [@global_invocation_id], %index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%global_id:vec3<u32> [@global_invocation_id], %index:u32 [@local_invocation_index]):void {
   $B2: {
     %5:bool = eq %index, 0u
     if %5 [t: $B3] {  # if_1
@@ -1572,7 +1593,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, bool, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%params:MyStruct):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%params:MyStruct):void {
   $B2: {
     %4:bool = load %wgvar
     ret
@@ -1591,7 +1612,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, bool, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%params:MyStruct):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%params:MyStruct):void {
   $B2: {
     %4:u32 = access %params, 1u
     %5:bool = eq %4, 0u
@@ -1643,7 +1664,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, bool, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func():void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     if true [t: $B3] {  # if_1
       $B3: {  # true
@@ -1675,7 +1696,7 @@ $B1: {  # root
   %wgvar:ptr<workgroup, bool, read_write> = var
 }
 
-%main = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
     %4:bool = eq %tint_local_index, 0u
     if %4 [t: $B3] {  # if_1
@@ -1792,7 +1813,7 @@ $B1: {  # root
     ret
   }
 }
-%func = @compute @workgroup_size(1, 1, 1) func():void {
+%func = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B7: {
     if true [t: $B8] {  # if_2
       $B8: {  # true
@@ -1849,7 +1870,7 @@ $B1: {  # root
     ret
   }
 }
-%func = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%func = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B7: {
     %8:bool = eq %tint_local_index, 0u
     if %8 [t: $B8] {  # if_2
@@ -1935,13 +1956,13 @@ $B1: {  # root
     ret
   }
 }
-%ep1 = @compute @workgroup_size(1, 1, 1) func():void {
+%ep1 = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B5: {
     %5:void = call %foo
     ret
   }
 }
-%ep2 = @compute @workgroup_size(1, 1, 1) func():void {
+%ep2 = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B6: {
     %7:void = call %foo
     ret
@@ -1969,7 +1990,7 @@ $B1: {  # root
     ret
   }
 }
-%ep1 = @compute @workgroup_size(1, 1, 1) func(%tint_local_index:u32 [@local_invocation_index]):void {
+%ep1 = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B5: {
     %6:bool = eq %tint_local_index, 0u
     if %6 [t: $B6] {  # if_1
@@ -1983,7 +2004,7 @@ $B1: {  # root
     ret
   }
 }
-%ep2 = @compute @workgroup_size(1, 1, 1) func(%tint_local_index_1:u32 [@local_invocation_index]):void {  # %tint_local_index_1: 'tint_local_index'
+%ep2 = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index_1:u32 [@local_invocation_index]):void {  # %tint_local_index_1: 'tint_local_index'
   $B7: {
     %11:bool = eq %tint_local_index_1, 0u
     if %11 [t: $B8] {  # if_2
