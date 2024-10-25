@@ -444,6 +444,20 @@ std::vector<const char*> FeaturesSet::GetEnabledFeatureNames() const {
     return enabledFeatureNames;
 }
 
+void FeaturesSet::ToSupportedFeatures(SupportedFeatures* supportedFeatures) const {
+    if (supportedFeatures == nullptr) {
+        return;
+    }
+    wgpu::FeatureName* features = nullptr;
+    for (Feature f : IterateBitSet(featuresBitSet)) {
+        wgpu::FeatureName feature = ToAPI(f);
+        *features = feature;
+        ++features;
+    }
+    supportedFeatures->featureCount = featuresBitSet.count();
+    supportedFeatures->features = features;
+}
+
 }  // namespace dawn::native
 
 #include "dawn/native/Features_autogen.inl"
