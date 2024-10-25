@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39b1feb0_f21f74d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T21:34:17Z",
+      "side": 1,
+      "message": "So much simpler than the AST version :-)",
+      "revId": "406c53a89b1f27d2a2a4add4cdd7199e956e7c0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196e97e7_cc33f601",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2857,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T21:34:17Z",
+      "side": 1,
+      "message": "Are these ones really worth testing? IIUC this transformation is only relevant to vertex shaders.",
+      "revId": "406c53a89b1f27d2a2a4add4cdd7199e956e7c0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
