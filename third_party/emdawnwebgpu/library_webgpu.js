@@ -2453,7 +2453,7 @@ for (var value in LibraryWebGPU.$WebGPU.FeatureName) {
 for (const key of Object.keys(LibraryWebGPU)) {
   if (typeof LibraryWebGPU[key] !== 'function') continue;
   if (key + '__i53abi' in LibraryWebGPU) continue;
-  const sig = LibraryWebGPU[key + '__sig'];
+  const sig = LibraryManager.library[key + '__sig'];
   if (!sig?.includes('j')) continue;
   LibraryWebGPU[key + '__i53abi'] = true;
 }
