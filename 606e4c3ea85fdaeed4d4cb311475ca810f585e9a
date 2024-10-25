@@ -33,6 +33,24 @@
       "message": "My editor removed all the trailing ` ` in the unittests on save. This just gets rid of them making things a bit nicer.",
       "revId": "606e4c3ea85fdaeed4d4cb311475ca810f585e9a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bd3831b_76a5dfc1",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T20:23:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c5c49635_4b0c1c7a",
+      "revId": "606e4c3ea85fdaeed4d4cb311475ca810f585e9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

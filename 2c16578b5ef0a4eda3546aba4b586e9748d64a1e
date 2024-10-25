@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0065eedc_17f074e5",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T20:23:51Z",
+      "side": 1,
+      "message": "I don\u0027t think we should have these two unnamed overloads. It\u0027s not valid to create entry points without names, and the only time we do it is in the one validator test that is testing that piece of validation, where we can just create the function and set the workgroup size manually instead.",
+      "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "589651e3_5bf5a1bc",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T20:23:51Z",
+      "side": 1,
+      "message": "This overload only exists to avoid having `_u` suffixes on a few callsites, AFAICT?\n\nI\u0027ve generally preferred requiring the suffixes to keep everything explicit. If we want to start allowing unsuffixed literals to create constants then maybe we should have a more general rule rather than create extra overloads like this.\n\nBut I\u0027m just thinking aloud. Fine to keep this if you think the value of not having some `_u`s in this CL is high enough.",
+      "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb02c36c_7b2308cf",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T20:23:51Z",
+      "side": 1,
+      "message": "Nit: There are no defaults in this overload. You could add them, you just need to default the template parameter (to `u32`) as well as the function parameter (to `u32(1)`).",
+      "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d999b4e4_901acae9",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T20:23:51Z",
+      "side": 1,
+      "message": "Nit: Could just do `Function(name, ir.Types().void_(), Function::PipelineStage::kCompute)` and then `SetWorkgroupSize()`?",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 35
+      },
+      "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82992344_f50f7522",
+        "filename": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T20:23:51Z",
+      "side": 1,
+      "message": "I think we should just use `WorkgroupSizeAsConst()` here. This transform shouldn\u0027t ever be invoked when overrides are still present.",
+      "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
