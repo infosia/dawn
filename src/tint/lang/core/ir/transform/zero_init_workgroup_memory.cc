@@ -134,7 +134,6 @@ struct State {
         // Get the local invocation index and the linearized workgroup size.
         auto* local_index = GetLocalInvocationIndex(func);
         auto wgsizes = func->WorkgroupSize().value();
-        auto wgsize = wgsizes[0] * wgsizes[1] * wgsizes[2];
 
         // Insert instructions to zero-initialize every variable.
         b.InsertBefore(function_start, [&] {
@@ -150,8 +149,27 @@ struct State {
                         b.ExitIf(ifelse);
                     });
                 } else {
+                    core::ir::Value* wgsize = nullptr;
+
+                    {
+                        // If the workgroup size is all constant, just calculate the value,
+                        // otherwise, we need to emit the multiply instructions
+                        auto* x = wgsizes[0]->As<core::ir::Constant>();
+                        auto* y = wgsizes[1]->As<core::ir::Constant>();
+                        auto* z = wgsizes[2]->As<core::ir::Constant>();
+                        if (x && y && z) {
+                            wgsize = b.Constant(u32(x->Value()->ValueAs<uint32_t>() *
+                                                    y->Value()->ValueAs<uint32_t>() *
+                                                    y->Value()->ValueAs<uint32_t>()));
+                        } else {
+                            wgsize = b.Multiply(ty.u32(), wgsizes[0],
+                                                b.Multiply(ty.u32(), wgsizes[1], wgsizes[2]))
+                                         ->Result(0);
+                        }
+                    }
+
                     // Use a loop for arrayed stores.
-                    b.LoopRange(ty, local_index, u32(count), u32(wgsize), [&](Value* index) {
+                    b.LoopRange(ty, local_index, u32(count), wgsize, [&](Value* index) {
                         for (auto& store : *element_stores) {
                             GenerateStore(store, count, index);
                         }
