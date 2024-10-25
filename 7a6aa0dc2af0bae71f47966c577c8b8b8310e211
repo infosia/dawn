@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdabf162_53bcd8af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-25T18:31:49Z",
+      "side": 1,
+      "message": "Dan is trying to roll the CTS and this would cause a merge conflict.",
+      "revId": "7a6aa0dc2af0bae71f47966c577c8b8b8310e211",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
