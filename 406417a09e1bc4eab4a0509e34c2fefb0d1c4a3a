@@ -16,6 +16,23 @@
       "message": "Loko: could you please review? CC\u0027ing Corentin as FYI.",
       "revId": "406417a09e1bc4eab4a0509e34c2fefb0d1c4a3a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f63f1397_62ff43e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-10-25T17:17:44Z",
+      "side": 1,
+      "message": "Thanks Corentin for your review!",
+      "revId": "406417a09e1bc4eab4a0509e34c2fefb0d1c4a3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
