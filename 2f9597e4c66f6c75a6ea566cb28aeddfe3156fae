@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7064212d_86ee59f9",
+        "filename": "src/tint/lang/core/ir/referenced_module_vars.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T18:16:50Z",
+      "side": 1,
+      "message": "The file uses `ControlInstruction`. Hasn\u0027t caused a problem before because this file has always been included after `builder.h`. This CL includes it without the builder, so the missing include was exposed.",
+      "parentUuid": "257c70e6_2fccfe93",
+      "revId": "2f9597e4c66f6c75a6ea566cb28aeddfe3156fae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18a568c1_61bee387",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-10-24T15:28:59Z",
       "side": 1,
       "message": "You\u0027 erasing from the list you\u0027re iterating, doesn\u0027t that mean you\u0027re going to a) skip elements as we shift the further elements down and b) walk off the end of the list?\n\nShould this iterate the vector the in the opposite order so you remove from the end first?",
+      "revId": "2f9597e4c66f6c75a6ea566cb28aeddfe3156fae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08bb46a6_ce6afbcd",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T18:16:50Z",
+      "side": 1,
+      "message": "Good catch, fixed by only incrementing the index if we\u0027re keeping the function.",
+      "parentUuid": "18a568c1_61bee387",
       "revId": "2f9597e4c66f6c75a6ea566cb28aeddfe3156fae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -60,6 +96,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "46e9c384_57354b92",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T18:16:50Z",
+      "side": 1,
+      "message": "As mentioned in the previous CL, I find this change makes the code slightly more awkward to read in these simple cases, for no real gain (we\u0027re not deeply nested here, and nowhere near the 100 column limit).\n\nThe original reads clearly for me:\n\"\"If the var isn\u0027t in the set, destroy it\"\"\nWhereas your suggestion reads as:\n\"\"If the var is in the set, continue, then if we\u0027re not continuing destroy it.\"\"\nAmounts to the same thing, but I personally prefer the original.",
+      "parentUuid": "39cb883c_962be860",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 9
+      },
+      "revId": "2f9597e4c66f6c75a6ea566cb28aeddfe3156fae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "059d757e_780460c5",
         "filename": "src/tint/lang/core/ir/transform/single_entry_point_test.cc",
         "patchSetId": 1
@@ -71,6 +131,30 @@
       "writtenOn": "2024-10-24T15:28:59Z",
       "side": 1,
       "message": "Can you make a similar test with something like:\n\n```\nauto* f1 \u003d Func(\"f1\");\nauto* f2 \u003d Func(\"f2\");\nauto* f3 \u003d Func(\"f3\");\n\nEntryPoint(\"foo\", {f1});\n```\n\nI _think_ currently it would skip removing `f3` due to the deleting while iterating but would be good to get a test.",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 28
+      },
+      "revId": "2f9597e4c66f6c75a6ea566cb28aeddfe3156fae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bee3420a_91ce9074",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-25T18:16:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "059d757e_780460c5",
       "range": {
         "startLine": 163,
         "startChar": 0,
