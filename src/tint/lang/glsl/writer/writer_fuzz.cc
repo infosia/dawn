@@ -27,6 +27,7 @@
 
 #include "src/tint/cmd/fuzz/ir/fuzz.h"
 #include "src/tint/lang/core/ir/module.h"
+#include "src/tint/lang/core/ir/transform/single_entry_point.h"
 #include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/input_attachment.h"
 #include "src/tint/lang/core/type/pointer.h"
@@ -111,23 +112,24 @@ bool CanRun(const core::ir::Module& module, Options& options) {
         }
     }
 
-    // Make sure that there is at most one entry point.
-    bool has_entry_point = false;
-    for (auto& func : module.functions) {
-        if (func->Stage() != core::ir::Function::PipelineStage::kUndefined) {
-            if (has_entry_point) {
-                return false;
-            }
-            has_entry_point = true;
-        }
-    }
-
     return true;
 }
 
 void IRFuzzer(core::ir::Module& module, Options options) {
     if (!CanRun(module, options)) {
         return;
+    }
+
+    // TODO(375388101): We cannot run the backend for every entry point in the module unless we
+    // clone the whole module each time, so for now we just generate the first entry point.
+
+    // Strip the module down to a single entry point.
+    for (auto& func : module.functions) {
+        if (func->Stage() != core::ir::Function::PipelineStage::kUndefined) {
+            TINT_ASSERT(core::ir::transform::SingleEntryPoint(
+                            module, module.NameOf(func).NameView()) == Success);
+            break;
+        }
     }
 
     options.bindings = GenerateBindings(module);
