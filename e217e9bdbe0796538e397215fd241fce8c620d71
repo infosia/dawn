@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76a8ec5e_f67ad7f9",
+        "filename": "src/emdawnwebgpu/tests/FuturesTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-25T04:15:45Z",
+      "side": 1,
+      "message": "Not technically necessary since MapAsync also does this. I assume you\u0027re just doing it to test the entry point. If so, comment that, so no one goes and tries to delete the redundant wait.",
+      "range": {
+        "startLine": 248,
+        "startChar": 48,
+        "endLine": 248,
+        "endChar": 77
+      },
+      "revId": "e217e9bdbe0796538e397215fd241fce8c620d71",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58c3bd42_52ac9de8",
+        "filename": "src/emdawnwebgpu/tests/FuturesTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-25T04:15:45Z",
+      "side": 1,
+      "message": "nit: Assert `messageCount` is 1 here before indexing `messages`.\n\n(Might not then be necessary to also `EXPECT_EQ` it later.)",
+      "range": {
+        "startLine": 357,
+        "startChar": 42,
+        "endLine": 357,
+        "endChar": 50
+      },
+      "revId": "e217e9bdbe0796538e397215fd241fce8c620d71",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
