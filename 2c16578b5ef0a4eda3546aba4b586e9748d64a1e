@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ffc553f6_0082a62c",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-25T20:53:13Z",
+      "side": 1,
+      "message": "You\u0027re probably right, I just wanted to avoid adding like 600 `_u`s, heh.",
+      "parentUuid": "589651e3_5bf5a1bc",
+      "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cb02c36c_7b2308cf",
         "filename": "src/tint/lang/core/ir/builder.h",
         "patchSetId": 5
