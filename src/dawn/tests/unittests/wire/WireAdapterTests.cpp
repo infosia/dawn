@@ -159,9 +159,9 @@ TEST_P(WireAdapterTests, RequestDeviceSuccess) {
     fakeLimits.limits.maxTextureDimension1D = 433;
     fakeLimits.limits.maxVertexAttributes = 1243;
 
-    std::initializer_list<wgpu::FeatureName> fakeFeatures = {
-        wgpu::FeatureName::Depth32FloatStencil8,
-        wgpu::FeatureName::TextureCompressionBC,
+    std::initializer_list<WGPUFeatureName> fakeFeatures = {
+        WGPUFeatureName_Depth32FloatStencil8,
+        WGPUFeatureName_TextureCompressionBC,
     };
 
     wgpu::DeviceDescriptor desc = {};
@@ -183,15 +183,17 @@ TEST_P(WireAdapterTests, RequestDeviceSuccess) {
                     return WGPUStatus_Success;
                 })));
 
-            EXPECT_CALL(api, DeviceEnumerateFeatures(apiDevice, nullptr))
-                .WillOnce(Return(fakeFeatures.size()));
-
-            EXPECT_CALL(api, DeviceEnumerateFeatures(apiDevice, NotNull()))
-                .WillOnce(WithArg<1>(Invoke([&](WGPUFeatureName* features) {
-                    for (wgpu::FeatureName feature : fakeFeatures) {
-                        *(features++) = static_cast<WGPUFeatureName>(feature);
+            EXPECT_CALL(api, DeviceGetFeatures(apiDevice, NotNull()))
+                .WillOnce(WithArg<1>(Invoke([&](WGPUSupportedFeatures* supportedFeatures) {
+                    const size_t count = fakeFeatures.size();
+                    WGPUFeatureName* features = new WGPUFeatureName[count];
+                    uint32_t index = 0;
+                    for (WGPUFeatureName feature : fakeFeatures) {
+                        features[index++] = feature;
                     }
-                    return fakeFeatures.size();
+                    supportedFeatures->featureCount = count;
+                    supportedFeatures->features = features;
+                    return WGPUStatus_Success;
                 })));
 
             // The backend device should still not be known by the wire server since the
@@ -220,13 +222,15 @@ TEST_P(WireAdapterTests, RequestDeviceSuccess) {
                           fakeLimits.limits.maxTextureDimension1D);
                 EXPECT_EQ(limits.limits.maxVertexAttributes, fakeLimits.limits.maxVertexAttributes);
 
-                std::vector<wgpu::FeatureName> features;
-                features.resize(device.EnumerateFeatures(nullptr));
-                ASSERT_EQ(features.size(), fakeFeatures.size());
-                EXPECT_EQ(device.EnumerateFeatures(&features[0]), features.size());
+                wgpu::SupportedFeatures supportedFeatures;
+                EXPECT_EQ(device.GetFeatures(&supportedFeatures), wgpu::Status::Success);
+                ASSERT_EQ(supportedFeatures.featureCount, fakeFeatures.size());
 
-                std::unordered_set<wgpu::FeatureName> featureSet(fakeFeatures);
-                for (wgpu::FeatureName feature : features) {
+                std::unordered_set<WGPUFeatureName> featureSet(fakeFeatures);
+                for (uint32_t i = 0; i < supportedFeatures.featureCount; ++i) {
+                    // FIXME! cannot initialize a variable of type 'WGPUFeatureName' with an lvalue
+                    // of type 'const FeatureName'
+                    WGPUFeatureName feature = supportedFeatures.features[i];
                     EXPECT_EQ(featureSet.erase(feature), 1u);
                 }
             })));

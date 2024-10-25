@@ -89,6 +89,7 @@ void Server::OnRequestAdapterCallback(RequestAdapterUserdata* data,
     // Query and report the adapter supported features.
     std::vector<WGPUFeatureName> features;
 
+    // TODO(crbug.com/368672123): Use GetFeatures once we remove EnumerateFeatures.
     size_t featuresCount = mProcs.adapterEnumerateFeatures(adapter, nullptr);
     features.resize(featuresCount);
     mProcs.adapterEnumerateFeatures(adapter, features.data());

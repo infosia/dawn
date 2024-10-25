@@ -99,15 +99,15 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
 
     std::vector<WGPUFeatureName> features;
 
-    size_t featuresCount = mProcs.deviceEnumerateFeatures(device, nullptr);
-    features.resize(featuresCount);
-    mProcs.deviceEnumerateFeatures(device, features.data());
+    WGPUSupportedFeatures supportedFeatures;
+    mProcs.deviceGetFeatures(device, &supportedFeatures);
 
     // The client should only be able to request supported features, so all enumerated
     // features that were enabled must also be supported by the wire.
     // Note: We fail the callback here, instead of immediately upon receiving
     // the request to preserve callback ordering.
-    for (WGPUFeatureName f : features) {
+    for (uint32_t i = 0; i < supportedFeatures.featureCount; ++i) {
+        WGPUFeatureName f = supportedFeatures.features[i];
         if (!IsFeatureSupported(f)) {
             // Release the device.
             mProcs.deviceRelease(device);
@@ -120,8 +120,8 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
         }
     }
 
-    cmd.featuresCount = features.size();
-    cmd.features = features.data();
+    cmd.featuresCount = supportedFeatures.featureCount;
+    cmd.features = supportedFeatures.features;
 
     // Query and report the adapter limits, including DawnExperimentalSubgroupLimits and
     // DawnExperimentalImmediateDataLimits. Reporting to client.
