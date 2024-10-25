@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2ef595d_c5dda0b1",
+        "filename": "src/emdawnwebgpu/tests/FuturesTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T18:15:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76a8ec5e_f67ad7f9",
+      "range": {
+        "startLine": 248,
+        "startChar": 48,
+        "endLine": 248,
+        "endChar": 77
+      },
+      "revId": "e217e9bdbe0796538e397215fd241fce8c620d71",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58c3bd42_52ac9de8",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-10-25T04:15:45Z",
       "side": 1,
       "message": "nit: Assert `messageCount` is 1 here before indexing `messages`.\n\n(Might not then be necessary to also `EXPECT_EQ` it later.)",
+      "range": {
+        "startLine": 357,
+        "startChar": 42,
+        "endLine": 357,
+        "endChar": 50
+      },
+      "revId": "e217e9bdbe0796538e397215fd241fce8c620d71",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81a77642_e01b9501",
+        "filename": "src/emdawnwebgpu/tests/FuturesTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T18:15:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58c3bd42_52ac9de8",
       "range": {
         "startLine": 357,
         "startChar": 42,
