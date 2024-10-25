@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36595fc3_df750ae6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2024-10-25T12:32:51Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "47c95d8b534b2f0a98243c1845add1b218c8bb22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "039c7b60_bbdee9a4",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2024-10-25T12:32:51Z",
+      "side": 1,
+      "message": "nit: Maybe \"Null views must be marked as preserved so that they keep using attachment slots. Otherwise the holes in the attachments would get compacted by D3D12. See https://microsoft.github.io/DirectX-Specs/d3d/RenderPasses.html#surfaces-that-beginrenderpass-binds-for-raster\"",
+      "revId": "47c95d8b534b2f0a98243c1845add1b218c8bb22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
