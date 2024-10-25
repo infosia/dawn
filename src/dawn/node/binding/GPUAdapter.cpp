@@ -88,15 +88,12 @@ GPUAdapter::GPUAdapter(dawn::native::Adapter a,
                        std::shared_ptr<AsyncRunner> async)
     : adapter_(a), flags_(flags), async_(async) {}
 
-// TODO(dawn:1133): Avoid the extra copy by making the generator make a virtual method with const
-// std::string&
 interop::Interface<interop::GPUSupportedFeatures> GPUAdapter::getFeatures(Napi::Env env) {
-    wgpu::Adapter adapter(adapter_.Get());
-    size_t count = adapter.EnumerateFeatures(nullptr);
-    std::vector<wgpu::FeatureName> features(count);
-    adapter.EnumerateFeatures(&features[0]);
-    return interop::GPUSupportedFeatures::Create<GPUSupportedFeatures>(env, env,
-                                                                       std::move(features));
+    wgpu::SupportedFeatures features{};
+    if (!adapter_.GetFeatures(&features)) {
+        Napi::Error::New(env, "failed to get adapter features").ThrowAsJavaScriptException();
+    }
+    return interop::GPUSupportedFeatures::Create<GPUSupportedFeatures>(env, env, features);
 }
 
 interop::Interface<interop::GPUSupportedLimits> GPUAdapter::getLimits(Napi::Env env) {
