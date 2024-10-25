@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92c5f022_3f44340f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-25T17:54:47Z",
+      "side": 1,
+      "message": "Duplicate change as in https://dawn-review.googlesource.com/c/dawn/+/211940 that should be landing already.",
+      "revId": "8d8b78e0c420950ccbdf78b766fb541ace687dc9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
