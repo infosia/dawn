@@ -149,6 +149,7 @@
             },
             {
                 "name": "has feature",
+                "tags": ["deprecated"],
                 "returns": "bool",
                 "args": [
                     {"name": "feature", "type": "feature name"}
@@ -156,9 +157,17 @@
             },
             {
                 "name": "enumerate features",
+                "tags": ["deprecated"],
                 "returns": "size_t",
                 "args": [
                     {"name": "features", "type": "feature name", "annotation": "*"}
+                ]
+            },
+            {
+                "name": "get features",
+                "returns": "status",
+                "args": [
+                    {"name": "features", "type": "supported features", "annotation": "*"}
                 ]
             },
             {
@@ -1548,6 +1557,7 @@
             },
             {
                 "name": "has feature",
+                "tags": ["deprecated"],
                 "returns": "bool",
                 "args": [
                     {"name": "feature", "type": "feature name"}
@@ -1555,9 +1565,17 @@
             },
             {
                 "name": "enumerate features",
+                "tags": ["deprecated"],
                 "returns": "size_t",
                 "args": [
                     {"name": "features", "type": "feature name", "annotation": "*"}
+                ]
+            },
+            {
+                "name": "get features",
+                "returns": "status",
+                "args": [
+                    {"name": "features", "type": "supported features", "annotation": "*"}
                 ]
             },
             {
@@ -1860,6 +1878,21 @@
         "extensible": "out",
         "members": [
             {"name": "limits", "type": "limits"}
+        ]
+    },
+    "supported features": {
+        "category": "structure",
+        "extensible": "out",
+        "members": [
+            {"name": "feature count", "type": "size_t"},
+            {"name": "features", "type": "feature name", "annotation": "const*", "length": "feature count"}
+        ],
+        "methods": [
+            {
+                "name": "free members",
+                "returns": "void",
+                "args": []
+            }
         ]
     },
     "logging callback": {
