@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f80380c_72aef12a",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-26T01:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0065eedc_17f074e5",
+      "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "589651e3_5bf5a1bc",
@@ -53,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ddae474_00c81858",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-26T01:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffc553f6_0082a62c",
+      "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb02c36c_7b2308cf",
@@ -66,6 +102,24 @@
       "writtenOn": "2024-10-25T20:23:51Z",
       "side": 1,
       "message": "Nit: There are no defaults in this overload. You could add them, you just need to default the template parameter (to `u32`) as well as the function parameter (to `u32(1)`).",
+      "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31f725c8_c2d5faee",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-26T01:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb02c36c_7b2308cf",
       "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -93,6 +147,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56f92e93_01d9794c",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-26T01:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d999b4e4_901acae9",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 35
+      },
+      "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82992344_f50f7522",
@@ -106,6 +184,24 @@
       "writtenOn": "2024-10-25T20:23:51Z",
       "side": 1,
       "message": "I think we should just use `WorkgroupSizeAsConst()` here. This transform shouldn\u0027t ever be invoked when overrides are still present.",
+      "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9eb77b3_67dc1088",
+        "filename": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-26T01:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82992344_f50f7522",
       "revId": "2c16578b5ef0a4eda3546aba4b586e9748d64a1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
