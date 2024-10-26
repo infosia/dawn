@@ -33,6 +33,24 @@
       "message": "Are these ones really worth testing? IIUC this transformation is only relevant to vertex shaders.",
       "revId": "406c53a89b1f27d2a2a4add4cdd7199e956e7c0f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4dc593f_10c1c390",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2857,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-26T15:45:48Z",
+      "side": 1,
+      "message": "Removed the two fragment tests.",
+      "parentUuid": "196e97e7_cc33f601",
+      "revId": "406c53a89b1f27d2a2a4add4cdd7199e956e7c0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
