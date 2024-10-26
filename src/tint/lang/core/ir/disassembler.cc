@@ -53,6 +53,7 @@
 #include "src/tint/lang/core/ir/member_builtin_call.h"
 #include "src/tint/lang/core/ir/multi_in_block.h"
 #include "src/tint/lang/core/ir/next_iteration.h"
+#include "src/tint/lang/core/ir/override.h"
 #include "src/tint/lang/core/ir/return.h"
 #include "src/tint/lang/core/ir/store.h"
 #include "src/tint/lang/core/ir/store_vector_element.h"
@@ -513,6 +514,18 @@ void Disassembler::EmitInstruction(const Instruction* inst) {
             if (!c->Args().IsEmpty()) {
                 out_ << " ";
                 EmitOperandList(c, UserCall::kArgsOperandOffset);
+            }
+        },
+        [&](const Override* o) {
+            EmitValueWithType(o);
+            out_ << " = ";
+            EmitInstructionName(o);
+            if (o->Initializer()) {
+                out_ << ", ";
+                EmitOperand(o, Var::kInitializerOperandOffset);
+            }
+            if (o->HasOverrideID()) {
+                out_ << " @id(" << o->OverrideID().value << ")";
             }
         },
         [&](const Var* v) {
