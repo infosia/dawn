@@ -64,6 +64,7 @@
 #include "src/tint/lang/core/ir/member_builtin_call.h"
 #include "src/tint/lang/core/ir/multi_in_block.h"
 #include "src/tint/lang/core/ir/next_iteration.h"
+#include "src/tint/lang/core/ir/override.h"
 #include "src/tint/lang/core/ir/referenced_module_vars.h"
 #include "src/tint/lang/core/ir/return.h"
 #include "src/tint/lang/core/ir/store.h"
@@ -101,7 +102,7 @@
 #include "src/tint/utils/text/text_style.h"
 
 /// If set to 1 then the Tint will dump the IR when validating.
-#define TINT_DUMP_IR_WHEN_VALIDATING 0
+#define TINT_DUMP_IR_WHEN_VALIDATING 1
 #if TINT_DUMP_IR_WHEN_VALIDATING
 #include <iostream>
 #include "src/tint/utils/text/styled_text_printer.h"
@@ -847,6 +848,10 @@ class Validator {
     /// @param blk the block
     void CheckRootBlock(const Block* blk);
 
+    /// Validates the given instruction is only used in the root block.
+    /// @param inst the instruction
+    void CheckOnlyUsedInRootBlock(const Instruction* inst);
+
     /// Validates the given function
     /// @param func the function to validate
     void CheckFunction(const Function* func);
@@ -921,6 +926,10 @@ class Validator {
     /// Validates the given instruction
     /// @param inst the instruction to validate
     void CheckInstruction(const Instruction* inst);
+
+    /// Validates the given override
+    /// @param o the override to validate
+    void CheckOverride(const Override* o);
 
     /// Validates the given var
     /// @param var the var to validate
@@ -1671,6 +1680,9 @@ void Validator::CheckRootBlock(const Block* blk) {
     block_stack_.Push(blk);
     TINT_DEFER(block_stack_.Pop());
 
+    scope_stack_.Push();
+    TINT_DEFER(scope_stack_.Pop());
+
     for (auto* inst : *blk) {
         if (inst->Block() != blk) {
             AddError(inst) << "instruction in root block does not have root block as parent";
@@ -1679,6 +1691,13 @@ void Validator::CheckRootBlock(const Block* blk) {
 
         tint::Switch(
             inst,  //
+            [&](const core::ir::Override* o) {
+                if (capabilities_.Contains(Capability::kAllowOverrides)) {
+                    CheckInstruction(o);
+                } else {
+                    AddError(inst) << "root block: invalid instruction: " << inst->TypeInfo().name;
+                }
+            },
             [&](const core::ir::Var* var) { CheckInstruction(var); },
             [&](const core::ir::Let* let) {
                 if (capabilities_.Contains(Capability::kAllowModuleScopeLets)) {
@@ -1695,9 +1714,26 @@ void Validator::CheckRootBlock(const Block* blk) {
                 }
             },
             [&](Default) {
-                AddError(inst) << "root block: invalid instruction: " << inst->TypeInfo().name;
+                if (capabilities_.Contains(Capability::kAllowOverrides)) {
+                    // If overrides are allowed we can have regular instructions in the root block,
+                    // with the caveat that those instructions can _only_ be used in the root block.
+                    CheckOnlyUsedInRootBlock(inst);
+                } else {
+                    AddError(inst) << "root block: invalid instruction: " << inst->TypeInfo().name;
+                }
             });
     }
+}
+
+void Validator::CheckOnlyUsedInRootBlock(const Instruction* inst) {
+    for (auto& usage : inst->Result(0)->UsagesSorted()) {
+        if (usage.instruction->Block() != mod_.root_block) {
+            AddError(inst) << "root block: instruction used outside of root block "
+                           << inst->TypeInfo().name;
+        }
+    }
+
+    CheckInstruction(inst);
 }
 
 void Validator::CheckFunction(const Function* func) {
@@ -1974,11 +2010,25 @@ void Validator::CheckInstruction(const Instruction* inst) {
         [&](const Swizzle* s) { CheckSwizzle(s); },                        //
         [&](const Terminator* b) { CheckTerminator(b); },                  //
         [&](const Unary* u) { CheckUnary(u); },                            //
+        [&](const Override* o) { CheckOverride(o); },                      //
         [&](const Var* var) { CheckVar(var); },                            //
         [&](const Default) { AddError(inst) << "missing validation"; });
 
     for (auto* result : results) {
         scope_stack_.Add(result);
+    }
+}
+
+void Validator::CheckOverride(const Override* o) {
+    // Intentionally not checking operands, since Override may have a null operand
+    if (!CheckResults(o, Override::kNumResults)) {
+        return;
+    }
+
+    if (o->Initializer()) {
+        if (!CheckOperand(o, ir::Var::kInitializerOperandOffset)) {
+            return;
+        }
     }
 }
 
