@@ -29,6 +29,7 @@
 #define SRC_TINT_LANG_WGSL_READER_LOWER_LOWER_H_
 
 #include "src/tint/lang/core/ir/module.h"
+#include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/utils/diagnostic/diagnostic.h"
 #include "src/tint/utils/result/result.h"
 
