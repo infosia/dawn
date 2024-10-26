@@ -204,7 +204,13 @@ core::BuiltinFn Convert(wgsl::BuiltinFn fn) {
 }  // namespace
 
 Result<SuccessType> Lower(core::ir::Module& mod) {
+<<<<<<< PATCH SET (21e871 [ir] Add concept of overrides to the IR.)
+    auto res = core::ir::ValidateAndDumpIfNeeded(
+        mod, "wgsl.Lower", core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
+    if (res != Success) {
+=======
     if (auto res = core::ir::ValidateAndDumpIfNeeded(mod, "wgsl.Lower"); res != Success) {
+>>>>>>> BASE      (67afad [ir] Change `workgroup_size` to a `Value`.)
         return res.Failure();
     }
 
