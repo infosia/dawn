@@ -41424,6 +41424,15 @@ webgpu:shader,execution,expression,access,matrix,index:abstract_float_element:in
 webgpu:shader,execution,expression,access,matrix,index:abstract_float_element:indexType="u32";columns=4;rows=2
 webgpu:shader,execution,expression,access,matrix,index:abstract_float_element:indexType="u32";columns=4;rows=3
 webgpu:shader,execution,expression,access,matrix,index:abstract_float_element:indexType="u32";columns=4;rows=4
+webgpu:shader,execution,expression,access,matrix,index:non_const_index:columns=2;rows=2
+webgpu:shader,execution,expression,access,matrix,index:non_const_index:columns=2;rows=3
+webgpu:shader,execution,expression,access,matrix,index:non_const_index:columns=2;rows=4
+webgpu:shader,execution,expression,access,matrix,index:non_const_index:columns=3;rows=2
+webgpu:shader,execution,expression,access,matrix,index:non_const_index:columns=3;rows=3
+webgpu:shader,execution,expression,access,matrix,index:non_const_index:columns=3;rows=4
+webgpu:shader,execution,expression,access,matrix,index:non_const_index:columns=4;rows=2
+webgpu:shader,execution,expression,access,matrix,index:non_const_index:columns=4;rows=3
+webgpu:shader,execution,expression,access,matrix,index:non_const_index:columns=4;rows=4
 webgpu:shader,execution,expression,access,structure,index:buffer:member_types=["u32"];inputSource="uniform"
 webgpu:shader,execution,expression,access,structure,index:buffer:member_types=["u32"];inputSource="storage"
 webgpu:shader,execution,expression,access,structure,index:buffer:member_types=["vec3f"];inputSource="uniform"
