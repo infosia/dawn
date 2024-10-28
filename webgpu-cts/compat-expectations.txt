@@ -1893,9 +1893,9 @@ crbug.com/372198639 [ linux nvidia ] webgpu:api,validation,state,device_lost,des
 crbug.com/372198639 [ android arm ] webgpu:api,validation,state,device_lost,destroy:importExternalTexture:sourceType="VideoElement";awaitLost=false [ RetryOnFailure ]
 
 # Returns 0
-crbug.com/374218148 [ intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_2d_coords:* [ Failure ]
-crbug.com/374218148 [ intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_3d_coords:* [ Failure ]
-crbug.com/374218148 [ intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_array_2d_coords:* [ Failure ]
+crbug.com/374218148 [ linux ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_2d_coords:* [ Failure ]
+crbug.com/374218148 [ linux ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_3d_coords:* [ Failure ]
+crbug.com/374218148 [ linux ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_array_2d_coords:* [ Failure ]
 crbug.com/374218148 [ intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:* [ Failure ]
 crbug.com/374218148 [ intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_3d_coords:* [ Failure ]
 crbug.com/374218148 [ intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_array_2d_coords:* [ Failure ]
