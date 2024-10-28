@@ -350,8 +350,8 @@ void Device::SetLimits(const WGPUSupportedLimits* limits) {
     return mLimitsAndFeatures.SetLimits(limits);
 }
 
-void Device::SetFeatures(const WGPUFeatureName* features, uint32_t featuresCount) {
-    return mLimitsAndFeatures.SetFeatures(features, featuresCount);
+void Device::SetFeatures(const WGPUSupportedFeatures* features) {
+    return mLimitsAndFeatures.SetFeatures(features);
 }
 
 void Device::HandleError(WGPUErrorType errorType, WGPUStringView message) {

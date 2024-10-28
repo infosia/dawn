@@ -85,8 +85,7 @@ void Server::OnRequestAdapterCallback(RequestAdapterUserdata* data,
     // Query and report the adapter supported features.
     WGPUSupportedFeatures supportedFeatures;
     mProcs.adapterGetFeatures(adapter, &supportedFeatures);
-    cmd.featuresCount = supportedFeatures.featureCount;
-    cmd.features = supportedFeatures.features;
+    cmd.features = &supportedFeatures;
 
     // Query and report the adapter info.
     WGPUAdapterInfo info = {};

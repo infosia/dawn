@@ -117,9 +117,7 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
             return;
         }
     }
-
-    cmd.featuresCount = supportedFeatures.featureCount;
-    cmd.features = supportedFeatures.features;
+    cmd.features = &supportedFeatures;
 
     // Query and report the adapter limits, including DawnExperimentalSubgroupLimits and
     // DawnExperimentalImmediateDataLimits. Reporting to client.

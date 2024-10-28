@@ -64,14 +64,13 @@ class RequestDeviceEvent : public TrackedEvent {
                          WGPURequestDeviceStatus status,
                          WGPUStringView message,
                          const WGPUSupportedLimits* limits,
-                         uint32_t featuresCount,
-                         const WGPUFeatureName* features) {
+                         const WGPUSupportedFeatures* features) {
         DAWN_ASSERT(mDevice != nullptr);
         mStatus = status;
         mMessage = ToString(message);
         if (status == WGPURequestDeviceStatus_Success) {
             mDevice->SetLimits(limits);
-            mDevice->SetFeatures(features, featuresCount);
+            mDevice->SetFeatures(features);
         }
         return WireResult::Success;
     }
@@ -163,8 +162,8 @@ void Adapter::SetLimits(const WGPUSupportedLimits* limits) {
     return mLimitsAndFeatures.SetLimits(limits);
 }
 
-void Adapter::SetFeatures(const WGPUFeatureName* features, uint32_t featuresCount) {
-    return mLimitsAndFeatures.SetFeatures(features, featuresCount);
+void Adapter::SetFeatures(const WGPUSupportedFeatures* features) {
+    return mLimitsAndFeatures.SetFeatures(features);
 }
 
 void Adapter::SetInfo(const WGPUAdapterInfo* info) {
@@ -356,11 +355,9 @@ WireResult Client::DoAdapterRequestDeviceCallback(ObjectHandle eventManager,
                                                   WGPURequestDeviceStatus status,
                                                   WGPUStringView message,
                                                   const WGPUSupportedLimits* limits,
-                                                  uint32_t featuresCount,
-                                                  const WGPUFeatureName* features) {
+                                                  const WGPUSupportedFeatures* features) {
     return GetEventManager(eventManager)
-        .SetFutureReady<RequestDeviceEvent>(future.id, status, message, limits, featuresCount,
-                                            features);
+        .SetFutureReady<RequestDeviceEvent>(future.id, status, message, limits, features);
 }
 
 WGPUInstance Adapter::GetInstance() const {

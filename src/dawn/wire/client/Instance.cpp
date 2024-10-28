@@ -69,15 +69,14 @@ class RequestAdapterEvent : public TrackedEvent {
                          WGPUStringView message,
                          const WGPUAdapterInfo* info,
                          const WGPUSupportedLimits* limits,
-                         uint32_t featuresCount,
-                         const WGPUFeatureName* features) {
+                         const WGPUSupportedFeatures* features) {
         DAWN_ASSERT(mAdapter != nullptr);
         mStatus = status;
         mMessage = ToString(message);
         if (status == WGPURequestAdapterStatus_Success) {
             mAdapter->SetInfo(info);
             mAdapter->SetLimits(limits);
-            mAdapter->SetFeatures(features, featuresCount);
+            mAdapter->SetFeatures(features);
         }
         return WireResult::Success;
     }
@@ -256,11 +255,9 @@ WireResult Client::DoInstanceRequestAdapterCallback(ObjectHandle eventManager,
                                                     WGPUStringView message,
                                                     const WGPUAdapterInfo* info,
                                                     const WGPUSupportedLimits* limits,
-                                                    uint32_t featuresCount,
-                                                    const WGPUFeatureName* features) {
+                                                    const WGPUSupportedFeatures* features) {
     return GetEventManager(eventManager)
-        .SetFutureReady<RequestAdapterEvent>(future.id, status, message, info, limits,
-                                             featuresCount, features);
+        .SetFutureReady<RequestAdapterEvent>(future.id, status, message, info, limits, features);
 }
 
 void Instance::ProcessEvents() {

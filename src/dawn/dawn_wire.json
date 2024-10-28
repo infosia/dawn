@@ -191,8 +191,7 @@
             { "name": "message", "type": "string view" },
             { "name": "info", "type": "adapter info", "annotation": "const*", "optional": "true" },
             { "name": "limits", "type": "supported limits", "annotation": "const*", "optional": "true" },
-            { "name": "features count", "type": "uint32_t"},
-            { "name": "features", "type": "feature name", "annotation": "const*", "length": "features count"}
+            { "name": "features", "type": "supported features", "annotation": "const*", "optional": "true"}
         ],
         "adapter request device callback": [
             { "name": "event manager", "type": "ObjectHandle" },
@@ -200,8 +199,7 @@
             { "name": "status", "type": "request device status" },
             { "name": "message", "type": "string view" },
             { "name": "limits", "type": "supported limits", "annotation": "const*", "optional": "true" },
-            { "name": "features count", "type": "uint32_t"},
-            { "name": "features", "type": "feature name", "annotation": "const*", "length": "features count"}
+            { "name": "features", "type": "supported features", "annotation": "const*", "optional": "true"}
         ]
     },
     "special items": {

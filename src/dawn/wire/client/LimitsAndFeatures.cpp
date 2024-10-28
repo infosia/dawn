@@ -132,15 +132,16 @@ void LimitsAndFeatures::SetLimits(const WGPUSupportedLimits* limits) {
     }
 }
 
-void LimitsAndFeatures::SetFeatures(const WGPUFeatureName* features, uint32_t featuresCount) {
-    DAWN_ASSERT(features != nullptr || featuresCount == 0);
-    for (uint32_t i = 0; i < featuresCount; ++i) {
+void LimitsAndFeatures::SetFeatures(const WGPUSupportedFeatures* supportedFeatures) {
+    DAWN_ASSERT(supportedFeatures->features != nullptr || supportedFeatures->featureCount == 0);
+    for (uint32_t i = 0; i < supportedFeatures->featureCount; ++i) {
+        WGPUFeatureName feature = supportedFeatures->features[i];
         // Filter out features that the server supports, but the client does not.
         // (Could be different versions)
-        if (!IsFeatureSupported(features[i])) {
+        if (!IsFeatureSupported(feature)) {
             continue;
         }
-        mFeatures.insert(features[i]);
+        mFeatures.insert(feature);
     }
 }
 
