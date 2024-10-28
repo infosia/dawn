@@ -16,6 +16,24 @@
       "message": "@cwallez@chromium.org Do you know how to get a WGPUFeatureName from a FeatureName in a wire test?",
       "revId": "aedd39a02e7a5bd1e2dd0b2f58cd084417fa707a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "842deccc_cccf3d32",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-28T13:13:22Z",
+      "side": 1,
+      "message": "nvm",
+      "parentUuid": "104fe6c7_a2159585",
+      "revId": "aedd39a02e7a5bd1e2dd0b2f58cd084417fa707a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
