@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43c3a801_69da93fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-28T21:27:45Z",
+      "side": 1,
+      "message": "LGTM, just a note about how this sort of thing may be better covered with some more general rules in the future.",
+      "revId": "527f8c668e3f446fe39f5cc74c1c6281079beea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7361d3b_2cd71cac",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1825,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-28T21:27:45Z",
+      "side": 1,
+      "message": "I presume at some point we\u0027ll have a check to make sure that every param/member has either `@builtin` or `@location`, and we\u0027ll also want to check that `@location` is only used with valid types.\n\nOnce we have those checks in place, I feel like these targeted checks for `bool`+`front_facing` would become redundant, as these cases would be covered by the more general checks.\n\nNothing needs to change here now, this is just a heads up about what other things you\u0027re likely to hit soon as well. Same applies to return types.",
+      "revId": "527f8c668e3f446fe39f5cc74c1c6281079beea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
