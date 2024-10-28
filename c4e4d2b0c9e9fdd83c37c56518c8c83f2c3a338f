@@ -3,6 +3,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dada14a4_3faf59f0",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-28T21:59:59Z",
+      "side": 1,
+      "message": "I believe we will keep HasFeature because it maps well to the JS API (it\u0027s possible to check for the presence of a feature without enumerating them - and this can possibly reduce the number of fingerprinting bits accessed).",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2593bcb_bd181075",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 1560,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-28T21:59:59Z",
+      "side": 1,
+      "message": "same (though this one doesn\u0027t impact fingerprinting at all so it\u0027s less important)",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2271690b_1fd82ea9",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 1885,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-28T21:59:59Z",
+      "side": 1,
+      "message": "I just realized I accidentally made this extensible upstream. It doesn\u0027t need to be extensible because it just returns a list every time. That was the design I had written down.\n\nThe GetFeatures methods also change to not return a status.\n\nhttps://github.com/webgpu-native/webgpu-headers/pull/382\n\nSorry for my mistake!",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4b20b0a0_3a5bf074",
         "filename": "src/dawn/native/Adapter.h",
         "patchSetId": 30
@@ -14,6 +65,127 @@
       "writtenOn": "2024-10-28T14:04:15Z",
       "side": 1,
       "message": "This is needed for tests.",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d22c924a_e2df95b6",
+        "filename": "src/dawn/native/Adapter.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-28T21:59:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4b20b0a0_3a5bf074",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec36e0ac_3086c066",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-28T21:59:59Z",
+      "side": 1,
+      "message": "nit: Comment that this will be freed by wgpuSupportedFeaturesFreeMembers",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a357beda_1c89164a",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-28T21:59:59Z",
+      "side": 1,
+      "message": "DAWN_ASSERT that `index \u003d\u003d count` here, just for a bit of safety, even though it should be true by construction.",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "849e295c_e1a25a1a",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-28T21:59:59Z",
+      "side": 1,
+      "message": "(I don\u0027t think we intend to keep allowing casting statuses to bool, so should compare to wgpu::Status::Success explicitly. Anyway, this comment will become irrelevant if GetFeatures no longer returns a status.)",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 9
+      },
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b619a71_95022123",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-28T21:59:59Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 180,
+        "startChar": 8,
+        "endLine": 180,
+        "endChar": 9
+      },
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5afec3f9_97a5a81d",
+        "filename": "src/dawn/wire/client/LimitsAndFeatures.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-28T21:59:59Z",
+      "side": 1,
+      "message": "same comment about where this gets freed",
+      "range": {
+        "startLine": 100,
+        "startChar": 32,
+        "endLine": 100,
+        "endChar": 35
+      },
       "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -31,6 +203,24 @@
       "writtenOn": "2024-10-28T14:04:15Z",
       "side": 1,
       "message": "I wish I could do `cmd.features \u003d \u0026supportedFeatures` but as you can see in try bots from https://dawn-review.googlesource.com/c/dawn/+/212754, I get the following errors:\n\n```\nReceived signal 11 SEGV_ACCERR aaaaaaaaaaaaaab2\n0   libbase.dylib                       0x000000010f0daa38 base::debug::CollectStackTrace(base::span\u003cvoid const*, 18446744073709551615ul, void const**\u003e) + 84\n1   libbase.dylib                       0x000000010f08523c base::debug::StackTrace::StackTrace(unsigned long) + 156\n2   libbase.dylib                       0x000000010f0852e4 base::debug::StackTrace::StackTrace(unsigned long) + 36\n3   libbase.dylib                       0x000000010f0852b0 base::debug::StackTrace::StackTrace() + 40\n4   libbase.dylib                       0x000000010f0da878 base::debug::(anonymous namespace)::StackDumpSignalHandler(int, __siginfo*, void*) + 1352\n5   libsystem_platform.dylib            0x000000019ff5a584 _sigtramp + 56\n6   libdawn_wire.dylib                  0x0000000110d25e74 dawn::wire::(anonymous namespace)::WGPUSupportedFeaturesGetExtraRequiredSize(WGPUSupportedFeatures const\u0026) + 64\n7   libdawn_wire.dylib                  0x0000000110d25e74 dawn::wire::(anonymous namespace)::WGPUSupportedFeaturesGetExtraRequiredSize(WGPUSupportedFeatures const\u0026) + 64\n8   libdawn_wire.dylib                  0x0000000110cf157c dawn::wire::(anonymous namespace)::ReturnInstanceRequestAdapterCallbackGetExtraRequiredSize(dawn::wire::ReturnInstanceRequestAdapterCallbackCmd const\u0026) + 804\n9   libdawn_wire.dylib                  0x0000000110cf122c dawn::wire::ReturnInstanceRequestAdapterCallbackCmd::GetRequiredSize() const + 44\n```",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c29ecb8_50daf9de",
+        "filename": "src/dawn/wire/server/ServerInstance.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-28T21:59:59Z",
+      "side": 1,
+      "message": "I think it\u0027s because the double-indirection (pointer to struct containing another pointer) does not get serialized correctly - it reallocates the data for the first pointer in the wire, but the second pointer just gets copied verbatim (probably).\nMaybe `cmd.features` can be `WGPUSupportedFeatures` instead of `WGPUSupportedFeatures const *` but the serialization code probably wouldn\u0027t understand that either.",
+      "parentUuid": "2def25be_b64fb360",
       "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
