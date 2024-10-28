@@ -79,13 +79,13 @@ class CreatePipelineAsyncEvent final : public EventManager::TrackedEvent {
     // Entrance call to start an AsyncTask initializing the pipeline.
     void InitializeAsync();
 
-    void Complete(EventCompletionType completionType) override;
+    void Complete(EventCompletionType completionType, bool* wasInserted) override;
 
   private:
     static const char* kDawnHistogramMetricsSuccess;
     static const char* kDawnHistogramMetricsUS;
 
-    void AddOrGetCachedPipeline();
+    void AddOrGetCachedPipeline(bool* wasInserted);
 
     // Body of pipeline initialization, called synchronously, or wrapped in an AsyncTask run by
     // AsyncTaskManager.

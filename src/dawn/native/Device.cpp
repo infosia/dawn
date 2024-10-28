@@ -91,7 +91,7 @@ struct DeviceBase::Caches {
     ContentLessObjectCache<BindGroupLayoutInternalBase> bindGroupLayouts;
     ContentLessObjectCache<ComputePipelineBase> computePipelines;
     ContentLessObjectCache<PipelineLayoutBase> pipelineLayouts;
-    ContentLessObjectCache<RenderPipelineBase> renderPipelines;
+    ContentLessObjectCache<RenderPipelineBase> renderPipelines1;
     ContentLessObjectCache<SamplerBase> samplers;
     ContentLessObjectCache<ShaderModuleBase> shaderModules;
 };
@@ -218,7 +218,7 @@ DeviceBase::DeviceLostEvent::DeviceLostEvent(const WGPUDeviceLostCallbackInfo2& 
       mUserdata2(callbackInfo.userdata2) {}
 
 DeviceBase::DeviceLostEvent::~DeviceLostEvent() {
-    EnsureComplete(EventCompletionType::Shutdown);
+    EnsureComplete(EventCompletionType::Shutdown, nullptr);
 }
 
 // static
@@ -266,7 +266,7 @@ Ref<DeviceBase::DeviceLostEvent> DeviceBase::DeviceLostEvent::Create(
     return AcquireRef(new DeviceBase::DeviceLostEvent(deviceLostCallbackInfo));
 }
 
-void DeviceBase::DeviceLostEvent::Complete(EventCompletionType completionType) {
+void DeviceBase::DeviceLostEvent::Complete(EventCompletionType completionType, bool* wasInserted) {
     if (completionType == EventCompletionType::Shutdown) {
         mReason = wgpu::DeviceLostReason::InstanceDropped;
         mMessage = "A valid external Instance reference no longer exists.";
@@ -912,9 +912,9 @@ Future DeviceBase::APIPopErrorScope2(const WGPUPopErrorScopeCallbackInfo2& callb
               mUserdata2(callbackInfo.userdata2),
               mScope(scope) {}
 
-        ~PopErrorScopeEvent() override { EnsureComplete(EventCompletionType::Shutdown); }
+        ~PopErrorScopeEvent() override { EnsureComplete(EventCompletionType::Shutdown, nullptr); }
 
-        void Complete(EventCompletionType completionType) override {
+        void Complete(EventCompletionType completionType, bool* wasInserted) override {
             WGPUPopErrorScopeStatus status = completionType == EventCompletionType::Ready
                                                  ? WGPUPopErrorScopeStatus_Success
                                                  : WGPUPopErrorScopeStatus_InstanceDropped;
@@ -1131,21 +1131,33 @@ Ref<ComputePipelineBase> DeviceBase::GetCachedComputePipeline(
     return mCaches->computePipelines.Find(uninitializedComputePipeline);
 }
 
+int gotten = 0;
+
 Ref<RenderPipelineBase> DeviceBase::GetCachedRenderPipeline(
     RenderPipelineBase* uninitializedRenderPipeline) {
-    return mCaches->renderPipelines.Find(uninitializedRenderPipeline);
+    auto pipeline = mCaches->renderPipelines1.Find(uninitializedRenderPipeline);
+    //$$
+    if (pipeline) {
+        gotten++;
+    }
+    return std::move(pipeline);
 }
 
 Ref<ComputePipelineBase> DeviceBase::AddOrGetCachedComputePipeline(
     Ref<ComputePipelineBase> computePipeline) {
-    auto [pipeline, _] = mCaches->computePipelines.Insert(computePipeline.Get());
-    return std::move(pipeline);
+    auto [pipeline2, _] = mCaches->computePipelines.Insert(computePipeline.Get());
+    return std::move(pipeline2);
 }
 
 Ref<RenderPipelineBase> DeviceBase::AddOrGetCachedRenderPipeline(
-    Ref<RenderPipelineBase> renderPipeline) {
-    auto [pipeline, _] = mCaches->renderPipelines.Insert(renderPipeline.Get());
-    return std::move(pipeline);
+    Ref<RenderPipelineBase> renderPipeline,
+    bool* wasInsertedIn) {
+    auto [pipeline2, wasInserted] = mCaches->renderPipelines1.Insert(renderPipeline.Get());
+    if (wasInsertedIn) {
+        //$$
+        *wasInsertedIn = wasInserted;
+    }
+    return std::move(pipeline2);
 }
 
 ResultOrError<Ref<TextureViewBase>>
@@ -2222,7 +2234,8 @@ ResultOrError<Ref<RenderBundleEncoder>> DeviceBase::CreateRenderBundleEncoder(
 
 ResultOrError<Ref<RenderPipelineBase>> DeviceBase::CreateRenderPipeline(
     const RenderPipelineDescriptor* descriptor,
-    bool allowInternalBinding) {
+    bool allowInternalBinding,
+    bool* wasInserted) {
     // If a pipeline layout is not specified, we cannot use cached pipelines.
     bool useCache = descriptor->layout != nullptr;
 
@@ -2246,8 +2259,9 @@ ResultOrError<Ref<RenderPipelineBase>> DeviceBase::CreateRenderPipeline(
     DAWN_HISTOGRAM_BOOLEAN(GetPlatform(), "CreateRenderPipelineSuccess", maybeError.IsSuccess());
 
     DAWN_TRY(std::move(maybeError));
-    return useCache ? AddOrGetCachedRenderPipeline(std::move(uninitializedRenderPipeline))
-                    : std::move(uninitializedRenderPipeline);
+    return useCache
+               ? AddOrGetCachedRenderPipeline(std::move(uninitializedRenderPipeline), wasInserted)
+               : std::move(uninitializedRenderPipeline);
 }
 
 ResultOrError<Ref<RenderPipelineBase>> DeviceBase::CreateUninitializedRenderPipeline(

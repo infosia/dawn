@@ -1555,9 +1555,9 @@ Future ShaderModuleBase::APIGetCompilationInfo2(
               mUserdata2(callbackInfo.userdata2),
               mShaderModule(std::move(shaderModule)) {}
 
-        ~CompilationInfoEvent() override { EnsureComplete(EventCompletionType::Shutdown); }
+        ~CompilationInfoEvent() override { EnsureComplete(EventCompletionType::Shutdown, nullptr); }
 
-        void Complete(EventCompletionType completionType) override {
+        void Complete(EventCompletionType completionType, bool* wasInserted) override {
             WGPUCompilationInfoRequestStatus status =
                 WGPUCompilationInfoRequestStatus_InstanceDropped;
             const CompilationInfo* compilationInfo = nullptr;

@@ -147,8 +147,8 @@ class EventManager::TrackedEvent : public RefCounted {
     const CompletionData& GetCompletionData() const;
 
   protected:
-    void EnsureComplete(EventCompletionType);
-    virtual void Complete(EventCompletionType) = 0;
+    void EnsureComplete(EventCompletionType, bool* wasInserted);
+    virtual void Complete(EventCompletionType, bool* wasInserted) = 0;
 
     wgpu::CallbackMode mCallbackMode;
     FutureID mFutureID = kNullFutureID;

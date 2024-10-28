@@ -63,7 +63,7 @@ const char*
         "CreateComputePipelineUS";
 template <>
 void CreatePipelineAsyncEvent<ComputePipelineBase, WGPUCreateComputePipelineAsyncCallbackInfo2>::
-    AddOrGetCachedPipeline() {
+    AddOrGetCachedPipeline(bool* /* wasInserted */) {
     DeviceBase* device = mPipeline->GetDevice();
     auto deviceLock(device->GetScopedLock());
     if (device->GetState() == DeviceBase::State::Alive) {
@@ -83,11 +83,11 @@ const char*
         "CreateRenderPipelineUS";
 template <>
 void CreatePipelineAsyncEvent<RenderPipelineBase, WGPUCreateRenderPipelineAsyncCallbackInfo2>::
-    AddOrGetCachedPipeline() {
+    AddOrGetCachedPipeline(bool* wasInserted) {
     DeviceBase* device = mPipeline->GetDevice();
     auto deviceLock(device->GetScopedLock());
     if (device->GetState() == DeviceBase::State::Alive) {
-        mPipeline = device->AddOrGetCachedRenderPipeline(std::move(mPipeline));
+        mPipeline = device->AddOrGetCachedRenderPipeline(std::move(mPipeline), wasInserted);
     }
 }
 
@@ -131,7 +131,7 @@ CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::CreateP
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
 CreatePipelineAsyncEvent<PipelineType,
                          CreatePipelineAsyncCallbackInfo>::~CreatePipelineAsyncEvent() {
-    EnsureComplete(EventCompletionType::Shutdown);
+    EnsureComplete(EventCompletionType::Shutdown, nullptr);
 }
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
@@ -181,7 +181,8 @@ void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::In
 
 template <typename PipelineType, typename CreatePipelineAsyncCallbackInfo>
 void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::Complete(
-    EventCompletionType completionType) {
+    EventCompletionType completionType,
+    bool* wasInserted) {
     auto userdata1 = mUserdata1.ExtractAsDangling();
     auto userdata2 = mUserdata2.ExtractAsDangling();
 
@@ -226,7 +227,7 @@ void CreatePipelineAsyncEvent<PipelineType, CreatePipelineAsyncCallbackInfo>::Co
         return;
     }
 
-    AddOrGetCachedPipeline();
+    AddOrGetCachedPipeline(wasInserted);
     if (mCallback) {
         mCallback(WGPUCreatePipelineAsyncStatus_Success, ToAPI(ReturnToAPI(std::move(mPipeline))),
                   kEmptyOutputStringView, userdata1, userdata2);

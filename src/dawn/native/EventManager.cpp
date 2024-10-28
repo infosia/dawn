@@ -331,7 +331,7 @@ FutureID EventManager::TrackEvent(Ref<TrackedEvent>&& event) {
                       queueAndSerial.queue->GetCompletedCommandSerial();
         }
         if (isReady) {
-            event->EnsureComplete(EventCompletionType::Ready);
+            event->EnsureComplete(EventCompletionType::Ready, nullptr);
             return futureID;
         }
     }
@@ -377,7 +377,7 @@ void EventManager::SetFutureReady(TrackedEvent* event) {
             }
             (*events)->erase(event->mFutureID);
         });
-        event->EnsureComplete(EventCompletionType::Ready);
+        event->EnsureComplete(EventCompletionType::Ready, nullptr);
     }
 }
 
@@ -438,7 +438,7 @@ bool EventManager::ProcessPollEvents() {
     // Finally, call callbacks while comparing the last process event id with any new ones that may
     // have been created via the callbacks.
     for (auto it = futures.begin(); it != readyEnd; ++it) {
-        it->event->EnsureComplete(EventCompletionType::Ready);
+        it->event->EnsureComplete(EventCompletionType::Ready, nullptr);
     }
     // Note that in the event of all progressing events completing, but there exists non-progressing
     // events, we will return true one extra time.
@@ -516,7 +516,7 @@ wgpu::WaitStatus EventManager::WaitAny(size_t count, FutureWaitInfo* infos, Nano
     for (auto it = futures.begin(); it != readyEnd; ++it) {
         // Set completed before calling the callback.
         infos[it->indexInInfos].completed = true;
-        it->event->EnsureComplete(EventCompletionType::Ready);
+        it->event->EnsureComplete(EventCompletionType::Ready, nullptr);
     }
 
     return wgpu::WaitStatus::Success;
@@ -546,10 +546,11 @@ const EventManager::TrackedEvent::CompletionData& EventManager::TrackedEvent::Ge
     return mCompletionData;
 }
 
-void EventManager::TrackedEvent::EnsureComplete(EventCompletionType completionType) {
+void EventManager::TrackedEvent::EnsureComplete(EventCompletionType completionType,
+                                                bool* wasInserted) {
     bool alreadyComplete = mCompleted.exchange(true);
     if (!alreadyComplete) {
-        Complete(completionType);
+        Complete(completionType, wasInserted);
     }
 }
 

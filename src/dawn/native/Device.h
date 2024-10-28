@@ -106,7 +106,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
         explicit DeviceLostEvent(const WGPUDeviceLostCallbackInfo2& callbackInfo);
         ~DeviceLostEvent() override;
 
-        void Complete(EventCompletionType completionType) override;
+        void Complete(EventCompletionType completionType, bool* wasInserted) override;
     };
 
     DeviceBase(AdapterBase* adapter,
@@ -217,7 +217,8 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
         const RenderBundleEncoderDescriptor* descriptor);
     ResultOrError<Ref<RenderPipelineBase>> CreateRenderPipeline(
         const RenderPipelineDescriptor* descriptor,
-        bool allowInternalBinding = false);
+        bool allowInternalBinding = false,
+        bool* wasInserted = nullptr);
     ResultOrError<Ref<RenderPipelineBase>> CreateUninitializedRenderPipeline(
         const RenderPipelineDescriptor* descriptor,
         bool allowInternalBinding = false);
@@ -430,7 +431,8 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
 
     Ref<ComputePipelineBase> AddOrGetCachedComputePipeline(
         Ref<ComputePipelineBase> computePipeline);
-    Ref<RenderPipelineBase> AddOrGetCachedRenderPipeline(Ref<RenderPipelineBase> renderPipeline);
+    Ref<RenderPipelineBase> AddOrGetCachedRenderPipeline(Ref<RenderPipelineBase> renderPipeline,
+                                                         bool* wasInserted);
 
     void DumpMemoryStatistics(dawn::native::MemoryDump* dump) const;
     uint64_t ComputeEstimatedMemoryUsage() const;

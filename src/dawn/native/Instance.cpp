@@ -301,9 +301,9 @@ Future InstanceBase::APIRequestAdapter2(const RequestAdapterOptions* options,
               mUserdata2(callbackInfo.userdata2),
               mAdapter(std::move(adapter)) {}
 
-        ~RequestAdapterEvent() override { EnsureComplete(EventCompletionType::Shutdown); }
+        ~RequestAdapterEvent() override { EnsureComplete(EventCompletionType::Shutdown, nullptr); }
 
-        void Complete(EventCompletionType completionType) override {
+        void Complete(EventCompletionType completionType, bool* wasInserted) override {
             if (completionType == EventCompletionType::Shutdown) {
                 mCallback(WGPURequestAdapterStatus_InstanceDropped, nullptr, kEmptyOutputStringView,
                           mUserdata1.ExtractAsDangling(), mUserdata2.ExtractAsDangling());

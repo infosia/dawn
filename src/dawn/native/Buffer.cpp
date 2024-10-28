@@ -236,9 +236,9 @@ struct BufferBase::MapAsyncEvent1 final : public BufferBase::MapAsyncEvent {
                                  uint64_t(kBeginningOfGPUTime));
     }
 
-    ~MapAsyncEvent1() override { EnsureComplete(EventCompletionType::Shutdown); }
+    ~MapAsyncEvent1() override { EnsureComplete(EventCompletionType::Shutdown, nullptr); }
 
-    void Complete(EventCompletionType completionType) override {
+    void Complete(EventCompletionType completionType, bool* wasInserted) override {
         if (const auto* queueAndSerial = std::get_if<QueueAndSerial>(&GetCompletionData())) {
             TRACE_EVENT_ASYNC_END0(queueAndSerial->queue->GetDevice()->GetPlatform(), General,
                                    "Buffer::APIMapAsync",
@@ -327,9 +327,9 @@ struct BufferBase::MapAsyncEvent2 final : public BufferBase::MapAsyncEvent {
                                  uint64_t(kBeginningOfGPUTime));
     }
 
-    ~MapAsyncEvent2() override { EnsureComplete(EventCompletionType::Shutdown); }
+    ~MapAsyncEvent2() override { EnsureComplete(EventCompletionType::Shutdown, nullptr); }
 
-    void Complete(EventCompletionType completionType) override {
+    void Complete(EventCompletionType completionType, bool* wasInserted) override {
         if (const auto* queueAndSerial = std::get_if<QueueAndSerial>(&GetCompletionData())) {
             TRACE_EVENT_ASYNC_END0(queueAndSerial->queue->GetDevice()->GetPlatform(), General,
                                    "Buffer::APIMapAsync",

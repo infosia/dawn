@@ -392,9 +392,9 @@ Future AdapterBase::APIRequestDevice2(const DeviceDescriptor* descriptor,
               mStatus(WGPURequestDeviceStatus_Error),
               mMessage(message) {}
 
-        ~RequestDeviceEvent() override { EnsureComplete(EventCompletionType::Shutdown); }
+        ~RequestDeviceEvent() override { EnsureComplete(EventCompletionType::Shutdown, nullptr); }
 
-        void Complete(EventCompletionType completionType) override {
+        void Complete(EventCompletionType completionType, bool* wasInserted) override {
             if (completionType == EventCompletionType::Shutdown) {
                 mStatus = WGPURequestDeviceStatus_InstanceDropped;
                 mDevice = nullptr;

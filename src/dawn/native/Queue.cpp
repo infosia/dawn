@@ -325,9 +325,9 @@ Future QueueBase::APIOnSubmittedWorkDone2(const WGPUQueueWorkDoneCallbackInfo2& 
               mUserdata1(callbackInfo.userdata1),
               mUserdata2(callbackInfo.userdata2) {}
 
-        ~WorkDoneEvent() override { EnsureComplete(EventCompletionType::Shutdown); }
+        ~WorkDoneEvent() override { EnsureComplete(EventCompletionType::Shutdown, nullptr); }
 
-        void Complete(EventCompletionType completionType) override {
+        void Complete(EventCompletionType completionType, bool* wasInserted) override {
             // WorkDoneEvent has no error cases other than the mEarlyStatus ones.
             WGPUQueueWorkDoneStatus status = WGPUQueueWorkDoneStatus_Success;
             if (completionType == EventCompletionType::Shutdown) {
