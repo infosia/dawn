@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b20b0a0_3a5bf074",
+        "filename": "src/dawn/native/Adapter.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-28T14:04:15Z",
+      "side": 1,
+      "message": "This is needed for tests.",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2def25be_b64fb360",
+        "filename": "src/dawn/wire/server/ServerInstance.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-28T14:04:15Z",
+      "side": 1,
+      "message": "I wish I could do `cmd.features \u003d \u0026supportedFeatures` but as you can see in try bots from https://dawn-review.googlesource.com/c/dawn/+/212754, I get the following errors:\n\n```\nReceived signal 11 SEGV_ACCERR aaaaaaaaaaaaaab2\n0   libbase.dylib                       0x000000010f0daa38 base::debug::CollectStackTrace(base::span\u003cvoid const*, 18446744073709551615ul, void const**\u003e) + 84\n1   libbase.dylib                       0x000000010f08523c base::debug::StackTrace::StackTrace(unsigned long) + 156\n2   libbase.dylib                       0x000000010f0852e4 base::debug::StackTrace::StackTrace(unsigned long) + 36\n3   libbase.dylib                       0x000000010f0852b0 base::debug::StackTrace::StackTrace() + 40\n4   libbase.dylib                       0x000000010f0da878 base::debug::(anonymous namespace)::StackDumpSignalHandler(int, __siginfo*, void*) + 1352\n5   libsystem_platform.dylib            0x000000019ff5a584 _sigtramp + 56\n6   libdawn_wire.dylib                  0x0000000110d25e74 dawn::wire::(anonymous namespace)::WGPUSupportedFeaturesGetExtraRequiredSize(WGPUSupportedFeatures const\u0026) + 64\n7   libdawn_wire.dylib                  0x0000000110d25e74 dawn::wire::(anonymous namespace)::WGPUSupportedFeaturesGetExtraRequiredSize(WGPUSupportedFeatures const\u0026) + 64\n8   libdawn_wire.dylib                  0x0000000110cf157c dawn::wire::(anonymous namespace)::ReturnInstanceRequestAdapterCallbackGetExtraRequiredSize(dawn::wire::ReturnInstanceRequestAdapterCallbackCmd const\u0026) + 804\n9   libdawn_wire.dylib                  0x0000000110cf122c dawn::wire::ReturnInstanceRequestAdapterCallbackCmd::GetRequiredSize() const + 44\n```",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

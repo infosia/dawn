@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46c895a7_8d4eb4fb",
+        "filename": "src/dawn/wire/server/ServerInstance.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-28T14:04:15Z",
+      "side": 0,
+      "message": "I\u0027ve noticed this is not needed as `LimitsAndFeatures::SetFeatures` already takes care of filtering with IsFeatureSupported.",
+      "revId": "ad5d94bc8579845adc7591878855885f170774cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
