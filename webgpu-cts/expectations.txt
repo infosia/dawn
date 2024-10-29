@@ -1421,6 +1421,7 @@ crbug.com/tint/2226 [ nvidia-0x2184 ] webgpu:shader,execution,expression,call,bu
 ################################################################################
 # Test bugs? due to Float16Array <https://github.com/gpuweb/cts/issues/3655>
 ################################################################################
+<<<<<<< HEAD   (c9815a Reland "DEPS: Update DXC to patched branch")
 crbug.com/dawn/0000 [ amd-0x67ef mac ] webgpu:shader,validation,expression,call,builtin,normalize:values:stage="constant";type="vec2%3Cf16%3E" [ Failure ]
 crbug.com/dawn/0000 [ amd-0x67ef mac ] webgpu:shader,validation,expression,call,builtin,normalize:values:stage="constant";type="vec3%3Cf16%3E" [ Failure ]
 crbug.com/dawn/0000 [ amd-0x67ef mac ] webgpu:shader,validation,expression,call,builtin,normalize:values:stage="constant";type="vec4%3Cf16%3E" [ Failure ]
@@ -1463,6 +1464,116 @@ crbug.com/dawn/0000 [ nvidia-0x2184 webgpu-dxc-enabled win10 ] webgpu:shader,val
 crbug.com/dawn/0000 [ nvidia-0x2184 webgpu-dxc-enabled win10 ] webgpu:shader,validation,expression,call,builtin,normalize:values:stage="override";type="vec2%3Cf16%3E" [ Failure ]
 crbug.com/dawn/0000 [ nvidia-0x2184 webgpu-dxc-enabled win10 ] webgpu:shader,validation,expression,call,builtin,normalize:values:stage="override";type="vec3%3Cf16%3E" [ Failure ]
 crbug.com/dawn/0000 [ nvidia-0x2184 webgpu-dxc-enabled win10 ] webgpu:shader,validation,expression,call,builtin,normalize:values:stage="override";type="vec4%3Cf16%3E" [ Failure ]
+=======
+
+# external_texture failures
+crbug.com/dawn/0000 [ intel-0x9bc5 linux no-clang-coverage webgpu-adapter-default ] webgpu:web_platform,external_texture,* [ Failure ]
+
+# maxBufferSize test causing instability
+crbug.com/dawn/0000 [ arm ] webgpu:api,validation,capability_checks,limits,maxBufferSize:* [ Skip ]
+
+# copy_subrect_from_* tests are very flaky on Windows NVIDIA w/ validation
+# but often fail without validation and on Intel as well
+crbug.com/dawn/0000 [ dawn-backend-validation graphite-disabled no-asan no-clang-coverage release-x64 target-cpu-64 webgpu-adapter-default win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:copy_subrect_from_2D_Canvas:* [ Failure ]
+crbug.com/dawn/0000 [ dawn-backend-validation graphite-enabled no-asan no-clang-coverage nvidia-0x2184 nvidia_ge_31.0.15.4601 release-x64 target-cpu-64 webgpu-adapter-default webgpu-dxc-disabled win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:copy_subrect_from_2D_Canvas:* [ Failure ]
+crbug.com/dawn/0000 [ dawn-backend-validation graphite-enabled no-asan no-clang-coverage nvidia-0x2184 nvidia_lt_535.183.01 release-x64 target-cpu-64 webgpu-adapter-default webgpu-dxc-enabled win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:copy_subrect_from_2D_Canvas:* [ Failure ]
+crbug.com/dawn/0000 [ dawn-backend-validation no-asan no-clang-coverage release-x64 target-cpu-64 webgpu-adapter-default win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:copy_subrect_from_ImageData:* [ Failure ]
+crbug.com/dawn/0000 [ dawn-backend-validation no-asan no-clang-coverage release-x64 target-cpu-64 webgpu-adapter-default win10 ] webgpu:web_platform,copyToTexture,ImageData:copy_subrect_from_ImageData:* [ Failure ]
+
+# Miscellaneous flakes that are too flaky for retry
+crbug.com/dawn/0000 [ android-r qualcomm ] webgpu:api,operation,render_pipeline,overrides:precision:isAsync=true [ Failure ]
+
+# Failures due to AMD Macbook OS upgrade
+crbug.com/dawn/0000 [ amd dawn-backend-validation mac target-cpu-64 webgpu-adapter-default ] webgpu:shader,execution,expression,call,builtin,unpack2x16snorm:* [ Failure ]
+crbug.com/dawn/0000 [ amd dawn-no-backend-validation mac target-cpu-64 webgpu-adapter-default ] webgpu:shader,execution,expression,call,builtin,unpack2x16snorm:* [ Failure ]
+crbug.com/dawn/0000 [ amd-0x67ef dawn-backend-validation mac target-cpu-64 webgpu-adapter-default ] webgpu:shader,execution,expression,call,builtin,clamp:f32:* [ Failure ]
+crbug.com/dawn/0000 [ amd-0x67ef dawn-no-backend-validation mac target-cpu-64 webgpu-adapter-default ] webgpu:shader,execution,expression,call,builtin,clamp:f32:* [ Failure ]
+
+# Failures on Android U. These fail on Android T as well, but need to be "immutable"
+# so the roller won't remove the Android U versions of the expectations.
+crbug.com/dawn/0000 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 ] webgpu:shader,execution,limits:const_array_elements: [ Failure ]
+crbug.com/dawn/0000 [ android-14 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0,1];sampleCount=4;interpolation={"type":"linear","sampling":"sample"} [ Failure ]
+crbug.com/dawn/0000 [ android-14 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0.25,0.75];sampleCount=4;interpolation={"type":"linear","sampling":"sample"} [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_array_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureGatherCompare:array_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureGatherCompare:sampled_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="compute";format="depth16unorm";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="compute";format="depth16unorm";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="fragment";format="depth16unorm";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="fragment";format="depth16unorm";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="vertex";format="depth16unorm";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="vertex";format="depth16unorm";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="compute";format="depth32float";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="compute";format="depth32float";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="fragment";format="depth32float";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="fragment";format="depth32float";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="vertex";format="depth32float";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:stage="vertex";format="depth32float";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_3d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="compute";format="depth16unorm";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="compute";format="depth16unorm";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="fragment";format="depth16unorm";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="fragment";format="depth16unorm";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="vertex";format="depth16unorm";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="vertex";format="depth16unorm";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="compute";format="depth32float";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="compute";format="depth32float";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="fragment";format="depth32float";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="fragment";format="depth32float";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="vertex";format="depth32float";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:stage="vertex";format="depth32float";offset=false [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_3d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,shader_io,fragment_builtins:subgroup_invocation_id:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm dawn-no-backend-validation ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_3d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:api,validation,capability_checks,features,texture_formats:canvas_configuration:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:format="depth16unorm";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:format="depth32float";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_array_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_array_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_array_3d_coords:format="rgba16float" [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:arrayed_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:arrayed_3d_coords:format="rgba16float" [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:sampled_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:sampled_3d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:2d_coords:format="depth16unorm";minFilter="linear";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:2d_coords:format="depth16unorm";minFilter="nearest";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:2d_coords:format="depth32float";minFilter="linear";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:2d_coords:format="depth32float";minFilter="nearest";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth16unorm";minFilter="linear";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth16unorm";minFilter="nearest";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth32float";minFilter="linear";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth32float";minFilter="nearest";offset=true [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_3d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_array_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_array_3d_coords:stage="compute";format="rgba16float" [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_array_3d_coords:stage="fragment";format="rgba16float" [ Failure ]
+crbug.com/dawn/0000 [ android-14 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_array_3d_coords:stage="vertex";format="rgba16float" [ Failure ]
+
+# untriaged failures
+crbug.com/dawn/0000 [ intel-0x3e9b ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize="_undef_";non_uniform_discard=true [ Failure ]
+crbug.com/dawn/0000 [ intel-0x3e9b ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=true [ Failure ]
+crbug.com/dawn/0000 [ nvidia-0x2184 nvidia_lt_535.183.01 ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize="_undef_";non_uniform_discard=true [ Failure ]
+crbug.com/dawn/0000 [ nvidia-0x2184 nvidia_lt_535.183.01 ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=true [ Failure ]
+
+# Temporary Failures due to intentional change in behavior
+crbug.com/dawn/366000875 webgpu:shader,validation,decl,var:var_access_mode_bad_other_template_contents:accessMode="read";prefix="storage,";suffix="," [ Failure ]
+crbug.com/dawn/366000875 webgpu:shader,validation,decl,var:var_access_mode_bad_other_template_contents:accessMode="read_write";prefix="storage,";suffix="," [ Failure ]
+
+# Failures due to change in `@align()` validation.
+crbug.com/375467276 webgpu:shader,execution,expression,access,structure,index:buffer_align:* [ Failure ]
+crbug.com/375467276 webgpu:shader,validation,shader_io,align:* [ Failure ]
+
+# Minor accuracy issue with the introduction of texture sample bias clampling
+# specific subtest case: samplePoints="spiral";addressModeU="clamp-to-edge";addressModeV="mirror-repeat";minFilter="linear"
+crbug.com/dawn/371033198 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:sampled_2d_coords:format="bc1-rgba-unorm";offset=true [ Failure ]
+>>>>>>> CHANGE (ed15f8 [tint] Validate that `@align()` is large enough)
 
 ################################################################################
 # Test bugs <https://github.com/gpuweb/cts/issues/3657>
