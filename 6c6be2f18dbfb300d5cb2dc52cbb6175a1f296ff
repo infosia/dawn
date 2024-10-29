@@ -16,6 +16,24 @@
       "message": "Do we emit an error somewhere if this is a nullptr?",
       "revId": "6c6be2f18dbfb300d5cb2dc52cbb6175a1f296ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95e9d474_8fa87fae",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2283,
+      "author": {
+        "id": 1000896
+      },
+      "writtenOn": "2024-10-29T18:05:01Z",
+      "side": 1,
+      "message": "The error below should be \"index must be integer, got undefined\" if -\u003eType() is null",
+      "parentUuid": "f265315f_a16cf5a5",
+      "revId": "6c6be2f18dbfb300d5cb2dc52cbb6175a1f296ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
