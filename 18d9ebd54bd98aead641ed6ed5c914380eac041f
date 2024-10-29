@@ -50,6 +50,24 @@
       "message": "Why is this needed?",
       "revId": "18d9ebd54bd98aead641ed6ed5c914380eac041f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22a5e65c_2e9f5f55",
+        "filename": "src/dawn/native/null/DeviceNull.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-29T15:54:14Z",
+      "side": 1,
+      "message": "Because with this patch if we don\u0027t submit the command now the staging buffer will be set to nullptr after the command is called and `source` will point to a dangling pointer, which causes many failures in dawn_unittests.",
+      "parentUuid": "cd8b4fae_f712f8f7",
+      "revId": "18d9ebd54bd98aead641ed6ed5c914380eac041f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
