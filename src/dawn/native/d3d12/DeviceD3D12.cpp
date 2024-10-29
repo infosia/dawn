@@ -63,7 +63,7 @@
 #include "dawn/native/d3d12/SwapChainD3D12.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
 #include "dawn/platform/DawnPlatform.h"
-#include "dawn/platform/tracing/TraceEvent.h"
+#include "src/utils/trace_event.h"
 
 namespace dawn::native::d3d12 {
 namespace {

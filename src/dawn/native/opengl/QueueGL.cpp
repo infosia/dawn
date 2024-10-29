@@ -36,7 +36,7 @@
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/TextureGL.h"
 #include "dawn/platform/DawnPlatform.h"
-#include "dawn/platform/tracing/TraceEvent.h"
+#include "src/utils/trace_event.h"
 
 namespace dawn::native::opengl {
 

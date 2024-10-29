@@ -37,7 +37,7 @@
 #include "dawn/native/metal/CommandBufferMTL.h"
 #include "dawn/native/metal/DeviceMTL.h"
 #include "dawn/platform/DawnPlatform.h"
-#include "dawn/platform/tracing/TraceEvent.h"
+#include "src/utils/trace_event.h"
 
 namespace dawn::native::metal {
 

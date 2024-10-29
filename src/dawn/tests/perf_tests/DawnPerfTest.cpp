@@ -33,9 +33,9 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Log.h"
-#include "dawn/platform/tracing/TraceEvent.h"
 #include "dawn/tests/perf_tests/DawnPerfTestPlatform.h"
 #include "dawn/utils/Timer.h"
+#include "src/utils/trace_event.h"
 
 namespace dawn {
 namespace {

@@ -47,7 +47,7 @@
 #include "dawn/native/wgpu_structs_autogen.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
-#include "dawn/platform/tracing/TraceEvent.h"
+#include "src/utils/trace_event.h"
 
 namespace dawn::native {
 

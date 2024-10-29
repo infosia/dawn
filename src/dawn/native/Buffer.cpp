@@ -53,8 +53,8 @@
 #include "dawn/native/SystemEvent.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/platform/DawnPlatform.h"
-#include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/trace_event.h"
 
 namespace dawn::native {
 
