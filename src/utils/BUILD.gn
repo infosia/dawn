@@ -41,6 +41,7 @@ static_library("utils") {
     "event_tracer.cc",
     "event_tracer.h",
     "platform.h",
+    "timer.cc",
     "timer.h",
     "trace_event.h",
     "trace_platform.cc",

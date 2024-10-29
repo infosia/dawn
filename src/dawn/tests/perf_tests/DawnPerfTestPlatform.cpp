@@ -84,12 +84,12 @@ double DawnPerfTestPlatform::MonotonicallyIncreasingTime() {
     return mTimer->GetAbsoluteTime() - origin;
 }
 
-std::vector<DawnPerfTestPlatform::TraceEvent>* DawnPerfTestPlatform::GetLocalTraceEventBuffer() {
+std::vector<utils::TraceEvent>* DawnPerfTestPlatform::GetLocalTraceEventBuffer() {
     // Cache the pointer to the vector in thread_local storage
-    thread_local std::vector<TraceEvent>* traceEventBuffer = nullptr;
+    thread_local std::vector<utils::TraceEvent>* traceEventBuffer = nullptr;
 
     if (traceEventBuffer == nullptr) {
-        auto buffer = std::make_unique<std::vector<TraceEvent>>();
+        auto buffer = std::make_unique<std::vector<utils::TraceEvent>>();
         traceEventBuffer = buffer.get();
 
         // Add a new buffer to the map
@@ -123,7 +123,7 @@ uint64_t DawnPerfTestPlatform::AddTraceEvent(char phase,
     const TraceCategoryInfo* info =
         reinterpret_cast<const TraceCategoryInfo*>(categoryGroupEnabled);
 
-    std::vector<TraceEvent>* buffer = GetLocalTraceEventBuffer();
+    std::vector<utils::TraceEvent>* buffer = GetLocalTraceEventBuffer();
     buffer->emplace_back(phase, info->category, name, id, timestamp);
 
     size_t hash = 0;
@@ -136,8 +136,8 @@ void DawnPerfTestPlatform::EnableTraceEventRecording(bool enable) {
     mRecordTraceEvents = enable;
 }
 
-std::vector<DawnPerfTestPlatform::TraceEvent> DawnPerfTestPlatform::AcquireTraceEventBuffer() {
-    std::vector<TraceEvent> traceEventBuffer;
+std::vector<utils::TraceEvent> DawnPerfTestPlatform::AcquireTraceEventBuffer() {
+    std::vector<utils::TraceEvent> traceEventBuffer;
     {
         // AcquireTraceEventBuffer should only be called when Dawn is completely idle. There should
         // be no threads inserting trace events.
@@ -152,7 +152,7 @@ std::vector<DawnPerfTestPlatform::TraceEvent> DawnPerfTestPlatform::AcquireTrace
             std::string threadId = stream.str();
 
             std::transform(it->second->begin(), it->second->end(),
-                           std::back_inserter(traceEventBuffer), [&threadId](TraceEvent ev) {
+                           std::back_inserter(traceEventBuffer), [&threadId](utils::TraceEvent ev) {
                                ev.threadId = threadId;
                                return ev;
                            });

@@ -29,6 +29,7 @@
 #define SRC_UTILS_TRACE_PLATFORM_H_
 
 #include <cstdint>
+#include <string>
 
 namespace dawn::utils {
 
@@ -38,6 +39,26 @@ enum class TraceCategory {
     Recording,   // Native command recording
     GPUWork,     // Actual GPU work
     Tint,        // Tint work
+};
+
+// These are trace events according to Google's "Trace Event Format".
+// See https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU
+// Only a subset of the properties are implemented.
+struct TraceEvent final {
+    TraceEvent() {}
+    TraceEvent(char phaseIn,
+               TraceCategory categoryIn,
+               const char* nameIn,
+               uint64_t idIn,
+               double timestampIn)
+        : phase(phaseIn), category(categoryIn), name(nameIn), id(idIn), timestamp(timestampIn) {}
+
+    char phase = 0;
+    TraceCategory category;
+    const char* name = nullptr;
+    uint64_t id = 0;
+    uint64_t threadId = 0;
+    double timestamp = 0;
 };
 
 class TracePlatform {

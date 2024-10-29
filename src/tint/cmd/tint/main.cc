@@ -27,6 +27,7 @@
 
 #include <charconv>
 #include <cstdio>
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include <optional>
@@ -59,6 +60,8 @@
 #include "src/tint/utils/text/string_stream.h"
 #include "src/tint/utils/text/styled_text.h"
 #include "src/tint/utils/text/styled_text_printer.h"
+#include "src/utils/timer.h"
+#include "src/utils/trace_event.h"
 
 #if TINT_BUILD_WGSL_READER
 #include "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.h"
@@ -188,6 +191,8 @@ struct Options {
 
     bool rename_all = false;
 
+    bool enable_tracing = false;
+
     bool dump_ir = false;
     bool use_ir = false;
     bool use_ir_reader = false;
@@ -261,6 +266,77 @@ Format InferFormat(const std::string& filename) {
 
     return Format::kUnknown;
 }
+
+struct TraceCategoryInfo {
+    unsigned char enabled;
+    dawn::utils::TraceCategory category;
+};
+
+constexpr TraceCategoryInfo trace_categories[5] = {
+    {1, dawn::utils::TraceCategory::General},   {1, dawn::utils::TraceCategory::Validation},
+    {1, dawn::utils::TraceCategory::Recording}, {1, dawn::utils::TraceCategory::GPUWork},
+    {1, dawn::utils::TraceCategory::Tint},
+};
+
+static_assert(static_cast<uint32_t>(dawn::utils::TraceCategory::General) == 0);
+static_assert(static_cast<uint32_t>(dawn::utils::TraceCategory::Validation) == 1);
+static_assert(static_cast<uint32_t>(dawn::utils::TraceCategory::Recording) == 2);
+static_assert(static_cast<uint32_t>(dawn::utils::TraceCategory::GPUWork) == 3);
+static_assert(static_cast<uint32_t>(dawn::utils::TraceCategory::Tint) == 4);
+
+class TintTracePlatform : public dawn::utils::TracePlatform {
+  public:
+    TintTracePlatform() : timer_(dawn::utils::CreateTimer()) { trace_event_buffer_.reserve(1024); }
+
+    ~TintTracePlatform() override = default;
+
+    const unsigned char* GetTraceCategoryEnabledFlag(dawn::utils::TraceCategory category) override {
+        switch (category) {
+            case dawn::utils::TraceCategory::General:
+            case dawn::utils::TraceCategory::Validation:
+            case dawn::utils::TraceCategory::Recording:
+            case dawn::utils::TraceCategory::GPUWork:
+            case dawn::utils::TraceCategory::Tint:
+                break;
+        }
+        return &trace_categories[static_cast<uint32_t>(category)].enabled;
+    }
+
+    double MonotonicallyIncreasingTime() override {
+        // Move the time origin to the first call to this function, to avoid generating
+        // unnecessarily large timestamps.
+        static double origin = timer_->GetAbsoluteTime();
+        return timer_->GetAbsoluteTime() - origin;
+    }
+
+    uint64_t AddTraceEvent(char phase,
+                           const unsigned char* categoryGroupEnabled,
+                           const char* name,
+                           uint64_t id,
+                           double timestamp,
+                           [[maybe_unused]] int numArgs,
+                           [[maybe_unused]] const char** argNames,
+                           [[maybe_unused]] const unsigned char* argTypes,
+                           [[maybe_unused]] const uint64_t* argValues,
+                           [[maybe_unused]] unsigned char flags) override {
+        // Discover the category name based on categoryGroupEnabled.  This flag comes from the first
+        // parameter of TraceCategory, and corresponds to one of the entries in gTraceCategories.
+        static_assert(offsetof(TraceCategoryInfo, enabled) == 0,
+                      "|enabled| must be the first field of the TraceCategoryInfo class.");
+
+        const TraceCategoryInfo* info =
+            reinterpret_cast<const TraceCategoryInfo*>(categoryGroupEnabled);
+
+        trace_event_buffer_.emplace_back(phase, info->category, name, id, timestamp);
+        return trace_event_buffer_.size();
+    }
+
+    const std::vector<dawn::utils::TraceEvent>& TraceBuffer() const { return trace_event_buffer_; }
+
+  private:
+    std::unique_ptr<dawn::utils::Timer> timer_;
+    std::vector<dawn::utils::TraceEvent> trace_event_buffer_;
+};
 
 bool ParseArgs(tint::VectorRef<std::string_view> arguments,
                std::string transform_names,
@@ -497,6 +573,10 @@ of the hash codes in the comma separated list of hashes)");
     auto& overrides = options.Add<StringOption>(
         "overrides", "Override values as IDENTIFIER=VALUE, comma-separated");
 
+    auto& enable_tracing =
+        options.Add<BoolOption>("enable-tracing", "Enable tracing the execution", Default{false});
+    TINT_DEFER(opts->enable_tracing = *enable_tracing.value);
+
     auto& help = options.Add<BoolOption>("help", "Show usage", ShortName{"h"});
 
     auto show_usage = [&] {
@@ -692,7 +772,9 @@ std::string Disassemble(const std::vector<uint32_t>& data) {
 /// @param program the program to generate
 /// @param options the options that Tint was invoked with
 /// @returns true on success
-bool GenerateSpirv(const tint::Program& program, const Options& options) {
+bool GenerateSpirv(const tint::Program& program,
+                   const Options& options,
+                   [[maybe_unused]] TintTracePlatform* platform) {
 #if TINT_BUILD_SPV_WRITER
     // Convert the AST program to an IR module.
     auto ir = tint::wgsl::reader::ProgramToLoweredIR(program);
@@ -757,7 +839,8 @@ bool GenerateSpirv(const tint::Program& program, const Options& options) {
 /// @param options the options that Tint was invoked with
 /// @returns true on success
 bool GenerateWgsl([[maybe_unused]] const tint::Program& program,
-                  [[maybe_unused]] const Options& options) {
+                  [[maybe_unused]] const Options& options,
+                  [[maybe_unused]] TintTracePlatform* platform) {
 #if TINT_BUILD_WGSL_WRITER
     // TODO(jrprice): Provide a way for the user to set non-default options.
     tint::wgsl::writer::Options gen_options;
@@ -803,7 +886,8 @@ bool GenerateWgsl([[maybe_unused]] const tint::Program& program,
 /// @param options the options that Tint was invoked with
 /// @returns true on success
 bool GenerateMsl([[maybe_unused]] const tint::Program& program,
-                 [[maybe_unused]] const Options& options) {
+                 [[maybe_unused]] const Options& options,
+                 [[maybe_unused]] TintTracePlatform* platform) {
 #if !TINT_BUILD_MSL_WRITER
     std::cerr << "MSL writer not enabled in tint build\n";
     return false;
@@ -912,7 +996,9 @@ bool GenerateMsl([[maybe_unused]] const tint::Program& program,
 /// @param program the program to generate
 /// @param options the options that Tint was invoked with
 /// @returns true on success
-bool GenerateHlsl(const tint::Program& program, const Options& options) {
+bool GenerateHlsl(const tint::Program& program,
+                  const Options& options,
+                  [[maybe_unused]] TintTracePlatform* platform) {
 #if TINT_BUILD_HLSL_WRITER
     const bool for_fxc = options.format == Format::kHlslFxc;
     // TODO(jrprice): Provide a way for the user to set non-default options.
@@ -1040,7 +1126,8 @@ bool GenerateHlsl(const tint::Program& program, const Options& options) {
 /// @param options the options that Tint was invoked with
 /// @returns true on success
 bool GenerateGlsl([[maybe_unused]] const tint::Program& program,
-                  [[maybe_unused]] const Options& options) {
+                  [[maybe_unused]] const Options& options,
+                  [[maybe_unused]] TintTracePlatform* platform) {
 #if !TINT_BUILD_GLSL_WRITER
     std::cerr << "GLSL writer not enabled in tint build\n";
     return false;
@@ -1179,22 +1266,79 @@ bool GenerateGlsl([[maybe_unused]] const tint::Program& program,
 /// @param options the options that Tint was invoked with
 /// @returns true on success
 bool DumpIR([[maybe_unused]] const tint::Program& program,
-            [[maybe_unused]] const Options& options) {
+            [[maybe_unused]] const Options& options,
+            TintTracePlatform* platform) {
 #if !TINT_BUILD_WGSL_READER
     std::cerr << "WGSL reader not enabled in tint build\n";
     return false;
 #else
+    TRACE_EVENT_BEGIN0(platform, Tint, "Dump IR");
+
+    TRACE_EVENT_BEGIN0(platform, Tint, "ProgramToLoweredIR");
     auto result = tint::wgsl::reader::ProgramToLoweredIR(program);
+    TRACE_EVENT_END0(platform, Tint, "ProgramToLoweredIR");
+
     if (result != tint::Success) {
         std::cerr << "Failed to build IR from program: " << result.Failure() << "\n";
         return false;
     }
 
-    options.printer->Print(tint::core::ir::Disassembler(result.Get()).Text());
+    TRACE_EVENT_BEGIN0(platform, Tint, "Dissassemble");
+    auto dump = tint::core::ir::Disassembler(result.Get()).Text();
+    TRACE_EVENT_END0(platform, Tint, "Dissassemble");
+
+    options.printer->Print(dump);
     options.printer->Print(tint::StyledText{} << "\n");
 
+    TRACE_EVENT_END0(platform, Tint, "Dump IR");
     return true;
 #endif
+}
+
+void EmitTrace(TintTracePlatform* trace_platform) {
+    if (!trace_platform) {
+        return;
+    }
+
+    std::ofstream out;
+    out.open("tint.trace", std::ios_base::app);
+
+    out << "[";
+    bool first = true;
+    for (const auto& trace : trace_platform->TraceBuffer()) {
+        const char* category = nullptr;
+        switch (trace.category) {
+            case dawn::utils::TraceCategory::General:
+                category = "general";
+                break;
+            case dawn::utils::TraceCategory::Validation:
+                category = "validation";
+                break;
+            case dawn::utils::TraceCategory::Recording:
+                category = "recording";
+                break;
+            case dawn::utils::TraceCategory::GPUWork:
+                category = "gpu";
+                break;
+            case dawn::utils::TraceCategory::Tint:
+                category = "tint";
+                break;
+        }
+
+        uint64_t microseconds = static_cast<uint64_t>(trace.timestamp * 1000.0 * 1000.0);
+
+        if (!first) {
+            out << ",";
+        }
+        first = false;
+
+        out << "{ " << "\"name\": \"" << trace.name << "\", " << "\"cat\": \"" << category << "\", "
+            << "\"ph\": \"" << trace.phase << "\", " << "\"id\": " << trace.id << ", "
+            << "\"tid\": " << trace.threadId << ", " << "\"ts\": " << microseconds << ", "
+            << "\"pid\": \"Dawn\"" << " }";
+    }
+    out << "]\n";
+    out.close();
 }
 
 }  // namespace
@@ -1295,6 +1439,11 @@ int main(int argc, const char** argv) {
         return 1;
     }
 
+    std::unique_ptr<TintTracePlatform> trace_platform = nullptr;
+    if (options.enable_tracing) {
+        trace_platform = std::make_unique<TintTracePlatform>();
+    }
+
     // Implement output format defaults.
     if (options.format == Format::kUnknown) {
         // Try inferring from filename.
@@ -1313,7 +1462,9 @@ int main(int argc, const char** argv) {
     opts.spirv_reader_options = options.spirv_reader_options;
 #endif
 
+    TRACE_EVENT_BEGIN0(trace_platform.get(), Tint, "LoadProgramInfo");
     auto info = tint::cmd::LoadProgramInfo(opts);
+    TRACE_EVENT_END0(trace_platform.get(), Tint, "LoadProgramInfo");
 
     if (options.parse_only) {
         return 1;
@@ -1321,6 +1472,8 @@ int main(int argc, const char** argv) {
 
 #if TINT_BUILD_SYNTAX_TREE_WRITER
     if (options.dump_ast) {
+        TRACE_EVENT_BEGIN0(trace_platform.get(), Tint, "Dump AST");
+
         tint::wgsl::writer::Options gen_options;
         gen_options.use_syntax_tree_writer = true;
         auto result = tint::wgsl::writer::Generate(info.program, gen_options);
@@ -1329,18 +1482,22 @@ int main(int argc, const char** argv) {
         } else {
             std::cout << result->wgsl << "\n";
         }
+
+        TRACE_EVENT_END0(trace_platform.get(), Tint, "Dump AST");
     }
 #endif  // TINT_BUILD_SYNTAX_TREE_WRITER
 
 #if TINT_BUILD_WGSL_READER
     if (options.dump_ir) {
-        DumpIR(info.program, options);
+        DumpIR(info.program, options, trace_platform.get());
     }
 #endif  // TINT_BUILD_WGSL_READER
 
     tint::inspector::Inspector inspector(info.program);
     if (options.dump_inspector_bindings) {
+        TRACE_EVENT_BEGIN0(trace_platform.get(), Tint, "Print Inspector Bindings");
         tint::cmd::PrintInspectorBindings(inspector);
+        TRACE_EVENT_END0(trace_platform.get(), Tint, "Print Inspector Bindings");
     }
 
     tint::ast::transform::Manager transform_manager;
@@ -1420,8 +1577,10 @@ int main(int argc, const char** argv) {
         transform_inputs.Add<tint::ast::transform::SingleEntryPoint::Config>(options.ep_name);
     }
 
+    TRACE_EVENT_BEGIN0(trace_platform.get(), Tint, "Run Transforms");
     tint::ast::transform::DataMap outputs;
     auto program = transform_manager.Run(info.program, std::move(transform_inputs), outputs);
+    TRACE_EVENT_END0(trace_platform.get(), Tint, "Run Transforms");
     if (!program.IsValid()) {
         tint::cmd::PrintWGSL(std::cerr, program);
         std::cerr << program.Diagnostics() << "\n";
@@ -1432,23 +1591,23 @@ int main(int argc, const char** argv) {
     switch (options.format) {
         case Format::kSpirv:
         case Format::kSpvAsm:
-            success = GenerateSpirv(program, options);
+            success = GenerateSpirv(program, options, trace_platform.get());
             break;
         case Format::kWgsl:
-            success = GenerateWgsl(program, options);
+            success = GenerateWgsl(program, options, trace_platform.get());
             break;
         case Format::kMsl:
-            success = GenerateMsl(program, options);
+            success = GenerateMsl(program, options, trace_platform.get());
             break;
         case Format::kHlsl:
         case Format::kHlslFxc:
-            success = GenerateHlsl(program, options);
+            success = GenerateHlsl(program, options, trace_platform.get());
             break;
         case Format::kGlsl:
-            success = GenerateGlsl(program, options);
+            success = GenerateGlsl(program, options, trace_platform.get());
             break;
         case Format::kIr:
-            success = DumpIR(program, options);
+            success = DumpIR(program, options, trace_platform.get());
             break;
         case Format::kNone:
             break;
@@ -1459,6 +1618,8 @@ int main(int argc, const char** argv) {
     if (!success) {
         return 1;
     }
+
+    EmitTrace(trace_platform.get());
 
     return 0;
 }
