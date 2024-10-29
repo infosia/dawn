@@ -31,8 +31,8 @@
 #include <utility>
 
 #include "dawn/common/NonCopyable.h"
-#include "dawn/common/Platform.h"
 #include "dawn/native/Error.h"
+#include "src/utils/platform.h"
 
 namespace dawn::native {
 

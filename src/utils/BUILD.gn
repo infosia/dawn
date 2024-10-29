@@ -40,10 +40,20 @@ static_library("utils") {
     "compiler.h",
     "event_tracer.cc",
     "event_tracer.h",
+    "platform.h",
+    "timer.h",
     "trace_event.h",
     "trace_platform.cc",
     "trace_platform.h",
   ]
+
+  if (is_win) {
+    sources += [ "timer_windows.cc" ]
+  } else if (is_mac) {
+    sources += [ "timer_osx.cc" ]
+  } else {
+    sources += [ "timer_posix.cc" ]
+  }
 
   public_configs = [ ":internal_config" ]
 }

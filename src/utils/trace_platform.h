@@ -37,6 +37,7 @@ enum class TraceCategory {
     Validation,  // Dawn validation
     Recording,   // Native command recording
     GPUWork,     // Actual GPU work
+    Tint,        // Tint work
 };
 
 class TracePlatform {
