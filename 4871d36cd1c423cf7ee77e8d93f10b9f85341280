@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89a42601_db57fd99",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3505806
+      },
+      "writtenOn": "2024-10-29T19:37:22Z",
+      "side": 1,
+      "message": "We also need this reverted because we\u0027re reverting the SDK update entirely, and this depends on it.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "4871d36cd1c423cf7ee77e8d93f10b9f85341280",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
