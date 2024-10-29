@@ -135,6 +135,7 @@ enum class Toggle {
     D3D12ForceStencilComponentReplicateSwizzle,
     D3D12ExpandShaderResourceStateTransitionsToCopySource,
     GLDepthBiasModifier,
+    D3D12QualcommLimitedRawBufferSize,
 
     // Unresolved issues.
     NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
