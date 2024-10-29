@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb8aaddb_766fc0d3",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-29T08:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dada14a4_3faf59f0",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2593bcb_bd181075",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "178664cd_3b626734",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 1560,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-29T08:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2593bcb_bd181075",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2271690b_1fd82ea9",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-10-28T21:59:59Z",
       "side": 1,
       "message": "I just realized I accidentally made this extensible upstream. It doesn\u0027t need to be extensible because it just returns a list every time. That was the design I had written down.\n\nThe GetFeatures methods also change to not return a status.\n\nhttps://github.com/webgpu-native/webgpu-headers/pull/382\n\nSorry for my mistake!",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d076feb9_f14d3afa",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 1885,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-29T08:17:06Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to not return a status BUT if I remove the `\"extensible\": \"out\"` line, it has no FreeMembers function anymore which is required for calling `mProcs.supportedFeaturesFreeMembers(supportedFeatures)` in dawn wire server. See https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/dawn_json_generator.py;l\u003d339;drc\u003dc5f706b42e0c062aa572255240093f1f065f2a79\n\nAdding the following does not help either:\n```\n        \"methods\": [\n            {\n                \"name\": \"free members\",\n                \"returns\": \"void\",\n                \"args\": []\n            }\n        ]\n```",
+      "parentUuid": "2271690b_1fd82ea9",
       "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -104,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2189ca2c_a7f8a7ed",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-29T08:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec36e0ac_3086c066",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a357beda_1c89164a",
@@ -117,6 +189,24 @@
       "writtenOn": "2024-10-28T21:59:59Z",
       "side": 1,
       "message": "DAWN_ASSERT that `index \u003d\u003d count` here, just for a bit of safety, even though it should be true by construction.",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82b6e391_9ff8bd0c",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-29T08:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a357beda_1c89164a",
       "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -190,6 +280,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92729568_f46fad99",
+        "filename": "src/dawn/wire/client/LimitsAndFeatures.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-29T08:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5afec3f9_97a5a81d",
+      "range": {
+        "startLine": 100,
+        "startChar": 32,
+        "endLine": 100,
+        "endChar": 35
+      },
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2def25be_b64fb360",
@@ -221,6 +335,24 @@
       "side": 1,
       "message": "I think it\u0027s because the double-indirection (pointer to struct containing another pointer) does not get serialized correctly - it reallocates the data for the first pointer in the wire, but the second pointer just gets copied verbatim (probably).\nMaybe `cmd.features` can be `WGPUSupportedFeatures` instead of `WGPUSupportedFeatures const *` but the serialization code probably wouldn\u0027t understand that either.",
       "parentUuid": "2def25be_b64fb360",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12360c86_e2cc8946",
+        "filename": "src/dawn/wire/server/ServerInstance.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-29T08:17:06Z",
+      "side": 1,
+      "message": "I\u0027ve tried your suggestion in case it would work but nope ;(",
+      "parentUuid": "6c29ecb8_50daf9de",
       "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
