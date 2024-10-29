@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f265315f_a16cf5a5",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2283,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-29T18:02:28Z",
+      "side": 1,
+      "message": "Do we emit an error somewhere if this is a nullptr?",
+      "revId": "6c6be2f18dbfb300d5cb2dc52cbb6175a1f296ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
