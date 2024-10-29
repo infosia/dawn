@@ -387,6 +387,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "89653bc9_2e750ff2",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 28
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-29T00:44:05Z",
+      "side": 1,
+      "message": "IIUC this comment asked to remove the \"dawn\" prefix, not the \"_Dawn\" suffix.\nHowever we really need to figure out what the naming convention is going to be first, before we go through the effort of renaming repeatedly.",
+      "parentUuid": "60f4c95d_5b21d999",
+      "revId": "a844e4e25ae25264856157547511fdf6ed0eea2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e1f9888a_84ca6759",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 28

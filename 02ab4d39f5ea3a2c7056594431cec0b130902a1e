@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "523b8db1_44fff115",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 38
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-29T00:44:05Z",
+      "side": 1,
+      "message": "Remove this blank line - `Bug:` needs to be in the \"last paragraph\".",
+      "revId": "02ab4d39f5ea3a2c7056594431cec0b130902a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2fc44fd8_a1e1a410",
@@ -14,6 +31,41 @@
       "writtenOn": "2024-10-28T08:45:22Z",
       "side": 1,
       "message": "(gentle ping)",
+      "revId": "02ab4d39f5ea3a2c7056594431cec0b130902a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee312ec8_c50fe42d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 38
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-29T00:44:05Z",
+      "side": 1,
+      "message": "I finally followed up on https://github.com/webgpu-native/webgpu-headers/issues/212 and pinged other members for input on it.",
+      "parentUuid": "2fc44fd8_a1e1a410",
+      "revId": "02ab4d39f5ea3a2c7056594431cec0b130902a1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61e73ddb_7ac6f0eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 38
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-29T00:44:05Z",
+      "side": 1,
+      "message": "I fina",
       "revId": "02ab4d39f5ea3a2c7056594431cec0b130902a1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
