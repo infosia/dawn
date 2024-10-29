@@ -29,9 +29,9 @@
 #define SRC_DAWN_COMMON_ITYP_BITSET_H_
 
 #include "dawn/common/BitSetIterator.h"
-#include "dawn/common/Platform.h"
 #include "dawn/common/TypedInteger.h"
 #include "dawn/common/UnderlyingType.h"
+#include "src/utils/platform.h"
 
 namespace dawn {
 namespace ityp {

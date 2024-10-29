@@ -25,63 +25,76 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <CoreServices/CoreServices.h>
-#include <mach/mach.h>
-#include <mach/mach_time.h>
-
-#include "dawn/utils/Timer.h"
+#include "src/utils/timer.h"
+#include "src/utils/windows_with_undefs.h"
 
 namespace dawn::utils {
 
-class OSXTimer : public Timer {
+class WindowsTimer : public Timer {
   public:
-    OSXTimer() : Timer(), mRunning(false), mSecondCoeff(0) {}
+    WindowsTimer() : Timer(), mRunning(false), mFrequency(0) {}
 
-    ~OSXTimer() override = default;
+    ~WindowsTimer() override = default;
 
     void Start() override {
-        mStartTime = mach_absolute_time();
-        // Cache secondCoeff
-        GetSecondCoeff();
+        LARGE_INTEGER curTime;
+        QueryPerformanceCounter(&curTime);
+        mStartTime = curTime.QuadPart;
+
+        // Cache the frequency
+        GetFrequency();
+
         mRunning = true;
     }
 
     void Stop() override {
-        mStopTime = mach_absolute_time();
+        LARGE_INTEGER curTime;
+        QueryPerformanceCounter(&curTime);
+        mStopTime = curTime.QuadPart;
+
         mRunning = false;
     }
 
     double GetElapsedTime() const override {
+        LONGLONG endTime;
         if (mRunning) {
-            return mSecondCoeff * (mach_absolute_time() - mStartTime);
+            LARGE_INTEGER curTime;
+            QueryPerformanceCounter(&curTime);
+            endTime = curTime.QuadPart;
         } else {
-            return mSecondCoeff * (mStopTime - mStartTime);
+            endTime = mStopTime;
         }
+
+        return static_cast<double>(endTime - mStartTime) / mFrequency;
     }
 
-    double GetAbsoluteTime() override { return GetSecondCoeff() * mach_absolute_time(); }
+    double GetAbsoluteTime() override {
+        LARGE_INTEGER curTime;
+        QueryPerformanceCounter(&curTime);
+
+        return static_cast<double>(curTime.QuadPart) / GetFrequency();
+    }
 
   private:
-    double GetSecondCoeff() {
-        // If this is the first time we've run, get the timebase.
-        if (mSecondCoeff == 0.0) {
-            mach_timebase_info_data_t timebaseInfo;
-            mach_timebase_info(&timebaseInfo);
+    LONGLONG GetFrequency() {
+        if (mFrequency == 0) {
+            LARGE_INTEGER frequency = {};
+            QueryPerformanceFrequency(&frequency);
 
-            mSecondCoeff = timebaseInfo.numer * (1.0 / 1000000000) / timebaseInfo.denom;
+            mFrequency = frequency.QuadPart;
         }
 
-        return mSecondCoeff;
+        return mFrequency;
     }
 
     bool mRunning;
-    uint64_t mStartTime;
-    uint64_t mStopTime;
-    double mSecondCoeff;
+    LONGLONG mStartTime;
+    LONGLONG mStopTime;
+    LONGLONG mFrequency;
 };
 
 Timer* CreateTimer() {
-    return new OSXTimer();
+    return new WindowsTimer();
 }
 
 }  // namespace dawn::utils

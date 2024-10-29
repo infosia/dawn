@@ -25,76 +25,60 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "dawn/common/windows_with_undefs.h"
-#include "dawn/utils/Timer.h"
+#include <stdint.h>
+#include <time.h>
+
+#include "src/utils/timer.h"
 
 namespace dawn::utils {
 
-class WindowsTimer : public Timer {
-  public:
-    WindowsTimer() : Timer(), mRunning(false), mFrequency(0) {}
+namespace {
 
-    ~WindowsTimer() override = default;
+uint64_t GetCurrentTimeNs() {
+    struct timespec currentTime;
+    clock_gettime(CLOCK_MONOTONIC, &currentTime);
+    return currentTime.tv_sec * 1'000'000'000llu + currentTime.tv_nsec;
+}
+
+}  // anonymous namespace
+
+class PosixTimer : public Timer {
+  public:
+    PosixTimer() : Timer(), mRunning(false) {}
+
+    ~PosixTimer() override = default;
 
     void Start() override {
-        LARGE_INTEGER curTime;
-        QueryPerformanceCounter(&curTime);
-        mStartTime = curTime.QuadPart;
-
-        // Cache the frequency
-        GetFrequency();
-
+        mStartTimeNs = GetCurrentTimeNs();
         mRunning = true;
     }
 
     void Stop() override {
-        LARGE_INTEGER curTime;
-        QueryPerformanceCounter(&curTime);
-        mStopTime = curTime.QuadPart;
-
+        mStopTimeNs = GetCurrentTimeNs();
         mRunning = false;
     }
 
     double GetElapsedTime() const override {
-        LONGLONG endTime;
+        uint64_t endTimeNs;
         if (mRunning) {
-            LARGE_INTEGER curTime;
-            QueryPerformanceCounter(&curTime);
-            endTime = curTime.QuadPart;
+            endTimeNs = GetCurrentTimeNs();
         } else {
-            endTime = mStopTime;
+            endTimeNs = mStopTimeNs;
         }
 
-        return static_cast<double>(endTime - mStartTime) / mFrequency;
+        return (endTimeNs - mStartTimeNs) * 1e-9;
     }
 
-    double GetAbsoluteTime() override {
-        LARGE_INTEGER curTime;
-        QueryPerformanceCounter(&curTime);
-
-        return static_cast<double>(curTime.QuadPart) / GetFrequency();
-    }
+    double GetAbsoluteTime() override { return GetCurrentTimeNs() * 1e-9; }
 
   private:
-    LONGLONG GetFrequency() {
-        if (mFrequency == 0) {
-            LARGE_INTEGER frequency = {};
-            QueryPerformanceFrequency(&frequency);
-
-            mFrequency = frequency.QuadPart;
-        }
-
-        return mFrequency;
-    }
-
     bool mRunning;
-    LONGLONG mStartTime;
-    LONGLONG mStopTime;
-    LONGLONG mFrequency;
+    uint64_t mStartTimeNs;
+    uint64_t mStopTimeNs;
 };
 
 Timer* CreateTimer() {
-    return new WindowsTimer();
+    return new PosixTimer();
 }
 
 }  // namespace dawn::utils

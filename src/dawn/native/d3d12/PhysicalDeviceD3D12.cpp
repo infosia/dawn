@@ -32,7 +32,6 @@
 #include <utility>
 
 #include "dawn/common/Constants.h"
-#include "dawn/common/Platform.h"
 #include "dawn/common/WindowsUtils.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Instance.h"
@@ -42,6 +41,7 @@
 #include "dawn/native/d3d12/PlatformFunctionsD3D12.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
 #include "dawn/platform/DawnPlatform.h"
+#include "src/utils/platform.h"
 
 namespace dawn::native::d3d12 {
 

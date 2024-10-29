@@ -39,11 +39,11 @@
 
 #include <optional>
 
-#include "dawn/common/Platform.h"
 #include "dawn/common/TypedInteger.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/stream/Sink.h"
 #include "dawn/native/stream/Source.h"
+#include "src/utils/platform.h"
 
 namespace dawn::ityp {
 template <typename Index, size_t N>

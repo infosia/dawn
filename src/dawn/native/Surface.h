@@ -38,7 +38,7 @@
 
 #include "dawn/native/dawn_platform.h"
 
-#include "dawn/common/Platform.h"
+#include "src/utils/platform.h"
 
 #if defined(DAWN_USE_WINDOWS_UI)
 #include "dawn/native/d3d/d3d_platform.h"

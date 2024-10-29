@@ -56,6 +56,7 @@ dawn_add_library(
         "SampleUtils.cpp"
     DEPENDS
         ${sample_util_depends}
+        dawn_shared_utils
 )
 
 ###############################################################################

@@ -42,7 +42,6 @@
 #include "dawn/common/GPUInfo.h"
 #include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
-#include "dawn/common/Platform.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/common/SystemUtils.h"
 #include "dawn/dawn_proc.h"
@@ -61,6 +60,7 @@
 #include "dawn/wire/WireClient.h"
 #include "dawn/wire/WireServer.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/platform.h"
 
 #if defined(DAWN_ENABLE_BACKEND_OPENGL)
 #include "dawn/native/OpenGLBackend.h"
