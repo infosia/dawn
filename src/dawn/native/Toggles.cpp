@@ -564,6 +564,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "while the WebGPU CTS is expecting n. Scale the depth bias value by multiple 0.5 on certain "
       "backends to achieve conformant result.",
       "https://crbug.com/42241017", ToggleStage::Device}},
+    {Toggle::D3D12QualcommLimitedRawBufferSize,
+     {"d3d12_qualcomm_limited_raw_buffer_size",
+      "Due to a driver and hardware limitation, Raw Buffers can only address 2^27 WORDS instead of "
+      "the guaranteeed 2^31. Probably because it uses some form of texel buffer of 32bit values to "
+      "implement [RW]ByteAddressBuffer.",
+      "https://crbug.com/42242119", ToggleStage::Adapter}},
     {Toggle::NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
      {"no_workaround_sample_mask_becomes_zero_for_all_but_last_color_target",
       "MacOS 12.0+ Intel has a bug where the sample mask is only applied for the last color "
