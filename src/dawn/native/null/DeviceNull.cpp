@@ -287,6 +287,7 @@ MaybeError Device::CopyFromStagingToBufferImpl(BufferBase* source,
     operation->size = size;
 
     AddPendingOperation(std::move(operation));
+    DAWN_TRY(SubmitPendingOperations());
 
     return {};
 }
