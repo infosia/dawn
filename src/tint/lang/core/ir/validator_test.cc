@@ -9463,5 +9463,109 @@ note: # Disassembly
 )");
 }
 
+TEST_F(IR_ValidatorTest, OverrideWithoutCapability) {
+    b.Append(mod.root_block, [&] { b.Override("a", 1_u); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:2:12 error: override: root block: invalid instruction: tint::core::ir::Override
+  %a:u32 = override, 1u
+           ^^^^^^^^
+
+:1:1 note: in block
+$B1: {  # root
+^^^
+
+note: # Disassembly
+$B1: {  # root
+  %a:u32 = override, 1u
+}
+
+)");
+}
+
+TEST_F(IR_ValidatorTest, InstructionInRootBlockWithoutOverrideCap) {
+    b.Append(mod.root_block, [&] { b.Add(ty.u32(), 3_u, 2_u); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:2:3 error: binary: root block: invalid instruction: tint::core::ir::CoreBinary
+  %1:u32 = add 3u, 2u
+  ^^^^^^^^^^^^^^^^^^^
+
+:1:1 note: in block
+$B1: {  # root
+^^^
+
+note: # Disassembly
+$B1: {  # root
+  %1:u32 = add 3u, 2u
+}
+
+)");
+}
+
+TEST_F(IR_ValidatorTest, OverrideWithCapability) {
+    b.Append(mod.root_block, [&] { b.Override(ty.u32()); });
+
+    auto res = ir::Validate(mod, core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
+    ASSERT_EQ(res, Success);
+}
+
+TEST_F(IR_ValidatorTest, OverrideWithValue) {
+    b.Append(mod.root_block, [&] {
+        auto* z = b.Override(ty.u32());
+        auto* init = b.Add(ty.u32(), z, 2_u);
+        b.Override("a", init);
+    });
+
+    auto res = ir::Validate(mod, core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
+    ASSERT_EQ(res, Success);
+}
+
+TEST_F(IR_ValidatorTest, InstructionInRootBlockOnlyUsedInRootBlock) {
+    core::ir::Value* init = nullptr;
+    b.Append(mod.root_block, [&] {
+        auto* z = b.Override(ty.u32());
+        init = b.Add(ty.u32(), z, 2_u)->Result(0);
+        b.Override("a", init);
+    });
+
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        b.Add(ty.u32(), init, 2_u);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod, core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(
+        res.Failure().reason.Str(),
+        R"(:3:3 error: binary: root block: instruction used outside of root block tint::core::ir::CoreBinary
+  %2:u32 = add %1, 2u
+  ^^^^^^^^^^^^^^^^^^^
+
+:1:1 note: in block
+$B1: {  # root
+^^^
+
+note: # Disassembly
+$B1: {  # root
+  %1:u32 = override
+  %2:u32 = add %1, 2u
+  %a:u32 = override, %2
+}
+
+%my_func = func():void {
+  $B2: {
+    %5:u32 = add %2, 2u
+    ret
+  }
+}
+)");
+}
+
 }  // namespace
 }  // namespace tint::core::ir
