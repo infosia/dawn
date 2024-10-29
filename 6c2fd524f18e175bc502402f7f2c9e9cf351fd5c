@@ -16,6 +16,24 @@
       "message": "This is not compiling in Skia:\nhttps://logs.chromium.org/logs/skia/6cf002808fd78311/+/steps/ninja/0/stdout\nbecause `D3D12_FEATURE_DATA_D3D12_OPTIONS18` is not defined. Does this need to be guarded by a version check or something?",
       "revId": "6c2fd524f18e175bc502402f7f2c9e9cf351fd5c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b831f06_579792a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-29T14:23:12Z",
+      "side": 1,
+      "message": "This requires a newer-ish Windows SDK. Do you keep up to date with Windows SDKs in Skia (as in this would get fixed soon) or that a whole difficult process? In both cases feel free to revert.",
+      "parentUuid": "bd733aab_4e0aeee4",
+      "revId": "6c2fd524f18e175bc502402f7f2c9e9cf351fd5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
