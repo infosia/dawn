@@ -133,15 +133,27 @@ WGPUDevice Adapter::CreateDevice(const WGPUDeviceDescriptor* deviceDescriptor) {
 void Adapter::RequestDevice(const wgpu::DeviceDescriptor* descriptor,
                             WGPURequestDeviceCallback callback,
                             void* userdata) {
-    mImpl->APIRequestDevice(reinterpret_cast<const DeviceDescriptor*>(descriptor), callback,
-                            userdata);
+    mImpl->APIRequestDevice(reinterpret_cast<const DeviceDescriptor*>(descriptor),
+                            {nullptr, WGPUCallbackMode_AllowSpontaneous,
+                             [](WGPURequestDeviceStatus status, WGPUDevice device,
+                                WGPUStringView message, void* callback, void* userdata) {
+                                 auto cb = reinterpret_cast<WGPURequestDeviceCallback>(callback);
+                                 cb(status, device, message, userdata);
+                             },
+                             reinterpret_cast<void*>(callback), userdata});
 }
 
 void Adapter::RequestDevice(const WGPUDeviceDescriptor* descriptor,
                             WGPURequestDeviceCallback callback,
                             void* userdata) {
-    mImpl->APIRequestDevice(reinterpret_cast<const DeviceDescriptor*>(descriptor), callback,
-                            userdata);
+    mImpl->APIRequestDevice(reinterpret_cast<const DeviceDescriptor*>(descriptor),
+                            {nullptr, WGPUCallbackMode_AllowSpontaneous,
+                             [](WGPURequestDeviceStatus status, WGPUDevice device,
+                                WGPUStringView message, void* callback, void* userdata) {
+                                 auto cb = reinterpret_cast<WGPURequestDeviceCallback>(callback);
+                                 cb(status, device, message, userdata);
+                             },
+                             reinterpret_cast<void*>(callback), userdata});
 }
 
 void Adapter::ResetInternalDeviceForTesting() {
