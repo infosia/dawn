@@ -774,10 +774,14 @@ std::string Disassemble(const std::vector<uint32_t>& data) {
 /// @returns true on success
 bool GenerateSpirv(const tint::Program& program,
                    const Options& options,
-                   [[maybe_unused]] TintTracePlatform* platform) {
+                   TintTracePlatform* platform) {
 #if TINT_BUILD_SPV_WRITER
     // Convert the AST program to an IR module.
+    TRACE_EVENT_BEGIN0(platform, Tint, "Generate SPIRV");
+
+    TRACE_EVENT_BEGIN0(platform, Tint, "ProgramToLoweredIR");
     auto ir = tint::wgsl::reader::ProgramToLoweredIR(program);
+    TRACE_EVENT_END0(platform, Tint, "ProgramToLoweredIR");
     if (ir != tint::Success) {
         std::cerr << "Failed to generate IR: " << ir << "\n";
         return false;
@@ -790,7 +794,7 @@ bool GenerateSpirv(const tint::Program& program,
     gen_options.bindings = tint::spirv::writer::GenerateBindings(ir.Get());
 
     // Generate SPIR-V from Tint IR.
-    auto result = tint::spirv::writer::Generate(ir.Get(), gen_options);
+    auto result = tint::spirv::writer::Generate(ir.Get(), gen_options, platform);
     if (result != tint::Success) {
         tint::cmd::PrintWGSL(std::cerr, program);
         std::cerr << "Failed to generate SPIR-V: " << result.Failure() << "\n";
@@ -824,6 +828,8 @@ bool GenerateSpirv(const tint::Program& program,
             return false;
         }
     }
+
+    TRACE_EVENT_END0(platform, Tint, "Generate SPIRV");
 
     return true;
 #else
@@ -1335,7 +1341,7 @@ void EmitTrace(TintTracePlatform* trace_platform) {
         out << "{ " << "\"name\": \"" << trace.name << "\", " << "\"cat\": \"" << category << "\", "
             << "\"ph\": \"" << trace.phase << "\", " << "\"id\": " << trace.id << ", "
             << "\"tid\": " << trace.threadId << ", " << "\"ts\": " << microseconds << ", "
-            << "\"pid\": \"Dawn\"" << " }";
+            << "\"pid\": \"tint\"" << " }";
     }
     out << "]\n";
     out.close();

@@ -32,6 +32,7 @@
 #include "src/tint/lang/spirv/writer/common/options.h"
 #include "src/tint/lang/spirv/writer/output.h"
 #include "src/tint/utils/result/result.h"
+#include "src/utils/trace_platform.h"
 
 namespace tint::spirv::writer {
 
@@ -40,7 +41,9 @@ namespace tint::spirv::writer {
 /// @param ir the IR module to translate to SPIR-V
 /// @param options the configuration options to use when generating SPIR-V
 /// @returns the resulting SPIR-V and supplementary information, or failure.
-Result<Output> Generate(core::ir::Module& ir, const Options& options);
+Result<Output> Generate(core::ir::Module& ir,
+                        const Options& options,
+                        dawn::utils::TracePlatform* platform = nullptr);
 
 }  // namespace tint::spirv::writer
 

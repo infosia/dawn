@@ -54,16 +54,21 @@
 #include "src/tint/lang/spirv/writer/raise/remove_unreachable_in_loop_continuing.h"
 #include "src/tint/lang/spirv/writer/raise/shader_io.h"
 #include "src/tint/lang/spirv/writer/raise/var_for_dynamic_index.h"
+#include "src/utils/trace_event.h"
 
 namespace tint::spirv::writer {
 
-Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
-#define RUN_TRANSFORM(name, ...)         \
-    do {                                 \
-        auto result = name(__VA_ARGS__); \
-        if (result != Success) {         \
-            return result;               \
-        }                                \
+Result<SuccessType> Raise(core::ir::Module& module,
+                          const Options& options,
+                          dawn::utils::TracePlatform* platform) {
+#define RUN_TRANSFORM(name, ...)                   \
+    do {                                           \
+        TRACE_EVENT_BEGIN0(platform, Tint, #name); \
+        auto result = name(__VA_ARGS__);           \
+        TRACE_EVENT_END0(platform, Tint, #name);   \
+        if (result != Success) {                   \
+            return result;                         \
+        }                                          \
     } while (false)
 
     tint::transform::multiplanar::BindingsMap multiplanar_map{};
