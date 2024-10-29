@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "18d9ebd54bd98aead641ed6ed5c914380eac041f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "091ca146_4f790fd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-29T14:56:00Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "18d9ebd54bd98aead641ed6ed5c914380eac041f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd8b4fae_f712f8f7",
+        "filename": "src/dawn/native/null/DeviceNull.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-29T14:56:00Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "revId": "18d9ebd54bd98aead641ed6ed5c914380eac041f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
