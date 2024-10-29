@@ -34,6 +34,24 @@
       "parentUuid": "bd733aab_4e0aeee4",
       "revId": "6c2fd524f18e175bc502402f7f2c9e9cf351fd5c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0909ab9_24848fa9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004021
+      },
+      "writtenOn": "2024-10-29T17:58:36Z",
+      "side": 1,
+      "message": "OK, after consulting with the Skia infra team it sounds like we will want to unblock the Dawn roller before we\u0027ll be able to update the Windows SDK for Skia, so I\u0027ll revert. Thank you!",
+      "parentUuid": "5b831f06_579792a1",
+      "revId": "6c2fd524f18e175bc502402f7f2c9e9cf351fd5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
