@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b1a74b0_6cac9869",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-30T14:17:44Z",
+      "side": 1,
+      "message": "This change is needed so that our tools that load DXC will work on MacOS using a GN build. When I wrote the DXC GN build file, I used `loadable_module` because it seemed to be what I wanted based on [the doc](https://gn.googlesource.com/gn/+/main/docs/reference.md#func_loadable_module). \n\nHowever, with further digging, I learned that `loadable_module` is used to create MacOS \"bundles\", while a `shared_library` creates a regular shared library - a \"dylib\" on MacOS. On Linux and Windows, there\u0027s no difference between `loadable_module` and `shared_library`. MacOS bundles are emitted with extension \".so\", like on Linux, and since more recent MacOS versions, there isn\u0027t much difference anymore between bundles (.so) and shared libraries (.dylib). If you\u0027re interested, [this is a pretty good explanation](https://stackoverflow.com/a/2339910).\n\nAnyway, long story short: we want a \".dylib\" for DXC to match what CMake does, so we should be using `shared_library` for the target type.",
+      "revId": "b2f373e9a25d8e02478181adab45e09e671ac0d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
