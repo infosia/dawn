@@ -144,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3579a2b7_f0d2dfa9",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 1885,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-30T06:21:44Z",
+      "side": 1,
+      "message": "Yes I think so. Then `output` can just be `self.chained \u003d\u003d \"out\" or self.extensible \u003d\u003d \"out\" or self.output` even though that is very redundant.",
+      "parentUuid": "ec7cd432_79a5d469",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4b20b0a0_3a5bf074",
         "filename": "src/dawn/native/Adapter.h",
         "patchSetId": 30
