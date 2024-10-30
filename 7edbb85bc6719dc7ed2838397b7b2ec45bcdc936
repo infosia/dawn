@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad793766_66d1ba6c",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-30T06:00:17Z",
+      "side": 1,
+      "message": "This shouldn\u0027t attempt to free `features` if it\u0027s null. (I believe we want to make it valid to call FreeMembers on a zero-initialized struct.)",
+      "revId": "7edbb85bc6719dc7ed2838397b7b2ec45bcdc936",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
