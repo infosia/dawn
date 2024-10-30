@@ -27,6 +27,7 @@
 
 #include <vector>
 
+#include "absl/types/span.h"  // TODO(343500108): Use std::span when we have C++20.
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/wire/SupportedFeatures.h"
 #include "dawn/wire/WireResult.h"
@@ -97,18 +98,16 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
         return;
     }
 
-    std::vector<WGPUFeatureName> features;
-
-    size_t featuresCount = mProcs.deviceEnumerateFeatures(device, nullptr);
-    features.resize(featuresCount);
-    mProcs.deviceEnumerateFeatures(device, features.data());
-
     // The client should only be able to request supported features, so all enumerated
     // features that were enabled must also be supported by the wire.
     // Note: We fail the callback here, instead of immediately upon receiving
     // the request to preserve callback ordering.
-    for (WGPUFeatureName f : features) {
-        if (!IsFeatureSupported(f)) {
+    FreeMembers<WGPUSupportedFeatures> supportedFeatures(mProcs);
+    mProcs.deviceGetFeatures(device, &supportedFeatures);
+    absl::Span<const WGPUFeatureName> features(supportedFeatures.features,
+                                               supportedFeatures.featureCount);
+    for (WGPUFeatureName feature : features) {
+        if (!IsFeatureSupported(feature)) {
             // Release the device.
             mProcs.deviceRelease(device);
             device = nullptr;
@@ -119,7 +118,6 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
             return;
         }
     }
-
     cmd.featuresCount = features.size();
     cmd.features = features.data();
 
