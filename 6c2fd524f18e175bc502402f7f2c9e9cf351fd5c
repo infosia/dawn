@@ -52,6 +52,24 @@
       "parentUuid": "5b831f06_579792a1",
       "revId": "6c2fd524f18e175bc502402f7f2c9e9cf351fd5c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f65dbc1d_83b6f81a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-30T02:18:40Z",
+      "side": 1,
+      "message": "Oh this is really unfortunate.\n\nHi Corentin and Loko, since this is the second time that my CL is reverted because of Skia. Do you think if we should add the build of Skia into Dawn bot?",
+      "parentUuid": "f0909ab9_24848fa9",
+      "revId": "6c2fd524f18e175bc502402f7f2c9e9cf351fd5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
