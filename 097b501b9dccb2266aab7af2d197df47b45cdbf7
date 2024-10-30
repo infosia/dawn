@@ -33,6 +33,24 @@
       "message": "Can\u0027t we detect that we can do a full copy here and use CopyResource instead?",
       "revId": "097b501b9dccb2266aab7af2d197df47b45cdbf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f9c3d88_16a7ddb0",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-10-30T15:36:59Z",
+      "side": 1,
+      "message": "+1 since that might improve copies in general in that case.",
+      "parentUuid": "c755ff1f_7eddbfcb",
+      "revId": "097b501b9dccb2266aab7af2d197df47b45cdbf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
