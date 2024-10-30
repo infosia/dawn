@@ -68,6 +68,24 @@
       "parentUuid": "cd8b4fae_f712f8f7",
       "revId": "18d9ebd54bd98aead641ed6ed5c914380eac041f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35ccffae_5cdde36f",
+        "filename": "src/dawn/native/null/DeviceNull.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-30T03:23:36Z",
+      "side": 1,
+      "message": "Hi Corentin, I\u0027ve fixed this part. Now we don\u0027t need this change anymore.\n\nPTAL, thanks!",
+      "parentUuid": "22a5e65c_2e9f5f55",
+      "revId": "18d9ebd54bd98aead641ed6ed5c914380eac041f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
