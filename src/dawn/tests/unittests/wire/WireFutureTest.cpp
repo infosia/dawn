@@ -62,4 +62,19 @@ std::ostream& operator<<(std::ostream& os, const WireFutureTestParam& param) {
     return os;
 }
 
+std::ostream& operator<<(std::ostream& os, const WireFutureTestParam2& param) {
+    switch (param.callbackMode) {
+        case wgpu::CallbackMode::WaitAnyOnly:
+            os << "WaitOnly";
+            break;
+        case wgpu::CallbackMode::AllowProcessEvents:
+            os << "ProcessEvents";
+            break;
+        case wgpu::CallbackMode::AllowSpontaneous:
+            os << "Spontaneous";
+            break;
+    }
+    return os;
+}
+
 }  // namespace dawn::wire
