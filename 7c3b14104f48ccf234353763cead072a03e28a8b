@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e1d0e90_8627a5ae",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-30T16:31:44Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs to use a worklist. You shoudl be able to just insert hte loop before the switch and destroy the switch statement.",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce176854_8831b0e1",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-30T16:31:44Z",
+      "side": 1,
+      "message": "Maybe add a note along the lines of:\n\n\u0027Note, you can\u0027t just add a `case 0` fallthrough on the `default` as FXC will strip both of them in that case, it treates it the same as just a `default`.\u0027\n\nSo we don\u0027t make the same change again.",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9469c66d_188cb2e1",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-30T16:31:44Z",
+      "side": 1,
+      "message": "Just do `exit-\u003eDestroy`. The destroy sets a flag, it doesn\u0027t change the list being iterated.",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adafdbff_bc137566",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-30T16:31:44Z",
+      "side": 1,
+      "message": "This feels like there is a better way. The instructions are just a linked list. So, can we just assign the `instructions_` over to the new block and clear out the initial one. If you did the `Exits` replacement afterwards then it should remove the incorrect parent pointer as the exit switches are gone.",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee8b5d73_2096d00f",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-30T16:31:44Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be a separate loop, you can just destroy above.",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
