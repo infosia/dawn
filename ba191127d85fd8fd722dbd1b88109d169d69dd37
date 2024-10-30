@@ -16,6 +16,24 @@
       "message": "confirmed that the remaining tests pass instead of fail",
       "revId": "ba191127d85fd8fd722dbd1b88109d169d69dd37",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad8b43f2_89152c32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-10-30T12:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52977165_2687fe76",
+      "revId": "ba191127d85fd8fd722dbd1b88109d169d69dd37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
