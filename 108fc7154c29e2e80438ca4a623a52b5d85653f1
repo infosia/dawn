@@ -16,6 +16,29 @@
       "message": "The fuzzer is no longer crashing out fast.",
       "revId": "108fc7154c29e2e80438ca4a623a52b5d85653f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8c5b65a_4f9ea8f9",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-30T19:54:55Z",
+      "side": 1,
+      "message": "nit: don\u0027t we usually write `crbug.com/348702031` so that we can copy this to the browser?",
+      "range": {
+        "startLine": 685,
+        "startChar": 24,
+        "endLine": 685,
+        "endChar": 33
+      },
+      "revId": "108fc7154c29e2e80438ca4a623a52b5d85653f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
