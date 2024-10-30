@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8149e1b5_7fc88d6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-10-30T00:00:59Z",
+      "side": 1,
+      "message": "PTAL\n\nI\u0027m running another test roll now, but https://dawn-review.googlesource.com/c/dawn/+/212995 appears to be happy.",
+      "revId": "adae4d33ae1b0f89a4a4bf02983c07bd3a68256f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
