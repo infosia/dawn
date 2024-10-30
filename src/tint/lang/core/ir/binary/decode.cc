@@ -905,9 +905,13 @@ struct Decoder {
     const type::SubgroupMatrix* CreateTypeSubgroupMatrix(
         SubgroupMatrixKind kind,
         const pb::TypeSubgroupMatrix& subgroup_matrix) {
-        return mod_out_.Types().Get<type::SubgroupMatrix>(kind, Type(subgroup_matrix.sub_type()),
-                                                          subgroup_matrix.rows(),
-                                                          subgroup_matrix.columns());
+        // TODO(348702031): Re-enable decoding SubgroupMatrix once it is fully implemented
+        Error() << "SubgroupMatrix is currently not implemented";
+        return nullptr;
+        //        return mod_out_.Types().Get<type::SubgroupMatrix>(kind,
+        //        Type(subgroup_matrix.sub_type()),
+        //                                                          subgroup_matrix.rows(),
+        //                                                          subgroup_matrix.columns());
     }
 
     const type::Type* Type(size_t id) {
