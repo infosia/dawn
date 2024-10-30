@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aa58dcf7_b4ee0cc5",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 1885,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-10-30T05:52:33Z",
+      "side": 1,
+      "message": "IIRC the generator can only put methods on objects, not structures.\n\nSounds like the definition of `self.output` needs to be updated:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/dawn_json_generator.py;l\u003d333-335;drc\u003dc5f706b42e0c062aa572255240093f1f065f2a79\nWe need some way to signify that something is an output structure without also making it extensible. Unfortunately we probably don\u0027t have such a thing. Just adding a new key like `\"output\": true` would be simplest even though it\u0027s kind of messy.\n\nIt would be overall better to replace `\"extensible\"`/`\"chained\"` with something that expresses this correctly, however this should be a separate CL if we do it at all. I don\u0027t know what it should be, there are a bunch of options (sketched below). I also seem to remember there was some reason we wanted to replace the \"in\"/\"out\" terminology with some other terminology but I can\u0027t remember what the suggested replacement was. (Though I did recently suggest a rename from \"out\" to \"mut\", which is in discussion: https://github.com/webgpu-native/webgpu-headers/pull/376)\n\n`\"extensible\":` unspecified (default) or `\"extensible\"` or `\"chained\"`\n`\"out\":` boolean\n\nor\n\n`\"structure_type\":` `\"in\"` (default) or `\"out\"` or `\"extensible-in\"` or `\"extensible-out\"` or `\"chained-in\"` or `\"chained-out\"`\n\nor split the `\"category\"` in two:\n\n`\"category\": `\"structure\"` or `\"out-structure\"`\n\nIDK.",
+      "parentUuid": "d076feb9_f14d3afa",
+      "revId": "c4e4d2b0c9e9fdd83c37c56518c8c83f2c3a338f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4b20b0a0_3a5bf074",
         "filename": "src/dawn/native/Adapter.h",
         "patchSetId": 30
