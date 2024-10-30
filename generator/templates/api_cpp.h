@@ -475,6 +475,25 @@ struct StringView {
 };
 
 namespace detail {
+{% for type in by_category["callback function"] %}
+    template <typename... T>
+    struct {{as_cppType(type.name)}}TypeValidator {
+        static_assert(sizeof...(T) <= 1);
+        using Callback = void (
+            {%- for arg in type.arguments -%}
+                {{as_annotated_cppType(arg)}}{{", "}}
+            {%- endfor -%}
+        T... userdata);
+    };
+{% endfor %}
+}  // namespace detail
+
+{% for type in by_category["callback function"] %}
+    template <typename... T>
+    using {{as_cppType(type.name)}} = detail::{{as_cppType(type.name)}}TypeValidator<T...>::Callback;
+{% endfor %}
+
+namespace detail {
 constexpr size_t ConstexprMax(size_t a, size_t b) {
     return a > b ? a : b;
 }
