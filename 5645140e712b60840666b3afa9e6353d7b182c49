@@ -16,6 +16,24 @@
       "message": "I\u0027d rather we made methods for this then a macro. I\u0027d prefer just having the code duplicated to a macro, heh.",
       "revId": "5645140e712b60840666b3afa9e6353d7b182c49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00283b9e_65f67033",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-30T21:18:59Z",
+      "side": 1,
+      "message": "I am fine with keeping the existing pattern",
+      "parentUuid": "1c5b7932_4a7cfe98",
+      "revId": "5645140e712b60840666b3afa9e6353d7b182c49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
