@@ -69,7 +69,7 @@ using namespace tint::core::number_suffixes;  // NOLINT
 using IR_FromProgramTest = helpers::IRProgramTest;
 
 TEST_F(IR_FromProgramTest, Func) {
-    Func("f", tint::Empty, ty.void_(), tint::Empty);
+    Func(Source{{1, 2}}, "f", tint::Empty, ty.void_(), tint::Empty);
 
     auto m = Build();
     ASSERT_EQ(m, Success);
@@ -79,6 +79,7 @@ TEST_F(IR_FromProgramTest, Func) {
     core::ir::Function* f = m->functions[0];
     ASSERT_NE(f->Block(), nullptr);
 
+    EXPECT_EQ(m->SourceOf(f), Source{1, 2});
     EXPECT_EQ(m->functions[0]->Stage(), core::ir::Function::PipelineStage::kUndefined);
 
     EXPECT_EQ(core::ir::Disassembler(m.Get()).Plain(), R"(%f = func():void {

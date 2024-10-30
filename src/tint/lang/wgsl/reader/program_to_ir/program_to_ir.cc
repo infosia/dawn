@@ -267,7 +267,7 @@ class Impl {
         auto* ir_func = builder_.Function(ast_func->name->symbol.NameView(),
                                           sem->ReturnType()->Clone(clone_ctx_.type_ctx));
         current_function_ = ir_func;
-
+        builder_.ir.SetSource(ir_func, ast_func->source);
         scopes_.Set(ast_func->name->symbol, ir_func);
 
         if (ast_func->IsEntryPoint()) {
@@ -418,8 +418,10 @@ class Impl {
 
         auto b = builder_.Append(current_block_);
         if (auto* v = std::get_if<core::ir::Value*>(&lhs)) {
+            builder_.ir.SetSource(*v, stmt->source);
             b.Store(*v, rhs);
         } else if (auto ref = std::get_if<VectorRefElementAccess>(&lhs)) {
+            builder_.ir.SetSource(ref->vector, stmt->source);
             b.StoreVectorElement(ref->vector, ref->index, rhs);
         }
     }
@@ -478,6 +480,7 @@ class Impl {
             return;
         }
         auto* if_inst = builder_.If(reg);
+        builder_.ir.SetSource(if_inst, stmt->source);
         current_block_->Append(if_inst);
 
         {
@@ -507,6 +510,7 @@ class Impl {
 
     void EmitLoop(const ast::LoopStatement* stmt) {
         auto* loop_inst = builder_.Loop();
+        builder_.ir.SetSource(loop_inst, stmt->source);
         current_block_->Append(loop_inst);
 
         // Note: The loop doesn't use EmitBlock because it needs the scope stack to not get popped
@@ -548,6 +552,7 @@ class Impl {
 
     void EmitWhile(const ast::WhileStatement* stmt) {
         auto* loop_inst = builder_.Loop();
+        builder_.ir.SetSource(loop_inst, stmt->source);
         current_block_->Append(loop_inst);
 
         ControlStackScope scope(this, loop_inst);
@@ -592,6 +597,7 @@ class Impl {
 
     void EmitForLoop(const ast::ForLoopStatement* stmt) {
         auto* loop_inst = builder_.Loop();
+        builder_.ir.SetSource(loop_inst, stmt->source);
         current_block_->Append(loop_inst);
 
         ControlStackScope scope(this, loop_inst);
@@ -650,6 +656,7 @@ class Impl {
             return;
         }
         auto* switch_inst = builder_.Switch(reg);
+        builder_.ir.SetSource(switch_inst, stmt->source);
         current_block_->Append(switch_inst);
 
         ControlStackScope scope(this, switch_inst);
@@ -684,31 +691,41 @@ class Impl {
             ret_value = ret;
         }
         if (ret_value) {
-            SetTerminator(builder_.Return(current_function_, ret_value));
+            auto* ret = builder_.Return(current_function_, ret_value);
+            builder_.ir.SetSource(ret, stmt->source);
+            SetTerminator(ret);
         } else {
-            SetTerminator(builder_.Return(current_function_));
+            auto* ret = builder_.Return(current_function_);
+            builder_.ir.SetSource(ret, stmt->source);
+            SetTerminator(ret);
         }
     }
 
-    void EmitBreak(const ast::BreakStatement*) {
+    void EmitBreak(const ast::BreakStatement* stmt) {
         auto* current_control = FindEnclosingControl(ControlFlags::kNone);
         TINT_ASSERT(current_control);
 
         if (auto* c = current_control->As<core::ir::Loop>()) {
-            SetTerminator(builder_.ExitLoop(c));
+            auto* ex = builder_.ExitLoop(c);
+            builder_.ir.SetSource(ex, stmt->source);
+            SetTerminator(ex);
         } else if (auto* s = current_control->As<core::ir::Switch>()) {
-            SetTerminator(builder_.ExitSwitch(s));
+            auto* es = builder_.ExitSwitch(s);
+            builder_.ir.SetSource(es, stmt->source);
+            SetTerminator(es);
         } else {
             TINT_UNREACHABLE();
         }
     }
 
-    void EmitContinue(const ast::ContinueStatement*) {
+    void EmitContinue(const ast::ContinueStatement* stmt) {
         auto* current_control = FindEnclosingControl(ControlFlags::kExcludeSwitch);
         TINT_ASSERT(current_control);
 
         if (auto* c = current_control->As<core::ir::Loop>()) {
-            SetTerminator(builder_.Continue(c));
+            auto* cont = builder_.Continue(c);
+            builder_.ir.SetSource(cont, stmt->source);
+            SetTerminator(cont);
         } else {
             TINT_UNREACHABLE();
         }
@@ -718,8 +735,9 @@ class Impl {
     // the code has to continue as before it just predicates writes. If WGSL grows some kind of
     // terminating discard that would probably make sense as a Block but would then require
     // figuring out the multi-level exit that is triggered.
-    void EmitDiscard(const ast::DiscardStatement*) {
+    void EmitDiscard(const ast::DiscardStatement* d) {
         auto* inst = builder_.Discard();
+        builder_.ir.SetSource(inst, d->source);
         current_block_->Append(inst);
     }
 
@@ -731,7 +749,10 @@ class Impl {
         if (!cond) {
             return;
         }
-        SetTerminator(builder_.BreakIf(current_control->As<core::ir::Loop>(), cond));
+
+        auto* bi = builder_.BreakIf(current_control->As<core::ir::Loop>(), cond);
+        builder_.ir.SetSource(bi, stmt->source);
+        SetTerminator(bi);
     }
 
     ValueOrVecElAccess EmitExpression(const ast::Expression* root) {
@@ -1162,6 +1183,7 @@ class Impl {
     core::ir::Value* EmitValueExpression(const ast::Expression* root) {
         auto res = EmitExpression(root);
         if (auto** val = std::get_if<core::ir::Value*>(&res)) {
+            builder_.ir.SetSource(*val, root->source);
             return *val;
         }
         TINT_ICE() << "expression did not resolve to a value";
@@ -1204,8 +1226,9 @@ class Impl {
                 // Store the declaration so we can get the instruction to store too
                 scopes_.Set(v->name->symbol, val->Result(0));
 
-                // Record the original name of the var
+                // Record the original name and source of the var
                 builder_.ir.SetName(val, v->name->symbol.Name());
+                builder_.ir.SetSource(val, v->source);
             },
             [&](const ast::Let* l) {
                 auto init = EmitValueExpression(l->initializer);
@@ -1217,6 +1240,7 @@ class Impl {
 
                 // Store the results of the initialization
                 scopes_.Set(l->name->symbol, let->Result(0));
+                builder_.ir.SetSource(let, l->source);
             },
             [&](const ast::Override* o) {
                 auto* o_sem = program_.Sem().Get(o);
@@ -1239,8 +1263,9 @@ class Impl {
                 // Store the declaration so we can get the instruction to store too
                 scopes_.Set(o->name->symbol, override->Result(0));
 
-                // Record the original name of the var
+                // Record the original name and source of the var
                 builder_.ir.SetName(override, o->name->symbol.Name());
+                builder_.ir.SetSource(override, o->source);
             },
             [&](const ast::Const*) {
                 // Skip. This should be handled by const-eval already, so the const will be a
