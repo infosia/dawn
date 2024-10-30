@@ -163,7 +163,7 @@ class BufferBase : public SharedResource {
     virtual void UnmapImpl() = 0;
 
     virtual bool IsCPUWritableAtCreation() const = 0;
-    MaybeError CopyFromStagingBuffer();
+    MaybeError FullCopyFromStagingBuffer();
 
     MaybeError ValidateMapAsync(wgpu::MapMode mode,
                                 size_t offset,

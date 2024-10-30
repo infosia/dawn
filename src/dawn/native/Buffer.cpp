@@ -880,11 +880,10 @@ uint64_t BufferBase::APIGetSize() const {
     return mSize;
 }
 
-MaybeError BufferBase::CopyFromStagingBuffer() {
+MaybeError BufferBase::FullCopyFromStagingBuffer() {
     DAWN_ASSERT(mStagingBuffer != nullptr && mSize != 0);
 
-    DAWN_TRY(
-        GetDevice()->CopyFromStagingToBuffer(mStagingBuffer.Get(), 0, this, 0, GetAllocatedSize()));
+    DAWN_TRY(GetDevice()->FullCopyFromStagingToBuffer(mStagingBuffer.Get(), this));
 
     DynamicUploader* uploader = GetDevice()->GetDynamicUploader();
     uploader->ReleaseStagingBuffer(std::move(mStagingBuffer));
@@ -907,7 +906,7 @@ MaybeError BufferBase::Unmap() {
 
     // Make sure writes are now visibile to the GPU if we used a staging buffer.
     if (mState == BufferState::MappedAtCreation && mStagingBuffer != nullptr) {
-        DAWN_TRY(CopyFromStagingBuffer());
+        DAWN_TRY(FullCopyFromStagingBuffer());
     }
     UnmapInternal(WGPUBufferMapAsyncStatus_UnmappedBeforeCallback);
     return {};

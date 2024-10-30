@@ -2494,6 +2494,16 @@ MaybeError DeviceBase::CopyFromStagingToBuffer(BufferBase* source,
     return {};
 }
 
+MaybeError DeviceBase::FullCopyFromStagingToBuffer(BufferBase* source, BufferBase* destination) {
+    DAWN_ASSERT(source->GetAllocatedSize() == destination->GetAllocatedSize());
+    return FullCopyFromStagingToBufferImpl(source, destination);
+}
+
+MaybeError DeviceBase::FullCopyFromStagingToBufferImpl(BufferBase* source,
+                                                       BufferBase* destination) {
+    return CopyFromStagingToBuffer(source, 0, destination, 0, destination->GetAllocatedSize());
+}
+
 MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
                                                 const TextureDataLayout& src,
                                                 const TextureCopy& dst,
