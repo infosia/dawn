@@ -107,6 +107,8 @@
 #include "src/tint/utils/text/styled_text_printer.h"
 #endif
 
+#define UNDEF_IF_NULL(cond, str) (cond != nullptr ? str : "undef")
+
 using namespace tint::core::fluent_types;  // NOLINT
 
 namespace tint::core::ir {
@@ -1464,8 +1466,7 @@ StyledText Validator::NameOf(const CastableBase* decl) {
 }
 
 StyledText Validator::NameOf(const type::Type* ty) {
-    auto name = ty ? ty->FriendlyName() : "undef";
-    return StyledText{} << style::Type(name);
+    return StyledText{} << style::Type(UNDEF_IF_NULL(ty, ty->FriendlyName()));
 }
 
 StyledText Validator::NameOf(const Value* value) {
@@ -1473,14 +1474,13 @@ StyledText Validator::NameOf(const Value* value) {
 }
 
 StyledText Validator::NameOf(const Instruction* inst) {
-    auto name = inst ? inst->FriendlyName() : "undef";
-    return StyledText{} << style::Instruction(name);
+    return StyledText{} << style::Instruction(UNDEF_IF_NULL(inst, inst->FriendlyName()));
 }
 
 StyledText Validator::NameOf(const Block* block) {
-    auto parent_name = block->Parent() ? block->Parent()->FriendlyName() : "undef";
-    return StyledText{} << style::Instruction(parent_name) << " block "
-                        << Disassemble().NameOf(block);
+    return StyledText{} << style::Instruction(
+                               UNDEF_IF_NULL(block->Parent(), block->Parent()->FriendlyName()))
+                        << " block " << Disassemble().NameOf(block);
 }
 
 bool Validator::CheckResult(const Instruction* inst, size_t idx) {
@@ -2166,9 +2166,12 @@ void Validator::CheckLet(const Let* l) {
 
     if (l->Result(0) && l->Value()) {
         if (l->Result(0)->Type() != l->Value()->Type()) {
-            AddError(l) << "result type " << style::Type(l->Result(0)->Type()->FriendlyName())
+            AddError(l) << "result type "
+                        << style::Type(UNDEF_IF_NULL(l->Result(0)->Type(),
+                                                     l->Result(0)->Type()->FriendlyName()))
                         << " does not match value type "
-                        << style::Type(l->Value()->Type()->FriendlyName());
+                        << style::Type(UNDEF_IF_NULL(l->Value()->Type(),
+                                                     l->Value()->Type()->FriendlyName()));
         }
     }
 }
@@ -2385,7 +2388,7 @@ void Validator::CheckAccess(const Access* a) {
         auto* index = a->Indices()[i];
         if (DAWN_UNLIKELY(!index->Type() || !index->Type()->IsIntegerScalar())) {
             err() << "index must be integer, got "
-                  << (index->Type() ? index->Type()->FriendlyName() : "undefined");
+                  << UNDEF_IF_NULL(index->Type(), index->Type()->FriendlyName());
             return;
         }
 
