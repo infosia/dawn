@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b02ae7a_330b141b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2024-10-30T10:16:50Z",
+      "side": 1,
+      "message": "Added the missing NativeTests.kt file",
+      "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
