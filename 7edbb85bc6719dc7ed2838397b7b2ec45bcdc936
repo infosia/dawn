@@ -34,6 +34,24 @@
       "parentUuid": "ad793766_66d1ba6c",
       "revId": "7edbb85bc6719dc7ed2838397b7b2ec45bcdc936",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e53c1b9_67bd9051",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-10-30T07:43:56Z",
+      "side": 1,
+      "message": "Note that trybot raised this:\n\n```\n \u0027if\u0027 statement is unnecessary; deleting null pointer has no effect (https://clang.llvm.org/extra/clang-tidy/checks/readability/delete-null-pointer.html)\n```",
+      "parentUuid": "2a9bcfda_b9d61bf6",
+      "revId": "7edbb85bc6719dc7ed2838397b7b2ec45bcdc936",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
