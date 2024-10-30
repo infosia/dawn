@@ -70,6 +70,24 @@
       "parentUuid": "f0909ab9_24848fa9",
       "revId": "6c2fd524f18e175bc502402f7f2c9e9cf351fd5c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53c1f2e4_2a971d37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-30T14:30:44Z",
+      "side": 1,
+      "message": "FWIW it also failed when importing in Google3. I\u0027ll surface the idea of putting Skia on the Dawn CQ but IDK how practical it would be.",
+      "parentUuid": "f65dbc1d_83b6f81a",
+      "revId": "6c2fd524f18e175bc502402f7f2c9e9cf351fd5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
