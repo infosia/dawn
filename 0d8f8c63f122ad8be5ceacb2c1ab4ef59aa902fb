@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33390f2e_f8143be4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-10-30T17:21:51Z",
+      "side": 1,
+      "message": "I spot checked the builds that the UPF reported as still having failures, and it looks like they were all from the first half of the month, so this should be safe.",
+      "revId": "0d8f8c63f122ad8be5ceacb2c1ab4ef59aa902fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
