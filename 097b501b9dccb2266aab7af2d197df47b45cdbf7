@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "097b501b9dccb2266aab7af2d197df47b45cdbf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c755ff1f_7eddbfcb",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-30T14:39:32Z",
+      "side": 1,
+      "message": "Can\u0027t we detect that we can do a full copy here and use CopyResource instead?",
+      "revId": "097b501b9dccb2266aab7af2d197df47b45cdbf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
