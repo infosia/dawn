@@ -511,6 +511,21 @@ MaybeError Device::CopyFromStagingToBufferImpl(BufferBase* source,
     return {};
 }
 
+MaybeError Device::FullCopyFromStagingToBufferImpl(BufferBase* source, BufferBase* destination) {
+    CommandRecordingContext* commandContext =
+        ToBackend(GetQueue())->GetPendingCommandContext(QueueBase::SubmitMode::Passive);
+
+    Buffer* dstBuffer = ToBackend(destination);
+    Buffer* srcBuffer = ToBackend(source);
+
+    DAWN_ASSERT(!dstBuffer->NeedsInitialization());
+
+    dstBuffer->TrackUsageAndTransitionNow(commandContext, wgpu::BufferUsage::CopyDst);
+    commandContext->GetCommandList()->CopyResource(dstBuffer->GetD3D12Resource(),
+                                                   srcBuffer->GetD3D12Resource());
+    return {};
+}
+
 void Device::CopyFromStagingToBufferHelper(CommandRecordingContext* commandContext,
                                            BufferBase* source,
                                            uint64_t sourceOffset,

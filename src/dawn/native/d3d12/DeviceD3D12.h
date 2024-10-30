@@ -217,6 +217,9 @@ class Device final : public d3d::Device {
     ResultOrError<Ref<SharedFenceBase>> ImportSharedFenceImpl(
         const SharedFenceDescriptor* descriptor) override;
 
+    MaybeError FullCopyFromStagingToBufferImpl(BufferBase* source,
+                                               BufferBase* destination) override;
+
     void DestroyImpl() override;
 
     MaybeError CheckDebugLayerAndGenerateErrors();

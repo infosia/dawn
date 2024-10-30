@@ -312,6 +312,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
                                        BufferBase* destination,
                                        uint64_t destinationOffset,
                                        uint64_t size);
+    MaybeError FullCopyFromStagingToBuffer(BufferBase* source, BufferBase* destination);
     MaybeError CopyFromStagingToTexture(BufferBase* source,
                                         const TextureDataLayout& src,
                                         const TextureCopy& dst,
@@ -541,6 +542,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
                                                     const TextureDataLayout& src,
                                                     const TextureCopy& dst,
                                                     const Extent3D& copySizePixels) = 0;
+    virtual MaybeError FullCopyFromStagingToBufferImpl(BufferBase* source, BufferBase* destination);
 
     WGPUUncapturedErrorCallbackInfo2 mUncapturedErrorCallbackInfo;
 
