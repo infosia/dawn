@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "134ce3a9_40f50660",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-31T23:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b0779e5_2f97d816",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4f1c84d_5cf16cad",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-10-31T14:14:46Z",
       "side": 1,
       "message": "übernit: Prefer `Id` instead of `ID` for consistency (yeah, there\u0027s other places that use `ID`, but meh).",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 66
+      },
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "553deaf0_50d0052e",
+        "filename": "src/tint/lang/core/ir/override.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-31T23:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4f1c84d_5cf16cad",
       "range": {
         "startLine": 72,
         "startChar": 0,
@@ -60,6 +102,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "75cd7444_1ae0e600",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-31T23:47:15Z",
+      "side": 1,
+      "message": "We can, but is it worth it? We\u0027ll be removing this capabilty pretty eary in the pipeline, at which point any of those things (arrayLength, non-const value) would get caught immediately. So, is it worth it making this a lot more complicated?",
+      "parentUuid": "caed0e45_2a03c9dc",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aac93674_3a8c6191",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 9
@@ -71,6 +131,24 @@
       "writtenOn": "2024-10-31T14:14:46Z",
       "side": 1,
       "message": "Should also check that the result type is a scalar.",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77be7d54_ae619fff",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2024,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-31T23:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aac93674_3a8c6191",
       "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "def13eb5_6ab79944",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-31T23:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a9bf9b3_e7d7e161",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e07df7dc_d2462023",
@@ -109,6 +205,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4184381_8f3d731e",
+        "filename": "src/tint/lang/wgsl/reader/lower/lower.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-31T23:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e07df7dc_d2462023",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fb74236_3f9588cb",
@@ -122,6 +236,24 @@
       "writtenOn": "2024-10-31T14:14:46Z",
       "side": 1,
       "message": "I thought we invented IDs for Dawn, so there should always be one? Would be nice to make this a requirement in the IR instead of an optional that you have to check for.",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "223780e4_6b9ab48e",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-31T23:47:15Z",
+      "side": 1,
+      "message": "Done. I left it as a `Set` call instead of adding it to the constructor for now.",
+      "parentUuid": "4fb74236_3f9588cb",
       "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
