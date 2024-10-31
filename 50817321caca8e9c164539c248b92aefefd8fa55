@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "50817321caca8e9c164539c248b92aefefd8fa55",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69146e16_752156c1",
+        "filename": "src/tint/lang/core/ir/module.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-31T14:21:09Z",
+      "side": 1,
+      "message": "`32` is probably way too small, but then again there\u0027s probably no good number here.\n\nLooks like we use `0` in other places where there is no real good choice?",
+      "revId": "50817321caca8e9c164539c248b92aefefd8fa55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
