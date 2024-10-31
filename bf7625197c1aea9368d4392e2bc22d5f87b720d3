@@ -16,6 +16,23 @@
       "message": "LGTM, Geoff PTAL as well",
       "revId": "bf7625197c1aea9368d4392e2bc22d5f87b720d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56466043_2926af37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-10-31T15:21:07Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "bf7625197c1aea9368d4392e2bc22d5f87b720d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
