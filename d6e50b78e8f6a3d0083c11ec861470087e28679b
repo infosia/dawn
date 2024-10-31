@@ -33,6 +33,29 @@
       "message": "LGTM but I just realized that depth should not be filterable according to the spec, like you pointed out in chat and I just kinda blanked out. Sorry.",
       "revId": "d6e50b78e8f6a3d0083c11ec861470087e28679b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "251f5074_fb386b9c",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-31T23:57:06Z",
+      "side": 1,
+      "message": "This is actually not allowed: \"depth\" + \"filtering sampler\" because the results are undefined (says Kai) so we removed it.",
+      "range": {
+        "startLine": 1287,
+        "startChar": 16,
+        "endLine": 1287,
+        "endChar": 87
+      },
+      "revId": "d6e50b78e8f6a3d0083c11ec861470087e28679b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
