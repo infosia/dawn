@@ -33,6 +33,24 @@
       "message": "`32` is probably way too small, but then again there\u0027s probably no good number here.\n\nLooks like we use `0` in other places where there is no real good choice?",
       "revId": "50817321caca8e9c164539c248b92aefefd8fa55",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c181d27d_781816d2",
+        "filename": "src/tint/lang/core/ir/module.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-10-31T16:56:01Z",
+      "side": 1,
+      "message": "I\u0027m going to keep 32 to now, it matches the size in the value_to_name map, which probably has more stuff then this map anyway. We can always revisit later if desired.",
+      "parentUuid": "69146e16_752156c1",
+      "revId": "50817321caca8e9c164539c248b92aefefd8fa55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
