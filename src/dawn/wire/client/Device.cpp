@@ -486,6 +486,10 @@ WGPUAdapter Device::GetAdapter() const {
     return ReturnToAPI(std::move(adapter));
 }
 
+WGPUStatus Device::GetAdapterInfo(WGPUAdapterInfo* adapterInfo) const {
+    return mAdapter->GetInfo(adapterInfo);
+}
+
 WGPUQueue Device::GetQueue() {
     // The queue is lazily created because if a Device is created by
     // Reserve/Inject, we cannot send the GetQueue message until
