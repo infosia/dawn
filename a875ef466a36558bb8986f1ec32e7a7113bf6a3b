@@ -16,6 +16,23 @@
       "message": "vsavu@: This CL got an approval. PTAL.",
       "revId": "a875ef466a36558bb8986f1ec32e7a7113bf6a3b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b67141a9_47142083",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001201
+      },
+      "writtenOn": "2024-10-31T16:27:35Z",
+      "side": 1,
+      "message": "LTS LGTM",
+      "revId": "a875ef466a36558bb8986f1ec32e7a7113bf6a3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
