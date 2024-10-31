@@ -813,26 +813,6 @@ MyStruct = struct @align(16) {
 )");
 }
 
-TEST_F(IR_ValidatorTest, Function_MissingWorkgroupSize) {
-    auto* f = b.Function("f", ty.void_(), Function::PipelineStage::kCompute);
-    b.Append(f->Block(), [&] { b.Return(f); });
-
-    auto res = ir::Validate(mod);
-    ASSERT_NE(res, Success);
-    EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:1 error: compute entry point requires workgroup size attribute
-%f = @compute func():void {
-^^
-
-note: # Disassembly
-%f = @compute func():void {
-  $B1: {
-    ret
-  }
-}
-)");
-}
-
 TEST_F(IR_ValidatorTest, Function_UnnamedEntryPoint) {
     auto* f = b.Function(ty.void_(), ir::Function::PipelineStage::kCompute);
     f->SetWorkgroupSize({b.Constant(1_u), b.Constant(1_u), b.Constant(1_u)});
@@ -924,7 +904,7 @@ note: # Disassembly
 
 TEST_F(IR_ValidatorTest, Function_Compute_NonVoidReturn) {
     auto* f = b.Function("my_func", ty.f32(), core::ir::Function::PipelineStage::kCompute);
-    f->SetWorkgroupSize(b.Constant(0_u), b.Constant(0_u), b.Constant(0_u));
+    f->SetWorkgroupSize(b.Constant(1_u), b.Constant(1_u), b.Constant(1_u));
 
     b.Append(f->Block(), [&] { b.Unreachable(); });
 
@@ -932,11 +912,11 @@ TEST_F(IR_ValidatorTest, Function_Compute_NonVoidReturn) {
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
               R"(:1:1 error: compute entry point must not have a return type
-%my_func = @compute @workgroup_size(0u, 0u, 0u) func():f32 {
+%my_func = @compute @workgroup_size(1u, 1u, 1u) func():f32 {
 ^^^^^^^^
 
 note: # Disassembly
-%my_func = @compute @workgroup_size(0u, 0u, 0u) func():f32 {
+%my_func = @compute @workgroup_size(1u, 1u, 1u) func():f32 {
   $B1: {
     unreachable
   }
@@ -944,7 +924,27 @@ note: # Disassembly
 )");
 }
 
-TEST_F(IR_ValidatorTest, Function_WorkspaceSizeOnlyOnCompute) {
+TEST_F(IR_ValidatorTest, Function_WorkgroupSize_MissingOnCompute) {
+    auto* f = b.Function("f", ty.void_(), Function::PipelineStage::kCompute);
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:1:1 error: compute entry point requires @workgroup_size
+%f = @compute func():void {
+^^
+
+note: # Disassembly
+%f = @compute func():void {
+  $B1: {
+    ret
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Function_WorkgroupSize_NonCompute) {
     auto* f = FragmentEntryPoint();
     f->SetWorkgroupSize(b.Constant(1_u), b.Constant(1_u), b.Constant(1_u));
 
@@ -953,12 +953,129 @@ TEST_F(IR_ValidatorTest, Function_WorkspaceSizeOnlyOnCompute) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:1:1 error: workgroup size attribute only valid on compute entry point
+              R"(:1:1 error: @workgroup_size only valid on compute entry point
 %f = @fragment @workgroup_size(1u, 1u, 1u) func():void {
 ^^
 
 note: # Disassembly
 %f = @fragment @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    unreachable
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamUndefined) {
+    auto* f = ComputeEntryPoint();
+    f->SetWorkgroupSize({nullptr, b.Constant(2_u), b.Constant(3_u)});
+
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:1:1 error: @workgroup_size params must be an i32 or u32
+%f = @compute @workgroup_size(undef, 2u, 3u) func():void {
+^^
+
+note: # Disassembly
+%f = @compute @workgroup_size(undef, 2u, 3u) func():void {
+  $B1: {
+    unreachable
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamWrongType) {
+    auto* f = ComputeEntryPoint();
+    f->SetWorkgroupSize({b.Constant(1_f), b.Constant(2_u), b.Constant(3_u)});
+
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:1:1 error: @workgroup_size params must be an i32 or u32
+%f = @compute @workgroup_size(1.0f, 2u, 3u) func():void {
+^^
+
+note: # Disassembly
+%f = @compute @workgroup_size(1.0f, 2u, 3u) func():void {
+  $B1: {
+    unreachable
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamsSameType) {
+    auto* f = ComputeEntryPoint();
+    f->SetWorkgroupSize({b.Constant(1_u), b.Constant(2_i), b.Constant(3_u)});
+
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:1:1 error: @workgroup_size params must be all i32s or all u32s
+%f = @compute @workgroup_size(1u, 2i, 3u) func():void {
+^^
+
+note: # Disassembly
+%f = @compute @workgroup_size(1u, 2i, 3u) func():void {
+  $B1: {
+    unreachable
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamNonConstant) {
+    auto* l = b.Let("wgsize", 1_u);
+    mod.root_block->Append(l);
+
+    auto* f = ComputeEntryPoint();
+    f->SetWorkgroupSize({l->Result(0), b.Constant(2_u), b.Constant(3_u)});
+
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowModuleScopeLets});
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:5:1 error: @workgroup_size params must be a constant or override values
+%f = @compute @workgroup_size(%wgsize, 2u, 3u) func():void {
+^^
+
+note: # Disassembly
+$B1: {  # root
+  %wgsize:u32 = let 1u
+}
+
+%f = @compute @workgroup_size(%wgsize, 2u, 3u) func():void {
+  $B2: {
+    unreachable
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Function_WorkgroupSize_ParamTooSmall) {
+    auto* f = ComputeEntryPoint();
+    f->SetWorkgroupSize({b.Constant(-1_i), b.Constant(2_i), b.Constant(3_i)});
+
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:1:1 error: @workgroup_size params must be greater than 0
+%f = @compute @workgroup_size(-1i, 2i, 3i) func():void {
+^^
+
+note: # Disassembly
+%f = @compute @workgroup_size(-1i, 2i, 3i) func():void {
   $B1: {
     unreachable
   }
