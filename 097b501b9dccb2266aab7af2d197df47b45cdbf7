@@ -51,6 +51,24 @@
       "parentUuid": "c755ff1f_7eddbfcb",
       "revId": "097b501b9dccb2266aab7af2d197df47b45cdbf7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "466e2259_4bfd25e8",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-31T05:32:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f9c3d88_16a7ddb0",
+      "revId": "097b501b9dccb2266aab7af2d197df47b45cdbf7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
