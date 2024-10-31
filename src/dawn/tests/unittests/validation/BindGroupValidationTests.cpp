@@ -3490,6 +3490,62 @@ TEST_F(SamplerTypeBindingTest, ShaderAndBGLMatches) {
                 _ = textureSample(myTexture, mySampler, vec2f(0.0, 0.0));
             })");
     }
+
+    // Test that a filtering sampler can not be used to sample an sint texture.
+    {
+        wgpu::BindGroupLayout bindGroupLayout = utils::MakeBindGroupLayout(
+            device, {{0, wgpu::ShaderStage::Fragment, wgpu::SamplerBindingType::Filtering},
+                     {1, wgpu::ShaderStage::Fragment, wgpu::TextureSampleType::Sint}});
+
+        ASSERT_DEVICE_ERROR(CreateFragmentPipeline(&bindGroupLayout, R"(
+            @group(0) @binding(0) var mySampler: sampler;
+            @group(0) @binding(1) var myTexture: texture_2d<i32>;
+            @fragment fn main() {
+                _ = textureGather(0, myTexture, mySampler, vec2f(0.0, 0.0));
+            })"));
+    }
+
+    // Test that a non-filtering sampler can be used to sample an sint texture.
+    {
+        wgpu::BindGroupLayout bindGroupLayout = utils::MakeBindGroupLayout(
+            device, {{0, wgpu::ShaderStage::Fragment, wgpu::SamplerBindingType::NonFiltering},
+                     {1, wgpu::ShaderStage::Fragment, wgpu::TextureSampleType::Sint}});
+
+        CreateFragmentPipeline(&bindGroupLayout, R"(
+            @group(0) @binding(0) var mySampler: sampler;
+            @group(0) @binding(1) var myTexture: texture_2d<i32>;
+            @fragment fn main() {
+                _ = textureGather(0, myTexture, mySampler, vec2f(0.0, 0.0));
+            })");
+    }
+
+    // Test that a filtering sampler can not be used to sample an uint texture.
+    {
+        wgpu::BindGroupLayout bindGroupLayout = utils::MakeBindGroupLayout(
+            device, {{0, wgpu::ShaderStage::Fragment, wgpu::SamplerBindingType::Filtering},
+                     {1, wgpu::ShaderStage::Fragment, wgpu::TextureSampleType::Uint}});
+
+        ASSERT_DEVICE_ERROR(CreateFragmentPipeline(&bindGroupLayout, R"(
+            @group(0) @binding(0) var mySampler: sampler;
+            @group(0) @binding(1) var myTexture: texture_2d<u32>;
+            @fragment fn main() {
+                _ = textureGather(0, myTexture, mySampler, vec2f(0.0, 0.0));
+            })"));
+    }
+
+    // Test that a non-filtering sampler can not be used to sample an uint texture.
+    {
+        wgpu::BindGroupLayout bindGroupLayout = utils::MakeBindGroupLayout(
+            device, {{0, wgpu::ShaderStage::Fragment, wgpu::SamplerBindingType::NonFiltering},
+                     {1, wgpu::ShaderStage::Fragment, wgpu::TextureSampleType::Uint}});
+
+        CreateFragmentPipeline(&bindGroupLayout, R"(
+            @group(0) @binding(0) var mySampler: sampler;
+            @group(0) @binding(1) var myTexture: texture_2d<u32>;
+            @fragment fn main() {
+                _ = textureGather(0, myTexture, mySampler, vec2f(0.0, 0.0));
+            })");
+    }
 }
 
 TEST_F(SamplerTypeBindingTest, SamplerAndBindGroupMatches) {
