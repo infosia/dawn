@@ -16,6 +16,24 @@
       "message": "... I am suprised that clang cannot detect correctly that I checked has_value above.",
       "revId": "cb8d0d38794f46670e208993847a83b239d7909a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6887c951_a85222de",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-10-31T20:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4cf7324_b163fa34",
+      "revId": "cb8d0d38794f46670e208993847a83b239d7909a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
