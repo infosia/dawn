@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b24a10e_da06f1d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-31T13:49:27Z",
+      "side": 1,
+      "message": "Agree with Dan\u0027s comments about way instructions are destroyed.",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e1d0e90_8627a5ae",
@@ -65,6 +82,24 @@
       "writtenOn": "2024-10-30T16:31:44Z",
       "side": 1,
       "message": "This feels like there is a better way. The instructions are just a linked list. So, can we just assign the `instructions_` over to the new block and clear out the initial one. If you did the `Exits` replacement afterwards then it should remove the incorrect parent pointer as the exit switches are gone.",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7435780a_a37426c9",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-31T13:49:27Z",
+      "side": 1,
+      "message": "I thought this too, but we currently don\u0027t have APIs that give you a way to do this, AFAICT. Just calling `SetBlock()` on every instruction and moving the first instruction isn\u0027t enough, as there\u0027s other state tracking in block that needs to be updated (namely `instruction_count_`).\n\nWe could potentially add a `MoveBlockInstructions(Block*)` helper to do this in one go while hiding the ugly details.",
+      "parentUuid": "adafdbff_bc137566",
       "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
