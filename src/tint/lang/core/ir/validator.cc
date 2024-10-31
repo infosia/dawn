@@ -78,6 +78,7 @@
 #include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/bool.h"
 #include "src/tint/lang/core/type/f32.h"
+#include "src/tint/lang/core/type/i32.h"
 #include "src/tint/lang/core/type/i8.h"
 #include "src/tint/lang/core/type/memory_view.h"
 #include "src/tint/lang/core/type/pointer.h"
@@ -117,6 +118,11 @@ struct ValidatedType {
 };
 
 namespace {
+
+// Values from Section 3.6.2. Limits, https://www.w3.org/TR/webgpu/#limits
+constexpr int64_t kComputeInvocationsPerWorkgroup = 256;
+// x, y, and z have different entries in the spec, but are all the same value.
+constexpr int64_t kComputeWorkgroupSizePerDimensionLimit = 256;
 
 /// @returns the parent block of @p block
 const Block* ParentBlockOf(const Block* block) {
@@ -877,6 +883,10 @@ class Validator {
     /// Validates the given function
     /// @param func the function to validate
     void CheckFunction(const Function* func);
+
+    /// Validates the workgroup_size attribute for a given function
+    /// @param func the function to validate
+    void CheckWorkgroupSize(const Function* func);
 
     /// Validates the specific function as a vertex entry point
     /// @param ep the function to validate
@@ -1860,19 +1870,12 @@ void Validator::CheckFunction(const Function* func) {
         }
     }
 
-    if (func->Stage() == Function::PipelineStage::kCompute) {
-        if (DAWN_UNLIKELY(!func->WorkgroupSize().has_value())) {
-            AddError(func) << "compute entry point requires workgroup size attribute";
-        }
+    CheckWorkgroupSize(func);
 
+    if (func->Stage() == Function::PipelineStage::kCompute) {
         if (DAWN_UNLIKELY(func->ReturnType() && !func->ReturnType()->Is<core::type::Void>())) {
             AddError(func) << "compute entry point must not have a return type";
         }
-    }
-
-    if (DAWN_UNLIKELY(func->Stage() != Function::PipelineStage::kCompute &&
-                      func->WorkgroupSize().has_value())) {
-        AddError(func) << "workgroup size attribute only valid on compute entry point";
     }
 
     if (func->Stage() == Function::PipelineStage::kFragment) {
@@ -1932,6 +1935,79 @@ void Validator::CheckFunction(const Function* func) {
 
     QueueBlock(func->Block());
     ProcessTasks();
+}
+
+void Validator::CheckWorkgroupSize(const Function* func) {
+    if (func->Stage() != Function::PipelineStage::kCompute) {
+        if (func->WorkgroupSize().has_value()) {
+            AddError(func) << "@workgroup_size only valid on compute entry point";
+        }
+        return;
+    }
+
+    if (!func->WorkgroupSize().has_value()) {
+        AddError(func) << "compute entry point requires @workgroup_size";
+        return;
+    }
+
+    auto sizes = func->WorkgroupSize().value();
+    // The number parameters cannot be checked here, since it is stored internally as a 3 element
+    // array, so will always have 3 elements at this point.
+
+    if (!sizes[0] || !sizes[0]->Type()) {
+        AddError(func) << "@workgroup_size params must be an i32 or u32";
+        return;
+    }
+    bool sizes_are_i32 = sizes[0]->Type()->Is<core::type::I32>();
+    int64_t size_product = 1;
+    for (auto* size : sizes) {
+        if (!size) {
+            AddError(func) << "@workgroup_size params must be an i32 or u32";
+            return;
+        }
+
+        auto* ty = size->Type();
+        if (!ty || (!ty->Is<core::type::U32>() && !ty->Is<core::type::I32>())) {
+            AddError(func) << "@workgroup_size params must be an i32 or u32";
+            return;
+        }
+
+        bool size_is_i32 = ty->Is<core::type::I32>();
+        if (sizes_are_i32 != size_is_i32) {
+            AddError(func) << "@workgroup_size params must be all i32s or all u32s";
+            return;
+        }
+
+        // TODO: Add logic for Override, once https://dawn-review.googlesource.com/c/dawn/+/212094
+        // has landed
+        auto* c = size->As<ir::Constant>();
+        if (!c) {
+            AddError(func) << "@workgroup_size params must be a constant or override values";
+            return;
+        }
+
+        int64_t val = c->Value()->ValueAs<int64_t>();
+        if (val <= 0) {
+            AddError(func) << "@workgroup_size params must be greater than 0";
+            return;
+        }
+
+        if (val > kComputeWorkgroupSizePerDimensionLimit) {
+            AddError(func)
+                << "@workgroup_size must be less than or equal to the individual dimension limit, "
+                << kComputeWorkgroupSizePerDimensionLimit;
+            return;
+        }
+
+        size_product *= val;
+    }
+
+    if (size_product > kComputeInvocationsPerWorkgroup) {
+        AddError(func) << "the product of @workgroup_size params must be less than or equal to the "
+                          "invocations per workgroup limit, "
+                       << kComputeInvocationsPerWorkgroup;
+        return;
+    }
 }
 
 void Validator::CheckVertexEntryPoint(const Function* ep) {

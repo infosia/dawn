@@ -157,8 +157,8 @@ TEST_F(SpirvParserTest, MultipleEntryPoints) {
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %foo "foo"
                OpEntryPoint GLCompute %bar "bar"
-               OpExecutionMode %foo LocalSize 3 4 5
-               OpExecutionMode %bar LocalSize 6 7 8
+               OpExecutionMode %foo LocalSize 1 2 3
+               OpExecutionMode %bar LocalSize 4 5 6
        %void = OpTypeVoid
     %ep_type = OpTypeFunction %void
 
@@ -173,12 +173,12 @@ TEST_F(SpirvParserTest, MultipleEntryPoints) {
                OpFunctionEnd
 )",
               R"(
-%foo = @compute @workgroup_size(3u, 4u, 5u) func():void {
+%foo = @compute @workgroup_size(1u, 2u, 3u) func():void {
   $B1: {
     ret
   }
 }
-%bar = @compute @workgroup_size(6u, 7u, 8u) func():void {
+%bar = @compute @workgroup_size(4u, 5u, 6u) func():void {
   $B2: {
     ret
   }
