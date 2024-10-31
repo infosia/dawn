@@ -1582,6 +1582,10 @@
                 ]
             },
             {
+                "name": "get adapter info",
+                "returns": "adapter info"
+            },
+            {
                 "name": "get adapter",
                 "returns": "adapter",
                 "tags": ["dawn"]

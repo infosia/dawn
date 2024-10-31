@@ -288,6 +288,7 @@
             "BufferUnmap",
             "DeviceCreateErrorBuffer",
             "DeviceDestroy",
+            "DeviceGetAdapterInfo",
             "DeviceGetQueue",
             "DeviceGetSupportedSurfaceUsage",
             "DeviceInjectError",

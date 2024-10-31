@@ -282,6 +282,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     TextureBase* APICreateErrorTexture(const TextureDescriptor* desc);
 
     AdapterBase* APIGetAdapter();
+    AdapterInfo* APIGetAdapterInfo();
     QueueBase* APIGetQueue();
 
     wgpu::Status APIGetAHardwareBufferProperties(void* handle,
