@@ -16,6 +16,23 @@
       "message": "this will have to wait for a CTS roll",
       "revId": "d6e50b78e8f6a3d0083c11ec861470087e28679b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68ff86c9_8555518f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-31T23:41:17Z",
+      "side": 1,
+      "message": "LGTM but I just realized that depth should not be filterable according to the spec, like you pointed out in chat and I just kinda blanked out. Sorry.",
+      "revId": "d6e50b78e8f6a3d0083c11ec861470087e28679b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
