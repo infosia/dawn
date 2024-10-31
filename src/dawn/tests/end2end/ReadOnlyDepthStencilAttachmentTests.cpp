@@ -84,6 +84,7 @@ class ReadOnlyDepthStencilAttachmentTests
                                               const TestSpec& spec) const {
         utils::ComboRenderPipelineDescriptor pipelineDescriptor;
 
+        std::vector<wgpu::BindGroupLayoutEntry> entries;
         // Draw a rectangle via two triangles. The depth value of the top of the rectangle is 0.4.
         // The depth value of the bottom is 0.0. The depth value gradually change from 0.4 to 0.0
         // from the top to the bottom. The top part will compare with the depth values and fail to
@@ -119,7 +120,20 @@ class ReadOnlyDepthStencilAttachmentTests
                     fn main(@builtin(position) FragCoord : vec4f) -> @location(0) vec4f {
                         return vec4f(textureSample(tex, samp, FragCoord.xy), 0.0, 0.0, 0.0);
                     })");
-
+            {
+                wgpu::BindGroupLayoutEntry entry;
+                entry.binding = 0;
+                entry.visibility = wgpu::ShaderStage::Fragment;
+                entry.sampler.type = wgpu::SamplerBindingType::NonFiltering;
+                entries.push_back(entry);
+            }
+            {
+                wgpu::BindGroupLayoutEntry entry;
+                entry.binding = 1;
+                entry.visibility = wgpu::ShaderStage::Fragment;
+                entry.texture.sampleType = wgpu::TextureSampleType::Depth;
+                entries.push_back(entry);
+            }
         } else {
             DAWN_ASSERT(spec.sampledAspect == wgpu::TextureAspect::StencilOnly);
             // Sample from stencil attachment and draw that sampled texel into color buffer.
@@ -133,6 +147,20 @@ class ReadOnlyDepthStencilAttachmentTests
                         var texel = textureLoad(tex, vec2i(FragCoord.xy), 0);
                         return vec4f(f32(texel[0]) / 255.0, 0.0, 0.0, 0.0);
                     })");
+            {
+                wgpu::BindGroupLayoutEntry entry;
+                entry.binding = 0;
+                entry.visibility = wgpu::ShaderStage::Fragment;
+                entry.sampler.type = wgpu::SamplerBindingType::NonFiltering;
+                entries.push_back(entry);
+            }
+            {
+                wgpu::BindGroupLayoutEntry entry;
+                entry.binding = 1;
+                entry.visibility = wgpu::ShaderStage::Fragment;
+                entry.texture.sampleType = wgpu::TextureSampleType::Uint;
+                entries.push_back(entry);
+            }
         }
 
         wgpu::DepthStencilState* depthStencil = pipelineDescriptor.EnableDepthStencil(format);
@@ -142,6 +170,16 @@ class ReadOnlyDepthStencilAttachmentTests
         if (spec.stencilWriteEnabled) {
             depthStencil->stencilFront.passOp = wgpu::StencilOperation::Replace;
         }
+
+        wgpu::BindGroupLayoutDescriptor bglDescriptor;
+        bglDescriptor.entryCount = entries.size();
+        bglDescriptor.entries = entries.data();
+        wgpu::BindGroupLayout bgl = device.CreateBindGroupLayout(&bglDescriptor);
+
+        wgpu::PipelineLayoutDescriptor plDescriptor;
+        plDescriptor.bindGroupLayoutCount = entries.empty() ? 0 : 1;
+        plDescriptor.bindGroupLayouts = &bgl;
+        pipelineDescriptor.layout = device.CreatePipelineLayout(&plDescriptor);
 
         return device.CreateRenderPipeline(&pipelineDescriptor);
     }
