@@ -22,6 +22,30 @@
       },
       "revId": "ea3d226d4e1644b309124c4ad231d67844729a9e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0166986_d8d4c4a9",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-10-31T11:42:46Z",
+      "side": 1,
+      "message": "Thanks for your information, Rafael!\n\nWill you work on this in Dawn or maybe I can help?",
+      "parentUuid": "ef049ae5_06fd93db",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 28
+      },
+      "revId": "ea3d226d4e1644b309124c4ad231d67844729a9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
