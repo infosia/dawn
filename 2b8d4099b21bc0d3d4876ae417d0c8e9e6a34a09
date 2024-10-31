@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fbbfc9b_8544e3c6",
+        "filename": "src/dawn/native/CompilationMessages.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-10-31T16:42:40Z",
+      "side": 1,
+      "message": "I don\u0027t think an atomic is enough to protect this. If two threads hit this function at the same time, one will get `alreadyFlushed \u003d false` and start to write the CompilationInfo members while the other will get `alreadyFlushed \u003d true` and skip the condition while the first thread is still in the process of writing values, potentially reading partially written data.",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 5
+      },
+      "revId": "2b8d4099b21bc0d3d4876ae417d0c8e9e6a34a09",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
