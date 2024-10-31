@@ -326,5 +326,112 @@ DAWN_INSTANTIATE_TEST_P(BufferMapExtendedUsagesPerf,
                          UploadSize::BufferSize_1MB, UploadSize::BufferSize_4MB,
                          UploadSize::BufferSize_16MB});
 
+struct MultipleBufferUploadParams : AdapterTestParam {
+    MultipleBufferUploadParams(const AdapterTestParam& param, UploadMethod uploadMethod)
+        : AdapterTestParam(param), uploadMethod(uploadMethod) {}
+
+    UploadMethod uploadMethod;
+};
+
+std::ostream& operator<<(std::ostream& ostream, const MultipleBufferUploadParams& param) {
+    ostream << static_cast<const AdapterTestParam&>(param);
+
+    switch (param.uploadMethod) {
+        case UploadMethod::WriteBuffer:
+            ostream << "_WriteBuffer";
+            break;
+        case UploadMethod::MappedAtCreation:
+            ostream << "_MappedAtCreation";
+            break;
+        case UploadMethod::MapWithExtendedUsages:
+            ostream << "_MapWithExtendedUsages";
+            break;
+        case UploadMethod::StagingBuffer:
+            ostream << "_StagingBuffer";
+            break;
+    }
+
+    return ostream;
+}
+
+class MultipleBufferUploadPerf : public DawnPerfTestWithParams<MultipleBufferUploadParams> {
+  public:
+    MultipleBufferUploadPerf() : DawnPerfTestWithParams(1, 1) {}
+    ~MultipleBufferUploadPerf() override = default;
+
+    void SetUp() override;
+
+  private:
+    void Step() override;
+
+    void StepForMappedAtCreation();
+
+    void MapAsyncAndWait(const wgpu::Buffer& buffer,
+                         wgpu::MapMode mode,
+                         size_t offset,
+                         size_t size);
+
+    std::array<uint32_t, 500> mBufferSizes;
+};
+
+void MultipleBufferUploadPerf::SetUp() {
+    DawnPerfTestWithParams<MultipleBufferUploadParams>::SetUp();
+
+    uint32_t minSizePower = 4;
+    uint32_t maxSizePower = 23;
+
+    for (size_t i = 0; i < mBufferSizes.size(); ++i) {
+        uint32_t power = minSizePower + i % (maxSizePower - minSizePower + 1);
+        mBufferSizes[i] = 1 << power;
+        printf("%d ", 1 << power);
+    }
+    printf("\n");
+}
+
+void MultipleBufferUploadPerf::Step() {
+    StepForMappedAtCreation();
+}
+
+void MultipleBufferUploadPerf::StepForMappedAtCreation() {
+    std::array<wgpu::Buffer, 500> buffers;
+    for (size_t i = 0; i < 500; ++i) {
+        uint32_t bufferSize = mBufferSizes[i];
+        wgpu::BufferDescriptor storageDesc;
+        storageDesc.mappedAtCreation = true;
+        storageDesc.size = bufferSize;
+        storageDesc.usage =
+            wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Storage;
+        buffers[i] = device.CreateBuffer(&storageDesc);
+        void* mapped = buffers[i].GetMappedRange();
+        memset(mapped, 0, bufferSize);
+        buffers[i].Unmap();
+        queue.Submit(0, nullptr);
+    }
+
+    bool submittedWorkDone = false;
+    queue.OnSubmittedWorkDone(wgpu::CallbackMode::AllowProcessEvents,
+                              [&submittedWorkDone](wgpu::QueueWorkDoneStatus status) {
+                                  EXPECT_EQ(status, wgpu::QueueWorkDoneStatus::Success);
+                                  submittedWorkDone = true;
+                              });
+    while (!submittedWorkDone) {
+        WaitABit();
+    }
+}
+
+void MultipleBufferUploadPerf::MapAsyncAndWait(const wgpu::Buffer& buffer,
+                                               wgpu::MapMode mode,
+                                               size_t offset,
+                                               size_t size) {}
+
+TEST_P(MultipleBufferUploadPerf, Run) {
+    RunTest();
+}
+
+DAWN_INSTANTIATE_TEST_P(MultipleBufferUploadPerf,
+                        {D3D12Backend(), VulkanBackend()},
+                        {UploadMethod::WriteBuffer, UploadMethod::MappedAtCreation,
+                         UploadMethod::StagingBuffer});
+
 }  // anonymous namespace
 }  // namespace dawn

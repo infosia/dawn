@@ -77,7 +77,7 @@ class DawnPerfTestEnvironment : public DawnTestEnvironment {
 class DawnPerfTestBase {
     static constexpr double kCalibrationRunTimeSeconds = 1.0;
     static constexpr double kMaximumRunTimeSeconds = 10.0;
-    static constexpr unsigned int kNumTrials = 3;
+    static constexpr unsigned int kNumTrials = 1;
 
   public:
     // Perf test results are reported as the amortized time of |mStepsToRun| * |mIterationsPerStep|.
