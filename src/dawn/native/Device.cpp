@@ -1725,6 +1725,12 @@ AdapterBase* DeviceBase::APIGetAdapter() {
     return mAdapter.Get();
 }
 
+AdapterInfo* DeviceBase::APIGetAdapterInfo() {
+    AdapterInfo adapterInfo;
+    mAdapter->GetInfo(&adapterInfo);
+    return ReturnToAPI(std::move(adapterInfo));
+}
+
 QueueBase* DeviceBase::APIGetQueue() {
     // Backends gave the primary queue during initialization.
     DAWN_ASSERT(mQueue != nullptr);
