@@ -33,6 +33,23 @@
       "message": "PTAL cwallez@ and let me know if there is anything else here needed.",
       "revId": "a0b4cdc5129bb4784987c914dcb09f80bd94f0d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06a7a4da_97a08500",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-10-31T23:03:42Z",
+      "side": 1,
+      "message": "LGTM as well, thank you for your patience while we were at the WebGPU F2F.",
+      "revId": "a0b4cdc5129bb4784987c914dcb09f80bd94f0d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
