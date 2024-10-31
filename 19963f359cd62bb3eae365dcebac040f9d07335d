@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "196bb9e1_37b95dbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-10-31T23:32:36Z",
+      "side": 1,
+      "message": "looks good other than what Dan found and my requested assert, looks good.",
+      "revId": "19963f359cd62bb3eae365dcebac040f9d07335d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a84f2e1_d96ddedb",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-10-31T23:32:36Z",
+      "side": 1,
+      "message": "Please assert that it has 3 elements.",
+      "revId": "19963f359cd62bb3eae365dcebac040f9d07335d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd0c59e6_72bb45a5",
