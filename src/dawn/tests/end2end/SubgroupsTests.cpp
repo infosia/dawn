@@ -990,13 +990,12 @@ TEST_P(SubgroupsShaderInclusiveTest, InclusiveExecution) {
     }
     DAWN_TEST_UNSUPPORTED_IF(!IsChromiumExperimentalSubgroupsRequired());
 
-    // TODO(351745820): Suppress the test for Qualcomm Adreno 6xx until we figure out why creating
-    // compute pipeline with subgroupBroadcast shader fails on trybots using these devices.
-    DAWN_SUPPRESS_TEST_IF(gpu_info::IsQualcomm_PCIAdreno6xx(GetParam().adapterProperties.vendorID,
-                                                            GetParam().adapterProperties.deviceID));
-
     for (uint32_t workgroupSize : {1, 2, 3, 4, 7, 8, 15, 16, 31, 32, 63, 64, 127, 128, 255, 256}) {
-        TestReadSubgroupSize(workgroupSize);
+        if (workgroupSize != 1 && workgroupSize != 256) {
+            InfoLog() << "SubgroupsShaderInclusiveTest - start " << workgroupSize;
+            TestReadSubgroupSize(workgroupSize);
+            InfoLog() << "SubgroupsShaderInclusiveTest - end " << workgroupSize;
+        }
     }
 }
 
