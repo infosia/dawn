@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef049ae5_06fd93db",
+        "filename": "src/dawn/native/d3d12/D3D12Info.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2024-10-31T02:13:19Z",
+      "side": 1,
+      "message": "Using the SDK_VERSION macro will work but has the disadvantage that Skia tests always run with no render passes. \n\nI was originally going to solve this by changing Dawn to use the D3D12 headers from https://github.com/microsoft/directX-Headers, which has the OPTIONS18 struct. Chromium already takes a dependency on this repository. If Dawn + Skia took the same dependency, then Dawn code can be #ifdef clean.",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 28
+      },
+      "revId": "ea3d226d4e1644b309124c4ad231d67844729a9e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
