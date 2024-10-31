@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2d993db_cef0a375",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-31T21:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e1d0e90_8627a5ae",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce176854_8831b0e1",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b379bbb1_8a067e6b",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-31T21:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce176854_8831b0e1",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9469c66d_188cb2e1",
@@ -65,6 +101,24 @@
       "writtenOn": "2024-10-30T16:31:44Z",
       "side": 1,
       "message": "Just do `exit-\u003eDestroy`. The destroy sets a flag, it doesn\u0027t change the list being iterated.",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c089dfa_84f5e1bb",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-31T21:16:24Z",
+      "side": 1,
+      "message": "Right, but calling Exit::Destroy() removes the exit from the Switch\u0027s list of Exits, which invalidates the iterator. The workaround I\u0027ve seen thus far is to iterate over a Vector copy of the Exits (over `swtch-\u003eExits().Vector()`), which works, but it\u0027s unfortunate that we have to make a copy. Ideally, we\u0027d find a way to remove the element from the container, and get the next valid iterator, like how [C++ `erase`](https://en.cppreference.com/w/cpp/container/unordered_set/erase).\n\nI\u0027ll do the Vector() thing for now, unless a better way is suggested.",
+      "parentUuid": "9469c66d_188cb2e1",
       "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -104,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4036ca61_3b1bda23",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-31T21:16:24Z",
+      "side": 1,
+      "message": "As discussed offline with James, we can do this as a follow-up.",
+      "parentUuid": "7435780a_a37426c9",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee8b5d73_2096d00f",
@@ -117,6 +189,24 @@
       "writtenOn": "2024-10-30T16:31:44Z",
       "side": 1,
       "message": "This doesn\u0027t need to be a separate loop, you can just destroy above.",
+      "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4de3b34a_551f80d8",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-10-31T21:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee8b5d73_2096d00f",
       "revId": "7c3b14104f48ccf234353763cead072a03e28a8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
