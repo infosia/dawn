@@ -210,6 +210,13 @@ interop::Interface<interop::GPUSupportedLimits> GPUDevice::getLimits(Napi::Env e
     return interop::GPUSupportedLimits::Create<GPUSupportedLimits>(env, limits);
 }
 
+interop::Interface<interop::GPUAdapterInfo> GPUDevice::getAdapterInfo(Napi::Env env) {
+    wgpu::AdapterInfo adapterInfo = {};
+    device_.GetAdapterInfo(&adapterInfo);
+
+    return interop::GPUAdapterInfo::Create<GPUAdapterInfo>(env, adapterInfo);
+}
+
 interop::Interface<interop::GPUQueue> GPUDevice::getQueue(Napi::Env env) {
     return interop::GPUQueue::Create<GPUQueue>(env, device_.GetQueue(), async_);
 }
