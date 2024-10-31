@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b0779e5_2f97d816",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-31T14:14:46Z",
+      "side": 1,
+      "message": "Nit: Just an `override` instruction now.",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4f1c84d_5cf16cad",
+        "filename": "src/tint/lang/core/ir/override.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-31T14:14:46Z",
+      "side": 1,
+      "message": "übernit: Prefer `Id` instead of `ID` for consistency (yeah, there\u0027s other places that use `ID`, but meh).",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 66
+      },
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caed0e45_2a03c9dc",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-31T14:14:46Z",
+      "side": 1,
+      "message": "This feels too loose now. This would allow you to put other instructions in a root block that would be invalid, e.g.\n\n```\n%v:array\u003cu32\u003e \u003d var\u003cstorage\u003e\n%1 \u003d call arrayLength(%v)\n%2:u32 \u003d var\u003cprivate\u003e %1\n```\n\nThe `arrayLength` call is only used in the root block, but this should still not be allowed.\n\nI think we should be specifically checking for all the types of instructions that are allowed (`binary`, `unary`, `call`, `construct`, `convert`), and checking that their operands are all constants or other overrides (and also that they are only used in the root block).",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aac93674_3a8c6191",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2024,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-31T14:14:46Z",
+      "side": 1,
+      "message": "Should also check that the result type is a scalar.",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a9bf9b3_e7d7e161",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-31T14:14:46Z",
+      "side": 1,
+      "message": "Should also check that the type matches the instruction result type.",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e07df7dc_d2462023",
+        "filename": "src/tint/lang/wgsl/reader/lower/lower.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-31T14:14:46Z",
+      "side": 1,
+      "message": "Nit: Put in the `.cc` instead?",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fb74236_3f9588cb",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-10-31T14:14:46Z",
+      "side": 1,
+      "message": "I thought we invented IDs for Dawn, so there should always be one? Would be nice to make this a requirement in the IR instead of an optional that you have to check for.",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
