@@ -403,8 +403,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
     // Check in debug that the pipeline layout is compatible with the current pipeline.
     for (const StageAndDescriptor& stage : stages) {
         const EntryPointMetadata& metadata = stage.module->GetEntryPoint(stage.entryPoint);
-        DAWN_ASSERT(
-            ValidateCompatibilityWithPipelineLayout(device, metadata, result.Get()).IsSuccess());
+        DAWN_TRY(ValidateCompatibilityWithPipelineLayout(device, metadata, result.Get()));
     }
 
     return std::move(result);
