@@ -45,6 +45,7 @@ cc_library(
   hdrs = [
     "binding_point.h",
     "override_id.h",
+    "print_info.h",
     "vertex_pulling_config.h",
   ],
   deps = [
