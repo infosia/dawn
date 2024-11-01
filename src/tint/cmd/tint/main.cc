@@ -1060,7 +1060,6 @@ bool GenerateGlsl([[maybe_unused]] const tint::Program& program,
         }
 
         gen_options.disable_robustness = !options.enable_robustness;
-        gen_options.bindings = tint::glsl::writer::GenerateBindings(program);
 
         constexpr uint32_t kMaxBindGroups = 4u;
         gen_options.bindings.texture_builtins_from_uniform.ubo_binding = {kMaxBindGroups, 0u};
@@ -1107,6 +1106,9 @@ bool GenerateGlsl([[maybe_unused]] const tint::Program& program,
                 return 1;
             }
         }
+
+        // Generate binding options.
+        gen_options.bindings = tint::glsl::writer::GenerateBindings(ir.Get());
 
         // Generate GLSL.
         auto result = tint::glsl::writer::Generate(ir.Get(), gen_options, "");
