@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "5b646e263f2eaee1b634b19f93a40b9de68e561b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "876acfb1_94cf154d",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2024-11-01T15:24:10Z",
+      "side": 1,
+      "message": "```suggestion\n        // of the guaranteed 2^31 bytes.\n```",
+      "range": {
+        "startLine": 380,
+        "startChar": 30,
+        "endLine": 380,
+        "endChar": 34
+      },
+      "revId": "5b646e263f2eaee1b634b19f93a40b9de68e561b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
