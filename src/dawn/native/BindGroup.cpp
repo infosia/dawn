@@ -174,9 +174,14 @@ MaybeError ValidateSampledTextureBinding(DeviceBase* device,
 
     SampleTypeBit supportedTypes = texture->GetFormat().GetAspectInfo(aspect).supportedSampleTypes;
     if (supportedTypes == SampleTypeBit::External) {
-        supportedTypes =
-            static_cast<SharedTextureMemoryContents*>(texture->GetSharedResourceMemoryContents())
-                ->GetExternalFormatSupportedSampleTypes();
+        auto* memory_contents =
+            static_cast<SharedTextureMemoryContents*>(texture->GetSharedResourceMemoryContents());
+        if (memory_contents) {
+            supportedTypes = memory_contents->GetExternalFormatSupportedSampleTypes();
+        } else {
+            // TODO: Maybe Null backend should support SharedTextureMemory?
+            supportedTypes = SampleTypeBit::Float;
+        }
     }
     DAWN_TRY(ValidateCanUseAs(view, wgpu::TextureUsage::TextureBinding, mode));
 
