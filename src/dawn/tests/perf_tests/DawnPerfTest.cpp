@@ -63,6 +63,9 @@ void DumpTraceEventsToJSONFile(
             case platform::TraceCategory::GPUWork:
                 category = "gpu";
                 break;
+            case platform::TraceCategory::Tint:
+                category = "tint";
+                break;
             default:
                 DAWN_UNREACHABLE();
         }

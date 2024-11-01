@@ -32,7 +32,7 @@ namespace dawn::utils {
 
 class Timer {
   public:
-    virtual ~Timer() {}
+    virtual ~Timer();
 
     // Timer functionality: Use start() and stop() to record the duration and use
     // getElapsedTime() to query that duration.  If getElapsedTime() is called in between, it

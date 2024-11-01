@@ -168,7 +168,6 @@
 #include <atomic>
 #include <string>
 
-#include "partition_alloc/pointers/raw_ptr.h"
 #include "src/utils/event_tracer.h"
 
 // Records a pair of begin and end events called "name" for the current
@@ -891,7 +890,7 @@ static inline tracing::TraceEventHandle addTraceEvent(
     unsigned char flags,
     int /*unused, helps avoid empty __VA_ARGS__*/) {
     return TRACE_EVENT_API_ADD_TRACE_EVENT(platform, phase, categoryEnabled, name, id, zeroNumArgs,
-                                           0, 0, 0, flags);
+                                           nullptr, nullptr, nullptr, flags);
 }
 
 template <class ARG1_TYPE>
@@ -959,9 +958,9 @@ class TraceEndOnScopeClose {
     void addEventIfEnabled() {
         // Only called when m_pdata is non-null.
         if (*m_pdata->categoryEnabled) {
-            TRACE_EVENT_API_ADD_TRACE_EVENT(m_pdata->platform, TRACE_EVENT_PHASE_END,
-                                            m_pdata->categoryEnabled, m_pdata->name, noEventId,
-                                            zeroNumArgs, 0, 0, 0, TRACE_EVENT_FLAG_NONE);
+            TRACE_EVENT_API_ADD_TRACE_EVENT(
+                m_pdata->platform, TRACE_EVENT_PHASE_END, m_pdata->categoryEnabled, m_pdata->name,
+                noEventId, zeroNumArgs, nullptr, nullptr, nullptr, TRACE_EVENT_FLAG_NONE);
         }
     }
 
@@ -971,11 +970,11 @@ class TraceEndOnScopeClose {
     // members of this class instead, compiler warnings occur about potential
     // uninitialized accesses.
     struct Data {
-        raw_ptr<TracePlatform> platform;
+        TracePlatform* platform;
         const unsigned char* categoryEnabled;
         const char* name;
     };
-    raw_ptr<Data> m_pdata = nullptr;
+    Data* m_pdata = nullptr;
     Data m_data;
 };
 

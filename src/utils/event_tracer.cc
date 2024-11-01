@@ -56,8 +56,6 @@ TraceEventHandle AddTraceEvent(TracePlatform* platform,
                                const unsigned char* argTypes,
                                const uint64_t* argValues,
                                unsigned char flags) {
-    DAWN_ASSERT(platform != nullptr);
-
     double timestamp = platform->MonotonicallyIncreasingTime();
     if (timestamp != 0) {
         TraceEventHandle handle =

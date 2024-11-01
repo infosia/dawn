@@ -36,6 +36,7 @@ set(headers
 
 set(sources
     "event_tracer.cc"
+    "timer.cc"
     "trace_platform.cc"
 )
 

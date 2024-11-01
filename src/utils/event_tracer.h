@@ -32,12 +32,7 @@
 
 #include "src/utils/trace_platform.h"
 
-namespace dawn::utils {
-
-class Platform;
-enum class TraceCategory;
-
-namespace tracing {
+namespace dawn::utils::tracing {
 
 using TraceEventHandle = uint64_t;
 
@@ -55,7 +50,6 @@ TraceEventHandle AddTraceEvent(TracePlatform* platform,
                                const uint64_t* argValues,
                                unsigned char flags);
 
-}  // namespace tracing
-}  // namespace dawn::utils
+}  // namespace dawn::utils::tracing
 
 #endif  // SRC_UTILS_EVENT_TRACER_H_
