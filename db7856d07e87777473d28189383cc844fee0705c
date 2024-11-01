@@ -16,6 +16,24 @@
       "message": "I\u0027m (re?)discovering the discussion here https://github.com/webgpu-native/webgpu-headers/issues/252#issuecomment-1888142875 why do we care about the output size changing given that this is a set of features that will not change after the creation of the adapter?",
       "revId": "db7856d07e87777473d28189383cc844fee0705c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bd7d9f9_593d75b9",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 35
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-01T21:40:27Z",
+      "side": 1,
+      "message": "For this one I don\u0027t think there was really a hazard, it just would be inconsistent with how we return variable sized data everywhere else in the API.",
+      "parentUuid": "56328209_2abb3d95",
+      "revId": "db7856d07e87777473d28189383cc844fee0705c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

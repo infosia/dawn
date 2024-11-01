@@ -52,6 +52,24 @@
       "parentUuid": "2a9bcfda_b9d61bf6",
       "revId": "7edbb85bc6719dc7ed2838397b7b2ec45bcdc936",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "396331d1_2b210915",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-01T21:40:27Z",
+      "side": 1,
+      "message": "ah, then the `if`s are not needed. Didn\u0027t realize it would do that!",
+      "parentUuid": "4e53c1b9_67bd9051",
+      "revId": "7edbb85bc6719dc7ed2838397b7b2ec45bcdc936",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
