@@ -33,6 +33,7 @@
 #include "src/tint/lang/spirv/writer/common/options.h"
 #include "src/tint/utils/diagnostic/diagnostic.h"
 #include "src/tint/utils/result/result.h"
+#include "src/utils/trace_platform.h"
 
 // Forward declarations
 namespace tint::core::ir {
@@ -45,7 +46,9 @@ namespace tint::spirv::writer {
 /// @param module the core IR module to raise to SPIR-V dialect
 /// @param options the SPIR-V writer options
 /// @returns success or failure
-Result<SuccessType> Raise(core::ir::Module& module, const Options& options);
+Result<SuccessType> Raise(core::ir::Module& module,
+                          const Options& options,
+                          dawn::utils::TracePlatform* platform);
 
 }  // namespace tint::spirv::writer
 

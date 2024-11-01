@@ -33,15 +33,22 @@
 #include "src/tint/lang/spirv/writer/common/option_helpers.h"
 #include "src/tint/lang/spirv/writer/printer/printer.h"
 #include "src/tint/lang/spirv/writer/raise/raise.h"
+#include "src/utils/trace_event.h"
 
 // Included by 'ast_printer.h', included again here for './tools/run gen' track the dependency.
 #include "spirv/unified1/spirv.h"
 
 namespace tint::spirv::writer {
 
-Result<Output> Generate(core::ir::Module& ir, const Options& options) {
+Result<Output> Generate(core::ir::Module& ir,
+                        const Options& options,
+                        dawn::utils::TracePlatform* platform) {
+    TRACE_EVENT_BEGIN0(platform, Tint, "Generate SPIR-V");
+
     {
+        TRACE_EVENT_BEGIN0(platform, Tint, "Validate");
         auto res = ValidateBindingOptions(options);
+        TRACE_EVENT_END0(platform, Tint, "Validate");
         if (res != Success) {
             return res.Failure();
         }
@@ -50,16 +57,20 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options) {
     Output output;
 
     // Raise from core-dialect to SPIR-V-dialect.
-    if (auto res = Raise(ir, options); res != Success) {
+    if (auto res = Raise(ir, options, platform); res != Success) {
         return std::move(res.Failure());
     }
 
     // Generate the SPIR-V code.
+    TRACE_EVENT_BEGIN0(platform, Tint, "Print");
     auto spirv = Print(ir, options);
+    TRACE_EVENT_END0(platform, Tint, "Print");
     if (spirv != Success) {
         return std::move(spirv.Failure());
     }
     output.spirv = std::move(spirv.Get());
+
+    TRACE_EVENT_END0(platform, Tint, "Generate SPIR-V");
 
     return output;
 }
