@@ -430,6 +430,7 @@ enum class BuiltinFn : uint8_t {
     kSubgroupMatrixStore,
     kSubgroupMatrixMultiply,
     kSubgroupMatrixMultiplyAccumulate,
+    kPrint,
     kTintMaterialize,
     kNone,
 };
@@ -605,6 +606,7 @@ constexpr BuiltinFn kBuiltinFns[] = {
     BuiltinFn::kSubgroupMatrixStore,
     BuiltinFn::kSubgroupMatrixMultiply,
     BuiltinFn::kSubgroupMatrixMultiplyAccumulate,
+    BuiltinFn::kPrint,
     BuiltinFn::kTintMaterialize,
 };
 
@@ -761,6 +763,7 @@ constexpr const char* kBuiltinFnStrings[] = {
     "subgroupMatrixStore",
     "subgroupMatrixMultiply",
     "subgroupMatrixMultiplyAccumulate",
+    "print",
     "__tint_materialize",
 };
 
