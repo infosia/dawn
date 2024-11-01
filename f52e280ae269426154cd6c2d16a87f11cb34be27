@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f889b9bf_5983332a",
+        "filename": "src/dawn/native/AHBFunctions.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-01T23:08:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c760abd_94ae641e",
+      "revId": "f52e280ae269426154cd6c2d16a87f11cb34be27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a23f606_10e62d00",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-11-01T21:18:59Z",
       "side": 1,
       "message": "But these are formats we don\u0027t support so they would be `Undefined`. Spoke about this offline, these formats can be used for video decoding etc so they should also be treated as external for the purpose of EGL.",
+      "revId": "f52e280ae269426154cd6c2d16a87f11cb34be27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fbfe84a_477ff26b",
+        "filename": "src/dawn/native/AHBFunctions.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-01T23:08:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a23f606_10e62d00",
       "revId": "f52e280ae269426154cd6c2d16a87f11cb34be27",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
