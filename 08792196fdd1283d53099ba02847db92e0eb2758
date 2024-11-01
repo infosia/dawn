@@ -39,6 +39,30 @@
       },
       "revId": "08792196fdd1283d53099ba02847db92e0eb2758",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22a8b5d1_9763c628",
+        "filename": "src/dawn/native/AHBFunctions.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-01T23:40:39Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "d7ae1e85_1080a6f9",
+      "range": {
+        "startLine": 98,
+        "startChar": 79,
+        "endLine": 98,
+        "endChar": 88
+      },
+      "revId": "08792196fdd1283d53099ba02847db92e0eb2758",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
