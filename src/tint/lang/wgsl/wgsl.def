@@ -673,6 +673,10 @@ match workgroup
 @must_use @stage("fragment", "compute") implicit(T: fiu32_f16) fn quadSwapDiagonal(e: T) -> T
 @must_use @stage("fragment", "compute") implicit(N: num, T: fiu32_f16) fn quadSwapDiagonal(e: vec<N, T>) -> vec<N, T>
 
+// chromium_experimental_print
+implicit(T: concrete_scalar) fn print(T)
+implicit(N: num, T: concrete_scalar) fn print(vec<N, T>)
+
 ////////////////////////////////////////////////////////////////////////////////
 // Value constructors                                                         //
 ////////////////////////////////////////////////////////////////////////////////

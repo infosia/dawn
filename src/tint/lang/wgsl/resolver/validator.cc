@@ -1882,6 +1882,17 @@ bool Validator::BuiltinCall(const sem::Call* call) const {
         }
     }
 
+    // The `print()` builtin requires the chromium_internal_print feature to be available.
+    if (auto* fn = call->Target()->As<sem::BuiltinFn>()) {
+        if (fn->Fn() == wgsl::BuiltinFn::kPrint) {
+            if (!allowed_features_.extensions.count(wgsl::Extension::kChromiumInternalPrint)) {
+                AddError(call->Declaration()->source)
+                    << "chromium_internal_print is not available on this device";
+                return false;
+            }
+        }
+    }
+
     return true;
 }
 
