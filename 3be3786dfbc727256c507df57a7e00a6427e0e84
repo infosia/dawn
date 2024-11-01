@@ -156,6 +156,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "971a292b_acbdf950",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-01T15:41:40Z",
+      "side": 1,
+      "message": "I could imagine `SubstituteOverrides` trying to const-eval expressions that have non-constant values, e.g.\n```\n%o:u32 \u003d override @id(1)\n%p:ptr\u003cu32, private\u003e \u003d var\u003cprivate\u003e\n%1:u32 \u003d load %p \n%2:u32 \u003d add %o %1\n```\nHere when you replace `%o` and recursively substitute and evaluate its uses, you\u0027ll want to evaluate the `%2`/`add` instruction, which has a non-constant/override operand.\n\nLikewise, the current validation logic would allow something like `call dpdx %o`, which *does* have override operands, but cannot be const-evaluated.\n\nThat said, I don\u0027t think we have any plans to fuzz this transform directly, since we\u0027re currently only gearing up to directly fuzz IR that validates with the core IR capabilities (and therefore excludes overrides). So I think we should maybe just add a comment about how this validation is a little loose and land this as is, and deal with it later if it becomes an issue.",
+      "parentUuid": "8da248f8_433fe082",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aac93674_3a8c6191",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 9
