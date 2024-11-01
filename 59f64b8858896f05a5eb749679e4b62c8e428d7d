@@ -16,6 +16,24 @@
       "message": "lgtm\n\nthe only thing is the added suppressions at the end have too many tags. But those can be cleaned up manually later?",
       "revId": "59f64b8858896f05a5eb749679e4b62c8e428d7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1809a9f1_cce1dbfc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-11-01T21:41:38Z",
+      "side": 1,
+      "message": "It might be possible to have the simplified code path be less verbose. It does this at the moment to avoid any possibility of conflicts, but it may be possible to re-use some of the work from https://dawn-review.googlesource.com/c/dawn/+/194441 to figure out which tags can be safely removed.\n\nThat\u0027s an improvement that I\u0027d want to save for after the roller is switched over to the simplified path and the old path is removed, though.",
+      "parentUuid": "efd52195_9b28d23c",
+      "revId": "59f64b8858896f05a5eb749679e4b62c8e428d7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
