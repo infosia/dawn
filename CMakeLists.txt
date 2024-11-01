@@ -86,6 +86,10 @@ if (CMAKE_SYSTEM_NAME MATCHES "Emscripten")
   set(BUILD_SAMPLES ON)
   set(BUILD_TESTS ON)
   set(ENABLE_NULL OFF)
+  # Prevent gtest from using exceptions, otherwise tests crash under JSPI. There
+  # doesn't seem to be an option to tell the gtest build files to do this, so we
+  # set it globally. (This seems to be the intended usage.)
+  add_definitions(-DGTEST_HAS_EXCEPTIONS=0)
 elseif (WIN32)
   set(ENABLE_D3D11 ON)
   set(USE_WINDOWS_UI ON)
