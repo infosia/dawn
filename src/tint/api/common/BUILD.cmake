@@ -42,6 +42,7 @@ tint_add_target(tint_api_common lib
   api/common/binding_point.h
   api/common/common.cc
   api/common/override_id.h
+  api/common/print_info.h
 )
 
 tint_target_add_dependencies(tint_api_common lib
