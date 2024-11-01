@@ -120,6 +120,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1dc9bc7d_b1171cef",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-01T01:58:07Z",
+      "side": 1,
+      "message": "It\u0027ll likely be necessary to have this extra validation at some point, as the fuzzers will probably do this as soon as we add override support to the IR proto, and then break the `SubstituteOverrides` transform.\n\nWe can do it in a later date, but I wanted to call it out as a potential issue that we will likely hit later.",
+      "parentUuid": "75cd7444_1ae0e600",
+      "revId": "3be3786dfbc727256c507df57a7e00a6427e0e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aac93674_3a8c6191",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 9
