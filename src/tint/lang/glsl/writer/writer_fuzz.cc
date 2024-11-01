@@ -140,12 +140,12 @@ bool CanRun(const core::ir::Module& module, Options& options) {
     return true;
 }
 
-void IRFuzzer(core::ir::Module& module, Options options) {
+void IRFuzzer(core::ir::Module& module) {
+    Options options;
+    options.bindings = GenerateBindings(module);
     if (!CanRun(module, options)) {
         return;
     }
-
-    options.bindings = GenerateBindings(module);
 
     [[maybe_unused]] auto output = Generate(module, options, "");
 }
