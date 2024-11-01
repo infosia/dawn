@@ -51,6 +51,20 @@ interface GPUCommandEncoder {
 };
 
 // Not in webgpu.idl yet.
+enum GPUVertexFormat {
+    "uint8",
+    "sint8",
+    "unorm8",
+    "snorm8",
+    "uint16",
+    "sint16",
+    "unorm16",
+    "snorm16",
+    "float16",
+    "unorm8x4-bgra",
+};
+
+// Not in webgpu.idl yet.
 interface GPURenderPassEncoder {
     undefined multiDrawIndirect(GPUBuffer indirectBuffer, GPUSize64 indirectOffset, GPUSize32 maxDrawCount,
         GPUBuffer? drawCountBuffer, optional GPUSize64 drawCountBufferOffset = 0);
