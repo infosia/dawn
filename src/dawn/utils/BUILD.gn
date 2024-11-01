@@ -58,7 +58,6 @@ static_library("utils") {
     "TestUtils.h",
     "TextureUtils.cpp",
     "TextureUtils.h",
-    "Timer.h",
     "WGPUHelpers.cpp",
     "WGPUHelpers.h",
     "WireHelper.cpp",
@@ -82,25 +81,6 @@ static_library("utils") {
     sources += [ "WindowsDebugLogger.cpp" ]
   } else {
     sources += [ "EmptyDebugLogger.cpp" ]
-  }
-
-  if (is_win) {
-    sources += [ "WindowsTimer.cpp" ]
-  } else if (is_mac) {
-    sources += [
-      "OSXTimer.cpp",
-      "ObjCUtils.h",
-      "ObjCUtils.mm",
-    ]
-    frameworks += [ "QuartzCore.framework" ]
-
-    # If a "build with ARC" config is present, remove it.
-    if (filter_include(configs, [ "//build/config/compiler:enable_arc" ]) !=
-        []) {
-      configs -= [ "//build/config/compiler:enable_arc" ]
-    }
-  } else {
-    sources += [ "PosixTimer.cpp" ]
   }
 
   public_deps = [

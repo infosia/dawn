@@ -25,60 +25,63 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <stdint.h>
-#include <time.h>
+#include <CoreServices/CoreServices.h>
+#include <mach/mach.h>
+#include <mach/mach_time.h>
 
-#include "dawn/utils/Timer.h"
+#include "src/utils/timer.h"
 
 namespace dawn::utils {
 
-namespace {
-
-uint64_t GetCurrentTimeNs() {
-    struct timespec currentTime;
-    clock_gettime(CLOCK_MONOTONIC, &currentTime);
-    return currentTime.tv_sec * 1'000'000'000llu + currentTime.tv_nsec;
-}
-
-}  // anonymous namespace
-
-class PosixTimer : public Timer {
+class OSXTimer : public Timer {
   public:
-    PosixTimer() : Timer(), mRunning(false) {}
+    OSXTimer() : Timer(), mRunning(false), mSecondCoeff(0) {}
 
-    ~PosixTimer() override = default;
+    ~OSXTimer() override = default;
 
     void Start() override {
-        mStartTimeNs = GetCurrentTimeNs();
+        mStartTime = mach_absolute_time();
+        // Cache secondCoeff
+        GetSecondCoeff();
         mRunning = true;
     }
 
     void Stop() override {
-        mStopTimeNs = GetCurrentTimeNs();
+        mStopTime = mach_absolute_time();
         mRunning = false;
     }
 
     double GetElapsedTime() const override {
-        uint64_t endTimeNs;
         if (mRunning) {
-            endTimeNs = GetCurrentTimeNs();
+            return mSecondCoeff * (mach_absolute_time() - mStartTime);
         } else {
-            endTimeNs = mStopTimeNs;
+            return mSecondCoeff * (mStopTime - mStartTime);
         }
-
-        return (endTimeNs - mStartTimeNs) * 1e-9;
     }
 
-    double GetAbsoluteTime() override { return GetCurrentTimeNs() * 1e-9; }
+    double GetAbsoluteTime() override { return GetSecondCoeff() * mach_absolute_time(); }
 
   private:
+    double GetSecondCoeff() {
+        // If this is the first time we've run, get the timebase.
+        if (mSecondCoeff == 0.0) {
+            mach_timebase_info_data_t timebaseInfo;
+            mach_timebase_info(&timebaseInfo);
+
+            mSecondCoeff = timebaseInfo.numer * (1.0 / 1000000000) / timebaseInfo.denom;
+        }
+
+        return mSecondCoeff;
+    }
+
     bool mRunning;
-    uint64_t mStartTimeNs;
-    uint64_t mStopTimeNs;
+    uint64_t mStartTime;
+    uint64_t mStopTime;
+    double mSecondCoeff;
 };
 
 Timer* CreateTimer() {
-    return new PosixTimer();
+    return new OSXTimer();
 }
 
 }  // namespace dawn::utils

@@ -33,10 +33,10 @@
 
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/NonCopyable.h"
-#include "dawn/common/Platform.h"
 #include "dawn/common/RefCounted.h"
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/SystemHandle.h"
+#include "src/utils/platform.h"
 
 namespace dawn::native {
 

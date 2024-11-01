@@ -92,7 +92,6 @@ set(private_system_headers
     "CommandLineParser.h"
     "PlatformDebugLogger.h"
     "SystemUtils.h"
-    "Timer.h"
 )
 set(system_sources
     "CommandLineParser.cpp"
@@ -104,21 +103,6 @@ if (WIN32 AND NOT WINDOWS_STORE)
   list(APPEND system_sources "WindowsDebugLogger.cpp")
 else ()
   list(APPEND system_sources "EmptyDebugLogger.cpp")
-endif ()
-
-if (WIN32)
-  list(APPEND system_sources "WindowsTimer.cpp")
-elseif (APPLE)
-  list(APPEND private_system_headers
-      "ObjCUtils.h"
-  )
-  list(APPEND system_sources
-      "ObjCUtils.mm"
-      "OSXTimer.cpp"
-  )
-  list(APPEND private_system_depends "-framework QuartzCore")
-elseif (UNIX)
-    list(APPEND system_sources "PosixTimer.cpp")
 endif ()
 
 dawn_add_library(

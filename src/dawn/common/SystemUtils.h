@@ -32,7 +32,7 @@
 #include <string>
 #include <utility>
 
-#include "dawn/common/Platform.h"
+#include "src/utils/platform.h"
 
 namespace dawn {
 

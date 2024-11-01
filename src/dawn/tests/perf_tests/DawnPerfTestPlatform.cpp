@@ -33,7 +33,7 @@
 #include "dawn/common/Assert.h"
 #include "dawn/common/HashUtils.h"
 #include "dawn/tests/perf_tests/DawnPerfTest.h"
-#include "dawn/utils/Timer.h"
+#include "src/utils/timer.h"
 #include "src/utils/trace_event.h"
 
 namespace dawn {
@@ -44,17 +44,17 @@ struct TraceCategoryInfo {
     platform::TraceCategory category;
 };
 
-constexpr TraceCategoryInfo gTraceCategories[4] = {
-    {1, platform::TraceCategory::General},
-    {1, platform::TraceCategory::Validation},
-    {1, platform::TraceCategory::Recording},
-    {1, platform::TraceCategory::GPUWork},
+constexpr TraceCategoryInfo gTraceCategories[5] = {
+    {1, platform::TraceCategory::General},   {1, platform::TraceCategory::Validation},
+    {1, platform::TraceCategory::Recording}, {1, platform::TraceCategory::GPUWork},
+    {1, platform::TraceCategory::Tint},
 };
 
 static_assert(static_cast<uint32_t>(platform::TraceCategory::General) == 0);
 static_assert(static_cast<uint32_t>(platform::TraceCategory::Validation) == 1);
 static_assert(static_cast<uint32_t>(platform::TraceCategory::Recording) == 2);
 static_assert(static_cast<uint32_t>(platform::TraceCategory::GPUWork) == 3);
+static_assert(static_cast<uint32_t>(platform::TraceCategory::Tint) == 4);
 
 }  // anonymous namespace
 
@@ -69,6 +69,7 @@ const unsigned char* DawnPerfTestPlatform::GetTraceCategoryEnabledFlag(
         case platform::TraceCategory::Validation:
         case platform::TraceCategory::Recording:
         case platform::TraceCategory::GPUWork:
+        case platform::TraceCategory::Tint:
             break;
         default:
             DAWN_UNREACHABLE();

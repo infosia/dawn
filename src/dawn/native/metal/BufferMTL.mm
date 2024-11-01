@@ -28,7 +28,6 @@
 #include "dawn/native/metal/BufferMTL.h"
 
 #include "dawn/common/Math.h"
-#include "dawn/common/Platform.h"
 #include "dawn/native/CallbackTaskManager.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
@@ -36,6 +35,7 @@
 #include "dawn/native/metal/DeviceMTL.h"
 #include "dawn/native/metal/QueueMTL.h"
 #include "dawn/native/metal/UtilsMetal.h"
+#include "src/utils/platform.h"
 
 #include <limits>
 

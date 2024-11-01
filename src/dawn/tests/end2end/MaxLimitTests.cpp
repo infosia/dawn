@@ -31,10 +31,10 @@
 #include <vector>
 
 #include "dawn/common/Math.h"
-#include "dawn/common/Platform.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/platform.h"
 
 namespace dawn {
 namespace {

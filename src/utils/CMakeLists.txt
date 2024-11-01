@@ -28,6 +28,8 @@
 set(headers
     "compiler.h"
     "event_tracer.h"
+    "platform.h"
+    "timer.h"
     "trace_event.h"
     "trace_platform.h"
 )
@@ -36,6 +38,14 @@ set(sources
     "event_tracer.cc"
     "trace_platform.cc"
 )
+
+if (WIN32)
+  list(APPEND sources "timer_windows.cc")
+elseif (APPLE)
+  list(APPEND sources "timer_osx.cc" )
+elseif (UNIX)
+    list(APPEND sources "timer_posix.cc")
+endif ()
 
 set(conditional_private_depends)
 

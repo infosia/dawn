@@ -53,7 +53,7 @@ struct BindingInfo {
     /// @returns the hash code of the BindingInfo
     tint::HashCode HashCode() const { return Hash(binding); }
 
-    /// Reflect the fields of this class so taht it can be used by tint::ForeachField()
+    /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(BindingInfo, binding);
 };
 

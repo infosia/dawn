@@ -32,8 +32,8 @@
 #include "dawn/samples/SampleUtils.h"
 
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
-#include "dawn/utils/Timer.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "src/utils/timer.h"
 
 constexpr size_t kNumTriangles = 10000;
 

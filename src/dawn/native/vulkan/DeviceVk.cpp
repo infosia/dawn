@@ -29,7 +29,6 @@
 
 #include "dawn/common/Log.h"
 #include "dawn/common/NonCopyable.h"
-#include "dawn/common/Platform.h"
 #include "dawn/common/Version_autogen.h"
 #include "dawn/native/BackendConnection.h"
 #include "dawn/native/ChainUtils.h"
@@ -62,6 +61,7 @@
 #include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
+#include "src/utils/platform.h"
 
 namespace dawn::native::vulkan {
 namespace {

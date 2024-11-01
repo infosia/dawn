@@ -25,10 +25,10 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_DAWN_COMMON_WINDOWS_WITH_UNDEFS_H_
-#define SRC_DAWN_COMMON_WINDOWS_WITH_UNDEFS_H_
+#ifndef SRC_UTILS_WINDOWS_WITH_UNDEFS_H_
+#define SRC_UTILS_WINDOWS_WITH_UNDEFS_H_
 
-#include "dawn/common/Platform.h"
+#include "src/utils/platform.h"
 
 #if !DAWN_PLATFORM_IS(WINDOWS)
 #error "windows_with_undefs.h included on non-Windows"
@@ -48,4 +48,4 @@
 // Macro defined as an alias of GetTickCount
 #undef GetCurrentTime
 
-#endif  // SRC_DAWN_COMMON_WINDOWS_WITH_UNDEFS_H_
+#endif  // SRC_UTILS_WINDOWS_WITH_UNDEFS_H_

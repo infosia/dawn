@@ -32,13 +32,31 @@ cc_library(
   hdrs = [
     "compiler.h",
     "event_tracer.h",
+    "platform.h",
+    "timer.h",
     "trace_event.h",
     "trace_platform.h",
   ],
   srcs = [
     "event_tracer.cc",
     "trace_platform.cc",
-  ],
+  ] + select({
+    ":tint_build_is_win": [
+      "timer_windows.cc",
+    ],
+    "//conditions:default": [],
+  }) + select({
+    ":tint_build_is_mac": [
+      "timer_osx.cc",
+    ],
+    "//conditions:default": [],
+  }) + select({
+    ":tint_build_is_linux": [
+      "timer_posix.cc",
+    ],
+    "//conditions:default": [],
+  }),
+
   deps = [],
   copts = COPTS,
   visibility = ["//visibility:public"],

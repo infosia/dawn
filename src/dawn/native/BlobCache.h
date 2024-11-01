@@ -30,10 +30,10 @@
 
 #include <mutex>
 
-#include "dawn/common/Platform.h"
 #include "dawn/native/Blob.h"
 #include "dawn/native/CacheResult.h"
 #include "partition_alloc/pointers/raw_ptr_exclusion.h"
+#include "src/utils/platform.h"
 
 namespace dawn::platform {
 class CachingInterface;

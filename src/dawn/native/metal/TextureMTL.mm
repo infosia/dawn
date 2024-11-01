@@ -31,7 +31,6 @@
 #include "dawn/common/Constants.h"
 #include "dawn/common/IOSurfaceUtils.h"
 #include "dawn/common/Math.h"
-#include "dawn/common/Platform.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/EnumMaskIterator.h"
@@ -42,6 +41,7 @@
 #include "dawn/native/metal/SharedFenceMTL.h"
 #include "dawn/native/metal/SharedTextureMemoryMTL.h"
 #include "dawn/native/metal/UtilsMetal.h"
+#include "src/utils/platform.h"
 
 #include <CoreVideo/CVPixelBuffer.h>
 

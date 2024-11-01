@@ -30,7 +30,7 @@
 #include <cstdlib>
 #include "dawn/common/Assert.h"
 #include "dawn/common/Math.h"
-#include "dawn/common/Platform.h"
+#include "src/utils/platform.h"
 
 namespace dawn {
 

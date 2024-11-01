@@ -42,7 +42,6 @@
 
 #include "dawn/common/Log.h"
 #include "dawn/common/Mutex.h"
-#include "dawn/common/Platform.h"
 #include "dawn/common/Preprocessor.h"
 #include "dawn/dawn_proc_table.h"
 #include "dawn/native/DawnNative.h"
@@ -55,6 +54,7 @@
 #include "dawn/utils/TextureUtils.h"
 #include "dawn/webgpu_cpp_print.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/utils/platform.h"
 
 // Getting data back from Dawn is done in an async manners so all expectations are "deferred"
 // until the end of the test. Also expectations use a copy to a MapRead buffer to get the data

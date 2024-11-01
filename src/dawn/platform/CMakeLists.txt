@@ -41,7 +41,7 @@ dawn_add_library(
   DEPENDS
     dawn::dawn_headers
     dawn::partition_alloc
-    dawn_shared_utils
+    dawn::dawn_shared_utils
   PRIVATE_DEPENDS
     dawn::dawn_common
 )

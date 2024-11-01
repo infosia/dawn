@@ -33,13 +33,13 @@
 
 #include "dawn/native/dawn_platform.h"
 
-#include "dawn/common/Platform.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/QuerySet.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/Forward.h"
 #include "dawn/native/opengl/GLFormat.h"
 #include "dawn/native/opengl/OpenGLFunctions.h"
+#include "src/utils/platform.h"
 
 namespace dawn::native::opengl {
 
