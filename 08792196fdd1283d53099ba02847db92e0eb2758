@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46807bbe_6602158c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-01T23:34:46Z",
+      "side": 1,
+      "message": "Thanks! Still LGTM",
+      "revId": "08792196fdd1283d53099ba02847db92e0eb2758",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7ae1e85_1080a6f9",
+        "filename": "src/dawn/native/AHBFunctions.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-01T23:34:46Z",
+      "side": 1,
+      "message": "```suggestion\n        // Android drivers make use of formats outside of the defined enums to represent internal\n```",
+      "range": {
+        "startLine": 98,
+        "startChar": 79,
+        "endLine": 98,
+        "endChar": 88
+      },
+      "revId": "08792196fdd1283d53099ba02847db92e0eb2758",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
