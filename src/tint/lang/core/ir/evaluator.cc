@@ -34,8 +34,12 @@ namespace tint::core::ir {
 namespace eval {
 
 Result<core::ir::Value*> Eval(core::ir::Builder& b, core::ir::Instruction* inst) {
+    return Eval(b, inst->Result(0));
+}
+
+Result<core::ir::Value*> Eval(core::ir::Builder& b, core::ir::Value* val) {
     ir::Evaluator e(b);
-    return e.Evaluate(inst->Result(0));
+    return e.Evaluate(val);
 }
 
 }  // namespace eval
@@ -129,7 +133,7 @@ Evaluator::EvalResult Evaluator::EvalConstruct(core::ir::Construct* c) {
     auto mat_vec = [&](const core::type::Type* type,
                        core::intrinsic::CtorConv intrinsic) -> constant::Eval::Result {
         auto op =
-            table.Lookup(intrinsic, Vector{type}, arg_types, core::EvaluationStage::kConstant);
+            table.Lookup(intrinsic, Vector{type}, arg_types, core::EvaluationStage::kOverride);
         if (op != Success) {
             AddError(SourceOf(c)) << "unable to find intrinsic for construct: " << op.Failure();
             return constant::Eval::Error();
