@@ -130,8 +130,10 @@ TEST_F(YCbCrInfoWithFeatureValidationTest, YCbCrSamplerSupported) {
 // Tests that creating a bind group layout with a valid static sampler succeeds if the
 // required feature is enabled.
 TEST_F(YCbCrInfoWithFeatureValidationTest, CreateBindGroupWithYCbCrSamplerSupported) {
-    wgpu::BindGroupLayoutEntry binding = {};
-    binding.binding = 0;
+    std::vector<wgpu::BindGroupLayoutEntry> entries;
+
+    wgpu::BindGroupLayoutEntry binding0 = {};
+    binding0.binding = 0;
     wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
 
     wgpu::SamplerDescriptor samplerDesc = {};
@@ -139,19 +141,41 @@ TEST_F(YCbCrInfoWithFeatureValidationTest, CreateBindGroupWithYCbCrSamplerSuppor
     samplerDesc.nextInChain = &yCbCrDesc;
 
     staticSamplerBinding.sampler = device.CreateSampler(&samplerDesc);
-    binding.nextInChain = &staticSamplerBinding;
+    staticSamplerBinding.sampledTextureBinding = 2;
+    binding0.nextInChain = &staticSamplerBinding;
+    entries.push_back(binding0);
 
-    wgpu::BindGroupLayoutDescriptor desc = {};
-    desc.entryCount = 1;
-    desc.entries = &binding;
+    wgpu::BindGroupLayoutEntry binding1 = {};
+    binding1.binding = 1;
+    binding1.texture.sampleType = wgpu::TextureSampleType::Float;
+    binding1.texture.viewDimension = wgpu::TextureViewDimension::e2D;
+    binding1.texture.multisampled = false;
+    entries.push_back(binding1);
 
-    wgpu::BindGroupLayout layout = device.CreateBindGroupLayout(&desc);
+    wgpu::BindGroupLayoutDescriptor layoutDesc = {};
+    layoutDesc.entryCount = 2;
+    layoutDesc.entries = entries.data();
 
-    wgpu::BindGroupDescriptor descriptor;
-    descriptor.layout = layout;
-    descriptor.entryCount = 0;
+    wgpu::BindGroupLayout layout = device.CreateBindGroupLayout(&layoutDesc);
 
-    device.CreateBindGroup(&descriptor);
+    wgpu::Texture texture = Create2DTexture(device);
+    wgpu::TextureViewDescriptor textureDesc =
+        CreateDefaultViewDescriptor(wgpu::TextureViewDimension::e2D);
+    textureDesc.arrayLayerCount = 1;
+    textureDesc.nextInChain = &yCbCrDesc;
+
+    wgpu::TextureView textureView = texture.CreateView(&textureDesc);
+
+    wgpu::BindGroupEntry textureEntry;
+    textureEntry.binding = 1;
+    textureEntry.textureView = textureView;
+
+    wgpu::BindGroupDescriptor groupDesc;
+    groupDesc.layout = layout;
+    groupDesc.entryCount = 1;
+    groupDesc.entries = &textureEntry;
+
+    device.CreateBindGroup(&groupDesc);
 }
 
 // Verifies that creation of a correctly-specified bind group for a layout that

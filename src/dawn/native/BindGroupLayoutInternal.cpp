@@ -37,9 +37,11 @@
 
 #include "dawn/common/BitSetIterator.h"
 #include "dawn/common/Enumerator.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/ObjectContentHasher.h"
@@ -202,6 +204,14 @@ MaybeError ValidateBindGroupLayoutEntry(DeviceBase* device,
                         wgpu::FeatureName::StaticSamplers);
 
         DAWN_TRY(device->ValidateObject(staticSamplerBindingLayout->sampler));
+        dawn::ErrorLog() << "validating StaticSamplerBindingLayout sampledTextureBinding="
+                         << staticSamplerBindingLayout->sampledTextureBinding;
+
+        if (staticSamplerBindingLayout->sampler->IsYCbCr()) {
+            if (staticSamplerBindingLayout->sampledTextureBinding == WGPU_LIMIT_U32_UNDEFINED) {
+                return DAWN_VALIDATION_ERROR("YCbCr requires sampledTextureBinding to be set");
+            }
+        }
     }
 
     if (entry.Get<ExternalTextureBindingLayout>()) {
