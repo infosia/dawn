@@ -42,15 +42,6 @@ Platform::Platform() = default;
 
 Platform::~Platform() = default;
 
-const unsigned char* Platform::GetTraceCategoryEnabledFlag(TraceCategory category) {
-    static unsigned char disabled = 0;
-    return &disabled;
-}
-
-double Platform::MonotonicallyIncreasingTime() {
-    return 0;
-}
-
 uint64_t Platform::AddTraceEvent(char phase,
                                  const unsigned char* categoryGroupEnabled,
                                  const char* name,

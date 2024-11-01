@@ -25,13 +25,14 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "dawn/platform/tracing/EventTracer.h"
+#include "src/utils/event_tracer.h"
+
 #include "dawn/common/Assert.h"
 #include "dawn/platform/DawnPlatform.h"
 
-namespace dawn::platform::tracing {
+namespace dawn::utils::tracing {
 
-const unsigned char* GetTraceCategoryEnabledFlag(Platform* platform, TraceCategory category) {
+const unsigned char* GetTraceCategoryEnabledFlag(TracePlatform* platform, TraceCategory category) {
     static unsigned char disabled = 0;
     if (platform == nullptr) {
         return &disabled;
@@ -45,7 +46,7 @@ const unsigned char* GetTraceCategoryEnabledFlag(Platform* platform, TraceCatego
     return &disabled;
 }
 
-TraceEventHandle AddTraceEvent(Platform* platform,
+TraceEventHandle AddTraceEvent(TracePlatform* platform,
                                char phase,
                                const unsigned char* categoryGroupEnabled,
                                const char* name,
@@ -68,4 +69,4 @@ TraceEventHandle AddTraceEvent(Platform* platform,
     return static_cast<TraceEventHandle>(0);
 }
 
-}  // namespace dawn::platform::tracing
+}  // namespace dawn::utils::tracing

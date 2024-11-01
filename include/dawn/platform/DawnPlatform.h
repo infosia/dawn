@@ -35,15 +35,11 @@
 #include <memory>
 
 #include "dawn/platform/dawn_platform_export.h"
+#include "src/utils/trace_platform.h"
 
 namespace dawn::platform {
 
-enum class TraceCategory {
-    General,     // General trace events
-    Validation,  // Dawn validation
-    Recording,   // Native command recording
-    GPUWork,     // Actual GPU work
-};
+using TraceCategory = dawn::utils::TraceCategory;
 
 class DAWN_PLATFORM_EXPORT CachingInterface {
   public:
@@ -102,25 +98,21 @@ enum class Features {
     kWebGPUUseTintIR,
 };
 
-class DAWN_PLATFORM_EXPORT Platform {
+class DAWN_PLATFORM_EXPORT Platform : public utils::TracePlatform {
   public:
     Platform();
-    virtual ~Platform();
+    ~Platform() override;
 
-    virtual const unsigned char* GetTraceCategoryEnabledFlag(TraceCategory category);
-
-    virtual double MonotonicallyIncreasingTime();
-
-    virtual uint64_t AddTraceEvent(char phase,
-                                   const unsigned char* categoryGroupEnabled,
-                                   const char* name,
-                                   uint64_t id,
-                                   double timestamp,
-                                   int numArgs,
-                                   const char** argNames,
-                                   const unsigned char* argTypes,
-                                   const uint64_t* argValues,
-                                   unsigned char flags);
+    uint64_t AddTraceEvent(char phase,
+                           const unsigned char* categoryGroupEnabled,
+                           const char* name,
+                           uint64_t id,
+                           double timestamp,
+                           int numArgs,
+                           const char** argNames,
+                           const unsigned char* argTypes,
+                           const uint64_t* argValues,
+                           unsigned char flags) override;
 
     // Invoked to add a UMA histogram count-based sample
     virtual void HistogramCustomCounts(const char* name,

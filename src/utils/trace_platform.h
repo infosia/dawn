@@ -25,9 +25,45 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#if defined(__clang__)
-#pragma clang diagnostic ignored "-Wmissing-variable-declarations"
-#endif
+#ifndef SRC_UTILS_TRACE_PLATFORM_H_
+#define SRC_UTILS_TRACE_PLATFORM_H_
 
-// A placeholder symbol used to emit a symbol for this lib target.
-int src_utils_symbol = 1;
+#include <cstdint>
+
+namespace dawn::utils {
+
+enum class TraceCategory {
+    General,     // General trace events
+    Validation,  // Dawn validation
+    Recording,   // Native command recording
+    GPUWork,     // Actual GPU work
+};
+
+class TracePlatform {
+  public:
+    TracePlatform();
+    virtual ~TracePlatform();
+
+    virtual const unsigned char* GetTraceCategoryEnabledFlag(TraceCategory category);
+
+    virtual double MonotonicallyIncreasingTime();
+
+    virtual uint64_t AddTraceEvent(char phase,
+                                   const unsigned char* categoryGroupEnabled,
+                                   const char* name,
+                                   uint64_t id,
+                                   double timestamp,
+                                   int numArgs,
+                                   const char** argNames,
+                                   const unsigned char* argTypes,
+                                   const uint64_t* argValues,
+                                   unsigned char flags);
+
+  private:
+    TracePlatform(const TracePlatform&) = delete;
+    TracePlatform& operator=(const TracePlatform&) = delete;
+};
+
+}  // namespace dawn::utils
+
+#endif  // SRC_UTILS_TRACE_PLATFORM_H_

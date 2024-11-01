@@ -25,14 +25,14 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_DAWN_PLATFORM_TRACING_EVENTTRACER_H_
-#define SRC_DAWN_PLATFORM_TRACING_EVENTTRACER_H_
+#ifndef SRC_UTILS_EVENT_TRACER_H_
+#define SRC_UTILS_EVENT_TRACER_H_
 
 #include <cstdint>
 
-#include "dawn/platform/dawn_platform_export.h"
+#include "src/utils/trace_platform.h"
 
-namespace dawn::platform {
+namespace dawn::utils {
 
 class Platform;
 enum class TraceCategory;
@@ -41,22 +41,21 @@ namespace tracing {
 
 using TraceEventHandle = uint64_t;
 
-DAWN_PLATFORM_EXPORT const unsigned char* GetTraceCategoryEnabledFlag(Platform* platform,
-                                                                      TraceCategory category);
+const unsigned char* GetTraceCategoryEnabledFlag(TracePlatform* platform, TraceCategory category);
 
 // TODO(enga): Simplify this API.
-DAWN_PLATFORM_EXPORT TraceEventHandle AddTraceEvent(Platform* platform,
-                                                    char phase,
-                                                    const unsigned char* categoryGroupEnabled,
-                                                    const char* name,
-                                                    uint64_t id,
-                                                    int numArgs,
-                                                    const char** argNames,
-                                                    const unsigned char* argTypes,
-                                                    const uint64_t* argValues,
-                                                    unsigned char flags);
+TraceEventHandle AddTraceEvent(TracePlatform* platform,
+                               char phase,
+                               const unsigned char* categoryGroupEnabled,
+                               const char* name,
+                               uint64_t id,
+                               int numArgs,
+                               const char** argNames,
+                               const unsigned char* argTypes,
+                               const uint64_t* argValues,
+                               unsigned char flags);
 
 }  // namespace tracing
-}  // namespace dawn::platform
+}  // namespace dawn::utils
 
-#endif  // SRC_DAWN_PLATFORM_TRACING_EVENTTRACER_H_
+#endif  // SRC_UTILS_EVENT_TRACER_H_
