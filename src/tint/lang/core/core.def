@@ -765,6 +765,10 @@ implicit(C: iu32) fn textureStore(texture: texture_storage_3d<u32_texel_format, 
 @must_use @stage("fragment", "compute") implicit(T: fiu32_f16) fn quadSwapDiagonal(e: T) -> T
 @must_use @stage("fragment", "compute") implicit(N: num, T: fiu32_f16) fn quadSwapDiagonal(e: vec<N, T>) -> vec<N, T>
 
+// chromium_experimental_print
+implicit(T: scalar) fn print(T)
+implicit(N: num, T: scalar) fn print(vec<N, T>)
+
 ////////////////////////////////////////////////////////////////////////////////
 // Value constructors                                                         //
 ////////////////////////////////////////////////////////////////////////////////
