@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efd52195_9b28d23c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-11-01T19:24:57Z",
+      "side": 1,
+      "message": "lgtm\n\nthe only thing is the added suppressions at the end have too many tags. But those can be cleaned up manually later?",
+      "revId": "59f64b8858896f05a5eb749679e4b62c8e428d7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
