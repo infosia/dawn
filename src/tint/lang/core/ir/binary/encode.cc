@@ -1240,6 +1240,8 @@ struct Encoder {
                 return pb::BuiltinFn::quad_swap_y;
             case core::BuiltinFn::kQuadSwapDiagonal:
                 return pb::BuiltinFn::quad_swap_diagonal;
+            case core::BuiltinFn::kPrint:
+                return pb::BuiltinFn::print;
             case core::BuiltinFn::kNone:
                 break;
         }
