@@ -37,9 +37,11 @@
 
 #include "dawn/common/BitSetIterator.h"
 #include "dawn/common/Enumerator.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/ObjectContentHasher.h"
@@ -90,6 +92,7 @@ MaybeError ValidateStorageTextureViewDimension(wgpu::TextureViewDimension dimens
 }
 
 MaybeError ValidateBindGroupLayoutEntry(DeviceBase* device,
+                                        const BindGroupLayoutDescriptor* descriptor,
                                         const UnpackedPtr<BindGroupLayoutEntry>& entry,
                                         bool allowInternalBinding) {
     DAWN_TRY(ValidateShaderStage(entry->visibility));
@@ -202,6 +205,28 @@ MaybeError ValidateBindGroupLayoutEntry(DeviceBase* device,
                         wgpu::FeatureName::StaticSamplers);
 
         DAWN_TRY(device->ValidateObject(staticSamplerBindingLayout->sampler));
+
+        uint32_t sampledTextureBinding = staticSamplerBindingLayout->sampledTextureBinding;
+        if (sampledTextureBinding == WGPU_LIMIT_U32_UNDEFINED) {
+            if (staticSamplerBindingLayout->sampler->IsYCbCr()) {
+                return DAWN_VALIDATION_ERROR("YCbCr sampler requires sampledTextureBinding.");
+            }
+        } else {
+            if (sampledTextureBinding >= descriptor->entryCount) {
+                return DAWN_VALIDATION_ERROR(
+                    "sampledTextureBinding (%u) is not a valid binding index.",
+                    sampledTextureBinding);
+            }
+
+            UnpackedPtr<BindGroupLayoutEntry> textureEntry;
+            DAWN_TRY_ASSIGN(textureEntry,
+                            ValidateAndUnpack(&descriptor->entries[sampledTextureBinding]));
+
+            if (textureEntry->texture.sampleType == wgpu::TextureSampleType::Undefined) {
+                return DAWN_VALIDATION_ERROR("sampledTextureBinding (%u) is not a texture binding.",
+                                             sampledTextureBinding);
+            }
+        }
     }
 
     if (entry.Get<ExternalTextureBindingLayout>()) {
@@ -332,8 +357,9 @@ MaybeError ValidateBindGroupLayoutDescriptor(DeviceBase* device,
                         "On entries[%u]: binding index (%u) was specified by a previous entry.", i,
                         entry->binding);
 
-        DAWN_TRY_CONTEXT(ValidateBindGroupLayoutEntry(device, entry, allowInternalBinding),
-                         "validating entries[%u]", i);
+        DAWN_TRY_CONTEXT(
+            ValidateBindGroupLayoutEntry(device, descriptor, entry, allowInternalBinding),
+            "validating entries[%u]", i);
 
         IncrementBindingCounts(&bindingCounts, entry);
 
