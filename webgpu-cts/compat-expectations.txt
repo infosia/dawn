@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-10-27 05:05:04AM
+# Last rolled: 2024-11-01 05:04:38AM
 
 # conflicts_allowed: true
 
@@ -638,9 +638,9 @@ crbug.com/368241687 [ android-pixel-6 arm ] webgpu:shader,execution,expression,c
 crbug.com/367807042 [ android-pixel-6 arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:* [ Skip ]
 
 # textureSampleLevel() with depth textures failing on Intel 770
-crbug.com/dawn/0000 [ linux intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:* [ Failure ]
-crbug.com/dawn/0000 [ linux intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_3d_coords:* [ Failure ]
-crbug.com/dawn/0000 [ linux intel-0x4680 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ intel-0x4680 linux ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_2d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ intel-0x4680 linux ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_3d_coords:* [ Failure ]
+crbug.com/dawn/0000 [ intel-0x4680 linux ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:depth_array_2d_coords:* [ Failure ]
 
 # limits:const_array_elements failures
 # also failing on Vulkan Pixel 6 (Core) and NVidia GL ES Compat
@@ -1828,6 +1828,7 @@ crbug.com/374218148 [ linux nvidia-0x2184 ] webgpu:shader,execution,expression,c
 crbug.com/374218148 [ linux nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_3d_coords:stage="v";format="depth32float";filt="linear";mode="c" [ Failure ]
 crbug.com/374218148 [ linux nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_3d_coords:stage="v";format="depth32float";filt="linear";mode="m" [ Failure ]
 crbug.com/374218148 [ linux nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,textureGather:depth_3d_coords:stage="v";format="depth32float";filt="linear";mode="r" [ Failure ]
+
 # Returning unexpected values with filt="linear"
 crbug.com/0 [ linux nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:format="depth16unorm";filt="linear";* [ Failure ]
 crbug.com/0 [ linux nvidia-0x2184 ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:format="depth32float";filt="linear";* [ Failure ]
