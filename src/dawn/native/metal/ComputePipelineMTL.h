@@ -54,6 +54,9 @@ class ComputePipeline final : public ComputePipelineBase {
     MTLSize GetLocalWorkGroupSize() const;
     bool RequiresStorageBufferLength() const;
 
+    bool RequiresPrintBuffer() const;
+    tint::PrintInfo GetPrintInfo(uint32_t id) const;
+
   private:
     using ComputePipelineBase::ComputePipelineBase;
     MaybeError InitializeImpl() override;
@@ -62,6 +65,7 @@ class ComputePipeline final : public ComputePipelineBase {
     MTLSize mLocalWorkgroupSize;
     bool mRequiresStorageBufferLength;
     std::vector<uint32_t> mWorkgroupAllocations;
+    tint::PrintIdToInfo mPrintIdToInfo;
 };
 
 }  // namespace dawn::native::metal

@@ -391,6 +391,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     if (vertexData.needsStorageBufferLength) {
         mStagesRequiringStorageBufferLength |= wgpu::ShaderStage::Vertex;
     }
+    mVertexPrintIdToInfo = std::move(vertexData.printIdToInfo);
 
     if (GetStageMask() & wgpu::ShaderStage::Fragment) {
         const ProgrammableStage& fragmentStage = allStages[wgpu::ShaderStage::Fragment];
@@ -405,6 +406,7 @@ MaybeError RenderPipeline::InitializeImpl() {
         if (fragmentData.needsStorageBufferLength) {
             mStagesRequiringStorageBufferLength |= wgpu::ShaderStage::Fragment;
         }
+        mFragmentPrintIdToInfo = std::move(fragmentData.printIdToInfo);
 
         const auto& fragmentOutputMask = fragmentStage.metadata->fragmentOutputMask;
         for (auto i : IterateBitSet(GetColorAttachmentsMask())) {
@@ -608,6 +610,18 @@ NSRef<MTLDepthStencilDescriptor> RenderPipeline::MakeDepthStencilDesc() {
     }
 
     return mtlDepthStencilDescRef;
+}
+
+bool RenderPipeline::RequiresPrintBuffer() const {
+    return !mVertexPrintIdToInfo.empty() || !mFragmentPrintIdToInfo.empty();
+}
+
+tint::PrintInfo RenderPipeline::GetVertexPrintInfo(uint32_t id) const {
+    return mVertexPrintIdToInfo.at(id);
+}
+
+tint::PrintInfo RenderPipeline::GetFragmentPrintInfo(uint32_t id) const {
+    return mFragmentPrintIdToInfo.at(id);
 }
 
 }  // namespace dawn::native::metal

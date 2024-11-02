@@ -52,6 +52,11 @@ class Device;
 class Texture;
 class QuerySet;
 
+struct PrintBufferInfo {
+    NSPRef<id> buffer;
+    Ref<PipelineBase> pipeline;
+};
+
 void RecordCopyBufferToTexture(CommandRecordingContext* commandContext,
                                id<MTLBuffer> mtlBuffer,
                                uint64_t bufferSize,
@@ -74,6 +79,8 @@ class CommandBuffer final : public CommandBufferBase {
 
     MaybeError FillCommands(CommandRecordingContext* commandContext);
 
+    const std::vector<PrintBufferInfo>& PrintBuffers();
+
   private:
     using CommandBufferBase::CommandBufferBase;
 
@@ -89,6 +96,10 @@ class CommandBuffer final : public CommandBufferBase {
                                 BeginRenderPassCmd* renderPassCmd,
                                 EmptyOcclusionQueries* emptyOcclusionQueries,
                                 const std::vector<MultiDrawExecutionData>& multiDrawExecutions);
+
+    id MakePrintBuffer(PipelineBase* pipeline);
+
+    std::vector<PrintBufferInfo> mPrintBuffers;
 };
 
 }  // namespace dawn::native::metal
