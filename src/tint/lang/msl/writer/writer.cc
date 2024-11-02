@@ -131,6 +131,7 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options) {
     }
 
     result->needs_storage_buffer_sizes = raise_result->needs_storage_buffer_sizes;
+    result->print_id_to_info = std::move(raise_result->print_id_to_info);
     return result;
 }
 

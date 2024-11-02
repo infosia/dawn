@@ -1377,6 +1377,12 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                 bindGroups.Apply(encoder);
                 storageBufferLengths.Apply(encoder, lastPipeline);
 
+                // Bind the print buffer if needed.
+                if (lastPipeline->RequiresPrintBuffer()) {
+                    id buffer = MakePrintBuffer(lastPipeline);
+                    [encoder setBuffer:buffer offset:0 atIndex:kPrintBufferSlot];
+                }
+
                 [encoder dispatchThreadgroups:MTLSizeMake(dispatch->x, dispatch->y, dispatch->z)
                         threadsPerThreadgroup:lastPipeline->GetLocalWorkGroupSize()];
                 break;
@@ -1387,6 +1393,12 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
 
                 bindGroups.Apply(encoder);
                 storageBufferLengths.Apply(encoder, lastPipeline);
+
+                // Bind the print buffer if needed.
+                if (lastPipeline->RequiresPrintBuffer()) {
+                    id buffer = MakePrintBuffer(lastPipeline);
+                    [encoder setBuffer:buffer offset:0 atIndex:kPrintBufferSlot];
+                }
 
                 Buffer* buffer = ToBackend(dispatch->indirectBuffer.Get());
                 buffer->TrackUsage();
@@ -1511,6 +1523,15 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 bindGroups.Apply(encoder);
                 storageBufferLengths.Apply(encoder, lastPipeline, enableVertexPulling);
 
+                // Bind the print buffer if needed.
+                if (lastPipeline->RequiresPrintBuffer()) {
+                    id buffer = MakePrintBuffer(lastPipeline);
+                    [encoder setVertexBuffer:buffer offset:0 atIndex:kPrintBufferSlot];
+                    [encoder setFragmentBuffer:buffer
+                                        offset:(100 * 32 + 16)
+                                       atIndex:kPrintBufferSlot];
+                }
+
                 // The instance count must be non-zero, otherwise no-op
                 if (draw->instanceCount != 0) {
                     // MTLFeatureSet_iOS_GPUFamily3_v1 does not support baseInstance
@@ -1538,6 +1559,15 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 vertexBuffers.Apply(encoder, lastPipeline, enableVertexPulling);
                 bindGroups.Apply(encoder);
                 storageBufferLengths.Apply(encoder, lastPipeline, enableVertexPulling);
+
+                // Bind the print buffer if needed.
+                if (lastPipeline->RequiresPrintBuffer()) {
+                    id buffer = MakePrintBuffer(lastPipeline);
+                    [encoder setVertexBuffer:buffer offset:0 atIndex:kPrintBufferSlot];
+                    [encoder setFragmentBuffer:buffer
+                                        offset:(100 * 32 + 16)
+                                       atIndex:kPrintBufferSlot];
+                }
 
                 // The index and instance count must be non-zero, otherwise no-op
                 if (draw->indexCount != 0 && draw->instanceCount != 0) {
@@ -1574,6 +1604,15 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 vertexBuffers.Apply(encoder, lastPipeline, enableVertexPulling);
                 bindGroups.Apply(encoder);
                 storageBufferLengths.Apply(encoder, lastPipeline, enableVertexPulling);
+
+                // Bind the print buffer if needed.
+                if (lastPipeline->RequiresPrintBuffer()) {
+                    id buffer = MakePrintBuffer(lastPipeline);
+                    [encoder setVertexBuffer:buffer offset:0 atIndex:kPrintBufferSlot];
+                    [encoder setFragmentBuffer:buffer
+                                        offset:(100 * 32 + 16)
+                                       atIndex:kPrintBufferSlot];
+                }
 
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
                 buffer->TrackUsage();
@@ -1855,6 +1894,27 @@ MaybeError CommandBuffer::EncodeRenderPass(
 
     // EndRenderPass should have been called
     DAWN_UNREACHABLE();
+}
+
+id CommandBuffer::MakePrintBuffer(PipelineBase* pipeline) {
+    // Make the buffer twice as big for render pipelines, which share the buffer between stages.
+    uint32_t bufferSize =
+        (tint::kMaxPrintEntries * tint::kPrintEntrySize + tint::kPrintEntryOffset);
+    if (pipeline->GetType() == ObjectType::RenderPipeline) {
+        bufferSize *= 2;
+    }
+
+    // Create the buffer and track it to read back later.
+    NSPRef<id> printBuffer =
+        [ToBackend(GetDevice())->GetMTLDevice() newBufferWithLength:bufferSize
+                                                            options:MTLResourceStorageModeShared];
+    memset([printBuffer.Get() contents], 0, bufferSize);
+    mPrintBuffers.push_back(PrintBufferInfo{printBuffer, pipeline});
+    return printBuffer.Get();
+}
+
+const std::vector<PrintBufferInfo>& CommandBuffer::PrintBuffers() {
+    return mPrintBuffers;
 }
 
 }  // namespace dawn::native::metal

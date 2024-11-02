@@ -478,6 +478,11 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     deviceToggles->Default(Toggle::UseTintIR,
                            platform->IsFeatureEnabled(platform::Features::kWebGPUUseTintIR));
 
+    // Enable the shader print extension if we are using Tint IR and unsafe APIs are enabled.
+    deviceToggles->Default(Toggle::ShaderPrint,
+                           deviceToggles->IsEnabled(Toggle::UseTintIR) &&
+                               deviceToggles->IsEnabled(Toggle::AllowUnsafeAPIs));
+
 #if DAWN_PLATFORM_IS(MACOS)
     if (gpu_info::IsIntel(vendorId)) {
         deviceToggles->Default(

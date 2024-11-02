@@ -178,6 +178,9 @@ struct Options {
     /// The optional vertex pulling configuration.
     std::optional<VertexPullingConfig> vertex_pulling_config = {};
 
+    /// The binding point to use for the print buffer, if needed.
+    uint32_t print_buffer_binding = {};
+
     /// The bindings.
     Bindings bindings;
 
@@ -195,6 +198,7 @@ struct Options {
                  pixel_local_attachments,
                  array_length_from_uniform,
                  vertex_pulling_config,
+                 print_buffer_binding,
                  bindings);
 };
 

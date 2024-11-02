@@ -39,6 +39,7 @@
 #include "src/tint/lang/core/ir/transform/multiplanar_external_texture.h"
 #include "src/tint/lang/core/ir/transform/preserve_padding.h"
 #include "src/tint/lang/core/ir/transform/prevent_infinite_loops.h"
+#include "src/tint/lang/core/ir/transform/print.h"
 #include "src/tint/lang/core/ir/transform/remove_continue_in_switch.h"
 #include "src/tint/lang/core/ir/transform/remove_terminator_args.h"
 #include "src/tint/lang/core/ir/transform/rename_conflicts.h"
@@ -84,6 +85,13 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
     if (!options.disable_robustness) {
         RUN_TRANSFORM(core::ir::transform::PreventInfiniteLoops, module);
     }
+
+    auto print_result =
+        core::ir::transform::Print(module, BindingPoint{0, options.print_buffer_binding});
+    if (print_result != Success) {
+        return print_result.Failure();
+    }
+    raise_result.print_id_to_info = std::move(print_result->print_id_to_info);
 
     {
         core::ir::transform::BinaryPolyfillConfig binary_polyfills{};
