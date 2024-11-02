@@ -32,6 +32,8 @@
 #include <string>
 #include <vector>
 
+#include "src/tint/api/common/print_info.h"
+
 namespace tint::msl::writer {
 
 /// The output produced when generating MSL.
@@ -78,6 +80,9 @@ struct Output {
 
     /// The workgroup size information, if the entry point was a compute shader
     WorkgroupInfo workgroup_info{};
+
+    /// A map from print call ID to information about its value type and WGSL source location.
+    PrintIdToInfo print_id_to_info;
 };
 
 }  // namespace tint::msl::writer

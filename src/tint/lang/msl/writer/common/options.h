@@ -193,6 +193,9 @@ struct Options {
     /// Immediate binding point info
     std::optional<BindingPoint> immediate_binding_point = {};
 
+    /// The binding point to use for the print buffer, if needed.
+    uint32_t print_buffer_binding = {};
+
     /// The bindings.
     Bindings bindings;
 
@@ -215,6 +218,7 @@ struct Options {
                  array_length_from_uniform,
                  vertex_pulling_config,
                  immediate_binding_point,
+                 print_buffer_binding,
                  bindings);
 };
 

@@ -916,6 +916,7 @@ bool GenerateMsl([[maybe_unused]] const Options& options,
     gen_options.array_length_from_uniform.ubo_binding = 30;
     gen_options.disable_demote_to_helper = options.disable_demote_to_helper;
     gen_options.use_argument_buffers = options.use_argument_buffers;
+    gen_options.print_buffer_binding = 29;
 
     // Add array_length_from_uniform entries for all storage buffers with runtime sized arrays.
     std::unordered_set<tint::BindingPoint> storage_bindings;
