@@ -44,8 +44,11 @@ class Device;
 static constexpr size_t kMetalBufferTableSize = 31;
 // The Metal buffer slot that Dawn reserves for its own use to pass more data to shaders
 static constexpr size_t kBufferLengthBufferSlot = kMetalBufferTableSize - 1;
+// The Metal buffer slot that Dawn reserves for its own use as a print buffer
+// TODO(jrprice): We should probably only reserve the slot if shader print is enabled.
+static constexpr size_t kPrintBufferSlot = kMetalBufferTableSize - 2;
 // The number of Metal buffers Dawn can use in a generic way (i.e. that aren't reserved)
-static constexpr size_t kGenericMetalBufferSlots = kMetalBufferTableSize - 1;
+static constexpr size_t kGenericMetalBufferSlots = kMetalBufferTableSize - 2;
 
 static constexpr BindGroupIndex kPullingBufferBindingSet = BindGroupIndex(kMaxBindGroups);
 

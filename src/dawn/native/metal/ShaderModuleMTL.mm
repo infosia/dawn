@@ -80,6 +80,7 @@ using WorkgroupAllocations = std::vector<uint32_t>;
     X(bool, needsStorageBufferLength)             \
     X(bool, hasInvariantAttribute)                \
     X(WorkgroupAllocations, workgroupAllocations) \
+    X(tint::PrintIdToInfo, printIdToInfo)         \
     X(Extent3D, localWorkgroupSize)
 
 DAWN_SERIALIZABLE(struct, MslCompilation, MSL_COMPILATION_MEMBERS){};
@@ -87,6 +88,24 @@ DAWN_SERIALIZABLE(struct, MslCompilation, MSL_COMPILATION_MEMBERS){};
 
 }  // namespace
 }  // namespace dawn::native::metal
+
+namespace dawn::native {
+template <>
+void stream::Stream<tint::PrintInfo>::Write(stream::Sink* s, const tint::PrintInfo& info) {
+    StreamIn(s, info.location.line);
+    StreamIn(s, info.location.column);
+    StreamIn(s, info.value_type);
+}
+
+template <>
+MaybeError stream::Stream<tint::PrintInfo>::Read(stream::Source* s, tint::PrintInfo* info) {
+    DAWN_TRY(StreamOut(s, &info->location.line));
+    DAWN_TRY(StreamOut(s, &info->location.column));
+    DAWN_TRY(StreamOut(s, &info->value_type));
+    return {};
+}
+
+}  // namespace dawn::native
 
 namespace dawn::native::metal {
 
@@ -292,6 +311,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
         stage == SingleShaderStage::Vertex &&
         renderPipeline->GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList;
     req.tintOptions.array_length_from_uniform = std::move(arrayLengthFromUniform);
+    req.tintOptions.print_buffer_binding = kPrintBufferSlot;
     req.tintOptions.pixel_local_attachments = std::move(pixelLocalAttachments);
     req.tintOptions.bindings = std::move(bindings);
     req.tintOptions.disable_polyfill_integer_div_mod =
@@ -400,6 +420,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
                 result->needs_storage_buffer_sizes,
                 result->has_invariant_attribute,
                 std::move(workgroupAllocations),
+                result->print_id_to_info,
                 localSize,
             }};
         },
@@ -445,6 +466,7 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     out->localWorkgroupSize = MTLSizeMake(mslCompilation->localWorkgroupSize.width,
                                           mslCompilation->localWorkgroupSize.height,
                                           mslCompilation->localWorkgroupSize.depthOrArrayLayers);
+    out->printIdToInfo = mslCompilation->printIdToInfo;
 
     NSRef<NSString> mslSource =
         AcquireNSRef([[NSString alloc] initWithUTF8String:mslCompilation->msl.c_str()]);

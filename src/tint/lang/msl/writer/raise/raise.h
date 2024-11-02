@@ -30,6 +30,7 @@
 
 #include <string>
 
+#include "src/tint/api/common/print_info.h"
 #include "src/tint/lang/msl/writer/common/options.h"
 #include "src/tint/utils/diagnostic/diagnostic.h"
 #include "src/tint/utils/result/result.h"
@@ -45,6 +46,9 @@ namespace tint::msl::writer {
 struct RaiseResult {
     /// `true` if the transformed module needs the storage buffer sizes UBO.
     bool needs_storage_buffer_sizes = false;
+
+    /// A map from print call ID to information about its value type and WGSL source location.
+    PrintIdToInfo print_id_to_info;
 };
 
 /// Raise a core IR module to the MSL dialect of the IR.

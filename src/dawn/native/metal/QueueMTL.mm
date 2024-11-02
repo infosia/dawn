@@ -34,8 +34,11 @@
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/MetalBackend.h"
 #include "dawn/native/WaitAnySystemEvent.h"
+#include "dawn/native/metal/BufferMTL.h"
 #include "dawn/native/metal/CommandBufferMTL.h"
+#include "dawn/native/metal/ComputePipelineMTL.h"
 #include "dawn/native/metal/DeviceMTL.h"
+#include "dawn/native/metal/RenderPipelineMTL.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 
@@ -206,17 +209,197 @@ ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence() {
     return SharedFence::Create(ToBackend(GetDevice()), "Internal MTLSharedEvent", &desc);
 }
 
+namespace {
+struct PrintEntry {
+    uint32_t print_id;
+    uint32_t id_x;
+    uint32_t id_y;
+    uint32_t id_z;
+    uint32_t data[4];
+};
+
+void EmitPrintEntries(DeviceBase* device,
+                      PipelineBase* pipeline,
+                      PrintEntry* entries,
+                      SingleShaderStage stage) {
+    auto ToBool = [](uint32_t& value) { return (value ? "true" : "false"); };
+    auto ToF16 = [](uint32_t& value) { return *reinterpret_cast<float*>(&value); };
+    auto ToF32 = [](uint32_t& value) { return *reinterpret_cast<float*>(&value); };
+    auto ToI32 = [](uint32_t& value) { return *reinterpret_cast<int32_t*>(&value); };
+    auto ToU32 = [](uint32_t& value) { return value; };
+
+    auto entryPoint = pipeline->GetStage(stage).entryPoint;
+
+    for (uint32_t i = 0; i < tint::kMaxPrintEntries; i++) {
+        auto entry = entries[i];
+        auto id = entry.print_id;
+        if (id == 0) {
+            break;
+        }
+
+        std::ostringstream output;
+
+        // TODO(jrprice): Could show command buffer label and/or pipeline label?
+        tint::PrintInfo info;
+        switch (stage) {
+            case SingleShaderStage::Compute:
+                info = static_cast<ComputePipeline*>(pipeline)->GetPrintInfo(id);
+                output << "[ comp " << entryPoint << ":" << "L" << info.location.line << " "
+                       << "global_invocation_id(" << entry.id_x << "," << entry.id_y << ","
+                       << entry.id_z << ") ] ";
+                break;
+            case SingleShaderStage::Fragment:
+                info = static_cast<RenderPipeline*>(pipeline)->GetFragmentPrintInfo(id);
+                output << "[ frag " << entryPoint << ":" << "L" << info.location.line << " "
+                       << "position(" << ToF32(entry.id_x) << ", " << ToF32(entry.id_y) << ", "
+                       << ToF32(entry.id_z) << ") ] ";
+                break;
+            case SingleShaderStage::Vertex:
+                info = static_cast<RenderPipeline*>(pipeline)->GetVertexPrintInfo(id);
+                output << "[ vert " << entryPoint << ":" << "L" << info.location.line << " "
+                       << "instance=" << entry.id_x << ", vertex=" << entry.id_y << " ] ";
+                break;
+            default:
+                DAWN_UNREACHABLE();
+        }
+
+        // Emit the value.
+        auto Vec = [&output, &entry](uint32_t width, auto&& to) {
+            output << "(" << to(entry.data[0]);
+            for (uint32_t i = 1; i < width; i++) {
+                output << ", " << to(entry.data[i]);
+            }
+            output << ")";
+        };
+        switch (info.value_type) {
+            case tint::kBool:
+                output << ToBool(entry.data[0]);
+                break;
+            case tint::kF16:
+                output << ToF16(entry.data[0]);
+                break;
+            case tint::kF32:
+                output << ToF32(entry.data[0]);
+                break;
+            case tint::kI32:
+                output << ToI32(entry.data[0]);
+                break;
+            case tint::kU32:
+                output << entry.data[0];
+                break;
+            case tint::kVec2Bool:
+                Vec(2, ToBool);
+                break;
+            case tint::kVec2F16:
+                Vec(2, ToF16);
+                break;
+            case tint::kVec2F32:
+                Vec(2, ToF32);
+                break;
+            case tint::kVec2I32:
+                Vec(2, ToI32);
+                break;
+            case tint::kVec2U32:
+                Vec(2, ToU32);
+                break;
+            case tint::kVec3Bool:
+                Vec(3, ToBool);
+                break;
+            case tint::kVec3F16:
+                Vec(3, ToF16);
+                break;
+            case tint::kVec3F32:
+                Vec(3, ToF32);
+                break;
+            case tint::kVec3I32:
+                Vec(3, ToI32);
+                break;
+            case tint::kVec3U32:
+                Vec(3, ToU32);
+                break;
+            case tint::kVec4Bool:
+                Vec(4, ToBool);
+                break;
+            case tint::kVec4F16:
+                Vec(4, ToF16);
+                break;
+            case tint::kVec4F32:
+                Vec(4, ToF32);
+                break;
+            case tint::kVec4I32:
+                Vec(4, ToI32);
+                break;
+            case tint::kVec4U32:
+                Vec(4, ToU32);
+                break;
+        }
+
+        device->EmitLog(output.str());
+    }
+}
+
+void EmitPrintBuffer(DeviceBase* device, NSPRef<id> printBuffer, Ref<PipelineBase> pipeline) {
+    auto* printData = reinterpret_cast<uint8_t*>([printBuffer.Get() contents]);
+    switch (pipeline->GetType()) {
+        case ObjectType::ComputePipeline: {
+            auto* entries = reinterpret_cast<PrintEntry*>(printData + tint::kPrintEntryOffset);
+            EmitPrintEntries(device, pipeline.Get(), entries, SingleShaderStage::Compute);
+            break;
+        }
+        case ObjectType::RenderPipeline: {
+            {
+                auto* entries = reinterpret_cast<PrintEntry*>(printData + tint::kPrintEntryOffset);
+                EmitPrintEntries(device, pipeline.Get(), entries, SingleShaderStage::Vertex);
+            }
+            {
+                uint32_t offset =
+                    tint::kPrintEntryOffset * 2 + tint::kMaxPrintEntries * tint::kPrintEntrySize;
+                auto* entries = reinterpret_cast<PrintEntry*>(printData + offset);
+                EmitPrintEntries(device, pipeline.Get(), entries, SingleShaderStage::Fragment);
+            }
+            break;
+        }
+        default:
+            DAWN_UNREACHABLE();
+    }
+}
+}  // namespace
+
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
     @autoreleasepool {
         CommandRecordingContext* commandContext = GetPendingCommandContext();
 
+        bool usesShaderPrint = false;
+
         TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferMTL::FillCommands");
         for (uint32_t i = 0; i < commandCount; ++i) {
             DAWN_TRY(ToBackend(commands[i])->FillCommands(commandContext));
+
+            const auto& printBuffers = ToBackend(commands[i])->PrintBuffers();
+            if (!printBuffers.empty()) {
+                usesShaderPrint = true;
+            }
         }
         TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferMTL::FillCommands");
 
         DAWN_TRY(SubmitPendingCommandBuffer());
+
+        if (usesShaderPrint) {
+            // Wait for all commands to be finished so that we can read back the print results.
+            auto serial = GetLastSubmittedCommandSerial();
+            while (GetCompletedCommandSerial() != serial) {
+                usleep(100);
+                DAWN_TRY(CheckPassedSerials());
+            }
+
+            // Emit all of the print buffers used by all of the commands that were submitted.
+            for (uint32_t i = 0; i < commandCount; ++i) {
+                const auto& printBuffers = ToBackend(commands[i])->PrintBuffers();
+                for (auto& printBuffer : printBuffers) {
+                    EmitPrintBuffer(GetDevice(), printBuffer.buffer.Get(), printBuffer.pipeline);
+                }
+            }
+        }
 
         return {};
     }
