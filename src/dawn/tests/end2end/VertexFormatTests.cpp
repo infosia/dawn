@@ -706,8 +706,8 @@ TEST_P(VertexFormatTest, Unorm8x4) {
 }
 
 TEST_P(VertexFormatTest, Unorm8x4BGRA) {
-    // TODO(376924407): OpenGL needs a shader transform to support the BGRA format as it doesn't have
-    // any swizzled vertex format.
+    // TODO(376924407): OpenGL needs a shader transform to support the BGRA format as it doesn't
+    // have any swizzled vertex format.
     DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
 
     std::vector<uint8_t> vertexData = {std::numeric_limits<uint8_t>::max(),
