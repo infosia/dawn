@@ -50,6 +50,9 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
     /// The output variables.
     Vector<core::ir::Var*, 4> output_vars;
 
+    /// The original type of vertex input variables that we are bgra-swizzling. Keyed by location.
+    Hashmap<uint32_t, const core::type::Type*, 1> bgra_swizzle_original_types;
+
     /// The configuration options.
     const ShaderIOConfig& config;
 
@@ -143,15 +146,25 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 }
             } else {
                 name << ir.NameOf(func).Name();
+                auto* type = io.type;
 
                 if (io.attributes.location) {
                     name << "_loc" << io.attributes.location.value();
                     if (io.attributes.blend_src.has_value()) {
                         name << "_idx" << io.attributes.blend_src.value();
                     }
+
+                    // When doing the BGRA swizzle, always emit vec4f. The component type must be
+                    // f32 for unorm8x4-bgra, but the number of components can be anything. Even if
+                    // the input variable is an f32 we need to get the full vec4f when swizzling as
+                    // the components are reordered.
+                    if (config.bgra_swizzle_locations.count(*io.attributes.location) != 0) {
+                        bgra_swizzle_original_types.Add(*io.attributes.location, io.type);
+                        type = ty.vec4<f32>();
+                    }
                 }
                 name << name_suffix;
-                ptr = ty.ptr(addrspace, io.type, access);
+                ptr = ty.ptr(addrspace, type, access);
             }
 
             // Create an IO variable and add it to the root block.
@@ -199,6 +212,16 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 default:
                     break;
             }
+        }
+
+        // Replace the value with the BGRA-swizzled version of it when required.
+        if (inputs[idx].attributes.location &&
+            config.bgra_swizzle_locations.count(*inputs[idx].attributes.location) != 0) {
+            auto* swizzled_value = builder.Swizzle(value->Type(), value, {2, 1, 0, 3});
+
+            auto* original_type =
+                *bgra_swizzle_original_types.Get(*inputs[idx].attributes.location);
+            value = builder.Convert(original_type, swizzled_value)->Result(0);
         }
 
         return value;
