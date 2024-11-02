@@ -62,6 +62,7 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options) {
     output.workgroup_allocations = std::move(result->workgroup_allocations);
     output.needs_storage_buffer_sizes = raise_result->needs_storage_buffer_sizes;
     output.has_invariant_attribute = result->has_invariant_attribute;
+    output.print_id_to_info = std::move(raise_result->print_id_to_info);
     return output;
 }
 

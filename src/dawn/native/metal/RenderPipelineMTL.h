@@ -63,6 +63,10 @@ class RenderPipeline final : public RenderPipelineBase {
 
     MaybeError InitializeImpl() override;
 
+    bool RequiresPrintBuffer() const;
+    tint::PrintInfo GetVertexPrintInfo(uint32_t id) const;
+    tint::PrintInfo GetFragmentPrintInfo(uint32_t id) const;
+
   private:
     using RenderPipelineBase::RenderPipelineBase;
 
@@ -77,6 +81,9 @@ class RenderPipeline final : public RenderPipelineBase {
     PerVertexBuffer<uint32_t> mMtlVertexBufferIndices;
 
     wgpu::ShaderStage mStagesRequiringStorageBufferLength = wgpu::ShaderStage::None;
+
+    tint::PrintIdToInfo mVertexPrintIdToInfo;
+    tint::PrintIdToInfo mFragmentPrintIdToInfo;
 };
 
 }  // namespace dawn::native::metal

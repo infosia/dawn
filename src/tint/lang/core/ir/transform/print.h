@@ -42,7 +42,7 @@ namespace tint::core::ir::transform {
 // /// The result of running the Print transform.
 struct PrintResult {
     /// A map from print call ID to print info entry.
-    std::unordered_map<uint32_t, PrintInfo> print_id_to_info{};
+    PrintIdToInfo print_id_to_info{};
 };
 
 /// Print is a transform that replaces calls to the print() builtin, by writing entries into a

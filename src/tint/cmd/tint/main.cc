@@ -824,6 +824,7 @@ bool GenerateMsl([[maybe_unused]] const tint::Program& program,
     gen_options.pixel_local_attachments = options.pixel_local_attachments;
     gen_options.bindings = tint::msl::writer::GenerateBindings(*input_program);
     gen_options.array_length_from_uniform.ubo_binding = 30;
+    gen_options.print_buffer_binding = 29;
 
     // Add array_length_from_uniform entries for all storage buffers with runtime sized arrays.
     std::unordered_set<tint::BindingPoint> storage_bindings;

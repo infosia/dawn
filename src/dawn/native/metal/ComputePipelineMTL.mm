@@ -100,6 +100,7 @@ MaybeError ComputePipeline::InitializeImpl() {
 
     mRequiresStorageBufferLength = computeData.needsStorageBufferLength;
     mWorkgroupAllocations = std::move(computeData.workgroupAllocations);
+    mPrintIdToInfo = std::move(computeData.printIdToInfo);
     return {};
 }
 
@@ -121,6 +122,14 @@ MTLSize ComputePipeline::GetLocalWorkGroupSize() const {
 
 bool ComputePipeline::RequiresStorageBufferLength() const {
     return mRequiresStorageBufferLength;
+}
+
+bool ComputePipeline::RequiresPrintBuffer() const {
+    return !mPrintIdToInfo.empty();
+}
+
+tint::PrintInfo ComputePipeline::GetPrintInfo(uint32_t id) const {
+    return mPrintIdToInfo.at(id);
 }
 
 }  // namespace dawn::native::metal

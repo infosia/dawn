@@ -34,6 +34,8 @@
 #include <unordered_set>
 #include <vector>
 
+#include "src/tint/api/common/print_info.h"
+
 namespace tint::msl::writer {
 
 /// The output produced when generating MSL.
@@ -64,6 +66,9 @@ struct Output {
     /// Each entry in the vector is the size of the workgroup allocation that
     /// should be created for that index.
     std::unordered_map<std::string, std::vector<uint32_t>> workgroup_allocations;
+
+    /// A map from print call ID to information about its value type and WGSL source location.
+    PrintIdToInfo print_id_to_info;
 };
 
 }  // namespace tint::msl::writer
