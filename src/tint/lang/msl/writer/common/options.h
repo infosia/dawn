@@ -174,6 +174,9 @@ struct Options {
     /// from which to load buffer sizes.
     ArrayLengthFromUniformOptions array_length_from_uniform = {};
 
+    /// The binding point to use for the print buffer, if needed.
+    uint32_t print_buffer_binding = {};
+
     /// The bindings
     Bindings bindings;
 
@@ -190,6 +193,7 @@ struct Options {
                  fixed_sample_mask,
                  pixel_local_attachments,
                  array_length_from_uniform,
+                 print_buffer_binding,
                  bindings);
 };
 
