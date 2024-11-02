@@ -70,6 +70,24 @@
       "parentUuid": "4e53c1b9_67bd9051",
       "revId": "7edbb85bc6719dc7ed2838397b7b2ec45bcdc936",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01627c0a_b713103c",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-02T06:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "396331d1_2b210915",
+      "revId": "7edbb85bc6719dc7ed2838397b7b2ec45bcdc936",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
