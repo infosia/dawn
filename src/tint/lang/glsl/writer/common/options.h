@@ -267,6 +267,9 @@ struct Options {
     /// Offsets of the minDepth and maxDepth push constants.
     std::optional<RangeOffsets> depth_range_offsets;
 
+    /// Vertex inputs to perform BGRA swizzle on.
+    std::unordered_set<uint32_t> bgra_swizzle_locations;
+
     /// The bindings
     Bindings bindings{};
 
@@ -279,6 +282,7 @@ struct Options {
                  first_vertex_offset,
                  first_instance_offset,
                  depth_range_offsets,
+                 bgra_swizzle_locations,
                  bindings);
 };
 
