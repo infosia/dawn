@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca524d83_4798308a",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-04T18:47:56Z",
+      "side": 1,
+      "message": "Turn this into a todo?\n\n```suggestion\n        // TODO(374971092): Handle removal of override expressions\n```",
+      "revId": "e24a7378fb97b45793096ab048538f33a10cbf18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
