@@ -802,6 +802,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::D3D12ForceStencilComponentReplicateSwizzle, true);
         deviceToggles->Default(Toggle::D3D12ExpandShaderResourceStateTransitionsToCopySource, true);
     }
+
+    // TEMP: force enable Tint IR backend for testing
+    deviceToggles->ForceSet(Toggle::UseTintIR, true);
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
