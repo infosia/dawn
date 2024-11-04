@@ -16,6 +16,24 @@
       "message": "Turn this into a todo?\n\n```suggestion\n        // TODO(374971092): Handle removal of override expressions\n```",
       "revId": "e24a7378fb97b45793096ab048538f33a10cbf18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2412aecc_a6e1a066",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-04T19:58:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca524d83_4798308a",
+      "revId": "e24a7378fb97b45793096ab048538f33a10cbf18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
