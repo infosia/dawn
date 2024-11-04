@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b494effb_79dab618",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-04T18:51:31Z",
+      "side": 1,
+      "message": "```suggestion\n                return false;\n```",
+      "revId": "1f55362fd160f70ff728602bcc050e9901384643",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

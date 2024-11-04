@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "951ef4ee_b6c8cff9",
+        "filename": "test/tint/bug/chromium/339704114.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-04T18:51:31Z",
+      "side": 0,
+      "message": "For these `bug` tests, does the thing that\u0027s stripped here matter for the test? (the last test file also changed, most of the others were just an id change)",
+      "revId": "e24a7378fb97b45793096ab048538f33a10cbf18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
