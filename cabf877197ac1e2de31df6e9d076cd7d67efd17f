@@ -33,6 +33,23 @@
       "message": "LGTM for Dawn-side",
       "revId": "cabf877197ac1e2de31df6e9d076cd7d67efd17f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8b0e07e_0580ced4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-04T20:39:31Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "cabf877197ac1e2de31df6e9d076cd7d67efd17f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
