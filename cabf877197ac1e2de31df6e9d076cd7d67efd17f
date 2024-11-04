@@ -16,6 +16,23 @@
       "message": "Loko, Geoff, PTAL Dawn\nDan PTAL Tint",
       "revId": "cabf877197ac1e2de31df6e9d076cd7d67efd17f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "324bab05_e3c7d0b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-04T18:43:55Z",
+      "side": 1,
+      "message": "LGTM for Dawn-side",
+      "revId": "cabf877197ac1e2de31df6e9d076cd7d67efd17f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
