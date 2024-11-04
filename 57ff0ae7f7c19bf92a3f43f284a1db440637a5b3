@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4a92d7f_235b508d",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-04T22:05:35Z",
+      "side": 1,
+      "message": "As discussed offline, this will fail to evaluate other instructions that use overrides outside of the root block, e.g. the division here:\n```\noverride x \u003d 32;\n\n@compute @workgroup_size(1)\nfn foo() {\n  let y \u003d 10 / x;\n}\n```\n\nRecommend changing this to walk the uses of an `override` and replace them recursively instead.",
+      "revId": "57ff0ae7f7c19bf92a3f43f284a1db440637a5b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
