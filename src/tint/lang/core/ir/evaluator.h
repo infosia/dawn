@@ -81,6 +81,12 @@ namespace eval {
 /// @returns the evaluated value for `inst` or a `Failure` otherwise.
 Result<core::ir::Value*> Eval(core::ir::Builder& b, core::ir::Instruction* inst);
 
+/// Evaluate the given `inst` with the provided `b`.
+/// @param b the builder
+/// @param val the value
+/// @returns the evaluated value for `val` or a `Failure` otherwise.
+Result<core::ir::Value*> Eval(core::ir::Builder& b, core::ir::Value* val);
+
 }  // namespace eval
 
 }  // namespace tint::core::ir
