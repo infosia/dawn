@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16fb3630_20a25f2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-04T21:21:32Z",
+      "side": 1,
+      "message": "Omg, I just realized that I never sent my review for this which is why presumably this has been so stale! D: I\u0027m sorry Stephen!!",
+      "revId": "85261f99105b1fff6725e2d2c9a499250745317e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a0ae7f3_faea5f02",
+        "filename": "src/dawn/samples/CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-04T21:21:32Z",
+      "side": 1,
+      "message": "Thoughts on moving this somewhere else instead of in the samples dir? (Maybe we could reuse this for tests in the future?)",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 7
+      },
+      "revId": "85261f99105b1fff6725e2d2c9a499250745317e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
