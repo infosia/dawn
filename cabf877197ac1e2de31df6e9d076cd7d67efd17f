@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9027522_d81aebd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-04T17:45:15Z",
+      "side": 1,
+      "message": "Loko, Geoff, PTAL Dawn\nDan PTAL Tint",
+      "revId": "cabf877197ac1e2de31df6e9d076cd7d67efd17f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
