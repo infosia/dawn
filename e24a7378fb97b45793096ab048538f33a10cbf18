@@ -16,6 +16,24 @@
       "message": "For these `bug` tests, does the thing that\u0027s stripped here matter for the test? (the last test file also changed, most of the others were just an id change)",
       "revId": "e24a7378fb97b45793096ab048538f33a10cbf18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f1e7533_17264981",
+        "filename": "test/tint/bug/chromium/339704114.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-04T20:01:00Z",
+      "side": 0,
+      "message": "These changes are because we are running `SingleEntryPoint` after folding constants and simplifying pointers in the AST-\u003eIR conversion phase. The `a` function here was used in the RHS side of a short-circuited expression that was removed when converting to IR. The other test change was due to `_ \u003d \u0026s` getting removed when converting to IR, so the reference to that global variable was dropped.",
+      "parentUuid": "951ef4ee_b6c8cff9",
+      "revId": "e24a7378fb97b45793096ab048538f33a10cbf18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
