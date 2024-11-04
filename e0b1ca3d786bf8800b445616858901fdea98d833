@@ -33,6 +33,24 @@
       "message": "Discussed offline with Dan that this should ideally stay in include/dawn/platform to make it clear it is an API surface of our libraries. src/utils is common internal utilities and not meant for public consumption.",
       "revId": "e0b1ca3d786bf8800b445616858901fdea98d833",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1c7bd4b_6719ccb7",
+        "filename": "src/utils/trace_platform.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-04T22:33:37Z",
+      "side": 1,
+      "message": "Seems OK to have it in `include/dawn/platform` as a separate header file from `DawnPlatform.h`.\n\nIt\u0027ll be kinda weird including files under a `dawn` directory from Tint, but we\u0027re already halfway there with the `DAWN_` macros in `src/utils`.",
+      "parentUuid": "1e12e01f_bc98e2e8",
+      "revId": "e0b1ca3d786bf8800b445616858901fdea98d833",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
