@@ -114,6 +114,7 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
             cmd.status = WGPURequestDeviceStatus_Error;
             cmd.message = ToOutputStringView("Requested feature not supported.");
             SerializeCommand(cmd);
+            mProcs.supportedFeaturesFreeMembers(supportedFeatures);
             return;
         }
     }
@@ -144,6 +145,7 @@ void Server::OnRequestDeviceCallback(RequestDeviceUserdata* data,
         cmd.status = WGPURequestDeviceStatus_Unknown;
         cmd.message = ToOutputStringView("Destroyed before request was fulfilled.");
         SerializeCommand(cmd);
+        mProcs.supportedFeaturesFreeMembers(supportedFeatures);
         return;
     }
     DAWN_ASSERT(reservation.data != nullptr);
