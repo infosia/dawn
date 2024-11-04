@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "42d14d1e017657dfd9b778ae48148eb17912fe5f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ae5b77a_0ba47e03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-04T18:26:42Z",
+      "side": 1,
+      "message": "This needs to be done as part of relanding the dawn::wire::server support after the partial revert goes through.",
+      "revId": "42d14d1e017657dfd9b778ae48148eb17912fe5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
