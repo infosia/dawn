@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "0ff9080f_b4732b91",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-04T21:39:36Z",
+      "side": 1,
+      "message": "I\u0027ll be adding more types here in the future so I added the ValidateBranches stuff up front for nicer diffs :)",
+      "parentUuid": "c4469e70_4575bae1",
+      "range": {
+        "startLine": 294,
+        "startChar": 4,
+        "endLine": 296,
+        "endChar": 99
+      },
+      "revId": "e576a4507ae425bfec933795628f6e34eb7d3fa7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "0f0df88e_a0ca3704",
         "filename": "src/dawn/native/opengl/TextureGL.h",
         "patchSetId": 15
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-04T21:19:49Z",
       "side": 1,
       "message": "Just for my understanding, this is just for readability right?",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 2
+      },
+      "revId": "e576a4507ae425bfec933795628f6e34eb7d3fa7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06da6a32_145230d8",
+        "filename": "src/dawn/native/opengl/TextureGL.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-04T21:39:36Z",
+      "side": 1,
+      "message": "Yup. It\u0027s too easy to mess up function calls when they look like `foo(true, false, false, true)`.",
+      "parentUuid": "0f0df88e_a0ca3704",
       "range": {
         "startLine": 41,
         "startChar": 0,
