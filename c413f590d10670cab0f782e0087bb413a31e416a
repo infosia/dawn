@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0dced79_0cb5eaee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-04T21:24:40Z",
+      "side": 1,
+      "message": "unfortunately adding a comment on here does not work, I\u0027ve tried it before too. I don\u0027t know what the best way is to explain why you\u0027re using No-Try.",
+      "revId": "c413f590d10670cab0f782e0087bb413a31e416a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
