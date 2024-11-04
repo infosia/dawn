@@ -299,6 +299,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     if (gpu_info::IsIntelGen11OrOlder(vendorId, deviceId)) {
         deviceToggles->Default(Toggle::ClearColorWithDraw, true);
     }
+
+    // TEMP: force enable Tint IR backend for testing
+    deviceToggles->ForceSet(Toggle::UseTintIR, true);
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
