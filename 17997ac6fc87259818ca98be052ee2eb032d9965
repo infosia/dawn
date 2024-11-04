@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff8bcaaa_7955f69c",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-04T22:00:24Z",
+      "side": 1,
+      "message": "I think we need to handle `bitcast` too?",
+      "revId": "17997ac6fc87259818ca98be052ee2eb032d9965",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "416e4bc9_08119125",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-04T22:00:24Z",
+      "side": 1,
+      "message": "As discussed offline, we probably want to make this a soft error (e.g. return `nullptr`), as the lack of a const-eval-fn shouldn\u0027t cause problems for cases like this:\n```\noverride x \u003d 1.0;\nfn foo() {\n  let y \u003d dpdx(x + 1);\n}\n```\n\nI guess that means you\u0027d also need to check for `nullptr` at all the callsites of `EvalValue()`, which is kinda annoying.",
+      "revId": "17997ac6fc87259818ca98be052ee2eb032d9965",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2b31e1b_314473ec",
+        "filename": "src/tint/lang/core/ir/evaluator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-04T22:00:24Z",
+      "side": 1,
+      "message": "Nit: Could tighten this up to return an `ir::Constant`?",
+      "revId": "17997ac6fc87259818ca98be052ee2eb032d9965",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
