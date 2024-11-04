@@ -34,6 +34,24 @@
       "parentUuid": "951ef4ee_b6c8cff9",
       "revId": "e24a7378fb97b45793096ab048538f33a10cbf18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46ae2171_7f75e00c",
+        "filename": "test/tint/bug/chromium/339704114.wgsl.expected.glsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-04T20:10:47Z",
+      "side": 0,
+      "message": "K, as long as the changes aren\u0027t modifying what the test should be dong.",
+      "parentUuid": "9f1e7533_17264981",
+      "revId": "e24a7378fb97b45793096ab048538f33a10cbf18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
