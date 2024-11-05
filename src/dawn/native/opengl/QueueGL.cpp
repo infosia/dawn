@@ -34,6 +34,7 @@
 #include "dawn/native/opengl/CommandBufferGL.h"
 #include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
+#include "dawn/native/opengl/SharedFenceEGL.h"
 #include "dawn/native/opengl/TextureGL.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
@@ -47,8 +48,15 @@ ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* d
 Queue::Queue(Device* device, const QueueDescriptor* descriptor) : QueueBase(device, descriptor) {
     const auto& egl = device->GetEGL(false);
 
-    DAWN_ASSERT(egl.HasExt(EGLExt::FenceSync) || egl.HasExt(EGLExt::ReusableSync));
-    mEGLSyncType = egl.HasExt(EGLExt::FenceSync) ? EGL_SYNC_FENCE : EGL_SYNC_REUSABLE_KHR;
+    if (egl.HasExt(EGLExt::NativeFenceSync)) {
+        mEGLSyncType = EGL_SYNC_NATIVE_FENCE_ANDROID;
+    } else if (egl.HasExt(EGLExt::FenceSync)) {
+        mEGLSyncType = EGL_SYNC_FENCE;
+    } else if (egl.HasExt(EGLExt::ReusableSync)) {
+        mEGLSyncType = EGL_SYNC_REUSABLE_KHR;
+    } else {
+        DAWN_UNREACHABLE();
+    }
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
@@ -146,32 +154,24 @@ void Queue::OnGLUsed() {
     mHasPendingCommands = true;
 }
 
-GLenum Queue::ClientWaitSync(EGLSync sync, Nanoseconds timeout) {
-    const Device* device = ToBackend(GetDevice());
-    const EGLFunctions& egl = device->GetEGL(/*makeCurrent=*/false);
-
-    return egl.ClientWaitSync(device->GetEGLDisplay(), sync, EGL_SYNC_FLUSH_COMMANDS_BIT,
-                              uint64_t(timeout));
-}
-
 ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
     // Search for the first fence >= serial.
     return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<bool> {
-        EGLSync waitSync = nullptr;
+        Ref<WrappedEGLSync> sync;
         for (auto it = fencesInFlight->begin(); it != fencesInFlight->end(); ++it) {
             if (it->second >= serial) {
-                waitSync = it->first;
+                sync = it->first;
                 break;
             }
         }
-        if (waitSync == nullptr) {
+        if (sync == nullptr) {
             // Fence sync not found. This serial must have already completed.
             // Return a success status.
             return true;
         }
 
         // Wait for the fence sync.
-        GLenum result = ClientWaitSync(waitSync, timeout);
+        GLenum result = sync->ClientWait(EGL_SYNC_FLUSH_COMMANDS_BIT, timeout);
         switch (result) {
             case EGL_TIMEOUT_EXPIRED:
                 return false;
@@ -190,23 +190,45 @@ void Queue::SubmitFenceSync() {
         if (!mHasPendingCommands) {
             return;
         }
-        const Device* device = ToBackend(GetDevice());
-        const EGLFunctions& egl = device->GetEGL(/*makeCurrent=*/true);
+        Device* device = ToBackend(GetDevice());
 
-        EGLSync sync = egl.CreateSync(device->GetEGLDisplay(), mEGLSyncType, nullptr);
-        DAWN_ASSERT(sync != EGL_NO_SYNC);
+        Ref<WrappedEGLSync> sync =
+            WrappedEGLSync::Create(device, mEGLSyncType, nullptr).AcquireSuccess();
 
         // Signal the sync if it is EGL_SYNC_REUSABLE_KHR. On the other hand,
         // EGL_SYNC_FENCE_KHR has its signal scheduled on creation.
         if (mEGLSyncType == EGL_SYNC_REUSABLE_KHR) {
-            EGLBoolean status = egl.SignalSync(device->GetEGLDisplay(), sync, EGL_SIGNALED);
-            DAWN_ASSERT(status == EGL_TRUE);
+            sync->Signal(EGL_SIGNALED);
         }
 
         IncrementLastSubmittedCommandSerial();
         fencesInFlight->emplace_back(sync, GetLastSubmittedCommandSerial());
         mHasPendingCommands = false;
     });
+}
+
+ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(ExecutionSerial lastUsageSerial) {
+    DAWN_ASSERT(mEGLSyncType == EGL_SYNC_NATIVE_FENCE_ANDROID);
+
+    // Look for an existing sync that can represent this serial.
+
+    Ref<WrappedEGLSync> sync = mFencesInFlight.Use([&](auto fencesInFlight) -> Ref<WrappedEGLSync> {
+        for (auto it = fencesInFlight->begin(); it != fencesInFlight->end(); ++it) {
+            if (it->second >= lastUsageSerial) {
+                return it->first;
+            }
+        }
+        return {};
+    });
+
+    if (sync == nullptr) {
+        DAWN_TRY_ASSIGN(sync,
+                        WrappedEGLSync::Create(ToBackend(GetDevice()), mEGLSyncType, nullptr));
+    }
+
+    DAWN_ASSERT(sync != nullptr);
+    return AcquireRef(new SharedFenceEGL(ToBackend(GetDevice()), "Internal EGLSync",
+                                         wgpu::SharedFenceType::SyncFD, sync));
 }
 
 bool Queue::HasPendingCommands() const {
@@ -219,10 +241,6 @@ MaybeError Queue::SubmitPendingCommands() {
 }
 
 ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
-    const Device* device = ToBackend(GetDevice());
-    const EGLFunctions& egl = device->GetEGL(/*makeCurrent=*/false);
-    EGLDisplay display = device->GetEGLDisplay();
-
     return mFencesInFlight.Use([&](auto fencesInFlight) {
         ExecutionSerial fenceSerial{0};
         while (!fencesInFlight->empty()) {
@@ -230,14 +248,12 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
 
             // Fence are added in order, so we can stop searching as soon
             // as we see one that's not ready.
-            GLenum result = ClientWaitSync(sync, Nanoseconds(0));
+            GLenum result = sync->ClientWait(EGL_SYNC_FLUSH_COMMANDS_BIT, Nanoseconds(0));
             if (result == EGL_TIMEOUT_EXPIRED) {
                 return fenceSerial;
             }
             // Update fenceSerial since fence is ready.
             fenceSerial = tentativeSerial;
-
-            egl.DestroySync(display, sync);
 
             fencesInFlight->pop_front();
 

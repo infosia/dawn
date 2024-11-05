@@ -84,5 +84,63 @@ MaybeError CheckEGL(const EGLFunctions& egl, EGLBoolean result, const char* cont
         return DAWN_INTERNAL_ERROR(message);
     }
 }
+ResultOrError<Ref<WrappedEGLSync>> WrappedEGLSync::Create(Device* device,
+                                                          EGLenum type,
+                                                          const EGLAttrib* attribs) {
+    const EGLFunctions& egl = device->GetEGL(false);
+    EGLSyncKHR sync =
+        egl.CreateSync(device->GetEGLDisplay(), EGL_SYNC_NATIVE_FENCE_ANDROID, attribs);
+    DAWN_TRY(CheckEGL(egl, sync == nullptr, "eglCreateSync"));
+    return AcquireRef(new WrappedEGLSync(device, sync));
+}
+
+WrappedEGLSync::WrappedEGLSync() {}
+
+WrappedEGLSync::WrappedEGLSync(Device* device, EGLSync sync) : mDevice(device), mSync(sync) {
+    DAWN_ASSERT(mDevice != nullptr);
+    DAWN_ASSERT(mSync != EGL_NO_SYNC);
+}
+
+WrappedEGLSync::~WrappedEGLSync() {
+    if (IsValid()) {
+        DAWN_ASSERT(mDevice != nullptr);
+        const EGLFunctions& egl = mDevice->GetEGL(false);
+        egl.DestroySync(mDevice->GetEGLDisplay(), mSync);
+        mDevice = nullptr;
+        mSync = EGL_NO_SYNC;
+    }
+}
+
+bool WrappedEGLSync::IsValid() const {
+    return mSync != EGL_NO_SYNC;
+}
+
+EGLSync WrappedEGLSync::Get() const {
+    return mSync;
+}
+
+void WrappedEGLSync::Signal(EGLenum mode) {
+    DAWN_ASSERT(IsValid());
+
+    const EGLFunctions& egl = mDevice->GetEGL(false);
+    EGLBoolean status = egl.SignalSync(mDevice->GetEGLDisplay(), mSync, mode);
+    DAWN_ASSERT(status == EGL_TRUE);
+}
+
+EGLenum WrappedEGLSync::ClientWait(EGLint flags, Nanoseconds timeout) {
+    DAWN_ASSERT(IsValid());
+
+    const EGLFunctions& egl = mDevice->GetEGL(false);
+    return egl.ClientWaitSync(mDevice->GetEGLDisplay(), mSync, flags, uint64_t(timeout));
+}
+
+void WrappedEGLSync::Wait() {
+    DAWN_ASSERT(IsValid());
+
+    const EGLFunctions& egl = mDevice->GetEGL(false);
+    constexpr EGLint flags = 0;
+    EGLBoolean status = egl.WaitSync(mDevice->GetEGLDisplay(), mSync, flags);
+    DAWN_ASSERT(status == EGL_TRUE);
+}
 
 }  // namespace dawn::native::opengl
