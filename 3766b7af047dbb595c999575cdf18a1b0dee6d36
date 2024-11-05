@@ -16,6 +16,40 @@
       "message": "Thoughts",
       "revId": "3766b7af047dbb595c999575cdf18a1b0dee6d36",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f7bba2d_fb905b11",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-05T21:56:18Z",
+      "side": 1,
+      "message": "Seems reasonable.",
+      "revId": "3766b7af047dbb595c999575cdf18a1b0dee6d36",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b856c4b3_c494aff6",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-05T21:56:18Z",
+      "side": 1,
+      "message": "Should only handle `Tint` and leave the rest as `TINT_UNREACHABLE`? To mirror how the DawnPerfTest version works.",
+      "revId": "3766b7af047dbb595c999575cdf18a1b0dee6d36",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
