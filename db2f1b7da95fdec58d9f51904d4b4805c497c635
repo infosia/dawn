@@ -51,6 +51,24 @@
       "parentUuid": "eca829bb_a2c11448",
       "revId": "db2f1b7da95fdec58d9f51904d4b4805c497c635",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e84af6a6_3e604b7e",
+        "filename": "src/tint/lang/glsl/writer/writer_fuzz.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-05T14:33:34Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "d5f2cc81_65e281b5",
+      "revId": "db2f1b7da95fdec58d9f51904d4b4805c497c635",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
