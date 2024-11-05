@@ -62,6 +62,8 @@ class Texture final : public TextureBase {
 
     MaybeError EnsureSubresourceContentInitialized(const SubresourceRange& range);
 
+    void SynchronizeTextureBeforeUse();
+
   private:
     Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor);
     ~Texture() override;

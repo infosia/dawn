@@ -34,10 +34,13 @@
 #include "dawn/common/Constants.h"
 #include "dawn/common/Math.h"
 #include "dawn/native/ChainUtils.h"
+#include "dawn/native/Device.h"
 #include "dawn/native/EnumMaskIterator.h"
+#include "dawn/native/Queue.h"
 #include "dawn/native/opengl/BufferGL.h"
 #include "dawn/native/opengl/CommandBufferGL.h"
 #include "dawn/native/opengl/DeviceGL.h"
+#include "dawn/native/opengl/SharedFenceGL.h"
 #include "dawn/native/opengl/SharedTextureMemoryGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
 
@@ -523,6 +526,20 @@ MaybeError Texture::EnsureSubresourceContentInitialized(const SubresourceRange& 
         DAWN_TRY(ClearTexture(range, TextureBase::ClearValue::Zero));
     }
     return {};
+}
+
+void Texture::SynchronizeTextureBeforeUse() {
+    SharedTextureMemoryBase::PendingFenceList fences;
+    SharedResourceMemoryContents* contents = GetSharedResourceMemoryContents();
+    if (contents != nullptr) {
+        contents->AcquirePendingFences(&fences);
+    }
+    for (const auto& fenceAndSignaledValue : fences) {
+        SharedFence* fence = ToBackend(fenceAndSignaledValue.object).Get();
+        fence->ServerWait(fenceAndSignaledValue.signaledValue);
+    }
+
+    mLastSharedTextureMemoryUsageSerial = GetDevice()->GetQueue()->GetPendingCommandSerial();
 }
 
 // TextureView
