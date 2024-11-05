@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f41da386_c91f7af0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-05T19:08:16Z",
+      "side": 1,
+      "message": "Not a blocker for this change, but now that we have some testing in place, WDYT about adding minimal testing for new changes we add? I know it will probably duplicate w.r.t to dawn_unittest/dawn_e2e eventually, but at least we have something? (The tests run in google3 roll so even if we don\u0027t catch it immediately, at least it will gate somewhere and we have a signal?)",
+      "revId": "ea6799c18daf744afb604fe31e17fa82333a5d3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
