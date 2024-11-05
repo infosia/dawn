@@ -194,7 +194,8 @@ class SharedTextureMemoryTestAndroidOpenGLESBackend
     }
 
     std::vector<wgpu::FeatureName> RequiredFeatures(const wgpu::Adapter&) const override {
-        return {wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer};
+        return {wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer,
+                wgpu::FeatureName::SharedFenceSyncFD};
     }
 };
 
