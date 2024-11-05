@@ -79,6 +79,7 @@ static constexpr std::array<ExtensionInfo, kExtensionCount> kExtensionInfos{{
      ExtType::Client},
     {EGLExt::GLColorSpace, "EGL_KHR_gl_colorspace", EGL1_5, ExtType::Display},
     {EGLExt::SurfacelessContext, "EGL_KHR_surfaceless_context", EGL1_5, ExtType::Display},
+    {EGLExt::NativeFenceSync, "EGL_ANDROID_native_fence_sync", NeverPromoted, ExtType::Display},
 
     {EGLExt::DisplayTextureShareGroup, "EGL_ANGLE_display_texture_share_group", NeverPromoted,
      ExtType::Display},
@@ -240,6 +241,10 @@ MaybeError EGLFunctions::LoadDisplayProcs(EGLDisplay display) {
 
     if (HasExt(EGLExt::GetNativeClientBuffer)) {
         GET_PROC_WITH_NAME(GetNativeClientBuffer, "eglGetNativeClientBufferANDROID");
+    }
+
+    if (HasExt(EGLExt::NativeFenceSync)) {
+        GET_PROC_WITH_NAME(DupNativeFenceFD, "eglDupNativeFenceFDANDROID");
     }
 
     return {};
