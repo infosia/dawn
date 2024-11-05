@@ -60,6 +60,7 @@ enum class EGLExt {
     NoConfigContext,
     PixelFormatFloat,
     GLColorspace,
+    NativeFenceSync,  // EGL_ANDROID_native_fence_sync
 
     // EGL image creation extensions
     ImageNativeBuffer,      // EGL_ANDROID_image_native_buffer
@@ -136,11 +137,22 @@ class EGLFunctions {
     PFNEGLCREATEPLATFORMPIXMAPSURFACEPROC CreatePlatformPixmapSurface;
     PFNEGLWAITSYNCPROC WaitSync;
 
+    // EGL_KHR_fence_sync
+    // NOTE: These functions use attribute lists with EGLint but the core versions use EGLattrib.
+    // They are not compatible.
+    PFNEGLCREATESYNCKHRPROC CreateSyncKHR;
+    PFNEGLDESTROYSYNCKHRPROC DestroySyncKHR;
+    PFNEGLCLIENTWAITSYNCKHRPROC ClientWaitSyncKHR;
+    PFNEGLGETSYNCATTRIBKHRPROC GetSyncAttribKHR;
+
     // EGL_KHR_reusable_sync
     PFNEGLSIGNALSYNCKHRPROC SignalSync;
 
     // EGL_ANDROID_get_native_client_buffer
     PFNEGLGETNATIVECLIENTBUFFERANDROIDPROC GetNativeClientBuffer;
+
+    // EGL_ANDROID_native_fence_sync
+    PFNEGLDUPNATIVEFENCEFDANDROIDPROC DupNativeFenceFD;
 
   private:
     MaybeError LoadClientExtensions();
