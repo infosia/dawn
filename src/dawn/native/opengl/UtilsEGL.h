@@ -28,8 +28,10 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_UTILSEGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_UTILSEGL_H_
 
+#include "dawn/common/RefCounted.h"
 #include "dawn/common/egl_platform.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/opengl/DeviceGL.h"
 
 namespace dawn::native::opengl {
 
@@ -37,6 +39,42 @@ class EGLFunctions;
 
 const char* EGLErrorAsString(EGLint error);
 MaybeError CheckEGL(const EGLFunctions& egl, EGLBoolean result, const char* context);
+
+class WrappedEGLSync : public RefCounted {
+  public:
+    static ResultOrError<Ref<WrappedEGLSync>> Create(Device* device,
+                                                     EGLenum type,
+                                                     const EGLAttrib* attribs);
+
+    WrappedEGLSync();
+
+    // Disallow copy/move/assign
+    WrappedEGLSync(const WrappedEGLSync&) = delete;
+    WrappedEGLSync& operator=(const WrappedEGLSync&) = delete;
+    WrappedEGLSync(WrappedEGLSync&& moveFrom) = delete;
+    WrappedEGLSync& operator=(WrappedEGLSync&& moveFrom) = delete;
+
+    bool IsValid() const;
+
+    EGLSync Get() const;
+
+    // Call eglSignalSync with given mode. Requires sync type of EGL_SYNC_REUSABLE_KHR.
+    MaybeError Signal(EGLenum mode);
+
+    // Call eglClientWaitSync
+    ResultOrError<EGLenum> ClientWait(EGLint flags, Nanoseconds timeout);
+
+    // Call eglWaitSync (server wait)
+    MaybeError Wait();
+
+  protected:
+    WrappedEGLSync(Device* device, EGLSync sync);
+    ~WrappedEGLSync() override;
+
+  private:
+    Ref<Device> mDevice;
+    EGLSync mSync = nullptr;
+};
 
 }  // namespace dawn::native::opengl
 
