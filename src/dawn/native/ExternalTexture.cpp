@@ -38,6 +38,8 @@
 
 #include "dawn/native/dawn_platform.h"
 
+#include "dawn/common/Log.h"
+
 namespace dawn::native {
 
 MaybeError ValidateExternalTexturePlane(const TextureViewBase* textureView) {
@@ -143,8 +145,6 @@ ResultOrError<Ref<ExternalTextureBase>> ExternalTextureBase::Create(
 ExternalTextureBase::ExternalTextureBase(DeviceBase* device,
                                          const ExternalTextureDescriptor* descriptor)
     : ApiObjectBase(device, descriptor->label),
-      mVisibleOrigin(descriptor->visibleOrigin),
-      mVisibleSize(descriptor->visibleSize),
       mState(ExternalTextureState::Active) {
     GetObjectTrackingList()->Track(this);
 }
@@ -281,10 +281,10 @@ MaybeError ExternalTextureBase::Initialize(DeviceBase* device,
                        static_cast<float>(plane0Extent.height)};
     vec2 plane1Size = {static_cast<float>(plane1Extent.width),
                        static_cast<float>(plane1Extent.height)};
-    vec2 visibleOrigin = {static_cast<float>(mVisibleOrigin.x),
-                          static_cast<float>(mVisibleOrigin.y)};
-    vec2 visibleSize = {static_cast<float>(mVisibleSize.width),
-                        static_cast<float>(mVisibleSize.height)};
+    vec2 visibleOrigin = {static_cast<float>(descriptor->visibleOrigin.x),
+                          static_cast<float>(descriptor->visibleOrigin.y)};
+    vec2 visibleSize = {static_cast<float>(descriptor->visibleSize.width),
+                        static_cast<float>(descriptor->visibleSize.height)};
 
     // Offset the coordinates so the center texel is at the origin, so we can apply rotations and
     // y-flips. After translation, coordinates range from [-0.5 .. +0.5] in both U and V.
@@ -299,7 +299,7 @@ MaybeError ExternalTextureBase::Initialize(DeviceBase* device,
 
     // Apply rotations as needed this may rotate the shader-visible size of the texture for
     // textureLoad operations.
-    std::array<uint32_t, 2> loadBounds = {mVisibleSize.width - 1, mVisibleSize.height - 1};
+    std::array<uint32_t, 2> loadBounds = {descriptor->displaySize.width - 1, descriptor->displaySize.height - 1};
     switch (descriptor->rotation) {
         case wgpu::ExternalTextureRotation::Rotate0Degrees:
             break;
@@ -333,6 +333,10 @@ MaybeError ExternalTextureBase::Initialize(DeviceBase* device,
 
     params.sampleTransform = TransposeForWGSL(sampleTransform);
 
+    DAWN_DEBUG() << "sampleTransform";
+    DAWN_DEBUG() << sampleTransform[0] << " " << sampleTransform[1] << " " << sampleTransform[2];
+    DAWN_DEBUG() << sampleTransform[3] << " " << sampleTransform[4] << " " << sampleTransform[5];
+
     // Compute the load transformation matrix by using toTexels * sampleTransform * toNormalized
     // Note that coords starts from 0 so the max value is size - 1.
     {
@@ -341,7 +345,11 @@ MaybeError ExternalTextureBase::Initialize(DeviceBase* device,
         mat2x3 loadTransform = Mul(toTexels, Mul(sampleTransform, toNormalized));
 
         params.loadTransform = TransposeForWGSL(loadTransform);
+        DAWN_DEBUG() << "loadTransform";
+        DAWN_DEBUG() << loadTransform[0] << " " << loadTransform[1] << " " << loadTransform[2];
+        DAWN_DEBUG() << loadTransform[3] << " " << loadTransform[4] << " " << loadTransform[5];
     }
+
 
     // Compute the clamping for each plane individually: to avoid bleeding of OOB texels due to
     // interpolation we need to offset by a half texel in, which depends on the size of the plane.
@@ -435,16 +443,6 @@ BufferBase* ExternalTextureBase::GetParamsBuffer() const {
 
 ObjectType ExternalTextureBase::GetType() const {
     return ObjectType::ExternalTexture;
-}
-
-const Extent2D& ExternalTextureBase::GetVisibleSize() const {
-    DAWN_ASSERT(!IsError());
-    return mVisibleSize;
-}
-
-const Origin2D& ExternalTextureBase::GetVisibleOrigin() const {
-    DAWN_ASSERT(!IsError());
-    return mVisibleOrigin;
 }
 
 }  // namespace dawn::native

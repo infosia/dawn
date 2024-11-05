@@ -73,9 +73,6 @@ class ExternalTextureBase : public ApiObjectBase {
     const std::array<Ref<TextureViewBase>, kMaxPlanesPerFormat>& GetTextureViews() const;
     ObjectType GetType() const override;
 
-    const Extent2D& GetVisibleSize() const;
-    const Origin2D& GetVisibleOrigin() const;
-
     MaybeError ValidateCanUseInSubmitNow() const;
     static Ref<ExternalTextureBase> MakeError(DeviceBase* device, StringView label = {});
 
@@ -101,12 +98,6 @@ class ExternalTextureBase : public ApiObjectBase {
     Ref<TextureBase> mPlaceholderTexture;
     Ref<BufferBase> mParamsBuffer;
     std::array<Ref<TextureViewBase>, kMaxPlanesPerFormat> mTextureViews;
-
-    // TODO(dawn:1082) Use the visible size and origin in the external texture shader
-    // code to sample video content.
-    Origin2D mVisibleOrigin;
-    Extent2D mVisibleSize;
-
     ExternalTextureState mState;
 };
 }  // namespace dawn::native
