@@ -33,6 +33,24 @@
       "message": "Out of curiousity, should this happen in the general bindings helper for GLSL? Like,  does `tint` need to do this same thing?",
       "revId": "2ff9b75622e8071a56dae3bf7c51a6411bf9d160",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66d98d57_99096c98",
+        "filename": "src/tint/lang/glsl/writer/writer_fuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-05T14:27:43Z",
+      "side": 1,
+      "message": "The Tint exe already does the same thing, but it uses the Inspector to get figure out if these things are needed.\n\nMaybe we could rename `GenerateBindings` to `GenerateDefaultOptions()` and make it do more of this sort of stuff.",
+      "parentUuid": "a56fb535_6365b2af",
+      "revId": "2ff9b75622e8071a56dae3bf7c51a6411bf9d160",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
