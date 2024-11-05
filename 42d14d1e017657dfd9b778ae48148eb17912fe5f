@@ -103,6 +103,24 @@
       "parentUuid": "4459296f_04ac5123",
       "revId": "42d14d1e017657dfd9b778ae48148eb17912fe5f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1286f58_4ddab82d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-05T06:26:28Z",
+      "side": 1,
+      "message": "Uhh sorry I think it\u0027s not really worth it, it turns out to be quite messy. Would make more sense if we already had a helper class for it.\n\n```\n    auto supportedFeaturesDeleter \u003d [\u0026](WGPUSupportedFeatures* f) {\n        mProcs.supportedFeaturesFreeMembers(f);\n    };\n    std::unique_ptr\u003cWGPUSupportedFeatures, decltype(supportedFeaturesDeleter)\u003e\n        supportedFeatures{new WGPUSupportedFeatures{}, supportedFeaturesDeleter};\n```",
+      "parentUuid": "8251add7_1b119131",
+      "revId": "42d14d1e017657dfd9b778ae48148eb17912fe5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
