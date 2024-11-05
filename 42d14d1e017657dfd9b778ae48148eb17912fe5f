@@ -85,6 +85,24 @@
       "message": "I do wonder if it could be done with RAII to avoid this code being fragile. Maybe std::unique_ptr with a custom deleter?",
       "revId": "42d14d1e017657dfd9b778ae48148eb17912fe5f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8251add7_1b119131",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-05T05:49:30Z",
+      "side": 1,
+      "message": "How would you do that?",
+      "parentUuid": "4459296f_04ac5123",
+      "revId": "42d14d1e017657dfd9b778ae48148eb17912fe5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
