@@ -69,6 +69,24 @@
       "parentUuid": "66d98d57_99096c98",
       "revId": "2ff9b75622e8071a56dae3bf7c51a6411bf9d160",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "948fc369_ab2ad286",
+        "filename": "src/tint/lang/glsl/writer/writer_fuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-05T14:37:21Z",
+      "side": 1,
+      "message": "Done: crbug.com/377481485",
+      "parentUuid": "9881f70e_74fc827e",
+      "revId": "2ff9b75622e8071a56dae3bf7c51a6411bf9d160",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
