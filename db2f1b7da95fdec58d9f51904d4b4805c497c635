@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a215cdf1_a2f99545",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-05T14:17:36Z",
+      "side": 1,
+      "message": "lgtm w/ question",
+      "revId": "db2f1b7da95fdec58d9f51904d4b4805c497c635",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eca829bb_a2c11448",
+        "filename": "src/tint/lang/glsl/writer/writer_fuzz.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-05T14:17:36Z",
+      "side": 1,
+      "message": "Do you actually need the else here, couldn\u0027t we just do this all the time? Like, in the struct cast the params attribute won\u0027t be defined so this won\u0027t match?",
+      "revId": "db2f1b7da95fdec58d9f51904d4b4805c497c635",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
