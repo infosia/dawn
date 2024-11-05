@@ -84,5 +84,65 @@ MaybeError CheckEGL(const EGLFunctions& egl, EGLBoolean result, const char* cont
         return DAWN_INTERNAL_ERROR(message);
     }
 }
+ResultOrError<Ref<WrappedEGLSync>> WrappedEGLSync::Create(Device* device,
+                                                          EGLenum type,
+                                                          const EGLAttrib* attribs) {
+    const EGLFunctions& egl = device->GetEGL(false);
+    EGLSyncKHR sync =
+        egl.CreateSync(device->GetEGLDisplay(), EGL_SYNC_NATIVE_FENCE_ANDROID, attribs);
+    DAWN_TRY(CheckEGL(egl, sync != EGL_NO_SYNC, "eglCreateSync"));
+    return AcquireRef(new WrappedEGLSync(device, sync));
+}
+
+WrappedEGLSync::WrappedEGLSync() {}
+
+WrappedEGLSync::WrappedEGLSync(Device* device, EGLSync sync) : mDevice(device), mSync(sync) {
+    DAWN_ASSERT(mDevice != nullptr);
+    DAWN_ASSERT(mSync != EGL_NO_SYNC);
+}
+
+WrappedEGLSync::~WrappedEGLSync() {
+    if (IsValid()) {
+        DAWN_ASSERT(mDevice != nullptr);
+        const EGLFunctions& egl = mDevice->GetEGL(false);
+        egl.DestroySync(mDevice->GetEGLDisplay(), mSync);
+        mDevice = nullptr;
+        mSync = EGL_NO_SYNC;
+    }
+}
+
+bool WrappedEGLSync::IsValid() const {
+    return mSync != EGL_NO_SYNC;
+}
+
+EGLSync WrappedEGLSync::Get() const {
+    return mSync;
+}
+
+MaybeError WrappedEGLSync::Signal(EGLenum mode) {
+    DAWN_ASSERT(IsValid());
+
+    const EGLFunctions& egl = mDevice->GetEGL(false);
+    DAWN_TRY(CheckEGL(egl, egl.SignalSync(mDevice->GetEGLDisplay(), mSync, mode), "eglSignalSync"));
+    return {};
+}
+
+ResultOrError<EGLenum> WrappedEGLSync::ClientWait(EGLint flags, Nanoseconds timeout) {
+    DAWN_ASSERT(IsValid());
+
+    const EGLFunctions& egl = mDevice->GetEGL(false);
+    EGLenum result = egl.ClientWaitSync(mDevice->GetEGLDisplay(), mSync, flags, uint64_t(timeout));
+    DAWN_TRY(CheckEGL(egl, result != EGL_FALSE, "eglClientWaitSync"));
+    return result;
+}
+
+MaybeError WrappedEGLSync::Wait() {
+    DAWN_ASSERT(IsValid());
+
+    const EGLFunctions& egl = mDevice->GetEGL(false);
+    constexpr EGLint flags = 0;
+    DAWN_TRY(CheckEGL(egl, egl.WaitSync(mDevice->GetEGLDisplay(), mSync, flags), "eglWaitSync"));
+    return {};
+}
 
 }  // namespace dawn::native::opengl

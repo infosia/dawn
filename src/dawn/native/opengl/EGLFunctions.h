@@ -60,6 +60,7 @@ enum class EGLExt {
     NoConfigContext,
     PixelFormatFloat,
     GLColorspace,
+    NativeFenceSync,  // EGL_ANDROID_native_fence_sync
 
     // EGL image creation extensions
     ImageNativeBuffer,      // EGL_ANDROID_image_native_buffer
@@ -141,6 +142,9 @@ class EGLFunctions {
 
     // EGL_ANDROID_get_native_client_buffer
     PFNEGLGETNATIVECLIENTBUFFERANDROIDPROC GetNativeClientBuffer;
+
+    // EGL_ANDROID_native_fence_sync
+    PFNEGLDUPNATIVEFENCEFDANDROIDPROC DupNativeFenceFD;
 
   private:
     MaybeError LoadClientExtensions();
