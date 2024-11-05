@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1425aecf_141321d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-05T14:20:55Z",
+      "side": 1,
+      "message": "lgtm w/ question",
+      "revId": "2ff9b75622e8071a56dae3bf7c51a6411bf9d160",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a56fb535_6365b2af",
+        "filename": "src/tint/lang/glsl/writer/writer_fuzz.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-05T14:20:55Z",
+      "side": 1,
+      "message": "Out of curiousity, should this happen in the general bindings helper for GLSL? Like,  does `tint` need to do this same thing?",
+      "revId": "2ff9b75622e8071a56dae3bf7c51a6411bf9d160",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
