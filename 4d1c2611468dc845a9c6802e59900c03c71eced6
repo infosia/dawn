@@ -16,6 +16,40 @@
       "message": "Thoughts?",
       "revId": "4d1c2611468dc845a9c6802e59900c03c71eced6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee23024a_e37edd5d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-05T21:51:48Z",
+      "side": 1,
+      "message": "This looks reasonable to me.",
+      "revId": "4d1c2611468dc845a9c6802e59900c03c71eced6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e7d605e_c858c3e8",
+        "filename": "src/tint/lang/spirv/writer/writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-05T21:51:48Z",
+      "side": 1,
+      "message": "Nit: More specifically: \"Validate binding options\"? Because it could be referring to IR validation, or SPIR-V validation...",
+      "revId": "4d1c2611468dc845a9c6802e59900c03c71eced6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
