@@ -33,6 +33,24 @@
       "message": "Do you actually need the else here, couldn\u0027t we just do this all the time? Like, in the struct cast the params attribute won\u0027t be defined so this won\u0027t match?",
       "revId": "db2f1b7da95fdec58d9f51904d4b4805c497c635",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5f2cc81_65e281b5",
+        "filename": "src/tint/lang/glsl/writer/writer_fuzz.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-05T14:30:10Z",
+      "side": 1,
+      "message": "Yeah, we could drop the else and it\u0027d work fine.\n\nI kinda like it with the else though, just because it matches the logic in my head, which is \"if the param is a struct then the attributes are on the members, else the attributes are on the parameter\".",
+      "parentUuid": "eca829bb_a2c11448",
+      "revId": "db2f1b7da95fdec58d9f51904d4b4805c497c635",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
