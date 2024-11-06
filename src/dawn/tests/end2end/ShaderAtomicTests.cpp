@@ -89,7 +89,7 @@ class ShaderAtomicTests : public DawnTestWithParams<SubgroupsShaderTestsParams> 
 
     wgpu::ComputePipeline CreateComputePipeline(
         const std::string& shader,
-        const char* entryPoint = nullptr,
+        const char* entryPoint = "maintestentry",
         const std::vector<wgpu::ConstantEntry>* constants = nullptr) {
         wgpu::ComputePipelineDescriptor csDesc;
         csDesc.compute.module = utils::CreateShaderModule(device, shader.c_str());
@@ -104,8 +104,6 @@ class ShaderAtomicTests : public DawnTestWithParams<SubgroupsShaderTestsParams> 
 
 TEST_P(ShaderAtomicTests, WorkgroupAtomicArray) {
     // TODO(crbug.com/42241359): Work in progress to resolve these tests mobile devices.
-    DAWN_SUPPRESS_TEST_IF(gpu_info::IsQualcomm_PCIAdreno6xx(GetParam().adapterProperties.vendorID,
-                                                            GetParam().adapterProperties.deviceID));
 
     // Suppression for Mali gpus.
     DAWN_SUPPRESS_TEST_IF(gpu_info::IsARM(GetParam().adapterProperties.vendorID));
@@ -141,7 +139,7 @@ TEST_P(ShaderAtomicTests, WorkgroupAtomicArray) {
 @compute @workgroup_size( )"
          << GetParam().mWorkgroupSizeParameter
          << R"(  )
-fn main(@builtin(local_invocation_index) local_invocation_index: u32,
+fn maintestentry(@builtin(local_invocation_index) local_invocation_index: u32,
         @builtin(workgroup_id) workgroup_id : vec3<u32>){
   if (local_invocation_index == 0) {
      atomicStore(&workgroup_buffer)" +
@@ -149,6 +147,7 @@ fn main(@builtin(local_invocation_index) local_invocation_index: u32,
   }
 
   workgroupBarrier();
+
   )"
          << (GetParam().mShaderAtomicOp == ShaderAtomicOp::AtomicAdd ? kAtomicAddOperation
                                                                      : kAtomicCASFakeAddOperation)
