@@ -16,6 +16,24 @@
       "message": "I\u0027m not entirely sure if I need to port this fix to the `library_webgpu.js` file in emscripten/emscripten-core. IIUC, dawn\u0027s js file is going to eventually replace emscripten\u0027s file. Is that correct?",
       "revId": "ef57c9315336ccc17416fadd6967603c00b32e47",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c546ed12_56996e90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-06T19:14:27Z",
+      "side": 1,
+      "message": "That is correct! If the issue exists upstream though, and since this fix is pretty small, you could send a PR there as well.",
+      "parentUuid": "b19c1538_4a2d15e0",
+      "revId": "ef57c9315336ccc17416fadd6967603c00b32e47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
