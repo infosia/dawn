@@ -357,6 +357,35 @@ struct State {
         return b.Convert(result_ty, load);
     }
 
+    // core::ir::Call* MakeVec2LoadF16(core::ir::Instruction* load,
+    //                                   const core::type::Type* result_ty,
+    //                                   core::ir::Value* byte_idx) {
+
+    //     auto make_vec2 = [&](auto* scalar_ty, auto value) {
+    //         return b.Construct(ty.vec2(scalar_ty), value, value);
+    //     };
+
+    //     // Handle F16
+    //     if (auto* cnst = byte_idx->As<core::ir::Constant>()) {
+    //         if (cnst->Value()->ValueAs<uint32_t>() % 4 != 0) {
+    //             load = b.ShiftRight(ty.vec2<u32>(), load, make_vec2(ty.u32(), 16_u));
+    //         }
+    //     } else {
+    //         // auto* false_ = b.Value(16_u);
+    //         // auto* true_ = b.Value(0_u);
+    //         // auto* cond = b.Equal(ty.bool_(), b.Modulo(ty.vec2<u32>(), byte_idx, make_vec2(ty.u32(), 4_u), make_vec2(ty.u32(), 0_u));
+
+    //         // Vector<core::ir::Value*, 3> args{false_, true_, cond->Result(0)};
+    //         // auto* shift_amt =
+    //         //     b.ir.CreateInstruction<hlsl::ir::Ternary>(b.InstructionResult(ty.vec2<u32>()), args);
+    //         // b.Append(shift_amt);
+
+    //         // load = b.ShiftRight(ty.vec2<u32>(), load, shift_amt);
+    //     }
+    //     load = b.Call<hlsl::ir::BuiltinCall>(ty.vec2<f32>(), hlsl::BuiltinFn::kF16Tof32, load);
+    //     return b.Convert(result_ty, load);
+    // }
+
     // When loading a vector we have to take the alignment into account to determine which part of
     // the `uint4` to load. A `vec`  of `u32`, `f32` or `i32` has an alignment requirement of
     // a multiple of 8-bytes (`f16` is 4-bytes). So, this means we'll have memory like:
@@ -421,42 +450,88 @@ struct State {
     core::ir::Instruction* MakeVectorLoadF16(core::ir::Access* access,
                                              const core::type::Vector* result_ty,
                                              core::ir::Value* byte_idx) {
-        core::ir::Instruction* load = nullptr;
+
         // Vec4 ends up being the same as a bitcast of vec2<u32> to a vec4<f16>
-        if (result_ty->Width() == 4) {
-            return b.Bitcast(result_ty, b.Load(access));
-        }
-
-        // A vec3 will be stored as a vec4, so we can bitcast as if we're a vec4 and swizzle out the
-        // last element
-        if (result_ty->Width() == 3) {
-            auto* bc = b.Bitcast(ty.vec4(result_ty->Type()), b.Load(access));
-            return b.Swizzle(result_ty, bc, {0, 1, 2});
-        }
-
-        // Vec2 ends up being the same as a bitcast u32 to vec2<f16>
-        if (result_ty->Width() == 2) {
+        if (result_ty->Width() == 4 || result_ty->Width() == 3) {
+            core::ir::Instruction* load = nullptr;
             auto* vec_idx = CalculateVectorOffset(byte_idx);
             if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
                 if (cnst->Value()->ValueAs<uint32_t>() == 2u) {
-                    load = b.Swizzle(ty.u32(), b.Load(access), {2});
+                    load = b.Swizzle(ty.vec2<u32>(), b.Load(access), {2, 3});
                 } else {
-                    load = b.Swizzle(ty.u32(), b.Load(access), {0});
+                    load = b.Swizzle(ty.vec2<u32>(), b.Load(access), {0, 1});
                 }
+                // We can do this instead of bitcast...
+                // auto* load_xz = MakeVec2LoadF16(load, ty.vec2<f16>(), b.Value(0_u));
+                // auto* load_yw = MakeVec2LoadF16(load, ty.vec2<f16>(), b.Value(1_u));
+                // auto* x = b.Access(ty.f16(), load_xz, 0_u);
+                // auto* y = b.Access(ty.f16(), load_yw, 0_u);
+                // auto* z = b.Access(ty.f16(), load_xz, 1_u);
+                // auto* w = b.Access(ty.f16(), load_yw, 1_u);
+                // return b.Construct(result_ty, x, y, z, w);
             } else {
                 auto* ubo = b.Load(access);
                 // if vec_idx == 2 -> zw
-                auto* sw_lhs = b.Swizzle(ty.u32(), ubo, {2});
+                auto* sw_lhs = b.Swizzle(ty.vec2<u32>(), ubo, {2, 3});
                 // else -> xy
-                auto* sw_rhs = b.Swizzle(ty.u32(), ubo, {0});
+                auto* sw_rhs = b.Swizzle(ty.vec2<u32>(), ubo, {0, 1});
                 auto* cond = b.Equal(ty.bool_(), vec_idx, 2_u);
 
                 Vector<core::ir::Value*, 3> args{sw_rhs->Result(0), sw_lhs->Result(0),
                                                  cond->Result(0)};
 
                 load =
-                    b.ir.CreateInstruction<hlsl::ir::Ternary>(b.InstructionResult(ty.u32()), args);
+                    b.ir.CreateInstruction<hlsl::ir::Ternary>(b.InstructionResult(ty.vec2<u32>()), std::move(args));
                 b.Append(load);
+
+                // Is it better to do the conditional swizzle above, or to LVE at vec_idx and vec_idx+1?
+                // auto* index0 = vec_idx;
+                // auto* val0 = b.LoadVectorElement(access, index0);
+                // auto* index1 = b.Add(ty.u32(), vec_idx, 1_u)->Result(0);
+                // auto* val1 = b.LoadVectorElement(access, index1);
+                // load = b.Construct(ty.vec2<u32>(), val0, val1);
+            }
+            if (result_ty->Width() == 3) {
+                auto* bc = b.Bitcast(ty.vec4(result_ty->Type()), load);
+                return b.Swizzle(result_ty, bc, {0, 1, 2});
+            }
+            return b.Bitcast(result_ty, load);
+        }
+
+        // A vec3 will be stored as a vec4, so we can bitcast as if we're a vec4 and swizzle out the
+        // last element
+        // if (result_ty->Width() == 3) {
+        //     auto* bc = b.Bitcast(ty.vec4(result_ty->Type()), b.Load(access));
+        //     return b.Swizzle(result_ty, bc, {0, 1, 2});
+        // }
+
+        // Vec2 ends up being the same as a bitcast u32 to vec2<f16>
+        if (result_ty->Width() == 2) {
+            core::ir::Instruction* load = nullptr;
+            auto* vec_idx = CalculateVectorOffset(byte_idx);
+            if (auto* cnst = vec_idx->As<core::ir::Constant>()) {
+                // if (cnst->Value()->ValueAs<uint32_t>() == 2u) {
+                //     load = b.Swizzle(ty.u32(), b.Load(access), {2});
+                // } else {
+                //     load = b.Swizzle(ty.u32(), b.Load(access), {0});
+                // }
+                const auto vec_idx_val = cnst->Value()->ValueAs<uint32_t>();
+                load = b.Swizzle(ty.u32(), b.Load(access), {vec_idx_val});
+            } else {
+                // auto* ubo = b.Load(access);
+                // // if vec_idx == 2 -> zw
+                // auto* sw_lhs = b.Swizzle(ty.u32(), ubo, {2});
+                // // else -> xy
+                // auto* sw_rhs = b.Swizzle(ty.u32(), ubo, {0});
+                // auto* cond = b.Equal(ty.bool_(), vec_idx, 2_u);
+
+                // Vector<core::ir::Value*, 3> args{sw_rhs->Result(0), sw_lhs->Result(0),
+                //                                  cond->Result(0)};
+
+                // load =
+                //     b.ir.CreateInstruction<hlsl::ir::Ternary>(b.InstructionResult(ty.u32()), std::move(args));
+                // b.Append(load);
+                load = b.Access(ty.u32(), b.Load(access), vec_idx);
             }
             return b.Bitcast(result_ty, load);
         }
