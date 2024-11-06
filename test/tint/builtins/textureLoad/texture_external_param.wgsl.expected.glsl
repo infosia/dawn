@@ -36,7 +36,7 @@ struct tint_ExternalTextureParams_std140 {
   vec2 samplePlane0RectMax;
   vec2 samplePlane1RectMin;
   vec2 samplePlane1RectMax;
-  uvec2 visibleSize;
+  uvec2 apparentSize;
   vec2 plane1CoordFactor;
 };
 
@@ -53,7 +53,7 @@ struct tint_ExternalTextureParams {
   vec2 samplePlane0RectMax;
   vec2 samplePlane1RectMin;
   vec2 samplePlane1RectMax;
-  uvec2 visibleSize;
+  uvec2 apparentSize;
   vec2 plane1CoordFactor;
 };
 
@@ -72,7 +72,7 @@ vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   return mix((v_5 * (pow(((params.A * v_4) + params.B), v_2) + params.E)), (v_5 * ((params.C * v_4) + params.F)), v_6);
 }
 vec4 tint_TextureLoadExternal(tint_ExternalTextureParams params, uvec2 coords) {
-  vec2 v_7 = round((params.loadTransform * vec3(vec2(min(coords, params.visibleSize)), 1.0f)));
+  vec2 v_7 = round((params.loadTransform * vec3(vec2(min(coords, params.apparentSize)), 1.0f)));
   uvec2 v_8 = uvec2(v_7);
   vec3 v_9 = vec3(0.0f);
   float v_10 = 0.0f;
@@ -103,7 +103,7 @@ vec4 textureLoad2d(tint_ExternalTextureParams tint_symbol_params, ivec2 coords) 
 tint_ExternalTextureParams tint_convert_tint_ExternalTextureParams(tint_ExternalTextureParams_std140 tint_input) {
   mat3 v_18 = mat3(tint_input.gamutConversionMatrix_col0, tint_input.gamutConversionMatrix_col1, tint_input.gamutConversionMatrix_col2);
   mat3x2 v_19 = mat3x2(tint_input.sampleTransform_col0, tint_input.sampleTransform_col1, tint_input.sampleTransform_col2);
-  return tint_ExternalTextureParams(tint_input.numPlanes, tint_input.doYuvToRgbConversionOnly, tint_input.yuvToRgbConversionMatrix, tint_input.gammaDecodeParams, tint_input.gammaEncodeParams, v_18, v_19, mat3x2(tint_input.loadTransform_col0, tint_input.loadTransform_col1, tint_input.loadTransform_col2), tint_input.samplePlane0RectMin, tint_input.samplePlane0RectMax, tint_input.samplePlane1RectMin, tint_input.samplePlane1RectMax, tint_input.visibleSize, tint_input.plane1CoordFactor);
+  return tint_ExternalTextureParams(tint_input.numPlanes, tint_input.doYuvToRgbConversionOnly, tint_input.yuvToRgbConversionMatrix, tint_input.gammaDecodeParams, tint_input.gammaEncodeParams, v_18, v_19, mat3x2(tint_input.loadTransform_col0, tint_input.loadTransform_col1, tint_input.loadTransform_col2), tint_input.samplePlane0RectMin, tint_input.samplePlane0RectMax, tint_input.samplePlane1RectMin, tint_input.samplePlane1RectMax, tint_input.apparentSize, tint_input.plane1CoordFactor);
 }
 void doTextureLoad() {
   vec4 res = textureLoad2d(tint_convert_tint_ExternalTextureParams(v_1.inner), ivec2(0));
@@ -158,7 +158,7 @@ struct tint_ExternalTextureParams_std140 {
   vec2 samplePlane0RectMax;
   vec2 samplePlane1RectMin;
   vec2 samplePlane1RectMax;
-  uvec2 visibleSize;
+  uvec2 apparentSize;
   vec2 plane1CoordFactor;
 };
 
@@ -175,7 +175,7 @@ struct tint_ExternalTextureParams {
   vec2 samplePlane0RectMax;
   vec2 samplePlane1RectMin;
   vec2 samplePlane1RectMax;
-  uvec2 visibleSize;
+  uvec2 apparentSize;
   vec2 plane1CoordFactor;
 };
 
@@ -194,7 +194,7 @@ vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   return mix((v_5 * (pow(((params.A * v_4) + params.B), v_2) + params.E)), (v_5 * ((params.C * v_4) + params.F)), v_6);
 }
 vec4 tint_TextureLoadExternal(tint_ExternalTextureParams params, uvec2 coords) {
-  vec2 v_7 = round((params.loadTransform * vec3(vec2(min(coords, params.visibleSize)), 1.0f)));
+  vec2 v_7 = round((params.loadTransform * vec3(vec2(min(coords, params.apparentSize)), 1.0f)));
   uvec2 v_8 = uvec2(v_7);
   vec3 v_9 = vec3(0.0f);
   float v_10 = 0.0f;
@@ -225,7 +225,7 @@ vec4 textureLoad2d(tint_ExternalTextureParams tint_symbol_params, ivec2 coords) 
 tint_ExternalTextureParams tint_convert_tint_ExternalTextureParams(tint_ExternalTextureParams_std140 tint_input) {
   mat3 v_18 = mat3(tint_input.gamutConversionMatrix_col0, tint_input.gamutConversionMatrix_col1, tint_input.gamutConversionMatrix_col2);
   mat3x2 v_19 = mat3x2(tint_input.sampleTransform_col0, tint_input.sampleTransform_col1, tint_input.sampleTransform_col2);
-  return tint_ExternalTextureParams(tint_input.numPlanes, tint_input.doYuvToRgbConversionOnly, tint_input.yuvToRgbConversionMatrix, tint_input.gammaDecodeParams, tint_input.gammaEncodeParams, v_18, v_19, mat3x2(tint_input.loadTransform_col0, tint_input.loadTransform_col1, tint_input.loadTransform_col2), tint_input.samplePlane0RectMin, tint_input.samplePlane0RectMax, tint_input.samplePlane1RectMin, tint_input.samplePlane1RectMax, tint_input.visibleSize, tint_input.plane1CoordFactor);
+  return tint_ExternalTextureParams(tint_input.numPlanes, tint_input.doYuvToRgbConversionOnly, tint_input.yuvToRgbConversionMatrix, tint_input.gammaDecodeParams, tint_input.gammaEncodeParams, v_18, v_19, mat3x2(tint_input.loadTransform_col0, tint_input.loadTransform_col1, tint_input.loadTransform_col2), tint_input.samplePlane0RectMin, tint_input.samplePlane0RectMax, tint_input.samplePlane1RectMin, tint_input.samplePlane1RectMax, tint_input.apparentSize, tint_input.plane1CoordFactor);
 }
 void doTextureLoad() {
   vec4 res = textureLoad2d(tint_convert_tint_ExternalTextureParams(v_1.inner), ivec2(0));
@@ -271,7 +271,7 @@ struct tint_ExternalTextureParams_std140 {
   vec2 samplePlane0RectMax;
   vec2 samplePlane1RectMin;
   vec2 samplePlane1RectMax;
-  uvec2 visibleSize;
+  uvec2 apparentSize;
   vec2 plane1CoordFactor;
 };
 
@@ -288,7 +288,7 @@ struct tint_ExternalTextureParams {
   vec2 samplePlane0RectMax;
   vec2 samplePlane1RectMin;
   vec2 samplePlane1RectMax;
-  uvec2 visibleSize;
+  uvec2 apparentSize;
   vec2 plane1CoordFactor;
 };
 
@@ -307,7 +307,7 @@ vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   return mix((v_5 * (pow(((params.A * v_4) + params.B), v_2) + params.E)), (v_5 * ((params.C * v_4) + params.F)), v_6);
 }
 vec4 tint_TextureLoadExternal(tint_ExternalTextureParams params, uvec2 coords) {
-  vec2 v_7 = round((params.loadTransform * vec3(vec2(min(coords, params.visibleSize)), 1.0f)));
+  vec2 v_7 = round((params.loadTransform * vec3(vec2(min(coords, params.apparentSize)), 1.0f)));
   uvec2 v_8 = uvec2(v_7);
   vec3 v_9 = vec3(0.0f);
   float v_10 = 0.0f;
@@ -338,7 +338,7 @@ vec4 textureLoad2d(tint_ExternalTextureParams tint_symbol_params, ivec2 coords) 
 tint_ExternalTextureParams tint_convert_tint_ExternalTextureParams(tint_ExternalTextureParams_std140 tint_input) {
   mat3 v_18 = mat3(tint_input.gamutConversionMatrix_col0, tint_input.gamutConversionMatrix_col1, tint_input.gamutConversionMatrix_col2);
   mat3x2 v_19 = mat3x2(tint_input.sampleTransform_col0, tint_input.sampleTransform_col1, tint_input.sampleTransform_col2);
-  return tint_ExternalTextureParams(tint_input.numPlanes, tint_input.doYuvToRgbConversionOnly, tint_input.yuvToRgbConversionMatrix, tint_input.gammaDecodeParams, tint_input.gammaEncodeParams, v_18, v_19, mat3x2(tint_input.loadTransform_col0, tint_input.loadTransform_col1, tint_input.loadTransform_col2), tint_input.samplePlane0RectMin, tint_input.samplePlane0RectMax, tint_input.samplePlane1RectMin, tint_input.samplePlane1RectMax, tint_input.visibleSize, tint_input.plane1CoordFactor);
+  return tint_ExternalTextureParams(tint_input.numPlanes, tint_input.doYuvToRgbConversionOnly, tint_input.yuvToRgbConversionMatrix, tint_input.gammaDecodeParams, tint_input.gammaEncodeParams, v_18, v_19, mat3x2(tint_input.loadTransform_col0, tint_input.loadTransform_col1, tint_input.loadTransform_col2), tint_input.samplePlane0RectMin, tint_input.samplePlane0RectMax, tint_input.samplePlane1RectMin, tint_input.samplePlane1RectMax, tint_input.apparentSize, tint_input.plane1CoordFactor);
 }
 void doTextureLoad() {
   vec4 res = textureLoad2d(tint_convert_tint_ExternalTextureParams(v_1.inner), ivec2(0));
