@@ -142,6 +142,30 @@
       },
       "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "283542d9_41c35441",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-11-06T16:37:06Z",
+      "side": 0,
+      "message": "I could use some guidance on what tags to use for a particular expectation",
+      "parentUuid": "8003f700_bb95b037",
+      "range": {
+        "startLine": 1578,
+        "startChar": 0,
+        "endLine": 1583,
+        "endChar": 139
+      },
+      "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
