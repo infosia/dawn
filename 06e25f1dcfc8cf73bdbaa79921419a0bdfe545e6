@@ -51,6 +51,24 @@
       "message": "```suggestion\n    // vec4\u003cu32\u003e:|         x         |         y         |         z         |         w         |\n```",
       "revId": "06e25f1dcfc8cf73bdbaa79921419a0bdfe545e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b9ad858_f3a73ae9",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-06T20:54:34Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "f8e26a52_3876c7a9",
+      "revId": "06e25f1dcfc8cf73bdbaa79921419a0bdfe545e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
