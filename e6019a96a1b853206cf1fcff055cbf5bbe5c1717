@@ -118,6 +118,30 @@
       },
       "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8003f700_bb95b037",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-11-06T16:15:30Z",
+      "side": 0,
+      "message": "BTW, thanks for renaming the android-14 ones in https://dawn-review.googlesource.com/c/dawn/+/212435/8/webgpu-cts/expectations.txt, Dan!",
+      "parentUuid": "65846679_4f3425bd",
+      "range": {
+        "startLine": 1578,
+        "startChar": 0,
+        "endLine": 1583,
+        "endChar": 139
+      },
+      "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
