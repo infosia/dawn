@@ -47,8 +47,8 @@ wgpu::Device CreateExtraDevice(wgpu::Instance instance) {
     // up the two instances. We use these to bypass the override.
     auto* requestAdapter = reinterpret_cast<WGPUProcInstanceRequestAdapter2>(
         wgpu::GetProcAddress("wgpuInstanceRequestAdapter2"));
-    auto* requestDevice = reinterpret_cast<WGPUProcAdapterRequestDevice2>(
-        wgpu::GetProcAddress("wgpuAdapterRequestDevice2"));
+    auto* requestDevice = reinterpret_cast<WGPUProcAdapterRequestDevice>(
+        wgpu::GetProcAddress("wgpuAdapterRequestDevice"));
 
     wgpu::Adapter adapter2;
     requestAdapter(instance.Get(), nullptr,
