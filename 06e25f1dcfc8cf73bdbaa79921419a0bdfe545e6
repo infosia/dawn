@@ -34,6 +34,23 @@
       "parentUuid": "b799d3d3_3b437a96",
       "revId": "06e25f1dcfc8cf73bdbaa79921419a0bdfe545e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8e26a52_3876c7a9",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-06T20:50:07Z",
+      "side": 1,
+      "message": "```suggestion\n    // vec4\u003cu32\u003e:|         x         |         y         |         z         |         w         |\n```",
+      "revId": "06e25f1dcfc8cf73bdbaa79921419a0bdfe545e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
