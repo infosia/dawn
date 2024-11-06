@@ -16,6 +16,24 @@
       "message": "Can you add a couple words here as to what `fix` means? I believe it\u0027s something like, the old f16 code was not taking into account the size of f16 is 4 instead of 8 bytes. So, the indices and swizzling were all working on the wrong compoennts. The fix is to handle the f16\u0027s as 4 bytes and use the correct swizzling.\n\nOr something?",
       "revId": "06e25f1dcfc8cf73bdbaa79921419a0bdfe545e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6c370a5_19ff7517",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-06T20:48:04Z",
+      "side": 1,
+      "message": "I like your description. Done!",
+      "parentUuid": "b799d3d3_3b437a96",
+      "revId": "06e25f1dcfc8cf73bdbaa79921419a0bdfe545e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
