@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1da959d_962f1660",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-06T01:01:29Z",
+      "side": 1,
+      "message": "lgtm. will leave to Antonio for approval as he spent the day getting familiar with the code.",
+      "revId": "cfd4c1999933f3d7b39e4660eeb502b9ac71a527",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
