@@ -104,8 +104,6 @@ class ShaderAtomicTests : public DawnTestWithParams<SubgroupsShaderTestsParams> 
 
 TEST_P(ShaderAtomicTests, WorkgroupAtomicArray) {
     // TODO(crbug.com/42241359): Work in progress to resolve these tests mobile devices.
-    DAWN_SUPPRESS_TEST_IF(gpu_info::IsQualcomm_PCIAdreno6xx(GetParam().adapterProperties.vendorID,
-                                                            GetParam().adapterProperties.deviceID));
 
     // Suppression for Mali gpus.
     DAWN_SUPPRESS_TEST_IF(gpu_info::IsARM(GetParam().adapterProperties.vendorID));
@@ -149,6 +147,8 @@ fn main(@builtin(local_invocation_index) local_invocation_index: u32,
   }
 
   workgroupBarrier();
+  storageBarrier();
+  textureBarrier();
   )"
          << (GetParam().mShaderAtomicOp == ShaderAtomicOp::AtomicAdd ? kAtomicAddOperation
                                                                      : kAtomicCASFakeAddOperation)
@@ -157,7 +157,8 @@ fn main(@builtin(local_invocation_index) local_invocation_index: u32,
         R"(
 
   workgroupBarrier();
-
+  storageBarrier();
+  textureBarrier();
   if (local_invocation_index == 0) {
      output[workgroup_id.x] = atomicLoad(&workgroup_buffer)" +
             kConditionalArray + R"();
