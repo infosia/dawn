@@ -1,3 +1,4 @@
+
 struct MyStruct {
     f1 : f32,
 };
