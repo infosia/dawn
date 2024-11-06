@@ -166,6 +166,30 @@
       },
       "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e85e24e_3e112312",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-11-06T17:01:15Z",
+      "side": 0,
+      "message": "There is no generic guidance, it all depends on the reason for the particular failure.\nE.g. you\u0027d use `android-t` for a failure due to a bug in Vulkan driver on that OS version.\nOr, you\u0027d use `android-pixel-6` for a failure due to a HW bug in Pixel 6.\nOne important rule is that the tags that you use must appear in `The following expectations condition tags were generated` text in the Swarming shard of a particular failure you want to suppress.\nE.g. in https://chromium-swarm.appspot.com/task?id\u003d6cf256ae68c26b10 you have:\n```\n(INFO) 2024-10-29 18:24:50,372 serially_executed_browser_test_case.StartBrowser:154  The following expectations condition tags were generated [\u0027mobile\u0027, \u0027android-chromium\u0027, \u0027android-not-webview\u0027, \u0027angle-opengles\u0027, \u0027renderer-skia-vulkan\u0027, \u0027android-14\u0027, \u0027webgpu-adapter-default\u0027, \u0027no-asan\u0027, \u0027arm\u0027, \u0027dawn-no-backend-validation\u0027, \u0027android\u0027, \u0027webgpu-no-worker\u0027, \u0027passthrough\u0027, \u0027arm-0x92020000\u0027, \u0027target-cpu-64\u0027, \u0027no-clang-coverage\u0027, \u0027graphite-disabled\u0027, \u0027oop-c\u0027, \u0027android-Pixel-6\u0027]\n```\nYou are welcome to add me as a reviewer when you have questions what tags to use.",
+      "parentUuid": "283542d9_41c35441",
+      "range": {
+        "startLine": 1578,
+        "startChar": 0,
+        "endLine": 1583,
+        "endChar": 139
+      },
+      "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
