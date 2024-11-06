@@ -16,6 +16,64 @@
       "message": "lgtm. Will let dneto approve as he went through this code yesterday.",
       "revId": "e76ccb64501721b2832e3c4e5c2db20f261eab12",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81eaebf2_3172fb12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-06T20:58:39Z",
+      "side": 1,
+      "message": "just comments",
+      "revId": "e76ccb64501721b2832e3c4e5c2db20f261eab12",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aa4a93b_3e9f8860",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-06T20:58:39Z",
+      "side": 1,
+      "message": "vec2h has 4 byte alignment, \nvec3h and vec4h have 8 byte alignment.",
+      "range": {
+        "startLine": 421,
+        "startChar": 39,
+        "endLine": 421,
+        "endChar": 40
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "18888077_e7cbf26d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+              "range": {
+                "startLine": 421,
+                "startChar": 0,
+                "endLine": 423,
+                "endChar": 0
+              },
+              "replacement": "    // A `vec4` or `vec3` of `f16` has 8-byte alignment, while a `vec2` of `f16` has 4-byte\n    // alignment. So, this means we\u0027ll have memory like (note, the `vec2` is padded to 8-bytes):\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e76ccb64501721b2832e3c4e5c2db20f261eab12",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
