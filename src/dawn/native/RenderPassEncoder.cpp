@@ -166,43 +166,43 @@ void RenderPassEncoder::APIEnd() {
 void RenderPassEncoder::End() {
     DAWN_ASSERT(GetDevice()->IsLockedByCurrentThreadIfNeeded());
 
-    mCommandBufferState.End();
-
     if (mEnded && IsValidationEnabled()) {
         GetDevice()->HandleError(DAWN_VALIDATION_ERROR("%s was already ended.", this));
         return;
     }
 
-    mEnded = true;
+    if (mEncodingContext->TryEncode(
+            this,
+            [&](CommandAllocator* allocator) -> MaybeError {
+                if (IsValidationEnabled()) {
+                    DAWN_TRY(ValidateProgrammableEncoderEnd());
 
-    mEncodingContext->TryEncode(
-        this,
-        [&](CommandAllocator* allocator) -> MaybeError {
-            if (IsValidationEnabled()) {
-                DAWN_TRY(ValidateProgrammableEncoderEnd());
+                    DAWN_INVALID_IF(
+                        mOcclusionQueryActive,
+                        "Render pass %s ended with incomplete occlusion query index %u of %s.",
+                        this, mCurrentOcclusionQueryIndex, mOcclusionQuerySet.Get());
 
-                DAWN_INVALID_IF(
-                    mOcclusionQueryActive,
-                    "Render pass %s ended with incomplete occlusion query index %u of %s.", this,
-                    mCurrentOcclusionQueryIndex, mOcclusionQuerySet.Get());
+                    DAWN_INVALID_IF(
+                        mDrawCount > mMaxDrawCount,
+                        "The drawCount (%u) of %s is greater than the maxDrawCount (%u).",
+                        mDrawCount, this, mMaxDrawCount);
+                }
 
-                DAWN_INVALID_IF(mDrawCount > mMaxDrawCount,
-                                "The drawCount (%u) of %s is greater than the maxDrawCount (%u).",
-                                mDrawCount, this, mMaxDrawCount);
-            }
+                allocator->Allocate<EndRenderPassCmd>(Command::EndRenderPass);
 
-            allocator->Allocate<EndRenderPassCmd>(Command::EndRenderPass);
-
-            DAWN_TRY(mEncodingContext->ExitRenderPass(this, std::move(mUsageTracker),
-                                                      mCommandEncoder.Get(),
-                                                      std::move(mIndirectDrawMetadata)));
-            if (mEndCallback) {
-                mEncodingContext->ConsumedError(mEndCallback());
-            }
-
-            return {};
-        },
-        "encoding %s.End().", this);
+                return {};
+            },
+            "encoding %s.End().", this)) {
+        // Only if validation succeeded, perform all the steps to make the End() effective.
+        mEnded = true;
+        mCommandBufferState.End();
+        mEncodingContext->ConsumedError(
+            mEncodingContext->ExitRenderPass(this, std::move(mUsageTracker), mCommandEncoder.Get(),
+                                             std::move(mIndirectDrawMetadata)));
+        if (mEndCallback) {
+            mEncodingContext->ConsumedError(mEndCallback());
+        }
+    }
 }
 
 void RenderPassEncoder::APISetStencilReference(uint32_t reference) {

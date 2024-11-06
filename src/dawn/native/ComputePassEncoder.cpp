@@ -173,14 +173,10 @@ ObjectType ComputePassEncoder::GetType() const {
 }
 
 void ComputePassEncoder::APIEnd() {
-    mCommandBufferState.End();
-
     if (mEnded && IsValidationEnabled()) {
         GetDevice()->HandleError(DAWN_VALIDATION_ERROR("%s was already ended.", this));
         return;
     }
-
-    mEnded = true;
 
     if (mEncodingContext->TryEncode(
             this,
@@ -194,6 +190,9 @@ void ComputePassEncoder::APIEnd() {
                 return {};
             },
             "encoding %s.End().", this)) {
+        // Only if validation succeeded, perform all the steps to make the End() effective.
+        mEnded = true;
+        mCommandBufferState.End();
         mEncodingContext->ExitComputePass(this, mUsageTracker.AcquireResourceUsage());
     }
 }
