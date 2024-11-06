@@ -34,6 +34,24 @@
       ],
       "revId": "c7d5dfaf35a1cd55e16e679fdf0ec7b6302e48e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2db42503_3348effc",
+        "filename": "src/tint/lang/core/ir/evaluator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-06T17:37:27Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "43d38f51_d557057d",
+      "revId": "c7d5dfaf35a1cd55e16e679fdf0ec7b6302e48e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
