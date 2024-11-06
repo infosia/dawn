@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "245aca49_5390657d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-06T23:06:03Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "e14027754076fb0fa763d0298911266d850ab279",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a4fd161_7a3843dd",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-06T23:06:03Z",
+      "side": 1,
+      "message": "nit: comment needs updating.",
+      "revId": "e14027754076fb0fa763d0298911266d850ab279",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bc4f077_6d64fcb0",
+        "filename": "src/dawn/tests/end2end/DepthStencilSamplingTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-06T23:06:03Z",
+      "side": 1,
+      "message": "optional nit: We have `utils::MakeBindGroup`, I think the following would work.\n\n```\nwgpu::BindGroupLayout bgl \u003d utils::MakeBindGroup(device, {\n   {0, wgpu::TextureSampleType::Depth},\n   {1, wgpu::SamplerBindingType::NonFiltering},\n});\n```\n\nLikewise in other tests and `utils::MakePipelineLayout`.",
+      "revId": "e14027754076fb0fa763d0298911266d850ab279",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "206c272e_6a6e9d04",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3538,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-06T23:06:03Z",
+      "side": 1,
+      "message": "```suggestion\n    // Test that a non-filtering sampler can be used to sample an uint texture.\n```",
+      "revId": "e14027754076fb0fa763d0298911266d850ab279",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
