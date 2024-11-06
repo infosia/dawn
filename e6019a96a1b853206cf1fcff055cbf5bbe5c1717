@@ -70,6 +70,30 @@
       },
       "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "173a68a9_f1b234cd",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-11-06T15:57:09Z",
+      "side": 0,
+      "message": "Ah, yea in general I think we shouldn\u0027t be removing them. The texture ones were a bit of an exception as the names of the tests all changed, so the parameterization would have been all wrong I think. Even if they remained they would have all failed to work correctly.\n\nI\u0027m not sure what was blocking moving them to main CQ. They\u0027d need capacity to keep up and stabl-ish expectations I\u0027d assume, but that\u0027s a question for the larger team.",
+      "parentUuid": "6bfa6e70_5ace06aa",
+      "range": {
+        "startLine": 1578,
+        "startChar": 0,
+        "endLine": 1583,
+        "endChar": 139
+      },
+      "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
