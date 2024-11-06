@@ -171,30 +171,10 @@
             },
             {
                 "name": "request device",
-                "args": [
-                    {"name": "descriptor", "type": "device descriptor", "annotation": "const*", "optional": true, "no_default": true},
-                    {"name": "callback", "type": "request device callback"},
-                    {"name": "userdata", "type": "void *"}
-                ]
-            },
-            {
-                "name": "request device f",
-                "_comment": "TODO(crbug.com/dawn/2021): This is dawn/emscripten-only until we rename it to replace the old API. See bug for details.",
-                "tags": ["dawn", "emscripten"],
                 "returns": "future",
                 "args": [
                     {"name": "options", "type": "device descriptor", "annotation": "const*", "optional": true, "no_default": true},
                     {"name": "callback info", "type": "request device callback info"}
-                ]
-            },
-            {
-                "name": "request device 2",
-                "_comment": "TODO(crbug.com/dawn/2021): This is dawn/emscripten-only until we rename it to replace the old API. See bug for details.",
-                "tags": ["dawn", "emscripten"],
-                "returns": "future",
-                "args": [
-                    {"name": "options", "type": "device descriptor", "annotation": "const*", "optional": true, "no_default": true},
-                    {"name": "callback info", "type": "request device callback info 2"}
                 ]
             },
             {
@@ -3534,16 +3514,6 @@
     },
 
     "request device callback": {
-        "category": "function pointer",
-        "_comment": "crbug.com/1234617: Revisit optional status of device once requestDevice can return lost devices",
-        "args": [
-            {"name": "status", "type": "request device status"},
-            {"name": "device", "type": "device", "optional": true},
-            {"name": "message", "type": "string view"},
-            {"name": "userdata", "type": "void *"}
-        ]
-    },
-    "request device callback 2": {
         "category": "callback function",
         "_comment": "crbug.com/1234617: Revisit optional status of device once requestDevice can return lost devices",
         "args": [
@@ -3553,19 +3523,10 @@
         ]
     },
     "request device callback info": {
-         "category": "structure",
-         "extensible": "in",
-         "members": [
-            {"name": "mode", "type": "callback mode"},
-            {"name": "callback", "type": "request device callback"},
-            {"name": "userdata", "type": "void *"}
-         ]
-    },
-    "request device callback info 2": {
         "category": "callback info",
         "members": [
             {"name": "mode", "type": "callback mode"},
-            {"name": "callback", "type": "request device callback 2"}
+            {"name": "callback", "type": "request device callback"}
         ]
    },
 
