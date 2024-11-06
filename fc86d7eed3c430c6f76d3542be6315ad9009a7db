@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "fc86d7eed3c430c6f76d3542be6315ad9009a7db",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62bc172c_16c1f68c",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-06T15:03:53Z",
+      "side": 1,
+      "message": "`ary-\u003eElemType()-\u003eClone(clone_ctx_.type_ctx)`",
+      "range": {
+        "startLine": 1202,
+        "startChar": 24,
+        "endLine": 1202,
+        "endChar": 39
+      },
+      "revId": "fc86d7eed3c430c6f76d3542be6315ad9009a7db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
