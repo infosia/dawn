@@ -53,6 +53,8 @@
 #include "partition_alloc/pointers/raw_ptr.h"
 #include "tint/tint.h"
 
+#include <spirv-tools/libspirv.hpp>
+
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
 #include "dawn/native/SpirvValidation.h"
 #endif
@@ -468,6 +470,21 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     DAWN_TRY(ValidateSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size(),
                            GetDevice()->IsToggleEnabled(Toggle::DumpShaders)));
 #endif
+
+    if ((true)) {
+        spvtools::SpirvTools spirvTools(SPV_ENV_VULKAN_1_1);
+        std::ostringstream dumpedMsg;
+
+        std::string disassembly;
+        if (spirvTools.Disassemble(
+                compilation->spirv.data(), compilation->spirv.size(), &disassembly,
+                SPV_BINARY_TO_TEXT_OPTION_FRIENDLY_NAMES | SPV_BINARY_TO_TEXT_OPTION_INDENT)) {
+            dumpedMsg << "/* Dumped generated SPIRV disassembly */\n" << disassembly;
+        } else {
+            dumpedMsg << "/* Failed to disassemble generated SPIRV */";
+        }
+        GetDevice()->EmitLog(WGPULoggingType_Info, dumpedMsg.str().c_str());
+    }
 
     VkShaderModuleCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
