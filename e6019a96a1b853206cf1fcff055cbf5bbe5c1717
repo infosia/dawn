@@ -94,6 +94,30 @@
       },
       "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65846679_4f3425bd",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-11-06T16:03:47Z",
+      "side": 0,
+      "message": "I avoid adding experimental bots to the CQ, because:\n1. We can\u0027t upgrade many devices to the new version, so running CQ would become very slow.\n2. Experimental OS/driver version would initially have more failures than the stable version, which would cause many retries, and make CQ exponentially slower.\n\nWould make my job much simpler, though.",
+      "parentUuid": "173a68a9_f1b234cd",
+      "range": {
+        "startLine": 1578,
+        "startChar": 0,
+        "endLine": 1583,
+        "endChar": 139
+      },
+      "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
