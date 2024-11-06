@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3501fcc6_a050c7de",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-11-06T23:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a4fd161_7a3843dd",
+      "revId": "e14027754076fb0fa763d0298911266d850ab279",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8bc4f077_6d64fcb0",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56db2f85_1abff554",
+        "filename": "src/dawn/tests/end2end/DepthStencilSamplingTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-11-06T23:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bc4f077_6d64fcb0",
+      "revId": "e14027754076fb0fa763d0298911266d850ab279",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "206c272e_6a6e9d04",
@@ -65,6 +101,24 @@
       "writtenOn": "2024-11-06T23:06:03Z",
       "side": 1,
       "message": "```suggestion\n    // Test that a non-filtering sampler can be used to sample an uint texture.\n```",
+      "revId": "e14027754076fb0fa763d0298911266d850ab279",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4e65b1e_f8b69724",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3538,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-11-06T23:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "206c272e_6a6e9d04",
       "revId": "e14027754076fb0fa763d0298911266d850ab279",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
