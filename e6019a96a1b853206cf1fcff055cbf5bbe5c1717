@@ -22,6 +22,30 @@
       },
       "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21d171fe_4e0083d9",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-11-06T15:50:03Z",
+      "side": 0,
+      "message": "If the bot doesn\u0027t trigger on the roll when we won\u0027t see it. Keeping experimental bots up to date is probably too much work at this point given how much trouble we have with non-experimental. Once it\u0027s a real bot then we\u0027ll have to take over but until then.....",
+      "parentUuid": "466a45a7_8d8613d0",
+      "range": {
+        "startLine": 1578,
+        "startChar": 0,
+        "endLine": 1583,
+        "endChar": 139
+      },
+      "revId": "e6019a96a1b853206cf1fcff055cbf5bbe5c1717",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
