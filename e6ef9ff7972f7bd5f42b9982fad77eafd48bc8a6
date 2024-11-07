@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02cd6bc7_a5f40c04",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-07T19:19:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4220029_36ab3a30",
+      "revId": "e6ef9ff7972f7bd5f42b9982fad77eafd48bc8a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91f51333_219f8500",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-11-06T19:04:21Z",
       "side": 1,
       "message": "Discussed offline - this won\u0027t quite work. Rough design offline is to use a work queue with a map that tracks how many pending operands any given instruction has.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 52
+      },
+      "revId": "e6ef9ff7972f7bd5f42b9982fad77eafd48bc8a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a652ed70_42c1e567",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-07T19:19:51Z",
+      "side": 1,
+      "message": "Thinking about it more, I think it does work. We\u0027ve already replaced all `Override` values, that was done in the loop above. So anywhere they were used we want to now evaluate. The `Evaluator` already handles evaluating the operands, so either the operand is already `Constant` or the evaluator will calculate it for us.\n\nOr, put another way, I can\u0027t figure out how to write a test case that fails ... I added a test which requires multiple steps and multiple overrides, and then another which does exactly the same thing but flips the override usage and I can\u0027t make it fail ....",
+      "parentUuid": "91f51333_219f8500",
       "range": {
         "startLine": 203,
         "startChar": 0,
