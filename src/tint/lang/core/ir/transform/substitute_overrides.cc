@@ -31,6 +31,7 @@
 
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/evaluator.h"
+#include "src/tint/lang/core/ir/type/array_count.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/utils/result/result.h"
 
@@ -61,6 +62,7 @@ struct State {
     Result<SuccessType> Process() {
         Vector<Instruction*, 8> to_remove;
         Vector<Value*, 8> values_to_propagate;
+        Vector<core::ir::Var*, 4> vars_with_value_array_count;
 
         // Note, we don't `Destroy` the overrides when we substitute them. We need them to stay
         // alive because the `workgroup_size` and `array` usages aren't in the `Usages` list so
@@ -70,8 +72,14 @@ struct State {
         for (auto* inst : *ir.root_block) {
             auto* override = inst->As<core::ir::Override>();
             if (!override) {
-                // Gather all the non-var instructions which we'll remove
-                if (!inst->Is<core::ir::Var>()) {
+                if (auto* var = inst->As<core::ir::Var>()) {
+                    if (auto* ary = var->Result(0)->Type()->UnwrapPtr()->As<core::type::Array>()) {
+                        if (ary->Count()->Is<core::ir::type::ValueArrayCount>()) {
+                            vars_with_value_array_count.Push(var);
+                        }
+                    }
+                } else {
+                    // Gather all the non-var instructions which we'll remove
                     to_remove.Push(inst);
                 }
                 continue;
@@ -144,6 +152,9 @@ struct State {
                     if (r != Success) {
                         return r.Failure();
                     }
+                    // Must be able to evaluate the constant.
+                    TINT_ASSERT(r.Get());
+
                     new_value = r.Get();
                 }
 
@@ -152,7 +163,67 @@ struct State {
             func->SetWorkgroupSize(new_wg);
         }
 
-        // TODO(dsinclair): Replace array type
+        // Replace array types using overrides
+        for (auto var : vars_with_value_array_count) {
+            auto* old_ptr = var->Result(0)->Type()->As<core::type::Pointer>();
+            TINT_ASSERT(old_ptr);
+
+            auto* old_ty = old_ptr->UnwrapPtr()->As<core::type::Array>();
+            auto* cnt = old_ty->Count()->As<core::ir::type::ValueArrayCount>();
+            TINT_ASSERT(cnt);
+
+            core::ir::Value* new_value = nullptr;
+
+            auto* cnt_value = cnt->value->As<core::ir::InstructionResult>();
+            TINT_ASSERT(cnt_value);
+
+            if (auto* override = cnt_value->Instruction()->As<core::ir::Override>()) {
+                auto replacement = override_id_to_value_.Get(override->OverrideId());
+                TINT_ASSERT(replacement);
+                new_value = *replacement;
+            } else {
+                auto r = eval::Eval(b, cnt->value);
+                if (r != Success) {
+                    return r.Failure();
+                }
+                // Must be able to evaluate the constant.
+                TINT_ASSERT(r.Get());
+
+                new_value = r.Get();
+            }
+
+            auto* cnst = new_value->As<core::ir::Constant>();
+            TINT_ASSERT(cnst);
+
+            auto val = cnst->Value()->ValueAs<uint32_t>();
+
+            auto* new_cnt = ty.Get<core::type::ConstantArrayCount>(val);
+            auto* new_ty = ty.Get<core::type::Array>(old_ty->ElemType(), new_cnt, old_ty->Align(),
+                                                     old_ty->Size(), old_ty->Stride(),
+                                                     old_ty->ImplicitStride());
+
+            auto* new_ptr = ty.ptr(old_ptr->AddressSpace(), new_ty, old_ptr->Access());
+            var->Result(0)->SetType(new_ptr);
+
+            // The `Var` type needs to propagate to certain usages. A `Load` instruction needes to
+            // be updated as it loads the `Var` and any `Let` instructions which then use that
+            // `Load` need types update.
+            Vector<core::ir::Instruction*, 2> to_replace;
+            to_replace.Push(var);
+
+            while (!to_replace.IsEmpty()) {
+                auto* inst = to_replace.Pop();
+
+                for (auto usage : inst->Result(0)->UsagesUnsorted()) {
+                    if (!usage->instruction->IsAnyOf<core::ir::Let, core::ir::Load>()) {
+                        continue;
+                    }
+
+                    usage->instruction->Result(0)->SetType(new_ty);
+                    to_replace.Push(usage->instruction);
+                }
+            }
+        }
 
         // Remove any non-var instruction in the root block
         for (auto* inst : to_remove) {
