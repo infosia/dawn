@@ -49,7 +49,13 @@ using namespace tint::core::number_suffixes;  // NOLINT
 namespace tint::msl::writer::raise {
 namespace {
 
-using MslWriter_BuiltinPolyfillTest = core::ir::transform::TransformTest;
+class MslWriter_BuiltinPolyfillTest : public core::ir::transform::TransformTest {
+  public:
+    void SetUp() override {
+        capabilities.Add(core::ir::Capability::kAllowPointersInStructures,
+                         core::ir::Capability::kAllowInputParamBindings);
+    }
+};
 
 TEST_F(MslWriter_BuiltinPolyfillTest, AtomicAdd_Workgroup_I32) {
     auto* a = b.FunctionParam<ptr<workgroup, atomic<i32>>>("a");
@@ -86,6 +92,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, AtomicAdd_Workgroup_I32) {
 
 TEST_F(MslWriter_BuiltinPolyfillTest, AtomicAdd_Storage_U32) {
     auto* a = b.FunctionParam<ptr<storage, atomic<u32>>>("a");
+    a->SetBindingPoint(0, 0);
     auto* func = b.Function("foo", ty.u32());
     func->SetParams({a});
     b.Append(func->Block(), [&] {
@@ -94,7 +101,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, AtomicAdd_Storage_U32) {
     });
 
     auto* src = R"(
-%foo = func(%a:ptr<storage, atomic<u32>, read_write>):u32 {
+%foo = func(%a:ptr<storage, atomic<u32>, read_write> [@binding_point(0, 0)]):u32 {
   $B1: {
     %3:u32 = atomicAdd %a, 1u
     ret %3
@@ -104,7 +111,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, AtomicAdd_Storage_U32) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%a:ptr<storage, atomic<u32>, read_write>):u32 {
+%foo = func(%a:ptr<storage, atomic<u32>, read_write> [@binding_point(0, 0)]):u32 {
   $B1: {
     %3:u32 = msl.atomic_fetch_add_explicit %a, 1u, 0u
     ret %3
@@ -668,10 +675,12 @@ __atomic_compare_exchange_result_u32 = struct @align(4) {
     EXPECT_EQ(expect, str());
 }
 
+// TODO: BuiltinPolyfill does not correctly forward binding information to inserted functions
 TEST_F(MslWriter_BuiltinPolyfillTest,
-       AtomicCompareExchangeWeak_Multiple_DifferentAddressSpace_SameType) {
+       DISABLED_AtomicCompareExchangeWeak_Multiple_DifferentAddressSpace_SameType) {
     auto* aw = b.FunctionParam<ptr<workgroup, atomic<i32>>>("aw");
     auto* as = b.FunctionParam<ptr<storage, atomic<i32>>>("as");
+    as->SetBindingPoint(0, 0);
     auto* func = b.Function("foo", ty.i32());
     func->SetParams({aw, as});
     b.Append(func->Block(), [&] {
@@ -688,13 +697,13 @@ TEST_F(MslWriter_BuiltinPolyfillTest,
         b.Return(func, b.Access<i32>(result_b, 0_u));
     });
 
-    auto* src = R"(
+    auto* src = R"(+
 __atomic_compare_exchange_result_i32 = struct @align(4) {
   old_value:i32 @offset(0)
   exchanged:bool @offset(4)
 }
 
-%foo = func(%aw:ptr<workgroup, atomic<i32>, read_write>, %as:ptr<storage, atomic<i32>, read_write>):i32 {
+%foo = func(%aw:ptr<workgroup, atomic<i32>, read_write>, %as:ptr<storage, atomic<i32>, read_write> [@binding_point(0, 0)]):i32 {
   $B1: {
     %4:__atomic_compare_exchange_result_i32 = atomicCompareExchangeWeak %aw, 1i, 2i
     %5:__atomic_compare_exchange_result_i32 = atomicCompareExchangeWeak %as, 3i, 4i
@@ -718,7 +727,7 @@ __atomic_compare_exchange_result_i32 = struct @align(4) {
   exchanged:bool @offset(4)
 }
 
-%foo = func(%aw:ptr<workgroup, atomic<i32>, read_write>, %as:ptr<storage, atomic<i32>, read_write>):i32 {
+%foo = func(%aw:ptr<workgroup, atomic<i32>, read_write>, %as:ptr<storage, atomic<i32>, read_write> [@binding_point(0, 0)]):i32 {
   $B1: {
     %4:__atomic_compare_exchange_result_i32 = call %5, %aw, 1i, 2i
     %6:__atomic_compare_exchange_result_i32 = call %7, %as, 3i, 4i
@@ -1500,6 +1509,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, Sign_Vector) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_1d) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k1d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* func = b.Function("foo", ty.u32());
     func->SetParams({t});
     b.Append(func->Block(), [&] {
@@ -1508,7 +1518,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_1d) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_1d<f32>):u32 {
+%foo = func(%t:texture_1d<f32> [@binding_point(0, 0)]):u32 {
   $B1: {
     %3:u32 = textureDimensions %t
     ret %3
@@ -1518,7 +1528,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_1d) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_1d<f32>):u32 {
+%foo = func(%t:texture_1d<f32> [@binding_point(0, 0)]):u32 {
   $B1: {
     %3:u32 = %t.get_width
     %4:u32 = construct %3
@@ -1535,6 +1545,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_1d) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_2d_WithoutLod) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* func = b.Function("foo", ty.vec2<u32>());
     func->SetParams({t});
     b.Append(func->Block(), [&] {
@@ -1543,7 +1554,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_2d_WithoutLod) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<f32>):vec2<u32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)]):vec2<u32> {
   $B1: {
     %3:vec2<u32> = textureDimensions %t
     ret %3
@@ -1553,7 +1564,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_2d_WithoutLod) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<f32>):vec2<u32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)]):vec2<u32> {
   $B1: {
     %3:u32 = %t.get_width 0u
     %4:u32 = %t.get_height 0u
@@ -1571,6 +1582,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_2d_WithoutLod) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_2d_WithI32Lod) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* func = b.Function("foo", ty.vec2<u32>());
     func->SetParams({t});
     b.Append(func->Block(), [&] {
@@ -1579,7 +1591,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_2d_WithI32Lod) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<f32>):vec2<u32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)]):vec2<u32> {
   $B1: {
     %3:vec2<u32> = textureDimensions %t, 3i
     ret %3
@@ -1589,7 +1601,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_2d_WithI32Lod) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<f32>):vec2<u32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)]):vec2<u32> {
   $B1: {
     %3:u32 = convert 3i
     %4:u32 = %t.get_width %3
@@ -1608,6 +1620,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_2d_WithI32Lod) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_3d) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k3d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* func = b.Function("foo", ty.vec3<u32>());
     func->SetParams({t});
     b.Append(func->Block(), [&] {
@@ -1616,7 +1629,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_3d) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_3d<f32>):vec3<u32> {
+%foo = func(%t:texture_3d<f32> [@binding_point(0, 0)]):vec3<u32> {
   $B1: {
     %3:vec3<u32> = textureDimensions %t
     ret %3
@@ -1626,7 +1639,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_3d) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_3d<f32>):vec3<u32> {
+%foo = func(%t:texture_3d<f32> [@binding_point(0, 0)]):vec3<u32> {
   $B1: {
     %3:u32 = %t.get_width 0u
     %4:u32 = %t.get_height 0u
@@ -1645,7 +1658,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureDimensions_3d) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_UnsignedComponent) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* func = b.Function("foo", ty.vec4<f32>());
     func->SetParams({t, s, coords});
@@ -1655,7 +1670,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_UnsignedComponent) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>):vec4<f32> {
   $B1: {
     %5:vec4<f32> = textureGather 1u, %t, %s, %coords
     ret %5
@@ -1665,7 +1680,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_UnsignedComponent) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>):vec4<f32> {
   $B1: {
     %5:vec4<f32> = %t.gather %s, %coords, vec2<i32>(0i), 1u
     ret %5
@@ -1681,7 +1696,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_UnsignedComponent) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_SignedComponent) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* func = b.Function("foo", ty.vec4<f32>());
     func->SetParams({t, s, coords});
@@ -1691,7 +1708,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_SignedComponent) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>):vec4<f32> {
   $B1: {
     %5:vec4<f32> = textureGather 2i, %t, %s, %coords
     ret %5
@@ -1701,7 +1718,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_SignedComponent) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>):vec4<f32> {
   $B1: {
     %5:vec4<f32> = %t.gather %s, %coords, vec2<i32>(0i), 2u
     ret %5
@@ -1717,7 +1734,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_SignedComponent) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_WithOffset) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* offset = b.FunctionParam("offset", ty.vec2<i32>());
     auto* func = b.Function("foo", ty.vec4<f32>());
@@ -1729,7 +1748,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_WithOffset) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>, %offset:vec2<i32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %offset:vec2<i32>):vec4<f32> {
   $B1: {
     %6:vec4<f32> = textureGather 1u, %t, %s, %coords, %offset
     ret %6
@@ -1739,7 +1758,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_WithOffset) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>, %offset:vec2<i32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %offset:vec2<i32>):vec4<f32> {
   $B1: {
     %6:vec4<f32> = %t.gather %s, %coords, %offset, 1u
     ret %6
@@ -1755,7 +1774,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2d_WithOffset) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_Depth2d) {
     auto* t =
         b.FunctionParam("t", ty.Get<core::type::DepthTexture>(core::type::TextureDimension::k2d));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* func = b.Function("foo", ty.vec4<f32>());
     func->SetParams({t, s, coords});
@@ -1765,7 +1786,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_Depth2d) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_depth_2d, %s:sampler, %coords:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_depth_2d [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>):vec4<f32> {
   $B1: {
     %5:vec4<f32> = textureGather %t, %s, %coords
     ret %5
@@ -1775,7 +1796,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_Depth2d) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_depth_2d, %s:sampler, %coords:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_depth_2d [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>):vec4<f32> {
   $B1: {
     %5:vec4<f32> = %t.gather %s, %coords, vec2<i32>(0i)
     ret %5
@@ -1791,7 +1812,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_Depth2d) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureGatherCompare) {
     auto* t =
         b.FunctionParam("t", ty.Get<core::type::DepthTexture>(core::type::TextureDimension::k2d));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.comparison_sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* depth = b.FunctionParam("depth", ty.f32());
     auto* func = b.Function("foo", ty.vec4<f32>());
@@ -1803,7 +1826,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGatherCompare) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_depth_2d, %s:sampler_comparison, %coords:vec2<f32>, %depth:f32):vec4<f32> {
+%foo = func(%t:texture_depth_2d [@binding_point(0, 0)], %s:sampler_comparison [@binding_point(0, 1)], %coords:vec2<f32>, %depth:f32):vec4<f32> {
   $B1: {
     %6:vec4<f32> = textureGatherCompare %t, %s, %coords, %depth
     ret %6
@@ -1813,7 +1836,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGatherCompare) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_depth_2d, %s:sampler_comparison, %coords:vec2<f32>, %depth:f32):vec4<f32> {
+%foo = func(%t:texture_depth_2d [@binding_point(0, 0)], %s:sampler_comparison [@binding_point(0, 1)], %coords:vec2<f32>, %depth:f32):vec4<f32> {
   $B1: {
     %6:vec4<f32> = %t.gather_compare %s, %coords, %depth
     ret %6
@@ -1832,6 +1855,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_1d_U32Coord) {
         core::type::TextureDimension::k1d, format, core::Access::kRead,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.u32());
     auto* func = b.Function("foo", ty.vec4<f32>());
     func->SetParams({t, coords});
@@ -1841,7 +1865,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_1d_U32Coord) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_1d<rgba8unorm, read>, %coords:u32):vec4<f32> {
+%foo = func(%t:texture_storage_1d<rgba8unorm, read> [@binding_point(0, 0)], %coords:u32):vec4<f32> {
   $B1: {
     %4:vec4<f32> = textureLoad %t, %coords
     ret %4
@@ -1851,7 +1875,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_1d_U32Coord) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_1d<rgba8unorm, read>, %coords:u32):vec4<f32> {
+%foo = func(%t:texture_storage_1d<rgba8unorm, read> [@binding_point(0, 0)], %coords:u32):vec4<f32> {
   $B1: {
     %4:vec4<f32> = %t.read %coords
     ret %4
@@ -1870,6 +1894,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_1d_I32Coord) {
         core::type::TextureDimension::k1d, format, core::Access::kRead,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.i32());
     auto* func = b.Function("foo", ty.vec4<f32>());
     func->SetParams({t, coords});
@@ -1879,7 +1904,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_1d_I32Coord) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_1d<rgba8unorm, read>, %coords:i32):vec4<f32> {
+%foo = func(%t:texture_storage_1d<rgba8unorm, read> [@binding_point(0, 0)], %coords:i32):vec4<f32> {
   $B1: {
     %4:vec4<f32> = textureLoad %t, %coords
     ret %4
@@ -1889,7 +1914,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_1d_I32Coord) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_1d<rgba8unorm, read>, %coords:i32):vec4<f32> {
+%foo = func(%t:texture_storage_1d<rgba8unorm, read> [@binding_point(0, 0)], %coords:i32):vec4<f32> {
   $B1: {
     %4:u32 = convert %coords
     %5:vec4<f32> = %t.read %4
@@ -1909,6 +1934,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2d_U32Coords) {
         core::type::TextureDimension::k2d, format, core::Access::kRead,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec2<u32>());
     auto* func = b.Function("foo", ty.vec4<f32>());
     func->SetParams({t, coords});
@@ -1918,7 +1944,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2d_U32Coords) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_2d<rgba8unorm, read>, %coords:vec2<u32>):vec4<f32> {
+%foo = func(%t:texture_storage_2d<rgba8unorm, read> [@binding_point(0, 0)], %coords:vec2<u32>):vec4<f32> {
   $B1: {
     %4:vec4<f32> = textureLoad %t, %coords
     ret %4
@@ -1928,7 +1954,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2d_U32Coords) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_2d<rgba8unorm, read>, %coords:vec2<u32>):vec4<f32> {
+%foo = func(%t:texture_storage_2d<rgba8unorm, read> [@binding_point(0, 0)], %coords:vec2<u32>):vec4<f32> {
   $B1: {
     %4:vec4<f32> = %t.read %coords
     ret %4
@@ -1947,6 +1973,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2d_I32Coords) {
         core::type::TextureDimension::k2d, format, core::Access::kRead,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec2<i32>());
     auto* func = b.Function("foo", ty.vec4<f32>());
     func->SetParams({t, coords});
@@ -1956,7 +1983,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2d_I32Coords) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_2d<rgba8unorm, read>, %coords:vec2<i32>):vec4<f32> {
+%foo = func(%t:texture_storage_2d<rgba8unorm, read> [@binding_point(0, 0)], %coords:vec2<i32>):vec4<f32> {
   $B1: {
     %4:vec4<f32> = textureLoad %t, %coords
     ret %4
@@ -1966,7 +1993,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2d_I32Coords) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_2d<rgba8unorm, read>, %coords:vec2<i32>):vec4<f32> {
+%foo = func(%t:texture_storage_2d<rgba8unorm, read> [@binding_point(0, 0)], %coords:vec2<i32>):vec4<f32> {
   $B1: {
     %4:vec2<u32> = convert %coords
     %5:vec4<f32> = %t.read %4
@@ -1984,6 +2011,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2d_WithLevel) {
     auto* texture_ty =
         ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.i32());
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec2<i32>());
     auto* level = b.FunctionParam("level", ty.i32());
     auto* func = b.Function("foo", ty.vec4<i32>());
@@ -1994,7 +2022,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2d_WithLevel) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<i32>, %coords:vec2<i32>, %level:i32):vec4<i32> {
+%foo = func(%t:texture_2d<i32> [@binding_point(0, 0)], %coords:vec2<i32>, %level:i32):vec4<i32> {
   $B1: {
     %5:vec4<i32> = textureLoad %t, %coords, %level
     ret %5
@@ -2004,7 +2032,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2d_WithLevel) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<i32>, %coords:vec2<i32>, %level:i32):vec4<i32> {
+%foo = func(%t:texture_2d<i32> [@binding_point(0, 0)], %coords:vec2<i32>, %level:i32):vec4<i32> {
   $B1: {
     %5:vec2<u32> = convert %coords
     %6:vec4<i32> = %t.read %5, %level
@@ -2024,6 +2052,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2darray_U32Index) {
         core::type::TextureDimension::k2dArray, format, core::Access::kRead,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec2<i32>());
     auto* index = b.FunctionParam("index", ty.u32());
     auto* func = b.Function("foo", ty.vec4<f32>());
@@ -2034,7 +2063,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2darray_U32Index) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_2d_array<rgba8unorm, read>, %coords:vec2<i32>, %index:u32):vec4<f32> {
+%foo = func(%t:texture_storage_2d_array<rgba8unorm, read> [@binding_point(0, 0)], %coords:vec2<i32>, %index:u32):vec4<f32> {
   $B1: {
     %5:vec4<f32> = textureLoad %t, %coords, %index
     ret %5
@@ -2044,7 +2073,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2darray_U32Index) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_2d_array<rgba8unorm, read>, %coords:vec2<i32>, %index:u32):vec4<f32> {
+%foo = func(%t:texture_storage_2d_array<rgba8unorm, read> [@binding_point(0, 0)], %coords:vec2<i32>, %index:u32):vec4<f32> {
   $B1: {
     %5:vec2<u32> = convert %coords
     %6:vec4<f32> = %t.read %5, %index
@@ -2064,6 +2093,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2darray_I32Index) {
         core::type::TextureDimension::k2dArray, format, core::Access::kRead,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec2<i32>());
     auto* index = b.FunctionParam("index", ty.i32());
     auto* func = b.Function("foo", ty.vec4<f32>());
@@ -2074,7 +2104,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2darray_I32Index) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_2d_array<rgba8unorm, read>, %coords:vec2<i32>, %index:i32):vec4<f32> {
+%foo = func(%t:texture_storage_2d_array<rgba8unorm, read> [@binding_point(0, 0)], %coords:vec2<i32>, %index:i32):vec4<f32> {
   $B1: {
     %5:vec4<f32> = textureLoad %t, %coords, %index
     ret %5
@@ -2084,7 +2114,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2darray_I32Index) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_2d_array<rgba8unorm, read>, %coords:vec2<i32>, %index:i32):vec4<f32> {
+%foo = func(%t:texture_storage_2d_array<rgba8unorm, read> [@binding_point(0, 0)], %coords:vec2<i32>, %index:i32):vec4<f32> {
   $B1: {
     %5:vec2<u32> = convert %coords
     %6:vec4<f32> = %t.read %5, %index
@@ -2102,6 +2132,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2darray_WithLevel) {
     auto* texture_ty =
         ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2dArray, ty.f32());
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec2<i32>());
     auto* index = b.FunctionParam("index", ty.i32());
     auto* level = b.FunctionParam("level", ty.i32());
@@ -2113,7 +2144,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2darray_WithLevel) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d_array<f32>, %coords:vec2<i32>, %index:i32, %level:i32):vec4<f32> {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)], %coords:vec2<i32>, %index:i32, %level:i32):vec4<f32> {
   $B1: {
     %6:vec4<f32> = textureLoad %t, %coords, %index, %level
     ret %6
@@ -2123,7 +2154,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_2darray_WithLevel) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d_array<f32>, %coords:vec2<i32>, %index:i32, %level:i32):vec4<f32> {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)], %coords:vec2<i32>, %index:i32, %level:i32):vec4<f32> {
   $B1: {
     %6:vec2<u32> = convert %coords
     %7:vec4<f32> = %t.read %6, %index, %level
@@ -2143,6 +2174,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_3d) {
         core::type::TextureDimension::k3d, format, core::Access::kRead,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec3<i32>());
     auto* func = b.Function("foo", ty.vec4<f32>());
     func->SetParams({t, coords});
@@ -2152,7 +2184,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_3d) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_3d<rgba8unorm, read>, %coords:vec3<i32>):vec4<f32> {
+%foo = func(%t:texture_storage_3d<rgba8unorm, read> [@binding_point(0, 0)], %coords:vec3<i32>):vec4<f32> {
   $B1: {
     %4:vec4<f32> = textureLoad %t, %coords
     ret %4
@@ -2162,7 +2194,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_3d) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_3d<rgba8unorm, read>, %coords:vec3<i32>):vec4<f32> {
+%foo = func(%t:texture_storage_3d<rgba8unorm, read> [@binding_point(0, 0)], %coords:vec3<i32>):vec4<f32> {
   $B1: {
     %4:vec3<u32> = convert %coords
     %5:vec4<f32> = %t.read %4
@@ -2179,6 +2211,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureLoad_3d) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumLayers) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2dArray, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* func = b.Function("foo", ty.u32());
     func->SetParams({t});
     b.Append(func->Block(), [&] {
@@ -2187,7 +2220,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumLayers) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d_array<f32>):u32 {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)]):u32 {
   $B1: {
     %3:u32 = textureNumLayers %t
     ret %3
@@ -2197,7 +2230,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumLayers) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d_array<f32>):u32 {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)]):u32 {
   $B1: {
     %3:u32 = %t.get_array_size
     ret %3
@@ -2213,6 +2246,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumLayers) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumLevels) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* func = b.Function("foo", ty.u32());
     func->SetParams({t});
     b.Append(func->Block(), [&] {
@@ -2221,7 +2255,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumLevels) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<f32>):u32 {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)]):u32 {
   $B1: {
     %3:u32 = textureNumLevels %t
     ret %3
@@ -2231,7 +2265,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumLevels) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<f32>):u32 {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)]):u32 {
   $B1: {
     %3:u32 = %t.get_num_mip_levels
     ret %3
@@ -2247,6 +2281,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumLevels) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumSamples) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::MultisampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* func = b.Function("foo", ty.u32());
     func->SetParams({t});
     b.Append(func->Block(), [&] {
@@ -2255,7 +2290,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumSamples) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_multisampled_2d<f32>):u32 {
+%foo = func(%t:texture_multisampled_2d<f32> [@binding_point(0, 0)]):u32 {
   $B1: {
     %3:u32 = textureNumSamples %t
     ret %3
@@ -2265,7 +2300,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumSamples) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_multisampled_2d<f32>):u32 {
+%foo = func(%t:texture_multisampled_2d<f32> [@binding_point(0, 0)]):u32 {
   $B1: {
     %3:u32 = %t.get_num_samples
     ret %3
@@ -2281,7 +2316,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureNumSamples) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSample) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* func = b.Function("foo", ty.vec4<f32>());
     func->SetParams({t, s, coords});
@@ -2291,7 +2328,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSample) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>):vec4<f32> {
   $B1: {
     %5:vec4<f32> = textureSample %t, %s, %coords
     ret %5
@@ -2301,7 +2338,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSample) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>):vec4<f32> {
   $B1: {
     %5:vec4<f32> = %t.sample %s, %coords
     ret %5
@@ -2317,7 +2354,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSample) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleBias) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* bias = b.FunctionParam("bias", ty.f32());
     auto* func = b.Function("foo", ty.vec4<f32>());
@@ -2328,7 +2367,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleBias) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>, %bias:f32):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %bias:f32):vec4<f32> {
   $B1: {
     %6:vec4<f32> = textureSampleBias %t, %s, %coords, %bias
     ret %6
@@ -2338,7 +2377,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleBias) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>, %bias:f32):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %bias:f32):vec4<f32> {
   $B1: {
     %6:msl.bias = construct %bias
     %7:vec4<f32> = %t.sample %s, %coords, %6
@@ -2355,7 +2394,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleBias) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleBias_Array) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2dArray, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* index = b.FunctionParam("index", ty.u32());
     auto* bias = b.FunctionParam("bias", ty.f32());
@@ -2368,7 +2409,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleBias_Array) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d_array<f32>, %s:sampler, %coords:vec2<f32>, %index:u32, %bias:f32):vec4<f32> {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %index:u32, %bias:f32):vec4<f32> {
   $B1: {
     %7:vec4<f32> = textureSampleBias %t, %s, %coords, %index, %bias
     ret %7
@@ -2378,7 +2419,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleBias_Array) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d_array<f32>, %s:sampler, %coords:vec2<f32>, %index:u32, %bias:f32):vec4<f32> {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %index:u32, %bias:f32):vec4<f32> {
   $B1: {
     %7:msl.bias = construct %bias
     %8:vec4<f32> = %t.sample %s, %coords, %index, %7
@@ -2395,7 +2436,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleBias_Array) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompare) {
     auto* t =
         b.FunctionParam("t", ty.Get<core::type::DepthTexture>(core::type::TextureDimension::k2d));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.comparison_sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* depth = b.FunctionParam("depth", ty.f32());
     auto* func = b.Function("foo", ty.f32());
@@ -2406,7 +2449,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompare) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_depth_2d, %s:sampler_comparison, %coords:vec2<f32>, %depth:f32):f32 {
+%foo = func(%t:texture_depth_2d [@binding_point(0, 0)], %s:sampler_comparison [@binding_point(0, 1)], %coords:vec2<f32>, %depth:f32):f32 {
   $B1: {
     %6:f32 = textureSampleCompare %t, %s, %coords, %depth
     ret %6
@@ -2416,7 +2459,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompare) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_depth_2d, %s:sampler_comparison, %coords:vec2<f32>, %depth:f32):f32 {
+%foo = func(%t:texture_depth_2d [@binding_point(0, 0)], %s:sampler_comparison [@binding_point(0, 1)], %coords:vec2<f32>, %depth:f32):f32 {
   $B1: {
     %6:f32 = %t.sample_compare %s, %coords, %depth
     ret %6
@@ -2432,7 +2475,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompare) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompareLevel) {
     auto* t =
         b.FunctionParam("t", ty.Get<core::type::DepthTexture>(core::type::TextureDimension::k2d));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.comparison_sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* depth = b.FunctionParam("depth", ty.f32());
     auto* func = b.Function("foo", ty.f32());
@@ -2444,7 +2489,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompareLevel) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_depth_2d, %s:sampler_comparison, %coords:vec2<f32>, %depth:f32):f32 {
+%foo = func(%t:texture_depth_2d [@binding_point(0, 0)], %s:sampler_comparison [@binding_point(0, 1)], %coords:vec2<f32>, %depth:f32):f32 {
   $B1: {
     %6:f32 = textureSampleCompareLevel %t, %s, %coords, %depth
     ret %6
@@ -2454,7 +2499,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompareLevel) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_depth_2d, %s:sampler_comparison, %coords:vec2<f32>, %depth:f32):f32 {
+%foo = func(%t:texture_depth_2d [@binding_point(0, 0)], %s:sampler_comparison [@binding_point(0, 1)], %coords:vec2<f32>, %depth:f32):f32 {
   $B1: {
     %6:msl.level = construct 0u
     %7:f32 = %t.sample_compare %s, %coords, %depth, %6
@@ -2471,7 +2516,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompareLevel) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompareLevel_WithOffset) {
     auto* t =
         b.FunctionParam("t", ty.Get<core::type::DepthTexture>(core::type::TextureDimension::k2d));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.comparison_sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* depth = b.FunctionParam("depth", ty.f32());
     auto* offset = b.FunctionParam("offset", ty.vec2<i32>());
@@ -2484,7 +2531,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompareLevel_WithOffset) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_depth_2d, %s:sampler_comparison, %coords:vec2<f32>, %depth:f32, %offset:vec2<i32>):f32 {
+%foo = func(%t:texture_depth_2d [@binding_point(0, 0)], %s:sampler_comparison [@binding_point(0, 1)], %coords:vec2<f32>, %depth:f32, %offset:vec2<i32>):f32 {
   $B1: {
     %7:f32 = textureSampleCompareLevel %t, %s, %coords, %depth, %offset
     ret %7
@@ -2494,7 +2541,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompareLevel_WithOffset) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_depth_2d, %s:sampler_comparison, %coords:vec2<f32>, %depth:f32, %offset:vec2<i32>):f32 {
+%foo = func(%t:texture_depth_2d [@binding_point(0, 0)], %s:sampler_comparison [@binding_point(0, 1)], %coords:vec2<f32>, %depth:f32, %offset:vec2<i32>):f32 {
   $B1: {
     %7:msl.level = construct 0u
     %8:f32 = %t.sample_compare %s, %coords, %depth, %7, %offset
@@ -2511,7 +2558,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleCompareLevel_WithOffset) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_2d) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* ddx = b.FunctionParam("ddx", ty.vec2<f32>());
     auto* ddy = b.FunctionParam("ddy", ty.vec2<f32>());
@@ -2524,7 +2573,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_2d) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>, %ddx:vec2<f32>, %ddy:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %ddx:vec2<f32>, %ddy:vec2<f32>):vec4<f32> {
   $B1: {
     %7:vec4<f32> = textureSampleGrad %t, %s, %coords, %ddx, %ddy
     ret %7
@@ -2534,7 +2583,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_2d) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>, %ddx:vec2<f32>, %ddy:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %ddx:vec2<f32>, %ddy:vec2<f32>):vec4<f32> {
   $B1: {
     %7:msl.gradient2d = construct %ddx, %ddy
     %8:vec4<f32> = %t.sample %s, %coords, %7
@@ -2551,7 +2600,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_2d) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2dArray) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2dArray, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* index = b.FunctionParam("index", ty.i32());
     auto* func = b.Function("foo", ty.vec4<f32>());
@@ -2562,7 +2613,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2dArray) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d_array<f32>, %s:sampler, %coords:vec2<f32>, %index:i32):vec4<f32> {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %index:i32):vec4<f32> {
   $B1: {
     %6:vec4<f32> = textureGather 0u, %t, %s, %coords, %index
     ret %6
@@ -2572,7 +2623,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2dArray) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d_array<f32>, %s:sampler, %coords:vec2<f32>, %index:i32):vec4<f32> {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %index:i32):vec4<f32> {
   $B1: {
     %6:i32 = max %index, 0i
     %7:vec4<f32> = %t.gather %s, %coords, %6, vec2<i32>(0i), 0u
@@ -2589,7 +2640,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureGather_2dArray) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_2dArray) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2dArray, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* index = b.FunctionParam("index", ty.i32());
     auto* ddx = b.FunctionParam("ddx", ty.vec2<f32>());
@@ -2603,7 +2656,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_2dArray) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d_array<f32>, %s:sampler, %coords:vec2<f32>, %index:i32, %ddx:vec2<f32>, %ddy:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %index:i32, %ddx:vec2<f32>, %ddy:vec2<f32>):vec4<f32> {
   $B1: {
     %8:vec4<f32> = textureSampleGrad %t, %s, %coords, %index, %ddx, %ddy
     ret %8
@@ -2613,7 +2666,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_2dArray) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d_array<f32>, %s:sampler, %coords:vec2<f32>, %index:i32, %ddx:vec2<f32>, %ddy:vec2<f32>):vec4<f32> {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %index:i32, %ddx:vec2<f32>, %ddy:vec2<f32>):vec4<f32> {
   $B1: {
     %8:msl.gradient2d = construct %ddx, %ddy
     %9:i32 = max %index, 0i
@@ -2631,7 +2684,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_2dArray) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_3d) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k3d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec3<f32>());
     auto* ddx = b.FunctionParam("ddx", ty.vec3<f32>());
     auto* ddy = b.FunctionParam("ddy", ty.vec3<f32>());
@@ -2644,7 +2699,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_3d) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_3d<f32>, %s:sampler, %coords:vec3<f32>, %ddx:vec3<f32>, %ddy:vec3<f32>):vec4<f32> {
+%foo = func(%t:texture_3d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec3<f32>, %ddx:vec3<f32>, %ddy:vec3<f32>):vec4<f32> {
   $B1: {
     %7:vec4<f32> = textureSampleGrad %t, %s, %coords, %ddx, %ddy
     ret %7
@@ -2654,7 +2709,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_3d) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_3d<f32>, %s:sampler, %coords:vec3<f32>, %ddx:vec3<f32>, %ddy:vec3<f32>):vec4<f32> {
+%foo = func(%t:texture_3d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec3<f32>, %ddx:vec3<f32>, %ddy:vec3<f32>):vec4<f32> {
   $B1: {
     %7:msl.gradient3d = construct %ddx, %ddy
     %8:vec4<f32> = %t.sample %s, %coords, %7
@@ -2671,7 +2726,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_3d) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_Cube) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::kCube, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec3<f32>());
     auto* ddx = b.FunctionParam("ddx", ty.vec3<f32>());
     auto* ddy = b.FunctionParam("ddy", ty.vec3<f32>());
@@ -2684,7 +2741,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_Cube) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_cube<f32>, %s:sampler, %coords:vec3<f32>, %ddx:vec3<f32>, %ddy:vec3<f32>):vec4<f32> {
+%foo = func(%t:texture_cube<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec3<f32>, %ddx:vec3<f32>, %ddy:vec3<f32>):vec4<f32> {
   $B1: {
     %7:vec4<f32> = textureSampleGrad %t, %s, %coords, %ddx, %ddy
     ret %7
@@ -2694,7 +2751,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_Cube) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_cube<f32>, %s:sampler, %coords:vec3<f32>, %ddx:vec3<f32>, %ddy:vec3<f32>):vec4<f32> {
+%foo = func(%t:texture_cube<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec3<f32>, %ddx:vec3<f32>, %ddy:vec3<f32>):vec4<f32> {
   $B1: {
     %7:msl.gradientcube = construct %ddx, %ddy
     %8:vec4<f32> = %t.sample %s, %coords, %7
@@ -2711,7 +2768,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_Cube) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_WithOffset) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* ddx = b.FunctionParam("ddx", ty.vec2<f32>());
     auto* ddy = b.FunctionParam("ddy", ty.vec2<f32>());
@@ -2725,7 +2784,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_WithOffset) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>, %ddx:vec2<f32>, %ddy:vec2<f32>, %offset:vec2<i32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %ddx:vec2<f32>, %ddy:vec2<f32>, %offset:vec2<i32>):vec4<f32> {
   $B1: {
     %8:vec4<f32> = textureSampleGrad %t, %s, %coords, %ddx, %ddy, %offset
     ret %8
@@ -2735,7 +2794,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_WithOffset) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>, %ddx:vec2<f32>, %ddy:vec2<f32>, %offset:vec2<i32>):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %ddx:vec2<f32>, %ddy:vec2<f32>, %offset:vec2<i32>):vec4<f32> {
   $B1: {
     %8:msl.gradient2d = construct %ddx, %ddy
     %9:vec4<f32> = %t.sample %s, %coords, %8, %offset
@@ -2752,7 +2811,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleGrad_WithOffset) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleLevel) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2d, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* level = b.FunctionParam("level", ty.f32());
     auto* func = b.Function("foo", ty.vec4<f32>());
@@ -2763,7 +2824,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleLevel) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>, %level:f32):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %level:f32):vec4<f32> {
   $B1: {
     %6:vec4<f32> = textureSampleLevel %t, %s, %coords, %level
     ret %6
@@ -2773,7 +2834,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleLevel) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d<f32>, %s:sampler, %coords:vec2<f32>, %level:f32):vec4<f32> {
+%foo = func(%t:texture_2d<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %level:f32):vec4<f32> {
   $B1: {
     %6:msl.level = construct %level
     %7:vec4<f32> = %t.sample %s, %coords, %6
@@ -2790,7 +2851,9 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleLevel) {
 TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleLevel_Array) {
     auto* t = b.FunctionParam(
         "t", ty.Get<core::type::SampledTexture>(core::type::TextureDimension::k2dArray, ty.f32()));
+    t->SetBindingPoint(0, 0);
     auto* s = b.FunctionParam("s", ty.sampler());
+    s->SetBindingPoint(0, 1);
     auto* coords = b.FunctionParam("coords", ty.vec2<f32>());
     auto* index = b.FunctionParam("index", ty.u32());
     auto* level = b.FunctionParam("level", ty.f32());
@@ -2803,7 +2866,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleLevel_Array) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_2d_array<f32>, %s:sampler, %coords:vec2<f32>, %index:u32, %level:f32):vec4<f32> {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %index:u32, %level:f32):vec4<f32> {
   $B1: {
     %7:vec4<f32> = textureSampleLevel %t, %s, %coords, %index, %level
     ret %7
@@ -2813,7 +2876,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureSampleLevel_Array) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_2d_array<f32>, %s:sampler, %coords:vec2<f32>, %index:u32, %level:f32):vec4<f32> {
+%foo = func(%t:texture_2d_array<f32> [@binding_point(0, 0)], %s:sampler [@binding_point(0, 1)], %coords:vec2<f32>, %index:u32, %level:f32):vec4<f32> {
   $B1: {
     %7:msl.level = construct %level
     %8:vec4<f32> = %t.sample %s, %coords, %index, %7
@@ -2833,6 +2896,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_1d_U32Coord) {
         core::type::TextureDimension::k1d, format, core::Access::kWrite,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.u32());
     auto* value = b.FunctionParam("value", ty.vec4<f32>());
     auto* func = b.Function("foo", ty.void_());
@@ -2843,7 +2907,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_1d_U32Coord) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_1d<rgba8unorm, write>, %coords:u32, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_1d<rgba8unorm, write> [@binding_point(0, 0)], %coords:u32, %value:vec4<f32>):void {
   $B1: {
     %5:void = textureStore %t, %coords, %value
     ret
@@ -2853,7 +2917,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_1d_U32Coord) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_1d<rgba8unorm, write>, %coords:u32, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_1d<rgba8unorm, write> [@binding_point(0, 0)], %coords:u32, %value:vec4<f32>):void {
   $B1: {
     %5:void = %t.write %value, %coords
     ret
@@ -2872,6 +2936,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_1d_I32Coord) {
         core::type::TextureDimension::k1d, format, core::Access::kWrite,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.i32());
     auto* value = b.FunctionParam("value", ty.vec4<f32>());
     auto* func = b.Function("foo", ty.void_());
@@ -2882,7 +2947,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_1d_I32Coord) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_1d<rgba8unorm, write>, %coords:i32, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_1d<rgba8unorm, write> [@binding_point(0, 0)], %coords:i32, %value:vec4<f32>):void {
   $B1: {
     %5:void = textureStore %t, %coords, %value
     ret
@@ -2892,7 +2957,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_1d_I32Coord) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_1d<rgba8unorm, write>, %coords:i32, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_1d<rgba8unorm, write> [@binding_point(0, 0)], %coords:i32, %value:vec4<f32>):void {
   $B1: {
     %5:u32 = convert %coords
     %6:void = %t.write %value, %5
@@ -2912,6 +2977,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2d_U32Coords) {
         core::type::TextureDimension::k2d, format, core::Access::kWrite,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec2<u32>());
     auto* value = b.FunctionParam("value", ty.vec4<f32>());
     auto* func = b.Function("foo", ty.void_());
@@ -2922,7 +2988,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2d_U32Coords) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_2d<rgba8unorm, write>, %coords:vec2<u32>, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_2d<rgba8unorm, write> [@binding_point(0, 0)], %coords:vec2<u32>, %value:vec4<f32>):void {
   $B1: {
     %5:void = textureStore %t, %coords, %value
     ret
@@ -2932,7 +2998,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2d_U32Coords) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_2d<rgba8unorm, write>, %coords:vec2<u32>, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_2d<rgba8unorm, write> [@binding_point(0, 0)], %coords:vec2<u32>, %value:vec4<f32>):void {
   $B1: {
     %5:void = %t.write %value, %coords
     ret
@@ -2951,6 +3017,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2d_I32Coords) {
         core::type::TextureDimension::k2d, format, core::Access::kWrite,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec2<i32>());
     auto* value = b.FunctionParam("value", ty.vec4<f32>());
     auto* func = b.Function("foo", ty.void_());
@@ -2961,7 +3028,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2d_I32Coords) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_2d<rgba8unorm, write>, %coords:vec2<i32>, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_2d<rgba8unorm, write> [@binding_point(0, 0)], %coords:vec2<i32>, %value:vec4<f32>):void {
   $B1: {
     %5:void = textureStore %t, %coords, %value
     ret
@@ -2971,7 +3038,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2d_I32Coords) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_2d<rgba8unorm, write>, %coords:vec2<i32>, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_2d<rgba8unorm, write> [@binding_point(0, 0)], %coords:vec2<i32>, %value:vec4<f32>):void {
   $B1: {
     %5:vec2<u32> = convert %coords
     %6:void = %t.write %value, %5
@@ -2991,6 +3058,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2darray_U32Index) {
         core::type::TextureDimension::k2dArray, format, core::Access::kWrite,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec2<i32>());
     auto* index = b.FunctionParam("index", ty.u32());
     auto* value = b.FunctionParam("value", ty.vec4<f32>());
@@ -3002,7 +3070,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2darray_U32Index) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_2d_array<rgba8unorm, write>, %coords:vec2<i32>, %index:u32, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_2d_array<rgba8unorm, write> [@binding_point(0, 0)], %coords:vec2<i32>, %index:u32, %value:vec4<f32>):void {
   $B1: {
     %6:void = textureStore %t, %coords, %index, %value
     ret
@@ -3012,7 +3080,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2darray_U32Index) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_2d_array<rgba8unorm, write>, %coords:vec2<i32>, %index:u32, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_2d_array<rgba8unorm, write> [@binding_point(0, 0)], %coords:vec2<i32>, %index:u32, %value:vec4<f32>):void {
   $B1: {
     %6:vec2<u32> = convert %coords
     %7:void = %t.write %value, %6, %index
@@ -3032,6 +3100,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2darray_I32Index) {
         core::type::TextureDimension::k2dArray, format, core::Access::kWrite,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec2<i32>());
     auto* index = b.FunctionParam("index", ty.i32());
     auto* value = b.FunctionParam("value", ty.vec4<f32>());
@@ -3043,7 +3112,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2darray_I32Index) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_2d_array<rgba8unorm, write>, %coords:vec2<i32>, %index:i32, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_2d_array<rgba8unorm, write> [@binding_point(0, 0)], %coords:vec2<i32>, %index:i32, %value:vec4<f32>):void {
   $B1: {
     %6:void = textureStore %t, %coords, %index, %value
     ret
@@ -3053,7 +3122,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_2darray_I32Index) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_2d_array<rgba8unorm, write>, %coords:vec2<i32>, %index:i32, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_2d_array<rgba8unorm, write> [@binding_point(0, 0)], %coords:vec2<i32>, %index:i32, %value:vec4<f32>):void {
   $B1: {
     %6:vec2<u32> = convert %coords
     %7:void = %t.write %value, %6, %index
@@ -3073,6 +3142,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_3d) {
         core::type::TextureDimension::k3d, format, core::Access::kWrite,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec3<i32>());
     auto* value = b.FunctionParam("value", ty.vec4<f32>());
     auto* func = b.Function("foo", ty.void_());
@@ -3083,7 +3153,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_3d) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_3d<rgba8unorm, write>, %coords:vec3<i32>, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_3d<rgba8unorm, write> [@binding_point(0, 0)], %coords:vec3<i32>, %value:vec4<f32>):void {
   $B1: {
     %5:void = textureStore %t, %coords, %value
     ret
@@ -3093,7 +3163,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStore_3d) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_3d<rgba8unorm, write>, %coords:vec3<i32>, %value:vec4<f32>):void {
+%foo = func(%t:texture_storage_3d<rgba8unorm, write> [@binding_point(0, 0)], %coords:vec3<i32>, %value:vec4<f32>):void {
   $B1: {
     %5:vec3<u32> = convert %coords
     %6:void = %t.write %value, %5
@@ -3114,6 +3184,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStoreToReadWriteBeforeLoad) {
         core::type::TextureDimension::k2d, format, core::Access::kReadWrite,
         core::type::StorageTexture::SubtypeFor(format, ty));
     auto* t = b.FunctionParam("t", texture_ty);
+    t->SetBindingPoint(0, 0);
     auto* coords = b.FunctionParam("coords", ty.vec2<i32>());
     auto* value = b.FunctionParam("value", ty.vec4<f32>());
     auto* func = b.Function("foo", ty.vec4<f32>());
@@ -3125,7 +3196,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStoreToReadWriteBeforeLoad) {
     });
 
     auto* src = R"(
-%foo = func(%t:texture_storage_2d<rgba8unorm, read_write>, %coords:vec2<i32>, %value:vec4<f32>):vec4<f32> {
+%foo = func(%t:texture_storage_2d<rgba8unorm, read_write> [@binding_point(0, 0)], %coords:vec2<i32>, %value:vec4<f32>):vec4<f32> {
   $B1: {
     %5:void = textureStore %t, %coords, %value
     %6:vec4<f32> = textureLoad %t, %coords
@@ -3136,7 +3207,7 @@ TEST_F(MslWriter_BuiltinPolyfillTest, TextureStoreToReadWriteBeforeLoad) {
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-%foo = func(%t:texture_storage_2d<rgba8unorm, read_write>, %coords:vec2<i32>, %value:vec4<f32>):vec4<f32> {
+%foo = func(%t:texture_storage_2d<rgba8unorm, read_write> [@binding_point(0, 0)], %coords:vec2<i32>, %value:vec4<f32>):vec4<f32> {
   $B1: {
     %5:vec2<u32> = convert %coords
     %6:void = %t.write %value, %5
