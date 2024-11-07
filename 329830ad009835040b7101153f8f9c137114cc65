@@ -72,6 +72,47 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6352d9df_40fd4125",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-07T15:12:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1d70db30_1b342cfd",
+      "revId": "329830ad009835040b7101153f8f9c137114cc65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deccf0b0_5fdf6fc6",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-07T15:12:41Z",
+      "side": 1,
+      "message": "```suggestion\n            auto* vfactor \u003d b.Construct(vec_ty, factor);\n```\n\nCan turn this into a splat which is a bit shorter.",
+      "range": {
+        "startLine": 707,
+        "startChar": 28,
+        "endLine": 707,
+        "endChar": 63
+      },
+      "revId": "329830ad009835040b7101153f8f9c137114cc65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2db5c614_82bccd68",
