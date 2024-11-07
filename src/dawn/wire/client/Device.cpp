@@ -210,9 +210,11 @@ class Device::DeviceLostEvent : public TrackedEvent {
     EventType GetType() override { return kType; }
 
     WireResult ReadyHook(FutureID futureID, WGPUDeviceLostReason reason, WGPUStringView message) {
-        mReason = reason;
-        mMessage = ToString(message);
-        mDevice->mDeviceLostInfo.futureID = kNullFutureID;
+        if (mDevice->mIsAlive) {
+            mReason = reason;
+            mMessage = ToString(message);
+            mDevice->mIsAlive = false;
+        }
         return WireResult::Success;
     }
 
@@ -370,15 +372,12 @@ void Device::HandleLogging(WGPULoggingType loggingType, WGPUStringView message) 
 }
 
 void Device::HandleDeviceLost(WGPUDeviceLostReason reason, WGPUStringView message) {
-    FutureID futureID = GetDeviceLostFuture().id;
-    if (futureID != kNullFutureID) {
-        DAWN_CHECK(GetEventManager().SetFutureReady<DeviceLostEvent>(futureID, reason, message) ==
-                   WireResult::Success);
-    }
-    mIsAlive = false;
+    FutureID futureID = GetLostFuture().id;
+    DAWN_CHECK(GetEventManager().SetFutureReady<DeviceLostEvent>(futureID, reason, message) ==
+               WireResult::Success);
 }
 
-WGPUFuture Device::GetDeviceLostFuture() {
+WGPUFuture Device::GetLostFuture() {
     // Lazily track the device lost event so that event ordering w.r.t RequestDevice is correct.
     if (mDeviceLostInfo.event != nullptr) {
         auto [deviceLostFutureIDInternal, tracked] =
@@ -391,7 +390,7 @@ WGPUFuture Device::GetDeviceLostFuture() {
 }
 
 void Device::SetUncapturedErrorCallback(WGPUErrorCallback errorCallback, void* errorUserdata) {
-    if (mDeviceLostInfo.futureID != kNullFutureID) {
+    if (mIsAlive) {
         mUncapturedErrorCallbackInfo = {nullptr, &LegacyUncapturedErrorCallback,
                                         reinterpret_cast<void*>(errorCallback), errorUserdata};
     }
@@ -621,8 +620,6 @@ void Device::Destroy() {
     DeviceDestroyCmd cmd;
     cmd.self = ToAPI(this);
     GetClient()->SerializeCommand(cmd);
-
-    mIsAlive = false;
 }
 
 }  // namespace dawn::wire::client
