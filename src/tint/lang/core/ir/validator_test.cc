@@ -661,6 +661,102 @@ MyStruct = struct @align(16) {
 )");
 }
 
+TEST_F(IR_ValidatorTest, Function_Param_BindingPointWithoutCapability) {
+    auto* f = b.Function("my_func", ty.void_());
+    auto* p = b.FunctionParam("my_param", ty.ptr<uniform, i32>());
+    p->SetBindingPoint(0, 0);
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(
+        res.Failure().reason.Str(),
+        R"(:1:17 error: input param has binding point without kAllowInputParamBindings being set
+%my_func = func(%my_param:ptr<uniform, i32, read> [@binding_point(0, 0)]):void {
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note: # Disassembly
+%my_func = func(%my_param:ptr<uniform, i32, read> [@binding_point(0, 0)]):void {
+  $B1: {
+    ret
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Function_Param_ResouceWithoutBindingPoint) {
+    auto* f = b.Function("my_func", ty.void_());
+    auto* p = b.FunctionParam("my_param", ty.ptr<uniform, i32>());
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowInputParamBindings});
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:1:17 error: resource input param missing binding point
+%my_func = func(%my_param:ptr<uniform, i32, read>):void {
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note: # Disassembly
+%my_func = func(%my_param:ptr<uniform, i32, read>):void {
+  $B1: {
+    ret
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Function_Param_NonPointerWithBindingPoint) {
+    auto* f = b.Function("my_func", ty.void_());
+    auto* p = b.FunctionParam("my_param", ty.i32());
+    p->SetBindingPoint(0, 0);
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowInputParamBindings});
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:1:17 error: non-resource input param has binding point
+%my_func = func(%my_param:i32 [@binding_point(0, 0)]):void {
+                ^^^^^^^^^^^^^
+
+note: # Disassembly
+%my_func = func(%my_param:i32 [@binding_point(0, 0)]):void {
+  $B1: {
+    ret
+  }
+}
+)");
+}
+
+TEST_F(IR_ValidatorTest, Function_Param_NonResourceWithBindingPoint) {
+    auto* f = b.Function("my_func", ty.void_());
+    auto* p = b.FunctionParam("my_param", ty.ptr<private_, i32>());
+    p->SetBindingPoint(0, 0);
+    f->SetParams({p});
+
+    b.Append(f->Block(), [&] { b.Return(f); });
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowInputParamBindings});
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:1:17 error: non-resource input param has binding point
+%my_func = func(%my_param:ptr<private, i32, read_write> [@binding_point(0, 0)]):void {
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note: # Disassembly
+%my_func = func(%my_param:ptr<private, i32, read_write> [@binding_point(0, 0)]):void {
+  $B1: {
+    ret
+  }
+}
+)");
+}
+
 TEST_F(IR_ValidatorTest, Function_Return_BothLocationAndBuiltin) {
     auto* f = VertexEntryPoint("my_func");
     IOAttributes attr;
@@ -5089,7 +5185,7 @@ TEST_F(IR_ValidatorTest, Var_HandleMissingBindingPoint) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:2:31 error: var: resource variable missing binding points
+              R"(:2:31 error: var: resource variable missing binding point
   %1:ptr<handle, i32, read> = var
                               ^^^
 
@@ -5112,7 +5208,7 @@ TEST_F(IR_ValidatorTest, Var_StorageMissingBindingPoint) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:2:38 error: var: resource variable missing binding points
+              R"(:2:38 error: var: resource variable missing binding point
   %1:ptr<storage, i32, read_write> = var
                                      ^^^
 
@@ -5135,7 +5231,7 @@ TEST_F(IR_ValidatorTest, Var_UniformMissingBindingPoint) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:2:32 error: var: resource variable missing binding points
+              R"(:2:32 error: var: resource variable missing binding point
   %1:ptr<uniform, i32, read> = var
                                ^^^
 
@@ -5146,6 +5242,30 @@ $B1: {  # root
 note: # Disassembly
 $B1: {  # root
   %1:ptr<uniform, i32, read> = var
+}
+
+)");
+}
+
+TEST_F(IR_ValidatorTest, Var_NonResourceWithBindingPoint) {
+    auto* v = b.Var(ty.ptr<private_, i32>());
+    v->SetBindingPoint(0, 0);
+    mod.root_block->Append(v);
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:2:38 error: var: non-resource variable has binding point
+  %1:ptr<private, i32, read_write> = var @binding_point(0, 0)
+                                     ^^^
+
+:1:1 note: in block
+$B1: {  # root
+^^^
+
+note: # Disassembly
+$B1: {  # root
+  %1:ptr<private, i32, read_write> = var @binding_point(0, 0)
 }
 
 )");
