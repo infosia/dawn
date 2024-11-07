@@ -82,6 +82,7 @@ MaybeError ValidateSpirv(DeviceBase* device,
         } else {
             dumpedMsg << "/* Failed to disassemble generated SPIRV */";
         }
+        printf("SUMPOIN  %d %s", (uint32_t)disassembly.length(), disassembly.c_str());
         device->EmitLog(WGPULoggingType_Info, dumpedMsg.str().c_str());
     }
 
