@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ce28539_aea30586",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-07T14:07:54Z",
+      "side": 1,
+      "message": "I discussed this with Dan offline, and he made the point that \"tint should be in charge of making the decision on what needs to be done for fxc. If we leave it to dawn then any other embedder needs to know to do that specific thing for fxc, when they would preferably be telling us use fxc and this is Intel and we do what\u0027s needed\". I fully agree with Dan\u0027s comment; however, this means we would need Dawn to pass down a flag to say we\u0027re targeting an Intel GPU. Maybe we should do this, but this seems like a bigger change and discussion to have with Dawn folks.\n\nFor now, I\u0027m just emulating the behaviour on the AST path, and adding the assertion as a guard. I don\u0027t think we should conditionally enable the polyfill if the option is enabled \u0026\u0026 the compiler is FXC, because then we\u0027d silently do nothing if calling code enabled this flag and set the compiler to DXC.\n\nAnother alternative would be to remove the options flag, and to always enable this workaround when compiling for FXC. This would penalize non-Intel GPUs, but maybe that\u0027s okay.",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 65
+      },
+      "revId": "329830ad009835040b7101153f8f9c137114cc65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
