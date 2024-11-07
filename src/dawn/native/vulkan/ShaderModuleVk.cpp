@@ -53,6 +53,8 @@
 #include "partition_alloc/pointers/raw_ptr.h"
 #include "tint/tint.h"
 
+#include <spirv-tools/libspirv.hpp>
+
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
 #include "dawn/native/SpirvValidation.h"
 #endif
@@ -355,7 +357,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.tintOptions.disable_workgroup_init =
         GetDevice()->IsToggleEnabled(Toggle::DisableWorkgroupInit);
     req.tintOptions.use_zero_initialize_workgroup_memory_extension =
-        GetDevice()->IsToggleEnabled(Toggle::VulkanUseZeroInitializeWorkgroupMemoryExtension);
+        false;  // Hac for local machine
     req.tintOptions.use_storage_input_output_16 =
         GetDevice()->IsToggleEnabled(Toggle::VulkanUseStorageInputOutput16);
     req.tintOptions.bindings = std::move(bindings);

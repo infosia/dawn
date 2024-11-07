@@ -2390,6 +2390,9 @@ std::vector<const char*> DeviceBase::GetTogglesUsed() const {
 }
 
 bool DeviceBase::IsToggleEnabled(Toggle toggle) const {
+    if (toggle == Toggle::DumpShaders) {
+        return true;
+    }
     return mToggles.IsEnabled(toggle);
 }
 
