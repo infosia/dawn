@@ -58,6 +58,8 @@ enum class Capability : uint8_t {
     kAllowRefTypes,
     /// Allows access instructions to create pointers to vector elements.
     kAllowVectorElementPointer,
+    /// Allows input parameters to be annotated with a binding point
+    kAllowInputParamBindings,
 };
 
 /// Capabilities is a set of Capability

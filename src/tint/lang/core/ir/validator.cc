@@ -992,6 +992,17 @@ class Validator {
     /// @param var the var to validate
     void CheckVar(const Var* var);
 
+    /// Validates binding_point usage for pointers
+    /// @param binding_point the binding information associated with pointer
+    /// @param address_space the address space of pointer
+    /// @param target_str string to insert in error message describing what has a binding_point,
+    /// defaults to 'variable'
+    /// @returns Success if a valid usage, or reason for invalidity in Failure
+    Result<SuccessType, std::string> ValidateBindingPoint(
+        const std::optional<struct BindingPoint>& binding_point,
+        AddressSpace address_space,
+        const std::string& target_str = "variable");
+
     /// Validates the given let
     /// @param l the let to validate
     void CheckLet(const Let* l);
@@ -1884,6 +1895,34 @@ void Validator::CheckFunction(const Function* func) {
                            "entry point params can only be a bool for fragment shaders"));
         }
 
+        if (!capabilities_.Contains(Capability::kAllowInputParamBindings)) {
+            if (param->BindingPoint().has_value()) {
+                AddError(param)
+                    << "input param has binding point without kAllowInputParamBindings being set";
+            }
+        } else {
+            AddressSpace address_space = AddressSpace::kUndefined;
+            auto* mv = param->Type()->As<type::MemoryView>();
+            if (mv) {
+                address_space = mv->AddressSpace();
+            } else {
+                // ModuleScopeVars transform in MSL backends unwraps pointers to handles
+                if (param->Type()->IsAnyOf<type::Texture, type::Sampler>()) {
+                    address_space = AddressSpace::kHandle;
+                }
+            }
+
+            if (address_space == AddressSpace::kUndefined && param->BindingPoint().has_value()) {
+                AddError(param) << "a non-resource input param has binding point";
+            } else {
+                auto result =
+                    ValidateBindingPoint(param->BindingPoint(), address_space, "input param");
+                if (result != Success) {
+                    AddError(param) << result.Failure();
+                }
+            }
+        }
+
         scope_stack_.Add(param);
     }
 
@@ -2275,23 +2314,12 @@ void Validator::CheckVar(const Var* var) {
         return;
     }
 
-    // Check that only resource variables have @group and @binding set
-    switch (mv->AddressSpace()) {
-        case AddressSpace::kHandle:
-            if (!capabilities_.Contains(Capability::kAllowHandleVarsWithoutBindings)) {
-                if (!var->BindingPoint().has_value()) {
-                    AddError(var) << "resource variable missing binding points";
-                }
-            }
-            break;
-        case AddressSpace::kStorage:
-        case AddressSpace::kUniform:
-            if (!var->BindingPoint().has_value()) {
-                AddError(var) << "resource variable missing binding points";
-            }
-            break;
-        default:
-            break;
+    {
+        auto result = ValidateBindingPoint(var->BindingPoint(), mv->AddressSpace());
+        if (result != Success) {
+            AddError(var) << result.Failure();
+            return;
+        }
     }
 
     // Check that non-handle variables don't have @input_attachment_index set
@@ -2319,6 +2347,33 @@ void Validator::CheckVar(const Var* var) {
             }
         }
     }
+}
+
+Result<SuccessType, std::string> Validator::ValidateBindingPoint(
+    const std::optional<struct BindingPoint>& binding_point,
+    AddressSpace address_space,
+    const std::string& target_str) {
+    switch (address_space) {
+        case AddressSpace::kHandle:
+            if (!capabilities_.Contains(Capability::kAllowHandleVarsWithoutBindings)) {
+                if (!binding_point.has_value()) {
+                    return "resource " + target_str + " missing binding point";
+                }
+            }
+            break;
+        case AddressSpace::kStorage:
+        case AddressSpace::kUniform:
+            if (!binding_point.has_value()) {
+                return "resource " + target_str + " missing binding point";
+            }
+            break;
+        default:
+            if (binding_point.has_value()) {
+                return "a non-resource " + target_str + " has binding point";
+            }
+            break;
+    }
+    return Success;
 }
 
 void Validator::CheckLet(const Let* l) {
