@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1d70db30_1b342cfd",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-07T15:08:31Z",
+      "side": 1,
+      "message": "Yeah `b.Construct(vec_ty, factor)` is a non-constant splat. `b.Splat\u003cvec2\u003cf32\u003e\u003e(1_f)` would give you a constant vector splat.",
+      "parentUuid": "6f225409_65e632d6",
+      "revId": "329830ad009835040b7101153f8f9c137114cc65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2db5c614_82bccd68",
         "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
         "patchSetId": 1
