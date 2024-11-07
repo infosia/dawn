@@ -67,6 +67,9 @@ Extension ParseExtension(std::string_view str) {
     if (str == "chromium_internal_input_attachments") {
         return Extension::kChromiumInternalInputAttachments;
     }
+    if (str == "chromium_internal_print") {
+        return Extension::kChromiumInternalPrint;
+    }
     if (str == "clip_distances") {
         return Extension::kClipDistances;
     }
@@ -99,6 +102,8 @@ std::string_view ToString(Extension value) {
             return "chromium_internal_graphite";
         case Extension::kChromiumInternalInputAttachments:
             return "chromium_internal_input_attachments";
+        case Extension::kChromiumInternalPrint:
+            return "chromium_internal_print";
         case Extension::kClipDistances:
             return "clip_distances";
         case Extension::kDualSourceBlending:
