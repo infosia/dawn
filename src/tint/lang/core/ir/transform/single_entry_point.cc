@@ -93,7 +93,8 @@ Result<SuccessType> Run(ir::Module& ir, std::string_view entry_point_name) {
 }  // namespace
 
 Result<SuccessType> SingleEntryPoint(Module& ir, std::string_view entry_point_name) {
-    auto result = ValidateAndDumpIfNeeded(ir, "core.SingleEntryPoint");
+    auto result = ValidateAndDumpIfNeeded(
+        ir, "core.SingleEntryPoint", core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
     if (result != Success) {
         return result.Failure();
     }
