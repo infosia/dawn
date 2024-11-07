@@ -113,6 +113,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75e1966e_aa4f85ab",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-07T18:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deccf0b0_5fdf6fc6",
+      "range": {
+        "startLine": 707,
+        "startChar": 28,
+        "endLine": 707,
+        "endChar": 63
+      },
+      "revId": "329830ad009835040b7101153f8f9c137114cc65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2db5c614_82bccd68",
@@ -126,6 +150,30 @@
       "writtenOn": "2024-11-07T15:00:03Z",
       "side": 1,
       "message": "```suggestion\n            b.AddWithResult(call-\u003eDetachResult(), e1, mul);\n```",
+      "range": {
+        "startLine": 709,
+        "startChar": 12,
+        "endLine": 710,
+        "endChar": 56
+      },
+      "revId": "329830ad009835040b7101153f8f9c137114cc65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87bddf2b_77444602",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-07T18:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2db5c614_82bccd68",
       "range": {
         "startLine": 709,
         "startChar": 12,
@@ -173,6 +221,30 @@
       "side": 1,
       "message": "File a bug for the other approach and we can deal with it later. I\u0027d almost be inclined to just drop the assert as it would also be confusing if they turned it on and it silently asserted because we aren\u0027t in FXC",
       "parentUuid": "6ce28539_aea30586",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 65
+      },
+      "revId": "329830ad009835040b7101153f8f9c137114cc65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f62ac64e_03615d82",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-07T18:56:33Z",
+      "side": 1,
+      "message": "Created b/377920072, and deleted the assertion.",
+      "parentUuid": "d4cc31fb_53f4bf77",
       "range": {
         "startLine": 112,
         "startChar": 0,
