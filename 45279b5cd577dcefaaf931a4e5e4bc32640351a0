@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e5e2590_22ad0280",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-11-07T18:50:08Z",
+      "side": 1,
+      "message": "Fix in chromium at: https://chromium-review.googlesource.com/c/chromium/src/+/6001103",
+      "revId": "45279b5cd577dcefaaf931a4e5e4bc32640351a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
