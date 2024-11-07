@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "af23ca9a_8c104ca4",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-07T15:04:53Z",
+      "side": 1,
+      "message": "`Splat` is only for constants.",
+      "parentUuid": "75642309_beeb5524",
+      "revId": "329830ad009835040b7101153f8f9c137114cc65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2db5c614_82bccd68",
         "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
         "patchSetId": 1
