@@ -53,6 +53,8 @@
 #include "partition_alloc/pointers/raw_ptr.h"
 #include "tint/tint.h"
 
+#include <spirv-tools/libspirv.hpp>
+
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
 #include "dawn/native/SpirvValidation.h"
 #endif

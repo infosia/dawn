@@ -89,7 +89,7 @@ class ShaderAtomicTests : public DawnTestWithParams<SubgroupsShaderTestsParams> 
 
     wgpu::ComputePipeline CreateComputePipeline(
         const std::string& shader,
-        const char* entryPoint = nullptr,
+        const char* entryPoint = "maintestentry",
         const std::vector<wgpu::ConstantEntry>* constants = nullptr) {
         wgpu::ComputePipelineDescriptor csDesc;
         csDesc.compute.module = utils::CreateShaderModule(device, shader.c_str());
@@ -104,8 +104,6 @@ class ShaderAtomicTests : public DawnTestWithParams<SubgroupsShaderTestsParams> 
 
 TEST_P(ShaderAtomicTests, WorkgroupAtomicArray) {
     // TODO(crbug.com/42241359): Work in progress to resolve these tests mobile devices.
-    DAWN_SUPPRESS_TEST_IF(gpu_info::IsQualcomm_PCIAdreno6xx(GetParam().adapterProperties.vendorID,
-                                                            GetParam().adapterProperties.deviceID));
 
     // Suppression for Mali gpus.
     DAWN_SUPPRESS_TEST_IF(gpu_info::IsARM(GetParam().adapterProperties.vendorID));
@@ -139,16 +137,11 @@ TEST_P(ShaderAtomicTests, WorkgroupAtomicArray) {
          <<
         R"(
 @compute @workgroup_size( )"
-         << GetParam().mWorkgroupSizeParameter
-         << R"(  )
-fn main(@builtin(local_invocation_index) local_invocation_index: u32,
+         << GetParam().mWorkgroupSizeParameter << R"(  )
+fn maintestentry(@builtin(local_invocation_index) local_invocation_index: u32,
         @builtin(workgroup_id) workgroup_id : vec3<u32>){
-  if (local_invocation_index == 0) {
-     atomicStore(&workgroup_buffer)" +
-                kConditionalArray + R"(, 7);
-  }
-
   workgroupBarrier();
+
   )"
          << (GetParam().mShaderAtomicOp == ShaderAtomicOp::AtomicAdd ? kAtomicAddOperation
                                                                      : kAtomicCASFakeAddOperation)
@@ -157,21 +150,17 @@ fn main(@builtin(local_invocation_index) local_invocation_index: u32,
         R"(
 
   workgroupBarrier();
-
-  if (local_invocation_index == 0) {
-     output[workgroup_id.x] = atomicLoad(&workgroup_buffer)" +
+     output[local_invocation_index] = atomicLoad(&workgroup_buffer)" +
             kConditionalArray + R"();
-  }
+  
 }
 )";
 
     wgpu::ComputePipeline pipeline = CreateComputePipeline(code.str());
-    constexpr int kInitStartValueShader = 7;
-    std::vector<uint32_t> expected(
-        GetParam().mDispatchSizeParameter,
-        static_cast<uint32_t>(GetParam().mWorkgroupSizeParameter + kInitStartValueShader));
+    std::vector<uint32_t> expected(GetParam().mWorkgroupSizeParameter,
+                                   static_cast<uint32_t>(GetParam().mWorkgroupSizeParameter));
 
-    wgpu::Buffer output = CreateBuffer(GetParam().mDispatchSizeParameter, -1);
+    wgpu::Buffer output = CreateBuffer(GetParam().mWorkgroupSizeParameter, -1);
     wgpu::BindGroup bindGroup =
         utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0), {{0, output}});
 
