@@ -79,6 +79,22 @@ bool operator<(const CombinedSampler& a, const CombinedSampler& b);
 
 using CombinedSamplerInfo = std::vector<CombinedSampler>;
 
+struct CompilationOptions {
+    const ProgrammableStage* stage;
+    const PipelineLayout* layout = nullptr;
+    bool usesVertexIndex = false;
+    bool usesInstanceIndex = false;
+    bool usesFragDepth = false;
+    VertexAttributeMask bgraSwizzleAttributes = {};
+};
+
+struct CompilationOutputs {
+    CombinedSamplerInfo combinedSamplers;
+    bool needsPlaceholderSampler;
+    bool needsTextureBuiltinUniformBuffer;
+    BindingPointToFunctionAndOffset bindingPointToData;
+};
+
 class ShaderModule final : public ShaderModuleBase {
   public:
     static ResultOrError<Ref<ShaderModule>> Create(
@@ -89,17 +105,8 @@ class ShaderModule final : public ShaderModuleBase {
         OwnedCompilationMessages* compilationMessages);
 
     ResultOrError<GLuint> CompileShader(const OpenGLFunctions& gl,
-                                        const ProgrammableStage& programmableStage,
-                                        SingleShaderStage stage,
-                                        bool usesVertexIndex,
-                                        bool usesInstanceIndex,
-                                        bool usesFragDepth,
-                                        VertexAttributeMask bgraSwizzleAttributes,
-                                        CombinedSamplerInfo* combinedSamplers,
-                                        const PipelineLayout* layout,
-                                        bool* needsPlaceholderSampler,
-                                        bool* needsTextureBuiltinUniformBuffer,
-                                        BindingPointToFunctionAndOffset* bindingPointToData) const;
+                                        const CompilationOptions& options,
+                                        CompilationOutputs* out) const;
 
   private:
     ShaderModule(Device* device,

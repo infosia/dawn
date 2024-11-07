@@ -38,6 +38,7 @@
 
 #include "dawn/native/PerStage.h"
 #include "dawn/native/opengl/BindingPoint.h"
+#include "dawn/native/opengl/ShaderModuleGL.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native {
@@ -74,11 +75,7 @@ class PipelineGL {
     void ApplyNow(const OpenGLFunctions& gl);
     MaybeError InitializeBase(const OpenGLFunctions& gl,
                               const PipelineLayout* layout,
-                              const PerStage<ProgrammableStage>& stages,
-                              bool usesVertexIndex,
-                              bool usesInstanceIndex,
-                              bool usesFragDepth,
-                              VertexAttributeMask bgraSwizzleAttributes);
+                              const PerStage<CompilationOptions>& stages);
     void DeleteProgram(const OpenGLFunctions& gl);
 
   private:

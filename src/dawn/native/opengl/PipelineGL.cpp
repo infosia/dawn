@@ -52,11 +52,7 @@ PipelineGL::~PipelineGL() = default;
 
 MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
                                       const PipelineLayout* layout,
-                                      const PerStage<ProgrammableStage>& stages,
-                                      bool usesVertexIndex,
-                                      bool usesInstanceIndex,
-                                      bool usesFragDepth,
-                                      VertexAttributeMask bgraSwizzleAttributes) {
+                                      const PerStage<CompilationOptions>& stages) {
     mProgram = gl.CreateProgram();
 
     // Compute the set of active stages.
