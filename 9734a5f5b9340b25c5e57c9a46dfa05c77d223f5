@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56499c1d_cdfa02a3",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-07T04:29:05Z",
+      "side": 1,
+      "message": "fwiw I think these two functions are identical; if so we should merge them into one `emwgpu` function at some point",
+      "revId": "9734a5f5b9340b25c5e57c9a46dfa05c77d223f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
