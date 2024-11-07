@@ -58,7 +58,6 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
     void SetFeatures(const WGPUFeatureName* features, uint32_t featuresCount);
 
     bool IsAlive() const;
-    WGPUFuture GetDeviceLostFuture();
 
     void HandleError(WGPUErrorType errorType, WGPUStringView message);
     void HandleLogging(WGPULoggingType loggingType, WGPUStringView message);
@@ -96,6 +95,7 @@ class Device final : public RefCountedWithExternalCount<ObjectWithEventsBase> {
         const WGPUCreateRenderPipelineAsyncCallbackInfo2& callbackInfo);
 
     WGPUStatus GetLimits(WGPUSupportedLimits* limits) const;
+    WGPUFuture GetLostFuture();
     bool HasFeature(WGPUFeatureName feature) const;
     size_t EnumerateFeatures(WGPUFeatureName* features) const;
     void GetFeatures(WGPUSupportedFeatures* features) const;
