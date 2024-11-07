@@ -306,7 +306,7 @@ WGPUFuture Adapter::RequestDeviceF(const WGPUDeviceDescriptor* descriptor,
     cmd.eventManagerHandle = GetEventManagerHandle();
     cmd.future = {futureIDInternal};
     cmd.deviceObjectHandle = device->GetWireHandle();
-    cmd.deviceLostFuture = device->GetDeviceLostFuture();
+    cmd.deviceLostFuture = device->GetLostFuture();
     cmd.descriptor = &wireDescriptor;
     cmd.userdataCount = 1;
 
@@ -342,7 +342,7 @@ WGPUFuture Adapter::RequestDevice2(const WGPUDeviceDescriptor* descriptor,
     cmd.eventManagerHandle = GetEventManagerHandle();
     cmd.future = {futureIDInternal};
     cmd.deviceObjectHandle = device->GetWireHandle();
-    cmd.deviceLostFuture = device->GetDeviceLostFuture();
+    cmd.deviceLostFuture = device->GetLostFuture();
     cmd.descriptor = &wireDescriptor;
     cmd.userdataCount = 2;
 

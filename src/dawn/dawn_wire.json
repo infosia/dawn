@@ -246,6 +246,7 @@
             "DeviceGetAdapter",
             "DeviceGetFeatures",
             "DeviceGetLimits",
+            "DeviceGetLostFuture",
             "DeviceHasFeature",
             "DeviceEnumerateFeatures",
             "DevicePopErrorScope",
