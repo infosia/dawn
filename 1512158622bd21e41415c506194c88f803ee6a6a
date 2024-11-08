@@ -16,6 +16,24 @@
       "message": "Yuly, please check this doesn\u0027t kill your experimental bot filters.",
       "revId": "1512158622bd21e41415c506194c88f803ee6a6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81a69122_dbf27ab6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-11-08T15:03:55Z",
+      "side": 1,
+      "message": "No expectation updates in PS2 so far.\nBut, I have https://dawn-review.googlesource.com/c/dawn/+/214434 updating expectations.\nHope these 2 CLs don\u0027t conflict.\nWell, they won\u0027t if this one keeps at not touching expectations.",
+      "parentUuid": "f3c5a6a2_903fe57f",
+      "revId": "1512158622bd21e41415c506194c88f803ee6a6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
