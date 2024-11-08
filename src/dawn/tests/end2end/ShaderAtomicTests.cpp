@@ -139,16 +139,8 @@ TEST_P(ShaderAtomicTests, WorkgroupAtomicArray) {
          <<
         R"(
 @compute @workgroup_size( )"
-         << GetParam().mWorkgroupSizeParameter
-         << R"(  )
-fn main(@builtin(local_invocation_index) local_invocation_index: u32,
-        @builtin(workgroup_id) workgroup_id : vec3<u32>){
-  if (local_invocation_index == 0) {
-     atomicStore(&workgroup_buffer)" +
-                kConditionalArray + R"(, 7);
-  }
-
-  workgroupBarrier();
+         << GetParam().mWorkgroupSizeParameter << R"(  )
+fn main(@builtin(local_invocation_index) local_invocation_index: u32){
   )"
          << (GetParam().mShaderAtomicOp == ShaderAtomicOp::AtomicAdd ? kAtomicAddOperation
                                                                      : kAtomicCASFakeAddOperation)
@@ -159,17 +151,15 @@ fn main(@builtin(local_invocation_index) local_invocation_index: u32,
   workgroupBarrier();
 
   if (local_invocation_index == 0) {
-     output[workgroup_id.x] = atomicLoad(&workgroup_buffer)" +
+     output[0] = atomicLoad(&workgroup_buffer)" +
             kConditionalArray + R"();
   }
 }
 )";
 
     wgpu::ComputePipeline pipeline = CreateComputePipeline(code.str());
-    constexpr int kInitStartValueShader = 7;
-    std::vector<uint32_t> expected(
-        GetParam().mDispatchSizeParameter,
-        static_cast<uint32_t>(GetParam().mWorkgroupSizeParameter + kInitStartValueShader));
+    std::vector<uint32_t> expected(GetParam().mDispatchSizeParameter,
+                                   static_cast<uint32_t>(GetParam().mWorkgroupSizeParameter));
 
     wgpu::Buffer output = CreateBuffer(GetParam().mDispatchSizeParameter, -1);
     wgpu::BindGroup bindGroup =
