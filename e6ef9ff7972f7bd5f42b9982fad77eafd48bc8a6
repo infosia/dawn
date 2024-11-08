@@ -81,6 +81,30 @@
       },
       "revId": "e6ef9ff7972f7bd5f42b9982fad77eafd48bc8a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f71eb7f_65c73d9f",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-08T23:04:01Z",
+      "side": 1,
+      "message": "I think you\u0027re right, the current implementation is sound.\n\nI don\u0027t love the fact that relies on the evaluator recursively evaluating operands, as I find it makes the logic somewhat confusing (sometimes you propagate forwards from the root, sometimes you evaluate backwards from the leaves...).\n\nIt\u0027s also potentially much less efficient. For example, for something like this:\n```\n  %o:u32 \u003d override @id(1)\n  %2:u32 \u003d mul %o, 2u\n  %3:u32 \u003d add %2, %2\n  %4:u32 \u003d add %3, %3\n  %5:u32 \u003d add %4, %4\n  %x:u32 \u003d override, %5 @id(2)\n  %y:u32 \u003d override, %5 @id(3)\n  %z:u32 \u003d override, %5 @id(4)\n```\n... the `mul` instruction gets evaluated 24 times, because you\u0027re evaluating it again and again via the initializers of x/y/z.\n\nThese are the reasons why I\u0027d pictured something that only propagated values forwards, so that the transform would evaluate an instruction once and then it gets replaced.\n\nThat said, there\u0027s no way to actually write this in WGSL, so we\u0027re not going to hit these cases with real shaders.\n\nThis is something that we\u0027ll have to take more care of if we want to do a separate constant propagation transform though.\n\nSo TL;DR, this is probably fine as is, it just feels a little awkward to me.",
+      "parentUuid": "a652ed70_42c1e567",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 52
+      },
+      "revId": "e6ef9ff7972f7bd5f42b9982fad77eafd48bc8a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
