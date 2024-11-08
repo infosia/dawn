@@ -117,5 +117,35 @@ TEST_F(VectorTest, Clone_Packed) {
     EXPECT_TRUE(vec->Packed());
 }
 
+TEST_F(VectorTest, Align) {
+    auto* a = create<Vector>(create<I32>(), 2u);
+    auto* b = create<Vector>(create<I32>(), 3u);
+    auto* c = create<Vector>(create<F32>(), 4u);
+
+    EXPECT_EQ(a->Align(), 8u);
+    EXPECT_EQ(b->Align(), 16u);
+    EXPECT_EQ(c->Align(), 16u);
+}
+
+TEST_F(VectorTest, RequiredAlign) {
+    auto* a = create<Vector>(create<I32>(), 2u);
+    auto* b = create<Vector>(create<I32>(), 3u);
+    auto* c = create<Vector>(create<F32>(), 4u);
+
+    EXPECT_EQ(a->RequiredAlign(), 8u);
+    EXPECT_EQ(b->RequiredAlign(), 16u);
+    EXPECT_EQ(c->RequiredAlign(), 16u);
+}
+
+TEST_F(VectorTest, DISABLED_Align_Packed) {
+    auto* a = create<Vector>(create<I32>(), 2u, true);
+    auto* b = create<Vector>(create<I32>(), 3u, true);
+    auto* c = create<Vector>(create<F32>(), 4u, true);
+
+    EXPECT_EQ(a->Align(), 8u);
+    EXPECT_EQ(b->Align(), 4u);  // ?? is this right?
+    EXPECT_EQ(c->Align(), 16u);
+}
+
 }  // namespace
 }  // namespace tint::core::type

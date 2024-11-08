@@ -114,6 +114,10 @@ uint32_t Array::Align() const {
     return align_;
 }
 
+uint32_t Array::RequiredAlign() const {
+    return element_->RequiredAlign();
+}
+
 uint32_t Array::Size() const {
     return size_;
 }

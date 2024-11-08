@@ -108,6 +108,10 @@ class Type : public Castable<Type, UniqueNode> {
     /// @note opaque types will return a size of 0.
     virtual uint32_t Align() const;
 
+    /// @returns the required alignment, assuming storage buffer storage class
+    /// @note opaque types will return a size of 0.
+    virtual uint32_t RequiredAlign() const { return Align(); }
+
     /// @param ctx the clone context
     /// @returns a clone of this type created in the provided context
     virtual Type* Clone(CloneContext& ctx) const = 0;

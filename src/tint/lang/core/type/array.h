@@ -88,6 +88,9 @@ class Array : public Castable<Array, Type> {
     /// array type, if the member is annotated with the `@align(n)` attribute.
     uint32_t Align() const override;
 
+    /// @returns the byte alignment requirement of the array
+    uint32_t RequiredAlign() const override;
+
     /// @returns the byte size of the array
     /// @note this may differ from the size of a structure member of this array
     /// type, if the member is annotated with the `@size(n)` attribute.

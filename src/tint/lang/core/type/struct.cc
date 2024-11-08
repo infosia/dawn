@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/core/type/struct.h"
 
+#include <algorithm>
 #include <cmath>
 #include <iomanip>
 #include <string>
@@ -108,6 +109,14 @@ const StructMember* Struct::FindMember(Symbol name) const {
 
 uint32_t Struct::Align() const {
     return align_;
+}
+
+uint32_t Struct::RequiredAlign() const {
+    uint32_t result = Align();
+    for (auto* member : members_) {
+        result = std::max(result, member->Type()->RequiredAlign());
+    }
+    return result;
 }
 
 uint32_t Struct::Size() const {

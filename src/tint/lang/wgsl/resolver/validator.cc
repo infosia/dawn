@@ -541,11 +541,13 @@ bool Validator::AddressSpaceLayout(const core::type::Type* store_ty,
         return address_space == core::AddressSpace::kUniform && ty->Is<core::type::Struct>();
     };
 
+    // Returns the alignment requirement for a type in the current address space.
+    // In the future, if we want to allow relaxed layout rules such as scalar block layout,
+    // this is the place to adjust it.  It won't affect inferred sizes.
     auto required_alignment_of = [&](const core::type::Type* ty) {
-        uint32_t actual_align = ty->Align();
-        uint32_t required_align = actual_align;
+        uint32_t required_align = ty->RequiredAlign();
         if (is_uniform_struct_or_array(ty)) {
-            required_align = tint::RoundUp(16u, actual_align);
+            required_align = tint::RoundUp(16u, required_align);
         }
         return required_align;
     };
@@ -642,6 +644,7 @@ bool Validator::AddressSpaceLayout(const core::type::Type* store_ty,
                 }
             }
 
+#if 0
             // If an alignment was explicitly specified, we need to validate that it satisfies the
             // alignment requirement of the address space.
             auto* align_attr =
@@ -657,6 +660,7 @@ bool Validator::AddressSpaceLayout(const core::type::Type* store_ty,
                     return false;
                 }
             }
+#endif
         }
     }
 
@@ -668,6 +672,25 @@ bool Validator::AddressSpaceLayout(const core::type::Type* store_ty,
         // AST type nodes instead.
         if (!AddressSpaceLayout(arr->ElemType(), address_space, source)) {
             return false;
+        }
+
+        // Check stride against element required alignment
+        {
+            auto* elem_ty = arr->ElemType();
+
+            auto note_elem_ty = [&] {
+                AddNote(source) << "element type " << style::Type(elem_ty->FriendlyName())
+                                << " used in address space " << style::Enum(address_space)
+                                << " here";
+            };
+
+            uint32_t required_align = required_alignment_of(elem_ty);
+            if (arr->Stride() % required_align != 0) {
+                AddError(source) << "array stride must be a multiple of "
+                                 << style::Literal(required_align) << " bytes";
+                note_elem_ty();
+                return false;
+            }
         }
 
         if (address_space == core::AddressSpace::kUniform &&

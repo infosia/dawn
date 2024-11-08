@@ -73,10 +73,6 @@ class Vector : public Castable<Vector, type::Type> {
     /// @returns the size in bytes of a vector of the given width.
     static uint32_t SizeOf(uint32_t width);
 
-    /// @param width the width of the vector
-    /// @returns the alignment in bytes of a vector of the given width.
-    static uint32_t AlignOf(uint32_t width);
-
     /// @copydoc Type::Elements
     TypeAndCount Elements(const type::Type* type_if_invalid = nullptr,
                           uint32_t count_if_invalid = 0) const override;
