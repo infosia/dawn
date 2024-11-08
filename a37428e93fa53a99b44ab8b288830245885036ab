@@ -16,6 +16,29 @@
       "message": "Dan PTAL Tint.\n\nGeoff, Stephen, PTAL Dawn.",
       "revId": "a37428e93fa53a99b44ab8b288830245885036ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4412db2_02d22cee",
+        "filename": "src/tint/lang/glsl/writer/common/options.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-08T14:45:13Z",
+      "side": 1,
+      "message": "Does this cause the swizzle to be put in a cache key?",
+      "range": {
+        "startLine": 286,
+        "startChar": 17,
+        "endLine": 286,
+        "endChar": 40
+      },
+      "revId": "a37428e93fa53a99b44ab8b288830245885036ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
