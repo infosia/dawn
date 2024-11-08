@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ba90bda_7d5eb246",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-08T13:53:47Z",
+      "side": 1,
+      "message": "Dan PTAL Tint.\n\nGeoff, Stephen, PTAL Dawn.",
+      "revId": "a37428e93fa53a99b44ab8b288830245885036ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
