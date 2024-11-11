@@ -16,6 +16,29 @@
       "message": "PTAL, thanks!",
       "revId": "bf94201d990fba0512f0d062967a010847132786",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "502eaff8_19cd9381",
+        "filename": "src/dawn/native/DynamicUploader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-11T18:32:52Z",
+      "side": 1,
+      "message": "nit. I think that you could use a `dawn::SerialQueue` and helpers like `IterateUpTo` and `ClearUpTo` to implement a lot of the `Deallocate` logic.",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 84
+      },
+      "revId": "bf94201d990fba0512f0d062967a010847132786",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
