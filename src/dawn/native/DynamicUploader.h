@@ -55,18 +55,14 @@ class DynamicUploader {
     explicit DynamicUploader(DeviceBase* device);
     ~DynamicUploader() = default;
 
-    // We add functions to Release StagingBuffers to the DynamicUploader as there's
-    // currently no place to track the allocated staging buffers such that they're freed after
-    // pending commands are finished. This should be changed when better resource allocation is
-    // implemented.
-    void ReleaseStagingBuffer(Ref<BufferBase> stagingBuffer);
-
     ResultOrError<UploadHandle> Allocate(uint64_t allocationSize,
                                          ExecutionSerial serial,
                                          uint64_t offsetAlignment);
     void Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll = false);
 
     bool ShouldFlush();
+
+    void TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize);
 
   private:
     static constexpr uint64_t kRingBufferSize = 4 * 1024 * 1024;
@@ -81,9 +77,13 @@ class DynamicUploader {
                                                  ExecutionSerial serial,
                                                  uint64_t offsetAlignment);
 
+    void ReleaseStagingBuffer(Ref<BufferBase> stagingBuffer);
+
     std::vector<std::unique_ptr<RingBuffer>> mRingBuffers;
     SerialQueue<ExecutionSerial, Ref<BufferBase>> mReleasedStagingBuffers;
     raw_ptr<DeviceBase> mDevice;
+
+    SerialQueue<ExecutionSerial, uint64_t> mReleasedStagingMemorySizes;
 };
 }  // namespace dawn::native
 

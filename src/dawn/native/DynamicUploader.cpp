@@ -141,6 +141,8 @@ void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeA
         }
     }
     mReleasedStagingBuffers.ClearUpTo(lastCompletedSerial);
+
+    mReleasedStagingMemorySizes.ClearUpTo(lastCompletedSerial);
 }
 
 ResultOrError<UploadHandle> DynamicUploader::Allocate(uint64_t allocationSize,
@@ -151,14 +153,30 @@ ResultOrError<UploadHandle> DynamicUploader::Allocate(uint64_t allocationSize,
 }
 
 bool DynamicUploader::ShouldFlush() {
-    uint64_t kTotalAllocatedSizeThreshold = 64 * 1024 * 1024;
+    constexpr uint64_t kTotalAllocatedSizeThreshold = 64 * 1024 * 1024;
     // We use total allocated size instead of pending-upload size to prevent Dawn from allocating
     // too much GPU memory so that the risk of OOM can be minimized.
     return GetTotalAllocatedSize() > kTotalAllocatedSizeThreshold;
 }
 
+void DynamicUploader::TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize) {
+    ExecutionSerial pendingSerial = mDevice->GetQueue()->GetPendingCommandSerial();
+
+    if (mReleasedStagingMemorySizes.Empty() ||
+        mReleasedStagingMemorySizes.LastSerial() < pendingSerial) {
+        mReleasedStagingMemorySizes.Enqueue(stagingMemorySize, pendingSerial);
+    } else {
+        DAWN_ASSERT(mReleasedStagingMemorySizes.LastSerial() == pendingSerial &&
+                    !mReleasedStagingMemorySizes.LastValues().empty());
+        mReleasedStagingMemorySizes.LastValues()[0] += stagingMemorySize;
+    }
+}
+
 uint64_t DynamicUploader::GetTotalAllocatedSize() {
     uint64_t size = 0;
+    for (uint64_t stagingMemorySize : mReleasedStagingMemorySizes.IterateAll()) {
+        size += stagingMemorySize;
+    }
     for (const auto& buffer : mReleasedStagingBuffers.IterateAll()) {
         size += buffer->GetSize();
     }

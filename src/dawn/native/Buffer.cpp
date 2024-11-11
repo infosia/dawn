@@ -891,6 +891,7 @@ MaybeError BufferBase::CopyFromStagingBuffer() {
         GetDevice()->CopyFromStagingToBuffer(mStagingBuffer.Get(), 0, this, 0, GetAllocatedSize()));
 
     mStagingBuffer = nullptr;
+    GetDevice()->GetDynamicUploader()->TrackStagingMemorySizeToRelease(GetAllocatedSize());
 
     return {};
 }
