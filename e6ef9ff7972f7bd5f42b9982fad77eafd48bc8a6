@@ -105,6 +105,30 @@
       },
       "revId": "e6ef9ff7972f7bd5f42b9982fad77eafd48bc8a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3ba9694_3c5edd68",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-11T04:39:57Z",
+      "side": 1,
+      "message": "Yea, the ordering of things to get forward propagation is ... annoying. Given we can\u0027t create code like this, I think it\u0027s fine for now. We can deal with it later if it ends up being an issue.\n\nGiven it\u0027s fine, can I get a +2?",
+      "parentUuid": "8f71eb7f_65c73d9f",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 52
+      },
+      "revId": "e6ef9ff7972f7bd5f42b9982fad77eafd48bc8a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
