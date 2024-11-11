@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f75cd43_37cd14a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-11T23:13:57Z",
+      "side": 1,
+      "message": "We decided not to go down this route.\nThis might be the direction when implementing scalar block laytou.",
+      "revId": "2f0147619ad05831da2b0324f04f7499803248a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8fda09fc_568f30d7",
