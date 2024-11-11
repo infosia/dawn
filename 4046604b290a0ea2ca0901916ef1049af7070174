@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "316380f0_fe318a84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-11-11T10:21:23Z",
+      "side": 1,
+      "message": "I checked with Gemini and it says there\u0027s no way to express \"ndkVersion x or higher\", so LGTM",
+      "revId": "4046604b290a0ea2ca0901916ef1049af7070174",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
