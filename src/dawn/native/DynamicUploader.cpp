@@ -36,7 +36,8 @@
 
 namespace dawn::native {
 
-DynamicUploader::DynamicUploader(DeviceBase* device) : mDevice(device) {}
+DynamicUploader::DynamicUploader(DeviceBase* device)
+    : mDevice(device), mTotalStagingMemorySizeToRelease(0) {}
 
 void DynamicUploader::ReleaseStagingBuffer(Ref<BufferBase> stagingBuffer) {
     mReleasedStagingBuffers.Enqueue(std::move(stagingBuffer),
@@ -141,6 +142,19 @@ void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeA
         }
     }
     mReleasedStagingBuffers.ClearUpTo(lastCompletedSerial);
+
+    while (true) {
+        if (mReleasedStagingMemorySizeInfos.empty()) {
+            break;
+        }
+        const auto& serialAndSize = mReleasedStagingMemorySizeInfos.front();
+        if (serialAndSize.pendingSerial > lastCompletedSerial) {
+            break;
+        }
+        DAWN_ASSERT(serialAndSize.size <= mTotalStagingMemorySizeToRelease);
+        mTotalStagingMemorySizeToRelease -= serialAndSize.size;
+        mReleasedStagingMemorySizeInfos.pop();
+    }
 }
 
 ResultOrError<UploadHandle> DynamicUploader::Allocate(uint64_t allocationSize,
@@ -151,14 +165,31 @@ ResultOrError<UploadHandle> DynamicUploader::Allocate(uint64_t allocationSize,
 }
 
 bool DynamicUploader::ShouldFlush() {
-    uint64_t kTotalAllocatedSizeThreshold = 64 * 1024 * 1024;
+    constexpr uint64_t kTotalAllocatedSizeThreshold = 64 * 1024 * 1024;
     // We use total allocated size instead of pending-upload size to prevent Dawn from allocating
     // too much GPU memory so that the risk of OOM can be minimized.
     return GetTotalAllocatedSize() > kTotalAllocatedSizeThreshold;
 }
 
+void DynamicUploader::TrackStagingMemorySizeToRelease(uint64_t stagingBufferSize) {
+    if (mReleasedStagingMemorySizeInfos.empty()) {
+        DAWN_ASSERT(mTotalStagingMemorySizeToRelease == 0);
+    }
+
+    ExecutionSerial pendingSerial = mDevice->GetQueue()->GetPendingCommandSerial();
+    if (mReleasedStagingMemorySizeInfos.empty() ||
+        mReleasedStagingMemorySizeInfos.back().pendingSerial < pendingSerial) {
+        mReleasedStagingMemorySizeInfos.emplace(pendingSerial, stagingBufferSize);
+    } else {
+        DAWN_ASSERT(mReleasedStagingMemorySizeInfos.back().pendingSerial == pendingSerial);
+        mReleasedStagingMemorySizeInfos.back().size += stagingBufferSize;
+    }
+    mTotalStagingMemorySizeToRelease += stagingBufferSize;
+}
+
 uint64_t DynamicUploader::GetTotalAllocatedSize() {
-    uint64_t size = 0;
+    uint64_t size = mTotalStagingMemorySizeToRelease;
+
     for (const auto& buffer : mReleasedStagingBuffers.IterateAll()) {
         size += buffer->GetSize();
     }
@@ -167,6 +198,7 @@ uint64_t DynamicUploader::GetTotalAllocatedSize() {
             size += buffer->mStagingBuffer->GetSize();
         }
     }
+
     return size;
 }
 
