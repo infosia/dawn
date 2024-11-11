@@ -16,6 +16,109 @@
       "message": "Added the missing NativeTests.kt file",
       "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f50097fc_894ddeb6",
+        "filename": "tools/android/gradle/wrapper/gradle-wrapper.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-11-11T14:53:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be needed after merge.",
+      "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2180de2_a6a698ef",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-11-11T14:53:43Z",
+      "side": 1,
+      "message": "Could do: \n\n```\ntargets \u0027webgpu_c_bundled\u0027, \u0027webgpu_wrapper_tests\u0027\n```",
+      "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8cae309_6ed97b1b",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-11-11T14:53:43Z",
+      "side": 1,
+      "message": "I believe that \u0027viewBinding true\u0027 is not required for the tests to work.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba4dff64_82b2cbb3",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-11-11T14:53:43Z",
+      "side": 1,
+      "message": "I believe that the line `headers...` isn\u0027t required for the tests to work.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22da9773_f063668f",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-11-11T14:53:43Z",
+      "side": 1,
+      "message": "I believe you only need the dependency `androidx.test....`, not the other two.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 72
+      },
+      "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
