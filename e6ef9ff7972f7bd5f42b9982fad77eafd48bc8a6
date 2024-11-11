@@ -129,6 +129,30 @@
       },
       "revId": "e6ef9ff7972f7bd5f42b9982fad77eafd48bc8a6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d20e7b88_d48a1f9a",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-11T22:26:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3ba9694_3c5edd68",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 52
+      },
+      "revId": "e6ef9ff7972f7bd5f42b9982fad77eafd48bc8a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

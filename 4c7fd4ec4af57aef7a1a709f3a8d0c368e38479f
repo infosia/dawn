@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1803174_96bec62e",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_fuzz.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-11T22:26:17Z",
+      "side": 1,
+      "message": "Nit: This has nothing to do with this fuzzer?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "4c7fd4ec4af57aef7a1a709f3a8d0c368e38479f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
