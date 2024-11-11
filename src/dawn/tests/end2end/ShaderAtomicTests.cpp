@@ -198,9 +198,7 @@ DAWN_INSTANTIATE_TEST_P(ShaderAtomicTests,
                         {true, false}, /*use shader array*/
                         {1,  2,  3,  4,  5,  6,   7,   8,   9,   13, 15,
                          16, 31, 32, 53, 64, 111, 128, 137, 173, 256}, /* workgroup size*/
-                        {
-                            1,
-                        }, /*dispatch size */
+                        {1, 2, 3, 5} /*dispatch size */,
                         {ShaderAtomicOp::AtomicAdd, ShaderAtomicOp::AtomicCASFakeAdd});
 
 }  // anonymous namespace
