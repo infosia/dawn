@@ -97,6 +97,46 @@
       },
       "revId": "a37428e93fa53a99b44ab8b288830245885036ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "daac4086_7e849664",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-11T23:06:43Z",
+      "side": 1,
+      "message": "We can\u0027t just `convert` between vectors/scalars of different sizes. You\u0027d need to swizzle out the desired components instead. See [1] for where your unit tests are doing invalid things.\n\nI guess this is somehow generating code that passes the Dawn E2E tests and I\u0027m not sure how, unless you only have coverage for the `vec4f` case?",
+      "revId": "a37428e93fa53a99b44ab8b288830245885036ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db810b4c_827da7ac",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-11T23:06:43Z",
+      "side": 1,
+      "message": "[1]\n\nWe don\u0027t yet have IR validation logic to make sure the src and dst types are compatible for conversion, but when we eventually do this will be rejected.",
+      "range": {
+        "startLine": 1649,
+        "startChar": 0,
+        "endLine": 1650,
+        "endChar": 25
+      },
+      "revId": "a37428e93fa53a99b44ab8b288830245885036ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
