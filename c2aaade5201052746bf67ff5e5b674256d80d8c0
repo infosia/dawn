@@ -16,6 +16,24 @@
       "message": "Alan PTAL (since I know you were attempting a roll)\n\nI wonder if we should try to add `dawn-try-win10-x64-intel-asan` to the CTS roller. Not sure if it has capacity? (@ynovikov@chromium.org?)",
       "revId": "c2aaade5201052746bf67ff5e5b674256d80d8c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfb4d702_b78216e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-11-11T16:49:23Z",
+      "side": 1,
+      "message": "No, it does not have the capacity.",
+      "parentUuid": "cdc4e664_d101869f",
+      "revId": "c2aaade5201052746bf67ff5e5b674256d80d8c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
