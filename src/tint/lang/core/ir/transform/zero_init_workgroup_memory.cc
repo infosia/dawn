@@ -138,6 +138,7 @@ struct State {
         b.InsertBefore(function_start, [&] {
             for (auto count : sorted_iteration_counts) {
                 auto element_stores = stores.Get(count);
+                // here
                 if (count == 1u) {
                     // Make the first invocation in the group perform all of the non-arrayed stores.
                     auto* ifelse = b.If(b.Equal(ty.bool_(), local_index, 0_u));
@@ -278,10 +279,10 @@ struct State {
 
         // Generate the store instruction.
         if (auto* atomic = store.store_type->As<type::Atomic>()) {
-            auto* zero = b.Constant(ir.constant_values.Zero(atomic->Type()));
+            auto* zero = b.Constant(ir.constant_values.One(atomic->Type()));
             b.Call(ty.void_(), core::BuiltinFn::kAtomicStore, to, zero);
         } else {
-            auto* zero = b.Constant(ir.constant_values.Zero(store.store_type));
+            auto* zero = b.Constant(ir.constant_values.One(store.store_type));
             b.Store(to, zero);
         }
     }

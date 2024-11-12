@@ -129,6 +129,55 @@ const Scalar<AInt>* Manager::Get(AInt value) {
     return Get<Scalar<AInt>>(types.AInt(), value);
 }
 
+const Value* Manager::One(const core::type::Type* type) {
+    return Switch(
+        type,  //
+        [&](const core::type::Vector* v) -> const Value* {
+            auto* zero_el = One(v->Type());
+            return Splat(type, zero_el);
+        },
+        [&](const core::type::Matrix* m) -> const Value* {
+            auto* zero_el = One(m->ColumnType());
+            return Splat(type, zero_el);
+        },
+        [&](const core::type::Array* a) -> const Value* {
+            if (a->ConstantCount()) {
+                if (auto* zero_el = One(a->ElemType())) {
+                    return Splat(type, zero_el);
+                }
+            }
+            return nullptr;
+        },
+        [&](const core::type::Struct* s) -> const Value* {
+            Hashmap<const core::type::Type*, const Value*, 8> zero_by_type;
+            Vector<const Value*, 4> zeros;
+            zeros.Reserve(s->Members().Length());
+            for (auto* member : s->Members()) {
+                auto* zero =
+                    zero_by_type.GetOrAdd(member->Type(), [&] { return One(member->Type()); });
+                if (!zero) {
+                    return nullptr;
+                }
+                zeros.Push(zero);
+            }
+            if (zero_by_type.Count() == 1) {
+                // All members were of the same type, so the zero value is the same for all members.
+                return Splat(type, zeros[0]);
+            }
+            return Composite(s, std::move(zeros));
+        },
+        [&](const core::type::AbstractInt*) { return Get(AInt(1)); },      //
+        [&](const core::type::AbstractFloat*) { return Get(AFloat(1)); },  //
+        [&](const core::type::I32*) { return Get(i32(1)); },               //
+        [&](const core::type::U32*) { return Get(u32(1)); },               //
+        [&](const core::type::F32*) { return Get(f32(1)); },               //
+        [&](const core::type::F16*) { return Get(f16(1)); },               //
+        [&](const core::type::Bool*) { return Get(true); },               //
+        [&](const core::type::Invalid*) { return Invalid(); },             //
+        TINT_ICE_ON_NO_MATCH);
+}
+
+
 const Value* Manager::Zero(const core::type::Type* type) {
     return Switch(
         type,  //
