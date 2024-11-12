@@ -55,11 +55,20 @@ struct SerialStorageTraits<SerialQueue<SerialT, ValueT>> {
 template <typename Serial, typename Value>
 class SerialQueue : public SerialStorage<SerialQueue<Serial, Value>> {
   public:
+    SerialQueue() = default;
+
     // The serial must be given in (not strictly) increasing order.
     void Enqueue(const Value& value, Serial serial);
     void Enqueue(Value&& value, Serial serial);
     void Enqueue(const std::vector<Value>& values, Serial serial);
     void Enqueue(std::vector<Value>&& values, Serial serial);
+
+  private:
+    using DerivedType = SerialQueue<Serial, Value>;
+    friend class SerialStorage<DerivedType>;
+
+    explicit SerialQueue(SerialStorageTraits<DerivedType>::Storage storage)
+        : SerialStorage<DerivedType>(std::move(storage)) {}
 };
 
 // SerialQueue
