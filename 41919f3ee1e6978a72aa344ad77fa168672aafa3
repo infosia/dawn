@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42779930_f8c5757a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-12T18:01:28Z",
+      "side": 1,
+      "message": "This looks like it fails the bots on Github for the `go` check with errors like:\n\n```\nError: ../../../go/pkg/mod/go.chromium.org/luci@v0.0.0-20230311013728-313c8e2205bc/buildbucket/proto/project_config.pb.go:31:2: missing go.sum entry for module providing package google.golang.org/protobuf/types/known/wrapperspb (imported by go.chromium.org/luci/buildbucket/proto); to add:\n\tgo get go.chromium.org/luci/buildbucket/proto@v0.0.0-20230311013728-313c8e2205bc\n```\n\nwhich I\u0027m guessing are related to the entries that were removed in the CL?",
+      "revId": "41919f3ee1e6978a72aa344ad77fa168672aafa3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
