@@ -66,101 +66,7 @@ MTLIndexType MTLIndexFormat(wgpu::IndexFormat format) {
     }
 }
 
-template <typename PassDescriptor>
-class SampleBufferAttachment {
-  public:
-    void SetSampleBuffer(PassDescriptor* descriptor, id<MTLCounterSampleBuffer> sampleBuffer)
-        API_AVAILABLE(macos(11.0), ios(14.0));
-    void SetStartSampleIndex(PassDescriptor* descriptor, NSUInteger sampleIndex)
-        API_AVAILABLE(macos(11.0), ios(14.0));
-    void SetEndSampleIndex(PassDescriptor* descriptor, NSUInteger sampleIndex)
-        API_AVAILABLE(macos(11.0), ios(14.0));
-
-  private:
-    // Initialized to the maximum value, in order to start from 0 after the first increment.
-    NSUInteger attachmentIndex = NSUIntegerMax;
-    // TODO(dawn:1473): The maximum of sampleBufferAttachments depends on the length of MTLDevice's
-    // counterSets, but Metal does not match the allowed maximum of sampleBufferAttachments with the
-    // length of counterSets on AGX family. Hardcode as a constant and check this whenever Metal
-    // could get the matched value.
-    static constexpr NSUInteger kMaxSampleBufferAttachments = 4;
-};
-
-template <typename PassDescriptor>
-void SampleBufferAttachment<PassDescriptor>::SetSampleBuffer(
-    PassDescriptor* descriptor,
-    id<MTLCounterSampleBuffer> sampleBuffer) API_AVAILABLE(macos(11.0), ios(14.0)) {
-    attachmentIndex++;
-    DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
-    descriptor.sampleBufferAttachments[attachmentIndex].sampleBuffer = sampleBuffer;
-}
-
-// Must be called after SetSampleBuffer
-template <>
-void SampleBufferAttachment<MTLRenderPassDescriptor>::SetStartSampleIndex(
-    MTLRenderPassDescriptor* descriptor,
-    NSUInteger sampleIndex) API_AVAILABLE(macos(11.0), ios(14.0)) {
-    DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
-    descriptor.sampleBufferAttachments[attachmentIndex].startOfVertexSampleIndex = sampleIndex;
-}
-
-// Must be called after SetSampleBuffer
-template <>
-void SampleBufferAttachment<MTLRenderPassDescriptor>::SetEndSampleIndex(
-    MTLRenderPassDescriptor* descriptor,
-    NSUInteger sampleIndex) API_AVAILABLE(macos(11.0), ios(14.0)) {
-    DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
-    descriptor.sampleBufferAttachments[attachmentIndex].endOfFragmentSampleIndex = sampleIndex;
-}
-
-// Must be called after SetSampleBuffer
-template <>
-void SampleBufferAttachment<MTLComputePassDescriptor>::SetStartSampleIndex(
-    MTLComputePassDescriptor* descriptor,
-    NSUInteger sampleIndex) API_AVAILABLE(macos(11.0), ios(14.0)) {
-    DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
-    descriptor.sampleBufferAttachments[attachmentIndex].startOfEncoderSampleIndex = sampleIndex;
-}
-
-// Must be called after SetSampleBuffer
-template <>
-void SampleBufferAttachment<MTLComputePassDescriptor>::SetEndSampleIndex(
-    MTLComputePassDescriptor* descriptor,
-    NSUInteger sampleIndex) API_AVAILABLE(macos(11.0), ios(14.0)) {
-    // TODO(dawn:1473): Use MTLComputePassSampleBuffers or query method instead of the magic number
-    // 4 when Metal could get the maximum of sampleBufferAttachments on compute pass
-    DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
-    descriptor.sampleBufferAttachments[attachmentIndex].endOfEncoderSampleIndex = sampleIndex;
-}
-
-template <typename PassDescriptor, typename BeginPass>
-void SetSampleBufferAttachments(PassDescriptor* descriptor, BeginPass* cmd) {
-    // Use @available instead of API_AVAILABLE because GetCounterSampleBuffer() also needs checking
-    // API availability.
-    if (@available(macOS 11.0, iOS 14.0, *)) {
-        QuerySetBase* querySet = cmd->timestampWrites.querySet.Get();
-        if (querySet == nullptr) {
-            return;
-        }
-        SampleBufferAttachment<PassDescriptor> sampleBufferAttachment;
-        sampleBufferAttachment.SetSampleBuffer(descriptor,
-                                               ToBackend(querySet)->GetCounterSampleBuffer());
-        uint32_t beginningOfPassWriteIndex = cmd->timestampWrites.beginningOfPassWriteIndex;
-        sampleBufferAttachment.SetStartSampleIndex(
-            descriptor, beginningOfPassWriteIndex != wgpu::kQuerySetIndexUndefined
-                            ? NSUInteger(beginningOfPassWriteIndex)
-                            : MTLCounterDontSample);
-        uint32_t endOfPassWriteIndex = cmd->timestampWrites.endOfPassWriteIndex;
-        sampleBufferAttachment.SetEndSampleIndex(
-            descriptor, endOfPassWriteIndex != wgpu::kQuerySetIndexUndefined
-                            ? NSUInteger(endOfPassWriteIndex)
-                            : MTLCounterDontSample);
-    } else {
-        DAWN_UNREACHABLE();
-    }
-}
-
-NSRef<MTLComputePassDescriptor> CreateMTLComputePassDescriptor(BeginComputePassCmd* computePass)
+NSRef<MTLComputePassDescriptor> CreateMTLComputePassDescriptor(BeginComputePassCmd* cmd)
     API_AVAILABLE(macos(11.0), ios(14.0)) {
     // Note that this creates a descriptor that's autoreleased so we don't use AcquireNSRef
     NSRef<MTLComputePassDescriptor> descriptorRef =
@@ -171,7 +77,19 @@ NSRef<MTLComputePassDescriptor> CreateMTLComputePassDescriptor(BeginComputePassC
     // access to the same resources, which we may support it later.
     descriptor.dispatchType = MTLDispatchTypeSerial;
 
-    SetSampleBufferAttachments(descriptor, computePass);
+    if (@available(macOS 11.0, iOS 14.0, *)) {
+        if (QuerySet* querySet = ToBackend(cmd->timestampWrites.querySet.Get())) {
+            auto* attachment = descriptor.sampleBufferAttachments[0];
+            auto beginIndex = cmd->timestampWrites.beginningOfPassWriteIndex;
+            auto endIndex = cmd->timestampWrites.endOfPassWriteIndex;
+
+            attachment.sampleBuffer = querySet->GetCounterSampleBuffer();
+            attachment.startOfEncoderSampleIndex =
+                beginIndex != wgpu::kQuerySetIndexUndefined ? beginIndex : MTLCounterDontSample;
+            attachment.endOfEncoderSampleIndex =
+                endIndex != wgpu::kQuerySetIndexUndefined ? endIndex : MTLCounterDontSample;
+        }
+    }
 
     return descriptorRef;
 }
@@ -337,8 +255,23 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
     }
 
     if (@available(macOS 11.0, iOS 14.0, *)) {
-        if (useCounterSamplingAtStageBoundary) {
-            SetSampleBufferAttachments(descriptor, renderPass);
+        if (QuerySet* querySet = ToBackend(renderPass->timestampWrites.querySet.Get())) {
+            DAWN_ASSERT(useCounterSamplingAtStageBoundary);
+            auto* attachment = descriptor.sampleBufferAttachments[0];
+            auto beginIndex = renderPass->timestampWrites.beginningOfPassWriteIndex;
+            auto endIndex = renderPass->timestampWrites.endOfPassWriteIndex;
+
+            attachment.sampleBuffer = querySet->GetCounterSampleBuffer();
+            attachment.startOfVertexSampleIndex =
+                beginIndex != wgpu::kQuerySetIndexUndefined ? beginIndex : MTLCounterDontSample;
+            attachment.endOfFragmentSampleIndex =
+                endIndex != wgpu::kQuerySetIndexUndefined ? endIndex : MTLCounterDontSample;
+
+            // TODO are these two needed?????
+            attachment.endOfVertexSampleIndex =
+                endIndex != wgpu::kQuerySetIndexUndefined ? endIndex : MTLCounterDontSample;
+            attachment.startOfFragmentSampleIndex =
+                endIndex != wgpu::kQuerySetIndexUndefined ? endIndex : MTLCounterDontSample;
         }
     }
 

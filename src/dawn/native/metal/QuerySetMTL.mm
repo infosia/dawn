@@ -60,9 +60,9 @@ ResultOrError<id<MTLCounterSampleBuffer>> CreateCounterSampleBuffer(Device* devi
 
     descriptor.sampleCount = static_cast<NSUInteger>(std::max(count, uint32_t(1u)));
     descriptor.storageMode = MTLStorageModePrivate;
-    if (device->IsToggleEnabled(Toggle::MetalUseSharedModeForCounterSampleBuffer)) {
-        descriptor.storageMode = MTLStorageModeShared;
-    }
+    // if (device->IsToggleEnabled(Toggle::MetalUseSharedModeForCounterSampleBuffer)) {
+    descriptor.storageMode = MTLStorageModeShared;
+    // }
 
     NSError* error = nullptr;
     id<MTLCounterSampleBuffer> counterSampleBuffer =
