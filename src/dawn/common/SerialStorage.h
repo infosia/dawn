@@ -82,6 +82,8 @@ class SerialStorage {
 
     class BeginEnd {
       public:
+        using value_type = typename SerialStorageTraits<Derived>::Value;
+
         BeginEnd(StorageIterator start, StorageIterator end);
 
         Iterator begin() const;
@@ -94,6 +96,8 @@ class SerialStorage {
 
     class ConstBeginEnd {
       public:
+        using value_type = typename SerialStorageTraits<Derived>::Value;
+
         ConstBeginEnd(ConstStorageIterator start, ConstStorageIterator end);
 
         ConstIterator begin() const;
@@ -103,6 +107,8 @@ class SerialStorage {
         ConstStorageIterator mStartIt;
         ConstStorageIterator mEndIt;
     };
+
+    SerialStorage() = default;
 
     // Derived classes may specialize constraits for elements stored
     // Ex.) SerialQueue enforces that the serial must be given in (not strictly)
@@ -122,6 +128,9 @@ class SerialStorage {
     BeginEnd IterateAll();
     BeginEnd IterateUpTo(Serial serial);
 
+    // Take all values up to `serial` and returns them in a new container.
+    Derived TakeUpTo(Serial serial);
+
     void Clear();
     void ClearUpTo(Serial serial);
 
@@ -129,6 +138,8 @@ class SerialStorage {
     Serial LastSerial() const;
 
   protected:
+    explicit SerialStorage(Storage storage) : mStorage(std::move(storage)) {}
+
     // Returns the first StorageIterator that a serial bigger than serial.
     ConstStorageIterator FindUpTo(Serial serial) const;
     StorageIterator FindUpTo(Serial serial);
@@ -161,6 +172,14 @@ typename SerialStorage<Derived>::BeginEnd SerialStorage<Derived>::IterateAll() {
 template <typename Derived>
 typename SerialStorage<Derived>::BeginEnd SerialStorage<Derived>::IterateUpTo(Serial serial) {
     return {mStorage.begin(), FindUpTo(serial)};
+}
+
+template <typename Derived>
+Derived SerialStorage<Derived>::TakeUpTo(Serial serial) {
+    Storage storage(std::make_move_iterator(mStorage.begin()),
+                    std::make_move_iterator(FindUpTo(serial)));
+    ClearUpTo(serial);
+    return Derived(storage);
 }
 
 template <typename Derived>

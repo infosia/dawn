@@ -56,12 +56,21 @@ struct SerialStorageTraits<SerialMap<SerialT, ValueT>> {
 template <typename Serial, typename Value>
 class SerialMap : public SerialStorage<SerialMap<Serial, Value>> {
   public:
+    SerialMap() = default;
+
     void Enqueue(const Value& value, Serial serial);
     void Enqueue(Value&& value, Serial serial);
     void Enqueue(const std::vector<Value>& values, Serial serial);
     void Enqueue(std::vector<Value>&& values, Serial serial);
 
     std::optional<Value> TakeOne(Serial serial);
+
+  private:
+    using DerivedType = SerialMap<Serial, Value>;
+    friend class SerialStorage<DerivedType>;
+
+    explicit SerialMap(typename SerialStorageTraits<DerivedType>::Storage storage)
+        : SerialStorage<DerivedType>(std::move(storage)) {}
 };
 
 // SerialMap

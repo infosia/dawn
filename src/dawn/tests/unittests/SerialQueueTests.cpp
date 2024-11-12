@@ -30,6 +30,7 @@
 
 #include "dawn/common/SerialQueue.h"
 #include "dawn/common/TypedInteger.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace dawn {
@@ -137,6 +138,25 @@ TEST(SerialQueue, ClearUpTo) {
         expectedValues.erase(expectedValues.begin());
     }
     ASSERT_TRUE(expectedValues.empty());
+}
+
+// Test TakeUpTo()
+TEST(SerialQueue, TakeUpTo) {
+    TestSerialQueue queue;
+
+    std::vector<int> vector1 = {1, 2, 3, 4};
+    std::vector<int> vector2 = {5, 6, 7, 8};
+    std::vector<int> vector3 = {9, 0};
+
+    queue.Enqueue(vector1, 0);
+    queue.Enqueue(std::move(vector2), 0);
+    queue.Enqueue(vector3, 1);
+
+    TestSerialQueue values_up_to = queue.TakeUpTo(0);
+    EXPECT_THAT(values_up_to.IterateAll(), testing::UnorderedElementsAre(1, 2, 3, 4, 5, 6, 7, 8));
+
+    EXPECT_EQ(queue.LastSerial(), 1u);
+    EXPECT_THAT(queue.IterateAll(), testing::UnorderedElementsAre(0, 9));
 }
 
 // Test FirstSerial
