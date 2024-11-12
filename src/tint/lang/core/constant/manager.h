@@ -153,6 +153,13 @@ class Manager final {
     /// @returns a constant zero-value for the type
     const Value* Zero(const core::type::Type* type);
 
+
+    /// Constructs a constant zero-value of the type @p type.
+    /// @param type the constant type
+    /// @returns a constant zero-value for the type
+    const Value* One(const core::type::Type* type);
+
+
     /// Constructs an invalid constant
     /// @returns an invalid constant
     const constant::Invalid* Invalid();
