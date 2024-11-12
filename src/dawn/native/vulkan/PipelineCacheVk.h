@@ -58,7 +58,7 @@ class PipelineCache final : public PipelineCacheBase {
     void Initialize();
     MaybeError SerializeToBlobImpl(Blob* blob) override;
 
-    raw_ptr<DeviceBase> mDevice;
+    const raw_ptr<DeviceBase> mDevice;
     VkPipelineCache mHandle = VK_NULL_HANDLE;
 
     size_t mStoredDataSize = 0;

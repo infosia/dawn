@@ -87,7 +87,7 @@ MaybeError PipelineCache::SerializeToBlobImpl(Blob* blob) {
         "GetPipelineCacheData"));
 
     if (bufferSize == 0 || bufferSize == mStoredDataSize) {
-        // If current VkPipelineCache data size is same as `mCachedDataSize` assume nothing has
+        // If current VkPipelineCache data size is same as `mStoredDataSize` assume nothing has
         // changed vs what is stored in the BlobCache.
         return {};
     }
