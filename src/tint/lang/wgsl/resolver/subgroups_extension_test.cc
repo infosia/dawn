@@ -244,5 +244,13 @@ TEST_F(ResolverSubgroupsExtensionTest, SubgroupInvocationIdComputeShaderOutput) 
               "fragment shader input");
 }
 
+// Using the subgroup_uniformity diagnostic rule without subgroups enabled should fail.
+TEST_F(ResolverSubgroupsExtensionTest, UseSubgroupUniformityRuleWithoutExtensionError) {
+    DiagnosticDirective(wgsl::DiagnosticSeverity::kOff, "subgroup_uniformity");
+    EXPECT_FALSE(r()->Resolve());
+    EXPECT_EQ(r()->error(),
+              R"(error: 'subgroup_uniformity' rule requires the 'subgroups' extension)");
+}
+
 }  // namespace
 }  // namespace tint::resolver

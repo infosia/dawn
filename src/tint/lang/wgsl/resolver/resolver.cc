@@ -4118,6 +4118,12 @@ bool Resolver::DiagnosticControl(const ast::DiagnosticControl& control) {
 
     auto rule = wgsl::ParseCoreDiagnosticRule(name);
     if (rule != wgsl::CoreDiagnosticRule::kUndefined) {
+        if (rule == wgsl::CoreDiagnosticRule::kSubgroupUniformity &&
+            !enabled_extensions_.Contains(wgsl::Extension::kSubgroups)) {
+            AddError(control.rule_name->source) << style::Code(name) << " rule requires the "
+                                                << style::Code("subgroups") << " extension";
+            return false;
+        }
         validator_.DiagnosticFilters().Set(rule, control.severity);
     } else {
         auto& warning = AddWarning(control.rule_name->source)
