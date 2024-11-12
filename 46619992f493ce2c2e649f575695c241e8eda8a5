@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ec79170_42cae0fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-12T13:08:10Z",
+      "side": 1,
+      "message": "I have to say, I don\u0027t understand what we are trying to achieve here. Is it that we want to take into account the Buffer\u0027s mStagingBuffer in the DynamicUploader::Flush heuristic? mStagingBuffer is no longer always the DynamicUploader.",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f23edbe5_79f33df9",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-12T13:08:10Z",
+      "side": 1,
+      "message": "ShouldFlush is checked in CopyFromStagingToBuffer so if we do accounting we should do it before that call. But also IMHO we should not do it in DynamicUploader.",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e407a06f_b2c5a0fe",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-12T13:08:10Z",
+      "side": 1,
+      "message": "This heuristic looking at the total allocated size is weird. We should flush based on how much memory the flush might allow reclaiming by itself, not what previous flushes might already allow reclaiming.",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
