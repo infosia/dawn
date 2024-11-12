@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "644fdcae_a8e6678b",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-12T18:51:51Z",
+      "side": 1,
+      "message": "Nit: This all looks duplicated with the workgroup_size size case above, so could be de-duplicated into a function that takes an `ir::Value*` and returns an `ir::Constant*`.",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 13
+      },
+      "revId": "20f471e6584c0d9404f024f5020f556f50bfb28c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edf4793a_fd66543f",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-12T18:51:51Z",
+      "side": 1,
+      "message": "Hmm, I think the old size wouldn\u0027t be correct, if we\u0027re overriding with a new element count? We should probably update this to be the correct new size. I\u0027m guessing it might screw up some things like dynamic workgroup allocation sizes in the MSL backend.",
+      "range": {
+        "startLine": 202,
+        "startChar": 53,
+        "endLine": 202,
+        "endChar": 67
+      },
+      "revId": "20f471e6584c0d9404f024f5020f556f50bfb28c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "894e68c5_5de17f8f",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-12T18:51:51Z",
+      "side": 1,
+      "message": "You shouldn\u0027t be able to load the whole array (WGSL doesn\u0027t allow it), so you only need to care about `let` here.",
+      "revId": "20f471e6584c0d9404f024f5020f556f50bfb28c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20f2ddd6_06ce2439",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-12T18:51:51Z",
+      "side": 1,
+      "message": "As mentioned above, just do a `let` to capture the pointer, as that\u0027s the only way to propagate the override array size that WGSL allows.",
+      "revId": "20f471e6584c0d9404f024f5020f556f50bfb28c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33e092e5_f34c075c",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-12T18:51:51Z",
+      "side": 1,
+      "message": "Need to handle `let` too, e.g.:\n```\noverride x \u003d 1;\nvar\u003cworkgroup\u003e arr : array\u003cu32, x\u003e;\n\nfn a() {\n  let y \u003d \u0026arr;\n}\n```\nThis currently crashes with this CL.\n\nPlease add a couple of Program-\u003eIR unit tests for this stuff.",
+      "revId": "20f471e6584c0d9404f024f5020f556f50bfb28c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
