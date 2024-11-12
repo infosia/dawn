@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "856ee3e7ef54623946f319c18744b1c2dd7c205f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8871ac16_c0036146",
+        "filename": "src/dawn/native/EncodingContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-12T15:11:19Z",
+      "side": 1,
+      "message": "I think we should handle more status values here explicitly, even if we don\u0027t necessarily do anything. It\u0027s not obvious to me why `mStatus` is not set for cases like `Status::Finished`.",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 5
+      },
+      "revId": "856ee3e7ef54623946f319c18744b1c2dd7c205f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
