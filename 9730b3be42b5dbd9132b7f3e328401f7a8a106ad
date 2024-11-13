@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0a64a184_17945879",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-13T23:23:48Z",
+      "side": 1,
+      "message": "For the first one do you mean:\n```\nbuffer.MapAsync(AllowSpontaneous,\n    [](MapAsyncStatus status, StringView msg, Buffer* buffer) { \n        buffer-\u003eGetMappedRange();\n    },\n    \u0026buffer); // \u003c--\n```\nWe don\u0027t automatically pass the buffer right?",
+      "parentUuid": "e4906b3c_d45ede74",
+      "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "40a8a24a_7f861397",
         "filename": "generator/templates/api_cpp.h",
         "patchSetId": 6
