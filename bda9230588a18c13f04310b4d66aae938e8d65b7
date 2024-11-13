@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b0e3d01_ccc73f54",
+        "filename": "src/dawn/common/SerialStorage.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-13T18:26:35Z",
+      "side": 1,
+      "message": "This allows gmock to iterate through the container like object.",
+      "revId": "bda9230588a18c13f04310b4d66aae938e8d65b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
