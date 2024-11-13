@@ -63,6 +63,70 @@
       "message": "Sorry for the giant change... but it was easier to just update everything in this change instead of splitting... heh..",
       "revId": "da762c80f8fd8b9e0faaadea66a705e967ad0259",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d782a65_1fcc1ccd",
+        "filename": "generator/templates/dawn/wire/server/WGPUTraits.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-13T23:07:20Z",
+      "side": 1,
+      "message": "nit: FreeMembers?",
+      "range": {
+        "startLine": 50,
+        "startChar": 30,
+        "endLine": 50,
+        "endChar": 40
+      },
+      "revId": "da762c80f8fd8b9e0faaadea66a705e967ad0259",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "412d18f0_6102078a",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-13T23:07:20Z",
+      "side": 1,
+      "message": "nit: \"callbacks\"",
+      "range": {
+        "startLine": 116,
+        "startChar": 57,
+        "endLine": 116,
+        "endChar": 68
+      },
+      "revId": "da762c80f8fd8b9e0faaadea66a705e967ad0259",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88dce55d_c375275e",
+        "filename": "src/dawn/tests/unittests/wire/WireBufferMappingTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-13T23:07:20Z",
+      "side": 1,
+      "message": "Old issue but may as well fix.",
+      "parentUuid": "97cae437_c99e6eac",
+      "revId": "da762c80f8fd8b9e0faaadea66a705e967ad0259",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

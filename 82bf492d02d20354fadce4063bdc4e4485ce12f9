@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d2e3533_c5bbcf04",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-13T23:07:20Z",
+      "side": 1,
+      "message": "This and equivalent comments are sort of outdated now, since we don\u0027t use the mode to select which API to call",
+      "revId": "82bf492d02d20354fadce4063bdc4e4485ce12f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36bfeea7_5b411256",
+        "filename": "src/dawn/tests/unittests/wire/WireCreatePipelineAsyncTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-13T23:07:20Z",
+      "side": 1,
+      "message": "A bunch of these tests say this but then they expect InstanceDropped. Are the comments outdated?",
+      "range": {
+        "startLine": 241,
+        "startChar": 3,
+        "endLine": 241,
+        "endChar": 10
+      },
+      "revId": "82bf492d02d20354fadce4063bdc4e4485ce12f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7450768_b7246d9c",
+        "filename": "src/dawn/tests/unittests/wire/WireErrorCallbackTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-13T23:07:20Z",
+      "side": 1,
+      "message": "This changed from WGPUErrorType_Validation to wgpu::ErrorType::NoError?",
+      "range": {
+        "startLine": 309,
+        "startChar": 86,
+        "endLine": 309,
+        "endChar": 93
+      },
+      "revId": "82bf492d02d20354fadce4063bdc4e4485ce12f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ea1780_e6249a41",
+        "filename": "src/dawn/wire/server/ServerInstance.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-13T23:07:20Z",
+      "side": 1,
+      "message": "This was removed, AFAIK shouldn\u0027t need to be reintroduced? See https://dawn-review.googlesource.com/c/dawn/+/212174/comment/46c895a7_8d4eb4fb/",
+      "revId": "82bf492d02d20354fadce4063bdc4e4485ce12f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
