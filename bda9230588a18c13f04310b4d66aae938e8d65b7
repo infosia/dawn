@@ -39,6 +39,30 @@
       },
       "revId": "bda9230588a18c13f04310b4d66aae938e8d65b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6f630ea_415b5cd8",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-13T21:58:47Z",
+      "side": 1,
+      "message": "Oh, that is exactly what I needed actually, I guess I should have asked before trying to modify the container! My only concern with doing that is holding the mutex while the following runs:\n\n```\n        GetResourceMemoryAllocator()-\u003eTick(completedSerial);\n        GetFencedDeleter()-\u003eTick(completedSerial);\n```\n\nThat could lead to deadlock if there is reentrant mutex acquisition (aka something reentrant tries to append to mDescriptorAllocatorsPendingDeallocation) or mutex acquisition order inversion with some other mutex acquired in those tasks. I don\u0027t think this has to hold the mDescriptorAllocatorsPendingDeallocation mutex while those functions run though? Just for the iteration. Let me know if the new patch looks good.",
+      "parentUuid": "41b70078_be4a2779",
+      "range": {
+        "startLine": 914,
+        "startChar": 4,
+        "endLine": 922,
+        "endChar": 29
+      },
+      "revId": "bda9230588a18c13f04310b4d66aae938e8d65b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
