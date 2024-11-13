@@ -1,0 +1,59 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18cbede0_f50451ce",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-13T18:30:08Z",
+      "side": 1,
+      "message": "Nit: PascalCase",
+      "fixSuggestions": [
+        {
+          "fixId": "3059d778_ad034461",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+              "range": {
+                "startLine": 143,
+                "startChar": 0,
+                "endLine": 144,
+                "endChar": 0
+              },
+              "replacement": "                auto new_value \u003d CalculateOverride(val);\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+              "range": {
+                "startLine": 161,
+                "startChar": 0,
+                "endLine": 162,
+                "endChar": 0
+              },
+              "replacement": "            auto new_value \u003d CalculateOverride(cnt-\u003evalue);\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+              "range": {
+                "startLine": 209,
+                "startChar": 0,
+                "endLine": 210,
+                "endChar": 0
+              },
+              "replacement": "    Result\u003ccore::ir::Constant*\u003e CalculateOverride(core::ir::Value* val) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e4aa762475fbd1f01a2cee343fe5abc0e3ea8e60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
