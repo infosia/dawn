@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8c9656c4_21024c04",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-13T21:11:11Z",
+      "side": 1,
+      "message": "Hmm I\u0027m thinking about this w.r.t this nice diagram that Austin made a while back: https://docs.google.com/presentation/d/1Neo0j7P5kFO14AeglJhA1qLrWsOpzwaa4EFkNlDRBYw/edit#slide\u003did.g220653d85b5_0_701\n\nIt feels like this kind of bookkeeping should belong in the allocation world so moving it into the ExecutionQueue probably isn\u0027t ideal...\n\nIn order to not violate the dependency graph, it almost feels necessary to move to decision making to the object level (i.e. the api calls) where we can depend on both the allocation and execution services. So in a sense, putting this logic in something like `DynamicUploader` does make sense since that lives on the Device... I agree that it seems weird here cause the memory isn\u0027t allocated by the `DynamicUploader`, but if we are trying to alleviate memory back pressure, it actually feels like having something on the device that tracks the memory usage when we do stuff, i.e. unmap buffers, and then calls the execution services makes for a better dependency chain in the long run.\n\nOtherwise, if we did the bookkeeping of memory usage in the execution service it seems like a boundary violation w.r.t what each service is doing. And if we had the allocation service have the ability to invoke the execution service, we would have a potential dependency loop.\n\nIn short though... while `DynamicUploader` doesn\u0027t feel like the best place, maybe this warrants some sort of `MemoryBookkeeper` or something on the `Device` that we could use? I think I would prefer something like that over doing this in the `ExecutionQueue`.",
+      "parentUuid": "52fabd52_012ce565",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e80955ca_99d81e46",
         "filename": "src/dawn/native/DynamicUploader.cpp",
         "patchSetId": 5
