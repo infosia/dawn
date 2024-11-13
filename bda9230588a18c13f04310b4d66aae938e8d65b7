@@ -16,6 +16,29 @@
       "message": "This allows gmock to iterate through the container like object.",
       "revId": "bda9230588a18c13f04310b4d66aae938e8d65b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41b70078_be4a2779",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-13T21:22:57Z",
+      "side": 1,
+      "message": "I think you could deal with this using something like:\n\n```\nmDescriptorAllocatorsPendingDeallocation.Use([\u0026](auto pendings) {\n    for (Ref\u003cDescriptorSetAllocator\u003e\u0026 allocator :\n        pendings-\u003eIterateUpTo(kMaxExecutionSerial)) {\n        allocator-\u003eFinishDeallocation(kMaxExecutionSerial);\n    }\n\n    // Releasing the uploader enqueues buffers to be released.\n    // Call Tick() again to clear them before releasing the deleter.\n    GetResourceMemoryAllocator()-\u003eTick(kMaxExecutionSerial);\n    pendings-\u003eClearUpTo(kMaxExecutionSerial);\n});\n```\n\nto avoid introduing `TakeUpTo` and making a copy of the data.",
+      "range": {
+        "startLine": 914,
+        "startChar": 4,
+        "endLine": 922,
+        "endChar": 29
+      },
+      "revId": "bda9230588a18c13f04310b4d66aae938e8d65b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
