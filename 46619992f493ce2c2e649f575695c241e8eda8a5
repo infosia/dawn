@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a76ee0e2_a1a83826",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-13T02:26:34Z",
+      "side": 1,
+      "message": "\u003e mStagingBuffer is no longer always the DynamicUploader.\n\nThat\u0027s the problem. Now `DynamicUploader::ShouldFlush()` is always called in `Device::CopyStagingToBuffer()`[1] while actually `mStagingBuffer` for `mappedAtCreation` is not tracked with `DynamicUploader` any more, so that `ShouldFlush()` is totally unnecessary and I\u0027d like to fix it.\n\nI even find currently all the staging buffers that are intended to be released in\n`ReleaseStagingBuffer()` can be destroyed at once just like what we do for `mStagingbuffer`, so in the next CL we can also track such pieces of memory with `TrackStagingMemorySizeToRelease()`.\n\n[1] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.cpp;l\u003d2505",
+      "parentUuid": "6ec79170_42cae0fa",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f23edbe5_79f33df9",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 5
@@ -37,6 +55,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5e5ec12e_ab708cca",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-13T02:26:34Z",
+      "side": 1,
+      "message": "OK but I think we should track the total memory of `mStagingBuffer` for `mappedAtCreation` because if we can release `mStagingBuffer` soon we can better recycle the memory (e.g. the underlying D3D12 heap) for future `mappedAtCreation`.\n\nI\u0027d like to solve the problem that:\n- An application (e.g. LLM) initializes all the input buffers (e.g. the input weights which can be several GB) with `mappedAtCreation \u003d\u003d true`.\n- Currently calling `unmap` won\u0027t manually trigger the execution of the pending\n  command list, which means the memory in UPLOAD heap cannot be released.\n- The current solution is on the JS side calling several empty `queue.submit([])`.\n- Do you think if we should commit the pending command list if we have allocated\n  too much staging memory to avoid such empty submit?",
+      "parentUuid": "f23edbe5_79f33df9",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e80955ca_99d81e46",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-13T02:26:34Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e407a06f_b2c5a0fe",
         "filename": "src/dawn/native/DynamicUploader.cpp",
         "patchSetId": 5
@@ -48,6 +101,24 @@
       "writtenOn": "2024-11-12T13:08:10Z",
       "side": 1,
       "message": "This heuristic looking at the total allocated size is weird. We should flush based on how much memory the flush might allow reclaiming by itself, not what previous flushes might already allow reclaiming.",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08c1a010_0fd9f09b",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-13T02:26:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e407a06f_b2c5a0fe",
       "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
