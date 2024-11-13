@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a109af3_d02227a6",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-13T23:56:28Z",
+      "side": 1,
+      "message": "Ack, I believe that\u0027s true. Clang says \"explicit specialization of alias templates is not permitted\"",
+      "parentUuid": "cc88c585_38879c27",
+      "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9124847e_6c15e377",
@@ -103,6 +121,24 @@
       "side": 1,
       "message": "Yes! Sorry, I forgot to include the last argument.",
       "parentUuid": "0a64a184_17945879",
+      "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9256b4f1_23a2ab1c",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-13T23:56:28Z",
+      "side": 1,
+      "message": "Corentin: the new PR summary explains this change; the original issue explains why we allow the overloads (basically, to let users choose between capturing and allocation-free without being type-unsafe) https://crbug.com/42240840",
+      "parentUuid": "dac21ba8_78197e96",
       "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
