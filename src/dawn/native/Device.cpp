@@ -425,7 +425,7 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
         mLimits.v1 =
             ReifyDefaultLimits(descriptor->requiredLimits->limits, adapter->GetFeatureLevel());
     } else {
-        GetDefaultLimits(&mLimits.v1, adapter->GetFeatureLevel());
+        mLimits.v1 = GetPhysicalDevice()->GetLimits().v1;
     }
     // Get experimentalSubgroupLimits from physical device
     mLimits.experimentalSubgroupLimits =

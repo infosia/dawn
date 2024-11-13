@@ -117,6 +117,7 @@
     X(Maximum,                 maxUniformBufferBindingSize,     16384,     65536,      65536) \
     X(Alignment,           minUniformBufferOffsetAlignment,       256,       256,        256) \
     X(Alignment,           minStorageBufferOffsetAlignment,       256,       256,        256) \
+    X(Alignment,            minTexelCopyBufferRowAlignment,       256,       256,        256) \
     X(Maximum,                            maxVertexBuffers,         8,         8,          8) \
     X(Maximum,                         maxVertexAttributes,        16,        16,         30) \
     X(Maximum,                  maxVertexBufferArrayStride,      2048,      2048,       2048) \

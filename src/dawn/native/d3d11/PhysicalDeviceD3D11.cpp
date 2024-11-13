@@ -264,6 +264,8 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
     limits->v1.maxInterStageShaderComponents =
         limits->v1.maxInterStageShaderVariables * D3D11_PS_INPUT_REGISTER_COMPONENTS;
 
+    limits->v1.minTexelCopyBufferRowAlignment = 4;
+
     return {};
 }
 
