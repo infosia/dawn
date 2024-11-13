@@ -116,6 +116,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a298785_e0318bf9",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-13T14:16:56Z",
+      "side": 1,
+      "message": "In the Dawn end2end tests we only have coverage of vec4f, but in the CTS we have coverage of all conversions. My guess is that it happens to work in GLSL even if the IR is malformed.",
+      "parentUuid": "daac4086_7e849664",
+      "revId": "a37428e93fa53a99b44ab8b288830245885036ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db810b4c_827da7ac",
@@ -129,6 +147,30 @@
       "writtenOn": "2024-11-11T23:06:43Z",
       "side": 1,
       "message": "[1]\n\nWe don\u0027t yet have IR validation logic to make sure the src and dst types are compatible for conversion, but when we eventually do this will be rejected.",
+      "range": {
+        "startLine": 1649,
+        "startChar": 0,
+        "endLine": 1650,
+        "endChar": 25
+      },
+      "revId": "a37428e93fa53a99b44ab8b288830245885036ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fad6a0a_af23c591",
+        "filename": "src/tint/lang/glsl/writer/raise/shader_io_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-13T14:16:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "db810b4c_827da7ac",
       "range": {
         "startLine": 1649,
         "startChar": 0,
