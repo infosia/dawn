@@ -2366,11 +2366,6 @@
             {"name": "handle", "type": "int"}
         ]
     },
-    "shared fence vk semaphore sync FD descriptor": {
-        "category": "typedef",
-        "tags": ["dawn", "native"],
-        "type": "shared fence sync FD descriptor"
-    },
     "shared fence vk semaphore zircon handle descriptor": {
         "category": "structure",
         "chained": "in",
@@ -2435,11 +2430,6 @@
         "members": [
             {"name": "handle", "type": "int"}
         ]
-    },
-    "shared fence vk semaphore sync FD export info": {
-        "category": "typedef",
-        "tags": ["dawn", "native"],
-        "type": "shared fence sync FD export info"
     },
     "shared fence vk semaphore zircon handle export info": {
         "category": "structure",
@@ -2545,8 +2535,7 @@
             {"value": 53, "name": "dawn load resolve texture", "tags": ["dawn"]},
             {"value": 54, "name": "dawn partial load resolve texture", "tags": ["dawn"]},
             {"value": 55, "name": "multi draw indirect", "tags": ["dawn"]},
-            {"value": 56, "name": "clip distances", "tags": ["dawn"]},
-            {"value": 57, "name": "shared fence vk semaphore sync FD", "tags": ["dawn", "native"]}
+            {"value": 56, "name": "clip distances", "tags": ["dawn"]}
         ]
     },
     "filter mode": {
