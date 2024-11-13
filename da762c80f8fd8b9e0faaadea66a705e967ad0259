@@ -193,6 +193,24 @@
       "parentUuid": "88dce55d_c375275e",
       "revId": "da762c80f8fd8b9e0faaadea66a705e967ad0259",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eac6f1b6_25d1743a",
+        "filename": "src/dawn/tests/unittests/wire/WireBufferMappingTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-13T23:51:18Z",
+      "side": 1,
+      "message": "Actually, I don\u0027t know hot to fix this properly atm. IIUC, I need to keep it in the namespace otherwise it can\u0027t resolve it for the test names. (And making it explicitly marked static didn\u0027t result in the warning going away?)",
+      "parentUuid": "7ed88a64_62645c49",
+      "revId": "da762c80f8fd8b9e0faaadea66a705e967ad0259",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
