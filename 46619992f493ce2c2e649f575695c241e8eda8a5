@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "52fabd52_012ce565",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-13T14:30:33Z",
+      "side": 1,
+      "message": "Yes we should commit the pending command list (at some point, maybe we should wait a bit to aggregate more than 64kb, as that limit is small and could cause a LOT of submits, but that\u0027s another topic) for mappedAtCreation + Unmap as well. However DynamicUploader is no longer the correct place for that if the memory that we want to cause flushes with is no longer allocated with the DynamicUploader. What do you think of moving that logic maybe to ExecutionQueue with a number of bytes waiting for upload and would be freed eventually after a submit?\n\nLoko would putting that logic on ExecutionQueue sound good to you?",
+      "parentUuid": "5e5ec12e_ab708cca",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e80955ca_99d81e46",
         "filename": "src/dawn/native/DynamicUploader.cpp",
         "patchSetId": 5
