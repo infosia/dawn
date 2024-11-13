@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d25dc9a_00925337",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-13T18:21:45Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "644fdcae_a8e6678b",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 13
+      },
+      "revId": "20f471e6584c0d9404f024f5020f556f50bfb28c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edf4793a_fd66543f",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-12T18:51:51Z",
       "side": 1,
       "message": "Hmm, I think the old size wouldn\u0027t be correct, if we\u0027re overriding with a new element count? We should probably update this to be the correct new size. I\u0027m guessing it might screw up some things like dynamic workgroup allocation sizes in the MSL backend.",
+      "range": {
+        "startLine": 202,
+        "startChar": 53,
+        "endLine": 202,
+        "endChar": 67
+      },
+      "revId": "20f471e6584c0d9404f024f5020f556f50bfb28c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0824bfbc_8d1d158f",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-13T18:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edf4793a_fd66543f",
       "range": {
         "startLine": 202,
         "startChar": 53,
@@ -64,6 +112,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e56d606b_1b6f5096",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-13T18:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "894e68c5_5de17f8f",
+      "revId": "20f471e6584c0d9404f024f5020f556f50bfb28c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "20f2ddd6_06ce2439",
@@ -81,6 +147,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4fb7de1_9e388451",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-13T18:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20f2ddd6_06ce2439",
+      "revId": "20f471e6584c0d9404f024f5020f556f50bfb28c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33e092e5_f34c075c",
@@ -94,6 +178,24 @@
       "writtenOn": "2024-11-12T18:51:51Z",
       "side": 1,
       "message": "Need to handle `let` too, e.g.:\n```\noverride x \u003d 1;\nvar\u003cworkgroup\u003e arr : array\u003cu32, x\u003e;\n\nfn a() {\n  let y \u003d \u0026arr;\n}\n```\nThis currently crashes with this CL.\n\nPlease add a couple of Program-\u003eIR unit tests for this stuff.",
+      "revId": "20f471e6584c0d9404f024f5020f556f50bfb28c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2d15a4d_48552a8f",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-13T18:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33e092e5_f34c075c",
       "revId": "20f471e6584c0d9404f024f5020f556f50bfb28c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
