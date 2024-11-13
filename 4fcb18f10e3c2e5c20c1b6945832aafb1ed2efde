@@ -16,6 +16,23 @@
       "message": "PTAL the Tint part again!",
       "revId": "4fcb18f10e3c2e5c20c1b6945832aafb1ed2efde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bf7bd46_b63762e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-13T16:19:54Z",
+      "side": 1,
+      "message": "Tint part LGTM",
+      "revId": "4fcb18f10e3c2e5c20c1b6945832aafb1ed2efde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
