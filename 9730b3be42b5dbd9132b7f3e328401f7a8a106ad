@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cc88c585_38879c27",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-13T18:56:57Z",
+      "side": 1,
+      "message": "I think the issue with type alias (assuming `using`) for templates, they don\u0027t allow specialization which we need here to specialize to use `std::function` for the default non-templated version.",
+      "parentUuid": "71e6dacc_e580245c",
+      "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9124847e_6c15e377",
         "filename": "generator/templates/api_cpp.h",
         "patchSetId": 6
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e4906b3c_d45ede74",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-13T18:56:57Z",
+      "side": 1,
+      "message": "We need the templating because we support a templating callback type, i.e. for `MapAsync` we might have something like \n\n```\nMapAsync(AllowSpontaneous, \n    [](MapAsyncStatus status, StringView msg, Buffer* buffer) { \n        buffer-\u003eGetMappedRange();\n    })\n```\nor\n```\nMapAsync(AllowSpontaneous,\n    [buffer](MapAsyncStatus status, StringView msg) {\n        buffer.GetMappedRange();\n    })\n```\n\nIn order to support both, the callback type potentially needs to take the type `T \u003d wgpu::Buffer` in the first case. This is so that users that don\u0027t want to make an allocation can use the templated callbacks, and users that are trying to just have the convenience of lambda captures can also use them.",
+      "parentUuid": "9124847e_6c15e377",
+      "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "40a8a24a_7f861397",
         "filename": "generator/templates/api_cpp.h",
         "patchSetId": 6
@@ -48,6 +84,24 @@
       "writtenOn": "2024-11-13T09:04:59Z",
       "side": 1,
       "message": "Didn\u0027t we have aliases for the C callback types that this will shadow?",
+      "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "233ec35b_010ecd6e",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-13T18:56:57Z",
+      "side": 1,
+      "message": "These don\u0027t shadow because their names are different atm. When I rename everything I will use an alias or #define to make it work.",
+      "parentUuid": "40a8a24a_7f861397",
       "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
