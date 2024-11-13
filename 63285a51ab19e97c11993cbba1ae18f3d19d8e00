@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72c428ed_de4855d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-13T16:21:55Z",
+      "side": 1,
+      "message": "Not sure who is more appropriate reviewer cwallez/lokokung so adding both of you.",
+      "revId": "63285a51ab19e97c11993cbba1ae18f3d19d8e00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
