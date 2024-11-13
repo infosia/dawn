@@ -54,6 +54,24 @@
       ],
       "revId": "e4aa762475fbd1f01a2cee343fe5abc0e3ea8e60",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3e1301e_78ebd1cc",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-13T18:32:12Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "18cbede0_f50451ce",
+      "revId": "e4aa762475fbd1f01a2cee343fe5abc0e3ea8e60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
