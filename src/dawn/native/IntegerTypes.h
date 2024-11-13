@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_INTEGERTYPES_H_
 
 #include <cstdint>
+#include <limits>
 
 #include "dawn/common/Constants.h"
 #include "dawn/common/TypedInteger.h"
@@ -114,7 +115,8 @@ using FenceAPISerial = TypedInteger<struct FenceAPISerialT, uint64_t>;
 // is incremented by one. This way to know if something is done executing, we just need to
 // compare its serial with the currently completed serial.
 using ExecutionSerial = TypedInteger<struct QueueSerialT, uint64_t>;
-constexpr ExecutionSerial kMaxExecutionSerial = ExecutionSerial(~uint64_t(0));
+constexpr ExecutionSerial kMaxExecutionSerial =
+    ExecutionSerial(std::numeric_limits<uint64_t>::max());
 constexpr ExecutionSerial kBeginningOfGPUTime = ExecutionSerial(0);
 
 // An identifier that indicates which Pipeline a BindGroupLayout is compatible with. Pipelines
