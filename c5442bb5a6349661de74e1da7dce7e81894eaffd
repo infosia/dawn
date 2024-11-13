@@ -16,6 +16,24 @@
       "message": "François I think you meant to CQ+2 instead of CR+2. I\u0027ll try to CQ but not sure it will allow it",
       "revId": "c5442bb5a6349661de74e1da7dce7e81894eaffd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c73d5c39_8ebd88e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-13T21:14:18Z",
+      "side": 1,
+      "message": "Ah, there, I could remove your CR+2 from my other account.",
+      "parentUuid": "61e689ff_cb4a549b",
+      "revId": "c5442bb5a6349661de74e1da7dce7e81894eaffd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
