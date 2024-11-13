@@ -1834,6 +1834,7 @@
             {"name": "max storage buffer binding size", "type": "uint64_t", "default": "WGPU_LIMIT_U64_UNDEFINED"},
             {"name": "min uniform buffer offset alignment", "type": "uint32_t", "default": "WGPU_LIMIT_U32_UNDEFINED"},
             {"name": "min storage buffer offset alignment", "type": "uint32_t", "default": "WGPU_LIMIT_U32_UNDEFINED"},
+            {"name": "min texel copy buffer row alignment", "type": "uint32_t", "default": "WGPU_LIMIT_U32_UNDEFINED"},
             {"name": "max vertex buffers", "type": "uint32_t", "default": "WGPU_LIMIT_U32_UNDEFINED"},
             {"name": "max buffer size", "type": "uint64_t", "default": "WGPU_LIMIT_U64_UNDEFINED"},
             {"name": "max vertex attributes", "type": "uint32_t", "default": "WGPU_LIMIT_U32_UNDEFINED"},
