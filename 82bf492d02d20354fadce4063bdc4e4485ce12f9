@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a358bac4_cc9eac1d",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-13T23:36:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d2e3533_c5bbcf04",
+      "revId": "82bf492d02d20354fadce4063bdc4e4485ce12f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36bfeea7_5b411256",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-11-13T23:07:20Z",
       "side": 1,
       "message": "A bunch of these tests say this but then they expect InstanceDropped. Are the comments outdated?",
+      "range": {
+        "startLine": 241,
+        "startChar": 3,
+        "endLine": 241,
+        "endChar": 10
+      },
+      "revId": "82bf492d02d20354fadce4063bdc4e4485ce12f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "959f0c0b_44cccda6",
+        "filename": "src/dawn/tests/unittests/wire/WireCreatePipelineAsyncTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-13T23:36:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36bfeea7_5b411256",
       "range": {
         "startLine": 241,
         "startChar": 3,
@@ -64,6 +106,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b57a4bb1_d7236542",
+        "filename": "src/dawn/tests/unittests/wire/WireErrorCallbackTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-13T23:36:49Z",
+      "side": 1,
+      "message": "It just made more sense here atm. This will prob change once we add the empty stack enum. But the result is just because that\u0027s what we told the mock to call it with.",
+      "parentUuid": "e7450768_b7246d9c",
+      "range": {
+        "startLine": 309,
+        "startChar": 86,
+        "endLine": 309,
+        "endChar": 93
+      },
+      "revId": "82bf492d02d20354fadce4063bdc4e4485ce12f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33ea1780_e6249a41",
@@ -77,6 +143,24 @@
       "writtenOn": "2024-11-13T23:07:20Z",
       "side": 1,
       "message": "This was removed, AFAIK shouldn\u0027t need to be reintroduced? See https://dawn-review.googlesource.com/c/dawn/+/212174/comment/46c895a7_8d4eb4fb/",
+      "revId": "82bf492d02d20354fadce4063bdc4e4485ce12f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b732e081_eed31778",
+        "filename": "src/dawn/wire/server/ServerInstance.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-13T23:36:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33ea1780_e6249a41",
       "revId": "82bf492d02d20354fadce4063bdc4e4485ce12f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
