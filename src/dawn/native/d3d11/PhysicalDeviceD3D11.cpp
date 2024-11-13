@@ -265,6 +265,9 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
     limits->v1.maxInterStageShaderComponents =
         limits->v1.maxInterStageShaderVariables * D3D11_PS_INPUT_REGISTER_COMPONENTS;
 
+    // The BlitTextureToBuffer helper requires the alignment to be 4.
+    limits->v1.minTexelCopyBufferRowAlignment = 4;
+
     return {};
 }
 

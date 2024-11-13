@@ -202,20 +202,25 @@ class CopyTests {
         return textureData;
     }
 
-    static BufferSpec MinimumBufferSpec(uint32_t width,
-                                        uint32_t height,
-                                        uint32_t depth = 1,
-                                        wgpu::TextureFormat format = kDefaultFormat) {
+    static BufferSpec MinimumBufferSpec(
+        uint32_t width,
+        uint32_t height,
+        uint32_t depth = 1,
+        wgpu::TextureFormat format = kDefaultFormat,
+        uint32_t textureBytesPerRowAlignment = kTextureBytesPerRowAlignment) {
         return MinimumBufferSpec({width, height, depth}, kStrideComputeDefault,
                                  depth == 1 ? wgpu::kCopyStrideUndefined : kStrideComputeDefault,
-                                 format);
+                                 format, textureBytesPerRowAlignment);
     }
 
-    static BufferSpec MinimumBufferSpec(wgpu::Extent3D copyExtent,
-                                        uint32_t overrideBytesPerRow = kStrideComputeDefault,
-                                        uint32_t overrideRowsPerImage = kStrideComputeDefault,
-                                        wgpu::TextureFormat format = kDefaultFormat) {
-        uint32_t bytesPerRow = utils::GetMinimumBytesPerRow(format, copyExtent.width);
+    static BufferSpec MinimumBufferSpec(
+        wgpu::Extent3D copyExtent,
+        uint32_t overrideBytesPerRow = kStrideComputeDefault,
+        uint32_t overrideRowsPerImage = kStrideComputeDefault,
+        wgpu::TextureFormat format = kDefaultFormat,
+        uint32_t textureBytesPerRowAlignment = kTextureBytesPerRowAlignment) {
+        uint32_t bytesPerRow =
+            utils::GetMinimumBytesPerRow(format, copyExtent.width, textureBytesPerRowAlignment);
         if (overrideBytesPerRow != kStrideComputeDefault) {
             bytesPerRow = overrideBytesPerRow;
         }
@@ -254,16 +259,27 @@ class CopyTests {
 namespace {
 using TextureFormat = wgpu::TextureFormat;
 DAWN_TEST_PARAM_STRUCT(CopyTextureFormatParams, TextureFormat);
+
+using UseDefaultTextureBytesPerRowAlignment = bool;
+DAWN_TEST_PARAM_STRUCT(CopyT2BParams, TextureFormat, UseDefaultTextureBytesPerRowAlignment);
 }  // namespace
 
-class CopyTests_T2B : public CopyTests, public DawnTestWithParams<CopyTextureFormatParams> {
+class CopyTests_T2B : public CopyTests, public DawnTestWithParams<CopyT2BParams> {
   protected:
     struct TextureSpec : CopyTests::TextureSpec {
         TextureSpec() { format = GetParam().mTextureFormat; }
     };
 
+    wgpu::RequiredLimits GetRequiredLimits(const wgpu::SupportedLimits& supported) override {
+        wgpu::RequiredLimits required = {};
+        if (!GetParam().mUseDefaultTextureBytesPerRowAlignment) {
+            required.limits = supported.limits;
+        }
+        return required;
+    }
+
     void SetUp() override {
-        DawnTestWithParams<CopyTextureFormatParams>::SetUp();
+        DawnTestWithParams<CopyT2BParams>::SetUp();
 
         // TODO(dawn:2129): Fail for Win ANGLE D3D11
         DAWN_SUPPRESS_TEST_IF((GetParam().mTextureFormat == wgpu::TextureFormat::RGB9E5Ufloat) &&
@@ -288,14 +304,24 @@ class CopyTests_T2B : public CopyTests, public DawnTestWithParams<CopyTextureFor
                                GetParam().mTextureFormat == wgpu::TextureFormat::RG11B10Ufloat) &&
                               (IsD3D11() || IsOpenGLES()) && IsIntelGen12());
     }
-    static BufferSpec MinimumBufferSpec(uint32_t width, uint32_t height, uint32_t depth = 1) {
-        return CopyTests::MinimumBufferSpec(width, height, depth, GetParam().mTextureFormat);
+    uint32_t GetTextureBytesPerRowAlignment() const {
+        if (GetParam().mUseDefaultTextureBytesPerRowAlignment) {
+            return kTextureBytesPerRowAlignment;
+        }
+        wgpu::SupportedLimits limits;
+        device.GetLimits(&limits);
+        return limits.limits.minTexelCopyBufferRowAlignment;
     }
-    static BufferSpec MinimumBufferSpec(wgpu::Extent3D copyExtent,
-                                        uint32_t overrideBytesPerRow = kStrideComputeDefault,
-                                        uint32_t overrideRowsPerImage = kStrideComputeDefault) {
+    BufferSpec MinimumBufferSpec(uint32_t width, uint32_t height, uint32_t depth = 1) {
+        return CopyTests::MinimumBufferSpec(width, height, depth, GetParam().mTextureFormat,
+                                            GetTextureBytesPerRowAlignment());
+    }
+    BufferSpec MinimumBufferSpec(wgpu::Extent3D copyExtent,
+                                 uint32_t overrideBytesPerRow = kStrideComputeDefault,
+                                 uint32_t overrideRowsPerImage = kStrideComputeDefault) {
         return CopyTests::MinimumBufferSpec(copyExtent, overrideBytesPerRow, overrideRowsPerImage,
-                                            GetParam().mTextureFormat);
+                                            GetParam().mTextureFormat,
+                                            GetTextureBytesPerRowAlignment());
     }
 
     void DoTest(
@@ -1763,7 +1789,8 @@ DAWN_INSTANTIATE_TEST_P(CopyTests_T2B,
 
                             // Testing OpenGL compat Toggle::UseBlitForBGRA8UnormTextureToBufferCopy
                             wgpu::TextureFormat::BGRA8Unorm,
-                        });
+                        },
+                        {true, false});
 
 class CopyTests_T2B_No_Format_Param : public CopyTests, public DawnTest {};
 
@@ -1923,7 +1950,8 @@ DAWN_INSTANTIATE_TEST_P(CopyTests_T2B_Compat,
 
                             // Testing OpenGL compat Toggle::UseBlitForRGB9E5UfloatTextureCopy
                             wgpu::TextureFormat::RGB9E5Ufloat,
-                        });
+                        },
+                        {true, false});
 
 // Test that copying an entire texture with 256-byte aligned dimensions works
 TEST_P(CopyTests_B2T, FullTextureAligned) {
