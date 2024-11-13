@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71e6dacc_e580245c",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-13T09:04:59Z",
+      "side": 1,
+      "message": "u-nit: is it possible to make these be type aliases instead of using the alias-in-struct? I believe it should be possible after C++14 (but know there are corner cases where it doesn\u0027t).",
+      "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9124847e_6c15e377",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-13T09:04:59Z",
+      "side": 1,
+      "message": "Can you detail why we need to do this templating? I\u0027m not sure that it is the best API to expose to the users but don\u0027t understand the benefit.",
+      "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40a8a24a_7f861397",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-13T09:04:59Z",
+      "side": 1,
+      "message": "Didn\u0027t we have aliases for the C callback types that this will shadow?",
+      "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
