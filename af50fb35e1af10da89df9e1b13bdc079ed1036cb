@@ -16,6 +16,24 @@
       "message": "It\u0027s hard to tell what is added here, can you put an example or something in the commit summary?",
       "revId": "af50fb35e1af10da89df9e1b13bdc079ed1036cb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ad9df22_6f737ce4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-13T23:44:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f64fbdd7_0246c25c",
+      "revId": "af50fb35e1af10da89df9e1b13bdc079ed1036cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
