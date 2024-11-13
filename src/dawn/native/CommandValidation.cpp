@@ -403,10 +403,12 @@ MaybeError ValidateLinearTextureData(const TextureDataLayout& layout,
 MaybeError ValidateImageCopyBuffer(DeviceBase const* device,
                                    const ImageCopyBuffer& imageCopyBuffer) {
     DAWN_TRY(device->ValidateObject(imageCopyBuffer.buffer));
+    const auto alignment = std::min(device->GetLimits().v1.minTexelCopyBufferRowAlignment,
+                                    kTextureBytesPerRowAlignment);
     if (imageCopyBuffer.layout.bytesPerRow != wgpu::kCopyStrideUndefined) {
-        DAWN_INVALID_IF(imageCopyBuffer.layout.bytesPerRow % kTextureBytesPerRowAlignment != 0,
+        DAWN_INVALID_IF(imageCopyBuffer.layout.bytesPerRow % alignment != 0,
                         "bytesPerRow (%u) is not a multiple of %u.",
-                        imageCopyBuffer.layout.bytesPerRow, kTextureBytesPerRowAlignment);
+                        imageCopyBuffer.layout.bytesPerRow, alignment);
     }
 
     return {};
