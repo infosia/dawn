@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4968eb0e_03acc276",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-14T21:58:45Z",
+      "side": 1,
+      "message": "Note that we actually already did this for the IR path:\nhttps://dawn-review.googlesource.com/c/dawn/+/206374",
+      "revId": "f4a3d947602b466fbe68037faa6b3141ae2b658b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
