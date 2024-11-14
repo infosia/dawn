@@ -16,6 +16,23 @@
       "message": "PTAL. This is a clone of https://dawn-review.googlesource.com/c/dawn/+/212794 which I\u0027ve run `go mod tidy` on to regenerate the `go.sum` file.",
       "revId": "90c3d8f4d90b32c74e81ef582908968585985be0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad5b180d_8b77a593",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T11:54:15Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "90c3d8f4d90b32c74e81ef582908968585985be0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
