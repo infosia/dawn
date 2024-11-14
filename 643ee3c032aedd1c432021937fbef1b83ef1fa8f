@@ -16,6 +16,92 @@
       "message": "PTAL.",
       "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "737f3687_5c21bb34",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1420,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-14T16:25:52Z",
+      "side": 1,
+      "message": "Any particular reason you\u0027ve started adding `core::` to some of these things?",
+      "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdc64eb7_2887273e",
+        "filename": "src/tint/lang/core/ir/referenced_module_decls.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-14T16:25:52Z",
+      "side": 1,
+      "message": "This is adding to the var\u0027s block, which is the root block? I don\u0027t think this is necessary, unless I\u0027m missing something...",
+      "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "299bdd48_d63e9d29",
+        "filename": "src/tint/lang/core/ir/referenced_module_decls.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-14T16:25:52Z",
+      "side": 1,
+      "message": "Could also be an `access`. We should probably just add it to the blocks of all users instead.",
+      "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a95db103_f3ab8c7e",
+        "filename": "src/tint/lang/core/ir/referenced_module_decls.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-14T16:25:52Z",
+      "side": 1,
+      "message": "Minor optimisation would be to only do the next part if the `Add` succeeded, as if the instruction is already in the set then we\u0027ve already looked at its operands.",
+      "fixSuggestions": [
+        {
+          "fixId": "71ce510b_39829168",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/referenced_module_decls.h",
+              "range": {
+                "startLine": 185,
+                "startChar": 0,
+                "endLine": 186,
+                "endChar": 0
+              },
+              "replacement": "            if (decls.Add(wl_inst)) {\n                for (auto* operand : wl_inst-\u003eOperands()) {\n                    auto* res \u003d operand-\u003etemplate As\u003ccore::ir::InstructionResult\u003e();\n                    if (!res) {\n                        continue;\n                    }\n                    worklist.Push(res-\u003eInstruction());\n                }\n            }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
