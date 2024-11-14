@@ -1773,6 +1773,38 @@ var LibraryWebGPU = {
     return device.features.has(WebGPU.FeatureName[featureEnumValue]);
   },
 
+  wgpuDeviceGetAdapterInfo__deps: ['$stringToNewUTF8', '$lengthBytesUTF8'],
+  wgpuDeviceGetAdapterInfo: (devicePtr, info) => {
+    var device = WebGPU.getJsObject(devicePtr);
+    {{{ gpu.makeCheckDescriptor('info') }}}
+
+    // Append all the strings together to condense into a single malloc.
+    var strs = device.adapterInfo.vendor + device.adapterInfo.architecture + device.adapterInfo.device + device.adapterInfo.description;
+    var strPtr = stringToNewUTF8(strs);
+
+    var vendorLen = lengthBytesUTF8(device.adapterInfo.vendor);
+    WebGPU.setStringView(info + {{{ C_STRUCTS.WGPUAdapterInfo.vendor }}}, strPtr, vendorLen);
+    strPtr += vendorLen;
+
+    var architectureLen = lengthBytesUTF8(device.adapterInfo.architecture);
+    WebGPU.setStringView(info + {{{ C_STRUCTS.WGPUAdapterInfo.architecture }}}, strPtr, architectureLen);
+    strPtr += architectureLen;
+
+    var deviceLen = lengthBytesUTF8(device.adapterInfo.device);
+    WebGPU.setStringView(info + {{{ C_STRUCTS.WGPUAdapterInfo.device }}}, strPtr, deviceLen);
+    strPtr += deviceLen;
+
+    var descriptionLen = lengthBytesUTF8(device.adapterInfo.description);
+    WebGPU.setStringView(info + {{{ C_STRUCTS.WGPUAdapterInfo.description }}}, strPtr, descriptionLen);
+    strPtr += descriptionLen;
+
+    {{{ makeSetValue('info', C_STRUCTS.WGPUAdapterInfo.backendType, gpu.BackendType.WebGPU, 'i32') }}};
+    var adapterType = adapter.isFallbackAdapter ? {{{ gpu.AdapterType.CPU }}} : {{{ gpu.AdapterType.Unknown }}};
+    {{{ makeSetValue('info', C_STRUCTS.WGPUAdapterInfo.adapterType, 'adapterType', 'i32') }}};
+    {{{ makeSetValue('info', C_STRUCTS.WGPUAdapterInfo.vendorID, '0', 'i32') }}};
+    {{{ makeSetValue('info', C_STRUCTS.WGPUAdapterInfo.deviceID, '0', 'i32') }}};
+  },
+
   emwgpuDevicePopErrorScope__deps: ['emwgpuOnPopErrorScopeCompleted'],
   emwgpuDevicePopErrorScope__sig: 'vpj',
   emwgpuDevicePopErrorScope: (devicePtr, futureId) => {
