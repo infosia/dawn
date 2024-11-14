@@ -211,6 +211,24 @@
       "parentUuid": "7ed88a64_62645c49",
       "revId": "da762c80f8fd8b9e0faaadea66a705e967ad0259",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d78a9627_0a51d757",
+        "filename": "src/dawn/tests/unittests/wire/WireBufferMappingTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-14T00:14:47Z",
+      "side": 1,
+      "message": "Static is fine (though I thought an anonymous namespace would also resolve fine). If that doesn\u0027t work nbd.\n\nThe ClangTidy comment is attached to patchset 9 so it wouldn\u0027t go away automatically, did you see it on a newer patchset?",
+      "parentUuid": "eac6f1b6_25d1743a",
+      "revId": "da762c80f8fd8b9e0faaadea66a705e967ad0259",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
