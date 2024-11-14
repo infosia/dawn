@@ -34,6 +34,24 @@
       "parentUuid": "e854be96_2aba6ef4",
       "revId": "b3afe6be330807ca80dba075071c1833f0c63941",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97df4af7_f9a00b8b",
+        "filename": "src/dawn/tests/end2end/VertexStateTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-14T17:37:26Z",
+      "side": 0,
+      "message": "\u003e Undefined now gets defaulted to VertexBufferNotUsed\n\nThat\u0027s what I was concerned about and is why we need the test. It needs to still default to `Vertex`.\n\nThe C++ struct default should be `VertexBufferNotUsed` but `Undefined` should cause it to default to `Vertex`.",
+      "parentUuid": "187e1799_c44edf43",
+      "revId": "b3afe6be330807ca80dba075071c1833f0c63941",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
