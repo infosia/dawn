@@ -1288,6 +1288,8 @@ int main(int argc, const char** argv) {
 #if TINT_BUILD_SPV_READER
     opts.use_ir = options.use_ir_reader;
     opts.spirv_reader_options = options.spirv_reader_options;
+    // Allow the shader-f16 extension
+    opts.spirv_reader_options.allowed_features.extensions.insert(tint::wgsl::Extension::kF16);
 #endif
 
     auto info = tint::cmd::LoadProgramInfo(opts);
