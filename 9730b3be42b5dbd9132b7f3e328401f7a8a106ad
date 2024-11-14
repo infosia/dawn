@@ -143,6 +143,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cf615ab_494ee434",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T12:03:43Z",
+      "side": 1,
+      "message": "I could swear I looked at the description. Yeah it definitely explains the purpose. Sorry!",
+      "parentUuid": "9256b4f1_23a2ab1c",
+      "revId": "9730b3be42b5dbd9132b7f3e328401f7a8a106ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40a8a24a_7f861397",
