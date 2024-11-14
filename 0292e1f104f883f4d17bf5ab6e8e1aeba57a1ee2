@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb3ddc3c_08cbc9fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-14T21:48:28Z",
+      "side": 1,
+      "message": "Shouldn\u0027t error on directive for subgroup_uniformity when subgroups is not enabled. It\u0027s just like any other unrecognized diagnostic name.",
+      "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31b007cb_952c790a",
+        "filename": "src/tint/lang/wgsl/diagnostic_rule_bench.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-14T21:48:28Z",
+      "side": 1,
+      "message": "could try something that adds text to the *front of subgroup_uniformity\n\neg, abcsubgroup_uniformity",
+      "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2641204_d03f5c34",
+        "filename": "src/tint/lang/wgsl/resolver/subgroups_extension_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-14T21:48:28Z",
+      "side": 1,
+      "message": "Shouldn\u0027t an unrecognized diagnostic issue a warning and definitely not an error?",
+      "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
