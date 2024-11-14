@@ -51,6 +51,24 @@
       "parentUuid": "1e12e01f_bc98e2e8",
       "revId": "e0b1ca3d786bf8800b445616858901fdea98d833",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98cffa1c_1e4b8e13",
+        "filename": "src/utils/trace_platform.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-14T04:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1c7bd4b_6719ccb7",
+      "revId": "e0b1ca3d786bf8800b445616858901fdea98d833",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
