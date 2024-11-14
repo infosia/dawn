@@ -16,6 +16,40 @@
       "message": "Ptal",
       "revId": "d6594c5cb103944a2f3d466a26abb5e3cc912977",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ad381b6_94679092",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-14T20:38:26Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "d6594c5cb103944a2f3d466a26abb5e3cc912977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88f9837c_f70a131b",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-14T20:38:26Z",
+      "side": 1,
+      "message": "FYI @lokokung@google.com this may cause a small merge conflict with https://dawn-review.googlesource.com/c/dawn/+/213160",
+      "revId": "d6594c5cb103944a2f3d466a26abb5e3cc912977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
