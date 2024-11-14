@@ -58,7 +58,7 @@
 %compute_main_inner = OpFunction %void None %25
 %tint_local_index = OpFunctionParameter %uint
          %26 = OpLabel
-         %27 = OpIEqual %bool %tint_local_index %uint_0
+         %27 = OpULessThanEqual %bool %tint_local_index %uint_0
                OpSelectionMerge %29 None
                OpBranchConditional %27 %30 %29
          %30 = OpLabel

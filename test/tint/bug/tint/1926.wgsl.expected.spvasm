@@ -52,7 +52,7 @@
    %local_id = OpFunctionParameter %v3uint
 %tint_local_index = OpFunctionParameter %uint
          %19 = OpLabel
-         %20 = OpIEqual %bool %tint_local_index %uint_0
+         %20 = OpULessThanEqual %bool %tint_local_index %uint_0
                OpSelectionMerge %23 None
                OpBranchConditional %20 %24 %23
          %24 = OpLabel

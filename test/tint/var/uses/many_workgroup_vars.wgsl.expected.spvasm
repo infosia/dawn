@@ -235,7 +235,7 @@
 %tint_symbol_inner = OpFunction %void None %111
         %idx = OpFunctionParameter %uint
         %112 = OpLabel
-        %113 = OpIEqual %bool %idx %uint_0
+        %113 = OpULessThanEqual %bool %idx %uint_0
                OpSelectionMerge %116 None
                OpBranchConditional %113 %117 %116
         %117 = OpLabel
