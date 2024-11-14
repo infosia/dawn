@@ -111,6 +111,30 @@
       },
       "revId": "bda9230588a18c13f04310b4d66aae938e8d65b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "470689c7_ebbdc66f",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T17:32:14Z",
+      "side": 1,
+      "message": "There is no reason the VkDescriptorPools have to be delete later as at that point any that is added for deletion would be no longer in use by the GPU so we should be able to try putting both calls in the same `Use` call in the future!",
+      "parentUuid": "2f07b81e_0468bfd3",
+      "range": {
+        "startLine": 914,
+        "startChar": 4,
+        "endLine": 922,
+        "endChar": 29
+      },
+      "revId": "bda9230588a18c13f04310b4d66aae938e8d65b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

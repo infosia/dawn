@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbd3fe15_405c134a",
+        "filename": "src/dawn/native/IntegerTypes.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T17:32:14Z",
+      "side": 1,
+      "message": "Ack, FYI I didn\u0027t have strong opinion either way.",
+      "parentUuid": "dd5bb96e_195d2069",
+      "revId": "4c061f79b3b63f7a2e477721ab0aa451187abe88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16c7aa10_33e5886c",
