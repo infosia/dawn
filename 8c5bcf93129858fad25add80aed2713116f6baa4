@@ -16,6 +16,24 @@
       "message": "https://github.com/gpuweb/cts/pull/4038 fixes the CTS related failures.",
       "revId": "8c5bcf93129858fad25add80aed2713116f6baa4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc086088_d8514d34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-14T23:19:47Z",
+      "side": 1,
+      "message": "i approved and will auto-merge that",
+      "parentUuid": "cf075eb3_ba4e7d28",
+      "revId": "8c5bcf93129858fad25add80aed2713116f6baa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
