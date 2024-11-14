@@ -16,6 +16,74 @@
       "message": "PTAL, thanks!",
       "revId": "e849de0bb97093ca5aed89ada3ae7cc0c01b2610",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1711f9cd_f1ddc0f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T17:28:56Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "e849de0bb97093ca5aed89ada3ae7cc0c01b2610",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2439d264_9422b0c0",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T17:28:56Z",
+      "side": 1,
+      "message": "nit: setLayouts could be an ityp_array",
+      "revId": "e849de0bb97093ca5aed89ada3ae7cc0c01b2610",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fd71a63_dc7ed9fa",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T17:28:56Z",
+      "side": 1,
+      "message": "This could use `for (BindGroupIndex i : Range(GetHighestIndexPlusOne(bindGroupmask)))`",
+      "revId": "e849de0bb97093ca5aed89ada3ae7cc0c01b2610",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5fe529a_eecf3650",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T17:28:56Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e849de0bb97093ca5aed89ada3ae7cc0c01b2610",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
