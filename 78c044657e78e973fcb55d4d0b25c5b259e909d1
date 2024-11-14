@@ -16,6 +16,40 @@
       "message": "Ptal",
       "revId": "78c044657e78e973fcb55d4d0b25c5b259e909d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "168d12d3_e43c1d6e",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1777,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-14T20:47:35Z",
+      "side": 1,
+      "message": "This code could be deduplicated. It\u0027s not critical to fix right now, but we should have a TODO for code size.\n```suggestion\n  wgpuDeviceGetAdapterInfo: (devicePtr, adapterInfo) \u003d\u003e {\n    // TODO(crbug.com/377760848): Avoid duplicated code with wgpuAdapterGetInfo,\n    // for example by deferring to wgpuAdapterGetInfo from webgpu.cpp.\n```",
+      "revId": "78c044657e78e973fcb55d4d0b25c5b259e909d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b05082c_dd77fed9",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1802,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-14T20:47:35Z",
+      "side": 1,
+      "message": "There are ways to fix this, so it should be a TODO. OK to not link a bug I think.\n```suggestion\n    // TODO: Set the adapter type from adapter.isFallbackAdapter (not easily available here).\n```",
+      "revId": "78c044657e78e973fcb55d4d0b25c5b259e909d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
