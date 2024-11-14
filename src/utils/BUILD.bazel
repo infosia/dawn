@@ -31,9 +31,12 @@ cc_library(
   name = "utils",
   hdrs = [
     "compiler.h",
+    "event_tracer.h",
+    "trace_event.h",
   ],
   srcs = [
-    "placeholder.cc",
+    "event_tracer.cc",
+    "trace_platform.cc",
   ],
   deps = [],
   copts = COPTS,

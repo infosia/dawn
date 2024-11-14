@@ -25,9 +25,34 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#if defined(__clang__)
-#pragma clang diagnostic ignored "-Wmissing-variable-declarations"
-#endif
+#include "dawn/platform/trace_platform.h"
 
-// A placeholder symbol used to emit a symbol for this lib target.
-int src_utils_symbol = 1;
+namespace dawn::platform {
+
+TracePlatform::TracePlatform() = default;
+
+TracePlatform::~TracePlatform() = default;
+
+const unsigned char* TracePlatform::GetTraceCategoryEnabledFlag(TraceCategory category) {
+    static unsigned char disabled = 0;
+    return &disabled;
+}
+
+double TracePlatform::MonotonicallyIncreasingTime() {
+    return 0;
+}
+
+uint64_t TracePlatform::AddTraceEvent(char phase,
+                                      const unsigned char* categoryGroupEnabled,
+                                      const char* name,
+                                      uint64_t id,
+                                      double timestamp,
+                                      int numArgs,
+                                      const char** argNames,
+                                      const unsigned char* argTypes,
+                                      const uint64_t* argValues,
+                                      unsigned char flags) {
+    return 0;
+}
+
+}  // namespace dawn::platform

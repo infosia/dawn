@@ -25,12 +25,15 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-set(private_headers
+set(headers
     "compiler.h"
+    "event_tracer.h"
+    "trace_event.h"
 )
 
 set(sources
-    "placeholder.cc"
+    "event_tracer.cc"
+    "trace_platform.cc"
 )
 
 set(conditional_private_depends)
@@ -38,10 +41,9 @@ set(conditional_private_depends)
 dawn_add_library(
     dawn_shared_utils
     ENABLE_EMSCRIPTEN
-    HEADER_ONLY
     UTILITY_TARGET dawn_internal_config
     HEADERS
-        ${private_headers}
+        ${headers}
     SOURCES
         ${sources}
 )

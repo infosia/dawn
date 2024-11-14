@@ -1,4 +1,4 @@
-// Copyright 2019 The Dawn & Tint Authors
+// Copyright 2024 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -25,8 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_DAWN_PLATFORM_TRACING_EVENTTRACER_H_
-#define SRC_DAWN_PLATFORM_TRACING_EVENTTRACER_H_
+#ifndef INCLUDE_DAWN_PLATFORM_TRACE_PLATFORM_H_
+#define INCLUDE_DAWN_PLATFORM_TRACE_PLATFORM_H_
 
 #include <cstdint>
 
@@ -34,29 +34,38 @@
 
 namespace dawn::platform {
 
-class Platform;
-enum class TraceCategory;
+enum class TraceCategory {
+    General,     // General trace events
+    Validation,  // Dawn validation
+    Recording,   // Native command recording
+    GPUWork,     // Actual GPU work
+};
 
-namespace tracing {
+class DAWN_PLATFORM_EXPORT TracePlatform {
+  public:
+    TracePlatform();
+    virtual ~TracePlatform();
 
-using TraceEventHandle = uint64_t;
+    virtual const unsigned char* GetTraceCategoryEnabledFlag(TraceCategory category);
 
-DAWN_PLATFORM_EXPORT const unsigned char* GetTraceCategoryEnabledFlag(Platform* platform,
-                                                                      TraceCategory category);
+    virtual double MonotonicallyIncreasingTime();
 
-// TODO(enga): Simplify this API.
-DAWN_PLATFORM_EXPORT TraceEventHandle AddTraceEvent(Platform* platform,
-                                                    char phase,
-                                                    const unsigned char* categoryGroupEnabled,
-                                                    const char* name,
-                                                    uint64_t id,
-                                                    int numArgs,
-                                                    const char** argNames,
-                                                    const unsigned char* argTypes,
-                                                    const uint64_t* argValues,
-                                                    unsigned char flags);
+    virtual uint64_t AddTraceEvent(char phase,
+                                   const unsigned char* categoryGroupEnabled,
+                                   const char* name,
+                                   uint64_t id,
+                                   double timestamp,
+                                   int numArgs,
+                                   const char** argNames,
+                                   const unsigned char* argTypes,
+                                   const uint64_t* argValues,
+                                   unsigned char flags);
 
-}  // namespace tracing
+  private:
+    TracePlatform(const TracePlatform&) = delete;
+    TracePlatform& operator=(const TracePlatform&) = delete;
+};
+
 }  // namespace dawn::platform
 
-#endif  // SRC_DAWN_PLATFORM_TRACING_EVENTTRACER_H_
+#endif  // INCLUDE_DAWN_PLATFORM_TRACE_PLATFORM_H_

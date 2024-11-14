@@ -38,7 +38,10 @@ config("internal_config") {
 static_library("utils") {
   sources = [
     "compiler.h",
-    "placeholder.cc",
+    "event_tracer.cc",
+    "event_tracer.h",
+    "trace_event.h",
+    "trace_platform.cc",
   ]
 
   public_configs = [ ":internal_config" ]

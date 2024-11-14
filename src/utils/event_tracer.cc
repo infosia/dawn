@@ -25,13 +25,14 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "dawn/platform/tracing/EventTracer.h"
+#include "src/utils/event_tracer.h"
+
 #include "dawn/common/Assert.h"
-#include "dawn/platform/DawnPlatform.h"
 
-namespace dawn::platform::tracing {
+namespace dawn::utils::tracing {
 
-const unsigned char* GetTraceCategoryEnabledFlag(Platform* platform, TraceCategory category) {
+const unsigned char* GetTraceCategoryEnabledFlag(platform::TracePlatform* platform,
+                                                 platform::TraceCategory category) {
     static unsigned char disabled = 0;
     if (platform == nullptr) {
         return &disabled;
@@ -45,7 +46,7 @@ const unsigned char* GetTraceCategoryEnabledFlag(Platform* platform, TraceCatego
     return &disabled;
 }
 
-TraceEventHandle AddTraceEvent(Platform* platform,
+TraceEventHandle AddTraceEvent(platform::TracePlatform* platform,
                                char phase,
                                const unsigned char* categoryGroupEnabled,
                                const char* name,
@@ -55,7 +56,11 @@ TraceEventHandle AddTraceEvent(Platform* platform,
                                const unsigned char* argTypes,
                                const uint64_t* argValues,
                                unsigned char flags) {
-    DAWN_ASSERT(platform != nullptr);
+    // TODO(dsinclair): Originally this did a `DAWN_ASSERT` we should decide if we want to do that
+    // in the future which would require porting some kind of assert macro into src/utils.
+    if (platform == nullptr) {
+        return static_cast<TraceEventHandle>(0);
+    }
 
     double timestamp = platform->MonotonicallyIncreasingTime();
     if (timestamp != 0) {
@@ -68,4 +73,4 @@ TraceEventHandle AddTraceEvent(Platform* platform,
     return static_cast<TraceEventHandle>(0);
 }
 
-}  // namespace dawn::platform::tracing
+}  // namespace dawn::utils::tracing

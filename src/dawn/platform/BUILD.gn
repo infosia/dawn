@@ -42,12 +42,13 @@ dawn_component("platform") {
     "WorkerThread.h",
     "metrics/HistogramMacros.cpp",
     "metrics/HistogramMacros.h",
-    "tracing/EventTracer.cpp",
-    "tracing/EventTracer.h",
-    "tracing/TraceEvent.h",
   ]
 
-  deps = [ "${dawn_root}/src/dawn/common" ]
+  deps = [
+    "${dawn_root}/src/dawn/common",
+    "${dawn_root}/src/utils",
+  ]
+
   if (dawn_use_built_dxc) {
     defines = [ "DAWN_USE_BUILT_DXC" ]
   }
