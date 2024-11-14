@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c054b98_6fe5438e",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1420,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-14T16:35:46Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5f1123ff_af2b7d54",
+      "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cdc64eb7_2887273e",
