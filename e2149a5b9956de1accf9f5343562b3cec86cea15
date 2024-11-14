@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a278954b_ab2f85aa",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-14T19:11:33Z",
+      "side": 1,
+      "message": "This is the Android specific fd extension which didn\u0027t become core.",
+      "parentUuid": "1b5054e7_51e8bf0a",
+      "range": {
+        "startLine": 260,
+        "startChar": 9,
+        "endLine": 260,
+        "endChar": 53
+      },
+      "revId": "e2149a5b9956de1accf9f5343562b3cec86cea15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "041c8b9e_4a1937bc",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-11-14T18:16:31Z",
       "side": 1,
       "message": "nit: We always use the EGLdisplay or EGLFunctions in this class so it might not require the Device itself, only the DisplayEGL.",
+      "range": {
+        "startLine": 102,
+        "startChar": 58,
+        "endLine": 102,
+        "endChar": 73
+      },
+      "revId": "e2149a5b9956de1accf9f5343562b3cec86cea15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "498dedc8_8fc7c53f",
+        "filename": "src/dawn/native/opengl/UtilsEGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-14T19:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "041c8b9e_4a1937bc",
       "range": {
         "startLine": 102,
         "startChar": 58,
@@ -81,6 +129,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ea0dcf7_72cdc000",
+        "filename": "src/dawn/native/opengl/UtilsEGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-14T19:11:33Z",
+      "side": 1,
+      "message": "I had wanted to support wrapping a null sync but that doesn\u0027t make sense anymore. Removed, also got to remove the IsValid stuff.",
+      "parentUuid": "679b5e42_16e23176",
+      "revId": "e2149a5b9956de1accf9f5343562b3cec86cea15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d33c2f0_fb2f6f64",
@@ -94,6 +160,24 @@
       "writtenOn": "2024-11-14T18:16:31Z",
       "side": 1,
       "message": "nit: we have NonMovable",
+      "revId": "e2149a5b9956de1accf9f5343562b3cec86cea15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25b9ecd1_dbc10785",
+        "filename": "src/dawn/native/opengl/UtilsEGL.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-14T19:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d33c2f0_fb2f6f64",
       "revId": "e2149a5b9956de1accf9f5343562b3cec86cea15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
