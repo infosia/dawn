@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "887eb521_965bb7ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-14T05:01:33Z",
+      "side": 1,
+      "message": "PTAL.\n\nI figured out the magic incantation to get an F16 value where needed (you can\u0027t get it from the spirv-opt constant, you get the bits and use those directly). \n\nThis needs tests, but wanted to see if there were any major complaints (or oversights on my part) that I should address before figuring out the testing.",
+      "revId": "22a46126bba36bbf2ff5148c82790c6eac77c102",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
