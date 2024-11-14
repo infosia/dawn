@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "b55111cd_e44591f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003516
+      },
+      "writtenOn": "2024-11-14T05:44:08Z",
+      "side": 1,
+      "message": "I think majority of the places that use this constant are tests. So it\u0027s reasonable to change the internal code only. The tests can continue using this constant because it\u0027s the default limit.\n\nNote that by default dawn will still use 256 as alignment. Only when we explicitly set it to 4 here https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/dawn_context_provider.cc;drc\u003d3604009eb6f4c2287d0052ed3eaaa62bff79541d;l\u003d592 then it will become active. The tests mostly use default alignment so IMO we can leave them.",
+      "parentUuid": "31016bd3_c5736b02",
+      "revId": "ab9ee1ecb9c00cfc6baae780e07be9f3dd430b9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "6cbf375a_fdba0639",
         "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
         "patchSetId": 1
@@ -31,6 +49,30 @@
       "writtenOn": "2024-11-13T13:21:36Z",
       "side": 1,
       "message": "Per [this line](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Format.cpp;drc\u003d981ce1e8f82050b33153a9c4652f2ad1cefabff1;l\u003d221), it seems we can\u0027t simply set it 4. More precisely, it should be the largest one of all texture format\u0027s block sizes, which should still cause the copy of gaps.",
+      "range": {
+        "startLine": 267,
+        "startChar": 48,
+        "endLine": 267,
+        "endChar": 49
+      },
+      "revId": "ab9ee1ecb9c00cfc6baae780e07be9f3dd430b9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1db91484_e57124e8",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003516
+      },
+      "writtenOn": "2024-11-14T05:44:08Z",
+      "side": 1,
+      "message": "Possibly we can have different limits for compressed formats and non-compressed formats.",
+      "parentUuid": "6cbf375a_fdba0639",
       "range": {
         "startLine": 267,
         "startChar": 48,
