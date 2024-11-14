@@ -3646,5 +3646,24 @@ TEST_F(SamplerTypeBindingTest, SamplerAndBindGroupMatches) {
     }
 }
 
+class PipelineLayoutValidationTest : public ValidationTest {};
+
+// Test creating pipeline layout with empty bind group layout works.
+TEST_F(PipelineLayoutValidationTest, CreateWithEmptyBindGroupLayout) {
+    std::vector<wgpu::BindGroupLayout> bgls(4);
+    for (uint32_t i = 0; i < bgls.size(); ++i) {
+        bgls[i] = utils::MakeBindGroupLayout(
+            device, {{0, wgpu::ShaderStage::Compute, wgpu::StorageTextureAccess::WriteOnly,
+                      wgpu::TextureFormat::R32Float}});
+    }
+
+    for (uint32_t i = 0; i < bgls.size(); ++i) {
+        auto& currentBGLs = bgls;
+        currentBGLs[i] = nullptr;
+
+        utils::MakePipelineLayout(device, currentBGLs);
+    }
+}
+
 }  // anonymous namespace
 }  // namespace dawn
