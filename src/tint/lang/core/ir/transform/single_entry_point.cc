@@ -31,7 +31,7 @@
 
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/referenced_functions.h"
-#include "src/tint/lang/core/ir/referenced_module_vars.h"
+#include "src/tint/lang/core/ir/referenced_module_decls.h"
 #include "src/tint/lang/core/ir/validator.h"
 
 namespace tint::core::ir::transform {
@@ -71,20 +71,18 @@ Result<SuccessType> Run(ir::Module& ir, std::string_view entry_point_name) {
     }
 
     // Remove unused module-scope variables.
-    ReferencedModuleVars<Module> referenced_var_cache(ir);
+    ReferencedModuleDecls<Module> referenced_var_cache(ir);
     auto& referenced_vars = referenced_var_cache.TransitiveReferences(entry_point);
     auto* inst = ir.root_block->Front();
     while (inst) {
-        // TODO(374971092): Handle removal of override instructions.
-        auto* var = inst->As<Var>();
-        TINT_ASSERT(var);
-        inst = var->next;
-        if (!referenced_vars.Contains(var)) {
+        auto next = inst->next;
+        if (!referenced_vars.Contains(inst)) {
             // There shouldn't be any remaining references to the variable.
             // This will not always be the case once we have override support.
-            TINT_ASSERT(var->Result(0)->NumUsages() == 0);
-            var->Destroy();
+            TINT_ASSERT(inst->Result(0)->NumUsages() == 0);
+            inst->Destroy();
         }
+        inst = next;
     }
 
     return Success;
@@ -93,7 +91,8 @@ Result<SuccessType> Run(ir::Module& ir, std::string_view entry_point_name) {
 }  // namespace
 
 Result<SuccessType> SingleEntryPoint(Module& ir, std::string_view entry_point_name) {
-    auto result = ValidateAndDumpIfNeeded(ir, "core.SingleEntryPoint");
+    auto result = ValidateAndDumpIfNeeded(
+        ir, "core.SingleEntryPoint", core::ir::Capabilities{core::ir::Capability::kAllowOverrides});
     if (result != Success) {
         return result.Failure();
     }
