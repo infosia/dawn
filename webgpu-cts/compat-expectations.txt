@@ -82,10 +82,9 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-11-01 08:36:30AM
+# Last rolled: 2024-11-14 04:01:47PM
 
 # conflicts_allowed: true
-
 
 # Flaky memory_sync failures on Intel
 crbug.com/dawn/2083 [ intel-0x9bc5 linux ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:ww:boundary="command-buffer";writeOps=["storage","b2b-copy"];contexts=["render-bundle-encoder","command-encoder"] [ Failure ]
@@ -761,7 +760,6 @@ crbug.com/dawn/2114 [ intel-0x4680 linux ] webgpu:web_platform,canvas,getCurrent
 
 ### This section represents issues that are likely bugs in ANGLE
 
-
 # read-only storage texture failures
 # passes on ANGLE/Vulkan, so likely a bug in ANGLE/SwiftShader and ANGLE/GL
 crbug.com/dawn/2430 [ intel-0x9bc5 linux mesa_ge_23.2 ] webgpu:api,operation,storage_texture,read_only:basic:format="rgba8snorm";shaderStage="compute";dimension="1d";depthOrArrayLayers=1 [ Failure ]
@@ -882,10 +880,8 @@ crbug.com/dawn/2248 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries
 crbug.com/dawn/2248 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="zero";querySetOffset="zero";alpha=0.5 [ Failure ]
 crbug.com/dawn/2248 [ intel-0x9bc5 ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=0;renderMode="render-bundle";bufferOffset="zero";querySetOffset="zero";alpha=0.75 [ Failure ]
 
-
 # getCurrentTexture failures on Intel 630
 crbug.com/dawn/2114 [ intel-0x9bc5 linux ] webgpu:web_platform,canvas,getCurrentTexture:resize:* [ Failure ]
-
 
 # Limits issues on NVidia GL
 crbug.com/dawn/2123 [ linux nvidia-0x2184 ] webgpu:api,validation,capability_checks,limits,maxBufferSize:createBuffer,at_over:limitTest="atMaximum";testValueName="atLimit" [ Failure ]
@@ -1864,8 +1860,6 @@ crbug.com/dawn/2414 [ android-14 arm ] webgpu:shader,execution,expression,call,b
 crbug.com/42251283 [ android arm ] webgpu:shader,execution,expression,call,builtin,dpdxFine:* [ Failure ]
 crbug.com/42251283 [ android arm ] webgpu:shader,execution,expression,call,builtin,dpdyFine:* [ Failure ]
 crbug.com/42251283 [ android arm ] webgpu:shader,execution,expression,call,builtin,fwidthFine:* [ Failure ]
-
-
 
 # copyToTexture,canvas:copy_contents_from_gpu_context_canvas too flaky for RetryOnFailure on Android
 crbug.com/dawn/0000 [ android arm ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:canvasType="offscreen";srcAndDstInSameGPUDevice=false;dstColorFormat="r16float";srcAlphaMode="premultiplied";dstAlphaMode="opaque";srcDoFlipYDuringCopy=false [ Failure ]
