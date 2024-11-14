@@ -130,6 +130,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33259e4c_a640c435",
+        "filename": "src/dawn/tests/unittests/wire/WireErrorCallbackTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-14T00:15:52Z",
+      "side": 1,
+      "message": "Ah of course, it just comes from the mock. Got it.",
+      "parentUuid": "b57a4bb1_d7236542",
+      "range": {
+        "startLine": 309,
+        "startChar": 86,
+        "endLine": 309,
+        "endChar": 93
+      },
+      "revId": "82bf492d02d20354fadce4063bdc4e4485ce12f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33ea1780_e6249a41",
