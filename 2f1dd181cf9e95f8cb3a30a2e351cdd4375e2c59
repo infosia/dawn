@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8eb5b34d_e01b1c49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T11:53:07Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "2f1dd181cf9e95f8cb3a30a2e351cdd4375e2c59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2f776f4_0efa7462",
+        "filename": "include/dawn/platform/DawnPlatform.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T11:53:07Z",
+      "side": 1,
+      "message": "Is that include possible to remove?",
+      "revId": "2f1dd181cf9e95f8cb3a30a2e351cdd4375e2c59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78763dd5_3049b024",
+        "filename": "include/dawn/platform/DawnPlatform.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T11:53:07Z",
+      "side": 1,
+      "message": "Why do we need to keep this one since we already have a default in `TracePlatform`?",
+      "revId": "2f1dd181cf9e95f8cb3a30a2e351cdd4375e2c59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da7ed531_143ebb39",
+        "filename": "src/utils/event_tracer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T11:53:07Z",
+      "side": 1,
+      "message": "Why is one header starting from src/ and the other one from // ?",
+      "revId": "2f1dd181cf9e95f8cb3a30a2e351cdd4375e2c59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f80261a_8ba06757",
+        "filename": "src/utils/event_tracer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T11:53:07Z",
+      "side": 1,
+      "message": "nit: Could we associate that to an issue? It\u0027s our TODO, not just yours :)",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "2f1dd181cf9e95f8cb3a30a2e351cdd4375e2c59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
