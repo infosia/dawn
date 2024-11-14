@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "58814df9_7e367bdb",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2860,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-14T21:44:50Z",
+      "side": 1,
+      "message": "I think if the validation test below with your suggested fix works, the wire should be working properly so maybe it\u0027s ok?\n\nBut I agree that this field shouldn\u0027t actually be optional here.",
+      "parentUuid": "b124de50_3f8b1794",
+      "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7e236c63_075bcdcb",
         "filename": "src/dawn/native/PipelineLayout.cpp",
         "patchSetId": 1
@@ -88,6 +106,24 @@
       "writtenOn": "2024-11-14T17:24:55Z",
       "side": 1,
       "message": "Did you mean to make a copy here? We want to allow holes in the middle so we should with other BGLs filled.",
+      "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36c1b4d0_c25c0424",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3661,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-14T21:44:50Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "808faf65_f0ca9f70",
       "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
