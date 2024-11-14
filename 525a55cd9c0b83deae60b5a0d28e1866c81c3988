@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0218aca_949b9a6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-14T14:53:41Z",
+      "side": 1,
+      "message": "Need +1 again for the removed file.",
+      "revId": "525a55cd9c0b83deae60b5a0d28e1866c81c3988",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

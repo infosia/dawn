@@ -87,6 +87,30 @@
       },
       "revId": "bda9230588a18c13f04310b4d66aae938e8d65b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f07b81e_0468bfd3",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-14T14:53:41Z",
+      "side": 1,
+      "message": "\u003e IDK that the Tick calls need to be interleaved.\n\nIt looks like `FencedDeleter::Tick()` will release all kinds of resources, including VkDescriptorPools, and then `mDescriptorAllocatorsPendingDeallocation-\u003eClearUpTo()` will enqueue more VkDescriptorPools for deletion next time FencedDeleter::Tick() runs. That order looked intentional enough I didn\u0027t want to change it and my Vulkan understanding isn\u0027t good enough to know if there is a reason the VkDescriptorPools have to be deleted later? If this order should be changed I can do that as a separate CL just let me kniow!",
+      "parentUuid": "e600a0e5_2b81fd91",
+      "range": {
+        "startLine": 914,
+        "startChar": 4,
+        "endLine": 922,
+        "endChar": 29
+      },
+      "revId": "bda9230588a18c13f04310b4d66aae938e8d65b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
