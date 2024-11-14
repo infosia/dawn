@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5f1123ff_af2b7d54",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1420,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-14T16:34:49Z",
+      "side": 1,
+      "message": "Yea, because `ir::type` exists and is getting pulled in and now it can\u0027t figure out what `type` means.",
+      "parentUuid": "737f3687_5c21bb34",
+      "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cdc64eb7_2887273e",
         "filename": "src/tint/lang/core/ir/referenced_module_decls.h",
         "patchSetId": 8
@@ -48,6 +66,24 @@
       "writtenOn": "2024-11-14T16:25:52Z",
       "side": 1,
       "message": "This is adding to the var\u0027s block, which is the root block? I don\u0027t think this is necessary, unless I\u0027m missing something...",
+      "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "868afc9a_9a684bed",
+        "filename": "src/tint/lang/core/ir/referenced_module_decls.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-14T16:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdc64eb7_2887273e",
       "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -65,6 +101,24 @@
       "writtenOn": "2024-11-14T16:25:52Z",
       "side": 1,
       "message": "Could also be an `access`. We should probably just add it to the blocks of all users instead.",
+      "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e849988_f490747e",
+        "filename": "src/tint/lang/core/ir/referenced_module_decls.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-14T16:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "299bdd48_d63e9d29",
       "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -100,6 +154,24 @@
           ]
         }
       ],
+      "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4994c917_3ac41d55",
+        "filename": "src/tint/lang/core/ir/referenced_module_decls.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-14T16:34:49Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "a95db103_f3ab8c7e",
       "revId": "643ee3c032aedd1c432021937fbef1b83ef1fa8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
