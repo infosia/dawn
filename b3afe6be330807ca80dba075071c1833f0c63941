@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e854be96_2aba6ef4",
+        "filename": "src/dawn/tests/end2end/VertexStateTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-14T00:21:19Z",
+      "side": 0,
+      "message": "I think we should keep this spot-test because it\u0027s still important that `Undefined` gets defaulted to `Vertex`.",
+      "revId": "b3afe6be330807ca80dba075071c1833f0c63941",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
