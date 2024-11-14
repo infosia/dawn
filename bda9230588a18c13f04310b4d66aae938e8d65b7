@@ -63,6 +63,30 @@
       },
       "revId": "bda9230588a18c13f04310b4d66aae938e8d65b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e600a0e5_2b81fd91",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T11:48:24Z",
+      "side": 1,
+      "message": "The new patch looks good also because we know that nothing new will be added to that serial between the two mutex locks. But we could put both the FinishDeallocation and ClearUpTo in the same block with nothing in between. IDK that the Tick calls need to be interleaved.",
+      "parentUuid": "c6f630ea_415b5cd8",
+      "range": {
+        "startLine": 914,
+        "startChar": 4,
+        "endLine": 922,
+        "endChar": 29
+      },
+      "revId": "bda9230588a18c13f04310b4d66aae938e8d65b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

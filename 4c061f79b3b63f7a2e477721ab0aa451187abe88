@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "461f8e17_7f5b43a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T11:48:24Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "4c061f79b3b63f7a2e477721ab0aa451187abe88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbb647ef_3c056a3f",
+        "filename": "src/dawn/native/IntegerTypes.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T11:48:24Z",
+      "side": 1,
+      "message": "Note: this was to avoid an include, did it have the wrong value?",
+      "revId": "4c061f79b3b63f7a2e477721ab0aa451187abe88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16c7aa10_33e5886c",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T11:48:24Z",
+      "side": 1,
+      "message": "```suggestion\n            allocator-\u003eFinishDeallocation(completedSerial);\n```",
+      "range": {
+        "startLine": 340,
+        "startChar": 42,
+        "endLine": 340,
+        "endChar": 61
+      },
+      "revId": "4c061f79b3b63f7a2e477721ab0aa451187abe88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
