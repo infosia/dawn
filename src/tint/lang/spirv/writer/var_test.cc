@@ -362,7 +362,7 @@ TEST_F(SpirvWriterTest, StorageVar_Workgroup_WithVulkan) {
   %foo_inner = OpFunction %void None %10
 %tint_local_index = OpFunctionParameter %uint
          %11 = OpLabel
-         %12 = OpIEqual %bool %tint_local_index %uint_0
+         %12 = OpULessThanEqual %bool %tint_local_index %uint_0
                OpSelectionMerge %15 None
                OpBranchConditional %12 %16 %15
          %16 = OpLabel

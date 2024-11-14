@@ -36,7 +36,7 @@
     %F_inner = OpFunction %void None %12
      %mat2x2 = OpFunctionParameter %uint
          %13 = OpLabel
-         %14 = OpIEqual %bool %mat2x2 %uint_0
+         %14 = OpULessThanEqual %bool %mat2x2 %uint_0
                OpSelectionMerge %17 None
                OpBranchConditional %14 %18 %17
          %18 = OpLabel

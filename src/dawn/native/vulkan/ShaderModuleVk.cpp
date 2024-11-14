@@ -354,8 +354,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     req.tintOptions.emit_vertex_point_size = emitPointSize;
     req.tintOptions.disable_workgroup_init =
         GetDevice()->IsToggleEnabled(Toggle::DisableWorkgroupInit);
-    req.tintOptions.use_zero_initialize_workgroup_memory_extension =
-        GetDevice()->IsToggleEnabled(Toggle::VulkanUseZeroInitializeWorkgroupMemoryExtension);
+    req.tintOptions.use_zero_initialize_workgroup_memory_extension = false;
     req.tintOptions.use_storage_input_output_16 =
         GetDevice()->IsToggleEnabled(Toggle::VulkanUseStorageInputOutput16);
     req.tintOptions.bindings = std::move(bindings);
