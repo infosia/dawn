@@ -16,6 +16,24 @@
       "message": "I think we should keep this spot-test because it\u0027s still important that `Undefined` gets defaulted to `Vertex`.",
       "revId": "b3afe6be330807ca80dba075071c1833f0c63941",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "187e1799_c44edf43",
+        "filename": "src/dawn/tests/end2end/VertexStateTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-14T08:00:14Z",
+      "side": 0,
+      "message": "`Undefined` now gets defaulted to `VertexBufferNotUsed` according to `out/Debug/gen/third_party/dawn/src/dawn/native/wgpu_structs_autogen.cpp`:\n\n```\n    VertexBufferLayout VertexBufferLayout::WithTrivialFrontendDefaults() const {\n        VertexBufferLayout copy;\n        copy.arrayStride \u003d arrayStride;\n        copy.stepMode \u003d (stepMode \u003d\u003d wgpu::VertexStepMode::Undefined)\n            ? wgpu::VertexStepMode::VertexBufferNotUsed\n            : stepMode;\n        copy.attributeCount \u003d attributeCount;\n        copy.attributes \u003d attributes;\n        return copy;\n    }\n```\n\nWithout this, the `VertexStateTest.LastAllowedVertexBuffer` test fails as you can see in latest patch:\n```\n[ RUN      ] VertexStateTest.LastAllowedVertexBuffer/Metal_Apple_M1_Pro\nError: Assertion failure at ../../third_party/dawn/src/dawn/native/RenderPipeline.cpp:995 (RenderPipelineBase): (0) \u0026\u0026 \"Unreachable code hit\"\n```",
+      "parentUuid": "e854be96_2aba6ef4",
+      "revId": "b3afe6be330807ca80dba075071c1833f0c63941",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
