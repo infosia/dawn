@@ -16,6 +16,80 @@
       "message": "PTAL, thanks!",
       "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b124de50_3f8b1794",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2860,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T17:24:55Z",
+      "side": 1,
+      "message": "Note that the optional:true here will apply to the pointer to the array, not the objects inside the array themselves. I don\u0027t know if it will cause issues for example in the wire.",
+      "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e236c63_075bcdcb",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T17:24:55Z",
+      "side": 1,
+      "message": "Could we emit a validation error if unsafe APIs is not set? We want to full test the feature before we start shipping it.",
+      "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25a2caba_9751ea47",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3652,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T17:24:55Z",
+      "side": 1,
+      "message": "```suggestion\nTEST_F(PipelineLayoutValidationTest, CreateWithNullBindGroupLayout) {\n```",
+      "range": {
+        "startLine": 3652,
+        "startChar": 47,
+        "endLine": 3652,
+        "endChar": 52
+      },
+      "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "808faf65_f0ca9f70",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3661,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-14T17:24:55Z",
+      "side": 1,
+      "message": "Did you mean to make a copy here? We want to allow holes in the middle so we should with other BGLs filled.",
+      "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
