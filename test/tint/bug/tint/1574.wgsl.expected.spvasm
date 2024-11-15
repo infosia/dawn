@@ -92,7 +92,7 @@
     %value_0 = OpVariable %_ptr_Function_int Function
     %value_1 = OpVariable %_ptr_Function_uint Function
     %value_2 = OpVariable %_ptr_Function_int Function
-         %20 = OpIEqual %bool %tint_local_index %uint_0
+         %20 = OpULessThanEqual %bool %tint_local_index %uint_0
                OpSelectionMerge %23 None
                OpBranchConditional %20 %24 %23
          %24 = OpLabel

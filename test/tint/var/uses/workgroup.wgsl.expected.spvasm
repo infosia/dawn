@@ -95,7 +95,7 @@
 %main1_inner = OpFunction %void None %37
 %tint_local_index = OpFunctionParameter %uint
          %38 = OpLabel
-         %39 = OpIEqual %bool %tint_local_index %uint_0
+         %39 = OpULessThanEqual %bool %tint_local_index %uint_0
                OpSelectionMerge %42 None
                OpBranchConditional %39 %43 %42
          %43 = OpLabel
@@ -110,7 +110,7 @@
 %main2_inner = OpFunction %void None %37
 %tint_local_index_0 = OpFunctionParameter %uint
          %51 = OpLabel
-         %52 = OpIEqual %bool %tint_local_index_0 %uint_0
+         %52 = OpULessThanEqual %bool %tint_local_index_0 %uint_0
                OpSelectionMerge %53 None
                OpBranchConditional %52 %54 %53
          %54 = OpLabel
@@ -125,7 +125,7 @@
 %main3_inner = OpFunction %void None %37
 %tint_local_index_1 = OpFunctionParameter %uint
          %60 = OpLabel
-         %61 = OpIEqual %bool %tint_local_index_1 %uint_0
+         %61 = OpULessThanEqual %bool %tint_local_index_1 %uint_0
                OpSelectionMerge %62 None
                OpBranchConditional %61 %63 %62
          %63 = OpLabel
