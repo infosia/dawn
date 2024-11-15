@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fe449ce_55cb17e1",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1777,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-15T08:18:56Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "168d12d3_e43c1d6e",
+      "revId": "78c044657e78e973fcb55d4d0b25c5b259e909d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b05082c_dd77fed9",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-11-14T20:47:35Z",
       "side": 1,
       "message": "There are ways to fix this, so it should be a TODO. OK to not link a bug I think.\n```suggestion\n    // TODO: Set the adapter type from adapter.isFallbackAdapter (not easily available here).\n```",
+      "revId": "78c044657e78e973fcb55d4d0b25c5b259e909d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b60530e_237f59ad",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1802,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-15T08:18:56Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "1b05082c_dd77fed9",
       "revId": "78c044657e78e973fcb55d4d0b25c5b259e909d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
