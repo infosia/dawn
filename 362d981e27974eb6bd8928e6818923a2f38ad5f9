@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c34e4787_8fe99e2b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2860,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-15T03:11:22Z",
+      "side": 1,
+      "message": "\u003e  I don\u0027t know if it will cause issues for example in the wire.\n\nOh I don\u0027t think you need to worry about it as both dawn_unittests and dawn_end2end_tests are running with dawn wire on the bots, \n\nActually `\"optional\": true` is applied to every item in the array instead of the pointer to the array.\n\nFor example, in ClientBase_autogen.h:\n\n----------------\n\nWith `\"optional\": true`:\n\nfor (decltype(memberLength) i \u003d 0; i \u003c memberLength; ++i) {\n    WIRE_TRY(provider.GetOptionalId(record.bindGroupLayouts[i], \u0026memberBuffer[i]));\n}\n\nWhere `provider.GetOptionalId()` will set `memberBuffer[i]` to 0 when `record.bindGroupLayouts[i]` is `nullptr`.\n\n----------------\n\nWithout `\"optional\": true`:\n\nfor (decltype(memberLength) i \u003d 0; i \u003c memberLength; ++i) {\n    WIRE_TRY(provider.GetId(record.bindGroupLayouts[i], \u0026memberBuffer[i]));\n}\n\nWhere `provider.GetId()` will return `WireResult::FatalError` when `record.bindGroupLayouts[i]` is `nullptr`.",
+      "parentUuid": "58814df9_7e367bdb",
+      "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7e236c63_075bcdcb",
         "filename": "src/dawn/native/PipelineLayout.cpp",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "writtenOn": "2024-11-14T17:24:55Z",
       "side": 1,
       "message": "Could we emit a validation error if unsafe APIs is not set? We want to full test the feature before we start shipping it.",
+      "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4737666c_3e2d42c5",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-15T03:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e236c63_075bcdcb",
       "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -83,6 +119,30 @@
       "writtenOn": "2024-11-14T17:24:55Z",
       "side": 1,
       "message": "```suggestion\nTEST_F(PipelineLayoutValidationTest, CreateWithNullBindGroupLayout) {\n```",
+      "range": {
+        "startLine": 3652,
+        "startChar": 47,
+        "endLine": 3652,
+        "endChar": 52
+      },
+      "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0ccdba7_1ab51429",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3652,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-15T03:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25a2caba_9751ea47",
       "range": {
         "startLine": 3652,
         "startChar": 47,
@@ -124,6 +184,24 @@
       "side": 1,
       "message": "+1",
       "parentUuid": "808faf65_f0ca9f70",
+      "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8b9bc2e_c5133f45",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3661,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-15T03:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36c1b4d0_c25c0424",
       "revId": "362d981e27974eb6bd8928e6818923a2f38ad5f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
