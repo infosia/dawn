@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7058058_1f9ea795",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-11-15T11:29:32Z",
+      "side": 1,
+      "message": "Shall we add new dawn feature for this minor change?",
+      "range": {
+        "startLine": 1837,
+        "startChar": 0,
+        "endLine": 1837,
+        "endChar": 119
+      },
+      "revId": "b5768306e4575cf7a6e0f7acee6d31826d0a4ab6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d777f801_1299b442",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-11-15T11:29:32Z",
+      "side": 1,
+      "message": "@lehoangquyen@chromium.org\nI tried setting the alignment to 1, and some cases triggering BlitTextureToBuffer  ran into failure. It seems to be the restriction of BlitTextureToBuffer, right? Correct me if not the case!",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 69
+      },
+      "revId": "b5768306e4575cf7a6e0f7acee6d31826d0a4ab6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
