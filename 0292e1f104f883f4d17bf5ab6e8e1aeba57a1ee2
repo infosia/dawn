@@ -50,6 +50,24 @@
       "message": "Shouldn\u0027t an unrecognized diagnostic issue a warning and definitely not an error?",
       "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e600f57d_cd81e7ae",
+        "filename": "src/tint/lang/wgsl/resolver/subgroups_extension_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-15T16:29:59Z",
+      "side": 1,
+      "message": "I\u0027m actually not sure. The rule is (or will be) defined in the spec, so does it still count as \"unrecognized\"? We do recognize it, but the functionality it corresponds to it guarded by an extension.\n\nSo we could treat it the same as an unrecognized rule and issue a warning. Or we could just accept it as a no-op since we do recognize it. Or we could error because using it without enabling the extensions is likely a bug (but that seems less friendly to developers that might be conditionally enabling the extension).\n\nI lean towards accepting it unconditinoally without any error/warning.\n\nalanbaker@google.com do you have a preference?",
+      "parentUuid": "d2641204_d03f5c34",
+      "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
