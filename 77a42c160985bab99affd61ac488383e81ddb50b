@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80be72b8_effb0ede",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-15T14:51:15Z",
+      "side": 1,
+      "message": "Cherry-pick patch to M130 Extended Stable (branch 6723)",
+      "revId": "77a42c160985bab99affd61ac488383e81ddb50b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
