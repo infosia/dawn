@@ -68,6 +68,24 @@
       "parentUuid": "d2641204_d03f5c34",
       "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4c6caae_774bcf97",
+        "filename": "src/tint/lang/wgsl/resolver/subgroups_extension_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2024-11-15T16:38:33Z",
+      "side": 1,
+      "message": "The way I worded the spec, the extension adds the ability to use the builtin functions and values. So in a way the diagnostic is being added to the core language. Maybe it should have a language feature, but that seems to overdo it. Definitely not an error to use without the enable. At best a warning, but maybe \"hey this won\u0027t do anything\" sort of warning.",
+      "parentUuid": "e600f57d_cd81e7ae",
+      "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
