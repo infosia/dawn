@@ -86,6 +86,24 @@
       "parentUuid": "e600f57d_cd81e7ae",
       "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44cb8118_1c5c1222",
+        "filename": "src/tint/lang/wgsl/resolver/subgroups_extension_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-15T16:39:00Z",
+      "side": 1,
+      "message": "The WGSL spec PR as currently written does not explicitly say that the diagnostic rule is guarded by the extension, which also suggests that accepting this without a warning would be fine.",
+      "parentUuid": "e600f57d_cd81e7ae",
+      "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
