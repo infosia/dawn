@@ -106,6 +106,24 @@
       "parentUuid": "8625faeb_93963c05",
       "revId": "fc9656e73220536abb75377153bf86a92a60dacc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "593e64cb_b19ebee0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-15T09:39:31Z",
+      "side": 1,
+      "message": "(gentle ping)\n\nWe can discuss it offline next week as well.",
+      "parentUuid": "fd5e6b4f_00732565",
+      "revId": "fc9656e73220536abb75377153bf86a92a60dacc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
