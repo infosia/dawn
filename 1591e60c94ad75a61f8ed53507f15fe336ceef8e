@@ -1,0 +1,144 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8817d1b4_6a145589",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-11-15T01:51:43Z",
+      "side": 1,
+      "message": "Question: `CallAdapterRequestDevice2Callback` looks the same as `CallAdapterRequestDeviceCallback` and that\u0027s for?",
+      "fixSuggestions": [
+        {
+          "fixId": "14a8d9f5_5b5ea195",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+              "range": {
+                "startLine": 79,
+                "startChar": 0,
+                "endLine": 80,
+                "endChar": 0
+              },
+              "replacement": "            api.CallAdapterRequestDeviceCallback(apiAdapter, WGPURequestDeviceStatus_Error,\n"
+            },
+            {
+              "path": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+              "range": {
+                "startLine": 102,
+                "startChar": 0,
+                "endLine": 103,
+                "endChar": 0
+              },
+              "replacement": "            api.CallAdapterRequestDeviceCallback(apiAdapter, WGPURequestDeviceStatus_Error,\n"
+            },
+            {
+              "path": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+              "range": {
+                "startLine": 138,
+                "startChar": 0,
+                "endLine": 139,
+                "endChar": 0
+              },
+              "replacement": "            api.CallAdapterRequestDeviceCallback(apiAdapter, WGPURequestDeviceStatus_Error,\n"
+            },
+            {
+              "path": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+              "range": {
+                "startLine": 188,
+                "startChar": 0,
+                "endLine": 189,
+                "endChar": 0
+              },
+              "replacement": "            api.CallAdapterRequestDeviceCallback(apiAdapter, WGPURequestDeviceStatus_Success,\n"
+            },
+            {
+              "path": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+              "range": {
+                "startLine": 267,
+                "startChar": 0,
+                "endLine": 268,
+                "endChar": 0
+              },
+              "replacement": "            api.CallAdapterRequestDeviceCallback(apiAdapter, WGPURequestDeviceStatus_Success,\n"
+            },
+            {
+              "path": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+              "range": {
+                "startLine": 290,
+                "startChar": 0,
+                "endLine": 291,
+                "endChar": 0
+              },
+              "replacement": "            api.CallAdapterRequestDeviceCallback(apiAdapter, WGPURequestDeviceStatus_Error,\n"
+            },
+            {
+              "path": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+              "range": {
+                "startLine": 322,
+                "startChar": 0,
+                "endLine": 323,
+                "endChar": 0
+              },
+              "replacement": "            api.CallAdapterRequestDeviceCallback(apiAdapter, WGPURequestDeviceStatus_Success,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1591e60c94ad75a61f8ed53507f15fe336ceef8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41530645_f8a845ff",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-11-15T01:51:43Z",
+      "side": 1,
+      "message": "Question: This place seems the only one going reversely from `wgpu::` to `WGPU` (c++ to c) style and that\u0027s for?",
+      "fixSuggestions": [
+        {
+          "fixId": "7d1dcb05_78433b56",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+              "range": {
+                "startLine": 160,
+                "startChar": 0,
+                "endLine": 161,
+                "endChar": 0
+              },
+              "replacement": "    WGPUSupportedFeatures fakeFeatures \u003d {\n        static_cast\u003cuint32_t\u003e(fakeFeaturesList.size()), std::data(fakeFeaturesList)};\n"
+            },
+            {
+              "path": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+              "range": {
+                "startLine": 246,
+                "startChar": 0,
+                "endLine": 247,
+                "endChar": 0
+              },
+              "replacement": "    WGPUSupportedFeatures fakeFeatures \u003d {\n        static_cast\u003cuint32_t\u003e(fakeFeaturesList.size()), std::data(fakeFeaturesList)};\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1591e60c94ad75a61f8ed53507f15fe336ceef8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
