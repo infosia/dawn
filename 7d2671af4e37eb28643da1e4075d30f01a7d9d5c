@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "599ffbcc_b9c057b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-15T17:02:40Z",
+      "side": 1,
+      "message": "PTAL, hoping that I have fixed all the bots on this one.\n\nI have used pretty broad globs for some of the rules, which cause a significant number of unexpected passes, but that is because due to combinatrics, some of the bots had +6k failing tests, and manually entering in the expectations for the precise tests was intractable.\n\nI am hoping this gets the CTS roll into a state that it will run successfully overnight (or atleast not bomb out on the first iteration due to infra issue), so that the machinary for fixing up unexpected passes can break down those globs.",
+      "revId": "7d2671af4e37eb28643da1e4075d30f01a7d9d5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
