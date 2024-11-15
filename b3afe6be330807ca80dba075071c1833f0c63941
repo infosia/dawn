@@ -70,6 +70,24 @@
       "parentUuid": "97df4af7_f9a00b8b",
       "revId": "b3afe6be330807ca80dba075071c1833f0c63941",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "432d9705_ee516ef1",
+        "filename": "src/dawn/tests/end2end/VertexStateTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-15T09:24:18Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e6fe2ab4_c85c21cb",
+      "revId": "b3afe6be330807ca80dba075071c1833f0c63941",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
