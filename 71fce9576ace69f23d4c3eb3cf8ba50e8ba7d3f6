@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e303cd05_0d6ee230",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-15T14:29:20Z",
+      "side": 1,
+      "message": "Cherry-pick patch for M131 Stable (branch 6778)",
+      "revId": "71fce9576ace69f23d4c3eb3cf8ba50e8ba7d3f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
