@@ -96,6 +96,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b2f3670_97fa47d8",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-15T08:03:36Z",
+      "side": 1,
+      "message": "We need to call `CallAdapterRequestDevice2Callback` instead of the old one because that\u0027s the new mock callback for the entry point.",
+      "parentUuid": "8817d1b4_6a145589",
+      "revId": "1591e60c94ad75a61f8ed53507f15fe336ceef8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41530645_f8a845ff",
@@ -137,6 +155,24 @@
           ]
         }
       ],
+      "revId": "1591e60c94ad75a61f8ed53507f15fe336ceef8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d57464d_77c44c65",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-15T08:03:36Z",
+      "side": 1,
+      "message": "The reason I decided to use the C types here is because the C++ `wgpu::SupportedFeatures` struct can\u0027t actually be constructed at the moment, i.e. the two fields are `const` fields and the constructor does not take them. I would have to do some `const` casting stuff to achieve this. I think that we will probably update the C++ headers later on to provide some way to do this while letting the API know whether or not the struct is owned by the user or if the API allocated the data in these out structs. Leaving as is for now.",
+      "parentUuid": "41530645_f8a845ff",
       "revId": "1591e60c94ad75a61f8ed53507f15fe336ceef8e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
