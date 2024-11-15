@@ -104,6 +104,24 @@
       "parentUuid": "e600f57d_cd81e7ae",
       "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "584b8cfc_cd1f8193",
+        "filename": "src/tint/lang/wgsl/resolver/subgroups_extension_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-15T16:40:36Z",
+      "side": 1,
+      "message": "Sorry posted before I saw you reply.\n\nI think we\u0027re on the same page though. I\u0027ll update this CL to not produce any errors/warnings. I don\u0027t think a \"hey this won\u0027t do anything\" would be particularly useful to most people.",
+      "parentUuid": "44cb8118_1c5c1222",
+      "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
