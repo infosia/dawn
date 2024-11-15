@@ -1395,10 +1395,16 @@ ShaderModuleBase* DeviceBase::APICreateShaderModule(const ShaderModuleDescriptor
     utils::TraceLabel label = utils::GetLabelForTrace(descriptor->label);
     TRACE_EVENT1(GetPlatform(), General, "DeviceBase::APICreateShaderModule", "label", label.label);
 
+    // Allow the use of the shader print extension if the toggle is enabled.
+    std::vector<tint::wgsl::Extension> internalExtensions;
+    if (IsToggleEnabled(Toggle::ShaderPrint)) {
+        internalExtensions.push_back(tint::wgsl::Extension::kChromiumInternalPrint);
+    }
+
     std::unique_ptr<OwnedCompilationMessages> compilationMessages(
         std::make_unique<OwnedCompilationMessages>());
     auto resultOrError =
-        CreateShaderModule(descriptor, /*internalExtensions=*/{}, &compilationMessages);
+        CreateShaderModule(descriptor, std::move(internalExtensions), &compilationMessages);
     if (resultOrError.IsSuccess()) {
         Ref<ShaderModuleBase> result = resultOrError.AcquireSuccess();
         EmitCompilationLog(result.Get());
