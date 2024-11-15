@@ -82,8 +82,7 @@ TEST_F(EnableDirectiveTest, SingleTrailingComma) {
 
 // Test a valid enable directive with multiple extensions.
 TEST_F(EnableDirectiveTest, Multiple) {
-    auto p = parser(
-        "enable f16, chromium_disable_uniformity_analysis, chromium_experimental_subgroups;");
+    auto p = parser("enable f16, chromium_disable_uniformity_analysis, subgroups;");
     p->enable_directive();
     EXPECT_FALSE(p->has_error()) << p->error();
     auto program = p->program();
@@ -101,7 +100,7 @@ TEST_F(EnableDirectiveTest, Multiple) {
     EXPECT_EQ(enable->extensions[1]->source.range.begin.column, 13u);
     EXPECT_EQ(enable->extensions[1]->source.range.end.line, 1u);
     EXPECT_EQ(enable->extensions[1]->source.range.end.column, 49u);
-    EXPECT_EQ(enable->extensions[2]->name, wgsl::Extension::kChromiumExperimentalSubgroups);
+    EXPECT_EQ(enable->extensions[2]->name, wgsl::Extension::kSubgroups);
     EXPECT_EQ(enable->extensions[2]->source.range.begin.line, 1u);
     EXPECT_EQ(enable->extensions[2]->source.range.begin.column, 51u);
     EXPECT_EQ(enable->extensions[2]->source.range.end.line, 1u);
@@ -112,8 +111,7 @@ TEST_F(EnableDirectiveTest, Multiple) {
 
 // Test a valid enable directive with multiple extensions.
 TEST_F(EnableDirectiveTest, MultipleTrailingComma) {
-    auto p = parser(
-        "enable f16, chromium_disable_uniformity_analysis, chromium_experimental_subgroups,;");
+    auto p = parser("enable f16, chromium_disable_uniformity_analysis, subgroups,;");
     p->enable_directive();
     EXPECT_FALSE(p->has_error()) << p->error();
     auto program = p->program();
@@ -131,7 +129,7 @@ TEST_F(EnableDirectiveTest, MultipleTrailingComma) {
     EXPECT_EQ(enable->extensions[1]->source.range.begin.column, 13u);
     EXPECT_EQ(enable->extensions[1]->source.range.end.line, 1u);
     EXPECT_EQ(enable->extensions[1]->source.range.end.column, 49u);
-    EXPECT_EQ(enable->extensions[2]->name, wgsl::Extension::kChromiumExperimentalSubgroups);
+    EXPECT_EQ(enable->extensions[2]->name, wgsl::Extension::kSubgroups);
     EXPECT_EQ(enable->extensions[2]->source.range.begin.line, 1u);
     EXPECT_EQ(enable->extensions[2]->source.range.begin.column, 51u);
     EXPECT_EQ(enable->extensions[2]->source.range.end.line, 1u);
