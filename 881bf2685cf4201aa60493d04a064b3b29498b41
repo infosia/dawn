@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f4f2bec_786ec844",
+        "filename": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-15T15:26:14Z",
+      "side": 1,
+      "message": "call this count?",
+      "range": {
+        "startLine": 148,
+        "startChar": 38,
+        "endLine": 148,
+        "endChar": 39
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "dc32120a_af7dd802",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.cc",
+              "range": {
+                "startLine": 148,
+                "startChar": 0,
+                "endLine": 149,
+                "endChar": 0
+              },
+              "replacement": "                    // Make the first count invocations in the group perform the arrayed stores.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "881bf2685cf4201aa60493d04a064b3b29498b41",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
