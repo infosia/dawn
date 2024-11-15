@@ -33,6 +33,23 @@
       "message": "Looks good so far!",
       "revId": "22a46126bba36bbf2ff5148c82790c6eac77c102",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02ece400_3275b5c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-15T15:28:55Z",
+      "side": 1,
+      "message": "the bug id is wrong. typo?",
+      "revId": "22a46126bba36bbf2ff5148c82790c6eac77c102",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
