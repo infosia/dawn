@@ -33,6 +33,42 @@
       "message": "LGTM",
       "revId": "05f75e69f634880d491492a0cbcd2dbeb9a5ece1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eed5b02b_7b1174b5",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3686,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-15T18:55:51Z",
+      "side": 1,
+      "message": "\u003e do not use \u0027std::endl\u0027 with streams; use \u0027\\n\u0027 instead (https://clang.llvm.org/extra/clang-tidy/checks/performance/avoid-endl.html)\n\u003e \n\u003e (Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)\n\nPlease fix especially since you use `\\n` later in line 3692 already.",
+      "parentUuid": "a7cbf610_848e09fe",
+      "revId": "05f75e69f634880d491492a0cbcd2dbeb9a5ece1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e974893e_ee0882e9",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3689,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-15T18:55:51Z",
+      "side": 1,
+      "message": "\u003e do not use \u0027std::endl\u0027 with streams; use \u0027\\n\u0027 instead (https://clang.llvm.org/extra/clang-tidy/checks/performance/avoid-endl.html)\n\u003e \n\u003e (Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)\n\nPlease fix.",
+      "parentUuid": "28e38d39_abd9d581",
+      "revId": "05f75e69f634880d491492a0cbcd2dbeb9a5ece1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
