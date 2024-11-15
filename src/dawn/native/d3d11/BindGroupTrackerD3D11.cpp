@@ -232,7 +232,7 @@ MaybeError BindGroupTracker::ApplyBindGroup(BindGroupIndex index) {
                         }
                         break;
                     }
-                    case wgpu::BufferBindingType::Undefined:
+                    case wgpu::BufferBindingType::BindingNotUsed:
                         DAWN_UNREACHABLE();
                 }
                 return {};
@@ -370,7 +370,7 @@ void ComputePassBindGroupTracker::UnapplyComputeBindings(BindGroupIndex index) {
                         deviceContext->CSSetShaderResources(bindingSlot, 1, &nullSRV);
                         break;
                     }
-                    case wgpu::BufferBindingType::Undefined:
+                    case wgpu::BufferBindingType::BindingNotUsed:
                         DAWN_UNREACHABLE();
                 }
             },
@@ -495,7 +495,7 @@ MaybeError RenderPassBindGroupTracker::Apply() {
                         }
                         case wgpu::BufferBindingType::Uniform:
                         case wgpu::BufferBindingType::ReadOnlyStorage:
-                        case wgpu::BufferBindingType::Undefined: {
+                        case wgpu::BufferBindingType::BindingNotUsed: {
                             break;
                         }
                     }
