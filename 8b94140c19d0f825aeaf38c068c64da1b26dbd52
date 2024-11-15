@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af622d2a_19fa6610",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000896
+      },
+      "writtenOn": "2024-11-15T22:25:21Z",
+      "side": 1,
+      "message": "FYI, I just landed a manual CTS roll that adds a bunch of texture builtin expectations, https://dawn-review.googlesource.com/c/dawn/+/214876, so this might need to be rebased. The next nightly roll, if is succeeds, will likely refine my overly broad suppressions, since I know my change added in some unexpected passes.",
+      "revId": "8b94140c19d0f825aeaf38c068c64da1b26dbd52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
