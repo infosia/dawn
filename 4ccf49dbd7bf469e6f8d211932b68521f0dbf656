@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b9e1faa_e16f2cab",
+        "filename": "test/tint/bug/tint/379127084.wgsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-15T02:40:40Z",
+      "side": 1,
+      "message": "This file is the Graphite-generated WGSL that resulted in the FXC failure that this CL fixes.",
+      "revId": "4ccf49dbd7bf469e6f8d211932b68521f0dbf656",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
