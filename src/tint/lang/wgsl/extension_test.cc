@@ -62,7 +62,6 @@ static constexpr Case kValidCases[] = {
     {"chromium_experimental_pixel_local", Extension::kChromiumExperimentalPixelLocal},
     {"chromium_experimental_push_constant", Extension::kChromiumExperimentalPushConstant},
     {"chromium_experimental_subgroup_matrix", Extension::kChromiumExperimentalSubgroupMatrix},
-    {"chromium_experimental_subgroups", Extension::kChromiumExperimentalSubgroups},
     {"chromium_internal_graphite", Extension::kChromiumInternalGraphite},
     {"chromium_internal_input_attachments", Extension::kChromiumInternalInputAttachments},
     {"chromium_internal_relaxed_uniform_layout", Extension::kChromiumInternalRelaxedUniformLayout},
