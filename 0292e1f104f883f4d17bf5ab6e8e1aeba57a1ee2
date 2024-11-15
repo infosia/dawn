@@ -122,6 +122,24 @@
       "parentUuid": "44cb8118_1c5c1222",
       "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bf9d7be_2c3b0452",
+        "filename": "src/tint/lang/wgsl/resolver/subgroups_extension_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-15T16:58:34Z",
+      "side": 1,
+      "message": "Done, PTAL.",
+      "parentUuid": "584b8cfc_cd1f8193",
+      "revId": "0292e1f104f883f4d17bf5ab6e8e1aeba57a1ee2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
