@@ -68,6 +68,15 @@ wgpu::TextureViewDescriptor CreateDefaultViewDescriptor(wgpu::TextureViewDimensi
     return descriptor;
 }
 
+wgpu::TextureView Create2DTextureView(wgpu::Texture texture, wgpu::YCbCrVkDescriptor yCbCrDesc) {
+    wgpu::TextureViewDescriptor textureDesc =
+        CreateDefaultViewDescriptor(wgpu::TextureViewDimension::e2D);
+    textureDesc.arrayLayerCount = 1;
+    textureDesc.nextInChain = &yCbCrDesc;
+
+    return texture.CreateView(&textureDesc);
+}
+
 class YCbCrInfoWithoutFeatureValidationTest : public ValidationTest {
     void SetUp() override {
         ValidationTest::SetUp();
@@ -130,6 +139,43 @@ TEST_F(YCbCrInfoWithFeatureValidationTest, YCbCrSamplerSupported) {
 // Tests that creating a bind group layout with a valid static sampler succeeds if the
 // required feature is enabled.
 TEST_F(YCbCrInfoWithFeatureValidationTest, CreateBindGroupWithYCbCrSamplerSupported) {
+    std::vector<wgpu::BindGroupLayoutEntry> entries;
+
+    wgpu::BindGroupLayoutEntry binding0 = {};
+    binding0.binding = 0;
+    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+
+    wgpu::SamplerDescriptor samplerDesc = {};
+    wgpu::YCbCrVkDescriptor yCbCrDesc = {};
+    samplerDesc.nextInChain = &yCbCrDesc;
+
+    staticSamplerBinding.sampler = device.CreateSampler(&samplerDesc);
+    staticSamplerBinding.sampledTextureBinding = 1;
+    binding0.nextInChain = &staticSamplerBinding;
+    entries.push_back(binding0);
+
+    wgpu::BindGroupLayoutEntry binding1 = {};
+    binding1.binding = 1;
+    binding1.texture.sampleType = wgpu::TextureSampleType::Float;
+    binding1.texture.viewDimension = wgpu::TextureViewDimension::e2D;
+    binding1.texture.multisampled = false;
+    entries.push_back(binding1);
+
+    wgpu::BindGroupLayoutDescriptor layoutDesc = {};
+    layoutDesc.entryCount = entries.size();
+    layoutDesc.entries = entries.data();
+
+    wgpu::BindGroupLayout layout = device.CreateBindGroupLayout(&layoutDesc);
+
+    wgpu::Texture texture = Create2DTexture(device);
+    wgpu::TextureView textureView = Create2DTextureView(texture, yCbCrDesc);
+
+    utils::MakeBindGroup(device, layout, {{1, textureView}});
+}
+
+// Verify that creating a bind group layout fails with a static sampler binding that has no texture
+// binding.
+TEST_F(YCbCrInfoWithFeatureValidationTest, CreateBindGroupWithYCbCrSamplerNoTextureBinding) {
     wgpu::BindGroupLayoutEntry binding = {};
     binding.binding = 0;
     wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
@@ -145,13 +191,95 @@ TEST_F(YCbCrInfoWithFeatureValidationTest, CreateBindGroupWithYCbCrSamplerSuppor
     desc.entryCount = 1;
     desc.entries = &binding;
 
-    wgpu::BindGroupLayout layout = device.CreateBindGroupLayout(&desc);
+    ASSERT_DEVICE_ERROR(device.CreateBindGroupLayout(&desc));
+}
 
-    wgpu::BindGroupDescriptor descriptor;
-    descriptor.layout = layout;
-    descriptor.entryCount = 0;
+// Verifies that creating a bind group layout fails with a static sampler binding that refers to an
+// invalid binding index for texture binding.
+TEST_F(YCbCrInfoWithFeatureValidationTest,
+       CreateBindGroupWithYCbCrSamplerInvalidTextureBindingIndex) {
+    wgpu::BindGroupLayoutEntry binding = {};
+    binding.binding = 0;
+    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
 
-    device.CreateBindGroup(&descriptor);
+    wgpu::SamplerDescriptor samplerDesc = {};
+    wgpu::YCbCrVkDescriptor yCbCrDesc = {};
+    samplerDesc.nextInChain = &yCbCrDesc;
+
+    staticSamplerBinding.sampler = device.CreateSampler(&samplerDesc);
+    staticSamplerBinding.sampledTextureBinding = 1;
+
+    binding.nextInChain = &staticSamplerBinding;
+
+    wgpu::BindGroupLayoutDescriptor desc = {};
+    desc.entryCount = 1;
+    desc.entries = &binding;
+
+    ASSERT_DEVICE_ERROR(device.CreateBindGroupLayout(&desc));
+}
+
+// Verifies that creating a bind group layout fails with a static sampler binding that refers to a
+// binding that is not a texture binding.
+TEST_F(YCbCrInfoWithFeatureValidationTest,
+       CreateBindGroupWithYCbCrSamplerInvalidTextureBindingType) {
+    std::vector<wgpu::BindGroupLayoutEntry> entries;
+
+    wgpu::BindGroupLayoutEntry binding0 = {};
+    binding0.binding = 0;
+    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+
+    wgpu::SamplerDescriptor samplerDesc = {};
+    wgpu::YCbCrVkDescriptor yCbCrDesc = {};
+    samplerDesc.nextInChain = &yCbCrDesc;
+
+    staticSamplerBinding.sampler = device.CreateSampler(&samplerDesc);
+    staticSamplerBinding.sampledTextureBinding = 1;
+    binding0.nextInChain = &staticSamplerBinding;
+    entries.push_back(binding0);
+
+    wgpu::BindGroupLayoutEntry binding1 = {};
+    binding1.binding = 1;
+    binding1.sampler.type = wgpu::SamplerBindingType::Filtering;
+    entries.push_back(binding1);
+
+    wgpu::BindGroupLayoutDescriptor layoutDesc = {};
+    layoutDesc.entryCount = entries.size();
+    layoutDesc.entries = entries.data();
+
+    ASSERT_DEVICE_ERROR(device.CreateBindGroupLayout(&layoutDesc));
+}
+
+// Verify that creating a bind group layout with a valid static sampler succeeds if the
+// required feature is enabled.
+TEST_F(YCbCrInfoWithFeatureValidationTest, CreateBindGroupWithYCbCrSamplerDuplicateSamplers) {
+    std::vector<wgpu::BindGroupLayoutEntry> entries;
+
+    wgpu::SamplerDescriptor samplerDesc = {};
+    wgpu::YCbCrVkDescriptor yCbCrDesc = {};
+    samplerDesc.nextInChain = &yCbCrDesc;
+
+    auto& binding0 = entries.emplace_back();
+    binding0.binding = 0;
+    wgpu::StaticSamplerBindingLayout staticSamplerBinding = {};
+    staticSamplerBinding.sampler = device.CreateSampler(&samplerDesc);
+    staticSamplerBinding.sampledTextureBinding = 1;
+    binding0.nextInChain = &staticSamplerBinding;
+
+    auto& binding1 = entries.emplace_back();
+    binding1.binding = 1;
+    binding1.texture.sampleType = wgpu::TextureSampleType::Float;
+    binding1.texture.viewDimension = wgpu::TextureViewDimension::e2D;
+    binding1.texture.multisampled = false;
+
+    auto& binding2 = entries.emplace_back();
+    binding2.binding = 2;
+    binding2.nextInChain = &staticSamplerBinding;
+
+    wgpu::BindGroupLayoutDescriptor layoutDesc = {};
+    layoutDesc.entryCount = entries.size();
+    layoutDesc.entries = entries.data();
+
+    ASSERT_DEVICE_ERROR(device.CreateBindGroupLayout(&layoutDesc));
 }
 
 // Verifies that creation of a correctly-specified bind group for a layout that
@@ -173,23 +301,36 @@ TEST_F(YCbCrInfoWithFeatureValidationTest, CreateBindGroupWithSamplerAndStaticSa
     samplerDesc.nextInChain = &yCbCrDesc;
 
     staticSamplerBinding.sampler = device.CreateSampler(&samplerDesc);
+    staticSamplerBinding.sampledTextureBinding = 2;
     binding1.nextInChain = &staticSamplerBinding;
     entries.push_back(binding1);
 
+    wgpu::BindGroupLayoutEntry binding2 = {};
+    binding2.binding = 2;
+    binding2.texture.sampleType = wgpu::TextureSampleType::Float;
+    binding2.texture.viewDimension = wgpu::TextureViewDimension::e2D;
+    binding2.texture.multisampled = false;
+    entries.push_back(binding2);
+
     wgpu::BindGroupLayoutDescriptor desc = {};
-    desc.entryCount = 2;
+    desc.entryCount = entries.size();
     desc.entries = entries.data();
 
     wgpu::BindGroupLayout layout = device.CreateBindGroupLayout(&desc);
 
-    wgpu::SamplerDescriptor samplerDesc0;
-    samplerDesc0.minFilter = wgpu::FilterMode::Linear;
-    utils::MakeBindGroup(device, layout, {{0, device.CreateSampler(&samplerDesc0)}});
+    wgpu::SamplerDescriptor dynamicSamplerDesc;
+    dynamicSamplerDesc.minFilter = wgpu::FilterMode::Linear;
+
+    wgpu::Texture texture = Create2DTexture(device);
+    wgpu::TextureView textureView = Create2DTextureView(texture, yCbCrDesc);
+
+    utils::MakeBindGroup(device, layout,
+                         {{0, device.CreateSampler(&dynamicSamplerDesc)}, {2, textureView}});
 }
 
 // Verifies that creation of a bind group with the correct number of entries for a layout that has a
-// sampler and a static sampler raises an error if the entry is specified at the
-// index of the static sampler rather than that of the sampler.
+// sampler and a static sampler raises an error if the entry is specified at the index of the static
+// sampler rather than that of the sampler.
 TEST_F(YCbCrInfoWithFeatureValidationTest, BindGroupCreationForSamplerBindingTypeCausesError) {
     std::vector<wgpu::BindGroupLayoutEntry> entries;
 
@@ -207,19 +348,31 @@ TEST_F(YCbCrInfoWithFeatureValidationTest, BindGroupCreationForSamplerBindingTyp
     samplerDesc.nextInChain = &yCbCrDesc;
 
     staticSamplerBinding.sampler = device.CreateSampler(&samplerDesc);
+    staticSamplerBinding.sampledTextureBinding = 2;
     binding1.nextInChain = &staticSamplerBinding;
     entries.push_back(binding1);
 
+    wgpu::BindGroupLayoutEntry binding2 = {};
+    binding2.binding = 2;
+    binding2.texture.sampleType = wgpu::TextureSampleType::Float;
+    binding2.texture.viewDimension = wgpu::TextureViewDimension::e2D;
+    binding2.texture.multisampled = false;
+    entries.push_back(binding2);
+
     wgpu::BindGroupLayoutDescriptor desc = {};
-    desc.entryCount = 2;
+    desc.entryCount = entries.size();
     desc.entries = entries.data();
 
     wgpu::BindGroupLayout layout = device.CreateBindGroupLayout(&desc);
 
     wgpu::SamplerDescriptor samplerDesc0;
     samplerDesc0.minFilter = wgpu::FilterMode::Linear;
-    ASSERT_DEVICE_ERROR(
-        utils::MakeBindGroup(device, layout, {{1, device.CreateSampler(&samplerDesc0)}}));
+
+    wgpu::Texture texture = Create2DTexture(device);
+    wgpu::TextureView textureView = Create2DTextureView(texture, yCbCrDesc);
+
+    ASSERT_DEVICE_ERROR(utils::MakeBindGroup(
+        device, layout, {{1, device.CreateSampler(&samplerDesc0)}, {2, textureView}}));
 }
 
 // Tests that creating a texture view with a valid ycbcr vulkan descriptor succeeds if the
