@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f616546_40a81ef7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-15T14:13:01Z",
+      "side": 1,
+      "message": "Cherry-pick patch for M132 Beta (branch 6834)",
+      "revId": "c470ec2d84596edd64886fdfbe9b4ba3d367fc26",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
