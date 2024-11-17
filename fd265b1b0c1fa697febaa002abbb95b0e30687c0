@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20240724_a5a8e147",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-17T17:26:20Z",
+      "side": 1,
+      "message": "PTAL. Give a good look at how I marked things as Load, Store, etc. I _think_ I grouped them correctly, but second and third checks are good.\n\nThis removes about 3.5k lines of generated output from the end-to-end tests.",
+      "revId": "fd265b1b0c1fa697febaa002abbb95b0e30687c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
