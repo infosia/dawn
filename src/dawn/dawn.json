@@ -2542,7 +2542,8 @@
             {"value": 53, "name": "dawn load resolve texture", "tags": ["dawn"]},
             {"value": 54, "name": "dawn partial load resolve texture", "tags": ["dawn"]},
             {"value": 55, "name": "multi draw indirect", "tags": ["dawn"]},
-            {"value": 56, "name": "clip distances", "tags": ["dawn"]}
+            {"value": 56, "name": "clip distances", "tags": ["dawn"]},
+            {"value": 57, "name": "dawn texel copy buffer 4 bytes aligned", "tags": ["dawn", "native"]}
         ]
     },
     "filter mode": {
