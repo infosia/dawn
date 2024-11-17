@@ -185,6 +185,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (formatSupport & D3D11_FORMAT_SUPPORT_TYPED_UNORDERED_ACCESS_VIEW) {
         EnableFeature(Feature::BGRA8UnormStorage);
     }
+
+    EnableFeature(Feature::DawnTexelCopyBuffer4BytesAligned);
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {

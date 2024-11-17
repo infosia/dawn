@@ -1627,6 +1627,7 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         case wgpu::FeatureName::YCbCrVulkanSamplers:
         case wgpu::FeatureName::DawnLoadResolveTexture:
         case wgpu::FeatureName::DawnPartialLoadResolveTexture:
+        case wgpu::FeatureName::DawnTexelCopyBuffer4BytesAligned:
             return false;
     }
     return false;
