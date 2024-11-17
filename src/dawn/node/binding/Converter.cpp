@@ -1573,6 +1573,7 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         CASE(DualSourceBlending, kDualSourceBlending);
         CASE(ClipDistances, kClipDistances);
         CASE(ChromiumExperimentalImmediateData, kChromiumExperimentalImmediateData);
+        CASE(DawnTexelCopyBuffer4BytesAligned, kDawnTexelCopyBuffer4BytesAligned);
 
 #undef CASE
 
