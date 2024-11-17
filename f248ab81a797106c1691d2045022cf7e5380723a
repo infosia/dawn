@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfcd20f7_32b714d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2024-11-17T17:18:09Z",
+      "side": 1,
+      "message": "Note: when trying to run the generated webgpu_dawn.dll, I get teh message \"DXC dlls were built, but are not available\" (from [1]). Does this mean the build workflow fails to package the dll in question?\n\n[1]: https://github.com/google/dawn/blob/3fc6432bcc2fcb61fbfbfe37a0adafc62d17dad6/src/dawn/native/d3d12/BackendD3D12.cpp#L130",
+      "revId": "f248ab81a797106c1691d2045022cf7e5380723a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
