@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3831cb4_e478da22",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 1598,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-11-17T11:58:28Z",
+      "side": 1,
+      "message": "This overrides more specific Skip expectations below, like:\n```\ncrbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_array_2d_coords:format\u003d\"rgba8unorm-srgb\";filt\u003d\"nearest\";modeU\u003d\"r\";modeV\u003d\"m\";offset\u003dtrue\n```\nWhich increases the runtime of CTS due to excessive logging.",
+      "range": {
+        "startLine": 1598,
+        "startChar": 0,
+        "endLine": 1598,
+        "endChar": 102
+      },
+      "revId": "22fc5cd5bf634ecaf217d72f8c9dc33e5a1db50b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
