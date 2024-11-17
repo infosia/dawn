@@ -253,6 +253,9 @@ struct Options {
     /// Set to `true` to disable workgroup memory zero initialization
     bool disable_workgroup_init = false;
 
+    /// Set to `true` to disable demote to helper transform
+    bool disable_demote_to_helper = false;
+
     /// Set to `true` to disable the polyfills on integer division and modulo.
     bool disable_polyfill_integer_div_mod = false;
 
@@ -278,6 +281,7 @@ struct Options {
     TINT_REFLECT(Options,
                  disable_robustness,
                  disable_workgroup_init,
+                 disable_demote_to_helper,
                  disable_polyfill_integer_div_mod,
                  version,
                  first_vertex_offset,

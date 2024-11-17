@@ -444,6 +444,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::MetalEnableVertexPulling, true);
     }
 
+    deviceToggles->Default(Toggle::DisableDemoteToHelper, false);
+    // need to test for metal 2.3+
+    if ((true)) {
+        deviceToggles->Default(Toggle::DisableDemoteToHelper, true);
+    }
+
     // TODO(crbug.com/dawn/846): tighten this workaround when the driver bug is fixed.
     deviceToggles->Default(Toggle::AlwaysResolveIntoZeroLevelAndLayer, true);
 
