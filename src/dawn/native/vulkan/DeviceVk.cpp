@@ -446,6 +446,13 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         featuresChain.Add(&usedKnobs.zeroInitializeWorkgroupMemoryFeatures);
     }
 
+    if (mDeviceInfo.HasExt(DeviceExt::DemoteToHelperInvocation)) {
+        DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::DemoteToHelperInvocation));
+        //
+        usedKnobs.demoteToHelperInvocationFeatures = mDeviceInfo.demoteToHelperInvocationFeatures;
+        featuresChain.Add(&usedKnobs.demoteToHelperInvocationFeatures);
+    }
+
     if (mDeviceInfo.HasExt(DeviceExt::ShaderIntegerDotProduct)) {
         DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::ShaderIntegerDotProduct));
 
@@ -609,6 +616,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     // When we have DeviceExt::GetPhysicalDeviceProperties2, use features2 so that features not
     // covered by VkPhysicalDeviceFeatures can be enabled.
     if (mDeviceInfo.HasExt(DeviceExt::GetPhysicalDeviceProperties2)) {
+        DAWN_DEBUG() << " physical device features 2 used";
         features2.features = usedKnobs.features;
         createInfo.pNext = &features2;
         createInfo.pEnabledFeatures = nullptr;
