@@ -9,13 +9,12 @@ Texture2D tex : register(t2);
 [numthreads(1, 1, 1)]
 void compute_main() {
   uint2 v = coords[0u].xy;
-  uint v_1 = level[0u].x;
-  uint3 v_2 = (0u).xxx;
-  tex.GetDimensions(0u, v_2[0u], v_2[1u], v_2[2u]);
-  uint v_3 = min(v_1, (v_2.z - 1u));
-  uint3 v_4 = (0u).xxx;
-  tex.GetDimensions(uint(v_3), v_4[0u], v_4[1u], v_4[2u]);
-  int2 v_5 = int2(min(v, (v_4.xy - (1u).xx)));
-  float res = tex.Load(int3(v_5, int(v_3))).x;
+  uint3 v_1 = (0u).xxx;
+  tex.GetDimensions(0u, v_1[0u], v_1[1u], v_1[2u]);
+  uint v_2 = min(level[0u].x, (v_1.z - 1u));
+  uint3 v_3 = (0u).xxx;
+  tex.GetDimensions(uint(v_2), v_3[0u], v_3[1u], v_3[2u]);
+  int2 v_4 = int2(min(v, (v_3.xy - (1u).xx)));
+  float res = tex.Load(int3(v_4, int(v_2))).x;
 }
 

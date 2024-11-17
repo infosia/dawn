@@ -37,11 +37,6 @@ namespace tint::core::ir::transform {
 
 namespace {
 
-/// Access is an enumerator of memory access operations
-enum class Access : uint8_t { kLoad, kStore };
-/// Accesses is a set of of Access
-using Accesses = EnumSet<Access>;
-
 /// PIMPL state for the transform.
 struct State {
     /// The IR module.
@@ -60,7 +55,7 @@ struct State {
     // marked-for or ruled-out-for inlining.
     Hashset<ir::InstructionResult*, 32> pending_resolution{};
     // The accesses of the values in pending_resolution.
-    Access pending_access = Access::kLoad;
+    Call::Access pending_access = Call::Access::kLoad;
 
     /// Process the module.
     void Process() {
@@ -129,14 +124,14 @@ struct State {
                 }
             }
 
-            if (accesses.Contains(Access::kStore)) {  // Note: Also handles load + store
+            if (accesses.Contains(Call::Access::kStore)) {  // Note: Also handles load + store
                 PutPendingInLets();
-                pending_access = Access::kStore;
+                pending_access = Call::Access::kStore;
                 inst = MaybePutInLet(inst, accesses);
-            } else if (accesses.Contains(Access::kLoad)) {
-                if (pending_access != Access::kLoad) {
+            } else if (accesses.Contains(Call::Access::kLoad)) {
+                if (pending_access != Call::Access::kLoad) {
                     PutPendingInLets();
-                    pending_access = Access::kLoad;
+                    pending_access = Call::Access::kLoad;
                 }
                 inst = MaybePutInLet(inst, accesses);
             }
@@ -144,27 +139,22 @@ struct State {
     }
 
     /// @returns the accesses that may be performed by the instruction @p inst
-    Accesses AccessesFor(ir::Instruction* inst) {
-        return tint::Switch<Accesses>(
+    Call::Accesses AccessesFor(ir::Instruction* inst) {
+        return tint::Switch<Call::Accesses>(
             inst,  //
             [&](const ir::Load* l) {
                 // Always inline things in the `handle` address space
                 if (l->From()->Type()->As<core::type::Pointer>()->AddressSpace() ==
                     core::AddressSpace::kHandle) {
-                    return Accesses{};
+                    return Call::Accesses{};
                 }
-                return Accesses{Access::kLoad};
-            },                                                              //
-            [&](const ir::LoadVectorElement*) { return Access::kLoad; },    //
-            [&](const ir::Store*) { return Access::kStore; },               //
-            [&](const ir::StoreVectorElement*) { return Access::kStore; },  //
-            [&](const ir::Call*) {
-                if (inst->IsAnyOf<core::ir::Bitcast>()) {
-                    return Accesses{};
-                }
-                return Accesses{Access::kLoad, Access::kStore};
-            },
-            [&](Default) { return Accesses{}; });
+                return Call::Accesses{Call::Access::kLoad};
+            },                                                                    //
+            [&](const ir::LoadVectorElement*) { return Call::Access::kLoad; },    //
+            [&](const ir::Store*) { return Call::Access::kStore; },               //
+            [&](const ir::StoreVectorElement*) { return Call::Access::kStore; },  //
+            [&](const ir::Call* c) { return c->GetRequiredAccessRestrictions(); },
+            [&](Default) { return Call::Accesses{}; });
     }
 
     void PutPendingInLets() {
@@ -174,12 +164,12 @@ struct State {
         pending_resolution.Clear();
     }
 
-    core::ir::Instruction* MaybePutInLet(core::ir::Instruction* inst, Accesses& accesses) {
+    core::ir::Instruction* MaybePutInLet(core::ir::Instruction* inst, Call::Accesses& accesses) {
         if (auto* result = inst->Result(0)) {
             auto& usages = result->UsagesUnsorted();
             switch (result->NumUsages()) {
                 case 0:  // No usage
-                    if (accesses.Contains(Access::kStore)) {
+                    if (accesses.Contains(Call::Access::kStore)) {
                         // This instruction needs to be emitted but has no uses, so we need to
                         // make sure that it will be used in a statement. Function call
                         // instructions with no uses will be emitted as call statements, so we

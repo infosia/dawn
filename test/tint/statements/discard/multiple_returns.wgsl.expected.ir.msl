@@ -16,20 +16,19 @@ fragment void tint_symbol(device int* non_uniform_global [[buffer(0)]], device f
   if (((*tint_module_vars.non_uniform_global) < 0)) {
     (*tint_module_vars.continue_execution) = false;
   }
-  float const v = dfdx(1.0f);
   if ((*tint_module_vars.continue_execution)) {
-    (*tint_module_vars.output) = v;
+    (*tint_module_vars.output) = dfdx(1.0f);
   }
   if (((*tint_module_vars.output) < 0.0f)) {
     int i = 0;
     {
       while(true) {
         TINT_ISOLATE_UB(tint_volatile_false)
-        float const v_1 = (*tint_module_vars.output);
-        if ((v_1 > float(i))) {
-          float const v_2 = float(i);
+        float const v = (*tint_module_vars.output);
+        if ((v > float(i))) {
+          float const v_1 = float(i);
           if ((*tint_module_vars.continue_execution)) {
-            (*tint_module_vars.output) = v_2;
+            (*tint_module_vars.output) = v_1;
           }
           if (!((*tint_module_vars.continue_execution))) {
             discard_fragment();

@@ -69,6 +69,9 @@ class BuiltinCall final : public Castable<BuiltinCall, core::ir::BuiltinCall> {
         return msl::intrinsic::Dialect::kData;
     }
 
+    /// @returns an access information for the function
+    Accesses GetRequiredAccessRestrictions() const override;
+
   private:
     BuiltinFn func_;
 };

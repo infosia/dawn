@@ -36,6 +36,14 @@ namespace tint::core::ir {
 /// A Call instruction in the IR.
 class Call : public Castable<Call, OperandInstruction<4, 1>> {
   public:
+    /// Kinds of memory access the call will do.
+    enum class Access {
+        kLoad,
+        kStore,
+    };
+    /// Accesses is a set of of Access
+    using Accesses = EnumSet<Access>;
+
     ~Call() override;
 
     /// @returns the offset of the arguments in Operands()
@@ -56,6 +64,10 @@ class Call : public Castable<Call, OperandInstruction<4, 1>> {
     /// Append a new argument to the argument list for this call instruction.
     /// @param arg the argument value to append
     void AppendArg(ir::Value* arg) { AddOperand(operands_.Length(), arg); }
+
+    virtual Accesses GetRequiredAccessRestrictions() const {
+        return Accesses{Access::kLoad, Access::kStore};
+    }
 
   protected:
     /// Constructor

@@ -28,4 +28,53 @@ const char* str(BuiltinFn i) {
     return "<unknown>";
 }
 
+tint::core::ir::Call::Accesses GetRequiredAccessRestrictions(BuiltinFn fn) {
+    switch (fn) {
+        case BuiltinFn::kArrayLength:
+        case BuiltinFn::kImageDrefGather:
+        case BuiltinFn::kImageFetch:
+        case BuiltinFn::kImageGather:
+        case BuiltinFn::kImageQuerySize:
+        case BuiltinFn::kImageQuerySizeLod:
+        case BuiltinFn::kImageRead:
+        case BuiltinFn::kImageSampleImplicitLod:
+        case BuiltinFn::kImageSampleExplicitLod:
+        case BuiltinFn::kImageSampleDrefImplicitLod:
+        case BuiltinFn::kImageSampleDrefExplicitLod:
+        case BuiltinFn::kSampledImage:
+            return core::ir::Call::Accesses{core::ir::Call::Access::kLoad};
+
+        case BuiltinFn::kImageWrite:
+            return core::ir::Call::Accesses{core::ir::Call::Access::kStore};
+
+        case BuiltinFn::kAtomicAnd:
+        case BuiltinFn::kAtomicCompareExchange:
+        case BuiltinFn::kAtomicExchange:
+        case BuiltinFn::kAtomicIadd:
+        case BuiltinFn::kAtomicIsub:
+        case BuiltinFn::kAtomicLoad:
+        case BuiltinFn::kAtomicOr:
+        case BuiltinFn::kAtomicSmax:
+        case BuiltinFn::kAtomicSmin:
+        case BuiltinFn::kAtomicStore:
+        case BuiltinFn::kAtomicUmax:
+        case BuiltinFn::kAtomicUmin:
+        case BuiltinFn::kAtomicXor:
+            return core::ir::Call::Accesses{core::ir::Call::Access::kLoad, core::ir::Call::Access::kStore};
+
+        case BuiltinFn::kDot:
+        case BuiltinFn::kMatrixTimesMatrix:
+        case BuiltinFn::kMatrixTimesScalar:
+        case BuiltinFn::kMatrixTimesVector:
+        case BuiltinFn::kSelect:
+        case BuiltinFn::kVectorTimesMatrix:
+        case BuiltinFn::kVectorTimesScalar:
+        case BuiltinFn::kSdot:
+        case BuiltinFn::kUdot:
+        case BuiltinFn::kNone:
+            break;
+    }
+    return core::ir::Call::Accesses{};
+}
+
 }  // namespace tint::spirv
