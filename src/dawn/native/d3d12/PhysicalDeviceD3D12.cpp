@@ -785,6 +785,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::D3D12PolyfillReflectVec2F32, true);
     }
 
+    // The default behavior of HLSL for discard is demote to helper.
+    deviceToggles->Default(Toggle::DisableDemoteToHelper, true);
+
     // Currently this workaround is needed on old Intel drivers and newer version of Windows 11.
     // See http://crbug.com/dawn/2308 for more information.
     if (gpu_info::IsIntel(vendorId)) {

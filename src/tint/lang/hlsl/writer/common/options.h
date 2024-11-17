@@ -195,6 +195,9 @@ struct Options {
     /// Set to `true` to disable workgroup memory zero initialization
     bool disable_workgroup_init = false;
 
+    /// Set to `true` to disable demote to helper transform
+    bool disable_demote_to_helper = false;
+
     /// Set to `true` to run the TruncateInterstageVariables transform.
     bool truncate_interstage_variables = false;
 
@@ -235,6 +238,7 @@ struct Options {
     TINT_REFLECT(Options,
                  disable_robustness,
                  disable_workgroup_init,
+                 disable_demote_to_helper,
                  truncate_interstage_variables,
                  polyfill_reflect_vec2_f32,
                  polyfill_dot_4x8_packed,

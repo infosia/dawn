@@ -32,6 +32,7 @@
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/vulkan/BackendVk.h"
 #include "dawn/native/vulkan/PhysicalDeviceVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
@@ -302,6 +303,12 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
             featuresChain.Add(
                 &info.zeroInitializeWorkgroupMemoryFeatures,
                 VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES);
+        }
+
+        if (info.extensions[DeviceExt::DemoteToHelperInvocation]) {
+            featuresChain.Add(
+                &info.demoteToHelperInvocationFeatures,
+                VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES_EXT);
         }
 
         if (info.extensions[DeviceExt::Robustness2]) {
