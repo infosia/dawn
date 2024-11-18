@@ -288,6 +288,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     deviceToggles->Default(Toggle::D3D11UseUnmonitoredFence, !mDeviceInfo.supportsMonitoredFence);
     deviceToggles->Default(Toggle::UseBlitForT2B, true);
 
+    // The default behavior of HLSL for discard is demote to helper.
+    deviceToggles->Default(Toggle::DisableDemoteToHelper, true);
+
     auto deviceId = GetDeviceId();
     auto vendorId = GetVendorId();
     // D3D11 ClearRenderTargetView() could be buggy with some old driver or GPUs. Intel Gen12+ GPUs

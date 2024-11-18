@@ -72,6 +72,8 @@ enum class Toggle {
     DisallowSpirv,
     DumpShaders,
     DisableWorkgroupInit,
+    DisableDemoteToHelper,
+    VulkanUseDemoteToHelperInvocationExtension,
     DisableSymbolRenaming,
     UseUserDefinedLabelsInBackend,
     UsePlaceholderFragmentInVertexOnlyPipeline,
