@@ -51,6 +51,24 @@
       ],
       "revId": "facd7dbffa3227192fd9faabd4e12fc416638df4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eea3eccd_783e5422",
+        "filename": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-18T20:21:52Z",
+      "side": 1,
+      "message": "I think I was trying to preserve the equality.",
+      "parentUuid": "76fb02e3_41de4e98",
+      "revId": "facd7dbffa3227192fd9faabd4e12fc416638df4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
