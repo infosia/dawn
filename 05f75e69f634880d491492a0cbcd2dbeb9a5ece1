@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cc37509_bfca79dc",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3686,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-18T02:02:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eed5b02b_7b1174b5",
+      "revId": "05f75e69f634880d491492a0cbcd2dbeb9a5ece1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e974893e_ee0882e9",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "\u003e do not use \u0027std::endl\u0027 with streams; use \u0027\\n\u0027 instead (https://clang.llvm.org/extra/clang-tidy/checks/performance/avoid-endl.html)\n\u003e \n\u003e (Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)\n\nPlease fix.",
       "parentUuid": "28e38d39_abd9d581",
+      "revId": "05f75e69f634880d491492a0cbcd2dbeb9a5ece1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e85b223e_361d39b4",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3689,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-18T02:02:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e974893e_ee0882e9",
       "revId": "05f75e69f634880d491492a0cbcd2dbeb9a5ece1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
