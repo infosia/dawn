@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20da4ea1_97261307",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-18T08:05:18Z",
+      "side": 1,
+      "message": "Without this fix many CL will be blocked on the bots.\n\nPTAL, thanks!",
+      "revId": "15048a1829569d3c191b8aa74b0c9852bd90f0af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
