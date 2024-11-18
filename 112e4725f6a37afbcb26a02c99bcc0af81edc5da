@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bf24c9f_ac4f9a80",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1000015
+      },
+      "writtenOn": "2024-11-18T20:47:53Z",
+      "side": 1,
+      "message": "Ah nice, I forgot we had this right here so we had a good spot to do the defaulting already. :)",
+      "range": {
+        "startLine": 979,
+        "startChar": 47,
+        "endLine": 979,
+        "endChar": 74
+      },
+      "revId": "112e4725f6a37afbcb26a02c99bcc0af81edc5da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
