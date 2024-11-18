@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6902f4ad_b6296699",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2024-11-18T14:22:37Z",
+      "side": 1,
+      "message": "Seems reasonable enough. Might be worth special casing count \u003d\u003d wg_size to avoid the generated if statement too.",
+      "revId": "facd7dbffa3227192fd9faabd4e12fc416638df4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76fb02e3_41de4e98",
+        "filename": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2024-11-18T14:22:37Z",
+      "side": 1,
+      "message": "Nit: local_index \u003c count",
+      "fixSuggestions": [
+        {
+          "fixId": "08222d8e_e6f8e93c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.cc",
+              "range": {
+                "startLine": 150,
+                "startChar": 0,
+                "endLine": 152,
+                "endChar": 0
+              },
+              "replacement": "                        b.If(b.LessThan(ty.bool_(), local_index,\n                                       b.Constant(ir.constant_values.Get(u32(count)))));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "facd7dbffa3227192fd9faabd4e12fc416638df4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
