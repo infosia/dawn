@@ -38,7 +38,7 @@ import("build/cmake_configure_file.gni")
 import("build/generate_version_include.gni")
 import("build/message_compiler.gni")
 
-dawn_dxc_gn_dir = "$dawn_dxc_dir/../gn"
+# dawn_dxc_gn_dir = "$dawn_dxc_dir/../gn"
 llvm_target_triple = "dxil-ms-dx"  # Force target triple
 llvm_version_major = 3
 llvm_version_minor = 7
@@ -586,7 +586,7 @@ template("dxc_module") {
     }
     if (is_win) {
       # DXC is built with multibyte character set, so it expects Win32 functions to map the ANSI ones, not the UNICODE ones.
-      configs -= [ "//build/config/win:unicode" ]
+      # configs -= [ "//build/config/win:unicode" ]
     }
     if (dawn_dxc_enable_asserts_in_ndebug && !is_debug) {
       # Do as CMake option "LLVM_ENABLE_ASSERTIONS" does: undef NDEBUG and define _DEBUG
@@ -801,6 +801,7 @@ template("tblgen") {
 
   built_target_action(target_name) {
     td_file = invoker.td_file
+    # print(invoker.tblgen_target)
     target = invoker.tblgen_target
     inputs = [ td_file ]
 
@@ -834,7 +835,16 @@ template("llvm_tablegen") {
                              "td_file",
                              "visibility",
                            ])
-    tblgen_target = ":llvm-tblgen($host_toolchain)"
+    # print("$host_toolchain")
+    # print(get_label_info("$host_toolchain", "root_out_dir"))
+    # print(get_label_info(":llvm-tblgen($host_toolchain)", "root_out_dir"))
+
+    # if (get_label_info("$host_toolchain", "name") == "") {
+    if (string_replace("$host_toolchain", "//", "") == "$host_toolchain") {
+      tblgen_target = ":llvm-tblgen"
+    } else {
+      tblgen_target = ":llvm-tblgen($host_toolchain)"
+    }
   }
 }
 
@@ -847,7 +857,11 @@ template("clang_tablegen") {
                              "td_file",
                              "visibility",
                            ])
-    tblgen_target = ":clang-tblgen($host_toolchain)"
+    if (string_replace("$host_toolchain", "//", "") == "$host_toolchain") {
+      tblgen_target = ":clang-tblgen"
+    } else {
+      tblgen_target = ":clang-tblgen($host_toolchain)"
+    }
   }
 }
 
@@ -2386,7 +2400,7 @@ executable("dxc") {
 
   if (is_win) {
     # DXC is built with multibyte character set, so it expects Win32 functions to map the ANSI ones, not the UNICODE ones.
-    configs -= [ "//build/config/win:unicode" ]
+    # configs -= [ "//build/config/win:unicode" ]
   }
 
   deps = [ ":dxclib" ]
