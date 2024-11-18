@@ -16,6 +16,23 @@
       "message": "Without this fix many CL will be blocked on the bots.\n\nPTAL, thanks!",
       "revId": "15048a1829569d3c191b8aa74b0c9852bd90f0af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80daad19_d45eeb3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-18T13:07:58Z",
+      "side": 1,
+      "message": "James PTAL as well (we need a 2-Googler review now)",
+      "revId": "15048a1829569d3c191b8aa74b0c9852bd90f0af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
