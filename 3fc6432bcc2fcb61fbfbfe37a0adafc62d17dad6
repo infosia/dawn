@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01eea6a3_3a1162d1",
+        "filename": "src/tint/lang/spirv/reader/ast_parser/function_conversion_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-18T17:18:00Z",
+      "side": 0,
+      "message": "Nice. Thanks for cleaning this up.  :-)",
+      "revId": "3fc6432bcc2fcb61fbfbfe37a0adafc62d17dad6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
