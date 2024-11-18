@@ -67,6 +67,24 @@
       "message": "Maybe just use `tint::wgsl::AllowedFeatures::Everything()`?\n\nI think we previously discussed that this would be the most friendly to developers (somebody else hit an issue where they couldn\u0027t use read-write storage textures because of this).",
       "revId": "22a46126bba36bbf2ff5148c82790c6eac77c102",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd6e2139_a1664b56",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T03:30:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb43fcf2_cb4be68c",
+      "revId": "22a46126bba36bbf2ff5148c82790c6eac77c102",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
