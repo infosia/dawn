@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fbd1079_80e2bd5c",
+        "filename": "src/tint/lang/core/ir/call.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8d320a2_28bf677d",
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90306de7_3859af87",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-11-18T16:00:03Z",
       "side": 1,
       "message": "`arrayLength()` and the texture query operations don\u0027t access memory and should be safe to inline.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa99c8d4_19395cb8",
+        "filename": "src/tint/lang/core/ir/core_builtin_call.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90306de7_3859af87",
       "range": {
         "startLine": 60,
         "startChar": 0,
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "816beea9_3c4a7fd7",
+        "filename": "src/tint/lang/core/ir/core_builtin_call.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a91146b_3c05969f",
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f84eca0_5c8ad083",
@@ -75,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8a347cf_57bc2cf4",
+        "filename": "src/tint/lang/core/ir/core_builtin_call.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f84eca0_5c8ad083",
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a065939_8c8cc0a1",
@@ -88,6 +166,30 @@
       "writtenOn": "2024-11-18T16:00:03Z",
       "side": 1,
       "message": "Derivative operations are sensitive to uniform control flow requirements and shouldn\u0027t be moved around.",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 34
+      },
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c89360c2_2c3cf6bf",
+        "filename": "src/tint/lang/core/ir/core_builtin_call.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a065939_8c8cc0a1",
       "range": {
         "startLine": 146,
         "startChar": 0,
@@ -121,6 +223,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c87093d_ab83880d",
+        "filename": "src/tint/lang/core/ir/core_builtin_call.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37625c9a_60a716da",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 36
+      },
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f9b898a_4e5283fd",
@@ -138,6 +264,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c55df55e_37d3292d",
+        "filename": "src/tint/lang/core/ir/transform/value_to_let.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f9b898a_4e5283fd",
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb794a18_9cdb9463",
@@ -151,6 +295,30 @@
       "writtenOn": "2024-11-18T16:00:03Z",
       "side": 1,
       "message": "Texture queries should be inlineable.",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 35
+      },
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49030ecf_88768e1c",
+        "filename": "src/tint/lang/glsl/builtin_fn.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb794a18_9cdb9463",
       "range": {
         "startLine": 155,
         "startChar": 0,
@@ -184,6 +352,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad1e0155_0fd885ed",
+        "filename": "src/tint/lang/hlsl/builtin_fn.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caf821e1_f7ac4a29",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 42
+      },
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c68655ff_3dc19c13",
@@ -201,6 +393,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d68ba80_73908a28",
+        "filename": "src/tint/lang/hlsl/builtin_fn.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c68655ff_3dc19c13",
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2949d4b3_96189f78",
@@ -214,6 +424,24 @@
       "writtenOn": "2024-11-18T16:00:03Z",
       "side": 1,
       "message": "`atomicLoad` is just a load.",
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6492205_9a7e3215",
+        "filename": "src/tint/lang/msl/builtin_fn.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2949d4b3_96189f78",
       "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -241,6 +469,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ff19378_2e34d50b",
+        "filename": "src/tint/lang/msl/builtin_fn.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6764dcc0_a5f77b9c",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 39
+      },
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "093ac7fe_30ca87d5",
@@ -254,6 +506,24 @@
       "writtenOn": "2024-11-18T16:00:03Z",
       "side": 1,
       "message": "OpArrayLength is just a query.",
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b70a1159_cd1dffe0",
+        "filename": "src/tint/lang/spirv/builtin_fn.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "093ac7fe_30ca87d5",
       "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -281,6 +551,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75ac7fd7_2f71dc92",
+        "filename": "src/tint/lang/spirv/builtin_fn.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79de6329_5d9266e8",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 43
+      },
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de5af476_cf25dd0d",
@@ -294,6 +588,24 @@
       "writtenOn": "2024-11-18T16:00:03Z",
       "side": 1,
       "message": "`atomicLoad` is just a load.",
+      "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "208985e2_e371ae14",
+        "filename": "src/tint/lang/spirv/builtin_fn.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-18T17:02:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de5af476_cf25dd0d",
       "revId": "39dc9f4a213c17a364ff17778d24f04922f65e51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
