@@ -15,9 +15,8 @@ void main() {
   if ((v.inner < 0)) {
     continue_execution = false;
   }
-  float v_2 = dFdx(1.0f);
   if (continue_execution) {
-    v_1.inner = v_2;
+    v_1.inner = dFdx(1.0f);
   }
   if (!(continue_execution)) {
     discard;

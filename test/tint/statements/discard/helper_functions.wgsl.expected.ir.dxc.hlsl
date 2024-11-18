@@ -9,9 +9,8 @@ void foo() {
 }
 
 void bar() {
-  float v = ddx(1.0f);
   if (continue_execution) {
-    output.Store(0u, asuint(v));
+    output.Store(0u, asuint(ddx(1.0f)));
   }
 }
 

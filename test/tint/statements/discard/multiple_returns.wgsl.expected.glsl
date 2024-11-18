@@ -15,19 +15,18 @@ void main() {
   if ((v.inner < 0)) {
     continue_execution = false;
   }
-  float v_2 = dFdx(1.0f);
   if (continue_execution) {
-    v_1.inner = v_2;
+    v_1.inner = dFdx(1.0f);
   }
   if ((v_1.inner < 0.0f)) {
     int i = 0;
     {
       while(true) {
-        float v_3 = v_1.inner;
-        if ((v_3 > float(i))) {
-          float v_4 = float(i);
+        float v_2 = v_1.inner;
+        if ((v_2 > float(i))) {
+          float v_3 = float(i);
           if (continue_execution) {
-            v_1.inner = v_4;
+            v_1.inner = v_3;
           }
           if (!(continue_execution)) {
             discard;
