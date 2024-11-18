@@ -190,6 +190,75 @@ TEST_F(SpirvWriterTest, WorkgroupVar_ZeroInitializeWithExtension) {
     EXPECT_INST("%v = OpVariable %_ptr_Workgroup_int Workgroup %4");
 }
 
+TEST_F(SpirvWriterTest, Discard_DemoteToHelperWithExtension) {
+    Options opts{};
+    opts.disable_demote_to_helper = false;
+    opts.use_demote_to_helper_invocation_extensions = true;
+
+    auto* v = b.Var("v", ty.ptr<private_, i32>());
+    v->SetInitializer(b.Constant(42_i));
+    mod.root_block->Append(v);
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Discard();
+        auto* load = b.Load(v);
+        auto* add = b.Add(ty.i32(), load, 1_i);
+
+        b.Store(v, add);
+        b.Return(func);
+    });
+
+    ASSERT_TRUE(Generate(opts)) << Error() << output_;
+    EXPECT_INST("OpDemoteToHelperInvocation");
+}
+
+TEST_F(SpirvWriterTest, Discard_DemoteToHelperAsTransform) {
+    Options opts{};
+    opts.disable_demote_to_helper = false;
+    opts.use_demote_to_helper_invocation_extensions = false;
+
+    auto* v = b.Var("v", ty.ptr<private_, i32>());
+    v->SetInitializer(b.Constant(42_i));
+    mod.root_block->Append(v);
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        b.Discard();
+        auto* load = b.Load(v);
+        auto* add = b.Add(ty.i32(), load, 1_i);
+
+        b.Store(v, add);
+        b.Return(func);
+    });
+
+    ASSERT_TRUE(Generate(opts)) << Error() << output_;
+    EXPECT_INST("continue_execution");
+}
+
+TEST_F(SpirvWriterTest, Discard_DemoteToHelperNonConformant) {
+    Options opts{};
+    opts.disable_demote_to_helper = true;
+    opts.use_demote_to_helper_invocation_extensions = false;
+
+    auto* v = b.Var("v", ty.ptr<private_, i32>());
+    v->SetInitializer(b.Constant(42_i));
+    mod.root_block->Append(v);
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        auto* load = b.Load(v);
+        auto* add = b.Add(ty.i32(), load, 1_i);
+        /// b.Discard();
+
+        b.Store(v, add);
+        b.Return(func);
+    });
+
+    ASSERT_TRUE(Generate(opts)) << Error() << output_;
+    EXPECT_INST("OpCapability");
+}
+
 TEST_F(SpirvWriterTest, StorageVar_ReadOnly) {
     auto* v = b.Var("v", ty.ptr<storage, i32, read>());
     v->SetBindingPoint(0, 0);
