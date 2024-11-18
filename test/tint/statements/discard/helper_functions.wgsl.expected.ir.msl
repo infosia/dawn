@@ -14,9 +14,8 @@ void foo(tint_module_vars_struct tint_module_vars) {
 }
 
 void bar(tint_module_vars_struct tint_module_vars) {
-  float const v = dfdx(1.0f);
   if ((*tint_module_vars.continue_execution)) {
-    (*tint_module_vars.output) = v;
+    (*tint_module_vars.output) = dfdx(1.0f);
   }
 }
 

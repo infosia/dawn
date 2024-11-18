@@ -61,4 +61,8 @@ MemberBuiltinCall* MemberBuiltinCall::Clone(core::ir::CloneContext& ctx) {
                                                        std::move(new_args));
 }
 
+tint::core::ir::Call::Accesses MemberBuiltinCall::GetRequiredAccessRestrictions() const {
+    return hlsl::GetRequiredAccessRestrictions(func_);
+}
+
 }  // namespace tint::hlsl::ir

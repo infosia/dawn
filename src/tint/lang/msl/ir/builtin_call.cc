@@ -54,4 +54,8 @@ BuiltinCall* BuiltinCall::Clone(core::ir::CloneContext& ctx) {
     return ctx.ir.CreateInstruction<BuiltinCall>(new_result, func_, new_args);
 }
 
+tint::core::ir::Call::Accesses BuiltinCall::GetRequiredAccessRestrictions() const {
+    return msl::GetRequiredAccessRestrictions(func_);
+}
+
 }  // namespace tint::msl::ir

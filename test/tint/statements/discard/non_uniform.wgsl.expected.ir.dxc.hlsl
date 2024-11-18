@@ -6,9 +6,8 @@ void main() {
   if ((asint(non_uniform_global.Load(0u)) < int(0))) {
     continue_execution = false;
   }
-  float v = ddx(1.0f);
   if (continue_execution) {
-    output.Store(0u, asuint(v));
+    output.Store(0u, asuint(ddx(1.0f)));
   }
   if (!(continue_execution)) {
     discard;
