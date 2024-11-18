@@ -48,6 +48,7 @@
 #include "src/tint/lang/core/ir/continue.h"
 #include "src/tint/lang/core/ir/convert.h"
 #include "src/tint/lang/core/ir/core_builtin_call.h"
+#include "src/tint/lang/core/ir/discard.h"
 #include "src/tint/lang/core/ir/exit_if.h"
 #include "src/tint/lang/core/ir/exit_loop.h"
 #include "src/tint/lang/core/ir/exit_switch.h"
@@ -284,6 +285,11 @@ class Printer {
         }
 
         module_.PushCapability(SpvCapabilityShader);
+
+        if (options_.use_demote_to_helper_invocation_extensions) {
+            module_.PushExtension("SPV_EXT_demote_to_helper_invocation");
+            module_.PushCapability(SpvCapabilityDemoteToHelperInvocationEXT);
+        }
 
         if (options_.use_vulkan_memory_model) {
             module_.PushExtension("SPV_KHR_vulkan_memory_model");
@@ -922,6 +928,7 @@ class Printer {
                 [&](core::ir::Let* l) { EmitLet(l); },                                //
                 [&](core::ir::If* i) { EmitIf(i); },                                  //
                 [&](core::ir::Terminator* t) { EmitTerminator(t); },                  //
+                [&](core::ir::Discard* t) { EmitDiscard(t); },                        //
                 TINT_ICE_ON_NO_MATCH);
 
             // Set the name for the SPIR-V result ID if provided in the module.
@@ -930,6 +937,17 @@ class Printer {
                     module_.PushDebug(spv::Op::OpName, {Value(inst), Operand(name.Name())});
                 }
             }
+        }
+    }
+
+    void EmitDiscard(core::ir::Discard* t) {
+        [[maybe_unused]] auto* use = t;
+        if (options_.use_demote_to_helper_invocation_extensions) {
+            current_function_.PushInst(spv::Op::OpDemoteToHelperInvocationEXT, {});
+        } else {
+            // OpKill does not have the same behavioral symantics as demote to helper and will not
+            // be conformant.
+            current_function_.PushInst(spv::Op::OpKill, {});
         }
     }
 
