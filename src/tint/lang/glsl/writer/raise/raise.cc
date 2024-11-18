@@ -167,7 +167,9 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     }
 
     // DemoteToHelper must come before any transform that introduces non-core instructions.
-    RUN_TRANSFORM(core::ir::transform::DemoteToHelper, module);
+    if (!options.disable_demote_to_helper) {
+        RUN_TRANSFORM(core::ir::transform::DemoteToHelper, module);
+    }
 
     RUN_TRANSFORM(raise::BinaryPolyfill, module);
     // Must come after zero-init as it will add builtins
