@@ -1,6 +1,57 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "952ca804_ad6bdd07",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-19T13:12:57Z",
+      "side": 1,
+      "message": "nit: is this change on purpose?",
+      "revId": "f248ab81a797106c1691d2045022cf7e5380723a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ce657fe_19433d1d",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-19T13:12:57Z",
+      "side": 1,
+      "message": "Dawn no longer requires that Windows SDK version because we added back the #ifdef, is the change still needed to fix CI?",
+      "revId": "f248ab81a797106c1691d2045022cf7e5380723a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d575fe4_9fad44e1",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-19T13:12:57Z",
+      "side": 1,
+      "message": "Is it possible to make this a variable used both here and for `WIN10_SDK_VERSION`?",
+      "revId": "f248ab81a797106c1691d2045022cf7e5380723a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "dfcd20f7_32b714d4",
@@ -14,6 +65,23 @@
       "writtenOn": "2024-11-17T17:18:09Z",
       "side": 1,
       "message": "Note: when trying to run the generated webgpu_dawn.dll, I get teh message \"DXC dlls were built, but are not available\" (from [1]). Does this mean the build workflow fails to package the dll in question?\n\n[1]: https://github.com/google/dawn/blob/3fc6432bcc2fcb61fbfbfe37a0adafc62d17dad6/src/dawn/native/d3d12/BackendD3D12.cpp#L130",
+      "revId": "f248ab81a797106c1691d2045022cf7e5380723a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "945b4ba0_8ad62d59",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-19T13:12:57Z",
+      "side": 1,
+      "message": "LGTM overall, a few questions.",
       "revId": "f248ab81a797106c1691d2045022cf7e5380723a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
