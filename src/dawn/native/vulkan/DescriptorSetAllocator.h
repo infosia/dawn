@@ -43,22 +43,22 @@
 namespace dawn::native::vulkan {
 
 class BindGroupLayout;
+class DescriptorSetAllocatorManager;
 
 class DescriptorSetAllocator : public ObjectBase {
     using PoolIndex = uint32_t;
     using SetIndex = uint16_t;
 
   public:
-    static Ref<DescriptorSetAllocator> Create(
-        DeviceBase* device,
-        absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType);
-
     ResultOrError<DescriptorSetAllocation> Allocate(BindGroupLayout* layout);
     void Deallocate(DescriptorSetAllocation* allocationInfo);
     void FinishDeallocation(ExecutionSerial completedSerial);
 
   private:
+    friend class DescriptorSetAllocatorManager;
+
     DescriptorSetAllocator(DeviceBase* device,
+                           DescriptorSetAllocatorManager* manager,
                            absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType);
     ~DescriptorSetAllocator() override;
 
@@ -83,8 +83,9 @@ class DescriptorSetAllocator : public ObjectBase {
     SerialQueue<ExecutionSerial, Deallocation> mPendingDeallocations;
     ExecutionSerial mLastDeallocationSerial = ExecutionSerial(0);
 
-    // Used to guard all public member functions.
-    Mutex mMutex;
+    // The manager is owned by the device and this class holds a reference to
+    // the device which ensures manager outlives this class.
+    const raw_ptr<DescriptorSetAllocatorManager> mManager;
 };
 
 }  // namespace dawn::native::vulkan
