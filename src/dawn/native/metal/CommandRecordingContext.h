@@ -38,8 +38,8 @@ namespace dawn::native::metal {
 class Queue;
 
 struct MTLSharedEventAndSignalValue {
-    NSPRef<id> sharedEvent;
-    uint64_t signaledValue;
+    NSPRef<id> sharedEvent = nullptr;
+    uint64_t signaledValue = 0;
 };
 
 // This class wraps a MTLCommandBuffer and tracks which Metal encoder is open.
@@ -63,6 +63,7 @@ class CommandRecordingContext : NonMovable {
         API_AVAILABLE(macos(11.0), ios(14.0));
     id<MTLBlitCommandEncoder> EnsureBlit();
     void EndBlit();
+    MaybeError EndBlitAndWait() API_AVAILABLE(macos(10.14), ios(12.0));
 
     // Create a sequential compute pass by default.
     id<MTLComputeCommandEncoder> BeginCompute();
@@ -84,6 +85,11 @@ class CommandRecordingContext : NonMovable {
     NSPRef<id<MTLBlitCommandEncoder>> mBlit;
     NSPRef<id<MTLComputeCommandEncoder>> mCompute;
     NSPRef<id<MTLRenderCommandEncoder>> mRender;
+
+    // Shared event and signal used to split command buffer passes with an immediate signal and wait
+    // for workarounds such as the one needed in crbug.com/372698905.
+    MTLSharedEventAndSignalValue mSplitWorkaround;
+
     bool mInEncoder = false;
     bool mNeedsSubmit = false;
     bool mUsed = false;
