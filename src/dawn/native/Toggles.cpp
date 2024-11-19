@@ -569,6 +569,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Use a monolithic VkPipelineCache per device. The embedder is responsible for calling "
       "PerformIdleTasks() on the device to serialize VkPipelineCache to BlobCache if needed.",
       "crbug.com/370343334", ToggleStage::Device}},
+    {Toggle::MetalSplitTimestampGenerationAndResolutionWithSharedEvent,
+     {"metal_split_timestamp_generation_and_resolution_with_shared_event",
+      "Newer Apple GPUs can race on query set resolution with timestamp writing from earlier "
+      "compute passes. This can be workarounded by splitting the generation and resolution of "
+      "timestamps in the command buffer and waiting on a shared event in between.",
+      "crbug.com/372698905", ToggleStage::Device}},
     {Toggle::NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
      {"no_workaround_sample_mask_becomes_zero_for_all_but_last_color_target",
       "MacOS 12.0+ Intel has a bug where the sample mask is only applied for the last color "
