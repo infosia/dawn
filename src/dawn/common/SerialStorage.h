@@ -82,6 +82,8 @@ class SerialStorage {
 
     class BeginEnd {
       public:
+        using value_type = typename SerialStorageTraits<Derived>::Value;
+
         BeginEnd(StorageIterator start, StorageIterator end);
 
         Iterator begin() const;
@@ -94,6 +96,8 @@ class SerialStorage {
 
     class ConstBeginEnd {
       public:
+        using value_type = typename SerialStorageTraits<Derived>::Value;
+
         ConstBeginEnd(ConstStorageIterator start, ConstStorageIterator end);
 
         ConstIterator begin() const;
@@ -121,6 +125,9 @@ class SerialStorage {
     ConstBeginEnd IterateUpTo(Serial serial) const;
     BeginEnd IterateAll();
     BeginEnd IterateUpTo(Serial serial);
+
+    // Take all values up to `serial` and returns them in a new container.
+    Derived TakeUpTo(Serial serial);
 
     void Clear();
     void ClearUpTo(Serial serial);
@@ -161,6 +168,15 @@ typename SerialStorage<Derived>::BeginEnd SerialStorage<Derived>::IterateAll() {
 template <typename Derived>
 typename SerialStorage<Derived>::BeginEnd SerialStorage<Derived>::IterateUpTo(Serial serial) {
     return {mStorage.begin(), FindUpTo(serial)};
+}
+
+template <typename Derived>
+Derived SerialStorage<Derived>::TakeUpTo(Serial serial) {
+    Derived take_storage;
+    take_storage.mStorage = Storage(std::make_move_iterator(mStorage.begin()),
+                                    std::make_move_iterator(FindUpTo(serial)));
+    ClearUpTo(serial);
+    return take_storage;
 }
 
 template <typename Derived>
