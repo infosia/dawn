@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e32aff1_78e6f667",
+        "filename": "third_party/gn/dxc/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-19T21:02:06Z",
+      "side": 1,
+      "message": "This was put together while trying to make Skia build with `dawn_use_built_dxc` enabled. First, I set `dawn_use_built_dxc \u003d true` in the root `.gn` file, then I had to add a few gn args to point at the external msvc and sdk directories.",
+      "revId": "2f78b5dfe1b3d1816de76c1fd03fdc9c3705739e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0215c1d0_d1965df7",
+        "filename": "third_party/gn/dxc/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-19T21:02:06Z",
+      "side": 1,
+      "message": "TODO: find a better way. This hack is used to test if $host_toolchain was set from Chrome build tools (e.g. is a `//`-relative path), or is external, like `msvc` (or something, I forget the name). We don\u0027t want to include the toolchain in the target name if using external MSVC.",
+      "revId": "2f78b5dfe1b3d1816de76c1fd03fdc9c3705739e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
