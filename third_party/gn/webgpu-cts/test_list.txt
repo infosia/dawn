@@ -206457,6 +206457,7 @@ webgpu:shader,validation,shader_io,align:parsing:align="trailing_comma"
 webgpu:shader,validation,shader_io,align:parsing:align="const_u"
 webgpu:shader,validation,shader_io,align:parsing:align="const_i"
 webgpu:shader,validation,shader_io,align:parsing:align="const_expr"
+webgpu:shader,validation,shader_io,align:parsing:align="const_expr_2"
 webgpu:shader,validation,shader_io,align:parsing:align="large"
 webgpu:shader,validation,shader_io,align:parsing:align="tabs"
 webgpu:shader,validation,shader_io,align:parsing:align="comment"
@@ -206506,7 +206507,7 @@ webgpu:shader,validation,shader_io,align:required_alignment:address_space="stora
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=1;type={"name":"mat3x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=1;type={"name":"mat4x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=1;type={"name":"array%3Cvec2%3Ci32%3E,%202%3E","storage":8,"uniform":16}
-webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=1;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":8,"uniform":16}
+webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=1;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":16,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=1;type={"name":"S","storage":8,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=2;type={"name":"i32","storage":4,"uniform":4}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=2;type={"name":"u32","storage":4,"uniform":4}
@@ -206538,7 +206539,7 @@ webgpu:shader,validation,shader_io,align:required_alignment:address_space="stora
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=2;type={"name":"mat3x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=2;type={"name":"mat4x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=2;type={"name":"array%3Cvec2%3Ci32%3E,%202%3E","storage":8,"uniform":16}
-webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=2;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":8,"uniform":16}
+webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=2;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":16,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=2;type={"name":"S","storage":8,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align="alignment";type={"name":"i32","storage":4,"uniform":4}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align="alignment";type={"name":"u32","storage":4,"uniform":4}
@@ -206570,7 +206571,7 @@ webgpu:shader,validation,shader_io,align:required_alignment:address_space="stora
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align="alignment";type={"name":"mat3x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align="alignment";type={"name":"mat4x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align="alignment";type={"name":"array%3Cvec2%3Ci32%3E,%202%3E","storage":8,"uniform":16}
-webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align="alignment";type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":8,"uniform":16}
+webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align="alignment";type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":16,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align="alignment";type={"name":"S","storage":8,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=32;type={"name":"i32","storage":4,"uniform":4}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=32;type={"name":"u32","storage":4,"uniform":4}
@@ -206602,7 +206603,7 @@ webgpu:shader,validation,shader_io,align:required_alignment:address_space="stora
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=32;type={"name":"mat3x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=32;type={"name":"mat4x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=32;type={"name":"array%3Cvec2%3Ci32%3E,%202%3E","storage":8,"uniform":16}
-webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=32;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":8,"uniform":16}
+webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=32;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":16,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="storage";align=32;type={"name":"S","storage":8,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=1;type={"name":"i32","storage":4,"uniform":4}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=1;type={"name":"u32","storage":4,"uniform":4}
@@ -206634,7 +206635,7 @@ webgpu:shader,validation,shader_io,align:required_alignment:address_space="unifo
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=1;type={"name":"mat3x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=1;type={"name":"mat4x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=1;type={"name":"array%3Cvec2%3Ci32%3E,%202%3E","storage":8,"uniform":16}
-webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=1;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":8,"uniform":16}
+webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=1;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":16,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=1;type={"name":"S","storage":8,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=2;type={"name":"i32","storage":4,"uniform":4}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=2;type={"name":"u32","storage":4,"uniform":4}
@@ -206666,7 +206667,7 @@ webgpu:shader,validation,shader_io,align:required_alignment:address_space="unifo
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=2;type={"name":"mat3x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=2;type={"name":"mat4x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=2;type={"name":"array%3Cvec2%3Ci32%3E,%202%3E","storage":8,"uniform":16}
-webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=2;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":8,"uniform":16}
+webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=2;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":16,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=2;type={"name":"S","storage":8,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align="alignment";type={"name":"i32","storage":4,"uniform":4}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align="alignment";type={"name":"u32","storage":4,"uniform":4}
@@ -206698,7 +206699,7 @@ webgpu:shader,validation,shader_io,align:required_alignment:address_space="unifo
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align="alignment";type={"name":"mat3x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align="alignment";type={"name":"mat4x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align="alignment";type={"name":"array%3Cvec2%3Ci32%3E,%202%3E","storage":8,"uniform":16}
-webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align="alignment";type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":8,"uniform":16}
+webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align="alignment";type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":16,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align="alignment";type={"name":"S","storage":8,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=32;type={"name":"i32","storage":4,"uniform":4}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=32;type={"name":"u32","storage":4,"uniform":4}
@@ -206730,7 +206731,7 @@ webgpu:shader,validation,shader_io,align:required_alignment:address_space="unifo
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=32;type={"name":"mat3x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=32;type={"name":"mat4x4%3Cf16%3E","storage":8,"uniform":8}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=32;type={"name":"array%3Cvec2%3Ci32%3E,%202%3E","storage":8,"uniform":16}
-webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=32;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":8,"uniform":16}
+webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=32;type={"name":"array%3Cvec4%3Ci32%3E,%202%3E","storage":16,"uniform":16}
 webgpu:shader,validation,shader_io,align:required_alignment:address_space="uniform";align=32;type={"name":"S","storage":8,"uniform":16}
 webgpu:shader,validation,shader_io,align:placement:scope="private-var";attribute={"private-var":false,"storage-var":false,"struct-member":true,"fn-decl":false,"fn-param":false,"fn-var":false,"fn-return":false,"while-stmt":false}
 webgpu:shader,validation,shader_io,align:placement:scope="storage-var";attribute={"private-var":false,"storage-var":false,"struct-member":true,"fn-decl":false,"fn-param":false,"fn-var":false,"fn-return":false,"while-stmt":false}
