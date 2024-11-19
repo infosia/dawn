@@ -533,6 +533,14 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
 
     if (gpu_info::IsApple(vendorId)) {
         deviceToggles->Default(Toggle::MetalFillEmptyOcclusionQueriesWithZero, true);
+
+        // TODO(crbug.com/372698905): Tighten the workaround when a fixed macOS version releases.
+        if (@available(macOS 10.15, iOS 13.0, *)) {
+            if ([*mDevice supportsFamily:MTLGPUFamilyApple8]) {
+                deviceToggles->Default(Toggle::MetalSerializeTimestampGenerationAndResolution,
+                                       true);
+            }
+        }
     }
 
     // Local testing shows the workaround is needed on AMD Radeon HD 8870M (gcn-1) MacOS 12.1;
