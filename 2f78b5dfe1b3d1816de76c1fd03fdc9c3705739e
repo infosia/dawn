@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "82cc4b61_306f7200",
+        "filename": "third_party/gn/dxc/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-19T21:15:11Z",
+      "side": 1,
+      "message": "I also added \"third_party/externals/dxc\" to DEPS.",
+      "parentUuid": "0e32aff1_78e6f667",
+      "revId": "2f78b5dfe1b3d1816de76c1fd03fdc9c3705739e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0215c1d0_d1965df7",
         "filename": "third_party/gn/dxc/BUILD.gn",
         "patchSetId": 1
