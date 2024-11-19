@@ -384,7 +384,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     EnableFeature(Feature::TransientAttachments);
     EnableFeature(Feature::AdapterPropertiesVk);
-    EnableFeature(Feature::DawnLoadResolveTexture);
+    // EnableFeature(Feature::DawnLoadResolveTexture);
 
     // TODO(349125474): Remove deprecated ChromiumExperimentalSubgroups.
     // Enable ChromiumExperimentalSubgroups feature if:
