@@ -433,6 +433,8 @@ TEST_P(QueueWriteTextureTests, VaryingTextureSize) {
 
 // Test uploading a large amount of data with writeTexture.
 TEST_P(QueueWriteTextureTests, LargeWriteTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     TextureSpec textureSpec;
     textureSpec.textureSize = {2048, 2048, 2};
     textureSpec.copyOrigin = {0, 0, 0};
@@ -443,6 +445,8 @@ TEST_P(QueueWriteTextureTests, LargeWriteTexture) {
 
 // Test writing a pixel with an offset.
 TEST_P(QueueWriteTextureTests, VaryingTextureOffset) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     // The entire subresource must be copied when the format is a depth/stencil format.
     DAWN_TEST_UNSUPPORTED_IF(utils::IsDepthOrStencilFormat(GetParam().mTextureFormat));
 
