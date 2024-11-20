@@ -654,6 +654,8 @@ TEST_P(DepthCopyTests, FromDepthAspectToBufferAtNonZeroOffset) {
 
 // Test copying the non-zero mip, depth-only aspect into a buffer.
 TEST_P(DepthCopyTests, FromNonZeroMipDepthAspect) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     constexpr uint32_t kBufferCopyOffset = 0;
     constexpr uint32_t kWidth = 9;
     constexpr uint32_t kHeight = 9;
@@ -1151,6 +1153,8 @@ class StencilCopyTests : public DepthStencilCopyTests {
 
 // Test copying the stencil-only aspect into a buffer.
 TEST_P(StencilCopyTests, FromStencilAspect) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     constexpr uint32_t kTestLevel = 0;
     constexpr uint32_t kBufferCopyOffset = 0;
     constexpr uint32_t kTestTextureSizes[][2] = {

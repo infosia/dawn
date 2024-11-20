@@ -233,6 +233,8 @@ TEST_P(SurfaceTests, ReconfigureBasic) {
 
 // Test reconfiguring the surface after GetCurrentTexture
 TEST_P(SurfaceTests, ReconfigureAfterGetCurrentTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
 

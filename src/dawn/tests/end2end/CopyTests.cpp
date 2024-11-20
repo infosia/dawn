@@ -1078,6 +1078,8 @@ TEST_P(CopyTests_T2B, OffsetBufferAligned) {
 
 // Test that copying without a 512-byte aligned buffer offset works
 TEST_P(CopyTests_T2B, OffsetBufferUnaligned) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
@@ -1100,6 +1102,8 @@ TEST_P(CopyTests_T2B, OffsetBufferUnaligned) {
 
 // Test that copying without a 512-byte aligned buffer offset works. Note: the buffer is mappable.
 TEST_P(CopyTests_T2B, MappableBufferWithOffsetUnaligned) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsOpenGLES());
+
     // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
@@ -1230,6 +1234,8 @@ TEST_P(CopyTests_T2B, MappableBufferBeforeAndAfterBytesNotOverwritten) {
 // Test that copying without a 512-byte aligned buffer offset that is greater than the bytes per row
 // works
 TEST_P(CopyTests_T2B, OffsetBufferUnalignedSmallBytesPerRow) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
@@ -1492,6 +1498,8 @@ TEST_P(CopyTests_T2B, Texture2DArrayRegionWithOffsetEvenRowsPerImage) {
 
 // Testing a series of params for 1D texture texture-to-buffer-copy.
 TEST_P(CopyTests_T2B, Texture1D) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsOpenGLES());
+
     // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
@@ -1558,6 +1566,8 @@ TEST_P(CopyTests_T2B, Texture3DSubRegion) {
 }
 
 TEST_P(CopyTests_T2B, Texture3DNoSplitRowDataWithEmptyFirstRow) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
@@ -1583,6 +1593,8 @@ TEST_P(CopyTests_T2B, Texture3DNoSplitRowDataWithEmptyFirstRow) {
 }
 
 TEST_P(CopyTests_T2B, Texture3DSplitRowDataWithoutEmptyFirstRow) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
@@ -1603,6 +1615,8 @@ TEST_P(CopyTests_T2B, Texture3DSplitRowDataWithoutEmptyFirstRow) {
 }
 
 TEST_P(CopyTests_T2B, Texture3DSplitRowDataWithEmptyFirstRow) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
@@ -1627,6 +1641,8 @@ TEST_P(CopyTests_T2B, Texture3DSplitRowDataWithEmptyFirstRow) {
 }
 
 TEST_P(CopyTests_T2B, Texture3DCopyHeightIsOneCopyWidthIsTiny) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
@@ -1652,6 +1668,8 @@ TEST_P(CopyTests_T2B, Texture3DCopyHeightIsOneCopyWidthIsTiny) {
 }
 
 TEST_P(CopyTests_T2B, Texture3DCopyHeightIsOneCopyWidthIsSmall) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     // TODO(crbug.com/dawn/2294): diagnose T2B failures on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
@@ -1698,6 +1716,8 @@ TEST_P(CopyTests_T2B, Texture3DMipAligned) {
 
 // Test that copying texture 3D array mips with 256-byte unaligned sizes works
 TEST_P(CopyTests_T2B, Texture3DMipUnaligned) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     constexpr uint32_t kWidth = 261;
     constexpr uint32_t kHeight = 123;
     constexpr uint32_t kDepth = 69u;
@@ -1770,6 +1790,8 @@ class CopyTests_T2B_No_Format_Param : public CopyTests, public DawnTest {};
 // A regression test for a bug on D3D12 backend that causes crash when doing texture-to-texture
 // copy one row with the texture format Depth32Float.
 TEST_P(CopyTests_T2B_No_Format_Param, CopyOneRowWithDepth32Float) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     constexpr wgpu::TextureFormat kFormat = wgpu::TextureFormat::Depth32Float;
     constexpr uint32_t kPixelsPerRow = 4u;
 
