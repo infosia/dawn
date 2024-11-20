@@ -22,6 +22,30 @@
       },
       "revId": "8b004e6d2397b3aa714ffecce46894d3b552cf89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd74d078_83bb6004",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-20T20:26:38Z",
+      "side": 1,
+      "message": "Good point.",
+      "parentUuid": "fa368761_69c6b193",
+      "range": {
+        "startLine": 1864,
+        "startChar": 0,
+        "endLine": 1869,
+        "endChar": 32
+      },
+      "revId": "8b004e6d2397b3aa714ffecce46894d3b552cf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
