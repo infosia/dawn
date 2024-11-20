@@ -284,26 +284,46 @@ MaybeError ValidateTextureSize(const DeviceBase* device,
     DAWN_ASSERT(descriptor->size.width != 0 && descriptor->size.height != 0 &&
                 descriptor->size.depthOrArrayLayers != 0);
     const CombinedLimits& limits = device->GetLimits();
+
+    SupportedLimits adapterLimits;
+    wgpu::Status status = device->GetAdapter()->APIGetLimits(&adapterLimits);
+    DAWN_ASSERT(status == wgpu::Status::Success);
+
     Extent3D maxExtent;
+    Extent3D maxExtentAdapter;
     switch (descriptor->dimension) {
         case wgpu::TextureDimension::Undefined:
             DAWN_UNREACHABLE();
         case wgpu::TextureDimension::e1D:
             maxExtent = {limits.v1.maxTextureDimension1D, 1, 1};
+            maxExtentAdapter = {adapterLimits.limits.maxTextureDimension1D, 1, 1};
             break;
         case wgpu::TextureDimension::e2D:
             maxExtent = {limits.v1.maxTextureDimension2D, limits.v1.maxTextureDimension2D,
                          limits.v1.maxTextureArrayLayers};
+            maxExtentAdapter = {adapterLimits.limits.maxTextureDimension2D,
+                                adapterLimits.limits.maxTextureDimension2D,
+                                adapterLimits.limits.maxTextureArrayLayers};
             break;
         case wgpu::TextureDimension::e3D:
             maxExtent = {limits.v1.maxTextureDimension3D, limits.v1.maxTextureDimension3D,
                          limits.v1.maxTextureDimension3D};
+            maxExtentAdapter = {adapterLimits.limits.maxTextureDimension3D,
+                                adapterLimits.limits.maxTextureDimension3D,
+                                adapterLimits.limits.maxTextureDimension3D};
             break;
     }
+
     DAWN_INVALID_IF(
         descriptor->size.width > maxExtent.width || descriptor->size.height > maxExtent.height ||
             descriptor->size.depthOrArrayLayers > maxExtent.depthOrArrayLayers,
-        "Texture size (%s) exceeded maximum texture size (%s).", &descriptor->size, &maxExtent);
+        "Texture size (%s) exceeded maximum texture size (%s).%s", &descriptor->size, &maxExtent,
+        (descriptor->size.width <= maxExtentAdapter.width &&
+         descriptor->size.height <= maxExtentAdapter.height &&
+         descriptor->size.depthOrArrayLayers <= maxExtentAdapter.depthOrArrayLayers)
+            ? " You can avoid this error if you specify a higher limit when calling "
+              "requestDevice() with requiredLimits."
+            : "");
 
     switch (descriptor->dimension) {
         case wgpu::TextureDimension::Undefined:
