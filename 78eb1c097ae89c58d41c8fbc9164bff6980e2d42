@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d97ba8c2_19f0a8ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-20T09:47:05Z",
+      "side": 1,
+      "message": "Dan PTAL Tint stuff getting renamed.\nKai, Loko PTAL the Dawn side.",
+      "revId": "78eb1c097ae89c58d41c8fbc9164bff6980e2d42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
