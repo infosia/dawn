@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa368761_69c6b193",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-20T20:20:47Z",
+      "side": 1,
+      "message": "nit: Your change is fine, but we can avoid having to declare the `Vector` type here by just wrapping the loop you had before with `if (inst-\u003eResult(0)) {`. This means we can use `auto\u0026 usage` as before, which has the slight advantage that if we ever change the return type of `UsagesSorted` to one with a larger size, we won\u0027t get a hidden heap allocation when it gets assigned here.\n\n(Note: we should consider making it a compile error if you try to assign a Vector of size N to another of size M if M\u003cN, as this would catch such hidden heap allocations).",
+      "range": {
+        "startLine": 1864,
+        "startChar": 0,
+        "endLine": 1869,
+        "endChar": 32
+      },
+      "revId": "8b004e6d2397b3aa714ffecce46894d3b552cf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
