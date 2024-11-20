@@ -158,6 +158,8 @@ class MatrixVectorMultiplyPerf : public DawnPerfTestWithParams<MatrixVectorMulti
 };
 
 void MatrixVectorMultiplyPerf::SetUp() {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D12() || IsVulkan()));
+
     // TODO(crbug.com/dawn/2508): Fails due to an OS/driver upgrade on Linux/llvmpipe.
     // This must also be checked before SetUp() since the crash happens in SetUp() itself.
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsMesa("23.2.1") && IsMesaSoftware() &&
