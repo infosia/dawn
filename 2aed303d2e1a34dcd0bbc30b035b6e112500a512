@@ -52,6 +52,24 @@
       "parentUuid": "64d707e2_d371bbc8",
       "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39cbf763_98605ec8",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-20T16:25:54Z",
+      "side": 1,
+      "message": "Yea, I can\u0027t think of a case where `void` would be validly annotated, so ICE makes sense.",
+      "parentUuid": "ae00efb9_0300dad7",
+      "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
