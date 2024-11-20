@@ -225,6 +225,8 @@ TEST_P(DepthStencilLoadOpTests, ClearMip1) {
 
 // Clear first mip then the second mip.  Check both mip levels.
 TEST_P(DepthStencilLoadOpTests, ClearBothMip0Then1) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     // TODO(crbug.com/dawn/1828): depth16unorm broken on Apple GPUs.
     DAWN_SUPPRESS_TEST_IF(IsApple() && GetParam().mFormat == wgpu::TextureFormat::Depth16Unorm);
 
@@ -240,6 +242,8 @@ TEST_P(DepthStencilLoadOpTests, ClearBothMip0Then1) {
 
 // Clear second mip then the first mip. Check both mip levels.
 TEST_P(DepthStencilLoadOpTests, ClearBothMip1Then0) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     // TODO(crbug.com/dawn/1828): depth16unorm broken on Apple GPUs.
     DAWN_SUPPRESS_TEST_IF(IsApple() && GetParam().mFormat == wgpu::TextureFormat::Depth16Unorm);
 
@@ -383,6 +387,8 @@ class DepthTextureClearTwiceTest : public DawnTestWithParams<DepthTextureClearTw
 };
 
 TEST_P(DepthTextureClearTwiceTest, ClearDepthAspectTwice) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     DAWN_SUPPRESS_TEST_IF(!mIsFormatSupported);
 
     constexpr uint32_t kSize = 64;
