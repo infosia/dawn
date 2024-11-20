@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92dbde81_602db1c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-20T16:31:12Z",
+      "side": 1,
+      "message": "We can now reland this CL. See https://chat.google.com/room/AAAATWNUeXA/sFZsVyjkgUQ/sFZsVyjkgUQ?cls\u003d10",
+      "revId": "8ddc45f313388ed4d4c1764070c7862eb8208d63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
