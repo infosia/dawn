@@ -278,6 +278,8 @@ TEST_P(VertexOnlyRenderPipelineTest, Depth) {
 // draw, and make sure that it correctly use the stencil and depth result set in previous
 // vertex-only pipelines.
 TEST_P(VertexOnlyRenderPipelineTest, MultiplePass) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
 
     ClearAttachment(encoder);

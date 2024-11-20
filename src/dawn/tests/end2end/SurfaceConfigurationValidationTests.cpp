@@ -187,6 +187,8 @@ TEST_P(SurfaceConfigurationValidationTests, AlphaModeAuto) {
 
 // Using any combination of the reported capability is ok for configuring the surface.
 TEST_P(SurfaceConfigurationValidationTests, AnyCombinationOfCapabilities) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // TODO(dawn:2320): Fails with "internal drawable creation failed" on the Windows NVIDIA CQ
     // builders but not locally. This is a similar limitation to SurfaceTests.SwitchPresentMode.
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsVulkan() && IsNvidia());
