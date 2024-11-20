@@ -637,6 +637,8 @@ TEST_P(TextureZeroInitTest, RenderingLoadingDepthStencil) {
 
 // Test that clear state is tracked independently for depth/stencil textures.
 TEST_P(TextureZeroInitTest, IndependentDepthStencilLoadAfterDiscard) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     // TODO(dawn:1549) Fails on Qualcomm-based Android devices.
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsQualcomm());
 

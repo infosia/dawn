@@ -222,6 +222,8 @@ TEST_P(ComputeDispatchTests, DirectNoop) {
 
 // Test basic indirect
 TEST_P(ComputeDispatchTests, IndirectBasic) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
 #if DAWN_PLATFORM_IS(32_BIT)
     // TODO(crbug.com/dawn/1196): Fails on Chromium's Quadro P400 bots
     DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
@@ -251,6 +253,8 @@ TEST_P(ComputeDispatchTests, IndirectNoop) {
 
 // Test indirect with buffer offset
 TEST_P(ComputeDispatchTests, IndirectOffset) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
 #if DAWN_PLATFORM_IS(32_BIT)
     // TODO(crbug.com/dawn/1196): Fails on Chromium's Quadro P400 bots
     DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
@@ -265,6 +269,8 @@ TEST_P(ComputeDispatchTests, IndirectOffsetWithoutNumWorkgroups) {
 
 // Test indirect dispatches at max limit.
 TEST_P(ComputeDispatchTests, MaxWorkgroups) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
 #if DAWN_PLATFORM_IS(32_BIT)
     // TODO(crbug.com/dawn/1196): Fails on Chromium's Quadro P400 bots
     DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());

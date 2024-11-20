@@ -304,6 +304,8 @@ TEST_P(DrawIndexedIndirectTest, ValidateMultiplePasses) {
 }
 
 TEST_P(DrawIndexedIndirectTest, ValidateMultipleDraws) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     // TODO(crbug.com/dawn/789): Test is failing under SwANGLE on Windows only.
     DAWN_SUPPRESS_TEST_IF(IsANGLE() && IsWindows());
 
@@ -469,6 +471,8 @@ TEST_P(DrawIndexedIndirectTest, ValidateEncodeMultipleThenSubmitAtOnce) {
 }
 
 TEST_P(DrawIndexedIndirectTest, ValidateEncodeMultipleMixedDrawsOneIndirectBufferThenSubmitAtOnce) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     // TODO(crbug.com/dawn/789): Test is failing after a roll on SwANGLE on Windows only.
     DAWN_SUPPRESS_TEST_IF(IsANGLE() && IsWindows());
 

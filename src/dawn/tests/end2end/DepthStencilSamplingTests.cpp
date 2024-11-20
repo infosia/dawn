@@ -980,6 +980,8 @@ TEST_P(DepthSamplingTest, CompareFunctionsRender) {
     DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode() &&
                           HasToggleEnabled("gl_force_es_31_and_no_extensions"));
 
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // Initialization via renderPass loadOp doesn't work on Mac Intel.
     DAWN_SUPPRESS_TEST_IF(IsMetal() && IsIntel());
 

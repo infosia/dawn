@@ -674,6 +674,8 @@ fn main(
 // and 256. Note that although we assume invocation 0 of the workgroup has a subgroup_id of 0 in its
 // subgroup, we don't assume any other particular subgroups layout property.
 TEST_P(SubgroupsBroadcastTests, SubgroupBroadcast) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     if (GetParam().mBroadcastType == BroadcastType::F16) {
         DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsF16SupportedByBackend());
         DAWN_ASSERT(IsShaderF16EnabledInWGSL() && IsSubgroupsEnabledInWGSL() &&

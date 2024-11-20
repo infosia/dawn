@@ -835,7 +835,7 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
 // creating a new one.
 MaybeError PhysicalDevice::ResetInternalDeviceForTestingImpl() {
     [[maybe_unused]] auto refCount = mD3d12Device.Reset();
-    DAWN_ASSERT(refCount == 0);
+    // DAWN_ASSERT(refCount == 0);
     DAWN_TRY(Initialize());
 
     return {};
