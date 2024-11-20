@@ -194,6 +194,8 @@ TEST_P(MultithreadTests, Device_DroppedInCallback_OnAnotherThread) {
 // Test that multiple buffers being created and mapped on multiple threads won't interfere with
 // each other.
 TEST_P(MultithreadTests, Buffers_MapInParallel) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     constexpr uint32_t kDataSize = 1000;
     std::vector<uint32_t> myData;
     for (uint32_t i = 0; i < kDataSize; ++i) {

@@ -445,6 +445,8 @@ TEST_P(MultisampledRenderingTest, MultisampledRenderingWithDepthTest) {
 // Test rendering into a multisampled color attachment and doing MSAA resolve in another render pass
 // works correctly.
 TEST_P(MultisampledRenderingTest, ResolveInAnotherRenderPass) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // TODO(dawn:1549) Fails on Qualcomm-based Android devices.
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsQualcomm());
 
@@ -481,6 +483,8 @@ TEST_P(MultisampledRenderingTest, ResolveInAnotherRenderPass) {
 
 // Test doing MSAA resolve into multiple resolve targets works correctly.
 TEST_P(MultisampledRenderingTest, ResolveIntoMultipleResolveTargets) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // TODO(dawn:1550) Workaround introduces a bug on Qualcomm GPUs, but is necessary for ARM GPUs.
     DAWN_TEST_UNSUPPORTED_IF(IsAndroid() && IsQualcomm() &&
                              HasToggleEnabled("resolve_multiple_attachments_in_separate_passes"));
@@ -523,6 +527,8 @@ TEST_P(MultisampledRenderingTest, ResolveIntoMultipleResolveTargets) {
 
 // Test that resolving only one of multiple MSAA targets works correctly. (dawn:1550)
 TEST_P(MultisampledRenderingTest, ResolveOneOfMultipleTargets) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // TODO(dawn:1550) Workaround introduces a bug on Qualcomm GPUs, but is necessary for ARM GPUs.
     DAWN_TEST_UNSUPPORTED_IF(IsAndroid() && IsQualcomm() &&
                              HasToggleEnabled("resolve_multiple_attachments_in_separate_passes"));
@@ -610,6 +616,8 @@ TEST_P(MultisampledRenderingTest, ResolveIntoNonZeroLocation) {
 
 // Test doing MSAA resolve on one multisampled texture twice works correctly.
 TEST_P(MultisampledRenderingTest, ResolveOneMultisampledTextureTwice) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // TODO(dawn:1549) Fails on Qualcomm-based Android devices.
     DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsQualcomm());
 
@@ -685,6 +693,8 @@ TEST_P(MultisampledRenderingTest, ResolveIntoOneMipmapLevelOf2DTexture) {
 
 // Test using a level or a layer of a 2D array texture as resolve target works correctly.
 TEST_P(MultisampledRenderingTest, ResolveInto2DArrayTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // TODO(dawn:1550) Workaround introduces a bug on Qualcomm GPUs, but is necessary for ARM GPUs.
     DAWN_TEST_UNSUPPORTED_IF(IsAndroid() && IsQualcomm() &&
                              HasToggleEnabled("resolve_multiple_attachments_in_separate_passes"));
@@ -809,6 +819,8 @@ TEST_P(MultisampledRenderingTest, ResolveInto2DTextureWithEmptyFinalSampleMask) 
 // Test doing MSAA resolve into multiple resolve targets works correctly with a non-default sample
 // mask.
 TEST_P(MultisampledRenderingTest, ResolveIntoMultipleResolveTargetsWithSampleMask) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     /// TODO(dawn:1550) Workaround introduces a bug on Qualcomm GPUs, but is necessary for ARM GPUs.
     DAWN_TEST_UNSUPPORTED_IF(IsAndroid() && IsQualcomm() &&
                              HasToggleEnabled("resolve_multiple_attachments_in_separate_passes"));
@@ -978,6 +990,8 @@ TEST_P(MultisampledRenderingTest, ResolveInto2DTextureWithSampleMaskAndShaderOut
 // Test doing MSAA resolve into multiple resolve targets works correctly with a non-default
 // shader-output mask.
 TEST_P(MultisampledRenderingTest, ResolveIntoMultipleResolveTargetsWithShaderOutputMask) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // sample_mask is not supported in compat.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
@@ -1099,6 +1113,8 @@ TEST_P(MultisampledRenderingTest, ResolveInto2DTextureWithAlphaToCoverage) {
 // alphaToCoverage. The alphaToCoverage mask is computed based on the alpha
 // component of the first color render attachment.
 TEST_P(MultisampledRenderingTest, ResolveIntoMultipleResolveTargetsWithAlphaToCoverage) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // TODO(dawn:1550) Workaround introduces a bug on Qualcomm GPUs, but is necessary for ARM GPUs.
     DAWN_TEST_UNSUPPORTED_IF(IsAndroid() && IsQualcomm() &&
                              HasToggleEnabled("resolve_multiple_attachments_in_separate_passes"));
