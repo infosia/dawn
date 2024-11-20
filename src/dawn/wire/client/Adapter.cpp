@@ -289,12 +289,12 @@ WGPUFuture Adapter::RequestDeviceF(const WGPUDeviceDescriptor* descriptor,
     WGPUDeviceDescriptor wireDescriptor = {};
     if (descriptor) {
         wireDescriptor = *descriptor;
-        wireDescriptor.deviceLostCallback = nullptr;
-        wireDescriptor.deviceLostUserdata = nullptr;
-        wireDescriptor.deviceLostCallbackInfo.callback = nullptr;
-        wireDescriptor.deviceLostCallbackInfo.userdata = nullptr;
-        wireDescriptor.uncapturedErrorCallbackInfo.callback = nullptr;
-        wireDescriptor.uncapturedErrorCallbackInfo.userdata = nullptr;
+        wireDescriptor.deviceLostCallbackInfo2.callback = nullptr;
+        wireDescriptor.deviceLostCallbackInfo2.userdata1 = nullptr;
+        wireDescriptor.deviceLostCallbackInfo2.userdata2 = nullptr;
+        wireDescriptor.uncapturedErrorCallbackInfo2.callback = nullptr;
+        wireDescriptor.uncapturedErrorCallbackInfo2.userdata1 = nullptr;
+        wireDescriptor.uncapturedErrorCallbackInfo2.userdata2 = nullptr;
     }
 
     AdapterRequestDeviceCmd cmd;
@@ -325,12 +325,12 @@ WGPUFuture Adapter::RequestDevice2(const WGPUDeviceDescriptor* descriptor,
     WGPUDeviceDescriptor wireDescriptor = {};
     if (descriptor) {
         wireDescriptor = *descriptor;
-        wireDescriptor.deviceLostCallback = nullptr;
-        wireDescriptor.deviceLostUserdata = nullptr;
-        wireDescriptor.deviceLostCallbackInfo.callback = nullptr;
-        wireDescriptor.deviceLostCallbackInfo.userdata = nullptr;
-        wireDescriptor.uncapturedErrorCallbackInfo.callback = nullptr;
-        wireDescriptor.uncapturedErrorCallbackInfo.userdata = nullptr;
+        wireDescriptor.deviceLostCallbackInfo2.callback = nullptr;
+        wireDescriptor.deviceLostCallbackInfo2.userdata1 = nullptr;
+        wireDescriptor.deviceLostCallbackInfo2.userdata2 = nullptr;
+        wireDescriptor.uncapturedErrorCallbackInfo2.callback = nullptr;
+        wireDescriptor.uncapturedErrorCallbackInfo2.userdata1 = nullptr;
+        wireDescriptor.uncapturedErrorCallbackInfo2.userdata2 = nullptr;
     }
 
     AdapterRequestDeviceCmd cmd;
