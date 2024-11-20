@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "888e67b3_fa8ac390",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-20T16:46:27Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69817df4_bdbdcb6c",
@@ -15,6 +32,24 @@
       "side": 1,
       "message": "\u003e enum \u0027IOAnnotation\u0027 uses a larger base type (\u0027int\u0027, size: 4 bytes) than necessary for its value set, consider using \u0027std::uint8_t\u0027 (1 byte) as the base type to reduce its size (https://clang.llvm.org/extra/clang-tidy/checks/performance/enum-size.html)\n\u003e \n\u003e (Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)\n\nPlease fix.",
       "parentUuid": "a9b29bfe_2a628f8b",
+      "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02ca921e_711405d4",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-20T16:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69817df4_bdbdcb6c",
       "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -68,6 +103,24 @@
       "side": 1,
       "message": "Yea, I can\u0027t think of a case where `void` would be validly annotated, so ICE makes sense.",
       "parentUuid": "ae00efb9_0300dad7",
+      "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bae65686_4a75457e",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-20T16:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39cbf763_98605ec8",
       "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
