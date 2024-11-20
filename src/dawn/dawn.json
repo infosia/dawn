@@ -1619,28 +1619,11 @@
                 "tags": ["dawn"]
             },
             {
-                "name": "set uncaptured error callback",
-                "no autolock": true,
-                "args": [
-                    {"name": "callback", "type": "error callback"},
-                    {"name": "userdata", "type": "void *"}
-                ]
-            },
-            {
                 "name": "set logging callback",
                 "no autolock": true,
                 "tags": ["dawn"],
                 "args": [
                     {"name": "callback", "type": "logging callback"},
-                    {"name": "userdata", "type": "void *"}
-                ]
-            },
-            {
-                "name": "set device lost callback",
-                "no autolock": true,
-                "tags": ["deprecated"],
-                "args": [
-                    {"name": "callback", "type": "device lost callback"},
                     {"name": "userdata", "type": "void *"}
                 ]
             },
