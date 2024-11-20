@@ -409,6 +409,8 @@ class ShaderBuiltinPartialConstExponentTest
 };
 
 TEST_P(ShaderBuiltinPartialConstExponentTest, All) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     if (GetParam().mFloatType == FloatType::f16) {
         DAWN_TEST_UNSUPPORTED_IF(!mShaderF16Supported);
     }

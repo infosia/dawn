@@ -136,6 +136,8 @@ class MultisampledSamplingTest : public DawnTest {
 // must cover both the X and Y coordinates of the sample position (no false positives if
 // it covers the X position but not the Y, or vice versa).
 TEST_P(MultisampledSamplingTest, SamplePositions) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     // textureLoad with texture_depth_xxx is not supported in compat mode.
     DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
