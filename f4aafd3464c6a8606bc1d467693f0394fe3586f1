@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "05ee0811_0a6890f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T21:47:10Z",
+      "side": 1,
+      "message": "Hmm... I\u0027m not a huge fan of this change since it\u0027s a super big hammer solution and serializes all descriptor set allocations across different allocators, when really, all we need is synchronization for deallocations.\n\nI think that the solution in https://dawn-review.googlesource.com/c/dawn/+/214734 can probably be made to work if in `DescriptorSetAllocator::Deallocate`, we scope the allocator level lock to not be held when we call `device-\u003eEnqueueDeferredDeallocation(this)`. That should ensure that the big deallocation lock is never held when we are only dealing with per-allocator stuff.\n\nSuper naive example to get my idea across:\n```\nvoid DescriptorSetAllocator::Deallocate(DescriptorSetAllocation* allocationInfo) {\n    bool enqueueDeferredDeallocation \u003d false;\n    {\n        Mutex::AutoLock lock(\u0026mMutex);\n\n        DAWN_ASSERT(allocationInfo !\u003d nullptr);\n        DAWN_ASSERT(allocationInfo-\u003eset !\u003d VK_NULL_HANDLE);\n\n        // We can\u0027t reuse the descriptor set right away because the Vulkan spec says in the\n        // documentation for vkCmdBindDescriptorSets that the set may be consumed any time between\n        // host execution of the command and the end of the draw/dispatch.\n        Device* device \u003d ToBackend(GetDevice());\n        const ExecutionSerial serial \u003d device-\u003eGetQueue()-\u003eGetPendingCommandSerial();\n        mPendingDeallocations.Enqueue({allocationInfo-\u003epoolIndex, allocationInfo-\u003esetIndex}, serial);\n\n        if (mLastDeallocationSerial !\u003d serial) {\n            enqueueDeferredDeallocation \u003d true;\n            mLastDeallocationSerial \u003d serial;\n        }\n\n        // Clear the content of allocation so that use after frees are more visible.\n        *allocationInfo \u003d {};\n    }\n    \n    if (enqueueDeferredDeallocation) {\n        device-\u003eEnqueueDeferredDeallocation(this);\n    }\n}\n```\n\nIn general though, I\u0027m not entirely opposed to some sort of refactoring in this area to eventually allow us to reuse allocators for different BGLs with the same actual layout (I think there\u0027s already a TODO in `BindGroupLayoutVk.cpp` for that, but this change further obfuscates the dependency cycle/chain amongst device, dsetallocators, dsetallocatormanager, bindgrouplayouts, etc... (that I think resolves correctly atm), but will introduce more overhead for maintenance in the future to remember how it all works.\n\nBasically, I think that we should try to solve the immediate issue with a smaller change for now, and really think about this design a bit more before trying to move ahead with it. I do apologize for pushing back on this change though since I\u0027m sure it was some work refactoring stuff! :(",
+      "revId": "f4aafd3464c6a8606bc1d467693f0394fe3586f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fdb49ab1_bc9cdeb1",
         "filename": "src/dawn/native/vulkan/DescriptorSetAllocatorManager.h",
         "patchSetId": 6
