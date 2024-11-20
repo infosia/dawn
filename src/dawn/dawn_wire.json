@@ -252,8 +252,6 @@
             "DevicePopErrorScope",
             "DevicePopErrorScopeF",
             "DevicePopErrorScope2",
-            "DeviceSetDeviceLostCallback",
-            "DeviceSetUncapturedErrorCallback",
             "DeviceSetLoggingCallback",
             "InstanceEnumerateWGSLLanguageFeatures",
             "InstanceHasWGSLLanguageFeature",
