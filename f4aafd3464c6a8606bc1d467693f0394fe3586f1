@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b81e346a_58bb2916",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-20T22:27:02Z",
+      "side": 1,
+      "message": "\u003e that the solution in https://dawn-review.googlesource.com/c/dawn/+/214734 can probably be made to work if in DescriptorSetAllocator::Deallocate, we scope the allocator level lock to not be held when we call device-\u003eEnqueueDeferredDeallocation(this)\n\nThat should definitely work and I [implemented that here already](https://dawn-review.googlesource.com/c/dawn/+/215714/3/src/dawn/native/vulkan/DescriptorSetAllocator.cpp#125). The CL also has TakeUpTo() so that per allocator lock is never held at the time as the deallocation lock. We don\u0027t need both of those changes to remove the lock-order-inversion but never having both locks held at the same time but makes it harder to accidentally add one in the future.\n\nJust let me know what you and cwallez agree is the best approach and I\u0027ll land that.",
+      "parentUuid": "05ee0811_0a6890f6",
+      "revId": "f4aafd3464c6a8606bc1d467693f0394fe3586f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fdb49ab1_bc9cdeb1",
         "filename": "src/dawn/native/vulkan/DescriptorSetAllocatorManager.h",
         "patchSetId": 6
