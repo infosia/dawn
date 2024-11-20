@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9aecdf00_3850a48a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-20T14:25:19Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "f81e4acf2d5af85fc3468ff9783e3cfa3067bcfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7890c34_f313d1a1",
@@ -76,6 +93,23 @@
           ]
         }
       ],
+      "revId": "f81e4acf2d5af85fc3468ff9783e3cfa3067bcfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d667286_81a2af0e",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-20T14:25:19Z",
+      "side": 1,
+      "message": "u-nit: I\u0027m not sure what there is TODO here, is the TODO to tighten the workaround once fixes macOS versions are released?",
       "revId": "f81e4acf2d5af85fc3468ff9783e3cfa3067bcfc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
