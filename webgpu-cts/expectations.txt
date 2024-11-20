@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-11-14 04:01:47PM
+# Last rolled: 2024-11-20 05:04:41AM
 
 # conflicts_allowed: true
 
@@ -165,7 +165,6 @@ crbug.com/376924407 webgpu:api,operation,vertex_state,correctness:vertex_format_
 crbug.com/376924407 webgpu:api,operation,vertex_state,correctness:vertex_format_to_shader_format_conversion:format="unorm16";* [ Skip ]
 crbug.com/376924407 webgpu:api,operation,vertex_state,correctness:vertex_format_to_shader_format_conversion:format="unorm8";* [ Skip ]
 crbug.com/376924407 webgpu:api,operation,vertex_state,correctness:vertex_format_to_shader_format_conversion:format="unorm8x4-bgra";* [ Skip ]
-
 
 crbug.com/376924407 webgpu:api,validation,render_pipeline,vertex_state:vertex_attribute_contained_in_stride:format="float16" [ Skip ]
 crbug.com/376924407 webgpu:api,validation,render_pipeline,vertex_state:vertex_attribute_contained_in_stride:format="sint16" [ Skip ]
@@ -1608,8 +1607,8 @@ crbug.com/0000 [ mac ] webgpu:api,validation,non_filterable_texture:non_filterab
 crbug.com/0000 [ mac ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:drawTo2DCanvas:format="bgra8unorm";alphaMode="opaque";colorSpace="display-p3";webgpuCanvasType="offscreen";canvas2DType="offscreen" [ Failure ]
 crbug.com/0000 [ mac ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:drawTo2DCanvas:format="bgra8unorm";alphaMode="opaque";colorSpace="srgb";webgpuCanvasType="offscreen";canvas2DType="offscreen" [ Failure ]
 
-crbug.com/0000 [ win intel ] webgpu:shader,execution,expression,call,builtin,textureDimensions:sampled_and_multisampled:format="depth16unorm";aspect="all";samples=1 [ Failure ]
-crbug.com/0000 [ win intel ] webgpu:shader,execution,expression,call,builtin,textureDimensions:sampled_and_multisampled:format="r8snorm";aspect="all";samples=1 [ Failure ]
+crbug.com/0000 [ intel win ] webgpu:shader,execution,expression,call,builtin,textureDimensions:sampled_and_multisampled:format="depth16unorm";aspect="all";samples=1 [ Failure ]
+crbug.com/0000 [ intel win ] webgpu:shader,execution,expression,call,builtin,textureDimensions:sampled_and_multisampled:format="r8snorm";aspect="all";samples=1 [ Failure ]
 
 crbug.com/0000 [ linux nvidia ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="premultiply";orientation="flipY";colorSpaceConversion="default";srcFlipYInCopy=false;dstFormat="rgba8unorm";* [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="premultiply";orientation="flipY";colorSpaceConversion="default";srcFlipYInCopy=false;dstFormat="rgba8unorm-srgb";* [ Failure ]
@@ -1735,8 +1734,6 @@ crbug.com/dawn/0000 [ amd mac-x86_64 webgpu-adapter-swiftshader ] webgpu:web_pla
 crbug.com/dawn/0000 [ mac-arm64 webgpu-adapter-swiftshader webgpu-no-worker ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_bitmaprenderer_context_canvas:* [ Failure ]
 
 crbug.com/dawn/0000 [ angle-d3d11 dawn-backend-validation desktop graphite-enabled intel-0x4680 no-asan no-clang-coverage oop-c passthrough release-x64 renderer-skia-gl target-cpu-64 webgpu-adapter-default webgpu-dxc-disabled webgpu-no-worker win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="none";orientation="none";colorSpaceConversion="default";srcFlipYInCopy=false;dstFormat="rg32float";dstPremultiplied=false [ RetryOnFailure ]
-
-
 
 crbug.com/dawn/0000 [ android-pixel-4 dawn-no-backend-validation qualcomm webgpu-service-worker ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:drawTo2DCanvas:format="bgra8unorm";alphaMode="opaque";colorSpace="display-p3";webgpuCanvasType="offscreen";canvas2DType="offscreen" [ Failure ]
 crbug.com/dawn/0000 [ android-pixel-4 qualcomm ] webgpu:api,validation,capability_checks,limits,maxSamplersPerShaderStage:createPipeline,at_over:* [ Failure ]
@@ -7050,7 +7047,6 @@ crbug.com/dawn/0000 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,bui
 
 # dead - bot failed - no device
 crbug.com/dawn/0000 [ intel win ] webgpu:shader,execution,expression,unary,af_arithmetic:negation:inputSource="const";vectorize=3 [ Failure ]
-
 
 crbug.com/dawn/0000 [ intel-0x3e9b ] webgpu:shader,execution,expression,call,builtin,textureLoad:depth:stage="c";format="depth16unorm" [ Failure ]
 crbug.com/dawn/0000 [ intel-0x3e9b ] webgpu:shader,execution,expression,call,builtin,textureLoad:depth:stage="c";format="depth32float" [ Failure ]
