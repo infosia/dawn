@@ -16,6 +16,24 @@
       "message": "Well this is frustrating.. I lost +2 when I uploaded a CL that depends on this one. Sorry, still getting used to dawn `git cl upload` being different from chrome. Can you +2 again?",
       "revId": "0d8466e851b2e243cae0d3bc419440fe65b45b15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da66c56e_13c75ae6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-20T14:16:40Z",
+      "side": 1,
+      "message": "I personally never user git cl upload in dawn but `git push origin HEAD:refs/for/main` because it does less magic",
+      "parentUuid": "103c5df6_c24f70b2",
+      "revId": "0d8466e851b2e243cae0d3bc419440fe65b45b15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
