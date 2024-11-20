@@ -233,6 +233,8 @@ TEST_P(SurfaceTests, ReconfigureBasic) {
 
 // Test reconfiguring the surface after GetCurrentTexture
 TEST_P(SurfaceTests, ReconfigureAfterGetCurrentTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
 
@@ -290,6 +292,8 @@ TEST_P(SurfaceTests, UnconfigureAfterGet) {
 }
 // Test switching between surfaces that have different present modes.
 TEST_P(SurfaceTests, SwitchPresentMode) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // Fails with "internal drawable creation failed" on the Windows NVIDIA CQ builders but not
     // locally.
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsVulkan() && IsNvidia());
@@ -349,6 +353,8 @@ TEST_P(SurfaceTests, SwitchPresentMode) {
 
 // Test resizing the surface and without resizing the window.
 TEST_P(SurfaceTests, ResizingSurfaceOnly) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     wgpu::Surface surface = CreateTestSurface();
 
     for (int i = 0; i < 10; i++) {

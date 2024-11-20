@@ -433,6 +433,8 @@ TEST_P(QueueWriteTextureTests, VaryingTextureSize) {
 
 // Test uploading a large amount of data with writeTexture.
 TEST_P(QueueWriteTextureTests, LargeWriteTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     TextureSpec textureSpec;
     textureSpec.textureSize = {2048, 2048, 2};
     textureSpec.copyOrigin = {0, 0, 0};
