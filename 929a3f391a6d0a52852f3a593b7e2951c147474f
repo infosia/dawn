@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fb286a7_23987098",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-11-20T04:00:35Z",
+      "side": 1,
+      "message": "After reviewing this CL, I may actually propose to webgpu.h that we _don\u0027t_ add back `Undefined`, and remove it for VertexStepMode too. It seems pretty useless. I need to go back to the notes to see why we wanted it.\n\nAnyway, hold off on part 2 until we figure that out.",
+      "range": {
+        "startLine": 7,
+        "startChar": 46,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "929a3f391a6d0a52852f3a593b7e2951c147474f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbf829cf_e23f61e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-11-20T04:00:35Z",
+      "side": 1,
+      "message": "Nice that Chromium already doesn\u0027t seem to be referencing the old name, and I couldn\u0027t find any in mldrift either, so should be good!",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "929a3f391a6d0a52852f3a593b7e2951c147474f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "14c59f03_4c1653aa",
@@ -14,6 +60,63 @@
       "writtenOn": "2024-11-19T13:28:00Z",
       "side": 1,
       "message": "PTAL",
+      "revId": "929a3f391a6d0a52852f3a593b7e2951c147474f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0b2ce35_e6e283b1",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-11-20T04:00:35Z",
+      "side": 1,
+      "message": "Not a blocker, but I filed this issue for followup: https://crbug.com/379889259",
+      "revId": "929a3f391a6d0a52852f3a593b7e2951c147474f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac97e866_c743f2ef",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-11-20T04:00:35Z",
+      "side": 1,
+      "message": "existing nit: This `default:` shouldn\u0027t be here, the `switch` is already exhaustive (and we don\u0027t handle out-of-range enum values except in validation).\n\n(maybe best done in a follow-up cleanup CL, along with the other thing, and any other stray `default:`s - I see at least one in `BindGroupTrackerD3D11.cpp`)",
+      "revId": "929a3f391a6d0a52852f3a593b7e2951c147474f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35dc50a3_4cde99ab",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-11-20T04:00:35Z",
+      "side": 1,
+      "message": "existing nit: Probably a followup change since it _could_ break something, but I\u0027m pretty sure this one should be UNREACHABLE. (`Uniform` and `ReadOnlyStorage` are reachable, but not `BindingNotUsed` because `bindingInfo.bindingLayout` has already determined that this is a buffer binding.)",
+      "range": {
+        "startLine": 498,
+        "startChar": 29,
+        "endLine": 498,
+        "endChar": 68
+      },
       "revId": "929a3f391a6d0a52852f3a593b7e2951c147474f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
