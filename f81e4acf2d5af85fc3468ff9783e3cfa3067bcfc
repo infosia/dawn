@@ -1,0 +1,83 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3e9fcf5_fbd4c7ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-11-20T05:33:22Z",
+      "side": 1,
+      "message": "lgtm with a couple of comments. Thanks for taking care of this.",
+      "revId": "f81e4acf2d5af85fc3468ff9783e3cfa3067bcfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7890c34_f313d1a1",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-11-20T05:33:22Z",
+      "side": 1,
+      "message": "There\u0027s a garbage character at the end of this string.",
+      "revId": "f81e4acf2d5af85fc3468ff9783e3cfa3067bcfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e53f8a71_263b9947",
+        "filename": "src/dawn/native/metal/CommandRecordingContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-11-20T05:33:22Z",
+      "side": 1,
+      "message": "I see now that this can\u0027t be made private, but perhaps it should still come at the end of the public section since WaitForSharedEvent is more important than this workaround.",
+      "fixSuggestions": [
+        {
+          "fixId": "15cd513b_7f37e0cc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/metal/CommandRecordingContext.h",
+              "range": {
+                "startLine": 78,
+                "startChar": 0,
+                "endLine": 80,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/dawn/native/metal/CommandRecordingContext.h",
+              "range": {
+                "startLine": 83,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": "    MaybeError EncodeSharedEventWorkaround() API_AVAILABLE(macos(10.14), ios(12.0));\n\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f81e4acf2d5af85fc3468ff9783e3cfa3067bcfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
