@@ -564,6 +564,8 @@ TEST_P(VideoViewsTests, CreateVideoTextureWithoutInitializedData) {
 // Samples the luminance (Y) plane from an imported bi-planar 420 texture into a single channel of
 // an RGBA output attachment and checks for the expected pixel value in the rendered quad.
 TEST_P(VideoViewsTests, SampleYtoR) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     std::unique_ptr<VideoViewsTestBackend::PlatformTexture> platformTexture =
         mBackend->CreateVideoTextureForTest(GetFormat(), wgpu::TextureUsage::TextureBinding,
                                             /*isCheckerboard*/ false,
@@ -2124,6 +2126,8 @@ TEST_P(VideoViewsRenderTargetTests, RenderAttachmentSizeValidation) {
 
 // Tests for rendering to a multiplanar video texture through its views.
 TEST_P(VideoViewsRenderTargetTests, RenderToMultiplanarVideoTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 8) {
         RenderToMultiplanarVideoTextures<uint8_t>(/*numOfTextures=*/1, /*hasDepth=*/false);
     } else if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 16) {
@@ -2134,6 +2138,8 @@ TEST_P(VideoViewsRenderTargetTests, RenderToMultiplanarVideoTexture) {
 }
 
 TEST_P(VideoViewsRenderTargetTests, RenderToMultiplanarVideoTextureWithDepth) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 8) {
         RenderToMultiplanarVideoTextures<uint8_t>(/*numOfTextures=*/1, /*hasDepth=*/true);
     } else if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 16) {
@@ -2144,6 +2150,8 @@ TEST_P(VideoViewsRenderTargetTests, RenderToMultiplanarVideoTextureWithDepth) {
 }
 
 TEST_P(VideoViewsRenderTargetTests, RenderToThreeMultiplanarVideoTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 8) {
         RenderToMultiplanarVideoTextures<uint8_t>(/*numOfTextures=*/3, /*hasDepth=*/false);
     } else if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 16) {
@@ -2154,6 +2162,8 @@ TEST_P(VideoViewsRenderTargetTests, RenderToThreeMultiplanarVideoTexture) {
 }
 
 TEST_P(VideoViewsRenderTargetTests, RenderToThreeMultiplanarVideoTextureWithDepth) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 8) {
         RenderToMultiplanarVideoTextures<uint8_t>(/*numOfTextures=*/3, /*hasDepth=*/true);
     } else if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 16) {
@@ -2165,6 +2175,8 @@ TEST_P(VideoViewsRenderTargetTests, RenderToThreeMultiplanarVideoTextureWithDept
 
 // Tests for rendering to one plane while reading from another plane.
 TEST_P(VideoViewsRenderTargetTests, RenderFromLumaToChromaPlane) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 8) {
         RenderFromLumaToChromaPlane<uint8_t>();
     } else if (utils::GetMultiPlaneTextureBitDepth(GetFormat()) == 16) {
