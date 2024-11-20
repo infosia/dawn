@@ -73,6 +73,22 @@ class TestHelperBase : public BASE, public ProgramBuilder {
         return *gen_;
     }
 
+    /// Builds and returns a ASTPrinter from the program, with the given
+    /// options. It is recreated each time this function is called, since
+    /// options might change.
+    /// @return the built generator
+    ASTPrinter& BuildWithOptions(const Options& options) {
+        if (!IsValid()) {
+            ADD_FAILURE() << "ProgramBuilder is not valid: " << Diagnostics();
+        }
+        program = std::make_unique<Program>(resolver::Resolve(*this));
+        if (!program->IsValid()) {
+            ADD_FAILURE() << program->Diagnostics();
+        }
+        gen_with_options_ = std::make_unique<ASTPrinter>(*program, options);
+        return *gen_with_options_;
+    }
+
     /// Builds the program, runs the program through the transform::Msl sanitizer
     /// and returns a ASTPrinter from the sanitized program.
     /// @param options The MSL generator options.
@@ -96,7 +112,7 @@ class TestHelperBase : public BASE, public ProgramBuilder {
             ADD_FAILURE() << result.program.Diagnostics();
         }
         *program = std::move(result.program);
-        gen_ = std::make_unique<ASTPrinter>(*program);
+        gen_ = std::make_unique<ASTPrinter>(*program, options);
         return *gen_;
     }
 
@@ -105,6 +121,7 @@ class TestHelperBase : public BASE, public ProgramBuilder {
 
   private:
     std::unique_ptr<ASTPrinter> gen_;
+    std::unique_ptr<ASTPrinter> gen_with_options_;
 };
 
 /// Test helper
