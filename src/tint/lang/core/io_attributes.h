@@ -52,6 +52,9 @@ struct IOAttributes {
     bool invariant = false;
 };
 
+/// @returns true if any of the values in the provided IOAttributes has been set, otherwise false;
+bool AnyAttributesApplied(const IOAttributes& attr);
+
 }  // namespace tint::core
 
 #endif  // SRC_TINT_LANG_CORE_IO_ATTRIBUTES_H_

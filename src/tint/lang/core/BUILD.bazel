@@ -48,6 +48,7 @@ cc_library(
     "builtin_value.cc",
     "interpolation_sampling.cc",
     "interpolation_type.cc",
+    "io_attributes.cc",
     "number.cc",
     "parameter_usage.cc",
     "subgroup_matrix_kind.cc",

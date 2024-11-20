@@ -249,7 +249,9 @@ struct Decoder {
                 mod_out_.SetName(fn_out, fn_in.name());
             }
         }
-        fn_out->SetReturnType(Type(fn_in.return_type()));
+
+        auto* ret_ty = Type(fn_in.return_type());
+        fn_out->SetReturnType(ret_ty);
         if (fn_in.has_pipeline_stage()) {
             fn_out->SetStage(PipelineStage(fn_in.pipeline_stage()));
         }
@@ -280,6 +282,11 @@ struct Decoder {
         if (fn_in.return_invariant()) {
             fn_out->SetReturnInvariant(true);
         }
+
+        if (ret_ty->Is<type::Void>() && AnyAttributesApplied(fn_out->ReturnAttributes())) {
+            Error() << "function has void return with return attributes set";
+        }
+
         fn_out->SetParams(std::move(params_out));
         fn_out->SetBlock(Block(fn_in.block()));
     }
@@ -990,6 +997,11 @@ struct Decoder {
 
     ir::FunctionParam* FunctionParameter(const pb::FunctionParameter& param_in) {
         auto* type = Type(param_in.type());
+        if (DAWN_UNLIKELY(type->Is<type::Void>())) {
+            Error() << "function param cannot be void type";
+            return nullptr;
+        }
+
         auto* param_out = b.FunctionParam(type);
         if (!param_in.name().empty()) {
             if (DAWN_UNLIKELY(param_in.name().find('\0') != std::string::npos)) {
