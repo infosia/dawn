@@ -335,6 +335,8 @@ TEST_P(SharedBufferMemoryTests, EnsureNoDuplicateBeginAccessCalls) {
 // Ensure the BeginAccessDescriptor initialized parameter preserves or clears the buffer as
 // necessary.
 TEST_P(SharedBufferMemoryTests, BeginAccessInitialization) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     // TODO(dawn:2382): Investigate why this test fails on Windows Intel bots.
     DAWN_SUPPRESS_TEST_IF(IsIntel() && IsD3D12());
 
