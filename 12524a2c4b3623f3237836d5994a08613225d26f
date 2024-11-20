@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36c31ef8_209e9194",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T02:14:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00b5b628_cd4548b6",
+      "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "30569aee_20dd5008",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6f47fd5_9ff756ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T02:14:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30569aee_20dd5008",
+      "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4be6fd0d_14e44b7c",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-11-20T01:56:04Z",
       "side": 1,
       "message": "Could you add a couple of commas?\n\n\"timestamps, and their resolution,\"",
+      "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6b488bb_443211e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T02:14:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be6fd0d_14e44b7c",
       "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -104,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eee80757_f8e50bb1",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T02:14:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94bc478b_c57eca87",
+      "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ed35673_ffb0440c",
@@ -139,6 +211,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f3fb9ab_355882d9",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T02:14:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed35673_ffb0440c",
+      "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d6e1b82_9914a1fc",
@@ -170,6 +260,24 @@
           ]
         }
       ],
+      "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "051b6b57_84f18037",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T02:14:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d6e1b82_9914a1fc",
       "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -219,6 +327,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1fa1880_0285e7b8",
+        "filename": "src/dawn/native/metal/CommandRecordingContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T02:14:13Z",
+      "side": 1,
+      "message": "Renamed, but it can\u0027t be private because its called in `CommandBufferMTL.mm` above.",
+      "parentUuid": "e3a499d1_3406c62a",
+      "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5eaa1df_9cd4f08d",
@@ -254,6 +380,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6775f6f4_54775ddf",
+        "filename": "src/dawn/native/metal/CommandRecordingContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T02:14:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5eaa1df_9cd4f08d",
+      "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e353ea9_a209cbc5",
@@ -285,6 +429,24 @@
           ]
         }
       ],
+      "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18c0de87_51964241",
+        "filename": "src/dawn/native/metal/CommandRecordingContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T02:14:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e353ea9_a209cbc5",
       "revId": "12524a2c4b3623f3237836d5994a08613225d26f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
