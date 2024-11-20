@@ -236,6 +236,7 @@ source_set("native_mocks_sources") {
 
   deps = [
     ":gmock_and_gtest",
+    ":test_infra_sources",
     "${dawn_root}/src/dawn:proc",
     "${dawn_root}/src/dawn/native:sources",
     "${dawn_root}/src/dawn/native:static",
@@ -314,11 +315,6 @@ dawn_test("dawn_unittests") {
     "${dawn_root}/src/dawn/wire/server/ServerMemoryTransferService_mock.h",
     "DawnNativeTest.cpp",
     "DawnNativeTest.h",
-    "MockCallback.h",
-    "ParamGenerator.h",
-    "StringViewMatchers.h",
-    "ToggleParser.cpp",
-    "ToggleParser.h",
     "unittests/AsyncTaskTests.cpp",
     "unittests/BitSetIteratorTests.cpp",
     "unittests/BuddyAllocatorTests.cpp",
@@ -515,6 +511,12 @@ source_set("test_infra_sources") {
     "${dawn_root}/src/dawn/wire",
   ]
 
+  public = [
+    "MockCallback.h",
+    "ParamGenerator.h",
+    "StringViewMatchers.h",
+    "ToggleParser.h",
+  ]
   public_deps = [
     ":gmock_and_gtest",
     "${dawn_root}/src/dawn/partition_alloc:raw_ptr",
@@ -529,11 +531,7 @@ source_set("test_infra_sources") {
     "AdapterTestConfig.h",
     "DawnTest.cpp",
     "DawnTest.h",
-    "MockCallback.h",
-    "ParamGenerator.h",
-    "StringViewMatchers.h",
     "ToggleParser.cpp",
-    "ToggleParser.h",
   ]
 }
 
