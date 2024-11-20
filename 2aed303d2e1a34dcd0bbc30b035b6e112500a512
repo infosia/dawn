@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69817df4_bdbdcb6c",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-20T16:03:22Z",
+      "side": 1,
+      "message": "\u003e enum \u0027IOAnnotation\u0027 uses a larger base type (\u0027int\u0027, size: 4 bytes) than necessary for its value set, consider using \u0027std::uint8_t\u0027 (1 byte) as the base type to reduce its size (https://clang.llvm.org/extra/clang-tidy/checks/performance/enum-size.html)\n\u003e \n\u003e (Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)\n\nPlease fix.",
+      "parentUuid": "a9b29bfe_2a628f8b",
+      "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64d707e2_d371bbc8",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-20T16:03:22Z",
+      "side": 1,
+      "message": "What happens if the type is `void` but I\u0027ve also attached `attr` or binding point? Can that happen?",
+      "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
