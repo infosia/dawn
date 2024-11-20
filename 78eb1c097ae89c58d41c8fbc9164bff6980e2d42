@@ -16,6 +16,46 @@
       "message": "Dan PTAL Tint stuff getting renamed.\nKai, Loko PTAL the Dawn side.",
       "revId": "78eb1c097ae89c58d41c8fbc9164bff6980e2d42",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dee2ed1b_a90e1f50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T21:52:22Z",
+      "side": 1,
+      "message": "LGTM for Dawn changes also!",
+      "revId": "78eb1c097ae89c58d41c8fbc9164bff6980e2d42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72b3915b_23e4b62c",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T21:52:22Z",
+      "side": 1,
+      "message": "nit. existing, but maybe we should have `plane \u003d nullptr` instead since we are doing `nullptr` checks and `{}` and `nullptr` aren\u0027t immediately obviously the same thing.",
+      "range": {
+        "startLine": 110,
+        "startChar": 87,
+        "endLine": 110,
+        "endChar": 91
+      },
+      "revId": "78eb1c097ae89c58d41c8fbc9164bff6980e2d42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
