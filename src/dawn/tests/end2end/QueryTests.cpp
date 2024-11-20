@@ -387,6 +387,8 @@ TEST_P(OcclusionQueryTests, ResolveWithoutWritten) {
 
 // Test setting an occlusion query to non-zero, then rewriting it without drawing, resolves to 0.
 TEST_P(OcclusionQueryTests, RewriteNoDrawToZero) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen12());
 
@@ -431,6 +433,8 @@ TEST_P(OcclusionQueryTests, RewriteNoDrawToZero) {
 // Test setting an occlusion query to non-zero, then rewriting it without drawing, resolves to 0.
 // Do the two queries+resolves in separate submits.
 TEST_P(OcclusionQueryTests, RewriteNoDrawToZeroSeparateSubmit) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D11());
+
     // TODO(dawn:1870): D3D11_QUERY_OCCLUSION_PREDICATE doesn't work on Intel Gen12.
     DAWN_SUPPRESS_TEST_IF(IsD3D11() && IsIntelGen12());
 
