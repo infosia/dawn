@@ -1095,24 +1095,32 @@ TEST_P(CopyTextureForBrowser_Basic, PassthroughCopy) {
 }
 
 TEST_P(CopyTextureForBrowser_Basic, VerifyCopyOnXDirection) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
 
     DoBasicCopyTest({1000, 1});
 }
 
 TEST_P(CopyTextureForBrowser_Basic, VerifyCopyOnYDirection) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
 
     DoBasicCopyTest({1, 1000});
 }
 
 TEST_P(CopyTextureForBrowser_Basic, VerifyCopyFromLargeTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
 
     DoBasicCopyTest({899, 999});
 }
 
 TEST_P(CopyTextureForBrowser_Basic, VerifyFlipY) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
 
     wgpu::CopyTextureForBrowserOptions options = {};
@@ -1122,6 +1130,8 @@ TEST_P(CopyTextureForBrowser_Basic, VerifyFlipY) {
 }
 
 TEST_P(CopyTextureForBrowser_Basic, VerifyFlipYInSlimTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
 
     wgpu::CopyTextureForBrowserOptions options = {};

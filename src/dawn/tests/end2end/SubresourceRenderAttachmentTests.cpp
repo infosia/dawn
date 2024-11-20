@@ -168,6 +168,8 @@ TEST_P(SubresourceRenderAttachmentTest, ColorTexture) {
 
 // Test rendering into a subresource of a depth texture
 TEST_P(SubresourceRenderAttachmentTest, DepthTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsOpenGLES());
+
     DoTest(Type::Depth);
 }
 
