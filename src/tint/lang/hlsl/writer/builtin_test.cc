@@ -4498,5 +4498,68 @@ void foo() {
 )");
 }
 
+// The generated HLSL must effectively be emitted as:
+//      x + (-2.0 * dot(x,y) * y)
+// Rather than:
+//      x - 2.0 * dot(x,y) * y
+// See crbug.com/tint/1798
+TEST_F(HlslWriterTest, Discard_DemoteToHelperAsDiscard) {
+    auto* v = b.Var("v", ty.ptr<private_, i32>());
+    v->SetInitializer(b.Constant(42_i));
+    mod.root_block->Append(v);
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        auto* load = b.Load(v);
+        auto* add = b.Add(ty.i32(), load, 1_i);
+        b.Discard();
+        b.Store(v, add);
+        b.Return(func);
+    });
+    tint::hlsl::writer::Options options;
+    options.disable_demote_to_helper = false;
+    ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+static int v = int(42);
+static bool continue_execution = true;
+void foo() {
+  int v_1 = (v + int(1));
+  continue_execution = false;
+  v = v_1;
+  if (!(continue_execution)) {
+    discard;
+  }
+}
+
+)");
+}
+
+TEST_F(HlslWriterTest, Discard_DemoteToHelperAsContinueExecution) {
+    auto* v = b.Var("v", ty.ptr<private_, i32>());
+    v->SetInitializer(b.Constant(42_i));
+    mod.root_block->Append(v);
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        auto* load = b.Load(v);
+        auto* add = b.Add(ty.i32(), load, 1_i);
+        b.Discard();
+        b.Store(v, add);
+        b.Return(func);
+    });
+    tint::hlsl::writer::Options options;
+    options.disable_demote_to_helper = true;
+    ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+static int v = int(42);
+void foo() {
+  int v_1 = (v + int(1));
+  discard;
+  v = v_1;
+}
+
+)");
+}
+
 }  // namespace
 }  // namespace tint::hlsl::writer
