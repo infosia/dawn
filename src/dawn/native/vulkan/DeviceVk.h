@@ -41,6 +41,7 @@
 #include "dawn/native/dawn_platform.h"
 #include "dawn/native/vulkan/CommandRecordingContext.h"
 #include "dawn/native/vulkan/DescriptorSetAllocator.h"
+#include "dawn/native/vulkan/DescriptorSetAllocatorManager.h"
 #include "dawn/native/vulkan/Forward.h"
 #include "dawn/native/vulkan/VulkanFunctions.h"
 #include "dawn/native/vulkan/VulkanInfo.h"
@@ -79,7 +80,9 @@ class Device final : public DeviceBase {
     MutexProtected<ResourceMemoryAllocator>& GetResourceMemoryAllocator() const;
     external_semaphore::Service* GetExternalSemaphoreService() const;
 
-    void EnqueueDeferredDeallocation(DescriptorSetAllocator* allocator);
+    DescriptorSetAllocatorManager& GetDescriptorSetAllocatorManager() {
+        return mDescriptorSetAllocatorManager;
+    }
 
     // Dawn Native API
 
@@ -187,8 +190,7 @@ class Device final : public DeviceBase {
     VkDevice mVkDevice = VK_NULL_HANDLE;
     uint32_t mMainQueueFamily = 0;
 
-    SerialQueue<ExecutionSerial, Ref<DescriptorSetAllocator>>
-        mDescriptorAllocatorsPendingDeallocation;
+    DescriptorSetAllocatorManager mDescriptorSetAllocatorManager;
     std::unique_ptr<MutexProtected<FencedDeleter>> mDeleter;
     std::unique_ptr<MutexProtected<ResourceMemoryAllocator>> mResourceMemoryAllocator;
     std::unique_ptr<RenderPassCache> mRenderPassCache;

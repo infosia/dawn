@@ -671,6 +671,7 @@ if (DAWN_ENABLE_VULKAN)
         "vulkan/ComputePipelineVk.h"
         "vulkan/DescriptorSetAllocation.h"
         "vulkan/DescriptorSetAllocator.h"
+        "vulkan/DescriptorSetAllocatorManager.h",
         "vulkan/DeviceVk.h"
         "vulkan/ExternalHandle.h"
         "vulkan/FencedDeleter.h"
@@ -713,6 +714,7 @@ if (DAWN_ENABLE_VULKAN)
         "vulkan/CommandBufferVk.cpp"
         "vulkan/ComputePipelineVk.cpp"
         "vulkan/DescriptorSetAllocator.cpp"
+        "vulkan/DescriptorSetAllocatorManager.cpp",
         "vulkan/DeviceVk.cpp"
         "vulkan/FencedDeleter.cpp"
         "vulkan/PhysicalDeviceVk.cpp"

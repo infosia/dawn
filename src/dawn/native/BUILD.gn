@@ -798,6 +798,8 @@ source_set("sources") {
       "vulkan/DescriptorSetAllocation.h",
       "vulkan/DescriptorSetAllocator.cpp",
       "vulkan/DescriptorSetAllocator.h",
+      "vulkan/DescriptorSetAllocatorManager.cpp",
+      "vulkan/DescriptorSetAllocatorManager.h",
       "vulkan/DeviceVk.cpp",
       "vulkan/DeviceVk.h",
       "vulkan/ExternalHandle.h",
