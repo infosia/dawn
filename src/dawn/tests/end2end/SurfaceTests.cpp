@@ -48,6 +48,8 @@ struct GLFWindowDestroyer {
 class SurfaceTests : public DawnTest {
   public:
     void SetUp() override {
+        DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
         DawnTest::SetUp();
         DAWN_TEST_UNSUPPORTED_IF(UsesWire());
 
@@ -233,6 +235,8 @@ TEST_P(SurfaceTests, ReconfigureBasic) {
 
 // Test reconfiguring the surface after GetCurrentTexture
 TEST_P(SurfaceTests, ReconfigureAfterGetCurrentTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
 
@@ -254,6 +258,8 @@ TEST_P(SurfaceTests, ReconfigureAfterGetCurrentTexture) {
 
 // Test unconfiguring then reconfiguring the surface
 TEST_P(SurfaceTests, ReconfigureAfterUnconfigure) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
 
@@ -290,6 +296,8 @@ TEST_P(SurfaceTests, UnconfigureAfterGet) {
 }
 // Test switching between surfaces that have different present modes.
 TEST_P(SurfaceTests, SwitchPresentMode) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // Fails with "internal drawable creation failed" on the Windows NVIDIA CQ builders but not
     // locally.
     DAWN_SUPPRESS_TEST_IF(IsWindows() && IsVulkan() && IsNvidia());
@@ -349,6 +357,8 @@ TEST_P(SurfaceTests, SwitchPresentMode) {
 
 // Test resizing the surface and without resizing the window.
 TEST_P(SurfaceTests, ResizingSurfaceOnly) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D12() || IsVulkan()));
+
     wgpu::Surface surface = CreateTestSurface();
 
     for (int i = 0; i < 10; i++) {
@@ -366,6 +376,8 @@ TEST_P(SurfaceTests, ResizingSurfaceOnly) {
 
 // Test resizing the window but not the surface.
 TEST_P(SurfaceTests, ResizingWindowOnly) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     // Hangs on NVIDIA GTX 1660
     DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
 
@@ -387,6 +399,8 @@ TEST_P(SurfaceTests, ResizingWindowOnly) {
 
 // Test resizing both the window and the surface at the same time.
 TEST_P(SurfaceTests, ResizingWindowAndSurface) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsVulkan());
+
     // TODO(crbug.com/dawn/1205): Currently failing on new NVIDIA GTX 1660s on Linux/Vulkan.
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsNvidia());
 
@@ -414,6 +428,8 @@ TEST_P(SurfaceTests, ResizingWindowAndSurface) {
 
 // Test switching devices on the same adapter.
 TEST_P(SurfaceTests, SwitchingDevice) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     // TODO(https://crbug.com/dawn/2116): VVLs crash because oldSwapchain is from a different
     // device. The spec says it is ok if it is only the same instance but clarifications yet to be
     // published by Khronos are that the spec is wrong and should require the swapchain to be from
