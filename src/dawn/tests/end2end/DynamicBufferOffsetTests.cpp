@@ -257,6 +257,8 @@ TEST_P(DynamicBufferOffsetTests, BasicRenderPipeline) {
 
 // Have non-zero dynamic offsets.
 TEST_P(DynamicBufferOffsetTests, SetDynamicOffsetsRenderPipeline) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     wgpu::RenderPipeline pipeline = CreateRenderPipeline();
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
@@ -299,6 +301,8 @@ TEST_P(DynamicBufferOffsetTests, BasicComputePipeline) {
 
 // Have non-zero dynamic offsets.
 TEST_P(DynamicBufferOffsetTests, SetDynamicOffsetsComputePipeline) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     wgpu::ComputePipeline pipeline = CreateComputePipeline();
 
     std::array<uint32_t, 2> offsets = {mMinUniformBufferOffsetAlignment,
@@ -320,6 +324,8 @@ TEST_P(DynamicBufferOffsetTests, SetDynamicOffsetsComputePipeline) {
 
 // Test basic inherit on render pipeline
 TEST_P(DynamicBufferOffsetTests, BasicInheritRenderPipeline) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, R"(
             @vertex
             fn main(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4f {
@@ -415,6 +421,8 @@ TEST_P(DynamicBufferOffsetTests, BasicInheritRenderPipeline) {
 
 // Test inherit dynamic offsets on render pipeline
 TEST_P(DynamicBufferOffsetTests, InheritDynamicOffsetsRenderPipeline) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     // TODO(crbug.com/1497726): Remove when test is no longer flaky on M2
     // devices.
     DAWN_SUPPRESS_TEST_IF(IsApple());
@@ -450,6 +458,8 @@ TEST_P(DynamicBufferOffsetTests, InheritDynamicOffsetsRenderPipeline) {
 
 // Test inherit dynamic offsets on compute pipeline
 TEST_P(DynamicBufferOffsetTests, InheritDynamicOffsetsComputePipeline) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsOpenGLES()));
+
     wgpu::ComputePipeline pipeline = CreateComputePipeline();
     wgpu::ComputePipeline testPipeline = CreateComputePipeline(true);
 
