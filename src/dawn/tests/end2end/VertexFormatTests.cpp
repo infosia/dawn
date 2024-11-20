@@ -1103,6 +1103,8 @@ TEST_P(VertexFormatTest, Uint32x4) {
 }
 
 TEST_P(VertexFormatTest, Sint32) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsD3D12() || IsOpenGLES()));
+
     std::vector<int32_t> vertexData = {std::numeric_limits<int32_t>::max(),
                                        std::numeric_limits<int32_t>::min(),
                                        std::numeric_limits<int8_t>::max()};
@@ -1111,6 +1113,8 @@ TEST_P(VertexFormatTest, Sint32) {
 }
 
 TEST_P(VertexFormatTest, Sint32x2) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsD3D12() || IsOpenGLES()));
+
     std::vector<int32_t> vertexData = {
         std::numeric_limits<int32_t>::max(), std::numeric_limits<int32_t>::min(),
         std::numeric_limits<int16_t>::max(), std::numeric_limits<int16_t>::min(),
@@ -1120,6 +1124,8 @@ TEST_P(VertexFormatTest, Sint32x2) {
 }
 
 TEST_P(VertexFormatTest, Sint32x3) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsD3D12() || IsOpenGLES()));
+
     std::vector<int32_t> vertexData = {
         std::numeric_limits<int32_t>::max(), std::numeric_limits<int32_t>::min(), 64,
         std::numeric_limits<int16_t>::max(), std::numeric_limits<int16_t>::min(), 128,
@@ -1129,6 +1135,8 @@ TEST_P(VertexFormatTest, Sint32x3) {
 }
 
 TEST_P(VertexFormatTest, Sint32x4) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && (IsD3D11() || IsD3D12() || IsOpenGLES()));
+
     std::vector<int32_t> vertexData = {
         std::numeric_limits<int32_t>::max(), std::numeric_limits<int32_t>::min(), 64,   -5460,
         std::numeric_limits<int16_t>::max(), std::numeric_limits<int16_t>::min(), -128, 0,

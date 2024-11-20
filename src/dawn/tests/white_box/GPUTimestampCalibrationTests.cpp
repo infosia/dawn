@@ -301,6 +301,8 @@ class GPUTimestampCalibrationTests : public DawnTestWithParams<GPUTimestampCalib
 // Check that the timestamps got by timestamp query are between the two timestamps from
 // GetClockCalibration() with the 'disable_timestamp_query_conversion' toggle disabled or enabled.
 TEST_P(GPUTimestampCalibrationTests, TimestampsCalibration) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     RunTest();
 }
 
