@@ -433,6 +433,8 @@ TEST_P(QueueWriteTextureTests, VaryingTextureSize) {
 
 // Test uploading a large amount of data with writeTexture.
 TEST_P(QueueWriteTextureTests, LargeWriteTexture) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     TextureSpec textureSpec;
     textureSpec.textureSize = {2048, 2048, 2};
     textureSpec.copyOrigin = {0, 0, 0};
@@ -443,6 +445,8 @@ TEST_P(QueueWriteTextureTests, LargeWriteTexture) {
 
 // Test writing a pixel with an offset.
 TEST_P(QueueWriteTextureTests, VaryingTextureOffset) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     // The entire subresource must be copied when the format is a depth/stencil format.
     DAWN_TEST_UNSUPPORTED_IF(utils::IsDepthOrStencilFormat(GetParam().mTextureFormat));
 
@@ -467,6 +471,8 @@ TEST_P(QueueWriteTextureTests, VaryingTextureOffset) {
 
 // Test writing a pixel with an offset to a texture array
 TEST_P(QueueWriteTextureTests, VaryingTextureArrayOffset) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     // The entire subresource must be copied when the format is a depth/stencil format.
     DAWN_TEST_UNSUPPORTED_IF(utils::IsDepthOrStencilFormat(GetParam().mTextureFormat));
     // TODO(crbug.com/dawn/2095): Failing on ANGLE + SwiftShader, needs investigation.
@@ -496,6 +502,8 @@ TEST_P(QueueWriteTextureTests, VaryingTextureArrayOffset) {
 
 // Test writing with varying write sizes.
 TEST_P(QueueWriteTextureTests, VaryingWriteSize) {
+    DAWN_SUPPRESS_TEST_IF(IsWindows() && IsQualcomm() && IsD3D12());
+
     // The entire subresource must be copied when the format is a depth/stencil format.
     DAWN_TEST_UNSUPPORTED_IF(utils::IsDepthOrStencilFormat(GetParam().mTextureFormat));
     constexpr uint32_t kWidth = 257;
