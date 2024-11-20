@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdb49ab1_bc9cdeb1",
+        "filename": "src/dawn/native/vulkan/DescriptorSetAllocatorManager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-20T21:22:03Z",
+      "side": 1,
+      "message": "nit: is this `up to and including \u0027serial\u0027` or `up to and excluding \u0027serial\u0027`?",
+      "revId": "f4aafd3464c6a8606bc1d467693f0394fe3586f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
