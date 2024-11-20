@@ -219,7 +219,7 @@ MaybeError BindGroupLayout::Initialize() {
     // TODO(enga): Consider deduping allocators for layouts with the same descriptor type
     // counts.
     mDescriptorSetAllocator =
-        DescriptorSetAllocator::Create(device, std::move(descriptorCountPerType));
+        device->GetDescriptorSetAllocatorManager().Create(std::move(descriptorCountPerType));
 
     SetLabelImpl();
 
