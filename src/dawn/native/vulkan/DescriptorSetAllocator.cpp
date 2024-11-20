@@ -31,6 +31,7 @@
 
 #include "dawn/native/Queue.h"
 #include "dawn/native/vulkan/BindGroupLayoutVk.h"
+#include "dawn/native/vulkan/DescriptorSetAllocatorManager.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/VulkanError.h"
@@ -40,17 +41,13 @@ namespace dawn::native::vulkan {
 // TODO(enga): Figure out this value.
 static constexpr uint32_t kMaxDescriptorsPerPool = 512;
 
-// static
-Ref<DescriptorSetAllocator> DescriptorSetAllocator::Create(
-    DeviceBase* device,
-    absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType) {
-    return AcquireRef(new DescriptorSetAllocator(device, descriptorCountPerType));
-}
-
 DescriptorSetAllocator::DescriptorSetAllocator(
     DeviceBase* device,
+    DescriptorSetAllocatorManager* manager,
     absl::flat_hash_map<VkDescriptorType, uint32_t> descriptorCountPerType)
-    : ObjectBase(device) {
+    : ObjectBase(device), mManager(manager) {
+    DAWN_ASSERT(mManager);
+
     // Compute the total number of descriptors for this layout.
     uint32_t totalDescriptorCount = 0;
     mPoolSizes.reserve(descriptorCountPerType.size());
@@ -94,7 +91,7 @@ DescriptorSetAllocator::~DescriptorSetAllocator() {
 }
 
 ResultOrError<DescriptorSetAllocation> DescriptorSetAllocator::Allocate(BindGroupLayout* layout) {
-    Mutex::AutoLock lock(&mMutex);
+    Mutex::AutoLock lock(mManager->GetMutex());
 
     if (mAvailableDescriptorPoolIndices.empty()) {
         DAWN_TRY(AllocateDescriptorPool(layout));
@@ -118,7 +115,7 @@ ResultOrError<DescriptorSetAllocation> DescriptorSetAllocator::Allocate(BindGrou
 }
 
 void DescriptorSetAllocator::Deallocate(DescriptorSetAllocation* allocationInfo) {
-    Mutex::AutoLock lock(&mMutex);
+    Mutex::AutoLock lock(mManager->GetMutex());
 
     DAWN_ASSERT(allocationInfo != nullptr);
     DAWN_ASSERT(allocationInfo->set != VK_NULL_HANDLE);
@@ -131,7 +128,7 @@ void DescriptorSetAllocator::Deallocate(DescriptorSetAllocation* allocationInfo)
     mPendingDeallocations.Enqueue({allocationInfo->poolIndex, allocationInfo->setIndex}, serial);
 
     if (mLastDeallocationSerial != serial) {
-        device->EnqueueDeferredDeallocation(this);
+        mManager->EnqueueDeferredDeallocation(this, serial);
         mLastDeallocationSerial = serial;
     }
 
@@ -140,7 +137,7 @@ void DescriptorSetAllocator::Deallocate(DescriptorSetAllocation* allocationInfo)
 }
 
 void DescriptorSetAllocator::FinishDeallocation(ExecutionSerial completedSerial) {
-    Mutex::AutoLock lock(&mMutex);
+    DAWN_ASSERT(mManager->GetMutex()->IsLockedByCurrentThread());
 
     for (const Deallocation& dealloc : mPendingDeallocations.IterateUpTo(completedSerial)) {
         DAWN_ASSERT(dealloc.poolIndex < mDescriptorPools.size());
