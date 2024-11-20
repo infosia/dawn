@@ -246,6 +246,7 @@ source_set("native_mocks_sources") {
   configs += [ "${dawn_root}/src/dawn/native:internal" ]
 
   sources = [
+    "MockCallback.h",
     "unittests/native/mocks/BindGroupLayoutMock.cpp",
     "unittests/native/mocks/BindGroupLayoutMock.h",
     "unittests/native/mocks/BindGroupMock.cpp",
