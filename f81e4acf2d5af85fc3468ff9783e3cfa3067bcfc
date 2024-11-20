@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0511e603_6c27e0e0",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T19:07:47Z",
+      "side": 1,
+      "message": "Huh... that\u0027s very odd O.o... Fixed though.",
+      "parentUuid": "a7890c34_f313d1a1",
+      "revId": "f81e4acf2d5af85fc3468ff9783e3cfa3067bcfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e53f8a71_263b9947",
@@ -97,6 +115,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b04b2caa_81bab2b3",
+        "filename": "src/dawn/native/metal/CommandRecordingContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T19:07:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e53f8a71_263b9947",
+      "revId": "f81e4acf2d5af85fc3468ff9783e3cfa3067bcfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d667286_81a2af0e",
@@ -110,6 +146,24 @@
       "writtenOn": "2024-11-20T14:25:19Z",
       "side": 1,
       "message": "u-nit: I\u0027m not sure what there is TODO here, is the TODO to tighten the workaround once fixes macOS versions are released?",
+      "revId": "f81e4acf2d5af85fc3468ff9783e3cfa3067bcfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58d78baf_5e7dbf2e",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-20T19:07:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d667286_81a2af0e",
       "revId": "f81e4acf2d5af85fc3468ff9783e3cfa3067bcfc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
