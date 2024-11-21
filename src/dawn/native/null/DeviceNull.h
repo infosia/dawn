@@ -69,7 +69,7 @@ using Sampler = SamplerBase;
 class ShaderModule;
 class SwapChain;
 class Texture;
-using TextureView = TextureViewBase;
+class TextureView;
 
 struct NullBackendTraits {
     using BindGroupType = BindGroup;
@@ -343,6 +343,18 @@ class SwapChain final : public SwapChainBase {
 class Texture : public TextureBase {
   public:
     Texture(DeviceBase* device, const UnpackedPtr<TextureDescriptor>& descriptor);
+};
+
+class TextureView : public TextureViewBase {
+  public:
+    TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor);
+
+    bool IsYCbCr() const override;
+    const YCbCrVkDescriptor* GetYCbCrVkDescriptor() const override;
+
+  private:
+    bool mIsYCbCr = false;
+    YCbCrVkDescriptor mYCbCrVkDescriptor;
 };
 
 }  // namespace dawn::native::null

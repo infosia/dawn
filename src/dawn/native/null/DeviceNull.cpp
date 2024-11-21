@@ -583,4 +583,21 @@ bool Device::CanTextureLoadResolveTargetInTheSameRenderpass() const {
 Texture::Texture(DeviceBase* device, const UnpackedPtr<TextureDescriptor>& descriptor)
     : TextureBase(device, descriptor) {}
 
+TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor)
+    : TextureViewBase(texture, descriptor) {
+    if (auto* yCbCrVkDescriptor = descriptor.Get<YCbCrVkDescriptor>()) {
+        mIsYCbCr = true;
+        mYCbCrVkDescriptor = *yCbCrVkDescriptor;
+        mYCbCrVkDescriptor.nextInChain = nullptr;
+    }
+}
+
+bool TextureView::IsYCbCr() const {
+    return mIsYCbCr;
+}
+
+const YCbCrVkDescriptor* TextureView::GetYCbCrVkDescriptor() const {
+    return &mYCbCrVkDescriptor;
+}
+
 }  // namespace dawn::native::null

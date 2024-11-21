@@ -32,6 +32,7 @@
 #include "dawn/common/Math.h"
 #include "dawn/common/ityp_bitset.h"
 #include "dawn/native/BindGroupLayout.h"
+#include "dawn/native/BindingInfo.h"
 #include "dawn/native/Buffer.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandValidation.h"
@@ -446,6 +447,41 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
     //
     // We don't validate the equality because it wouldn't be possible to cover it with a test.
     DAWN_ASSERT(bindingsSet.count() == expectedBindingsCount);
+
+    for (BindingIndex bindingIndex{0}; bindingIndex < layout->GetBindingCount(); ++bindingIndex) {
+        const BindingInfo& bindingInfo = layout->GetBindingInfo(bindingIndex);
+        if (!std::holds_alternative<StaticSamplerBindingInfo>(bindingInfo.bindingLayout)) {
+            continue;
+        }
+
+        auto samplerLayout = std::get<StaticSamplerBindingInfo>(bindingInfo.bindingLayout);
+        if (!samplerLayout.isUsedForSingleTextureBinding) {
+            continue;
+        }
+
+        SamplerBase* sampler = samplerLayout.sampler.Get();
+
+        // TODO: It would be better not to have to iterate to find texture binding.
+        TextureViewBase* sampledTexture = nullptr;
+        for (uint32_t i = 0; i < descriptor->entryCount; ++i) {
+            const BindGroupEntry& entry = descriptor->entries[i];
+            if (BindingNumber(entry.binding) == samplerLayout.sampledTextureBinding) {
+                sampledTexture = entry.textureView;
+                break;
+            }
+        }
+        DAWN_ASSERT(sampledTexture);
+
+        DAWN_INVALID_IF(sampler->IsYCbCr() != sampledTexture->IsYCbCr(),
+                        "YCbCr static sampler must be paired with YCbCr texture");
+
+        if (sampler->IsYCbCr()) {
+            DAWN_ASSERT(sampledTexture->GetYCbCrVkDescriptor());
+            DAWN_INVALID_IF(
+                sampler->GetYCbCrVkDescriptor() != *sampledTexture->GetYCbCrVkDescriptor(),
+                "Sampler and texture YCbCrVkDescriptors do not match.");
+        }
+    }
 
     return {};
 }
