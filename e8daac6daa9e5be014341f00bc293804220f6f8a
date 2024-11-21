@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e54082e_c1d54dab",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-21T17:58:40Z",
+      "side": 1,
+      "message": "Use memcpy to avoid UB due to type punning restrictions in C++.",
+      "revId": "e8daac6daa9e5be014341f00bc293804220f6f8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
