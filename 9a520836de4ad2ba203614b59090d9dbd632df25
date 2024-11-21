@@ -16,6 +16,24 @@
       "message": "After this change, are there any e2e tests left which have the robustness entries in them?\n\nIf not, should we duplicate a couple of these tests, something like `assign_to_function_var_robustness.wgsl` and add the `// flags: --transform robustness` comment at the top to force robustness enabled?",
       "revId": "9a520836de4ad2ba203614b59090d9dbd632df25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "279e96d6_9d621034",
+        "filename": "test/tint/array/assign_to_function_var.wgsl.expected.msl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-21T16:14:53Z",
+      "side": 0,
+      "message": "Will be mitigated by crbug.com/378726537, which we will hopefully get to soon.",
+      "parentUuid": "d470556f_c382cf1f",
+      "revId": "9a520836de4ad2ba203614b59090d9dbd632df25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
