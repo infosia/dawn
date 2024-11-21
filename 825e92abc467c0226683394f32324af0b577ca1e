@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "177ab59f_6d2d83f2",
+        "filename": "src/tint/lang/wgsl/writer/ir_to_program/ir_to_program.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-21T14:32:01Z",
+      "side": 1,
+      "message": "You\u0027ll need to also enable `f16` here if you want to enable `subgroups_f16`. This is the cause of the CQ failures in our roundtrip fuzzer.\n\nI\u0027ve filed crbug.com/380244620 to remove `subgroups_f16` as agreed at the F2F, which will make this problem go away.",
+      "revId": "825e92abc467c0226683394f32324af0b577ca1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
