@@ -16,6 +16,23 @@
       "message": "PTAL, changed this to be converting the ICE into a validator rejection instead of hacking the decode",
       "revId": "4a7d6c370edc6f496d87cdafec3e7f25ed483059",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8fa379b_5011049e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-21T16:31:06Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "4a7d6c370edc6f496d87cdafec3e7f25ed483059",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
