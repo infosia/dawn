@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c16cbd7_074dacc7",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-21T19:04:03Z",
+      "side": 1,
+      "message": "I tried OpKill and spirv validation immediately told me that OpKill must be the end of a block. I didnt bother finishing the implementation because it will not be conformant for wgsl and it OpKill is deprecated.",
+      "range": {
+        "startLine": 948,
+        "startChar": 15,
+        "endLine": 948,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "82c6e6cd_9c103fae",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/printer/printer.cc",
+              "range": {
+                "startLine": 948,
+                "startChar": 0,
+                "endLine": 950,
+                "endChar": 0
+              },
+              "replacement": "            // I tried OpKill and it does not have the same behavioral semantics as demote to helper and\n            // will not be conformant. OpKill has also been deprecated and the alternative\n"
+            }
+          ]
+        }
+      ],
+      "revId": "bafcd4bb94374c5e79bd39aaebbb876648f184a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
