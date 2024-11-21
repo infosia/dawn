@@ -123,6 +123,24 @@
       "parentUuid": "09e940bb_32efb047",
       "revId": "36a103571f75221dae82c5895002522001d306a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a62777b_687ef45a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3753638
+      },
+      "writtenOn": "2024-11-21T18:47:54Z",
+      "side": 1,
+      "message": "Likely reason is that the symbol doesn\u0027t exist in that SDK. You can grep for the symbol in the SDK directory.\n\n\u003e From the compilation error, it would seem that including this code for macOS 10.15 and above using @available is wrong;\n\nIt is the correct availability mantra.\nAvailability is a runtime thing.\nSemantic is that supportsFamily will respond correctly when asked about MTLGPUFamilyApple8 on macOS 10.15, even though macOS 10.15 does not know about MTLGPUFamilyApple8.\n\nNote:\nThe idea is that developers always use the latest SDK, even when targeting the most historical OSes. This would mean that if you see a symbol in the docs, the symbol is available in SDK without any ifdef macros.\n\nIf Mac11 bot is running on macOS 11 and testing that the last supported Xcode of macOS 11 is able to compile this code, then you need to add a ifdef, and the resulting binary will be semantically different to one built with newer Xcodes.",
+      "parentUuid": "7a596673_40706fee",
+      "revId": "36a103571f75221dae82c5895002522001d306a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
