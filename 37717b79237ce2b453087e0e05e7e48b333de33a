@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dc77faf_db86f63f",
+        "filename": "src/tint/lang/msl/writer/ast_printer/helper_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-21T19:57:21Z",
+      "side": 1,
+      "message": "I did the first thing.\n\nWhat I was worried about was calling Build with different configs. But it already seems there\u0027s an assumption with SanitizeAndBuild that it\u0027s only called once.\nSo we can have the same assumption here: Build(...) is only called once.",
+      "parentUuid": "8622228f_6065cdf0",
+      "revId": "37717b79237ce2b453087e0e05e7e48b333de33a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93eec3a2_df265b55",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39785dc8_fdc7b57e",
+        "filename": "src/tint/lang/msl/writer/ast_printer/helper_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-21T19:57:21Z",
+      "side": 1,
+      "message": "deleted this code.",
+      "parentUuid": "93eec3a2_df265b55",
+      "revId": "37717b79237ce2b453087e0e05e7e48b333de33a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b45b566_887a11d1",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-11-21T14:33:29Z",
       "side": 1,
       "message": "Why call this `gen_with_options_` instead of just `gen_` as the others do?",
+      "revId": "37717b79237ce2b453087e0e05e7e48b333de33a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c49c9536_b794e135",
+        "filename": "src/tint/lang/msl/writer/ast_printer/helper_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-21T19:57:21Z",
+      "side": 1,
+      "message": "Because it thought we might call Build* more than once in the same test.. Not so.",
+      "parentUuid": "1b45b566_887a11d1",
       "revId": "37717b79237ce2b453087e0e05e7e48b333de33a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
