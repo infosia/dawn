@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "91f23e11_c2e19ad5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-21T14:47:54Z",
+      "side": 1,
+      "message": "I don\u0027t understand the reasoning for detecting this in decode rather than in the IR validator (also commented on the previous CL that introduced the ICE).\n\nIn my mind, error detection in IR protobuf decode should be limited to things that cannot really be expressed in IR (e.g. via the builder) and/or easily caught by the validator. Every check that exists in the validator is there to catch Tint bugs, and this seems to me like just another thing that somebody could have screwed up in a transform.",
+      "revId": "98c4c778f163b8f9178d4286420112ade001aae7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "89cade3e_fad0c95b",
         "filename": "src/tint/lang/core/io_attributes.h",
         "patchSetId": 1
