@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "88bab4c2_ce0fcbe7",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-11-21T21:09:43Z",
+      "side": 1,
+      "message": "My preference would be to drop it from the vulkan options until we can do something with it. Since we never really want Dawn to enable it, always the other one. \n\n@jrprice@google.com what\u0027s your preference here?",
+      "parentUuid": "82ee7e26_2577a2e4",
+      "revId": "1e13c2cf33d7a8b0c857235ccf44ba0bb57d15ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06b96001_34d864c7",
         "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
         "patchSetId": 22
