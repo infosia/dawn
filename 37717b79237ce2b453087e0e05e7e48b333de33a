@@ -122,6 +122,24 @@
       "parentUuid": "c49c9536_b794e135",
       "revId": "37717b79237ce2b453087e0e05e7e48b333de33a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6aa39b6c_32bbcf2b",
+        "filename": "src/tint/lang/msl/writer/ast_printer/helper_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-21T21:27:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c49c9536_b794e135",
+      "revId": "37717b79237ce2b453087e0e05e7e48b333de33a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
