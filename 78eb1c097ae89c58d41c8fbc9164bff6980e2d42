@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2c036e8_dc5c1f5f",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-21T09:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72b3915b_23e4b62c",
+      "range": {
+        "startLine": 110,
+        "startChar": 87,
+        "endLine": 110,
+        "endChar": 91
+      },
+      "revId": "78eb1c097ae89c58d41c8fbc9164bff6980e2d42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d23b8ac8_5f4a311b",
@@ -71,6 +95,24 @@
       "writtenOn": "2024-11-21T03:54:28Z",
       "side": 1,
       "message": "```suggestion\n    // Check that the apparentSize is correct and that the center of the quad has moved due to the\n```",
+      "revId": "78eb1c097ae89c58d41c8fbc9164bff6980e2d42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43489cb8_175c4c54",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-21T09:17:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d23b8ac8_5f4a311b",
       "revId": "78eb1c097ae89c58d41c8fbc9164bff6980e2d42",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
