@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8622228f_6065cdf0",
+        "filename": "src/tint/lang/msl/writer/ast_printer/helper_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-21T14:33:29Z",
+      "side": 1,
+      "message": "Actually, do we need this method? Can we just change `Build` to be `Build(const Options\u0026 options \u003d {})` then we don\u0027t need the overload? (Or name it `Build` and have it as an overload?)",
+      "revId": "37717b79237ce2b453087e0e05e7e48b333de33a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93eec3a2_df265b55",
+        "filename": "src/tint/lang/msl/writer/ast_printer/helper_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-21T14:33:29Z",
+      "side": 1,
+      "message": "```suggestion\n    ASTPrinter\u0026 BuildWithOptions(const Options\u0026 options) {\n      if (gen_with_options_) {\n          return *gen_with_optins_;\n      }\n```",
+      "revId": "37717b79237ce2b453087e0e05e7e48b333de33a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b45b566_887a11d1",
+        "filename": "src/tint/lang/msl/writer/ast_printer/helper_test.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-21T14:33:29Z",
+      "side": 1,
+      "message": "Why call this `gen_with_options_` instead of just `gen_` as the others do?",
+      "revId": "37717b79237ce2b453087e0e05e7e48b333de33a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
