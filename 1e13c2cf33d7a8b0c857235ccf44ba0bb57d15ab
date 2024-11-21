@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "775f4da4_c24ea122",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-21T20:57:29Z",
+      "side": 1,
+      "message": "Ok but this simply disables the transform but does not guarantee that the extension is there. So what you will get is possibly a tint ICE. My concern was that the fuzzer will find this ICE.",
+      "parentUuid": "a24fb681_03929d42",
+      "revId": "1e13c2cf33d7a8b0c857235ccf44ba0bb57d15ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06b96001_34d864c7",
         "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
         "patchSetId": 22
@@ -48,6 +66,30 @@
       "writtenOn": "2024-11-21T20:49:04Z",
       "side": 1,
       "message": "```suggestion\n    void EmitDiscard(core::ir::Discard*) {\n```",
+      "range": {
+        "startLine": 943,
+        "startChar": 1,
+        "endLine": 944,
+        "endChar": 39
+      },
+      "revId": "1e13c2cf33d7a8b0c857235ccf44ba0bb57d15ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af3628f5_49829c30",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-21T20:57:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06b96001_34d864c7",
       "range": {
         "startLine": 943,
         "startChar": 1,
