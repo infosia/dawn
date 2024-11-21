@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41882cda_0203081f",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-21T15:06:11Z",
+      "side": 1,
+      "message": "This is a place holder for doing the right thing so that unit tests can create wgpu::Textures with format external and bind them. wgpu::Texture is needed for YCbCrInfoWithFeatureValidationTest that create a BindGroup since the BindGroup[Layout] now needs to have a sampled texture binding to pass validation. The test isn\u0027t creating wgpu::Texutre through SharedTextureMemory so `texture-\u003eGetSharedResourceMemoryContents()` is null there. I\u0027m just not sure what the right thing is, should we fake STM in tests or do something different?",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 50
+      },
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0eecaf6_488ebc73",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-21T15:06:11Z",
+      "side": 1,
+      "message": "Do we want to enforce that sampledTextureBinding is only set for the Vulkan backend here? My understanding is this is specific to Vulkan COMBINED_IMAGE_SAMPLERs and implementation doesn\u0027t exist in other backends. I\u0027m also not sure if frontend validation should enforce a specific backend for features?",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
