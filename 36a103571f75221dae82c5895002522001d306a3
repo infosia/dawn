@@ -143,6 +143,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94f17a4c_5f2cc431",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-21T22:21:07Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7a62777b_687ef45a",
+      "revId": "36a103571f75221dae82c5895002522001d306a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8765ed39_63a8b5fb",
@@ -171,6 +189,24 @@
         "id": 1000009
       },
       "writtenOn": "2024-11-21T22:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8765ed39_63a8b5fb",
+      "revId": "36a103571f75221dae82c5895002522001d306a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a66095d_564d44ae",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-21T22:21:07Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "8765ed39_63a8b5fb",
