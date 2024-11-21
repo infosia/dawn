@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "175ac451_9efd3d28",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-21T16:23:20Z",
+      "side": 1,
+      "message": "This will be common to all platforms but has issues on vulkan right now.",
+      "range": {
+        "startLine": 210,
+        "startChar": 13,
+        "endLine": 210,
+        "endChar": 34
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2c5398b2_2efee634",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Toggles.cpp",
+              "range": {
+                "startLine": 213,
+                "startChar": 0,
+                "endLine": 214,
+                "endChar": 0
+              },
+              "replacement": "      \"https://crbug.com/42250787\", ToggleStage::Instance}},\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8496561a5dc07e83ba7a9ef9fda494f1803a89a6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
