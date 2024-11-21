@@ -105,6 +105,24 @@
       "parentUuid": "e0075207_1e804133",
       "revId": "36a103571f75221dae82c5895002522001d306a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "472b1aa9_0682cb89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-21T18:47:48Z",
+      "side": 1,
+      "message": "Yes, you can it [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/global/main.star;l\u003d236-237?q\u003ddawn%20main.star). For Mac, we select any machine that matches these dimensions. This is why it looked like it passed for GN, but failed for CMake; this was random. When I made it run on GN + Mac-11, it failed as well.",
+      "parentUuid": "09e940bb_32efb047",
+      "revId": "36a103571f75221dae82c5895002522001d306a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
