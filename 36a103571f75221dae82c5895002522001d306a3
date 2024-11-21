@@ -16,6 +16,23 @@
       "message": "Removed my Chromium account which can\u0027t do Gerrit reviews.",
       "revId": "36a103571f75221dae82c5895002522001d306a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a596673_40706fee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-21T15:19:33Z",
+      "side": 1,
+      "message": "In it\u0027s present state, this CL fails to compile on our Mac-11 bots with:\n```\n/opt/s/w/ir/cache/uncached/dawn/src/dawn/native/metal/PhysicalDeviceMTL.mm:539:42: error: use of undeclared identifier \u0027MTLGPUFamilyApple8\u0027\n            if ([*mDevice supportsFamily:MTLGPUFamilyApple8]) {\n```\n\nInitially this looked like it was only happening on CMake builds, but I ran a GN build on a Mac-11 bot for this CL, and it [failed with the same compilation error](https://ci.chromium.org/ui/p/dawn/builders/try.shadow/mac-dbg/b8730710154764435361/infra).\n\nThe diff that\u0027s resulting in the compilation error is:\n```\n        // TODO(crbug.com/372698905): Tighten the workaround when a fixed macOS version releases.\n        if (@available(macOS 10.15, iOS 13.0, *)) {\n            if ([*mDevice supportsFamily:MTLGPUFamilyApple8]) {\n                deviceToggles-\u003eDefault(Toggle::MetalSerializeTimestampGenerationAndResolution,\n                                       true);\n            }\n        }\n```\n\nFrom the compilation error, it would seem that including this code for `macOS 10.15` and above using `@available` is wrong; however, according to the docs, this symbol [should be available for 10.15+](https://developer.apple.com/documentation/metal/mtlgpufamily/mtlgpufamilyapple8).\n\nKai suggested that perhaps we\u0027re building against the wrong SDK. However, the compilation shows the full compiler command line, and in there we see that it specifies:\n```\n-isysroot /opt/s/w/ir/cache/osx_sdk/XCode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min\u003d11.7\n```\n\nSo we\u0027re using the MacOSX 12.1 SDK, which I think should defined `supportsFamily:MTLGPUFamilyApple8`.\n\nI\u0027m not sure what\u0027s the actual problem. I\u0027m also not experienced in Mac development, so perhaps someone with more experience would know.",
+      "revId": "36a103571f75221dae82c5895002522001d306a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
