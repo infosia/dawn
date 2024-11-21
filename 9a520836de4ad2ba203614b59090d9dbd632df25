@@ -52,6 +52,24 @@
       "parentUuid": "279e96d6_9d621034",
       "revId": "9a520836de4ad2ba203614b59090d9dbd632df25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d84dd83_cb1d9668",
+        "filename": "test/tint/array/assign_to_function_var.wgsl.expected.msl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-21T20:33:07Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "ae9e17df_ee935498",
+      "revId": "9a520836de4ad2ba203614b59090d9dbd632df25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
