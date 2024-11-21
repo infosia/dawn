@@ -386,26 +386,37 @@ VkBuffer Buffer::GetHandle() const {
     return mHandle;
 }
 
-void Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
+bool Buffer::TransitionUsageNow(CommandRecordingContext* recordingContext,
                                 wgpu::BufferUsage usage,
+                                VkAccessFlags* srcAccessMask,
+                                VkAccessFlags* dstAccessMask,
+                                VkPipelineStageFlags* srcStages,
+                                VkPipelineStageFlags* dstStages,
                                 wgpu::ShaderStage shaderStage) {
-    VkBufferMemoryBarrier barrier;
+    return TrackUsageAndGetResourceBarrier(recordingContext, usage, shaderStage, srcAccessMask,
+                                           dstAccessMask, srcStages, dstStages);
+}
+
+void Buffer::TransitionUsageNowWithBarrier(CommandRecordingContext* recordingContext,
+                                           wgpu::BufferUsage usage,
+                                           wgpu::ShaderStage shaderStage) {
+    VkAccessFlags srcAccessFlags = 0;
+    VkAccessFlags dstAccessFlags = 0;
     VkPipelineStageFlags srcStages = 0;
     VkPipelineStageFlags dstStages = 0;
-
-    if (TrackUsageAndGetResourceBarrier(recordingContext, usage, shaderStage, &barrier, &srcStages,
-                                        &dstStages)) {
-        DAWN_ASSERT(srcStages != 0 && dstStages != 0);
+    if (TrackUsageAndGetResourceBarrier(recordingContext, usage, shaderStage, &srcAccessFlags,
+                                        &dstAccessFlags, &srcStages, &dstStages)) {
         ToBackend(GetDevice())
-            ->fn.CmdPipelineBarrier(recordingContext->commandBuffer, srcStages, dstStages, 0, 0,
-                                    nullptr, 1u, &barrier, 0, nullptr);
+            ->AddMemoryBarrier(recordingContext, srcAccessFlags, dstAccessFlags, srcStages,
+                               dstStages);
     }
 }
 
 bool Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
                                              wgpu::BufferUsage usage,
                                              wgpu::ShaderStage shaderStage,
-                                             VkBufferMemoryBarrier* barrier,
+                                             VkAccessFlags* srcAccessMask,
+                                             VkAccessFlags* dstAccessMask,
                                              VkPipelineStageFlags* srcStages,
                                              VkPipelineStageFlags* dstStages) {
     if (shaderStage == wgpu::ShaderStage::None) {
@@ -445,7 +456,7 @@ bool Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
         }
 
         if (usage & kReadOnlyShaderBufferUsages) {
-            // Pre-emptively transition to all read-only shader buffer usages if one is used to
+            // Preemptively transition to all read-only shader buffer usages if one is used to
             // avoid unnecessary barriers later.
             usage |= GetInternalUsage() & kReadOnlyShaderBufferUsages;
         }
@@ -460,7 +471,7 @@ bool Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
 
         // Write -> read barrier.
         *srcStages |= VulkanPipelineStage(mLastWriteUsage, mLastWriteShaderStage);
-        barrier->srcAccessMask = VulkanAccessFlags(mLastWriteUsage);
+        *srcAccessMask |= VulkanAccessFlags(mLastWriteUsage);
     } else {
         bool skipBarrier = false;
 
@@ -479,11 +490,11 @@ bool Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
             // No reads since the last write.
             // Write -> write barrier.
             *srcStages |= VulkanPipelineStage(mLastWriteUsage, mLastWriteShaderStage);
-            barrier->srcAccessMask = VulkanAccessFlags(mLastWriteUsage);
+            *srcAccessMask |= VulkanAccessFlags(mLastWriteUsage);
         } else {
             // Read -> write barrier.
             *srcStages |= VulkanPipelineStage(mReadUsage, mReadShaderStages);
-            barrier->srcAccessMask = VulkanAccessFlags(mReadUsage);
+            *srcAccessMask |= VulkanAccessFlags(mReadUsage);
         }
 
         mLastWriteUsage = usage;
@@ -504,17 +515,7 @@ bool Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
     }
 
     *dstStages |= VulkanPipelineStage(usage, shaderStage);
-
-    barrier->sType = VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER;
-    barrier->pNext = nullptr;
-    barrier->dstAccessMask = VulkanAccessFlags(usage);
-    barrier->srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-    barrier->dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-    barrier->buffer = mHandle;
-    barrier->offset = 0;
-    // VK_WHOLE_SIZE doesn't work on old Windows Intel Vulkan drivers, so we don't use it.
-    barrier->size = GetAllocatedSize();
-
+    *dstAccessMask |= VulkanAccessFlags(usage);
     return true;
 }
 
@@ -534,12 +535,26 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
     // TODO(crbug.com/dawn/852): initialize mapped buffer in CPU side.
     EnsureDataInitialized(recordingContext);
 
+    bool need_barrier = false;
+    VkAccessFlags srcAccessMask = 0;
+    VkAccessFlags dstAccessMask = 0;
+    VkPipelineStageFlags srcStages = 0;
+    VkPipelineStageFlags dstStages = 0;
+
     if (mode & wgpu::MapMode::Read) {
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapRead);
+        need_barrier = TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapRead,
+                                          &srcAccessMask, &dstAccessMask, &srcStages, &dstStages);
     } else {
         DAWN_ASSERT(mode & wgpu::MapMode::Write);
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite);
+        need_barrier = TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite,
+                                          &srcAccessMask, &dstAccessMask, &srcStages, &dstStages);
     }
+    if (need_barrier) {
+        ToBackend(GetDevice())
+            ->AddMemoryBarrier(recordingContext, srcAccessMask, dstAccessMask, srcStages,
+                               dstStages);
+    }
+
     return {};
 }
 
@@ -640,7 +655,7 @@ MaybeError Buffer::UploadData(uint64_t bufferOffset, const void* data, size_t si
         // despite never getting the fast path.
         CommandRecordingContext* recordingContext =
             ToBackend(device->GetQueue())->GetPendingRecordingContext();
-        TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite);
+        TransitionUsageNowWithBarrier(recordingContext, wgpu::BufferUsage::MapWrite);
         device->GetQueue()->ForceEventualFlushOfCommands();
         mHasWriteTransitioned = true;
     }
@@ -732,40 +747,46 @@ bool Buffer::EnsureDataInitializedAsDestination(CommandRecordingContext* recordi
 }
 
 // static
-void Buffer::TransitionMappableBuffersEagerly(const VulkanFunctions& fn,
+void Buffer::TransitionMappableBuffersEagerly(Device* device,
+                                              const VulkanFunctions& fn,
                                               CommandRecordingContext* recordingContext,
                                               const absl::flat_hash_set<Ref<Buffer>>& buffers) {
     DAWN_ASSERT(!buffers.empty());
 
-    VkPipelineStageFlags srcStages = 0;
-    VkPipelineStageFlags dstStages = 0;
-
-    std::vector<VkBufferMemoryBarrier> barriers;
-    barriers.reserve(buffers.size());
+    bool needs_barrier = false;
+    VkAccessFlags barrierSrcAccessMask = 0;
+    VkAccessFlags barrierDstAccessMask = 0;
+    VkPipelineStageFlags barrierSrcStages = 0;
+    VkPipelineStageFlags barrierDstStages = 0;
 
     size_t originalBufferCount = buffers.size();
     for (const Ref<Buffer>& buffer : buffers) {
         wgpu::BufferUsage mapUsage = buffer->GetInternalUsage() & kMappableBufferUsages;
         DAWN_ASSERT(mapUsage == wgpu::BufferUsage::MapRead ||
                     mapUsage == wgpu::BufferUsage::MapWrite);
-        VkBufferMemoryBarrier barrier;
 
+        VkAccessFlags srcAccessMask = 0;
+        VkAccessFlags dstAccessMask = 0;
+        VkPipelineStageFlags srcStages = 0;
+        VkPipelineStageFlags dstStages = 0;
         if (buffer->TrackUsageAndGetResourceBarrier(recordingContext, mapUsage,
-                                                    wgpu::ShaderStage::None, &barrier, &srcStages,
-                                                    &dstStages)) {
-            barriers.push_back(barrier);
+                                                    wgpu::ShaderStage::None, &srcAccessMask,
+                                                    &dstAccessMask, &srcStages, &dstStages)) {
+            needs_barrier = true;
+            barrierSrcAccessMask |= srcAccessMask;
+            barrierDstAccessMask |= dstAccessMask;
+            barrierSrcStages |= srcStages;
+            barrierDstStages |= dstStages;
         }
     }
     // TrackUsageAndGetResourceBarrier() should not modify recordingContext for map usages.
     DAWN_ASSERT(buffers.size() == originalBufferCount);
 
-    if (barriers.empty()) {
+    if (!needs_barrier) {
         return;
     }
-
-    DAWN_ASSERT(srcStages != 0 && dstStages != 0);
-    fn.CmdPipelineBarrier(recordingContext->commandBuffer, srcStages, dstStages, 0, 0, nullptr,
-                          barriers.size(), barriers.data(), 0, nullptr);
+    device->AddMemoryBarrier(recordingContext, barrierSrcAccessMask, barrierDstAccessMask,
+                             barrierSrcStages, barrierDstStages);
 }
 
 void Buffer::SetLabelImpl() {
@@ -788,7 +809,7 @@ void Buffer::ClearBuffer(CommandRecordingContext* recordingContext,
     size = size > 0 ? size : GetAllocatedSize();
     DAWN_ASSERT(size > 0);
 
-    TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
+    TransitionUsageNowWithBarrier(recordingContext, wgpu::BufferUsage::CopyDst);
 
     Device* device = ToBackend(GetDevice());
     // VK_WHOLE_SIZE doesn't work on old Windows Intel Vulkan drivers, so we don't use it.

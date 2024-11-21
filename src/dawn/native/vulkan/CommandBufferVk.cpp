@@ -206,27 +206,33 @@ MaybeError TransitionAndClearForSyncScope(Device* device,
                                               VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT;
 
     struct Barriers {
-        std::vector<VkBufferMemoryBarrier> bufferBarriers;
         std::vector<VkImageMemoryBarrier> imageBarriers;
+        VkAccessFlags srcAccessMask = 0;
+        VkAccessFlags dstAccessMask = 0;
         VkPipelineStageFlags srcStages = 0;
         VkPipelineStageFlags dstStages = 0;
+
+        bool NeedsMemoryBarrier() const { return srcStages != 0 && dstStages != 0; }
     };
 
     Barriers vertexBarriers;
     Barriers nonVertexBarriers;
 
-    auto MergeBufferBarrier = [](Barriers* barriers, VkPipelineStageFlags srcStages,
-                                 VkPipelineStageFlags dstStages,
-                                 const VkBufferMemoryBarrier& bufferBarrier) {
+    auto MergeBufferBarrier = [](Barriers* barriers, VkAccessFlags srcAccessMask,
+                                 VkAccessFlags dstAccessMask, VkPipelineStageFlags srcStages,
+                                 VkPipelineStageFlags dstStages) {
+        barriers->srcAccessMask |= srcAccessMask;
+        barriers->dstAccessMask |= dstAccessMask;
         barriers->srcStages |= srcStages;
         barriers->dstStages |= dstStages;
-        barriers->bufferBarriers.push_back(bufferBarrier);
     };
 
     for (size_t i = 0; i < scope.buffers.size(); ++i) {
         Buffer* buffer = ToBackend(scope.buffers[i]);
         buffer->EnsureDataInitialized(recordingContext);
 
+        VkAccessFlags srcAccessMask = 0;
+        VkAccessFlags dstAccessMask = 0;
         VkPipelineStageFlags srcStages = 0;
         VkPipelineStageFlags dstStages = 0;
 
@@ -242,12 +248,11 @@ MaybeError TransitionAndClearForSyncScope(Device* device,
         wgpu::BufferUsage usage =
             scope.bufferSyncInfos[i].usage & (~kIndirectBufferForFrontendValidation);
 
-        VkBufferMemoryBarrier bufferBarrier;
-        if (buffer->TrackUsageAndGetResourceBarrier(recordingContext, usage,
-                                                    scope.bufferSyncInfos[i].shaderStages,
-                                                    &bufferBarrier, &srcStages, &dstStages)) {
+        if (buffer->TrackUsageAndGetResourceBarrier(
+                recordingContext, usage, scope.bufferSyncInfos[i].shaderStages, &srcAccessMask,
+                &dstAccessMask, &srcStages, &dstStages)) {
             MergeBufferBarrier((dstStages & vertexStages) ? &vertexBarriers : &nonVertexBarriers,
-                               srcStages, dstStages, bufferBarrier);
+                               srcAccessMask, dstAccessMask, srcStages, dstStages);
         }
     }
 
@@ -289,11 +294,16 @@ MaybeError TransitionAndClearForSyncScope(Device* device,
     }
 
     for (const Barriers& barriers : {vertexBarriers, nonVertexBarriers}) {
-        if (!barriers.bufferBarriers.empty() || !barriers.imageBarriers.empty()) {
-            device->fn.CmdPipelineBarrier(
-                recordingContext->commandBuffer, barriers.srcStages, barriers.dstStages, 0, 0,
-                nullptr, barriers.bufferBarriers.size(), barriers.bufferBarriers.data(),
-                barriers.imageBarriers.size(), barriers.imageBarriers.data());
+        if (barriers.NeedsMemoryBarrier() || !barriers.imageBarriers.empty()) {
+            VkMemoryBarrier barrier;
+            barrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
+            barrier.pNext = nullptr;
+            barrier.srcAccessMask = barriers.srcStages;
+            barrier.dstAccessMask = barriers.dstStages;
+
+            device->fn.CmdPipelineBarrier(recordingContext->commandBuffer, barriers.srcStages,
+                                          barriers.dstStages, 0, 1, &barrier, 0, nullptr, 0,
+                                          nullptr);
         }
     }
 
@@ -593,7 +603,7 @@ MaybeError CommandBuffer::RecordCopyImageWithTemporaryBuffer(
     VkImage srcImage = ToBackend(srcCopy.texture)->GetHandle();
     VkImage dstImage = ToBackend(dstCopy.texture)->GetHandle();
 
-    tempBuffer->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
+    tempBuffer->TransitionUsageNowWithBarrier(recordingContext, wgpu::BufferUsage::CopyDst);
     VkBufferImageCopy srcToTempBufferRegion =
         ComputeBufferImageCopyRegion(tempBufferCopy, srcCopy, copySize);
 
@@ -601,7 +611,7 @@ MaybeError CommandBuffer::RecordCopyImageWithTemporaryBuffer(
     device->fn.CmdCopyImageToBuffer(commands, srcImage, VK_IMAGE_LAYOUT_GENERAL,
                                     tempBuffer->GetHandle(), 1, &srcToTempBufferRegion);
 
-    tempBuffer->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopySrc);
+    tempBuffer->TransitionUsageNowWithBarrier(recordingContext, wgpu::BufferUsage::CopySrc);
     VkBufferImageCopy tempBufferToDstRegion =
         ComputeBufferImageCopyRegion(tempBufferCopy, dstCopy, copySize);
 
@@ -656,8 +666,23 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 dstBuffer->EnsureDataInitializedAsDestination(recordingContext,
                                                               copy->destinationOffset, copy->size);
 
-                srcBuffer->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopySrc);
-                dstBuffer->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
+                bool needs_barrier = false;
+                VkAccessFlags srcAccessMask = 0;
+                VkAccessFlags dstAccessMask = 0;
+                VkPipelineStageFlags srcStages = 0;
+                VkPipelineStageFlags dstStages = 0;
+
+                needs_barrier |= srcBuffer->TransitionUsageNow(
+                    recordingContext, wgpu::BufferUsage::CopySrc, &srcAccessMask, &dstAccessMask,
+                    &srcStages, &dstStages);
+                needs_barrier |= dstBuffer->TransitionUsageNow(
+                    recordingContext, wgpu::BufferUsage::CopyDst, &srcAccessMask, &dstAccessMask,
+                    &srcStages, &dstStages);
+
+                if (needs_barrier) {
+                    device->AddMemoryBarrier(recordingContext, srcAccessMask, dstAccessMask,
+                                             srcStages, dstStages);
+                }
 
                 VkBufferCopy region;
                 region.srcOffset = copy->sourceOffset;
@@ -696,11 +721,26 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                     DAWN_TRY(ToBackend(dst.texture)
                                  ->EnsureSubresourceContentInitialized(recordingContext, range));
                 }
-                ToBackend(src.buffer)
-                    ->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopySrc);
+
+                bool needs_barrier = false;
+                VkAccessFlags srcAccessMask = 0;
+                VkAccessFlags dstAccessMask = 0;
+                VkPipelineStageFlags srcStages = 0;
+                VkPipelineStageFlags dstStages = 0;
+
+                needs_barrier |= ToBackend(src.buffer)
+                                     ->TransitionUsageNow(
+                                         recordingContext, wgpu::BufferUsage::CopySrc,
+                                         &srcAccessMask, &dstAccessMask, &srcStages, &dstStages);
                 ToBackend(dst.texture)
                     ->TransitionUsageNow(recordingContext, wgpu::TextureUsage::CopyDst,
                                          wgpu::ShaderStage::None, range);
+
+                if (needs_barrier) {
+                    device->AddMemoryBarrier(recordingContext, srcAccessMask, dstAccessMask,
+                                             srcStages, dstStages);
+                }
+
                 VkBuffer srcBuffer = ToBackend(src.buffer)->GetHandle();
                 VkImage dstImage = ToBackend(dst.texture)->GetHandle();
 
@@ -731,11 +771,24 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 DAWN_TRY(ToBackend(src.texture)
                              ->EnsureSubresourceContentInitialized(recordingContext, range));
 
+                bool needs_barrier = false;
+                VkAccessFlags srcAccessMask = 0;
+                VkAccessFlags dstAccessMask = 0;
+                VkPipelineStageFlags srcStages = 0;
+                VkPipelineStageFlags dstStages = 0;
+
                 ToBackend(src.texture)
                     ->TransitionUsageNow(recordingContext, wgpu::TextureUsage::CopySrc,
                                          wgpu::ShaderStage::None, range);
-                ToBackend(dst.buffer)
-                    ->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
+                needs_barrier |= ToBackend(dst.buffer)
+                                     ->TransitionUsageNow(
+                                         recordingContext, wgpu::BufferUsage::CopyDst,
+                                         &srcAccessMask, &dstAccessMask, &srcStages, &dstStages);
+
+                if (needs_barrier) {
+                    device->AddMemoryBarrier(recordingContext, srcAccessMask, dstAccessMask,
+                                             srcStages, dstStages);
+                }
 
                 VkImage srcImage = ToBackend(src.texture)->GetHandle();
                 VkBuffer dstBuffer = ToBackend(dst.buffer)->GetHandle();
@@ -836,7 +889,8 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                     recordingContext, cmd->offset, cmd->size);
 
                 if (!clearedToZero) {
-                    dstBuffer->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
+                    dstBuffer->TransitionUsageNowWithBarrier(recordingContext,
+                                                             wgpu::BufferUsage::CopyDst);
                     device->fn.CmdFillBuffer(recordingContext->commandBuffer,
                                              dstBuffer->GetHandle(), cmd->offset, cmd->size, 0u);
                 }
@@ -901,13 +955,15 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 // See http://crbug.com/dawn/1823 for more information.
                 bool clearNeeded = device->IsToggleEnabled(Toggle::ClearBufferBeforeResolveQueries);
                 if (hasUnavailableQueries || clearNeeded) {
-                    destination->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
+                    destination->TransitionUsageNowWithBarrier(recordingContext,
+                                                               wgpu::BufferUsage::CopyDst);
                     device->fn.CmdFillBuffer(commands, destination->GetHandle(),
                                              cmd->destinationOffset,
                                              cmd->queryCount * sizeof(uint64_t), 0u);
                 }
 
-                destination->TransitionUsageNow(recordingContext, wgpu::BufferUsage::QueryResolve);
+                destination->TransitionUsageNowWithBarrier(recordingContext,
+                                                           wgpu::BufferUsage::QueryResolve);
 
                 RecordResolveQuerySetCmd(commands, device, querySet, cmd->firstQuery,
                                          cmd->queryCount, destination, cmd->destinationOffset);
@@ -994,7 +1050,8 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
                 dstBuffer->EnsureDataInitializedAsDestination(recordingContext, offset, size);
 
-                dstBuffer->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
+                dstBuffer->TransitionUsageNowWithBarrier(recordingContext,
+                                                         wgpu::BufferUsage::CopyDst);
 
                 VkBufferCopy copy;
                 copy.srcOffset = uploadHandle.startOffset;

@@ -51,14 +51,21 @@ class Buffer final : public BufferBase {
 
     // Transitions the buffer to be used as `usage`, recording any necessary barrier in
     // `commands`.
-    // TODO(crbug.com/dawn/851): coalesce barriers and do them early when possible.
-    void TransitionUsageNow(CommandRecordingContext* recordingContext,
+    bool TransitionUsageNow(CommandRecordingContext* recordingContext,
                             wgpu::BufferUsage usage,
+                            VkAccessFlags* srcAccessMask,
+                            VkAccessFlags* dstAccessMask,
+                            VkPipelineStageFlags* srcStages,
+                            VkPipelineStageFlags* dstStages,
                             wgpu::ShaderStage shaderStage = wgpu::ShaderStage::None);
+    void TransitionUsageNowWithBarrier(CommandRecordingContext* recordingContext,
+                                       wgpu::BufferUsage usage,
+                                       wgpu::ShaderStage shaderStage = wgpu::ShaderStage::None);
     bool TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingContext,
                                          wgpu::BufferUsage usage,
                                          wgpu::ShaderStage shaderStage,
-                                         VkBufferMemoryBarrier* barrier,
+                                         VkAccessFlags* srcAccessMask,
+                                         VkAccessFlags* dstAccessMask,
                                          VkPipelineStageFlags* srcStages,
                                          VkPipelineStageFlags* dstStages);
 
@@ -73,7 +80,8 @@ class Buffer final : public BufferBase {
     // Dawn API
     void SetLabelImpl() override;
 
-    static void TransitionMappableBuffersEagerly(const VulkanFunctions& fn,
+    static void TransitionMappableBuffersEagerly(Device* device,
+                                                 const VulkanFunctions& fn,
                                                  CommandRecordingContext* recordingContext,
                                                  const absl::flat_hash_set<Ref<Buffer>>& buffers);
 

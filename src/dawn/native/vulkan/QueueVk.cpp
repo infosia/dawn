@@ -329,7 +329,8 @@ MaybeError Queue::SubmitPendingCommands() {
     if (!mRecordingContext.mappableBuffersForEagerTransition.empty()) {
         // Transition mappable buffers back to map usages with the submit.
         Buffer::TransitionMappableBuffersEagerly(
-            device->fn, &mRecordingContext, mRecordingContext.mappableBuffersForEagerTransition);
+            device, device->fn, &mRecordingContext,
+            mRecordingContext.mappableBuffersForEagerTransition);
     }
 
     // Create an external semaphore for each external textures used in the pending submit.
