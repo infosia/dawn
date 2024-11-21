@@ -87,6 +87,24 @@
       "parentUuid": "75e0985c_2bbc2328",
       "revId": "36a103571f75221dae82c5895002522001d306a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09e940bb_32efb047",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-11-21T18:44:59Z",
+      "side": 1,
+      "message": "Thanks - but wait, the same CQ configuration like `mac-dbg` randomly selects a Mac-11 bot or a Mac-10.15 builder?",
+      "parentUuid": "e0075207_1e804133",
+      "revId": "36a103571f75221dae82c5895002522001d306a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
