@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a685a8d_c18f7a12",
+        "filename": "src/dawn/tests/end2end/DiscardBasicTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-21T14:48:49Z",
+      "side": 1,
+      "message": "24",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d287532b_2c72f229",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/DiscardBasicTests.cpp",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 2,
+                "endChar": 0
+              },
+              "replacement": "// Copyright 2024 The Dawn \u0026 Tint Authors\n"
+            }
+          ]
+        }
+      ],
+      "revId": "54c4c790c1362b4d4d4f3ea6bd798bec6b1f77bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
