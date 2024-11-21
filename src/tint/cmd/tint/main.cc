@@ -181,6 +181,7 @@ struct Options {
     bool verbose = false;
     bool parse_only = false;
     bool disable_workgroup_init = false;
+    bool disable_demote_to_helper = false;
     bool validate = false;
     bool print_hash = false;
     bool dump_inspector_bindings = false;
@@ -397,6 +398,10 @@ violations that may be produced)",
     auto& disable_wg_init = options.Add<BoolOption>(
         "disable-workgroup-init", "Disable workgroup memory zero initialization", Default{false});
     TINT_DEFER(opts->disable_workgroup_init = *disable_wg_init.value);
+
+    auto& disable_demote_to_helper = options.Add<BoolOption>(
+        "disable-demote-to-helper", "Disable demote to helper for discard", Default{false});
+    TINT_DEFER(opts->disable_demote_to_helper = *disable_demote_to_helper.value);
 
     auto& rename_all = options.Add<BoolOption>("rename-all", "Renames all symbols", Default{false});
     TINT_DEFER(opts->rename_all = *rename_all.value);
@@ -705,6 +710,7 @@ bool GenerateSpirv(const tint::Program& program, const Options& options) {
     tint::spirv::writer::Options gen_options;
     gen_options.disable_robustness = !options.enable_robustness;
     gen_options.disable_workgroup_init = options.disable_workgroup_init;
+    gen_options.disable_demote_to_helper = options.disable_demote_to_helper;
     gen_options.use_storage_input_output_16 = options.use_storage_input_output_16;
     gen_options.bindings = tint::spirv::writer::GenerateBindings(ir.Get());
 
