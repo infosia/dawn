@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89008c9f_0e5d2dbe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-21T16:19:09Z",
+      "side": 1,
+      "message": "I agree this should be an validation error instead of an ICE.",
+      "parentUuid": "91f23e11_c2e19ad5",
+      "revId": "98c4c778f163b8f9178d4286420112ade001aae7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89cade3e_fad0c95b",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-11-21T14:23:48Z",
       "side": 1,
       "message": "Why is this a free function instead of a method on the struct?",
+      "revId": "98c4c778f163b8f9178d4286420112ade001aae7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a9aa3ed_5619bb69",
+        "filename": "src/tint/lang/core/io_attributes.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-21T16:19:09Z",
+      "side": 1,
+      "message": "Just an artifact of how I originally hacked it in, then refactored it out.\n\nThis is no longer needed in my updated version, so I have removed it entirely.",
+      "parentUuid": "89cade3e_fad0c95b",
       "revId": "98c4c778f163b8f9178d4286420112ade001aae7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
