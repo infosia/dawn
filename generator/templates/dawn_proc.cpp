@@ -63,7 +63,7 @@ void {{prefix}}ProcSetProcs(const {{Prefix}}ProcTable* procs_) {
 }
 
 {% for function in by_category["function"] %}
-    DAWN_NO_SANITIZE("cfi-icall")
+    DAWN_NO_SANITIZE("cfi-icall") DAWN_NO_SANITIZE("enum")
     {{as_cType(function.return_type.name)}} {{as_cMethod(None, function.name)}}(
         {%- for arg in function.arguments -%}
             {% if not loop.first %}, {% endif %}{{as_annotated_cType(arg)}}
@@ -80,7 +80,7 @@ void {{prefix}}ProcSetProcs(const {{Prefix}}ProcTable* procs_) {
 
 {% for type in by_category["object"] %}
     {% for method in c_methods(type) %}
-        DAWN_NO_SANITIZE("cfi-icall")
+        DAWN_NO_SANITIZE("cfi-icall") DAWN_NO_SANITIZE("enum")
         {{as_cType(method.return_type.name)}} {{as_cMethod(type.name, method.name)}}(
             {{-as_cType(type.name)}} {{as_varName(type.name)}}
             {%- for arg in method.arguments -%}
