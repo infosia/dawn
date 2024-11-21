@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dd7f51d0_818ed250",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-21T21:31:42Z",
+      "side": 1,
+      "message": "I will probably preemptively remove it 😊",
+      "parentUuid": "88bab4c2_ce0fcbe7",
+      "revId": "1e13c2cf33d7a8b0c857235ccf44ba0bb57d15ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06b96001_34d864c7",
         "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
         "patchSetId": 22
