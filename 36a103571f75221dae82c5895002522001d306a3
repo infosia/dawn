@@ -158,6 +158,24 @@
       "message": "Per the internal discussion thread with Chrome\u0027s Mac developers, Dawn\u0027s bots aren\u0027t set up to be able to reference the constant MTLGPUFamilyApple8 right now. To work around this I suggest using `reinterpret_cast\u003cMTLGPUFamily\u003e(1008)` and a big comment that this is a workaround for the inability to reference the MTLGPUFamilyApple8 enum on Dawn\u0027s build bots because they\u0027re building with a too-old Mac SDK. This workaround could also be #ifdef\u0027d but I don\u0027t think it\u0027s worth the complexity.",
       "revId": "36a103571f75221dae82c5895002522001d306a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "125cc672_ebda8680",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-11-21T22:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8765ed39_63a8b5fb",
+      "revId": "36a103571f75221dae82c5895002522001d306a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

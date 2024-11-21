@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d1b77d2_4becdb25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-11-21T22:17:03Z",
+      "side": 1,
+      "message": "Still lgtm.",
+      "revId": "2b8cdfa1c40e5e7e0ba0dd14dc4b8a2c16a04e4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74018d68_cac53898",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2024-11-21T22:17:03Z",
+      "side": 1,
+      "message": "crbug/com -\u003e crbug.com",
+      "revId": "2b8cdfa1c40e5e7e0ba0dd14dc4b8a2c16a04e4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
