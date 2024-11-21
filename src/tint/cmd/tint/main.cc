@@ -205,7 +205,7 @@ struct Options {
     bool use_storage_input_output_16 = true;
 #endif  // TINT_BULD_SPV_WRITER
 
-#if TINT_BUILD_HLSL_WRITER || TINT_BUILD_MSL_WRITER
+#if TINT_BUILD_MSL_WRITER
     std::unordered_map<uint32_t, uint32_t> pixel_local_attachments;
 #endif
 
@@ -578,20 +578,23 @@ Options:
                 return false;
             }
             auto format = values[1];
-            tint::hlsl::writer::PixelLocalOptions::TexelFormat texel_format =
-                tint::hlsl::writer::PixelLocalOptions::TexelFormat::kUndefined;
+            tint::hlsl::writer::PixelLocalAttachment::TexelFormat texel_format =
+                tint::hlsl::writer::PixelLocalAttachment::TexelFormat::kUndefined;
             if (format == "R32Sint") {
-                texel_format = tint::hlsl::writer::PixelLocalOptions::TexelFormat::kR32Sint;
+                texel_format = tint::hlsl::writer::PixelLocalAttachment::TexelFormat::kR32Sint;
             } else if (format == "R32Uint") {
-                texel_format = tint::hlsl::writer::PixelLocalOptions::TexelFormat::kR32Uint;
+                texel_format = tint::hlsl::writer::PixelLocalAttachment::TexelFormat::kR32Uint;
             } else if (format == "R32Float") {
-                texel_format = tint::hlsl::writer::PixelLocalOptions::TexelFormat::kR32Float;
+                texel_format = tint::hlsl::writer::PixelLocalAttachment::TexelFormat::kR32Float;
             } else {
                 std::cerr << "Invalid texel format for " << pixel_local_attachments.name << ": "
                           << format << "\n";
                 return false;
             }
-            opts->pixel_local_options.attachment_formats.emplace(member_index.Get(), texel_format);
+            // Add an entry with just the texel format for now. We will fill in the attachment index
+            // below.
+            tint::hlsl::writer::PixelLocalAttachment attachment{~0u, texel_format};
+            opts->pixel_local_options.attachments.emplace(member_index.Get(), attachment);
         }
     }
 
@@ -627,13 +630,22 @@ Options:
                           << values[1] << "\n";
                 return false;
             }
+#if TINT_BUILD_MSL_WRITER
             opts->pixel_local_attachments.emplace(member_index.Get(), attachment_index.Get());
+#endif
+#if TINT_BUILD_HLSL_WRITER
+            // We've already set the format for this member index, now we can set the attachment
+            // index
+            auto iter = opts->pixel_local_options.attachments.find(member_index.Get());
+            if (iter == opts->pixel_local_options.attachments.end()) {
+                std::cerr << "Missing pixel local format for member index: " << member_index.Get()
+                          << "\n";
+                return false;
+            }
+            iter->second.index = attachment_index.Get();
+#endif
         }
     }
-#if TINT_BUILD_HLSL_WRITER
-    opts->pixel_local_options.attachments = opts->pixel_local_attachments;
-#endif
-
 #endif
 
     auto files = result.Get();
