@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8297e65b_5c166c97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-21T18:45:45Z",
+      "side": 1,
+      "message": "Closing this in favor of https://dawn-review.googlesource.com/c/dawn/+/216114.",
+      "parentUuid": "b81e346a_58bb2916",
+      "revId": "f4aafd3464c6a8606bc1d467693f0394fe3586f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fdb49ab1_bc9cdeb1",
