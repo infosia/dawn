@@ -50,6 +50,54 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7fedba6f_9a1d014c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-21T09:08:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "04e299e3_fab681fe",
+      "range": {
+        "startLine": 7,
+        "startChar": 46,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "929a3f391a6d0a52852f3a593b7e2951c147474f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f161b57d_647b4602",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-21T09:08:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "04e299e3_fab681fe",
+      "range": {
+        "startLine": 7,
+        "startChar": 46,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "929a3f391a6d0a52852f3a593b7e2951c147474f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "bbf829cf_e23f61e4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -122,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "90442c6a_6f1c6d9d",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-21T09:08:20Z",
+      "side": 1,
+      "message": "I\u0027ll do that in the follow-up cleanup CL after part 2 then. See https://issues.chromium.org/issues/377820810#comment6",
+      "parentUuid": "ac97e866_c743f2ef",
+      "revId": "929a3f391a6d0a52852f3a593b7e2951c147474f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35dc50a3_4cde99ab",
@@ -135,6 +201,30 @@
       "writtenOn": "2024-11-20T04:00:35Z",
       "side": 1,
       "message": "existing nit: Probably a followup change since it _could_ break something, but I\u0027m pretty sure this one should be UNREACHABLE. (`Uniform` and `ReadOnlyStorage` are reachable, but not `BindingNotUsed` because `bindingInfo.bindingLayout` has already determined that this is a buffer binding.)",
+      "range": {
+        "startLine": 498,
+        "startChar": 29,
+        "endLine": 498,
+        "endChar": 68
+      },
+      "revId": "929a3f391a6d0a52852f3a593b7e2951c147474f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ee559b9_78d250f1",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-21T09:08:20Z",
+      "side": 1,
+      "message": "I\u0027ve uploaded this CL with your suggested changes.",
+      "parentUuid": "35dc50a3_4cde99ab",
       "range": {
         "startLine": 498,
         "startChar": 29,
