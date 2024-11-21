@@ -123,6 +123,24 @@
       "parentUuid": "39cbf763_98605ec8",
       "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a687258_28ce490a",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-21T14:45:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand the reasoning for making this an ICE just because it isn\u0027t valid. The whole purpose of the validator is to find stuff that isn\u0027t valid, which are always caused by programming errors in Tint, so why is this one any different?",
+      "parentUuid": "bae65686_4a75457e",
+      "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
