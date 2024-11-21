@@ -16,6 +16,23 @@
       "message": "Retrying the failed builds, looked like infra flake",
       "revId": "98c4c778f163b8f9178d4286420112ade001aae7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89cade3e_fad0c95b",
+        "filename": "src/tint/lang/core/io_attributes.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-21T14:23:48Z",
+      "side": 1,
+      "message": "Why is this a free function instead of a method on the struct?",
+      "revId": "98c4c778f163b8f9178d4286420112ade001aae7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
