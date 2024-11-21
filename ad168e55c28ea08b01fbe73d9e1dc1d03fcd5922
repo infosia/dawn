@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f76dbfdf_4158df87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-21T20:59:36Z",
+      "side": 1,
+      "message": "LGTM for me! Will let Corentin take a look as well to make sure he\u0027s happy with this fix instead of the other one! Thanks Kyle!",
+      "revId": "ad168e55c28ea08b01fbe73d9e1dc1d03fcd5922",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
