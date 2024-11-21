@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "82ee7e26_2577a2e4",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-21T21:05:54Z",
+      "side": 1,
+      "message": "I was doing it so that the option was going to be the same for all platforms (the option not to do transform)\n\nI asked james if he though we would ever want tint to use OpKill instead. He said maybe. (this would probably be in the context of dawn native probably for a game)\n\nI can simply remove this option and yes it will make the code cleaner.",
+      "parentUuid": "5e2b89b2_10bba7da",
+      "revId": "1e13c2cf33d7a8b0c857235ccf44ba0bb57d15ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06b96001_34d864c7",
         "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
         "patchSetId": 22
