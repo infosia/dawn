@@ -141,6 +141,24 @@
       "parentUuid": "bae65686_4a75457e",
       "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4a7419b_9441de55",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-21T17:27:36Z",
+      "side": 1,
+      "message": "We discussed this out of band, going to switch from being an ICE to a validation failure",
+      "parentUuid": "2a687258_28ce490a",
+      "revId": "2aed303d2e1a34dcd0bbc30b035b6e112500a512",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
