@@ -69,6 +69,24 @@
       "parentUuid": "7b61ab16_d53225e2",
       "revId": "36a103571f75221dae82c5895002522001d306a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0075207_1e804133",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-21T18:42:42Z",
+      "side": 1,
+      "message": "The reason for the -1 is that it\u0027s possible to land this if CQ doesn\u0027t select a Mac-11 bot. But fine, I removed it.",
+      "parentUuid": "75e0985c_2bbc2328",
+      "revId": "36a103571f75221dae82c5895002522001d306a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
