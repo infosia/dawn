@@ -152,6 +152,10 @@ struct Options {
 
     /// Set to `true` to initialize workgroup memory with OpConstantNull when
     /// VK_KHR_zero_initialize_workgroup_memory is enabled.
+    bool use_demote_to_helper_invocation_extensions = false;
+
+    /// Set to `true` to initialize workgroup memory with OpConstantNull when
+    /// VK_KHR_zero_initialize_workgroup_memory is enabled.
     bool use_zero_initialize_workgroup_memory_extension = false;
 
     /// Set to `true` to use the StorageInputOutput16 capability for shader IO that uses f16 types.
@@ -189,6 +193,7 @@ struct Options {
                  disable_image_robustness,
                  disable_runtime_sized_array_index_clamping,
                  disable_workgroup_init,
+                 use_demote_to_helper_invocation_extensions,
                  use_zero_initialize_workgroup_memory_extension,
                  use_storage_input_output_16,
                  emit_vertex_point_size,
