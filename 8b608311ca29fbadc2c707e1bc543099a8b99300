@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e95ce764_fe94b0a3",
+        "filename": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-21T17:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4cf613b_cd9c1aed",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 91
+      },
+      "revId": "8b608311ca29fbadc2c707e1bc543099a8b99300",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39bb0d80_39c104f9",
@@ -54,6 +78,24 @@
       "writtenOn": "2024-11-21T16:28:23Z",
       "side": 1,
       "message": "Nit: Should be able to just do `b.LessThan(ty.bool_(), local_index, u32(count))` instead of manually creating the constant.",
+      "revId": "8b608311ca29fbadc2c707e1bc543099a8b99300",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4705a070_288e2ae4",
+        "filename": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-21T17:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39bb0d80_39c104f9",
       "revId": "8b608311ca29fbadc2c707e1bc543099a8b99300",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
