@@ -30,6 +30,7 @@
 
 #include "dawn/common/SerialMap.h"
 #include "dawn/common/TypedInteger.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 namespace dawn {
@@ -156,6 +157,19 @@ TEST(SerialMap, ClearUpTo) {
         expectedValues.erase(expectedValues.begin());
     }
     ASSERT_TRUE(expectedValues.empty());
+}
+
+// Test TakeUpTo()
+TEST(SerialMap, TakeUpTo) {
+    TestSerialMap map;
+    map.Enqueue({1, 2, 3, 4}, 0);
+    map.Enqueue({5, 6, 7, 8}, 0);
+    map.Enqueue({9, 0}, 1);
+
+    TestSerialMap values_up_to = map.TakeUpTo(0);
+    EXPECT_THAT(values_up_to.IterateAll(), testing::UnorderedElementsAre(1, 2, 3, 4, 5, 6, 7, 8));
+
+    EXPECT_THAT(map.IterateAll(), testing::UnorderedElementsAre(0, 9));
 }
 
 // Test FirstSerial

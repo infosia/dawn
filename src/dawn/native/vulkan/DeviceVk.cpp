@@ -332,14 +332,14 @@ MaybeError Device::TickImpl() {
     ExecutionSerial completedSerial = queue->GetCompletedCommandSerial();
     queue->RecycleCompletedCommands(completedSerial);
 
-    for (Ref<DescriptorSetAllocator>& allocator :
-         mDescriptorAllocatorsPendingDeallocation.IterateUpTo(completedSerial)) {
+    auto pendingDeallocate = mDescriptorAllocatorsPendingDeallocation->TakeUpTo(completedSerial);
+    for (Ref<DescriptorSetAllocator>& allocator : pendingDeallocate.IterateAll()) {
         allocator->FinishDeallocation(completedSerial);
     }
-    mDescriptorAllocatorsPendingDeallocation.ClearUpTo(completedSerial);
 
     GetResourceMemoryAllocator()->Tick(completedSerial);
     GetFencedDeleter()->Tick(completedSerial);
+    pendingDeallocate.Clear();
 
     DAWN_TRY(queue->SubmitPendingCommands());
     DAWN_TRY(CheckDebugLayerAndGenerateErrors());
@@ -383,8 +383,8 @@ external_semaphore::Service* Device::GetExternalSemaphoreService() const {
 }
 
 void Device::EnqueueDeferredDeallocation(DescriptorSetAllocator* allocator) {
-    mDescriptorAllocatorsPendingDeallocation.Enqueue(allocator,
-                                                     GetQueue()->GetPendingCommandSerial());
+    mDescriptorAllocatorsPendingDeallocation->Enqueue(allocator,
+                                                      GetQueue()->GetPendingCommandSerial());
 }
 
 ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysicalDevice) {
@@ -908,15 +908,16 @@ void Device::DestroyImpl() {
 
     ToBackend(GetPhysicalDevice())->GetVulkanInstance()->StopListeningForDeviceMessages(this);
 
-    for (Ref<DescriptorSetAllocator>& allocator :
-         mDescriptorAllocatorsPendingDeallocation.IterateUpTo(kMaxExecutionSerial)) {
+    auto pendingDeallocate =
+        mDescriptorAllocatorsPendingDeallocation->TakeUpTo(kMaxExecutionSerial);
+    for (Ref<DescriptorSetAllocator>& allocator : pendingDeallocate.IterateAll()) {
         allocator->FinishDeallocation(kMaxExecutionSerial);
     }
-    mDescriptorAllocatorsPendingDeallocation.ClearUpTo(kMaxExecutionSerial);
 
     // Releasing the uploader enqueues buffers to be released.
     // Call Tick() again to clear them before releasing the deleter.
     GetResourceMemoryAllocator()->Tick(kMaxExecutionSerial);
+    pendingDeallocate.Clear();
 
     // Allow recycled memory to be deleted.
     GetResourceMemoryAllocator()->DestroyPool();
