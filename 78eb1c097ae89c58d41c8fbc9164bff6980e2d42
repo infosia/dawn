@@ -56,6 +56,23 @@
       },
       "revId": "78eb1c097ae89c58d41c8fbc9164bff6980e2d42",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d23b8ac8_5f4a311b",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-11-21T03:54:28Z",
+      "side": 1,
+      "message": "```suggestion\n    // Check that the apparentSize is correct and that the center of the quad has moved due to the\n```",
+      "revId": "78eb1c097ae89c58d41c8fbc9164bff6980e2d42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
