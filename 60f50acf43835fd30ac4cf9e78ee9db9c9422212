@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75c7b9d5_b30c16b3",
+        "filename": "generator/templates/dawn_proc.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-21T18:04:02Z",
+      "side": 1,
+      "message": "We could sprinkle these all over the place, but that seemss wrong.\nThe alternate would be change the parameter type on the API and that seems even worse",
+      "revId": "60f50acf43835fd30ac4cf9e78ee9db9c9422212",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
