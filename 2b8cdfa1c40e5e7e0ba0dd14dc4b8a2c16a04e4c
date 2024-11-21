@@ -33,6 +33,24 @@
       "message": "crbug/com -\u003e crbug.com",
       "revId": "2b8cdfa1c40e5e7e0ba0dd14dc4b8a2c16a04e4c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9ea86df_72f240fb",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-21T22:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74018d68_cac53898",
+      "revId": "2b8cdfa1c40e5e7e0ba0dd14dc4b8a2c16a04e4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
