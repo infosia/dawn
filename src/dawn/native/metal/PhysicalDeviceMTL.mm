@@ -741,10 +741,13 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     // explicitly use Xcode 13.3 and MacOS 12.3 version 21E226, so does not support
     // MTLGPUFamilyMetal3.
     // Note that supportsFamily: method requires macOS 10.15+ or iOS 13.0+
+    // TODO(380326541): Check that reduction operations are supported in Apple6. The support
+    // table says Apple7.
     if (@available(macOS 10.15, iOS 13.0, *)) {
         if ([*mDevice supportsFamily:MTLGPUFamilyApple6] ||
             [*mDevice supportsFamily:MTLGPUFamilyMac2]) {
             EnableFeature(Feature::Subgroups);
+            // TODO(crbug.com/380244620) remove SubgroupsF16
             EnableFeature(Feature::SubgroupsF16);
         }
     }
@@ -944,6 +947,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
     // - maxVertexBufferArrayStride
 
     // Experimental limits for subgroups
+    // TODO(354751907): Move to AdapterInfo
     limits->experimentalSubgroupLimits.minSubgroupSize = 4;
     limits->experimentalSubgroupLimits.maxSubgroupSize = 64;
 
@@ -957,6 +961,10 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
 }
 
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {
+    if (auto* subgroupProperties = info.Get<AdapterPropertiesSubgroups>()) {
+        subgroupProperties->minSubgroupSize = 4;
+        subgroupProperties->maxSubgroupSize = 64;
+    }
     if (auto* memoryHeapProperties = info.Get<AdapterPropertiesMemoryHeaps>()) {
         if ([*mDevice hasUnifiedMemory]) {
             auto* heapInfo = new MemoryHeapInfo[1];

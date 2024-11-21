@@ -152,6 +152,11 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
     }
 
     bool hadError = false;
+    if (unpacked.Get<AdapterPropertiesSubgroups>() != nullptr &&
+        !mSupportedFeatures.IsEnabled(wgpu::FeatureName::Subgroups)) {
+        hadError |=
+            mInstance->ConsumedError(DAWN_VALIDATION_ERROR("Feature Subgroups is not available."));
+    }
     if (unpacked.Get<AdapterPropertiesMemoryHeaps>() != nullptr &&
         !mSupportedFeatures.IsEnabled(wgpu::FeatureName::AdapterPropertiesMemoryHeaps)) {
         hadError |= mInstance->ConsumedError(
