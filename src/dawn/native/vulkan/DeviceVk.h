@@ -125,6 +125,12 @@ class Device final : public DeviceBase {
     // Used to associate this device with validation layer messages.
     const char* GetDebugPrefix() { return mDebugPrefix.c_str(); }
 
+    void AddMemoryBarrier(CommandRecordingContext* recordingContext,
+                          VkAccessFlags srcAccessMask,
+                          VkAccessFlags dstAccessMask,
+                          VkPipelineStageFlags srcStages,
+                          VkPipelineStageFlags dstStages);
+
   private:
     Device(AdapterBase* adapter,
            const UnpackedPtr<DeviceDescriptor>& descriptor,

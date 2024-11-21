@@ -647,7 +647,8 @@ MaybeError Device::CopyFromStagingToBufferImpl(BufferBase* source,
 
     // Insert pipeline barrier to ensure correct ordering with previous memory operations on the
     // buffer.
-    ToBackend(destination)->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
+    ToBackend(destination)
+        ->TransitionUsageNowWithBarrier(recordingContext, wgpu::BufferUsage::CopyDst);
 
     VkBufferCopy copy;
     copy.srcOffset = sourceOffset;
@@ -1021,6 +1022,23 @@ void Device::PerformIdleTasksImpl() {
             return;
         }
     }
+}
+
+void Device::AddMemoryBarrier(CommandRecordingContext* recordingContext,
+                              VkAccessFlags srcAccessMask,
+                              VkAccessFlags dstAccessMask,
+                              VkPipelineStageFlags srcStages,
+                              VkPipelineStageFlags dstStages) {
+    DAWN_ASSERT(srcStages != 0 && dstStages != 0);
+
+    VkMemoryBarrier barrier;
+    barrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
+    barrier.pNext = nullptr;
+    barrier.srcAccessMask = srcAccessMask;
+    barrier.dstAccessMask = dstAccessMask;
+
+    fn.CmdPipelineBarrier(recordingContext->commandBuffer, srcStages, dstStages, 0, 1, &barrier, 0,
+                          nullptr, 0, nullptr);
 }
 
 }  // namespace dawn::native::vulkan
