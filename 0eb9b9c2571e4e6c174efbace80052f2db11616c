@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16c67838_506b86f8",
+        "filename": "src/dawn/fuzzers/DawnWireServerAndD3D12BackendFuzzer.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:05:52Z",
+      "side": 1,
+      "message": "It compiles inside a Chromium build that enables fuzzers.",
+      "parentUuid": "78a29e3a_858e6405",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dfa0b716_e076ad92",
         "filename": "src/dawn/node/binding/GPU.cpp",
         "patchSetId": 17
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "What would be the signature of this new method?\n\n```\n            {\n                \"name\": \"enumerate adapters\",\n                \"returns\": \"?\",\n                \"args\": [\n                    {\"name\": \"options\", \"type\": \"request adapter options\", \"annotation\": \"const*\", \"optional\": true, \"no_default\": true},\n                ]\n            }\n```",
       "parentUuid": "dfa0b716_e076ad92",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aebf975e_e63a75af",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:05:52Z",
+      "side": 1,
+      "message": "Like the previous enumerateFeatures we had it would take a count and an out array.",
+      "parentUuid": "3f63bbc2_16ae08a1",
       "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -108,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "50419bc4_cf3ec2a9",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:05:52Z",
+      "side": 1,
+      "message": "That\u0027s basically it.",
+      "parentUuid": "e4e094de_e27b00ba",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "95adac37_c20fa1d6",
         "filename": "src/dawn/node/binding/GPUAdapter.cpp",
         "patchSetId": 17
@@ -137,6 +191,24 @@
       "side": 1,
       "message": "Would this still work with `adapter_.CreateDevice(\u0026desc)` below?",
       "parentUuid": "95adac37_c20fa1d6",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31e2f189_df4b517a",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:05:52Z",
+      "side": 1,
+      "message": "That createDevice could be changed to requestDevice. IDK why dawn.node doesn\u0027t use request to implement request.\n\nI\u0027d suggest splitting this CL in multiple ones at this point because there starts to be a lot of things.",
+      "parentUuid": "864e2b6e_89cd07e2",
       "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
