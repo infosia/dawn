@@ -201,6 +201,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15a90a15_6df2c58c",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-22T16:09:48Z",
+      "side": 1,
+      "message": "So my concern is if someone sets up a D3D12 static sampler and binds it to a texture with `sampledTextureBinding` that texture binding is not going to work. The D3D12 and GL backends don\u0027t check the `samptedTextureBinding` field to know it was set.\n\nIt sounds like gating samptedTextureBinding on Feature::YCbCrVulkanSamplers is the wrong way to approach this though. `samptedTextureBinding` could be made to work with D3D12 and GL but it just hasn\u0027t been yet. As long as the plan is to make it work on those platforms that seems fine to me.",
+      "parentUuid": "a8bbe9da_68488880",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39f006a4_9bb6075f",
