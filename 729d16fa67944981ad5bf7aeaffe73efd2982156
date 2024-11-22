@@ -183,6 +183,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8bbe9da_68488880",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-11-22T15:49:03Z",
+      "side": 1,
+      "message": "It\u0027s only YCbCr samplers that *must* use `sampledTextureBinding`. In general, a static sampler just means that the sampler is passed in the BGL instead of the BG; it can still be used to sample textures arbitrarily in a shader. Vulkan has the requirement that YCbCr samplers must be `COMBINED_IMAGE_SAMPLER` which basically means that the sampler and texture need to be tied to each other at the time of creating the descriptor set layout (BGL in Dawn terms). General static samplers don\u0027t have that restriction.",
+      "parentUuid": "e37b8894_796e22fe",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39f006a4_9bb6075f",
