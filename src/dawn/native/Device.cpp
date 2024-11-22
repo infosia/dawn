@@ -2176,10 +2176,11 @@ void DeviceBase::InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsync
 
 ResultOrError<Ref<PipelineLayoutBase>> DeviceBase::CreatePipelineLayout(
     const PipelineLayoutDescriptor* descriptor,
-    PipelineCompatibilityToken pipelineCompatibilityToken) {
+    PipelineCompatibilityToken pipelineCompatibilityToken,
+    bool skipValidation) {
     DAWN_TRY(ValidateIsAlive());
     UnpackedPtr<PipelineLayoutDescriptor> unpacked;
-    if (IsValidationEnabled()) {
+    if (IsValidationEnabled() && !skipValidation) {
         DAWN_TRY_ASSIGN(unpacked, ValidatePipelineLayoutDescriptor(this, descriptor,
                                                                    pipelineCompatibilityToken));
     } else {
