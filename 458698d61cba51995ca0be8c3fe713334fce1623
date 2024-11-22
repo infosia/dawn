@@ -16,6 +16,23 @@
       "message": "Fails SubgroupsPropertiesTests.FromAdapter/Metal_Intel_R__UHD_Graphics_630 \nbecause minSubgroupSize is given as UINT_MAX",
       "revId": "458698d61cba51995ca0be8c3fe713334fce1623",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8aa51a38_0465a33c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-22T20:51:38Z",
+      "side": 1,
+      "message": "Failed SubgroupsPropertiesTests.FromAdapter/Vulkan_Intel_R__UHD_Graphics_630__CML_GT2 same reason",
+      "revId": "458698d61cba51995ca0be8c3fe713334fce1623",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
