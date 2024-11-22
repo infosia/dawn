@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46b0b0ec_db0e66b8",
+        "filename": "src/dawn/fuzzers/DawnWireServerAndD3D12BackendFuzzer.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T11:16:15Z",
+      "side": 1,
+      "message": "Can we change this function to take a callback with a wgpu::Adapter instead of a dawn::native::Adapter? It would let us do the case only once.",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfa0b716_e076ad92",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T11:16:15Z",
+      "side": 1,
+      "message": "IMHO we should have a dawn.json version of EnumerateAdapters to avoid the need to cast things around below.",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36c7e84a_4b06f8cb",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T11:16:15Z",
+      "side": 1,
+      "message": "Could we instead of doing casts in three different places below, do it once to convert the vector of adapters to a whole new vector of wgpu::Adapter?",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95adac37_c20fa1d6",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T11:16:15Z",
+      "side": 1,
+      "message": "Can we change the type of adapter_ instead?",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6973da3f_a1ce3fca",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T11:16:15Z",
+      "side": 1,
+      "message": "We cannot use this yet. It is C++20 library features that we won\u0027t enable for a while.",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "661e3fb9_48d249d9",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T11:16:15Z",
+      "side": 1,
+      "message": "Here we need to use the C procs like at [1] because the C and C++ API are potentially bound to dawn::wire so the current code would pass a dawn::native adapter to a dawn::wire proc.",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d858f85f_2ae05d29",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T11:16:15Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ca10fb4_3393524e",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T11:16:15Z",
+      "side": 1,
+      "message": "ditto: we need to use the C API and `backendAdapter` here.",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10a34083_b0d82db0",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T11:16:15Z",
+      "side": 1,
+      "message": "That\u0027s too broad a suppression: we need to keep testing these on the wire.",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97828da6_2468e911",
+        "filename": "src/dawn/tests/perf_tests/DawnPerfTest.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T11:16:15Z",
+      "side": 1,
+      "message": "Can we instead have some kind of IsCPU() on DawnTestBase and check that? It would avoid the need to get the info once again etc.",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
