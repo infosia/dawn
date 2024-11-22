@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "835c9671_add53635",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-22T00:04:53Z",
+      "side": 1,
+      "message": "Sorry I left this open for a while. It took a while to debug the failing tests from before, and I realized that part of them was caused due to some issues that would be fixed if I finished deprecating the Set*Callback entry points so I took a side-quest to fix that first \u003e\u003c",
+      "revId": "d165e75e0cbde6ef83c9e827a6eed9c36a5ce2bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
