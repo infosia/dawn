@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc3feebc_6894c3d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-22T06:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89d63bda_25479174",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "fbefb3e22219ec8004aab8e8f20bd3e2af32ecb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0418d076_2442109d",
@@ -71,6 +95,30 @@
           ]
         }
       ],
+      "revId": "fbefb3e22219ec8004aab8e8f20bd3e2af32ecb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b504ce29_3933ca22",
+        "filename": "src/dawn/wire/client/Adapter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-22T06:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0418d076_2442109d",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 72
+      },
       "revId": "fbefb3e22219ec8004aab8e8f20bd3e2af32ecb6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
