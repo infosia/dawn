@@ -50,6 +50,23 @@
       "message": "Failed SubgroupsPropertiesTests.FromAdapter/D3D12_Intel_R__UHD_Graphics_630  same reason",
       "revId": "458698d61cba51995ca0be8c3fe713334fce1623",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf18fc1a_ec4889d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-22T20:56:27Z",
+      "side": 1,
+      "message": "Failed  SubgroupsPropertiesTests.FromAdapter/Metal_Apple_M2\n../../third_party/dawn/src/dawn/tests/end2end/SubgroupsTests.cpp:105: Failure\nValue of: IsPowerOfTwo(minSubgroupSize)\n  Actual: false\nExpected: true\nStack trace:\n0   dawn_end2end_tests                  0x0000000104baa638 dawn::(anonymous namespace)::SubgroupsPropertiesTests::CheckValidSizes(unsigned int, unsigned int) + 380\n1   dawn_end2end_tests                  0x0000000104baa3d8 dawn::(anonymous namespace)::SubgroupsPropertiesTests_FromAdapter_Test::TestBody() + 108\n\n../../third_party/dawn/src/dawn/tests/end2end/SubgroupsTests.cpp:107: Failure\nExpected: (maxSubgroupSize) \u003c\u003d (128u), actual: 4294967295 vs 128",
+      "revId": "458698d61cba51995ca0be8c3fe713334fce1623",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
