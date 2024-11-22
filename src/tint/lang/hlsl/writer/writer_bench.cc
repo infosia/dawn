@@ -29,9 +29,32 @@
 
 #include "src/tint/cmd/bench/bench.h"
 #include "src/tint/lang/hlsl/writer/writer.h"
+#include "src/tint/lang/wgsl/reader/reader.h"
 
 namespace tint::hlsl::writer {
 namespace {
+
+void GenerateHLSL(benchmark::State& state, std::string input_name) {
+    auto res = bench::GetWgslProgram(input_name);
+    if (res != Success) {
+        state.SkipWithError(res.Failure().reason.Str());
+        return;
+    }
+    for (auto _ : state) {
+        // Convert the AST program to an IR module.
+        auto ir = tint::wgsl::reader::ProgramToLoweredIR(res->program);
+        if (ir != Success) {
+            state.SkipWithError(ir.Failure().reason.Str());
+            return;
+        }
+
+        tint::hlsl::writer::Options gen_options;
+        auto gen_res = Generate(ir.Get(), gen_options);
+        if (gen_res != Success) {
+            state.SkipWithError(gen_res.Failure().reason.Str());
+        }
+    }
+}
 
 void GenerateHLSL_AST(benchmark::State& state, std::string input_name) {
     auto res = bench::GetWgslProgram(input_name);
@@ -47,6 +70,7 @@ void GenerateHLSL_AST(benchmark::State& state, std::string input_name) {
     }
 }
 
+TINT_BENCHMARK_PROGRAMS(GenerateHLSL);
 TINT_BENCHMARK_PROGRAMS(GenerateHLSL_AST);
 
 }  // namespace
