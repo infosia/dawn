@@ -145,6 +145,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4c902584_7e73c826",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-22T22:53:08Z",
+      "side": 1,
+      "message": "Yeah, I think that if we are not supporting an `OpTerminateInvocation` path right now, I think the only option we need here is one that tells Tint that `SPV_EXT_demote_to_helper_invocation` is available.",
+      "parentUuid": "dd7f51d0_818ed250",
+      "revId": "1e13c2cf33d7a8b0c857235ccf44ba0bb57d15ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06b96001_34d864c7",
         "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
         "patchSetId": 22

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b80eaba_c0035a54",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-22T22:53:08Z",
+      "side": 1,
+      "message": "Nit: Update comment",
+      "revId": "82858cb2c69d7f45cba7e7a1c72034d387f6130f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90b95620_ec538439",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-22T22:53:08Z",
+      "side": 1,
+      "message": "Nit: Prefer to do this lazily so that we\u0027re not enabling extensions that might not be used for the shader we are currently generating.",
+      "revId": "82858cb2c69d7f45cba7e7a1c72034d387f6130f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab159d71_6f4406bc",
+        "filename": "src/tint/lang/spirv/writer/var_test.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-22T22:53:08Z",
+      "side": 1,
+      "message": "Nit: Probably better in `discard_test.cc`",
+      "revId": "82858cb2c69d7f45cba7e7a1c72034d387f6130f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
