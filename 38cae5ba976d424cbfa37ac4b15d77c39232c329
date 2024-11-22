@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7fc70da_0bc94848",
+        "filename": "src/tint/lang/hlsl/writer/writer_bench.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-22T22:41:50Z",
+      "side": 1,
+      "message": "I\u0027m surprised this works without `GenerateBindings()`.\n\nBut now I\u0027m looking at the code for the HLSL backends, and I don\u0027t actually know what the HLSL backend uses most of the generated bindings information for...",
+      "revId": "38cae5ba976d424cbfa37ac4b15d77c39232c329",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
