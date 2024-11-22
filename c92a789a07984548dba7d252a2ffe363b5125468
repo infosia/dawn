@@ -33,6 +33,24 @@
       "message": "nit: we should be able to check that only one of the two formats is snorm.",
       "revId": "c92a789a07984548dba7d252a2ffe363b5125468",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5479d72a_f1522bb5",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-11-22T17:42:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "730e6037_aba67e66",
+      "revId": "c92a789a07984548dba7d252a2ffe363b5125468",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
