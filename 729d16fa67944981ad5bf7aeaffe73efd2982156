@@ -239,6 +239,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4749610f_efcf9be7",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-22T16:18:36Z",
+      "side": 1,
+      "message": "I agree with you Colin but I think Corentin was pushing for the opposite:\n\n\u003e That said, this feature should happen to work on other backends where StaticSamplers is supported because everything sampledTextureBinding does is constrain on the validation side that the sampler be statically used only with that texture, so we can do the correct thing in Vulkan. Because it is just opting in to additional constraints, it will work everywhere.\n\nThrowing in something like the following here would be simpler than adding support where it\u0027s potentially not needed.\n\n```\nDAWN_INVALID_IF(!device-\u003eHasFeature(Feature::YCbCrVulkanSamplers),\n                \"Sampled texture binding is not supported without %s.\",  wgpu::FeatureName::YCbCrVulkanSamplers);\n```",
+      "parentUuid": "2bfd915f_22f8e2fe",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39f006a4_9bb6075f",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 9
