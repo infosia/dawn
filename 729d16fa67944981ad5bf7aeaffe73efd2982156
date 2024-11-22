@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a84e399_231ffc31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:57:36Z",
+      "side": 1,
+      "message": "LGTM overall",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed2e0670_16f893af",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:57:36Z",
+      "side": 1,
+      "message": "```suggestion\n        auto* memoryContents \u003d\n```",
+      "range": {
+        "startLine": 177,
+        "startChar": 14,
+        "endLine": 177,
+        "endChar": 29
+      },
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41882cda_0203081f",
@@ -26,6 +66,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b58f3fb1_e3330911",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:57:36Z",
+      "side": 1,
+      "message": "That would be a good solution as well, but for now what we\u0027ve been doing is sticking the validation tests inside dawn_end2end_tests so that it runs on a real device with the OS-specific extensions that can be used to create the STM.\n\nKeeping the code how it was previously, or adding the Null backend STM would work, but the current change is a bit worrisome because it adds context when new kinds of SampleTypeBig::External textures are added that we need to modify this piece of code (which we\u0027ll definitely forget!)",
+      "parentUuid": "41882cda_0203081f",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 50
+      },
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c0eecaf6_488ebc73",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 9
@@ -37,6 +101,41 @@
       "writtenOn": "2024-11-21T15:06:11Z",
       "side": 1,
       "message": "Do we want to enforce that sampledTextureBinding is only set for the Vulkan backend here? My understanding is this is specific to Vulkan COMBINED_IMAGE_SAMPLERs and implementation doesn\u0027t exist in other backends. I\u0027m also not sure if frontend validation should enforce a specific backend for features?",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "281970b7_93ec504c",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:57:36Z",
+      "side": 1,
+      "message": "In general the frontend should be the one to gate on a specific Feature being present. That said, this feature should happen to work on other backends where StaticSamplers is supported because everything `sampledTextureBinding` does is constrain on the validation side that the sampler be statically used only with that texture, so we can do the correct thing in Vulkan. Because it is just opting in to additional constraints, it will work everywhere.",
+      "parentUuid": "c0eecaf6_488ebc73",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39f006a4_9bb6075f",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:57:36Z",
+      "side": 1,
+      "message": "very optional nit: WDYT of moving the population of the map outside of this function and into the parent? Or even doing everything in a helper function called from `ValidateBindGroupLayoutDescriptor` that loops over bindings again once or twice? This is pretty cold code so we can prioritize straightforwardness of the code here.",
       "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
