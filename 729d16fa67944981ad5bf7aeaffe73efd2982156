@@ -90,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e13702ba_afa2e01f",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-22T15:44:58Z",
+      "side": 1,
+      "message": "Right, I have no intention of landing this part of the change I just wasn\u0027t sure what the right way to fix it was.\n\nI guess if the strategy has been to move validation into dawn_end2end_tests that seems easiest. YCbCrInfoWithFeatureValidationTest don\u0027t run except on Android already so nothing is changing really. This also makes BindGroup validation easier since the DeviceNull TextureView doesn\u0027t have to support all the YCbCr stuff if tests can use TextureViewVk instead.",
+      "parentUuid": "b58f3fb1_e3330911",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 50
+      },
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c0eecaf6_488ebc73",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 9
@@ -123,6 +147,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e37b8894_796e22fe",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-22T15:44:58Z",
+      "side": 1,
+      "message": "Ah okay, so front end is supposed to get this platform specific things on features. That part makes sense.\n\nFWIW both D3D12 and GL backends say they support Features::StaticSamplers but don\u0027t use `sampledTextureBinding` in any way. I guess that is just broken then but should be fixed at some point.",
+      "parentUuid": "281970b7_93ec504c",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39f006a4_9bb6075f",
@@ -136,6 +178,24 @@
       "writtenOn": "2024-11-22T14:57:36Z",
       "side": 1,
       "message": "very optional nit: WDYT of moving the population of the map outside of this function and into the parent? Or even doing everything in a helper function called from `ValidateBindGroupLayoutDescriptor` that loops over bindings again once or twice? This is pretty cold code so we can prioritize straightforwardness of the code here.",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0038c55f_b11f87e4",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-22T15:44:58Z",
+      "side": 1,
+      "message": "I could do that if you think it\u0027s the right solution. We\u0027d have to unpack the layout entries multiple times.\n\nI could also just pull all the `StaticSamplerBindingLayout` related logic that is here into a helper function that is called from here? We\u0027d still have to pass textureToStaticSamplerBindingMap reference through this function and into the other helper though.",
+      "parentUuid": "39f006a4_9bb6075f",
       "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
