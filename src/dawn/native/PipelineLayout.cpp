@@ -381,34 +381,31 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
             std::max(immediateDataRangeByteSize, metadata.immediateDataRangeByteSize);
     }
 
-    // Create the bind group layouts. We need to keep track of the last non-empty BGL because
-    // Dawn doesn't yet know that an empty BGL and a null BGL are the same thing.
-    // TODO(cwallez@chromium.org): remove this when Dawn knows that empty and null BGL are the
-    // same.
-    BindGroupIndex pipelineBGLCount = BindGroupIndex(0);
+    // Create the bind group layouts.
     PerBindGroup<Ref<BindGroupLayoutBase>> bindGroupLayouts = {};
     for (auto group : Range(kMaxBindGroupsTyped)) {
-        DAWN_TRY_ASSIGN(
-            bindGroupLayouts[group],
-            CreateBGL(device, entryData[group], pipelineCompatibilityToken, allowInternalBinding));
-        if (entryData[group].size() != 0) {
-            pipelineBGLCount = ityp::PlusOne(group);
+        if (!entryData[group].empty()) {
+            DAWN_TRY_ASSIGN(bindGroupLayouts[group],
+                            CreateBGL(device, entryData[group], pipelineCompatibilityToken,
+                                      allowInternalBinding));
         }
     }
 
     // Create the deduced pipeline layout, validating if it is valid.
     PerBindGroup<BindGroupLayoutBase*> bgls = {};
-    for (auto group : Range(pipelineBGLCount)) {
+    for (auto group : Range(kMaxBindGroupsTyped)) {
         bgls[group] = bindGroupLayouts[group].Get();
     }
 
     PipelineLayoutDescriptor desc = {};
     desc.bindGroupLayouts = bgls.data();
-    desc.bindGroupLayoutCount = static_cast<uint32_t>(pipelineBGLCount);
+    desc.bindGroupLayoutCount = static_cast<uint32_t>(kMaxBindGroupsTyped);
     desc.immediateDataRangeByteSize = immediateDataRangeByteSize;
 
     Ref<PipelineLayoutBase> result;
-    DAWN_TRY_ASSIGN(result, device->CreatePipelineLayout(&desc, pipelineCompatibilityToken));
+    constexpr bool kSkipValidation = true;
+    DAWN_TRY_ASSIGN(
+        result, device->CreatePipelineLayout(&desc, pipelineCompatibilityToken, kSkipValidation));
     DAWN_ASSERT(!result->IsError());
 
     // That the auto pipeline layout is compatible with the current pipeline.
@@ -431,24 +428,34 @@ const BindGroupLayoutBase* PipelineLayoutBase::GetFrontendBindGroupLayout(
     BindGroupIndex group) const {
     DAWN_ASSERT(!IsError());
     DAWN_ASSERT(group < kMaxBindGroupsTyped);
-    DAWN_ASSERT(mMask[group]);
-    const BindGroupLayoutBase* bgl = mBindGroupLayouts[group].Get();
-    DAWN_ASSERT(bgl != nullptr);
-    return bgl;
+    if (mMask[group]) {
+        const BindGroupLayoutBase* bgl = mBindGroupLayouts[group].Get();
+        DAWN_ASSERT(bgl != nullptr);
+        return bgl;
+    } else {
+        return GetDevice()->GetEmptyBindGroupLayout();
+    }
 }
 
 BindGroupLayoutBase* PipelineLayoutBase::GetFrontendBindGroupLayout(BindGroupIndex group) {
     DAWN_ASSERT(!IsError());
     DAWN_ASSERT(group < kMaxBindGroupsTyped);
-    DAWN_ASSERT(mMask[group]);
-    BindGroupLayoutBase* bgl = mBindGroupLayouts[group].Get();
-    DAWN_ASSERT(bgl != nullptr);
-    return bgl;
+    if (mMask[group]) {
+        BindGroupLayoutBase* bgl = mBindGroupLayouts[group].Get();
+        DAWN_ASSERT(bgl != nullptr);
+        return bgl;
+    } else {
+        return GetDevice()->GetEmptyBindGroupLayout();
+    }
 }
 
 const BindGroupLayoutInternalBase* PipelineLayoutBase::GetBindGroupLayout(
     BindGroupIndex group) const {
-    return GetFrontendBindGroupLayout(group)->GetInternalBindGroupLayout();
+    if (mMask[group]) {
+        return GetFrontendBindGroupLayout(group)->GetInternalBindGroupLayout();
+    } else {
+        return GetDevice()->GetEmptyBindGroupLayout()->GetInternalBindGroupLayout();
+    }
 }
 
 const BindGroupMask& PipelineLayoutBase::GetBindGroupLayoutsMask() const {

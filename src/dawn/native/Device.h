@@ -211,7 +211,8 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
         const ComputePipelineDescriptor* descriptor);
     ResultOrError<Ref<PipelineLayoutBase>> CreatePipelineLayout(
         const PipelineLayoutDescriptor* rawDescriptor,
-        PipelineCompatibilityToken pipelineCompatibilityToken = kExplicitPCT);
+        PipelineCompatibilityToken pipelineCompatibilityToken = kExplicitPCT,
+        bool skipValidation = false);
     ResultOrError<Ref<QuerySetBase>> CreateQuerySet(const QuerySetDescriptor* descriptor);
     ResultOrError<Ref<RenderBundleEncoder>> CreateRenderBundleEncoder(
         const RenderBundleEncoderDescriptor* descriptor);
