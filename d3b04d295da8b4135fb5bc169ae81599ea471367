@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51d39b5e_f3ae28b3",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:34:48Z",
+      "side": 1,
+      "message": "The |\u003d would be done on CommandRecordingContext.",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65fcc890_f3d79a00",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:34:48Z",
+      "side": 1,
+      "message": "```suggestion\n    bool needBarrier \u003d false;\n```",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a261f1d4_66f6de69",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:34:48Z",
+      "side": 1,
+      "message": "EmitBarriers would be the ones to check if any stages have been set (any src, or dst) to know if the barrier should be skipped.",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a40aca84_80a8e8f1",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:34:48Z",
+      "side": 1,
+      "message": "While this approach works, I think we could try to make CommandRecordingContext a bit smarter instead to avoid the need to expose all these flags/mask/stages outside of buffer.\n\n```\nstruct CommandRecordingContext {\npublic:\n  AddBufferBarrier(srcAccessMask, dstAccessMask, srcStages, dstStages, shaderStage)\n  EmitBufferBarriers();\n  \nprivate:\n  mBufferSrcAccessMask;\n  mBufferDstAccessMask;\n  ... (we might need to duplicate between vertex vs. the rest to avoid overflushing on tilers).\n}\n```\n\nThis way TransitionUsageNow would do:\n\n```\nTrackUsageAndAddResourceBarrier(recordingContext, usage, shaderStage);\nrecordingContext-\u003eEmitBufferBarriers();\n```",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80529151_91f6daa4",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:34:48Z",
+      "side": 1,
+      "message": "nit: we no longer need fn since we can get it easily from device-\u003efn.",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c715748_4b8787de",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T14:34:48Z",
+      "side": 1,
+      "message": "It\u0027d be ideal to keep the semantic that TransitionUsageNow does the emission of the barrier on its own, otherwise we risk easily forgetting a barrier. Only for CopyB2B it might make sense to add barriers more manually and flush them both at once.",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
