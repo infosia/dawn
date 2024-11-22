@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89d63bda_25479174",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-11-22T02:46:48Z",
+      "side": 1,
+      "message": "s/Deprecate/Remove",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "fbefb3e22219ec8004aab8e8f20bd3e2af32ecb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0418d076_2442109d",
+        "filename": "src/dawn/wire/client/Adapter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-11-22T02:46:48Z",
+      "side": 1,
+      "message": "nit: wow I didn\u0027t even type anything except \"nit:\" and the AI suggested fix was what I was going to suggest, _if_ you don\u0027t need to preserve the `mode` which I\u0027m not sure about.\n\n(If you do need to preserve it, add a comment, otherwise it looks like it doesn\u0027t matter)",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 72
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a2f2f297_172fe8e2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/wire/client/Adapter.cpp",
+              "range": {
+                "startLine": 292,
+                "startChar": 0,
+                "endLine": 298,
+                "endChar": 0
+              },
+              "replacement": "        wireDescriptor.deviceLostCallbackInfo2 \u003d {};\n        wireDescriptor.uncapturedErrorCallbackInfo2 \u003d {};\n"
+            },
+            {
+              "path": "src/dawn/wire/client/Adapter.cpp",
+              "range": {
+                "startLine": 328,
+                "startChar": 0,
+                "endLine": 334,
+                "endChar": 0
+              },
+              "replacement": "        wireDescriptor.deviceLostCallbackInfo2 \u003d {};\n        wireDescriptor.uncapturedErrorCallbackInfo2 \u003d {};\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fbefb3e22219ec8004aab8e8f20bd3e2af32ecb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
