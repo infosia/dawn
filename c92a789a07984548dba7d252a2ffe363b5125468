@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef8465e7_d8b7a9ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T10:44:13Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "c92a789a07984548dba7d252a2ffe363b5125468",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "730e6037_aba67e66",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T10:44:13Z",
+      "side": 1,
+      "message": "nit: we should be able to check that only one of the two formats is snorm.",
+      "revId": "c92a789a07984548dba7d252a2ffe363b5125468",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
