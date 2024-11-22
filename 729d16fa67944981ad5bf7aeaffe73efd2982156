@@ -165,6 +165,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71f66f13_642418cf",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-22T15:46:03Z",
+      "side": 1,
+      "message": "\u003e supposed to *gate* platform specific things on features",
+      "parentUuid": "e37b8894_796e22fe",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39f006a4_9bb6075f",
