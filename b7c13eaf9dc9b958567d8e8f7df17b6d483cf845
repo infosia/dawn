@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f90d57a_67fa8e1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T10:46:30Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "b7c13eaf9dc9b958567d8e8f7df17b6d483cf845",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ac844f9_df77340b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1840,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T10:46:30Z",
+      "side": 1,
+      "message": "Note that the defaults should be updated to match what we choose for WebGPU (if we decide to use 4 and 128 in the future).",
+      "revId": "b7c13eaf9dc9b958567d8e8f7df17b6d483cf845",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
