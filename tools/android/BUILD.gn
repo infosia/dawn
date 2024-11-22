@@ -135,8 +135,6 @@ dawn_json_generator("kotlin_gen") {
     "java/android/dawn/QueryType.kt",
     "java/android/dawn/Queue.kt",
     "java/android/dawn/QueueDescriptor.kt",
-    "java/android/dawn/QueueWorkDoneCallback.kt",
-    "java/android/dawn/QueueWorkDoneCallbackInfo.kt",
     "java/android/dawn/QueueWorkDoneStatus.kt",
     "java/android/dawn/RenderBundle.kt",
     "java/android/dawn/RenderBundleDescriptor.kt",
