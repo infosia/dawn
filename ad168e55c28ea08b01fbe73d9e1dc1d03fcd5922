@@ -16,6 +16,23 @@
       "message": "LGTM for me! Will let Corentin take a look as well to make sure he\u0027s happy with this fix instead of the other one! Thanks Kyle!",
       "revId": "ad168e55c28ea08b01fbe73d9e1dc1d03fcd5922",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf78b7d6_d6b9f81e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-22T10:58:27Z",
+      "side": 1,
+      "message": "LGTM as well, we are going to have to make lock order more clear and require less thinking about in the future, but that solution works well for now!",
+      "revId": "ad168e55c28ea08b01fbe73d9e1dc1d03fcd5922",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
