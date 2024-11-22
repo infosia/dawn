@@ -257,6 +257,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "49ee0fcc_0f85eb8d",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-11-22T16:23:28Z",
+      "side": 1,
+      "message": "Ah my apologies I had missed Corentin\u0027s original reply there - thanks and apologies for the crossed wires! I defer to Corentin of course, although I think that \"sampled texture binding\" is kind of a backdoor for combined image samplers so that it would make sense to keep that scoped to the narrow use case that it\u0027s actually needed for given that IIUC we had decided against introducing the concept of combined image sampler more generally into Dawn/WebGPU.",
+      "parentUuid": "4749610f_efcf9be7",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39f006a4_9bb6075f",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 9
