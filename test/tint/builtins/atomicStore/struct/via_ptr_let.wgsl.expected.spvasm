@@ -1,7 +1,7 @@
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
-; Bound: 37
+; Bound: 38
 ; Schema: 0
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -40,7 +40,7 @@
      %uint_2 = OpConstant %uint 2
 %_ptr_Workgroup_uint_0 = OpTypePointer Workgroup %uint
    %uint_264 = OpConstant %uint 264
-         %33 = OpTypeFunction %void
+         %34 = OpTypeFunction %void
 %compute_main_inner = OpFunction %void None %11
 %tint_local_index = OpFunctionParameter %uint
          %12 = OpLabel
@@ -50,20 +50,21 @@
          %17 = OpLabel
          %18 = OpAccessChain %_ptr_Workgroup_int %wg %uint_0
                OpStore %18 %int_0 None
-         %22 = OpAccessChain %_ptr_Workgroup_uint %wg %uint_1
-               OpAtomicStore %22 %uint_2 %uint_0 %uint_0
-         %26 = OpAccessChain %_ptr_Workgroup_uint_0 %wg %uint_2
-               OpStore %26 %uint_0 None
+         %22 = OpAccessChain %_ptr_Workgroup_uint %wg %uint_2
+               OpStore %22 %uint_0 None
                OpBranch %16
          %16 = OpLabel
+         %25 = OpUMod %uint %tint_local_index %uint_1
+         %26 = OpAccessChain %_ptr_Workgroup_uint_0 %wg %uint_1
+               OpAtomicStore %26 %uint_2 %uint_0 %uint_0
                OpControlBarrier %uint_2 %uint_2 %uint_264
-         %p1 = OpAccessChain %_ptr_Workgroup_uint %wg %uint_1
+         %p1 = OpAccessChain %_ptr_Workgroup_uint_0 %wg %uint_1
                OpAtomicStore %p1 %uint_2 %uint_0 %uint_1
                OpReturn
                OpFunctionEnd
-%compute_main = OpFunction %void None %33
-         %34 = OpLabel
-         %35 = OpLoad %uint %compute_main_local_invocation_index_Input None
-         %36 = OpFunctionCall %void %compute_main_inner %35
+%compute_main = OpFunction %void None %34
+         %35 = OpLabel
+         %36 = OpLoad %uint %compute_main_local_invocation_index_Input None
+         %37 = OpFunctionCall %void %compute_main_inner %36
                OpReturn
                OpFunctionEnd

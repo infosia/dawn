@@ -418,13 +418,8 @@ $B1: {  # root
 
 %main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
-    %4:bool = lt %tint_local_index, 1u
-    if %4 [t: $B3] {  # if_1
-      $B3: {  # true
-        %5:void = atomicStore %wgvar, 0i
-        exit_if  # if_1
-      }
-    }
+    %4:u32 = mod %tint_local_index, 1u
+    %5:void = atomicStore %wgvar, 0i
     %6:void = workgroupBarrier
     %7:i32 = atomicLoad %wgvar
     ret
@@ -467,13 +462,8 @@ $B1: {  # root
 
 %main = @compute @workgroup_size(1u, 1u, 1u) func(%tint_local_index:u32 [@local_invocation_index]):void {
   $B2: {
-    %4:bool = lt %tint_local_index, 1u
-    if %4 [t: $B3] {  # if_1
-      $B3: {  # true
-        %5:void = atomicStore %wgvar, 0u
-        exit_if  # if_1
-      }
-    }
+    %4:u32 = mod %tint_local_index, 1u
+    %5:void = atomicStore %wgvar, 0u
     %6:void = workgroupBarrier
     %7:u32 = atomicLoad %wgvar
     ret
@@ -1110,15 +1100,16 @@ $B1: {  # root
         store %5, 0.0f
         %6:ptr<workgroup, i32, read_write> = access %wgvar, 1u, 0u
         store %6, 0i
-        %7:ptr<workgroup, atomic<u32>, read_write> = access %wgvar, 1u, 1u
-        %8:void = atomicStore %7, 0u
-        %9:ptr<workgroup, bool, read_write> = access %wgvar, 2u
-        store %9, false
+        %7:ptr<workgroup, bool, read_write> = access %wgvar, 2u
+        store %7, false
         exit_if  # if_1
       }
     }
-    %10:void = workgroupBarrier
-    %11:Outer = load %wgvar
+    %8:u32 = mod %tint_local_index, 1u
+    %9:ptr<workgroup, atomic<u32>, read_write> = access %wgvar, 1u, 1u
+    %10:void = atomicStore %9, 0u
+    %11:void = workgroupBarrier
+    %12:Outer = load %wgvar
     ret
   }
 }

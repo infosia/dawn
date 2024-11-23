@@ -145,14 +145,36 @@ struct State {
                 TINT_ASSERT(count);
                 // No loop is required if we have at least as many invocations than counts.
                 if (count <= wgsize) {
-                    // Make the first |count| invocations in the group perform the arrayed stores.
-                    auto* ifelse = b.If(b.LessThan(ty.bool_(), local_index, u32(count)));
-                    b.Append(ifelse->True(), [&] {
-                        for (auto& store : *element_stores) {
-                            GenerateStore(store, count, local_index);
+                    size_t numberAtomic = 0;
+                    for (auto& store : *element_stores) {
+                        if (store.store_type->As<type::Atomic>()) {
+                            numberAtomic++;
                         }
-                        b.ExitIf(ifelse);
-                    });
+                    }
+
+                    if (numberAtomic < element_stores->Length()) {
+                        // Make the first |count| invocations in the group perform the arrayed
+                        // stores.
+                        auto* ifelse = b.If(b.LessThan(ty.bool_(), local_index, u32(count)));
+                        b.Append(ifelse->True(), [&] {
+                            for (auto& store : *element_stores) {
+                                if (!store.store_type->As<type::Atomic>()) {
+                                    GenerateStore(store, count, local_index);
+                                }
+                            }
+                            b.ExitIf(ifelse);
+                        });
+                    }
+
+                    if (numberAtomic != 0) {
+                        auto* mod_index = b.Modulo(ty.u32(), local_index, u32(count))->Result(0);
+                        for (auto& store : *element_stores) {
+                            if (store.store_type->As<type::Atomic>()) {
+                                GenerateStore(store, count, mod_index);
+                            }
+                        }
+                    }
+
                 } else {
                     // Use a loop for arrayed stores that exceed the wgsize
                     b.LoopRange(ty, local_index, u32(count), u32(wgsize), [&](Value* index) {

@@ -497,11 +497,11 @@ groupshared SB v;
 void foo_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
     v.padding = (0.0f).xxxx;
-    int v_1 = int(0);
-    InterlockedExchange(v.a, int(0), v_1);
-    uint v_2 = 0u;
-    InterlockedExchange(v.b, 0u, v_2);
   }
+  int v_1 = int(0);
+  InterlockedExchange(v.a, int(0), v_1);
+  uint v_2 = 0u;
+  InterlockedExchange(v.b, 0u, v_2);
   GroupMemoryBarrierWithGroupSync();
   int v_3 = int(0);
   InterlockedExchange(v.a, int(123), v_3);
@@ -548,11 +548,11 @@ groupshared SB v;
 void foo_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
     v.padding = (0.0f).xxxx;
-    int v_1 = int(0);
-    InterlockedExchange(v.a, int(0), v_1);
-    uint v_2 = 0u;
-    InterlockedExchange(v.b, 0u, v_2);
   }
+  int v_1 = int(0);
+  InterlockedExchange(v.a, int(0), v_1);
+  uint v_2 = 0u;
+  InterlockedExchange(v.b, 0u, v_2);
   GroupMemoryBarrierWithGroupSync();
   int v_3 = int(0);
   InterlockedOr(v.a, int(0), v_3);
@@ -602,11 +602,11 @@ groupshared SB v;
 void foo_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
     v.padding = (0.0f).xxxx;
-    int v_1 = int(0);
-    InterlockedExchange(v.a, int(0), v_1);
-    uint v_2 = 0u;
-    InterlockedExchange(v.b, 0u, v_2);
   }
+  int v_1 = int(0);
+  InterlockedExchange(v.a, int(0), v_1);
+  uint v_2 = 0u;
+  InterlockedExchange(v.b, 0u, v_2);
   GroupMemoryBarrierWithGroupSync();
   int v_3 = int(0);
   InterlockedAdd(v.a, (int(0) - int(123)), v_3);
@@ -664,11 +664,11 @@ groupshared SB v;
 void foo_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
     v.padding = (0.0f).xxxx;
-    int v_1 = int(0);
-    InterlockedExchange(v.a, int(0), v_1);
-    uint v_2 = 0u;
-    InterlockedExchange(v.b, 0u, v_2);
   }
+  int v_1 = int(0);
+  InterlockedExchange(v.a, int(0), v_1);
+  uint v_2 = 0u;
+  InterlockedExchange(v.b, 0u, v_2);
   GroupMemoryBarrierWithGroupSync();
   int v_3 = int(0);
   InterlockedCompareExchange(v.a, int(123), int(345), v_3);
@@ -705,10 +705,8 @@ TEST_P(HlslBuiltinWorkgroupAtomic, Access) {
 
 groupshared int v;
 void foo_inner(uint tint_local_index) {
-  if ((tint_local_index < 1u)) {
-    int v_1 = int(0);
-    InterlockedExchange(v, int(0), v_1);
-  }
+  int v_1 = int(0);
+  InterlockedExchange(v, int(0), v_1);
   GroupMemoryBarrierWithGroupSync();
   int v_2 = int(0);
   )" + std::string(param.interlock) +

@@ -13,10 +13,8 @@ uint atomicXor_c8e6be() {
 }
 
 void compute_main_inner(uint tint_local_index) {
-  if ((tint_local_index < 1u)) {
-    uint v_1 = 0u;
-    InterlockedExchange(arg_0, 0u, v_1);
-  }
+  uint v_1 = 0u;
+  InterlockedExchange(arg_0, 0u, v_1);
   GroupMemoryBarrierWithGroupSync();
   prevent_dce.Store(0u, atomicXor_c8e6be());
 }

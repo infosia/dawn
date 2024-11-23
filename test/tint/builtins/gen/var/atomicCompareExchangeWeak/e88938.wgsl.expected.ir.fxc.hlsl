@@ -20,10 +20,8 @@ void atomicCompareExchangeWeak_e88938() {
 }
 
 void compute_main_inner(uint tint_local_index) {
-  if ((tint_local_index < 1u)) {
-    int v_3 = int(0);
-    InterlockedExchange(arg_0, int(0), v_3);
-  }
+  int v_3 = int(0);
+  InterlockedExchange(arg_0, int(0), v_3);
   GroupMemoryBarrierWithGroupSync();
   atomicCompareExchangeWeak_e88938();
 }

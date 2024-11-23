@@ -58,12 +58,12 @@ void compute_main_inner_1(uint local_invocation_index_1_param, tint_module_vars_
     (*tint_module_vars.wg).z = 0;
     (*tint_module_vars.wg).a.x = 0;
     (*tint_module_vars.wg).a.a.x = 0;
-    atomic_store_explicit((&(*tint_module_vars.wg).a.a.a), 0u, memory_order_relaxed);
     (*tint_module_vars.wg).a.a.y = 0;
     (*tint_module_vars.wg).a.a.z = 0;
     (*tint_module_vars.wg).a.y = 0;
     (*tint_module_vars.wg).a.z = 0;
   }
+  atomic_store_explicit((&(*tint_module_vars.wg).a.a.a), 0u, memory_order_relaxed);
   threadgroup_barrier(mem_flags::mem_threadgroup);
   (*tint_module_vars.local_invocation_index_1) = local_invocation_index_1_param;
   compute_main_1(tint_module_vars);

@@ -17,9 +17,7 @@ void compute_main_1() {
   compute_main_inner(x_30);
 }
 void compute_main_inner_1(uint local_invocation_index_1_param) {
-  if ((local_invocation_index_1_param < 1u)) {
-    atomicExchange(arg_0, 0);
-  }
+  atomicExchange(arg_0, 0);
   barrier();
   local_invocation_index_1 = local_invocation_index_1_param;
   compute_main_1();

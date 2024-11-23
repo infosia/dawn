@@ -2,9 +2,7 @@
 
 shared int arg_0;
 void compute_main_inner(uint tint_local_index) {
-  if ((tint_local_index < 1u)) {
-    atomicExchange(arg_0, 0);
-  }
+  atomicExchange(arg_0, 0);
   barrier();
   int res = atomicAdd(arg_0, -(-1));
 }

@@ -49,12 +49,12 @@ void compute_main_inner_1(uint local_invocation_index_1_param) {
     wg.z = 0;
     wg.a.x = 0;
     wg.a.a.x = 0;
-    atomicExchange(wg.a.a.a, 0u);
     wg.a.a.y = 0;
     wg.a.a.z = 0;
     wg.a.y = 0;
     wg.a.z = 0;
   }
+  atomicExchange(wg.a.a.a, 0u);
   barrier();
   local_invocation_index_1 = local_invocation_index_1_param;
   compute_main_1();
