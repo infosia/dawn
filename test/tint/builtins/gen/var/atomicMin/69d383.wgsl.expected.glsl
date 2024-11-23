@@ -11,9 +11,7 @@ uint atomicMin_69d383() {
   return res;
 }
 void compute_main_inner(uint tint_local_index) {
-  if ((tint_local_index < 1u)) {
-    atomicExchange(arg_0, 0u);
-  }
+  atomicExchange(arg_0, 0u);
   barrier();
   v.inner = atomicMin_69d383();
 }

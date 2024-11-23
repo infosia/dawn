@@ -30,12 +30,12 @@ void compute_main_inner(uint tint_local_index) {
     wg.z = 0;
     wg.a.x = 0;
     wg.a.a.x = 0;
-    atomicExchange(wg.a.a.a, 0u);
     wg.a.a.y = 0;
     wg.a.a.z = 0;
     wg.a.y = 0;
     wg.a.z = 0;
   }
+  atomicExchange(wg.a.a.a, 0u);
   barrier();
   atomicExchange(wg.a.a.a, 1u);
 }

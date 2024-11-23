@@ -1,7 +1,7 @@
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
-; Bound: 121
+; Bound: 119
 ; Schema: 0
                OpCapability Shader
          %58 = OpExtInstImport "GLSL.std.450"
@@ -73,18 +73,18 @@
      %uint_2 = OpConstant %uint 2
        %void = OpTypeVoid
          %74 = OpTypeFunction %void %uint
-       %bool = OpTypeBool
       %int_0 = OpConstant %int 0
    %uint_264 = OpConstant %uint 264
-         %86 = OpConstantNull %S
-         %88 = OpConstantNull %v3float
+         %83 = OpConstantNull %S
+         %85 = OpConstantNull %v3float
 %_ptr_StorageBuffer_int = OpTypePointer StorageBuffer %int
-        %105 = OpTypeFunction %int %float
+        %102 = OpTypeFunction %int %float
 %float_n2_14748365e_09 = OpConstant %float -2.14748365e+09
+       %bool = OpTypeBool
 %int_n2147483648 = OpConstant %int -2147483648
 %float_2_14748352e_09 = OpConstant %float 2.14748352e+09
 %int_2147483647 = OpConstant %int 2147483647
-        %117 = OpTypeFunction %void
+        %115 = OpTypeFunction %void
 %accept_value = OpFunction %int None %12
         %val = OpFunctionParameter %int
          %13 = OpLabel
@@ -150,47 +150,42 @@
          %v1 = OpVariable %_ptr_Function_int Function
          %v2 = OpVariable %_ptr_Function_S Function
          %v4 = OpVariable %_ptr_Function_v3float Function
-         %76 = OpULessThan %bool %tint_local_index %uint_1
-               OpSelectionMerge %78 None
-               OpBranchConditional %76 %79 %78
-         %79 = OpLabel
+         %76 = OpUMod %uint %tint_local_index %uint_1
                OpAtomicStore %g1 %uint_2 %uint_0 %int_0
-               OpBranch %78
-         %78 = OpLabel
                OpControlBarrier %uint_2 %uint_2 %uint_264
                OpStore %v1 %int_0
-               OpStore %v2 %86
-               OpStore %v4 %88
+               OpStore %v2 %83
+               OpStore %v4 %85
          %t1 = OpAtomicLoad %int %g1 %uint_2 %uint_0
-         %90 = OpFunctionCall %int %accept_ptr_deref_pass_through %v1
-         %91 = OpFunctionCall %int %accept_ptr_to_struct_and_access %v2
-         %92 = OpIAdd %int %90 %91
-         %93 = OpFunctionCall %int %accept_ptr_to_struct_and_access %v2
-         %94 = OpIAdd %int %92 %93
-         %95 = OpFunctionCall %int %accept_ptr_vec_access_elements %v4
-         %96 = OpIAdd %int %94 %95
-         %97 = OpFunctionCall %int %accept_ptr_to_struct_access_pass_ptr %v2
-         %98 = OpIAdd %int %96 %97
-         %99 = OpFunctionCall %int %call_builtin_with_mod_scope_ptr
-        %100 = OpIAdd %int %98 %99
-        %101 = OpIAdd %int %100 %t1
-        %102 = OpAccessChain %_ptr_StorageBuffer_int %1 %uint_0
-               OpStore %102 %101 None
+         %87 = OpFunctionCall %int %accept_ptr_deref_pass_through %v1
+         %88 = OpFunctionCall %int %accept_ptr_to_struct_and_access %v2
+         %89 = OpIAdd %int %87 %88
+         %90 = OpFunctionCall %int %accept_ptr_to_struct_and_access %v2
+         %91 = OpIAdd %int %89 %90
+         %92 = OpFunctionCall %int %accept_ptr_vec_access_elements %v4
+         %93 = OpIAdd %int %91 %92
+         %94 = OpFunctionCall %int %accept_ptr_to_struct_access_pass_ptr %v2
+         %95 = OpIAdd %int %93 %94
+         %96 = OpFunctionCall %int %call_builtin_with_mod_scope_ptr
+         %97 = OpIAdd %int %95 %96
+         %98 = OpIAdd %int %97 %t1
+         %99 = OpAccessChain %_ptr_StorageBuffer_int %1 %uint_0
+               OpStore %99 %98 None
                OpReturn
                OpFunctionEnd
-%tint_f32_to_i32 = OpFunction %int None %105
+%tint_f32_to_i32 = OpFunction %int None %102
       %value = OpFunctionParameter %float
-        %106 = OpLabel
-        %107 = OpConvertFToS %int %value
-        %108 = OpFOrdGreaterThanEqual %bool %value %float_n2_14748365e_09
-        %110 = OpSelect %int %108 %107 %int_n2147483648
-        %112 = OpFOrdLessThanEqual %bool %value %float_2_14748352e_09
-        %114 = OpSelect %int %112 %110 %int_2147483647
-               OpReturnValue %114
+        %103 = OpLabel
+        %104 = OpConvertFToS %int %value
+        %105 = OpFOrdGreaterThanEqual %bool %value %float_n2_14748365e_09
+        %108 = OpSelect %int %105 %104 %int_n2147483648
+        %110 = OpFOrdLessThanEqual %bool %value %float_2_14748352e_09
+        %112 = OpSelect %int %110 %108 %int_2147483647
+               OpReturnValue %112
                OpFunctionEnd
-       %main = OpFunction %void None %117
-        %118 = OpLabel
-        %119 = OpLoad %uint %main_local_invocation_index_Input None
-        %120 = OpFunctionCall %void %main_inner %119
+       %main = OpFunction %void None %115
+        %116 = OpLabel
+        %117 = OpLoad %uint %main_local_invocation_index_Input None
+        %118 = OpFunctionCall %void %main_inner %117
                OpReturn
                OpFunctionEnd

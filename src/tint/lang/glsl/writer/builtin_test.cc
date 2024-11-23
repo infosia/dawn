@@ -276,9 +276,9 @@ shared SB v;
 void foo_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
     v.padding = vec4(0.0f);
-    atomicExchange(v.a, 0);
-    atomicExchange(v.b, 0u);
   }
+  atomicExchange(v.a, 0);
+  atomicExchange(v.b, 0u);
   barrier();
   int x = atomicOr(v.a, 0);
 }
@@ -321,9 +321,9 @@ shared SB v;
 void foo_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
     v.padding = vec4(0.0f);
-    atomicExchange(v.a, 0);
-    atomicExchange(v.b, 0u);
   }
+  atomicExchange(v.a, 0);
+  atomicExchange(v.b, 0u);
   barrier();
   int x = atomicAdd(v.a, -(123));
   uint y = atomicAdd(v.b, -(123u));
@@ -372,9 +372,9 @@ shared SB v;
 void foo_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
     v.padding = vec4(0.0f);
-    atomicExchange(v.a, 0);
-    atomicExchange(v.b, 0u);
   }
+  atomicExchange(v.a, 0);
+  atomicExchange(v.b, 0u);
   barrier();
   int v_1 = atomicCompSwap(v.a, 123, 345);
   atomic_compare_exchange_result_i32 x = atomic_compare_exchange_result_i32(v_1, (v_1 == 123));

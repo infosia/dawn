@@ -13,10 +13,10 @@ groupshared S wg;
 void compute_main_inner(uint tint_local_index) {
   if ((tint_local_index < 1u)) {
     wg.x = int(0);
-    uint v = 0u;
-    InterlockedExchange(wg.a, 0u, v);
     wg.y = 0u;
   }
+  uint v = 0u;
+  InterlockedExchange(wg.a, 0u, v);
   GroupMemoryBarrierWithGroupSync();
   uint v_1 = 0u;
   InterlockedExchange(wg.a, 1u, v_1);

@@ -32,13 +32,13 @@ void compute_main_inner(uint tint_local_index) {
     wg.z = int(0);
     wg.a.x = int(0);
     wg.a.a.x = int(0);
-    uint v = 0u;
-    InterlockedExchange(wg.a.a.a, 0u, v);
     wg.a.a.y = int(0);
     wg.a.a.z = int(0);
     wg.a.y = int(0);
     wg.a.z = int(0);
   }
+  uint v = 0u;
+  InterlockedExchange(wg.a.a.a, 0u, v);
   GroupMemoryBarrierWithGroupSync();
   uint v_1 = 0u;
   InterlockedExchange(wg.a.a.a, 1u, v_1);

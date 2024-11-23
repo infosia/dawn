@@ -32,11 +32,11 @@ void compute_main_1() {
 void compute_main_inner_1(uint local_invocation_index_1_param) {
   if ((local_invocation_index_1_param < 1u)) {
     wg.x = int(0);
-    uint v_4 = 0u;
-    InterlockedExchange(wg.a, 0u, v_4);
-    uint v_5 = 0u;
-    InterlockedExchange(wg.b, 0u, v_5);
   }
+  uint v_4 = 0u;
+  InterlockedExchange(wg.a, 0u, v_4);
+  uint v_5 = 0u;
+  InterlockedExchange(wg.b, 0u, v_5);
   GroupMemoryBarrierWithGroupSync();
   local_invocation_index_1 = local_invocation_index_1_param;
   compute_main_1();

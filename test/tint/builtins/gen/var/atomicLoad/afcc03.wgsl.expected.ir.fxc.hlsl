@@ -13,10 +13,8 @@ int atomicLoad_afcc03() {
 }
 
 void compute_main_inner(uint tint_local_index) {
-  if ((tint_local_index < 1u)) {
-    int v_1 = int(0);
-    InterlockedExchange(arg_0, int(0), v_1);
-  }
+  int v_1 = int(0);
+  InterlockedExchange(arg_0, int(0), v_1);
   GroupMemoryBarrierWithGroupSync();
   prevent_dce.Store(0u, asuint(atomicLoad_afcc03()));
 }

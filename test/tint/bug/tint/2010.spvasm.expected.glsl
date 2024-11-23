@@ -121,12 +121,10 @@ void main_1() {
   x_12.field0[0] = vec4(v_1, v_2, v_3, uintBitsToFloat(atomicOr(x_37, 0u)));
 }
 void tint_symbol_inner(uvec3 x_3_param, uint tint_local_index) {
-  if ((tint_local_index < 1u)) {
-    atomicExchange(x_34, 0u);
-    atomicExchange(x_35, 0u);
-    atomicExchange(x_36, 0u);
-    atomicExchange(x_37, 0u);
-  }
+  atomicExchange(x_34, 0u);
+  atomicExchange(x_35, 0u);
+  atomicExchange(x_36, 0u);
+  atomicExchange(x_37, 0u);
   {
     uint v_4 = 0u;
     v_4 = tint_local_index;

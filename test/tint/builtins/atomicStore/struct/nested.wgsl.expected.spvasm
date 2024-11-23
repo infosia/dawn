@@ -1,7 +1,7 @@
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
-; Bound: 46
+; Bound: 47
 ; Schema: 0
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -60,7 +60,7 @@
      %uint_3 = OpConstant %uint 3
 %_ptr_Workgroup_uint = OpTypePointer Workgroup %uint
    %uint_264 = OpConstant %uint 264
-         %42 = OpTypeFunction %void
+         %43 = OpTypeFunction %void
 %compute_main_inner = OpFunction %void None %13
 %tint_local_index = OpFunctionParameter %uint
          %14 = OpLabel
@@ -78,26 +78,27 @@
                OpStore %27 %int_0 None
          %29 = OpAccessChain %_ptr_Workgroup_int %wg %uint_3 %uint_1 %uint_0
                OpStore %29 %int_0 None
-         %30 = OpAccessChain %_ptr_Workgroup_uint %wg %uint_3 %uint_1 %uint_1
-               OpAtomicStore %30 %uint_2 %uint_0 %uint_0
-         %33 = OpAccessChain %_ptr_Workgroup_int %wg %uint_3 %uint_1 %uint_2
+         %30 = OpAccessChain %_ptr_Workgroup_int %wg %uint_3 %uint_1 %uint_2
+               OpStore %30 %int_0 None
+         %31 = OpAccessChain %_ptr_Workgroup_int %wg %uint_3 %uint_1 %uint_3
+               OpStore %31 %int_0 None
+         %32 = OpAccessChain %_ptr_Workgroup_int %wg %uint_3 %uint_2
+               OpStore %32 %int_0 None
+         %33 = OpAccessChain %_ptr_Workgroup_int %wg %uint_3 %uint_3
                OpStore %33 %int_0 None
-         %34 = OpAccessChain %_ptr_Workgroup_int %wg %uint_3 %uint_1 %uint_3
-               OpStore %34 %int_0 None
-         %35 = OpAccessChain %_ptr_Workgroup_int %wg %uint_3 %uint_2
-               OpStore %35 %int_0 None
-         %36 = OpAccessChain %_ptr_Workgroup_int %wg %uint_3 %uint_3
-               OpStore %36 %int_0 None
                OpBranch %18
          %18 = OpLabel
+         %34 = OpUMod %uint %tint_local_index %uint_1
+         %35 = OpAccessChain %_ptr_Workgroup_uint %wg %uint_3 %uint_1 %uint_1
+               OpAtomicStore %35 %uint_2 %uint_0 %uint_0
                OpControlBarrier %uint_2 %uint_2 %uint_264
-         %39 = OpAccessChain %_ptr_Workgroup_uint %wg %uint_3 %uint_1 %uint_1
-               OpAtomicStore %39 %uint_2 %uint_0 %uint_1
+         %40 = OpAccessChain %_ptr_Workgroup_uint %wg %uint_3 %uint_1 %uint_1
+               OpAtomicStore %40 %uint_2 %uint_0 %uint_1
                OpReturn
                OpFunctionEnd
-%compute_main = OpFunction %void None %42
-         %43 = OpLabel
-         %44 = OpLoad %uint %compute_main_local_invocation_index_Input None
-         %45 = OpFunctionCall %void %compute_main_inner %44
+%compute_main = OpFunction %void None %43
+         %44 = OpLabel
+         %45 = OpLoad %uint %compute_main_local_invocation_index_Input None
+         %46 = OpFunctionCall %void %compute_main_inner %45
                OpReturn
                OpFunctionEnd

@@ -1,7 +1,7 @@
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
-; Bound: 43
+; Bound: 41
 ; Schema: 0
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -59,20 +59,15 @@
 %compute_main_inner = OpFunction %void None %28
 %tint_local_index = OpFunctionParameter %uint
          %29 = OpLabel
-         %30 = OpULessThan %bool %tint_local_index %uint_1
-               OpSelectionMerge %32 None
-               OpBranchConditional %30 %33 %32
-         %33 = OpLabel
+         %30 = OpUMod %uint %tint_local_index %uint_1
                OpAtomicStore %arg_0 %uint_2 %uint_0 %int_0
-               OpBranch %32
-         %32 = OpLabel
                OpControlBarrier %uint_2 %uint_2 %uint_264
-         %38 = OpFunctionCall %void %atomicCompareExchangeWeak_e88938
+         %36 = OpFunctionCall %void %atomicCompareExchangeWeak_e88938
                OpReturn
                OpFunctionEnd
 %compute_main = OpFunction %void None %9
-         %40 = OpLabel
-         %41 = OpLoad %uint %compute_main_local_invocation_index_Input None
-         %42 = OpFunctionCall %void %compute_main_inner %41
+         %38 = OpLabel
+         %39 = OpLoad %uint %compute_main_local_invocation_index_Input None
+         %40 = OpFunctionCall %void %compute_main_inner %39
                OpReturn
                OpFunctionEnd
