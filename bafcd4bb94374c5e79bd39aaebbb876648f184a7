@@ -40,6 +40,30 @@
       ],
       "revId": "bafcd4bb94374c5e79bd39aaebbb876648f184a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c38e9532_76f05f96",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-24T16:10:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c16cbd7_074dacc7",
+      "range": {
+        "startLine": 948,
+        "startChar": 15,
+        "endLine": 948,
+        "endChar": 21
+      },
+      "revId": "bafcd4bb94374c5e79bd39aaebbb876648f184a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
