@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -8,6 +10,8 @@ void sinh_c4df74() {
 void main() {
   sinh_c4df74();
 }
+
+/* @compute */
 #version 310 es
 
 void sinh_c4df74() {
@@ -17,6 +21,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   sinh_c4df74();
 }
+
+/* @vertex */
 #version 310 es
 
 

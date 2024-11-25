@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -17,6 +19,8 @@ uint arrayLength_eb510f() {
 void main() {
   v.inner = arrayLength_eb510f();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, std430)

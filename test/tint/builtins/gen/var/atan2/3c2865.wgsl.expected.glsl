@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -8,6 +10,8 @@ void atan2_3c2865() {
 void main() {
   atan2_3c2865();
 }
+
+/* @compute */
 #version 310 es
 
 void atan2_3c2865() {
@@ -17,6 +21,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   atan2_3c2865();
 }
+
+/* @vertex */
 #version 310 es
 
 

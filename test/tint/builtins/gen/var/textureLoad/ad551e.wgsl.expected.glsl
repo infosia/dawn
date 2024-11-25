@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -15,6 +17,8 @@ uvec4 textureLoad_ad551e() {
 void main() {
   v.inner = textureLoad_ad551e();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, std430)

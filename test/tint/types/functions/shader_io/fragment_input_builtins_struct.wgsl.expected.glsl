@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 #extension GL_OES_sample_variables: require
 precision highp float;

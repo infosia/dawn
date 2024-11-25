@@ -1,3 +1,5 @@
+
+/* @vertex */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 
@@ -15,6 +17,8 @@ void main() {
   gl_Position[2u] = ((2.0f * gl_Position.z) - gl_Position.w);
   gl_PointSize = 1.0f;
 }
+
+/* @fragment */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 precision highp float;
@@ -27,6 +31,8 @@ void asinh_468a48() {
 void main() {
   asinh_468a48();
 }
+
+/* @compute */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 
@@ -38,6 +44,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   asinh_468a48();
 }
+
+/* @vertex */
 #version 310 es
 
 
@@ -89,6 +97,8 @@ void main() {
   vs_main_loc1_Output = v_2.quad_pos;
   gl_PointSize = 1.0f;
 }
+
+/* @compute */
 #version 310 es
 
 
@@ -137,6 +147,8 @@ layout(local_size_x = 64, local_size_y = 1, local_size_z = 1) in;
 void main() {
   simulate_inner(gl_GlobalInvocationID);
 }
+
+/* @compute */
 #version 310 es
 
 

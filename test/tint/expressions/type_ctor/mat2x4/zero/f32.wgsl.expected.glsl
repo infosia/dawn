@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 mat2x4 m = mat2x4(vec4(0.0f), vec4(0.0f));

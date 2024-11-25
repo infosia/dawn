@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -22,6 +24,8 @@ uint insertBits_e3e3a2() {
 void main() {
   v.inner = insertBits_e3e3a2();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, std430)
@@ -45,6 +49,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = insertBits_e3e3a2();
 }
+
+/* @vertex */
 #version 310 es
 
 

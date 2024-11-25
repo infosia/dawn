@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 #extension GL_EXT_texture_shadow_lod: require
 precision highp float;
@@ -16,6 +18,8 @@ float textureSampleLevel_a12142() {
 void main() {
   v.inner = textureSampleLevel_a12142();
 }
+
+/* @compute */
 #version 460
 #extension GL_EXT_texture_shadow_lod: require
 
@@ -33,6 +37,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = textureSampleLevel_a12142();
 }
+
+/* @vertex */
 #version 460
 #extension GL_EXT_texture_shadow_lod: require
 

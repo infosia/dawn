@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -13,6 +15,8 @@ int dot4I8Packed_881e62() {
 void main() {
   v.inner = dot4I8Packed_881e62();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, std430)
@@ -27,6 +31,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = dot4I8Packed_881e62();
 }
+
+/* @vertex */
 #version 310 es
 
 

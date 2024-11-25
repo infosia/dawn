@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -12,6 +14,8 @@ void textureStore_7792fa() {
 void main() {
   textureStore_7792fa();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, rg32i) uniform highp iimage3D arg_0;

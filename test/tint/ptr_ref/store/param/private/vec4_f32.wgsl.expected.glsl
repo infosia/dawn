@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 vec4 P = vec4(0.0f);

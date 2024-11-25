@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -8,6 +10,8 @@ void tanh_6289fd() {
 void main() {
   tanh_6289fd();
 }
+
+/* @compute */
 #version 310 es
 
 void tanh_6289fd() {
@@ -17,6 +21,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   tanh_6289fd();
 }
+
+/* @vertex */
 #version 310 es
 
 

@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 float tint_float_modulo(float x, float y) {

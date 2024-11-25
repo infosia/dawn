@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 uniform highp sampler3D t_f;

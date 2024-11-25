@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 void textureBarrier_3d0f7e() {

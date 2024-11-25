@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 shared uint sh_atomic_failed;

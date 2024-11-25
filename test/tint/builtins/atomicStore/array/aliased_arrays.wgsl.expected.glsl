@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 shared uint wg[3][2][1];

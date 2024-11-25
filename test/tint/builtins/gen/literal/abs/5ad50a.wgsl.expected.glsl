@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -13,6 +15,8 @@ ivec3 abs_5ad50a() {
 void main() {
   v.inner = abs_5ad50a();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, std430)
@@ -27,6 +31,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = abs_5ad50a();
 }
+
+/* @vertex */
 #version 310 es
 
 

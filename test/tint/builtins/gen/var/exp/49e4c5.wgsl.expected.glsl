@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -8,6 +10,8 @@ void exp_49e4c5() {
 void main() {
   exp_49e4c5();
 }
+
+/* @compute */
 #version 310 es
 
 void exp_49e4c5() {
@@ -17,6 +21,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   exp_49e4c5();
 }
+
+/* @vertex */
 #version 310 es
 
 

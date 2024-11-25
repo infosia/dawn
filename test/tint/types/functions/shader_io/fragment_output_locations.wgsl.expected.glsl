@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -9,6 +11,8 @@ int main0_inner() {
 void main() {
   main0_loc0_Output = main0_inner();
 }
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -20,6 +24,8 @@ uint main1_inner() {
 void main() {
   main1_loc1_Output = main1_inner();
 }
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -31,6 +37,8 @@ float main2_inner() {
 void main() {
   main2_loc2_Output = main2_inner();
 }
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;

@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -22,6 +24,8 @@ int atomicMax_92aa72() {
 void main() {
   v.inner = atomicMax_92aa72();
 }
+
+/* @compute */
 #version 310 es
 
 

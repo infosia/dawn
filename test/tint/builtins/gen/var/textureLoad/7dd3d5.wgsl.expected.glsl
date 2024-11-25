@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -18,6 +20,8 @@ vec4 textureLoad_7dd3d5() {
 void main() {
   v.inner = textureLoad_7dd3d5();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, std430)

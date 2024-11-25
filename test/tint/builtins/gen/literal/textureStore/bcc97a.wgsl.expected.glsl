@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -9,6 +11,8 @@ void textureStore_bcc97a() {
 void main() {
   textureStore_bcc97a();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, r32i) uniform highp iimage2D arg_0;

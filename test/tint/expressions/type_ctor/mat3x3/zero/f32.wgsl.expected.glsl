@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 mat3 m = mat3(vec3(0.0f), vec3(0.0f), vec3(0.0f));

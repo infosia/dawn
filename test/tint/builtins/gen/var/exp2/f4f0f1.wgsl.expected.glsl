@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -8,6 +10,8 @@ void exp2_f4f0f1() {
 void main() {
   exp2_f4f0f1();
 }
+
+/* @compute */
 #version 310 es
 
 void exp2_f4f0f1() {
@@ -17,6 +21,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   exp2_f4f0f1();
 }
+
+/* @vertex */
 #version 310 es
 
 

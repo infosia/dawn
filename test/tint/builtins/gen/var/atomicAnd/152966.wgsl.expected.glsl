@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -23,6 +25,8 @@ int atomicAnd_152966() {
 void main() {
   v.inner = atomicAnd_152966();
 }
+
+/* @compute */
 #version 310 es
 
 

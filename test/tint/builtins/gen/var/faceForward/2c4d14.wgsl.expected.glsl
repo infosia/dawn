@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -8,6 +10,8 @@ void faceForward_2c4d14() {
 void main() {
   faceForward_2c4d14();
 }
+
+/* @compute */
 #version 310 es
 
 void faceForward_2c4d14() {
@@ -17,6 +21,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   faceForward_2c4d14();
 }
+
+/* @vertex */
 #version 310 es
 
 

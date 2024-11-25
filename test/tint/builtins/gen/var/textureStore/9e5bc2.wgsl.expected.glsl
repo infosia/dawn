@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -12,6 +14,8 @@ void textureStore_9e5bc2() {
 void main() {
   textureStore_9e5bc2();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, r8) uniform highp writeonly image2D arg_0;

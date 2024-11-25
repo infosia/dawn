@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -16,6 +18,8 @@ void main() {
   float v = main1_inner();
   gl_FragDepth = clamp(v, tint_push_constants.tint_frag_depth_min, tint_push_constants.tint_frag_depth_max);
 }
+
+/* @fragment */
 #version 310 es
 #extension GL_OES_sample_variables: require
 precision highp float;

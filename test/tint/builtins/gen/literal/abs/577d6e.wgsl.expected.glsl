@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -8,6 +10,8 @@ void abs_577d6e() {
 void main() {
   abs_577d6e();
 }
+
+/* @compute */
 #version 310 es
 
 void abs_577d6e() {
@@ -17,6 +21,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   abs_577d6e();
 }
+
+/* @vertex */
 #version 310 es
 
 

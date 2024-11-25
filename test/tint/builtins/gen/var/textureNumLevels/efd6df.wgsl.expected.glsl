@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -22,6 +24,8 @@ uint textureNumLevels_efd6df() {
 void main() {
   v.inner = textureNumLevels_efd6df();
 }
+
+/* @compute */
 #version 310 es
 
 
@@ -45,6 +49,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = textureNumLevels_efd6df();
 }
+
+/* @vertex */
 #version 310 es
 
 

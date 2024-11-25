@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -9,6 +11,8 @@ void textureStore_dffb13() {
 void main() {
   textureStore_dffb13();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, rg32ui) uniform highp writeonly uimage2DArray arg_0;

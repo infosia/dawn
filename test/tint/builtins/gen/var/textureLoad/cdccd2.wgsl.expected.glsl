@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -18,6 +20,8 @@ uvec4 textureLoad_cdccd2() {
 void main() {
   v.inner = textureLoad_cdccd2();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, std430)

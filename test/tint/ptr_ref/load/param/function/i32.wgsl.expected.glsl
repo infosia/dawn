@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 int func(inout int pointer) {

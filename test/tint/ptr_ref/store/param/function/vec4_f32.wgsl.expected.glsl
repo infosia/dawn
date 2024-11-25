@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 void func(inout vec4 pointer) {

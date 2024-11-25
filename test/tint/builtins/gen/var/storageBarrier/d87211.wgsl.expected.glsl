@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 void storageBarrier_d87211() {

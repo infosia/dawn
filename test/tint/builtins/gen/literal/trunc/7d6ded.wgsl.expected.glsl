@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -8,6 +10,8 @@ void trunc_7d6ded() {
 void main() {
   trunc_7d6ded();
 }
+
+/* @compute */
 #version 310 es
 
 void trunc_7d6ded() {
@@ -17,6 +21,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   trunc_7d6ded();
 }
+
+/* @vertex */
 #version 310 es
 
 

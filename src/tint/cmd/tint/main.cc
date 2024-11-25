@@ -1145,6 +1145,11 @@ bool GenerateGlsl([[maybe_unused]] const tint::Program& program,
                 stage = tint::ast::PipelineStage::kFragment;
                 break;
         }
+
+        if (tint::cmd::IsStdout(options.output_file)) {
+            std::cout << "\n/* @" << stage << " */\n";
+        }
+
         success &= generate(program, entry_point.name, stage);
     }
     return success;

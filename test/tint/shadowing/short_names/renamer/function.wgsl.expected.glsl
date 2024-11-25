@@ -1,3 +1,5 @@
+
+/* @vertex */
 #version 310 es
 
 int vec4f() {

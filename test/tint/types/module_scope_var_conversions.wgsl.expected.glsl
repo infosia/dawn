@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 bool bool_var1 = true;

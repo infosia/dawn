@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -9,6 +11,8 @@ void textureStore_5ddc61() {
 void main() {
   textureStore_5ddc61();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, rgba8i) uniform highp writeonly iimage2DArray arg_0;

@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 precision highp float;
@@ -14,6 +16,8 @@ float16_t trunc_cc2b0d() {
 void main() {
   v.inner = trunc_cc2b0d();
 }
+
+/* @compute */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 
@@ -29,6 +33,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = trunc_cc2b0d();
 }
+
+/* @vertex */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 

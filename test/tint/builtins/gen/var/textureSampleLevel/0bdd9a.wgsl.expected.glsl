@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -20,6 +22,8 @@ vec4 textureSampleLevel_0bdd9a() {
 void main() {
   v.inner = textureSampleLevel_0bdd9a();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, std430)
@@ -41,6 +45,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = textureSampleLevel_0bdd9a();
 }
+
+/* @vertex */
 #version 460
 
 

@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -23,6 +25,8 @@ uint atomicMin_c67a74() {
 void main() {
   v.inner = atomicMin_c67a74();
 }
+
+/* @compute */
 #version 310 es
 
 

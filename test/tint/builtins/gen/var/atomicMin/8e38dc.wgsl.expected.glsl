@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -23,6 +25,8 @@ int atomicMin_8e38dc() {
 void main() {
   v.inner = atomicMin_8e38dc();
 }
+
+/* @compute */
 #version 310 es
 
 

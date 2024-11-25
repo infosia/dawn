@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -26,6 +28,8 @@ void atomicCompareExchangeWeak_1bd40a() {
 void main() {
   atomicCompareExchangeWeak_1bd40a();
 }
+
+/* @compute */
 #version 310 es
 
 

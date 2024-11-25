@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 float x_200(inout vec2 x_201) {

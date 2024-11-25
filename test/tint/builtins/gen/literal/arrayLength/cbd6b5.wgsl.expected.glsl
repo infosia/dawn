@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 precision highp float;
@@ -18,6 +20,8 @@ uint arrayLength_cbd6b5() {
 void main() {
   v.inner = arrayLength_cbd6b5();
 }
+
+/* @compute */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 

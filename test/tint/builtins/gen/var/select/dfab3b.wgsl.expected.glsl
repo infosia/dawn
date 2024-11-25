@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -9,6 +11,8 @@ void select_dfab3b() {
 void main() {
   select_dfab3b();
 }
+
+/* @compute */
 #version 310 es
 
 void select_dfab3b() {
@@ -19,6 +23,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   select_dfab3b();
 }
+
+/* @vertex */
 #version 310 es
 
 

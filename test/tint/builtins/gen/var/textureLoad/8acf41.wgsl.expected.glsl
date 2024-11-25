@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -113,6 +115,8 @@ vec4 textureLoad_8acf41() {
 void main() {
   v_1.inner = textureLoad_8acf41();
 }
+
+/* @compute */
 #version 310 es
 
 
@@ -227,6 +231,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v_1.inner = textureLoad_8acf41();
 }
+
+/* @vertex */
 #version 310 es
 
 

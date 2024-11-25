@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 int f(int a, int b, int c) {

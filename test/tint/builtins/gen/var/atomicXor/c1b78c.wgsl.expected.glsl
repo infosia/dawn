@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -23,6 +25,8 @@ int atomicXor_c1b78c() {
 void main() {
   v.inner = atomicXor_c1b78c();
 }
+
+/* @compute */
 #version 310 es
 
 

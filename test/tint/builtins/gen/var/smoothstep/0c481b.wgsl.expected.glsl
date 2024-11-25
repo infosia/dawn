@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -8,6 +10,8 @@ void smoothstep_0c481b() {
 void main() {
   smoothstep_0c481b();
 }
+
+/* @compute */
 #version 310 es
 
 void smoothstep_0c481b() {
@@ -17,6 +21,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   smoothstep_0c481b();
 }
+
+/* @vertex */
 #version 310 es
 
 

@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -14,6 +16,8 @@ uvec3 textureDimensions_4df14c() {
 void main() {
   v.inner = textureDimensions_4df14c();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, std430)

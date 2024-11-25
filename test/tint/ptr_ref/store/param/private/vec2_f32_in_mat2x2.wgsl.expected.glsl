@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 mat2 P = mat2(vec2(0.0f), vec2(0.0f));

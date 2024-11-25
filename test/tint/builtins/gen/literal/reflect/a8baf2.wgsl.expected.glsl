@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -8,6 +10,8 @@ void reflect_a8baf2() {
 void main() {
   reflect_a8baf2();
 }
+
+/* @compute */
 #version 310 es
 
 void reflect_a8baf2() {
@@ -17,6 +21,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   reflect_a8baf2();
 }
+
+/* @vertex */
 #version 310 es
 
 

@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 void tint_symbol_inner(uvec3 local_invocation_id, uint local_invocation_index, uvec3 global_invocation_id, uvec3 workgroup_id, uvec3 num_workgroups) {

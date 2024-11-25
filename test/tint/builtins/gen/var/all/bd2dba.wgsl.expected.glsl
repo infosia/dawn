@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -14,6 +16,8 @@ int all_bd2dba() {
 void main() {
   v.inner = all_bd2dba();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, std430)
@@ -29,6 +33,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = all_bd2dba();
 }
+
+/* @vertex */
 #version 310 es
 
 

@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 uvec3 tint_div_v3u32(uvec3 lhs, uvec3 rhs) {

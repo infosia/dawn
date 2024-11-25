@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -8,6 +10,8 @@ void cos_6b1fdf() {
 void main() {
   cos_6b1fdf();
 }
+
+/* @compute */
 #version 310 es
 
 void cos_6b1fdf() {
@@ -17,6 +21,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   cos_6b1fdf();
 }
+
+/* @vertex */
 #version 310 es
 
 

@@ -10,6 +10,8 @@
   switch (i32(x)) @diagnostic(warning, derivative_uniformity) {
               ^
 
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;

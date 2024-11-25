@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -14,6 +16,8 @@ void frexp_bee870() {
 void main() {
   frexp_bee870();
 }
+
+/* @compute */
 #version 310 es
 
 
@@ -29,6 +33,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   frexp_bee870();
 }
+
+/* @vertex */
 #version 310 es
 
 

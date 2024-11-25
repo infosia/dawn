@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -14,6 +16,8 @@ uint textureNumLayers_8bd987() {
 void main() {
   v.inner = textureNumLayers_8bd987();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, std430)

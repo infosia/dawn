@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 int zero[3] = int[3](0, 0, 0);

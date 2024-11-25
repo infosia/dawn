@@ -1,3 +1,5 @@
+
+/* @vertex */
 #version 310 es
 
 layout(location = 0) in vec2 vert_main_loc0_Input;
@@ -14,6 +16,8 @@ void main() {
   gl_Position[2u] = ((2.0f * gl_Position.z) - gl_Position.w);
   gl_PointSize = 1.0f;
 }
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -25,6 +29,8 @@ vec4 frag_main_inner() {
 void main() {
   frag_main_loc0_Output = frag_main_inner();
 }
+
+/* @compute */
 #version 310 es
 
 

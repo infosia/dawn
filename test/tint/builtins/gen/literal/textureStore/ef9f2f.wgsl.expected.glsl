@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -9,6 +11,8 @@ void textureStore_ef9f2f() {
 void main() {
   textureStore_ef9f2f();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, r32ui) uniform highp writeonly uimage3D arg_0;

@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 layout(binding = 1, r32ui) uniform highp writeonly uimage2D Dst;

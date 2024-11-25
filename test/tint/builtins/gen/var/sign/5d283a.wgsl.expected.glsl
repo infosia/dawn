@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 precision highp float;
@@ -15,6 +17,8 @@ f16vec3 sign_5d283a() {
 void main() {
   v.inner = sign_5d283a();
 }
+
+/* @compute */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 
@@ -31,6 +35,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = sign_5d283a();
 }
+
+/* @vertex */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 

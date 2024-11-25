@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -9,6 +11,8 @@ void select_089657() {
 void main() {
   select_089657();
 }
+
+/* @compute */
 #version 310 es
 
 void select_089657() {
@@ -19,6 +23,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   select_089657();
 }
+
+/* @vertex */
 #version 310 es
 
 

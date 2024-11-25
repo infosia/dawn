@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -9,6 +11,8 @@ void ldexp_71ebe3() {
 void main() {
   ldexp_71ebe3();
 }
+
+/* @compute */
 #version 310 es
 
 void ldexp_71ebe3() {
@@ -19,6 +23,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   ldexp_71ebe3();
 }
+
+/* @vertex */
 #version 310 es
 
 

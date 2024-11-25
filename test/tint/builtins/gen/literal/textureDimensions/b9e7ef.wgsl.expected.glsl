@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -14,6 +16,8 @@ uint textureDimensions_b9e7ef() {
 void main() {
   v.inner = textureDimensions_b9e7ef();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, std430)
@@ -29,6 +33,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = textureDimensions_b9e7ef();
 }
+
+/* @vertex */
 #version 310 es
 
 

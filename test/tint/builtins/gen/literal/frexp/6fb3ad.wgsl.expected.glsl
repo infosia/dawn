@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -14,6 +16,8 @@ void frexp_6fb3ad() {
 void main() {
   frexp_6fb3ad();
 }
+
+/* @compute */
 #version 310 es
 
 
@@ -29,6 +33,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   frexp_6fb3ad();
 }
+
+/* @vertex */
 #version 310 es
 
 

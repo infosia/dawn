@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 float tint_symbol() {

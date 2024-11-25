@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -10,6 +12,8 @@ void textureStore_ea30d2() {
 void main() {
   textureStore_ea30d2();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, rg32i) uniform highp iimage2DArray arg_0;

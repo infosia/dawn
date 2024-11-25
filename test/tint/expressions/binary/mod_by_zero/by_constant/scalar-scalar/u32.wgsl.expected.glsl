@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 uint tint_mod_u32(uint lhs, uint rhs) {

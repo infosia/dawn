@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -25,6 +27,8 @@ void fragment_main_1() {
 void main() {
   fragment_main_1();
 }
+
+/* @compute */
 #version 310 es
 
 

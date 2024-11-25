@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 float p = 0.0f;

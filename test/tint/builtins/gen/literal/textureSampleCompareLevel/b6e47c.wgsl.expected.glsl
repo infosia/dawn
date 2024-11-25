@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -14,6 +16,8 @@ float textureSampleCompareLevel_b6e47c() {
 void main() {
   v.inner = textureSampleCompareLevel_b6e47c();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, std430)
@@ -29,6 +33,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = textureSampleCompareLevel_b6e47c();
 }
+
+/* @vertex */
 #version 460
 
 

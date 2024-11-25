@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 uniform highp sampler2DMS t_f;

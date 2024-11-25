@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -14,6 +16,8 @@ uint textureNumLayers_34cefa() {
 void main() {
   v.inner = textureNumLayers_34cefa();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, std430)
@@ -29,6 +33,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = textureNumLayers_34cefa();
 }
+
+/* @vertex */
 #version 460
 
 

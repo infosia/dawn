@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -22,6 +24,8 @@ uint atomicOr_5e95d4() {
 void main() {
   v.inner = atomicOr_5e95d4();
 }
+
+/* @compute */
 #version 310 es
 
 

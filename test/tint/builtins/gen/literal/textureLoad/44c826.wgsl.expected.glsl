@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -14,6 +16,8 @@ uvec4 textureLoad_44c826() {
 void main() {
   v.inner = textureLoad_44c826();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, std430)
@@ -29,6 +33,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = textureLoad_44c826();
 }
+
+/* @vertex */
 #version 460
 
 

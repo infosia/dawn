@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 shared mat2x4 S;

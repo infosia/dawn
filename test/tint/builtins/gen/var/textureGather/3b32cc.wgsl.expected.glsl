@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -16,6 +18,8 @@ uvec4 textureGather_3b32cc() {
 void main() {
   v.inner = textureGather_3b32cc();
 }
+
+/* @compute */
 #version 310 es
 
 layout(binding = 0, std430)
@@ -33,6 +37,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = textureGather_3b32cc();
 }
+
+/* @vertex */
 #version 310 es
 
 

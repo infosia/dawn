@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -17,6 +19,8 @@ vec4 textureGather_43025d() {
 void main() {
   v.inner = textureGather_43025d();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, std430)
@@ -35,6 +39,8 @@ layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   v.inner = textureGather_43025d();
 }
+
+/* @vertex */
 #version 460
 
 

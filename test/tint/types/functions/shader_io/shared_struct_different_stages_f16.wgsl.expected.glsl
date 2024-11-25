@@ -1,3 +1,5 @@
+
+/* @vertex */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 
@@ -22,6 +24,8 @@ void main() {
   gl_Position[2u] = ((2.0f * gl_Position.z) - gl_Position.w);
   gl_PointSize = 1.0f;
 }
+
+/* @fragment */
 #version 310 es
 #extension GL_AMD_gpu_shader_half_float: require
 precision highp float;

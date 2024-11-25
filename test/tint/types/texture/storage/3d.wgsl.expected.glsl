@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 460
 
 layout(binding = 0, rgba8) uniform highp writeonly image3D t_rgba8unorm;

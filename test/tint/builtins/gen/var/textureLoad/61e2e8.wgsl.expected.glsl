@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 460
 precision highp float;
 precision highp int;
@@ -15,6 +17,8 @@ ivec4 textureLoad_61e2e8() {
 void main() {
   v.inner = textureLoad_61e2e8();
 }
+
+/* @compute */
 #version 460
 
 layout(binding = 0, std430)

@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 int a = 0;
@@ -9,6 +11,8 @@ void main() {
   a = 42;
   uses_a();
 }
+
+/* @compute */
 #version 310 es
 
 int b = 0;
@@ -20,6 +24,8 @@ void main() {
   b = 7;
   uses_b();
 }
+
+/* @compute */
 #version 310 es
 
 int a = 0;
@@ -47,6 +53,8 @@ void main() {
   outer();
   no_uses();
 }
+
+/* @compute */
 #version 310 es
 
 void no_uses() {

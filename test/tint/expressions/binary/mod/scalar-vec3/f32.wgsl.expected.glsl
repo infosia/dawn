@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 vec3 tint_float_modulo(vec3 x, vec3 y) {

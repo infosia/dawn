@@ -10,6 +10,8 @@
     v = textureSample(t, s, vec2(0, 0));
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;

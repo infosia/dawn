@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 void constant_with_non_constant() {

@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -23,6 +25,8 @@ uint atomicSub_15bfc9() {
 void main() {
   v.inner = atomicSub_15bfc9();
 }
+
+/* @compute */
 #version 310 es
 
 

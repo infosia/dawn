@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 layout(binding = 1, std430)

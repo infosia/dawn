@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 #extension GL_EXT_blend_func_extended: require
 precision highp float;

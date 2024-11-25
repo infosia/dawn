@@ -1,3 +1,5 @@
+
+/* @fragment */
 #version 310 es
 precision highp float;
 precision highp int;
@@ -23,6 +25,8 @@ int atomicExchange_f2e22f() {
 void main() {
   v.inner = atomicExchange_f2e22f();
 }
+
+/* @compute */
 #version 310 es
 
 

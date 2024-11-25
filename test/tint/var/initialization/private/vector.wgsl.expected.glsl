@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 ivec3 v = ivec3(0);

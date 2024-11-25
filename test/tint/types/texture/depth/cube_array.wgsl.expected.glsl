@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 460
 
 uniform highp samplerCubeArray t_f;

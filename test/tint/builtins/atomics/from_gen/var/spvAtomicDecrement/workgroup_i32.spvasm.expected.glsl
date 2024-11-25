@@ -1,3 +1,5 @@
+
+/* @compute */
 #version 310 es
 
 uint local_invocation_index_1 = 0u;

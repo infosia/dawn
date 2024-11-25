@@ -2,6 +2,8 @@
         let _e16_ = vec2(false, false);
         ^^^^^^^^^
 
+
+/* @compute */
 #version 310 es
 
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
