@@ -16,6 +16,98 @@
       "message": "PTAL\n\nHigh-level question;\nthis changes the behaviour of some of IR fuzzing passes in the WGSL fuzzer to not performing any post-run validation, since it was baked into the fuzzer pass before. Is this ok, or should I add into the WGSL fuzzer specific code running the post-validation based on the impl result like the IR fuzzer?\n\nThere are two areas that I would like special attention paid to:\n\na)\nMaking sure that all of the pre/post run capabilities are correct. I have attempted to implement what was in the existing code as well as I can, but given that there has been previous issues with these, I would like people with more expertise in the transforms to confirm the values. This is a good time to correct any issues with them.\n\nb)\nSome of the existing fuzzing passes did not perform validation after running, this change will now have them validating. I assume the lack of post-run validation was an oversight. If not I can change them to returning in a manner that prevent post-run validation",
       "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14be1b15_1194e7de",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-25T20:49:18Z",
+      "side": 1,
+      "message": "Why do we `TINT_ICE` for post_capabilities, but not for pre?",
+      "range": {
+        "startLine": 133,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 33
+      },
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69e44a57_cba576bb",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-25T20:49:18Z",
+      "side": 1,
+      "message": "nit: I think this is more readable by inverting the branches, and using early out:\n\n```\n                if (auto result \u003d fuzzer.fn(mod, data); result !\u003d Success) {\n                    if (options.verbose) {\n                        std::cout \u003c\u003c \"   Failed to execute fuzzer: \" \u003c\u003c result.Failure() \u003c\u003c \"\\n\";\n                    }\n                    return;\n                }\n                if (tint::core::ir::Validate(mod, fuzzer.post_capabilities) !\u003d Success) {\n                    TINT_ICE()\n                        \u003c\u003c \"Failed to validate against fuzzer capabilities after running, \"\n                        \u003c\u003c currently_running \u003c\u003c \"\\n\";\n                }\n```\n\nSame for the code below.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 17
+      },
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2bd2064_c26dc8a9",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-25T20:49:18Z",
+      "side": 1,
+      "message": "Formerly, if the decode failed, the run was not considered a failure. I assume this was because decode failures were a thing, and would not be considered an error. Is this no longer the case?",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 60
+      },
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60fc564f_1017f7bd",
+        "filename": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-25T20:49:18Z",
+      "side": 1,
+      "message": "nit: this creates a function pointer, which means it\u0027s possible the compiler produces less efficient calling code than calling the function directly (although unlikley). To be sure, though, you can use `constexpr auto\u0026`, which makes it both a compile-time variable and a reference, making it more unlikely to be compiled to a call-through-pointer.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
