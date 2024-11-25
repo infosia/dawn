@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "966c4bc5_1239fb42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-25T19:26:41Z",
+      "side": 1,
+      "message": "PTAL. This also makes it a lot clearer that `renamer` is always run except for `spv` and `wgsl` output. Also, we have a duplicate flag to run the renamer for some reason.",
+      "revId": "c2e89a69abc10251530a77570151a6ad369c15c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
