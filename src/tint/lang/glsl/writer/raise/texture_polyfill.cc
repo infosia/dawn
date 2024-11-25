@@ -965,7 +965,6 @@ struct State {
             params.Push(tex);
 
             bool is_depth = tex_type->Is<core::type::DepthTexture>();
-            bool needs_ext = false;
 
             auto depth_ref = 0_f;
 
@@ -985,7 +984,6 @@ struct State {
 
                     uint32_t vec_width = 3;
                     if (is_depth) {
-                        needs_ext = true;
                         new_coords.Push(b.Value(depth_ref));
                         ++vec_width;
                     }
@@ -995,7 +993,6 @@ struct State {
                 case core::type::TextureDimension::k3d:
                 case core::type::TextureDimension::kCube:
                     if (is_depth) {
-                        needs_ext = tex_type->Dim() == core::type::TextureDimension::kCube;
                         coords = b.Construct(ty.vec4<f32>(), coords, depth_ref)->Result(0);
                     }
                     params.Push(coords);
@@ -1005,7 +1002,6 @@ struct State {
                                     ->Result(0));
 
                     if (is_depth) {
-                        needs_ext = true;
                         params.Push(b.Value(depth_ref));
                     }
                     break;
@@ -1015,10 +1011,9 @@ struct State {
 
             params.Push(b.Convert(ty.f32(), args[idx++])->Result(0));
 
-            auto fn = needs_ext ? glsl::BuiltinFn::kExtTextureLod : glsl::BuiltinFn::kTextureLod;
+            auto fn = glsl::BuiltinFn::kTextureLod;
             if (idx < args.Length()) {
-                fn = needs_ext ? glsl::BuiltinFn::kExtTextureLodOffset
-                               : glsl::BuiltinFn::kTextureLodOffset;
+                fn = glsl::BuiltinFn::kTextureLodOffset;
                 params.Push(args[idx++]);
             }
 
