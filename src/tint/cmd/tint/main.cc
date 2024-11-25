@@ -887,6 +887,11 @@ bool GenerateMsl([[maybe_unused]] const tint::Program& program,
         }
     }
 
+    // The correct behavior for demote to helper in metal 2.3 onward.
+    if (options.disable_demote_to_helper) {
+        msl_version = std::max(msl_version, tint::msl::validate::MslVersion::kMsl_2_3);
+    }
+
     if (options.validate && options.skip_hash.count(hash) == 0) {
         tint::msl::validate::Result res;
 #if TINT_BUILD_IS_MAC
