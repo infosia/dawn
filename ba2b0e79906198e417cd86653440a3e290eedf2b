@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "ba2b0e79906198e417cd86653440a3e290eedf2b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "962b76b8_3660bef3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-25T15:35:17Z",
+      "side": 1,
+      "message": "We don\u0027t usually have child directories depending on their parents because it\u0027s a recipe for cyclic dependencies, but short of adding a `misc` subdirectory I don\u0027t see a better option.",
+      "revId": "ba2b0e79906198e417cd86653440a3e290eedf2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
