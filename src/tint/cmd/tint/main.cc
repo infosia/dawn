@@ -651,531 +651,6 @@ Options:
     return true;
 }
 
-#if TINT_BUILD_SPV_WRITER
-std::string Disassemble(const std::vector<uint32_t>& data) {
-    std::string spv_errors;
-    spv_target_env target_env = SPV_ENV_VULKAN_1_1;
-
-    auto msg_consumer = [&spv_errors](spv_message_level_t level, const char*,
-                                      const spv_position_t& position, const char* message) {
-        switch (level) {
-            case SPV_MSG_FATAL:
-            case SPV_MSG_INTERNAL_ERROR:
-            case SPV_MSG_ERROR:
-                spv_errors +=
-                    "error: line " + std::to_string(position.index) + ": " + message + "\n";
-                break;
-            case SPV_MSG_WARNING:
-                spv_errors +=
-                    "warning: line " + std::to_string(position.index) + ": " + message + "\n";
-                break;
-            case SPV_MSG_INFO:
-                spv_errors +=
-                    "info: line " + std::to_string(position.index) + ": " + message + "\n";
-                break;
-            case SPV_MSG_DEBUG:
-                break;
-        }
-    };
-
-    spvtools::SpirvTools tools(target_env);
-    tools.SetMessageConsumer(msg_consumer);
-
-    std::string result;
-    if (!tools.Disassemble(
-            data, &result,
-            SPV_BINARY_TO_TEXT_OPTION_INDENT | SPV_BINARY_TO_TEXT_OPTION_FRIENDLY_NAMES)) {
-        std::cerr << spv_errors << "\n";
-    }
-    return result;
-}
-#endif  // TINT_BUILD_SPV_WRITER
-
-/// Generate SPIR-V code for a program.
-/// @param program the program to generate
-/// @param options the options that Tint was invoked with
-/// @returns true on success
-bool GenerateSpirv(const tint::Program& program, const Options& options) {
-#if TINT_BUILD_SPV_WRITER
-    // Convert the AST program to an IR module.
-    auto ir = tint::wgsl::reader::ProgramToLoweredIR(program);
-    if (ir != tint::Success) {
-        std::cerr << "Failed to generate IR: " << ir << "\n";
-        return false;
-    }
-
-    tint::spirv::writer::Options gen_options;
-    gen_options.disable_robustness = !options.enable_robustness;
-    gen_options.disable_workgroup_init = options.disable_workgroup_init;
-    gen_options.use_storage_input_output_16 = options.use_storage_input_output_16;
-    gen_options.bindings = tint::spirv::writer::GenerateBindings(ir.Get());
-
-    // Generate SPIR-V from Tint IR.
-    auto result = tint::spirv::writer::Generate(ir.Get(), gen_options);
-    if (result != tint::Success) {
-        tint::cmd::PrintWGSL(std::cerr, program);
-        std::cerr << "Failed to generate SPIR-V: " << result.Failure() << "\n";
-        return false;
-    }
-
-    if (options.format == Format::kSpvAsm) {
-        if (!tint::cmd::WriteFile(options.output_file, "w", Disassemble(result.Get().spirv))) {
-            return false;
-        }
-    } else {
-        if (!tint::cmd::WriteFile(options.output_file, "wb", result.Get().spirv)) {
-            return false;
-        }
-    }
-
-    const auto hash = tint::CRC32(result.Get().spirv.data(), result.Get().spirv.size());
-    if (options.print_hash) {
-        PrintHash(hash);
-    }
-
-    if (options.validate && options.skip_hash.count(hash) == 0) {
-        // Use Vulkan 1.1, since this is what Tint, internally, uses.
-        spvtools::SpirvTools tools(SPV_ENV_VULKAN_1_1);
-        tools.SetMessageConsumer(
-            [](spv_message_level_t, const char*, const spv_position_t& pos, const char* msg) {
-                std::cerr << (pos.line + 1) << ":" << (pos.column + 1) << ": " << msg << "\n";
-            });
-        if (!tools.Validate(result.Get().spirv.data(), result.Get().spirv.size(),
-                            spvtools::ValidatorOptions())) {
-            return false;
-        }
-    }
-
-    return true;
-#else
-    (void)program;
-    (void)options;
-    std::cerr << "SPIR-V writer not enabled in tint build\n";
-    return false;
-#endif  // TINT_BUILD_SPV_WRITER
-}
-
-/// Generate WGSL code for a program.
-/// @param program the program to generate
-/// @param options the options that Tint was invoked with
-/// @returns true on success
-bool GenerateWgsl([[maybe_unused]] const tint::Program& program,
-                  [[maybe_unused]] const Options& options) {
-#if TINT_BUILD_WGSL_WRITER
-    // TODO(jrprice): Provide a way for the user to set non-default options.
-    tint::wgsl::writer::Options gen_options;
-    auto result = tint::wgsl::writer::Generate(program, gen_options);
-    if (result != tint::Success) {
-        std::cerr << "Failed to generate: " << result.Failure() << "\n";
-        return false;
-    }
-
-    if (!tint::cmd::WriteFile(options.output_file, "w", result->wgsl)) {
-        return false;
-    }
-
-    const auto hash = tint::CRC32(result->wgsl.data(), result->wgsl.size());
-    if (options.print_hash) {
-        PrintHash(hash);
-    }
-
-#if TINT_BUILD_WGSL_READER
-    if (options.validate && options.skip_hash.count(hash) == 0) {
-        // Attempt to re-parse the output program with Tint's WGSL reader.
-        tint::wgsl::reader::Options parser_options;
-        parser_options.allowed_features = tint::wgsl::AllowedFeatures::Everything();
-        auto source = std::make_unique<tint::Source::File>(options.input_filename, result->wgsl);
-        auto reparsed_program = tint::wgsl::reader::Parse(source.get(), parser_options);
-        if (!reparsed_program.IsValid()) {
-            tint::diag::Formatter diag_formatter;
-            options.printer->Print(diag_formatter.Format(reparsed_program.Diagnostics()));
-            return false;
-        }
-    }
-#endif  // TINT_BUILD_WGSL_READER
-
-    return true;
-#else
-    std::cerr << "WGSL writer not enabled in tint build\n";
-    return false;
-#endif  // TINT_BUILD_WGSL_WRITER
-}
-
-/// Generate MSL code for a program.
-/// @param program the program to generate
-/// @param options the options that Tint was invoked with
-/// @returns true on success
-bool GenerateMsl([[maybe_unused]] const tint::Program& program,
-                 [[maybe_unused]] const Options& options) {
-#if !TINT_BUILD_MSL_WRITER
-    std::cerr << "MSL writer not enabled in tint build\n";
-    return false;
-#else
-    // Remap resource numbers to a flat namespace.
-    // TODO(crbug.com/tint/1501): Do this via Options::BindingMap.
-    const tint::Program* input_program = &program;
-    auto flattened = tint::wgsl::FlattenBindings(program);
-    if (flattened) {
-        input_program = &*flattened;
-    }
-
-    // TODO(jrprice): Provide a way for the user to set non-default options.
-    tint::msl::writer::Options gen_options;
-    gen_options.disable_robustness = !options.enable_robustness;
-    gen_options.disable_workgroup_init = options.disable_workgroup_init;
-    gen_options.pixel_local_attachments = options.pixel_local_attachments;
-    gen_options.bindings = tint::msl::writer::GenerateBindings(*input_program);
-    gen_options.array_length_from_uniform.ubo_binding = 30;
-
-    // Add array_length_from_uniform entries for all storage buffers with runtime sized arrays.
-    std::unordered_set<tint::BindingPoint> storage_bindings;
-    for (auto* var : program.AST().GlobalVariables()) {
-        auto* sem_var = program.Sem().Get<tint::sem::GlobalVariable>(var);
-        if (!sem_var->Type()->UnwrapRef()->HasFixedFootprint()) {
-            auto bp = sem_var->Attributes().binding_point.value();
-            if (storage_bindings.insert(bp).second) {
-                gen_options.array_length_from_uniform.bindpoint_to_size_index.emplace(
-                    bp, static_cast<uint32_t>(storage_bindings.size() - 1));
-            }
-        }
-    }
-
-    tint::Result<tint::msl::writer::Output> result;
-    if (options.use_ir) {
-        // Convert the AST program to an IR module.
-        auto ir = tint::wgsl::reader::ProgramToLoweredIR(*input_program);
-        if (ir != tint::Success) {
-            std::cerr << "Failed to generate IR: " << ir << "\n";
-            return false;
-        }
-        result = tint::msl::writer::Generate(ir.Get(), gen_options);
-    } else {
-        result = tint::msl::writer::Generate(*input_program, gen_options);
-    }
-
-    if (result != tint::Success) {
-        tint::cmd::PrintWGSL(std::cerr, program);
-        std::cerr << "Failed to generate: " << result.Failure() << "\n";
-        return false;
-    }
-
-    if (!tint::cmd::WriteFile(options.output_file, "w", result->msl)) {
-        return false;
-    }
-
-    const auto hash = tint::CRC32(result->msl.c_str());
-    if (options.print_hash) {
-        PrintHash(hash);
-    }
-
-    // Default to validating against MSL 2.2, which corresponds to macOS 10.15.
-    // Check for extensions that bump the requirements.
-    auto msl_version = tint::msl::validate::MslVersion::kMsl_2_2;
-    for (auto* enable : program.AST().Enables()) {
-        if (enable->HasExtension(tint::wgsl::Extension::kChromiumExperimentalPixelLocal) ||
-            enable->HasExtension(tint::wgsl::Extension::kChromiumExperimentalFramebufferFetch)) {
-            msl_version = std::max(msl_version, tint::msl::validate::MslVersion::kMsl_2_3);
-        }
-    }
-
-    if (options.validate && options.skip_hash.count(hash) == 0) {
-        tint::msl::validate::Result res;
-#if TINT_BUILD_IS_MAC
-        res = tint::msl::validate::ValidateUsingMetal(result->msl, msl_version);
-#else
-#ifdef _WIN32
-        const char* default_xcrun_exe = "metal.exe";
-#else
-        const char* default_xcrun_exe = "xcrun";
-#endif
-        auto xcrun = tint::Command::LookPath(
-            options.xcrun_path.empty() ? default_xcrun_exe : std::string(options.xcrun_path));
-        if (xcrun.Found()) {
-            res = tint::msl::validate::Validate(xcrun.Path(), result->msl, msl_version);
-        } else {
-            res.output = "xcrun executable not found. Cannot validate.";
-            res.failed = true;
-        }
-#endif  // TINT_BUILD_IS_MAC
-        if (res.failed) {
-            std::cerr << res.output << "\n";
-            return false;
-        }
-    }
-
-    return true;
-#endif  // TINT_BUILD_MSL_WRITER
-}
-
-/// Generate HLSL code for a program.
-/// @param program the program to generate
-/// @param options the options that Tint was invoked with
-/// @returns true on success
-bool GenerateHlsl(const tint::Program& program, const Options& options) {
-#if TINT_BUILD_HLSL_WRITER
-    const bool for_fxc = options.format == Format::kHlslFxc;
-    // TODO(jrprice): Provide a way for the user to set non-default options.
-    tint::hlsl::writer::Options gen_options;
-    gen_options.disable_robustness = !options.enable_robustness;
-    gen_options.disable_workgroup_init = options.disable_workgroup_init;
-    gen_options.bindings = tint::hlsl::writer::GenerateBindings(program);
-    gen_options.root_constant_binding_point = options.hlsl_root_constant_binding_point;
-    gen_options.pixel_local = options.pixel_local_options;
-    gen_options.polyfill_dot_4x8_packed = options.hlsl_shader_model < kMinShaderModelForDP4aInHLSL;
-    gen_options.polyfill_pack_unpack_4x8 =
-        options.hlsl_shader_model < kMinShaderModelForPackUnpack4x8InHLSL;
-    gen_options.compiler = for_fxc ? tint::hlsl::writer::Options::Compiler::kFXC
-                                   : tint::hlsl::writer::Options::Compiler::kDXC;
-
-    tint::Result<tint::hlsl::writer::Output> result;
-    if (options.use_ir) {
-        // Convert the AST program to an IR module.
-        auto ir = tint::wgsl::reader::ProgramToLoweredIR(program);
-        if (ir != tint::Success) {
-            std::cerr << "Failed to generate IR: " << ir << "\n";
-            return false;
-        }
-        result = tint::hlsl::writer::Generate(ir.Get(), gen_options);
-    } else {
-        result = tint::hlsl::writer::Generate(program, gen_options);
-    }
-
-    if (result != tint::Success) {
-        tint::cmd::PrintWGSL(std::cerr, program);
-        std::cerr << "Failed to generate: " << result.Failure() << "\n";
-        return false;
-    }
-
-    if (!tint::cmd::WriteFile(options.output_file, "w", result->hlsl)) {
-        return false;
-    }
-
-    const auto hash = tint::CRC32(result->hlsl.c_str());
-    if (options.print_hash) {
-        PrintHash(hash);
-    }
-
-    const bool validate =
-        (options.validate || !options.fxc_path.empty() || !options.dxc_path.empty()) &&
-        (options.skip_hash.count(hash) == 0);
-
-    if (validate && !for_fxc) {
-        // DXC validation
-        tint::hlsl::validate::Result dxc_res;
-        const std::string dxc_path =
-            options.dxc_path.empty() ? tint::hlsl::validate::kDxcDLLName : options.dxc_path;
-        auto dxc = tint::Command::LookPath(dxc_path);
-        if (dxc.Found()) {
-            uint32_t hlsl_shader_model = options.hlsl_shader_model;
-            auto enable_list = program.AST().Enables();
-            bool dxc_require_16bit_types = false;
-            for (auto* enable : enable_list) {
-                if (enable->HasExtension(tint::wgsl::Extension::kF16)) {
-                    dxc_require_16bit_types = true;
-                    break;
-                }
-            }
-            if (options.verbose) {
-                std::cout << "Validating with DXC: " << dxc.Path() << "\n";
-            }
-            dxc_res = tint::hlsl::validate::ValidateUsingDXC(
-                dxc.Path(), result->hlsl, result->entry_points, dxc_require_16bit_types,
-                hlsl_shader_model);
-        } else {
-            dxc_res.failed = true;
-            dxc_res.output = "DXC executable '" + dxc_path + "' not found. Cannot validate.";
-        }
-
-        if (dxc_res.failed) {
-            std::cerr << "DXC validation failure:\n" << dxc_res.output << "\n";
-            return false;
-        }
-        if (options.verbose) {
-            std::cout << "Passed DXC validation. Compiler output:\n" << dxc_res.output << "\n";
-        }
-    }
-
-    if (validate && for_fxc) {
-        // FXC validation
-#ifndef _WIN32
-        std::cerr << "FXC can only be used on Windows.\n";
-        return false;
-#else
-        tint::hlsl::validate::Result fxc_res;
-        auto fxc = tint::Command::LookPath(
-            options.fxc_path.empty() ? tint::hlsl::validate::kFxcDLLName : options.fxc_path);
-        if (fxc.Found()) {
-            if (options.verbose) {
-                std::cout << "Validating with FXC: " << fxc.Path() << "\n";
-            }
-            fxc_res = tint::hlsl::validate::ValidateUsingFXC(fxc.Path(), result->hlsl,
-                                                             result->entry_points);
-        } else {
-            fxc_res.failed = true;
-            fxc_res.output = "FXC DLL '" + options.fxc_path + "' not found. Cannot validate.";
-        }
-
-        if (fxc_res.failed) {
-            std::cerr << "FXC validation failure:\n" << fxc_res.output << "\n";
-            return false;
-        }
-        if (options.verbose) {
-            std::cout << "Passed FXC validation. Compiler output:\n" << fxc_res.output << "\n";
-        }
-#endif  // _WIN32
-    }
-
-    return true;
-#else
-    (void)program;
-    (void)options;
-    std::cerr << "HLSL writer not enabled in tint build\n";
-    return false;
-#endif  // TINT_BUILD_HLSL_WRITER
-}
-
-/// Generate GLSL code for a program.
-/// @param program the program to generate
-/// @param options the options that Tint was invoked with
-/// @returns true on success
-bool GenerateGlsl([[maybe_unused]] const tint::Program& program,
-                  [[maybe_unused]] const Options& options) {
-#if !TINT_BUILD_GLSL_WRITER
-    std::cerr << "GLSL writer not enabled in tint build\n";
-    return false;
-#else
-    tint::inspector::Inspector inspector(program);
-
-    auto generate = [&](const tint::Program& prg, const std::string entry_point_name,
-                        [[maybe_unused]] tint::ast::PipelineStage stage) -> bool {
-        tint::glsl::writer::Options gen_options;
-
-        if (options.glsl_desktop) {
-            gen_options.version =
-                tint::glsl::writer::Version(tint::glsl::writer::Version::Standard::kDesktop, 4, 6);
-        } else {
-            gen_options.version = tint::glsl::writer::Version();
-        }
-
-        gen_options.disable_robustness = !options.enable_robustness;
-
-        auto entry_point = inspector.GetEntryPoint(entry_point_name);
-        uint32_t offset = entry_point.push_constant_size;
-
-        if (entry_point.instance_index_used) {
-            // Place the first_instance push constant member after user-defined push constants (if
-            // any).
-            gen_options.first_instance_offset = offset;
-            offset += 4;
-        }
-        if (entry_point.frag_depth_used) {
-            gen_options.depth_range_offsets = {offset + 0, offset + 4};
-            offset += 8;
-        }
-
-        // Convert the AST program to an IR module.
-        auto ir = tint::wgsl::reader::ProgramToLoweredIR(prg);
-        if (ir != tint::Success) {
-            std::cerr << "Failed to generate IR: " << ir << "\n";
-            return false;
-        }
-
-        // The GLSL backend assumes single entry point.
-        if (!entry_point_name.empty()) {
-            auto single_result =
-                tint::core::ir::transform::SingleEntryPoint(ir.Get(), entry_point_name);
-            if (single_result != tint::Success) {
-                std::cerr << single_result.Failure().reason.Str() << "\n";
-                return false;
-            }
-        }
-
-        // Generate binding options.
-        gen_options.bindings = tint::glsl::writer::GenerateBindings(ir.Get());
-
-        // Generate GLSL.
-        auto result = tint::glsl::writer::Generate(ir.Get(), gen_options, "");
-        if (result != tint::Success) {
-            std::cerr << "Failed to generate: " << result.Failure() << "\n";
-            return false;
-        }
-
-        if (!tint::cmd::WriteFile(options.output_file, "w", result->glsl)) {
-            return false;
-        }
-
-        const auto hash = tint::CRC32(result->glsl.c_str());
-        if (options.print_hash) {
-            PrintHash(hash);
-        }
-
-        if (options.validate && options.skip_hash.count(hash) == 0) {
-#if !TINT_BUILD_GLSL_VALIDATOR
-            std::cerr << "GLSL validator not enabled in tint build\n";
-            return false;
-#else
-            // If there is no entry point name there is nothing to validate
-            if (entry_point_name != "") {
-                auto val = tint::glsl::validate::Validate(result->glsl, stage);
-                if (val != tint::Success) {
-                    std::cerr << val.Failure();
-                    return false;
-                }
-            }
-#endif
-        }
-        return true;
-    };
-
-    if (inspector.GetEntryPoints().empty()) {
-        // Pass empty string here so that the GLSL generator will generate
-        // code for all functions, reachable or not.
-        return generate(program, "", tint::ast::PipelineStage::kCompute);
-    }
-
-    bool success = true;
-    for (auto& entry_point : inspector.GetEntryPoints()) {
-        tint::ast::PipelineStage stage = tint::ast::PipelineStage::kCompute;
-        switch (entry_point.stage) {
-            case tint::inspector::PipelineStage::kCompute:
-                stage = tint::ast::PipelineStage::kCompute;
-                break;
-            case tint::inspector::PipelineStage::kVertex:
-                stage = tint::ast::PipelineStage::kVertex;
-                break;
-            case tint::inspector::PipelineStage::kFragment:
-                stage = tint::ast::PipelineStage::kFragment;
-                break;
-        }
-        success &= generate(program, entry_point.name, stage);
-    }
-    return success;
-#endif  // TINT_BUILD_GLSL_WRITER
-}
-
-/// Generate IR code for a program.
-/// @param program the program to generate
-/// @param options the options that Tint was invoked with
-/// @returns true on success
-bool DumpIR([[maybe_unused]] const tint::Program& program,
-            [[maybe_unused]] const Options& options) {
-#if !TINT_BUILD_WGSL_READER
-    std::cerr << "WGSL reader not enabled in tint build\n";
-    return false;
-#else
-    auto result = tint::wgsl::reader::ProgramToLoweredIR(program);
-    if (result != tint::Success) {
-        std::cerr << "Failed to build IR from program: " << result.Failure() << "\n";
-        return false;
-    }
-
-    options.printer->Print(tint::core::ir::Disassembler(result.Get()).Text());
-    options.printer->Print(tint::StyledText{} << "\n");
-
-    return true;
-#endif
-}
-
 tint::Result<tint::Program> ProcessASTTransforms(Options& options,
                                                  tint::inspector::Inspector& inspector,
                                                  tint::Program& program) {
@@ -1279,6 +754,576 @@ tint::Result<tint::Program> ProcessASTTransforms(Options& options,
     return transform_manager.Run(program, std::move(transform_inputs), outputs);
 }
 
+#if TINT_BUILD_SPV_WRITER
+std::string Disassemble(const std::vector<uint32_t>& data) {
+    std::string spv_errors;
+    spv_target_env target_env = SPV_ENV_VULKAN_1_1;
+
+    auto msg_consumer = [&spv_errors](spv_message_level_t level, const char*,
+                                      const spv_position_t& position, const char* message) {
+        switch (level) {
+            case SPV_MSG_FATAL:
+            case SPV_MSG_INTERNAL_ERROR:
+            case SPV_MSG_ERROR:
+                spv_errors +=
+                    "error: line " + std::to_string(position.index) + ": " + message + "\n";
+                break;
+            case SPV_MSG_WARNING:
+                spv_errors +=
+                    "warning: line " + std::to_string(position.index) + ": " + message + "\n";
+                break;
+            case SPV_MSG_INFO:
+                spv_errors +=
+                    "info: line " + std::to_string(position.index) + ": " + message + "\n";
+                break;
+            case SPV_MSG_DEBUG:
+                break;
+        }
+    };
+
+    spvtools::SpirvTools tools(target_env);
+    tools.SetMessageConsumer(msg_consumer);
+
+    std::string result;
+    if (!tools.Disassemble(
+            data, &result,
+            SPV_BINARY_TO_TEXT_OPTION_INDENT | SPV_BINARY_TO_TEXT_OPTION_FRIENDLY_NAMES)) {
+        std::cerr << spv_errors << "\n";
+    }
+    return result;
+}
+#endif  // TINT_BUILD_SPV_WRITER
+
+/// Generate SPIR-V code for a program.
+/// @param options the options that Tint was invoked with
+/// @param inspector the inspector
+/// @param src_program the program to generate
+/// @returns true on success
+bool GenerateSpirv([[maybe_unused]] Options& options,
+                   [[maybe_unused]] tint::inspector::Inspector& inspector,
+                   [[maybe_unused]] tint::Program& src_program) {
+#if TINT_BUILD_SPV_WRITER
+
+    auto res = ProcessASTTransforms(options, inspector, src_program);
+    if (res != tint::Success || !res->IsValid()) {
+        tint::cmd::PrintWGSL(std::cerr, res.Get());
+        std::cerr << res->Diagnostics() << "\n";
+        return 1;
+    }
+
+    // Convert the AST program to an IR module.
+    auto ir = tint::wgsl::reader::ProgramToLoweredIR(res.Get());
+    if (ir != tint::Success) {
+        std::cerr << "Failed to generate IR: " << ir << "\n";
+        return false;
+    }
+
+    tint::spirv::writer::Options gen_options;
+    gen_options.disable_robustness = !options.enable_robustness;
+    gen_options.disable_workgroup_init = options.disable_workgroup_init;
+    gen_options.use_storage_input_output_16 = options.use_storage_input_output_16;
+    gen_options.bindings = tint::spirv::writer::GenerateBindings(ir.Get());
+
+    // Generate SPIR-V from Tint IR.
+    auto result = tint::spirv::writer::Generate(ir.Get(), gen_options);
+    if (result != tint::Success) {
+        tint::cmd::PrintWGSL(std::cerr, res.Get());
+        std::cerr << "Failed to generate SPIR-V: " << result.Failure() << "\n";
+        return false;
+    }
+
+    if (options.format == Format::kSpvAsm) {
+        if (!tint::cmd::WriteFile(options.output_file, "w", Disassemble(result.Get().spirv))) {
+            return false;
+        }
+    } else {
+        if (!tint::cmd::WriteFile(options.output_file, "wb", result.Get().spirv)) {
+            return false;
+        }
+    }
+
+    const auto hash = tint::CRC32(result.Get().spirv.data(), result.Get().spirv.size());
+    if (options.print_hash) {
+        PrintHash(hash);
+    }
+
+    if (options.validate && options.skip_hash.count(hash) == 0) {
+        // Use Vulkan 1.1, since this is what Tint, internally, uses.
+        spvtools::SpirvTools tools(SPV_ENV_VULKAN_1_1);
+        tools.SetMessageConsumer(
+            [](spv_message_level_t, const char*, const spv_position_t& pos, const char* msg) {
+                std::cerr << (pos.line + 1) << ":" << (pos.column + 1) << ": " << msg << "\n";
+            });
+        if (!tools.Validate(result.Get().spirv.data(), result.Get().spirv.size(),
+                            spvtools::ValidatorOptions())) {
+            return false;
+        }
+    }
+
+    return true;
+#else
+    std::cerr << "SPIR-V writer not enabled in tint build\n";
+    return false;
+#endif  // TINT_BUILD_SPV_WRITER
+}
+
+/// Generate WGSL code for a program.
+/// @param options the options that Tint was invoked with
+/// @param inspector the inspector
+/// @param src_program the program to generate
+/// @returns true on success
+bool GenerateWgsl([[maybe_unused]] Options& options,
+                  [[maybe_unused]] tint::inspector::Inspector& inspector,
+                  [[maybe_unused]] tint::Program& src_program) {
+#if TINT_BUILD_WGSL_WRITER
+
+    auto res = ProcessASTTransforms(options, inspector, src_program);
+    if (res != tint::Success || !res->IsValid()) {
+        tint::cmd::PrintWGSL(std::cerr, res.Get());
+        std::cerr << res->Diagnostics() << "\n";
+        return 1;
+    }
+
+    // TODO(jrprice): Provide a way for the user to set non-default options.
+    tint::wgsl::writer::Options gen_options;
+    auto result = tint::wgsl::writer::Generate(res.Get(), gen_options);
+    if (result != tint::Success) {
+        std::cerr << "Failed to generate: " << result.Failure() << "\n";
+        return false;
+    }
+
+    if (!tint::cmd::WriteFile(options.output_file, "w", result->wgsl)) {
+        return false;
+    }
+
+    const auto hash = tint::CRC32(result->wgsl.data(), result->wgsl.size());
+    if (options.print_hash) {
+        PrintHash(hash);
+    }
+
+#if TINT_BUILD_WGSL_READER
+    if (options.validate && options.skip_hash.count(hash) == 0) {
+        // Attempt to re-parse the output program with Tint's WGSL reader.
+        tint::wgsl::reader::Options parser_options;
+        parser_options.allowed_features = tint::wgsl::AllowedFeatures::Everything();
+        auto source = std::make_unique<tint::Source::File>(options.input_filename, result->wgsl);
+        auto reparsed_program = tint::wgsl::reader::Parse(source.get(), parser_options);
+        if (!reparsed_program.IsValid()) {
+            tint::diag::Formatter diag_formatter;
+            options.printer->Print(diag_formatter.Format(reparsed_program.Diagnostics()));
+            return false;
+        }
+    }
+#endif  // TINT_BUILD_WGSL_READER
+
+    return true;
+#else
+    std::cerr << "WGSL writer not enabled in tint build\n";
+    return false;
+#endif  // TINT_BUILD_WGSL_WRITER
+}
+
+/// Generate MSL code for a program.
+/// @param options the options that Tint was invoked with
+/// @param inspector the inspector
+/// @param src_program the program to generate
+/// @returns true on success
+bool GenerateMsl([[maybe_unused]] Options& options,
+                 [[maybe_unused]] tint::inspector::Inspector& inspector,
+                 [[maybe_unused]] tint::Program& src_program) {
+#if TINT_BUILD_MSL_WRITER
+
+    auto transform_res = ProcessASTTransforms(options, inspector, src_program);
+    if (transform_res != tint::Success || !transform_res->IsValid()) {
+        tint::cmd::PrintWGSL(std::cerr, transform_res.Get());
+        std::cerr << transform_res->Diagnostics() << "\n";
+        return 1;
+    }
+
+    // Remap resource numbers to a flat namespace.
+    // TODO(crbug.com/tint/1501): Do this via Options::BindingMap.
+    tint::Program input_program = std::move(transform_res.Get());
+    auto flattened = tint::wgsl::FlattenBindings(transform_res.Get());
+    if (flattened) {
+        input_program = std::move(flattened.value());
+    }
+
+    // TODO(jrprice): Provide a way for the user to set non-default options.
+    tint::msl::writer::Options gen_options;
+    gen_options.disable_robustness = !options.enable_robustness;
+    gen_options.disable_workgroup_init = options.disable_workgroup_init;
+    gen_options.pixel_local_attachments = options.pixel_local_attachments;
+    gen_options.bindings = tint::msl::writer::GenerateBindings(input_program);
+    gen_options.array_length_from_uniform.ubo_binding = 30;
+
+    // Add array_length_from_uniform entries for all storage buffers with runtime sized arrays.
+    std::unordered_set<tint::BindingPoint> storage_bindings;
+    for (auto* var : input_program.AST().GlobalVariables()) {
+        auto* sem_var = input_program.Sem().Get<tint::sem::GlobalVariable>(var);
+        if (!sem_var->Type()->UnwrapRef()->HasFixedFootprint()) {
+            auto bp = sem_var->Attributes().binding_point.value();
+            if (storage_bindings.insert(bp).second) {
+                gen_options.array_length_from_uniform.bindpoint_to_size_index.emplace(
+                    bp, static_cast<uint32_t>(storage_bindings.size() - 1));
+            }
+        }
+    }
+
+    tint::Result<tint::msl::writer::Output> result;
+    if (options.use_ir) {
+        // Convert the AST program to an IR module.
+        auto ir = tint::wgsl::reader::ProgramToLoweredIR(input_program);
+        if (ir != tint::Success) {
+            std::cerr << "Failed to generate IR: " << ir << "\n";
+            return false;
+        }
+        result = tint::msl::writer::Generate(ir.Get(), gen_options);
+    } else {
+        result = tint::msl::writer::Generate(input_program, gen_options);
+    }
+
+    if (result != tint::Success) {
+        tint::cmd::PrintWGSL(std::cerr, input_program);
+        std::cerr << "Failed to generate: " << result.Failure() << "\n";
+        return false;
+    }
+
+    if (!tint::cmd::WriteFile(options.output_file, "w", result->msl)) {
+        return false;
+    }
+
+    const auto hash = tint::CRC32(result->msl.c_str());
+    if (options.print_hash) {
+        PrintHash(hash);
+    }
+
+    // Default to validating against MSL 2.2, which corresponds to macOS 10.15.
+    // Check for extensions that bump the requirements.
+    auto msl_version = tint::msl::validate::MslVersion::kMsl_2_2;
+    for (auto* enable : input_program.AST().Enables()) {
+        if (enable->HasExtension(tint::wgsl::Extension::kChromiumExperimentalPixelLocal) ||
+            enable->HasExtension(tint::wgsl::Extension::kChromiumExperimentalFramebufferFetch)) {
+            msl_version = std::max(msl_version, tint::msl::validate::MslVersion::kMsl_2_3);
+        }
+    }
+
+    if (options.validate && options.skip_hash.count(hash) == 0) {
+        tint::msl::validate::Result res;
+#if TINT_BUILD_IS_MAC
+        res = tint::msl::validate::ValidateUsingMetal(result->msl, msl_version);
+#else
+#ifdef _WIN32
+        const char* default_xcrun_exe = "metal.exe";
+#else
+        const char* default_xcrun_exe = "xcrun";
+#endif
+        auto xcrun = tint::Command::LookPath(
+            options.xcrun_path.empty() ? default_xcrun_exe : std::string(options.xcrun_path));
+        if (xcrun.Found()) {
+            res = tint::msl::validate::Validate(xcrun.Path(), result->msl, msl_version);
+        } else {
+            res.output = "xcrun executable not found. Cannot validate.";
+            res.failed = true;
+        }
+#endif  // TINT_BUILD_IS_MAC
+        if (res.failed) {
+            std::cerr << res.output << "\n";
+            return false;
+        }
+    }
+
+    return true;
+#else
+    std::cerr << "MSL writer not enabled in tint build\n";
+    return false;
+#endif  // TINT_BUILD_MSL_WRITER
+}
+
+/// Generate HLSL code for a program.
+/// @param options the options that Tint was invoked with
+/// @param inspector the inspector
+/// @param src_program the program to generate
+/// @returns true on success
+bool GenerateHlsl([[maybe_unused]] Options& options,
+                  [[maybe_unused]] tint::inspector::Inspector& inspector,
+                  [[maybe_unused]] tint::Program& src_program) {
+#if TINT_BUILD_HLSL_WRITER
+    auto res = ProcessASTTransforms(options, inspector, src_program);
+    if (res != tint::Success || !res->IsValid()) {
+        tint::cmd::PrintWGSL(std::cerr, res.Get());
+        std::cerr << res->Diagnostics() << "\n";
+        return 1;
+    }
+
+    const bool for_fxc = options.format == Format::kHlslFxc;
+    // TODO(jrprice): Provide a way for the user to set non-default options.
+    tint::hlsl::writer::Options gen_options;
+    gen_options.disable_robustness = !options.enable_robustness;
+    gen_options.disable_workgroup_init = options.disable_workgroup_init;
+    gen_options.bindings = tint::hlsl::writer::GenerateBindings(res.Get());
+    gen_options.root_constant_binding_point = options.hlsl_root_constant_binding_point;
+    gen_options.pixel_local = options.pixel_local_options;
+    gen_options.polyfill_dot_4x8_packed = options.hlsl_shader_model < kMinShaderModelForDP4aInHLSL;
+    gen_options.polyfill_pack_unpack_4x8 =
+        options.hlsl_shader_model < kMinShaderModelForPackUnpack4x8InHLSL;
+    gen_options.compiler = for_fxc ? tint::hlsl::writer::Options::Compiler::kFXC
+                                   : tint::hlsl::writer::Options::Compiler::kDXC;
+
+    tint::Result<tint::hlsl::writer::Output> result;
+    if (options.use_ir) {
+        // Convert the AST program to an IR module.
+        auto ir = tint::wgsl::reader::ProgramToLoweredIR(res.Get());
+        if (ir != tint::Success) {
+            std::cerr << "Failed to generate IR: " << ir << "\n";
+            return false;
+        }
+        result = tint::hlsl::writer::Generate(ir.Get(), gen_options);
+    } else {
+        result = tint::hlsl::writer::Generate(res.Get(), gen_options);
+    }
+
+    if (result != tint::Success) {
+        tint::cmd::PrintWGSL(std::cerr, res.Get());
+        std::cerr << "Failed to generate: " << result.Failure() << "\n";
+        return false;
+    }
+
+    if (!tint::cmd::WriteFile(options.output_file, "w", result->hlsl)) {
+        return false;
+    }
+
+    const auto hash = tint::CRC32(result->hlsl.c_str());
+    if (options.print_hash) {
+        PrintHash(hash);
+    }
+
+    const bool validate =
+        (options.validate || !options.fxc_path.empty() || !options.dxc_path.empty()) &&
+        (options.skip_hash.count(hash) == 0);
+
+    if (validate && !for_fxc) {
+        // DXC validation
+        tint::hlsl::validate::Result dxc_res;
+        const std::string dxc_path =
+            options.dxc_path.empty() ? tint::hlsl::validate::kDxcDLLName : options.dxc_path;
+        auto dxc = tint::Command::LookPath(dxc_path);
+        if (dxc.Found()) {
+            uint32_t hlsl_shader_model = options.hlsl_shader_model;
+            auto enable_list = res->AST().Enables();
+            bool dxc_require_16bit_types = false;
+            for (auto* enable : enable_list) {
+                if (enable->HasExtension(tint::wgsl::Extension::kF16)) {
+                    dxc_require_16bit_types = true;
+                    break;
+                }
+            }
+            if (options.verbose) {
+                std::cout << "Validating with DXC: " << dxc.Path() << "\n";
+            }
+            dxc_res = tint::hlsl::validate::ValidateUsingDXC(
+                dxc.Path(), result->hlsl, result->entry_points, dxc_require_16bit_types,
+                hlsl_shader_model);
+        } else {
+            dxc_res.failed = true;
+            dxc_res.output = "DXC executable '" + dxc_path + "' not found. Cannot validate.";
+        }
+
+        if (dxc_res.failed) {
+            std::cerr << "DXC validation failure:\n" << dxc_res.output << "\n";
+            return false;
+        }
+        if (options.verbose) {
+            std::cout << "Passed DXC validation. Compiler output:\n" << dxc_res.output << "\n";
+        }
+    }
+
+    if (validate && for_fxc) {
+        // FXC validation
+#ifndef _WIN32
+        std::cerr << "FXC can only be used on Windows.\n";
+        return false;
+#else
+        tint::hlsl::validate::Result fxc_res;
+        auto fxc = tint::Command::LookPath(
+            options.fxc_path.empty() ? tint::hlsl::validate::kFxcDLLName : options.fxc_path);
+        if (fxc.Found()) {
+            if (options.verbose) {
+                std::cout << "Validating with FXC: " << fxc.Path() << "\n";
+            }
+            fxc_res = tint::hlsl::validate::ValidateUsingFXC(fxc.Path(), result->hlsl,
+                                                             result->entry_points);
+        } else {
+            fxc_res.failed = true;
+            fxc_res.output = "FXC DLL '" + options.fxc_path + "' not found. Cannot validate.";
+        }
+
+        if (fxc_res.failed) {
+            std::cerr << "FXC validation failure:\n" << fxc_res.output << "\n";
+            return false;
+        }
+        if (options.verbose) {
+            std::cout << "Passed FXC validation. Compiler output:\n" << fxc_res.output << "\n";
+        }
+#endif  // _WIN32
+    }
+
+    return true;
+#else
+    std::cerr << "HLSL writer not enabled in tint build\n";
+    return false;
+#endif  // TINT_BUILD_HLSL_WRITER
+}
+
+/// Generate GLSL code for a program.
+/// @param options the options that Tint was invoked with
+/// @param inspector the inspector
+/// @param src_program the program to generate
+/// @returns true on success
+bool GenerateGlsl([[maybe_unused]] Options& options,
+                  [[maybe_unused]] tint::inspector::Inspector& inspector,
+                  [[maybe_unused]] tint::Program& src_program) {
+#if TINT_BUILD_GLSL_WRITER
+
+    auto res = ProcessASTTransforms(options, inspector, src_program);
+    if (res != tint::Success || !res->IsValid()) {
+        tint::cmd::PrintWGSL(std::cerr, res.Get());
+        std::cerr << res->Diagnostics() << "\n";
+        return 1;
+    }
+
+    auto generate = [&](const tint::Program& prg, const std::string entry_point_name,
+                        [[maybe_unused]] tint::ast::PipelineStage stage) -> bool {
+        tint::glsl::writer::Options gen_options;
+
+        if (options.glsl_desktop) {
+            gen_options.version =
+                tint::glsl::writer::Version(tint::glsl::writer::Version::Standard::kDesktop, 4, 6);
+        } else {
+            gen_options.version = tint::glsl::writer::Version();
+        }
+
+        gen_options.disable_robustness = !options.enable_robustness;
+
+        auto entry_point = inspector.GetEntryPoint(entry_point_name);
+        uint32_t offset = entry_point.push_constant_size;
+
+        if (entry_point.instance_index_used) {
+            // Place the first_instance push constant member after user-defined push constants (if
+            // any).
+            gen_options.first_instance_offset = offset;
+            offset += 4;
+        }
+        if (entry_point.frag_depth_used) {
+            gen_options.depth_range_offsets = {offset + 0, offset + 4};
+            offset += 8;
+        }
+
+        // Convert the AST program to an IR module.
+        auto ir = tint::wgsl::reader::ProgramToLoweredIR(prg);
+        if (ir != tint::Success) {
+            std::cerr << "Failed to generate IR: " << ir << "\n";
+            return false;
+        }
+
+        // The GLSL backend assumes single entry point.
+        if (!entry_point_name.empty()) {
+            auto single_result =
+                tint::core::ir::transform::SingleEntryPoint(ir.Get(), entry_point_name);
+            if (single_result != tint::Success) {
+                std::cerr << single_result.Failure().reason.Str() << "\n";
+                return false;
+            }
+        }
+
+        // Generate binding options.
+        gen_options.bindings = tint::glsl::writer::GenerateBindings(ir.Get());
+
+        // Generate GLSL.
+        auto result = tint::glsl::writer::Generate(ir.Get(), gen_options, "");
+        if (result != tint::Success) {
+            std::cerr << "Failed to generate: " << result.Failure() << "\n";
+            return false;
+        }
+
+        if (!tint::cmd::WriteFile(options.output_file, "w", result->glsl)) {
+            return false;
+        }
+
+        const auto hash = tint::CRC32(result->glsl.c_str());
+        if (options.print_hash) {
+            PrintHash(hash);
+        }
+
+        if (options.validate && options.skip_hash.count(hash) == 0) {
+#if !TINT_BUILD_GLSL_VALIDATOR
+            std::cerr << "GLSL validator not enabled in tint build\n";
+            return false;
+#else
+            // If there is no entry point name there is nothing to validate
+            if (entry_point_name != "") {
+                auto val = tint::glsl::validate::Validate(result->glsl, stage);
+                if (val != tint::Success) {
+                    std::cerr << val.Failure();
+                    return false;
+                }
+            }
+#endif
+        }
+        return true;
+    };
+
+    if (inspector.GetEntryPoints().empty()) {
+        // Pass empty string here so that the GLSL generator will generate
+        // code for all functions, reachable or not.
+        return generate(res.Get(), "", tint::ast::PipelineStage::kCompute);
+    }
+
+    bool success = true;
+    for (auto& entry_point : inspector.GetEntryPoints()) {
+        tint::ast::PipelineStage stage = tint::ast::PipelineStage::kCompute;
+        switch (entry_point.stage) {
+            case tint::inspector::PipelineStage::kCompute:
+                stage = tint::ast::PipelineStage::kCompute;
+                break;
+            case tint::inspector::PipelineStage::kVertex:
+                stage = tint::ast::PipelineStage::kVertex;
+                break;
+            case tint::inspector::PipelineStage::kFragment:
+                stage = tint::ast::PipelineStage::kFragment;
+                break;
+        }
+        success &= generate(res.Get(), entry_point.name, stage);
+    }
+    return success;
+#else
+    std::cerr << "GLSL writer not enabled in tint build\n";
+    return false;
+#endif  // TINT_BUILD_GLSL_WRITER
+}
+
+/// Generate IR code for a program.
+/// @param program the program to generate
+/// @param options the options that Tint was invoked with
+/// @returns true on success
+bool DumpIR([[maybe_unused]] const tint::Program& program,
+            [[maybe_unused]] const Options& options) {
+#if TINT_BUILD_WGSL_READER
+    auto result = tint::wgsl::reader::ProgramToLoweredIR(program);
+    if (result != tint::Success) {
+        std::cerr << "Failed to build IR from program: " << result.Failure() << "\n";
+        return false;
+    }
+
+    options.printer->Print(tint::core::ir::Disassembler(result.Get()).Text());
+    options.printer->Print(tint::StyledText{} << "\n");
+
+    return true;
+#else
+    std::cerr << "WGSL reader not enabled in tint build\n";
+    return false;
+#endif
+}
+
 }  // namespace
 
 int main(int argc, const char** argv) {
@@ -1350,31 +1395,24 @@ int main(int argc, const char** argv) {
         tint::cmd::PrintInspectorBindings(inspector);
     }
 
-    auto res = ProcessASTTransforms(options, inspector, info.program);
-    if (res != tint::Success || !res->IsValid()) {
-        tint::cmd::PrintWGSL(std::cerr, res.Get());
-        std::cerr << res->Diagnostics() << "\n";
-        return 1;
-    }
-
     bool success = false;
     switch (options.format) {
         case Format::kSpirv:
         case Format::kSpvAsm:
-            success = GenerateSpirv(res.Get(), options);
+            success = GenerateSpirv(options, inspector, info.program);
             break;
         case Format::kWgsl:
-            success = GenerateWgsl(res.Get(), options);
+            success = GenerateWgsl(options, inspector, info.program);
             break;
         case Format::kMsl:
-            success = GenerateMsl(res.Get(), options);
+            success = GenerateMsl(options, inspector, info.program);
             break;
         case Format::kHlsl:
         case Format::kHlslFxc:
-            success = GenerateHlsl(res.Get(), options);
+            success = GenerateHlsl(options, inspector, info.program);
             break;
         case Format::kGlsl:
-            success = GenerateGlsl(res.Get(), options);
+            success = GenerateGlsl(options, inspector, info.program);
             break;
         case Format::kNone:
             break;
