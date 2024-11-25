@@ -88,6 +88,20 @@ struct CommandRecordingContext {
     // Need to track if a render pass has already been recorded for the
     // VulkanSplitCommandBufferOnComputePassAfterRenderPass workaround.
     bool hasRecordedRenderPass = false;
+
+    void AddBufferBarrier(VkAccessFlags srcAccessMask,
+                          VkAccessFlags dstAccessMask,
+                          VkPipelineStageFlags srcStages,
+                          VkPipelineStageFlags dstStages,
+                          wgpu::ShaderStage shaderStage);
+    void EmitBufferBarriers(Device* device);
+
+  private:
+    VkAccessFlags mBufferSrcAccessMask = 0;
+    VkAccessFlags mBufferDstAccessMask = 0;
+    VkPipelineStageFlags mBufferSrcStages = 0;
+    VkPipelineStageFlags mBufferDstStages = 0;
+    wgpu::ShaderStage mBufferShaderStages = wgpu::ShaderStage::None;
 };
 
 }  // namespace dawn::native::vulkan
