@@ -603,16 +603,6 @@
         "methods": [
             {
                 "name": "map async",
-                "args": [
-                    {"name": "mode", "type": "map mode"},
-                    {"name": "offset", "type": "size_t"},
-                    {"name": "size", "type": "size_t"},
-                    {"name": "callback", "type": "buffer map callback"},
-                    {"name": "userdata", "type": "void *"}
-                ]
-            },
-            {
-                "name": "map async f",
                 "_comment": "TODO(crbug.com/dawn/2021): This is dawn/emscripten-only until we rename it to replace the old API. See bug for details.",
                 "tags": ["dawn", "emscripten"],
                 "returns": "future",
@@ -621,18 +611,6 @@
                     {"name": "offset", "type": "size_t"},
                     {"name": "size", "type": "size_t"},
                     {"name": "callback info", "type": "buffer map callback info"}
-                ]
-            },
-            {
-                "name": "map async 2",
-                "_comment": "TODO(crbug.com/dawn/2021): This is dawn/emscripten-only until we rename it to replace the old API. See bug for details.",
-                "tags": ["dawn", "emscripten"],
-                "returns": "future",
-                "args": [
-                    {"name": "mode", "type": "map mode"},
-                    {"name": "offset", "type": "size_t"},
-                    {"name": "size", "type": "size_t"},
-                    {"name": "callback info", "type": "buffer map callback info 2"}
                 ]
             },
             {
@@ -709,13 +687,6 @@
         ]
     },
     "buffer map callback": {
-        "category": "function pointer",
-        "args": [
-            {"name": "status", "type": "buffer map async status"},
-            {"name": "userdata", "type": "void *"}
-        ]
-    },
-    "buffer map callback 2": {
         "category": "callback function",
         "args": [
             {"name": "status", "type": "map async status"},
@@ -723,35 +694,10 @@
         ]
     },
     "buffer map callback info": {
-        "category": "structure",
-        "extensible": "in",
-        "members": [
-            {"name": "mode", "type": "callback mode"},
-            {"name": "callback", "type": "buffer map callback"},
-            {"name": "userdata", "type": "void *"}
-        ]
-    },
-    "buffer map callback info 2": {
         "category": "callback info",
         "members": [
             {"name": "mode", "type": "callback mode"},
-            {"name": "callback", "type": "buffer map callback 2"}
-        ]
-    },
-    "buffer map async status": {
-        "category": "enum",
-        "emscripten_no_enum_table": true,
-        "values": [
-            {"value": 1, "name": "success"},
-            {"value": 2, "name": "instance dropped"},
-            {"value": 3, "name": "validation error"},
-            {"value": 4, "name": "unknown"},
-            {"value": 5, "name": "device lost"},
-            {"value": 6, "name": "destroyed before callback"},
-            {"value": 7, "name": "unmapped before callback"},
-            {"value": 8, "name": "mapping already pending"},
-            {"value": 9, "name": "offset out of range"},
-            {"value": 10, "name": "size out of range"}
+            {"name": "callback", "type": "buffer map callback"}
         ]
     },
     "map async status": {
