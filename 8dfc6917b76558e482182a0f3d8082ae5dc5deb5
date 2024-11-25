@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a75885e5_da3fb7e8",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-25T21:30:46Z",
+      "side": 1,
+      "message": "Failing to validate before running indicates the the input from the fuzzer is inappropriate for this fuzzing pass, i.e. it violates the pre-conditions for it, but the validator will filter it out, so the test case doesn\u0027t need to run (and probably shouldn\u0027t since it is likely to cause false-positive cases).\n\nFailing validation after running indicates that the fuzzing pass itself, i.e. transform, did some wrong and has violated its own post-conditions, which is one class of errors the fuzzer is trying to find.",
+      "parentUuid": "14be1b15_1194e7de",
+      "range": {
+        "startLine": 133,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 33
+      },
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "69e44a57_cba576bb",
         "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
         "patchSetId": 1
@@ -54,6 +78,30 @@
       "writtenOn": "2024-11-25T20:49:18Z",
       "side": 1,
       "message": "nit: I think this is more readable by inverting the branches, and using early out:\n\n```\n                if (auto result \u003d fuzzer.fn(mod, data); result !\u003d Success) {\n                    if (options.verbose) {\n                        std::cout \u003c\u003c \"   Failed to execute fuzzer: \" \u003c\u003c result.Failure() \u003c\u003c \"\\n\";\n                    }\n                    return;\n                }\n                if (tint::core::ir::Validate(mod, fuzzer.post_capabilities) !\u003d Success) {\n                    TINT_ICE()\n                        \u003c\u003c \"Failed to validate against fuzzer capabilities after running, \"\n                        \u003c\u003c currently_running \u003c\u003c \"\\n\";\n                }\n```\n\nSame for the code below.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 17
+      },
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07e0132b_d017d36a",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-25T21:30:46Z",
+      "side": 1,
+      "message": "I agree",
+      "parentUuid": "69e44a57_cba576bb",
       "range": {
         "startLine": 140,
         "startChar": 0,
@@ -89,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "713d7ea9_5f972776",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-25T21:30:46Z",
+      "side": 1,
+      "message": "Failure returns in this callback/wrapper indicate that the fuzzing pass failed to run to completion in some manner. This signals up to the calling code that it should not perform post-run validation.\n\nIt does not indicate a failure that would lead to a issue/case being report. TINT_ICE is used for that (e.g. in the Run() function where post-validation failures are raised to ICEs to signal a post-condition violation)",
+      "parentUuid": "d2bd2064_c26dc8a9",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 60
+      },
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "60fc564f_1017f7bd",
         "filename": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory_fuzz.cc",
         "patchSetId": 1
@@ -100,6 +172,30 @@
       "writtenOn": "2024-11-25T20:49:18Z",
       "side": 1,
       "message": "nit: this creates a function pointer, which means it\u0027s possible the compiler produces less efficient calling code than calling the function directly (although unlikley). To be sure, though, you can use `constexpr auto\u0026`, which makes it both a compile-time variable and a reference, making it more unlikely to be compiled to a call-through-pointer.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c5995d5_63bc2cea",
+        "filename": "src/tint/lang/core/ir/transform/zero_init_workgroup_memory_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-25T21:30:46Z",
+      "side": 1,
+      "message": "That makes sense, and it shouldn\u0027t be too hard. (sed ftw `sed -i \u0027s|const auto \\(.*\\)Fuzzer \u003d \\(.*\\)|constexpr auto\\\u0026 \\1Fuzzer \u003d \\2|g\u0027`",
+      "parentUuid": "60fc564f_1017f7bd",
       "range": {
         "startLine": 36,
         "startChar": 0,
