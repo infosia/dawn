@@ -89,24 +89,28 @@ bool CanRun(const core::ir::Module& module) {
     return true;
 }
 
-void IRFuzzerDXC(core::ir::Module& module) {
+Result<SuccessType> IRFuzzerDXC(core::ir::Module& module) {
     // TODO(377391551): Enable fuzzing of options.
     auto options = GenerateOptions(module, Options::Compiler::kDXC);
     if (!CanRun(module)) {
-        return;
+        return Failure{"Cannot run module"};
     }
+
     [[maybe_unused]] auto output = Generate(module, options);
     // TODO(42251292): Fuzz DXC with HLSL output
+    return Success;
 }
 
-void IRFuzzerFXC(core::ir::Module& module) {
+Result<SuccessType> IRFuzzerFXC(core::ir::Module& module) {
     // TODO(377391551): Enable fuzzing of options.
     auto options = GenerateOptions(module, Options::Compiler::kFXC);
     if (!CanRun(module)) {
-        return;
+        return Failure{"Cannot run module"};
     }
+
     [[maybe_unused]] auto output = Generate(module, options);
     // TODO(42251292): Fuzz DXC with HLSL output
+    return Success;
 }
 
 }  // namespace
