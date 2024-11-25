@@ -98,7 +98,7 @@ namespace {
 constexpr const char* kAMDGpuShaderHalfFloat = "GL_AMD_gpu_shader_half_float";
 constexpr const char* kOESSampleVariables = "GL_OES_sample_variables";
 constexpr const char* kEXTBlendFuncExtended = "GL_EXT_blend_func_extended";
-constexpr const char* kEXTTextureShadowLod = "GL_EXT_texture_shadow_lod";
+// constexpr const char* kEXTTextureShadowLod = "GL_EXT_texture_shadow_lod";
 
 enum class LayoutFormat : uint8_t {
     kStd140,
@@ -1230,9 +1230,10 @@ class Printer : public tint::TextGenerator {
         out << ")";
     }
 
-    bool RequiresEXTTextureShadowLod(glsl::BuiltinFn fn) {
-        return fn == glsl::BuiltinFn::kExtTextureLod || fn == glsl::BuiltinFn::kExtTextureLodOffset;
-    }
+    //    bool RequiresEXTTextureShadowLod(glsl::BuiltinFn fn) {
+    //        return fn == glsl::BuiltinFn::kExtTextureLod || fn ==
+    //        glsl::BuiltinFn::kExtTextureLodOffset;
+    //    }
 
     glsl::BuiltinFn EXTToNonEXT(glsl::BuiltinFn fn) {
         switch (fn) {
@@ -1265,10 +1266,10 @@ class Printer : public tint::TextGenerator {
 
         auto fn = c->Func();
 
-        if (RequiresEXTTextureShadowLod(fn)) {
-            EmitExtension(kEXTTextureShadowLod);
-            fn = EXTToNonEXT(fn);
-        }
+        //        if (RequiresEXTTextureShadowLod(fn)) {
+        //            EmitExtension(kEXTTextureShadowLod);
+        //            fn = EXTToNonEXT(fn);
+        //        }
 
         out << fn << "(";
         bool needs_comma = false;
