@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d40858b0_a08659a5",
+        "filename": "src/dawn/fuzzers/DawnWireServerAndD3D12BackendFuzzer.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-25T17:53:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16c67838_506b86f8",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dfa0b716_e076ad92",
@@ -103,6 +121,24 @@
       "side": 1,
       "message": "Like the previous enumerateFeatures we had it would take a count and an out array.",
       "parentUuid": "3f63bbc2_16ae08a1",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9bdb0a8_8fbe64ab",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-25T17:53:14Z",
+      "side": 1,
+      "message": "How about doing that in another CL?",
+      "parentUuid": "aebf975e_e63a75af",
       "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -162,6 +198,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "29554d12_051bb37d",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-25T17:53:14Z",
+      "side": 1,
+      "message": "Done. And I saved one GetInfo call.",
+      "parentUuid": "50419bc4_cf3ec2a9",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "95adac37_c20fa1d6",
         "filename": "src/dawn/node/binding/GPUAdapter.cpp",
         "patchSetId": 17
@@ -209,6 +263,24 @@
       "side": 1,
       "message": "That createDevice could be changed to requestDevice. IDK why dawn.node doesn\u0027t use request to implement request.\n\nI\u0027d suggest splitting this CL in multiple ones at this point because there starts to be a lot of things.",
       "parentUuid": "864e2b6e_89cd07e2",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84c2272c_f61887b6",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-25T17:53:14Z",
+      "side": 1,
+      "message": "I\u0027ve added a TODO next to the new `nativeAdapter_`.",
+      "parentUuid": "31e2f189_df4b517a",
       "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
