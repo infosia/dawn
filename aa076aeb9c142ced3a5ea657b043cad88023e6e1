@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "aa076aeb9c142ced3a5ea657b043cad88023e6e1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38e5cdea_6ea24ec0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-25T09:07:26Z",
+      "side": 1,
+      "message": "Jiawei PTAL",
+      "revId": "aa076aeb9c142ced3a5ea657b043cad88023e6e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
