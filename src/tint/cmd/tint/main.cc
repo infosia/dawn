@@ -935,7 +935,9 @@ bool GenerateHlsl(const tint::Program& program, const Options& options) {
         options.hlsl_shader_model < kMinShaderModelForPackUnpack4x8InHLSL;
     gen_options.compiler = for_fxc ? tint::hlsl::writer::Options::Compiler::kFXC
                                    : tint::hlsl::writer::Options::Compiler::kDXC;
-
+    // FXC can fail to compile builtin 'discard'.
+    // See crbug.com/42250787
+    gen_options.disable_demote_to_helper = !for_fxc;
     tint::Result<tint::hlsl::writer::Output> result;
     if (options.use_ir) {
         // Convert the AST program to an IR module.
