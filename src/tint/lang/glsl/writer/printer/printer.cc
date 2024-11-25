@@ -1230,9 +1230,9 @@ class Printer : public tint::TextGenerator {
         out << ")";
     }
 
-    bool RequiresEXTTextureShadowLod(glsl::BuiltinFn fn) {
-        return fn == glsl::BuiltinFn::kExtTextureLod || fn == glsl::BuiltinFn::kExtTextureLodOffset;
-    }
+//    bool RequiresEXTTextureShadowLod(glsl::BuiltinFn fn) {
+//        return fn == glsl::BuiltinFn::kExtTextureLod || fn == glsl::BuiltinFn::kExtTextureLodOffset;
+//    }
 
     glsl::BuiltinFn EXTToNonEXT(glsl::BuiltinFn fn) {
         switch (fn) {
@@ -1265,10 +1265,10 @@ class Printer : public tint::TextGenerator {
 
         auto fn = c->Func();
 
-        if (RequiresEXTTextureShadowLod(fn)) {
-            EmitExtension(kEXTTextureShadowLod);
-            fn = EXTToNonEXT(fn);
-        }
+//        if (RequiresEXTTextureShadowLod(fn)) {
+//            EmitExtension(kEXTTextureShadowLod);
+//            fn = EXTToNonEXT(fn);
+//        }
 
         out << fn << "(";
         bool needs_comma = false;
