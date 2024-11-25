@@ -835,7 +835,7 @@ void unused_entry_point() {
 )");
 }
 
-TEST_F(HlslWriterTest, FunctionWithDiscardAndVoidReturn) {
+TEST_F(HlslWriterTest, FunctionWithDiscardAndVoidReturnWithContinueExecution) {
     // fn my_func(a: i32) {
     //   if (a == 0) {
     //     discard;
@@ -854,8 +854,45 @@ TEST_F(HlslWriterTest, FunctionWithDiscardAndVoidReturn) {
         });
         b.Return(func);
     });
+    tint::hlsl::writer::Options options;
+    options.disable_demote_to_helper = true;
+    ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+void my_func(int a) {
+  if ((a == int(0))) {
+    discard;
+  }
+}
 
-    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+[numthreads(1, 1, 1)]
+void unused_entry_point() {
+}
+
+)");
+}
+
+TEST_F(HlslWriterTest, FunctionWithDiscardAndVoidReturnWithPlatformDiscard) {
+    // fn my_func(a: i32) {
+    //   if (a == 0) {
+    //     discard;
+    //   }
+    // }
+
+    auto* func = b.Function("my_func", ty.void_());
+    auto* p = b.FunctionParam("a", ty.i32());
+    func->SetParams({p});
+
+    b.Append(func->Block(), [&] {
+        auto* i = b.If(b.Equal(ty.bool_(), p, 0_i));
+        b.Append(i->True(), [&] {
+            b.Discard();
+            b.ExitIf(i);
+        });
+        b.Return(func);
+    });
+    tint::hlsl::writer::Options options;
+    options.disable_demote_to_helper = false;
+    ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 static bool continue_execution = true;
 void my_func(int a) {
@@ -871,7 +908,7 @@ void unused_entry_point() {
 )");
 }
 
-TEST_F(HlslWriterTest, FunctionWithDiscardAndNonVoidReturn) {
+TEST_F(HlslWriterTest, FunctionWithDiscardAndNonVoidReturnWithContinueExecution) {
     // fn my_func(a: i32) -> i32 {
     //   if (a == 0) {
     //     discard;
@@ -891,13 +928,52 @@ TEST_F(HlslWriterTest, FunctionWithDiscardAndNonVoidReturn) {
         });
         b.Return(func, 42_i);
     });
+    tint::hlsl::writer::Options options;
+    options.disable_demote_to_helper = true;
 
-    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
-static bool continue_execution = true;
 int my_func(int a) {
   if ((a == int(0))) {
-    continue_execution = false;
+    discard;
+  }
+  return int(42);
+}
+
+[numthreads(1, 1, 1)]
+void unused_entry_point() {
+}
+
+)");
+}
+
+TEST_F(HlslWriterTest, FunctionWithDiscardAndNonVoidReturnWithPlatformDiscard) {
+    // fn my_func(a: i32) -> i32 {
+    //   if (a == 0) {
+    //     discard;
+    //   }
+    //   return 42;
+    // }
+
+    auto* func = b.Function("my_func", ty.i32());
+    auto* a = b.FunctionParam("a", ty.i32());
+    func->SetParams({a});
+
+    b.Append(func->Block(), [&] {
+        auto* i = b.If(b.Equal(ty.bool_(), a, 0_i));
+        b.Append(i->True(), [&] {
+            b.Discard();
+            b.ExitIf(i);
+        });
+        b.Return(func, 42_i);
+    });
+    tint::hlsl::writer::Options options;
+    options.disable_demote_to_helper = true;
+    ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+int my_func(int a) {
+  if ((a == int(0))) {
+    discard;
   }
   return int(42);
 }
