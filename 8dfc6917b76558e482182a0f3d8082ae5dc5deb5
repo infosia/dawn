@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38acc9d1_09ca8960",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-25T22:31:41Z",
+      "side": 1,
+      "message": "Correction wrt my high lever question, since I misremembered the code.\n\npost-validation occurs on WGSL, since that is what it already does. The only open question is that currently it does not use the capabilities declared for the fuzzing pass for validation (i.e. it validates checks with Capabilities{}).\nShould it be validating against the post-capabilities instead?",
+      "parentUuid": "64dc9779_e9935b2f",
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14be1b15_1194e7de",
@@ -79,6 +97,30 @@
       "side": 1,
       "message": "That makes sense. Maybe just a comment here stating this would help clarify that.",
       "parentUuid": "a75885e5_da3fb7e8",
+      "range": {
+        "startLine": 133,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 33
+      },
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6ec003e_57c90283",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-25T22:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "370159c0_c5e34140",
       "range": {
         "startLine": 133,
         "startChar": 20,
