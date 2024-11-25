@@ -16,6 +16,24 @@
       "message": "This TODO is about something else unfortunately. Right now we always do barriers \"right now\" in the command stream, but it would be more efficient to try to insert them \"in the past\" instead as it would allow coalescing many vkCmdPipelineBarrier calls into one for both CPU and GPU performance wins.",
       "revId": "91bcd47a30c2e70f737cad19ceff2fc7adf3a61e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5343d4e9_5751977b",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-25T15:32:46Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "27c47d31_592d30ec",
+      "revId": "91bcd47a30c2e70f737cad19ceff2fc7adf3a61e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

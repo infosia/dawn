@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "15be276d_b9b3ab84",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-25T15:32:46Z",
+      "side": 1,
+      "message": "I used the `AddBufferBarrier` as mentioned above which is kind of nice, but also a little weird. Could move the `private` members to `public` and drop the `AddBufferBarrier` method all together.",
+      "parentUuid": "51d39b5e_f3ae28b3",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65fcc890_f3d79a00",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 2
@@ -31,6 +49,24 @@
       "writtenOn": "2024-11-22T14:34:48Z",
       "side": 1,
       "message": "```suggestion\n    bool needBarrier \u003d false;\n```",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0836598_1fb40170",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-25T15:32:46Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "65fcc890_f3d79a00",
       "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6b336f2f_d2a45d2b",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-25T15:32:46Z",
+      "side": 1,
+      "message": "I think this has to check both src and dst as the TransitionUsage code has early outs which may have set the srcStages but skips setting the dstStages.",
+      "parentUuid": "a261f1d4_66f6de69",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a40aca84_80a8e8f1",
         "filename": "src/dawn/native/vulkan/BufferVk.h",
         "patchSetId": 2
@@ -65,6 +119,24 @@
       "writtenOn": "2024-11-22T14:34:48Z",
       "side": 1,
       "message": "While this approach works, I think we could try to make CommandRecordingContext a bit smarter instead to avoid the need to expose all these flags/mask/stages outside of buffer.\n\n```\nstruct CommandRecordingContext {\npublic:\n  AddBufferBarrier(srcAccessMask, dstAccessMask, srcStages, dstStages, shaderStage)\n  EmitBufferBarriers();\n  \nprivate:\n  mBufferSrcAccessMask;\n  mBufferDstAccessMask;\n  ... (we might need to duplicate between vertex vs. the rest to avoid overflushing on tilers).\n}\n```\n\nThis way TransitionUsageNow would do:\n\n```\nTrackUsageAndAddResourceBarrier(recordingContext, usage, shaderStage);\nrecordingContext-\u003eEmitBufferBarriers();\n```",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e25b9e7f_f62711b2",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-25T15:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a40aca84_80a8e8f1",
       "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5de274d3_e0b004bd",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-25T15:32:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80529151_91f6daa4",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c715748_4b8787de",
@@ -99,6 +189,24 @@
       "writtenOn": "2024-11-22T14:34:48Z",
       "side": 1,
       "message": "It\u0027d be ideal to keep the semantic that TransitionUsageNow does the emission of the barrier on its own, otherwise we risk easily forgetting a barrier. Only for CopyB2B it might make sense to add barriers more manually and flush them both at once.",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36399207_4773f1a4",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-25T15:32:46Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8c715748_4b8787de",
       "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
