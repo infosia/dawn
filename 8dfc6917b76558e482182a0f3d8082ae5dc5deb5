@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "370159c0_c5e34140",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-25T21:33:11Z",
+      "side": 1,
+      "message": "That makes sense. Maybe just a comment here stating this would help clarify that.",
+      "parentUuid": "a75885e5_da3fb7e8",
+      "range": {
+        "startLine": 133,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 33
+      },
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "69e44a57_cba576bb",
         "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
         "patchSetId": 1
@@ -149,6 +173,30 @@
       "side": 1,
       "message": "Failure returns in this callback/wrapper indicate that the fuzzing pass failed to run to completion in some manner. This signals up to the calling code that it should not perform post-run validation.\n\nIt does not indicate a failure that would lead to a issue/case being report. TINT_ICE is used for that (e.g. in the Run() function where post-validation failures are raised to ICEs to signal a post-condition violation)",
       "parentUuid": "d2bd2064_c26dc8a9",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 60
+      },
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be9ed2db_3f990e6b",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-25T21:33:11Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "713d7ea9_5f972776",
       "range": {
         "startLine": 81,
         "startChar": 20,
