@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64dc9779_e9935b2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-25T19:31:30Z",
+      "side": 1,
+      "message": "PTAL\n\nHigh-level question;\nthis changes the behaviour of some of IR fuzzing passes in the WGSL fuzzer to not performing any post-run validation, since it was baked into the fuzzer pass before. Is this ok, or should I add into the WGSL fuzzer specific code running the post-validation based on the impl result like the IR fuzzer?\n\nThere are two areas that I would like special attention paid to:\n\na)\nMaking sure that all of the pre/post run capabilities are correct. I have attempted to implement what was in the existing code as well as I can, but given that there has been previous issues with these, I would like people with more expertise in the transforms to confirm the values. This is a good time to correct any issues with them.\n\nb)\nSome of the existing fuzzing passes did not perform validation after running, this change will now have them validating. I assume the lack of post-run validation was an oversight. If not I can change them to returning in a manner that prevent post-run validation",
+      "revId": "8dfc6917b76558e482182a0f3d8082ae5dc5deb5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
