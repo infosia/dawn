@@ -1349,8 +1349,11 @@ int main(int argc, const char** argv) {
     }
 #endif  // TINT_BUILD_SYNTAX_TREE_WRITER
 
-    if (options.dump_ir) {
-        DumpIR(info.program, options);
+    if (options.dump_ir || options.format == Format::kIr) {
+        auto res = DumpIR(info.program, options);
+        if (options.format == Format::kIr) {
+            return res;
+        }
     }
 
     tint::inspector::Inspector inspector(info.program);
@@ -1383,9 +1386,6 @@ int main(int argc, const char** argv) {
             break;
         case Format::kGlsl:
             success = GenerateGlsl(res.Get(), options);
-            break;
-        case Format::kIr:
-            success = DumpIR(res.Get(), options);
             break;
         case Format::kNone:
             break;
