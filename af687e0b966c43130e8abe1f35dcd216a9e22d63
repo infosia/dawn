@@ -174,6 +174,24 @@
       "parentUuid": "4ba1bf8b_9bafed71",
       "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25d893e9_b67ad5e5",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers_fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-26T18:02:33Z",
+      "side": 1,
+      "message": "Thinking about it, I think there are basically 2 cases.\n\n1- the lowering passes, pre is a superset, as we\u0027re lowering down to core and removing frontend specific constructs\n2- the raise passes, post is a superset, as we\u0027re rasing up to core and adding backend specific constructs\n\nSo, i don\u0027t know if a general assert would work. \n\n@jrprice@google.com did i miss any cases here?",
+      "parentUuid": "151406ab_4905227d",
+      "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
