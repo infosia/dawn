@@ -1715,55 +1715,57 @@ TEST_P(CopyTests_T2B, Texture3DMipUnaligned) {
     }
 }
 
-DAWN_INSTANTIATE_TEST_P(CopyTests_T2B,
-                        {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
-                         OpenGLESBackend(), VulkanBackend(),
-                         VulkanBackend({"use_blit_for_snorm_texture_to_buffer_copy",
-                                        "use_blit_for_bgra8unorm_texture_to_buffer_copy"})},
-                        {
-                            wgpu::TextureFormat::R8Unorm,
-                            wgpu::TextureFormat::RG8Unorm,
-                            wgpu::TextureFormat::RGBA8Unorm,
+DAWN_INSTANTIATE_TEST_P(
+    CopyTests_T2B,
+    {D3D11Backend(), D3D12Backend(),
+     D3D12Backend({}, {"d3d12_relax_buffer_texture_copy_pitch_and_offset_alignment"}),
+     MetalBackend(), OpenGLBackend(), OpenGLESBackend(), VulkanBackend(),
+     VulkanBackend({"use_blit_for_snorm_texture_to_buffer_copy",
+                    "use_blit_for_bgra8unorm_texture_to_buffer_copy"})},
+    {
+        wgpu::TextureFormat::R8Unorm,
+        wgpu::TextureFormat::RG8Unorm,
+        wgpu::TextureFormat::RGBA8Unorm,
 
-                            wgpu::TextureFormat::R8Uint,
-                            wgpu::TextureFormat::R8Sint,
+        wgpu::TextureFormat::R8Uint,
+        wgpu::TextureFormat::R8Sint,
 
-                            wgpu::TextureFormat::R16Uint,
-                            wgpu::TextureFormat::R16Sint,
-                            wgpu::TextureFormat::R16Float,
+        wgpu::TextureFormat::R16Uint,
+        wgpu::TextureFormat::R16Sint,
+        wgpu::TextureFormat::R16Float,
 
-                            wgpu::TextureFormat::RG16Uint,
-                            wgpu::TextureFormat::RG16Sint,
-                            wgpu::TextureFormat::RG16Float,
+        wgpu::TextureFormat::RG16Uint,
+        wgpu::TextureFormat::RG16Sint,
+        wgpu::TextureFormat::RG16Float,
 
-                            wgpu::TextureFormat::R32Uint,
-                            wgpu::TextureFormat::R32Sint,
-                            wgpu::TextureFormat::R32Float,
+        wgpu::TextureFormat::R32Uint,
+        wgpu::TextureFormat::R32Sint,
+        wgpu::TextureFormat::R32Float,
 
-                            wgpu::TextureFormat::RG32Float,
-                            wgpu::TextureFormat::RG32Uint,
-                            wgpu::TextureFormat::RG32Sint,
+        wgpu::TextureFormat::RG32Float,
+        wgpu::TextureFormat::RG32Uint,
+        wgpu::TextureFormat::RG32Sint,
 
-                            wgpu::TextureFormat::RGBA16Uint,
-                            wgpu::TextureFormat::RGBA16Sint,
-                            wgpu::TextureFormat::RGBA16Float,
+        wgpu::TextureFormat::RGBA16Uint,
+        wgpu::TextureFormat::RGBA16Sint,
+        wgpu::TextureFormat::RGBA16Float,
 
-                            wgpu::TextureFormat::RGBA32Float,
+        wgpu::TextureFormat::RGBA32Float,
 
-                            wgpu::TextureFormat::RGB10A2Unorm,
-                            wgpu::TextureFormat::RG11B10Ufloat,
+        wgpu::TextureFormat::RGB10A2Unorm,
+        wgpu::TextureFormat::RG11B10Ufloat,
 
-                            // Testing OpenGL compat Toggle::UseBlitForRGB9E5UfloatTextureCopy
-                            wgpu::TextureFormat::RGB9E5Ufloat,
+        // Testing OpenGL compat Toggle::UseBlitForRGB9E5UfloatTextureCopy
+        wgpu::TextureFormat::RGB9E5Ufloat,
 
-                            // Testing OpenGL compat Toggle::UseBlitForSnormTextureToBufferCopy
-                            wgpu::TextureFormat::R8Snorm,
-                            wgpu::TextureFormat::RG8Snorm,
-                            wgpu::TextureFormat::RGBA8Snorm,
+        // Testing OpenGL compat Toggle::UseBlitForSnormTextureToBufferCopy
+        wgpu::TextureFormat::R8Snorm,
+        wgpu::TextureFormat::RG8Snorm,
+        wgpu::TextureFormat::RGBA8Snorm,
 
-                            // Testing OpenGL compat Toggle::UseBlitForBGRA8UnormTextureToBufferCopy
-                            wgpu::TextureFormat::BGRA8Unorm,
-                        });
+        // Testing OpenGL compat Toggle::UseBlitForBGRA8UnormTextureToBufferCopy
+        wgpu::TextureFormat::BGRA8Unorm,
+    });
 
 class CopyTests_T2B_No_Format_Param : public CopyTests, public DawnTest {};
 
@@ -2520,6 +2522,8 @@ TEST_P(CopyTests_B2T, Texture3DMipUnaligned) {
 DAWN_INSTANTIATE_TEST(CopyTests_B2T,
                       D3D11Backend(),
                       D3D12Backend(),
+                      D3D12Backend({},
+                                   {"d3d12_relax_buffer_texture_copy_pitch_and_offset_alignment"}),
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
