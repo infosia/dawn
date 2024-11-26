@@ -210,6 +210,24 @@
       "parentUuid": "25d893e9_b67ad5e5",
       "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31a30a3e_79e2d7cc",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers_fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-26T20:07:01Z",
+      "side": 1,
+      "message": "So I think the resolution here is that pre and post run capabilties do not not guarantees of being sets of each other.\nThe fuzzing passes impls need to be accurate about what capabilities are valid before and after a transform is run, but there isn\u0027t a higher order guardrail that we can put in, so there is not additional change needed.\n\nDoes that sound correct?",
+      "parentUuid": "2b536a0d_cd2c8aee",
+      "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
