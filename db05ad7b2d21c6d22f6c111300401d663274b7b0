@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8af0e956_073444f6",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-26T14:34:08Z",
+      "side": 1,
+      "message": "Can\u0027t we just get rid of `--dump-ir` and leave `--format ir` where it was? There\u0027s no point having both if they\u0027re going to be identical, and I prefer `--format ir` of the two.",
+      "revId": "db05ad7b2d21c6d22f6c111300401d663274b7b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
