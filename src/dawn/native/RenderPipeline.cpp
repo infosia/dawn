@@ -178,11 +178,6 @@ MaybeError ValidateVertexBufferLayout(DeviceBase* device,
     DAWN_INVALID_IF(buffer->arrayStride % 4 != 0,
                     "Vertex buffer arrayStride (%u) is not a multiple of 4.", buffer->arrayStride);
 
-    DAWN_INVALID_IF(
-        buffer->stepMode == wgpu::VertexStepMode::VertexBufferNotUsed && buffer->attributeCount > 0,
-        "attributeCount (%u) is not zero although vertex buffer stepMode is %s.",
-        buffer->attributeCount, wgpu::VertexStepMode::VertexBufferNotUsed);
-
     for (uint32_t i = 0; i < buffer->attributeCount; ++i) {
         DAWN_TRY_CONTEXT(ValidateVertexAttribute(device, &buffer->attributes[i], metadata,
                                                  buffer->arrayStride, attributesSetMask),
@@ -970,15 +965,16 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
         ityp::SpanFromUntyped<VertexBufferSlot>(descriptor->vertex.buffers, mVertexBufferCount);
     for (auto [slot, buffer] : Enumerate(buffers)) {
         // Skip unused slots
-        if (buffer.stepMode == wgpu::VertexStepMode::VertexBufferNotUsed) {
+        if (buffer.stepMode == wgpu::VertexStepMode::Undefined && buffer.attributeCount == 0) {
             continue;
         }
 
         mVertexBuffersUsed.set(slot);
         mVertexBufferInfos[slot].arrayStride = buffer.arrayStride;
-        mVertexBufferInfos[slot].stepMode = (buffer.stepMode == wgpu::VertexStepMode::Undefined)
-                                                ? wgpu::VertexStepMode::Vertex
-                                                : buffer.stepMode;
+        mVertexBufferInfos[slot].stepMode =
+            (buffer.stepMode == wgpu::VertexStepMode::Undefined && buffer.attributeCount > 0)
+                ? wgpu::VertexStepMode::Vertex
+                : buffer.stepMode;
         mVertexBufferInfos[slot].usedBytesInStride = 0;
         mVertexBufferInfos[slot].lastStride = 0;
         switch (mVertexBufferInfos[slot].stepMode) {
@@ -988,9 +984,8 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
             case wgpu::VertexStepMode::Instance:
                 mVertexBuffersUsedAsInstanceBuffer.set(slot);
                 break;
-            case wgpu::VertexStepMode::VertexBufferNotUsed:
             case wgpu::VertexStepMode::Undefined:
-                DAWN_UNREACHABLE();
+                break;
         }
 
         auto attributes = ityp::SpanFromUntyped<size_t>(buffer.attributes, buffer.attributeCount);
