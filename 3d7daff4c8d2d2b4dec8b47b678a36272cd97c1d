@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0c9cec5_cca9a076",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-11-26T23:45:07Z",
+      "side": 1,
+      "message": "Well I saw last night\u0027s cts autoroll failure https://ci.chromium.org/ui/p/dawn/builders/ci/cts-roller/b8730233870848929345/overview and tried run with `tools/run cts roll --use-simplified-codepath`. But looking futher into the autoroll it was due to an unrelated bad commit that breaks every builder (already reverted)\n\nAbandon and wait for autoroll to see how it behaves",
+      "revId": "3d7daff4c8d2d2b4dec8b47b678a36272cd97c1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
