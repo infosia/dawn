@@ -313,6 +313,9 @@ class TextureView final : public TextureViewBase {
 
     ResultOrError<VkImageView> GetOrCreate2DViewOn3D(uint32_t depthSlice = 0u);
 
+    bool IsYCbCr() const override;
+    YCbCrVkDescriptor GetYCbCrVkDescriptor() const override;
+
   private:
     ~TextureView() override;
     void DestroyImpl() override;
@@ -329,6 +332,7 @@ class TextureView final : public TextureViewBase {
     VkImageView mHandle = VK_NULL_HANDLE;
     VkImageView mHandleForBGRA8UnormStorage = VK_NULL_HANDLE;
     VkSamplerYcbcrConversion mSamplerYCbCrConversion = VK_NULL_HANDLE;
+    bool mIsYCbCr = false;
     YCbCrVkDescriptor mYCbCrVkDescriptor;
     std::vector<VkImageView> mHandlesFor2DViewOn3D;
 };

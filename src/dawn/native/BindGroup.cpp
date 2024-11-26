@@ -27,16 +27,20 @@
 
 #include "dawn/native/BindGroup.h"
 
+#include <map>
+
 #include "dawn/common/Assert.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/ityp_bitset.h"
 #include "dawn/native/BindGroupLayout.h"
+#include "dawn/native/BindingInfo.h"
 #include "dawn/native/Buffer.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ExternalTexture.h"
+#include "dawn/native/IntegerTypes.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/Sampler.h"
@@ -349,6 +353,7 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
     const BindGroupLayoutInternalBase::BindingMap& bindingMap = layout->GetBindingMap();
     DAWN_ASSERT(bindingMap.size() <= kMaxBindingsPerPipelineLayout);
 
+    std::map<BindingNumber, uint32_t> bindingToEntryIndexMap;
     ityp::bitset<BindingIndex, kMaxBindingsPerPipelineLayout> bindingsSet;
     for (uint32_t i = 0; i < descriptor->entryCount; ++i) {
         const BindGroupEntry& entry = descriptor->entries[i];
@@ -367,6 +372,7 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
                         entry.binding);
 
         bindingsSet.set(bindingIndex);
+        bindingToEntryIndexMap[BindingNumber(entry.binding)] = i;
 
         // Below this block we validate entries based on the bind group layout, in which
         // external textures have been expanded into their underlying contents. For this reason
@@ -442,6 +448,29 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
     //
     // We don't validate the equality because it wouldn't be possible to cover it with a test.
     DAWN_ASSERT(bindingsSet.count() == expectedBindingsCount);
+
+    // Validate texture entries that are bound to each static sampler layout entry.
+    for (BindingIndex index{0}; index < layout->GetBindingCount(); ++index) {
+        const auto* staticSamplerLayout =
+            std::get_if<StaticSamplerBindingInfo>(&layout->GetBindingInfo(index).bindingLayout);
+        if (!staticSamplerLayout || !staticSamplerLayout->isUsedForSingleTextureBinding) {
+            continue;
+        }
+
+        const SamplerBase* sampler = staticSamplerLayout->sampler.Get();
+
+        size_t textureEntryIndex =
+            bindingToEntryIndexMap[BindingNumber(staticSamplerLayout->sampledTextureBinding)];
+        const TextureViewBase* textureView = descriptor->entries[textureEntryIndex].textureView;
+
+        DAWN_INVALID_IF(sampler->IsYCbCr() != textureView->IsYCbCr(),
+                        "YCbCr static sampler must be paired with YCbCr texture");
+
+        if (sampler->IsYCbCr()) {
+            DAWN_INVALID_IF(sampler->GetYCbCrVkDescriptor() != textureView->GetYCbCrVkDescriptor(),
+                            "Sampler and TextureView YCbCrVkDescriptors do not match.");
+        }
+    }
 
     return {};
 }
