@@ -192,6 +192,24 @@
       "parentUuid": "151406ab_4905227d",
       "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b536a0d_cd2c8aee",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers_fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-26T19:30:03Z",
+      "side": 1,
+      "message": "Even for Raise, I don\u0027t think we can/should guarantee that the post capabilities are a superset of the pre capabilities, since a backend-specific transform may be removing the use of something that is valid in core (e.g. RemoveTerminatorArgs - although we don\u0027t have a capability for terminator args right now we certainly could add one).",
+      "parentUuid": "25d893e9_b67ad5e5",
+      "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
