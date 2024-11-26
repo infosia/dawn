@@ -161,6 +161,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a131e5ce_b13ffc40",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-26T23:21:14Z",
+      "side": 1,
+      "message": "Before we do that, is there any reason to not just make it like `GetAdapters`, kind of like how we are getting rid of some of the other `Enumerate` functions in favor of just `Get`?",
+      "parentUuid": "a0c2b0c1_7426b3d5",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36c7e84a_4b06f8cb",
