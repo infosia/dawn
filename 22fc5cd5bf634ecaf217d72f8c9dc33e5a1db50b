@@ -22,6 +22,30 @@
       },
       "revId": "22fc5cd5bf634ecaf217d72f8c9dc33e5a1db50b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36fe8581_6f5df576",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 1598,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-11-26T11:19:23Z",
+      "side": 1,
+      "message": "Actually, looks like the Skip still applies somehow and I don\u0027t really understand the order in which expectations are applied.\nAnyway, looks like the bot is green now, so not going to investigate further for now.",
+      "parentUuid": "b3831cb4_e478da22",
+      "range": {
+        "startLine": 1598,
+        "startChar": 0,
+        "endLine": 1598,
+        "endChar": 102
+      },
+      "revId": "22fc5cd5bf634ecaf217d72f8c9dc33e5a1db50b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
