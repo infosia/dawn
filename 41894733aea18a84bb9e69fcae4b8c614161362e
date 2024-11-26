@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "155309fe_195c2ce2",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-26T14:49:56Z",
+      "side": 1,
+      "message": "Always added for certain platforms. This is how the existing code worked, but it\u0027s going to be changed anyway as we pull this up to the backends.",
+      "parentUuid": "658c0b14_15cc5ad2",
+      "revId": "41894733aea18a84bb9e69fcae4b8c614161362e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9de5feff_cec9d330",
         "filename": "test/tint/bug/tint/1725.wgsl",
         "patchSetId": 2
@@ -31,6 +49,24 @@
       "writtenOn": "2024-11-26T14:30:03Z",
       "side": 1,
       "message": "Related to my comment above, why did you have to do this, since we always run the Renamer anyway?",
+      "revId": "41894733aea18a84bb9e69fcae4b8c614161362e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "921f0040_0287c6d5",
+        "filename": "test/tint/bug/tint/1725.wgsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-26T14:49:56Z",
+      "side": 1,
+      "message": "I didnt\u0027 have too, i just don\u0027t like that it doesnt\u0027 include it. Without this we won\u0027t run the renamer for WGSL or SPIR-V. So, it\u0027s more consistent to enable it.",
+      "parentUuid": "9de5feff_cec9d330",
       "revId": "41894733aea18a84bb9e69fcae4b8c614161362e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
