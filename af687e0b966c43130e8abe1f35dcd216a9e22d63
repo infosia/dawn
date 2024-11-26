@@ -228,6 +228,24 @@
       "parentUuid": "2b536a0d_cd2c8aee",
       "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4211b5e6_32b85eb8",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers_fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-26T20:08:57Z",
+      "side": 1,
+      "message": "Yep, sounds right to me.",
+      "parentUuid": "31a30a3e_79e2d7cc",
+      "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
