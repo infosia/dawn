@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b934aebd_56a9e2a5",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-26T16:20:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "155309fe_195c2ce2",
+      "revId": "41894733aea18a84bb9e69fcae4b8c614161362e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9de5feff_cec9d330",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "I didnt\u0027 have too, i just don\u0027t like that it doesnt\u0027 include it. Without this we won\u0027t run the renamer for WGSL or SPIR-V. So, it\u0027s more consistent to enable it.",
       "parentUuid": "9de5feff_cec9d330",
+      "revId": "41894733aea18a84bb9e69fcae4b8c614161362e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad8a6fbf_a8d2b16a",
+        "filename": "test/tint/bug/tint/1725.wgsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-26T16:20:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "921f0040_0287c6d5",
       "revId": "41894733aea18a84bb9e69fcae4b8c614161362e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
