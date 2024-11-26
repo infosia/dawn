@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33b04a65_65fae922",
+        "filename": "src/tint/utils/command/command_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-26T16:07:57Z",
+      "side": 0,
+      "message": "This breaks Linux CMake builds for me 😞\n\nFix uploaded, https://dawn-review.googlesource.com/c/dawn/+/216754",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "2659fe8b0cb83de8ceab80a26286a6895508221c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
