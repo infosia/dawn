@@ -317,6 +317,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "27ad5778_c0ca7f65",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-11-26T14:41:02Z",
+      "side": 1,
+      "message": "Ah, perhaps I was totally confused (and adding noise to the CL :\\). If the frontend validation will Just Work across the different backends (which makes sense), and the only difference is that we don\u0027t actually *exploit* the information that the developer is giving us for the other backends, then I agree that there\u0027s no reason not to just do the validation agnostic to the backend.\n\nAnd I agree with your summary of what `sampledTextureBinding` fundamentally is.",
+      "parentUuid": "b8b3d570_3d665bba",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39f006a4_9bb6075f",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 9
