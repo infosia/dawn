@@ -335,6 +335,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1a46b355_aba4241e",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-26T14:56:20Z",
+      "side": 1,
+      "message": "I was assuming that since only the Vulkan backend uses `StaticSamplerBindingInfo::sampledTextureBinding`  things would be broken for other backends. I\u0027m not sure if that is a good assumption and I certainly don\u0027t have a good understanding of how this works across different backends.\n\n\u003e Otherwise in terms of WGSL, or BindGroup bindings, the sampler is \"just\" a static sampler, and the texture view is just a texture view. So if they are used together, things will just happen to work in other backends\n\nIIUC you\u0027re saying that the static sampler could still be used, just like other static samplers, in the other backends? Aka a shader could have sampler uniform that is bound to static sampler and texture uniform that is bound to the texture and shader creates a sampler2D object from that? That makes sense. \n\nIf the static sampler had `sampledTextureBinding` specifying it was used with texture A then I think the shader could still combine the sampler with some other texture B. That seems like it violates the spirit of the field at least?\n\nWhat I don\u0027t understand is presumably the shader source would only have sampler uniform and no texture uniform. I think that is how it works for the Vulkan backend but I\u0027m not sure what the WGSL looks like. My understanding is the actual Vulkan shader source doesn\u0027t have `uniform sampler` + `uniform texture2D`. It relies on `uniform sampler2D` being provided which is the combined image texture sampler that can be used directly.\n\nWould the shader source provided to dawn look similar for other backends? That seems like it would be broken when there is no combined image sampler concept.",
+      "parentUuid": "b8b3d570_3d665bba",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39f006a4_9bb6075f",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 9
@@ -381,6 +399,24 @@
       "writtenOn": "2024-11-26T13:30:48Z",
       "side": 1,
       "message": "All solution are a bit equivalent and relatively local so whichever you think is best. Personally I like grouping logic for more niche things together even if it costs some CPU cycles in cold code, but that\u0027s very subjective hence why it\u0027s an optional-nit!",
+      "parentUuid": "0038c55f_b11f87e4",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "015fa13a_cbaf906a",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-26T14:56:20Z",
+      "side": 1,
+      "message": "After looking at the code I agree pulling this out into a separate loop through entries is much cleaner. Will upload once I figure out the tests.",
       "parentUuid": "0038c55f_b11f87e4",
       "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
