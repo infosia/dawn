@@ -16,6 +16,24 @@
       "message": "Can\u0027t we just get rid of `--dump-ir` and leave `--format ir` where it was? There\u0027s no point having both if they\u0027re going to be identical, and I prefer `--format ir` of the two.",
       "revId": "db05ad7b2d21c6d22f6c111300401d663274b7b0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3df075b0_28177dd3",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-26T14:52:09Z",
+      "side": 1,
+      "message": "Maybe, but let me get through refactoring all the Generate code. Dump is a bit different as it isn\u0027t going to be doing single entry point and other transforms so I wanted to get it out of the way. Once I see how the switch below ends up looking I can figure out where to put Dump. \n\nAs to removing the flag, they aren\u0027t the same, `--dump-ir` doesn\u0027t exit, `format ir` does. You can `--dump ir --format msl` and it will do the right thing.",
+      "parentUuid": "8af0e956_073444f6",
+      "revId": "db05ad7b2d21c6d22f6c111300401d663274b7b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
