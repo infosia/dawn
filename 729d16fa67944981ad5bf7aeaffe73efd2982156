@@ -371,6 +371,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f49cab6d_371e06ea",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T15:44:19Z",
+      "side": 1,
+      "message": "Thanks Colin, that\u0027s exactly it!\n\nNote that part of the validation we should add is in `ShaderModule.cpp` in  [`ValidateCompatibilityWithPipelineLayout`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ShaderModule.cpp;drc\u003dd891d42f23f276b38c5b544a53bef27408eb68c3;l\u003d1242).\n\nThis function iterates over all the statically used texture+sampler pairs, so we can validate there that the WGSL abides by the restrictions set with `sampledTextureBinding` in the BGL.",
+      "parentUuid": "925128c3_2231dd5d",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39f006a4_9bb6075f",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 9
