@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a23a1cd0_3a286c6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-26T16:09:56Z",
+      "side": 1,
+      "message": "This was removed in https://dawn-review.googlesource.com/c/dawn/+/216414.\n\nI am unsure why this got through the bots. Presumably there is something subtly different about my dev env and the bots, but this header is definately referenced in this source file.",
+      "revId": "4949a4094bad08c3c28bb63b9ccf294dc223c1fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
