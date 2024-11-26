@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "346feb5b_21372534",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-26T14:41:45Z",
+      "side": 1,
+      "message": "Missing a `return` here. We don\u0027t want to run the post validate if the fuzzer function fails.",
+      "fixSuggestions": [
+        {
+          "fixId": "fff4aedb_5af33633",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/fuzz/ir/fuzz.cc",
+              "range": {
+                "startLine": 146,
+                "startChar": 0,
+                "endLine": 146,
+                "endChar": 0
+              },
+              "replacement": "                    return;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a774dc1be455a4c60da6af2cf011a63a76b235da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
