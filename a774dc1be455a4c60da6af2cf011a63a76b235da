@@ -34,6 +34,24 @@
       ],
       "revId": "a774dc1be455a4c60da6af2cf011a63a76b235da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2762cf5d_adf4d089",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000896
+      },
+      "writtenOn": "2024-11-26T15:28:56Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "346feb5b_21372534",
+      "revId": "a774dc1be455a4c60da6af2cf011a63a76b235da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
