@@ -214,6 +214,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b5b15e9_d27ffe61",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T12:14:55Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "29554d12_051bb37d",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "95adac37_c20fa1d6",
@@ -281,6 +299,24 @@
       "side": 1,
       "message": "I\u0027ve added a TODO next to the new `nativeAdapter_`.",
       "parentUuid": "31e2f189_df4b517a",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa731c07_d7136401",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T12:14:55Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "84c2272c_f61887b6",
       "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -491,6 +527,24 @@
       "side": 1,
       "message": "Are you thinking of something similar to `DawnTestBase::SupportsFeatures()` where we would call `native::GetProcs().adapterGetInfo()` or were you thinking of another thing like `DawnTestBase::IsMetal` where we\u0027d use `mParam.adapterProperties.adapterType \u003d\u003d wgpu::AdapterType::CPU`. I\u0027m asking because I\u0027m not sure which one to use.",
       "parentUuid": "97828da6_2468e911",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98516990_2097b13d",
+        "filename": "src/dawn/tests/perf_tests/DawnPerfTest.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T12:14:55Z",
+      "side": 1,
+      "message": "`mParam.adapterProperties.adapterType \u003d\u003d wgpu::AdapterType::CPU` should work.",
+      "parentUuid": "241eb091_6e38f694",
       "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
