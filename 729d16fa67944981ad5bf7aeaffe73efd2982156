@@ -114,6 +114,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7a217916_75571088",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T13:30:48Z",
+      "side": 1,
+      "message": "Sounds good!",
+      "parentUuid": "e13702ba_afa2e01f",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 50
+      },
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c0eecaf6_488ebc73",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 9
@@ -275,6 +299,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b8b3d570_3d665bba",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T13:30:48Z",
+      "side": 1,
+      "message": "I feel like I\u0027m missing something. From what I understand, `sampledTextureBinding` doesn\u0027t need to be implemented in other backends because it will just happen to work. There are two parts to `sampledTextureBinding` for Vulkan YCbCr: the frontend validation that checks that the static sampler / texture are only used together (or not at all), and the Vulkan backend part which uses that information to make the combined-texture-sampler when creating the BindGroup.\n\nOtherwise in terms of WGSL, or BindGroup bindings, the sampler is \"just\" a static sampler, and the texture view is just a texture view. So if they are used together, things will just happen to work in other backends. What the developer tells us with `sampledTextureBinding` is a (validated) promise that it will use them only together, and we use that promise for YCbCr in Vulkan.",
+      "parentUuid": "49ee0fcc_0f85eb8d",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39f006a4_9bb6075f",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 9
@@ -304,6 +346,24 @@
       "side": 1,
       "message": "I could do that if you think it\u0027s the right solution. We\u0027d have to unpack the layout entries multiple times.\n\nI could also just pull all the `StaticSamplerBindingLayout` related logic that is here into a helper function that is called from here? We\u0027d still have to pass textureToStaticSamplerBindingMap reference through this function and into the other helper though.",
       "parentUuid": "39f006a4_9bb6075f",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f999d83_5a7a2615",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T13:30:48Z",
+      "side": 1,
+      "message": "All solution are a bit equivalent and relatively local so whichever you think is best. Personally I like grouping logic for more niche things together even if it costs some CPU cycles in cold code, but that\u0027s very subjective hence why it\u0027s an optional-nit!",
+      "parentUuid": "0038c55f_b11f87e4",
       "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
