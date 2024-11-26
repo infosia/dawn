@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ce6a1b3_a7fd776a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T14:42:35Z",
+      "side": 1,
+      "message": "PTAL again! Now that https://chromium-review.googlesource.com/c/chromium/src/+/6049200 landed, (and Jiawei\u0027s fix in https://chromium-review.googlesource.com/c/chromium/src/+/6050699) we should be safe to reland this.",
+      "revId": "5afb5ed7a41f1208a51ebab211f25829fa2a3754",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
