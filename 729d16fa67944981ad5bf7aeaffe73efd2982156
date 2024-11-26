@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d047a76_7f2a8822",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-26T20:38:07Z",
+      "side": 1,
+      "message": "Not changed.",
+      "parentUuid": "ed2e0670_16f893af",
+      "range": {
+        "startLine": 177,
+        "startChar": 14,
+        "endLine": 177,
+        "endChar": 29
+      },
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41882cda_0203081f",
@@ -126,6 +150,30 @@
       "side": 1,
       "message": "Sounds good!",
       "parentUuid": "e13702ba_afa2e01f",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 50
+      },
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1a18b68_96b50f28",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-26T20:38:07Z",
+      "side": 1,
+      "message": "I moved new tests (and the existing tests that created BindGroup) into dawn_end2end_tests. PTAL!",
+      "parentUuid": "7a217916_75571088",
       "range": {
         "startLine": 182,
         "startChar": 0,
@@ -383,6 +431,24 @@
       "side": 1,
       "message": "Thanks Colin, that\u0027s exactly it!\n\nNote that part of the validation we should add is in `ShaderModule.cpp` in  [`ValidateCompatibilityWithPipelineLayout`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ShaderModule.cpp;drc\u003dd891d42f23f276b38c5b544a53bef27408eb68c3;l\u003d1242).\n\nThis function iterates over all the statically used texture+sampler pairs, so we can validate there that the WGSL abides by the restrictions set with `sampledTextureBinding` in the BGL.",
       "parentUuid": "925128c3_2231dd5d",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "565662fa_2c408868",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-26T20:38:07Z",
+      "side": 1,
+      "message": "Thanks for the explanation. I guess we should add the shader/tint level validation at some point then.",
+      "parentUuid": "f49cab6d_371e06ea",
       "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
