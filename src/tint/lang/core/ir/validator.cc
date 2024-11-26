@@ -2377,14 +2377,6 @@ void Validator::CheckVar(const Var* var) {
         return;
     }
 
-    {
-        auto result = ValidateBindingPoint(var->BindingPoint(), mv->AddressSpace());
-        if (result != Success) {
-            AddError(var) << result.Failure();
-            return;
-        }
-    }
-
     if (mv->AddressSpace() == AddressSpace::kWorkgroup) {
         if (auto* ary = result_type->UnwrapPtr()->As<core::type::Array>()) {
             if (auto* count = ary->Count()->As<core::ir::type::ValueArrayCount>()) {
@@ -2401,11 +2393,25 @@ void Validator::CheckVar(const Var* var) {
         return;
     }
 
+    if (var->Block() != mod_.root_block) {
+        if (var->BindingPoint().has_value()) {
+            AddError(var) << "binding points can only be set for variables in the module scope";
+            return;
+        }
+    }
+
     if (var->Block() == mod_.root_block) {
+        if (auto result = ValidateBindingPoint(var->BindingPoint(), mv->AddressSpace());
+            result != Success) {
+            AddError(var) << result.Failure();
+            return;
+        }
+
         if (mv->AddressSpace() == AddressSpace::kIn || mv->AddressSpace() == AddressSpace::kOut) {
-            auto result = ValidateShaderIOAnnotations(var->Result(0)->Type(), var->BindingPoint(),
-                                                      var->Attributes(), "module scope variable");
-            if (result != Success) {
+            if (auto result =
+                    ValidateShaderIOAnnotations(var->Result(0)->Type(), var->BindingPoint(),
+                                                var->Attributes(), "module scope variable");
+                result != Success) {
                 AddError(var) << result.Failure();
             }
         }

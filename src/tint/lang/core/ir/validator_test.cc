@@ -5150,6 +5150,36 @@ note: # Disassembly
 )");
 }
 
+TEST_F(IR_ValidatorTest, Var_Function_BindingPoint) {
+    auto* f = b.Function("my_func", ty.void_());
+
+    b.Append(f->Block(), [&] {
+        auto* v = b.Var<function, f32>();
+        v->SetBindingPoint(0, 0);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:3:41 error: var: binding points can only be set for variables in the module scope
+    %2:ptr<function, f32, read_write> = var @binding_point(0, 0)
+                                        ^^^
+
+:2:3 note: in block
+  $B1: {
+  ^^^
+
+note: # Disassembly
+%my_func = func():void {
+  $B1: {
+    %2:ptr<function, f32, read_write> = var @binding_point(0, 0)
+    ret
+  }
+}
+)");
+}
+
 TEST_F(IR_ValidatorTest, Var_Private_UnexpectedInputAttachmentIndex) {
     auto* f = b.Function("my_func", ty.void_());
 
