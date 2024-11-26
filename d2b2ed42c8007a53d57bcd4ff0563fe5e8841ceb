@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81d3b787_267b969a",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2400,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-26T20:46:04Z",
+      "side": 1,
+      "message": "As mentioned on the bug, I think the more comprehensive fix here is to disallow any address space that isn\u0027t `kFunction` here. We\u0027ll need to do that anyway, and then the binding point validation can stay as it was before.",
+      "range": {
+        "startLine": 2397,
+        "startChar": 0,
+        "endLine": 2400,
+        "endChar": 9
+      },
+      "revId": "d2b2ed42c8007a53d57bcd4ff0563fe5e8841ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
