@@ -22,6 +22,30 @@
       },
       "revId": "2659fe8b0cb83de8ceab80a26286a6895508221c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6733c374_10097573",
+        "filename": "src/tint/utils/command/command_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-26T16:16:52Z",
+      "side": 0,
+      "message": "Thanks, I just hit the same thing locally. Seems like the bots don\u0027t catch this for some reason.",
+      "parentUuid": "33b04a65_65fae922",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "2659fe8b0cb83de8ceab80a26286a6895508221c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
