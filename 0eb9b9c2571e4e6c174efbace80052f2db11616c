@@ -143,6 +143,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0c2b0c1_7426b3d5",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-26T15:00:05Z",
+      "side": 1,
+      "message": "https://issues.chromium.org/issues/347047627#comment4",
+      "parentUuid": "c9bdb0a8_8fbe64ab",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36c7e84a_4b06f8cb",
@@ -545,6 +563,24 @@
       "side": 1,
       "message": "`mParam.adapterProperties.adapterType \u003d\u003d wgpu::AdapterType::CPU` should work.",
       "parentUuid": "241eb091_6e38f694",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f4ba40b_a796e39f",
+        "filename": "src/dawn/tests/perf_tests/DawnPerfTest.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-26T15:00:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98516990_2097b13d",
       "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
