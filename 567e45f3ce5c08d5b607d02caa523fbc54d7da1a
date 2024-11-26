@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81ad83f4_4de7edfb",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T13:42:50Z",
+      "side": 0,
+      "message": "We should keep that logic as much as possible to avoid forcing tiler flushes when not needed. Can we replicated it in `CommandBufferRecordingContext`.",
+      "range": {
+        "startLine": 249,
+        "startChar": 31,
+        "endLine": 249,
+        "endChar": 96
+      },
+      "revId": "567e45f3ce5c08d5b607d02caa523fbc54d7da1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

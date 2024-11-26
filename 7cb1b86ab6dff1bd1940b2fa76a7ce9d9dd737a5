@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7407d41_a2c46028",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T13:42:50Z",
+      "side": 1,
+      "message": "While technically the same, we should record the buffer barrier only once that goes from the `src` computed here to the `dst` computed at [1], so here we\u0027d just set some local variables. Same below, where in some cases we can skip the barriers, so we shouldn\u0027t record it at all if it gets skipped.",
+      "revId": "7cb1b86ab6dff1bd1940b2fa76a7ce9d9dd737a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f4bbe18_5ac14938",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T13:42:50Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "7cb1b86ab6dff1bd1940b2fa76a7ce9d9dd737a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "806d5ac8_45a47fb3",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T13:42:50Z",
+      "side": 1,
+      "message": "nit: this is already done in `TransitionUsageNow`.",
+      "revId": "7cb1b86ab6dff1bd1940b2fa76a7ce9d9dd737a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b8aad61_a1ef1161",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-26T13:42:50Z",
+      "side": 1,
+      "message": "This state would be duplicated between `mVertexBufferBarrier` and `mNonVertexBufferBarrier`, while `mBufferShaderStages` would be removed since it is only used to decide which of the two to add to.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 46
+      },
+      "revId": "7cb1b86ab6dff1bd1940b2fa76a7ce9d9dd737a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
