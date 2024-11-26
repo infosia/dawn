@@ -33,6 +33,24 @@
       "message": "Missing TODO comment above this line:\n```\n// TODO(crbug.com/42250787): This is only necessary when FXC is being used.\n```",
       "revId": "3e5110c0bddea94e268d3a04f4d4df966414994e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2417dd5f_177c47d8",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-26T15:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3357950c_9044d5d4",
+      "revId": "3e5110c0bddea94e268d3a04f4d4df966414994e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
