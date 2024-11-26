@@ -28,6 +28,8 @@
 #include "dawn/native/ShaderModule.h"
 
 #include <algorithm>
+#include <limits>
+#include <set>
 #include <sstream>
 #include <utility>
 
@@ -1025,8 +1027,38 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
                         resource.binding, resource.bind_group);
     }
 
+    // Compute the texture+sampler combination count.
+    if (device->IsCompatibilityMode()) {
+        tint::BindingPoint nonSamplerBindingPoint = {std::numeric_limits<uint32_t>::max()};
+        auto samplerAndNonSamplerTextureUses =
+            inspector->GetSamplerTextureUses(entryPoint.name, nonSamplerBindingPoint);
+        // separate sampled from non-sampled and put sampled in set
+        std::set<tint::BindingPoint> sampledTextures;
+        std::vector<tint::inspector::SamplerTexturePair> sampledPairs;
+        std::vector<tint::BindingPoint> nonSampled;
+
+        for (const auto& pair : samplerAndNonSamplerTextureUses) {
+            if (pair.sampler_binding_point == nonSamplerBindingPoint) {
+                nonSampled.push_back(pair.texture_binding_point);
+            } else {
+                sampledPairs.push_back(pair);
+                sampledTextures.insert(pair.texture_binding_point);
+            }
+        }
+
+        // count the number of non-sampled that are not referenced by sampled pairs.
+        auto numNonSampled =
+            std::count_if(nonSampled.begin(), nonSampled.end(),
+                          [sampledTextures](const tint::BindingPoint& nonSampledBindingPoint) {
+                              return !sampledTextures.contains(nonSampledBindingPoint);
+                          });
+        uint32_t numCombos = sampledPairs.size() + numNonSampled;
+        metadata->numTextureSamplerCombinations = numCombos;
+    }
+
     // Reflection of combined sampler and texture uses.
     auto samplerTextureUses = inspector->GetSamplerTextureUses(entryPoint.name);
+
     metadata->samplerTexturePairs.reserve(samplerTextureUses.Length());
     std::transform(samplerTextureUses.begin(), samplerTextureUses.end(),
                    std::back_inserter(metadata->samplerTexturePairs),
