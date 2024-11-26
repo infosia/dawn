@@ -353,6 +353,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "925128c3_2231dd5d",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-11-26T15:37:22Z",
+      "side": 1,
+      "message": "Kyle, my apologies for adding confusion earlier on this comment thread as I\u0027m paging this all fully back in now. These are great questions.\n\nWRT the shader source: At the Dawn/Tint level, the texture looks independent from the sampler. So it\u0027s passed in the BindGroup and referenced by its BGL entry in the shader. It\u0027s in the transformation of the BGL/BG to Vulkan and the WGSL to SPIR-V that we collapse them. That\u0027s effectively what `sampledTextureBinding` is for - it allows us to determine what the right texture entry is to fold into the sampler entry without actually having to introduce the concept of a combined image sampler at the Dawn/Tint level.\n\nSo in the other backends the Dawn/Tint code would just get transformed the same way as they would if `sampledTextureBinding` wasn\u0027t passed at all, and that will work as expected from the client\u0027s POV.\n\nWRT validation of the WGSL: That is true but I think it\u0027s just as true in the Vulkan backend now because we don\u0027t have validation at the Tint level. If we added validation at the Tint level it could also be agnostic to the backend.",
+      "parentUuid": "1a46b355_aba4241e",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "39f006a4_9bb6075f",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 9
