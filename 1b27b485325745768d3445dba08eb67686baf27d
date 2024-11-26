@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68ef2652_de26c8fc",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-26T18:24:26Z",
+      "side": 1,
+      "message": "Do we have to worry about:\n\n    for ( var i:u32 \u003d 0; i \u003c 0; i++ )  { }\n    \nThe loop never exits, and so is finite. I guess that\u0027s ok too, for this analysis.",
+      "revId": "1b27b485325745768d3445dba08eb67686baf27d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df30c8b0_cecda5c9",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2074,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-26T18:24:26Z",
+      "side": 1,
+      "message": "very nice",
+      "revId": "1b27b485325745768d3445dba08eb67686baf27d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
