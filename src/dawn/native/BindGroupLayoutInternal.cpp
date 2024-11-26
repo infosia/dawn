@@ -40,6 +40,7 @@
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/ObjectContentHasher.h"
@@ -196,12 +197,16 @@ MaybeError ValidateBindGroupLayoutEntry(DeviceBase* device,
 
     if (auto* staticSamplerBindingLayout = entry.Get<StaticSamplerBindingLayout>()) {
         bindingMemberCount++;
-
         DAWN_INVALID_IF(!device->HasFeature(Feature::StaticSamplers),
                         "Static samplers used without the %s feature enabled.",
                         wgpu::FeatureName::StaticSamplers);
 
         DAWN_TRY(device->ValidateObject(staticSamplerBindingLayout->sampler));
+
+        if (staticSamplerBindingLayout->sampledTextureBinding == WGPU_LIMIT_U32_UNDEFINED) {
+            DAWN_INVALID_IF(staticSamplerBindingLayout->sampler->IsYCbCr(),
+                            "YCbCr static sampler requires a sampled texture binding");
+        }
     }
 
     if (entry.Get<ExternalTextureBindingLayout>()) {
@@ -215,6 +220,47 @@ MaybeError ValidateBindGroupLayoutEntry(DeviceBase* device,
     DAWN_INVALID_IF(bindingMemberCount != 1,
                     "BindGroupLayoutEntry had more than one of buffer, sampler, texture, "
                     "storageTexture, or externalTexture set");
+
+    return {};
+}
+
+MaybeError ValidateStaticSamplersWithTextureBindings(
+    DeviceBase* device,
+    const BindGroupLayoutDescriptor* descriptor,
+    const std::map<BindingNumber, uint32_t>& bindingNumberToIndexMap) {
+    // Map of texture binding number to static sampler binding number.
+    std::map<BindingNumber, BindingNumber> textureToStaticSamplerBindingMap;
+
+    for (uint32_t i = 0; i < descriptor->entryCount; ++i) {
+        UnpackedPtr<BindGroupLayoutEntry> entry = Unpack(&descriptor->entries[i]);
+        auto* staticSamplerLayout = entry.Get<StaticSamplerBindingLayout>();
+        if (!staticSamplerLayout ||
+            staticSamplerLayout->sampledTextureBinding == WGPU_LIMIT_U32_UNDEFINED) {
+            continue;
+        }
+
+        BindingNumber samplerBinding(entry->binding);
+        BindingNumber sampledTextureBinding(staticSamplerLayout->sampledTextureBinding);
+
+        bool inserted =
+            textureToStaticSamplerBindingMap.insert({sampledTextureBinding, samplerBinding}).second;
+        DAWN_INVALID_IF(!inserted,
+                        "For static sampler binding (%u) the sampled texture binding (%u) is "
+                        "already bound to a static sampler at binding (%u).",
+                        samplerBinding, sampledTextureBinding,
+                        textureToStaticSamplerBindingMap[sampledTextureBinding]);
+
+        DAWN_INVALID_IF(!bindingNumberToIndexMap.count(sampledTextureBinding),
+                        "For static sampler binding (%u) the sampled texture binding (%u) is not a "
+                        "valid binding number.",
+                        samplerBinding, sampledTextureBinding);
+
+        auto& textureEntry = descriptor->entries[bindingNumberToIndexMap.at(sampledTextureBinding)];
+        DAWN_INVALID_IF(textureEntry.texture.sampleType == wgpu::TextureSampleType::Undefined,
+                        "For static sampler binding (%u) the sampled texture binding (%u) is not a "
+                        "texture binding.",
+                        samplerBinding, sampledTextureBinding);
+    }
 
     return {};
 }
@@ -317,7 +363,8 @@ MaybeError ValidateBindGroupLayoutDescriptor(DeviceBase* device,
                                              bool allowInternalBinding) {
     DAWN_INVALID_IF(descriptor->nextInChain != nullptr, "nextInChain must be nullptr");
 
-    std::set<BindingNumber> bindingsSet;
+    // Map of binding number to entry index.
+    std::map<BindingNumber, uint32_t> bindingMap;
     BindingCounts bindingCounts = {};
 
     for (uint32_t i = 0; i < descriptor->entryCount; ++i) {
@@ -328,7 +375,7 @@ MaybeError ValidateBindGroupLayoutDescriptor(DeviceBase* device,
         DAWN_INVALID_IF(bindingNumber >= kMaxBindingsPerBindGroupTyped,
                         "Binding number (%u) exceeds the maxBindingsPerBindGroup limit (%u).",
                         uint32_t(bindingNumber), kMaxBindingsPerBindGroup);
-        DAWN_INVALID_IF(bindingsSet.count(bindingNumber) != 0,
+        DAWN_INVALID_IF(bindingMap.count(bindingNumber) != 0,
                         "On entries[%u]: binding index (%u) was specified by a previous entry.", i,
                         entry->binding);
 
@@ -337,8 +384,12 @@ MaybeError ValidateBindGroupLayoutDescriptor(DeviceBase* device,
 
         IncrementBindingCounts(&bindingCounts, entry);
 
-        bindingsSet.insert(bindingNumber);
+        bindingMap.insert({bindingNumber, i});
     }
+
+    // Perform a second validation pass for static samplers. This is done after initial validation
+    // as static samplers can have associated texture entries that need to be validated first.
+    DAWN_TRY(ValidateStaticSamplersWithTextureBindings(device, descriptor, bindingMap));
 
     DAWN_TRY_CONTEXT(ValidateBindingCounts(device->GetLimits(), bindingCounts),
                      "validating binding counts");
