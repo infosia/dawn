@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be151e5f_8803341d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-26T16:27:43Z",
+      "side": 1,
+      "message": "nit: s/previous/previously",
+      "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad78fd9d_fb5750dc",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-26T16:27:43Z",
+      "side": 1,
+      "message": "```suggestion\n                    // Failing before running indicates that this input violates the\n```",
+      "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2844cc39_837da861",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-26T16:27:43Z",
+      "side": 1,
+      "message": "```suggestion\n                // Failing before running indicates that this input violates the pre-conditions\n```",
+      "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fbe0be4_3598be53",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-26T16:27:43Z",
+      "side": 1,
+      "message": "This can probably just return `data_args.Failure()`?",
+      "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ba1bf8b_9bafed71",
+        "filename": "src/tint/lang/hlsl/writer/raise/promote_initializers_fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-26T16:27:43Z",
+      "side": 1,
+      "message": "Doesn\u0027t this need `kPromoteInitializerCapabilites` as well in the `post capabilities? I guess the question is, should the `post` be a superset of the `pre`?",
+      "revId": "af687e0b966c43130e8abe1f35dcd216a9e22d63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
