@@ -34,6 +34,24 @@
       "parentUuid": "8af0e956_073444f6",
       "revId": "db05ad7b2d21c6d22f6c111300401d663274b7b0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "470712ee_ac241833",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-26T20:39:25Z",
+      "side": 1,
+      "message": "Yeah, I know they\u0027re not quite the same, but we still don\u0027t need both.\n\nBut sure, let\u0027s discuss again when everything else is moved around.",
+      "parentUuid": "3df075b0_28177dd3",
+      "revId": "db05ad7b2d21c6d22f6c111300401d663274b7b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
