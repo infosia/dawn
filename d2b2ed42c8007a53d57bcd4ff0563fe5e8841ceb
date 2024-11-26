@@ -22,6 +22,30 @@
       },
       "revId": "d2b2ed42c8007a53d57bcd4ff0563fe5e8841ceb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69927a1f_da1fefa3",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2400,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-26T20:57:46Z",
+      "side": 1,
+      "message": "Sorry, I hadn\u0027t seen that response. I will abandon this CL and upload a new one with that fix instad.",
+      "parentUuid": "81d3b787_267b969a",
+      "range": {
+        "startLine": 2397,
+        "startChar": 0,
+        "endLine": 2400,
+        "endChar": 9
+      },
+      "revId": "d2b2ed42c8007a53d57bcd4ff0563fe5e8841ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
