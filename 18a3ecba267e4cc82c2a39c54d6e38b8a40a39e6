@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c82c886_f278b9dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-26T20:02:42Z",
+      "side": 1,
+      "message": "We can land this as-is, but we should create a bug to figure out whether we should be passing down the version number to Tint or not. Right now, the MSL backend exposes this option explicitly, while for HLSL, we decide based on the compiler. This inconsistency isn\u0027t great.",
+      "revId": "18a3ecba267e4cc82c2a39c54d6e38b8a40a39e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
