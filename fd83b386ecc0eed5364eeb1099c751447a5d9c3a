@@ -104,6 +104,24 @@
       "parentUuid": "be0c666b_a50b25ed",
       "revId": "fd83b386ecc0eed5364eeb1099c751447a5d9c3a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f4072b3_df32092d",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-27T18:45:34Z",
+      "side": 1,
+      "message": "In the `WireTests` the `FreeMember` functions don\u0027t do anything on purpose, so they don\u0027t need to be called. (We always allocate stuff for mocks on the stack which will clean themselves up.)",
+      "parentUuid": "d0216e8f_d38fd101",
+      "revId": "fd83b386ecc0eed5364eeb1099c751447a5d9c3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
