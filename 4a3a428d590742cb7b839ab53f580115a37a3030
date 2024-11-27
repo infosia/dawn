@@ -146,6 +146,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9741fd7d_a24e1c17",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1984,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-27T21:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3838f9b_746a4c44",
+      "range": {
+        "startLine": 1984,
+        "startChar": 46,
+        "endLine": 1984,
+        "endChar": 49
+      },
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4db2274_ed679bea",
@@ -230,6 +254,30 @@
       "side": 1,
       "message": "Might be useful to move for consistency though",
       "parentUuid": "0475878a_bd684c4d",
+      "range": {
+        "startLine": 2023,
+        "startChar": 46,
+        "endLine": 2023,
+        "endChar": 47
+      },
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e5b13c0_48932a44",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2023,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-27T21:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "965269b4_4c340842",
       "range": {
         "startLine": 2023,
         "startChar": 46,
