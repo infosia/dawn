@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "960380ec_0c78c9fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-27T20:28:30Z",
+      "side": 1,
+      "message": "Updated the patch. Needs another review. PTAL.",
+      "revId": "7c1b15e7e0b496b34e21b02b624b00d40b35c6bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
