@@ -167,8 +167,9 @@ ResultOrError<ComPtr<IDxcBlob>> CompileShaderDXC(const d3d::D3DBytecodeCompilati
         ComPtr<IDxcBlobEncoding> errors;
         DAWN_TRY(CheckHRESULT(result->GetErrorBuffer(&errors), "DXC get error buffer"));
 
-        return DAWN_VALIDATION_ERROR("DXC compile failed with: %s",
-                                     static_cast<char*>(errors->GetBufferPointer()));
+        return DAWN_VALIDATION_ERROR("DXC compile failed with: %s\n/* Generated HLSL: */\n%s\n",
+                                     static_cast<char*>(errors->GetBufferPointer()),
+                                     hlslSource.c_str());
     }
 
     ComPtr<IDxcBlob> compiledShader;
@@ -185,7 +186,8 @@ ResultOrError<ComPtr<ID3DBlob>> CompileShaderFXC(const d3d::D3DBytecodeCompilati
     DAWN_INVALID_IF(FAILED(r.d3dCompile(hlslSource.c_str(), hlslSource.length(), nullptr, nullptr,
                                         nullptr, entryPointName.c_str(), r.fxcShaderProfile.data(),
                                         r.compileFlags, 0, &compiledShader, &errors)),
-                    "D3D compile failed with: %s", static_cast<char*>(errors->GetBufferPointer()));
+                    "D3D compile failed with: %s\n/* Generated HLSL: */\n%s\n",
+                    static_cast<char*>(errors->GetBufferPointer()), hlslSource.c_str());
 
     return std::move(compiledShader);
 }
