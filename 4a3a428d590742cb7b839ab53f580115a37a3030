@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "45e8b4fb_4cd67290",
+        "filename": "src/tint/lang/wgsl/resolver/builtin_validation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T20:48:37Z",
+      "side": 1,
+      "message": "This looks like the wrong error message?",
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b038777e_09133e02",
+        "filename": "src/tint/lang/wgsl/resolver/builtin_validation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T20:48:37Z",
+      "side": 1,
+      "message": "Should this have a greater then 0 test where it passes in a `-4i`",
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d37bb386_28957626",
         "filename": "src/tint/lang/wgsl/resolver/validator.cc",
         "patchSetId": 2
@@ -54,6 +88,53 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c3838f9b_746a4c44",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1984,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T20:48:37Z",
+      "side": 1,
+      "message": "There is a `src/tint/utils/internal_limits.h` if you\u0027d like to put it somewhere common",
+      "parentUuid": "d37bb386_28957626",
+      "range": {
+        "startLine": 1984,
+        "startChar": 46,
+        "endLine": 1984,
+        "endChar": 49
+      },
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4db2274_ed679bea",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1987,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T20:48:37Z",
+      "side": 1,
+      "message": "```suggestion\n                \u003c\u003c \"the sourceLaneIndex argument of subgroupBroadcast \"\n                   \"must be less than 128\";\n```",
+      "range": {
+        "startLine": 1986,
+        "startChar": 0,
+        "endLine": 1987,
+        "endChar": 59
+      },
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0475878a_bd684c4d",
         "filename": "src/tint/lang/wgsl/resolver/validator.cc",
         "patchSetId": 2
@@ -65,6 +146,30 @@
       "writtenOn": "2024-11-27T20:27:37Z",
       "side": 1,
       "message": "A quad will always be 4 so I am not really concerned about this constant.",
+      "range": {
+        "startLine": 2023,
+        "startChar": 46,
+        "endLine": 2023,
+        "endChar": 47
+      },
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "965269b4_4c340842",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2023,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T20:48:37Z",
+      "side": 1,
+      "message": "Might be useful to move for consistency though",
+      "parentUuid": "0475878a_bd684c4d",
       "range": {
         "startLine": 2023,
         "startChar": 46,
