@@ -716,4 +716,72 @@ TextureCopySubresource Compute2DTextureCopySubresourceWithRelaxedRowPitchAndOffs
 
     return copy;
 }
+
+TextureCopySubresource Compute3DTextureCopySubresourceWithRelaxedRowPitchAndOffset(
+    BufferTextureCopyDirection direction,
+    Origin3D origin,
+    Extent3D copySize,
+    const TexelBlockInfo& blockInfo,
+    uint64_t offset,
+    uint32_t bytesPerRow,
+    uint32_t rowsPerImage) {
+    TextureCopySubresource copy;
+
+    // You can visualize the data in the buffer (`bufferLocation`) like the inline comments.
+    // * copy data is visualized as '+'.
+    //
+    // When copySize.depthOrArrayLayers > 1 (the caller of this function should guarantee the buffer
+    // is large enough. See the comments in `RecordBufferTextureCopy()` in UtilsD3D12.cpp for more
+    // details):
+    //
+    //                bufferOffset(0, 0, 0)
+    //                        ^
+    //                        |
+    // |<-------Offset------->|<-----------RowPitch----------->|----------|------------|
+    // |----------------------|++++++++++++++++++++++~~~~~~~~~~|    |     |     |      |
+    //                        |++++++++++++++++++++++~~~~~~~~~~|CopyHeight|     |      |
+    //                        |++++++++++++++++++++++~~~~~~~~~~|    |     |RowsPerImage|
+    //                        |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|----------|     |      |
+    //                        |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|          |     |      |
+    // |---End of 1st image-->|--------------------------------|----------|------------|
+    //                        |++++++++++++++++++++++~~~~~~~~~~|          |     |      |
+    //                        |++++++++++++++++++++++~~~~~~~~~~|          |     |      |
+    //                        |++++++++++++++++++++++~~~~~~~~~~|          |RowsPerImage|
+    //                        |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|          |     |      |
+    //                        |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|          |     |      |
+    // |---End of 2nd image-->|--------------------------------|----------|------------|
+    //                        |<-----CopyWidth------>|
+    //
+    //
+    // When copySize.depthOrArrayLayers == 1 (always use `CopyHeight` as `bufferSize.height` instead
+    // of `RowsPerImage`):
+    //
+    //                bufferOffset (0, 0, 0)
+    //                Begin of the last image
+    //                        ^
+    //                        |
+    // |<-------Offset------->|<-----------RowPitch----------->|----------|
+    // |----------------------|++++++++++++++++++++++~~~~~~~~~~|    |     |
+    //                        |++++++++++++++++++++++~~~~~~~~~~|CopyHeight|
+    //                        |++++++++++++++++++++++|         |    |     |
+    //                        |----------------------|---------|----------|
+    //                        |<-----CopyWidth------>|
+    //                                               ^
+    //                                     End of all buffer data
+    //
+
+    Origin3D bufferOffset = {0, 0, 0};
+    Origin3D textureOffset = origin;
+
+    uint32_t appliedRowsPerImage =
+        copySize.depthOrArrayLayers == 1 ? copySize.height : rowsPerImage;
+    Extent3D bufferSize = {copySize.width, appliedRowsPerImage, copySize.depthOrArrayLayers};
+
+    TextureCopySubresource::CopyInfo* copyInfo = copy.AddCopy();
+    FillTextureCopySubresourceCopyInfo(copyInfo, direction, bufferOffset, textureOffset, copySize,
+                                       bufferSize, offset, bytesPerRow);
+
+    return copy;
+}
+
 }  // namespace dawn::native::d3d12
