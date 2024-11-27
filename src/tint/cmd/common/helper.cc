@@ -55,7 +55,7 @@
 namespace tint::cmd {
 namespace {
 
-enum class InputFormat {
+enum class InputFormat : uint8_t {
     kUnknown,
     kWgsl,
     kSpirvBin,
@@ -194,9 +194,12 @@ ProgramInfo LoadProgramInfo(const LoadProgramOptions& opts) {
                 auto file = std::make_unique<tint::Source::File>(
                     opts.filename, std::string(data.begin(), data.end()));
 
+                auto [program, comments] =
+                    tint::wgsl::reader::ParseWithComments(file.get(), options);
                 return ProgramInfo{
-                    /* program */ tint::wgsl::reader::Parse(file.get(), options),
-                    /* source_file */ std::move(file),
+                    std::move(program),
+                    comments,
+                    std::move(file),
                 };
 #else
                 std::cerr << "Tint not built with the WGSL reader enabled\n";
@@ -212,6 +215,7 @@ ProgramInfo LoadProgramInfo(const LoadProgramOptions& opts) {
 
                 return ProgramInfo{
                     /* program */ ReadSpirv(data, opts),
+                    /* comments */ {},
                     /* source_file */ nullptr,
                 };
 #else
@@ -242,6 +246,7 @@ ProgramInfo LoadProgramInfo(const LoadProgramOptions& opts) {
 
                 return ProgramInfo{
                     /* program */ ReadSpirv(data, opts),
+                    /* comments */ {},
                     /* source_file */ std::move(file),
                 };
 #else

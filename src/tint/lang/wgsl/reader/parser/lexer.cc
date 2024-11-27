@@ -297,6 +297,8 @@ std::optional<Token> Lexer::skip_blankspace_and_comments() {
 
 std::optional<Token> Lexer::skip_comment() {
     if (matches(pos(), "//")) {
+        auto source = begin_source();
+
         // Line comment: ignore everything until the end of line.
         while (!is_eol()) {
             if (is_null()) {
@@ -304,7 +306,9 @@ std::optional<Token> Lexer::skip_comment() {
             }
             advance();
         }
-        return {};
+        end_source(source);
+
+        return Token{Token::Type::kComment, source};
     }
 
     if (matches(pos(), "/*")) {
@@ -339,6 +343,9 @@ std::optional<Token> Lexer::skip_comment() {
         if (depth > 0) {
             return Token{Token::Type::kError, source, "unterminated block comment"};
         }
+        end_source(source);
+
+        return Token{Token::Type::kComment, source};
     }
     return {};
 }

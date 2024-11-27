@@ -28,6 +28,9 @@
 #ifndef SRC_TINT_LANG_WGSL_READER_READER_H_
 #define SRC_TINT_LANG_WGSL_READER_READER_H_
 
+#include <tuple>
+#include <vector>
+
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/wgsl/program/program.h"
 #include "src/tint/lang/wgsl/reader/options.h"
@@ -46,6 +49,16 @@ namespace tint::wgsl::reader {
 /// @param options the configuration options to use when parsing WGSL
 /// @returns the parsed program
 Program Parse(const Source::File* file, const Options& options = {});
+
+/// Parses the WGSL source, returning the parsed program and comment data.
+/// If the source fails to parse then the returned
+/// `program.Diagnostics.ContainsErrors()` will be true, and the
+/// `program.Diagnostics()` will describe the error.
+/// @param file the source file
+/// @param options the configuration options to use when parsing WGSL
+/// @returns the parsed program
+std::tuple<Program, std::vector<Source>> ParseWithComments(const Source::File* file,
+                                                           const Options& options = {});
 
 /// Parse a WGSL program from source, and return an IR module.
 /// @param file the input WGSL file
