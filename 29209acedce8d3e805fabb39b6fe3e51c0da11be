@@ -34,6 +34,24 @@
       "parentUuid": "8883db1b_e7b4f3f6",
       "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "459a31b7_58c6379b",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T13:10:00Z",
+      "side": 1,
+      "message": "That\u0027s surprisingly expensive indeed. But doesn\u0027t Graphite always use a complete view of the buffer?",
+      "parentUuid": "23e69562_44a76763",
+      "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
