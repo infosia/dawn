@@ -1974,9 +1974,24 @@ bool Validator::SubgroupBroadcast(const sem::Call* call) const {
         return false;
     }
 
-    if (id->Type()->IsSignedIntegerScalar() && constant_value->ValueAs<i32>() < 0) {
+    if (id->Type()->IsSignedIntegerScalar()) {
+        if (constant_value->ValueAs<i32>() < 0) {
+            AddError(id->Declaration()->source)
+                << "the sourceLaneIndex argument of subgroupBroadcast "
+                   "must be greater than or equal to zero";
+            return false;
+        }
+        if (constant_value->ValueAs<i32>() >= 128) {
+            AddError(id->Declaration()->source)
+                << "the sourceLaneIndex argument of subgroupBroadcast "
+                   "must be greater than or equal to zero";
+            return false;
+        }
+    }
+
+    if (id->Type()->IsUnsignedIntegerScalar() && constant_value->ValueAs<u32>() >= 128) {
         AddError(id->Declaration()->source) << "the sourceLaneIndex argument of subgroupBroadcast "
-                                               "must be greater than or equal to zero";
+                                               "must be less than 128";
         return false;
     }
 
@@ -1999,9 +2014,22 @@ bool Validator::QuadBroadcast(const sem::Call* call) const {
         return false;
     }
 
-    if (id->Type()->IsSignedIntegerScalar() && constant_value->ValueAs<i32>() < 0) {
+    if (id->Type()->IsSignedIntegerScalar()) {
+        if (constant_value->ValueAs<i32>() < 0) {
+            AddError(id->Declaration()->source)
+                << "the id argument of quadBroadcast must be greater than or equal to zero";
+            return false;
+        }
+        if (constant_value->ValueAs<i32>() >= 4) {
+            AddError(id->Declaration()->source)
+                << "the id argument of quadBroadcast must be less than 4";
+            return false;
+        }
+    }
+
+    if (id->Type()->IsUnsignedIntegerScalar() && constant_value->ValueAs<u32>() >= 4) {
         AddError(id->Declaration()->source)
-            << "the id argument of quadBroadcast must be greater than or equal to zero";
+            << "the id argument of quadBroadcast must be less than 4";
         return false;
     }
 
