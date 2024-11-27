@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07f71c3c_bd1c2ef8",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2380,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-27T21:46:48Z",
+      "side": 1,
+      "message": "I\u0027m confused as to why it\u0027s not caught the check below though? If the type is `nullptr`, it won\u0027t match the `var` result type, so should fail there?",
+      "revId": "739c7e9e9ba087439655177c6ab3355f78c9c584",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
