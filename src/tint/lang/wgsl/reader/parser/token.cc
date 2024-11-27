@@ -54,6 +54,8 @@ std::string_view Token::TypeToName(Type type) {
             return "placeholder";
         case Token::Type::kUninitialized:
             return "uninitialized";
+        case Token::Type::kComment:
+            return "comment";
 
         case Token::Type::kAnd:
             return "&";

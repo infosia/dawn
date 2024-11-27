@@ -49,6 +49,8 @@ class Token {
         kPlaceholder = 1,
         /// End of input string reached
         kEOF,
+        /// Comment
+        kComment,
 
         /// An identifier
         kIdentifier,
@@ -292,6 +294,8 @@ class Token {
                type_ == Type::kFloatLiteral || type_ == Type::kFloatLiteral_F ||
                type_ == Type::kFloatLiteral_H;
     }
+    /// @returns true if the token is a comment
+    bool IsComment() const { return type_ == Type::kComment; }
 
     /// @returns the number of placeholder tokens required to follow the token, in order to provide
     /// space for token splitting.

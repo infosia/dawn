@@ -31,11 +31,9 @@
 #include <memory>
 #include <string>
 #include <string_view>
-#include <unordered_map>
 #include <utility>
 #include <vector>
 
-#include "src/tint/lang/core/access.h"
 #include "src/tint/lang/wgsl/program/program_builder.h"
 #include "src/tint/lang/wgsl/reader/parser/detail.h"
 #include "src/tint/lang/wgsl/reader/parser/token.h"
@@ -81,8 +79,8 @@ class Parser {
     /// Failure holds enumerator values used for the constructing an Expect and
     /// Match in an errored state.
     struct Failure {
-        enum Errored { kErrored };
-        enum NoMatch { kNoMatch };
+        enum Errored : uint8_t { kErrored };
+        enum NoMatch : uint8_t { kNoMatch };
     };
 
   public:
@@ -338,6 +336,9 @@ class Parser {
 
     /// @returns the program builder.
     ProgramBuilder& builder() { return builder_; }
+
+    /// @returns the comment locations in the source file
+    std::vector<Source> comments() const { return comments_; }
 
     /// @returns the next token
     const Token& next();
@@ -920,6 +921,7 @@ class Parser {
     int silence_diags_ = 0;
     ProgramBuilder builder_;
     size_t max_errors_ = 25;
+    std::vector<Source> comments_;
 };
 
 }  // namespace tint::wgsl::reader

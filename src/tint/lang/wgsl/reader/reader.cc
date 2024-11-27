@@ -38,15 +38,23 @@
 namespace tint::wgsl::reader {
 
 Program Parse(const Source::File* file, const Options& options) {
+    Program program;
+    std::vector<Source> comments;
+    std::tie(program, comments) = ParseWithComments(file, options);
+    return program;
+}
+
+std::tuple<Program, std::vector<Source>> ParseWithComments(const Source::File* file,
+                                                           const Options& options) {
     if (DAWN_UNLIKELY(file->content.data.size() >
                       static_cast<size_t>(std::numeric_limits<uint32_t>::max()))) {
         ProgramBuilder b;
         b.Diagnostics().AddError(tint::Source{}) << "WGSL source must be 0xffffffff bytes or fewer";
-        return Program(std::move(b));
+        return {Program(std::move(b)), std::vector<Source>{}};
     }
     Parser parser(file);
     parser.Parse();
-    return resolver::Resolve(parser.builder(), options.allowed_features);
+    return {resolver::Resolve(parser.builder(), options.allowed_features), parser.comments()};
 }
 
 Result<core::ir::Module> WgslToIR(const Source::File* file, const Options& options) {

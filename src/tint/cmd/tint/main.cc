@@ -874,9 +874,16 @@ bool GenerateSpirv(const tint::Program& program, const Options& options) {
 /// @param options the options that Tint was invoked with
 /// @returns true on success
 bool GenerateWgsl([[maybe_unused]] const tint::Program& program,
-                  [[maybe_unused]] const Options& options) {
+                  [[maybe_unused]] const Options& options,
+                  [[maybe_unused]] const std::vector<tint::Source> comments) {
+    // FIXME: Remove
+    for (const auto& c : comments) {
+        std::cout << tint::ToString(c);
+    }
+
+    std::cout << "==================\n\n";
+
 #if TINT_BUILD_WGSL_WRITER
-    // TODO(jrprice): Provide a way for the user to set non-default options.
     tint::wgsl::writer::Options gen_options;
     auto result = tint::wgsl::writer::Generate(program, gen_options);
     if (result != tint::Success) {
@@ -1381,7 +1388,7 @@ int main(int argc, const char** argv) {
             success = GenerateSpirv(res.Get(), options);
             break;
         case Format::kWgsl:
-            success = GenerateWgsl(res.Get(), options);
+            success = GenerateWgsl(res.Get(), options, info.comments);
             break;
         case Format::kMsl:
             success = GenerateMsl(res.Get(), options);

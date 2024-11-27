@@ -31,17 +31,11 @@
 #include <utility>
 
 #include "src/tint/lang/core/attribute.h"
-#include "src/tint/lang/core/type/depth_texture.h"
-#include "src/tint/lang/core/type/external_texture.h"
-#include "src/tint/lang/core/type/multisampled_texture.h"
-#include "src/tint/lang/core/type/sampled_texture.h"
-#include "src/tint/lang/core/type/texture_dimension.h"
 #include "src/tint/lang/wgsl/ast/assignment_statement.h"
 #include "src/tint/lang/wgsl/ast/break_if_statement.h"
 #include "src/tint/lang/wgsl/ast/break_statement.h"
 #include "src/tint/lang/wgsl/ast/call_statement.h"
 #include "src/tint/lang/wgsl/ast/continue_statement.h"
-#include "src/tint/lang/wgsl/ast/discard_statement.h"
 #include "src/tint/lang/wgsl/ast/id_attribute.h"
 #include "src/tint/lang/wgsl/ast/if_statement.h"
 #include "src/tint/lang/wgsl/ast/increment_decrement_statement.h"
@@ -275,6 +269,17 @@ const Token& Parser::next() {
         return tokens_[next_token_idx_];
     }
 
+    // Save off any comments
+    while (true) {
+        if (!tokens_[next_token_idx_].IsComment()) {
+            break;
+        }
+
+        auto& tok = tokens_[next_token_idx_];
+        comments_.push_back(tok.source());
+        next_token_idx_++;
+    }
+
     // Skip over any placeholder elements
     while (true) {
         if (!tokens_[next_token_idx_].IsPlaceholder()) {
@@ -292,7 +297,7 @@ const Token& Parser::next() {
 
 const Token& Parser::peek(size_t count) {
     for (size_t idx = next_token_idx_; idx < tokens_.size(); idx++) {
-        if (tokens_[idx].IsPlaceholder()) {
+        if (tokens_[idx].IsPlaceholder() || tokens_[idx].IsComment()) {
             continue;
         }
         if (count == 0) {

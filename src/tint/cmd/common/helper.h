@@ -52,6 +52,8 @@ namespace tint::cmd {
 struct ProgramInfo {
     /// The loaded program
     tint::Program program;
+    /// Comment information
+    std::vector<Source> comments;
     /// The source file information
     std::unique_ptr<tint::Source::File> source_file;
 };
