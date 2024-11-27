@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d41c33c5_10425666",
+        "filename": "src/tint/lang/wgsl/resolver/builtin_validation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-27T21:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e8b4fb_4cd67290",
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b038777e_09133e02",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-11-27T20:48:37Z",
       "side": 1,
       "message": "Should this have a greater then 0 test where it passes in a `-4i`",
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9478b7c7_ee0196cb",
+        "filename": "src/tint/lang/wgsl/resolver/builtin_validation_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-27T21:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b038777e_09133e02",
       "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -123,6 +159,30 @@
       "writtenOn": "2024-11-27T20:48:37Z",
       "side": 1,
       "message": "```suggestion\n                \u003c\u003c \"the sourceLaneIndex argument of subgroupBroadcast \"\n                   \"must be less than 128\";\n```",
+      "range": {
+        "startLine": 1986,
+        "startChar": 0,
+        "endLine": 1987,
+        "endChar": 59
+      },
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "454affbf_c070b9b4",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1987,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-27T21:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4db2274_ed679bea",
       "range": {
         "startLine": 1986,
         "startChar": 0,
