@@ -123,6 +123,24 @@
       "parentUuid": "8a67c7ff_392f2baa",
       "revId": "94d162090a655b6fe8a7a35cd2e725dbd49f4e79",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "060e22d7_b6cc58b5",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-27T21:31:40Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "09cfc3be_fd2c7694",
+      "revId": "94d162090a655b6fe8a7a35cd2e725dbd49f4e79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
