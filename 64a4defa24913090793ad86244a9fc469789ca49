@@ -80,6 +80,30 @@
       },
       "revId": "64a4defa24913090793ad86244a9fc469789ca49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "feb6d60d_b4a2cc01",
+        "filename": "src/dawn/tests/end2end/CopyTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-27T01:25:52Z",
+      "side": 1,
+      "message": "Ah, I see, I misread this when I was reviewing, I though you replaced the default one with only this one, but now I see that you actually added testing with the toggle forced-off.\n\nIs there ever any reason to not use the toggle if it\u0027s enabled by default though? I\u0027m wondering whether it\u0027s necessary to add this testing since the CopyTests are pretty hefty and have a lot of permutations...",
+      "parentUuid": "37866206_23589fdf",
+      "range": {
+        "startLine": 1721,
+        "startChar": 22,
+        "endLine": 1721,
+        "endChar": 84
+      },
+      "revId": "64a4defa24913090793ad86244a9fc469789ca49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
