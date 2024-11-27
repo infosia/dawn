@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a894cb4_763dbc18",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T16:20:37Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "15be276d_b9b3ab84",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65fcc890_f3d79a00",
@@ -137,6 +155,24 @@
       "writtenOn": "2024-11-27T11:33:22Z",
       "side": 1,
       "message": "Done",
+      "parentUuid": "6b336f2f_d2a45d2b",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fb2ee26_11ac72e8",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T16:20:37Z",
+      "side": 1,
+      "message": "Acknowledged",
       "parentUuid": "6b336f2f_d2a45d2b",
       "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"

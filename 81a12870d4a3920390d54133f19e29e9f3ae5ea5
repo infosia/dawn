@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22b0bff1_08645b42",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T16:20:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82a7bed_57cc23f8",
+      "revId": "81a12870d4a3920390d54133f19e29e9f3ae5ea5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "503de6bb_f40f9fc2",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-11-27T11:33:22Z",
       "side": 1,
       "message": "u-nit: since this is a struct we tend to not add the `m` prefix since we don\u0027t need to desambiguate member variables from local variables.",
+      "revId": "81a12870d4a3920390d54133f19e29e9f3ae5ea5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dff82a79_d55733b0",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T16:20:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "503de6bb_f40f9fc2",
       "revId": "81a12870d4a3920390d54133f19e29e9f3ae5ea5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
