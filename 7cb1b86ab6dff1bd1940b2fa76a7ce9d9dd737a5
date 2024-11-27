@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "45386a72_4fc55ada",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T11:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7407d41_a2c46028",
+      "revId": "7cb1b86ab6dff1bd1940b2fa76a7ce9d9dd737a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "6f4bbe18_5ac14938",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 3
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adb7de2c_5a461649",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T11:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "806d5ac8_45a47fb3",
+      "revId": "7cb1b86ab6dff1bd1940b2fa76a7ce9d9dd737a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b8aad61_a1ef1161",
@@ -65,6 +101,30 @@
       "writtenOn": "2024-11-26T13:42:50Z",
       "side": 1,
       "message": "This state would be duplicated between `mVertexBufferBarrier` and `mNonVertexBufferBarrier`, while `mBufferShaderStages` would be removed since it is only used to decide which of the two to add to.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 46
+      },
+      "revId": "7cb1b86ab6dff1bd1940b2fa76a7ce9d9dd737a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "625ddbc7_0f6ab65f",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T11:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b8aad61_a1ef1161",
       "range": {
         "startLine": 100,
         "startChar": 0,

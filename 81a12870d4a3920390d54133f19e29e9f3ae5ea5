@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07a92b38_2981cb55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T11:33:22Z",
+      "side": 1,
+      "message": "LGM!",
+      "revId": "81a12870d4a3920390d54133f19e29e9f3ae5ea5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e82a7bed_57cc23f8",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T11:33:22Z",
+      "side": 1,
+      "message": "```suggestion\n    auto CreateBarrierIfNeeded \u003d [\u0026](const BufferBarrier\u0026 barrier) {\n```\n\n(I know :/)",
+      "revId": "81a12870d4a3920390d54133f19e29e9f3ae5ea5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "503de6bb_f40f9fc2",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T11:33:22Z",
+      "side": 1,
+      "message": "u-nit: since this is a struct we tend to not add the `m` prefix since we don\u0027t need to desambiguate member variables from local variables.",
+      "revId": "81a12870d4a3920390d54133f19e29e9f3ae5ea5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

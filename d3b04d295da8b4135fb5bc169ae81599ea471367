@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee98e60d_3b996b1c",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T11:33:22Z",
+      "side": 1,
+      "message": "`AddBufferBarrier` is fine, what\u0027s weird about it?",
+      "parentUuid": "15be276d_b9b3ab84",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65fcc890_f3d79a00",
         "filename": "src/dawn/native/vulkan/BufferVk.cpp",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "I think this has to check both src and dst as the TransitionUsage code has early outs which may have set the srcStages but skips setting the dstStages.",
       "parentUuid": "a261f1d4_66f6de69",
+      "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4076a611_b8f6f431",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T11:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b336f2f_d2a45d2b",
       "revId": "d3b04d295da8b4135fb5bc169ae81599ea471367",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
