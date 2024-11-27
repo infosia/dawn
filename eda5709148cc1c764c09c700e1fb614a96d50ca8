@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a583a8e8_7bf6ce5c",
+        "filename": "src/dawn/tests/end2end/YCbCrInfoTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-27T14:17:21Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "6b127cc3_790f9ad6",
+      "revId": "eda5709148cc1c764c09c700e1fb614a96d50ca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8088a2b_9e5dd180",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-11-27T11:28:37Z",
       "side": 1,
       "message": "```suggestion\nwgpu::Sampler CreateYCbCrSampler(wgpu::Device device, const wgpu::YCbCrVkDescriptor* yCbCrDesc) {\n```",
+      "revId": "eda5709148cc1c764c09c700e1fb614a96d50ca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3e99f78_bbfe2e3a",
+        "filename": "src/dawn/tests/end2end/YCbCrInfoTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-27T14:17:21Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "d8088a2b_9e5dd180",
       "revId": "eda5709148cc1c764c09c700e1fb614a96d50ca8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
