@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d37bb386_28957626",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1984,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-27T20:09:41Z",
+      "side": 1,
+      "message": "We might want to make this a const even if we dont want to actually use our internal max subgroup size.",
+      "range": {
+        "startLine": 1984,
+        "startChar": 46,
+        "endLine": 1984,
+        "endChar": 49
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d55fe4bf_916a8e79",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/resolver/validator.cc",
+              "range": {
+                "startLine": 1704,
+                "startChar": 0,
+                "endLine": 1704,
+                "endChar": 0
+              },
+              "replacement": "       case core::BinaryOp::kSubgroupBroadcast: {\n           // https://gpuweb.github.io/gpuweb/wgsl/#subgroup-broadcast\n           // The sourceLaneIndex argument of subgroupBroadcast must be a const-expression\n           // that is greater than or equal to zero and less than 128.\n           const uint32_t kMaxSourceLaneIndex \u003d 128;\n           if (rhs-\u003eStage() !\u003d core::EvaluationStage::kConstant) {\n               return true;\n           }\n           auto* rhs_val \u003d rhs-\u003eConstantValue();\n           for (size_t i \u003d 0, n \u003d rhs_val-\u003eNumElements(); i \u003c n; i++) {\n               auto* shift_val \u003d n \u003d\u003d 1 ? rhs_val : rhs_val-\u003eIndex(i);\n               if (shift_val-\u003eValueAs\u003cu32\u003e() \u003e\u003d kMaxSourceLaneIndex) {\n                   AddError(node-\u003esource)\n                       \u003c\u003c \"the sourceLaneIndex argument of subgroupBroadcast must be less than \"\n                       \u003c\u003c kMaxSourceLaneIndex;\n                   return false;\n               }\n           }\n           return true;\n       }\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/resolver/validator.cc",
+              "range": {
+                "startLine": 1957,
+                "startChar": 0,
+                "endLine": 1997,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
