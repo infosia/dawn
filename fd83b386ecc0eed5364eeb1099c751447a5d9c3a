@@ -35,6 +35,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f90042b1_c49f6895",
+        "filename": "src/dawn/fuzzers/DawnWireServerFuzzer.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-27T13:14:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd79a45_4b645810",
+      "revId": "fd83b386ecc0eed5364eeb1099c751447a5d9c3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62a803a0_f869956b",
+        "filename": "src/dawn/fuzzers/DawnWireServerFuzzer.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-27T13:14:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd79a45_4b645810",
+      "revId": "fd83b386ecc0eed5364eeb1099c751447a5d9c3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be0c666b_a50b25ed",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-11-27T11:36:17Z",
       "side": 1,
       "message": "```suggestion\n                WGPUAdapterInfo info;\n```\n\nbecause if it has a `FreeMembers` then it will call the dawn::wire FreeMembers instead of the dawn::native one. (also please check if FreeMembers needs to be called).",
+      "revId": "fd83b386ecc0eed5364eeb1099c751447a5d9c3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0216e8f_d38fd101",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-27T13:14:30Z",
+      "side": 1,
+      "message": "https://source.chromium.org/search?q\u003df:test%20FreeMembers%20-f:debug\u0026ss\u003dchromium has no results.\nWhen running `$ ./out/Debug/dawn_unittests --use-wire --gtest_filter\u003dWireAdapterTests.RequestDeviceSuccess*`\n\nI get the following results:\n```\n...\nWireAdapterTests.RequestDeviceSuccess/WaitOnly:WireAdapterTests.RequestDeviceSuccess/ProcessEvents:WireAdapterTests.RequestDeviceSuccess/Spontaneous\n[\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] Running 3 tests from 1 test suite.\n[----------] Global test environment set-up.\n[----------] 3 tests from WireAdapterTests\n[ RUN      ] WireAdapterTests.RequestDeviceSuccess/WaitOnly\nWarning: No mock available for adapterPropertiesMemoryHeapsFreeMembers\nWarning: No mock available for adapterInfoFreeMembers\nWarning: No mock available for supportedFeaturesFreeMembers\nWarning: No Dawn device lost callback was set. This is probably not intended. If you really want to ignore device lost and suppress this message, set the callback explicitly.\n...\n```\n\nDoes this mean FreeMembers has to called? If so, where?",
+      "parentUuid": "be0c666b_a50b25ed",
       "revId": "fd83b386ecc0eed5364eeb1099c751447a5d9c3a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

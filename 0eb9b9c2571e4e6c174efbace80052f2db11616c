@@ -179,6 +179,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59b9f08f_9a2271f9",
+        "filename": "src/dawn/node/binding/GPU.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-11-27T13:14:30Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org may have opinions",
+      "parentUuid": "a131e5ce_b13ffc40",
+      "revId": "0eb9b9c2571e4e6c174efbace80052f2db11616c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36c7e84a_4b06f8cb",
