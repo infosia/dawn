@@ -2350,21 +2350,6 @@ void Validator::CheckVar(const Var* var) {
         return;
     }
 
-    // Check that initializer and result type match
-    if (var->Initializer()) {
-        if (!CheckOperand(var, ir::Var::kInitializerOperandOffset)) {
-            return;
-        }
-
-        if (var->Initializer()->Type() != var->Result(0)->Type()->UnwrapPtrOrRef()) {
-            AddError(var) << "initializer type "
-                          << style::Type(var->Initializer()->Type()->FriendlyName())
-                          << " does not match store type "
-                          << style::Type(var->Result(0)->Type()->UnwrapPtrOrRef()->FriendlyName());
-            return;
-        }
-    }
-
     auto* result_type = var->Result(0)->Type();
     if (result_type == nullptr) {
         AddError(var) << "result type is undefined";
@@ -2375,6 +2360,36 @@ void Validator::CheckVar(const Var* var) {
     if (!mv) {
         AddError(var) << "result type must be a pointer or a reference";
         return;
+    }
+
+    // Check that initializer and result type match
+    if (var->Initializer()) {
+        if (mv->AddressSpace() != AddressSpace::kFunction &&
+            mv->AddressSpace() != AddressSpace::kPrivate) {
+            AddError(var)
+                << "only variables in the function or private address space may be initialized";
+            return;
+        }
+
+        if (!CheckOperand(var, ir::Var::kInitializerOperandOffset)) {
+            return;
+        }
+
+        if (var->Operand(ir::Var::kInitializerOperandOffset)->Is<ir::Function>()) {
+            // ir::Function has a null ->Type(), and won't be filtered by CheckOperand, so needs
+            // special handling here
+            AddError(var) << "initializer type 'function' does not match store type "
+                          << style::Type(var->Result(0)->Type()->UnwrapPtrOrRef()->FriendlyName());
+            return;
+        }
+
+        if (var->Initializer()->Type() != var->Result(0)->Type()->UnwrapPtrOrRef()) {
+            AddError(var) << "initializer type "
+                          << style::Type(var->Initializer()->Type()->FriendlyName())
+                          << " does not match store type "
+                          << style::Type(var->Result(0)->Type()->UnwrapPtrOrRef()->FriendlyName());
+            return;
+        }
     }
 
     {
