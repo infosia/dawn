@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ccfdcf3_cfb1828a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-27T17:49:04Z",
+      "side": 1,
+      "message": "LGTM. ANGLE does the same thing in D3D11, we cache everything that the API creates, even if it claims to cache internally. That includes things like BlendState, DepthStencilState, RasterizerState.",
+      "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8883db1b_e7b4f3f6",
@@ -68,6 +85,24 @@
       "side": 1,
       "message": "For Canvas Arc test, mostly complete views are used. However,\nin Graphite, any offset and size could be used depending on the buffer manager class\u0027 decision. Hence, caching only full views seems like case specific optimization IMO. We want to avoid that and should make the code faster for every case. I would prefer graphite to not have some regressions in the wild reported on UMA that we don\u0027t know the exact scenarios.\n\nHow about we use a vector to store the views. For small number of views, vector should be faster than hash map. For large number of views, maybe we could use a limiting factor.",
       "parentUuid": "23e69562_44a76763",
+      "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21f2c21b_3ab93be2",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2024-11-27T17:49:04Z",
+      "side": 1,
+      "message": "flat_hash_map seems like the right type to use here, especially since your key is cheap to hash.\n\nI think if anything, we want to make sure these maps don\u0027t grow unbounded but the cost of an LRU on top of these is probably more overhead than we want.",
+      "parentUuid": "52734031_c0553e92",
       "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
