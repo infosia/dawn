@@ -16,6 +16,24 @@
       "message": "Do you have numbers of how much it improves things? I\u0027m a bit worried that the lookup will add fixed overhead that\u0027s not great.\n\nWhat cases in Graphite does this improve? Can we just cache the full buffer UAV/SRV on creation because these are used for `var\u003cstorage\u003e` that don\u0027t really have a size limit and would tend to bind the whole buffer every time?",
       "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23e69562_44a76763",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-11-27T12:42:26Z",
+      "side": 1,
+      "message": "I saw MotionMark\u0027s canvas arc\u0027s score being increased from 12k to 20k just by caching the SRV.\n\nFrom the profiler, it looks like 21% of CPU time was spent in creating SRV (without caching) https://drive.google.com/file/d/1IMyWtxFf7iMoBpBAWLhExgAPenrZHeat/view?usp\u003dsharing\n\nI think the overhead of hash map is still much lower than creating SRV everytime.",
+      "parentUuid": "8883db1b_e7b4f3f6",
+      "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
