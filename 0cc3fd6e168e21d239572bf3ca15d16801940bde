@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f3188d4_29fd9f3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-11-27T14:44:06Z",
+      "side": 1,
+      "message": "Does this make sense? Am I up-to-date on what we\u0027re validating, or are there things I\u0027m missing?",
+      "revId": "0cc3fd6e168e21d239572bf3ca15d16801940bde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
