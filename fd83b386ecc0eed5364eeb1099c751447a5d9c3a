@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ba516af_bf3078f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 33
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T11:36:17Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "fd83b386ecc0eed5364eeb1099c751447a5d9c3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbd79a45_4b645810",
+        "filename": "src/dawn/fuzzers/DawnWireServerFuzzer.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T11:36:17Z",
+      "side": 1,
+      "message": "nit: Could we have a TODO here and similar places to use a webgpu.h version of enumerateAdapters?",
+      "revId": "fd83b386ecc0eed5364eeb1099c751447a5d9c3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be0c666b_a50b25ed",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T11:36:17Z",
+      "side": 1,
+      "message": "```suggestion\n                WGPUAdapterInfo info;\n```\n\nbecause if it has a `FreeMembers` then it will call the dawn::wire FreeMembers instead of the dawn::native one. (also please check if FreeMembers needs to be called).",
+      "revId": "fd83b386ecc0eed5364eeb1099c751447a5d9c3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
