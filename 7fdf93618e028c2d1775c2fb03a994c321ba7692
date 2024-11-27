@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "cff0f7e4_28cd8c38",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1665,
+      "author": {
+        "id": 1002331
+      },
+      "writtenOn": "2024-11-27T18:39:13Z",
+      "side": 1,
+      "message": "To make it simpler, how about considering -1 as a valid file descriptor for semaphore with sync fd handle type? We can need loose related validation code in dawn. and in chrome side, we just need to handle -1 fd case properly.",
+      "range": {
+        "startLine": 1665,
+        "startChar": 15,
+        "endLine": 1665,
+        "endChar": 47
+      },
+      "revId": "7fdf93618e028c2d1775c2fb03a994c321ba7692",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b1d1c21e_d27121f6",
