@@ -16,6 +16,57 @@
       "message": "Does this make sense? Am I up-to-date on what we\u0027re validating, or are there things I\u0027m missing?",
       "revId": "0cc3fd6e168e21d239572bf3ca15d16801940bde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47e187ff_3a1f3556",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T15:10:25Z",
+      "side": 1,
+      "message": "LGTM, thank you for writing this down, it will help a lot when we revisit this in the future!",
+      "revId": "0cc3fd6e168e21d239572bf3ca15d16801940bde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c6bd6d9_bfcdc39f",
+        "filename": "docs/dawn/features/y_cb_cr_vulkan_samplers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T15:10:25Z",
+      "side": 1,
+      "message": "Maybe we should mention the opaque \"externalFormat\" integer that\u0027s the cause of some of the complexity here. We can only dynamically know the YCbCr information when we have the externalFormat, and that one can change every frame independently of our control.",
+      "revId": "0cc3fd6e168e21d239572bf3ca15d16801940bde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91dbc1af_16286422",
+        "filename": "docs/dawn/features/y_cb_cr_vulkan_samplers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T15:10:25Z",
+      "side": 1,
+      "message": "nit: Maybe mention the caching that would be necessary for perf.",
+      "revId": "0cc3fd6e168e21d239572bf3ca15d16801940bde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
