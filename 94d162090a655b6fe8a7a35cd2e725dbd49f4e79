@@ -51,6 +51,24 @@
       "parentUuid": "c8552679_04fe386f",
       "revId": "94d162090a655b6fe8a7a35cd2e725dbd49f4e79",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d57432d_ea8a1259",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-27T20:42:58Z",
+      "side": 1,
+      "message": "I\u0027d argue that you\u0027d want to know if your script is no longer doing what you expect it to do. I think it\u0027s fine to require any downstream users to update their scripts when they update their Tint checkout.\n\nLikewise, we should completely remove `--transform` when it no longer does anything.",
+      "parentUuid": "7f5a0a57_fff8c098",
+      "revId": "94d162090a655b6fe8a7a35cd2e725dbd49f4e79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
