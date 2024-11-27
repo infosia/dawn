@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2ffde11_fb91bec2",
+        "filename": "src/tint/utils/internal_limits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T21:14:14Z",
+      "side": 1,
+      "message": "```suggestion\n// A quad (fragment) is composed of four invocations.\n```",
+      "revId": "843274ef53bfc247930814b99381a5618ce2ee3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
