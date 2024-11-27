@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "94d162090a655b6fe8a7a35cd2e725dbd49f4e79",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8552679_04fe386f",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-27T20:03:53Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this still be an error?",
+      "revId": "94d162090a655b6fe8a7a35cd2e725dbd49f4e79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
