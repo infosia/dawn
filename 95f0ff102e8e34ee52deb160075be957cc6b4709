@@ -16,6 +16,24 @@
       "message": "LGTM but could we also make CopyTests force the toggle on/off? This is to not lose coverage of the more complex path when the drivers on the bots support the relaxed pitches.",
       "revId": "95f0ff102e8e34ee52deb160075be957cc6b4709",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d74a780_8604627d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-11-27T18:41:45Z",
+      "side": 1,
+      "message": "I was the one who asked to remove explicitly turning the toggle off. Given that the default will either be on/off depending on the driver, and explicitly turning the toggle off didn\u0027t seem like a common use case, the amount of tests that would be incurred seemed overkill? Note that the CopyTests permute a bunch of formats...",
+      "parentUuid": "633aa978_f665f1f5",
+      "revId": "95f0ff102e8e34ee52deb160075be957cc6b4709",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
