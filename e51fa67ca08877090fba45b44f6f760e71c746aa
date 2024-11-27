@@ -16,6 +16,24 @@
       "message": "PTAL.",
       "revId": "e51fa67ca08877090fba45b44f6f760e71c746aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d24f461c_12fa573a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3711353
+      },
+      "writtenOn": "2024-11-27T06:05:46Z",
+      "side": 1,
+      "message": "amaiorano@ or jrprice@: I don\u0027t have the permission to merge this CL to the dawn. Could you please merge this CL instead?",
+      "parentUuid": "b4691b5d_ff561753",
+      "revId": "e51fa67ca08877090fba45b44f6f760e71c746aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
