@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36e413a6_61d81b4a",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-11-27T20:45:03Z",
+      "side": 1,
+      "message": "The parent change was `Roll ANGLE from 777fd9127dd4 to 2e25ea1e727e`\nso this is an inadverted revert.\nI suspect that maybe the initial `gclient sync` during the roll failed somehow, leaving the new DEPS but the old gitlink, and then when the roll script went to update the webgpu-cts hash in `DEPS`, it also reverted the `DEPS` entry for ANGLE to match the local gitlink.\n\nMaybe the roller doesn\u0027t check if `gclient sync` succeeds and needs to crash or retry if it fails.",
+      "revId": "782b7974aa925307d8f46aec30ee70b7baeb75df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
