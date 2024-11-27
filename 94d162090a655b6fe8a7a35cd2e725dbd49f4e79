@@ -33,6 +33,24 @@
       "message": "Shouldn\u0027t this still be an error?",
       "revId": "94d162090a655b6fe8a7a35cd2e725dbd49f4e79",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f5a0a57_fff8c098",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T20:37:42Z",
+      "side": 1,
+      "message": "I don\u0027t think so, I\u0027ve removed `robustness` as an option, which means any script which had it in the flags would break, this way, they keep working with a note on `stdout`.\n\nWe will remove all of these I think as they\u0027re all enabled by Dawn, so at the end, I\u0027ll probably jsut change the flag to say it\u0027s gone away and do nothing when you provide `--transform`",
+      "parentUuid": "c8552679_04fe386f",
+      "revId": "94d162090a655b6fe8a7a35cd2e725dbd49f4e79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
