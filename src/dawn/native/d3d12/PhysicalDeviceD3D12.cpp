@@ -691,10 +691,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     }
 
     // Currently this workaround is needed on any D3D12 backend for some particular situations.
-    // But we may need to limit it if D3D12 runtime fixes the bug on its new release. See
+    // But we may need to limit it if D3D12 runtime fixes the behaviour on its new release. See
     // https://crbug.com/dawn/1289 for more information.
-    // TODO(dawn:1289): Unset this toggle when we skip the split on the buffer-texture copy
-    // on the platforms where UnrestrictedBufferTextureCopyPitchSupported is true.
     deviceToggles->Default(Toggle::D3D12SplitBufferTextureCopyForRowsPerImagePaddings, true);
 
     // This workaround is only needed on Intel Gen12LP with driver prior to 30.0.101.1692.
