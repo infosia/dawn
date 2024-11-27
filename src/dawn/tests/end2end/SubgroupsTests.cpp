@@ -107,7 +107,8 @@ class SubgroupsPropertiesTests : public SubgroupsTestsBase<AdapterTestParam> {
         EXPECT_LE(maxSubgroupSize, 128u) << maxSubgroupSize;
         EXPECT_TRUE(IsPowerOfTwo(maxSubgroupSize));
 
-        EXPECT_LE(minSubgroupSize, maxSubgroupSize) << minSubgroupSize << " should be less equal than " << maxSubgroupSize;
+        EXPECT_LE(minSubgroupSize, maxSubgroupSize)
+            << minSubgroupSize << " should be less equal than " << maxSubgroupSize;
     }
 };
 
@@ -115,6 +116,10 @@ TEST_P(SubgroupsPropertiesTests, FromAdapter) {
     DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsEnabledInWGSL());
 
     wgpu::AdapterPropertiesSubgroups subgroup_properties;
+    subgroup_properties.minSubgroupSize = 3;
+    subgroup_properties.maxSubgroupSize = 443;
+    EXPECT_EQ(subgroup_properties.sType, wgpu::SType::AdapterPropertiesSubgroups);
+    EXPECT_EQ(subgroup_properties.nextInChain, nullptr);
     wgpu::AdapterInfo info;
     info.nextInChain = &subgroup_properties;
     adapter.GetInfo(&info);
