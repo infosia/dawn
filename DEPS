@@ -274,7 +274,7 @@ deps = {
   },
 
   'third_party/angle': {
-    'url': '{chromium_git}/angle/angle@2e25ea1e727e3f111ed8f465b728ea01cfc1612b',
+    'url': '{chromium_git}/angle/angle@777fd9127dd4947d092db219fbd7d6b7da5714c6',
     'condition': 'dawn_standalone',
   },
 
@@ -367,7 +367,7 @@ deps = {
 
   # WebGPU CTS - not used directly by Dawn, only transitively by Chromium.
   'third_party/webgpu-cts': {
-    'url': '{chromium_git}/external/github.com/gpuweb/cts@43ac618bad4e06980a1242120366e3c6d3b1b663',
+    'url': '{chromium_git}/external/github.com/gpuweb/cts@a546ae203bd895c368ac05ed6b73839a7ce55c60',
     'condition': 'build_with_chromium',
   },
 
