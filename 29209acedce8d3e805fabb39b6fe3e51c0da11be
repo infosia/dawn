@@ -105,6 +105,24 @@
       "parentUuid": "52734031_c0553e92",
       "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e09cf83_8dff06fb",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T19:49:40Z",
+      "side": 1,
+      "message": "It seems like Graphite might move to mostly always using the whole buffer, but I\u0027ll defer to Geoff on caching if we decide to do it.",
+      "parentUuid": "21f2c21b_3ab93be2",
+      "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
