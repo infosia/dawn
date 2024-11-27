@@ -104,6 +104,30 @@
       },
       "revId": "64a4defa24913090793ad86244a9fc469789ca49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b735de78_86f18566",
+        "filename": "src/dawn/tests/end2end/CopyTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-11-27T02:21:04Z",
+      "side": 1,
+      "message": "Done\n\nI see we have `CopySplitTests` (https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/unittests/d3d12/CopySplitTests.cpp) to test the split of buffer-texture copies which is used when relaxed offset and row pitch are not supported so maybe we don\u0027t need to test that code path again here.",
+      "parentUuid": "feb6d60d_b4a2cc01",
+      "range": {
+        "startLine": 1721,
+        "startChar": 22,
+        "endLine": 1721,
+        "endChar": 84
+      },
+      "revId": "64a4defa24913090793ad86244a9fc469789ca49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
