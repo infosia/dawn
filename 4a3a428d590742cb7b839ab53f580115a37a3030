@@ -50,6 +50,29 @@
       ],
       "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0475878a_bd684c4d",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2023,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-27T20:27:37Z",
+      "side": 1,
+      "message": "A quad will always be 4 so I am not really concerned about this constant.",
+      "range": {
+        "startLine": 2023,
+        "startChar": 46,
+        "endLine": 2023,
+        "endChar": 47
+      },
+      "revId": "4a3a428d590742cb7b839ab53f580115a37a3030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
