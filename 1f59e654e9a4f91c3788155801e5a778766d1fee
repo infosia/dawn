@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90b17cbd_02ada936",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-27T15:10:46Z",
+      "side": 1,
+      "message": "Thoughts? David mentioned wanting to do a formatter again, and I thought this might be a good way to get comment information out of the parser. It probably needs a flag to not record comment source information in order to remove the cost in the case where we aren\u0027t formatting.\n\nThis seems like it would work as the basis to support coments in a tint-fmt command.",
+      "revId": "1f59e654e9a4f91c3788155801e5a778766d1fee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
