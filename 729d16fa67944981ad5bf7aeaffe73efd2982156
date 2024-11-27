@@ -453,6 +453,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77a1240c_c161a5e8",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-11-27T07:39:53Z",
+      "side": 1,
+      "message": "Definitely! That will fulfill this item from [here](https://docs.google.com/document/d/1j8Zxm72TRnuCRSds0M2LwCiePgDotML3URwKKcUFTo4/edit?resourcekey\u003d0-1o1Jj48EZgiElcerbn1IWw\u0026tab\u003dt.0#heading\u003dh.mu36ynanppdo):\n\n\"Tint-side validation (more ambitious)\nA sampler entry that has a valid sampledTextureBinding field is only used to sample the texture that it\u0027s paired with, and that texture is sampled only by that sampler entry\"",
+      "parentUuid": "565662fa_2c408868",
+      "revId": "729d16fa67944981ad5bf7aeaffe73efd2982156",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39f006a4_9bb6075f",
