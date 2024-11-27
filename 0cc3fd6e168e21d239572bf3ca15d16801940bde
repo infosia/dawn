@@ -67,6 +67,29 @@
       "message": "nit: Maybe mention the caching that would be necessary for perf.",
       "revId": "0cc3fd6e168e21d239572bf3ca15d16801940bde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60246d11_7fa17a7e",
+        "filename": "docs/dawn/features/y_cb_cr_vulkan_samplers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-27T16:10:48Z",
+      "side": 1,
+      "message": "What happens to variables created from the static sampler binding?",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 18
+      },
+      "revId": "0cc3fd6e168e21d239572bf3ca15d16801940bde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
