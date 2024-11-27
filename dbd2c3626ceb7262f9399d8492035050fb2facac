@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbfa89ca_118b8d0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-11-27T20:33:12Z",
+      "side": 1,
+      "message": "relevant spec: https://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md#20-limit-the-number-of-texturesampler-combinations-in-a-stage",
+      "revId": "dbd2c3626ceb7262f9399d8492035050fb2facac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
