@@ -51,4 +51,6 @@ public class {{ obj.name.CamelCase() }}(public val handle: Long): AutoCloseable 
         {% endif %}
     {% endfor %}
     external override fun close();
+
+    override fun equals(other: Any?): Boolean = other is Texture && other.handle == handle
 }
