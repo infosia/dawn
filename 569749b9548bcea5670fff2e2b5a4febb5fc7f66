@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d468fbce_7bfce2d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-27T17:03:52Z",
+      "side": 1,
+      "message": "PTAL, this is passing bots now with the CTS suppressions.",
+      "revId": "569749b9548bcea5670fff2e2b5a4febb5fc7f66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
