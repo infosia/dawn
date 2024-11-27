@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1d1c21e_d27121f6",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-27T14:36:47Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "7fdf93618e028c2d1775c2fb03a994c321ba7692",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
