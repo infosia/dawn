@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "330b6a5b_94f9bad7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-27T18:29:55Z",
+      "side": 1,
+      "message": "Please see my rationale for *always* emitting the HLSL rather then only when `dump_shaders` is enabled here: https://g-issues.chromium.org/issues/381065163#comment3",
+      "revId": "8c862b122ea144f8de275fb6ad588bd65580b63e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
