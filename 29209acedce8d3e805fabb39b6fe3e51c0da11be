@@ -52,6 +52,24 @@
       "parentUuid": "23e69562_44a76763",
       "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52734031_c0553e92",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-11-27T13:16:24Z",
+      "side": 1,
+      "message": "For Canvas Arc test, mostly complete views are used. However,\nin Graphite, any offset and size could be used depending on the buffer manager class\u0027 decision. Hence, caching only full views seems like case specific optimization IMO. We want to avoid that and should make the code faster for every case. I would prefer graphite to not have some regressions in the wild reported on UMA that we don\u0027t know the exact scenarios.\n\nHow about we use a vector to store the views. For small number of views, vector should be faster than hash map. For large number of views, maybe we could use a limiting factor.",
+      "parentUuid": "23e69562_44a76763",
+      "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
