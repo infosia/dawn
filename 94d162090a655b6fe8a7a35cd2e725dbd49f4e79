@@ -87,6 +87,24 @@
       "parentUuid": "3d57432d_ea8a1259",
       "revId": "94d162090a655b6fe8a7a35cd2e725dbd49f4e79",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a67c7ff_392f2baa",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-27T20:55:22Z",
+      "side": 1,
+      "message": "Sure, but maybe my script sometimes adds the flag and sometimes doesn\u0027t, and now I have no signal to tell me that robustness will now be enabled in both cases and that I need to change my script if I want it to sometimes be disabled.",
+      "parentUuid": "78ddbe23_c6bfbb33",
+      "revId": "94d162090a655b6fe8a7a35cd2e725dbd49f4e79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
