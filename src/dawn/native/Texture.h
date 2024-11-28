@@ -46,6 +46,10 @@
 
 namespace dawn::native {
 
+wgpu::TextureViewDimension ResolveDefaultCompatiblityTextureBindingViewDimension(
+    const DeviceBase* device,
+    const UnpackedPtr<TextureDescriptor>& descriptor);
+
 enum class AllowMultiPlanarTextureFormat {
     No,
     SingleLayerOnly,
