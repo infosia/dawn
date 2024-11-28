@@ -76,7 +76,7 @@ Putting the above together, a typical client flow would look like this:
 
 # Implementation Details
 
-* Static samplers are translated to immutable samplers in the Vulkan backend
+* Static samplers are translated to immutable samplers in the Vulkan backend.
 * If the static sampler has a `sampledTextureBinding` annotation, it is
   translated to a combined image sampler rather than a regular sampler entry.
   The texture information for that combined image sampler is that which the
