@@ -33,6 +33,23 @@
       "message": "Also adding dsinclair@, as cwallez@ might have gone OOO. PTAL.",
       "revId": "06c0318c973d4a1fd872dce62be48c43b609a735",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4bbdd32_11c8111c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2024-11-28T18:40:46Z",
+      "side": 1,
+      "message": "Thanks for quick review!",
+      "revId": "06c0318c973d4a1fd872dce62be48c43b609a735",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
