@@ -3036,6 +3036,11 @@ void Validator::CheckSwizzle(const Swizzle* s) {
 }
 
 void Validator::CheckTerminator(const Terminator* b) {
+    // All terminators should have zero results
+    if (!CheckResults(b, 0)) {
+        return;
+    }
+
     // Note, transforms create `undef` terminator arguments (this is done in MergeReturn and
     // DemoteToHelper) so we can't add validation.
 
@@ -3150,8 +3155,7 @@ void Validator::CheckExitIf(const ExitIf* e) {
 }
 
 void Validator::CheckReturn(const Return* ret) {
-    if (!CheckResultsAndOperandRange(ret, Return::kNumResults, Return::kMinOperands,
-                                     Return::kMaxOperands)) {
+    if (!CheckOperands(ret, Return::kMinOperands, Return::kMaxOperands)) {
         return;
     }
 
