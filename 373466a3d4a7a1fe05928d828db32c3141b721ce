@@ -143,6 +143,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7cee2b3_ccf9d95b",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-28T19:46:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c4915092_8080ffff",
+      "range": {
+        "startLine": 1907,
+        "startChar": 16,
+        "endLine": 1907,
+        "endChar": 25
+      },
+      "revId": "373466a3d4a7a1fe05928d828db32c3141b721ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f95a727c_6c2b9d5e",
