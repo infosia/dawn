@@ -5425,7 +5425,7 @@ TEST_F(IR_ValidatorTest, Var_Init_FunctionTypeInit) {
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
     EXPECT_EQ(res.Failure().reason.Str(),
-              R"(:8:41 error: var: initializer type 'function' does not match store type 'f32'
+              R"(:8:41 error: var: initializer type '<function>' does not match store type 'f32'
     %i:ptr<function, f32, read_write> = var, %invalid_init
                                         ^^^
 
