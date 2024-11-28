@@ -654,7 +654,15 @@ using UncapturedErrorCallback = typename detail::CallbackTypeBase<std::tuple<con
 {% macro render_cpp_method_impl(type, method) %}
     {{render_cpp_method_declaration(type, method, dfn=True)}} {
         {% for arg in method.arguments if arg.type.has_free_members_function and arg.annotation == '*' %}
-            *{{as_varName(arg.name)}} = {{as_cppType(arg.type.name)}}();
+            {% if arg.type.extensible %}
+                //* Preserve nextInChain, so we can get info for it too.
+                //* This does not clear any chained structs, when that might be needed.
+                auto savedNextInChain = {{as_varName(arg.name)}}->nextInChain;
+                *{{as_varName(arg.name)}} = {{as_cppType(arg.type.name)}}();
+                {{as_varName(arg.name)}}->nextInChain = savedNextInChain;
+            {% else %}
+                *{{as_varName(arg.name)}} = {{as_cppType(arg.type.name)}}();
+            {% endif %}
         {% endfor %}
         {% if method.return_type.name.concatcase() == "void" %}
             {{render_cpp_to_c_method_call(type, method)}};
