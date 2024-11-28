@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <iostream>
 #include <cmath>
 #include <cstdint>
 #include <string>
@@ -115,14 +116,29 @@ class SubgroupsPropertiesTests : public SubgroupsTestsBase<AdapterTestParam> {
 TEST_P(SubgroupsPropertiesTests, FromAdapter) {
     DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsEnabledInWGSL());
 
-    wgpu::AdapterPropertiesSubgroups subgroup_properties;
+    wgpu::AdapterInfo info;
+    auto subgroup_properties = wgpu::AdapterPropertiesSubgroups();
+
     subgroup_properties.minSubgroupSize = 3;
     subgroup_properties.maxSubgroupSize = 443;
     EXPECT_EQ(subgroup_properties.sType, wgpu::SType::AdapterPropertiesSubgroups);
     EXPECT_EQ(subgroup_properties.nextInChain, nullptr);
-    wgpu::AdapterInfo info;
+
     info.nextInChain = &subgroup_properties;
+
     adapter.GetInfo(&info);
+    std::cout << "=test info.nextInChain     " << info.nextInChain << std::endl;
+    if (info.nextInChain) {
+      std::cout << "=test info.nextInChain->sType     " << info.nextInChain->sType << std::endl;
+      std::cout << "=test info.nextInChain->sType     " << int(info.nextInChain->sType) << std::endl;
+    }
+    std::cout << "=test &subgroup_properties " << &subgroup_properties << std::endl;
+    std::cout << "=test subgroup_properties.sType " << subgroup_properties.sType << std::endl;
+    std::cout << "=test subgroup_properties.sType " << int(subgroup_properties.sType) << std::endl;
+
+    EXPECT_EQ(info.nextInChain, &subgroup_properties);
+    EXPECT_EQ(subgroup_properties.sType, wgpu::SType::AdapterPropertiesSubgroups);
+    EXPECT_EQ(subgroup_properties.nextInChain, nullptr);
 
     CheckValidSizes(subgroup_properties.minSubgroupSize, subgroup_properties.maxSubgroupSize);
 }
