@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6522eba7_ed32758b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-11-28T14:04:22Z",
+      "side": 1,
+      "message": "Did you want me to send to Loko as well or can you +2 Corentin?",
+      "revId": "b2dc1a0f00b079c8aa452dc83e54c855f9474ce3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
