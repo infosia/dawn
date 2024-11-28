@@ -42,19 +42,19 @@ class Buffer final : public BufferBase {
     static ResultOrError<Ref<Buffer>> CreateInternalBuffer(Device* device,
                                                            const BufferDescriptor* descriptor,
                                                            bool shouldLazyClear);
-
-    Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor);
+    static ResultOrError<Ref<Buffer>> Create(Device* device,
+                                             const UnpackedPtr<BufferDescriptor>& descriptor);
 
     GLuint GetHandle() const;
 
-    bool EnsureDataInitialized();
-    bool EnsureDataInitializedAsDestination(uint64_t offset, uint64_t size);
-    bool EnsureDataInitializedAsDestination(const CopyTextureToBufferCmd* copy);
+    ResultOrError<bool> EnsureDataInitialized();
+    ResultOrError<bool> EnsureDataInitializedAsDestination(uint64_t offset, uint64_t size);
+    ResultOrError<bool> EnsureDataInitializedAsDestination(const CopyTextureToBufferCmd* copy);
 
     void TrackUsage() { MarkUsedInPendingCommands(); }
 
   private:
-    Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, bool shouldLazyClear);
+    Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, GLuint handle);
     ~Buffer() override;
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override;
     void UnmapImpl() override;
@@ -63,7 +63,7 @@ class Buffer final : public BufferBase {
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointer() override;
 
-    void InitializeToZero();
+    MaybeError InitializeToZero();
 
     GLuint mBuffer = 0;
     raw_ptr<void> mMappedData = nullptr;
