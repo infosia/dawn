@@ -528,6 +528,11 @@ class Validator {
     /// @returns true on success, false otherwise
     bool ArrayConstructor(const ast::CallExpression* ctor, const sem::Array* arr_type) const;
 
+    /// Validates a subgroupShuffleXXX builtin function
+    /// @param call the builtin call to validate
+    /// @returns true on success, false otherwise
+    bool SubgroupShuffleGeneric(const sem::Call* call) const;
+
     /// Validates a texture builtin function
     /// @param call the builtin call to validate
     /// @returns true on success, false otherwise
