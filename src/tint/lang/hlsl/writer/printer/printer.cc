@@ -432,7 +432,18 @@ class Printer : public tint::TextGenerator {
     }
 
     /// Emit an unreachable instruction
-    void EmitUnreachable() { Line() << "/* unreachable */"; }
+    void EmitUnreachable() {
+        Line() << "/* unreachable */";
+        if (current_block_ == current_function_->Block() &&
+            !current_function_->ReturnType()->Is<core::type::Void>()) {
+            // If this is the end of a non-void function, emit a return statement to keep DXC happy.
+            auto out = Line();
+            out << "return ";
+            EmitZeroValue(out, current_function_->ReturnType());
+            out << ";";
+            return;
+        }
+    }
 
     void EmitContinue() {
         if (emit_continuing_) {
