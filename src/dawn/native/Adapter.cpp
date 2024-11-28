@@ -27,6 +27,7 @@
 
 #include "dawn/native/Adapter.h"
 
+#include <iostream>
 #include <algorithm>
 #include <memory>
 #include <string>
@@ -180,7 +181,12 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
         powerPreferenceDesc->powerPreference = mPowerPreference;
     }
 
+    std::cout << "=adapter: populate backend properties nextInChain: " << info->nextInChain << std::endl;
+    for (auto* nic = info->nextInChain; nic ; nic = nic->nextInChain) {
+       std::cout << "=adapter:  nic " << nic << " sType " << int(info->nextInChain->sType) << std::endl;
+    }
     mPhysicalDevice->PopulateBackendProperties(unpacked);
+    std::cout << "=adapter:  done populating done populating " << std::endl;
 
     // Allocate space for all strings.
     size_t allocSize = mPhysicalDevice->GetVendorName().length() +
