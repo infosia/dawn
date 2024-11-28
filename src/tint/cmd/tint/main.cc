@@ -150,8 +150,7 @@ struct Options {
     bool dump_inspector_bindings = false;
     bool emit_single_entry_point = false;
 
-    bool rename_all = false;
-
+    bool rename_required_only = false;
     bool enable_robustness = true;
 
     bool dump_ir = false;
@@ -362,9 +361,6 @@ violations that may be produced)",
     auto& disable_demote_to_helper = options.Add<BoolOption>(
         "disable-demote-to-helper", "Disable demote to helper for discard", Default{false});
     TINT_DEFER(opts->disable_demote_to_helper = *disable_demote_to_helper.value);
-
-    auto& rename_all = options.Add<BoolOption>("rename-all", "Renames all symbols", Default{false});
-    TINT_DEFER(opts->rename_all = *rename_all.value);
 
     auto& dump_inspector_bindings = options.Add<BoolOption>(
         "dump-inspector-bindings", "Dump reflection data about bindings to stdout",
@@ -657,36 +653,46 @@ Options:
     switch (options.format) {
         case Format::kMsl: {
 #if TINT_BUILD_MSL_WRITER
-            transform_inputs.Add<tint::ast::transform::Renamer::Config>(
-                options.rename_all ? tint::ast::transform::Renamer::Target::kAll
-                                   : tint::ast::transform::Renamer::Target::kMslKeywords,
-                /* preserve_unicode */ false);
-            transform_manager.Add<tint::ast::transform::Renamer>();
+            if (options.rename_requried_only) {
+                transform_inputs.Add<tint::ast::transform::Renamer::Config>(
+                    tint::ast::transform::Renamer::Target::kMslKeywords,
+                    /* preserve_unicode */ false);
+            }
 #endif  // TINT_BUILD_MSL_WRITER
             break;
         }
 #if TINT_BUILD_GLSL_WRITER
         case Format::kGlsl: {
-            transform_inputs.Add<tint::ast::transform::Renamer::Config>(
-                options.rename_all ? tint::ast::transform::Renamer::Target::kAll
-                                   : tint::ast::transform::Renamer::Target::kGlslKeywords,
-                /* preserve_unicode */ false);
-            transform_manager.Add<tint::ast::transform::Renamer>();
+            if (options.rename_required_only) {
+                transform_inputs.Add<tint::ast::transform::Renamer::Config>(
+                    tint::ast::transform::Renamer::Target::kGlslKeywords,
+                    /* preserve_unicode */ false);
+            }
             break;
         }
 #endif  // TINT_BUILD_GLSL_WRITER
         case Format::kHlsl:
         case Format::kHlslFxc: {
 #if TINT_BUILD_HLSL_WRITER
-            transform_inputs.Add<tint::ast::transform::Renamer::Config>(
-                options.rename_all ? tint::ast::transform::Renamer::Target::kAll
-                                   : tint::ast::transform::Renamer::Target::kHlslKeywords,
-                /* preserve_unicode */ false);
-            transform_manager.Add<tint::ast::transform::Renamer>();
+            if (options.rename_required_only) {
+                transform_inputs.Add<tint::ast::transform::Renamer::Config>(
+                    tint::ast::transform::Renamer::Target::kHlslKeywords,
+                    /* preserve_unicode */ false);
+            }
+
 #endif  // TINT_BUILD_HLSL_WRITER
             break;
         }
-        default:
+        case Format::kSpirv:
+        case Format::kSpvAsm:
+            if (!options.rename_required_only) {
+                transform_manager.Add<tint::ast::transform::Renamer>();
+            }
+            break;
+        case Format::kNone:
+        case Format::kUnknown:
+        case Format::kWgsl:
+        case Format::kIr:
             break;
     }
 
