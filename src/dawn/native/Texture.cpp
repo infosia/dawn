@@ -587,37 +587,6 @@ bool CopySrcNeedsInternalTextureBindingUsage(const DeviceBase* device, const For
     return false;
 }
 
-wgpu::TextureViewDimension ResolveDefaultCompatiblityTextureBindingViewDimension(
-    const DeviceBase* device,
-    const UnpackedPtr<TextureDescriptor>& descriptor) {
-    // In non-compatibility mode this value is not used so return undefined so that it is not
-    // used by mistake.
-    if (device->HasFlexibleTextureViews()) {
-        return wgpu::TextureViewDimension::Undefined;
-    }
-
-    auto textureBindingViewDimension = wgpu::TextureViewDimension::Undefined;
-    if (auto* subDesc = descriptor.Get<TextureBindingViewDimensionDescriptor>()) {
-        textureBindingViewDimension = subDesc->textureBindingViewDimension;
-    }
-    if (textureBindingViewDimension != wgpu::TextureViewDimension::Undefined) {
-        return textureBindingViewDimension;
-    }
-
-    switch (descriptor->dimension) {
-        case wgpu::TextureDimension::e1D:
-            return wgpu::TextureViewDimension::e1D;
-        case wgpu::TextureDimension::e2D:
-            return descriptor->size.depthOrArrayLayers == 1 ? wgpu::TextureViewDimension::e2D
-                                                            : wgpu::TextureViewDimension::e2DArray;
-        case wgpu::TextureDimension::e3D:
-            return wgpu::TextureViewDimension::e3D;
-        case wgpu::TextureDimension::Undefined:
-        default:
-            DAWN_UNREACHABLE();
-    }
-}
-
 wgpu::TextureUsage AddInternalUsages(const DeviceBase* device,
                                      wgpu::TextureUsage usage,
                                      const Format& format,
@@ -662,6 +631,37 @@ wgpu::TextureUsage AddInternalUsages(const DeviceBase* device,
 }
 
 }  // anonymous namespace
+
+wgpu::TextureViewDimension ResolveDefaultCompatiblityTextureBindingViewDimension(
+    const DeviceBase* device,
+    const UnpackedPtr<TextureDescriptor>& descriptor) {
+    // In non-compatibility mode this value is not used so return undefined so that it is not
+    // used by mistake.
+    if (device->HasFlexibleTextureViews()) {
+        return wgpu::TextureViewDimension::Undefined;
+    }
+
+    auto textureBindingViewDimension = wgpu::TextureViewDimension::Undefined;
+    if (auto* subDesc = descriptor.Get<TextureBindingViewDimensionDescriptor>()) {
+        textureBindingViewDimension = subDesc->textureBindingViewDimension;
+    }
+    if (textureBindingViewDimension != wgpu::TextureViewDimension::Undefined) {
+        return textureBindingViewDimension;
+    }
+
+    switch (descriptor->dimension) {
+        case wgpu::TextureDimension::e1D:
+            return wgpu::TextureViewDimension::e1D;
+        case wgpu::TextureDimension::e2D:
+            return descriptor->size.depthOrArrayLayers == 1 ? wgpu::TextureViewDimension::e2D
+                                                            : wgpu::TextureViewDimension::e2DArray;
+        case wgpu::TextureDimension::e3D:
+            return wgpu::TextureViewDimension::e3D;
+        case wgpu::TextureDimension::Undefined:
+        default:
+            DAWN_UNREACHABLE();
+    }
+}
 
 MaybeError ValidateTextureDescriptor(
     const DeviceBase* device,
