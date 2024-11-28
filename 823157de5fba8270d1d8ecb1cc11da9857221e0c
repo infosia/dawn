@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdec4028_0784c661",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-28T20:48:51Z",
+      "side": 1,
+      "message": "LGTM with Dan\u0027s suggested changes.",
+      "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd0487ff_035e59fd",
@@ -14,6 +31,24 @@
       "writtenOn": "2024-11-28T20:27:34Z",
       "side": 1,
       "message": "This seems like something that could get forgotten. Could we create an overload of `ir::Module::CreateValue` which does some kind of magic to say `std::is_same_v\u003cstd::decay_t\u003cTYPE\u003e, ir::Function` and then do this directly it module for all functions?\n\nAlternatively, can we change the empty `Function` constructor to take a type argument?",
+      "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a427e1ed_dafd5b6d",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-28T20:48:51Z",
+      "side": 1,
+      "message": "Isn\u0027t it enough that the Builder does it? This is probably pretty much the only place in the codebase that we\u0027d create the function directly, without going through the builder.\n\nWe can also add validation code to make sure that every function value has function type.",
+      "parentUuid": "cd0487ff_035e59fd",
       "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
