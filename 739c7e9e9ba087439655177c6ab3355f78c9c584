@@ -16,6 +16,24 @@
       "message": "I\u0027m confused as to why it\u0027s not caught the check below though? If the type is `nullptr`, it won\u0027t match the `var` result type, so should fail there?",
       "revId": "739c7e9e9ba087439655177c6ab3355f78c9c584",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "150c3475_e5988662",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2380,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-28T15:27:28Z",
+      "side": 1,
+      "message": "It will get caught, but then `var-\u003eInitializer()-\u003eType()-\u003eFriendlyName()` will segfault when it goes to add the error message, since Type() is null. I broke out specially instead of just doing a ternary -\u003eFriendlyName or \u0027undefined\u0027 to be explicit about ir::Function being special.\n\nIn general Type() is guaranteed to be not null here, except that ir::Function is a special case in CheckOperand, since it doesn\u0027t override the base -\u003eType().\n\n(Honestly the correct solution might be to add in a synthetic \u0027type::Function\u0027, so that ir::Function can return that and avoid the special case in CheckOperands, b/c I don\u0027t doubt this isn\u0027t handle correctly other places)",
+      "parentUuid": "07f71c3c_bd1c2ef8",
+      "revId": "739c7e9e9ba087439655177c6ab3355f78c9c584",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
