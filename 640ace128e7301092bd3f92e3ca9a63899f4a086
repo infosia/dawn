@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cecfa921_4eef5736",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-28T04:02:44Z",
+      "side": 1,
+      "message": "Finish sentence",
+      "range": {
+        "startLine": 1902,
+        "startChar": 45,
+        "endLine": 1902,
+        "endChar": 56
+      },
+      "revId": "640ace128e7301092bd3f92e3ca9a63899f4a086",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3fe5949_267a10ac",
+        "filename": "src/tint/lang/wgsl/resolver/validator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-28T04:02:44Z",
+      "side": 1,
+      "message": "CanWe express this better?",
+      "range": {
+        "startLine": 531,
+        "startChar": 20,
+        "endLine": 531,
+        "endChar": 38
+      },
+      "revId": "640ace128e7301092bd3f92e3ca9a63899f4a086",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
