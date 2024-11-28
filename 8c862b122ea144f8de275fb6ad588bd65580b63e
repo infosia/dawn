@@ -51,6 +51,24 @@
       "message": "LGTM depending of the result of the discussion on the issue.",
       "revId": "8c862b122ea144f8de275fb6ad588bd65580b63e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4190d4fd_b36a9fc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-28T14:31:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08827947_87b01799",
+      "revId": "8c862b122ea144f8de275fb6ad588bd65580b63e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
