@@ -34,6 +34,24 @@
       "parentUuid": "3e241ff5_cf7ac1e9",
       "revId": "d9dc0b23980dc34c0b716f815d6f91c5f859644b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df9758ec_1d05235b",
+        "filename": "test/tint/builtins/compute_subgroup_shuffle_fail_override.wgsl.expected.glsl",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-28T18:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "786371c3_f19b428f",
+      "revId": "d9dc0b23980dc34c0b716f815d6f91c5f859644b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
