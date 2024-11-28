@@ -150,6 +150,30 @@
       },
       "revId": "0cc3fd6e168e21d239572bf3ca15d16801940bde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4acf954_52c5ccb2",
+        "filename": "docs/dawn/features/y_cb_cr_vulkan_samplers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000122
+      },
+      "writtenOn": "2024-11-28T14:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "233dfae5_d9f15ce4",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 18
+      },
+      "revId": "0cc3fd6e168e21d239572bf3ca15d16801940bde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
