@@ -68,6 +68,30 @@
       },
       "revId": "373466a3d4a7a1fe05928d828db32c3141b721ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e4e18dc_8469edab",
+        "filename": "src/tint/lang/wgsl/resolver/validator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-28T16:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95a727c_6c2b9d5e",
+      "range": {
+        "startLine": 532,
+        "startChar": 9,
+        "endLine": 532,
+        "endChar": 14
+      },
+      "revId": "373466a3d4a7a1fe05928d828db32c3141b721ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
