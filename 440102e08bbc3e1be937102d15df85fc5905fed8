@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09a1dfbb_5dcf6097",
+        "filename": "src/tint/lang/glsl/writer/loop_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-28T22:54:18Z",
+      "side": 1,
+      "message": "Why is there no increment?",
+      "revId": "440102e08bbc3e1be937102d15df85fc5905fed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
