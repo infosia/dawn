@@ -33,6 +33,24 @@
       "message": "A comment here referencing https://kotlinlang.org/docs/equality.html#structural-equality, and in particular the text, \"By default, the equals() function implements referential equality\", would be useful.  That\u0027ll establish that you\u0027re doing referenctial and not structural equality on purpose.",
       "revId": "804436a0d86ed15a4e787920a380fc8572ff1b93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2b174b5_c5cce572",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-11-28T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dab38364_fc105b73",
+      "revId": "804436a0d86ed15a4e787920a380fc8572ff1b93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
