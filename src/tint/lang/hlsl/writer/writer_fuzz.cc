@@ -36,7 +36,7 @@
 namespace tint::hlsl::writer {
 namespace {
 
-bool CanRun(const core::ir::Module& module) {
+bool CanRun(const core::ir::Module& module, const Options& options) {
     // Check for unsupported module-scope variable address spaces and types.
     for (auto* inst : *module.root_block) {
         auto* var = inst->As<core::ir::Var>();
@@ -51,11 +51,30 @@ bool CanRun(const core::ir::Module& module) {
             return false;
         }
     }
+
+    auto not_frag = [](const core::ir::Function* f) {
+        return f->Stage() != core::ir::Function::PipelineStage::kFragment;
+    };
+    auto not_vert = [](const core::ir::Function* f) {
+        return f->Stage() != core::ir::Function::PipelineStage::kVertex;
+    };
+
+    // PixelLocal must only run for fragment shaders
+    const bool pixel_local_enabled = !options.pixel_local.attachments.empty();
+    if (pixel_local_enabled && module.functions.Any(not_frag)) {
+        return false;
+    }
+
+    // Truncating interstage variables must only run for vertex shaders
+    if (options.truncate_interstage_variables && module.functions.Any(not_vert)) {
+        return false;
+    }
+
     return true;
 }
 
 Result<SuccessType> IRFuzzer(core::ir::Module& module, Options options) {
-    if (!CanRun(module)) {
+    if (!CanRun(module, options)) {
         return Failure{"Cannot run module"};
     }
 
