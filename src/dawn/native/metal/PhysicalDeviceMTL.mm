@@ -27,6 +27,7 @@
 
 #include "dawn/native/metal/PhysicalDeviceMTL.h"
 
+#include <iostream>
 #include "dawn/common/CoreFoundationRef.h"
 #include "dawn/common/GPUInfo.h"
 #include "dawn/common/Log.h"
@@ -970,6 +971,7 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
 
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {
     if (auto* subgroupProperties = info.Get<AdapterPropertiesSubgroups>()) {
+std::cout << "=  populate subgroupProperties " << subgroupProperties <<std::endl;
         subgroupProperties->minSubgroupSize = 4;
         subgroupProperties->maxSubgroupSize = 64;
     }
