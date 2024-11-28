@@ -1888,6 +1888,46 @@ bool Validator::BuiltinCall(const sem::Call* call) const {
     return true;
 }
 
+bool Validator::SubgroupShuffleGeneric(const sem::Call* call) const {
+    auto* builtin = call->Target()->As<sem::BuiltinFn>();
+    if (!builtin) {
+        return false;
+    }
+
+    TINT_ASSERT(call->Arguments().Length() == 2);
+    auto* id = call->Arguments()[1];
+    auto* constant_value = id->ConstantValue();
+
+    if (!constant_value) {
+        // Non const values are allowed as parameters to
+        return true;
+    }
+
+    if (id->Type()->IsSignedIntegerScalar() && constant_value->ValueAs<i32>() < 0) {
+        AddError(id->Declaration()->source) << "the sourceLaneIndex argument of " << builtin->str()
+                                            << " must be greater than or equal to zero";
+        return false;
+    }
+
+    if (id->Type()->IsSignedIntegerScalar() &&
+        constant_value->ValueAs<i32>() >= tint::internal_limits::kMaxSubgroupSize) {
+        AddError(id->Declaration()->source)
+            << "the sourceLaneIndex argument of " << builtin->str() << " must be less than "
+            << tint::internal_limits::kMaxSubgroupSize;
+        return false;
+    }
+
+    if (id->Type()->IsUnsignedIntegerScalar() &&
+        constant_value->ValueAs<u32>() >= tint::internal_limits::kMaxSubgroupSize) {
+        AddError(id->Declaration()->source)
+            << "the sourceLaneIndex argument of " << builtin->str() << " must be greater than "
+            << tint::internal_limits::kMaxSubgroupSize;
+        return false;
+    }
+
+    return true;
+}
+
 bool Validator::TextureBuiltinFn(const sem::Call* call) const {
     auto* builtin = call->Target()->As<sem::BuiltinFn>();
     if (!builtin) {
