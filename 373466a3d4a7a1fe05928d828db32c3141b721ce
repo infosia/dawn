@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cfb89260_efd2ba97",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-28T18:06:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean, when you get the name for the `call-\u003eArguments()[1]` it\u0027s `id` and not `sourceLaneIndex`?",
+      "parentUuid": "4792df94_f981ffa9",
+      "range": {
+        "startLine": 1907,
+        "startChar": 16,
+        "endLine": 1907,
+        "endChar": 25
+      },
+      "revId": "373466a3d4a7a1fe05928d828db32c3141b721ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f95a727c_6c2b9d5e",
         "filename": "src/tint/lang/wgsl/resolver/validator.h",
         "patchSetId": 7
