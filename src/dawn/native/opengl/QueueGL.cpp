@@ -37,6 +37,7 @@
 #include "dawn/native/opengl/PhysicalDeviceGL.h"
 #include "dawn/native/opengl/SharedFenceEGL.h"
 #include "dawn/native/opengl/TextureGL.h"
+#include "dawn/native/opengl/UtilsGL.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 
@@ -75,10 +76,10 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   size_t size) {
     const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
 
-    ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size);
+    DAWN_TRY(ToBackend(buffer)->EnsureDataInitializedAsDestination(bufferOffset, size));
 
-    gl.BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle());
-    gl.BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data);
+    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, ToBackend(buffer)->GetHandle()));
+    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, bufferOffset, size, data));
     buffer->MarkUsedInPendingCommands();
     return {};
 }
@@ -147,7 +148,8 @@ MaybeError Queue::WriteTextureImpl(const TexelCopyTextureInfo& destination,
     } else {
         DAWN_TRY(ToBackend(destination.texture)->EnsureSubresourceContentInitialized(range));
     }
-    DoTexSubImage(ToBackend(GetDevice())->GetGL(), textureCopy, data, dataLayout, writeSizePixel);
+    DAWN_TRY(DoTexSubImage(ToBackend(GetDevice())->GetGL(), textureCopy, data, dataLayout,
+                           writeSizePixel));
     return {};
 }
 
@@ -233,7 +235,7 @@ ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence(ExecutionSerial la
     // The FD cannot be queried before the flush and clients may hang if they try to wait on the
     // sync.
     const OpenGLFunctions& gl = device->GetGL();
-    gl.Flush();
+    DAWN_GL_TRY(gl, Flush());
 
     EGLint fd;
     DAWN_TRY_ASSIGN(fd, sync->DupFD());
@@ -283,7 +285,7 @@ void Queue::ForceEventualFlushOfCommands() {
 
 MaybeError Queue::WaitForIdleForDestruction() {
     const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-    gl.Finish();
+    DAWN_GL_TRY(gl, Finish());
     DAWN_TRY(CheckPassedSerials());
     DAWN_ASSERT(mFencesInFlight->empty());
     mHasPendingCommands = false;
