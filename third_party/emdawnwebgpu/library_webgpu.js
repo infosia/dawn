@@ -265,6 +265,7 @@ var LibraryWebGPU = {
       return WebGPU.getJsObject(layoutPtr);
     },
 
+    // TODO(379059434): Remove this once it has been fully deprecated.
     makeProgrammableStageDescriptor: (ptr) => {
       if (!ptr) return undefined;
       {{{ gpu.makeCheckDescriptor('ptr') }}}
@@ -276,6 +277,21 @@ var LibraryWebGPU = {
           {{{ makeGetValue('ptr', C_STRUCTS.WGPUProgrammableStageDescriptor.constants, '*') }}}),
         "entryPoint": WebGPU.makeStringFromOptionalStringView(
           ptr + {{{ C_STRUCTS.WGPUProgrammableStageDescriptor.entryPoint }}}),
+      };
+      return desc;
+    },
+
+    makeComputeState: (ptr) => {
+      if (!ptr) return undefined;
+      {{{ gpu.makeCheckDescriptor('ptr') }}}
+      var desc = {
+        "module": WebGPU.getJsObject(
+          {{{ makeGetValue('ptr', C_STRUCTS.WGPUComputeState.module, '*') }}}),
+        "constants": WebGPU.makePipelineConstants(
+          {{{ gpu.makeGetU32('ptr', C_STRUCTS.WGPUComputeState.constantCount) }}},
+          {{{ makeGetValue('ptr', C_STRUCTS.WGPUComputeState.constants, '*') }}}),
+        "entryPoint": WebGPU.makeStringFromOptionalStringView(
+          ptr + {{{ C_STRUCTS.WGPUComputeState.entryPoint }}}),
       };
       return desc;
     },
