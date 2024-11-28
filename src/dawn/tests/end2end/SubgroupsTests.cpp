@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <iostream>
 #include <cmath>
 #include <cstdint>
 #include <string>
@@ -32,12 +33,106 @@
 
 #include "dawn/common/GPUInfo.h"
 #include "dawn/common/Math.h"
+#include "dawn/dawn_proc.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
 
 namespace dawn {
 namespace {
+
+class SubgroupsPropertiesTests : public DawnTestWithParams<AdapterTestParam> {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::Subgroups};
+    }
+
+    // Checks valid values for min and max subgroup sizes, per spec.
+    void CheckValidSizes(uint32_t minSubgroupSize, uint32_t maxSubgroupSize) {
+        EXPECT_GE(minSubgroupSize, 4u) << minSubgroupSize;
+        EXPECT_TRUE(IsPowerOfTwo(minSubgroupSize)) << minSubgroupSize;
+
+        EXPECT_LE(maxSubgroupSize, 128u) << maxSubgroupSize;
+        EXPECT_TRUE(IsPowerOfTwo(maxSubgroupSize));
+
+        EXPECT_LE(minSubgroupSize, maxSubgroupSize)
+            << minSubgroupSize << " should be less equal than " << maxSubgroupSize;
+    }
+};
+
+TEST_P(SubgroupsPropertiesTests, FromAdapter) {
+    DAWN_TEST_UNSUPPORTED_IF(!adapter.HasFeature(wgpu::FeatureName::Subgroups));
+
+    wgpu::AdapterInfo info;
+    wgpu::AdapterPropertiesSubgroups subgroup_properties;
+
+    subgroup_properties.minSubgroupSize = 3;
+    subgroup_properties.maxSubgroupSize = 443;
+    EXPECT_EQ(subgroup_properties.sType, wgpu::SType::AdapterPropertiesSubgroups);
+    EXPECT_EQ(subgroup_properties.nextInChain, nullptr);
+
+    info.nextInChain = &subgroup_properties;
+
+    std::cout << "=test0 info.nextInChain     " << info.nextInChain << std::endl;
+    if (info.nextInChain) {
+      std::cout << "=test0 info.nextInChain->sType     " << info.nextInChain->sType << std::endl;
+      std::cout << "=test0 info.nextInChain->sType     " << int(info.nextInChain->sType) << std::endl;
+    }
+
+    adapter.GetInfo(&info);
+    std::cout << "=test info.nextInChain     " << info.nextInChain << std::endl;
+    if (info.nextInChain) {
+      std::cout << "=test info.nextInChain->sType     " << info.nextInChain->sType << std::endl;
+      std::cout << "=test info.nextInChain->sType     " << int(info.nextInChain->sType) << std::endl;
+    }
+    std::cout << "=test &subgroup_properties " << &subgroup_properties << std::endl;
+    std::cout << "=test subgroup_properties.sType " << subgroup_properties.sType << std::endl;
+    std::cout << "=test subgroup_properties.sType " << int(subgroup_properties.sType) << std::endl;
+
+    EXPECT_EQ(info.nextInChain, &subgroup_properties);
+    EXPECT_EQ(subgroup_properties.sType, wgpu::SType::AdapterPropertiesSubgroups);
+    EXPECT_EQ(subgroup_properties.nextInChain, nullptr);
+
+    CheckValidSizes(subgroup_properties.minSubgroupSize, subgroup_properties.maxSubgroupSize);
+}
+
+TEST_P(SubgroupsPropertiesTests, FromDevice) {
+    DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::Subgroups));
+
+    wgpu::AdapterPropertiesSubgroups subgroup_properties;
+    wgpu::AdapterInfo info;
+    info.nextInChain = &subgroup_properties;
+
+    device.GetAdapterInfo(&info);
+
+    CheckValidSizes(subgroup_properties.minSubgroupSize, subgroup_properties.maxSubgroupSize);
+}
+
+TEST_P(SubgroupsPropertiesTests, DeviceAndAdapterAgree) {
+    DAWN_TEST_UNSUPPORTED_IF(!adapter.HasFeature(wgpu::FeatureName::Subgroups) ||
+                             !device.HasFeature(wgpu::FeatureName::Subgroups));
+
+    wgpu::AdapterPropertiesSubgroups adapter_subgroup_properties;
+    wgpu::AdapterInfo adapter_info;
+    adapter_info.nextInChain = &adapter_subgroup_properties;
+    device.GetAdapterInfo(&adapter_info);
+
+    wgpu::AdapterPropertiesSubgroups device_subgroup_properties;
+    wgpu::AdapterInfo device_info;
+    device_info.nextInChain = &device_subgroup_properties;
+    device.GetAdapterInfo(&device_info);
+
+    EXPECT_EQ(device_subgroup_properties.minSubgroupSize,
+              adapter_subgroup_properties.minSubgroupSize);
+    EXPECT_EQ(device_subgroup_properties.maxSubgroupSize,
+              adapter_subgroup_properties.maxSubgroupSize);
+}
+
+DAWN_INSTANTIATE_TEST(SubgroupsPropertiesTests,
+                      D3D12Backend(),
+                      D3D12Backend({}, {"use_dxc"}),
+                      MetalBackend(),
+                      VulkanBackend());
 
 template <class Params>
 class SubgroupsTestsBase : public DawnTestWithParams<Params> {
@@ -96,73 +191,6 @@ class SubgroupsTestsBase : public DawnTestWithParams<Params> {
     // Indicates that backend actually supports using subgroups functions with f16 types.
     bool mSubgroupsF16SupportedByBackend = false;
 };
-
-class SubgroupsPropertiesTests : public SubgroupsTestsBase<AdapterTestParam> {
-  protected:
-    // Checks valid values for min and max subgroup sizes, per spec.
-    void CheckValidSizes(uint32_t minSubgroupSize, uint32_t maxSubgroupSize) {
-        EXPECT_GE(minSubgroupSize, 4u) << minSubgroupSize;
-        EXPECT_TRUE(IsPowerOfTwo(minSubgroupSize)) << minSubgroupSize;
-
-        EXPECT_LE(maxSubgroupSize, 128u) << maxSubgroupSize;
-        EXPECT_TRUE(IsPowerOfTwo(maxSubgroupSize));
-
-        EXPECT_LE(minSubgroupSize, maxSubgroupSize)
-            << minSubgroupSize << " should be less equal than " << maxSubgroupSize;
-    }
-};
-
-TEST_P(SubgroupsPropertiesTests, FromAdapter) {
-    DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsEnabledInWGSL());
-
-    wgpu::AdapterPropertiesSubgroups subgroup_properties;
-    subgroup_properties.minSubgroupSize = 3;
-    subgroup_properties.maxSubgroupSize = 443;
-    EXPECT_EQ(subgroup_properties.sType, wgpu::SType::AdapterPropertiesSubgroups);
-    EXPECT_EQ(subgroup_properties.nextInChain, nullptr);
-    wgpu::AdapterInfo info;
-    info.nextInChain = &subgroup_properties;
-    adapter.GetInfo(&info);
-
-    CheckValidSizes(subgroup_properties.minSubgroupSize, subgroup_properties.maxSubgroupSize);
-}
-
-TEST_P(SubgroupsPropertiesTests, FromDevice) {
-    DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsEnabledInWGSL());
-
-    wgpu::AdapterPropertiesSubgroups subgroup_properties;
-    wgpu::AdapterInfo info;
-    info.nextInChain = &subgroup_properties;
-
-    device.GetAdapterInfo(&info);
-
-    CheckValidSizes(subgroup_properties.minSubgroupSize, subgroup_properties.maxSubgroupSize);
-}
-
-TEST_P(SubgroupsPropertiesTests, DeviceAndAdapterAgree) {
-    DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsEnabledInWGSL());
-
-    wgpu::AdapterPropertiesSubgroups adapter_subgroup_properties;
-    wgpu::AdapterInfo adapter_info;
-    adapter_info.nextInChain = &adapter_subgroup_properties;
-    device.GetAdapterInfo(&adapter_info);
-
-    wgpu::AdapterPropertiesSubgroups device_subgroup_properties;
-    wgpu::AdapterInfo device_info;
-    device_info.nextInChain = &device_subgroup_properties;
-    device.GetAdapterInfo(&device_info);
-
-    EXPECT_EQ(device_subgroup_properties.minSubgroupSize,
-              adapter_subgroup_properties.minSubgroupSize);
-    EXPECT_EQ(device_subgroup_properties.maxSubgroupSize,
-              adapter_subgroup_properties.maxSubgroupSize);
-}
-
-DAWN_INSTANTIATE_TEST(SubgroupsPropertiesTests,
-                      D3D12Backend(),
-                      D3D12Backend({}, {"use_dxc"}),
-                      MetalBackend(),
-                      VulkanBackend());
 
 class SubgroupsShaderTests : public SubgroupsTestsBase<AdapterTestParam> {
   protected:
