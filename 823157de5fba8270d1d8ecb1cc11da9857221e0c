@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd0487ff_035e59fd",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-28T20:27:34Z",
+      "side": 1,
+      "message": "This seems like something that could get forgotten. Could we create an overload of `ir::Module::CreateValue` which does some kind of magic to say `std::is_same_v\u003cstd::decay_t\u003cTYPE\u003e, ir::Function` and then do this directly it module for all functions?\n\nAlternatively, can we change the empty `Function` constructor to take a type argument?",
+      "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14d443cd_ee890c8a",
+        "filename": "src/tint/lang/core/ir/function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-28T20:27:34Z",
+      "side": 1,
+      "message": "Maybe:\n\n```suggestion\n    /// @param type the type of the function itself\n```",
+      "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3a6d25d_33bab8b7",
+        "filename": "src/tint/lang/core/ir/function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-28T20:27:34Z",
+      "side": 1,
+      "message": "Can probably just inline this instead of putting the body in the cpp file?",
+      "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c7771fa_80d54668",
+        "filename": "src/tint/lang/core/type/function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-28T20:27:34Z",
+      "side": 1,
+      "message": "Don\u0027t need to override `Size` and `Align` as the default implementation will work here.",
+      "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
