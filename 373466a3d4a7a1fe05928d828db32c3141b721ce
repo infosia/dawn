@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b9d6ec2_df7d95fb",
+        "filename": "src/tint/lang/wgsl/resolver/builtin_validation_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-28T16:06:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9823c479_3b107819",
+      "range": {
+        "startLine": 870,
+        "startChar": 80,
+        "endLine": 870,
+        "endChar": 87
+      },
+      "revId": "373466a3d4a7a1fe05928d828db32c3141b721ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4792df94_f981ffa9",
