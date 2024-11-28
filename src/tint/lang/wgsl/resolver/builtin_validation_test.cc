@@ -916,10 +916,7 @@ TEST_F(ResolverBuiltinValidationTest, SubgroupBroadcastWithoutExtension_F16) {
              Return(Call(Source{{12, 34}}, "subgroupBroadcast", 1_h, 0_u)),
          });
 
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(12:34 error: cannot call built-in function 'subgroupBroadcast' without extension 'subgroups_f16')");
+    EXPECT_TRUE(r()->Resolve());
 }
 
 TEST_F(ResolverBuiltinValidationTest, SubgroupBroadcastWithExtensions_F16) {
@@ -950,10 +947,7 @@ TEST_F(ResolverBuiltinValidationTest, SubgroupBroadcastWithoutExtension_VecF16) 
              Return(Call(Source{{12, 34}}, "subgroupBroadcast", Call(ty.vec4<f16>(), 1_h), 0_u)),
          });
 
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(12:34 error: cannot call built-in function 'subgroupBroadcast' without extension 'subgroups_f16')");
+    EXPECT_TRUE(r()->Resolve());
 }
 
 TEST_F(ResolverBuiltinValidationTest, SubgroupBroadcastWithExtensions_VecF16) {
