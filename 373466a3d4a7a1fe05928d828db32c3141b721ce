@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9823c479_3b107819",
+        "filename": "src/tint/lang/wgsl/resolver/builtin_validation_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-28T15:30:07Z",
+      "side": 1,
+      "message": "Why is this greater???",
+      "range": {
+        "startLine": 870,
+        "startChar": 80,
+        "endLine": 870,
+        "endChar": 87
+      },
+      "revId": "373466a3d4a7a1fe05928d828db32c3141b721ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4792df94_f981ffa9",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-28T15:30:07Z",
+      "side": 1,
+      "message": "It would be nice to get the param name here programatically. Unfortunately the shuffle has param \u0027id\u0027 and not \u0027sourceLaneIndex\u0027.",
+      "range": {
+        "startLine": 1907,
+        "startChar": 16,
+        "endLine": 1907,
+        "endChar": 25
+      },
+      "revId": "373466a3d4a7a1fe05928d828db32c3141b721ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f95a727c_6c2b9d5e",
+        "filename": "src/tint/lang/wgsl/resolver/validator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-28T15:30:07Z",
+      "side": 1,
+      "message": "Add the FN arg. Pure convenience",
+      "range": {
+        "startLine": 532,
+        "startChar": 9,
+        "endLine": 532,
+        "endChar": 14
+      },
+      "revId": "373466a3d4a7a1fe05928d828db32c3141b721ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
