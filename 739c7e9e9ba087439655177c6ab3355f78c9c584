@@ -34,6 +34,24 @@
       "parentUuid": "07f71c3c_bd1c2ef8",
       "revId": "739c7e9e9ba087439655177c6ab3355f78c9c584",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6761268_c758aea5",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2380,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-28T15:56:33Z",
+      "side": 1,
+      "message": "Yeah, I think `type::Function` is probably a good idea. Feel free to do that as a follow up if you want to get this in as is first.",
+      "parentUuid": "150c3475_e5988662",
+      "revId": "739c7e9e9ba087439655177c6ab3355f78c9c584",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
