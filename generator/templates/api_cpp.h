@@ -40,6 +40,7 @@
 #ifndef {{PREFIX}}{{API}}_CPP_H_
 #define {{PREFIX}}{{API}}_CPP_H_
 
+#include <iostream>
 #include <cassert>
 #include <cmath>
 #include <cstddef>
@@ -655,11 +656,21 @@ using UncapturedErrorCallback = typename detail::CallbackTypeBase<std::tuple<con
     {{render_cpp_method_declaration(type, method, dfn=True)}} {
         {% for arg in method.arguments if arg.type.has_free_members_function and arg.annotation == '*' %}
             {% if arg.type.extensible %}
+                std::cout << "= call0 method " << {{as_varName(arg.name)}} << "  nic "  <<
+                                              {{as_varName(arg.name)}}->nextInChain <<std::endl;
+                if ({{as_varName(arg.name)}}->nextInChain) {
+                  std::cout << "= call0 method .. " << int({{as_varName(arg.name)}}->nextInChain->sType ) << std::endl;
+                }
                 //* Preserve nextInChain, so we can get info for it too.
                 //* This does not clear any chained structs, when that might be needed.
                 auto savedNextInChain = {{as_varName(arg.name)}}->nextInChain;
                 *{{as_varName(arg.name)}} = {{as_cppType(arg.type.name)}}();
                 {{as_varName(arg.name)}}->nextInChain = savedNextInChain;
+                std::cout << "= call1 method " << {{as_varName(arg.name)}} << "  nic "  <<
+                                              {{as_varName(arg.name)}}->nextInChain <<std::endl;
+                if ({{as_varName(arg.name)}}->nextInChain) {
+                  std::cout << "= call1 method .. " << int({{as_varName(arg.name)}}->nextInChain ->sType) << std::endl;
+                }
             {% else %}
                 *{{as_varName(arg.name)}} = {{as_cppType(arg.type.name)}}();
             {% endif %}
