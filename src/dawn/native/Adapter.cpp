@@ -27,6 +27,7 @@
 
 #include "dawn/native/Adapter.h"
 
+#include <iostream>
 #include <algorithm>
 #include <memory>
 #include <string>
@@ -152,35 +153,51 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
     }
 
     bool hadError = false;
+    auto printit = [&](std::string tag) {
+        std::cout << "=adapter: " << tag << " nextInChain: " << info->nextInChain << " had error? "
+                  << (hadError ? "true" : "false") << std::endl;
+        for (auto* nic = info->nextInChain; nic; nic = nic->nextInChain) {
+            std::cout << "=adapter: " << tag << "   nic " << nic << " sType "
+                      << int(info->nextInChain->sType) << std::endl;
+        }
+    };
+    printit("check-subgroups");
     if (unpacked.Get<AdapterPropertiesSubgroups>() != nullptr &&
         !mSupportedFeatures.IsEnabled(wgpu::FeatureName::Subgroups)) {
         hadError |=
             mInstance->ConsumedError(DAWN_VALIDATION_ERROR("Feature Subgroups is not available."));
     }
+    printit("check-memory-heaps");
     if (unpacked.Get<AdapterPropertiesMemoryHeaps>() != nullptr &&
         !mSupportedFeatures.IsEnabled(wgpu::FeatureName::AdapterPropertiesMemoryHeaps)) {
         hadError |= mInstance->ConsumedError(
             DAWN_VALIDATION_ERROR("Feature AdapterPropertiesMemoryHeaps is not available."));
     }
+    printit("check-d3d");
     if (unpacked.Get<AdapterPropertiesD3D>() != nullptr &&
         !mSupportedFeatures.IsEnabled(wgpu::FeatureName::AdapterPropertiesD3D)) {
         hadError |= mInstance->ConsumedError(
             DAWN_VALIDATION_ERROR("Feature AdapterPropertiesD3D is not available."));
     }
+    printit("check-vk");
     if (unpacked.Get<AdapterPropertiesVk>() != nullptr &&
         !mSupportedFeatures.IsEnabled(wgpu::FeatureName::AdapterPropertiesVk)) {
         hadError |= mInstance->ConsumedError(
             DAWN_VALIDATION_ERROR("Feature AdapterPropertiesVk is not available."));
     }
+    printit("check-had-error");
     if (hadError) {
         return wgpu::Status::Error;
     }
 
+    printit("check-power-pref");
     if (auto* powerPreferenceDesc = unpacked.Get<DawnAdapterPropertiesPowerPreference>()) {
         powerPreferenceDesc->powerPreference = mPowerPreference;
     }
 
+    printit("populate-backend-properties");
     mPhysicalDevice->PopulateBackendProperties(unpacked);
+    std::cout << "=adapter:  done populating " << std::endl;
 
     // Allocate space for all strings.
     size_t allocSize = mPhysicalDevice->GetVendorName().length() +
