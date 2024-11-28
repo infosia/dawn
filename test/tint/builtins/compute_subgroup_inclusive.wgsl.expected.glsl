@@ -1,6 +1,6 @@
 SKIP: INVALID
 
-<dawn>/src/tint/lang/glsl/writer/printer/printer.cc:1487 internal compiler error: TINT_UNREACHABLE unhandled core builtin: subgroupInclusiveAdd
+../../src/tint/lang/glsl/writer/printer/printer.cc:1598 internal compiler error: TINT_UNREACHABLE unhandled core builtin: subgroupInclusiveAdd
 ********************************************************************
 *  The tint shader compiler has encountered an unexpected error.   *
 *                                                                  *
@@ -8,4 +8,4 @@ SKIP: INVALID
 *  crbug.com/tint with the source program that triggered the bug.  *
 ********************************************************************
 
-tint executable returned error: signal: trace/BPT trap
+tint executable returned error: signal: illegal instruction
