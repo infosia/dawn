@@ -27,6 +27,7 @@
 
 #include "dawn/native/Adapter.h"
 
+#include <iostream>
 #include <algorithm>
 #include <memory>
 #include <string>
@@ -180,6 +181,10 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
         powerPreferenceDesc->powerPreference = mPowerPreference;
     }
 
+    std::cout << "=adapter: populate backend properties nextInChain:" << info->nextInChain << std::endl;
+      if (info->nextInChain) {
+       std::cout << "=adapter:   sType " << int(info->nextInChain->sType) << std::endl;
+      }
     mPhysicalDevice->PopulateBackendProperties(unpacked);
 
     // Allocate space for all strings.
