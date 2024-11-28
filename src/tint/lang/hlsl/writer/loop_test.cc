@@ -48,7 +48,11 @@ TEST_F(HlslWriterTest, Loop) {
 [numthreads(1, 1, 1)]
 void a() {
   {
+    uint2 tint_loop_idx = (0u).xx;
     while(true) {
+      if (all((tint_loop_idx == (4294967295u).xx))) {
+        break;
+      }
       break;
     }
   }
@@ -72,8 +76,16 @@ TEST_F(HlslWriterTest, LoopContinueAndBreakIf) {
 [numthreads(1, 1, 1)]
 void a() {
   {
+    uint2 tint_loop_idx = (0u).xx;
     while(true) {
+      if (all((tint_loop_idx == (4294967295u).xx))) {
+        break;
+      }
       {
+        uint tint_low_inc = (tint_loop_idx.x + 1u);
+        tint_loop_idx.x = tint_low_inc;
+        uint tint_carry = uint((tint_low_inc == 0u));
+        tint_loop_idx.y = (tint_loop_idx.y + tint_carry);
         if (true) { break; }
       }
       continue;
@@ -103,9 +115,17 @@ TEST_F(HlslWriterTest, LoopBodyVarInContinue) {
 [numthreads(1, 1, 1)]
 void a() {
   {
+    uint2 tint_loop_idx = (0u).xx;
     while(true) {
+      if (all((tint_loop_idx == (4294967295u).xx))) {
+        break;
+      }
       bool v = true;
       {
+        uint tint_low_inc = (tint_loop_idx.x + 1u);
+        tint_loop_idx.x = tint_low_inc;
+        uint tint_carry = uint((tint_low_inc == 0u));
+        tint_loop_idx.y = (tint_loop_idx.y + tint_carry);
         if (v) { break; }
       }
       continue;
@@ -136,9 +156,17 @@ TEST_F(HlslWriterTest, LoopInitializer) {
 [numthreads(1, 1, 1)]
 void a() {
   {
+    uint2 tint_loop_idx = (0u).xx;
     bool v = true;
     while(true) {
+      if (all((tint_loop_idx == (4294967295u).xx))) {
+        break;
+      }
       {
+        uint tint_low_inc = (tint_loop_idx.x + 1u);
+        tint_loop_idx.x = tint_low_inc;
+        uint tint_carry = uint((tint_low_inc == 0u));
+        tint_loop_idx.y = (tint_loop_idx.y + tint_carry);
         if (v) { break; }
       }
       continue;
