@@ -5,13 +5,17 @@ this is not the only context in which YCbCr sampling can be used on Android, but
 for video playback it *must* be used). In a nutshell:
 
 * The AHardwareBuffer containing the video frame has YCbCr information that can
-  be queried
+  be queried. This YCbCr information has an opaque "external format" integer
+  that must be supplied when creating a sampler to sample this
+  AHardwareBuffer. It's possible for this format or other parts of the YCbCr
+  info to change from frame to frame (i.e., between AHBs), and hence the
+  information must be queried every frame.
 * The client must query that information and use it to create an immutable
   sampler
 * The client must then package that sampler together with the information of
   the sampled image into a combined image sampler that is inserted into the
   VkDescriptorSetLayout
-* The client must insert the sampled image (i.e., an image wrapping the AHB) 
+* The client must insert the sampled image (i.e., an image wrapping the AHB)
   into the VkDescriptorSet
 * The client's SPIR-V must either directly create a SampledImage from the
   combined image sampler or must create sampler and texture variables that both
@@ -61,7 +65,8 @@ Putting the above together, a typical client flow would look like this:
 * Create a BindGroupLayout that includes that YCbCr sampler with a
   `sampledTextureBinding` annotation that points to the entry of the texture
   that will be sampled (i.e., where the AHB will be passed). That texture entry
-  should have format type EXTERNAL.
+  must have format type EXTERNAL. Note: The client might want to cache created
+  BGLs for performance; if so, this caching must be keyed off the YCbCr info.
 * Create WGSL that references the sampler and texture via their respective
   indices in the BindGroupLayout, just as if they were an "ordinary" sampler and
   texture.
@@ -76,11 +81,13 @@ Putting the above together, a typical client flow would look like this:
   translated to a combined image sampler rather than a regular sampler entry.
   The texture information for that combined image sampler is that which the
   client passed in the corresponding texture entry.
-* In BindGroup->VkDescriptorSet translation, the texture is passed at the index 
+* In BindGroup->VkDescriptorSet translation, the texture is passed at the index
   for the combined image sampler in the VkDescriptorSetLayout.
 * In WGSL->SPIR-V translation, any variables created from the texture entry in
   the BindGroup are translated to point to the combined image sampler in the
-  VkDescriptorSet.
+  VkDescriptorSet (note that variables created from the sampler entry will
+  naturally point to the combined image sampler, since the combined image
+  sampler is created at the index for the sampler entry).
 
 # Validation
 
