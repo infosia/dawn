@@ -16,6 +16,63 @@
       "message": "relevant spec: https://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md#20-limit-the-number-of-texturesampler-combinations-in-a-stage",
       "revId": "dbd2c3626ceb7262f9399d8492035050fb2facac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7de6563_bbc6b255",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-28T21:31:07Z",
+      "side": 1,
+      "message": "My C++ is weak, but won\u0027t capturing the `sampledTextures` set by value potentially cause it to be copied?",
+      "revId": "dbd2c3626ceb7262f9399d8492035050fb2facac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79ea7f7b_3cb71da1",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-28T21:31:07Z",
+      "side": 1,
+      "message": "IIUC, `numSamplerExternalTexturePairs` will always be the same as `sampledExternalTextures.size()`, so this could just be written as `numSamplerExternalTexturePairs * 4`. Or `sampledExternalTextures.size() * 4`, and then you don\u0027t need the `numSamplerTexturePairs` counter (likewise for `numSamplerTexturePairs`).",
+      "range": {
+        "startLine": 1068,
+        "startChar": 0,
+        "endLine": 1069,
+        "endChar": 81
+      },
+      "revId": "dbd2c3626ceb7262f9399d8492035050fb2facac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee2e38af_7935652c",
+        "filename": "src/tint/lang/wgsl/inspector/entry_point.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-28T21:31:07Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like you need this?",
+      "revId": "dbd2c3626ceb7262f9399d8492035050fb2facac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
