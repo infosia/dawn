@@ -146,6 +146,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "baa0b8b6_14bd3d9b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2024-11-28T03:15:01Z",
+      "side": 1,
+      "message": "Makes sense!\n\nNice and warm to see you again, Geoff. You were one of the guides who firstly led me into ANGLE. Great to work with you again in Dawn. 😊",
+      "parentUuid": "6bc758c1_a8b31bb8",
+      "range": {
+        "startLine": 1837,
+        "startChar": 0,
+        "endLine": 1837,
+        "endChar": 119
+      },
+      "revId": "b5768306e4575cf7a6e0f7acee6d31826d0a4ab6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d777f801_1299b442",
         "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
         "patchSetId": 5
