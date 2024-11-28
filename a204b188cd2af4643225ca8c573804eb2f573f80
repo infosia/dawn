@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "a204b188cd2af4643225ca8c573804eb2f573f80",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0439917e_370693ea",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-28T21:34:20Z",
+      "side": 1,
+      "message": "I don\u0027t think we should add this flag. I can\u0027t think of a situation where you would ever want to turn it off, since it\u0027d only be valid to not run it if you don\u0027t have overrides, and then it\u0027s a no-op anyway.",
+      "revId": "a204b188cd2af4643225ca8c573804eb2f573f80",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
