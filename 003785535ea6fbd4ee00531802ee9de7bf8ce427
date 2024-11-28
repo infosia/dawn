@@ -16,6 +16,24 @@
       "message": "I haven\u0027t had a chance to test this yet because it turns out my local test project is way out of date (and having some build problems with removal of swapchain?), but here\u0027s the WIP CL",
       "revId": "003785535ea6fbd4ee00531802ee9de7bf8ce427",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "310b9fb9_eb9ada0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-11-28T05:14:51Z",
+      "side": 1,
+      "message": "OK, I was able to verify it! Incidentally though, I also proved that nested WaitAny (on a different future) doesn\u0027t work even with this patch :\u0027)",
+      "parentUuid": "e20a83cb_bf11b526",
+      "revId": "003785535ea6fbd4ee00531802ee9de7bf8ce427",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
