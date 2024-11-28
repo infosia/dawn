@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e3f34ce_24e871b4",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-28T20:51:38Z",
+      "side": 1,
+      "message": "Adding validation would probably catch it quick enough.",
+      "parentUuid": "a427e1ed_dafd5b6d",
+      "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "14d443cd_ee890c8a",
         "filename": "src/tint/lang/core/ir/function.h",
         "patchSetId": 1
