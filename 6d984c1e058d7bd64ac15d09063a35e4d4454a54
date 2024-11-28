@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25816943_bbea7f51",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-28T16:47:29Z",
+      "side": 1,
+      "message": "I\u0027ve found the info struct is being overwritten *including* its next-in-chain.\n\nThis is happening in the webgpu_api.h header via the line `*info \u003d AdapterInfo();`\nAnd that\u0027s happening because AdapterInfo is deemed to have a \u0027free_members_function\u0027 per the templating logic.\nThe original CL was https://dawn-review.googlesource.com/c/dawn/+/141501 and I\u0027m trying to figure out the intent here.\nSee line 187 in https://dawn-review.googlesource.com/c/dawn/+/141501/9/generator/templates/api_cpp.cpp",
+      "revId": "6d984c1e058d7bd64ac15d09063a35e4d4454a54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
