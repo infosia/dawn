@@ -763,9 +763,6 @@ def compute_kotlin_params(loaded_json, kotlin_json):
         return True
 
     def include_structure(structure):
-        # TODO(352710628) support converting callback info.
-        if structure.name.canonical_case().endswith(" callback info"):
-            return False
         if structure.name.canonical_case() == "string view":
             return False
         return True

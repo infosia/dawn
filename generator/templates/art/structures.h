@@ -31,6 +31,11 @@ namespace dawn::kotlin_api {
 
 class JNIContext;
 
+struct UserData {
+    JNIEnv *env;
+    jobject callback;
+};
+
 // Converts Kotlin objects representing Dawn structures into native structures that can be passed
 // into the native Dawn API.
 jobject ToKotlin(JNIEnv* env, const WGPUStringView* s);

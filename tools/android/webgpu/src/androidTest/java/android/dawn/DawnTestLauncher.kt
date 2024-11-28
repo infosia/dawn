@@ -1,9 +1,15 @@
 package android.dawn
 
-import android.dawn.helper.*
+import android.dawn.helper.DawnException
+import android.dawn.helper.Util
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+
+class DeviceLostException(val device: Device, val reason: DeviceLostReason, message: String) :
+    Exception(message)
+
+class UncapturedErrorException(val type: ErrorType, message: String) : Exception(message)
 
 fun dawnTestLauncher(
     requiredFeatures: Array<FeatureName> = arrayOf(),
@@ -26,12 +32,17 @@ fun dawnTestLauncher(
             instance.requestAdapter().adapter ?: throw DawnException("No adapter available")
 
         val device = adapter.requestDevice(
-            DeviceDescriptor(requiredFeatures = requiredFeatures)
+            DeviceDescriptor(
+                requiredFeatures = requiredFeatures,
+                deviceLostCallbackInfo = DeviceLostCallbackInfo(
+                    callback = DeviceLostCallbackNew
+                    { device, reason, message ->
+                        throw DeviceLostException(device, reason, message)
+                    }),
+                uncapturedErrorCallbackInfo = UncapturedErrorCallbackInfo { type, message ->
+                    throw UncapturedErrorException(type, message)
+                })
         ).device ?: throw DawnException("No device available")
-
-        device.setUncapturedErrorCallback { type, message ->
-            throw DawnException(message)
-        }
 
         callback(device)
 
@@ -43,6 +54,11 @@ fun dawnTestLauncher(
         runBlocking {
             eventProcessor.join()
         }
-        instance.close()
+        try {
+            instance.close()
+        } catch (ignored: DeviceLostException) {
+            // For some reason we receive a device lost callback even though the only device has
+            // been closed. b/381416258
+        }
     }
 }
