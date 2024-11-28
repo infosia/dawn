@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e20a83cb_bf11b526",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-11-28T03:10:01Z",
+      "side": 1,
+      "message": "I haven\u0027t had a chance to test this yet because it turns out my local test project is way out of date (and having some build problems with removal of swapchain?), but here\u0027s the WIP CL",
+      "revId": "003785535ea6fbd4ee00531802ee9de7bf8ce427",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
