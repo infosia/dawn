@@ -139,6 +139,9 @@ crbug.com/dawn/2168 [ android arm ] webgpu:api,validation,error_scope:simple:err
 # Integer multisampling issues
 crbug.com/397451807 webgpu:shader,execution,expression,call,builtin,textureNumSamples:sampled: [ Failure ]
 
+# Generates GL_OUT_OF_MEMORY
+crbug.com/361372970 webgpu:api,validation,image_copy,layout_related:copy_end_overflows_u64:method="WriteTexture" [ Failure ]
+
 # COMBINED_SHADER_OUTPUT_RESOURCES issue
 crbug.com/42241064 webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:* [ Skip ]
 crbug.com/42241064 webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:* [ Skip ]
