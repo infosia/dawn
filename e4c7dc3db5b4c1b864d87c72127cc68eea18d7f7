@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bea0a74_9a322455",
+        "filename": "src/tint/lang/hlsl/writer/writer_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-28T17:04:11Z",
+      "side": 1,
+      "message": "This will also fail for non-entry-point functions, which are not effected by these options. Same below.",
+      "revId": "e4c7dc3db5b4c1b864d87c72127cc68eea18d7f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
