@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c4915092_8080ffff",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-11-28T19:15:38Z",
+      "side": 1,
+      "message": "Ah, thought that\u0027s what your initial message was saying. I don\u0027t think these will be available at this point, you could get them from teh intrinsic table I think, but that would be pretty heavy weight, this way is probably better.",
+      "parentUuid": "99ee9b36_5d138aee",
+      "range": {
+        "startLine": 1907,
+        "startChar": 16,
+        "endLine": 1907,
+        "endChar": 25
+      },
+      "revId": "373466a3d4a7a1fe05928d828db32c3141b721ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f95a727c_6c2b9d5e",
         "filename": "src/tint/lang/wgsl/resolver/validator.h",
         "patchSetId": 7
