@@ -52,6 +52,24 @@
       "parentUuid": "150c3475_e5988662",
       "revId": "739c7e9e9ba087439655177c6ab3355f78c9c584",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8b5e8cc_552b8e88",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2380,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-11-28T16:24:14Z",
+      "side": 1,
+      "message": "Filed https://issues.chromium.org/issues/381281326 to do this in a followup.",
+      "parentUuid": "e6761268_c758aea5",
+      "revId": "739c7e9e9ba087439655177c6ab3355f78c9c584",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
