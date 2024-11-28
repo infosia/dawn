@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a467a8d_532ea747",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-11-28T14:12:26Z",
+      "side": 1,
+      "message": "Note that this may not always be portable in WASM because some objects are deduplicated by dawn::native (for example the same pipeline, or the same BGL) but not by the WebGPU JS API or dawn::wire::client.",
+      "revId": "a9f83d270521aad8e5031014294af5b2f719b880",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
