@@ -52,8 +52,9 @@ MaybeError ComputePipeline::InitializeImpl() {
     return {};
 }
 
-void ComputePipeline::ApplyNow() {
-    PipelineGL::ApplyNow(ToBackend(GetDevice())->GetGL());
+MaybeError ComputePipeline::ApplyNow() {
+    DAWN_TRY(PipelineGL::ApplyNow(ToBackend(GetDevice())->GetGL()));
+    return {};
 }
 
 }  // namespace dawn::native::opengl
