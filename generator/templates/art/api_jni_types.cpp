@@ -125,6 +125,8 @@
     {% elif member.type.category in ['bitmask', 'enum', 'native'] %}
         //* We use Kotlin value classes for bitmask and enum, and they get inlined as lone values.
         {{ to_jni_type(member.type) }} {{ output }} = static_cast<{{ to_jni_type(member.type) }}>({{ input }});
+    {% elif member.type.category == 'function pointer' %}
+        jobject {{ output }} = nullptr;  // Native callbacks cannot be converted to Kotlin.
     {% else %}
         {{ unreachable_code() }}
     {% endif %}
