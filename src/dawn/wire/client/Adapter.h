@@ -76,6 +76,7 @@ class Adapter final : public ObjectWithEventsBase {
     std::vector<WGPUMemoryHeapInfo> mMemoryHeapInfo;
     WGPUAdapterPropertiesD3D mD3DProperties;
     WGPUAdapterPropertiesVk mVkProperties;
+    WGPUAdapterPropertiesSubgroups mSubgroupsProperties;
 };
 
 }  // namespace dawn::wire::client
