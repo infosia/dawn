@@ -16,6 +16,24 @@
       "message": "Check the dawn side for the specific case of supporting f16 and subgroups but not subgroups_f16\n\nI am aware of how this works in vk",
       "revId": "7c957304f6ae1427ace44fbbc9c27d446d7b344e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f97a95c3_30124c1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-29T16:46:04Z",
+      "side": 1,
+      "message": "Only 4% of devices that support both f16 and subgroups could not support subgroup extended types. RESOLVED at F2F: remove subgroups_f16\n\nhttps://github.com/gpuweb/gpuweb/blob/main/proposals/subgroups.md",
+      "parentUuid": "c559961c_9531b883",
+      "revId": "7c957304f6ae1427ace44fbbc9c27d446d7b344e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
