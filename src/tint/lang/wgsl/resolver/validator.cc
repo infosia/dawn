@@ -2050,9 +2050,16 @@ bool Validator::RequiredFeaturesForBuiltinFn(const sem::Call* call) const {
     if (builtin->IsSubgroup()) {
         auto ext = wgsl::Extension::kSubgroups;
         if (builtin->ReturnType()->DeepestElement()->Is<core::type::F16>()) {
-            ext = wgsl::Extension::kSubgroupsF16;
+            ext = wgsl::Extension::kF16;
         }
-        if (!enabled_extensions_.Contains(ext)) {
+
+        // TODO(crbug.com/380244620): Remove when 'subgroups_f16' has been fully deprecated.
+        auto ext_deprecated = wgsl::Extension::kSubgroups;
+        if (builtin->ReturnType()->DeepestElement()->Is<core::type::F16>()) {
+            ext_deprecated = wgsl::Extension::kSubgroupsF16;
+        }
+
+        if (!enabled_extensions_.Contains(ext) && !enabled_extensions_.Contains(ext_deprecated)) {
             AddError(call->Declaration()->source)
                 << "cannot call built-in function " << style::Function(builtin->Fn())
                 << " without extension " << style::Code(wgsl::ToString(ext));
