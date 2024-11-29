@@ -71,7 +71,7 @@ TEST_P(SubgroupsPropertiesTests, FromAdapter) {
     wgpu::AdapterInfo info;
     info.nextInChain = &subgroup_properties;
 
-    adapter.GetInfo(&info);
+    GetAdapter().GetInfo(&info);
 
     EXPECT_EQ(info.nextInChain, &subgroup_properties);
     EXPECT_EQ(subgroup_properties.sType, wgpu::SType::AdapterPropertiesSubgroups);
@@ -99,7 +99,7 @@ TEST_P(SubgroupsPropertiesTests, DeviceAndAdapterAgree) {
     wgpu::AdapterPropertiesSubgroups adapter_subgroup_properties;
     wgpu::AdapterInfo adapter_info;
     adapter_info.nextInChain = &adapter_subgroup_properties;
-    adapter.GetInfo(&adapter_info);
+    GetAdapter().GetInfo(&adapter_info);
 
     wgpu::AdapterPropertiesSubgroups device_subgroup_properties;
     wgpu::AdapterInfo device_info;
