@@ -123,6 +123,24 @@
       "parentUuid": "21f2c21b_3ab93be2",
       "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a14a3580_113a4591",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-11-29T17:14:33Z",
+      "side": 1,
+      "message": "So is it ok to stamp this CL with +2? Thanks",
+      "parentUuid": "3e09cf83_8dff06fb",
+      "revId": "29209acedce8d3e805fabb39b6fe3e51c0da11be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
