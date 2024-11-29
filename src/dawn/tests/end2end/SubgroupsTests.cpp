@@ -126,7 +126,7 @@ TEST_P(SubgroupsPropertiesTests, DeviceAndAdapterAgree) {
     wgpu::AdapterPropertiesSubgroups adapter_subgroup_properties;
     wgpu::AdapterInfo adapter_info;
     adapter_info.nextInChain = &adapter_subgroup_properties;
-    adapter.GetInfo(&adapter_info);
+    GetAdapter().GetInfo(&adapter_info);
 
     wgpu::AdapterPropertiesSubgroups device_subgroup_properties;
     wgpu::AdapterInfo device_info;
