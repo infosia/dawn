@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f4a3dbf_c608f488",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-29T17:52:32Z",
+      "side": 1,
+      "message": "I\u0027m on the fence about whether to approve this.\nThe unit test should really show the definition of the end value for the vector.",
+      "revId": "1cdaf85eccf541fbc2660a1785f3fffe59537e68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3eb213e_99ab288e",
+        "filename": "src/tint/lang/spirv/writer/loop_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-11-29T17:52:32Z",
+      "side": 1,
+      "message": "nit:  The definition of %17 is not shown in this test.\n(It\u0027s the ve2u(UINT_MAX))\n\nIt\u0027s shown in the end2end tests, but that should be a second line of defense.",
+      "range": {
+        "startLine": 94,
+        "startChar": 36,
+        "endLine": 94,
+        "endChar": 39
+      },
+      "revId": "1cdaf85eccf541fbc2660a1785f3fffe59537e68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
