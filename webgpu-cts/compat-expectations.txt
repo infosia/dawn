@@ -2182,6 +2182,19 @@ crbug.com/dawn/0000 [ android arm ] webgpu:api,validation,error_scope:simple:err
 crbug.com/dawn/0000 [ android arm ] webgpu:api,validation,error_scope:simple:errorType="validation";errorFilter="out-of-memory" [ Skip ]
 
 ### This section represents tests which may require CTS changes.
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,quadBroadcast:requires_subgroups_f16:enable=false [ Failure ]
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,quadSwap:requires_subgroups_f16:enable=false;op="quadSwapDiagonal" [ Failure ]
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,quadSwap:requires_subgroups_f16:enable=false;op="quadSwapX" [ Failure ]
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,quadSwap:requires_subgroups_f16:enable=false;op="quadSwapY" [ Failure ]
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupBroadcast:requires_subgroups_f16:enable=false [ Failure ]
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupBroadcastFirst:requires_subgroups_f16:enable=false [ Failure ]
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupMinMax:requires_subgroups_f16:enable=false;op="subgroupMax" [ Failure ]
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupMinMax:requires_subgroups_f16:enable=false;op="subgroupMin" [ Failure ]
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupShuffle:requires_subgroups_f16:enable=false;op="subgroupShuffle" [ Failure ]
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupShuffle:requires_subgroups_f16:enable=false;op="subgroupShuffleDown" [ Failure ]
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupShuffle:requires_subgroups_f16:enable=false;op="subgroupShuffleUp" [ Failure ]
+crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupShuffle:requires_subgroups_f16:enable=false;op="subgroupShuffleXor" [ Failure ]
+
 
 # Failures due to change in `@align()` validation.
 crbug.com/375467276 webgpu:shader,execution,expression,access,structure,index:buffer_align:* [ Failure ]
