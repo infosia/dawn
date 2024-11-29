@@ -200,6 +200,13 @@ void Adapter::SetInfo(const WGPUAdapterInfo* info) {
                 mVkProperties.driverVersion = vkProperties->driverVersion;
                 break;
             }
+            case WGPUSType_AdapterPropertiesSubgroups: {
+                auto* subgroupsProperties =
+                    reinterpret_cast<WGPUAdapterPropertiesSubgroups*>(chain);
+                mSubgroupsProperties.minSubgroupSize = subgroupsProperties->minSubgroupSize;
+                mSubgroupsProperties.maxSubgroupSize = subgroupsProperties->maxSubgroupSize;
+                break;
+            }
             default:
                 DAWN_UNREACHABLE();
                 break;
@@ -233,6 +240,13 @@ WGPUStatus Adapter::GetInfo(WGPUAdapterInfo* info) const {
             case WGPUSType_AdapterPropertiesVk: {
                 auto* vkProperties = reinterpret_cast<WGPUAdapterPropertiesVk*>(chain);
                 vkProperties->driverVersion = mVkProperties.driverVersion;
+                break;
+            }
+            case WGPUSType_AdapterPropertiesSubgroups: {
+                auto* subgroupsProperties =
+                    reinterpret_cast<WGPUAdapterPropertiesSubgroups*>(chain);
+                subgroupsProperties->minSubgroupSize = mSubgroupsProperties.minSubgroupSize;
+                subgroupsProperties->maxSubgroupSize = mSubgroupsProperties.maxSubgroupSize;
                 break;
             }
             default:
