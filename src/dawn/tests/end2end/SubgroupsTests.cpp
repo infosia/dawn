@@ -39,6 +39,85 @@
 namespace dawn {
 namespace {
 
+class SubgroupsPropertiesTests : public DawnTestWithParams<AdapterTestParam> {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::Subgroups};
+    }
+
+    // Checks valid values for min and max subgroup sizes, per spec.
+    void CheckValidSizes(uint32_t minSubgroupSize, uint32_t maxSubgroupSize) {
+        EXPECT_GE(minSubgroupSize, 4u) << minSubgroupSize;
+        EXPECT_TRUE(IsPowerOfTwo(minSubgroupSize)) << minSubgroupSize;
+
+        EXPECT_LE(maxSubgroupSize, 128u) << maxSubgroupSize;
+        EXPECT_TRUE(IsPowerOfTwo(maxSubgroupSize));
+
+        EXPECT_LE(minSubgroupSize, maxSubgroupSize)
+            << minSubgroupSize << " should be less equal than " << maxSubgroupSize;
+    }
+};
+
+TEST_P(SubgroupsPropertiesTests, FromAdapter) {
+    DAWN_TEST_UNSUPPORTED_IF(!adapter.HasFeature(wgpu::FeatureName::Subgroups));
+
+    wgpu::AdapterPropertiesSubgroups subgroup_properties;
+
+    subgroup_properties.minSubgroupSize = 3;
+    subgroup_properties.maxSubgroupSize = 443;
+    EXPECT_EQ(subgroup_properties.sType, wgpu::SType::AdapterPropertiesSubgroups);
+    EXPECT_EQ(subgroup_properties.nextInChain, nullptr);
+
+    wgpu::AdapterInfo info;
+    info.nextInChain = &subgroup_properties;
+
+    adapter.GetInfo(&info);
+
+    EXPECT_EQ(info.nextInChain, &subgroup_properties);
+    EXPECT_EQ(subgroup_properties.sType, wgpu::SType::AdapterPropertiesSubgroups);
+    EXPECT_EQ(subgroup_properties.nextInChain, nullptr);
+
+    CheckValidSizes(subgroup_properties.minSubgroupSize, subgroup_properties.maxSubgroupSize);
+}
+
+TEST_P(SubgroupsPropertiesTests, FromDevice) {
+    DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::Subgroups));
+
+    wgpu::AdapterPropertiesSubgroups subgroup_properties;
+    wgpu::AdapterInfo info;
+    info.nextInChain = &subgroup_properties;
+
+    device.GetAdapterInfo(&info);
+
+    CheckValidSizes(subgroup_properties.minSubgroupSize, subgroup_properties.maxSubgroupSize);
+}
+
+TEST_P(SubgroupsPropertiesTests, DeviceAndAdapterAgree) {
+    DAWN_TEST_UNSUPPORTED_IF(!adapter.HasFeature(wgpu::FeatureName::Subgroups) ||
+                             !device.HasFeature(wgpu::FeatureName::Subgroups));
+
+    wgpu::AdapterPropertiesSubgroups adapter_subgroup_properties;
+    wgpu::AdapterInfo adapter_info;
+    adapter_info.nextInChain = &adapter_subgroup_properties;
+    adapter.GetInfo(&adapter_info);
+
+    wgpu::AdapterPropertiesSubgroups device_subgroup_properties;
+    wgpu::AdapterInfo device_info;
+    device_info.nextInChain = &device_subgroup_properties;
+    device.GetAdapterInfo(&device_info);
+
+    EXPECT_EQ(device_subgroup_properties.minSubgroupSize,
+              adapter_subgroup_properties.minSubgroupSize);
+    EXPECT_EQ(device_subgroup_properties.maxSubgroupSize,
+              adapter_subgroup_properties.maxSubgroupSize);
+}
+
+DAWN_INSTANTIATE_TEST(SubgroupsPropertiesTests,
+                      D3D12Backend(),
+                      D3D12Backend({}, {"use_dxc"}),
+                      MetalBackend(),
+                      VulkanBackend());
+
 template <class Params>
 class SubgroupsTestsBase : public DawnTestWithParams<Params> {
   public:
@@ -389,8 +468,7 @@ DAWN_TEST_PARAM_STRUCT(SubgroupsBroadcastTestsParams,
 constexpr int32_t SubgroupBroadcastConstantValueForInvocation0 = 1;
 constexpr int32_t SubgroupRegisterInitializer = 555;
 
-class SubgroupsBroadcastTests
-    : public SubgroupsTestsBase<SubgroupsBroadcastTestsParams> {
+class SubgroupsBroadcastTests : public SubgroupsTestsBase<SubgroupsBroadcastTestsParams> {
   protected:
     // Testing subgroup broadcasting. The shader declares a workgroup size of [workgroupSize, 1, 1],
     // in which each invocation hold a register initialized to SubgroupRegisterInitializer, then
@@ -603,7 +681,6 @@ DAWN_INSTANTIATE_TEST_P(SubgroupsBroadcastTests,
                          SubgroupBroadcastValueOfInvocation0::SubgroupSize}
                         // SubgroupBroadcastValueOfInvocation0
 );
-
 
 // Core functions that may be polyfilled
 enum class SubgroupIntrinsicOp : uint8_t {
