@@ -170,6 +170,12 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
     if (auto* powerPreferenceDesc = unpacked.Get<DawnAdapterPropertiesPowerPreference>()) {
         powerPreferenceDesc->powerPreference = mPowerPreference;
     }
+    if (auto* subgroupsProperties = unpacked.Get<AdapterPropertiesSubgroups>()) {
+        // When the feature is *not* supported, these must be 4 and 128.
+        // Set those defaults now, but a backend may override this.
+        subgroupsProperties->minSubgroupSize = 4;
+        subgroupsProperties->maxSubgroupSize = 128;
+    }
 
     mPhysicalDevice->PopulateBackendProperties(unpacked);
 
