@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d71a9b9_d75afdf4",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-29T16:16:14Z",
+      "side": 1,
+      "message": "Instead, can you write \"to avoid DXC error: ...\" or something so that we know exactly what we\u0027re fixing? Maybe we can TODO link this to https://g-issues.chromium.org/issues/378517038.",
+      "range": {
+        "startLine": 439,
+        "startChar": 85,
+        "endLine": 439,
+        "endChar": 99
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "bf2d122d_4dd72a69",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 439,
+                "startChar": 0,
+                "endLine": 440,
+                "endChar": 0
+              },
+              "replacement": "            // If this is the end of a non-void function, emit a return statement to avoid DXC error:\n            // https://github.com/microsoft/DirectXShaderCompiler/issues/378517038\n"
+            }
+          ]
+        }
+      ],
+      "revId": "28692c855e3b68085efb300b02ae9166761f3b33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76329c06_51075c11",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-29T16:16:14Z",
+      "side": 1,
+      "message": "As discussed offline, a future CL will obviate this change by emitting the return in the IR transform, so please create a bug for that, and TODO link it here with a comment to remove this once that change is made.",
+      "fixSuggestions": [
+        {
+          "fixId": "00a21a29_6bccd32a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 440,
+                "startChar": 0,
+                "endLine": 440,
+                "endChar": 0
+              },
+              "replacement": "            // TODO(b/289011111): Remove this once the return is emitted in the IR transform.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "28692c855e3b68085efb300b02ae9166761f3b33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cab93151_2204b563",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-11-29T16:16:14Z",
+      "side": 1,
+      "message": "Am I just not seeing it, or is there a writer unit test that demonstrates this?",
+      "fixSuggestions": [
+        {
+          "fixId": "7bec1239_d6ccde23",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 436,
+                "startChar": 0,
+                "endLine": 437,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/hlsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 443,
+                "startChar": 0,
+                "endLine": 444,
+                "endChar": 0
+              },
+              "replacement": "            out \u003c\u003c \"; /* unreachable */\";\n"
+            },
+            {
+              "path": "src/tint/lang/hlsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 446,
+                "startChar": 0,
+                "endLine": 446,
+                "endChar": 0
+              },
+              "replacement": "        Line() \u003c\u003c \"/* unreachable */\";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "28692c855e3b68085efb300b02ae9166761f3b33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
