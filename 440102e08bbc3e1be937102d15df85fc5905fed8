@@ -16,6 +16,24 @@
       "message": "Why is there no increment?",
       "revId": "440102e08bbc3e1be937102d15df85fc5905fed8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "756f49ad_180c4b48",
+        "filename": "src/tint/lang/glsl/writer/loop_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-29T00:37:16Z",
+      "side": 1,
+      "message": "Because it\u0027s in the `continuing` block, which gets inlined to where all the `continue` instructions are, but there aren\u0027t any in this loop.\n\nWith a bit more work we could make the loop analysis pass detect this as a trivially finite loop, at which point the `PreventInfiniteLoops` transform wouldn\u0027t add any of this code.",
+      "parentUuid": "09a1dfbb_5dcf6097",
+      "revId": "440102e08bbc3e1be937102d15df85fc5905fed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
