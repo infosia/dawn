@@ -39,6 +39,30 @@
       },
       "revId": "1cdaf85eccf541fbc2660a1785f3fffe59537e68",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ade7b6a_53e2b6e3",
+        "filename": "src/tint/lang/spirv/writer/loop_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-29T19:10:03Z",
+      "side": 1,
+      "message": "Added a check for that definition.",
+      "parentUuid": "c3eb213e_99ab288e",
+      "range": {
+        "startLine": 94,
+        "startChar": 36,
+        "endLine": 94,
+        "endChar": 39
+      },
+      "revId": "1cdaf85eccf541fbc2660a1785f3fffe59537e68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
