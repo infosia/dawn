@@ -39,6 +39,14 @@
 #define EGL_DISPLAY_TEXTURE_SHARE_GROUP_ANGLE 0x33AF
 #endif
 
+#ifndef EGL_CONTEXT_OPENGL_BACKWARDS_COMPATIBLE_ANGLE
+#define EGL_CONTEXT_OPENGL_BACKWARDS_COMPATIBLE_ANGLE 0x3483
+#endif
+
+#ifndef EGL_EXTENSIONS_ENABLED_ANGLE
+#define EGL_EXTENSIONS_ENABLED_ANGLE 0x345F
+#endif
+
 namespace dawn::native::opengl {
 
 // static
@@ -126,6 +134,9 @@ MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
         AddAttrib(EGL_DISPLAY_TEXTURE_SHARE_GROUP_ANGLE, EGL_TRUE);
     }
 
+    AddAttrib(EGL_CONTEXT_OPENGL_BACKWARDS_COMPATIBLE_ANGLE, EGL_FALSE);
+    AddAttrib(EGL_EXTENSIONS_ENABLED_ANGLE, EGL_FALSE);
+
     // The attrib list is finished with an EGL_NONE tag.
     attribs.push_back(EGL_NONE);
 
@@ -159,6 +170,32 @@ MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
     }
 
     return {};
+}
+
+void ContextEGL::RequestExtensions() {
+    const EGLFunctions& egl = mDisplay->egl;
+    using tmpl = void (*)(const char* ext);
+    auto glRequestExtension = (tmpl)egl.GetProcAddress("glRequestExtensionANGLE");
+
+    glRequestExtension("GL_EXT_texture_format_BGRA8888");
+    glRequestExtension("GL_APPLE_texture_format_BGRA8888");
+
+    glRequestExtension("GL_OES_texture_stencil8");
+
+    glRequestExtension("GL_EXT_color_buffer_float");
+    glRequestExtension("GL_EXT_color_buffer_half_float");
+
+    glRequestExtension("GL_ANGLE_texture_compression_dxt3");
+    glRequestExtension("GL_ANGLE_texture_compression_dxt5");
+    glRequestExtension("GL_ARB_texture_compression_bptc");
+    glRequestExtension("GL_EXT_texture_compression_bptc");
+    glRequestExtension("GL_EXT_texture_compression_dxt1");
+    glRequestExtension("GL_EXT_texture_compression_rgtc");
+    glRequestExtension("GL_EXT_texture_compression_s3tc");
+    glRequestExtension("GL_EXT_texture_compression_s3tc_srgb");
+    glRequestExtension("GL_EXT_texture_sRGB");
+    glRequestExtension("GL_KHR_texture_compression_astc_ldr");
+    glRequestExtension("GL_NV_sRGB_formats");
 }
 
 void ContextEGL::MakeCurrent() {
