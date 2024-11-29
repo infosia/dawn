@@ -42,6 +42,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25b5d7be_1c1b0590",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-29T17:18:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d71a9b9_d75afdf4",
+      "range": {
+        "startLine": 439,
+        "startChar": 85,
+        "endLine": 439,
+        "endChar": 99
+      },
+      "revId": "28692c855e3b68085efb300b02ae9166761f3b33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76329c06_51075c11",
@@ -73,6 +97,24 @@
           ]
         }
       ],
+      "revId": "28692c855e3b68085efb300b02ae9166761f3b33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6755ac83_50503e8f",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-29T17:18:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76329c06_51075c11",
       "revId": "28692c855e3b68085efb300b02ae9166761f3b33",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -128,6 +170,24 @@
           ]
         }
       ],
+      "revId": "28692c855e3b68085efb300b02ae9166761f3b33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c612bc2b_3e5d0679",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-11-29T17:18:41Z",
+      "side": 1,
+      "message": "Added one.",
+      "parentUuid": "cab93151_2204b563",
       "revId": "28692c855e3b68085efb300b02ae9166761f3b33",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
