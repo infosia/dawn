@@ -66,6 +66,7 @@ class ContextEGL : NonMovable {
     };
     [[nodiscard]] ScopedMakeSurfaceCurrent MakeSurfaceCurrentScope(EGLSurface surface);
 
+    void RequestExtensions();
     void MakeCurrent();
 
   private:
