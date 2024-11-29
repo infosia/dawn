@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c559961c_9531b883",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-11-29T16:30:08Z",
+      "side": 1,
+      "message": "Check the dawn side for the specific case of supporting f16 and subgroups but not subgroups_f16\n\nI am aware of how this works in vk",
+      "revId": "7c957304f6ae1427ace44fbbc9c27d446d7b344e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
