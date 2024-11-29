@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34338a5a_2a72fc4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-11-29T17:21:48Z",
+      "side": 1,
+      "message": "Added loko as an additional reviewer since Corentin is going to be OOO. I\u0027m not an owner of these changed files so loko might be more suitable.",
+      "revId": "ae323a11eaece584bb6a4848f354baa3119d5e69",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
