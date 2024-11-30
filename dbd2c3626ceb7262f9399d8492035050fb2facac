@@ -100,6 +100,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d81539e_f6d35572",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-11-30T04:08:08Z",
+      "side": 1,
+      "message": "note: This is what the `useSameExternalTexture` flag in the unittest is testing. That 1 external texture with 2 samplers counts as 7 combos, not 8.",
+      "parentUuid": "f0d4d5a3_c0e252b8",
+      "range": {
+        "startLine": 1068,
+        "startChar": 0,
+        "endLine": 1069,
+        "endChar": 81
+      },
+      "revId": "dbd2c3626ceb7262f9399d8492035050fb2facac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee2e38af_7935652c",
