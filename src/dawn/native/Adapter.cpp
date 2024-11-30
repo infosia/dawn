@@ -194,14 +194,17 @@ wgpu::Status AdapterBase::APIGetInfo(AdapterInfo* info) const {
     if (auto* powerPreferenceDesc = unpacked.Get<DawnAdapterPropertiesPowerPreference>()) {
         powerPreferenceDesc->powerPreference = mPowerPreference;
     }
-    if (auto* subgroupsProperties = unpacked.Get<AdapterPropertiesSubgroups>()) {
-        // When the feature is *not* supported, these must be 4 and 128.
-        // Set those defaults now, but a backend may override this.
-        subgroupsProperties->subgroupMinSize = 4;
-        subgroupsProperties->subgroupMaxSize = 128;
-    }
 
     mPhysicalDevice->PopulateBackendProperties(unpacked);
+
+    if (auto* subgroupsProperties = unpacked.Get<AdapterPropertiesSubgroups>()) {
+        if (!mSupportedFeatures.IsEnabled(wgpu::FeatureName::Subgroups)) {
+            // When the feature is *not* supported, these must be 4 and 128.
+            // Set those defaults now, but a backend may override this.
+            subgroupsProperties->subgroupMinSize = 4;
+            subgroupsProperties->subgroupMaxSize = 128;
+        }
+    }
 
     // Allocate space for all strings.
     size_t allocSize = mPhysicalDevice->GetVendorName().length() +
