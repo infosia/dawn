@@ -32,6 +32,7 @@
 #include <utility>
 
 #include "dawn/common/Constants.h"
+#include "dawn/common/Math.h"
 #include "dawn/common/Platform.h"
 #include "dawn/common/WindowsUtils.h"
 #include "dawn/native/ChainUtils.h"
@@ -825,9 +826,21 @@ MaybeError PhysicalDevice::ResetInternalDeviceForTestingImpl() {
     return {};
 }
 
+// Returns 4 if the given candidate subgroup size is invalid for WebGPU.
+// Some devices report invalid WaveLaneCountMin values.
+// For example, 2880154539 or 0xABABABAB has been reported for Intel UHD 630
+// and NVIDIA GeForce GTX 1660.
+static uint32_t FixMinSubgroupSize(uint32_t candidate) {
+    // The min subgroups size must be a power of two between 4 and 128 inclusive.
+    if (candidate < 4u || candidate > 128u || !IsPowerOfTwo(candidate)) {
+        return 4u;
+    }
+}
+
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {
     if (auto* subgroupProperties = info.Get<AdapterPropertiesSubgroups>()) {
-        subgroupProperties->minSubgroupSize = mDeviceInfo.waveLaneCountMin;
+        subgroupProperties->minSubgroupSize = FixMinSubgroupSize(mDeviceInfo.waveLaneCountMin);
+
         // Currently the WaveLaneCountMax queried from D3D12 API is not reliable and the meaning is
         // unclear. Use 128 instead, which is the largest possible size. Reference:
         // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics#:~:text=UINT%20WaveLaneCountMax
