@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8589819e_d03d1105",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-11-30T04:05:25Z",
+      "side": 1,
+      "message": "thanks!, fixed, just changed to `[\u0026]` which I see everywhere else.",
+      "parentUuid": "f7de6563_bbc6b255",
+      "revId": "dbd2c3626ceb7262f9399d8492035050fb2facac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79ea7f7b_3cb71da1",
@@ -58,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0d4d5a3_c0e252b8",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-11-30T04:05:25Z",
+      "side": 1,
+      "message": "If the WGSL is\n\n```\n@group(0) @binding(0) var t1: texture_external;\n@group(0) @binding(1) var s1: sampler;\n@group(0) @binding(2) var s2: sampler;\n\n  _ \u003d textureSampleBaseClampToEdge(t1, s1, vec2f(0));\n  _ \u003d textureSampleBaseClampToEdge(t1, s2, vec2f(0));\n```\n\nThen `numSamplerExternalTexturePairs \u003d\u003d 2` but `sampledExternalTextures.size() \u003d\u003d 1`",
+      "parentUuid": "79ea7f7b_3cb71da1",
+      "range": {
+        "startLine": 1068,
+        "startChar": 0,
+        "endLine": 1069,
+        "endChar": 81
+      },
+      "revId": "dbd2c3626ceb7262f9399d8492035050fb2facac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee2e38af_7935652c",
@@ -71,6 +113,24 @@
       "writtenOn": "2024-11-28T21:31:07Z",
       "side": 1,
       "message": "Doesn\u0027t look like you need this?",
+      "revId": "dbd2c3626ceb7262f9399d8492035050fb2facac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "939335f0_68fbb204",
+        "filename": "src/tint/lang/wgsl/inspector/entry_point.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-11-30T04:05:25Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "ee2e38af_7935652c",
       "revId": "dbd2c3626ceb7262f9399d8492035050fb2facac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
