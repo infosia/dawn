@@ -65,8 +65,9 @@ class SubgroupsPropertiesTestBase : public DawnTestWithParams<Params> {
 
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
-        if (GetParam().mRequestSubgroups == RequestSubgroups::WhenAvailable &&
-            SupportsFeatures({wgpu::FeatureName::Subgroups})) {
+        mAdapterSupportsSubgroups = SupportsFeatures({wgpu::FeatureName::Subgroups});
+        if (mAdapterSupportsSubgroups &&
+            GetParam().mRequestSubgroups == RequestSubgroups::WhenAvailable) {
             return {wgpu::FeatureName::Subgroups};
         }
         return {};
@@ -82,7 +83,15 @@ class SubgroupsPropertiesTestBase : public DawnTestWithParams<Params> {
 
         EXPECT_LE(minSubgroupSize, maxSubgroupSize)
             << minSubgroupSize << " should be less equal than " << maxSubgroupSize;
+
+        if (!mAdapterSupportsSubgroups) {
+            EXPECT_EQ(minSubgroupSize, 4u);
+            EXPECT_EQ(maxSubgroupSize, 128u);
+        }
     }
+
+  private:
+    bool mAdapterSupportsSubgroups = false;
 };
 
 using SubgroupsPropertiesTests = SubgroupsPropertiesTestBase<SubgroupsPropertiesTestsParams>;
