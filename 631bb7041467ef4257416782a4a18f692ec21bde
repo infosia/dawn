@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac54953a_dbd86be6",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-01T19:00:07Z",
+      "side": 1,
+      "message": "I feel like we should do a check here for anything less than 11 for macOS and return this error",
+      "range": {
+        "startLine": 307,
+        "startChar": 32,
+        "endLine": 307,
+        "endChar": 55
+      },
+      "revId": "631bb7041467ef4257416782a4a18f692ec21bde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
