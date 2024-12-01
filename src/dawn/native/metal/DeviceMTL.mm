@@ -85,11 +85,11 @@ float KalmanFilter(KalmanInfo* info, float measuredValue) {
     return info->filterValue;
 }
 
-void API_AVAILABLE(macos(10.15), ios(14)) UpdateTimestampPeriod(id<MTLDevice> device,
-                                                                KalmanInfo* info,
-                                                                MTLTimestamp* cpuTimestampStart,
-                                                                MTLTimestamp* gpuTimestampStart,
-                                                                float* timestampPeriod) {
+void UpdateTimestampPeriod(id<MTLDevice> device,
+                           KalmanInfo* info,
+                           MTLTimestamp* cpuTimestampStart,
+                           MTLTimestamp* gpuTimestampStart,
+                           float* timestampPeriod) {
     // The filter value is converged to an optimal value when the kalman gain is less than
     // 0.01. At this time, the weight of the measured value is too small to change the next
     // filter value, the sampling and calculations do not need to continue anymore.
@@ -171,7 +171,6 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         // an accurate value by the following calculations.
         mTimestampPeriod = gpu_info::IsIntel(GetPhysicalDevice()->GetVendorId()) ? 83.333f : 1.0f;
 
-        if (@available(macOS 10.15, iOS 14.0, *)) {
             if (!IsToggleEnabled(Toggle::MetalDisableTimestampPeriodEstimation)) {
                 // Initialize kalman filter parameters
                 mKalmanInfo = std::make_unique<KalmanInfo>();
@@ -185,7 +184,6 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
                 // Sample CPU timestamp and GPU timestamp for first time at device creation
                 [*mMtlDevice sampleTimestamps:&mCpuTimestamp gpuTimestamp:&mGpuTimestamp];
             }
-        }
     }
 
     return DeviceBase::Initialize(std::move(queue));
@@ -314,10 +312,8 @@ MaybeError Device::TickImpl() {
     // conversion is not disabled and the estimation is not disabled.
     if (mIsTimestampQueryEnabled && !IsToggleEnabled(Toggle::DisableTimestampQueryConversion) &&
         !IsToggleEnabled(Toggle::MetalDisableTimestampPeriodEstimation)) {
-        if (@available(macOS 10.15, iOS 14.0, *)) {
             UpdateTimestampPeriod(GetMTLDevice(), mKalmanInfo.get(), &mCpuTimestamp, &mGpuTimestamp,
                                   &mTimestampPeriod);
-        }
     }
 
     return {};

@@ -1225,7 +1225,6 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                         destinationOffset:NSUInteger(cmd->destinationOffset)
                                      size:NSUInteger(cmd->queryCount * sizeof(uint64_t))];
                 } else {
-                    if (@available(macOS 10.15, iOS 14.0, *)) {
                         destination->TrackUsage();
                         if (GetDevice()->IsToggleEnabled(
                                 Toggle::MetalSerializeTimestampGenerationAndResolution)) {
@@ -1236,9 +1235,6 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                                       inRange:NSMakeRange(cmd->firstQuery, cmd->queryCount)
                             destinationBuffer:destination->GetMTLBuffer()
                             destinationOffset:NSUInteger(cmd->destinationOffset)];
-                    } else {
-                        DAWN_UNREACHABLE();
-                    }
                 }
                 break;
             }
@@ -1256,16 +1252,12 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                         DAWN_UNREACHABLE();
                     }
                 } else {
-                    if (@available(macOS 10.15, iOS 14.0, *)) {
                         DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
                         [commandContext->EnsureBlit()
                             sampleCountersInBuffer:ToBackend(cmd->querySet.Get())
                                                        ->GetCounterSampleBuffer()
                                      atSampleIndex:NSUInteger(cmd->queryIndex)
                                        withBarrier:YES];
-                    } else {
-                        DAWN_UNREACHABLE();
-                    }
                 }
 
                 break;
@@ -1356,7 +1348,6 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
     } else {
         encoder = commandContext->BeginCompute();
 
-        if (@available(macOS 10.15, iOS 14.0, *)) {
             if (computePassCmd->timestampWrites.beginningOfPassWriteIndex !=
                 wgpu::kQuerySetIndexUndefined) {
                 DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
@@ -1368,7 +1359,6 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                                                           .beginningOfPassWriteIndex)
                                withBarrier:YES];
             }
-        }
     }
     SetDebugName(GetDevice(), encoder, "Dawn_ComputePassEncoder", computePassCmd->label);
 
@@ -1378,7 +1368,6 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
             case Command::EndComputePass: {
                 mCommands.NextCommand<EndComputePassCmd>();
 
-                if (@available(macOS 10.15, iOS 14.0, *)) {
                     // Simulate timestamp write at the end of render pass if it does not support
                     // counter sampling at stage boundary.
                     if (ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary() &&
@@ -1393,7 +1382,6 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                                                                        .endOfPassWriteIndex)
                                             withBarrier:YES];
                     }
-                }
 
                 commandContext->EndCompute();
                 return {};
@@ -1482,13 +1470,10 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                 WriteTimestampCmd* cmd = mCommands.NextCommand<WriteTimestampCmd>();
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
 
-                if (@available(macOS 10.15, iOS 14.0, *)) {
                     [encoder sampleCountersInBuffer:querySet->GetCounterSampleBuffer()
                                       atSampleIndex:NSUInteger(cmd->queryIndex)
                                         withBarrier:YES];
-                } else {
-                    DAWN_UNREACHABLE();
-                }
+
                 break;
             }
 
@@ -1522,7 +1507,6 @@ MaybeError CommandBuffer::EncodeRenderPass(
     VertexBufferTracker vertexBuffers(&storageBufferLengths);
     BindGroupTracker bindGroups(&storageBufferLengths);
 
-    if (@available(macOS 10.15, iOS 14.0, *)) {
         // Simulate timestamp write at the beginning of render pass by
         // sampleCountersInBuffer if it does not support counter sampling at stage boundary.
         if (ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary() &&
@@ -1537,7 +1521,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
                                            renderPassCmd->timestampWrites.beginningOfPassWriteIndex)
                            withBarrier:YES];
         }
-    }
+
     SetDebugName(GetDevice(), encoder, "Dawn_RenderPassEncoder", renderPassCmd->label);
 
     auto EncodeRenderBundleCommand = [&](CommandIterator* iter, Command type) {
@@ -1768,7 +1752,6 @@ MaybeError CommandBuffer::EncodeRenderPass(
             case Command::EndRenderPass: {
                 mCommands.NextCommand<EndRenderPassCmd>();
 
-                if (@available(macOS 10.15, iOS 14.0, *)) {
                     // Simulate timestamp write at the end of render pass if it does not support
                     // counter sampling at stage boundary.
                     if (ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary() &&
@@ -1783,7 +1766,6 @@ MaybeError CommandBuffer::EncodeRenderPass(
                                                                        .endOfPassWriteIndex)
                                             withBarrier:YES];
                     }
-                }
 
                 return {};
             }
@@ -1878,13 +1860,10 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 WriteTimestampCmd* cmd = mCommands.NextCommand<WriteTimestampCmd>();
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
 
-                if (@available(macOS 10.15, iOS 14.0, *)) {
                     [encoder sampleCountersInBuffer:querySet->GetCounterSampleBuffer()
                                       atSampleIndex:NSUInteger(cmd->queryIndex)
                                         withBarrier:YES];
-                } else {
-                    DAWN_UNREACHABLE();
-                }
+
                 break;
             }
 

@@ -46,8 +46,7 @@ class QuerySet final : public QuerySetBase {
     QuerySet(DeviceBase* device, const QuerySetDescriptor* descriptor);
 
     id<MTLBuffer> GetVisibilityBuffer() const;
-    id<MTLCounterSampleBuffer> GetCounterSampleBuffer() const
-        API_AVAILABLE(macos(10.15), ios(14.0));
+    id<MTLCounterSampleBuffer> GetCounterSampleBuffer() const;
 
   private:
     using QuerySetBase::QuerySetBase;

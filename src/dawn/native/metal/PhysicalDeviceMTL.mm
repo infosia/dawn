@@ -191,8 +191,7 @@ MaybeError GetDevicePCIInfo(id<MTLDevice>, PCIIDs* ids) {
 
 bool IsGPUCounterSupported(id<MTLDevice> device,
                            MTLCommonCounterSet counterSetName,
-                           std::vector<NSString*> counterNames)
-    API_AVAILABLE(macos(10.15), ios(14.0)) {
+                           std::vector<NSString*> counterNames) {
     id<MTLCounterSet> counterSet = nil;
     for (id<MTLCounterSet> set in [device counterSets]) {
         if ([set.name caseInsensitiveCompare:counterSetName] == NSOrderedSame) {
@@ -253,7 +252,6 @@ enum class MTLGPUFamily {
 ResultOrError<MTLGPUFamily> GetMTLGPUFamily(id<MTLDevice> device) {
     // https://developer.apple.com/documentation/metal/mtldevice/detecting_gpu_features_and_metal_software_versions?language=objc
 
-    if (@available(macOS 10.15, iOS 10.13, *)) {
 #if !DAWN_PLATFORM_IS(IOS)
         if ([device supportsFamily:MTLGPUFamilyMac2]) {
             return MTLGPUFamily::Mac2;
@@ -284,7 +282,6 @@ ResultOrError<MTLGPUFamily> GetMTLGPUFamily(id<MTLDevice> device) {
         // This family is no longer supported in the macOS 10.15 SDK but still exists so
         // default to it.
         return MTLGPUFamily::Mac1;
-    }
 
 #if DAWN_PLATFORM_IS(IOS) && \
     (!defined(__IPHONE_16_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_16_0)
@@ -461,10 +458,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // TODO(crbug.com/dawn/847): Use MTLStorageModeShared instead of MTLStorageModePrivate when
     // creating MTLCounterSampleBuffer in QuerySet on Intel platforms, otherwise it fails to
     // create the buffer. Change to use MTLStorageModePrivate when the bug is fixed.
-    if (@available(macOS 10.15, iOS 14.0, *)) {
+
         bool useSharedMode = gpu_info::IsIntel(vendorId);
         deviceToggles->Default(Toggle::MetalUseSharedModeForCounterSampleBuffer, useSharedMode);
-    }
 
     // Rendering R8Unorm and RG8Unorm to small mip doesn't work properly on Intel.
     // TODO(crbug.com/dawn/1071): Tighten the workaround when this issue is fixed.
@@ -543,13 +539,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::MetalFillEmptyOcclusionQueriesWithZero, true);
 
         // TODO(crbug.com/372698905): Tighten the workaround when a fixed macOS version releases.
-        if (@available(macOS 10.15, iOS 13.0, *)) {
+
             // TODO(crbug.com/380316939): Replace the cast with MTLGPUFamilyApple8 when available.
             if ([*mDevice supportsFamily:static_cast<::MTLGPUFamily>(1008)]) {
                 deviceToggles->Default(Toggle::MetalSerializeTimestampGenerationAndResolution,
                                        true);
             }
-        }
     }
 
     // Local testing shows the workaround is needed on AMD Radeon HD 8870M (gcn-1) MacOS 12.1;
@@ -609,16 +604,14 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 #endif
 
     // Check texture formats with MTLGPUFamily
-    if (@available(macOS 10.15, iOS 13.0, *)) {
+
         if ([*mDevice supportsFamily:MTLGPUFamilyApple2]) {
             EnableFeature(Feature::TextureCompressionETC2);
         }
         if ([*mDevice supportsFamily:MTLGPUFamilyApple3]) {
             EnableFeature(Feature::TextureCompressionASTC);
         }
-    }
 
-    if (@available(macOS 10.15, iOS 14.0, *)) {
         auto ShouldLeakCounterSets = [this] {
             // Intentionally leak counterSets to workaround an issue where the driver
             // over-releases the handle if it is accessed more than once. It becomes a zombie.
@@ -671,15 +664,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
                 EnableFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses);
             }
         }
-    }
 
-    if (@available(macOS 10.11, iOS 11.0, *)) {
         EnableFeature(Feature::DepthClipControl);
-    }
 
-    if (@available(macOS 10.11, iOS 9.0, *)) {
         EnableFeature(Feature::Depth32FloatStencil8);
-    }
 
 // TODO(dawn:2249): Enable on iOS. Some XCode or SDK versions seem to not match the docs.
 #if DAWN_PLATFORM_IS(MACOS)
@@ -688,47 +676,34 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 #endif
 
-    // Uses newTextureWithDescriptor::iosurface::plane which is available
-    // on ios 11.0+ and macOS 11.0+
-    if (@available(macOS 10.11, iOS 11.0, *)) {
         EnableFeature(Feature::DawnMultiPlanarFormats);
         EnableFeature(Feature::MultiPlanarFormatP010);
         EnableFeature(Feature::MultiPlanarRenderTargets);
         EnableFeature(Feature::MultiPlanarFormatExtendedUsages);
-    }
 
-    if (@available(macOS 10.13, iOS 11.0, *)) {
         EnableFeature(Feature::MultiPlanarFormatP210);
         EnableFeature(Feature::MultiPlanarFormatP410);
-    }
 
-    if (@available(macOS 10.15, iOS 13.0, *)) {
         EnableFeature(Feature::MultiPlanarFormatNv12a);
-    }
 
-    if (@available(macOS 11.0, iOS 14.0, *)) {
         EnableFeature(Feature::MultiPlanarFormatNv16);
         EnableFeature(Feature::MultiPlanarFormatNv24);
-    }
 
-    if (@available(macOS 11.0, iOS 10.0, *)) {
         // Memoryless storage mode and programmable blending are available only from the Apple2
         // family of GPUs on.
         if ([*mDevice supportsFamily:MTLGPUFamilyApple2]) {
             EnableFeature(Feature::FramebufferFetch);
             EnableFeature(Feature::TransientAttachments);
         }
-    }
 
     // TODO(crbug.com/356461286): Intel and AMD GPUs support the indirect command buffer and
     // argument buffer features which are required for multi draw. However, multi draw end2end tests
     // fail on non-Apple GPUs. Disable the feature for non-Apple GPUs. Apple3 family is the minimum
     // requirement and only includes Apple GPUs.
-    if (@available(macOS 10.15, iOS 13.0, *)) {
+
         if ([*mDevice supportsFamily:MTLGPUFamilyApple3]) {
             EnableFeature(Feature::MultiDrawIndirect);
         }
-    }
 
     EnableFeature(Feature::IndirectFirstInstance);
     EnableFeature(Feature::ShaderF16);
@@ -741,26 +716,15 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::ClipDistances);
     EnableFeature(Feature::Float32Blendable);
 
-    // SIMD-scoped permute operations is supported by GPU family Metal3, Apple6, Apple7, Apple8,
-    // and Mac2.
-    // https://developer.apple.com/metal/Metal-Feature-Set-Tables.pdf
-    // Metal3 family is a superset of Apple7 and Apple8, and introduced in macOS 13.0+ or
-    // iOS 16.0+. However when building with Chrome, mac_sdk_official_version in mac_sdk.gni
-    // explicitly use Xcode 13.3 and MacOS 12.3 version 21E226, so does not support
-    // MTLGPUFamilyMetal3.
-    // Note that supportsFamily: method requires macOS 10.15+ or iOS 13.0+
-    if (@available(macOS 10.15, iOS 13.0, *)) {
         if ([*mDevice supportsFamily:MTLGPUFamilyApple6] ||
             [*mDevice supportsFamily:MTLGPUFamilyMac2]) {
             EnableFeature(Feature::Subgroups);
             EnableFeature(Feature::SubgroupsF16);
         }
-    }
 
     EnableFeature(Feature::SharedTextureMemoryIOSurface);
-    if (@available(macOS 10.14, iOS 12.0, *)) {
+
         EnableFeature(Feature::SharedFenceMTLSharedEvent);
-    }
 
     EnableFeature(Feature::Unorm16TextureFormats);
     EnableFeature(Feature::Snorm16TextureFormats);
@@ -771,16 +735,13 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 #if DAWN_PLATFORM_IS(IOS)
     EnableFeature(Feature::BufferMapExtendedUsages);
 #else
-    if (@available(macOS 10.15, iOS 13.0, *)) {
         if ([*mDevice hasUnifiedMemory]) {
             EnableFeature(Feature::BufferMapExtendedUsages);
         }
-    }
 #endif
 }
 
 void PhysicalDevice::InitializeVendorArchitectureImpl() {
-    if (@available(macOS 10.15, iOS 13.0, *)) {
         // According to Apple's documentation:
         // https://developer.apple.com/documentation/metal/gpu_devices_and_work_submission/detecting_gpu_features_and_metal_software_versions
         // - "Use the Common family to create apps that target a range of GPUs on multiple
@@ -798,7 +759,6 @@ void PhysicalDevice::InitializeVendorArchitectureImpl() {
                 mArchitectureName = "common-1";
             }
         }
-    }
 
     mVendorName = gpu_info::GetVendorName(mVendorId);
     if (mDeviceId != 0) {
