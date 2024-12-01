@@ -70,11 +70,9 @@ template <typename PassDescriptor>
 class SampleBufferAttachment {
   public:
     void SetSampleBuffer(PassDescriptor* descriptor, id<MTLCounterSampleBuffer> sampleBuffer)
-        API_AVAILABLE(macos(11.0), ios(14.0));
-    void SetStartSampleIndex(PassDescriptor* descriptor, NSUInteger sampleIndex)
-        API_AVAILABLE(macos(11.0), ios(14.0));
-    void SetEndSampleIndex(PassDescriptor* descriptor, NSUInteger sampleIndex)
-        API_AVAILABLE(macos(11.0), ios(14.0));
+
+        void SetStartSampleIndex(PassDescriptor* descriptor, NSUInteger sampleIndex);
+    void SetEndSampleIndex(PassDescriptor* descriptor, NSUInteger sampleIndex);
 
   private:
     // Initialized to the maximum value, in order to start from 0 after the first increment.
@@ -89,7 +87,7 @@ class SampleBufferAttachment {
 template <typename PassDescriptor>
 void SampleBufferAttachment<PassDescriptor>::SetSampleBuffer(
     PassDescriptor* descriptor,
-    id<MTLCounterSampleBuffer> sampleBuffer) API_AVAILABLE(macos(11.0), ios(14.0)) {
+    id<MTLCounterSampleBuffer> sampleBuffer) {
     attachmentIndex++;
     DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
     descriptor.sampleBufferAttachments[attachmentIndex].sampleBuffer = sampleBuffer;
@@ -99,7 +97,7 @@ void SampleBufferAttachment<PassDescriptor>::SetSampleBuffer(
 template <>
 void SampleBufferAttachment<MTLRenderPassDescriptor>::SetStartSampleIndex(
     MTLRenderPassDescriptor* descriptor,
-    NSUInteger sampleIndex) API_AVAILABLE(macos(11.0), ios(14.0)) {
+    NSUInteger sampleIndex) {
     DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
     descriptor.sampleBufferAttachments[attachmentIndex].startOfVertexSampleIndex = sampleIndex;
 }
@@ -108,7 +106,7 @@ void SampleBufferAttachment<MTLRenderPassDescriptor>::SetStartSampleIndex(
 template <>
 void SampleBufferAttachment<MTLRenderPassDescriptor>::SetEndSampleIndex(
     MTLRenderPassDescriptor* descriptor,
-    NSUInteger sampleIndex) API_AVAILABLE(macos(11.0), ios(14.0)) {
+    NSUInteger sampleIndex) {
     DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
     descriptor.sampleBufferAttachments[attachmentIndex].endOfFragmentSampleIndex = sampleIndex;
 }
@@ -117,7 +115,7 @@ void SampleBufferAttachment<MTLRenderPassDescriptor>::SetEndSampleIndex(
 template <>
 void SampleBufferAttachment<MTLComputePassDescriptor>::SetStartSampleIndex(
     MTLComputePassDescriptor* descriptor,
-    NSUInteger sampleIndex) API_AVAILABLE(macos(11.0), ios(14.0)) {
+    NSUInteger sampleIndex) {
     DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
     descriptor.sampleBufferAttachments[attachmentIndex].startOfEncoderSampleIndex = sampleIndex;
 }
@@ -126,7 +124,7 @@ void SampleBufferAttachment<MTLComputePassDescriptor>::SetStartSampleIndex(
 template <>
 void SampleBufferAttachment<MTLComputePassDescriptor>::SetEndSampleIndex(
     MTLComputePassDescriptor* descriptor,
-    NSUInteger sampleIndex) API_AVAILABLE(macos(11.0), ios(14.0)) {
+    NSUInteger sampleIndex) {
     // TODO(dawn:1473): Use MTLComputePassSampleBuffers or query method instead of the magic number
     // 4 when Metal could get the maximum of sampleBufferAttachments on compute pass
     DAWN_ASSERT(attachmentIndex < kMaxSampleBufferAttachments);
@@ -135,13 +133,11 @@ void SampleBufferAttachment<MTLComputePassDescriptor>::SetEndSampleIndex(
 
 template <typename PassDescriptor, typename BeginPass>
 void SetSampleBufferAttachments(PassDescriptor* descriptor, BeginPass* cmd) {
-    // Use @available instead of API_AVAILABLE because GetCounterSampleBuffer() also needs checking
-    // API availability.
-    if (@available(macOS 11.0, iOS 14.0, *)) {
-        QuerySetBase* querySet = cmd->timestampWrites.querySet.Get();
-        if (querySet == nullptr) {
-            return;
-        }
+    // GetCounterSampleBuffer() needs checking API availability.
+    QuerySetBase* querySet = cmd->timestampWrites.querySet.Get();
+    if (querySet == nullptr) {
+        return;
+    }
         SampleBufferAttachment<PassDescriptor> sampleBufferAttachment;
         sampleBufferAttachment.SetSampleBuffer(descriptor,
                                                ToBackend(querySet)->GetCounterSampleBuffer());
@@ -155,13 +151,9 @@ void SetSampleBufferAttachments(PassDescriptor* descriptor, BeginPass* cmd) {
             descriptor, endOfPassWriteIndex != wgpu::kQuerySetIndexUndefined
                             ? NSUInteger(endOfPassWriteIndex)
                             : MTLCounterDontSample);
-    } else {
-        DAWN_UNREACHABLE();
-    }
 }
 
-NSRef<MTLComputePassDescriptor> CreateMTLComputePassDescriptor(BeginComputePassCmd* computePass)
-    API_AVAILABLE(macos(11.0), ios(14.0)) {
+NSRef<MTLComputePassDescriptor> CreateMTLComputePassDescriptor(BeginComputePassCmd* computePass) {
     // Note that this creates a descriptor that's autoreleased so we don't use AcquireNSRef
     NSRef<MTLComputePassDescriptor> descriptorRef =
         [MTLComputePassDescriptor computePassDescriptor];
@@ -336,11 +328,9 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
             ToBackend(renderPass->occlusionQuerySet.Get())->GetVisibilityBuffer();
     }
 
-    if (@available(macOS 11.0, iOS 14.0, *)) {
         if (useCounterSamplingAtStageBoundary) {
             SetSampleBufferAttachments(descriptor, renderPass);
         }
-    }
 
     if (renderPass->attachmentState->HasPixelLocalStorage()) {
         const std::vector<wgpu::TextureFormat>& storageAttachmentSlots =
@@ -360,11 +350,9 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                 texDesc.width = renderPass->width;
                 texDesc.height = renderPass->height;
                 texDesc.usage = MTLTextureUsageRenderTarget;
-                if (@available(macOS 11.0, iOS 10.0, *)) {
+
                     texDesc.storageMode = MTLStorageModeMemoryless;
-                } else {
-                    DAWN_UNREACHABLE();
-                }
+
                 texDesc.pixelFormat =
                     MetalPixelFormat(device, RenderPipelineBase::kImplicitPLSSlotFormat);
 
@@ -428,8 +416,7 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
 
 void EncodeEmptyBlitEncoderForWriteTimestamp(Device* device,
                                              CommandRecordingContext* commandContext,
-                                             WriteTimestampCmd* cmd)
-    API_AVAILABLE(macos(11.0), ios(14.0)) {
+                                             WriteTimestampCmd* cmd) {
     commandContext->EndBlit();
 
     auto scopedDescriptor = AcquireNSRef([[MTLBlitPassDescriptor alloc] init]);
@@ -1225,7 +1212,6 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                         destinationOffset:NSUInteger(cmd->destinationOffset)
                                      size:NSUInteger(cmd->queryCount * sizeof(uint64_t))];
                 } else {
-                    if (@available(macOS 10.15, iOS 14.0, *)) {
                         destination->TrackUsage();
                         if (GetDevice()->IsToggleEnabled(
                                 Toggle::MetalSerializeTimestampGenerationAndResolution)) {
@@ -1236,9 +1222,6 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                                       inRange:NSMakeRange(cmd->firstQuery, cmd->queryCount)
                             destinationBuffer:destination->GetMTLBuffer()
                             destinationOffset:NSUInteger(cmd->destinationOffset)];
-                    } else {
-                        DAWN_UNREACHABLE();
-                    }
                 }
                 break;
             }
@@ -1247,25 +1230,18 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                 WriteTimestampCmd* cmd = mCommands.NextCommand<WriteTimestampCmd>();
 
                 if (ToBackend(GetDevice())->UseCounterSamplingAtStageBoundary()) {
-                    if (@available(macos 11.0, iOS 14.0, *)) {
                         // Simulate writeTimestamp cmd between blit commands on the devices which
                         // supports counter sampling at stage boundary.
                         EncodeEmptyBlitEncoderForWriteTimestamp(ToBackend(GetDevice()),
                                                                 commandContext, cmd);
-                    } else {
-                        DAWN_UNREACHABLE();
-                    }
+
                 } else {
-                    if (@available(macOS 10.15, iOS 14.0, *)) {
                         DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
                         [commandContext->EnsureBlit()
                             sampleCountersInBuffer:ToBackend(cmd->querySet.Get())
                                                        ->GetCounterSampleBuffer()
                                      atSampleIndex:NSUInteger(cmd->queryIndex)
                                        withBarrier:YES];
-                    } else {
-                        DAWN_UNREACHABLE();
-                    }
                 }
 
                 break;
@@ -1346,17 +1322,13 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
     // compute pass descriptor, otherwise begin a default compute pass encoder, and simulate
     // timestamp writes using sampleCountersInBuffer API at the beginning and end of compute pass.
     if (ToBackend(GetDevice())->UseCounterSamplingAtStageBoundary()) {
-        if (@available(macOS 11.0, iOS 14.0, *)) {
             NSRef<MTLComputePassDescriptor> descriptor =
                 CreateMTLComputePassDescriptor(computePassCmd);
             encoder = commandContext->BeginCompute(descriptor.Get());
-        } else {
-            DAWN_UNREACHABLE();
-        }
+
     } else {
         encoder = commandContext->BeginCompute();
 
-        if (@available(macOS 10.15, iOS 14.0, *)) {
             if (computePassCmd->timestampWrites.beginningOfPassWriteIndex !=
                 wgpu::kQuerySetIndexUndefined) {
                 DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
@@ -1368,7 +1340,6 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                                                           .beginningOfPassWriteIndex)
                                withBarrier:YES];
             }
-        }
     }
     SetDebugName(GetDevice(), encoder, "Dawn_ComputePassEncoder", computePassCmd->label);
 
@@ -1378,7 +1349,6 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
             case Command::EndComputePass: {
                 mCommands.NextCommand<EndComputePassCmd>();
 
-                if (@available(macOS 10.15, iOS 14.0, *)) {
                     // Simulate timestamp write at the end of render pass if it does not support
                     // counter sampling at stage boundary.
                     if (ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary() &&
@@ -1393,7 +1363,6 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                                                                        .endOfPassWriteIndex)
                                             withBarrier:YES];
                     }
-                }
 
                 commandContext->EndCompute();
                 return {};
@@ -1482,13 +1451,10 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                 WriteTimestampCmd* cmd = mCommands.NextCommand<WriteTimestampCmd>();
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
 
-                if (@available(macOS 10.15, iOS 14.0, *)) {
                     [encoder sampleCountersInBuffer:querySet->GetCounterSampleBuffer()
                                       atSampleIndex:NSUInteger(cmd->queryIndex)
                                         withBarrier:YES];
-                } else {
-                    DAWN_UNREACHABLE();
-                }
+
                 break;
             }
 
@@ -1522,7 +1488,6 @@ MaybeError CommandBuffer::EncodeRenderPass(
     VertexBufferTracker vertexBuffers(&storageBufferLengths);
     BindGroupTracker bindGroups(&storageBufferLengths);
 
-    if (@available(macOS 10.15, iOS 14.0, *)) {
         // Simulate timestamp write at the beginning of render pass by
         // sampleCountersInBuffer if it does not support counter sampling at stage boundary.
         if (ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary() &&
@@ -1537,7 +1502,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
                                            renderPassCmd->timestampWrites.beginningOfPassWriteIndex)
                            withBarrier:YES];
         }
-    }
+
     SetDebugName(GetDevice(), encoder, "Dawn_RenderPassEncoder", renderPassCmd->label);
 
     auto EncodeRenderBundleCommand = [&](CommandIterator* iter, Command type) {
@@ -1709,16 +1674,16 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 [encoder setDepthBias:newPipeline->GetDepthBias()
                            slopeScale:newPipeline->GetDepthBiasSlopeScale()
                                 clamp:newPipeline->GetDepthBiasClamp()];
-                if (@available(macOS 10.11, iOS 11.0, *)) {
-                    // When using @builtin(frag_depth) we need to clamp to the viewport, otherwise
-                    // Metal writes the raw value to the depth buffer, which doesn't match other
-                    // APIs.
-                    MTLDepthClipMode clipMode =
-                        (newPipeline->UsesFragDepth() || newPipeline->HasUnclippedDepth())
-                            ? MTLDepthClipModeClamp
-                            : MTLDepthClipModeClip;
-                    [encoder setDepthClipMode:clipMode];
-                }
+
+                // When using @builtin(frag_depth) we need to clamp to the viewport, otherwise
+                // Metal writes the raw value to the depth buffer, which doesn't match other
+                // APIs.
+                MTLDepthClipMode clipMode =
+                    (newPipeline->UsesFragDepth() || newPipeline->HasUnclippedDepth())
+                        ? MTLDepthClipModeClamp
+                        : MTLDepthClipModeClip;
+                [encoder setDepthClipMode:clipMode];
+
                 newPipeline->Encode(encoder);
 
                 lastPipeline = newPipeline;
@@ -1768,7 +1733,6 @@ MaybeError CommandBuffer::EncodeRenderPass(
             case Command::EndRenderPass: {
                 mCommands.NextCommand<EndRenderPassCmd>();
 
-                if (@available(macOS 10.15, iOS 14.0, *)) {
                     // Simulate timestamp write at the end of render pass if it does not support
                     // counter sampling at stage boundary.
                     if (ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary() &&
@@ -1783,7 +1747,6 @@ MaybeError CommandBuffer::EncodeRenderPass(
                                                                        .endOfPassWriteIndex)
                                             withBarrier:YES];
                     }
-                }
 
                 return {};
             }
@@ -1878,13 +1841,10 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 WriteTimestampCmd* cmd = mCommands.NextCommand<WriteTimestampCmd>();
                 QuerySet* querySet = ToBackend(cmd->querySet.Get());
 
-                if (@available(macOS 10.15, iOS 14.0, *)) {
                     [encoder sampleCountersInBuffer:querySet->GetCounterSampleBuffer()
                                       atSampleIndex:NSUInteger(cmd->queryIndex)
                                         withBarrier:YES];
-                } else {
-                    DAWN_UNREACHABLE();
-                }
+
                 break;
             }
 
