@@ -34,6 +34,24 @@
       "parentUuid": "376aedc9_16c8dd17",
       "revId": "d26ee47da2fb968736b61ffef9cf6c8db2745fdc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d6a4fb9_52b926cc",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-02T10:39:00Z",
+      "side": 1,
+      "message": "I see what you meant with the comment now, but it\u0027s unclear at first reading--would you mind clarifying?",
+      "parentUuid": "1110639f_1a143e22",
+      "revId": "d26ee47da2fb968736b61ffef9cf6c8db2745fdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
