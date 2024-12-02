@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ca8e195_2786fa46",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-02T19:32:30Z",
+      "side": 1,
+      "message": "This older code is likely completely unsupported.",
+      "range": {
+        "startLine": 286,
+        "startChar": 4,
+        "endLine": 286,
+        "endChar": 35
+      },
+      "revId": "6e9d613462900632b68a8e8ea203d08de2ea68e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
