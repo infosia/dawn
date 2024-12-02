@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "376aedc9_16c8dd17",
+        "filename": "generator/templates/art/api_kotlin_object.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-02T09:52:29Z",
+      "side": 1,
+      "message": "AFAICT we DO NOT convert to structure equality here, do we?  Isn\u0027t checking the handles still a form of referential equality?",
+      "revId": "d26ee47da2fb968736b61ffef9cf6c8db2745fdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
