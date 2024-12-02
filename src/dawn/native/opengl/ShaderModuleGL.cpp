@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
+#include "dawn/native/Adapter.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/CacheRequest.h"
 #include "dawn/native/Pipeline.h"
@@ -93,6 +94,7 @@ using InterstageLocationAndName = std::pair<uint32_t, std::string>;
     X(SingleShaderStage, stage)                                                                  \
     X(std::optional<tint::ast::transform::SubstituteOverride::Config>, substituteOverrideConfig) \
     X(LimitsForCompilationRequest, limits)                                                       \
+    X(CacheKey::UnsafeUnkeyedValue<const AdapterBase*>, adapter)                   \
     X(bool, disableSymbolRenaming)                                                               \
     X(std::vector<InterstageLocationAndName>, interstageVariables)                               \
     X(std::vector<std::string>, bufferBindingVariables)                                          \
@@ -457,6 +459,8 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     req.entryPointName = programmableStage.entryPoint;
     req.substituteOverrideConfig = std::move(substituteOverrideConfig);
     req.limits = LimitsForCompilationRequest::Create(limits.v1);
+    req.adapter = UnsafeUnkeyedValue(static_cast<const AdapterBase*>(GetDevice()->GetAdapter()));
+
     req.platform = UnsafeUnkeyedValue(GetDevice()->GetPlatform());
 
     req.tintOptions.version = tint::glsl::writer::Version(ToTintGLStandard(version.GetStandard()),
@@ -553,8 +557,9 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
             if (r.stage == SingleShaderStage::Compute) {
                 // Validate workgroup size after program runs transforms.
                 Extent3D _;
-                DAWN_TRY_ASSIGN(_, ValidateComputeStageWorkgroupSize(
-                                       program, kRemappedEntryPointName, r.limits));
+                DAWN_TRY_ASSIGN(
+                    _, ValidateComputeStageWorkgroupSize(program, kRemappedEntryPointName, r.limits,
+                                                         r.adapter.UnsafeGetValue()));
             }
 
             // Intentionally assign entry point to empty to avoid a redundant 'SingleEntryPoint'
