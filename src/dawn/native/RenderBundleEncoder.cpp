@@ -29,6 +29,7 @@
 
 #include <utility>
 
+#include "dawn/native/Adapter.h"
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
@@ -69,9 +70,25 @@ MaybeError ValidateRenderBundleEncoderDescriptor(DeviceBase* device,
                     "Sample count (%u) is not supported.", descriptor->sampleCount);
 
     uint32_t maxColorAttachments = device->GetLimits().v1.maxColorAttachments;
-    DAWN_INVALID_IF(descriptor->colorFormatCount > maxColorAttachments,
-                    "Color formats count (%u) exceeds maximum number of color attachements (%u).",
-                    descriptor->colorFormatCount, maxColorAttachments);
+    if (descriptor->colorFormatCount > maxColorAttachments) {
+        SupportedLimits adapterLimits;
+        wgpu::Status status = device->GetAdapter()->APIGetLimits(&adapterLimits);
+        DAWN_ASSERT(status == wgpu::Status::Success);
+
+        uint32_t maxColorAttachmentsAdapterLimit = adapterLimits.limits.maxColorAttachments;
+        std::string increaseLimitAdvice =
+            (descriptor->colorFormatCount <= maxColorAttachmentsAdapterLimit)
+                ? absl::StrFormat(
+                      " This adapter supports a higher maxColorAttachments of %u, which can be "
+                      "specified in "
+                      "requiredLimits when calling requestDevice(). Limits differ by hardware, so "
+                      "always check the adapter limits prior to requesting a higher limit.",
+                      maxColorAttachmentsAdapterLimit)
+                : "";
+        return DAWN_VALIDATION_ERROR(
+            "Color formats count (%u) exceeds maximum number of color attachements (%u). %s",
+            descriptor->colorFormatCount, maxColorAttachments, increaseLimitAdvice);
+    }
 
     bool allColorFormatsUndefined = true;
     ColorAttachmentFormats colorAttachmentFormats;

@@ -36,6 +36,7 @@
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/ityp_array.h"
 #include "dawn/common/ityp_span.h"
+#include "dawn/native/Adapter.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Commands.h"
@@ -670,9 +671,26 @@ ResultOrError<ShaderModuleEntryPoint> ValidateFragmentState(DeviceBase* device,
     }
 
     uint32_t maxColorAttachments = device->GetLimits().v1.maxColorAttachments;
-    DAWN_INVALID_IF(descriptor->targetCount > maxColorAttachments,
-                    "Number of targets (%u) exceeds the maximum (%u).", descriptor->targetCount,
-                    maxColorAttachments);
+    if (descriptor->targetCount > maxColorAttachments) {
+        SupportedLimits adapterLimits;
+        wgpu::Status status = device->GetAdapter()->APIGetLimits(&adapterLimits);
+        DAWN_ASSERT(status == wgpu::Status::Success);
+
+        uint32_t maxColorAttachmentsAdapterLimit = adapterLimits.limits.maxColorAttachments;
+        std::string increaseLimitAdvice =
+            (descriptor->targetCount <= maxColorAttachmentsAdapterLimit)
+                ? absl::StrFormat(
+                      " This adapter supports a higher maxColorAttachments of %u, which can be "
+                      "specified in "
+                      "requiredLimits when calling requestDevice(). Limits differ by hardware, so "
+                      "always check the adapter limits prior to requesting a higher limit.",
+                      maxColorAttachmentsAdapterLimit)
+                : "";
+        return DAWN_VALIDATION_ERROR("Number of targets (%u) exceeds the maximum (%u).%s",
+                                     descriptor->targetCount, maxColorAttachments,
+                                     increaseLimitAdvice);
+    }
+
     auto targets =
         ityp::SpanFromUntyped<ColorAttachmentIndex>(descriptor->targets, descriptor->targetCount);
 
