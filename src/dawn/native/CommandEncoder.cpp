@@ -36,6 +36,7 @@
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/NonMovable.h"
+#include "dawn/native/Adapter.h"
 #include "dawn/native/ApplyClearColorValueWithDrawHelper.h"
 #include "dawn/native/BindGroup.h"
 #include "dawn/native/BlitBufferToDepthStencil.h"
@@ -752,10 +753,25 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
                             "validating chained structs.");
 
     uint32_t maxColorAttachments = device->GetLimits().v1.maxColorAttachments;
-    DAWN_INVALID_IF(
-        descriptor->colorAttachmentCount > maxColorAttachments,
-        "Color attachment count (%u) exceeds the maximum number of color attachments (%u).",
-        descriptor->colorAttachmentCount, maxColorAttachments);
+    if (descriptor->colorAttachmentCount > maxColorAttachments) {
+        SupportedLimits adapterLimits;
+        wgpu::Status status = device->GetAdapter()->APIGetLimits(&adapterLimits);
+        DAWN_ASSERT(status == wgpu::Status::Success);
+
+        uint32_t maxColorAttachmentsAdapterLimit = adapterLimits.limits.maxColorAttachments;
+        std::string increaseLimitAdvice =
+            (descriptor->colorAttachmentCount <= maxColorAttachmentsAdapterLimit)
+                ? absl::StrFormat(
+                      " This adapter supports a higher maxColorAttachments of %u, which can be "
+                      "specified in requiredLimits when calling requestDevice(). Limits differ by "
+                      "hardware, so always check the adapter limits prior to requesting a higher "
+                      "limit.",
+                      maxColorAttachmentsAdapterLimit)
+                : "";
+        return DAWN_VALIDATION_ERROR(
+            "Color attachment count (%u) exceeds the maximum number of color attachments (%u). %s",
+            descriptor->colorAttachmentCount, maxColorAttachments, increaseLimitAdvice);
+    }
 
     auto colorAttachments = ityp::SpanFromUntyped<ColorAttachmentIndex>(
         descriptor->colorAttachments, descriptor->colorAttachmentCount);
