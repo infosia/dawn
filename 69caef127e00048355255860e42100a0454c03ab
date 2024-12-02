@@ -46,6 +46,30 @@
       },
       "revId": "69caef127e00048355255860e42100a0454c03ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3c64e1d_4afccd02",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2062,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-02T19:28:47Z",
+      "side": 1,
+      "message": "I also see the logic error in the code. It is not appended the additional extension it is overriding the extension.",
+      "parentUuid": "dc9175f9_f06c8359",
+      "range": {
+        "startLine": 2053,
+        "startChar": 0,
+        "endLine": 2062,
+        "endChar": 98
+      },
+      "revId": "69caef127e00048355255860e42100a0454c03ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
