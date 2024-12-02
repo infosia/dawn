@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2b2d622_cff37a22",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-02T12:02:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8df533c4_9a2c7178",
+      "revId": "6b5fd1fef19d25149e95f07b93c2b0913b18f1b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54953cc4_78541e3f",
