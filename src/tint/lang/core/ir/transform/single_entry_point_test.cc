@@ -119,7 +119,9 @@ TEST_F(IR_SingleEntryPointTest, MultipleEntryPointsMatch) {
 
     EXPECT_EQ(src, str());
 
-    EXPECT_DEATH_IF_SUPPORTED({ Run(SingleEntryPoint, "main"); }, "internal compiler error");
+    // Even with the runner validation turned off, the impl of SingleEntryPoint should run the
+    // validator and reject this input.
+    ASSERT_NE(RunWithFailure(SingleEntryPoint, "main"), Success);
 }
 
 TEST_F(IR_SingleEntryPointTest, NoChangesNeeded) {
