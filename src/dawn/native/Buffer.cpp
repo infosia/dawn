@@ -461,9 +461,24 @@ ResultOrError<UnpackedPtr<BufferDescriptor>> ValidateBufferDescriptor(
                     "Buffer is mapped at creation but its size (%u) is not a multiple of 4.",
                     descriptor->size);
 
-    DAWN_INVALID_IF(descriptor->size > device->GetLimits().v1.maxBufferSize,
-                    "Buffer size (%u) exceeds the max buffer size limit (%u).", descriptor->size,
-                    device->GetLimits().v1.maxBufferSize);
+    uint32_t maxBufferSize = device->GetLimits().v1.maxBufferSize;
+    if (descriptor->size > maxBufferSize) {
+        SupportedLimits adapterLimits;
+        wgpu::Status status = device->GetAdapter()->APIGetLimits(&adapterLimits);
+        DAWN_ASSERT(status == wgpu::Status::Success);
+
+        uint32_t maxBufferSizeAdapterLimit = adapterLimits.limits.maxBufferSize;
+        std::string increaseLimitAdvice =
+            (descriptor->size <= maxBufferSizeAdapterLimit)
+                ? absl::StrFormat(
+                      " This adapter supports a higher maxBufferSize of %u, which can be specified "
+                      "in requiredLimits when calling requestDevice(). Limits differ by hardware, "
+                      "so always check the adapter limits prior to requesting a higher limit.",
+                      maxBufferSizeAdapterLimit)
+                : "";
+        return DAWN_VALIDATION_ERROR("Buffer size (%u) exceeds the max buffer size limit (%u).%s",
+                                     descriptor->size, maxBufferSize, increaseLimitAdvice);
+    }
 
     return unpacked;
 }
