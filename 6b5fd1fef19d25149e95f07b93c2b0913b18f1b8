@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a460c352_2ca33760",
+        "filename": "generator/templates/art/api_jni_types.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-02T09:50:08Z",
+      "side": 1,
+      "message": "Could this be concealing an error scenario?",
+      "revId": "6b5fd1fef19d25149e95f07b93c2b0913b18f1b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54953cc4_78541e3f",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnTestLauncher.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-02T09:50:08Z",
+      "side": 1,
+      "message": "If this behavior, while undesirable, is consistent and reproducible, then let\u0027s add some asserts here in the test to verify that we\u0027ve seen the strange behavior.  Then, when those tests start to fail in the future, we can know that we expected the strange behavior to have been fixed and therefore can remove this try/catch block.\n\nSo I\u0027d rewrite this as,\n\n        bool caughtDeviceLostException \u003d false;\n        try {\n            instance.close()\n        } catch (ignored: DeviceLostException) {\n            // For some reason...\n            caughtDeviceLostException \u003d true;\n        }\n        // When this assert stops passing, it indicates that the DeviceLostException we\u0027re catching above is no longer being erroneously thrown, so we can safely remove this try/catch logic and treat that DLE as a genuine error in the future\n        assertThat(caughtDeviceLostException);",
+      "revId": "6b5fd1fef19d25149e95f07b93c2b0913b18f1b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a298e0a2_e5682869",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/ErrorTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-02T09:50:08Z",
+      "side": 1,
+      "message": "Comment what this test is testing, please?",
+      "revId": "6b5fd1fef19d25149e95f07b93c2b0913b18f1b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
