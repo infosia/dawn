@@ -255,6 +255,29 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
                                       &transformOutputs, nullptr));
     }
 
+    // TODO(dawn:2180): refactor out.
+    if (auto* data = transformOutputs.Get<tint::ast::transform::Renamer::Data>()) {
+        auto it = data->remappings.find(r.entryPointName.data());
+        if (it != data->remappings.end()) {
+            *remappedEntryPointName = it->second;
+        } else {
+            DAWN_INVALID_IF(!r.disableSymbolRenaming,
+                            "Could not find remapped name for entry point.");
+
+            *remappedEntryPointName = r.entryPointName;
+        }
+    } else {
+        return DAWN_VALIDATION_ERROR("Transform output missing renamer data.");
+    }
+
+    // Validate workgroup size after program runs transforms.
+    if (r.stage == SingleShaderStage::Compute) {
+        Extent3D _;
+        DAWN_TRY_ASSIGN(
+            _, ValidateComputeStageWorkgroupSize(transformedProgram, kRemappedEntryPointName,
+                                                 r.limits, r.adapter.UnsafeGetValue()));
+    }
+
     bool usesVertexIndex = false;
     bool usesInstanceIndex = false;
     if (r.stage == SingleShaderStage::Vertex) {

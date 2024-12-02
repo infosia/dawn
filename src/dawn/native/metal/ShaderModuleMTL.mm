@@ -28,6 +28,7 @@
 #include "dawn/native/metal/ShaderModuleMTL.h"
 
 #include "dawn/common/MatchVariant.h"
+#include "dawn/native/Adapter.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/CacheRequest.h"
 #include "dawn/native/Serializable.h"
@@ -63,6 +64,7 @@ using OptionalVertexPullingTransformConfig =
     X(OptionalVertexPullingTransformConfig, vertexPullingTransformConfig)                        \
     X(std::optional<tint::ast::transform::SubstituteOverride::Config>, substituteOverrideConfig) \
     X(LimitsForCompilationRequest, limits)                                                       \
+    X(CacheKey::UnsafeUnkeyedValue<const AdapterBase*>, adapter)                   \
     X(std::string, entryPointName)                                                               \
     X(bool, disableSymbolRenaming)                                                               \
     X(tint::msl::writer::Options, tintOptions)                                                   \
@@ -299,6 +301,8 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
 
     const CombinedLimits& limits = device->GetLimits();
     req.limits = LimitsForCompilationRequest::Create(limits.v1);
+    req.adapter =
+        UnsafeUnkeyedValue(static_cast<const AdapterBase*>(device->GetAdapter()));
 
     CacheResult<MslCompilation> mslCompilation;
     DAWN_TRY_LOAD_OR_RUN(
@@ -348,6 +352,12 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
             }
 
             Extent3D localSize{0, 0, 0};
+            if (r.stage == SingleShaderStage::Compute) {
+                // Validate workgroup size after program runs transforms.
+                DAWN_TRY_ASSIGN(localSize, ValidateComputeStageWorkgroupSize(
+                                               program, kRemappedEntryPointName, r.limits,
+                                               r.adapter.UnsafeGetValue()));
+            }
 
             TRACE_EVENT0(r.platform.UnsafeGetValue(), General, "tint::msl::writer::Generate");
             tint::Result<tint::msl::writer::Output> result;
