@@ -129,6 +129,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
 
     InstanceBase* GetInstance() const;
     AdapterBase* GetAdapter() const;
+    const AdapterBase* GetConstAdapter() const;
     PhysicalDeviceBase* GetPhysicalDevice() const;
     dawn::platform::Platform* GetPlatform() const;
 

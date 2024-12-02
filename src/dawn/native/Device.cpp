@@ -923,6 +923,10 @@ AdapterBase* DeviceBase::GetAdapter() const {
     return mAdapter.Get();
 }
 
+const AdapterBase* DeviceBase::GetConstAdapter() const {
+    return mAdapter.Get();
+}
+
 PhysicalDeviceBase* DeviceBase::GetPhysicalDevice() const {
     return mAdapter->GetPhysicalDevice();
 }
