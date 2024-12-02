@@ -150,6 +150,18 @@ struct IsResultOrError<ResultOrError<T>> {
 // was too large or they should free some existing resources.
 #define DAWN_OUT_OF_MEMORY_ERROR(MESSAGE) DAWN_MAKE_ERROR(InternalErrorType::OutOfMemory, MESSAGE)
 
+#define DAWN_INCREASE_LIMIT_MESSAGE(adapterLimitValue, limitName, limitValue)                     \
+    [&]() -> std::string {                                                                        \
+        if (limitValue > adapterLimitValue) {                                                     \
+            return "";                                                                            \
+        }                                                                                         \
+        return absl::StrFormat(" This adapter supports a higher " #limitName                      \
+                               " of %u, which can be specified in requiredLimits when calling "   \
+                               "requestDevice(). Limits differ by hardware, so always check the " \
+                               "adapter limits prior to requesting a higher limit.",              \
+                               adapterLimitValue);                                                \
+    }()
+
 #define DAWN_CONCAT1(x, y) x##y
 #define DAWN_CONCAT2(x, y) DAWN_CONCAT1(x, y)
 #define DAWN_LOCAL_VAR(name) DAWN_CONCAT2(DAWN_CONCAT2(_localVar, __LINE__), name)

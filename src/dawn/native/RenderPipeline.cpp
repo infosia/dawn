@@ -201,9 +201,17 @@ ResultOrError<ShaderModuleEntryPoint> ValidateVertexState(
 
     const CombinedLimits& limits = device->GetLimits();
 
-    DAWN_INVALID_IF(descriptor->bufferCount > limits.v1.maxVertexBuffers,
-                    "Vertex buffer count (%u) exceeds the maximum number of vertex buffers (%u).",
-                    descriptor->bufferCount, limits.v1.maxVertexBuffers);
+    if (descriptor->bufferCount > limits.v1.maxVertexBuffers) {
+        SupportedLimits adapterLimits;
+        wgpu::Status status = device->GetAdapter()->APIGetLimits(&adapterLimits);
+        DAWN_ASSERT(status == wgpu::Status::Success);
+
+        return DAWN_VALIDATION_ERROR(
+            "Vertex buffer count (%u) exceeds the maximum number of vertex buffers (%u).%s",
+            descriptor->bufferCount, limits.v1.maxVertexBuffers,
+            DAWN_INCREASE_LIMIT_MESSAGE(adapterLimits.limits.maxVertexBuffers, "maxVertexBuffers",
+                                        descriptor->bufferCount));
+    }
 
     ShaderModuleEntryPoint entryPoint;
     DAWN_TRY_ASSIGN_CONTEXT(
