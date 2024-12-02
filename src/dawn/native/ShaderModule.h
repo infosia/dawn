@@ -145,10 +145,10 @@ MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
 
 // Return extent3D with workgroup size dimension info if it is valid.
 // width = x, height = y, depthOrArrayLength = z.
-ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
-    const tint::Program& program,
-    const char* entryPointName,
-    const LimitsForCompilationRequest& limits);
+ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(const tint::Program& program,
+                                                          const char* entryPointName,
+                                                          const LimitsForCompilationRequest& limits,
+                                                          AdapterBase* adapter);
 
 RequiredBufferSizes ComputeRequiredBufferSizesForLayout(const EntryPointMetadata& entryPoint,
                                                         const PipelineLayoutBase* layout);
