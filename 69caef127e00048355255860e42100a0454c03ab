@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5f7d1f5_9e082c86",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2062,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-02T19:05:59Z",
+      "side": 1,
+      "message": "This logic seems wrong now? For an f16 subgroup builtin, it only produces an error if !f16 *and* !subgroups_f16. I tried this patch locally and it allowed me to use `subgroupBroadcast(1h, 0)` with only `enable f16` and nothing else.\n\nI think you can just check for `subgroups` here, and ignore the f16 part. The `f16` extension will already be checked separately for the argument expression, so we don\u0027t need to worry about it here.",
+      "range": {
+        "startLine": 2053,
+        "startChar": 0,
+        "endLine": 2062,
+        "endChar": 98
+      },
+      "revId": "69caef127e00048355255860e42100a0454c03ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
