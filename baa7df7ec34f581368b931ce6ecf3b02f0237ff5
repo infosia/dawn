@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82888616_bc8d08f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-02T17:42:48Z",
+      "side": 1,
+      "message": "LGTM! Thanks!",
+      "revId": "baa7df7ec34f581368b931ce6ecf3b02f0237ff5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1933183_2ac05a75",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-02T17:42:48Z",
+      "side": 1,
+      "message": "Thought for future patches: This particular case is hard because of the need to select the applicable limit, but I think that for most limits this message is generic enough that we could probably make it into a macro that both tests the limit and formats the message? Something like INCREASE_LIMIT_MESSAGE(adapterLimits, \"maxUniformBufferBindingSize\", bindingSize)?",
+      "revId": "baa7df7ec34f581368b931ce6ecf3b02f0237ff5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
