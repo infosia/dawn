@@ -702,10 +702,29 @@ MaybeError ValidateColorAttachmentBytesPerSample(DeviceBase* device,
     }
     uint32_t maxColorAttachmentBytesPerSample =
         device->GetLimits().v1.maxColorAttachmentBytesPerSample;
-    DAWN_INVALID_IF(
-        totalByteSize > maxColorAttachmentBytesPerSample,
-        "Total color attachment bytes per sample (%u) exceeds maximum (%u) with formats (%s).",
-        totalByteSize, maxColorAttachmentBytesPerSample, TextureFormatsToString(formats));
+
+    if (totalByteSize > maxColorAttachmentBytesPerSample) {
+        SupportedLimits adapterLimits;
+        wgpu::Status status = device->GetAdapter()->APIGetLimits(&adapterLimits);
+        DAWN_ASSERT(status == wgpu::Status::Success);
+
+        uint32_t maxColorAttachmentBytesPerSampleAdapterLimit =
+            adapterLimits.limits.maxColorAttachmentBytesPerSample;
+        std::string increaseLimitAdvice =
+            (totalByteSize <= maxColorAttachmentBytesPerSampleAdapterLimit)
+                ? absl::StrFormat(
+                      " This adapter supports a higher maxColorAttachmentBytesPerSample of %u, "
+                      "which can be specified in requiredLimits when calling requestDevice(). "
+                      "Limits differ by hardware, so always check the adapter limits prior to "
+                      "requesting a higher limit.",
+                      maxColorAttachmentBytesPerSampleAdapterLimit)
+                : "";
+        return DAWN_VALIDATION_ERROR(
+            "Total color attachment bytes per sample (%u) exceeds maximum (%u) with formats "
+            "(%s).%s",
+            totalByteSize, maxColorAttachmentBytesPerSample, TextureFormatsToString(formats),
+            increaseLimitAdvice);
+    }
 
     return {};
 }
