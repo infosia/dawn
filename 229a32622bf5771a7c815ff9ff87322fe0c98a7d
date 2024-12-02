@@ -16,6 +16,64 @@
       "message": "@Kai, PTAL",
       "revId": "229a32622bf5771a7c815ff9ff87322fe0c98a7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35d201d9_8afe43fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-02T21:16:04Z",
+      "side": 1,
+      "message": "Unfortunate that we have to add a bucket. Hoping this won\u0027t increase the number of identifiable devices since qualcomm devices are probably already identifiable.\n\n(identifiable from limits/features alone - I\u0027m certain they\u0027re identifiable through rasterization differences)",
+      "revId": "229a32622bf5771a7c815ff9ff87322fe0c98a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10e53500_95fde23e",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-02T21:16:04Z",
+      "side": 1,
+      "message": "512MB (I\u0027d write 512MiB but we didn\u0027t use MiB/GiB for the rest of this comment so it\u0027s fine)",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a291e4b0_aee6132a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Limits.cpp",
+              "range": {
+                "startLine": 55,
+                "startChar": 0,
+                "endLine": 56,
+                "endChar": 0
+              },
+              "replacement": "// Tiers are 128MB, 512MB, 1GB, 2GB-4, 4GB-4.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "229a32622bf5771a7c815ff9ff87322fe0c98a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
