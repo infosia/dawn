@@ -36,6 +36,7 @@
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/NonMovable.h"
+#include "dawn/native/Adapter.h"
 #include "dawn/native/ApplyClearColorValueWithDrawHelper.h"
 #include "dawn/native/BindGroup.h"
 #include "dawn/native/BlitBufferToDepthStencil.h"
@@ -751,11 +752,14 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
     DAWN_TRY_ASSIGN_CONTEXT(descriptor, ValidateAndUnpack(rawDescriptor),
                             "validating chained structs.");
 
-    uint32_t maxColorAttachments = device->GetLimits().v1.maxColorAttachments;
-    DAWN_INVALID_IF(
-        descriptor->colorAttachmentCount > maxColorAttachments,
-        "Color attachment count (%u) exceeds the maximum number of color attachments (%u).",
-        descriptor->colorAttachmentCount, maxColorAttachments);
+    const uint32_t maxColorAttachments = device->GetLimits().v1.maxColorAttachments;
+    if (DAWN_UNLIKELY(descriptor->colorAttachmentCount > maxColorAttachments)) {
+        return DAWN_VALIDATION_ERROR(
+            "Color attachment count (%u) exceeds the maximum number of color attachments (%u).%s",
+            descriptor->colorAttachmentCount, maxColorAttachments,
+            DAWN_INCREASE_LIMIT_MESSAGE(device->GetAdapter(), maxColorAttachments,
+                                        descriptor->colorAttachmentCount));
+    }
 
     auto colorAttachments = ityp::SpanFromUntyped<ColorAttachmentIndex>(
         descriptor->colorAttachments, descriptor->colorAttachmentCount);
