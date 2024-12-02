@@ -36,6 +36,7 @@
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/ityp_array.h"
 #include "dawn/common/ityp_span.h"
+#include "dawn/native/Adapter.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Commands.h"
@@ -675,9 +676,14 @@ ResultOrError<ShaderModuleEntryPoint> ValidateFragmentState(DeviceBase* device,
     }
 
     uint32_t maxColorAttachments = device->GetLimits().v1.maxColorAttachments;
-    DAWN_INVALID_IF(descriptor->targetCount > maxColorAttachments,
-                    "Number of targets (%u) exceeds the maximum (%u).", descriptor->targetCount,
-                    maxColorAttachments);
+    if (DAWN_UNLIKELY(descriptor->targetCount > maxColorAttachments)) {
+        return DAWN_VALIDATION_ERROR(
+            "Number of targets (%u) exceeds the maximum (%u).%s", descriptor->targetCount,
+            maxColorAttachments,
+            DAWN_INCREASE_LIMIT_MESSAGE(device->GetAdapter(), maxColorAttachments,
+                                        descriptor->targetCount));
+    }
+
     auto targets =
         ityp::SpanFromUntyped<ColorAttachmentIndex>(descriptor->targets, descriptor->targetCount);
 
