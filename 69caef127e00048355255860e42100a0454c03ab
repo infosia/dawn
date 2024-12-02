@@ -22,6 +22,30 @@
       },
       "revId": "69caef127e00048355255860e42100a0454c03ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc9175f9_f06c8359",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2062,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-02T19:25:38Z",
+      "side": 1,
+      "message": "I think this should be caught by a unit test. If it does not exist I will add it to this CL.",
+      "parentUuid": "e5f7d1f5_9e082c86",
+      "range": {
+        "startLine": 2053,
+        "startChar": 0,
+        "endLine": 2062,
+        "endChar": 98
+      },
+      "revId": "69caef127e00048355255860e42100a0454c03ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
