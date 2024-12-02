@@ -1068,10 +1068,10 @@ MaybeError ReflectShaderUsingTint(const DeviceBase* device,
 }
 }  // anonymous namespace
 
-ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
-    const tint::Program& program,
-    const char* entryPointName,
-    const LimitsForCompilationRequest& limits) {
+ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(const tint::Program& program,
+                                                          const char* entryPointName,
+                                                          const LimitsForCompilationRequest& limits,
+                                                          AdapterBase* adapter) {
     tint::inspector::Inspector inspector(program);
     // At this point the entry point must exist and must have workgroup size values.
     tint::inspector::EntryPoint entryPoint = inspector.GetEntryPoint(entryPointName);
@@ -1082,6 +1082,22 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
                     "Entry-point uses workgroup_size(%u, %u, %u) that are below the "
                     "minimum allowed (1, 1, 1).",
                     workgroup_size.x, workgroup_size.y, workgroup_size.z);
+
+    if (workgroup_size.x > limits.maxComputeWorkgroupSizeX ||
+        workgroup_size.y > limits.maxComputeWorkgroupSizeY ||
+        workgroup_size.z > limits.maxComputeWorkgroupSizeZ) {
+        SupportedLimits adapterLimits;
+        wgpu::Status status = adapter->APIGetLimits(&adapterLimits);
+        DAWN_ASSERT(status == wgpu::Status::Success);
+
+        // FIXME
+        std::string increaseLimitAdvice = "";
+        return DAWN_VALIDATION_ERROR(
+            "Entry-point uses workgroup_size(%u, %u, %u) that exceeds the "
+            "maximum allowed (%u, %u, %u).%s",
+            workgroup_size.x, workgroup_size.y, workgroup_size.z, limits.maxComputeWorkgroupSizeX,
+            limits.maxComputeWorkgroupSizeY, limits.maxComputeWorkgroupSizeZ, increaseLimitAdvice);
+    }
 
     DAWN_INVALID_IF(workgroup_size.x > limits.maxComputeWorkgroupSizeX ||
                         workgroup_size.y > limits.maxComputeWorkgroupSizeY ||

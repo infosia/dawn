@@ -493,8 +493,8 @@ MaybeError ComputePipeline::InitializeImpl() {
     Extent3D _;
     DAWN_TRY_ASSIGN(
         _, ValidateComputeStageWorkgroupSize(transformedProgram, computeStage.entryPoint.c_str(),
-                                             LimitsForCompilationRequest::Create(limits.v1)));
-
+                                             LimitsForCompilationRequest::Create(limits.v1),
+                                             GetDevice()->GetAdapter()));
     return {};
 }
 
