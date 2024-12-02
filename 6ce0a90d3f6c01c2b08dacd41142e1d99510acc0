@@ -16,6 +16,87 @@
       "message": "PTAL",
       "revId": "6ce0a90d3f6c01c2b08dacd41142e1d99510acc0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3353c6d_c3d74707",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-02T21:11:52Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary, because none of the downstream projects should need to use it, they can just switch to the new name. (there is no breaking change happening in this CL - they\u0027re named `WGPU_BREAKING_CHANGE` because they\u0027re only needed when we have to pre-migrate downstream projects using `#ifdef`)",
+      "fixSuggestions": [
+        {
+          "fixId": "554747e5_f97415b9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/api.h",
+              "range": {
+                "startLine": 43,
+                "startChar": 0,
+                "endLine": 44,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "6ce0a90d3f6c01c2b08dacd41142e1d99510acc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f654009_d58397f5",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-02T21:11:52Z",
+      "side": 1,
+      "message": "This can be deleted, it\u0027s just a helper function, not part of the public API. (In fact, it probably won\u0027t compile because `C_STRUCTS.WGPUProgrammableStageDescriptor` shouldn\u0027t exist anymore, it\u0027s now a typedef instead of a struct.)\n\n```suggestion\n```",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 0
+      },
+      "revId": "6ce0a90d3f6c01c2b08dacd41142e1d99510acc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0627fa4_a65e1c00",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-02T21:11:52Z",
+      "side": 1,
+      "message": "This shouldn\u0027t change, `descriptor` is a pointer to a `WGPUComputePipelineDescriptor`.\n\n```suggestion\n          descriptor + {{{ C_STRUCTS.WGPUComputePipelineDescriptor.compute }}}),\n```",
+      "range": {
+        "startLine": 308,
+        "startChar": 37,
+        "endLine": 308,
+        "endChar": 53
+      },
+      "revId": "6ce0a90d3f6c01c2b08dacd41142e1d99510acc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
