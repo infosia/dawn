@@ -70,6 +70,30 @@
       },
       "revId": "69caef127e00048355255860e42100a0454c03ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f7437a4_d6d18036",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2062,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-02T20:42:50Z",
+      "side": 1,
+      "message": "Fixed. I have also added/fixed the validation tests which should make it easier to see that the correct behavior is indeed respected.",
+      "parentUuid": "f3c64e1d_4afccd02",
+      "range": {
+        "startLine": 2053,
+        "startChar": 0,
+        "endLine": 2062,
+        "endChar": 98
+      },
+      "revId": "69caef127e00048355255860e42100a0454c03ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
