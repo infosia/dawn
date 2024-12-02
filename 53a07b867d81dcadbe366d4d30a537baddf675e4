@@ -22,6 +22,30 @@
       },
       "revId": "53a07b867d81dcadbe366d4d30a537baddf675e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba54a45b_90c4bb72",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-02T21:46:44Z",
+      "side": 1,
+      "message": "Ohh I totally missed that. My brain read the slash as a `//` comment ^_^",
+      "parentUuid": "39a531ba_8df7b9e5",
+      "range": {
+        "startLine": 586,
+        "startChar": 48,
+        "endLine": 586,
+        "endChar": 60
+      },
+      "revId": "53a07b867d81dcadbe366d4d30a537baddf675e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
