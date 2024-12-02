@@ -16,6 +16,24 @@
       "message": "Hold off...",
       "revId": "e49e917e4a0c11c26f66fac87696e2b554cc7af7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e60453a8_263d3ef1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-02T21:06:29Z",
+      "side": 1,
+      "message": "Step 1 has been submitted\nhttps://dawn-review.googlesource.com/c/dawn/+/217474\n\nWe can submit this change now.",
+      "parentUuid": "95c69cd9_070c8d2f",
+      "revId": "e49e917e4a0c11c26f66fac87696e2b554cc7af7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
