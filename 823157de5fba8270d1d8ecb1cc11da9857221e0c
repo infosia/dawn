@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbd6be02_d1bc726a",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-12-02T20:44:51Z",
+      "side": 1,
+      "message": "Added validation to CheckFunction to ensure that type is correctly set.",
+      "parentUuid": "9e3f34ce_24e871b4",
+      "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14d443cd_ee890c8a",
@@ -84,6 +102,24 @@
       "writtenOn": "2024-11-28T20:27:34Z",
       "side": 1,
       "message": "Maybe:\n\n```suggestion\n    /// @param type the type of the function itself\n```",
+      "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71c244b6_34095d7e",
+        "filename": "src/tint/lang/core/ir/function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-12-02T20:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14d443cd_ee890c8a",
       "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -105,6 +141,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "360431ef_5d097207",
+        "filename": "src/tint/lang/core/ir/function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-12-02T20:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3a6d25d_33bab8b7",
+      "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c7771fa_80d54668",
@@ -118,6 +172,24 @@
       "writtenOn": "2024-11-28T20:27:34Z",
       "side": 1,
       "message": "Don\u0027t need to override `Size` and `Align` as the default implementation will work here.",
+      "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf720523_4a46fde4",
+        "filename": "src/tint/lang/core/type/function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-12-02T20:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c7771fa_80d54668",
       "revId": "823157de5fba8270d1d8ecb1cc11da9857221e0c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
