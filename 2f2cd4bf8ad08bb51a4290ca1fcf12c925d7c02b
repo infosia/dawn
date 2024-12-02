@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "2f2cd4bf8ad08bb51a4290ca1fcf12c925d7c02b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4eacffb6_d8ea916a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-02T23:33:11Z",
+      "side": 1,
+      "message": "Nice avoidance of the unsafe raw pointers!",
+      "revId": "2f2cd4bf8ad08bb51a4290ca1fcf12c925d7c02b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
