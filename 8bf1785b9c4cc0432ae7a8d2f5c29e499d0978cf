@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5c1f7bd_e3fcdf02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 37
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-12-02T15:45:18Z",
+      "side": 1,
+      "message": "This change appears to have broken the roll into Skia: https://logs.chromium.org/logs/skia/6d9f82518bcb4c11/+/steps/ninja/0/stdout",
+      "revId": "8bf1785b9c4cc0432ae7a8d2f5c29e499d0978cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
