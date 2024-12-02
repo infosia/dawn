@@ -192,7 +192,6 @@ bool AllowFormatReinterpretationWithoutFlag(MTLPixelFormat origin,
             SRGB_PAIR(MTLPixelFormatBC7_RGBAUnorm, MTLPixelFormatBC7_RGBAUnorm_sRGB);
 #endif
         default:
-            if (@available(macOS 11.0, iOS 8.0, *)) {
                 switch (origin) {
                     SRGB_PAIR(MTLPixelFormatEAC_RGBA8, MTLPixelFormatEAC_RGBA8_sRGB);
 
@@ -217,7 +216,6 @@ bool AllowFormatReinterpretationWithoutFlag(MTLPixelFormat origin,
                     default:
                         break;
                 }
-            }
 
             return false;
     }
@@ -251,11 +249,7 @@ NSRef<MTLTextureDescriptor> Texture::CreateMetalTextureDescriptor() const {
     // the texture should be created in memoryless storage mode.
     mtlDesc.storageMode = MTLStorageModePrivate;
     if (GetInternalUsage() & wgpu::TextureUsage::TransientAttachment) {
-        if (@available(macOS 11.0, iOS 10.0, *)) {
             mtlDesc.storageMode = MTLStorageModeMemoryless;
-        } else {
-            DAWN_UNREACHABLE();
-        }
     }
 
     // Choose the correct MTLTextureType and paper over differences in how the array layer count
@@ -416,7 +410,6 @@ MaybeError Texture::InitializeFromSharedTextureMemory(
 }
 
 void Texture::SynchronizeTextureBeforeUse(CommandRecordingContext* commandContext) {
-    if (@available(macOS 10.14, iOS 12.0, *)) {
         SharedTextureMemoryBase::PendingFenceList fences;
         SharedResourceMemoryContents* contents = GetSharedResourceMemoryContents();
         if (contents != nullptr) {
@@ -426,7 +419,7 @@ void Texture::SynchronizeTextureBeforeUse(CommandRecordingContext* commandContex
             commandContext->WaitForSharedEvent(ToBackend(fence.object)->GetMTLSharedEvent(),
                                                fence.signaledValue);
         }
-    }
+
     mLastSharedTextureMemoryUsageSerial = GetDevice()->GetQueue()->GetPendingCommandSerial();
 }
 
