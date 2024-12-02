@@ -34,6 +34,24 @@
       "parentUuid": "09a1dfbb_5dcf6097",
       "revId": "440102e08bbc3e1be937102d15df85fc5905fed8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f77cc35_30a44fcf",
+        "filename": "src/tint/lang/glsl/writer/loop_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-02T15:04:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "756f49ad_180c4b48",
+      "revId": "440102e08bbc3e1be937102d15df85fc5905fed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
