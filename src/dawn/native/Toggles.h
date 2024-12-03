@@ -137,6 +137,7 @@ enum class Toggle {
     D3D12ForceStencilComponentReplicateSwizzle,
     D3D12ExpandShaderResourceStateTransitionsToCopySource,
     GLDepthBiasModifier,
+    GLForceMinVersionAndNoExtension,
     VulkanMonolithicPipelineCache,
     MetalSerializeTimestampGenerationAndResolution,
     D3D12RelaxMinSubgroupSizeTo8,
@@ -196,6 +197,8 @@ class TogglesState {
 
     // Set a toggle of the same stage of toggles state stage if and only if it is not already set.
     void Default(Toggle toggle, bool enabled);
+    // Set a toggle to given state, unless it has been force set.
+    void DefaultOverride(Toggle toggle, bool enabled);
     // Force set a toggle of same stage of toggles state stage. A force-set toggle will get
     // inherited to all later stage as forced.
     void ForceSet(Toggle toggle, bool enabled);

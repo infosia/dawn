@@ -626,6 +626,7 @@ source_set("end2end_tests_sources") {
     "end2end/FirstIndexOffsetTests.cpp",
     "end2end/FragDepthTests.cpp",
     "end2end/FramebufferFetchTests.cpp",
+    "end2end/GLExplicitExtensionsTests.cpp",
     "end2end/GpuMemorySynchronizationTests.cpp",
     "end2end/HistogramTests.cpp",
     "end2end/IndexFormatTests.cpp",
@@ -849,8 +850,10 @@ source_set("white_box_tests_sources") {
   }
 
   if (dawn_enable_opengles) {
-    sources += [ "white_box/EGLImageWrappingTests.cpp" ]
-    sources += [ "white_box/GLTextureWrappingTests.cpp" ]
+    sources += [
+      "white_box/EGLImageWrappingTests.cpp",
+      "white_box/GLTextureWrappingTests.cpp",
+    ]
     include_dirs = [ "//third_party/khronos" ]
   }
 }
