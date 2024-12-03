@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "115cac33_d72df132",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-03T17:59:39Z",
+      "side": 1,
+      "message": "Looks good! Just one question.",
+      "revId": "751b69a4e53a48adc4eb0ad17607b409988e6275",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2aabfa8f_02ec59d8",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-03T17:59:39Z",
+      "side": 1,
+      "message": "How much of this can be feasibly moved into `DAWN_INCREASE_LIMIT_MESSAGE()`? I would prefer if we could avoid turning expanding `DAWN_INVALID_IF()` calls like this.\n\nPerhaps the macro can be `DAWN_INCREASE_LIMIT_MESSAGE(device-\u003eGetAdapter(), maxVertexBuffer, descriptor-\u003ebufferCount)`, allowing the query for the limits to be done inside the lambda and the limit itself can be selected with the property name (which wouldn\u0027t be passed as a string)?\n\nI think the formatting would be something like:\n\n```\nSupportedLimits adapterLimits;\nwgpu::Status status \u003d adapter-\u003eAPIGetLimits(\u0026adapterLimits);\nDAWN_ASSERT(status \u003d\u003d wgpu::Status::Success);\nif (limitValue \u003e adapterLimits.limits.#limitName) { ... }\n```",
+      "revId": "751b69a4e53a48adc4eb0ad17607b409988e6275",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
