@@ -160,7 +160,7 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     mContext->MakeCurrent();
     const OpenGLFunctions& gl = mGL;
 
-    mFormatTable = BuildGLFormatTable(GetBGRAInternalFormat(gl));
+    mFormatTable = BuildGLFormatTable(GetBGRAInternalFormat(gl), HasStencilIndex8Support(gl));
 
     // Use the debug output functionality to get notified about GL errors
     // TODO(crbug.com/dawn/1475): add support for the KHR_debug and ARB_debug_output
@@ -226,6 +226,22 @@ GLenum Device::GetBGRAInternalFormat(const OpenGLFunctions& gl) const {
     } else {
         // Desktop GL will swizzle to/from RGBA8 for BGRA formats.
         return GL_RGBA8;
+    }
+}
+
+bool Device::HasStencilIndex8Support(const OpenGLFunctions& gl) const {
+    if (gl.GetVersion().IsDesktop() || gl.IsAtLeastGLES(3, 2)) {
+        // Supported in core
+        return true;
+    } else if (!IsToggleEnabled(Toggle::GLForceMinVersionAndNoExtension)) {
+        // Supported in extensions
+        return gl.IsGLExtensionSupported("GL_OES_texture_stencil8");
+    } else {
+        // Extensions are requested explicitly.
+        // const auto& egl = GetEGL(false);
+        // egl.GetCurrentContext
+        // GetExtensionsEnabled
+        return false;
     }
 }
 

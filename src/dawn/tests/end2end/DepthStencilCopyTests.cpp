@@ -941,15 +941,6 @@ TEST_P(DepthCopyFromBufferTests, BufferToRenderableDepthAspectAtNonZeroOffset) {
 }
 
 class StencilCopyTests : public DepthStencilCopyTests {
-  protected:
-    void SetUp() override {
-        DepthStencilCopyTests::SetUp();
-        // TODO(crbug.com/382084196): OpenGLES 3.1 core doesn't support GL_STENCIL_INDEX8
-        DAWN_SUPPRESS_TEST_IF(GetParam().mTextureFormat == wgpu::TextureFormat::Stencil8 &&
-                              IsOpenGLES() &&
-                              HasToggleEnabled("gl_force_min_version_and_no_extension"));
-    }
-
   public:
     void DoCopyFromStencilTest(
         uint32_t bufferCopyOffset,
