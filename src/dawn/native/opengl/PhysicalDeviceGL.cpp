@@ -395,9 +395,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     bool supportsSampleVariables = gl.IsAtLeastGL(4, 0) || gl.IsAtLeastGLES(3, 2) ||
                                    gl.IsGLExtensionSupported("GL_OES_sample_variables");
 
-    // Decide whether glTexSubImage2D/3D accepts GL_STENCIL_INDEX or not.
-    bool supportsStencilWriteTexture =
-        gl.GetVersion().IsDesktop() || gl.IsGLExtensionSupported("GL_OES_texture_stencil8");
+    // Decide whether GL_STENCIL8 format is fully supported.
+    bool supportsStencil8 = gl.GetVersion().IsDesktop() || gl.IsAtLeastGLES(3, 2) ||
+                            gl.IsGLExtensionSupported("GL_OES_texture_stencil8");
 
     // TODO(crbug.com/dawn/343): Investigate emulation.
     deviceToggles->Default(Toggle::DisableIndexedDrawBuffers, !supportsIndexedDrawBuffers);
@@ -431,7 +431,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     deviceToggles->Default(Toggle::UseBlitForBufferToStencilTextureCopy, true);
 
     // Use a blit to emulate write to stencil textures.
-    deviceToggles->Default(Toggle::UseBlitForStencilTextureWrite, !supportsStencilWriteTexture);
+    deviceToggles->Default(Toggle::UseBlitForStencilTextureWrite, !supportsStencil8);
 
     // Use T2B and B2T copies to emulate a T2T copy between sRGB and non-sRGB textures.
     deviceToggles->Default(Toggle::UseT2B2TForSRGBTextureCopy, true);
