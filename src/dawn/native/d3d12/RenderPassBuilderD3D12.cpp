@@ -144,8 +144,22 @@ void RenderPassBuilder::SetRenderTargetView(ColorAttachmentIndex attachmentIndex
     }
 }
 
-void RenderPassBuilder::SetDepthStencilView(D3D12_CPU_DESCRIPTOR_HANDLE baseDescriptor) {
+void RenderPassBuilder::SetDepthStencilView(D3D12_CPU_DESCRIPTOR_HANDLE baseDescriptor,
+                                            bool isDepthReadOnly,
+                                            bool isStencilReadOnly) {
     mRenderPassDepthStencilDesc.cpuDescriptor = baseDescriptor;
+#if D3D12_SDK_VERSION >= 612
+    if (isDepthReadOnly) {
+        mRenderPassFlags |= D3D12_RENDER_PASS_FLAG_BIND_READ_ONLY_DEPTH;
+    }
+    if (isStencilReadOnly) {
+        mRenderPassFlags |= D3D12_RENDER_PASS_FLAG_BIND_READ_ONLY_STENCIL;
+    }
+#else
+    // We shouldn't be using D3D12 render passes on this old version
+    // of the SDK which had incomplete render pass support.
+    DAWN_CHECK(false);
+#endif
 }
 
 ColorAttachmentIndex RenderPassBuilder::GetHighestColorAttachmentIndexPlusOne() const {
