@@ -139,6 +139,7 @@ enum class Toggle {
     GLDepthBiasModifier,
     VulkanMonolithicPipelineCache,
     MetalSerializeTimestampGenerationAndResolution,
+    GLForceMinVersionAndNoExtension,
 
     // Unresolved issues.
     NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,

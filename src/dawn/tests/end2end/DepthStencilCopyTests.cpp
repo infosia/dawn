@@ -941,6 +941,15 @@ TEST_P(DepthCopyFromBufferTests, BufferToRenderableDepthAspectAtNonZeroOffset) {
 }
 
 class StencilCopyTests : public DepthStencilCopyTests {
+  protected:
+    void SetUp() override {
+        DepthStencilCopyTests::SetUp();
+        // TODO(crbug.com/382084196): OpenGLES 3.1 core doesn't support GL_STENCIL_INDEX8
+        DAWN_SUPPRESS_TEST_IF(GetParam().mTextureFormat == wgpu::TextureFormat::Stencil8 &&
+                              IsOpenGLES() &&
+                              HasToggleEnabled("gl_force_min_version_and_no_extension"));
+    }
+
   public:
     void DoCopyFromStencilTest(
         uint32_t bufferCopyOffset,
@@ -1608,13 +1617,14 @@ DAWN_INSTANTIATE_TEST_P(
      MetalBackend(
          {"metal_use_both_depth_and_stencil_attachments_for_combined_depth_stencil_formats"}),
      MetalBackend({"use_blit_for_buffer_to_stencil_texture_copy"}), OpenGLBackend(),
-     OpenGLESBackend(),
+     OpenGLESBackend(), OpenGLESBackend({"gl_force_min_version_and_no_extension"}),
      // Test with the vulkan_use_s8 toggle forced on and off.
      VulkanBackend({"vulkan_use_s8"}, {}), VulkanBackend({}, {"vulkan_use_s8"})},
     std::vector<wgpu::TextureFormat>(utils::kStencilFormats.begin(), utils::kStencilFormats.end()));
 
 DAWN_INSTANTIATE_TEST_P(StencilCopyTests_Compat,
-                        {OpenGLBackend(), OpenGLESBackend()},
+                        {OpenGLBackend(), OpenGLESBackend(),
+                         OpenGLESBackend({"gl_force_min_version_and_no_extension"})},
                         std::vector<wgpu::TextureFormat>(utils::kStencilFormats.begin(),
                                                          utils::kStencilFormats.end()));
 

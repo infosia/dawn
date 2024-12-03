@@ -112,7 +112,8 @@ ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType back
     // irrespective of the context creation options.
     std::unique_ptr<ContextEGL> context;
     DAWN_TRY_ASSIGN(context, ContextEGL::Create(display, backendType, /*useRobustness*/ false,
-                                                /*useANGLETextureSharing*/ false));
+                                                /*useANGLETextureSharing*/ false,
+                                                /*forceMinVersionAndExtensions*/ false));
 
     EGLSurface prevDrawSurface = egl.GetCurrentSurface(EGL_DRAW);
     EGLSurface prevReadSurface = egl.GetCurrentSurface(EGL_READ);
@@ -454,10 +455,13 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     }
 
     bool useRobustness = !deviceToggles.IsEnabled(Toggle::DisableRobustness);
+    bool forceMinVersionAndNoExtension =
+        deviceToggles.IsEnabled(Toggle::GLForceMinVersionAndNoExtension);
 
     std::unique_ptr<ContextEGL> context;
-    DAWN_TRY_ASSIGN(context, ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
-                                                useANGLETextureSharing));
+    DAWN_TRY_ASSIGN(context,
+                    ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
+                                       useANGLETextureSharing, forceMinVersionAndNoExtension));
 
     return Device::Create(adapter, descriptor, mFunctions, std::move(context), deviceToggles,
                           std::move(lostEvent));

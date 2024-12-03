@@ -583,6 +583,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "compute passes. This can be worked around by signaling and waiting for a shared event in "
       "between timestamp generation and resolution.",
       "crbug.com/372698905", ToggleStage::Device}},
+    {Toggle::GLForceMinVersionAndNoExtension,
+     {"gl_force_min_version_and_no_extension",
+      "Force OpenGLES to create context with minimum version and no extension required by Compat "
+      "spec, which for OpenGLES is version 3.1 with no extensions. This toggle is used by end2end "
+      "testing.",
+      "crbug.com/382084196", ToggleStage::Device}},
     {Toggle::NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
      {"no_workaround_sample_mask_becomes_zero_for_all_but_last_color_target",
       "MacOS 12.0+ Intel has a bug where the sample mask is only applied for the last color "
