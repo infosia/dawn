@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8a63fb4_2fbd1003",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-03T08:42:27Z",
+      "side": 1,
+      "message": "I thought I needed it because `WGPUProgrammableStageDescriptor` was used in `CreateComputePipelineAsyncJs()` by ML Drift. Sorry for that.",
+      "parentUuid": "f3353c6d_c3d74707",
+      "revId": "6ce0a90d3f6c01c2b08dacd41142e1d99510acc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f654009_d58397f5",
@@ -76,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45c4591d_df68940d",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-03T08:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f654009_d58397f5",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 0
+      },
+      "revId": "6ce0a90d3f6c01c2b08dacd41142e1d99510acc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0627fa4_a65e1c00",
@@ -89,6 +131,30 @@
       "writtenOn": "2024-12-02T21:11:52Z",
       "side": 1,
       "message": "This shouldn\u0027t change, `descriptor` is a pointer to a `WGPUComputePipelineDescriptor`.\n\n```suggestion\n          descriptor + {{{ C_STRUCTS.WGPUComputePipelineDescriptor.compute }}}),\n```",
+      "range": {
+        "startLine": 308,
+        "startChar": 37,
+        "endLine": 308,
+        "endChar": 53
+      },
+      "revId": "6ce0a90d3f6c01c2b08dacd41142e1d99510acc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd5b17d2_77a3cd5e",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-03T08:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0627fa4_a65e1c00",
       "range": {
         "startLine": 308,
         "startChar": 37,
