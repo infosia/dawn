@@ -572,6 +572,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "while the WebGPU CTS is expecting n. Scale the depth bias value by multiple 0.5 on certain "
       "backends to achieve conformant result.",
       "https://crbug.com/42241017", ToggleStage::Device}},
+    {Toggle::GLForceMinVersionAndNoExtension,
+     {"gl_force_min_version_and_no_extension",
+      "Force OpenGLES to create context with minimum version and no extension required by Compat "
+      "spec, which for OpenGLES is version 3.1 with no extensions. This toggle is used by end2end "
+      "testing.",
+      "crbug.com/382084196", ToggleStage::Device}},
     {Toggle::VulkanMonolithicPipelineCache,
      {"vulkan_monolithic_pipeline_cache",
       "Use a monolithic VkPipelineCache per device. The embedder is responsible for calling "
@@ -715,6 +721,17 @@ void TogglesState::Default(Toggle toggle, bool enabled) {
     DAWN_ASSERT(toggle != Toggle::InvalidEnum);
     DAWN_ASSERT(TogglesInfo::GetToggleInfo(toggle)->stage == mStage);
     if (IsSet(toggle)) {
+        return;
+    }
+    mTogglesSet.Set(toggle, true);
+    mEnabledToggles.Set(toggle, enabled);
+}
+
+// Set a toggle to given state, unless it has been force set.
+void TogglesState::DefaultOverride(Toggle toggle, bool enabled) {
+    DAWN_ASSERT(toggle != Toggle::InvalidEnum);
+    DAWN_ASSERT(TogglesInfo::GetToggleInfo(toggle)->stage == mStage);
+    if (mForcedToggles.Has(toggle)) {
         return;
     }
     mTogglesSet.Set(toggle, true);
