@@ -123,6 +123,15 @@ void KHRONOS_APIENTRY OnGLDebugMessage(GLenum source,
     }
 }
 
+bool HasStencilIndex8Support(const dawn::native::opengl::OpenGLFunctions& gl) {
+    if (gl.GetVersion().IsDesktop() || gl.IsAtLeastGLES(3, 2) ||
+        gl.IsGLExtensionSupported("GL_OES_texture_stencil8")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 }  // anonymous namespace
 
 namespace dawn::native::opengl {
@@ -161,7 +170,7 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     mContext->RequestExtensions();
     const OpenGLFunctions& gl = mGL;
 
-    mFormatTable = BuildGLFormatTable(GetBGRAInternalFormat(gl));
+    mFormatTable = BuildGLFormatTable(GetBGRAInternalFormat(gl), HasStencilIndex8Support(gl));
 
     // Use the debug output functionality to get notified about GL errors
     // TODO(crbug.com/dawn/1475): add support for the KHR_debug and ARB_debug_output
