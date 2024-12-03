@@ -1383,6 +1383,8 @@ class StencilCopyTests_Compat : public StencilCopyTests {
     void SetUp() override {
         StencilCopyTests::SetUp();
         DAWN_SUPPRESS_TEST_IF(!IsCompatibilityMode());
+        // TODO(crbug.com/382084196): OpenGLES 3.1 core doesn't support GL_STENCIL_INDEX8
+        DAWN_SUPPRESS_TEST_IF(HasToggleEnabled("gl_force_min_version_and_no_extension"));
     }
 
   public:
@@ -1614,7 +1616,8 @@ DAWN_INSTANTIATE_TEST_P(
     std::vector<wgpu::TextureFormat>(utils::kStencilFormats.begin(), utils::kStencilFormats.end()));
 
 DAWN_INSTANTIATE_TEST_P(StencilCopyTests_Compat,
-                        {OpenGLBackend(), OpenGLESBackend()},
+                        {OpenGLBackend(), OpenGLESBackend(),
+                         OpenGLESBackend({"gl_force_min_version_and_no_extension"})},
                         std::vector<wgpu::TextureFormat>(utils::kStencilFormats.begin(),
                                                          utils::kStencilFormats.end()));
 
