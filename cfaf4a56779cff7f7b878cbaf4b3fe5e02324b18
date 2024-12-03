@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "65d8231e_e108b9d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-03T16:08:14Z",
+      "side": 1,
+      "message": "Greg is telling me that intel mac on skia is stuck on 10.15.1\nThis would cause problems. This needs to be addressed first.",
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3416099_608c0798",
         "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
         "patchSetId": 12
