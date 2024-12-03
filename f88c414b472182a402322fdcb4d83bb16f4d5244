@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6eb5b0f2_3b904250",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-03T16:48:04Z",
+      "side": 1,
+      "message": "Is it invalid if we use read-only-depth-stencil without setting these flags? If so seems like we should do this unconditionally and require this SDK.",
+      "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbec6fff_60690199",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-03T16:48:04Z",
+      "side": 1,
+      "message": "Will older OSes be OK if we set these flags, from the newer SDK, on older drivers?",
+      "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
