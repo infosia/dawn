@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4a4f23a_a8062ff1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-03T17:31:56Z",
+      "side": 1,
+      "message": "I think it would be useful to add this info to the https://github.com/gpuweb/gpuweb/blob/main/proposals/subgroups.md\n\nand when we land this in the spec we may want to include this erratum in https://gpuweb.github.io/gpuweb/correspondence/",
+      "revId": "0ea7e8dfbec43dea6a1d5360eb5c4e57a666ec33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b305393a_69e7139a",
