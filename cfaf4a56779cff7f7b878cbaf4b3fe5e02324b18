@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3cee33a9_74a6d98a",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-03T14:57:22Z",
+      "side": 1,
+      "message": "This is one example of many where we probably dont need the \u0027toggle\u0027 anymore or the compiler option.",
+      "range": {
+        "startLine": 445,
+        "startChar": 35,
+        "endLine": 445,
+        "endChar": 56
+      },
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c626602d_bc83af62",
         "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
         "patchSetId": 12
@@ -49,6 +72,29 @@
       "side": 1,
       "message": "great find!",
       "parentUuid": "c626602d_bc83af62",
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e097b58c_b8debf17",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-03T14:57:22Z",
+      "side": 1,
+      "message": "These also are features that likely do not need the toggle anymore",
+      "range": {
+        "startLine": 656,
+        "startChar": 27,
+        "endLine": 656,
+        "endChar": 43
+      },
       "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
