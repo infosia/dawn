@@ -89,13 +89,17 @@ uint32_t GetDeviceIdFromRender(std::string_view render) {
     return deviceId;
 }
 
-bool IsANGLEDesktopGL(std::string renderer) {
+bool IsANGLE(std::string_view renderer) {
+    return renderer.find("ANGLE") != std::string::npos;
+}
+
+bool IsANGLEDesktopGL(std::string_view renderer) {
     return renderer.find("ANGLE") != std::string::npos &&
            renderer.find("OpenGL") != std::string::npos &&
            renderer.find("OpenGL ES") == std::string::npos;
 }
 
-bool IsSwiftShader(std::string renderer) {
+bool IsSwiftShader(std::string_view renderer) {
     return renderer.find("SwiftShader") != std::string::npos;
 }
 
@@ -112,7 +116,8 @@ ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType back
     // irrespective of the context creation options.
     std::unique_ptr<ContextEGL> context;
     DAWN_TRY_ASSIGN(context, ContextEGL::Create(display, backendType, /*useRobustness*/ false,
-                                                /*useANGLETextureSharing*/ false));
+                                                /*useANGLETextureSharing*/ false,
+                                                /*forceMinVersionAndExtensions*/ false));
 
     EGLSurface prevDrawSurface = egl.GetCurrentSurface(EGL_DRAW);
     EGLSurface prevReadSurface = egl.GetCurrentSurface(EGL_READ);
@@ -389,47 +394,54 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     bool supportsStencilWriteTexture =
         gl.GetVersion().IsDesktop() || gl.IsGLExtensionSupported("GL_OES_texture_stencil8");
 
+    bool reinitialize = deviceToggles->IsEnabled(Toggle::GLForceMinVersionAndNoExtension);
+    auto DefaultFunc = reinitialize ? &TogglesState::DefaultOverride : &TogglesState::Default;
+
     // TODO(crbug.com/dawn/343): Investigate emulation.
-    deviceToggles->Default(Toggle::DisableIndexedDrawBuffers, !supportsIndexedDrawBuffers);
-    deviceToggles->Default(Toggle::DisableSampleVariables, !supportsSampleVariables);
-    deviceToggles->Default(Toggle::FlushBeforeClientWaitSync, gl.GetVersion().IsES());
+    (deviceToggles->*DefaultFunc)(Toggle::DisableIndexedDrawBuffers, !supportsIndexedDrawBuffers);
+    (deviceToggles->*DefaultFunc)(Toggle::DisableSampleVariables, !supportsSampleVariables);
+    (deviceToggles->*DefaultFunc)(Toggle::FlushBeforeClientWaitSync, gl.GetVersion().IsES());
     // For OpenGL ES, we must use a placeholder fragment shader for vertex-only render pipeline.
-    deviceToggles->Default(Toggle::UsePlaceholderFragmentInVertexOnlyPipeline,
-                           gl.GetVersion().IsES());
+    (deviceToggles->*DefaultFunc)(Toggle::UsePlaceholderFragmentInVertexOnlyPipeline,
+                                  gl.GetVersion().IsES());
     // For OpenGL/OpenGL ES, use compute shader blit to emulate depth16unorm texture to buffer
     // copies.
-    deviceToggles->Default(Toggle::UseBlitForDepth16UnormTextureToBufferCopy, true);
+    (deviceToggles->*DefaultFunc)(Toggle::UseBlitForDepth16UnormTextureToBufferCopy, true);
 
     // For OpenGL ES, use compute shader blit to emulate depth32float texture to buffer copies.
-    deviceToggles->Default(Toggle::UseBlitForDepth32FloatTextureToBufferCopy,
-                           gl.GetVersion().IsES());
+    (deviceToggles->*DefaultFunc)(Toggle::UseBlitForDepth32FloatTextureToBufferCopy,
+                                  gl.GetVersion().IsES());
 
     // For OpenGL ES, use compute shader blit to emulate stencil texture to buffer copies.
-    deviceToggles->Default(Toggle::UseBlitForStencilTextureToBufferCopy, gl.GetVersion().IsES());
+    (deviceToggles->*DefaultFunc)(Toggle::UseBlitForStencilTextureToBufferCopy,
+                                  gl.GetVersion().IsES());
 
     // For OpenGL ES, use compute shader blit to emulate snorm texture to buffer copies.
-    deviceToggles->Default(Toggle::UseBlitForSnormTextureToBufferCopy,
-                           gl.GetVersion().IsES() || !supportsSnormRead);
+    (deviceToggles->*DefaultFunc)(Toggle::UseBlitForSnormTextureToBufferCopy,
+                                  gl.GetVersion().IsES() || !supportsSnormRead);
 
     // For OpenGL ES, use compute shader blit to emulate bgra8unorm texture to buffer copies.
-    deviceToggles->Default(Toggle::UseBlitForBGRA8UnormTextureToBufferCopy, !supportsBGRARead);
+    (deviceToggles->*DefaultFunc)(Toggle::UseBlitForBGRA8UnormTextureToBufferCopy,
+                                  !supportsBGRARead);
 
     // For OpenGL ES, use compute shader blit to emulate rgb9e5ufloat texture to buffer copies.
-    deviceToggles->Default(Toggle::UseBlitForRGB9E5UfloatTextureCopy, gl.GetVersion().IsES());
+    (deviceToggles->*DefaultFunc)(Toggle::UseBlitForRGB9E5UfloatTextureCopy,
+                                  gl.GetVersion().IsES());
 
     // Use a blit to emulate stencil-only buffer-to-texture copies.
-    deviceToggles->Default(Toggle::UseBlitForBufferToStencilTextureCopy, true);
+    (deviceToggles->*DefaultFunc)(Toggle::UseBlitForBufferToStencilTextureCopy, true);
 
     // Use a blit to emulate write to stencil textures.
-    deviceToggles->Default(Toggle::UseBlitForStencilTextureWrite, !supportsStencilWriteTexture);
+    (deviceToggles->*DefaultFunc)(Toggle::UseBlitForStencilTextureWrite,
+                                  !supportsStencilWriteTexture);
 
     // Use T2B and B2T copies to emulate a T2T copy between sRGB and non-sRGB textures.
-    deviceToggles->Default(Toggle::UseT2B2TForSRGBTextureCopy, true);
+    (deviceToggles->*DefaultFunc)(Toggle::UseT2B2TForSRGBTextureCopy, true);
 
     // Scale depth bias value by * 0.5 on certain GL drivers.
-    deviceToggles->Default(Toggle::GLDepthBiasModifier, gl.GetVersion().IsDesktop() ||
-                                                            IsANGLEDesktopGL(mName) ||
-                                                            IsSwiftShader(mName));
+    (deviceToggles->*DefaultFunc)(Toggle::GLDepthBiasModifier, gl.GetVersion().IsDesktop() ||
+                                                                   IsANGLEDesktopGL(mName) ||
+                                                                   IsSwiftShader(mName));
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
@@ -445,10 +457,29 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     }
 
     bool useRobustness = !deviceToggles.IsEnabled(Toggle::DisableRobustness);
+    // Only ANGLE EGL context has EGL_CONTEXT_OPENGL_BACKWARDS_COMPATIBLE_ANGLE and
+    // EGL_EXTENSIONS_ENABLED_ANGLE attribs
+    bool forceMinVersionAndNoExtension =
+        IsANGLE(mName) && deviceToggles.IsEnabled(Toggle::GLForceMinVersionAndNoExtension);
 
     std::unique_ptr<ContextEGL> context;
-    DAWN_TRY_ASSIGN(context, ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
-                                                useANGLETextureSharing));
+    DAWN_TRY_ASSIGN(context,
+                    ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
+                                       useANGLETextureSharing, forceMinVersionAndNoExtension));
+
+    if (forceMinVersionAndNoExtension) {
+        // Functions, limits, and extensions could be different from the default temporary context.
+        // Reinitialize the functions.
+        context->MakeCurrent();
+        DAWN_TRY(mFunctions.Initialize(context->egl().GetProcAddress));
+
+        // Reset the toggles based on extensions.
+        TogglesState adjustedDeviceToggles = deviceToggles;
+        SetupBackendDeviceToggles(adapter->GetInstance()->GetPlatform(), &adjustedDeviceToggles);
+
+        return Device::Create(adapter, descriptor, mFunctions, std::move(context),
+                              adjustedDeviceToggles, std::move(lostEvent));
+    }
 
     return Device::Create(adapter, descriptor, mFunctions, std::move(context), deviceToggles,
                           std::move(lostEvent));
