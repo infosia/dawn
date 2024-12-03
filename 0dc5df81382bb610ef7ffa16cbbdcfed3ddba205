@@ -1,0 +1,76 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e102fc5a_72db18e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-03T16:18:36Z",
+      "side": 1,
+      "message": "LGTM but suggest using a `Hashset` for the uniqueness check instead.",
+      "revId": "0dc5df81382bb610ef7ffa16cbbdcfed3ddba205",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4c048c8_5074ccc5",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-03T16:18:36Z",
+      "side": 1,
+      "message": "Nit: It\u0027d more efficient to use a `Hashset`, and then you could just `if (!entry_point_names.Add(name)) { /* it was a duplicate */ }`\n\nNot that important for real shaders, but I assume at some point the fuzzer will create a module with a million entry points and the `Vector::Any` approach might start becoming an issue.",
+      "fixSuggestions": [
+        {
+          "fixId": "e5ef2a09_9ef1000c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 1319,
+                "startChar": 0,
+                "endLine": 1320,
+                "endChar": 0
+              },
+              "replacement": "    Hashset\u003cstd::string, 4\u003e entry_point_names_;\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 1900,
+                "startChar": 0,
+                "endLine": 1901,
+                "endChar": 0
+              },
+              "replacement": "        if (!entry_point_names_.Add(name)) {\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 1902,
+                "startChar": 0,
+                "endLine": 1904,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "0dc5df81382bb610ef7ffa16cbbdcfed3ddba205",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
