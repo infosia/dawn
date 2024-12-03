@@ -77,6 +77,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3f2da879_61c3619a",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-03T16:10:06Z",
+      "side": 1,
+      "message": "I actually fixed the indentation and then ran the format and it reversed the indentation. I think something is wrong with clang format for .mm files",
+      "parentUuid": "f3416099_608c0798",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 8
+      },
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3cee33a9_74a6d98a",
         "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
         "patchSetId": 12
