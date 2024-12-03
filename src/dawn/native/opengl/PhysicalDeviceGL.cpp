@@ -89,30 +89,43 @@ uint32_t GetDeviceIdFromRender(std::string_view render) {
     return deviceId;
 }
 
-bool IsANGLEDesktopGL(std::string renderer) {
+bool IsANGLEDesktopGL(std::string_view renderer) {
     return renderer.find("ANGLE") != std::string::npos &&
            renderer.find("OpenGL") != std::string::npos &&
            renderer.find("OpenGL ES") == std::string::npos;
 }
 
-bool IsSwiftShader(std::string renderer) {
+bool IsSwiftShader(std::string_view renderer) {
     return renderer.find("SwiftShader") != std::string::npos;
 }
 
 }  // anonymous namespace
 
 // static
-ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType backendType,
-                                                          Ref<DisplayEGL> display) {
+ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(
+    wgpu::BackendType backendType,
+    Ref<DisplayEGL> display,
+    const UnpackedPtr<RequestAdapterOptions>& options) {
     const EGLFunctions& egl = display->egl;
     EGLDisplay eglDisplay = display->GetDisplay();
+
+    bool forceMinVersionAndExtensions = false;
+    if (auto* togglesDesc = options.Get<DawnTogglesDescriptor>()) {
+        TogglesState toggles =
+            TogglesState::CreateFromTogglesDescriptor(togglesDesc, ToggleStage::Adapter);
+        if (toggles.IsEnabled(Toggle::GLForceMinVersionAndNoExtensions)) {
+            forceMinVersionAndExtensions = true;
+        }
+    }
 
     // Create a temporary context and make it current during the creation of the PhysicalDevice so
     // that we can query the limits and other properties. Assumes that the limit are the same
     // irrespective of the context creation options.
     std::unique_ptr<ContextEGL> context;
-    DAWN_TRY_ASSIGN(context, ContextEGL::Create(display, backendType, /*useRobustness*/ false,
-                                                /*useANGLETextureSharing*/ false));
+    DAWN_TRY_ASSIGN(
+        context, ContextEGL::Create(display, backendType, /*useRobustness*/ false,
+                                    /*useANGLETextureSharing*/ false,
+                                    /*forceMinVersionAndExtensions*/ forceMinVersionAndExtensions));
 
     EGLSurface prevDrawSurface = egl.GetCurrentSurface(EGL_DRAW);
     EGLSurface prevReadSurface = egl.GetCurrentSurface(EGL_READ);
@@ -445,10 +458,13 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     }
 
     bool useRobustness = !deviceToggles.IsEnabled(Toggle::DisableRobustness);
+    bool forceMinVersionAndNoExtension =
+        deviceToggles.IsEnabled(Toggle::GLForceMinVersionAndNoExtensions);
 
     std::unique_ptr<ContextEGL> context;
-    DAWN_TRY_ASSIGN(context, ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
-                                                useANGLETextureSharing));
+    DAWN_TRY_ASSIGN(context,
+                    ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
+                                       useANGLETextureSharing, forceMinVersionAndNoExtension));
 
     return Device::Create(adapter, descriptor, mFunctions, std::move(context), deviceToggles,
                           std::move(lostEvent));

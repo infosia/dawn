@@ -80,7 +80,7 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
         }
 
         Ref<PhysicalDevice> device;
-        DAWN_TRY_ASSIGN(device, PhysicalDevice::Create(GetType(), std::move(display)));
+        DAWN_TRY_ASSIGN(device, PhysicalDevice::Create(GetType(), std::move(display), options));
         devices.push_back(device);
 
         return {};
