@@ -33,6 +33,24 @@
       "message": "Thought for future patches: This particular case is hard because of the need to select the applicable limit, but I think that for most limits this message is generic enough that we could probably make it into a macro that both tests the limit and formats the message? Something like INCREASE_LIMIT_MESSAGE(adapterLimits, \"maxUniformBufferBindingSize\", bindingSize)?",
       "revId": "baa7df7ec34f581368b931ce6ecf3b02f0237ff5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdee275c_94107992",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-03T09:57:05Z",
+      "side": 1,
+      "message": "Is https://dawn-review.googlesource.com/c/dawn/+/217597 what you had in mind?",
+      "parentUuid": "b1933183_2ac05a75",
+      "revId": "baa7df7ec34f581368b931ce6ecf3b02f0237ff5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
