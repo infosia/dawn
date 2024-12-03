@@ -71,6 +71,24 @@
       ],
       "revId": "0dc5df81382bb610ef7ffa16cbbdcfed3ddba205",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ef5cda2_2302e744",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-12-03T16:36:24Z",
+      "side": 1,
+      "message": "I had initially tried using HashSet, but was getting weird template errors using strings (maybe I was trying to use a string_view?).\n\nBut yeah, your version works and is superior.",
+      "parentUuid": "b4c048c8_5074ccc5",
+      "revId": "0dc5df81382bb610ef7ffa16cbbdcfed3ddba205",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
