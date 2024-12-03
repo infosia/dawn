@@ -93,6 +93,8 @@ MaybeError OpenGLFunctionsBase::LoadDesktopGLProcs(GLGetProcProc getProc, int ma
 #endif
 
 void OpenGLFunctionsBase::InitializeSupportedGLExtensions() {
+    mSupportedGLExtensionsSet.clear();
+
     int32_t numExtensions;
     GetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
 
