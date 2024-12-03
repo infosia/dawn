@@ -137,6 +137,7 @@ enum class Toggle {
     D3D12ForceStencilComponentReplicateSwizzle,
     D3D12ExpandShaderResourceStateTransitionsToCopySource,
     GLDepthBiasModifier,
+    GLForceMinVersionAndNoExtension,
     VulkanMonolithicPipelineCache,
     MetalSerializeTimestampGenerationAndResolution,
     D3D12RelaxMinSubgroupSizeTo8,
@@ -193,6 +194,9 @@ class TogglesState {
     // Inherit from a given toggles state of earlier stage, only inherit the forced and the
     // unrequired toggles to allow overriding. Return *this to allow method chaining manner.
     TogglesState& InheritFrom(const TogglesState& inheritedToggles);
+
+    // Same as InheritFrom but without ASSERT on stage.
+    TogglesState& InheritFromInternal(const TogglesState& inheritedToggles);
 
     // Set a toggle of the same stage of toggles state stage if and only if it is not already set.
     void Default(Toggle toggle, bool enabled);

@@ -572,6 +572,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "while the WebGPU CTS is expecting n. Scale the depth bias value by multiple 0.5 on certain "
       "backends to achieve conformant result.",
       "https://crbug.com/42241017", ToggleStage::Device}},
+    {Toggle::GLForceMinVersionAndNoExtension,
+     {"gl_force_min_version_and_no_extension",
+      "Force OpenGLES to create context with minimum version and no extension required by Compat "
+      "spec, which for OpenGLES is version 3.1 with no extensions. This toggle is used by end2end "
+      "testing.",
+      "crbug.com/382084196", ToggleStage::Device}},
     {Toggle::VulkanMonolithicPipelineCache,
      {"vulkan_monolithic_pipeline_cache",
       "Use a monolithic VkPipelineCache per device. The embedder is responsible for calling "
@@ -696,6 +702,24 @@ TogglesState& TogglesState::InheritFrom(const TogglesState& inheritedToggles) {
     for (uint32_t i : inheritedToggles.mTogglesSet.Iterate()) {
         const Toggle& toggle = static_cast<Toggle>(i);
         DAWN_ASSERT(TogglesInfo::GetToggleInfo(toggle)->stage < mStage);
+        bool isEnabled = inheritedToggles.mEnabledToggles.Has(toggle);
+        bool isForced = inheritedToggles.mForcedToggles.Has(toggle);
+        // Only inherit a toggle if it is not set by user requirement or is forced in earlier stage.
+        // In this way we allow user requirement override the inheritance if not forced.
+        if (!mTogglesSet.Has(toggle) || isForced) {
+            mTogglesSet.Set(toggle, true);
+            mEnabledToggles.Set(toggle, isEnabled);
+            mForcedToggles.Set(toggle, isForced);
+        }
+    }
+
+    return *this;
+}
+
+TogglesState& TogglesState::InheritFromInternal(const TogglesState& inheritedToggles) {
+    // Same as InheritFrom but without ASSERT on stage.
+    for (uint32_t i : inheritedToggles.mTogglesSet.Iterate()) {
+        const Toggle& toggle = static_cast<Toggle>(i);
         bool isEnabled = inheritedToggles.mEnabledToggles.Has(toggle);
         bool isForced = inheritedToggles.mForcedToggles.Has(toggle);
         // Only inherit a toggle if it is not set by user requirement or is forced in earlier stage.
