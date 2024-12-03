@@ -33,6 +33,24 @@
       "message": "I think you can remove all references to `IsMacOSVersionAtLeast(11)` as well in the `src/dawn/native/metal/PhysicalDeviceMTL.mm` file.",
       "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3273a91e_afbc13c0",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-03T13:39:28Z",
+      "side": 1,
+      "message": "great find!",
+      "parentUuid": "c626602d_bc83af62",
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
