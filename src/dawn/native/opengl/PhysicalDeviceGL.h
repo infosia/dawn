@@ -40,8 +40,10 @@ class DisplayEGL;
 
 class PhysicalDevice : public PhysicalDeviceBase {
   public:
-    static ResultOrError<Ref<PhysicalDevice>> Create(wgpu::BackendType backendType,
-                                                     Ref<DisplayEGL> display);
+    static ResultOrError<Ref<PhysicalDevice>> Create(
+        wgpu::BackendType backendType,
+        Ref<DisplayEGL> display,
+        const UnpackedPtr<RequestAdapterOptions>& options);
 
     ~PhysicalDevice() override = default;
 
