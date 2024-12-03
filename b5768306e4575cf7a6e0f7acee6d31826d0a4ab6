@@ -192,6 +192,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c7fe0af_56176b63",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 1837,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-12-03T09:34:39Z",
+      "side": 1,
+      "message": "resolved.",
+      "parentUuid": "65f82015_5f7577c2",
+      "range": {
+        "startLine": 1837,
+        "startChar": 0,
+        "endLine": 1837,
+        "endChar": 119
+      },
+      "revId": "b5768306e4575cf7a6e0f7acee6d31826d0a4ab6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d777f801_1299b442",
