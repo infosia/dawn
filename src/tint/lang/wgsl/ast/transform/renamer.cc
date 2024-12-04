@@ -1373,6 +1373,8 @@ Transform::ApplyResult Renamer::Apply(const Program& src,
             return true;
         }
         switch (target) {
+            case Target::kOnlyRequested:
+                return false;
             case Target::kGlslKeywords:
                 return std::binary_search(kReservedKeywordsGLSL,
                                           kReservedKeywordsGLSL +

@@ -63,6 +63,8 @@ class Renamer final : public Castable<Renamer, Transform> {
     enum class Target {
         /// Rename every symbol.
         kAll,
+        /// Rename only the symbols that were requested.
+        kOnlyRequested,
         /// Only rename symbols that are reserved keywords in GLSL.
         kGlslKeywords,
         /// Only rename symbols that are reserved keywords in HLSL.
