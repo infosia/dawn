@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9c418a6_e935077d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-04T00:08:05Z",
+      "side": 1,
+      "message": "Looks valid, but I\u0027m not sure the slight added complexity is necessary?",
+      "revId": "b7738fcdbc2a00f4aff7a04efb7a1c9a30616085",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "844df57a_5a43d2ff",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-04T00:08:05Z",
+      "side": 1,
+      "message": "The cycle would be broken anyway in `DeviceLostEvent::Complete`. Leaving a callback hanging will leak things according to the API contract anyway, so I don\u0027t think it matters if there\u0027s a cycle during that time. Is it really necessary to break the cycle early?",
+      "revId": "b7738fcdbc2a00f4aff7a04efb7a1c9a30616085",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
