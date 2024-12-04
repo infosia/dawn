@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8600fd8b_1034af7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-12-04T03:23:16Z",
+      "side": 1,
+      "message": "Add a note in https://github.com/gpuweb/gpuweb/pull/5007, please take a look, thanks.",
+      "parentUuid": "c4a4f23a_a8062ff1",
+      "revId": "0ea7e8dfbec43dea6a1d5360eb5c4e57a666ec33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b305393a_69e7139a",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -48,6 +66,23 @@
       "writtenOn": "2024-12-03T15:40:33Z",
       "side": 1,
       "message": "LGTM. Will need to coordinate with @dneto@google.com for the transition to GPUAdapterInfo.",
+      "revId": "0ea7e8dfbec43dea6a1d5360eb5c4e57a666ec33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64ce361f_937cf652",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002536
+      },
+      "writtenOn": "2024-12-04T03:23:16Z",
+      "side": 1,
+      "message": "Thanks for reviewing!",
       "revId": "0ea7e8dfbec43dea6a1d5360eb5c4e57a666ec33",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
