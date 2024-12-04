@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21c4ebdb_3eede604",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-04T13:03:54Z",
+      "side": 1,
+      "message": "Hi Loko,\n\nI\u0027ve rebased this CL. PTAL, thanks!",
+      "revId": "26ee1c7c09693a3d2f817236c0961bd3a25d940a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
