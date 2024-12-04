@@ -33,6 +33,57 @@
       "message": "Correcting reviewer list.",
       "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb21bfc5_73046d78",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-04T15:47:15Z",
+      "side": 1,
+      "message": "this is starting to feel brittle.  Can you walk me through what\u0027s happening here, and why you only reference userdata1 and not 2 in the line below?",
+      "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12a233ce_8b8927d7",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnTestLauncher.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-04T15:47:15Z",
+      "side": 1,
+      "message": "why the 2?",
+      "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46a556c9_9b01b29c",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnTestLauncher.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-04T15:47:15Z",
+      "side": 1,
+      "message": "same",
+      "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
