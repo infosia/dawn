@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b173eb01_c3d48b29",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-04T01:22:26Z",
+      "side": 1,
+      "message": "But if we build with an older SDK and therefore this block is not compiled, it seems we will still try to use render passes but without these flags. Is somehow fine? I would think that\u0027s invalid use of the D3D12 API, so Dawn should just not try to support render passes on older SDK versions at all.",
+      "parentUuid": "759b7563_60f7d6f8",
+      "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fbec6fff_60690199",
         "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
         "patchSetId": 2
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "On older OSes or older drivers D3D12 render pass is not supported so we won\u0027t enter this code path: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/D3D12Info.cpp;l\u003d95\n\nI\u0027ve also verified it on Intel devices in our side.",
       "parentUuid": "fbec6fff_60690199",
+      "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "105400cf_551643f2",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-04T01:22:26Z",
+      "side": 1,
+      "message": "Were these flags added in the same SDK version with D3D12_RENDER_PASS_DEPTH_STENCIL_DESC? Or later? I don\u0027t know how to look it up.",
+      "parentUuid": "df9f3fb7_2060d55e",
       "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
