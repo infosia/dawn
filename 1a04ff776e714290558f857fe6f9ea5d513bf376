@@ -16,6 +16,41 @@
       "message": "PTAL.",
       "revId": "1a04ff776e714290558f857fe6f9ea5d513bf376",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cd570d1_fa21ab02",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-04T01:09:44Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think the maybe_unused is actually needed here?",
+      "fixSuggestions": [
+        {
+          "fixId": "f65cf571_458cfd0f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/tint/main.cc",
+              "range": {
+                "startLine": 675,
+                "startChar": 0,
+                "endLine": 676,
+                "endChar": 0
+              },
+              "replacement": "tint::Result\u003cstd::unordered_map\u003ctint::OverrideId, double\u003e\u003e CreateOverrideMap(\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1a04ff776e714290558f857fe6f9ea5d513bf376",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
