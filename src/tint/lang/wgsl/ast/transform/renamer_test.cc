@@ -240,7 +240,8 @@ fn entry_point(@builtin(vertex_index) vert_idx : u32) -> ShaderIO {
 
 INSTANTIATE_TEST_SUITE_P(RenamerTestRequestedNamesWithoutRenameAll,
                          RenamerTestRequestedNamesWithoutRenameAll,
-                         testing::Values(Renamer::Target::kGlslKeywords,
+                         testing::Values(Renamer::Target::kOnlyRequested,
+                                         Renamer::Target::kGlslKeywords,
                                          Renamer::Target::kHlslKeywords,
                                          Renamer::Target::kMslKeywords));
 
