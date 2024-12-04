@@ -54,6 +54,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "99cd0d8a_cb67a0ff",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-04T10:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba098094_32d9db61",
+      "revId": "baa7df7ec34f581368b931ce6ecf3b02f0237ff5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b1933183_2ac05a75",
         "filename": "src/dawn/native/Texture.cpp",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "If you do add this macro later then please update this code to use it, so we can keep the wording in one place.",
       "parentUuid": "fdee275c_94107992",
+      "revId": "baa7df7ec34f581368b931ce6ecf3b02f0237ff5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "242d696a_be5b7b86",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-04T10:30:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure how I could use this macro sadly as the if condition is really specific there. See latest patchset from https://dawn-review.googlesource.com/c/dawn/+/217597\n\nShall I try to use the string though? If so, where would I define this const string?",
+      "parentUuid": "727876e2_d8e61c8b",
       "revId": "baa7df7ec34f581368b931ce6ecf3b02f0237ff5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
