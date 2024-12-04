@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "759b7563_60f7d6f8",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-04T01:15:56Z",
+      "side": 1,
+      "message": "Yes when we build Dawn with the latest Windows SDK (26100) D3D12 debug layer will report error when these render pass flags are not set but the DSV is created with the read-only flags.",
+      "parentUuid": "6eb5b0f2_3b904250",
+      "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fbec6fff_60690199",
         "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2024-12-03T16:48:04Z",
       "side": 1,
       "message": "Will older OSes be OK if we set these flags, from the newer SDK, on older drivers?",
+      "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df9f3fb7_2060d55e",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-04T01:15:56Z",
+      "side": 1,
+      "message": "On older OSes or older drivers D3D12 render pass is not supported so we won\u0027t enter this code path: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/D3D12Info.cpp;l\u003d95\n\nI\u0027ve also verified it on Intel devices in our side.",
+      "parentUuid": "fbec6fff_60690199",
       "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
