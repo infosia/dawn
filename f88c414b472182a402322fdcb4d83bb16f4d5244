@@ -194,6 +194,24 @@
       "parentUuid": "aea64f20_fe53551a",
       "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77d6e197_4cd59937",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-04T08:05:02Z",
+      "side": 1,
+      "message": "Oh it is mainly because in our side we are asked to build Dawn with latest Windows SDK.\n\n`DAWN_CHECK(false)` cannot be added as `SetupRenderPass()` is always called to save all the render pass members into `RenderPassBuilder` whether D3D12 render pass is supported or not, while Dawn will choose not to call `ID3D12GraphicsCommandList4::BeginRenderPass()` when D3D12 render pass is not supported.",
+      "parentUuid": "7fb4402e_e12c36a7",
+      "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
