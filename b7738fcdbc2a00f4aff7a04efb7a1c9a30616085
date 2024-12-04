@@ -33,6 +33,24 @@
       "message": "The cycle would be broken anyway in `DeviceLostEvent::Complete`. Leaving a callback hanging will leak things according to the API contract anyway, so I don\u0027t think it matters if there\u0027s a cycle during that time. Is it really necessary to break the cycle early?",
       "revId": "b7738fcdbc2a00f4aff7a04efb7a1c9a30616085",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71b79dc1_b6df005d",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-04T01:02:45Z",
+      "side": 1,
+      "message": "That\u0027s true assuming that `DeviceLostEvent::Complete` is always called. However, currently, that\u0027s not the case because of how we implement the `EventManager`. I was originally going to file a bug for it to detail what I found, but since this change fixed it I didn\u0027t, but basically:\n\n- When the last external reference to `Instance` is dropped, we drop all references to `TrackedEvent`s in the `EventManager`. In *most* cases, the only reference to an event is in the `EventManager`, so it triggers the `EnsureComplete(Shutdown)` that we put in every events destructor, and hence things are fine. In the bug I was gonna file, I was basically going to document that maybe we should make the native `EventManager` trigger the callbacks as well instead of relying on reference drops.\n\n- However, in the specific case where we create a device with a device lost mode that is *not* `AllowSpontaneous`, then drop the last external reference to the `Instance`, the `DeviceLostEvent`\u0027s destructor (and hence `DeviceLostEvent::Complete`) is not called because the `Device` still holds a reference to it. When the `Device` is dropped, the `DeviceLostEvent` is marked as ready, however it never runs because it\u0027s no longer possible for the user to call `ProcessEvent` or `WaitAny` on it. As a result, the event is leaked. Since this reference chain exists: `DeviceLostEvent-\u003eDevice-\u003ePhysicalDevice-\u003eInstance`, everything in that chain is leaked forever.",
+      "parentUuid": "844df57a_5a43d2ff",
+      "revId": "b7738fcdbc2a00f4aff7a04efb7a1c9a30616085",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
