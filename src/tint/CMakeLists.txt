@@ -626,9 +626,9 @@ endfunction()
 # Include the generated build files
 ################################################################################
 if(TINT_BUILD_FUZZERS)
-  if(NOT COMPILER_IS_CLANG)
-    message(FATAL_ERROR "TINT_BUILD_FUZZERS can only be enabled with the Clang toolchain")
-  endif()
+  # if(NOT COMPILER_IS_CLANG)
+  #   message(FATAL_ERROR "TINT_BUILD_FUZZERS can only be enabled with the Clang toolchain")
+  # endif()
 
   # Save the current build flags
   set(SAVE_TINT_BUILD_CMD_TOOLS ${TINT_BUILD_CMD_TOOLS})

@@ -53,6 +53,16 @@ function(common_compile_options target)
   if (MSVC)
     target_compile_options(${target}
       PUBLIC "/utf-8")
+    set(SANITIZER_OPTIONS "")
+    if (${DAWN_ENABLE_ASAN})
+      list(APPEND SANITIZER_OPTIONS "-fsanitize=address")
+    endif ()
+    if (SANITIZER_OPTIONS)
+      target_compile_options(${target}
+        PUBLIC ${SANITIZER_OPTIONS})
+      target_link_options(${target}
+        PUBLIC ${SANITIZER_OPTIONS})
+    endif ()
   endif ()
 
   if (COMPILER_IS_LIKE_GNU)

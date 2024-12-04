@@ -70,7 +70,11 @@ thread_local std::string_view currently_running;
 [[noreturn]] void TintInternalCompilerErrorReporter(const tint::InternalCompilerError& err) {
     std::cerr << "ICE while running fuzzer: '" << currently_running << "'\n";
     std::cerr << err.Error() << "\n";
+#if DAWN_COMPILER_IS(CLANG)
     __builtin_trap();
+#elif DAWN_COMPILER_IS(MSVC)
+    __debugbreak();
+#endif
 }
 
 bool IsAddressSpace(std::string_view name) {
