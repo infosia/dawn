@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c3f241d_4b7205e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-04T14:45:56Z",
+      "side": 1,
+      "message": "I\u0027m trying to land a CTS roll right now. I\u0027m going to -2 this until that fails or finishes and then I\u0027ll rebase this and land.",
+      "revId": "bcf2d9ed1174bb56ab2bbcbe6456a2ad67fdf468",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
