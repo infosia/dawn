@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f00a09cc_a9f93cff",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-04T01:44:37Z",
+      "side": 1,
+      "message": "Got it, thanks.",
+      "parentUuid": "b4dcdc94_6a16719c",
+      "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbec6fff_60690199",
@@ -156,6 +174,24 @@
       "side": 1,
       "message": "No these flags are introduced only with Windows SDK 26100 (in D3D12.h in Windows SDK 26100). The D3D12.h in Windows SDK 22621 and former doesn\u0027t have these flags so I have to skip this piece of code in a macro.",
       "parentUuid": "105400cf_551643f2",
+      "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fb4402e_e12c36a7",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-04T01:44:37Z",
+      "side": 1,
+      "message": "I\u0027m just surprised we need Dawn to build in that narrow range of SDKs specifically (after D3D12_RENDER_PASS_DEPTH_STENCIL_DESC was added, but before these flags were added).\n\nIf we do indeed need to build Dawn in that SDK range, then how about this (with the comment written according to my understanding - please fix it if it\u0027s wrong):\n```\n#else\n    // We shouldn\u0027t be using D3D12 render passes on this old version\n    // of the SDK which had incomplete render pass support.\n    DAWN_CHECK(false);\n```\nto make sure this is not used.",
+      "parentUuid": "aea64f20_fe53551a",
       "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
