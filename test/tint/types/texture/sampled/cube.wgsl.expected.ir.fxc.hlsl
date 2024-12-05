@@ -1,3 +1,6 @@
+//
+// main
+//
 
 TextureCube<float4> t_f : register(t0);
 TextureCube<int4> t_i : register(t1);

@@ -1,3 +1,6 @@
+//
+// compute_main
+//
 struct S0 {
   int x;
   uint a;

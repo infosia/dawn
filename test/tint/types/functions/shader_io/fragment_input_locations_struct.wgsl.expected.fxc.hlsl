@@ -1,3 +1,6 @@
+//
+// main
+//
 struct FragmentInputs {
   int loc0;
   uint loc1;

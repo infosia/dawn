@@ -1,3 +1,6 @@
+//
+// main
+//
 ByteAddressBuffer tint_symbol : register(t0);
 
 struct tint_symbol_8 {

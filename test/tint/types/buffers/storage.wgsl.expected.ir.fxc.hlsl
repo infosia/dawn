@@ -1,3 +1,6 @@
+//
+// main
+//
 
 ByteAddressBuffer weights : register(t0);
 void main() {

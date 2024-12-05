@@ -1,3 +1,6 @@
+//
+// main
+//
 struct Inner {
   float scalar_f32;
   float3 vec3_f32;

@@ -1,3 +1,6 @@
+//
+// main
+//
 
 RWByteAddressBuffer tint_symbol_2 : register(u0);
 [numthreads(1, 1, 1)]

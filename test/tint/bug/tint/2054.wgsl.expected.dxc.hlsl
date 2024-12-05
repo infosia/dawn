@@ -1,3 +1,6 @@
+//
+// foo
+//
 RWByteAddressBuffer tint_symbol : register(u0);
 
 void bar(inout float p) {

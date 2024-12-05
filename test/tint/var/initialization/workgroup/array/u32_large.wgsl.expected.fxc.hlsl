@@ -1,3 +1,6 @@
+//
+// main
+//
 groupshared int zero[23];
 
 void tint_zero_workgroup_memory(uint local_idx) {

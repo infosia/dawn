@@ -1,3 +1,6 @@
+//
+// main
+//
 
 RWByteAddressBuffer non_uniform_global : register(u0);
 static bool continue_execution = true;

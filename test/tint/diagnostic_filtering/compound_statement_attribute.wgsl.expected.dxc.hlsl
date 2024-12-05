@@ -10,6 +10,9 @@
     if (x > 0) {
         ^
 
+//
+// main
+//
 Texture2D<float4> t : register(t1);
 SamplerState s : register(s2);
 

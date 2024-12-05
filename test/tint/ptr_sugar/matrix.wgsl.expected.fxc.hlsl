@@ -1,3 +1,6 @@
+//
+// main
+//
 void deref() {
   float2x3 a = float2x3(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
   float3 b = a[0];

@@ -1,3 +1,6 @@
+//
+// main
+//
 struct S {
   float4 a;
   int b;

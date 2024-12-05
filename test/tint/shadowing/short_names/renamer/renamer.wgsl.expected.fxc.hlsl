@@ -1,3 +1,6 @@
+//
+// main
+//
 struct tint_symbol_3 {
   uint tint_symbol_1 : SV_VertexID;
 };

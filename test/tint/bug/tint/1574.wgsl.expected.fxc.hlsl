@@ -1,3 +1,6 @@
+//
+// main
+//
 struct atomic_compare_exchange_result_u32 {
   uint old_value;
   bool exchanged;

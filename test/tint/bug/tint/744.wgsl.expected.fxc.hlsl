@@ -1,3 +1,6 @@
+//
+// main
+//
 ByteAddressBuffer firstMatrix : register(t0);
 ByteAddressBuffer secondMatrix : register(t1);
 RWByteAddressBuffer resultMatrix : register(u2);

@@ -1,3 +1,6 @@
+//
+// f
+//
 struct f_inputs {
   uint3 v : SV_DispatchThreadID;
 };

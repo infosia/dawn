@@ -1,3 +1,6 @@
+//
+// main
+//
 struct S2 {
   float3x3 m[1];
 };

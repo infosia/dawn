@@ -1,3 +1,6 @@
+//
+// main
+//
 struct main_outputs {
   uint tint_symbol : SV_Target0;
 };

@@ -1,3 +1,6 @@
+//
+// main
+//
 struct str {
   int arr[4];
 };

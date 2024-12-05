@@ -1,3 +1,6 @@
+//
+// e
+//
 Texture2D<float4> tint_symbol : register(t0);
 
 [numthreads(6, 1, 1)]

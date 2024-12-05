@@ -1,3 +1,6 @@
+//
+// f
+//
 Texture2D<float4> t : register(t0);
 SamplerState s : register(s0, space1);
 

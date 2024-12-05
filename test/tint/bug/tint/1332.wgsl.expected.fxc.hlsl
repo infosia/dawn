@@ -1,3 +1,6 @@
+//
+// compute_main
+//
 [numthreads(1, 1, 1)]
 void compute_main() {
   float a = 1.24000000953674316406f;

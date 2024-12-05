@@ -1,3 +1,6 @@
+//
+// fragment_main
+//
 float2 tint_fwidth_fine(float2 v) {
   return (abs(ddx_fine(v)) + abs(ddy_fine(v)));
 }

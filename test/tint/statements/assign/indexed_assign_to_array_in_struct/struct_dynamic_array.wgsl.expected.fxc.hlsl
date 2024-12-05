@@ -1,3 +1,6 @@
+//
+// main
+//
 struct InnerS {
   int v;
 };

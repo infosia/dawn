@@ -1,3 +1,6 @@
+//
+// f
+//
 struct S {
   int before;
   float2x2 m;

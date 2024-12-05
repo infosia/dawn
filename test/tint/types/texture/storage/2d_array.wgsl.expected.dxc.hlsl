@@ -1,3 +1,6 @@
+//
+// main
+//
 RWTexture2DArray<float4> t_rgba8unorm : register(u0);
 RWTexture2DArray<float4> t_rgba8snorm : register(u1);
 RWTexture2DArray<uint4> t_rgba8uint : register(u2);

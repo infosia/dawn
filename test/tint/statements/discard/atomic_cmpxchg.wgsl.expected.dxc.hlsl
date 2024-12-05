@@ -1,3 +1,6 @@
+//
+// foo
+//
 struct atomic_compare_exchange_result_i32 {
   int old_value;
   bool exchanged;

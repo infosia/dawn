@@ -1,3 +1,6 @@
+//
+// main
+//
 
 void func(inout int pointer) {
   pointer = int(42);

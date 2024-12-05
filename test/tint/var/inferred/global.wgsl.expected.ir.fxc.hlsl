@@ -1,3 +1,6 @@
+//
+// f
+//
 struct MyStruct {
   float f1;
 };

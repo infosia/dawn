@@ -1,3 +1,6 @@
+//
+// tint_symbol
+//
 groupshared float2x2 m00;
 groupshared float2x2 m01;
 groupshared float2x2 m02;

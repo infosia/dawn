@@ -10,13 +10,14 @@
   switch (i32(x == 0.0 && dpdx(1.0) == 0.0)) {
               ^
 
+//
+// main
+//
 struct main_inputs {
   float x : TEXCOORD0;
 };
 
 
-Texture2D<float4> t : register(t1);
-SamplerState s : register(s2);
 void main_inner(float x) {
   bool v = false;
   if ((x == 0.0f)) {

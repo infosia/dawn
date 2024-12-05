@@ -1,3 +1,6 @@
+//
+// compute_main
+//
 struct compute_main_inputs {
   uint tint_local_index : SV_GroupIndex;
 };

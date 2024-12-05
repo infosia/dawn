@@ -1,3 +1,6 @@
+//
+// frag_main
+//
 struct frag_main_outputs {
   float4 tint_symbol : SV_Target0;
 };

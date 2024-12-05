@@ -1,3 +1,6 @@
+//
+// frag_main
+//
 struct S {
   float f;
   uint u;

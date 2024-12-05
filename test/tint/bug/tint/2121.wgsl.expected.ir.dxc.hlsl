@@ -1,3 +1,6 @@
+//
+// main
+//
 struct VSOut {
   float4 pos;
 };

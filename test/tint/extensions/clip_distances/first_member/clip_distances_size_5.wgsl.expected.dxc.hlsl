@@ -1,3 +1,6 @@
+//
+// main
+//
 struct VertexOutputs {
   float clipDistance[5];
   float4 position;

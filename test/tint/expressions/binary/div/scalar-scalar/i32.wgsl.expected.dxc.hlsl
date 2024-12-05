@@ -1,3 +1,6 @@
+//
+// f
+//
 int tint_div(int lhs, int rhs) {
   return (lhs / (((rhs == 0) | ((lhs == -2147483648) & (rhs == -1))) ? 1 : rhs));
 }

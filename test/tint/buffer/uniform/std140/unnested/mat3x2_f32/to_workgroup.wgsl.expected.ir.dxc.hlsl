@@ -1,3 +1,6 @@
+//
+// f
+//
 struct f_inputs {
   uint tint_local_index : SV_GroupIndex;
 };

@@ -1,3 +1,6 @@
+//
+// main
+//
 
 Texture2DArray<float4> t_f : register(t0);
 Texture2DArray<int4> t_i : register(t1);

@@ -1,3 +1,6 @@
+//
+// main
+//
 
 RWByteAddressBuffer S : register(u0);
 void func(uint pointer_indices[1]) {

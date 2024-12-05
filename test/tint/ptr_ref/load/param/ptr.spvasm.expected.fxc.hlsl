@@ -1,3 +1,6 @@
+//
+// main
+//
 int func(int value, inout int pointer) {
   int x_9 = pointer;
   return (value + x_9);

@@ -1,3 +1,6 @@
+//
+// main
+//
 RWByteAddressBuffer S : register(u0);
 
 void func_S_X(uint pointer[1]) {

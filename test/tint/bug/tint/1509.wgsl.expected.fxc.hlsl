@@ -1,3 +1,6 @@
+//
+// main
+//
 static uint v0 = 0u;
 static uint v1 = 0u;
 static uint v2 = 0u;

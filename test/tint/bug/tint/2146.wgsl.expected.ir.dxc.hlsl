@@ -1,12 +1,6 @@
-
-static uint3 localId = (0u).xxx;
-static uint localIndex = 0u;
-static uint3 globalId = (0u).xxx;
-static uint3 numWorkgroups = (0u).xxx;
-static uint3 workgroupId = (0u).xxx;
-uint globalId2Index() {
-  return globalId.x;
-}
+//
+// main
+//
 
 [numthreads(1, 1, 1)]
 void main() {

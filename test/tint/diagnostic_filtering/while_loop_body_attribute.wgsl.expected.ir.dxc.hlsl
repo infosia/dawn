@@ -10,6 +10,9 @@
     v = textureSample(t, s, vec2(0, 0));
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+//
+// main
+//
 struct main_inputs {
   float x : TEXCOORD0;
 };

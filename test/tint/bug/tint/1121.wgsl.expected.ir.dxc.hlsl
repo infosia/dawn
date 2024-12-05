@@ -1,3 +1,6 @@
+//
+// main
+//
 struct main_inputs {
   uint3 GlobalInvocationID : SV_DispatchThreadID;
 };

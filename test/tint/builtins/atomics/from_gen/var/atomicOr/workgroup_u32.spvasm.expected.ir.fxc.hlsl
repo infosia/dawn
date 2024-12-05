@@ -1,3 +1,6 @@
+//
+// compute_main
+//
 struct compute_main_inputs {
   uint local_invocation_index_1_param : SV_GroupIndex;
 };

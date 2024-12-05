@@ -1,3 +1,6 @@
+//
+// main
+//
 struct ComputeInputs {
   uint3 local_invocation_id;
   uint local_invocation_index;

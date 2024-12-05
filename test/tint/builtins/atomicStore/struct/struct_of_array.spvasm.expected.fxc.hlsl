@@ -1,3 +1,6 @@
+//
+// compute_main
+//
 struct S_atomic {
   int x;
   uint a[10];

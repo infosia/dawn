@@ -1,3 +1,6 @@
+//
+// main
+//
 
 ByteAddressBuffer S : register(t0);
 float2 func(uint pointer_indices[1]) {

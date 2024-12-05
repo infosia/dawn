@@ -1,3 +1,6 @@
+//
+// compute_main
+//
 
 void workgroupBarrier_a17f7f() {
   GroupMemoryBarrierWithGroupSync();

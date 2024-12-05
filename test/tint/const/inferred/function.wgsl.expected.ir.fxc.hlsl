@@ -1,10 +1,10 @@
+//
+// main
+//
 struct main_outputs {
   float4 tint_symbol : SV_Target0;
 };
 
-
-void const_decls() {
-}
 
 float4 main_inner() {
   return (0.0f).xxxx;

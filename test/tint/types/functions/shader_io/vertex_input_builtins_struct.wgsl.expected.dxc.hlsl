@@ -1,3 +1,6 @@
+//
+// main
+//
 struct VertexInputs {
   uint vertex_index;
   uint instance_index;

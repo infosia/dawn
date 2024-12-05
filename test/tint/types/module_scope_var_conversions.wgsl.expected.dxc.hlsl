@@ -1,3 +1,6 @@
+//
+// main
+//
 static bool bool_var1 = true;
 static bool bool_var2 = true;
 static bool bool_var3 = true;

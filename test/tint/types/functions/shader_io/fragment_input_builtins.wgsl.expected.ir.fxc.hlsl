@@ -1,3 +1,6 @@
+//
+// main
+//
 struct main_inputs {
   float4 position : SV_Position;
   bool front_facing : SV_IsFrontFace;

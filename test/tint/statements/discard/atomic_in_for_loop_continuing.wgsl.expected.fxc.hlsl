@@ -1,3 +1,6 @@
+//
+// foo
+//
 static bool tint_discarded = false;
 
 int tint_ftoi(float v) {

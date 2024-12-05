@@ -1,3 +1,6 @@
+//
+// main
+//
 [numthreads(1, 1, 1)]
 void main() {
   uint tint_symbol = 0u;

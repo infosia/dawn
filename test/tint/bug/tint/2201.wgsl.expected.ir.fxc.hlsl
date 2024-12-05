@@ -2,6 +2,9 @@
         let _e16_ = vec2(false, false);
         ^^^^^^^^^
 
+//
+// main
+//
 
 [numthreads(1, 1, 1)]
 void main() {

@@ -1,3 +1,6 @@
+//
+// main
+//
 struct tint_symbol_1 {
   int loc0 : TEXCOORD0;
   uint loc1 : TEXCOORD1;

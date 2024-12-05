@@ -1,3 +1,6 @@
+//
+// main
+//
 
 static int zero[3] = (int[3])0;
 static const int v[3] = {int(1), int(2), int(3)};

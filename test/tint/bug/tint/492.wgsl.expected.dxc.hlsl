@@ -1,3 +1,6 @@
+//
+// main
+//
 RWByteAddressBuffer buf : register(u0);
 
 [numthreads(1, 1, 1)]

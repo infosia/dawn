@@ -1,3 +1,6 @@
+//
+// main
+//
 struct S {
   int x;
 };

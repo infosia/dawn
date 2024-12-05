@@ -1,3 +1,6 @@
+//
+// main
+//
 struct FragmentInputs {
   uint subgroup_invocation_id;
   uint subgroup_size;

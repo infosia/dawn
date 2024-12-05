@@ -1,3 +1,6 @@
+//
+// main
+//
 Texture2D tex : register(t0);
 RWByteAddressBuffer result : register(u1);
 

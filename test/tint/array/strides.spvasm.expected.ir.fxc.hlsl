@@ -1,3 +1,6 @@
+//
+// f
+//
 struct strided_arr {
   float el;
 };

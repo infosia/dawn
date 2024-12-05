@@ -10,9 +10,9 @@
   switch (i32(x == 0.0 && dpdx(1.0) == 0.0)) {
               ^
 
-Texture2D<float4> t : register(t1);
-SamplerState s : register(s2);
-
+//
+// main
+//
 struct tint_symbol_3 {
   float x : TEXCOORD0;
 };

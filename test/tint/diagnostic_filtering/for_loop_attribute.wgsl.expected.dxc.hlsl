@@ -10,6 +10,9 @@
   for (; x > v.x && dpdx(1.0) > 0.0; ) {
                     ^^^^^^^^^
 
+//
+// main
+//
 struct tint_symbol_3 {
   float x : TEXCOORD0;
 };

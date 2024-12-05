@@ -1,3 +1,6 @@
+//
+// fragment_main
+//
 
 RWTexture2D<float4> tex : register(u0);
 void fragment_main() {

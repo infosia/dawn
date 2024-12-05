@@ -1,3 +1,6 @@
+//
+// main
+//
 
 void func(inout float4 pointer) {
   pointer = (0.0f).xxxx;

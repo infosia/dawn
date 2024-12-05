@@ -1,3 +1,6 @@
+//
+// f
+//
 uint3 tint_extract_bits(uint3 v, uint offset, uint count) {
   uint s = min(offset, 32u);
   uint e = min(32u, (s + count));

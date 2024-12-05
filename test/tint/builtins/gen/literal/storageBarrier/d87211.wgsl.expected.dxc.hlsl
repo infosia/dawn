@@ -1,3 +1,6 @@
+//
+// compute_main
+//
 void storageBarrier_d87211() {
   DeviceMemoryBarrierWithGroupSync();
 }

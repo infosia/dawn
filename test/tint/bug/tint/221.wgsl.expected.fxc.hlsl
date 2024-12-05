@@ -1,3 +1,6 @@
+//
+// main
+//
 RWByteAddressBuffer b : register(u0);
 
 uint tint_mod(uint lhs, uint rhs) {

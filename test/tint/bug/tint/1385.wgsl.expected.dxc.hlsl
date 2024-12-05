@@ -1,3 +1,6 @@
+//
+// main
+//
 ByteAddressBuffer data : register(t1);
 
 int foo() {

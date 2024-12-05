@@ -1,3 +1,6 @@
+//
+// main
+//
 
 int foo() {
   return int(1);

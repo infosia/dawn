@@ -1,3 +1,6 @@
+//
+// main
+//
 ByteAddressBuffer b0 : register(t0);
 ByteAddressBuffer b1 : register(t0, space1);
 ByteAddressBuffer b2 : register(t0, space2);

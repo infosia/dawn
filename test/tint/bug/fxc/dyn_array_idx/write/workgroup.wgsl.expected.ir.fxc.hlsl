@@ -1,3 +1,6 @@
+//
+// f
+//
 struct S {
   int data[64];
 };

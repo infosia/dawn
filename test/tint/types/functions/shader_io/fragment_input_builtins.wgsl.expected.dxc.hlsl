@@ -1,3 +1,6 @@
+//
+// main
+//
 struct tint_symbol_1 {
   float4 position : SV_Position;
   bool front_facing : SV_IsFrontFace;

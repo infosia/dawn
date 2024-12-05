@@ -1,3 +1,6 @@
+//
+// main
+//
 
 ByteAddressBuffer S : register(t0);
 int func() {

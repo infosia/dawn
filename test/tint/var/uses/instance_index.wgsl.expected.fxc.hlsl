@@ -1,3 +1,6 @@
+//
+// main
+//
 struct tint_symbol_1 {
   uint b : SV_InstanceID;
 };

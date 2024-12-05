@@ -1,3 +1,6 @@
+//
+// main
+//
 groupshared float w;
 
 void tint_zero_workgroup_memory(uint local_idx) {

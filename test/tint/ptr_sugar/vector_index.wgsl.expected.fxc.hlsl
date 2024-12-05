@@ -1,3 +1,6 @@
+//
+// main
+//
 void deref_const() {
   int3 a = int3(0, 0, 0);
   int b = a[0];

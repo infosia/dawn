@@ -10,6 +10,9 @@
   if (x > 0) @diagnostic(warning, derivative_uniformity) {
       ^
 
+//
+// main
+//
 struct main_inputs {
   float x : TEXCOORD0;
 };

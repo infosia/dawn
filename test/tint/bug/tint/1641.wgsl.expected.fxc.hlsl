@@ -1,3 +1,6 @@
+//
+// main
+//
 struct Normals {
   float3 f;
 };

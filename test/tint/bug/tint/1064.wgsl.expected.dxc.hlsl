@@ -1,3 +1,6 @@
+//
+// main
+//
 void main() {
   while (true) {
     if (false) {

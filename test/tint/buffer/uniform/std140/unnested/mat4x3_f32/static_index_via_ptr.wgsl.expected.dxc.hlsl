@@ -1,12 +1,9 @@
+//
+// f
+//
 cbuffer cbuffer_m : register(b0) {
   uint4 m[4];
 };
-static int counter = 0;
-
-int i() {
-  counter = (counter + 1);
-  return counter;
-}
 
 float4x3 m_load(uint offset) {
   const uint scalar_offset = ((offset + 0u)) / 4;

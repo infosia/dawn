@@ -1,3 +1,6 @@
+//
+// main
+//
 
 RWByteAddressBuffer output : register(u0);
 void main_inner(uint subgroup_invocation_id, uint subgroup_size) {

@@ -1,3 +1,6 @@
+//
+// main
+//
 
 static int P = int(0);
 void func(inout int pointer) {

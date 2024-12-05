@@ -1,3 +1,6 @@
+//
+// main
+//
 float x_200(inout float2 x_201) {
   float x_212 = x_201.x;
   return x_212;

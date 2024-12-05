@@ -1,3 +1,6 @@
+//
+// main
+//
 struct FragmentOutput {
   float4 color;
 };

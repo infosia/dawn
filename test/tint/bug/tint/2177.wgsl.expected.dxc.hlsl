@@ -1,3 +1,6 @@
+//
+// main
+//
 RWByteAddressBuffer arr : register(u0);
 
 uint f2_arr() {

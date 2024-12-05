@@ -1,3 +1,6 @@
+//
+// main
+//
 float4 func(inout float4 pointer) {
   return pointer;
 }

@@ -1,3 +1,6 @@
+//
+// main
+//
 groupshared int4 tint_symbol[4];
 groupshared int4 src_workgroup[4];
 groupshared int dst_nested[4][3][2];

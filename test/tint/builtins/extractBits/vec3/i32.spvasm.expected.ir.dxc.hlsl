@@ -1,3 +1,6 @@
+//
+// f
+//
 
 void f_1() {
   int3 v = (int(0)).xxx;

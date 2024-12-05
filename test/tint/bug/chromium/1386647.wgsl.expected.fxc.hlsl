@@ -1,3 +1,6 @@
+//
+// f
+//
 uint tint_mod(uint lhs, uint rhs) {
   return (lhs % ((rhs == 0u) ? 1u : rhs));
 }

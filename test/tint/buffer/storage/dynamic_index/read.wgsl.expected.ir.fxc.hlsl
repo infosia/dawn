@@ -1,3 +1,6 @@
+//
+// main
+//
 struct main_inputs {
   uint idx : SV_GroupIndex;
 };

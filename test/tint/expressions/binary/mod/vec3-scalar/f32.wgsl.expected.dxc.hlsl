@@ -1,3 +1,6 @@
+//
+// f
+//
 float3 tint_trunc(float3 param_0) {
   return param_0 < 0 ? ceil(param_0) : floor(param_0);
 }

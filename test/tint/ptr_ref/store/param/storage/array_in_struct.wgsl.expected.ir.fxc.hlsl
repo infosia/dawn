@@ -1,3 +1,6 @@
+//
+// main
+//
 
 RWByteAddressBuffer S : register(u0);
 void v(uint offset, int obj[4]) {

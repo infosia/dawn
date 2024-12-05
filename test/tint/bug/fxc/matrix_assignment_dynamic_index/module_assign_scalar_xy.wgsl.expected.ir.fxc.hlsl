@@ -1,3 +1,6 @@
+//
+// main
+//
 
 cbuffer cbuffer_uniforms : register(b4, space1) {
   uint4 uniforms[1];

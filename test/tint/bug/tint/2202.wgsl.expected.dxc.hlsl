@@ -2,6 +2,9 @@
         let _e9 = (vec3<i32>().y >= vec3<i32>().y);
         ^^^^^^^
 
+//
+// main
+//
 [numthreads(1, 1, 1)]
 void main() {
   while (true) {

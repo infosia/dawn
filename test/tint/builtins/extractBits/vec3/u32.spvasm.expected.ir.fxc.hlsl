@@ -1,3 +1,6 @@
+//
+// f
+//
 
 void f_1() {
   uint3 v = (0u).xxx;

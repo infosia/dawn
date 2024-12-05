@@ -1,3 +1,6 @@
+//
+// f
+//
 uint3 tint_mod(uint3 lhs, uint3 rhs) {
   return (lhs % ((rhs == (0u).xxx) ? (1u).xxx : rhs));
 }

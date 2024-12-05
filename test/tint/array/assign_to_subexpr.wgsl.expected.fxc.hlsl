@@ -1,3 +1,6 @@
+//
+// main
+//
 RWByteAddressBuffer s : register(u0);
 
 struct S {

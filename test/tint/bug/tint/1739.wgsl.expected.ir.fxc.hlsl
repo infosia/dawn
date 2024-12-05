@@ -1,3 +1,6 @@
+//
+// main
+//
 struct tint_GammaTransferParams {
   float G;
   float A;

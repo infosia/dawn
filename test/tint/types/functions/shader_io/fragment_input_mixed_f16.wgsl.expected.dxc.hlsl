@@ -1,3 +1,6 @@
+//
+// main
+//
 struct FragmentInputs0 {
   float4 position;
   int loc0;

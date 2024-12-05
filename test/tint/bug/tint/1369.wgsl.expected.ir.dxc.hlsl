@@ -1,3 +1,6 @@
+//
+// f
+//
 
 bool call_discard() {
   discard;

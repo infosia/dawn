@@ -1,3 +1,6 @@
+//
+// frag_main
+//
 struct FragOutput {
   float4 color;
   float4 blend;

@@ -1,3 +1,6 @@
+//
+// F
+//
 struct F_inputs {
   uint mat2x2 : SV_GroupIndex;
 };

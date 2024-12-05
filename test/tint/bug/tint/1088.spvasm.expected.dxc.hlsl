@@ -1,3 +1,6 @@
+//
+// main
+//
 static float3 position_1 = float3(0.0f, 0.0f, 0.0f);
 cbuffer cbuffer_x_14 : register(b2, space2) {
   uint4 x_14[17];

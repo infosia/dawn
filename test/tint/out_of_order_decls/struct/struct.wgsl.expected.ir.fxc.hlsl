@@ -1,3 +1,6 @@
+//
+// f
+//
 struct S2 {
   int m;
 };

@@ -1,3 +1,6 @@
+//
+// main
+//
 struct tint_symbol_1 {
   nointerpolation int loc0 : TEXCOORD0;
   nointerpolation uint loc1 : TEXCOORD1;

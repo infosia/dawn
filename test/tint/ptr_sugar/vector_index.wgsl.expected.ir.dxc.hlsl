@@ -1,3 +1,6 @@
+//
+// main
+//
 
 void deref_const() {
   int3 a = (int(0)).xxx;

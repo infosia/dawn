@@ -1,3 +1,6 @@
+//
+// main
+//
 void set_matrix_column(inout float2x2 mat, int col, float2 val) {
   switch (col) {
     case 0: mat[0] = val; break;

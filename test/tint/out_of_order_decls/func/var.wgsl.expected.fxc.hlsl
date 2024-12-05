@@ -1,3 +1,6 @@
+//
+// f
+//
 static int a = 1;
 
 void f() {

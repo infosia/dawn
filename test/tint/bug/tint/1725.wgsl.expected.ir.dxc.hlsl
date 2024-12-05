@@ -1,3 +1,6 @@
+//
+// main
+//
 struct tint_symbol_1_inputs {
   uint tint_symbol_2 : SV_GroupIndex;
 };

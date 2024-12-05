@@ -1,3 +1,6 @@
+//
+// main
+//
 struct FragmentInput {
   float2 vUv;
 };

@@ -1,3 +1,6 @@
+//
+// f
+//
 uint3 tint_div(uint3 lhs, uint rhs) {
   uint3 r = uint3((rhs).xxx);
   return (lhs / ((r == (0u).xxx) ? (1u).xxx : r));

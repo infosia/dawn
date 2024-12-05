@@ -10,6 +10,9 @@
     if (x > 0) {
         ^
 
+//
+// main
+//
 struct main_inputs {
   float x : TEXCOORD0;
 };

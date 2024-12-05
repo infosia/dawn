@@ -1,3 +1,6 @@
+//
+// main
+//
 
 void constant_with_non_constant() {
   float a = 0.0f;

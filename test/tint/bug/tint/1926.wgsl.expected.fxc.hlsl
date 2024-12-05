@@ -1,3 +1,6 @@
+//
+// main
+//
 groupshared uint sh_atomic_failed;
 
 void tint_zero_workgroup_memory(uint local_idx) {

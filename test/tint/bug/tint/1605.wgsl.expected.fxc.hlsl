@@ -1,3 +1,6 @@
+//
+// main
+//
 cbuffer cbuffer_b : register(b0) {
   uint4 b[1];
 };

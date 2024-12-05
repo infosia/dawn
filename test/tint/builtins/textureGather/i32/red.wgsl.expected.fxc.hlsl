@@ -1,3 +1,6 @@
+//
+// main
+//
 Texture2D<int4> t : register(t0, space1);
 SamplerState s : register(s1, space1);
 

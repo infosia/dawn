@@ -1,3 +1,6 @@
+//
+// f
+//
 
 static bool continue_execution = true;
 bool call_discard() {

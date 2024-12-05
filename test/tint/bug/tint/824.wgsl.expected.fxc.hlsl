@@ -1,3 +1,6 @@
+//
+// main
+//
 struct Output {
   float4 Position;
   float4 color;

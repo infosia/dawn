@@ -1,3 +1,6 @@
+//
+// main
+//
 RWByteAddressBuffer sb : register(u0);
 
 struct tint_symbol_1 {

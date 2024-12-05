@@ -1,3 +1,6 @@
+//
+// main
+//
 struct In {
   float none;
   float flat;

@@ -1,3 +1,6 @@
+//
+// main
+//
 void set_vector_element(inout uint4 vec, int idx, uint val) {
   vec = (idx.xxxx == int4(0, 1, 2, 3)) ? val.xxxx : vec;
 }

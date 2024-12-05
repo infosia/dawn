@@ -1,3 +1,6 @@
+//
+// compute_main
+//
 struct S0_atomic {
   int x;
   uint a;

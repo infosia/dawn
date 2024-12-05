@@ -1,3 +1,6 @@
+//
+// f
+//
 cbuffer cbuffer_a : register(b0) {
   uint4 a[12];
 };

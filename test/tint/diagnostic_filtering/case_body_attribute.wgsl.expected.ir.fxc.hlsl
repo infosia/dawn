@@ -10,6 +10,9 @@
   switch (i32(x)) {
               ^
 
+//
+// main
+//
 struct main_inputs {
   float x : TEXCOORD0;
 };

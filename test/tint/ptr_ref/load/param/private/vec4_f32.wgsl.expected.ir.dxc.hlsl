@@ -1,3 +1,6 @@
+//
+// main
+//
 
 static float4 P = (0.0f).xxxx;
 float4 func(inout float4 pointer) {

@@ -1,3 +1,6 @@
+//
+// f
+//
 groupshared float4x2 w[4];
 
 void tint_zero_workgroup_memory(uint local_idx) {

@@ -1,3 +1,6 @@
+//
+// f
+//
 uint3 tint_insert_bits(uint3 v, uint3 n, uint offset, uint count) {
   uint e = (offset + count);
   uint mask = ((((offset < 32u) ? (1u << offset) : 0u) - 1u) ^ (((e < 32u) ? (1u << e) : 0u) - 1u));

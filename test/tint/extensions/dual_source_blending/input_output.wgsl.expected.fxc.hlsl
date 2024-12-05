@@ -1,3 +1,6 @@
+//
+// frag_main
+//
 struct FragInput {
   float4 a;
   float4 b;

@@ -1,3 +1,6 @@
+//
+// main
+//
 struct OuterS {
   float2x4 m1;
 };

@@ -1,3 +1,6 @@
+//
+// main
+//
 RWByteAddressBuffer s : register(u0);
 
 float f1(float a[4]) {

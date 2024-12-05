@@ -1,3 +1,6 @@
+//
+// main
+//
 
 RWTexture1D<float4> t_rgba8unorm : register(u0);
 RWTexture1D<float4> t_rgba8snorm : register(u1);

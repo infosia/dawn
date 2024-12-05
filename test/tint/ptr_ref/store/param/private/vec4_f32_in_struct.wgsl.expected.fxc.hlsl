@@ -1,3 +1,6 @@
+//
+// main
+//
 struct str {
   float4 i;
 };

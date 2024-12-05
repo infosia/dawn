@@ -1,11 +1,11 @@
+//
+// main
+//
 struct main_inputs {
   uint3 GlobalInvocationID : SV_DispatchThreadID;
 };
 
 
-cbuffer cbuffer_constants : register(b0) {
-  uint4 constants[1];
-};
 Texture2DArray<float4> myTexture : register(t1);
 RWByteAddressBuffer result : register(u3);
 void main_inner(uint3 GlobalInvocationID) {

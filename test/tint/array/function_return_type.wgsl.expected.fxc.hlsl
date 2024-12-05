@@ -1,3 +1,6 @@
+//
+// main
+//
 RWByteAddressBuffer s : register(u0);
 
 typedef float f1_ret[4];

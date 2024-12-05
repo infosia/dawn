@@ -1,3 +1,6 @@
+//
+// main
+//
 cbuffer cbuffer_constants : register(b0, space1) {
   uint4 constants[1];
 };

@@ -1,3 +1,6 @@
+//
+// main
+//
 struct S {
   uint3 v;
   uint u;

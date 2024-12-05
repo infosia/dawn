@@ -1,3 +1,6 @@
+//
+// main
+//
 ByteAddressBuffer S : register(t0);
 
 float2 func_S_X(uint pointer[1]) {

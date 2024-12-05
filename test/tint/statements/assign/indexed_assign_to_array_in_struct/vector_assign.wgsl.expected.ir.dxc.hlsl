@@ -1,3 +1,6 @@
+//
+// main
+//
 struct OuterS {
   uint a1[8];
 };

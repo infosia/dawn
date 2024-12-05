@@ -1,3 +1,6 @@
+//
+// main
+//
 int tint_symbol() {
   return 0;
 }

@@ -1,3 +1,6 @@
+//
+// main
+//
 struct tint_symbol_1 {
   float none : TEXCOORD0;
   nointerpolation float flat : TEXCOORD1;

@@ -1,3 +1,6 @@
+//
+// main
+//
 struct main_inputs {
   nointerpolation int loc0 : TEXCOORD0;
   nointerpolation uint loc1 : TEXCOORD1;

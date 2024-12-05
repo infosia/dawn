@@ -1,3 +1,6 @@
+//
+// main
+//
 groupshared float mm_Asub[64][64];
 groupshared float mm_Bsub[64][64];
 

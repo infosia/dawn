@@ -1,3 +1,6 @@
+//
+// main
+//
 ByteAddressBuffer S : register(t0);
 
 typedef int S_load_ret[4];

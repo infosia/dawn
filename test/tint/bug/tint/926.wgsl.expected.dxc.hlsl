@@ -1,3 +1,6 @@
+//
+// computeMain
+//
 RWByteAddressBuffer drawOut : register(u5);
 static uint cubeVerts = 0u;
 

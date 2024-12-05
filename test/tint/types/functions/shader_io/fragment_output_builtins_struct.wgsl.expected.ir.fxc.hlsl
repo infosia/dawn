@@ -1,3 +1,6 @@
+//
+// main
+//
 struct FragmentOutputs {
   float frag_depth;
   uint sample_mask;

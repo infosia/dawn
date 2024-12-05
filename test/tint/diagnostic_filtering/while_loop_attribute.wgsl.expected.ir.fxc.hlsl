@@ -10,6 +10,9 @@
   while (x > 0.0 && dpdx(1.0) > 0.0)  {
                     ^^^^^^^^^
 
+//
+// main
+//
 struct main_inputs {
   float x : TEXCOORD0;
 };

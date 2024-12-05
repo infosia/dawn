@@ -1,3 +1,6 @@
+//
+// main
+//
 static int i = 123;
 
 [numthreads(1, 1, 1)]

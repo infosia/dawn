@@ -1,3 +1,6 @@
+//
+// f
+//
 
 ByteAddressBuffer rarr : register(t0);
 void tint_symbol() {

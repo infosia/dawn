@@ -1,3 +1,6 @@
+//
+// f
+//
 void tint_symbol() {
   int idx = 3;
   int x = int2(1, 2)[min(uint(idx), 1u)];

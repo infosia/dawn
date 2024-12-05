@@ -1,3 +1,6 @@
+//
+// main
+//
 RWByteAddressBuffer buf : register(u1);
 
 int g() {

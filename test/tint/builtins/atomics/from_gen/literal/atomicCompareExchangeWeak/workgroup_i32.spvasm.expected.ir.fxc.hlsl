@@ -1,3 +1,6 @@
+//
+// compute_main
+//
 struct x__atomic_compare_exchange_resulti32 {
   int old_value;
   bool exchanged;

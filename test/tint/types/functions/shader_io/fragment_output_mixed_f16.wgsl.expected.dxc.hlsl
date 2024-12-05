@@ -1,3 +1,6 @@
+//
+// main
+//
 struct FragmentOutputs {
   int loc0;
   float frag_depth;

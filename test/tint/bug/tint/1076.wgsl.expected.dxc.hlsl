@@ -1,3 +1,6 @@
+//
+// main
+//
 struct FragIn {
   float a;
   uint mask;

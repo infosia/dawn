@@ -1,3 +1,6 @@
+//
+// f
+//
 RWByteAddressBuffer s : register(u0);
 static int A = 1;
 static int _A = 2;

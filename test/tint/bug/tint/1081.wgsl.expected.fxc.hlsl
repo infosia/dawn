@@ -1,3 +1,6 @@
+//
+// main
+//
 static bool tint_discarded = false;
 
 int f(int x) {

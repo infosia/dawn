@@ -1,3 +1,6 @@
+//
+// f
+//
 static bool tint_discarded = false;
 
 bool call_discard() {

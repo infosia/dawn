@@ -1,3 +1,6 @@
+//
+// main
+//
 struct main_inputs {
   uint3 local_invocation_id : SV_GroupThreadID;
   uint local_invocation_index : SV_GroupIndex;

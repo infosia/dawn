@@ -1,3 +1,6 @@
+//
+// main
+//
 static bool tint_discarded = false;
 
 static float fClipDistance3 = 0.0f;

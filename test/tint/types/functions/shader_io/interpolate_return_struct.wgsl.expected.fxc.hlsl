@@ -1,3 +1,6 @@
+//
+// main
+//
 struct Out {
   float4 pos;
   float none;

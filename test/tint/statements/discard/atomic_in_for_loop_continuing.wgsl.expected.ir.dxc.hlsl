@@ -1,3 +1,6 @@
+//
+// foo
+//
 struct foo_outputs {
   int tint_symbol_1 : SV_Target0;
 };

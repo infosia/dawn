@@ -1,3 +1,6 @@
+//
+// f
+//
 static matrix<float16_t, 3, 3> m = matrix<float16_t, 3, 3>((float16_t(0.0h)).xxx, (float16_t(0.0h)).xxx, (float16_t(0.0h)).xxx);
 RWByteAddressBuffer tint_symbol : register(u0);
 

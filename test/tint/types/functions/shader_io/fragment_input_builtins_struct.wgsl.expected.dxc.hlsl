@@ -1,3 +1,6 @@
+//
+// main
+//
 struct FragmentInputs {
   float4 position;
   bool front_facing;

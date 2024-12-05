@@ -1,3 +1,6 @@
+//
+// main
+//
 static int zero[3] = (int[3])0;
 static int init[3] = {1, 2, 3};
 

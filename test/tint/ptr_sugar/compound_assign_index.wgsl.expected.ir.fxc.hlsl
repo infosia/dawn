@@ -1,3 +1,6 @@
+//
+// main
+//
 
 void deref() {
   int3 a = (int(0)).xxx;

@@ -1,3 +1,6 @@
+//
+// f
+//
 [numthreads(1, 1, 1)]
 void f() {
   float a = 1.0f;

@@ -1,3 +1,6 @@
+//
+// main
+//
 ByteAddressBuffer input : register(t0);
 
 struct tint_symbol_1 {

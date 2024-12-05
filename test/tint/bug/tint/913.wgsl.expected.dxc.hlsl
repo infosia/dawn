@@ -1,3 +1,6 @@
+//
+// main
+//
 Texture2D<float4> src : register(t0);
 Texture2D<float4> tint_symbol : register(t1);
 RWByteAddressBuffer output : register(u2);

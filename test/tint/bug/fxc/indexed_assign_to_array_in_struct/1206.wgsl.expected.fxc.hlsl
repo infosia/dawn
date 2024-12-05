@@ -1,3 +1,6 @@
+//
+// main
+//
 struct Particle {
   float3 position[8];
   float lifetime;

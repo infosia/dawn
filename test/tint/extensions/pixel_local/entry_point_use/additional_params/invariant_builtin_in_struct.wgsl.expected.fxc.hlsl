@@ -1,3 +1,6 @@
+//
+// f
+//
 RasterizerOrderedTexture2D<uint4> pixel_local_a : register(u1);
 RasterizerOrderedTexture2D<int4> pixel_local_b : register(u6);
 RasterizerOrderedTexture2D<float4> pixel_local_c : register(u3);

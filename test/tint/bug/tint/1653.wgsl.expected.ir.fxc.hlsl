@@ -1,3 +1,6 @@
+//
+// vs_main
+//
 struct vs_main_outputs {
   float4 tint_symbol : SV_Position;
 };

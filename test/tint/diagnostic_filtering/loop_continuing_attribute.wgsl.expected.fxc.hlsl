@@ -10,6 +10,9 @@
       break if x > 0.0;
                ^
 
+//
+// main
+//
 struct tint_symbol_1 {
   float x : TEXCOORD0;
 };

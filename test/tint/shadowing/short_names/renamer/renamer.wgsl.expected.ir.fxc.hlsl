@@ -1,3 +1,6 @@
+//
+// main
+//
 struct tint_symbol_outputs {
   float4 tint_symbol_2 : SV_Position;
 };

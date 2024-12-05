@@ -1,3 +1,6 @@
+//
+// main
+//
 int f(int x) {
   if (true) {
     if ((x == 10)) {

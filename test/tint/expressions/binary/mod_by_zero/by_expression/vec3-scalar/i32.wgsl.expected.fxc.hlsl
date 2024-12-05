@@ -1,3 +1,6 @@
+//
+// f
+//
 int3 tint_mod(int3 lhs, int rhs) {
   int3 r = int3((rhs).xxx);
   int3 rhs_or_one = (((r == (0).xxx) | ((lhs == (-2147483648).xxx) & (r == (-1).xxx))) ? (1).xxx : r);

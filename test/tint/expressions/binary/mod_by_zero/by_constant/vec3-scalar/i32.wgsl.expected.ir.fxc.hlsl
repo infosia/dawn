@@ -1,3 +1,6 @@
+//
+// f
+//
 
 int3 tint_mod_v3i32(int3 lhs, int3 rhs) {
   int3 v = ((((rhs == (int(0)).xxx) | ((lhs == (int(-2147483648)).xxx) & (rhs == (int(-1)).xxx)))) ? ((int(1)).xxx) : (rhs));

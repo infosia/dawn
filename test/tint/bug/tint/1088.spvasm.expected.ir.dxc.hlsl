@@ -1,3 +1,6 @@
+//
+// main
+//
 struct main_out {
   float4 gl_Position;
   float2 vUV_1;

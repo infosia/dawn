@@ -1,3 +1,6 @@
+//
+// main
+//
 static float4 gl_Position = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
 void main_1() {

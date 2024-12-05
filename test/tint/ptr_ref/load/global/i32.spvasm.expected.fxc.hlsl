@@ -1,3 +1,6 @@
+//
+// main
+//
 static int I = 0;
 
 void main_1() {

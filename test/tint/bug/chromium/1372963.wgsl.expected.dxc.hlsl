@@ -1,3 +1,6 @@
+//
+// main
+//
 int4 g() {
   return (0).xxxx;
 }

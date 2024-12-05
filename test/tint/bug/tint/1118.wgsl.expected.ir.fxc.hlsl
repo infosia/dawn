@@ -1,3 +1,6 @@
+//
+// main
+//
 struct main_out {
   float4 glFragColor_1;
 };

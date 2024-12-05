@@ -1,3 +1,6 @@
+//
+// main
+//
 struct VertexOutputs {
   int loc0;
   uint loc1;

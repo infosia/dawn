@@ -1,3 +1,6 @@
+//
+// main
+//
 struct tint_symbol_1 {
   float none : TEXCOORD2;
 };

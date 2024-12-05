@@ -1,3 +1,6 @@
+//
+// f
+//
 groupshared matrix<float16_t, 2, 4> w[4];
 
 void tint_zero_workgroup_memory(uint local_idx) {

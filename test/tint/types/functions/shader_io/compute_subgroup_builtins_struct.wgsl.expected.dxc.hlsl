@@ -1,3 +1,6 @@
+//
+// main
+//
 RWByteAddressBuffer output : register(u0);
 
 struct ComputeInputs {

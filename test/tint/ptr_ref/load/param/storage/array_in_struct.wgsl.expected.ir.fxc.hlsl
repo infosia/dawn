@@ -1,3 +1,6 @@
+//
+// main
+//
 
 ByteAddressBuffer S : register(t0);
 typedef int ary_ret[4];

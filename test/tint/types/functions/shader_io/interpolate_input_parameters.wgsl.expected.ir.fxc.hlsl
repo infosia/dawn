@@ -1,3 +1,6 @@
+//
+// main
+//
 struct main_inputs {
   float none : TEXCOORD0;
   nointerpolation float flat : TEXCOORD1;
