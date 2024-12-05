@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db116da5_67856d52",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1762,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-05T21:21:16Z",
+      "side": 1,
+      "message": "übernit: missing \"to\"",
+      "fixSuggestions": [
+        {
+          "fixId": "b5b91755_d77254f8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 1762,
+                "startChar": 0,
+                "endLine": 1763,
+                "endChar": 0
+              },
+              "replacement": "                    diag() \u003c\u003c \"references to void are not permitted\";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "76b232888faf3a758184b4307262e9620b247c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
