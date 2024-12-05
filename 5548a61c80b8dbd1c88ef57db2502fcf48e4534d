@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42c22ca8_40133954",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-05T20:47:36Z",
+      "side": 1,
+      "message": "This doesn\u0027t really affect anything, since we do pass in a dxc_path, but the code was incorrect, and I\u0027m basing the IR fuzzer code on it.",
+      "revId": "5548a61c80b8dbd1c88ef57db2502fcf48e4534d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
