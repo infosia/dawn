@@ -1,9 +1,8 @@
+//
+// main
+//
 #include <metal_stdlib>
 using namespace metal;
-
-struct Constants {
-  int level;
-};
 
 template<typename T, size_t N>
 struct tint_array {
@@ -22,7 +21,6 @@ struct Result {
 };
 
 struct tint_module_vars_struct {
-  const constant Constants* constants;
   texture2d_array<float, access::sample> myTexture;
   device Result* result;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;

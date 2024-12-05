@@ -10,6 +10,9 @@
   switch (i32(x)) {
               ^
 
+//
+// main
+//
 #include <metal_stdlib>
 
 using namespace metal;
