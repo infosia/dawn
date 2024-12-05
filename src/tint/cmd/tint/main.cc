@@ -135,6 +135,8 @@ struct Options {
     tint::Hashmap<std::string, double, 8> overrides;
 
     std::string ep_name;
+    bool emit_single_entry_point = false;
+    tint::ast::PipelineStage pipeline_stage = tint::ast::PipelineStage::kCompute;
 
     Format format = Format::kUnknown;
 
@@ -145,7 +147,6 @@ struct Options {
     bool validate = false;
     bool print_hash = false;
     bool dump_inspector_bindings = false;
-    bool emit_single_entry_point = false;
 
     bool rename_all = false;
     bool enable_robustness = true;
@@ -679,7 +680,9 @@ void AddSubstituteOverrides(std::unordered_map<tint::OverrideId, double> values,
     tint::ast::transform::Manager transform_manager;
     tint::ast::transform::DataMap transform_inputs;
 
-    // Renaming must always come first
+    transform_manager.append(std::make_unique<tint::ast::transform::SingleEntryPoint>());
+    transform_inputs.Add<tint::ast::transform::SingleEntryPoint::Config>(options.ep_name);
+
     AddRenamer(options, transform_manager, transform_inputs);
 
     auto res = CreateOverrideMap(options, inspector);
@@ -687,11 +690,6 @@ void AddSubstituteOverrides(std::unordered_map<tint::OverrideId, double> values,
         return res.Failure();
     }
     AddSubstituteOverrides(res.Get(), transform_manager, transform_inputs);
-
-    if (options.emit_single_entry_point) {
-        transform_manager.append(std::make_unique<tint::ast::transform::SingleEntryPoint>());
-        transform_inputs.Add<tint::ast::transform::SingleEntryPoint::Config>(options.ep_name);
-    }
 
     tint::ast::transform::DataMap outputs;
     return transform_manager.Run(program, std::move(transform_inputs), outputs);
@@ -746,7 +744,6 @@ bool GenerateSpirv([[maybe_unused]] Options& options,
                    [[maybe_unused]] tint::inspector::Inspector& inspector,
                    [[maybe_unused]] tint::Program& src_program) {
 #if TINT_BUILD_SPV_WRITER
-
     auto res = ProcessASTTransforms(options, inspector, src_program);
     if (res != tint::Success || !res->IsValid()) {
         tint::cmd::PrintWGSL(std::cerr, res.Get());
@@ -819,17 +816,9 @@ bool GenerateWgsl([[maybe_unused]] Options& options,
                   [[maybe_unused]] tint::inspector::Inspector& inspector,
                   [[maybe_unused]] tint::Program& src_program) {
 #if TINT_BUILD_WGSL_WRITER
-
-    auto res = ProcessASTTransforms(options, inspector, src_program);
-    if (res != tint::Success || !res->IsValid()) {
-        tint::cmd::PrintWGSL(std::cerr, res.Get());
-        std::cerr << res->Diagnostics() << "\n";
-        return 1;
-    }
-
     // TODO(jrprice): Provide a way for the user to set non-default options.
     tint::wgsl::writer::Options gen_options;
-    auto result = tint::wgsl::writer::Generate(res.Get(), gen_options);
+    auto result = tint::wgsl::writer::Generate(src_program, gen_options);
     if (result != tint::Success) {
         std::cerr << "Failed to generate: " << result.Failure() << "\n";
         return false;
@@ -875,7 +864,6 @@ bool GenerateMsl([[maybe_unused]] Options& options,
                  [[maybe_unused]] tint::inspector::Inspector& inspector,
                  [[maybe_unused]] tint::Program& src_program) {
 #if TINT_BUILD_MSL_WRITER
-
     auto transform_res = ProcessASTTransforms(options, inspector, src_program);
     if (transform_res != tint::Success || !transform_res->IsValid()) {
         tint::cmd::PrintWGSL(std::cerr, transform_res.Get());
@@ -965,7 +953,7 @@ bool GenerateMsl([[maybe_unused]] Options& options,
         const char* default_xcrun_exe = "metal.exe";
 #else
         const char* default_xcrun_exe = "xcrun";
-#endif
+#endif  // _WIN32
         auto xcrun = tint::Command::LookPath(
             options.xcrun_path.empty() ? default_xcrun_exe : std::string(options.xcrun_path));
         if (xcrun.Found()) {
@@ -1124,126 +1112,86 @@ bool GenerateHlsl([[maybe_unused]] Options& options,
 
 /// Generate GLSL code for a program.
 /// @param options the options that Tint was invoked with
-/// @param src_inspector the inspector
+/// @param inspector the inspector
 /// @param src_program the program to generate
 /// @returns true on success
 bool GenerateGlsl([[maybe_unused]] Options& options,
-                  [[maybe_unused]] tint::inspector::Inspector& src_inspector,
+                  [[maybe_unused]] tint::inspector::Inspector& inspector,
                   [[maybe_unused]] tint::Program& src_program) {
 #if TINT_BUILD_GLSL_WRITER
-
-    auto res = ProcessASTTransforms(options, src_inspector, src_program);
+    auto res = ProcessASTTransforms(options, inspector, src_program);
     if (res != tint::Success || !res->IsValid()) {
         tint::cmd::PrintWGSL(std::cerr, res.Get());
         std::cerr << res->Diagnostics() << "\n";
         return 1;
     }
-    tint::inspector::Inspector inspector(res.Get());
 
-    auto generate = [&](const tint::Program& prg, const std::string entry_point_name,
-                        [[maybe_unused]] tint::ast::PipelineStage stage) -> bool {
-        tint::glsl::writer::Options gen_options;
+    tint::glsl::writer::Options gen_options;
+    if (options.glsl_desktop) {
+        gen_options.version =
+            tint::glsl::writer::Version(tint::glsl::writer::Version::Standard::kDesktop, 4, 6);
+    } else {
+        gen_options.version = tint::glsl::writer::Version();
+    }
 
-        if (options.glsl_desktop) {
-            gen_options.version =
-                tint::glsl::writer::Version(tint::glsl::writer::Version::Standard::kDesktop, 4, 6);
-        } else {
-            gen_options.version = tint::glsl::writer::Version();
-        }
+    gen_options.disable_robustness = !options.enable_robustness;
 
-        gen_options.disable_robustness = !options.enable_robustness;
+    auto entry_point = inspector.GetEntryPoint(options.ep_name);
+    uint32_t offset = entry_point.push_constant_size;
 
-        auto entry_point = inspector.GetEntryPoint(entry_point_name);
-        uint32_t offset = entry_point.push_constant_size;
+    if (entry_point.instance_index_used) {
+        // Place the first_instance push constant member after user-defined push constants (if
+        // any).
+        gen_options.first_instance_offset = offset;
+        offset += 4;
+    }
+    if (entry_point.frag_depth_used) {
+        gen_options.depth_range_offsets = {offset + 0, offset + 4};
+        offset += 8;
+    }
 
-        if (entry_point.instance_index_used) {
-            // Place the first_instance push constant member after user-defined push constants (if
-            // any).
-            gen_options.first_instance_offset = offset;
-            offset += 4;
-        }
-        if (entry_point.frag_depth_used) {
-            gen_options.depth_range_offsets = {offset + 0, offset + 4};
-            offset += 8;
-        }
+    // Convert the AST program to an IR module.
+    auto ir = tint::wgsl::reader::ProgramToLoweredIR(res.Get());
+    if (ir != tint::Success) {
+        std::cerr << "Failed to generate IR: " << ir << "\n";
+        return false;
+    }
 
-        // Convert the AST program to an IR module.
-        auto ir = tint::wgsl::reader::ProgramToLoweredIR(prg);
-        if (ir != tint::Success) {
-            std::cerr << "Failed to generate IR: " << ir << "\n";
-            return false;
-        }
+    // Generate binding options.
+    gen_options.bindings = tint::glsl::writer::GenerateBindings(ir.Get());
 
-        // The GLSL backend assumes single entry point.
-        if (!entry_point_name.empty()) {
-            auto single_result =
-                tint::core::ir::transform::SingleEntryPoint(ir.Get(), entry_point_name);
-            if (single_result != tint::Success) {
-                std::cerr << single_result.Failure().reason.Str() << "\n";
+    // Generate GLSL.
+    auto result = tint::glsl::writer::Generate(ir.Get(), gen_options, "");
+    if (result != tint::Success) {
+        std::cerr << "Failed to generate: " << result.Failure() << "\n";
+        return false;
+    }
+
+    if (!tint::cmd::WriteFile(options.output_file, "w", result->glsl)) {
+        return false;
+    }
+
+    const auto hash = tint::CRC32(result->glsl.c_str());
+    if (options.print_hash) {
+        PrintHash(hash);
+    }
+
+    if (options.validate && options.skip_hash.count(hash) == 0) {
+#if !TINT_BUILD_GLSL_VALIDATOR
+        std::cerr << "GLSL validator not enabled in tint build\n";
+        return false;
+#else
+        // If there is no entry point name there is nothing to validate
+        if (options.ep_name != "") {
+            auto val = tint::glsl::validate::Validate(result->glsl, options.pipeline_stage);
+            if (val != tint::Success) {
+                std::cerr << val.Failure();
                 return false;
             }
         }
-
-        // Generate binding options.
-        gen_options.bindings = tint::glsl::writer::GenerateBindings(ir.Get());
-
-        // Generate GLSL.
-        auto result = tint::glsl::writer::Generate(ir.Get(), gen_options, "");
-        if (result != tint::Success) {
-            std::cerr << "Failed to generate: " << result.Failure() << "\n";
-            return false;
-        }
-
-        if (!tint::cmd::WriteFile(options.output_file, "w", result->glsl)) {
-            return false;
-        }
-
-        const auto hash = tint::CRC32(result->glsl.c_str());
-        if (options.print_hash) {
-            PrintHash(hash);
-        }
-
-        if (options.validate && options.skip_hash.count(hash) == 0) {
-#if !TINT_BUILD_GLSL_VALIDATOR
-            std::cerr << "GLSL validator not enabled in tint build\n";
-            return false;
-#else
-            // If there is no entry point name there is nothing to validate
-            if (entry_point_name != "") {
-                auto val = tint::glsl::validate::Validate(result->glsl, stage);
-                if (val != tint::Success) {
-                    std::cerr << val.Failure();
-                    return false;
-                }
-            }
-#endif
-        }
-        return true;
-    };
-
-    if (inspector.GetEntryPoints().empty()) {
-        // Pass empty string here so that the GLSL generator will generate
-        // code for all functions, reachable or not.
-        return generate(res.Get(), "", tint::ast::PipelineStage::kCompute);
+#endif  // !TINT_BUILD_GLSL_VALIDATOR
     }
-
-    bool success = true;
-    for (auto& entry_point : inspector.GetEntryPoints()) {
-        tint::ast::PipelineStage stage = tint::ast::PipelineStage::kCompute;
-        switch (entry_point.stage) {
-            case tint::inspector::PipelineStage::kCompute:
-                stage = tint::ast::PipelineStage::kCompute;
-                break;
-            case tint::inspector::PipelineStage::kVertex:
-                stage = tint::ast::PipelineStage::kVertex;
-                break;
-            case tint::inspector::PipelineStage::kFragment:
-                stage = tint::ast::PipelineStage::kFragment;
-                break;
-        }
-        success &= generate(res.Get(), entry_point.name, stage);
-    }
-    return success;
+    return true;
 #else
     std::cerr << "GLSL writer not enabled in tint build\n";
     return false;
@@ -1344,34 +1292,96 @@ int main(int argc, const char** argv) {
         tint::cmd::PrintInspectorBindings(inspector);
     }
 
-    bool success = false;
-    switch (options.format) {
-        case Format::kSpirv:
-        case Format::kSpvAsm:
-            success = GenerateSpirv(options, inspector, info.program);
-            break;
-        case Format::kWgsl:
-            success = GenerateWgsl(options, inspector, info.program);
-            break;
-        case Format::kMsl:
-            success = GenerateMsl(options, inspector, info.program);
-            break;
-        case Format::kHlsl:
-        case Format::kHlslFxc:
-            success = GenerateHlsl(options, inspector, info.program);
-            break;
-        case Format::kGlsl:
-            success = GenerateGlsl(options, inspector, info.program);
-            break;
-        case Format::kNone:
-            break;
-        default:
-            std::cerr << "Unknown output format specified\n";
-            return 1;
-    }
-    if (!success) {
-        return 1;
+    // Handle WGSL special as we want multiple shaders in a single file, unlike other formats where
+    // we run single entry point.
+    if (options.format == Format::kWgsl) {
+        return GenerateWgsl(options, inspector, info.program) ? 0 : 1;
     }
 
-    return 0;
+    auto generate = [&]() {
+        bool success = false;
+        switch (options.format) {
+            case Format::kSpirv:
+            case Format::kSpvAsm:
+                success = GenerateSpirv(options, inspector, info.program);
+                break;
+            case Format::kMsl:
+                success = GenerateMsl(options, inspector, info.program);
+                break;
+            case Format::kHlsl:
+            case Format::kHlslFxc:
+                success = GenerateHlsl(options, inspector, info.program);
+                break;
+            case Format::kGlsl:
+                success = GenerateGlsl(options, inspector, info.program);
+                break;
+            case Format::kNone:
+                break;
+            case Format::kWgsl:
+                TINT_UNREACHABLE();
+            default:
+                std::cerr << "Unknown output format specified\n";
+                return false;
+        }
+        if (!success) {
+            return false;
+        }
+        return true;
+    };
+
+    if (inspector.GetEntryPoints().empty()) {
+        return generate() ? 0 : 1;
+    }
+
+    bool success = true;
+    std::string outfile_name = options.output_file;
+    for (auto& entry_point : inspector.GetEntryPoints()) {
+        if (options.emit_single_entry_point && entry_point.name != options.ep_name) {
+            continue;
+        }
+
+        // If we're emitting to stdout, add a separator between the entry points. If we're going to
+        // a file, and we aren't emitting a single entry point, add the entry point name into the
+        // output file name.
+        if (tint::cmd::IsStdout(options.output_file)) {
+            if (options.format == Format::kSpvAsm) {
+                std::cout << ";\n; ";
+            } else {
+                std::cout << "//\n// ";
+            }
+            std::cout << entry_point.name << "\n";
+            if (options.format == Format::kSpvAsm) {
+                std::cout << ";\n";
+            } else {
+                std::cout << "//\n";
+            }
+        } else if (!options.emit_single_entry_point) {
+            auto pos = outfile_name.rfind(".");
+            if (pos == std::string_view::npos) {
+                options.output_file = outfile_name + "." + entry_point.name;
+            } else {
+                options.output_file = outfile_name.substr(0, pos) + "." + entry_point.name + "." +
+                                      outfile_name.substr(pos + 1);
+            }
+        }
+
+        switch (entry_point.stage) {
+            case tint::inspector::PipelineStage::kCompute:
+                options.pipeline_stage = tint::ast::PipelineStage::kCompute;
+                break;
+            case tint::inspector::PipelineStage::kVertex:
+                options.pipeline_stage = tint::ast::PipelineStage::kVertex;
+                break;
+            case tint::inspector::PipelineStage::kFragment:
+                options.pipeline_stage = tint::ast::PipelineStage::kFragment;
+                break;
+        }
+        options.ep_name = entry_point.name;
+        success &= generate();
+
+        if (options.emit_single_entry_point) {
+            break;
+        }
+    }
+    return success ? 0 : 1;
 }
