@@ -10,6 +10,9 @@
   if (x > 0) @diagnostic(warning, derivative_uniformity) {
       ^
 
+//
+// main
+//
 #version 310 es
 precision highp float;
 precision highp int;

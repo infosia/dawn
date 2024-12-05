@@ -10,6 +10,9 @@
   switch (i32(x)) {
               ^
 
+//
+// main
+//
 #version 310 es
 precision highp float;
 precision highp int;

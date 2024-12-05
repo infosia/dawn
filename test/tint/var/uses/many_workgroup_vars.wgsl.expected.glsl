@@ -1,3 +1,6 @@
+//
+// tint_symbol
+//
 #version 310 es
 
 shared mat2 m00;

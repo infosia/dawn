@@ -1,3 +1,6 @@
+//
+// main
+//
 #version 310 es
 
 vec4 tint_symbol_inner(uint VertexIndex) {

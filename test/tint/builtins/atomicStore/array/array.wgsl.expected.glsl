@@ -1,3 +1,6 @@
+//
+// compute_main
+//
 #version 310 es
 
 shared uint wg[4];
