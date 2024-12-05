@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9ba954e_9cb2f5f8",
+        "filename": "src/tint/lang/wgsl/ast/transform/renamer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-05T15:55:25Z",
+      "side": 1,
+      "message": "This seems unrelated?",
+      "revId": "1653364cc16dbe424de33c6c4c44740d28f40dc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
