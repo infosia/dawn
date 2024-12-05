@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dceac230_4a51bcd0",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-05T10:51:06Z",
+      "side": 1,
+      "message": "I think I follow.  (Well enough to LGTM the CL, anyhow.)\n\nHow\u0027s the whitespace formatting now?  Is it still decent after this change?  (Do you mind pasting a sample into this comment thread?)",
+      "parentUuid": "37e26974_ded331bc",
+      "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "12a233ce_8b8927d7",
         "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnTestLauncher.kt",
         "patchSetId": 5
