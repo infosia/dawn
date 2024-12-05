@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-11-27 07:34:54AM
+# Last rolled: 2024-12-05 05:15:34AM
 
 # conflicts_allowed: true
 
@@ -1537,7 +1537,6 @@ crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupShu
 crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupShuffle:requires_subgroups_f16:enable=false;op="subgroupShuffleDown" [ Failure ]
 crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupShuffle:requires_subgroups_f16:enable=false;op="subgroupShuffleUp" [ Failure ]
 crbug.com/380862306 webgpu:shader,validation,expression,call,builtin,subgroupShuffle:requires_subgroups_f16:enable=false;op="subgroupShuffleXor" [ Failure ]
-
 
 # Failures due to change in `@align()` validation.
 crbug.com/375467276 webgpu:shader,execution,expression,access,structure,index:buffer_align:* [ Failure ]
@@ -7903,4 +7902,3 @@ crbug.com/0000 [ win10 ] webgpu:shader,execution,expression,call,builtin,texture
 crbug.com/0000 [ win10 ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_array_2d_coords:* [ Skip ]
 crbug.com/0000 [ win10 ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_3d_coords:* [ Skip ]
 crbug.com/0000 [ win10 ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_array_3d_coords:* [ Skip ]
-
