@@ -34,6 +34,24 @@
       ],
       "revId": "76b232888faf3a758184b4307262e9620b247c29",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb709d37_8dc42f3f",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1762,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-12-05T21:31:05Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "db116da5_67856d52",
+      "revId": "76b232888faf3a758184b4307262e9620b247c29",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
