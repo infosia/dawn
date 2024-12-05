@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03a2aa64_e617a74e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-05T19:20:56Z",
+      "side": 1,
+      "message": "LGTM (There\u0027s a clangTidy comment to fix)",
+      "revId": "d78bcdd2d251506391ee88a7cb0828c135f423d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
