@@ -123,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af72c102_cbb5e5d4",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnTestLauncher.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-05T10:51:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a369c193_096ea7d3",
+      "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46a556c9_9b01b29c",
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "See above. I guess that:\n1. It\u0027s to allow them to add a second form of the callback without immediately deleting the old one.\n2. They intended to rename it (remove the \u00272\u0027) at some future point.",
       "parentUuid": "46a556c9_9b01b29c",
+      "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "580c2fa3_92a694ec",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnTestLauncher.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-05T10:51:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4d0e639_c63b3a58",
       "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
