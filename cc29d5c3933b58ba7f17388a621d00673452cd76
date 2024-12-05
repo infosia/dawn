@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "cc29d5c3933b58ba7f17388a621d00673452cd76",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e56dedb8_07527ef4",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-05T21:18:52Z",
+      "side": 1,
+      "message": "übernit: `kNone` is a better default.\n\nBut also, GLSL is the only backend that needs this, and it also already has the pipeline stage via a call to `inspector.GetEntryPoint()`, so doesn\u0027t really need to be passed it. I guess it\u0027s not quite the right version of the enum, because we\u0027ve somehow ended up with three different copies of the same enum...",
+      "revId": "cc29d5c3933b58ba7f17388a621d00673452cd76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4418b4d5_dada65cf",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-05T21:18:52Z",
+      "side": 1,
+      "message": "Maybe we should only output the separator if there is more than one entry point? That would reduce a lot of a E2E churn.",
+      "revId": "cc29d5c3933b58ba7f17388a621d00673452cd76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
