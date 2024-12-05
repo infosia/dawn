@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4ef27e40_35d78b72",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-12-05T12:15:15Z",
+      "side": 1,
+      "message": "I took a look and the whitespace formatting is still OK (not perfect).\nI included one or two improvements with this CL.",
+      "parentUuid": "dceac230_4a51bcd0",
+      "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "12a233ce_8b8927d7",
         "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnTestLauncher.kt",
         "patchSetId": 5
