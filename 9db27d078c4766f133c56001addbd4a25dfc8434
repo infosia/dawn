@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7eeff3bb_4de02464",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-12-05T20:48:15Z",
+      "side": 1,
+      "message": "per OOB conversation with James,\nThis need to also allow `convert`, `construct` `access`, `swizzle`, and `bitcast` for overrides",
+      "revId": "9db27d078c4766f133c56001addbd4a25dfc8434",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9ccec258_0dc0eab8",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 1
