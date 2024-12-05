@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9f97c3e_950c311c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-05T19:30:18Z",
+      "side": 1,
+      "message": "I\u0027m not too familiar with the Kotlin stuff, but LGTM for `dawn_json_generator.py` changes! Also LGTM to move to use the newer callback info structs as I am actively working on deprecating the old ones!",
+      "revId": "da866e4352ae35bd9fb15f29ef6021cc56cf61d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
