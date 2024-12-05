@@ -51,6 +51,24 @@
       "message": "Also `Construct`, `Convert`, `Swizzle`, `Access`, and `Bitcast`.\n\nAlso maybe worth testing specifically for `CoreBuiltinCall` instead of `BuiltinCall`. At some point we\u0027ll also need to restrict which core builtins are allowed to be called from the root block, because not all of them are (basically, do an intrinsic table lookup and check for the presence of a const-eval function).",
       "revId": "9db27d078c4766f133c56001addbd4a25dfc8434",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c7c16c8_cab946b1",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1888,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-12-05T21:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ccec258_0dc0eab8",
+      "revId": "9db27d078c4766f133c56001addbd4a25dfc8434",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
