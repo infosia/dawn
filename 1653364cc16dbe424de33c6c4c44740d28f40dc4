@@ -16,6 +16,24 @@
       "message": "This seems unrelated?",
       "revId": "1653364cc16dbe424de33c6c4c44740d28f40dc4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2912b0ac_ac6a6c92",
+        "filename": "src/tint/lang/wgsl/ast/transform/renamer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-05T15:59:19Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "a9ba954e_9cb2f5f8",
+      "revId": "1653364cc16dbe424de33c6c4c44740d28f40dc4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
