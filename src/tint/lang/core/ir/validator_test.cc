@@ -3850,8 +3850,7 @@ note: # Disassembly
 }
 
 TEST_F(IR_ValidatorTest, Discard_OutsideFunction) {
-    auto* d = b.Discard();
-    mod.root_block->Append(d);
+    mod.root_block->Append(b.Discard());
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
@@ -3869,6 +3868,55 @@ $B1: {  # root
   discard
 }
 
+)");
+}
+
+TEST_F(IR_ValidatorTest, Terminator_OutsideFunction) {
+    auto f = b.Function("f", ty.void_());
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    mod.root_block->Append(b.Return(f));
+    mod.root_block->Append(b.Unreachable());
+    mod.root_block->Append(b.TerminateInvocation());
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_EQ(res.Failure().reason.Str(),
+              R"(:2:3 error: return: root block: invalid instruction: tint::core::ir::Return
+  ret
+  ^^^
+
+:1:1 note: in block
+$B1: {  # root
+^^^
+
+:3:3 error: unreachable: root block: invalid instruction: tint::core::ir::Unreachable
+  unreachable
+  ^^^^^^^^^^^
+
+:1:1 note: in block
+$B1: {  # root
+^^^
+
+:4:3 error: terminate_invocation: root block: invalid instruction: tint::core::ir::TerminateInvocation
+  terminate_invocation
+  ^^^^^^^^^^^^^^^^^^^^
+
+:1:1 note: in block
+$B1: {  # root
+^^^
+
+note: # Disassembly
+$B1: {  # root
+  ret
+  unreachable
+  terminate_invocation
+}
+
+%f = func():void {
+  $B2: {
+    unreachable
+  }
+}
 )");
 }
 

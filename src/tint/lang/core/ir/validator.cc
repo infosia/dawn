@@ -1881,6 +1881,9 @@ void Validator::CheckRootBlock(const Block* blk) {
             [&](const core::ir::Discard* d) {
                 AddError(d) << "root block: invalid instruction: " << d->TypeInfo().name;
             },
+            [&](const core::ir::Terminator* t) {
+                AddError(t) << "root block: invalid instruction: " << t->TypeInfo().name;
+            },
             [&](Default) {
                 // Note, this validation is looser then it could be. There are only certain
                 // expressions and builtins which can be used in an override. We can tighten this up
