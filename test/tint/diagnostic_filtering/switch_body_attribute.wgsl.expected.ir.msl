@@ -10,6 +10,9 @@
   switch (i32(x)) @diagnostic(warning, derivative_uniformity) {
               ^
 
+//
+// main
+//
 #include <metal_stdlib>
 using namespace metal;
 

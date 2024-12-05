@@ -2,6 +2,9 @@
         let _e9 = (vec3<i32>().y >= vec3<i32>().y);
         ^^^^^^^
 
+//
+// main
+//
 #include <metal_stdlib>
 
 using namespace metal;

@@ -10,6 +10,9 @@
   if (x > 0) @diagnostic(warning, derivative_uniformity) {
       ^
 
+//
+// main
+//
 #include <metal_stdlib>
 
 using namespace metal;

@@ -2,6 +2,9 @@
         let _e16_ = vec2(false, false);
         ^^^^^^^^^
 
+//
+// main
+//
 #include <metal_stdlib>
 
 using namespace metal;
