@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92700311_7fb3a7a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-12-05T12:17:06Z",
+      "side": 1,
+      "message": "Loko, could you kindly consider this for OWNERS approval since Corentin is on leave?",
+      "revId": "2177791cade0dd95c3aff13f2345863c417c803e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
