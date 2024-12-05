@@ -1,3 +1,6 @@
+//
+// compute_main
+//
 #version 310 es
 
 void workgroupBarrier_a17f7f() {

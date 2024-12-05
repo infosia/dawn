@@ -1,3 +1,6 @@
+//
+// main
+//
 #version 310 es
 
 int tint_symbol() {

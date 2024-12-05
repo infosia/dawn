@@ -1,3 +1,6 @@
+//
+// main
+//
 #version 310 es
 
 layout(location = 0) in int tint_symbol_loc0_Input;
