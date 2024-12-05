@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "37e26974_ded331bc",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-12-05T10:01:23Z",
+      "side": 1,
+      "message": "userdata is used to pass the context into the callback; not required in Kotlin because closures do the same thing automatically. But we need to use the C userdata in our own use of the C API, for the JNI context.\n\nThere are two forms of callbacks in Dawn currently, and they both do userdata differently (although it is very likely the \u0027function pointer\u0027 form will be removed in time which will mean we can simplify this code).\n\n\u0027function pointer\u0027; by convention, has a final parameter \u0027userdata\u0027 in dawn.json. I rely on that convention.\n\n\u0027callback function\u0027 doesn\u0027t have anything about userdata in dawn.json. Instead, they add two userdata paramaters (presumably the second is only a matter of convenience; I\u0027ve never seen an API with two before). This was added here https://dawn-review.googlesource.com/c/dawn/+/183163\n\nThe highlighted code is where our lambda is set up, that is passed to the C API, and itself calls the Kotlin callback. It needs to have parameters as expected by Dawn API, all of which will need two void* parameters at the end.\n\nThe {{ userdata }} variable is needed because the structure that the data is written into with outStruct-\u003e{{ userdata }} is part of the C API so is set up differently for each method.",
+      "parentUuid": "bb21bfc5_73046d78",
+      "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "12a233ce_8b8927d7",
         "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnTestLauncher.kt",
         "patchSetId": 5
@@ -71,6 +89,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a369c193_096ea7d3",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnTestLauncher.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-12-05T10:01:23Z",
+      "side": 1,
+      "message": "It\u0027s what they called it. https://dawn-review.googlesource.com/c/dawn/+/183163/19/src/dawn/dawn.json",
+      "parentUuid": "12a233ce_8b8927d7",
+      "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "46a556c9_9b01b29c",
         "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnTestLauncher.kt",
         "patchSetId": 5
@@ -82,6 +118,24 @@
       "writtenOn": "2024-12-04T15:47:15Z",
       "side": 1,
       "message": "same",
+      "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4d0e639_c63b3a58",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/DawnTestLauncher.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-12-05T10:01:23Z",
+      "side": 1,
+      "message": "See above. I guess that:\n1. It\u0027s to allow them to add a second form of the callback without immediately deleting the old one.\n2. They intended to rename it (remove the \u00272\u0027) at some future point.",
+      "parentUuid": "46a556c9_9b01b29c",
       "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
