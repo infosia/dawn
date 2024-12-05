@@ -1329,7 +1329,8 @@ int main(int argc, const char** argv) {
 
     if (options.format == Format::kNone || options.format == Format::kGlsl ||
         options.format == Format::kHlsl || options.format == Format::kHlslFxc ||
-        options.format == Format::kMsl) {
+        options.format == Format::kMsl || options.format == Format::kSpirv ||
+        options.format == Format::kSpvAsm) {
         auto generate = [&]() {
             bool success = false;
             switch (options.format) {
@@ -1422,8 +1423,6 @@ int main(int argc, const char** argv) {
         switch (options.format) {
             case Format::kSpirv:
             case Format::kSpvAsm:
-                success = GenerateSpirv(options, inspector, info.program);
-                break;
             case Format::kMsl:
             case Format::kHlsl:
             case Format::kHlslFxc:

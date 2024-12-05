@@ -10,6 +10,9 @@
   switch (i32(x)) @diagnostic(warning, derivative_uniformity) {
               ^
 
+;
+; main
+;
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
