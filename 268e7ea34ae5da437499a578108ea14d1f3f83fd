@@ -16,6 +16,29 @@
       "message": "This is needed to compile dj2/dusk  It has extra warnings that will trigger on the old pattern.",
       "revId": "268e7ea34ae5da437499a578108ea14d1f3f83fd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "005e3150_a724a196",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-12-05T23:23:26Z",
+      "side": 1,
+      "message": "For example, this \"callback\" would be shadowed by the \u0027callback\u0027 param declaration on line 964.\n\nSimilar with userdata, and \u0027lambda\u0027 parameters and variables.",
+      "range": {
+        "startLine": 959,
+        "startChar": 68,
+        "endLine": 959,
+        "endChar": 78
+      },
+      "revId": "268e7ea34ae5da437499a578108ea14d1f3f83fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
