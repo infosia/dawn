@@ -10,6 +10,9 @@
       break if x > 0.0;
                ^
 
+;
+; main
+;
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
