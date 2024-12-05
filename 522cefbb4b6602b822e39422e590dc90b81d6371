@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78d2d104_f376267c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2024-12-05T23:34:22Z",
+      "side": 1,
+      "message": "there\u0027s 2 CTS patches (1) should shorten the logs (2) should fix the compute stage texture builtins (sorry, I\u0027m ashamed I missed that). I re-triggered the roller",
+      "revId": "522cefbb4b6602b822e39422e590dc90b81d6371",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
