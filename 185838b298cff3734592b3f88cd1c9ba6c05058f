@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89a6d20b_58d35977",
+        "filename": "generator/templates/art/kotlin_record_conversion.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2024-12-05T16:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ef27e40_35d78b72",
+      "revId": "185838b298cff3734592b3f88cd1c9ba6c05058f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12a233ce_8b8927d7",
