@@ -131,8 +131,8 @@ ValidationTest::ValidationTest() {
 
     // Forward to dawn::native instanceRequestAdapter, but save the returned backend device in
     // gCurrentTest->mLastCreatedBackendDevice.
-    procs.adapterRequestDevice2 = [](WGPUAdapter self, const WGPUDeviceDescriptor* descriptor,
-                                     WGPURequestDeviceCallbackInfo2 callbackInfo) -> WGPUFuture {
+    procs.adapterRequestDevice = [](WGPUAdapter self, const WGPUDeviceDescriptor* descriptor,
+                                    WGPURequestDeviceCallbackInfo callbackInfo) -> WGPUFuture {
         DAWN_ASSERT(gCurrentTest);
         DAWN_ASSERT(callbackInfo.mode == WGPUCallbackMode_AllowSpontaneous);
 
@@ -161,18 +161,18 @@ ValidationTest::ValidationTest() {
         deviceTogglesDesc.disabledToggles = disabledToggles.data();
         deviceTogglesDesc.disabledToggleCount = disabledToggles.size();
 
-        return dawn::native::GetProcs().adapterRequestDevice2(
+        return dawn::native::GetProcs().adapterRequestDevice(
             self, reinterpret_cast<WGPUDeviceDescriptor*>(&deviceDesc),
             {nullptr, WGPUCallbackMode_AllowSpontaneous,
              [](WGPURequestDeviceStatus status, WGPUDevice cDevice, WGPUStringView message,
                 void* userdata, void*) {
                  gCurrentTest->mLastCreatedBackendDevice = cDevice;
 
-                 auto* info = static_cast<WGPURequestDeviceCallbackInfo2*>(userdata);
+                 auto* info = static_cast<WGPURequestDeviceCallbackInfo*>(userdata);
                  info->callback(status, cDevice, message, info->userdata1, info->userdata2);
                  delete info;
              },
-             new WGPURequestDeviceCallbackInfo2(callbackInfo), nullptr});
+             new WGPURequestDeviceCallbackInfo(callbackInfo), nullptr});
     };
 
     mWireHelper = dawn::utils::CreateWireHelper(procs, gUseWire, gWireTraceDir.c_str());
