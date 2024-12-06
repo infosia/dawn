@@ -16,6 +16,23 @@
       "message": "PTAL Kai",
       "revId": "a6b9df4cbec2616856ba56375ab1251d023978f3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab04b97a_4683defb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-06T08:20:27Z",
+      "side": 1,
+      "message": "@kainino@chromium.org See https://dawn-review.googlesource.com/c/dawn/+/215894/comment/b1933183_2ac05a75/ as well",
+      "revId": "a6b9df4cbec2616856ba56375ab1251d023978f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
