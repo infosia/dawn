@@ -1014,6 +1014,140 @@ bool GenerateHlsl([[maybe_unused]] Options& options,
                   [[maybe_unused]] tint::inspector::Inspector& inspector,
                   [[maybe_unused]] tint::Program& src_program) {
 #if TINT_BUILD_HLSL_WRITER
+    auto res = ProcessASTTransforms(options, inspector, src_program);
+    if (res != tint::Success || !res->IsValid()) {
+        tint::cmd::PrintWGSL(std::cerr, res.Get());
+        std::cerr << res->Diagnostics() << "\n";
+        return 1;
+    }
+
+    const bool for_fxc = options.format == Format::kHlslFxc;
+    // TODO(jrprice): Provide a way for the user to set non-default options.
+    tint::hlsl::writer::Options gen_options;
+    gen_options.disable_robustness = !options.enable_robustness;
+    gen_options.disable_workgroup_init = options.disable_workgroup_init;
+    gen_options.bindings = tint::hlsl::writer::GenerateBindings(res.Get());
+    gen_options.pixel_local = options.pixel_local_options;
+    gen_options.polyfill_dot_4x8_packed = options.hlsl_shader_model < kMinShaderModelForDP4aInHLSL;
+    gen_options.polyfill_pack_unpack_4x8 =
+        options.hlsl_shader_model < kMinShaderModelForPackUnpack4x8InHLSL;
+    gen_options.compiler = for_fxc ? tint::hlsl::writer::Options::Compiler::kFXC
+                                   : tint::hlsl::writer::Options::Compiler::kDXC;
+
+    tint::Result<tint::hlsl::writer::Output> result;
+    if (options.use_ir) {
+        // Convert the AST program to an IR module.
+        auto ir = tint::wgsl::reader::ProgramToLoweredIR(res.Get());
+        if (ir != tint::Success) {
+            std::cerr << "Failed to generate IR: " << ir << "\n";
+            return false;
+        }
+        result = tint::hlsl::writer::Generate(ir.Get(), gen_options);
+    } else {
+        result = tint::hlsl::writer::Generate(res.Get(), gen_options);
+    }
+
+    if (result != tint::Success) {
+        tint::cmd::PrintWGSL(std::cerr, res.Get());
+        std::cerr << "Failed to generate: " << result.Failure() << "\n";
+        return false;
+    }
+
+    if (!tint::cmd::WriteFile(options.output_file, "w", result->hlsl)) {
+        return false;
+    }
+
+    const auto hash = tint::CRC32(result->hlsl.c_str());
+    if (options.print_hash) {
+        PrintHash(hash);
+    }
+
+    const bool validate =
+        (options.validate || !options.fxc_path.empty() || !options.dxc_path.empty()) &&
+        (options.skip_hash.count(hash) == 0);
+
+    if (validate && !for_fxc) {
+        // DXC validation
+        tint::hlsl::validate::Result dxc_res;
+        const std::string dxc_path =
+            options.dxc_path.empty() ? tint::hlsl::validate::kDxcDLLName : options.dxc_path;
+        auto dxc = tint::Command::LookPath(dxc_path);
+        if (dxc.Found()) {
+            uint32_t hlsl_shader_model = options.hlsl_shader_model;
+            auto enable_list = res->AST().Enables();
+            bool dxc_require_16bit_types = false;
+            for (auto* enable : enable_list) {
+                if (enable->HasExtension(tint::wgsl::Extension::kF16)) {
+                    dxc_require_16bit_types = true;
+                    break;
+                }
+            }
+            if (options.verbose) {
+                std::cout << "Validating with DXC: " << dxc.Path() << "\n";
+            }
+            dxc_res = tint::hlsl::validate::ValidateUsingDXC(
+                dxc.Path(), result->hlsl, result->entry_points, dxc_require_16bit_types,
+                hlsl_shader_model);
+        } else {
+            dxc_res.failed = true;
+            dxc_res.output = "DXC executable '" + dxc_path + "' not found. Cannot validate.";
+        }
+
+        if (dxc_res.failed) {
+            std::cerr << "DXC validation failure:\n" << dxc_res.output << "\n";
+            return false;
+        }
+        if (options.verbose) {
+            std::cout << "Passed DXC validation. Compiler output:\n" << dxc_res.output << "\n";
+        }
+    }
+
+    if (validate && for_fxc) {
+        // FXC validation
+#ifndef _WIN32
+        std::cerr << "FXC can only be used on Windows.\n";
+        return false;
+#else
+        tint::hlsl::validate::Result fxc_res;
+        auto fxc = tint::Command::LookPath(
+            options.fxc_path.empty() ? tint::hlsl::validate::kFxcDLLName : options.fxc_path);
+        if (fxc.Found()) {
+            if (options.verbose) {
+                std::cout << "Validating with FXC: " << fxc.Path() << "\n";
+            }
+            fxc_res = tint::hlsl::validate::ValidateUsingFXC(fxc.Path(), result->hlsl,
+                                                             result->entry_points);
+        } else {
+            fxc_res.failed = true;
+            fxc_res.output = "FXC DLL '" + options.fxc_path + "' not found. Cannot validate.";
+        }
+
+        if (fxc_res.failed) {
+            std::cerr << "FXC validation failure:\n" << fxc_res.output << "\n";
+            return false;
+        }
+        if (options.verbose) {
+            std::cout << "Passed FXC validation. Compiler output:\n" << fxc_res.output << "\n";
+        }
+#endif  // _WIN32
+    }
+
+    return true;
+#else
+    std::cerr << "HLSL writer not enabled in tint build\n";
+    return false;
+#endif  // TINT_BUILD_HLSL_WRITER
+}
+
+/// Generate HLSL FXC code for a program.
+/// @param options the options that Tint was invoked with
+/// @param inspector the inspector
+/// @param src_program the program to generate
+/// @returns true on success
+bool GenerateHlslFXC([[maybe_unused]] Options& options,
+                     [[maybe_unused]] tint::inspector::Inspector& inspector,
+                     [[maybe_unused]] tint::Program& src_program) {
+#if TINT_BUILD_HLSL_WRITER
     auto res = ProcessASTTransformsOld(options, inspector, src_program);
     if (res != tint::Success || !res->IsValid()) {
         tint::cmd::PrintWGSL(std::cerr, res.Get());
@@ -1339,7 +1473,8 @@ int main(int argc, const char** argv) {
         return GenerateWgsl(options, inspector, info.program) ? 0 : 1;
     }
 
-    if (options.format == Format::kNone || options.format == Format::kGlsl) {
+    if (options.format == Format::kNone || options.format == Format::kGlsl ||
+        options.format == Format::kHlsl) {
         auto generate = [&]() {
             bool success = false;
             switch (options.format) {
@@ -1429,10 +1564,10 @@ int main(int argc, const char** argv) {
             case Format::kMsl:
                 success = GenerateMsl(options, inspector, info.program);
                 break;
-            case Format::kHlsl:
             case Format::kHlslFxc:
-                success = GenerateHlsl(options, inspector, info.program);
+                success = GenerateHlslFXC(options, inspector, info.program);
                 break;
+            case Format::kHlsl:
             case Format::kGlsl:
             case Format::kWgsl:
             case Format::kNone:
