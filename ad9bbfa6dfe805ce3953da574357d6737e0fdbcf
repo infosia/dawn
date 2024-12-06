@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45e50c33_0675ea52",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-06T22:31:48Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we be forwarding the options from the WGSL fuzzer here?",
+      "revId": "ad9bbfa6dfe805ce3953da574357d6737e0fdbcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
