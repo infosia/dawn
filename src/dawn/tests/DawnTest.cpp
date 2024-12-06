@@ -771,8 +771,8 @@ DawnTestBase::DawnTestBase(const AdapterTestParam& param) : mParam(param) {
         return {0};
     };
 
-    procs.adapterRequestDevice2 = [](WGPUAdapter cAdapter, const WGPUDeviceDescriptor* descriptor,
-                                     WGPURequestDeviceCallbackInfo2 callbackInfo) -> WGPUFuture {
+    procs.adapterRequestDevice = [](WGPUAdapter cAdapter, const WGPUDeviceDescriptor* descriptor,
+                                    WGPURequestDeviceCallbackInfo callbackInfo) -> WGPUFuture {
         DAWN_ASSERT(gCurrentTest);
         DAWN_ASSERT(callbackInfo.mode == WGPUCallbackMode_AllowSpontaneous);
 
