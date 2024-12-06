@@ -51,6 +51,24 @@
       "parentUuid": "2aabfa8f_02ec59d8",
       "revId": "751b69a4e53a48adc4eb0ad17607b409988e6275",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d29041c_3dce323c",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-06T01:11:28Z",
+      "side": 1,
+      "message": "Ah, yeah. I believe the way you have it now is correct (My Macro-ese is a bit rusty.) Thanks! This should make it really easily reusable!",
+      "parentUuid": "c6742fa5_7c399f02",
+      "revId": "751b69a4e53a48adc4eb0ad17607b409988e6275",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
