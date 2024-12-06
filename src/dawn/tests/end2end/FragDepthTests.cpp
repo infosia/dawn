@@ -99,14 +99,14 @@ TEST_P(FragDepthTests, ChangingPipelineLayoutDoesntInvalidateViewport) {
             return vec4f(0.0, 0.0, 0.5, 1.0);
         }
 
-        @group(0) @binding(0) var<uniform> uniformDepth : f32;
-        @fragment fn fsUniform() -> @builtin(frag_depth) f32 {
-            return uniformDepth;
+        @group(0) @binding(0) var<uniform> uniformDepth1 : f32;
+        @fragment fn fsUniform1() -> @builtin(frag_depth) f32 {
+            return uniformDepth1;
         }
 
-        @group(0) @binding(0) var<storage, read> storageDepth : f32;
-        @fragment fn fsStorage() -> @builtin(frag_depth) f32 {
-            return storageDepth;
+        @group(0) @binding(0) var<uniform> uniformDepth2 : f32;
+        @fragment fn fsUniform2() -> @builtin(frag_depth) f32 {
+            return uniformDepth2;
         }
     )");
 
@@ -115,7 +115,7 @@ TEST_P(FragDepthTests, ChangingPipelineLayoutDoesntInvalidateViewport) {
     upDesc.vertex.module = module;
     upDesc.primitive.topology = wgpu::PrimitiveTopology::PointList;
     upDesc.cFragment.module = module;
-    upDesc.cFragment.entryPoint = "fsUniform";
+    upDesc.cFragment.entryPoint = "fsUniform1";
     upDesc.cFragment.targetCount = 0;
 
     wgpu::DepthStencilState* upDescDS = upDesc.EnableDepthStencil(kDepthFormat);
@@ -123,17 +123,17 @@ TEST_P(FragDepthTests, ChangingPipelineLayoutDoesntInvalidateViewport) {
     upDescDS->depthCompare = wgpu::CompareFunction::Always;
     wgpu::RenderPipeline uniformPipeline = device.CreateRenderPipeline(&upDesc);
 
-    wgpu::Buffer uniformBuffer =
+    wgpu::Buffer uniformBuffer1 =
         utils::CreateBufferFromData<float>(device, wgpu::BufferUsage::Uniform, {0.0});
     wgpu::BindGroup uniformBG =
-        utils::MakeBindGroup(device, uniformPipeline.GetBindGroupLayout(0), {{0, uniformBuffer}});
+        utils::MakeBindGroup(device, uniformPipeline.GetBindGroupLayout(0), {{0, uniformBuffer1}});
 
     // Create the pipeline and bindgroup for the pipeline layout with a uniform buffer.
     utils::ComboRenderPipelineDescriptor spDesc;
     spDesc.vertex.module = module;
     spDesc.primitive.topology = wgpu::PrimitiveTopology::PointList;
     spDesc.cFragment.module = module;
-    spDesc.cFragment.entryPoint = "fsStorage";
+    spDesc.cFragment.entryPoint = "fsUniform2";
     spDesc.cFragment.targetCount = 0;
 
     wgpu::DepthStencilState* spDescDS = spDesc.EnableDepthStencil(kDepthFormat);
@@ -141,10 +141,10 @@ TEST_P(FragDepthTests, ChangingPipelineLayoutDoesntInvalidateViewport) {
     spDescDS->depthCompare = wgpu::CompareFunction::Always;
     wgpu::RenderPipeline storagePipeline = device.CreateRenderPipeline(&spDesc);
 
-    wgpu::Buffer storageBuffer =
-        utils::CreateBufferFromData<float>(device, wgpu::BufferUsage::Storage, {1.0});
+    wgpu::Buffer uniformBuffer2 =
+        utils::CreateBufferFromData<float>(device, wgpu::BufferUsage::Uniform, {1.0});
     wgpu::BindGroup storageBG =
-        utils::MakeBindGroup(device, storagePipeline.GetBindGroupLayout(0), {{0, storageBuffer}});
+        utils::MakeBindGroup(device, storagePipeline.GetBindGroupLayout(0), {{0, uniformBuffer2}});
 
     // Create a depth-only render pass.
     wgpu::TextureDescriptor depthDesc;
