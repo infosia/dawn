@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "374474a1_deaa5c21",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-06T21:33:12Z",
+      "side": 1,
+      "message": "You\u0027ll probably wonder why bother with a `Context` struct wrapper around `Options`, given that there\u0027s only the one member. Two reasons:\n1. We do this for the wgsl fuzzer, where we actually did add another member. We may add more members in the future, and modifying this one struct is way easier than modifying the multiple places that deal with this arg.\n2. Adding an argument named \"Options\" is super confusing when the fuzzer function also has an argument named \"Options\" for backend options.",
+      "revId": "8848a26e59b13f905855440435896c7abdec19fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac2382b0_680fcad8",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-06T21:33:12Z",
+      "side": 1,
+      "message": "This overload and the one below are nearly copy-pasted versions of the two Create functions above, except for the `fn` arg which matches one that takes a `const Context\u0026`. Unlike the AST fuzzer, we can\u0027t just add this argument to all our fuzzer functions, since most of them are backend transforms.\n\nAdding these overloads is the simplest approach, but it means code duplication. I authored [another CL on top of this](https://dawn-review.googlesource.com/c/dawn/+/218615) one that factors this back out to one function using some template metaprogramming. Let me know if you think that second one is better, and I can merge it into this one (or keep them as two separate changes, if you prefer).",
+      "revId": "8848a26e59b13f905855440435896c7abdec19fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
