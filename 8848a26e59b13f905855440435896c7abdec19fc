@@ -33,6 +33,24 @@
       "message": "This overload and the one below are nearly copy-pasted versions of the two Create functions above, except for the `fn` arg which matches one that takes a `const Context\u0026`. Unlike the AST fuzzer, we can\u0027t just add this argument to all our fuzzer functions, since most of them are backend transforms.\n\nAdding these overloads is the simplest approach, but it means code duplication. I authored [another CL on top of this](https://dawn-review.googlesource.com/c/dawn/+/218615) one that factors this back out to one function using some template metaprogramming. Let me know if you think that second one is better, and I can merge it into this one (or keep them as two separate changes, if you prefer).",
       "revId": "8848a26e59b13f905855440435896c7abdec19fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84a72906_1dd26f38",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-06T22:26:38Z",
+      "side": 1,
+      "message": "No longer applicable. We now always pass Context through.",
+      "parentUuid": "ac2382b0_680fcad8",
+      "revId": "8848a26e59b13f905855440435896c7abdec19fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
