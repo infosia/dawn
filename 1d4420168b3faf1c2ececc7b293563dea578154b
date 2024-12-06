@@ -33,6 +33,24 @@
       "message": "Nit: Could just `return` in all of these cases instead of setting a flag and breaking?",
       "revId": "1d4420168b3faf1c2ececc7b293563dea578154b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40d25e53_c2dfcb7c",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-06T05:19:47Z",
+      "side": 1,
+      "message": "Nice, done.",
+      "parentUuid": "1fa38613_1e29e4f1",
+      "revId": "1d4420168b3faf1c2ececc7b293563dea578154b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
