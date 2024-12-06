@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec3 inner;
-} v;
+} f_v;
 vec3 radians_f96258() {
   vec3 res = vec3(0.01745329238474369049f);
   return res;
 }
 void main() {
-  v.inner = radians_f96258();
+  f_v.inner = radians_f96258();
 }
 //
 // compute_main

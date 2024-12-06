@@ -9,14 +9,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float16_t inner;
-} v;
+} f_v;
 float16_t determinant_32bfde() {
   f16mat4 arg_0 = f16mat4(f16vec4(1.0hf), f16vec4(1.0hf), f16vec4(1.0hf), f16vec4(1.0hf));
   float16_t res = determinant(arg_0);
   return res;
 }
 void main() {
-  v.inner = determinant_32bfde();
+  f_v.inner = determinant_32bfde();
 }
 //
 // compute_main

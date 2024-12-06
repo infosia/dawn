@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec2 inner;
-} v;
+} f_v;
 vec2 select_bf3d29() {
   vec2 arg_0 = vec2(1.0f);
   vec2 arg_1 = vec2(1.0f);
@@ -19,7 +19,7 @@ vec2 select_bf3d29() {
   return res;
 }
 void main() {
-  v.inner = select_bf3d29();
+  f_v.inner = select_bf3d29();
 }
 //
 // compute_main

@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 vec4 unpack4x8snorm_523fb3() {
   vec4 res = vec4(0.00787401571869850159f, 0.0f, 0.0f, 0.0f);
   return res;
 }
 void main() {
-  v.inner = unpack4x8snorm_523fb3();
+  f_v.inner = unpack4x8snorm_523fb3();
 }
 //
 // compute_main

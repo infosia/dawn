@@ -9,14 +9,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float16_t inner;
-} v;
+} f_v;
 float16_t saturate_e8df56() {
   float16_t arg_0 = 2.0hf;
   float16_t res = clamp(arg_0, 0.0hf, 1.0hf);
   return res;
 }
 void main() {
-  v.inner = saturate_e8df56();
+  f_v.inner = saturate_e8df56();
 }
 //
 // compute_main

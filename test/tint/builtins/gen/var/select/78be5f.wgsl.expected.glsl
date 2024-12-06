@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec3 inner;
-} v;
+} f_v;
 vec3 select_78be5f() {
   vec3 arg_0 = vec3(1.0f);
   vec3 arg_1 = vec3(1.0f);
@@ -19,7 +19,7 @@ vec3 select_78be5f() {
   return res;
 }
 void main() {
-  v.inner = select_78be5f();
+  f_v.inner = select_78be5f();
 }
 //
 // compute_main

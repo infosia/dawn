@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 float ceil_678655() {
   float arg_0 = 1.5f;
   float res = ceil(arg_0);
   return res;
 }
 void main() {
-  v.inner = ceil_678655();
+  f_v.inner = ceil_678655();
 }
 //
 // compute_main

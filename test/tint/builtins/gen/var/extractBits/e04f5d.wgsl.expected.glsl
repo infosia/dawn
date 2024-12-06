@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   ivec3 inner;
-} v;
+} f_v;
 ivec3 extractBits_e04f5d() {
   ivec3 arg_0 = ivec3(1);
   uint arg_1 = 1u;
@@ -21,7 +21,7 @@ ivec3 extractBits_e04f5d() {
   return res;
 }
 void main() {
-  v.inner = extractBits_e04f5d();
+  f_v.inner = extractBits_e04f5d();
 }
 //
 // compute_main

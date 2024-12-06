@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
-} v;
+} f_v;
 layout(binding = 0, rgba8) uniform highp writeonly image2DArray arg_0;
 uint textureNumLayers_1f858a() {
   uint res = uint(imageSize(arg_0).z);
   return res;
 }
 void main() {
-  v.inner = textureNumLayers_1f858a();
+  f_v.inner = textureNumLayers_1f858a();
 }
 //
 // compute_main

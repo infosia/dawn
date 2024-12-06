@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 uniform highp sampler2D arg_1_arg_2;
 vec4 textureGather_d6507c() {
   vec2 arg_3 = vec2(1.0f);
@@ -17,7 +17,7 @@ vec4 textureGather_d6507c() {
   return res;
 }
 void main() {
-  v.inner = textureGather_d6507c();
+  f_v.inner = textureGather_d6507c();
 }
 //
 // compute_main

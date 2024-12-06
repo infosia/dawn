@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 float sign_dd790e() {
   float arg_0 = 1.0f;
   float res = sign(arg_0);
   return res;
 }
 void main() {
-  v.inner = sign_dd790e();
+  f_v.inner = sign_dd790e();
 }
 //
 // compute_main

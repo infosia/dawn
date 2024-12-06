@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uvec3 inner;
-} v;
+} f_v;
 uvec3 clamp_548fc7() {
   uvec3 res = uvec3(1u);
   return res;
 }
 void main() {
-  v.inner = clamp_548fc7();
+  f_v.inner = clamp_548fc7();
 }
 //
 // compute_main

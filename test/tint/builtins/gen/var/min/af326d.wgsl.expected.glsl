@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 float min_af326d() {
   float arg_0 = 1.0f;
   float arg_1 = 1.0f;
@@ -16,7 +16,7 @@ float min_af326d() {
   return res;
 }
 void main() {
-  v.inner = min_af326d();
+  f_v.inner = min_af326d();
 }
 //
 // compute_main

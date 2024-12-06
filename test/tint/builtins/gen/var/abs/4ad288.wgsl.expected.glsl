@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int abs_4ad288() {
   int arg_0 = 1;
   int res = abs(arg_0);
   return res;
 }
 void main() {
-  v.inner = abs_4ad288();
+  f_v.inner = abs_4ad288();
 }
 //
 // compute_main

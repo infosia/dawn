@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uvec2 inner;
-} v;
+} f_v;
 uvec2 clamp_7706d7() {
   uvec2 arg_0 = uvec2(1u);
   uvec2 arg_1 = uvec2(1u);
@@ -17,7 +17,7 @@ uvec2 clamp_7706d7() {
   return res;
 }
 void main() {
-  v.inner = clamp_7706d7();
+  f_v.inner = clamp_7706d7();
 }
 //
 // compute_main

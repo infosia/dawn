@@ -9,7 +9,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float16_t inner;
-} v;
+} f_v;
 float16_t dot_d0d179() {
   f16vec4 arg_0 = f16vec4(1.0hf);
   f16vec4 arg_1 = f16vec4(1.0hf);
@@ -17,7 +17,7 @@ float16_t dot_d0d179() {
   return res;
 }
 void main() {
-  v.inner = dot_d0d179();
+  f_v.inner = dot_d0d179();
 }
 //
 // compute_main

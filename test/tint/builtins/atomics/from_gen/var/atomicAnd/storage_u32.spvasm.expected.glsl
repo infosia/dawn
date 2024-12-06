@@ -13,13 +13,13 @@ struct SB_RW_atomic {
 layout(binding = 0, std430)
 buffer sb_rw_block_1_ssbo {
   SB_RW_atomic inner;
-} v;
+} f_v;
 void atomicAnd_85a8d9() {
   uint arg_1 = 0u;
   uint res = 0u;
   arg_1 = 1u;
   uint x_18 = arg_1;
-  uint x_13 = atomicAnd(v.inner.arg_0, x_18);
+  uint x_13 = atomicAnd(f_v.inner.arg_0, x_18);
   res = x_13;
 }
 void fragment_main_1() {

@@ -13,10 +13,10 @@ struct SB_RW {
 layout(binding = 0, std430)
 buffer sb_rw_block_1_ssbo {
   SB_RW inner;
-} v;
+} f_v;
 void atomicStore_cdc29e() {
   uint arg_1 = 1u;
-  atomicExchange(v.inner.arg_0, arg_1);
+  atomicExchange(f_v.inner.arg_0, arg_1);
 }
 void main() {
   atomicStore_cdc29e();

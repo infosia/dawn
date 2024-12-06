@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 float distance_9646ea() {
   vec4 arg_0 = vec4(1.0f);
   vec4 arg_1 = vec4(1.0f);
@@ -16,7 +16,7 @@ float distance_9646ea() {
   return res;
 }
 void main() {
-  v.inner = distance_9646ea();
+  f_v.inner = distance_9646ea();
 }
 //
 // compute_main

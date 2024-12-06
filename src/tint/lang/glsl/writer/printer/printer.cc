@@ -132,6 +132,14 @@ class Printer : public tint::TextGenerator {
             }
         }
 
+        // Find the entry point that we are emitting code for. There should be exactly one.
+        for (auto& func : ir_.functions) {
+            if (func->IsEntryPoint()) {
+                TINT_ASSERT(stage_ == core::ir::Function::PipelineStage::kUndefined);
+                stage_ = func->Stage();
+            }
+        }
+
         FindHostShareableStructs();
         EmitRootBlock();
 
@@ -166,6 +174,8 @@ class Printer : public tint::TextGenerator {
     /// The buffer holding preamble text
     TextBuffer preamble_buffer_;
 
+    /// The pipeline stage we are emitting code for.
+    core::ir::Function::PipelineStage stage_ = core::ir::Function::PipelineStage::kUndefined;
     /// The current function being emitted
     const core::ir::Function* current_function_ = nullptr;
     /// The current block being emitted
@@ -972,8 +982,7 @@ class Printer : public tint::TextGenerator {
         EmitLayoutBinding(Line(), bp.value(), std::nullopt, {LayoutFormat::kStd430});
 
         auto* ptr = var->Result(0)->Type()->As<core::type::Pointer>();
-        EmitVarStruct("buffer", NameOf(var->Result(0)), "ssbo",
-                      ptr->UnwrapPtr()->As<core::type::Struct>());
+        EmitVarStruct(var, "buffer", "ssbo", ptr->UnwrapPtr()->As<core::type::Struct>());
     }
 
     void EmitUniformVar(core::ir::Var* var) {
@@ -983,8 +992,7 @@ class Printer : public tint::TextGenerator {
         EmitLayoutBinding(Line(), bp.value(), std::nullopt, {LayoutFormat::kStd140});
 
         auto* ptr = var->Result(0)->Type()->As<core::type::Pointer>();
-        EmitVarStruct("uniform", NameOf(var->Result(0)), "ubo",
-                      ptr->UnwrapPtr()->As<core::type::Struct>());
+        EmitVarStruct(var, "uniform", "ubo", ptr->UnwrapPtr()->As<core::type::Struct>());
     }
 
     void EmitWorkgroupVar(core::ir::Var* var) {
@@ -1040,8 +1048,8 @@ class Printer : public tint::TextGenerator {
         EmitVar(out, var);
     }
 
-    void EmitVarStruct(std::string_view kind,
-                       std::string_view name,
+    void EmitVarStruct(core::ir::Var* var,
+                       std::string_view kind,
                        std::string_view type_suffix,
                        const core::type::Struct* str) {
         TINT_ASSERT(str);
@@ -1055,6 +1063,15 @@ class Printer : public tint::TextGenerator {
             EmitStructMembers(str_buf, str);
             current_buffer_->Append(str_buf);
         }
+
+        // Prefix the buffer name to avoid collisions between different stages in the same pipeline.
+        auto name = NameOf(var->Result(0));
+        if (stage_ == core::ir::Function::PipelineStage::kFragment) {
+            name = "f_" + name;
+        } else if (stage_ == core::ir::Function::PipelineStage::kVertex) {
+            name = "v_" + name;
+        }
+        names_.Replace(var->Result(0), name);
 
         Line() << "} " << name << ";";
     }

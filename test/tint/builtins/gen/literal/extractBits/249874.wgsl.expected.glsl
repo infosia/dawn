@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int extractBits_249874() {
   int res = 0;
   return res;
 }
 void main() {
-  v.inner = extractBits_249874();
+  f_v.inner = extractBits_249874();
 }
 //
 // compute_main

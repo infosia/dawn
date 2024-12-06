@@ -30,7 +30,7 @@ struct FSOut {
 layout(binding = 2, std430)
 buffer FSUniforms_1_ssbo {
   FSUniformData fsUniformData[];
-} _storage1;
+} f__storage1;
 uint shadingSsboIndex = 0u;
 uniform highp sampler2D permutationsSampler_1_Texture_permutationsSampler_1_Sampler;
 uniform highp sampler2D noiseSampler_1_Texture_noiseSampler_1_Sampler;
@@ -40,15 +40,15 @@ layout(location = 0) out vec4 tint_symbol_loc0_Output;
 void _skslMain(FSIn _stageIn, inout FSOut _stageOut) {
   shadingSsboIndex = _stageIn.ssboIndicesVar.y;
   uint v = shadingSsboIndex;
-  uint v_1 = min(v, (uint(_storage1.fsUniformData.length()) - 1u));
-  int _56_d = _storage1.fsUniformData[v_1].noiseType_1;
+  uint v_1 = min(v, (uint(f__storage1.fsUniformData.length()) - 1u));
+  int _56_d = f__storage1.fsUniformData[v_1].noiseType_1;
   uint v_2 = shadingSsboIndex;
-  uint v_3 = min(v_2, (uint(_storage1.fsUniformData.length()) - 1u));
-  vec2 _57_k = vec2(((_stageIn.localCoordsVar + 0.5f) * _storage1.fsUniformData[v_3].baseFrequency_1));
+  uint v_3 = min(v_2, (uint(f__storage1.fsUniformData.length()) - 1u));
+  vec2 _57_k = vec2(((_stageIn.localCoordsVar + 0.5f) * f__storage1.fsUniformData[v_3].baseFrequency_1));
   vec4 _58_l = vec4(0.0f);
   uint v_4 = shadingSsboIndex;
-  uint v_5 = min(v_4, (uint(_storage1.fsUniformData.length()) - 1u));
-  vec2 _59_m = vec2(_storage1.fsUniformData[v_5].stitchData_1);
+  uint v_5 = min(v_4, (uint(f__storage1.fsUniformData.length()) - 1u));
+  vec2 _59_m = vec2(f__storage1.fsUniformData[v_5].stitchData_1);
   float _60_n = 1.0f;
   int _61_o = 0;
   {
@@ -59,15 +59,15 @@ void _skslMain(FSIn _stageIn, inout FSOut _stageOut) {
       }
       int v_6 = _61_o;
       uint v_7 = shadingSsboIndex;
-      uint v_8 = min(v_7, (uint(_storage1.fsUniformData.length()) - 1u));
-      if ((v_6 < _storage1.fsUniformData[v_8].numOctaves_1)) {
+      uint v_8 = min(v_7, (uint(f__storage1.fsUniformData.length()) - 1u));
+      if ((v_6 < f__storage1.fsUniformData[v_8].numOctaves_1)) {
         vec4 _62_f = vec4(0.0f);
         vec2 _skTemp2 = floor(_57_k);
         _62_f = vec4(_skTemp2, _62_f.zw);
         _62_f = vec4(_62_f.xy, (_62_f.xy + vec2(1.0f)));
         uint v_9 = shadingSsboIndex;
-        uint v_10 = min(v_9, (uint(_storage1.fsUniformData.length()) - 1u));
-        if (bool(_storage1.fsUniformData[v_10].stitching_1)) {
+        uint v_10 = min(v_9, (uint(f__storage1.fsUniformData.length()) - 1u));
+        if (bool(f__storage1.fsUniformData[v_10].stitching_1)) {
           vec4 _skTemp3 = step(_59_m.xyxy, _62_f);
           _62_f = (_62_f - (_skTemp3 * _59_m.xyxy));
         }
@@ -164,8 +164,8 @@ void _skslMain(FSIn _stageIn, inout FSOut _stageOut) {
   float _skTemp17 = clamp(_skTemp16, 0.0f, 1.0f);
   vec4 _84_a = vec4(0.0f, 0.0f, 0.0f, _skTemp17);
   uint v_17 = shadingSsboIndex;
-  uint v_18 = min(v_17, (uint(_storage1.fsUniformData.length()) - 1u));
-  int _85_d = _storage1.fsUniformData[v_18].inHSL_4;
+  uint v_18 = min(v_17, (uint(f__storage1.fsUniformData.length()) - 1u));
+  int _85_d = f__storage1.fsUniformData[v_18].inHSL_4;
   if (bool(_85_d)) {
     vec4 _skTemp18 = vec4(0.0f);
     if ((_84_a.y < _84_a.z)) {
@@ -196,12 +196,12 @@ void _skslMain(FSIn _stageIn, inout FSOut _stageOut) {
     _84_a = vec4((_84_a.xyz / _skTemp23), _84_a.w);
   }
   uint v_19 = shadingSsboIndex;
-  uint v_20 = min(v_19, (uint(_storage1.fsUniformData.length()) - 1u));
-  mat4 v_21 = _storage1.fsUniformData[v_20].matrix_4;
+  uint v_20 = min(v_19, (uint(f__storage1.fsUniformData.length()) - 1u));
+  mat4 v_21 = f__storage1.fsUniformData[v_20].matrix_4;
   vec4 v_22 = (v_21 * vec4(_84_a));
   uint v_23 = shadingSsboIndex;
-  uint v_24 = min(v_23, (uint(_storage1.fsUniformData.length()) - 1u));
-  vec4 _94_f = vec4((v_22 + _storage1.fsUniformData[v_24].translate_4));
+  uint v_24 = min(v_23, (uint(f__storage1.fsUniformData.length()) - 1u));
+  vec4 _94_f = vec4((v_22 + f__storage1.fsUniformData[v_24].translate_4));
   if (bool(_85_d)) {
     float _skTemp24 = abs(((2.0f * _94_f.z) - 1.0f));
     float _95_b = ((1.0f - _skTemp24) * _94_f.y);
@@ -214,8 +214,8 @@ void _skslMain(FSIn _stageIn, inout FSOut _stageOut) {
     _94_f = _skTemp28;
   } else {
     uint v_25 = shadingSsboIndex;
-    uint v_26 = min(v_25, (uint(_storage1.fsUniformData.length()) - 1u));
-    if (bool(_storage1.fsUniformData[v_26].clampRGB_4)) {
+    uint v_26 = min(v_25, (uint(f__storage1.fsUniformData.length()) - 1u));
+    if (bool(f__storage1.fsUniformData[v_26].clampRGB_4)) {
       vec4 _skTemp29 = clamp(_94_f, vec4(0.0f), vec4(1.0f));
       _94_f = _skTemp29;
     } else {

@@ -5,7 +5,7 @@ precision highp int;
 layout(binding = 2, std430)
 buffer a_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 bool continue_execution = true;
 uniform highp sampler2D t_s;
 layout(location = 0) in float foo_loc0_Input;
@@ -38,7 +38,7 @@ int foo_inner(float tint_symbol, vec2 coord) {
         tint_loop_idx.y = (tint_loop_idx.y + tint_carry);
         int v_1 = 0;
         if (continue_execution) {
-          v_1 = atomicAdd(v.inner, 1);
+          v_1 = atomicAdd(f_v.inner, 1);
         }
         i = v_1;
       }

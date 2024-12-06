@@ -13,10 +13,10 @@ struct SB_RW_atomic {
 layout(binding = 0, std430)
 buffer sb_rw_block_1_ssbo {
   SB_RW_atomic inner;
-} v;
+} f_v;
 void atomicLoad_fe6cc3() {
   uint res = 0u;
-  uint x_9 = atomicOr(v.inner.arg_0, 0u);
+  uint x_9 = atomicOr(f_v.inner.arg_0, 0u);
   res = x_9;
 }
 void fragment_main_1() {

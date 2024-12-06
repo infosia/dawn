@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 float exp2_dea523() {
   float res = 2.0f;
   return res;
 }
 void main() {
-  v.inner = exp2_dea523();
+  f_v.inner = exp2_dea523();
 }
 //
 // compute_main

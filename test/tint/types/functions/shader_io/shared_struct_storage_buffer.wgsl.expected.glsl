@@ -70,13 +70,13 @@ struct S {
 layout(binding = 0, std430)
 buffer tint_symbol_block_1_ssbo {
   S inner;
-} v_1;
+} f_v_1;
 layout(location = 0) in float frag_main_loc0_Input;
 layout(location = 1) flat in uint frag_main_loc1_Input;
 void tint_store_and_preserve_padding(S value_param) {
-  v_1.inner.f = value_param.f;
-  v_1.inner.u = value_param.u;
-  v_1.inner.v = value_param.v;
+  f_v_1.inner.f = value_param.f;
+  f_v_1.inner.u = value_param.u;
+  f_v_1.inner.v = value_param.v;
 }
 void frag_main_inner(S tint_symbol_1) {
   float f = tint_symbol_1.f;

@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec2 inner;
-} v;
+} f_v;
 vec2 refract_cd905f() {
   vec2 arg_0 = vec2(1.0f);
   vec2 arg_1 = vec2(1.0f);
@@ -17,7 +17,7 @@ vec2 refract_cd905f() {
   return res;
 }
 void main() {
-  v.inner = refract_cd905f();
+  f_v.inner = refract_cd905f();
 }
 //
 // compute_main

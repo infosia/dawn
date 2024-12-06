@@ -205,9 +205,9 @@ struct atomic_compare_exchange_result_i32 {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  int v_2 = atomicCompSwap(v_1.inner.a, 123, 345);
+  int v_2 = atomicCompSwap(f_v_1.inner.a, 123, 345);
   atomic_compare_exchange_result_i32 x = atomic_compare_exchange_result_i32(v_2, (v_2 == 123));
 }
 )");
@@ -238,9 +238,9 @@ struct atomic_compare_exchange_result_i32 {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   int inner;
-} v_1;
+} f_v_1;
 void main() {
-  int v_2 = atomicCompSwap(v_1.inner, 123, 345);
+  int v_2 = atomicCompSwap(f_v_1.inner, 123, 345);
   atomic_compare_exchange_result_i32 x = atomic_compare_exchange_result_i32(v_2, (v_2 == 123));
 }
 )");
@@ -891,10 +891,10 @@ struct TintTextureUniformData {
 layout(binding = 0, std140)
 uniform tint_symbol_1_ubo {
   TintTextureUniformData inner;
-} v_1;
+} f_v_1;
 uniform highp sampler2D v;
 void main() {
-  uvec2 x = uvec2(textureSize(v, int(min(3u, (v_1.inner.tint_builtin_value_0 - 1u)))));
+  uvec2 x = uvec2(textureSize(v, int(min(3u, (f_v_1.inner.tint_builtin_value_0 - 1u)))));
 }
 )");
 }
@@ -1455,9 +1455,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer SB_1_ssbo {
   uint b[];
-} v;
+} f_v;
 void main() {
-  uint x = uint(v.b.length());
+  uint x = uint(f_v.b.length());
 }
 )");
 }

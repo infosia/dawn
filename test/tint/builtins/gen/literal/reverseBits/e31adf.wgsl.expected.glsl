@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
-} v;
+} f_v;
 uint reverseBits_e31adf() {
   uint res = 2147483648u;
   return res;
 }
 void main() {
-  v.inner = reverseBits_e31adf();
+  f_v.inner = reverseBits_e31adf();
 }
 //
 // compute_main

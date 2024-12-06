@@ -9,14 +9,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   f16vec3 inner;
-} v;
+} f_v;
 f16vec3 sqrt_895a0c() {
   f16vec3 arg_0 = f16vec3(1.0hf);
   f16vec3 res = sqrt(arg_0);
   return res;
 }
 void main() {
-  v.inner = sqrt_895a0c();
+  f_v.inner = sqrt_895a0c();
 }
 //
 // compute_main

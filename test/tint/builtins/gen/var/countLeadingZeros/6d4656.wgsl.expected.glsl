@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int countLeadingZeros_6d4656() {
   int arg_0 = 1;
   uint v_1 = uint(arg_0);
@@ -16,7 +16,7 @@ int countLeadingZeros_6d4656() {
   return res;
 }
 void main() {
-  v.inner = countLeadingZeros_6d4656();
+  f_v.inner = countLeadingZeros_6d4656();
 }
 //
 // compute_main

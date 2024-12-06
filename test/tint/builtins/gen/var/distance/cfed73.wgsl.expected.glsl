@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 float distance_cfed73() {
   float arg_0 = 1.0f;
   float arg_1 = 1.0f;
@@ -16,7 +16,7 @@ float distance_cfed73() {
   return res;
 }
 void main() {
-  v.inner = distance_cfed73();
+  f_v.inner = distance_cfed73();
 }
 //
 // compute_main

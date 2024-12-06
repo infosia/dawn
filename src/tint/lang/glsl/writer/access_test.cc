@@ -277,13 +277,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   vec4 inner;
-} v_1;
+} f_v_1;
 void main() {
-  vec4 a = v_1.inner;
-  float b = v_1.inner.x;
-  float c = v_1.inner.y;
-  float d = v_1.inner.z;
-  float e = v_1.inner.w;
+  vec4 a = f_v_1.inner;
+  float b = f_v_1.inner.x;
+  float c = f_v_1.inner.y;
+  float d = f_v_1.inner.z;
+  float e = f_v_1.inner.w;
 }
 )");
 }
@@ -311,13 +311,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   f16vec4 inner;
-} v_1;
+} f_v_1;
 void main() {
-  f16vec4 a = v_1.inner;
-  float16_t b = v_1.inner.x;
-  float16_t c = v_1.inner.y;
-  float16_t d = v_1.inner.z;
-  float16_t e = v_1.inner.w;
+  f16vec4 a = f_v_1.inner;
+  float16_t b = f_v_1.inner.x;
+  float16_t c = f_v_1.inner.y;
+  float16_t d = f_v_1.inner.z;
+  float16_t e = f_v_1.inner.w;
 }
 )");
 }
@@ -343,11 +343,11 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   mat4 inner;
-} v_1;
+} f_v_1;
 void main() {
-  mat4 a = v_1.inner;
-  vec4 b = v_1.inner[3u];
-  float c = v_1.inner[1u].z;
+  mat4 a = f_v_1.inner;
+  vec4 b = f_v_1.inner[3u];
+  float c = f_v_1.inner[1u].z;
 }
 )");
 }
@@ -371,10 +371,10 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   vec3 inner[5];
-} v_1;
+} f_v_1;
 void main() {
-  vec3 a[5] = v_1.inner;
-  vec3 b = v_1.inner[3u];
+  vec3 a[5] = f_v_1.inner;
+  vec3 b = f_v_1.inner[3u];
 }
 )");
 }
@@ -409,10 +409,10 @@ struct SB {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  SB a = v_1.inner;
-  float b = v_1.inner.b;
+  SB a = f_v_1.inner;
+  float b = f_v_1.inner.b;
 }
 )");
 }
@@ -475,10 +475,10 @@ struct SB {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  SB a = v_1.inner;
-  float b = v_1.inner.b.y.t[3u].z;
+  SB a = f_v_1.inner;
+  float b = f_v_1.inner.b.y.t[3u].z;
 }
 )");
 }
@@ -504,12 +504,12 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   vec4 inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner.x = 2.0f;
-  v_1.inner.y = 4.0f;
-  v_1.inner.z = 8.0f;
-  v_1.inner.w = 16.0f;
+  f_v_1.inner.x = 2.0f;
+  f_v_1.inner.y = 4.0f;
+  f_v_1.inner.z = 8.0f;
+  f_v_1.inner.w = 16.0f;
 }
 )");
 }
@@ -545,16 +545,16 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v1_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 layout(binding = 1, std430)
 buffer v2_block_1_ssbo {
   vec4 inner;
-} v_1;
+} f_v_1;
 void bar() {
-  float a = v.inner.y;
+  float a = f_v.inner.y;
 }
 void bar_1() {
-  float a = v_1.inner.y;
+  float a = f_v_1.inner.y;
 }
 void main() {
   bar();
@@ -604,9 +604,9 @@ struct SB {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   SB inner[4];
-} v_1;
+} f_v_1;
 void main() {
-  uint b = v_1.inner[2u].b.d;
+  uint b = f_v_1.inner[2u].b.d;
 }
 )");
 }
@@ -652,9 +652,9 @@ struct SB {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  float a = v_1.inner.b.c;
+  float a = f_v_1.inner.b.c;
 }
 )");
 }
@@ -725,7 +725,7 @@ buffer SB_1_ssbo {
   uint tint_pad_1;
   uint tint_pad_2;
   S2 b_2[];
-} sb;
+} f_sb;
 void main() {
   int i = 4;
   int v = i;
@@ -733,9 +733,9 @@ void main() {
   uint v_1 = j;
   int k = 2;
   int v_2 = k;
-  uint v_3 = (uint(sb.b_2.length()) - 1u);
+  uint v_3 = (uint(f_sb.b_2.length()) - 1u);
   uint v_4 = min(uint(v), v_3);
-  float x = sb.b_2[v_4].b_1[min(v_1, 2u)].b[min(uint(v_2), 2u)];
+  float x = f_sb.b_2[v_4].b_1[min(v_1, 2u)].b[min(uint(v_2), 2u)];
 }
 )");
 }
@@ -803,12 +803,12 @@ buffer SB_1_ssbo {
   uint tint_pad_1;
   uint tint_pad_2;
   S2 b_2[];
-} sb;
+} f_sb;
 void main() {
   uint j = 1u;
   uint v = j;
-  uint v_1 = min(4u, (uint(sb.b_2.length()) - 1u));
-  float x = sb.b_2[v_1].b_1[min(v, 2u)].b.z;
+  uint v_1 = min(4u, (uint(f_sb.b_2.length()) - 1u));
+  float x = f_sb.b_2[v_1].b_1[min(v, 2u)].b.z;
 }
 )");
 }
@@ -860,9 +860,9 @@ struct SB {
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   SB inner[4];
-} v_1;
+} f_v_1;
 void main() {
-  uint b = v_1.inner[2u].b.d;
+  uint b = f_v_1.inner[2u].b.d;
 }
 )");
 }
@@ -913,9 +913,9 @@ struct SB {
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  float a = v_1.inner.b.c;
+  float a = f_v_1.inner.b.c;
 }
 )");
 }
@@ -938,9 +938,9 @@ precision highp int;
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   float inner;
-} v_1;
+} f_v_1;
 void main() {
-  float a = v_1.inner;
+  float a = f_v_1.inner;
 }
 )");
 }
@@ -964,9 +964,9 @@ precision highp int;
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   float16_t inner;
-} v_1;
+} f_v_1;
 void main() {
-  float16_t a = v_1.inner;
+  float16_t a = f_v_1.inner;
 }
 )");
 }
@@ -993,13 +993,13 @@ precision highp int;
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   vec4 inner;
-} v_1;
+} f_v_1;
 void main() {
-  vec4 a = v_1.inner;
-  float b = v_1.inner.x;
-  float c = v_1.inner.y;
-  float d = v_1.inner.z;
-  float e = v_1.inner.w;
+  vec4 a = f_v_1.inner;
+  float b = f_v_1.inner.x;
+  float c = f_v_1.inner.y;
+  float d = f_v_1.inner.z;
+  float e = f_v_1.inner.w;
 }
 )");
 }
@@ -1028,14 +1028,14 @@ precision highp int;
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   f16vec4 inner;
-} v_1;
+} f_v_1;
 void main() {
   uint x = 1u;
-  f16vec4 a = v_1.inner;
-  float16_t b = v_1.inner.x;
-  float16_t c = v_1.inner[min(x, 3u)];
-  float16_t d = v_1.inner.z;
-  float16_t e = v_1.inner.w;
+  f16vec4 a = f_v_1.inner;
+  float16_t b = f_v_1.inner.x;
+  float16_t c = f_v_1.inner[min(x, 3u)];
+  float16_t d = f_v_1.inner.z;
+  float16_t e = f_v_1.inner.w;
 }
 )");
 }
@@ -1061,11 +1061,11 @@ precision highp int;
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   mat4 inner;
-} v_1;
+} f_v_1;
 void main() {
-  mat4 a = v_1.inner;
-  vec4 b = v_1.inner[3u];
-  float c = v_1.inner[1u].z;
+  mat4 a = f_v_1.inner;
+  vec4 b = f_v_1.inner[3u];
+  float c = f_v_1.inner[1u].z;
 }
 )");
 }
@@ -1093,11 +1093,11 @@ uniform v_block_std140_1_ubo {
   vec3 inner_col0;
   uint tint_pad_0;
   vec3 inner_col1;
-} v_1;
+} f_v_1;
 void main() {
-  mat2x3 a = mat2x3(v_1.inner_col0, v_1.inner_col1);
-  vec3 b = mat2x3(v_1.inner_col0, v_1.inner_col1)[1u];
-  float c = mat2x3(v_1.inner_col0, v_1.inner_col1)[1u].z;
+  mat2x3 a = mat2x3(f_v_1.inner_col0, f_v_1.inner_col1);
+  vec3 b = mat2x3(f_v_1.inner_col0, f_v_1.inner_col1)[1u];
+  float c = mat2x3(f_v_1.inner_col0, f_v_1.inner_col1)[1u].z;
 }
 )");
 }
@@ -1124,11 +1124,11 @@ layout(binding = 0, std140)
 uniform v_block_std140_1_ubo {
   f16vec3 inner_col0;
   f16vec3 inner_col1;
-} v_1;
+} f_v_1;
 void main() {
-  f16mat2x3 a = f16mat2x3(v_1.inner_col0, v_1.inner_col1);
-  f16vec3 b = f16mat2x3(v_1.inner_col0, v_1.inner_col1)[1u];
-  float16_t c = f16mat2x3(v_1.inner_col0, v_1.inner_col1)[1u].z;
+  f16mat2x3 a = f16mat2x3(f_v_1.inner_col0, f_v_1.inner_col1);
+  f16vec3 b = f16mat2x3(f_v_1.inner_col0, f_v_1.inner_col1)[1u];
+  float16_t c = f16mat2x3(f_v_1.inner_col0, f_v_1.inner_col1)[1u].z;
 }
 )");
 }
@@ -1156,11 +1156,11 @@ uniform v_block_std140_1_ubo {
   vec2 inner_col0;
   vec2 inner_col1;
   vec2 inner_col2;
-} v_1;
+} f_v_1;
 void main() {
-  mat3x2 a = mat3x2(v_1.inner_col0, v_1.inner_col1, v_1.inner_col2);
-  vec2 b = mat3x2(v_1.inner_col0, v_1.inner_col1, v_1.inner_col2)[1u];
-  float c = mat3x2(v_1.inner_col0, v_1.inner_col1, v_1.inner_col2)[1u].y;
+  mat3x2 a = mat3x2(f_v_1.inner_col0, f_v_1.inner_col1, f_v_1.inner_col2);
+  vec2 b = mat3x2(f_v_1.inner_col0, f_v_1.inner_col1, f_v_1.inner_col2)[1u];
+  float c = mat3x2(f_v_1.inner_col0, f_v_1.inner_col1, f_v_1.inner_col2)[1u].y;
 }
 )");
 }
@@ -1187,11 +1187,11 @@ layout(binding = 0, std140)
 uniform v_block_std140_1_ubo {
   vec2 inner_col0;
   vec2 inner_col1;
-} v_1;
+} f_v_1;
 void main() {
-  mat2 a = mat2(v_1.inner_col0, v_1.inner_col1);
-  vec2 b = mat2(v_1.inner_col0, v_1.inner_col1)[1u];
-  float c = mat2(v_1.inner_col0, v_1.inner_col1)[1u].y;
+  mat2 a = mat2(f_v_1.inner_col0, f_v_1.inner_col1);
+  vec2 b = mat2(f_v_1.inner_col0, f_v_1.inner_col1)[1u];
+  float c = mat2(f_v_1.inner_col0, f_v_1.inner_col1)[1u].y;
 }
 )");
 }
@@ -1219,11 +1219,11 @@ layout(binding = 0, std140)
 uniform v_block_std140_1_ubo {
   f16vec2 inner_col0;
   f16vec2 inner_col1;
-} v_1;
+} f_v_1;
 void main() {
-  f16mat2 a = f16mat2(v_1.inner_col0, v_1.inner_col1);
-  f16vec2 b = f16mat2(v_1.inner_col0, v_1.inner_col1)[1u];
-  float16_t c = f16mat2(v_1.inner_col0, v_1.inner_col1)[1u].y;
+  f16mat2 a = f16mat2(f_v_1.inner_col0, f_v_1.inner_col1);
+  f16vec2 b = f16mat2(f_v_1.inner_col0, f_v_1.inner_col1)[1u];
+  float16_t c = f16mat2(f_v_1.inner_col0, f_v_1.inner_col1)[1u].y;
 }
 )");
 }
@@ -1247,10 +1247,10 @@ precision highp int;
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   vec3 inner[5];
-} v_1;
+} f_v_1;
 void main() {
-  vec3 a[5] = v_1.inner;
-  vec3 b = v_1.inner[3u];
+  vec3 a[5] = f_v_1.inner;
+  vec3 b = f_v_1.inner[3u];
 }
 )");
 }
@@ -1275,10 +1275,10 @@ precision highp int;
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   f16vec3 inner[5];
-} v_1;
+} f_v_1;
 void main() {
-  f16vec3 a[5] = v_1.inner;
-  f16vec3 b = v_1.inner[3u];
+  f16vec3 a[5] = f_v_1.inner;
+  f16vec3 b = f_v_1.inner[3u];
 }
 )");
 }
@@ -1302,10 +1302,10 @@ precision highp int;
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   vec3 inner[42];
-} v_1;
+} f_v_1;
 void main() {
-  vec3 a[42] = v_1.inner;
-  vec3 b = v_1.inner[3u];
+  vec3 a[42] = f_v_1.inner;
+  vec3 b = f_v_1.inner[3u];
 }
 )");
 }
@@ -1340,10 +1340,10 @@ struct SB {
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  SB a = v_1.inner;
-  float b = v_1.inner.b;
+  SB a = f_v_1.inner;
+  float b = f_v_1.inner.b;
 }
 )");
 }
@@ -1379,10 +1379,10 @@ struct SB {
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  SB a = v_1.inner;
-  float16_t b = v_1.inner.b;
+  SB a = f_v_1.inner;
+  float16_t b = f_v_1.inner.b;
 }
 )");
 }
@@ -1465,7 +1465,7 @@ struct SB {
 layout(binding = 0, std140)
 uniform v_block_std140_1_ubo {
   SB_std140 inner;
-} v_1;
+} f_v_1;
 Inner tint_convert_Inner(Inner_std140 tint_input) {
   return Inner(mat3(tint_input.s_col0, tint_input.s_col1, tint_input.s_col2), tint_input.t);
 }
@@ -1476,8 +1476,8 @@ SB tint_convert_SB(SB_std140 tint_input) {
   return SB(tint_input.a, tint_convert_Outer(tint_input.b));
 }
 void main() {
-  SB a = tint_convert_SB(v_1.inner);
-  float b = v_1.inner.b.y.t[3u].z;
+  SB a = tint_convert_SB(f_v_1.inner);
+  float b = f_v_1.inner.b.y.t[3u].z;
 }
 )");
 }
@@ -1500,9 +1500,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   float inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner = 2.0f;
+  f_v_1.inner = 2.0f;
 }
 )");
 }
@@ -1526,9 +1526,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   float16_t inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner = 2.0hf;
+  f_v_1.inner = 2.0hf;
 }
 )");
 }
@@ -1551,9 +1551,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   vec3 inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner.y = 2.0f;
+  f_v_1.inner.y = 2.0f;
 }
 )");
 }
@@ -1577,9 +1577,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   f16vec3 inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner.y = 2.0hf;
+  f_v_1.inner.y = 2.0hf;
 }
 )");
 }
@@ -1602,9 +1602,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   vec3 inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner = vec3(2.0f, 3.0f, 4.0f);
+  f_v_1.inner = vec3(2.0f, 3.0f, 4.0f);
 }
 )");
 }
@@ -1628,9 +1628,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   f16vec3 inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner = f16vec3(2.0hf, 3.0hf, 4.0hf);
+  f_v_1.inner = f16vec3(2.0hf, 3.0hf, 4.0hf);
 }
 )");
 }
@@ -1654,9 +1654,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   mat4 inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner[1u].z = 5.0f;
+  f_v_1.inner[1u].z = 5.0f;
 }
 )");
 }
@@ -1681,9 +1681,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   f16mat3x2 inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner[2u].y = 5.0hf;
+  f_v_1.inner[2u].y = 5.0hf;
 }
 )");
 }
@@ -1707,9 +1707,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   mat4 inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner[1u] = vec4(5.0f);
+  f_v_1.inner[1u] = vec4(5.0f);
 }
 )");
 }
@@ -1734,9 +1734,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   f16mat2x3 inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner[1u] = f16vec3(5.0hf);
+  f_v_1.inner[1u] = f16vec3(5.0hf);
 }
 )");
 }
@@ -1759,9 +1759,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   mat4 inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner = mat4(vec4(0.0f), vec4(0.0f), vec4(0.0f), vec4(0.0f));
+  f_v_1.inner = mat4(vec4(0.0f), vec4(0.0f), vec4(0.0f), vec4(0.0f));
 }
 )");
 }
@@ -1785,9 +1785,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   f16mat4 inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner = f16mat4(f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf));
+  f_v_1.inner = f16mat4(f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf), f16vec4(0.0hf));
 }
 )");
 }
@@ -1810,9 +1810,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   float inner[5];
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner[3u] = 1.0f;
+  f_v_1.inner[3u] = 1.0f;
 }
 )");
 }
@@ -1836,9 +1836,9 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   float16_t inner[5];
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner[3u] = 1.0hf;
+  f_v_1.inner[3u] = 1.0hf;
 }
 )");
 }
@@ -1862,7 +1862,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   vec3 inner[5];
-} v_1;
+} f_v_1;
 void tint_store_and_preserve_padding(vec3 value_param[5]) {
   {
     uint v_2 = 0u;
@@ -1872,7 +1872,7 @@ void tint_store_and_preserve_padding(vec3 value_param[5]) {
       if ((v_3 >= 5u)) {
         break;
       }
-      v_1.inner[v_3] = value_param[v_3];
+      f_v_1.inner[v_3] = value_param[v_3];
       {
         v_2 = (v_3 + 1u);
       }
@@ -1916,9 +1916,9 @@ struct SB {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner.b = 3.0f;
+  f_v_1.inner.b = 3.0f;
 }
 )");
 }
@@ -1953,9 +1953,9 @@ struct SB {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner.b = 3.0hf;
+  f_v_1.inner.b = 3.0hf;
 }
 )");
 }
@@ -2015,9 +2015,9 @@ struct SB {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  v_1.inner.b.x = 2.0f;
+  f_v_1.inner.b.x = 2.0f;
 }
 )");
 }
@@ -2081,17 +2081,17 @@ struct SB {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   SB inner;
-} v_1;
+} f_v_1;
 void tint_store_and_preserve_padding_2(Inner value_param) {
-  v_1.inner.b.y.s = value_param.s;
-  v_1.inner.b.y.t = value_param.t;
+  f_v_1.inner.b.y.s = value_param.s;
+  f_v_1.inner.b.y.t = value_param.t;
 }
 void tint_store_and_preserve_padding_1(Outer value_param) {
-  v_1.inner.b.x = value_param.x;
+  f_v_1.inner.b.x = value_param.x;
   tint_store_and_preserve_padding_2(value_param.y);
 }
 void tint_store_and_preserve_padding(SB value_param) {
-  v_1.inner.a = value_param.a;
+  f_v_1.inner.a = value_param.a;
   tint_store_and_preserve_padding_1(value_param.b);
 }
 void main() {
@@ -2157,7 +2157,7 @@ struct SB {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   SB inner;
-} v_1;
+} f_v_1;
 void tint_store_and_preserve_padding_4(vec3 value_param[5]) {
   {
     uint v_2 = 0u;
@@ -2167,7 +2167,7 @@ void tint_store_and_preserve_padding_4(vec3 value_param[5]) {
       if ((v_3 >= 5u)) {
         break;
       }
-      v_1.inner.b.y.t[v_3] = value_param[v_3];
+      f_v_1.inner.b.y.t[v_3] = value_param[v_3];
       {
         v_2 = (v_3 + 1u);
       }
@@ -2176,20 +2176,20 @@ void tint_store_and_preserve_padding_4(vec3 value_param[5]) {
   }
 }
 void tint_store_and_preserve_padding_3(mat3 value_param) {
-  v_1.inner.b.y.s[0u] = value_param[0u];
-  v_1.inner.b.y.s[1u] = value_param[1u];
-  v_1.inner.b.y.s[2u] = value_param[2u];
+  f_v_1.inner.b.y.s[0u] = value_param[0u];
+  f_v_1.inner.b.y.s[1u] = value_param[1u];
+  f_v_1.inner.b.y.s[2u] = value_param[2u];
 }
 void tint_store_and_preserve_padding_2(Inner value_param) {
   tint_store_and_preserve_padding_3(value_param.s);
   tint_store_and_preserve_padding_4(value_param.t);
 }
 void tint_store_and_preserve_padding_1(Outer value_param) {
-  v_1.inner.b.x = value_param.x;
+  f_v_1.inner.b.x = value_param.x;
   tint_store_and_preserve_padding_2(value_param.y);
 }
 void tint_store_and_preserve_padding(SB value_param) {
-  v_1.inner.a = value_param.a;
+  f_v_1.inner.a = value_param.a;
   tint_store_and_preserve_padding_1(value_param.b);
 }
 void main() {
@@ -2234,10 +2234,10 @@ struct SB {
 layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  float b = v_1.inner.b.y;
-  float c = v_1.inner.b.z;
+  float b = f_v_1.inner.b.y;
+  float c = f_v_1.inner.b.z;
 }
 )");
 }
@@ -2277,10 +2277,10 @@ struct SB {
 layout(binding = 0, std140)
 uniform v_block_1_ubo {
   SB inner;
-} v_1;
+} f_v_1;
 void main() {
-  float b = v_1.inner.d.y;
-  float c = v_1.inner.d.z;
+  float b = f_v_1.inner.d.y;
+  float c = f_v_1.inner.d.z;
 }
 )");
 }

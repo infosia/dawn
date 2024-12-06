@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 float fma_c10ba3() {
   float arg_0 = 1.0f;
   float arg_1 = 1.0f;
@@ -17,7 +17,7 @@ float fma_c10ba3() {
   return res;
 }
 void main() {
-  v.inner = fma_c10ba3();
+  f_v.inner = fma_c10ba3();
 }
 //
 // compute_main

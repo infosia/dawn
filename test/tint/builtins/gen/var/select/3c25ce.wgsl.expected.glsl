@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int select_3c25ce() {
   bvec3 arg_0 = bvec3(true);
   bvec3 arg_1 = bvec3(true);
@@ -19,7 +19,7 @@ int select_3c25ce() {
   return mix(0, 1, all(equal(res, bvec3(false))));
 }
 void main() {
-  v.inner = select_3c25ce();
+  f_v.inner = select_3c25ce();
 }
 //
 // compute_main

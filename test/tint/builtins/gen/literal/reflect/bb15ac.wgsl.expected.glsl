@@ -9,13 +9,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   f16vec2 inner;
-} v;
+} f_v;
 f16vec2 reflect_bb15ac() {
   f16vec2 res = f16vec2(-3.0hf);
   return res;
 }
 void main() {
-  v.inner = reflect_bb15ac();
+  f_v.inner = reflect_bb15ac();
 }
 //
 // compute_main

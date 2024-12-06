@@ -14,7 +14,7 @@ struct main_out {
 layout(binding = 0, std140)
 uniform x_7_block_1_ubo {
   buf0 inner;
-} v_1;
+} f_v_1;
 vec4 x_GLF_color = vec4(0.0f);
 layout(location = 0) out vec4 tint_symbol_loc0_Output;
 void main_1() {
@@ -22,7 +22,7 @@ void main_1() {
   vec4 v = vec4(0.0f);
   f = 1.0f;
   v = vec4(sin(f), cos(f), exp2(f), log(f));
-  if ((distance(v, v_1.inner.r) < 0.10000000149011611938f)) {
+  if ((distance(v, f_v_1.inner.r) < 0.10000000149011611938f)) {
     x_GLF_color = vec4(1.0f, 0.0f, 0.0f, 1.0f);
   } else {
     x_GLF_color = vec4(0.0f);

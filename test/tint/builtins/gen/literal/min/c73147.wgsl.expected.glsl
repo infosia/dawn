@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int min_c73147() {
   int res = 1;
   return res;
 }
 void main() {
-  v.inner = min_c73147();
+  f_v.inner = min_c73147();
 }
 //
 // compute_main

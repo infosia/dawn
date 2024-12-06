@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec3 inner;
-} v;
+} f_v;
 vec3 atan_331e6d() {
   vec3 res = vec3(0.78539818525314331055f);
   return res;
 }
 void main() {
-  v.inner = atan_331e6d();
+  f_v.inner = atan_331e6d();
 }
 //
 // compute_main

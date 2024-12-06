@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uvec4 inner;
-} v;
+} f_v;
 uvec4 unpack4xU8_a5ea55() {
   uint arg_0 = 1u;
   uint v_1 = arg_0;
@@ -18,7 +18,7 @@ uvec4 unpack4xU8_a5ea55() {
   return res;
 }
 void main() {
-  v.inner = unpack4xU8_a5ea55();
+  f_v.inner = unpack4xU8_a5ea55();
 }
 //
 // compute_main

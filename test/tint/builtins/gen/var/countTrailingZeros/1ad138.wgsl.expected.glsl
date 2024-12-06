@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uvec2 inner;
-} v;
+} f_v;
 uvec2 countTrailingZeros_1ad138() {
   uvec2 arg_0 = uvec2(1u);
   uvec2 v_1 = arg_0;
@@ -16,7 +16,7 @@ uvec2 countTrailingZeros_1ad138() {
   return res;
 }
 void main() {
-  v.inner = countTrailingZeros_1ad138();
+  f_v.inner = countTrailingZeros_1ad138();
 }
 //
 // compute_main

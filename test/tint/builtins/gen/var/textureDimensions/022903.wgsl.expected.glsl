@@ -13,19 +13,19 @@ struct TintTextureUniformData {
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
-} v;
+} f_v;
 layout(binding = 0, std140)
 uniform tint_symbol_1_ubo {
   TintTextureUniformData inner;
-} v_1;
+} f_v_1;
 uniform highp isampler2D arg_0;
 uint textureDimensions_022903() {
   uint arg_1 = 1u;
-  uint res = uvec2(textureSize(arg_0, int(min(arg_1, (v_1.inner.tint_builtin_value_0 - 1u))))).x;
+  uint res = uvec2(textureSize(arg_0, int(min(arg_1, (f_v_1.inner.tint_builtin_value_0 - 1u))))).x;
   return res;
 }
 void main() {
-  v.inner = textureDimensions_022903();
+  f_v.inner = textureDimensions_022903();
 }
 //
 // compute_main
@@ -73,12 +73,12 @@ struct VertexOutput {
 layout(binding = 0, std140)
 uniform tint_symbol_1_1_ubo {
   TintTextureUniformData inner;
-} v;
+} v_v;
 uniform highp isampler2D arg_0;
 layout(location = 0) flat out uint vertex_main_loc0_Output;
 uint textureDimensions_022903() {
   uint arg_1 = 1u;
-  uint res = uvec2(textureSize(arg_0, int(min(arg_1, (v.inner.tint_builtin_value_0 - 1u))))).x;
+  uint res = uvec2(textureSize(arg_0, int(min(arg_1, (v_v.inner.tint_builtin_value_0 - 1u))))).x;
   return res;
 }
 VertexOutput vertex_main_inner() {

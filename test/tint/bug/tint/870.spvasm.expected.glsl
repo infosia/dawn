@@ -18,10 +18,10 @@ struct x_B4_BuildInformation {
 layout(binding = 2, std430)
 buffer sspp962805860buildInformation_block_1_ssbo {
   x_B4_BuildInformation inner;
-} v;
+} f_v;
 void main_1() {
   int orientation[6] = int[6](0, 0, 0, 0, 0, 0);
-  int x_23[6] = v.inner.passthru.orientation;
+  int x_23[6] = f_v.inner.passthru.orientation;
   orientation[0u] = x_23[0u];
   orientation[1u] = x_23[1u];
   orientation[2u] = x_23[2u];

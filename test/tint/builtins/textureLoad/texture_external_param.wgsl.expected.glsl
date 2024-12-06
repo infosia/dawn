@@ -63,7 +63,7 @@ struct tint_ExternalTextureParams {
 layout(binding = 2, std140)
 uniform arg_0_params_block_std140_1_ubo {
   tint_ExternalTextureParams_std140 inner;
-} v_1;
+} v_v_1;
 uniform highp sampler2D arg_0_plane0;
 uniform highp sampler2D arg_0_plane1;
 vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
@@ -105,7 +105,7 @@ tint_ExternalTextureParams tint_convert_tint_ExternalTextureParams(tint_External
   return tint_ExternalTextureParams(tint_input.numPlanes, tint_input.doYuvToRgbConversionOnly, tint_input.yuvToRgbConversionMatrix, tint_input.gammaDecodeParams, tint_input.gammaEncodeParams, v_14, v_15, mat3x2(tint_input.loadTransform_col0, tint_input.loadTransform_col1, tint_input.loadTransform_col2), tint_input.samplePlane0RectMin, tint_input.samplePlane0RectMax, tint_input.samplePlane1RectMin, tint_input.samplePlane1RectMax, tint_input.apparentSize, tint_input.plane1CoordFactor);
 }
 void doTextureLoad() {
-  vec4 res = textureLoad2d(tint_convert_tint_ExternalTextureParams(v_1.inner), ivec2(0));
+  vec4 res = textureLoad2d(tint_convert_tint_ExternalTextureParams(v_v_1.inner), ivec2(0));
 }
 vec4 vertex_main_inner() {
   doTextureLoad();
@@ -184,7 +184,7 @@ struct tint_ExternalTextureParams {
 layout(binding = 2, std140)
 uniform arg_0_params_block_std140_1_ubo {
   tint_ExternalTextureParams_std140 inner;
-} v_1;
+} f_v_1;
 uniform highp sampler2D arg_0_plane0;
 uniform highp sampler2D arg_0_plane1;
 vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
@@ -226,7 +226,7 @@ tint_ExternalTextureParams tint_convert_tint_ExternalTextureParams(tint_External
   return tint_ExternalTextureParams(tint_input.numPlanes, tint_input.doYuvToRgbConversionOnly, tint_input.yuvToRgbConversionMatrix, tint_input.gammaDecodeParams, tint_input.gammaEncodeParams, v_14, v_15, mat3x2(tint_input.loadTransform_col0, tint_input.loadTransform_col1, tint_input.loadTransform_col2), tint_input.samplePlane0RectMin, tint_input.samplePlane0RectMax, tint_input.samplePlane1RectMin, tint_input.samplePlane1RectMax, tint_input.apparentSize, tint_input.plane1CoordFactor);
 }
 void doTextureLoad() {
-  vec4 res = textureLoad2d(tint_convert_tint_ExternalTextureParams(v_1.inner), ivec2(0));
+  vec4 res = textureLoad2d(tint_convert_tint_ExternalTextureParams(f_v_1.inner), ivec2(0));
 }
 void main() {
   doTextureLoad();

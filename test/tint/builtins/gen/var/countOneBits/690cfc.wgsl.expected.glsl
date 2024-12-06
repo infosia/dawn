@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uvec3 inner;
-} v;
+} f_v;
 uvec3 countOneBits_690cfc() {
   uvec3 arg_0 = uvec3(1u);
   uvec3 res = uvec3(bitCount(arg_0));
   return res;
 }
 void main() {
-  v.inner = countOneBits_690cfc();
+  f_v.inner = countOneBits_690cfc();
 }
 //
 // compute_main

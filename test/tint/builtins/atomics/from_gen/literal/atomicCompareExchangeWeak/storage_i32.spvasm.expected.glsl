@@ -23,10 +23,10 @@ struct atomic_compare_exchange_result_i32 {
 layout(binding = 0, std430)
 buffer sb_rw_block_1_ssbo {
   SB_RW_atomic inner;
-} v;
+} f_v;
 void atomicCompareExchangeWeak_1bd40a() {
   tint_symbol res = tint_symbol(0, false);
-  int v_1 = atomicCompSwap(v.inner.arg_0, 1, 1);
+  int v_1 = atomicCompSwap(f_v.inner.arg_0, 1, 1);
   int old_value_1 = atomic_compare_exchange_result_i32(v_1, (v_1 == 1)).old_value;
   int x_19 = old_value_1;
   res = tint_symbol(x_19, (x_19 == 1));

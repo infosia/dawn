@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec3 inner;
-} v;
+} f_v;
 vec3 tanh_9f9fb9() {
   vec3 arg_0 = vec3(1.0f);
   vec3 res = tanh(arg_0);
   return res;
 }
 void main() {
-  v.inner = tanh_9f9fb9();
+  f_v.inner = tanh_9f9fb9();
 }
 //
 // compute_main

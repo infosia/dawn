@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec3 inner;
-} v;
+} f_v;
 vec3 step_334303() {
   vec3 arg_0 = vec3(1.0f);
   vec3 arg_1 = vec3(1.0f);
@@ -16,7 +16,7 @@ vec3 step_334303() {
   return res;
 }
 void main() {
-  v.inner = step_334303();
+  f_v.inner = step_334303();
 }
 //
 // compute_main

@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   ivec4 inner;
-} v;
+} f_v;
 layout(binding = 0, rgba32i) uniform highp readonly iimage2D arg_0;
 ivec4 textureLoad_33d3aa() {
   ivec4 res = imageLoad(arg_0, ivec2(uvec2(min(1u, (uvec2(imageSize(arg_0)).x - 1u)), 0u)));
   return res;
 }
 void main() {
-  v.inner = textureLoad_33d3aa();
+  f_v.inner = textureLoad_33d3aa();
 }
 //
 // compute_main

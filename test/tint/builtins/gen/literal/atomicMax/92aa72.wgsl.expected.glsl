@@ -13,17 +13,17 @@ struct SB_RW {
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 layout(binding = 1, std430)
 buffer sb_rw_block_1_ssbo {
   SB_RW inner;
-} v_1;
+} f_v_1;
 int atomicMax_92aa72() {
-  int res = atomicMax(v_1.inner.arg_0, 1);
+  int res = atomicMax(f_v_1.inner.arg_0, 1);
   return res;
 }
 void main() {
-  v.inner = atomicMax_92aa72();
+  f_v.inner = atomicMax_92aa72();
 }
 //
 // compute_main

@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 uniform highp samplerCubeArray arg_0_arg_1;
 vec4 textureSampleGrad_bbb58f() {
   vec4 res = textureGrad(arg_0_arg_1, vec4(vec3(1.0f), float(1u)), vec3(1.0f), vec3(1.0f));
   return res;
 }
 void main() {
-  v.inner = textureSampleGrad_bbb58f();
+  f_v.inner = textureSampleGrad_bbb58f();
 }
 //
 // compute_main

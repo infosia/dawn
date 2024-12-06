@@ -8,17 +8,17 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
-} v;
+} f_v;
 layout(binding = 1, std430)
 buffer SB_RW_1_ssbo {
   int arg_0[];
-} sb_rw;
+} f_sb_rw;
 uint arrayLength_61b1c7() {
-  uint res = uint(sb_rw.arg_0.length());
+  uint res = uint(f_sb_rw.arg_0.length());
   return res;
 }
 void main() {
-  v.inner = arrayLength_61b1c7();
+  f_v.inner = arrayLength_61b1c7();
 }
 //
 // compute_main

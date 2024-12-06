@@ -17,8 +17,8 @@ struct S_std140 {
 layout(binding = 0, std140)
 uniform data_block_std140_1_ubo {
   S_std140 inner;
-} v;
+} f_v;
 void main() {
-  mat3 v_1 = mat3(v.inner.matrix_col0, v.inner.matrix_col1, v.inner.matrix_col2);
-  vec3 x = (v_1 * v.inner.vector);
+  mat3 v_1 = mat3(f_v.inner.matrix_col0, f_v.inner.matrix_col1, f_v.inner.matrix_col2);
+  vec3 x = (v_1 * f_v.inner.vector);
 }

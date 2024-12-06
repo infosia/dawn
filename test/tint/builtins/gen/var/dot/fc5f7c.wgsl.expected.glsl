@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int tint_int_dot(ivec2 x, ivec2 y) {
   return ((x.x * y.x) + (x.y * y.y));
 }
@@ -19,7 +19,7 @@ int dot_fc5f7c() {
   return res;
 }
 void main() {
-  v.inner = dot_fc5f7c();
+  f_v.inner = dot_fc5f7c();
 }
 //
 // compute_main

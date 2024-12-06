@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
-} v;
+} f_v;
 uniform highp samplerCubeArray arg_0;
 uint textureNumLayers_34cefa() {
   uint res = uint(textureSize(arg_0, 0).z);
   return res;
 }
 void main() {
-  v.inner = textureNumLayers_34cefa();
+  f_v.inner = textureNumLayers_34cefa();
 }
 //
 // compute_main

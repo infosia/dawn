@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   ivec4 inner;
-} v;
+} f_v;
 layout(binding = 0, r32i) uniform highp iimage2DArray arg_0;
 ivec4 textureLoad_3aea13() {
   uint v_1 = min(1u, (uint(imageSize(arg_0).z) - 1u));
@@ -18,7 +18,7 @@ ivec4 textureLoad_3aea13() {
   return res;
 }
 void main() {
-  v.inner = textureLoad_3aea13();
+  f_v.inner = textureLoad_3aea13();
 }
 //
 // compute_main

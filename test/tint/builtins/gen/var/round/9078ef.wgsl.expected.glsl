@@ -9,14 +9,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float16_t inner;
-} v;
+} f_v;
 float16_t round_9078ef() {
   float16_t arg_0 = 3.5hf;
   float16_t res = round(arg_0);
   return res;
 }
 void main() {
-  v.inner = round_9078ef();
+  f_v.inner = round_9078ef();
 }
 //
 // compute_main

@@ -8,9 +8,9 @@ struct DeclaredAfterUsage {
 layout(binding = 0, std140)
 uniform declared_after_usage_block_1_ubo {
   DeclaredAfterUsage inner;
-} v;
+} v_v;
 vec4 tint_symbol_inner() {
-  return vec4(v.inner.f);
+  return vec4(v_v.inner.f);
 }
 void main() {
   gl_Position = tint_symbol_inner();

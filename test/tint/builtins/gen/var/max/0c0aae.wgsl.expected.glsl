@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
-} v;
+} f_v;
 uint max_0c0aae() {
   uint arg_0 = 1u;
   uint arg_1 = 1u;
@@ -16,7 +16,7 @@ uint max_0c0aae() {
   return res;
 }
 void main() {
-  v.inner = max_0c0aae();
+  f_v.inner = max_0c0aae();
 }
 //
 // compute_main

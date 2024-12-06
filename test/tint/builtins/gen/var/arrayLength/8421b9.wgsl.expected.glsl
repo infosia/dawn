@@ -9,17 +9,17 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
-} v;
+} f_v;
 layout(binding = 1, std430)
 buffer SB_RO_1_ssbo {
   float16_t arg_0[];
-} sb_ro;
+} f_sb_ro;
 uint arrayLength_8421b9() {
-  uint res = uint(sb_ro.arg_0.length());
+  uint res = uint(f_sb_ro.arg_0.length());
   return res;
 }
 void main() {
-  v.inner = arrayLength_8421b9();
+  f_v.inner = arrayLength_8421b9();
 }
 //
 // compute_main
@@ -58,10 +58,10 @@ struct VertexOutput {
 layout(binding = 1, std430)
 buffer SB_RO_1_ssbo {
   float16_t arg_0[];
-} sb_ro;
+} v_sb_ro;
 layout(location = 0) flat out uint vertex_main_loc0_Output;
 uint arrayLength_8421b9() {
-  uint res = uint(sb_ro.arg_0.length());
+  uint res = uint(v_sb_ro.arg_0.length());
   return res;
 }
 VertexOutput vertex_main_inner() {

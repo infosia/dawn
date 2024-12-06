@@ -5,7 +5,7 @@ precision highp int;
 layout(binding = 0, std140)
 uniform weights_block_1_ubo {
   vec2 inner;
-} v;
+} f_v;
 void main() {
-  float a = v.inner.x;
+  float a = f_v.inner.x;
 }

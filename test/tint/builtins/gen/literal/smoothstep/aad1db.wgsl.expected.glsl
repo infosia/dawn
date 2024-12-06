@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec3 inner;
-} v;
+} f_v;
 vec3 smoothstep_aad1db() {
   vec3 res = vec3(0.5f);
   return res;
 }
 void main() {
-  v.inner = smoothstep_aad1db();
+  f_v.inner = smoothstep_aad1db();
 }
 //
 // compute_main

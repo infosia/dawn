@@ -10,67 +10,67 @@ struct S {
 layout(binding = 0, std430)
 buffer b0_block_1_ssbo {
   S inner;
-} v;
+} f_v;
 layout(binding = 0, std430)
 buffer b1_block_1_ssbo {
   S inner;
-} v_1;
+} f_v_1;
 layout(binding = 0, std430)
 buffer b2_block_1_ssbo {
   S inner;
-} v_2;
+} f_v_2;
 layout(binding = 0, std430)
 buffer b3_block_1_ssbo {
   S inner;
-} v_3;
+} f_v_3;
 layout(binding = 0, std430)
 buffer b4_block_1_ssbo {
   S inner;
-} v_4;
+} f_v_4;
 layout(binding = 0, std430)
 buffer b5_block_1_ssbo {
   S inner;
-} v_5;
+} f_v_5;
 layout(binding = 0, std430)
 buffer b6_block_1_ssbo {
   S inner;
-} v_6;
+} f_v_6;
 layout(binding = 0, std430)
 buffer b7_block_1_ssbo {
   S inner;
-} v_7;
+} f_v_7;
 layout(binding = 1, std140)
 uniform b8_block_1_ubo {
   S inner;
-} v_8;
+} f_v_8;
 layout(binding = 1, std140)
 uniform b9_block_1_ubo {
   S inner;
-} v_9;
+} f_v_9;
 layout(binding = 1, std140)
 uniform b10_block_1_ubo {
   S inner;
-} v_10;
+} f_v_10;
 layout(binding = 1, std140)
 uniform b11_block_1_ubo {
   S inner;
-} v_11;
+} f_v_11;
 layout(binding = 1, std140)
 uniform b12_block_1_ubo {
   S inner;
-} v_12;
+} f_v_12;
 layout(binding = 1, std140)
 uniform b13_block_1_ubo {
   S inner;
-} v_13;
+} f_v_13;
 layout(binding = 1, std140)
 uniform b14_block_1_ubo {
   S inner;
-} v_14;
+} f_v_14;
 layout(binding = 1, std140)
 uniform b15_block_1_ubo {
   S inner;
-} v_15;
+} f_v_15;
 uniform highp sampler2D t0;
 uniform highp sampler2D t1;
 uniform highp sampler2D t2;

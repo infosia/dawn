@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   ivec4 inner;
-} v;
+} f_v;
 uniform highp isamplerCubeArray arg_1_arg_2;
 ivec4 textureGather_c0640c() {
   vec4 v_1 = vec4(vec3(1.0f), float(1));
@@ -16,7 +16,7 @@ ivec4 textureGather_c0640c() {
   return res;
 }
 void main() {
-  v.inner = textureGather_c0640c();
+  f_v.inner = textureGather_c0640c();
 }
 //
 // compute_main

@@ -9,7 +9,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 float tint_bitcast_from_f16(f16vec2 src) {
   return uintBitsToFloat(packFloat2x16(src));
 }
@@ -19,7 +19,7 @@ float bitcast_23c8bd() {
   return res;
 }
 void main() {
-  v.inner = bitcast_23c8bd();
+  f_v.inner = bitcast_23c8bd();
 }
 //
 // compute_main

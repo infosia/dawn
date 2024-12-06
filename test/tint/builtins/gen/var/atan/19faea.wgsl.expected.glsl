@@ -9,14 +9,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   f16vec4 inner;
-} v;
+} f_v;
 f16vec4 atan_19faea() {
   f16vec4 arg_0 = f16vec4(1.0hf);
   f16vec4 res = atan(arg_0);
   return res;
 }
 void main() {
-  v.inner = atan_19faea();
+  f_v.inner = atan_19faea();
 }
 //
 // compute_main

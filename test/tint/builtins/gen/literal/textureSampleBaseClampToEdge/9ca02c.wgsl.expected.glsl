@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 uniform highp sampler2D arg_0_arg_1;
 vec4 textureSampleBaseClampToEdge_9ca02c() {
   vec2 v_1 = (vec2(0.5f) / vec2(uvec2(textureSize(arg_0_arg_1, 0))));
@@ -16,7 +16,7 @@ vec4 textureSampleBaseClampToEdge_9ca02c() {
   return res;
 }
 void main() {
-  v.inner = textureSampleBaseClampToEdge_9ca02c();
+  f_v.inner = textureSampleBaseClampToEdge_9ca02c();
 }
 //
 // compute_main

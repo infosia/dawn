@@ -5,7 +5,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 uniform highp sampler2DArray arg_0_arg_1;
 vec4 textureSampleBias_80e579() {
   vec2 arg_2 = vec2(1.0f);
@@ -17,5 +17,5 @@ vec4 textureSampleBias_80e579() {
   return res;
 }
 void main() {
-  v.inner = textureSampleBias_80e579();
+  f_v.inner = textureSampleBias_80e579();
 }

@@ -13,9 +13,9 @@ struct SB_RW {
 layout(binding = 0, std430)
 buffer sb_rw_block_1_ssbo {
   SB_RW inner;
-} v;
+} f_v;
 void atomicStore_cdc29e() {
-  atomicExchange(v.inner.arg_0, 1u);
+  atomicExchange(f_v.inner.arg_0, 1u);
 }
 void main() {
   atomicStore_cdc29e();

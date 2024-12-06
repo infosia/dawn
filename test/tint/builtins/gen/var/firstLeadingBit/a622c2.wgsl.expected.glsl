@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   ivec2 inner;
-} v;
+} f_v;
 ivec2 firstLeadingBit_a622c2() {
   ivec2 arg_0 = ivec2(1);
   uvec2 v_1 = uvec2(arg_0);
@@ -16,7 +16,7 @@ ivec2 firstLeadingBit_a622c2() {
   return res;
 }
 void main() {
-  v.inner = firstLeadingBit_a622c2();
+  f_v.inner = firstLeadingBit_a622c2();
 }
 //
 // compute_main

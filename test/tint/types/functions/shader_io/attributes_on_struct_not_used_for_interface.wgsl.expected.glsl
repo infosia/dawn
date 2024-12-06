@@ -70,11 +70,11 @@ struct S {
 layout(binding = 0, std430)
 buffer tint_symbol_block_1_ssbo {
   S inner;
-} v_1;
+} f_v_1;
 void tint_store_and_preserve_padding(S value_param) {
-  v_1.inner.f = value_param.f;
-  v_1.inner.u = value_param.u;
-  v_1.inner.v = value_param.v;
+  f_v_1.inner.f = value_param.f;
+  f_v_1.inner.u = value_param.u;
+  f_v_1.inner.v = value_param.v;
 }
 void main() {
   tint_store_and_preserve_padding(S(1.0f, 2u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, vec4(3.0f), 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u));

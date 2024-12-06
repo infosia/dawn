@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   ivec4 inner;
-} v;
+} f_v;
 ivec4 bitcast_6de2bd() {
   ivec4 res = ivec4(1065353216);
   return res;
 }
 void main() {
-  v.inner = bitcast_6de2bd();
+  f_v.inner = bitcast_6de2bd();
 }
 //
 // compute_main

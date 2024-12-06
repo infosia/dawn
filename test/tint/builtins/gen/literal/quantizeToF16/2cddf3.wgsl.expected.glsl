@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec2 inner;
-} v;
+} f_v;
 vec2 quantizeToF16_2cddf3() {
   vec2 res = vec2(1.0f);
   return res;
 }
 void main() {
-  v.inner = quantizeToF16_2cddf3();
+  f_v.inner = quantizeToF16_2cddf3();
 }
 //
 // compute_main

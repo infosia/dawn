@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int transpose_2585cd() {
   mat3x4 res = mat3x4(vec4(1.0f), vec4(1.0f), vec4(1.0f));
   return mix(0, 1, (res[0u].x == 0.0f));
 }
 void main() {
-  v.inner = transpose_2585cd();
+  f_v.inner = transpose_2585cd();
 }
 //
 // compute_main

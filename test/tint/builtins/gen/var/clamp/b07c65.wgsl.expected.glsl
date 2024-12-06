@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int clamp_b07c65() {
   int arg_0 = 1;
   int arg_1 = 1;
@@ -17,7 +17,7 @@ int clamp_b07c65() {
   return res;
 }
 void main() {
-  v.inner = clamp_b07c65();
+  f_v.inner = clamp_b07c65();
 }
 //
 // compute_main

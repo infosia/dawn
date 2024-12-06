@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int select_c31f9e() {
   bool arg_0 = true;
   bool arg_1 = true;
@@ -17,7 +17,7 @@ int select_c31f9e() {
   return mix(0, 1, (res == false));
 }
 void main() {
-  v.inner = select_c31f9e();
+  f_v.inner = select_c31f9e();
 }
 //
 // compute_main

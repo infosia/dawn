@@ -13,12 +13,12 @@ struct SB_RW_atomic {
 layout(binding = 0, std430)
 buffer sb_rw_block_1_ssbo {
   SB_RW_atomic inner;
-} v;
+} f_v;
 void atomicAdd_d32fe4() {
   int arg_1 = 0;
   int res = 0;
   arg_1 = 1;
-  int x_13 = atomicAdd(v.inner.arg_0, -(1));
+  int x_13 = atomicAdd(f_v.inner.arg_0, -(1));
   res = x_13;
 }
 void fragment_main_1() {

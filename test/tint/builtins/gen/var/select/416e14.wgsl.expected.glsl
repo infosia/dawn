@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 float select_416e14() {
   float arg_0 = 1.0f;
   float arg_1 = 1.0f;
@@ -17,7 +17,7 @@ float select_416e14() {
   return res;
 }
 void main() {
-  v.inner = select_416e14();
+  f_v.inner = select_416e14();
 }
 //
 // compute_main

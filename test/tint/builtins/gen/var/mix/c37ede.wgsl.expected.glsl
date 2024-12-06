@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 vec4 mix_c37ede() {
   vec4 arg_0 = vec4(1.0f);
   vec4 arg_1 = vec4(1.0f);
@@ -17,7 +17,7 @@ vec4 mix_c37ede() {
   return res;
 }
 void main() {
-  v.inner = mix_c37ede();
+  f_v.inner = mix_c37ede();
 }
 //
 // compute_main

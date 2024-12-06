@@ -9,13 +9,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int transpose_faeb05() {
   f16mat4x2 res = f16mat4x2(f16vec2(1.0hf), f16vec2(1.0hf), f16vec2(1.0hf), f16vec2(1.0hf));
   return mix(0, 1, (res[0u].x == 0.0hf));
 }
 void main() {
-  v.inner = transpose_faeb05();
+  f_v.inner = transpose_faeb05();
 }
 //
 // compute_main

@@ -5,7 +5,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer tint_symbol_block_1_ssbo {
   int inner[4];
-} v;
+} f_v;
 void foo() {
   {
     int i = 0;
@@ -16,7 +16,7 @@ void foo() {
       }
       uint v_1 = min(uint(i), 3u);
       bool tint_continue = false;
-      switch(v.inner[v_1]) {
+      switch(f_v.inner[v_1]) {
         case 1:
         {
           tint_continue = true;
@@ -25,7 +25,7 @@ void foo() {
         default:
         {
           uint v_2 = min(uint(i), 3u);
-          v.inner[v_2] = 2;
+          f_v.inner[v_2] = 2;
           break;
         }
       }

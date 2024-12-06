@@ -13,10 +13,10 @@ struct SB_RW_atomic {
 layout(binding = 0, std430)
 buffer sb_rw_block_1_ssbo {
   SB_RW_atomic inner;
-} v;
+} f_v;
 void atomicSub_051100() {
   int res = 0;
-  int x_9 = atomicAdd(v.inner.arg_0, -(1));
+  int x_9 = atomicAdd(f_v.inner.arg_0, -(1));
   res = x_9;
 }
 void fragment_main_1() {

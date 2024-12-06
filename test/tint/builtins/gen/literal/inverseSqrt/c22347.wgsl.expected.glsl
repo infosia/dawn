@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 vec4 inverseSqrt_c22347() {
   vec4 res = vec4(1.0f);
   return res;
 }
 void main() {
-  v.inner = inverseSqrt_c22347();
+  f_v.inner = inverseSqrt_c22347();
 }
 //
 // compute_main

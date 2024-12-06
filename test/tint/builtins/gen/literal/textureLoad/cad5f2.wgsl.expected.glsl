@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uvec4 inner;
-} v;
+} f_v;
 uniform highp usampler2DMS arg_0;
 uvec4 textureLoad_cad5f2() {
   uvec2 v_1 = (uvec2(textureSize(arg_0)) - uvec2(1u));
@@ -17,7 +17,7 @@ uvec4 textureLoad_cad5f2() {
   return res;
 }
 void main() {
-  v.inner = textureLoad_cad5f2();
+  f_v.inner = textureLoad_cad5f2();
 }
 //
 // compute_main

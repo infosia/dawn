@@ -76,17 +76,17 @@ struct VertexInput {
 layout(binding = 5, std140)
 uniform render_params_block_1_ubo {
   RenderParams inner;
-} v;
+} v_v;
 layout(location = 0) in vec3 vs_main_loc0_Input;
 layout(location = 1) in vec4 vs_main_loc1_Input;
 layout(location = 2) in vec2 vs_main_loc2_Input;
 layout(location = 0) out vec4 vs_main_loc0_Output;
 layout(location = 1) out vec2 vs_main_loc1_Output;
 VertexOutput vs_main_inner(VertexInput tint_symbol) {
-  vec3 quad_pos = (mat2x3(v.inner.right, v.inner.up) * tint_symbol.quad_pos);
+  vec3 quad_pos = (mat2x3(v_v.inner.right, v_v.inner.up) * tint_symbol.quad_pos);
   vec3 position = (tint_symbol.position - (quad_pos + 0.00999999977648258209f));
   VertexOutput tint_symbol_1 = VertexOutput(vec4(0.0f), vec4(0.0f), vec2(0.0f));
-  mat4 v_1 = v.inner.modelViewProjectionMatrix;
+  mat4 v_1 = v_v.inner.modelViewProjectionMatrix;
   tint_symbol_1.position = (v_1 * vec4(position, 1.0f));
   tint_symbol_1.color = tint_symbol.color;
   tint_symbol_1.quad_pos = tint_symbol.quad_pos;

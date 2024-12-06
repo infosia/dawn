@@ -65,11 +65,11 @@ struct tint_ExternalTextureParams {
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v_1;
+} f_v_1;
 layout(binding = 3, std140)
 uniform arg_0_params_block_std140_1_ubo {
   tint_ExternalTextureParams_std140 inner;
-} v_2;
+} f_v_2;
 uniform highp sampler2D arg_0_plane0_arg_1;
 uniform highp sampler2D arg_0_plane1_arg_1;
 vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
@@ -105,12 +105,12 @@ tint_ExternalTextureParams tint_convert_tint_ExternalTextureParams(tint_External
 }
 vec4 textureSampleBaseClampToEdge_7c04e6() {
   vec2 arg_2 = vec2(1.0f);
-  tint_ExternalTextureParams v_13 = tint_convert_tint_ExternalTextureParams(v_2.inner);
+  tint_ExternalTextureParams v_13 = tint_convert_tint_ExternalTextureParams(f_v_2.inner);
   vec4 res = tint_TextureSampleExternal(v_13, arg_2);
   return res;
 }
 void main() {
-  v_1.inner = textureSampleBaseClampToEdge_7c04e6();
+  f_v_1.inner = textureSampleBaseClampToEdge_7c04e6();
 }
 //
 // compute_main
@@ -295,7 +295,7 @@ struct VertexOutput {
 layout(binding = 3, std140)
 uniform arg_0_params_block_std140_1_ubo {
   tint_ExternalTextureParams_std140 inner;
-} v_1;
+} v_v_1;
 uniform highp sampler2D arg_0_plane0_arg_1;
 uniform highp sampler2D arg_0_plane1_arg_1;
 layout(location = 0) flat out vec4 vertex_main_loc0_Output;
@@ -332,7 +332,7 @@ tint_ExternalTextureParams tint_convert_tint_ExternalTextureParams(tint_External
 }
 vec4 textureSampleBaseClampToEdge_7c04e6() {
   vec2 arg_2 = vec2(1.0f);
-  tint_ExternalTextureParams v_12 = tint_convert_tint_ExternalTextureParams(v_1.inner);
+  tint_ExternalTextureParams v_12 = tint_convert_tint_ExternalTextureParams(v_v_1.inner);
   vec4 res = tint_TextureSampleExternal(v_12, arg_2);
   return res;
 }

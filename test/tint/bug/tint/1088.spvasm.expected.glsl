@@ -27,7 +27,7 @@ vec3 position_1 = vec3(0.0f);
 layout(binding = 2, std140)
 uniform x_14_block_1_ubo {
   LeftOver inner;
-} v;
+} v_v;
 vec2 vUV = vec2(0.0f);
 vec2 uv = vec2(0.0f);
 vec3 normal = vec3(0.0f);
@@ -41,9 +41,9 @@ void main_1() {
   vec3 p = vec3(0.0f);
   q = vec4(position_1.x, position_1.y, position_1.z, 1.0f);
   p = q.xyz;
-  p.x = (p.x + sin(((v.inner.test[0u].el * position_1.y) + v.inner.time)));
-  p.y = (p.y + sin((v.inner.time + 4.0f)));
-  mat4 v_1 = v.inner.worldViewProjection;
+  p.x = (p.x + sin(((v_v.inner.test[0u].el * position_1.y) + v_v.inner.time)));
+  p.y = (p.y + sin((v_v.inner.time + 4.0f)));
+  mat4 v_1 = v_v.inner.worldViewProjection;
   tint_symbol = (v_1 * vec4(p.x, p.y, p.z, 1.0f));
   vUV = uv;
   tint_symbol.y = (tint_symbol.y * -1.0f);

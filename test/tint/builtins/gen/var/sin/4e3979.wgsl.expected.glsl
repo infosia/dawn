@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 vec4 sin_4e3979() {
   vec4 arg_0 = vec4(1.57079637050628662109f);
   vec4 res = sin(arg_0);
   return res;
 }
 void main() {
-  v.inner = sin_4e3979();
+  f_v.inner = sin_4e3979();
 }
 //
 // compute_main

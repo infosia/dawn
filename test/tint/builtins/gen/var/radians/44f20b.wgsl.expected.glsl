@@ -9,14 +9,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   f16vec4 inner;
-} v;
+} f_v;
 f16vec4 radians_44f20b() {
   f16vec4 arg_0 = f16vec4(1.0hf);
   f16vec4 res = radians(arg_0);
   return res;
 }
 void main() {
-  v.inner = radians_44f20b();
+  f_v.inner = radians_44f20b();
 }
 //
 // compute_main

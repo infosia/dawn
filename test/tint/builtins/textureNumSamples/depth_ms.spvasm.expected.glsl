@@ -16,10 +16,10 @@ vec4 tint_symbol_1 = vec4(0.0f);
 layout(binding = 0, std140)
 uniform tint_symbol_3_1_ubo {
   TintTextureUniformData inner;
-} v;
+} v_v;
 void textureNumSamples_a3c8a0() {
   int res = 0;
-  res = int(v.inner.tint_builtin_value_0);
+  res = int(v_v.inner.tint_builtin_value_0);
 }
 void tint_symbol_2(vec4 tint_symbol) {
   tint_symbol_1 = tint_symbol;
@@ -53,10 +53,10 @@ struct TintTextureUniformData {
 layout(binding = 0, std140)
 uniform tint_symbol_1_ubo {
   TintTextureUniformData inner;
-} v;
+} f_v;
 void textureNumSamples_a3c8a0() {
   int res = 0;
-  res = int(v.inner.tint_builtin_value_0);
+  res = int(f_v.inner.tint_builtin_value_0);
 }
 void fragment_main_1() {
   textureNumSamples_a3c8a0();

@@ -13,17 +13,17 @@ struct SB_RW {
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 layout(binding = 1, std430)
 buffer sb_rw_block_1_ssbo {
   SB_RW inner;
-} v_1;
+} f_v_1;
 int atomicOr_8d96a0() {
-  int res = atomicOr(v_1.inner.arg_0, 1);
+  int res = atomicOr(f_v_1.inner.arg_0, 1);
   return res;
 }
 void main() {
-  v.inner = atomicOr_8d96a0();
+  f_v.inner = atomicOr_8d96a0();
 }
 //
 // compute_main

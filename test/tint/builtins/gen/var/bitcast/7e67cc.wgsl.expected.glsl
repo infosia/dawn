@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int bitcast_7e67cc() {
   int arg_0 = 1;
   int res = arg_0;
   return res;
 }
 void main() {
-  v.inner = bitcast_7e67cc();
+  f_v.inner = bitcast_7e67cc();
 }
 //
 // compute_main

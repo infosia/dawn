@@ -5,7 +5,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer s_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 void main() {
   float signed_literal[4] = float[4](0.0f, 0.0f, 0.0f, 0.0f);
   float unsigned_literal[4] = float[4](0.0f, 0.0f, 0.0f, 0.0f);
@@ -16,5 +16,5 @@ void main() {
   signed_constant = signed_literal;
   unsigned_constant = signed_literal;
   shr_const_expr = signed_literal;
-  v.inner = ((((signed_literal[0u] + unsigned_literal[0u]) + signed_constant[0u]) + unsigned_constant[0u]) + shr_const_expr[0u]);
+  f_v.inner = ((((signed_literal[0u] + unsigned_literal[0u]) + signed_constant[0u]) + unsigned_constant[0u]) + shr_const_expr[0u]);
 }

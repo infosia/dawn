@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uvec3 inner;
-} v;
+} f_v;
 uvec3 countLeadingZeros_ab6345() {
   uvec3 arg_0 = uvec3(1u);
   uvec3 v_1 = arg_0;
@@ -16,7 +16,7 @@ uvec3 countLeadingZeros_ab6345() {
   return res;
 }
 void main() {
-  v.inner = countLeadingZeros_ab6345();
+  f_v.inner = countLeadingZeros_ab6345();
 }
 //
 // compute_main

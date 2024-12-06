@@ -5,11 +5,11 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec3 inner;
-} v;
+} f_v;
 vec3 dpdyCoarse_ae1873() {
   vec3 res = dFdy(vec3(1.0f));
   return res;
 }
 void main() {
-  v.inner = dpdyCoarse_ae1873();
+  f_v.inner = dpdyCoarse_ae1873();
 }

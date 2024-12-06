@@ -5,11 +5,11 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 float dpdy_7f8d84() {
   float res = dFdy(1.0f);
   return res;
 }
 void main() {
-  v.inner = dpdy_7f8d84();
+  f_v.inner = dpdy_7f8d84();
 }

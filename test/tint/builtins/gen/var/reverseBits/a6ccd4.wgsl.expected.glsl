@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uvec3 inner;
-} v;
+} f_v;
 uvec3 reverseBits_a6ccd4() {
   uvec3 arg_0 = uvec3(1u);
   uvec3 res = bitfieldReverse(arg_0);
   return res;
 }
 void main() {
-  v.inner = reverseBits_a6ccd4();
+  f_v.inner = reverseBits_a6ccd4();
 }
 //
 // compute_main

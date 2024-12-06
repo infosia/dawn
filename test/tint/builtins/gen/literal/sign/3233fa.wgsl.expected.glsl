@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 int sign_3233fa() {
   int res = 1;
   return res;
 }
 void main() {
-  v.inner = sign_3233fa();
+  f_v.inner = sign_3233fa();
 }
 //
 // compute_main

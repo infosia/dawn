@@ -9,7 +9,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   ivec2 inner;
-} v;
+} f_v;
 ivec2 tint_bitcast_from_f16(f16vec4 src) {
   return ivec2(uvec2(packFloat2x16(src.xy), packFloat2x16(src.zw)));
 }
@@ -19,7 +19,7 @@ ivec2 bitcast_214f23() {
   return res;
 }
 void main() {
-  v.inner = bitcast_214f23();
+  f_v.inner = bitcast_214f23();
 }
 //
 // compute_main

@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 vec4 tint_quantize_to_f16(vec4 val) {
   return vec4(unpackHalf2x16(packHalf2x16(val.xy)), unpackHalf2x16(packHalf2x16(val.zw)));
 }
@@ -18,7 +18,7 @@ vec4 quantizeToF16_cba294() {
   return res;
 }
 void main() {
-  v.inner = quantizeToF16_cba294();
+  f_v.inner = quantizeToF16_cba294();
 }
 //
 // compute_main

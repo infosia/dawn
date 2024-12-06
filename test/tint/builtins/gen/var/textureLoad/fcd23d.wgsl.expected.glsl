@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 uniform highp sampler2DMS arg_0;
 float textureLoad_fcd23d() {
   uvec2 arg_1 = uvec2(1u);
@@ -20,7 +20,7 @@ float textureLoad_fcd23d() {
   return res;
 }
 void main() {
-  v.inner = textureLoad_fcd23d();
+  f_v.inner = textureLoad_fcd23d();
 }
 //
 // compute_main

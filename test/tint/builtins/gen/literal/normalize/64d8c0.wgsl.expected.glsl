@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec3 inner;
-} v;
+} f_v;
 vec3 normalize_64d8c0() {
   vec3 res = vec3(0.57735025882720947266f);
   return res;
 }
 void main() {
-  v.inner = normalize_64d8c0();
+  f_v.inner = normalize_64d8c0();
 }
 //
 // compute_main

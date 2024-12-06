@@ -5,7 +5,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   float inner;
-} v;
+} f_v;
 uniform highp samplerCubeArrayShadow arg_0_arg_1;
 float textureSample_c2f4e8() {
   vec3 arg_2 = vec3(1.0f);
@@ -15,5 +15,5 @@ float textureSample_c2f4e8() {
   return res;
 }
 void main() {
-  v.inner = textureSample_c2f4e8();
+  f_v.inner = textureSample_c2f4e8();
 }

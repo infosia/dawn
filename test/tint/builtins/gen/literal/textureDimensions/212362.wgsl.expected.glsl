@@ -8,14 +8,14 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
-} v;
+} f_v;
 layout(binding = 0, r32f) uniform highp readonly image2D arg_0;
 uint textureDimensions_212362() {
   uint res = uvec2(imageSize(arg_0)).x;
   return res;
 }
 void main() {
-  v.inner = textureDimensions_212362();
+  f_v.inner = textureDimensions_212362();
 }
 //
 // compute_main

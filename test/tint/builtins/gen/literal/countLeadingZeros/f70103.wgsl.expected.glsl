@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uvec4 inner;
-} v;
+} f_v;
 uvec4 countLeadingZeros_f70103() {
   uvec4 res = uvec4(31u);
   return res;
 }
 void main() {
-  v.inner = countLeadingZeros_f70103();
+  f_v.inner = countLeadingZeros_f70103();
 }
 //
 // compute_main

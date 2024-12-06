@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   ivec3 inner;
-} v;
+} f_v;
 ivec3 min_a45171() {
   ivec3 arg_0 = ivec3(1);
   ivec3 arg_1 = ivec3(1);
@@ -16,7 +16,7 @@ ivec3 min_a45171() {
   return res;
 }
 void main() {
-  v.inner = min_a45171();
+  f_v.inner = min_a45171();
 }
 //
 // compute_main

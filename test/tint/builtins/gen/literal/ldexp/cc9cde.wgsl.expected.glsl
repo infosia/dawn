@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 vec4 ldexp_cc9cde() {
   vec4 res = vec4(2.0f);
   return res;
 }
 void main() {
-  v.inner = ldexp_cc9cde();
+  f_v.inner = ldexp_cc9cde();
 }
 //
 // compute_main

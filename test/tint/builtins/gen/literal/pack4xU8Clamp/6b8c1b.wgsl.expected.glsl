@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
-} v;
+} f_v;
 uint pack4xU8Clamp_6b8c1b() {
   uint res = 16843009u;
   return res;
 }
 void main() {
-  v.inner = pack4xU8Clamp_6b8c1b();
+  f_v.inner = pack4xU8Clamp_6b8c1b();
 }
 //
 // compute_main

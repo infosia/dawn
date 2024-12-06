@@ -13,18 +13,18 @@ struct SB_RW {
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   int inner;
-} v;
+} f_v;
 layout(binding = 1, std430)
 buffer sb_rw_block_1_ssbo {
   SB_RW inner;
-} v_1;
+} f_v_1;
 int atomicAdd_d32fe4() {
   int arg_1 = 1;
-  int res = atomicAdd(v_1.inner.arg_0, arg_1);
+  int res = atomicAdd(f_v_1.inner.arg_0, arg_1);
   return res;
 }
 void main() {
-  v.inner = atomicAdd_d32fe4();
+  f_v.inner = atomicAdd_d32fe4();
 }
 //
 // compute_main

@@ -8,13 +8,13 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   ivec2 inner;
-} v;
+} f_v;
 ivec2 reverseBits_222177() {
   ivec2 res = ivec2((-2147483647 - 1));
   return res;
 }
 void main() {
-  v.inner = reverseBits_222177();
+  f_v.inner = reverseBits_222177();
 }
 //
 // compute_main

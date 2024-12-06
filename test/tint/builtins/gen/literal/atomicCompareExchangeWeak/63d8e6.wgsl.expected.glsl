@@ -18,9 +18,9 @@ struct atomic_compare_exchange_result_u32 {
 layout(binding = 0, std430)
 buffer sb_rw_block_1_ssbo {
   SB_RW inner;
-} v;
+} f_v;
 void atomicCompareExchangeWeak_63d8e6() {
-  uint v_1 = atomicCompSwap(v.inner.arg_0, 1u, 1u);
+  uint v_1 = atomicCompSwap(f_v.inner.arg_0, 1u, 1u);
   atomic_compare_exchange_result_u32 res = atomic_compare_exchange_result_u32(v_1, (v_1 == 1u));
 }
 void main() {

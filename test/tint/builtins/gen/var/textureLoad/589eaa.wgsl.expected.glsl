@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 layout(binding = 0, rgba16f) uniform highp readonly image3D arg_0;
 vec4 textureLoad_589eaa() {
   uvec3 arg_1 = uvec3(1u);
@@ -17,7 +17,7 @@ vec4 textureLoad_589eaa() {
   return res;
 }
 void main() {
-  v.inner = textureLoad_589eaa();
+  f_v.inner = textureLoad_589eaa();
 }
 //
 // compute_main

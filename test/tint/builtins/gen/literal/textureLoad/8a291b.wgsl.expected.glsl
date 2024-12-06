@@ -8,7 +8,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   vec4 inner;
-} v;
+} f_v;
 layout(binding = 0, rgba8) uniform highp readonly image2DArray arg_0;
 vec4 textureLoad_8a291b() {
   uint v_1 = min(1u, (uint(imageSize(arg_0).z) - 1u));
@@ -18,7 +18,7 @@ vec4 textureLoad_8a291b() {
   return res;
 }
 void main() {
-  v.inner = textureLoad_8a291b();
+  f_v.inner = textureLoad_8a291b();
 }
 //
 // compute_main

@@ -9,7 +9,7 @@ precision highp int;
 layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   f16vec2 inner;
-} v;
+} f_v;
 f16vec2 ldexp_3d90b4() {
   f16vec2 arg_0 = f16vec2(1.0hf);
   ivec2 arg_1 = ivec2(1);
@@ -17,7 +17,7 @@ f16vec2 ldexp_3d90b4() {
   return res;
 }
 void main() {
-  v.inner = ldexp_3d90b4();
+  f_v.inner = ldexp_3d90b4();
 }
 //
 // compute_main
