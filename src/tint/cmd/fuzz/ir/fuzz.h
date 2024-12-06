@@ -63,6 +63,32 @@ struct Context {
     Options options;
 };
 
+namespace Internal {
+// Base template
+template <typename... ARGS>
+struct ArgsInfoImpl;
+// No Context arg
+template <typename... ARGS>
+struct ArgsInfoImpl<std::tuple<ARGS...>> {
+    static constexpr bool HasContext = false;
+    using Args = std::tuple<ARGS...>;
+};
+// With Context arg
+template <typename... ARGS>
+struct ArgsInfoImpl<std::tuple<Context, ARGS...>> {
+    static constexpr bool HasContext = true;
+    using Args = std::tuple<ARGS...>;  // Args after Context arg
+};
+// No args at all
+template <>
+struct ArgsInfoImpl<std::tuple<>> {
+    static constexpr bool HasContext = false;
+    using Args = std::tuple<>;
+};
+template <typename... ARGS>
+struct ArgsInfo : ArgsInfoImpl<std::tuple<std::decay_t<ARGS>...>> {};
+}  // namespace Internal
+
 /// IRFuzzer describes a fuzzer function that takes a IR module as input
 struct IRFuzzer {
     /// @param name the name of the fuzzer
@@ -76,29 +102,45 @@ struct IRFuzzer {
                            Result<SuccessType> (*fn)(core::ir::Module&, ARGS...),
                            core::ir::Capabilities pre_capabilities,
                            core::ir::Capabilities post_capabilities) {
-        if constexpr (sizeof...(ARGS) > 0) {
-            auto fn_with_decode = [fn](core::ir::Module& module, const Context&,
+        using ArgsInfo = Internal::ArgsInfo<ARGS...>;
+        using Args = typename ArgsInfo::Args;
+
+        if constexpr (std::tuple_size_v<Args> > 0) {
+            auto fn_with_decode = [fn](core::ir::Module& module, const Context& context,
                                        Slice<const std::byte> data) -> Result<SuccessType> {
                 if (!data.data) {
                     return Failure{"Invalid data"};
                 }
 
                 bytes::BufferReader reader{data};
-                auto data_args = bytes::Decode<std::tuple<std::decay_t<ARGS>...>>(reader);
+                auto data_args = bytes::Decode<Args>(reader);
                 if (data_args != Success) {
                     return data_args.Failure();
                 }
 
-                auto all_args =
-                    std::tuple_cat(std::tuple<core::ir::Module&>{module}, data_args.Get());
-                return std::apply(*fn, all_args);
+                if constexpr (ArgsInfo::HasContext) {
+                    auto all_args = std::tuple_cat(
+                        std::tuple<core::ir::Module&, const Context&>{module, context},
+                        data_args.Get());
+                    return std::apply(*fn, all_args);
+                } else {
+                    auto all_args =
+                        std::tuple_cat(std::tuple<core::ir::Module&>{module}, data_args.Get());
+                    return std::apply(*fn, all_args);
+                }
             };
             return IRFuzzer{name, std::move(fn_with_decode), pre_capabilities, post_capabilities};
         } else {
             return IRFuzzer{
                 name,
-                [fn](core::ir::Module& module, const Context&,
-                     Slice<const std::byte>) -> Result<SuccessType> { return fn(module); },
+                [fn](core::ir::Module& module, const Context& context,
+                     Slice<const std::byte>) -> Result<SuccessType> {
+                    if constexpr (ArgsInfo::HasContext) {
+                        return fn(module, context);
+                    } else {
+                        return fn(module);
+                    }
+                },
                 pre_capabilities,
                 post_capabilities,
             };
@@ -113,61 +155,6 @@ struct IRFuzzer {
     template <typename... ARGS>
     static IRFuzzer Create(std::string_view name,
                            Result<SuccessType> (*fn)(core::ir::Module&, ARGS...),
-                           core::ir::Capabilities capabilities) {
-        return Create(name, fn, capabilities, capabilities);
-    }
-
-    /// Overload of Create that accepts a fuzzer function that takes a Context argument
-    /// @param name the name of the fuzzer
-    /// @param fn the fuzzer function
-    /// @param pre_capabilities the capabilities that are used before the fuzzer runs
-    /// @param post_capabilities the capabilities that are used after the fuzzer runs
-    /// @returns an IRFuzzer that invokes the function @p fn with the IR module, along with any
-    /// additional arguments which are deserialized from the fuzzer input.
-    template <typename... ARGS>
-    static IRFuzzer Create(std::string_view name,
-                           Result<SuccessType> (*fn)(core::ir::Module&, const Context&, ARGS...),
-                           core::ir::Capabilities pre_capabilities,
-                           core::ir::Capabilities post_capabilities) {
-        if constexpr (sizeof...(ARGS) > 0) {
-            auto fn_with_decode = [fn](core::ir::Module& module, const Context& context,
-                                       Slice<const std::byte> data) -> Result<SuccessType> {
-                if (!data.data) {
-                    return Failure{"Invalid data"};
-                }
-
-                bytes::BufferReader reader{data};
-                auto data_args = bytes::Decode<std::tuple<std::decay_t<ARGS>...>>(reader);
-                if (data_args != Success) {
-                    return data_args.Failure();
-                }
-
-                auto all_args =
-                    std::tuple_cat(std::tuple<core::ir::Module&, const Context&>{module, context},
-                                   data_args.Get());
-                return std::apply(*fn, all_args);
-            };
-            return IRFuzzer{name, std::move(fn_with_decode), pre_capabilities, post_capabilities};
-        } else {
-            return IRFuzzer{
-                name,
-                [fn](core::ir::Module& module, const Context& context,
-                     Slice<const std::byte>) -> Result<SuccessType> { return fn(module, context); },
-                pre_capabilities,
-                post_capabilities,
-            };
-        }
-    }
-
-    /// Overload of Create that accepts a fuzzer function that takes a Context argument
-    /// @param name the name of the fuzzer
-    /// @param fn the fuzzer function
-    /// @param capabilities the capabilities that are used before and after the fuzzer runs
-    /// @returns an IRFuzzer that invokes the function @p fn with the IR module, along with any
-    /// additional arguments which are deserialized from the fuzzer input.
-    template <typename... ARGS>
-    static IRFuzzer Create(std::string_view name,
-                           Result<SuccessType> (*fn)(core::ir::Module&, const Context&, ARGS...),
                            core::ir::Capabilities capabilities) {
         return Create(name, fn, capabilities, capabilities);
     }
