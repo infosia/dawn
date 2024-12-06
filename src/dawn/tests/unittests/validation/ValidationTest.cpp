@@ -110,23 +110,23 @@ ValidationTest::ValidationTest() {
 
     // Forward to dawn::native instanceRequestAdapter, but save the returned adapter in
     // gCurrentTest->mBackendAdapter.
-    procs.instanceRequestAdapter2 = [](WGPUInstance self, const WGPURequestAdapterOptions* options,
-                                       WGPURequestAdapterCallbackInfo2 callbackInfo) -> WGPUFuture {
+    procs.instanceRequestAdapter = [](WGPUInstance self, const WGPURequestAdapterOptions* options,
+                                      WGPURequestAdapterCallbackInfo callbackInfo) -> WGPUFuture {
         DAWN_ASSERT(gCurrentTest);
         DAWN_ASSERT(callbackInfo.mode == WGPUCallbackMode_AllowSpontaneous);
 
-        return dawn::native::GetProcs().instanceRequestAdapter2(
+        return dawn::native::GetProcs().instanceRequestAdapter(
             self, options,
             {nullptr, WGPUCallbackMode_AllowSpontaneous,
              [](WGPURequestAdapterStatus status, WGPUAdapter cAdapter, WGPUStringView message,
                 void* userdata, void*) {
                  gCurrentTest->mBackendAdapter = dawn::native::FromAPI(cAdapter);
 
-                 auto* info = static_cast<WGPURequestAdapterCallbackInfo2*>(userdata);
+                 auto* info = static_cast<WGPURequestAdapterCallbackInfo*>(userdata);
                  info->callback(status, cAdapter, message, info->userdata1, info->userdata2);
                  delete info;
              },
-             new WGPURequestAdapterCallbackInfo2(callbackInfo), nullptr});
+             new WGPURequestAdapterCallbackInfo(callbackInfo), nullptr});
     };
 
     // Forward to dawn::native instanceRequestAdapter, but save the returned backend device in
