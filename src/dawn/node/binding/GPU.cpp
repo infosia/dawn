@@ -145,6 +145,18 @@ interop::Promise<std::optional<interop::Interface<interop::GPUAdapter>>> GPU::re
     nativeOptions.forceFallbackAdapter = options.forceFallbackAdapter;
     nativeOptions.compatibilityMode = options.compatibilityMode;
 
+    // Convert the feature level.
+    nativeOptions.featureLevel = FeatureLevel::Undefined;
+    std::string featureLevelValue = options.featureLevel.value();
+    if (featureLevelValue() == "compatibility") {
+        nativeOptions.featureLevel = FeatureLevel::Compatibility;
+    } else if (featureLevelValue == "core") {
+        nativeOptions.featureLevel = FeatureLevel::Core;
+    } else {
+        promise.Resolve({});
+        return promise;
+    }
+
     // Convert the power preference.
     nativeOptions.powerPreference = PowerPreference::Undefined;
     if (options.powerPreference.has_value()) {
