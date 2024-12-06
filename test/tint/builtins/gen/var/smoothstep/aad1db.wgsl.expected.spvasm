@@ -1,10 +1,10 @@
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
-; Bound: 66
+; Bound: 75
 ; Schema: 0
                OpCapability Shader
-         %30 = OpExtInstImport "GLSL.std.450"
+         %33 = OpExtInstImport "GLSL.std.450"
                OpMemoryModel Logical GLSL450
                OpEntryPoint Fragment %fragment_main "fragment_main"
                OpEntryPoint GLCompute %compute_main "compute_main"
@@ -60,19 +60,21 @@
          %21 = OpConstantComposite %v3float %float_4 %float_4 %float_4
     %float_3 = OpConstant %float 3
          %24 = OpConstantComposite %v3float %float_3 %float_3 %float_3
+         %34 = OpConstantNull %v3float
+    %float_1 = OpConstant %float 1
+         %35 = OpConstantComposite %v3float %float_1 %float_1 %float_1
        %void = OpTypeVoid
-         %35 = OpTypeFunction %void
+         %45 = OpTypeFunction %void
 %_ptr_StorageBuffer_v3float = OpTypePointer StorageBuffer %v3float
        %uint = OpTypeInt 32 0
      %uint_0 = OpConstant %uint 0
 %VertexOutput = OpTypeStruct %v4float %v3float
-         %48 = OpTypeFunction %VertexOutput
+         %58 = OpTypeFunction %VertexOutput
 %_ptr_Function_VertexOutput = OpTypePointer Function %VertexOutput
-         %52 = OpConstantNull %VertexOutput
+         %62 = OpConstantNull %VertexOutput
 %_ptr_Function_v4float = OpTypePointer Function %v4float
-         %55 = OpConstantNull %v4float
+         %65 = OpConstantNull %v4float
      %uint_1 = OpConstant %uint 1
-    %float_1 = OpConstant %float 1
 %smoothstep_aad1db = OpFunction %v3float None %14
          %15 = OpLabel
       %arg_0 = OpVariable %_ptr_Function_v3float Function
@@ -85,43 +87,50 @@
          %26 = OpLoad %v3float %arg_0 None
          %27 = OpLoad %v3float %arg_1 None
          %28 = OpLoad %v3float %arg_2 None
-         %29 = OpExtInst %v3float %30 SmoothStep %26 %27 %28
-               OpStore %res %29
-         %32 = OpLoad %v3float %res None
-               OpReturnValue %32
+         %29 = OpFSub %v3float %28 %26
+         %30 = OpFSub %v3float %27 %26
+         %31 = OpFDiv %v3float %29 %30
+         %32 = OpExtInst %v3float %33 NClamp %31 %34 %35
+         %37 = OpFMul %v3float %18 %32
+         %38 = OpFSub %v3float %24 %37
+         %39 = OpFMul %v3float %32 %38
+         %40 = OpFMul %v3float %32 %39
+               OpStore %res %40
+         %42 = OpLoad %v3float %res None
+               OpReturnValue %42
                OpFunctionEnd
-%fragment_main = OpFunction %void None %35
-         %36 = OpLabel
-         %37 = OpFunctionCall %v3float %smoothstep_aad1db
-         %38 = OpAccessChain %_ptr_StorageBuffer_v3float %1 %uint_0
-               OpStore %38 %37 None
+%fragment_main = OpFunction %void None %45
+         %46 = OpLabel
+         %47 = OpFunctionCall %v3float %smoothstep_aad1db
+         %48 = OpAccessChain %_ptr_StorageBuffer_v3float %1 %uint_0
+               OpStore %48 %47 None
                OpReturn
                OpFunctionEnd
-%compute_main = OpFunction %void None %35
-         %43 = OpLabel
-         %44 = OpFunctionCall %v3float %smoothstep_aad1db
-         %45 = OpAccessChain %_ptr_StorageBuffer_v3float %1 %uint_0
-               OpStore %45 %44 None
+%compute_main = OpFunction %void None %45
+         %53 = OpLabel
+         %54 = OpFunctionCall %v3float %smoothstep_aad1db
+         %55 = OpAccessChain %_ptr_StorageBuffer_v3float %1 %uint_0
+               OpStore %55 %54 None
                OpReturn
                OpFunctionEnd
-%vertex_main_inner = OpFunction %VertexOutput None %48
-         %49 = OpLabel
-        %out = OpVariable %_ptr_Function_VertexOutput Function %52
-         %53 = OpAccessChain %_ptr_Function_v4float %out %uint_0
-               OpStore %53 %55 None
-         %56 = OpAccessChain %_ptr_Function_v3float %out %uint_1
-         %58 = OpFunctionCall %v3float %smoothstep_aad1db
-               OpStore %56 %58 None
-         %59 = OpLoad %VertexOutput %out None
-               OpReturnValue %59
+%vertex_main_inner = OpFunction %VertexOutput None %58
+         %59 = OpLabel
+        %out = OpVariable %_ptr_Function_VertexOutput Function %62
+         %63 = OpAccessChain %_ptr_Function_v4float %out %uint_0
+               OpStore %63 %65 None
+         %66 = OpAccessChain %_ptr_Function_v3float %out %uint_1
+         %68 = OpFunctionCall %v3float %smoothstep_aad1db
+               OpStore %66 %68 None
+         %69 = OpLoad %VertexOutput %out None
+               OpReturnValue %69
                OpFunctionEnd
-%vertex_main = OpFunction %void None %35
-         %61 = OpLabel
-         %62 = OpFunctionCall %VertexOutput %vertex_main_inner
-         %63 = OpCompositeExtract %v4float %62 0
-               OpStore %vertex_main_position_Output %63 None
-         %64 = OpCompositeExtract %v3float %62 1
-               OpStore %vertex_main_loc0_Output %64 None
+%vertex_main = OpFunction %void None %45
+         %71 = OpLabel
+         %72 = OpFunctionCall %VertexOutput %vertex_main_inner
+         %73 = OpCompositeExtract %v4float %72 0
+               OpStore %vertex_main_position_Output %73 None
+         %74 = OpCompositeExtract %v3float %72 1
+               OpStore %vertex_main_loc0_Output %74 None
                OpStore %vertex_main___point_size_Output %float_1 None
                OpReturn
                OpFunctionEnd

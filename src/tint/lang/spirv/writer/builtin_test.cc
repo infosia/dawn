@@ -1452,8 +1452,10 @@ INSTANTIATE_TEST_SUITE_P(
                     BuiltinTestCase{kF16, core::BuiltinFn::kFma, "Fma"},
                     BuiltinTestCase{kF32, core::BuiltinFn::kMix, "Mix"},
                     BuiltinTestCase{kF16, core::BuiltinFn::kMix, "Mix"},
-                    BuiltinTestCase{kF32, core::BuiltinFn::kSmoothstep, "SmoothStep"},
-                    BuiltinTestCase{kF16, core::BuiltinFn::kSmoothstep, "SmoothStep"}));
+                    // Smoothstep is now polyfilled such that it will used t = clamp((x - edge0) /
+                    // (edge1 - edge0), 0.0, 1.0) to generate a result =   t * t * (3.0 - 2.0 * t).
+                    BuiltinTestCase{kF32, core::BuiltinFn::kSmoothstep, "NClamp"},
+                    BuiltinTestCase{kF16, core::BuiltinFn::kSmoothstep, "NClamp"}));
 
 TEST_F(SpirvWriterTest, Builtin_Clamp_Scalar_I32) {
     auto* value = b.FunctionParam("value", ty.i32());
