@@ -143,7 +143,7 @@ void WireTest::SetUp() {
         deviceCb;
     adapter.RequestDevice(&deviceDesc, wgpu::CallbackMode::AllowSpontaneous, deviceCb.Callback(),
                           deviceCb.MakeUserdata(this));
-    EXPECT_CALL(api, OnAdapterRequestDevice2(apiAdapter, NotNull(), _))
+    EXPECT_CALL(api, OnAdapterRequestDevice(apiAdapter, NotNull(), _))
         .WillOnce(WithArg<1>([&](const WGPUDeviceDescriptor* desc) {
             // Set on device creation to forward callbacks to the client.
             EXPECT_CALL(api, OnDeviceSetLoggingCallback(apiDevice, NotNull(), NotNull())).Times(1);
@@ -169,8 +169,8 @@ void WireTest::SetUp() {
                 .WillOnce(
                     WithArg<1>(Invoke([&](WGPUSupportedFeatures* features) { *features = {}; })));
 
-            api.CallAdapterRequestDevice2Callback(apiAdapter, WGPURequestDeviceStatus_Success,
-                                                  apiDevice, kEmptyOutputStringView);
+            api.CallAdapterRequestDeviceCallback(apiAdapter, WGPURequestDeviceStatus_Success,
+                                                 apiDevice, kEmptyOutputStringView);
         }));
     FlushClient();
     EXPECT_CALL(deviceCb, Call(wgpu::RequestDeviceStatus::Success, NotNull(), StrEq(""), this))
