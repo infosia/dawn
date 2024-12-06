@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84da0f75_2fb9a8e3",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-06T04:36:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e56dedb8_07527ef4",
+      "revId": "cc29d5c3933b58ba7f17388a621d00673452cd76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4418b4d5_dada65cf",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-12-05T21:18:52Z",
       "side": 1,
       "message": "Maybe we should only output the separator if there is more than one entry point? That would reduce a lot of a E2E churn.",
+      "revId": "cc29d5c3933b58ba7f17388a621d00673452cd76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a750a56e_382b6e08",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-06T04:36:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4418b4d5_dada65cf",
       "revId": "cc29d5c3933b58ba7f17388a621d00673452cd76",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
