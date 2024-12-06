@@ -43,8 +43,18 @@ constexpr uint32_t kBindingSize = 8;
 
 class DynamicBufferOffsetTests : public DawnTest {
   protected:
+    wgpu::RequiredLimits GetRequiredLimits(const wgpu::SupportedLimits& supported) override {
+        // Just copy all the limits, though all we really care about is
+        // maxStorageBuffersInFragmentStage
+        wgpu::RequiredLimits required = {};
+        required.limits = supported.limits;
+        return required;
+    }
+
     void SetUp() override {
         DawnTest::SetUp();
+
+        DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInFragmentStage < 1);
 
         mMinUniformBufferOffsetAlignment =
             GetSupportedLimits().limits.minUniformBufferOffsetAlignment;
