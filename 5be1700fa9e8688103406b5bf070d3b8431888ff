@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0190069b_3842b514",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-06T08:31:53Z",
+      "side": 1,
+      "message": "More of a question than review request: at [1]\n\nThe current state of the CL is it sort of work but ugly. Because we have a physical device init earlier at [1] and assume limits, functions, extensions etc will stay same when creating device. But in our case it\u0027s not any more, so we\u0027d need to re-initialize gl functions, toggles, etc.",
+      "revId": "5be1700fa9e8688103406b5bf070d3b8431888ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "260ff401_765eda70",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-06T08:31:53Z",
+      "side": 1,
+      "message": "[1] Is there some existing pattern/framework for our dawn tests that could config with some instance/adapter stage toggles and pass to here?",
+      "revId": "5be1700fa9e8688103406b5bf070d3b8431888ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
