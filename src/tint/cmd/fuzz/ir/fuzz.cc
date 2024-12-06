@@ -88,7 +88,7 @@ void Register(const IRFuzzer& fuzzer) {
             if (auto val = core::ir::Validate(ir.Get()); val != Success) {
                 TINT_ICE() << val.Failure();
             }
-            [[maybe_unused]] auto result = fn(ir.Get(), data);
+            [[maybe_unused]] auto result = fn(ir.Get(), fuzz::ir::Context{}, data);
         },
     });
 #endif
@@ -108,6 +108,9 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
     // leading to non-determinism, which we must avoid.
     TINT_STATIC_INIT(Fuzzers().Sort([](auto& a, auto& b) { return a.name < b.name; }));
 
+    Context context;
+    context.options = options;
+
     bool ran_atleast_once = false;
 
     // Run each of the program fuzzer functions
@@ -122,25 +125,25 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
             }
             ran_atleast_once = true;
 
-            threads.Push(std::thread([i, &acquire_module, &data, &options] {
+            threads.Push(std::thread([i, &acquire_module, &data, &context] {
                 auto& fuzzer = Fuzzers()[i];
                 currently_running = fuzzer.name;
-                if (options.verbose) {
+                if (context.options.verbose) {
                     std::cout << " • [" << i << "] Running: " << currently_running << '\n';
                 }
                 auto mod = acquire_module();
                 if (tint::core::ir::Validate(mod, fuzzer.pre_capabilities) != tint::Success) {
                     // Failing before running indicates that this input violates the pre-conditions
                     // for this pass, so should be skipped.
-                    if (options.verbose) {
+                    if (context.options.verbose) {
                         std::cout
                             << "   Failed to validate against fuzzer capabilities before running\n";
                     }
                     return;
                 }
 
-                if (auto result = fuzzer.fn(mod, data); result != Success) {
-                    if (options.verbose) {
+                if (auto result = fuzzer.fn(mod, context, data); result != Success) {
+                    if (context.options.verbose) {
                         std::cout << "   Failed to execute fuzzer: " << result.Failure() << "\n";
                     }
                 }
@@ -180,7 +183,7 @@ void Run(const std::function<tint::core::ir::Module()>& acquire_module,
                 continue;
             }
 
-            if (auto result = fuzzer.fn(mod, data); result != Success) {
+            if (auto result = fuzzer.fn(mod, context, data); result != Success) {
                 if (options.verbose) {
                     std::cout << "   Failed to execute fuzzer: " << result.Failure() << "\n";
                 }
