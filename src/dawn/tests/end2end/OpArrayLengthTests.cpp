@@ -37,6 +37,17 @@ namespace {
 
 class OpArrayLengthTest : public DawnTest {
   protected:
+    wgpu::RequiredLimits GetRequiredLimits(const wgpu::SupportedLimits& supported) override {
+        // Just copy all the limits, though all we really care about is
+        // maxStorageBuffersInFragmentStage
+        // maxStorageTexturesInFragmentStage
+        // maxStorageBuffersInVertexStage
+        // maxStorageTexturesInVertexStage
+        wgpu::RequiredLimits required = {};
+        required.limits = supported.limits;
+        return required;
+    }
+
     void SetUp() override {
         DawnTest::SetUp();
 
@@ -178,6 +189,8 @@ TEST_P(OpArrayLengthTest, Fragment) {
     // (spurious but harmless) offset=64 that Tint/GLSL produces.
     DAWN_SUPPRESS_TEST_IF(IsIntel() && (IsOpenGL() || IsOpenGLES()));
 
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInFragmentStage < 1);
+
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
 
     // Create the pipeline that computes the length of the buffers and writes it to the only render
@@ -236,6 +249,8 @@ TEST_P(OpArrayLengthTest, Vertex) {
     // TODO(crbug.com/dawn/1292): Some Intel drivers don't seem to like the
     // (spurious but harmless) offset=64 that Tint/GLSL produces.
     DAWN_SUPPRESS_TEST_IF(IsIntel() && IsOpenGL());
+
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInVertexStage < 1);
 
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
 
