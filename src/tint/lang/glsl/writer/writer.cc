@@ -41,7 +41,7 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options, const std:
         return res.Failure();
     }
 
-    return Print(ir, options.version);
+    return Print(ir, options);
 }
 
 }  // namespace tint::glsl::writer
