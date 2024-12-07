@@ -2,34 +2,34 @@
 
 
 struct modf_result_f32 {
-  float fract;
+  float tint_member;
   float whole;
 };
 
 struct frexp_result_f32 {
-  float fract;
-  int exp;
+  float tint_member_1;
+  int tint_member_2;
 };
 
 void deref_modf() {
   modf_result_f32 a = modf_result_f32(0.5f, 1.0f);
-  float tint_symbol = a.fract;
+  float v = a.tint_member;
   float whole = a.whole;
 }
 void no_deref_modf() {
   modf_result_f32 a = modf_result_f32(0.5f, 1.0f);
-  float tint_symbol = a.fract;
+  float v_1 = a.tint_member;
   float whole = a.whole;
 }
 void deref_frexp() {
   frexp_result_f32 a = frexp_result_f32(0.75f, 1);
-  float tint_symbol = a.fract;
-  int tint_symbol_1 = a.exp;
+  float v_2 = a.tint_member_1;
+  int v_3 = a.tint_member_2;
 }
 void no_deref_frexp() {
   frexp_result_f32 a = frexp_result_f32(0.75f, 1);
-  float tint_symbol = a.fract;
-  int tint_symbol_1 = a.exp;
+  float v_4 = a.tint_member_1;
+  int v_5 = a.tint_member_2;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
