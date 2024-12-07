@@ -6,7 +6,7 @@ struct UBO {
 };
 
 struct Result {
-  int tint_symbol;
+  int tint_member;
 };
 
 struct S {
@@ -29,5 +29,5 @@ void x(inout S p) {
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   x(s);
-  v_1.inner.tint_symbol = s.data[3u];
+  v_1.inner.tint_member = s.data[3u];
 }

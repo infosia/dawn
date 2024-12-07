@@ -1560,15 +1560,15 @@ TEST_F(GlslWriterTest, Modf_Scalar) {
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(
 
 struct modf_result_f32 {
-  float fract;
+  float tint_member;
   float whole;
 };
 
 float foo(float value) {
   modf_result_f32 v = modf_result_f32(0.0f, 0.0f);
-  v.fract = modf(value, v.whole);
+  v.tint_member = modf(value, v.whole);
   modf_result_f32 v_1 = v;
-  return (v_1.fract + v_1.whole);
+  return (v_1.tint_member + v_1.whole);
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
@@ -1592,15 +1592,15 @@ TEST_F(GlslWriterTest, Modf_Vector) {
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(
 
 struct modf_result_vec4_f32 {
-  vec4 fract;
+  vec4 tint_member;
   vec4 whole;
 };
 
 vec4 foo(vec4 value) {
   modf_result_vec4_f32 v = modf_result_vec4_f32(vec4(0.0f), vec4(0.0f));
-  v.fract = modf(value, v.whole);
+  v.tint_member = modf(value, v.whole);
   modf_result_vec4_f32 v_1 = v;
-  return (v_1.fract + v_1.whole);
+  return (v_1.tint_member + v_1.whole);
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
@@ -1624,15 +1624,15 @@ TEST_F(GlslWriterTest, Frexp_Scalar) {
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(
 
 struct frexp_result_f32 {
-  float fract;
-  int exp;
+  float tint_member;
+  int tint_member_1;
 };
 
 float foo(float value) {
   frexp_result_f32 v = frexp_result_f32(0.0f, 0);
-  v.fract = frexp(value, v.exp);
+  v.tint_member = frexp(value, v.tint_member_1);
   frexp_result_f32 v_1 = v;
-  return (v_1.fract + float(v_1.exp));
+  return (v_1.tint_member + float(v_1.tint_member_1));
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
@@ -1656,15 +1656,15 @@ TEST_F(GlslWriterTest, Frexp_Vector) {
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(
 
 struct frexp_result_vec4_f32 {
-  vec4 fract;
-  ivec4 exp;
+  vec4 tint_member;
+  ivec4 tint_member_1;
 };
 
 vec4 foo(vec4 value) {
   frexp_result_vec4_f32 v = frexp_result_vec4_f32(vec4(0.0f), ivec4(0));
-  v.fract = frexp(value, v.exp);
+  v.tint_member = frexp(value, v.tint_member_1);
   frexp_result_vec4_f32 v_1 = v;
-  return (v_1.fract + vec4(v_1.exp));
+  return (v_1.tint_member + vec4(v_1.tint_member_1));
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
