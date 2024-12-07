@@ -44,7 +44,7 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options, const std:
     }
 
     // Generate the GLSL code.
-    auto result = Print(ir, options.version);
+    auto result = Print(ir, options);
     if (result != Success) {
         return result.Failure();
     }
