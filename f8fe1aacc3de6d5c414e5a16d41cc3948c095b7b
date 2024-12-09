@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86c42d29_e19751b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2024-12-09T20:07:40Z",
+      "side": 1,
+      "message": "Gregg, sorry if this conflicts with a CTS roll, but we must make these bots green ASAP, since we need to do an OS upgrade on them ASAP.",
+      "revId": "f8fe1aacc3de6d5c414e5a16d41cc3948c095b7b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
