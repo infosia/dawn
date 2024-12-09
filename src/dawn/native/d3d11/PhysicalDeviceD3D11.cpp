@@ -151,6 +151,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::D3D11MultithreadProtected);
     EnableFeature(Feature::Float32Filterable);
     EnableFeature(Feature::Float32Blendable);
+    EnableFeature(Feature::Float32Renderable);
+    EnableFeature(Feature::Float16Renderable);
     EnableFeature(Feature::DualSourceBlending);
     EnableFeature(Feature::ClipDistances);
     EnableFeature(Feature::Unorm16TextureFormats);
