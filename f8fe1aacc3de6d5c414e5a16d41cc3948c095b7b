@@ -16,6 +16,24 @@
       "message": "Gregg, sorry if this conflicts with a CTS roll, but we must make these bots green ASAP, since we need to do an OS upgrade on them ASAP.",
       "revId": "f8fe1aacc3de6d5c414e5a16d41cc3948c095b7b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "551fc210_0f26d3d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-12-09T20:17:12Z",
+      "side": 1,
+      "message": "All the rolls over the weekend were no-ops since there weren\u0027t any new CTS commits, so I think we should be safe?",
+      "parentUuid": "86c42d29_e19751b4",
+      "revId": "f8fe1aacc3de6d5c414e5a16d41cc3948c095b7b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
