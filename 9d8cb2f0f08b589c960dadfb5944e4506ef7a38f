@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85a8b623_a1926b5a",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-09T15:27:59Z",
+      "side": 1,
+      "message": "Better comment",
+      "range": {
+        "startLine": 445,
+        "startChar": 15,
+        "endLine": 445,
+        "endChar": 44
+      },
+      "revId": "9d8cb2f0f08b589c960dadfb5944e4506ef7a38f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f2d298f_383a7c67",
+        "filename": "test/tint/bug/tint/379127084.wgsl.expected.ir.msl",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-09T15:27:59Z",
+      "side": 1,
+      "message": "I dont know why some end up with this enormous equation and others use a temp",
+      "range": {
+        "startLine": 99,
+        "startChar": 41,
+        "endLine": 99,
+        "endChar": 46
+      },
+      "revId": "9d8cb2f0f08b589c960dadfb5944e4506ef7a38f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
