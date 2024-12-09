@@ -117,6 +117,30 @@
       },
       "revId": "9d8cb2f0f08b589c960dadfb5944e4506ef7a38f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8d1e02c_0853381c",
+        "filename": "test/tint/bug/tint/379127084.wgsl.expected.ir.msl",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-09T21:34:45Z",
+      "side": 1,
+      "message": "I meant the platform compilers will do cse with the code we generate.",
+      "parentUuid": "3d896189_0f8eacd8",
+      "range": {
+        "startLine": 99,
+        "startChar": 41,
+        "endLine": 99,
+        "endChar": 46
+      },
+      "revId": "9d8cb2f0f08b589c960dadfb5944e4506ef7a38f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
