@@ -63,6 +63,8 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
         return {};
     }
 
+    auto* glExplicitExtensions = options.Get<RequestAdapterOptionsGLExplicitExtensions>();
+
     std::vector<Ref<PhysicalDeviceBase>> devices;
 
     // A helper function performing checks on the display we're trying to use, and adding the
@@ -80,7 +82,8 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
         }
 
         Ref<PhysicalDevice> device;
-        DAWN_TRY_ASSIGN(device, PhysicalDevice::Create(GetType(), std::move(display)));
+        DAWN_TRY_ASSIGN(
+            device, PhysicalDevice::Create(GetType(), std::move(display), glExplicitExtensions));
         devices.push_back(device);
 
         return {};

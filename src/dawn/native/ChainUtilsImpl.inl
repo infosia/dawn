@@ -47,6 +47,7 @@ struct SharedBufferMemoryD3D12ResourceDescriptor;
 
 namespace opengl {
 struct RequestAdapterOptionsGetGLProc;
+struct RequestAdapterOptionsGLExplicitExtensions;
 }
 
 namespace vulkan {
@@ -77,10 +78,15 @@ constexpr inline wgpu::SType STypeForImpl<opengl::RequestAdapterOptionsGetGLProc
     wgpu::SType(WGPUSType_RequestAdapterOptionsGetGLProc);
 
 template <>
+constexpr inline wgpu::SType STypeForImpl<opengl::RequestAdapterOptionsGLExplicitExtensions> =
+    wgpu::SType(WGPUSType_RequestAdapterOptionsGLExplicitExtensions);
+
+template <>
 struct AdditionalExtensions<RequestAdapterOptions> {
     using List = AdditionalExtensionsList<const d3d::RequestAdapterOptionsLUID*,
                                           const d3d11::RequestAdapterOptionsD3D11Device*,
-                                          const opengl::RequestAdapterOptionsGetGLProc*>;
+                                          const opengl::RequestAdapterOptionsGetGLProc*,
+                                          const opengl::RequestAdapterOptionsGLExplicitExtensions*>;
 };
 
 template <>

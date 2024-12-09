@@ -98,6 +98,8 @@ void OpenGLFunctionsBase::InitializeSupportedGLExtensions() {
     int32_t numExtensions;
     GetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
 
+    printf("\n\n\n !!! numExtensions: %d\n\n", numExtensions);
+
     for (int32_t i = 0; i < numExtensions; ++i) {
         const char* extensionName = reinterpret_cast<const char*>(GetStringi(GL_EXTENSIONS, i));
         mSupportedGLExtensionsSet.insert(extensionName);

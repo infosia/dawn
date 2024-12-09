@@ -28,6 +28,9 @@
 #ifndef INCLUDE_DAWN_NATIVE_OPENGLBACKEND_H_
 #define INCLUDE_DAWN_NATIVE_OPENGLBACKEND_H_
 
+#include <string>
+#include <vector>
+
 #include "dawn/native/DawnNative.h"
 #include "webgpu/webgpu_cpp_chained_struct.h"
 
@@ -55,6 +58,13 @@ struct DAWN_NATIVE_EXPORT RequestAdapterOptionsGetGLProc : wgpu::ChainedStruct {
 
     EGLGetProcProc getProc;
     EGLDisplay display;
+};
+
+// Can be chained in WGPURequestAdapterOptions
+struct DAWN_NATIVE_EXPORT RequestAdapterOptionsGLExplicitExtensions : wgpu::ChainedStruct {
+    RequestAdapterOptionsGLExplicitExtensions();
+
+    std::vector<std::string> extensions;
 };
 
 struct DAWN_NATIVE_EXPORT ExternalImageDescriptorEGLImage : ExternalImageDescriptor {

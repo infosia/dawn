@@ -106,18 +106,22 @@ bool IsSwiftShader(std::string_view renderer) {
 }  // anonymous namespace
 
 // static
-ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType backendType,
-                                                          Ref<DisplayEGL> display) {
+ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(
+    wgpu::BackendType backendType,
+    Ref<DisplayEGL> display,
+    const RequestAdapterOptionsGLExplicitExtensions* glExplicitExtensions) {
     const EGLFunctions& egl = display->egl;
     EGLDisplay eglDisplay = display->GetDisplay();
 
     // Create a temporary context and make it current during the creation of the PhysicalDevice so
     // that we can query the limits and other properties. Assumes that the limit are the same
     // irrespective of the context creation options.
+    printf("\n\n\n !!! call ContextEGL::Create false");
     std::unique_ptr<ContextEGL> context;
-    DAWN_TRY_ASSIGN(context, ContextEGL::Create(display, backendType, /*useRobustness*/ false,
-                                                /*useANGLETextureSharing*/ false,
-                                                /*forceMinVersionAndExtensions*/ false));
+    DAWN_TRY_ASSIGN(context, ContextEGL::Create(
+                                 display, backendType, /*useRobustness*/ false,
+                                 /*useANGLETextureSharing*/ false,
+                                 /*forceMinVersionAndExtensions*/ glExplicitExtensions != nullptr));
 
     EGLSurface prevDrawSurface = egl.GetCurrentSurface(EGL_DRAW);
     EGLSurface prevReadSurface = egl.GetCurrentSurface(EGL_READ);
@@ -151,7 +155,7 @@ bool PhysicalDevice::SupportsExternalImages() const {
 MaybeError PhysicalDevice::InitializeImpl() {
     DAWN_TRY(mFunctions.Initialize(mDisplay->egl.GetProcAddress));
 
-    // In some cases (like like of EGL_KHR_create_context) we don't know before this point that we
+    // In some cases (like that of EGL_KHR_create_context) we don't know before this point that we
     // got a GL context that supports the required version. Check it now.
     switch (GetBackendType()) {
         case wgpu::BackendType::OpenGLES:
@@ -375,6 +379,7 @@ void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platfo
 
 void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platform,
                                                TogglesState* deviceToggles) const {
+    printf("\n\n\n !!! aaaaaaaa PhysicalDevice::SetupBackendDeviceToggles()\n\n");
     const OpenGLFunctions& gl = mFunctions;
 
     // TODO(crbug.com/dawn/582): Use OES_draw_buffers_indexed where available.
@@ -455,6 +460,7 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     bool forceMinVersionAndNoExtension =
         IsANGLE(mName) && deviceToggles.IsEnabled(Toggle::GLForceMinVersionAndNoExtension);
 
+    printf("\n\n\n !!! call ContextEGL::Create forceMinVersionAndNoExtension");
     std::unique_ptr<ContextEGL> context;
     DAWN_TRY_ASSIGN(context,
                     ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
@@ -470,6 +476,13 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
         TogglesState adjustedDeviceToggles(deviceToggles.GetStage());
         adjustedDeviceToggles.InheritFromInternal(deviceToggles);
         SetupBackendDeviceToggles(adapter->GetInstance()->GetPlatform(), &adjustedDeviceToggles);
+
+        printf("\n\n\n!! Toggle::UseBlitForStencilTextureWrite %d",
+               adjustedDeviceToggles.IsEnabled(Toggle::UseBlitForStencilTextureWrite));
+        printf("\n!! Toggle::GLForceMinVersionAndNoExtension %d",
+               adjustedDeviceToggles.IsEnabled(Toggle::GLForceMinVersionAndNoExtension));
+        printf("\n!! GL_OES_texture_stencil8: %d\n\n\n",
+               mFunctions.IsGLExtensionSupported("GL_OES_texture_stencil8"));
 
         return Device::Create(adapter, descriptor, mFunctions, std::move(context),
                               adjustedDeviceToggles, std::move(lostEvent));

@@ -4061,7 +4061,8 @@
             {"value": 56, "name": "shared texture memory a hardware buffer properties", "tags": ["dawn", "native"]},
             {"value": 57, "name": "a hardware buffer properties", "tags": ["dawn", "native"]},
             {"value": 58, "name": "dawn experimental immediate data limits", "tags": ["dawn"]},
-            {"value": 59, "name": "dawn texel copy buffer row alignment limits", "tags": ["dawn"]}
+            {"value": 59, "name": "dawn texel copy buffer row alignment limits", "tags": ["dawn"]},
+            {"value": 60, "name": "request adapter options GL explicit extensions", "tags": ["dawn", "native"]}
         ]
     },
     "texture": {

@@ -577,7 +577,7 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Force OpenGLES to create context with minimum version and no extension required by Compat "
       "spec, which for OpenGLES is version 3.1 with no extensions. This toggle is used by end2end "
       "testing.",
-      "crbug.com/382084196", ToggleStage::Device}},
+      "crbug.com/382084196", ToggleStage::Adapter}},
     {Toggle::VulkanMonolithicPipelineCache,
      {"vulkan_monolithic_pipeline_cache",
       "Use a monolithic VkPipelineCache per device. The embedder is responsible for calling "

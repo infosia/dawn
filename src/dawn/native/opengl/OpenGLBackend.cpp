@@ -40,6 +40,10 @@ RequestAdapterOptionsGetGLProc::RequestAdapterOptionsGetGLProc() {
     sType = wgpu::SType::RequestAdapterOptionsGetGLProc;
 }
 
+RequestAdapterOptionsGLExplicitExtensions::RequestAdapterOptionsGLExplicitExtensions() {
+    sType = wgpu::SType::RequestAdapterOptionsGLExplicitExtensions;
+}
+
 ExternalImageDescriptorEGLImage::ExternalImageDescriptorEGLImage()
     : ExternalImageDescriptor(ExternalImageType::EGLImage) {}
 

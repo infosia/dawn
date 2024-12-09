@@ -139,6 +139,7 @@ MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
         AddAttrib(EGL_DISPLAY_TEXTURE_SHARE_GROUP_ANGLE, EGL_TRUE);
     }
 
+    printf("\n\n\n !!! ContextEGL::Initialize\n\n");
     if (forceMinVersionAndNoExtension) {
         AddAttrib(EGL_CONTEXT_OPENGL_BACKWARDS_COMPATIBLE_ANGLE, EGL_FALSE);
         AddAttrib(EGL_EXTENSIONS_ENABLED_ANGLE, EGL_FALSE);

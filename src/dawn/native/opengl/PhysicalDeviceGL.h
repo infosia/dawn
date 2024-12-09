@@ -30,6 +30,7 @@
 
 #include <memory>
 
+#include "dawn/native/OpenGLBackend.h"
 #include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/OpenGLFunctions.h"
@@ -40,8 +41,10 @@ class DisplayEGL;
 
 class PhysicalDevice : public PhysicalDeviceBase {
   public:
-    static ResultOrError<Ref<PhysicalDevice>> Create(wgpu::BackendType backendType,
-                                                     Ref<DisplayEGL> display);
+    static ResultOrError<Ref<PhysicalDevice>> Create(
+        wgpu::BackendType backendType,
+        Ref<DisplayEGL> display,
+        const RequestAdapterOptionsGLExplicitExtensions* glExplicitExtensions);
 
     ~PhysicalDevice() override = default;
 
