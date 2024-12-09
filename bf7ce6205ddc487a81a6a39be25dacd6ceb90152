@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85ce78cd_ef8d71cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-09T19:53:56Z",
+      "side": 1,
+      "message": "LGTM with a couple of small comments.",
+      "revId": "bf7ce6205ddc487a81a6a39be25dacd6ceb90152",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "655aac6b_fab1ea6a",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-09T19:53:56Z",
+      "side": 1,
+      "message": "Drop the `-\u003eDeepestElement()` here since you already do it below?\nThen you could use `type` in the other places where you currently use `x_arg-\u003eType()`.",
+      "revId": "bf7ce6205ddc487a81a6a39be25dacd6ceb90152",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fbd4669_7c065b65",
+        "filename": "src/tint/lang/spirv/writer/builtin_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-09T19:53:56Z",
+      "side": 1,
+      "message": "Since it\u0027s no longer a 1-1 mapping from WGSL builtin to SPIR-V instruction I think we should split these out to separate tests that check for the whole sequence, as do for the other polyfills (e.g. `Builtin_ExtractBits_Scalar_I32`).",
+      "range": {
+        "startLine": 1455,
+        "startChar": 0,
+        "endLine": 1458,
+        "endChar": 84
+      },
+      "revId": "bf7ce6205ddc487a81a6a39be25dacd6ceb90152",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
