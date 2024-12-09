@@ -740,6 +740,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::DawnLoadResolveTexture);
     EnableFeature(Feature::ClipDistances);
     EnableFeature(Feature::Float32Blendable);
+    EnableFeature(Feature::Float32Renderable);
+    EnableFeature(Feature::Float16Renderable);
 
     // SIMD-scoped permute operations is supported by GPU family Metal3, Apple6, Apple7, Apple8,
     // and Mac2.
