@@ -661,6 +661,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::ClipDistances);
     EnableFeature(Feature::Float32Blendable);
     EnableFeature(Feature::FlexibleTextureViews);
+    EnableFeature(Feature::Float32Renderable);
+    EnableFeature(Feature::Float16Renderable);
 
     // The function subgroupBroadcast(f16) fails for some edge cases on intel gen-9 devices.
     // See crbug.com/391680973
