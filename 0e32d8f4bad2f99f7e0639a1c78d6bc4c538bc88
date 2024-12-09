@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6c498c3_5d83d350",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-09T21:04:59Z",
+      "side": 1,
+      "message": "Nit: Could also just set the optional in the printer when we emit the entry point and then retrieve it here, to avoid doing this loop over all functions again.",
+      "revId": "0e32d8f4bad2f99f7e0639a1c78d6bc4c538bc88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ef5617b_354a053b",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-09T21:04:59Z",
+      "side": 1,
+      "message": "Maybe we should move `writer::Output` to `writer/common/` so we don\u0027t have to duplicate these structures?",
+      "revId": "0e32d8f4bad2f99f7e0639a1c78d6bc4c538bc88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
