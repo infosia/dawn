@@ -193,7 +193,7 @@ class Printer {
     }
 
     /// @returns the generated SPIR-V code on success, or failure
-    Result<std::vector<uint32_t>> Code() {
+    Result<Output> Code() {
         if (auto res = Generate(); res != Success) {
             return res.Failure();
         }
@@ -202,7 +202,11 @@ class Printer {
         BinaryWriter writer;
         writer.WriteHeader(module_.IdBound(), kWriterVersion);
         writer.WriteModule(module_);
-        return std::move(writer.Result());
+
+        Output output;
+        output.spirv = std::move(writer.Result());
+        output.workgroup_info = workgroup_info;
+        return output;
     }
 
   private:
@@ -276,6 +280,9 @@ class Printer {
     uint32_t switch_merge_label_ = 0;
 
     bool zero_init_workgroup_memory_ = false;
+
+    /// Workgroup information emitted
+    std::optional<Output::WorkgroupInfo> workgroup_info = std::nullopt;
 
     /// Builds the SPIR-V from the IR
     Result<SuccessType> Generate() {
@@ -775,6 +782,9 @@ class Printer {
 
                 auto const_wg_size = func->WorkgroupSizeAsConst();
                 TINT_ASSERT(const_wg_size);
+
+                // Store the workgroup information away to return from the generator.
+                workgroup_info = {(*const_wg_size)[0], (*const_wg_size)[1], (*const_wg_size)[2]};
 
                 module_.PushExecutionMode(
                     spv::Op::OpExecutionMode,
@@ -2523,7 +2533,7 @@ class Printer {
 
 }  // namespace
 
-tint::Result<std::vector<uint32_t>> Print(core::ir::Module& module, const Options& options) {
+tint::Result<Output> Print(core::ir::Module& module, const Options& options) {
     return Printer{module, options}.Code();
 }
 
