@@ -16,6 +16,24 @@
       "message": "Shouldn\u0027t we be forwarding the options from the WGSL fuzzer here?",
       "revId": "ad9bbfa6dfe805ce3953da574357d6737e0fdbcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "510f18df_4d1eceb9",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-09T15:22:58Z",
+      "side": 1,
+      "message": "Yes we should, will fix.",
+      "parentUuid": "45e50c33_0675ea52",
+      "revId": "ad9bbfa6dfe805ce3953da574357d6737e0fdbcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
