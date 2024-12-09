@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80634780_3d2b3ff4",
+        "filename": "src/tint/lang/hlsl/writer/writer_fuzz.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-09T19:56:30Z",
+      "side": 1,
+      "message": "The AST fuzzer checks the Program enables to conditionally set the shader model to 6.2 if it needs f16, otherwise it sets it to 6.0. Here, we don\u0027t really have access to the enables, so I just always set to 6.6. We also always enable f16 support. This may not test exactly the same paths of DXC that are used by Dawn, but I think it\u0027s good enough.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 40
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "249e2d34_2d0ba2a2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/writer_fuzz.cc",
+              "range": {
+                "startLine": 129,
+                "startChar": 0,
+                "endLine": 129,
+                "endChar": 0
+              },
+              "replacement": "        // TODO: Use the enables to conditionally set the shader model to 6.2 if it needs f16, otherwise it sets it to 6.0.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "628777dcc2af21d038789ec2af4df0f2d30a7f8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
