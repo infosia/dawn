@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0862cf1_c3caf4be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-09T17:05:03Z",
+      "side": 1,
+      "message": "PTAL, decided we don\u0027t really need a transform for SPIR-V. Tempted to do the same with the other backends too...",
+      "revId": "282ce999406fc2d927a2031d099b29e45c84c529",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
