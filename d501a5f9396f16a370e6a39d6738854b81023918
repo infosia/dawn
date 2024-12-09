@@ -51,6 +51,24 @@
       "parentUuid": "f895af50_5cab5c2e",
       "revId": "d501a5f9396f16a370e6a39d6738854b81023918",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "527516c8_c0a44593",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3704,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-09T21:59:36Z",
+      "side": 1,
+      "message": "we just say \n(If edge0 \u003d edge1)\nWhich isnt entirely clarifying",
+      "parentUuid": "ff3f8ff1_21037542",
+      "revId": "d501a5f9396f16a370e6a39d6738854b81023918",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
