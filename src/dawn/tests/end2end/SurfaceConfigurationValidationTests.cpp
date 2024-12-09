@@ -62,6 +62,14 @@ struct GLFWindowDestroyer {
 
 class SurfaceConfigurationValidationTests : public DawnTest {
   public:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        std::vector<wgpu::FeatureName> requiredFeatures;
+        if (IsCompatibilityMode() && SupportsFeatures({wgpu::FeatureName::Float16Renderable})) {
+            requiredFeatures.push_back(wgpu::FeatureName::Float16Renderable);
+        }
+        return requiredFeatures;
+    }
+
     void SetUp() override {
         DawnTest::SetUp();
         DAWN_TEST_UNSUPPORTED_IF(UsesWire());
@@ -199,6 +207,10 @@ TEST_P(SurfaceConfigurationValidationTests, AnyCombinationOfCapabilities) {
     surface.GetCapabilities(adapter, &capabilities);
 
     for (wgpu::TextureFormat format : dawn::utils::kAllTextureFormats) {
+        if (format == wgpu::TextureFormat::RGBA16Float && IsCompatibilityMode() &&
+            !device.HasFeature(wgpu::FeatureName::Float16Renderable)) {
+            continue;
+        }
         for (wgpu::CompositeAlphaMode alphaMode : dawn::utils::kAllAlphaModes) {
             for (wgpu::PresentMode presentMode : dawn::utils::kAllPresentModes) {
                 config.format = format;

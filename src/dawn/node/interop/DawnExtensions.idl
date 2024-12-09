@@ -29,11 +29,13 @@
 // upstream webgpu.idl.
 
 enum GPUFeatureName {
-    // subgroups, subgroups-f16 and multi-draw-indirect features are not in webgpu.idl yet.
+    // List experimental features not in webgpu.idl yet here.
     "subgroups",
     "subgroups-f16",
     "multi-draw-indirect",
     "chromium-experimental-immediate-data",
+    "float16-renderable",
+    "float32-renderable",
 };
 
 interface GPUAdapter {
