@@ -974,12 +974,26 @@ TEST_P(DepthSamplingTest, SampleDepthOnly) {
                    format, kNormalizedTextureValues, tolerance);
 }
 
-// Test that sampling in a render pipeline with all of the compare functions works.
-TEST_P(DepthSamplingTest, CompareFunctionsRender) {
-    // TODO(crbug.com/388318201): investigate
-    DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode() &&
-                          HasToggleEnabled("gl_force_es_31_and_no_extensions"));
+class DepthSamplingTest_RequireF32Renderable : public DepthSamplingTest {
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        auto requiredFeatures = DepthSamplingTest::GetRequiredFeatures();
+        if (IsCompatibilityMode() && SupportsFeatures({wgpu::FeatureName::Float32Renderable})) {
+            requiredFeatures.push_back(wgpu::FeatureName::Float32Renderable);
+        }
+        return requiredFeatures;
+    }
 
+    void SetUp() override {
+        DepthSamplingTest::SetUp();
+
+        // Renders to R32Float in DoDepthCompareRefTest, need float32 to be color renderable
+        DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode() &&
+                                 !device.HasFeature(wgpu::FeatureName::Float32Renderable));
+    }
+};
+
+// Test that sampling in a render pipeline with all of the compare functions works.
+TEST_P(DepthSamplingTest_RequireF32Renderable, CompareFunctionsRender) {
     // Initialization via renderPass loadOp doesn't work on Mac Intel.
     DAWN_SUPPRESS_TEST_IF(IsMetal() && IsIntel());
 
@@ -1032,6 +1046,12 @@ DAWN_INSTANTIATE_TEST_P(DepthStencilSamplingTest,
                                                          utils::kDepthAndStencilFormats.end()));
 
 DAWN_INSTANTIATE_TEST_P(DepthSamplingTest,
+                        {D3D11Backend(), D3D11Backend({"use_packed_depth24_unorm_stencil8_format"}),
+                         MetalBackend(), OpenGLBackend(), OpenGLESBackend(), VulkanBackend()},
+                        std::vector<wgpu::TextureFormat>(utils::kDepthFormats.begin(),
+                                                         utils::kDepthFormats.end()));
+
+DAWN_INSTANTIATE_TEST_P(DepthSamplingTest_RequireF32Renderable,
                         {D3D11Backend(), D3D11Backend({"use_packed_depth24_unorm_stencil8_format"}),
                          MetalBackend(), OpenGLBackend(), OpenGLESBackend(), VulkanBackend()},
                         std::vector<wgpu::TextureFormat>(utils::kDepthFormats.begin(),
