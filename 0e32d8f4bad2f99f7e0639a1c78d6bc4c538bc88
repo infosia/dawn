@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4318e757_8246764c",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-09T21:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6c498c3_5d83d350",
+      "revId": "0e32d8f4bad2f99f7e0639a1c78d6bc4c538bc88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ef5617b_354a053b",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-12-09T21:04:59Z",
       "side": 1,
       "message": "Maybe we should move `writer::Output` to `writer/common/` so we don\u0027t have to duplicate these structures?",
+      "revId": "0e32d8f4bad2f99f7e0639a1c78d6bc4c538bc88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b7f869f_4d213523",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-09T21:23:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ef5617b_354a053b",
       "revId": "0e32d8f4bad2f99f7e0639a1c78d6bc4c538bc88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
