@@ -16,6 +16,23 @@
       "message": "cc Antonio as per our discussion about the AST HSL backend.",
       "revId": "d501a5f9396f16a370e6a39d6738854b81023918",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f895af50_5cab5c2e",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3704,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-09T21:35:16Z",
+      "side": 1,
+      "message": "Smoothstep is in terms of floats. Floats don\u0027t really `\u003d\u003d` very well, should this be doing something with some kind of epsilon value or something?",
+      "revId": "d501a5f9396f16a370e6a39d6738854b81023918",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
