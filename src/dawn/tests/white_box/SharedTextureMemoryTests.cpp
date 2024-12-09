@@ -112,6 +112,9 @@ std::vector<wgpu::FeatureName> SharedTextureMemoryTests::GetRequiredFeatures() {
             features.push_back(feature);
         }
     }
+    if (IsCompatibilityMode() && SupportsFeatures({wgpu::FeatureName::Float16Renderable})) {
+        features.push_back(wgpu::FeatureName::Float16Renderable);
+    }
 
     return features;
 }  // namespace dawn
@@ -968,6 +971,9 @@ TEST_P(SharedTextureMemoryTests, GetPropertiesErrorMemory) {
 
 // Tests that a SharedTextureMemory supports expected texture usages.
 TEST_P(SharedTextureMemoryTests, TextureUsages) {
+    DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode() &&
+                             !device.HasFeature(wgpu::FeatureName::Float16Renderable));
+
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
@@ -997,7 +1003,7 @@ TEST_P(SharedTextureMemoryTests, TextureUsages) {
         // context). Add tests where the D3D/Vulkan texture is not created with the
         // relevant flag.
         if ((isSinglePlanar || device.HasFeature(wgpu::FeatureName::MultiPlanarRenderTargets)) &&
-            utils::IsRenderableFormat(device, properties.format)) {
+            utils::IsRenderableFormat(device, properties.format, IsCompatibilityMode())) {
             expectedUsage |= wgpu::TextureUsage::RenderAttachment;
         }
 
@@ -1757,6 +1763,9 @@ TEST_P(SharedTextureMemoryTests, UninitializedOnEndAccess) {
 
 // Test copying to texture memory on one device, then sampling it using another device.
 TEST_P(SharedTextureMemoryTests, CopyToTextureThenSample) {
+    DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode() &&
+                             !device.HasFeature(wgpu::FeatureName::Float16Renderable));
+
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
@@ -1858,6 +1867,9 @@ TEST_P(SharedTextureMemoryTests, EndWithoutUse) {
 // If concurrent read is supported, use two read textures. The first EndAccess should
 // see no fences. The second should then export all the unacquired fences.
 TEST_P(SharedTextureMemoryTests, BeginEndWithoutUse) {
+    DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode() &&
+                             !device.HasFeature(wgpu::FeatureName::Float16Renderable));
+
     // crbug.com/358166479
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsNvidia() && IsVulkan());
 
@@ -1952,6 +1964,9 @@ TEST_P(SharedTextureMemoryTests, BeginEndWithoutUse) {
 
 // Test copying to texture memory on one device, then sampling it using another device.
 TEST_P(SharedTextureMemoryTests, CopyToTextureThenSample2DArray) {
+    DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode() &&
+                             !device.HasFeature(wgpu::FeatureName::Float16Renderable));
+
     if (GetParam().mLayerCount != 2) {
         return;
     }

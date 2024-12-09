@@ -1513,6 +1513,12 @@ bool Converter::Convert(wgpu::FeatureName& out, interop::GPUFeatureName in) {
         case interop::GPUFeatureName::kFloat32Blendable:
             out = wgpu::FeatureName::Float32Blendable;
             return true;
+        case interop::GPUFeatureName::kFloat32Renderable:
+            out = wgpu::FeatureName::Float32Renderable;
+            return true;
+        case interop::GPUFeatureName::kFloat16Renderable:
+            out = wgpu::FeatureName::Float16Renderable;
+            return true;
         case interop::GPUFeatureName::kSubgroups:
             out = wgpu::FeatureName::Subgroups;
             return true;
@@ -1547,6 +1553,8 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         CASE(DepthClipControl, kDepthClipControl);
         CASE(Float32Filterable, kFloat32Filterable);
         CASE(Float32Blendable, kFloat32Blendable);
+        CASE(Float16Renderable, kFloat16Renderable);
+        CASE(Float32Renderable, kFloat32Renderable);
         CASE(IndirectFirstInstance, kIndirectFirstInstance);
         CASE(RG11B10UfloatRenderable, kRg11B10UfloatRenderable);
         CASE(ShaderF16, kShaderF16);

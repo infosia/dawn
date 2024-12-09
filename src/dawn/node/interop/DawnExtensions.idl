@@ -31,6 +31,8 @@
 enum GPUFeatureName {
     "multi-draw-indirect",
     "chromium-experimental-immediate-data",
+    "float16-renderable",
+    "float32-renderable",
 };
 
 interface GPUAdapter {
