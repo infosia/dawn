@@ -69,6 +69,30 @@
       },
       "revId": "9d8cb2f0f08b589c960dadfb5944e4506ef7a38f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3428c407_f38efb2a",
+        "filename": "test/tint/bug/tint/379127084.wgsl.expected.ir.msl",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-09T20:51:12Z",
+      "side": 1,
+      "message": "Relying on common subexpression elimination might not be the wise move considering all of the backends and all of the compilers.",
+      "parentUuid": "0f3f6931_09b75f78",
+      "range": {
+        "startLine": 99,
+        "startChar": 41,
+        "endLine": 99,
+        "endChar": 46
+      },
+      "revId": "9d8cb2f0f08b589c960dadfb5944e4506ef7a38f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
