@@ -113,6 +113,8 @@ bool IsFeatureSupported(WGPUFeatureName feature) {
         case WGPUFeatureName_ClipDistances:
         case WGPUFeatureName_ChromiumExperimentalImmediateData:
         case WGPUFeatureName_DawnTexelCopyBufferRowAlignment:
+        case WGPUFeatureName_Float16Renderable:
+        case WGPUFeatureName_Float32Renderable:
             return true;
     }
 
