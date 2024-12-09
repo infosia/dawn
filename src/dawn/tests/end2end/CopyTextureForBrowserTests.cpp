@@ -58,6 +58,16 @@ static constexpr wgpu::TextureFormat kTextureFormat = wgpu::TextureFormat::RGBA8
 static constexpr uint64_t kDefaultTextureWidth = 10;
 static constexpr uint64_t kDefaultTextureHeight = 1;
 
+bool IsFloat16(wgpu::TextureFormat format) {
+    return format == wgpu::TextureFormat::R16Float || format == wgpu::TextureFormat::RG16Float ||
+           format == wgpu::TextureFormat::RGBA16Float;
+}
+
+bool IsFloat32(wgpu::TextureFormat format) {
+    return format == wgpu::TextureFormat::R32Float || format == wgpu::TextureFormat::RG32Float ||
+           format == wgpu::TextureFormat::RGBA32Float;
+}
+
 enum class ColorSpace : uint32_t {
     SRGB = 0x00,
     DisplayP3 = 0x01,
@@ -588,6 +598,17 @@ class CopyTextureForBrowser_Basic : public CopyTextureForBrowserTests<DawnTest> 
 class CopyTextureForBrowser_Formats
     : public CopyTextureForBrowserTests<DawnTestWithParams<FormatTestParams>> {
   protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        std::vector<wgpu::FeatureName> requiredFeatures;
+        if (SupportsFeatures({wgpu::FeatureName::Float16Renderable})) {
+            requiredFeatures.push_back(wgpu::FeatureName::Float16Renderable);
+        }
+        if (SupportsFeatures({wgpu::FeatureName::Float32Renderable})) {
+            requiredFeatures.push_back(wgpu::FeatureName::Float32Renderable);
+        }
+        return requiredFeatures;
+    }
+
     bool IsDstFormatSrgbFormats() {
         return GetParam().mDstFormat == wgpu::TextureFormat::RGBA8UnormSrgb ||
                GetParam().mDstFormat == wgpu::TextureFormat::BGRA8UnormSrgb;
@@ -804,6 +825,17 @@ class CopyTextureForBrowser_AlphaMode
 class CopyTextureForBrowser_ColorSpace
     : public CopyTextureForBrowserTests<DawnTestWithParams<ColorSpaceTestParams>> {
   protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        std::vector<wgpu::FeatureName> requiredFeatures;
+        if (SupportsFeatures({wgpu::FeatureName::Float16Renderable})) {
+            requiredFeatures.push_back(wgpu::FeatureName::Float16Renderable);
+        }
+        if (SupportsFeatures({wgpu::FeatureName::Float32Renderable})) {
+            requiredFeatures.push_back(wgpu::FeatureName::Float32Renderable);
+        }
+        return requiredFeatures;
+    }
+
     const ColorSpaceInfo& GetColorSpaceInfo(ColorSpace colorSpace) {
         uint32_t index = static_cast<uint32_t>(colorSpace);
         DAWN_ASSERT(index < ColorSpaceTable.size());
@@ -1140,15 +1172,14 @@ DAWN_INSTANTIATE_TEST(CopyTextureForBrowser_Basic,
 // Verify |CopyTextureForBrowser| doing color conversion correctly when
 // the source texture is RGBA8Unorm format.
 TEST_P(CopyTextureForBrowser_Formats, ColorConversion) {
-    // TODO(crbug.com/388318201): investigate: framebuffer incomplete
-    DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode() &&
-                          HasToggleEnabled("gl_force_es_31_and_no_extensions") &&
-                          (GetParam().mSrcFormat == wgpu::TextureFormat::RGBA16Float ||
-                           GetParam().mSrcFormat == wgpu::TextureFormat::BGRA8Unorm ||
-                           GetParam().mSrcFormat == wgpu::TextureFormat::RGBA8Unorm ||
-                           GetParam().mDstFormat == wgpu::TextureFormat::RGBA16Float ||
-                           GetParam().mDstFormat == wgpu::TextureFormat::BGRA8Unorm ||
-                           GetParam().mDstFormat == wgpu::TextureFormat::RGBA8Unorm));
+    if (IsCompatibilityMode()) {
+        if (IsFloat16(GetParam().mSrcFormat) || IsFloat16(GetParam().mDstFormat)) {
+            DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::Float16Renderable));
+        }
+        if (IsFloat32(GetParam().mSrcFormat) || IsFloat32(GetParam().mDstFormat)) {
+            DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::Float32Renderable));
+        }
+    }
 
     // BGRA8UnormSrgb is unsupported in Compatibility mode.
     DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode() &&
@@ -1223,12 +1254,12 @@ DAWN_INSTANTIATE_TEST_P(
 
 // Verify |CopyTextureForBrowser| doing color space conversion.
 TEST_P(CopyTextureForBrowser_ColorSpace, colorSpaceConversion) {
-    // TODO(crbug.com/381214487): float16-renderable and float32-renderable features. framebuffer
-    // incomplete.
-    DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode() &&
-                          HasToggleEnabled("gl_force_es_31_and_no_extensions") &&
-                          (GetParam().mDstFormat == wgpu::TextureFormat::RGBA16Float ||
-                           GetParam().mDstFormat == wgpu::TextureFormat::RGBA32Float));
+    if (IsCompatibilityMode()) {
+        DAWN_TEST_UNSUPPORTED_IF(IsFloat16(GetParam().mDstFormat) &&
+                                 !device.HasFeature(wgpu::FeatureName::Float16Renderable));
+        DAWN_TEST_UNSUPPORTED_IF(IsFloat32(GetParam().mDstFormat) &&
+                                 !device.HasFeature(wgpu::FeatureName::Float32Renderable));
+    }
 
     DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
 
