@@ -357,6 +357,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         (rgba32Properties.optimalTilingFeatures & VK_FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT)) {
         EnableFeature(Feature::Float32Blendable);
     }
+    EnableFeature(Feature::Float32Renderable);
+    EnableFeature(Feature::Float16Renderable);
 
     // Multiplanar formats.
     constexpr VkFormat multiplanarFormats[] = {

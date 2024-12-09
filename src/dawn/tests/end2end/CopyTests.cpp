@@ -275,16 +275,23 @@ class CopyTests_T2B : public CopyTests, public DawnTestWithParams<CopyTextureFor
         if (SupportsFeatures({wgpu::FeatureName::DawnTexelCopyBufferRowAlignment})) {
             requiredFeatures.push_back(wgpu::FeatureName::DawnTexelCopyBufferRowAlignment);
         }
+        if (SupportsFeatures({wgpu::FeatureName::Float32Renderable})) {
+            requiredFeatures.push_back(wgpu::FeatureName::Float32Renderable);
+        }
+        if (SupportsFeatures({wgpu::FeatureName::Float16Renderable})) {
+            requiredFeatures.push_back(wgpu::FeatureName::Float16Renderable);
+        }
         return requiredFeatures;
     }
 
     void SetUp() override {
         DawnTestWithParams<CopyTextureFormatParams>::SetUp();
 
+        auto format = GetParam().mTextureFormat;
+
         // TODO(crbug.com/388318201): Suppress for turning on OpenGLES ANGLE Swiftshader backend
         // with gl_force_es_31_and_no_extensions
         if (IsCompatibilityMode() && HasToggleEnabled("gl_force_es_31_and_no_extensions")) {
-            auto format = GetParam().mTextureFormat;
             // GL_EXT_texture_format_BGRA8888 or GL_APPLE_texture_format_BGRA8888 is required for
             // compat mode.
             DAWN_TEST_UNSUPPORTED_IF(format == wgpu::TextureFormat::BGRA8Unorm);
@@ -293,26 +300,26 @@ class CopyTests_T2B : public CopyTests, public DawnTestWithParams<CopyTextureFor
         }
 
         // TODO(dawn:2129): Fail for Win ANGLE D3D11
-        DAWN_SUPPRESS_TEST_IF((GetParam().mTextureFormat == wgpu::TextureFormat::RGB9E5Ufloat) &&
-                              IsANGLED3D11() && IsWindows());
+        DAWN_SUPPRESS_TEST_IF((format == wgpu::TextureFormat::RGB9E5Ufloat) && IsANGLED3D11() &&
+                              IsWindows());
 
         // TODO(crbug.com/dawn/2294): diagnose BGRA T2B failures on Pixel 4 OpenGLES
-        DAWN_SUPPRESS_TEST_IF(GetParam().mTextureFormat == wgpu::TextureFormat::BGRA8Unorm &&
-                              IsOpenGLES() && IsAndroid() && IsQualcomm());
+        DAWN_SUPPRESS_TEST_IF(format == wgpu::TextureFormat::BGRA8Unorm && IsOpenGLES() &&
+                              IsAndroid() && IsQualcomm());
 
         // TODO(dawn:1913): Many float formats tests failing for Metal backend on Mac Intel.
-        DAWN_SUPPRESS_TEST_IF((GetParam().mTextureFormat == wgpu::TextureFormat::R32Float ||
-                               GetParam().mTextureFormat == wgpu::TextureFormat::RG32Float ||
-                               GetParam().mTextureFormat == wgpu::TextureFormat::RGBA32Float ||
-                               GetParam().mTextureFormat == wgpu::TextureFormat::RGBA16Float ||
-                               GetParam().mTextureFormat == wgpu::TextureFormat::RG11B10Ufloat) &&
+        DAWN_SUPPRESS_TEST_IF((format == wgpu::TextureFormat::R32Float ||
+                               format == wgpu::TextureFormat::RG32Float ||
+                               format == wgpu::TextureFormat::RGBA32Float ||
+                               format == wgpu::TextureFormat::RGBA16Float ||
+                               format == wgpu::TextureFormat::RG11B10Ufloat) &&
                               IsMacOS() && IsIntel() && IsMetal());
 
         // TODO(dawn:1935): Many 16 float formats tests failing for D3D11 and OpenGLES backends on
         // Intel Gen12.
-        DAWN_SUPPRESS_TEST_IF((GetParam().mTextureFormat == wgpu::TextureFormat::R16Float ||
-                               GetParam().mTextureFormat == wgpu::TextureFormat::RGBA16Float ||
-                               GetParam().mTextureFormat == wgpu::TextureFormat::RG11B10Ufloat) &&
+        DAWN_SUPPRESS_TEST_IF((format == wgpu::TextureFormat::R16Float ||
+                               format == wgpu::TextureFormat::RGBA16Float ||
+                               format == wgpu::TextureFormat::RG11B10Ufloat) &&
                               (IsD3D11() || IsOpenGLES()) && IsIntelGen12());
     }
     uint32_t GetTextureBytesPerRowAlignment() const {

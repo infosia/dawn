@@ -99,6 +99,18 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
      {"Allows textures with formats \"r32float\" \"rg32float\" and \"rgba32float\" to be "
       "blendable.",
       "https://gpuweb.github.io/gpuweb/#float32-blendable", FeatureInfo::FeatureState::Stable}},
+    {Feature::Float16Renderable,
+     {"Allows the `RENDER_ATTACHMENT` usage on textures with format \"r16float\", \"rg16float\", "
+      "and \"rgba16float\" for compat mode.",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
+      "float16_renderable.md",
+      FeatureInfo::FeatureState::Stable}},
+    {Feature::Float32Renderable,
+     {"Allows the `RENDER_ATTACHMENT` usage on textures with format \"r32float\", \"rg32float\", "
+      "and \"rgba32float\" for compat mode.",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
+      "float32_renderable.md",
+      FeatureInfo::FeatureState::Stable}},
     {Feature::DawnInternalUsages,
      {"Add internal usages to resources to affect how the texture is allocated, but not "
       "frontend validation. Other internal commands may access this usage.",
