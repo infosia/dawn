@@ -103,6 +103,9 @@ class SpirvWriterTestHelperBase : public BASE {
     /// SPIR-V output.
     std::string output_;
 
+    /// Workgroup info
+    std::optional<Output::WorkgroupInfo> workgroup_info;
+
     /// @returns the error string from the validation
     std::string Error() const { return err_; }
 
@@ -124,6 +127,8 @@ class SpirvWriterTestHelperBase : public BASE {
         if (!Validate(result->spirv)) {
             return false;
         }
+        workgroup_info = result->workgroup_info;
+
         return true;
     }
 

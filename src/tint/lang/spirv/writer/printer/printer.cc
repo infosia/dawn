@@ -193,7 +193,7 @@ class Printer {
     }
 
     /// @returns the generated SPIR-V code on success, or failure
-    Result<std::vector<uint32_t>> Code() {
+    Result<printer::Output> Code() {
         if (auto res = Generate(); res != Success) {
             return res.Failure();
         }
@@ -202,7 +202,23 @@ class Printer {
         BinaryWriter writer;
         writer.WriteHeader(module_.IdBound(), kWriterVersion);
         writer.WriteModule(module_);
-        return std::move(writer.Result());
+
+        printer::Output output;
+        output.spirv = std::move(writer.Result());
+
+        // Assumes single entry point has run
+        for (const auto& func : ir_.functions) {
+            if (func->Stage() != core::ir::Function::PipelineStage::kCompute) {
+                continue;
+            }
+
+            auto size = func->WorkgroupSizeAsConst();
+            TINT_ASSERT(size.has_value());
+            output.workgroup_info = {(*size)[0], (*size)[1], (*size)[2]};
+            break;
+        }
+
+        return output;
     }
 
   private:
@@ -2523,7 +2539,7 @@ class Printer {
 
 }  // namespace
 
-tint::Result<std::vector<uint32_t>> Print(core::ir::Module& module, const Options& options) {
+tint::Result<printer::Output> Print(core::ir::Module& module, const Options& options) {
     return Printer{module, options}.Code();
 }
 
