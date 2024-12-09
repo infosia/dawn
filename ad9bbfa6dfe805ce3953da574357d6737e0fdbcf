@@ -34,6 +34,24 @@
       "parentUuid": "45e50c33_0675ea52",
       "revId": "ad9bbfa6dfe805ce3953da574357d6737e0fdbcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ef09f63_66a3c602",
+        "filename": "src/tint/cmd/fuzz/ir/fuzz.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-09T15:27:50Z",
+      "side": 1,
+      "message": "Ah no, now I remember. This isn\u0027t the same context object type. Here we\u0027re registering the IR fuzzer from the AST fuzzer, so the Context objects are different. What I\u0027ll do is copy the relevant options across.",
+      "parentUuid": "510f18df_4d1eceb9",
+      "revId": "ad9bbfa6dfe805ce3953da574357d6737e0fdbcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
