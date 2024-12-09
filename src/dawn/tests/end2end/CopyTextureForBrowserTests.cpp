@@ -804,6 +804,17 @@ class CopyTextureForBrowser_AlphaMode
 class CopyTextureForBrowser_ColorSpace
     : public CopyTextureForBrowserTests<DawnTestWithParams<ColorSpaceTestParams>> {
   protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        std::vector<wgpu::FeatureName> requiredFeatures;
+        if (SupportsFeatures({wgpu::FeatureName::Float16Renderable})) {
+            requiredFeatures.push_back(wgpu::FeatureName::Float16Renderable);
+        }
+        if (SupportsFeatures({wgpu::FeatureName::Float32Renderable})) {
+            requiredFeatures.push_back(wgpu::FeatureName::Float32Renderable);
+        }
+        return requiredFeatures;
+    }
+
     const ColorSpaceInfo& GetColorSpaceInfo(ColorSpace colorSpace) {
         uint32_t index = static_cast<uint32_t>(colorSpace);
         DAWN_ASSERT(index < ColorSpaceTable.size());
@@ -1223,12 +1234,7 @@ DAWN_INSTANTIATE_TEST_P(
 
 // Verify |CopyTextureForBrowser| doing color space conversion.
 TEST_P(CopyTextureForBrowser_ColorSpace, colorSpaceConversion) {
-    // TODO(crbug.com/381214487): float16-renderable and float32-renderable features. framebuffer
-    // incomplete.
-    DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode() &&
-                          HasToggleEnabled("gl_force_es_31_and_no_extensions") &&
-                          (GetParam().mDstFormat == wgpu::TextureFormat::RGBA16Float ||
-                           GetParam().mDstFormat == wgpu::TextureFormat::RGBA32Float));
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::Float32Renderable}));
 
     DAWN_SUPPRESS_TEST_IF(IsOpenGL() && IsLinux());
 

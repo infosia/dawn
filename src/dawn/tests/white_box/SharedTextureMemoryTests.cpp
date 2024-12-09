@@ -997,7 +997,7 @@ TEST_P(SharedTextureMemoryTests, TextureUsages) {
         // context). Add tests where the D3D/Vulkan texture is not created with the
         // relevant flag.
         if ((isSinglePlanar || device.HasFeature(wgpu::FeatureName::MultiPlanarRenderTargets)) &&
-            utils::IsRenderableFormat(device, properties.format)) {
+            utils::IsRenderableFormat(device, properties.format, IsCompatibilityMode())) {
             expectedUsage |= wgpu::TextureUsage::RenderAttachment;
         }
 
