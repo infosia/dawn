@@ -31,7 +31,6 @@
 #include <cstdint>
 #include <vector>
 
-#include "src/tint/lang/spirv/writer/common/module.h"
 #include "src/tint/lang/spirv/writer/common/options.h"
 #include "src/tint/utils/result/result.h"
 
@@ -42,10 +41,28 @@ class Module;
 
 namespace tint::spirv::writer {
 
+namespace printer {
+/// Workgroup size information
+struct WorkgroupInfo {
+    /// The x-component
+    uint32_t x;
+    /// The y-component
+    uint32_t y;
+    /// The z-component
+    uint32_t z;
+};
+
+struct Output {
+    std::vector<uint32_t> spirv;
+    std::optional<WorkgroupInfo> workgroup_info = std::nullopt;
+};
+
+}  // namespace printer
+
 /// @returns the generated SPIR-V instructions on success, or failure
 /// @param module the Tint IR module to generate
 /// @param options the printer options
-tint::Result<std::vector<uint32_t>> Print(core::ir::Module& module, const Options& options);
+tint::Result<printer::Output> Print(core::ir::Module& module, const Options& options);
 
 }  // namespace tint::spirv::writer
 
