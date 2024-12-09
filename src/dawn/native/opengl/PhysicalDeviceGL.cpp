@@ -287,6 +287,15 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (mFunctions.IsGLExtensionSupported("GL_EXT_float_blend")) {
         EnableFeature(Feature::Float32Blendable);
     }
+
+    // Float32Renderable, Float16Renderable
+    if (mFunctions.GetVersion().IsDesktop() || mFunctions.IsAtLeastGLES(3, 2) ||
+        mFunctions.IsGLExtensionSupported("GL_EXT_color_buffer_float")) {
+        EnableFeature(Feature::Float32Renderable);
+        EnableFeature(Feature::Float16Renderable);
+    } else if (mFunctions.IsGLExtensionSupported("GL_EXT_color_buffer_half_float")) {
+        EnableFeature(Feature::Float16Renderable);
+    }
 }
 
 namespace {

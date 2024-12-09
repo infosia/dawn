@@ -556,17 +556,29 @@ class TextureFormatTest : public DawnTest {
             mIsSnorm16TextureFormatsSupported = true;
             requiredFeatures.push_back(wgpu::FeatureName::Snorm16TextureFormats);
         }
+        if (SupportsFeatures({wgpu::FeatureName::Float16Renderable})) {
+            mIsFloat16Renderable = true;
+            requiredFeatures.push_back(wgpu::FeatureName::Float16Renderable);
+        }
+        if (SupportsFeatures({wgpu::FeatureName::Float32Renderable})) {
+            mIsFloat32Renderable = true;
+            requiredFeatures.push_back(wgpu::FeatureName::Float32Renderable);
+        }
         return requiredFeatures;
     }
 
     bool IsRG11B10UfloatRenderableSupported() { return mIsRG11B10UfloatRenderableSupported; }
     bool IsUnorm16TextureFormatsSupported() { return mIsUnorm16TextureFormatsSupported; }
     bool IsSnorm16TextureFormatsSupported() { return mIsSnorm16TextureFormatsSupported; }
+    bool IsFloat16Renderable() { return mIsFloat16Renderable; }
+    bool IsFloat32Renderable() { return mIsFloat32Renderable; }
 
   private:
     bool mIsRG11B10UfloatRenderableSupported = false;
     bool mIsUnorm16TextureFormatsSupported = false;
     bool mIsSnorm16TextureFormatsSupported = false;
+    bool mIsFloat16Renderable = false;
+    bool mIsFloat32Renderable = false;
 };
 
 // Test the R8Unorm format
@@ -780,25 +792,19 @@ TEST_P(TextureFormatTest, RGBA32Sint) {
 
 // Test the R32Float format
 TEST_P(TextureFormatTest, R32Float) {
-    // TODO(crbug.com/381214487): float32-renderable
-    DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode() &&
-                          HasToggleEnabled("gl_force_es_31_and_no_extensions"));
+    DAWN_TEST_UNSUPPORTED_IF(!IsFloat32Renderable());
     DoFloat32Test({wgpu::TextureFormat::R32Float, 4, TextureComponentType::Float, 1});
 }
 
 // Test the RG32Float format
 TEST_P(TextureFormatTest, RG32Float) {
-    // TODO(crbug.com/381214487): float32-renderable
-    DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode() &&
-                          HasToggleEnabled("gl_force_es_31_and_no_extensions"));
+    DAWN_TEST_UNSUPPORTED_IF(!IsFloat32Renderable());
     DoFloat32Test({wgpu::TextureFormat::RG32Float, 8, TextureComponentType::Float, 2});
 }
 
 // Test the RGBA32Float format
 TEST_P(TextureFormatTest, RGBA32Float) {
-    // TODO(crbug.com/381214487): float32-renderable
-    DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode() &&
-                          HasToggleEnabled("gl_force_es_31_and_no_extensions"));
+    DAWN_TEST_UNSUPPORTED_IF(!IsFloat32Renderable());
     DoFloat32Test({wgpu::TextureFormat::RGBA32Float, 16, TextureComponentType::Float, 4});
 }
 
