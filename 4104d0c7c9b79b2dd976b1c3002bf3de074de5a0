@@ -16,6 +16,24 @@
       "message": "Nit: So now you should just be able to `return Print(ir, options);`, since the output types are the same.",
       "revId": "4104d0c7c9b79b2dd976b1c3002bf3de074de5a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eaa8813_bb18d617",
+        "filename": "src/tint/lang/spirv/writer/writer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-10T01:58:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "339c2dd7_f61b9209",
+      "revId": "4104d0c7c9b79b2dd976b1c3002bf3de074de5a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
