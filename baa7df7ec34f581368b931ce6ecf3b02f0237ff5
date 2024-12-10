@@ -139,6 +139,24 @@
       "parentUuid": "727876e2_d8e61c8b",
       "revId": "baa7df7ec34f581368b931ce6ecf3b02f0237ff5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "269d1ee2_6606dac3",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-10T01:52:57Z",
+      "side": 1,
+      "message": "Ah true that it would not integrate well as is. Maybe you can split it into two parts, one clever macro, and one helper function, like:\n\n```cpp\ntemplate \u003ctypename T\u003e\nstd::string MakeIncreaseLimitMessage(std::string_view limitName, T adapterLimitValue) {\n        return absl::StrFormat(\" This adapter supports a higher %s\"\n                               \" of %u, which can be specified in requiredLimits when calling \"   \n                               \"requestDevice(). Limits differ by hardware, so always check the \" \n                               \"adapter limits prior to requesting a higher limit.\",              \n                               limitName, adapterLimitValue);                                   \n\n}\n\n#define DAWN_INCREASE_LIMIT_MESSAGE(adapter, limitName, limitValue)                               \\\n    [\u0026]() -\u003e std::string {                                                                        \\\n        SupportedLimits adapterLimits;                                                            \\\n        wgpu::Status status \u003d adapter-\u003eAPIGetLimits(\u0026adapterLimits);                              \\\n        DAWN_ASSERT(status \u003d\u003d wgpu::Status::Success);                                             \\\n        if (limitValue \u003e adapterLimits.limits.limitName) {                                        \\\n            return \"\";                                                                            \\\n        }                                                                                         \\\n        return MakeIncreaseLimitMessage(#limitName, adapterLimits.limit.limitName);               \\\n    }()\n```",
+      "parentUuid": "242d696a_be5b7b86",
+      "revId": "baa7df7ec34f581368b931ce6ecf3b02f0237ff5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
