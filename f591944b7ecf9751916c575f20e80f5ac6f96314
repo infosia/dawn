@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c78974c2_11aa2bc1",
+        "filename": "src/dawn/native/Error.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-10T18:43:30Z",
+      "side": 1,
+      "message": "`::dawn::native::SupportedLimits`",
+      "revId": "f591944b7ecf9751916c575f20e80f5ac6f96314",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "675410cf_30bab5ce",
+        "filename": "src/dawn/native/Error.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-10T18:43:30Z",
+      "side": 1,
+      "message": "I realized this should be fully-qualified so that the macro works regardless of the namespace where it\u0027s used.\n\n`::dawn::native::MakeIncreaseLimitMessage`",
+      "revId": "f591944b7ecf9751916c575f20e80f5ac6f96314",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
