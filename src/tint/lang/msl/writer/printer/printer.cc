@@ -119,7 +119,7 @@ class Printer : public tint::TextGenerator {
         : ir_(module), options_(options) {}
 
     /// @returns the generated MSL shader
-    tint::Result<PrintResult> Generate() {
+    tint::Result<Output> Generate() {
         auto valid = core::ir::ValidateAndDumpIfNeeded(
             ir_, "msl.Printer",
             core::ir::Capabilities{
@@ -157,7 +157,7 @@ class Printer : public tint::TextGenerator {
 
   private:
     /// The result of printing the module.
-    PrintResult result_;
+    Output result_;
 
     /// Map of builtin structure to unique generated name
     Hashmap<const core::type::Struct*, std::string, 4> builtin_struct_names_;
@@ -319,9 +319,17 @@ class Printer : public tint::TextGenerator {
             auto func_name = NameOf(func);
 
             switch (func->Stage()) {
-                case core::ir::Function::PipelineStage::kCompute:
+                case core::ir::Function::PipelineStage::kCompute: {
                     out << "kernel ";
+
+                    auto const_wg_size = func->WorkgroupSizeAsConst();
+                    TINT_ASSERT(const_wg_size);
+
+                    // Store the workgroup information away to return from the generator.
+                    result_.workgroup_info = {(*const_wg_size)[0], (*const_wg_size)[1],
+                                              (*const_wg_size)[2]};
                     break;
+                }
                 case core::ir::Function::PipelineStage::kFragment:
                     out << "fragment ";
                     break;
@@ -1765,16 +1773,8 @@ class Printer : public tint::TextGenerator {
 
 }  // namespace
 
-Result<PrintResult> Print(core::ir::Module& module, const Options& options) {
+Result<Output> Print(core::ir::Module& module, const Options& options) {
     return Printer{module, options}.Generate();
 }
-
-PrintResult::PrintResult() = default;
-
-PrintResult::~PrintResult() = default;
-
-PrintResult::PrintResult(const PrintResult&) = default;
-
-PrintResult& PrintResult::operator=(const PrintResult&) = default;
 
 }  // namespace tint::msl::writer
