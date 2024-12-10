@@ -88,6 +88,7 @@
 #include "src/tint/lang/core/type/memory_view.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/reference.h"
+#include "src/tint/lang/core/type/storage_texture.h"
 #include "src/tint/lang/core/type/type.h"
 #include "src/tint/lang/core/type/u32.h"
 #include "src/tint/lang/core/type/u8.h"
@@ -1820,6 +1821,20 @@ void Validator::CheckType(const core::type::Type* root,
                     return false;
                 }
                 return true;
+            },
+            [&](const core::type::StorageTexture* s) {
+                switch (s->Dim()) {
+                    case core::type::TextureDimension::kCube:
+                    case core::type::TextureDimension::kCubeArray:
+                        diag() << "cube texture dimensions for storage textures do not exist in "
+                                  "WGSL yet";
+                        return false;
+                    case core::type::TextureDimension::kNone:
+                        diag() << "invalid texture dimension, kNone";
+                        return false;
+                    default:
+                        return true;
+                }
             },
             [](Default) { return true; });
     };
