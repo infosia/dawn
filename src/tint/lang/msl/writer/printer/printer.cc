@@ -403,9 +403,21 @@ class Printer : public tint::TextGenerator {
                 }
                 if (ptr && ptr->AddressSpace() == core::AddressSpace::kWorkgroup &&
                     func->Stage() == core::ir::Function::PipelineStage::kCompute) {
+                    auto* ty = ptr->StoreType()->UnwrapRef();
+                    uint32_t align = ty->Align();
+                    uint32_t size = ty->Size();
+
                     auto& allocations = result_.workgroup_allocations.at(func_name);
                     out << " [[threadgroup(" << allocations.size() << ")]]";
-                    allocations.push_back(ptr->StoreType()->Size());
+                    allocations.push_back(size);
+
+                    // This essentially matches std430 layout rules from GLSL, which are in
+                    // turn specified as an upper bound for Vulkan layout sizing.
+                    //
+                    // Since Metal is even less specific, we assume Vulkan behavior as a
+                    // good-enough approximation everywhere.
+                    result_.workgroup_storage_size +=
+                        tint::RoundUp(16u, tint::RoundUp(align, size));
                 }
             }
 
