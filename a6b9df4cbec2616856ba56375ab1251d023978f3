@@ -33,6 +33,29 @@
       "message": "@kainino@chromium.org See https://dawn-review.googlesource.com/c/dawn/+/215894/comment/b1933183_2ac05a75/ as well",
       "revId": "a6b9df4cbec2616856ba56375ab1251d023978f3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f05638c_6f90ae0e",
+        "filename": "src/dawn/native/Error.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-10T01:05:13Z",
+      "side": 1,
+      "message": "nit: I think this should be passed as a `%s` parameter instead of inserted into the message string, to reduce binary size (otherwise this entire long string will be replicated in the binary for every DAWN_INCREASE_LIMIT_MESSAGE invocation).",
+      "range": {
+        "startLine": 161,
+        "startChar": 66,
+        "endLine": 161,
+        "endChar": 76
+      },
+      "revId": "a6b9df4cbec2616856ba56375ab1251d023978f3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
