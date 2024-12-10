@@ -51,6 +51,24 @@
       "parentUuid": "6d3cb839_0eb74a01",
       "revId": "bd0b770c7a380d5a59775c1a0660647e6c723ee0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15b2d7e1_f9f0494a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-10T19:53:12Z",
+      "side": 1,
+      "message": "Great, that\u0027s what I suspected but I wanted to be sure.\n\nMaybe to avoid passing in the Adapter we could pass a SupportedLimits object instead? But I don\u0027t think there is one that lives anywhere that we could pass without having to create it (by calling APIGetLimits).\n\nI suppose maybe we could have a base class of Adapter that _only_ provides APIGetLimits and pass that in.\n\nAbout `const`, would it work (and would it help) to use `CacheKey::UnsafeUnkeyedValue\u003cconst dawn::native::AdapterBase*\u003e` instead?",
+      "parentUuid": "b83edf9b_33297d6f",
+      "revId": "bd0b770c7a380d5a59775c1a0660647e6c723ee0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
