@@ -148,6 +148,30 @@
       ],
       "revId": "993884064406497bd19500ab5154c79d2e89b402",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87792a78_6cebdeaf",
+        "filename": "src/tint/cmd/fuzz/ir/main_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-10T20:50:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44ccde4e_b28ce62a",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 17
+      },
+      "revId": "993884064406497bd19500ab5154c79d2e89b402",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
