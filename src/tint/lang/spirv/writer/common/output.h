@@ -64,6 +64,9 @@ struct Output {
 
     /// The workgroup size information, if the entry point was a compute shader
     std::optional<WorkgroupInfo> workgroup_info = std::nullopt;
+
+    /// The needed workgroup storage size
+    size_t workgroup_storage_size = 0;
 };
 
 }  // namespace tint::spirv::writer
