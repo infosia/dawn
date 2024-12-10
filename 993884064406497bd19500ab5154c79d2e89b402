@@ -1,0 +1,65 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44ccde4e_b28ce62a",
+        "filename": "src/tint/cmd/fuzz/ir/main_fuzz.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-10T18:53:01Z",
+      "side": 1,
+      "message": "This is the simplest fix - each thread will deserialize its own copy of the module. Another perhaps simpler approach would be to make `acquire_module` always deserialize and return a module, rather than try to reuse the one we deserialized once at the top of this function. This would be at the cost of deserializing once extra to know if we should skip Run.",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 17
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "63687466_c6a9d1bb",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/fuzz/ir/main_fuzz.cc",
+              "range": {
+                "startLine": 53,
+                "startChar": 0,
+                "endLine": 58,
+                "endChar": 0
+              },
+              "replacement": "    auto acquire_module \u003d [\u0026] {\n"
+            },
+            {
+              "path": "src/tint/cmd/fuzz/ir/main_fuzz.cc",
+              "range": {
+                "startLine": 60,
+                "startChar": 0,
+                "endLine": 61,
+                "endChar": 0
+              },
+              "replacement": "            TINT_ICE() \u003c\u003c \"module successfully decoded once, then failed a subsequent time\\n\"\n                       \u003c\u003c decoded.Failure().reason;\n"
+            },
+            {
+              "path": "src/tint/cmd/fuzz/ir/main_fuzz.cc",
+              "range": {
+                "startLine": 62,
+                "startChar": 0,
+                "endLine": 77,
+                "endChar": 0
+              },
+              "replacement": "        return std::move(decoded.Move());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "993884064406497bd19500ab5154c79d2e89b402",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
