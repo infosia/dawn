@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49319fa7_50f4ecd0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2024-12-10T19:08:09Z",
+      "side": 1,
+      "message": "Out of curiosity, do the bots run concurrently or is this just a local thing? Could we just remove concurrent flag and skip the other changes?",
+      "revId": "993884064406497bd19500ab5154c79d2e89b402",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44ccde4e_b28ce62a",
