@@ -157,6 +157,24 @@
       "parentUuid": "242d696a_be5b7b86",
       "revId": "baa7df7ec34f581368b931ce6ecf3b02f0237ff5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6032d264_d99eb078",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-10T01:53:52Z",
+      "side": 1,
+      "message": "Do feel free to land this as is though, you don\u0027t need to do the refactor now since it still has to wait on the other CL.",
+      "parentUuid": "269d1ee2_6606dac3",
+      "revId": "baa7df7ec34f581368b931ce6ecf3b02f0237ff5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
