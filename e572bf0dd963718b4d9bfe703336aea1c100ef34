@@ -16,6 +16,23 @@
       "message": "lgtm. I guess this will work because we don\u0027t have any devices on the bots missing this.",
       "revId": "e572bf0dd963718b4d9bfe703336aea1c100ef34",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "315f72a4_56dfd329",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-10T20:45:43Z",
+      "side": 1,
+      "message": "LGTM2",
+      "revId": "e572bf0dd963718b4d9bfe703336aea1c100ef34",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
