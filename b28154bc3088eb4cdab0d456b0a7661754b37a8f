@@ -33,6 +33,23 @@
       "message": "Hi Kai,\n\nCould you take a look at this CL?\n\nThanks!",
       "revId": "b28154bc3088eb4cdab0d456b0a7661754b37a8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53bb6aef_4e7e2035",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-10T01:36:03Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "b28154bc3088eb4cdab0d456b0a7661754b37a8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
