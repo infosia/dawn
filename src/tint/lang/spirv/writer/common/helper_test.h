@@ -101,6 +101,9 @@ class SpirvWriterTestHelperBase : public BASE {
     /// Workgroup info
     std::optional<Output::WorkgroupInfo> workgroup_info;
 
+    /// Workgroup storage size
+    size_t workgroup_storage_size = 0;
+
     /// @returns the error string from the validation
     std::string Error() const { return err_; }
 
@@ -123,6 +126,7 @@ class SpirvWriterTestHelperBase : public BASE {
             return false;
         }
         workgroup_info = result->workgroup_info;
+        workgroup_storage_size = result->workgroup_storage_size;
 
         return true;
     }
