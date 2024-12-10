@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "76df19a2_06db9539",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-10T19:14:06Z",
+      "side": 1,
+      "message": "By the bots, I assume you mean ClusterFuzz? I think we\u0027re not yet using `tint_ir_fuzzer` on ClusterFuzz, so I would say no. I don\u0027t know if we\u0027re using it for the `tint_ast_fuzzer`, but I\u0027m assuming they run the fuzzers as separate processes (maybe with the `-workers \u003cn\u003e` libfuzzer arg).\n\nHaving said that, I think it\u0027s useful to be able to run the fuzzers on separate threads for higher throughput locally. It\u0027s easier to debug a single process, and takes less time to hit a breakpoint.",
+      "parentUuid": "49319fa7_50f4ecd0",
+      "revId": "993884064406497bd19500ab5154c79d2e89b402",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "44ccde4e_b28ce62a",
         "filename": "src/tint/cmd/fuzz/ir/main_fuzz.cc",
         "patchSetId": 1
