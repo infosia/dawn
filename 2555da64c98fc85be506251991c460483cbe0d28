@@ -16,6 +16,24 @@
       "message": "nit: not really part of this Cl, but we should change `None` to be `none` to be consistent with the rest of these (also it\u0027s amusing we print out the names of texture types which don\u0027t exist correctly)",
       "revId": "2555da64c98fc85be506251991c460483cbe0d28",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23d4bd44_115dfd88",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5372,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2024-12-10T20:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15aba4cb_d8425ca5",
+      "revId": "2555da64c98fc85be506251991c460483cbe0d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
