@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-12-06 12:42:30PM
+# Last rolled: 2024-12-10 05:07:05AM
 
 # conflicts_allowed: true
 
@@ -7311,7 +7311,7 @@ crbug.com/367513506 [ asan win ] webgpu:api,validation,error_scope:current_scope
 
 # Failures on Win NVIDIA experimental driver
 crbug.com/0000 [ angle-d3d11 graphite-enabled nvidia-0x2184 ] webgpu:api,operation,device,all_limits_and_features:everything: [ Failure ]
-crbug.com/0000 [ angle-d3d11 graphite-enabled nvidia-0x2184 dawn-backend-validation webgpu-dxc-disabled ] webgpu:shader,execution,limits:struct_members: [ Failure ]
+crbug.com/0000 [ angle-d3d11 dawn-backend-validation graphite-enabled nvidia-0x2184 webgpu-dxc-disabled ] webgpu:shader,execution,limits:struct_members: [ Failure ]
 crbug.com/0000 [ angle-d3d11 graphite-enabled nvidia-0x2184 webgpu-dxc-enabled ] webgpu:api,operation,adapter,info:subgroup_sizes: [ Failure ]
 crbug.com/0000 [ angle-d3d11 graphite-enabled nvidia-0x2184 webgpu-dxc-enabled ] webgpu:shader,execution,expression,call,builtin,subgroupBroadcast:compute,split:predicate="every_even" [ Failure ]
 crbug.com/0000 [ angle-d3d11 graphite-enabled nvidia-0x2184 webgpu-dxc-enabled ] webgpu:shader,execution,expression,call,builtin,subgroupBroadcast:compute,split:predicate="every_odd" [ Failure ]
