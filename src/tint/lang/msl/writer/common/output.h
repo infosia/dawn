@@ -25,10 +25,11 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_TINT_LANG_MSL_WRITER_OUTPUT_H_
-#define SRC_TINT_LANG_MSL_WRITER_OUTPUT_H_
+#ifndef SRC_TINT_LANG_MSL_WRITER_COMMON_OUTPUT_H_
+#define SRC_TINT_LANG_MSL_WRITER_COMMON_OUTPUT_H_
 
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -51,6 +52,16 @@ struct Output {
     /// @returns this
     Output& operator=(const Output&);
 
+    /// Workgroup size information
+    struct WorkgroupInfo {
+        /// The x-component
+        uint32_t x;
+        /// The y-component
+        uint32_t y;
+        /// The z-component
+        uint32_t z;
+    };
+
     /// The generated MSL.
     std::string msl = "";
 
@@ -60,6 +71,9 @@ struct Output {
     /// True if the generated shader uses the invariant attribute.
     bool has_invariant_attribute = false;
 
+    /// The workgroup size information, if the entry point was a compute shader
+    std::optional<WorkgroupInfo> workgroup_info = std::nullopt;
+
     /// A map from entry point name to a list of dynamic workgroup allocations.
     /// Each entry in the vector is the size of the workgroup allocation that
     /// should be created for that index.
@@ -68,4 +82,4 @@ struct Output {
 
 }  // namespace tint::msl::writer
 
-#endif  // SRC_TINT_LANG_MSL_WRITER_OUTPUT_H_
+#endif  // SRC_TINT_LANG_MSL_WRITER_COMMON_OUTPUT_H_
