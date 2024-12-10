@@ -212,6 +212,24 @@
       "parentUuid": "7fb4402e_e12c36a7",
       "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f56fcfa_b90cc6bf",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-10T01:40:54Z",
+      "side": 1,
+      "message": "Ahh I see, I thought we wouldn\u0027t be populating `D3D12_RENDER_PASS_DEPTH_STENCIL_DESC mRenderPassDepthStencilDesc` if we weren\u0027t actually using D3D12 render passes, so thought this must be already gated on that. I think I see why we are populating it anyway, though.\n\nLGTM then, sorry for blocking!",
+      "parentUuid": "77d6e197_4cd59937",
+      "revId": "f88c414b472182a402322fdcb4d83bb16f4d5244",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
