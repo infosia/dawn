@@ -33,6 +33,24 @@
       "message": "The limit message looks good, but I don\u0027t understand the UnsafeUnkeyedValue thing. @lokokung@google.com could you review?",
       "revId": "bd0b770c7a380d5a59775c1a0660647e6c723ee0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b83edf9b_33297d6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-10T19:47:55Z",
+      "side": 1,
+      "message": "Yea, the `UnsafeUnkeyedValue` is for passing something into the cache key that isn\u0027t actually a part of the key itself, but available for the cache function to use. It\u0027s a way to make it clear and auto-documented that we are passing in something that may produce a side-effect (something we want to avoid as much as possible). The platform is passed this way also so we can add tracing and stuff.\n\nTbh, I\u0027m not a super big fan of passing the `Adapter` like this because it introduces a way for users to do stuff in the cache function now that breaks the hermetic assumption of the cache functions... However, I think it\u0027s fine for now.\n\nInitially, Austin and I had an idea to pass the `Device` with `const`-ness to the cache function so that it could do stuff like query things that don\u0027t change anything, but it was hard so we put it off.",
+      "parentUuid": "6d3cb839_0eb74a01",
+      "revId": "bd0b770c7a380d5a59775c1a0660647e6c723ee0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
