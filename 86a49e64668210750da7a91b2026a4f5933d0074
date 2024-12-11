@@ -34,6 +34,24 @@
       ],
       "revId": "86a49e64668210750da7a91b2026a4f5933d0074",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5546681a_e6a2265f",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-11T16:33:26Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "cb91ffd2_4138024f",
+      "revId": "86a49e64668210750da7a91b2026a4f5933d0074",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
