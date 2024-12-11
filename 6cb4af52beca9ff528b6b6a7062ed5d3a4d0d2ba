@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "6cb4af52beca9ff528b6b6a7062ed5d3a4d0d2ba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3e09db2_9600cb6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-11T20:06:24Z",
+      "side": 1,
+      "message": "So for my understanding, we are basically just universally enabling this toggle then?",
+      "revId": "6cb4af52beca9ff528b6b6a7062ed5d3a4d0d2ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
