@@ -541,7 +541,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
         BeforeApply();
         for (BindGroupIndex index : IterateBitSet(mDirtyBindGroupsObjectChangedOrIsDynamic)) {
             ApplyBindGroup(encoder, index, ToBackend(mBindGroups[index]), mDynamicOffsets[index],
-                           ToBackend(mPipelineLayout));
+                           ToBackend(mPipelineLayout), mInlineDatas[index].data(), mInlineDatas[index].size());
         }
         AfterApply();
     }
@@ -556,7 +556,9 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                             BindGroupIndex index,
                             BindGroup* group,
                             const ityp::vector<BindingIndex, uint64_t>& dynamicOffsets,
-                            PipelineLayout* pipelineLayout) {
+                            PipelineLayout* pipelineLayout,
+                            const void* inlineData,
+                            const size_t inlineDataSize) {
         // TODO(crbug.com/dawn/854): Maintain buffers and offsets arrays in BindGroup
         // so that we only have to do one setVertexBuffers and one setFragmentBuffers
         // call here.
@@ -615,6 +617,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     const id<MTLBuffer> buffer = ToBackend(binding.buffer)->GetMTLBuffer();
                     NSUInteger offset = binding.offset;
 
+                    const bool isInlineData = bindingIndex == BindingIndex(0) && layout.hasDynamicOffset;
                     // TODO(crbug.com/dawn/854): Record bound buffer status to use
                     // setBufferOffset to achieve better performance.
                     if (layout.hasDynamicOffset) {
@@ -625,16 +628,28 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     if (hasVertStage) {
                         mLengthTracker->data[SingleShaderStage::Vertex][vertIndex] = binding.size;
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Vertex;
-                        [render setVertexBuffers:&buffer
-                                         offsets:&offset
-                                       withRange:NSMakeRange(vertIndex, 1)];
+                        if (isInlineData) {
+                            [render setVertexBytes:inlineData
+                                            length:inlineDataSize
+                                        atIndex:vertIndex];
+                        } else {
+                            [render setVertexBuffers:&buffer
+                                            offsets:&offset
+                                        withRange:NSMakeRange(vertIndex, 1)];
+                        }
                     }
                     if (hasFragStage) {
                         mLengthTracker->data[SingleShaderStage::Fragment][fragIndex] = binding.size;
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Fragment;
-                        [render setFragmentBuffers:&buffer
-                                           offsets:&offset
-                                         withRange:NSMakeRange(fragIndex, 1)];
+                        if (isInlineData) {
+                            [render setFragmentBytes:inlineData
+                                            length:inlineDataSize
+                                        atIndex:fragIndex];
+                        } else {
+                            [render setFragmentBuffers:&buffer
+                                            offsets:&offset
+                                            withRange:NSMakeRange(fragIndex, 1)];
+                        }
                     }
                     if (hasComputeStage) {
                         mLengthTracker->data[SingleShaderStage::Compute][computeIndex] =
@@ -1725,7 +1740,9 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 SetBindGroupCmd* cmd = iter->NextCommand<SetBindGroupCmd>();
                 uint32_t* dynamicOffsets = nullptr;
                 if (cmd->dynamicOffsetCount > 0) {
-                    dynamicOffsets = iter->NextData<uint32_t>(cmd->dynamicOffsetCount);
+                    dynamicOffsets = iter->NextData<uint32_t>(cmd->dynamicOffsetCount + 1);
+                    uint32_t inlineDataSize = dynamicOffsets[cmd->dynamicOffsetCount];
+                    iter->SkipData<uint32_t>((inlineDataSize + 3) / 4);
                 }
 
                 bindGroups.OnSetBindGroup(cmd->index, ToBackend(cmd->group.Get()),

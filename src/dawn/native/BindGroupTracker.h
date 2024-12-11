@@ -72,6 +72,15 @@ class BindGroupTrackerBase {
         mDynamicOffsets[index].resize(BindingIndex(dynamicOffsetCount));
         std::copy(dynamicOffsets, dynamicOffsets + dynamicOffsetCount,
                   mDynamicOffsets[index].begin());
+    
+        
+        if (dynamicOffsetCount > 0) {
+            mInlineDatas[index].resize(dynamicOffsets[dynamicOffsetCount]);
+            memcpy(mInlineDatas[index].data(), &dynamicOffsets[dynamicOffsetCount + 1], dynamicOffsets[dynamicOffsetCount]);
+        }
+        else {
+            mInlineDatas[index].resize(0);
+        }
     }
 
     void OnSetPipeline(PipelineBase* pipeline) { mPipelineLayout = pipeline->GetLayout(); }
@@ -124,6 +133,8 @@ class BindGroupTrackerBase {
     BindGroupMask mBindGroupLayoutsMask = 0;
     PerBindGroup<BindGroupBase*> mBindGroups = {};
     PerBindGroup<ityp::vector<BindingIndex, DynamicOffset>> mDynamicOffsets = {};
+
+    PerBindGroup<std::vector<uint8_t>> mInlineDatas = {};
 
     // |mPipelineLayout| is the current pipeline layout set on the command buffer.
     // |mLastAppliedPipelineLayout| is the last pipeline layout for which we applied changes

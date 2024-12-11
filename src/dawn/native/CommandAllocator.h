@@ -109,6 +109,10 @@ class CommandIterator : public NonCopyable {
     T* NextData(size_t count) {
         return static_cast<T*>(NextData(sizeof(T) * count, alignof(T)));
     }
+    template <typename T>
+    void SkipData(size_t count) {
+        SkipData(sizeof(T) * count, alignof(T));
+    }
 
     // Sets iterator to the beginning of the commands without emptying the list. This method can
     // be used if iteration was stopped early and the iterator needs to be restarted.
@@ -155,6 +159,10 @@ class CommandIterator : public NonCopyable {
         DAWN_ASSERT(id == detail::kAdditionalData);
 
         return NextCommand(dataSize, dataAlignment);
+    }
+    
+    DAWN_FORCE_INLINE void SkipData(size_t dataSize, size_t dataAlignment) {
+        NextCommand(dataSize, dataAlignment);
     }
 
     CommandBlocks mBlocks;

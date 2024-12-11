@@ -183,14 +183,21 @@ void CommandRecordingContext::WaitForSharedEvent(id<MTLSharedEvent> sharedEvent,
     // happen if the client passes us the same shared event that we gave it back to us. If these
     // events are waited on, they seem to cause waitUntilScheduled to block for previous command
     // buffers to complete due to dependencies between consecutive command buffers.
-    if (sharedEvent != mQueue->GetMTLSharedEvent()) {
+#define SKIP_SAME_EVENT 0
+#if SKIP_SAME_EVENT
+    if (sharedEvent != mQueue->GetMTLSharedEvent())
+#endif
+    {
         // There may be an open blit encoder from a copy command or writeBuffer.
         // Wait events are only allowed if there is no encoder open.
         EndBlit();
         [*mCommands encodeWaitForEvent:sharedEvent value:signaledValue];
-    } else {
+    }
+#if SKIP_SAME_EVENT
+    else {
         DAWN_ASSERT(ExecutionSerial(signaledValue) <= mQueue->GetLastSubmittedCommandSerial());
     }
+#endif
 }
 
 }  // namespace dawn::native::metal

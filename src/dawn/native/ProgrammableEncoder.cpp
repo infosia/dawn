@@ -207,8 +207,16 @@ void ProgrammableEncoder::RecordSetBindGroup(CommandAllocator* allocator,
     cmd->group = group;
     cmd->dynamicOffsetCount = dynamicOffsetCount;
     if (dynamicOffsetCount > 0) {
-        uint32_t* offsets = allocator->AllocateData<uint32_t>(cmd->dynamicOffsetCount);
-        memcpy(offsets, dynamicOffsets, dynamicOffsetCount * sizeof(uint32_t));
+        uint64_t inlinePtr;
+        uint64_t inlineDataSize;
+        memcpy(&inlinePtr, dynamicOffsets + dynamicOffsetCount, 8);
+        memcpy(&inlineDataSize, dynamicOffsets + dynamicOffsetCount + 2, 8);
+
+        uint32_t* offsets = allocator->AllocateData<uint32_t>(cmd->dynamicOffsetCount + 1 + (inlineDataSize + 3) / 4);
+
+        memcpy(offsets, dynamicOffsets, (dynamicOffsetCount) * sizeof(uint32_t));
+        offsets[dynamicOffsetCount] = (uint32_t)inlineDataSize;
+        memcpy(offsets + dynamicOffsetCount + 1, (void*)inlinePtr, inlineDataSize);
     }
 }
 
