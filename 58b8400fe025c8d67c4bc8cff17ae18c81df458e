@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9eab3d04_6aaecdf7",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-11T16:27:18Z",
+      "side": 1,
+      "message": "Nit: Unneeded UnwrapRef.",
+      "fixSuggestions": [
+        {
+          "fixId": "877e8342_181e4e9d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 953,
+                "startChar": 0,
+                "endLine": 954,
+                "endChar": 0
+              },
+              "replacement": "                auto* ty \u003d ptr-\u003eStoreType();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "58b8400fe025c8d67c4bc8cff17ae18c81df458e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
