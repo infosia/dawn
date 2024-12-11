@@ -34,6 +34,24 @@
       ],
       "revId": "58b8400fe025c8d67c4bc8cff17ae18c81df458e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4abbb24d_bf8bb9f2",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-11T16:31:27Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "9eab3d04_6aaecdf7",
+      "revId": "58b8400fe025c8d67c4bc8cff17ae18c81df458e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
