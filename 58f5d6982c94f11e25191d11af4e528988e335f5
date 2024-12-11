@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7fe7418b_2874daa6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-11T22:57:50Z",
+      "side": 1,
+      "message": "changing --use-angle seems to change in ANGLE repo: https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/src/libANGLE/Display.cpp;l\u003d287;drc\u003d6bb1bc9bd1bb2cb578ef6dd72b6d8bb2e5792985\n\nThe idea is to add new flag \"gl-min-version\" and then we can set EGL_CONTEXT_OPENGL_BACKWARDS_COMPATIBLE_ANGLE and EGL_EXTENSIONS_ENABLED_ANGLE.\n\n(Looking at this code, there\u0027s no \"desktop\" or \"gles\" for --use-angle\u003d, we are just using the fallthrough default for these)",
+      "parentUuid": "fcdb1937_0d2015aa",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "457d0bfc_765988eb",
         "filename": "src/dawn/native/opengl/ContextEGL.h",
         "patchSetId": 10
