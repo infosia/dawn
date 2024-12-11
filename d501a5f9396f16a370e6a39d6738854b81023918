@@ -69,6 +69,24 @@
       "parentUuid": "ff3f8ff1_21037542",
       "revId": "d501a5f9396f16a370e6a39d6738854b81023918",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11af7975_5badab68",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3704,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-11T01:51:34Z",
+      "side": 1,
+      "message": "Resolved in standup. This specific check is for programmer convenience.",
+      "parentUuid": "527516c8_c0a44593",
+      "revId": "d501a5f9396f16a370e6a39d6738854b81023918",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
