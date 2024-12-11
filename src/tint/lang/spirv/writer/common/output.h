@@ -52,11 +52,14 @@ struct Output {
     /// Workgroup size information
     struct WorkgroupInfo {
         /// The x-component
-        uint32_t x;
+        uint32_t x = 0;
         /// The y-component
-        uint32_t y;
+        uint32_t y = 0;
         /// The z-component
-        uint32_t z;
+        uint32_t z = 0;
+
+        /// The needed workgroup storage size
+        size_t storage_size = 0;
     };
 
     /// The generated SPIR-V.
