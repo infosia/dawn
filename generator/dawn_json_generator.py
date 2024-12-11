@@ -776,6 +776,9 @@ def compute_kotlin_params(loaded_json, kotlin_json):
             return False
         return True
 
+    def is_callback_method(method):
+        return len(method.arguments) >= 1 and method.arguments[-1].name.get() == 'callback info'
+
     # A structure may need to know which other structures listed it as a chain root, e.g.
     # to know whether to mark the generated class 'open'.
     chain_children = defaultdict(list)
@@ -789,6 +792,7 @@ def compute_kotlin_params(loaded_json, kotlin_json):
     params_kotlin['kotlin_record_members'] = kotlin_record_members
     params_kotlin['jni_name'] = jni_name
     params_kotlin['is_async_method'] = is_async_method
+    params_kotlin['is_callback_method'] = is_callback_method
     return params_kotlin
 
 
