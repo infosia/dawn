@@ -141,6 +141,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ea47779f_c331473f",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-11T20:06:30Z",
+      "side": 1,
+      "message": "Yeah I feel this double-initialization approach is ideal either.\n\nLet me do this, I will put up another CL, using an adapter and device created with descriptor with chained options, and just make it work for one test (StencilCopyTests in this case).\n\nIf that one looks like a better approach, we can then figure out how to make it a separate test config, apply to multiple tests and run on bots.",
+      "parentUuid": "4fda8a2b_6995f568",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "967af82f_7a6753e5",
         "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
         "patchSetId": 10
