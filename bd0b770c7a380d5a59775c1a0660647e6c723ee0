@@ -69,6 +69,24 @@
       "parentUuid": "b83edf9b_33297d6f",
       "revId": "bd0b770c7a380d5a59775c1a0660647e6c723ee0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "462abd56_31fcb03c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-11T09:51:19Z",
+      "side": 1,
+      "message": "Shall I still submit this CL as is?",
+      "parentUuid": "15b2d7e1_f9f0494a",
+      "revId": "bd0b770c7a380d5a59775c1a0660647e6c723ee0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
