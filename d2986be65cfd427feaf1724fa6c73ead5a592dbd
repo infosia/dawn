@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8a503f6_f894a714",
+        "filename": "src/tint/lang/hlsl/writer/writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-11T16:23:00Z",
+      "side": 1,
+      "message": "We should probably just push this into the printer. Doesn\u0027t have to be done here though.",
+      "revId": "d2986be65cfd427feaf1724fa6c73ead5a592dbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
