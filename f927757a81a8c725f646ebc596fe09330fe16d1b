@@ -16,6 +16,23 @@
       "message": "I need another CMakeLists.txt review",
       "revId": "f927757a81a8c725f646ebc596fe09330fe16d1b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3a21e62_63740dde",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-11T17:46:38Z",
+      "side": 1,
+      "message": "Why do we need to set this if it\u0027s always false?",
+      "revId": "f927757a81a8c725f646ebc596fe09330fe16d1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
