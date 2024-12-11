@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9720dc3_6a920eb4",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-11T01:16:31Z",
+      "side": 1,
+      "message": "Add a brief comment about why we need to override the previously-set toggles.\n\nIt seems like what you really want to do is reset the whole TogglesState and set it again. Is that right? And if so can we do that instead? (I don\u0027t know what state it would need to be reset to.)",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17a3efcf_30dc9e18",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-11T01:16:31Z",
+      "side": 1,
+      "message": "(if relevant after the other comments)\n\nThis is neat but I think it would be clearer to use a more common pattern, maybe:\n\n```cpp\n    auto default \u003d [\u0026](Toggle toggle, bool enabled) {\n        if (reinitialize) {\n            deviceToggles-\u003eDefaultOverride(toggle, enabled);\n        } else {\n            deviceToggles-\u003eDefault(toggle, enabled);\n        }\n    };\n```\n\nOr perhaps better, add a third argument like:\n```\nvoid TogglesState::Default(Toggle toggle, bool enabled,\n    TogglesState::Condition condition \u003d TogglesState::Condition::IfNotSet);\n```\nand here use:\n```\nauto cond \u003d reinitialize ?\n    TogglesState::Condition::IfNotForced :\n    TogglesState::Condition::IfNotSet;\ndeviceToggles-\u003eDefault(toggle, enabled, cond);\n```",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef20f82c_d35eddfa",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-11T01:16:31Z",
+      "side": 1,
+      "message": "Comment somewhere, perhaps here, about why we need to reinitialize rather than just initializing correctly the first time. (Because we can\u0027t check IsANGLE until after initializing once? Is it possible to determine that from whether Dawn is configured to use ANGLE, rather than by whether it\u0027s _actually_ ANGLE? For example on an Android device where the system driver is ANGLE, I\u0027m guessing we don\u0027t care if this toggle can be used.)",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
