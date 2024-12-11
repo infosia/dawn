@@ -33,6 +33,24 @@
       "message": "Why do we need to set this if it\u0027s always false?",
       "revId": "f927757a81a8c725f646ebc596fe09330fe16d1b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a99123f_a35d4ddd",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-11T18:30:05Z",
+      "side": 1,
+      "message": "We don\u0027t. It\u0027s only here to make the CMake and GN build files not so different, including the assertion error message.\n\nNote that before this change, we were relying on CMake treating undefined variables are falsy in files like `src/tint/cmd/fuzz/ir/BUILD.cmake`.",
+      "parentUuid": "b3a21e62_63740dde",
+      "revId": "f927757a81a8c725f646ebc596fe09330fe16d1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
