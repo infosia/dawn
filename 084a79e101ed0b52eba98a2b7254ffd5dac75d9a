@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ac8961a_b7f6cd8f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-11T22:11:48Z",
+      "side": 1,
+      "message": "nit. I assume this is gonna happen soon hence the brevity of the message, but maybe just a 1-liner to add a little bit of context would be nice?",
+      "range": {
+        "startLine": 377,
+        "startChar": 4,
+        "endLine": 377,
+        "endChar": 45
+      },
+      "revId": "084a79e101ed0b52eba98a2b7254ffd5dac75d9a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
