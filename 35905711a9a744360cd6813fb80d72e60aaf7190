@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90d6958e_45d752c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-11T18:37:58Z",
+      "side": 1,
+      "message": "Messages LGTM, but I do have a question about the macro changes.",
+      "revId": "35905711a9a744360cd6813fb80d72e60aaf7190",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d414c7de_97bae667",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-11T18:37:58Z",
+      "side": 1,
+      "message": "Repeating my feedback from a change that already landed here: Why was the change from `DAWN_INVALID_IF` to `if (DAWN_UNLIKELY` needed here? `DAWN_INVALID_IF` should already be doing the same thing, if I recall correctly? And since you\u0027re not doing any additional work inside the `if` it doesn\u0027t seem like a necessary change.",
+      "revId": "35905711a9a744360cd6813fb80d72e60aaf7190",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
