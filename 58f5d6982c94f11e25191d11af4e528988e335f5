@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fcdb1937_0d2015aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-11T20:25:32Z",
+      "side": 1,
+      "message": "\u003e  (31 and no extensions) Toggle -\u003e Feature\n\nI don\u0027t think this can change physical device creation at[1] triggered at listing available system adapters?\n\n\nI think now I have an idea, what we want is this flag `--use-angle\u003ddesktop-min-version`, which makes a difference when initializing physical device\n\nExample log output difference with/without `--use-angle\u003ddesktop`\n```\n$ dawn_end2end_tests --backend\u003dopengles\n...\nSystem adapters: \n...\n - \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0)\" - \"OpenGL version OpenGL ES 3.1.0 (ANGLE 2.1.24454 git hash: 0bb109aa3311) [Selected]\"\n   type: CPU, backend: OpenGLES, compatibilityMode: true\n   vendorId: 0x0000, deviceId: 0xC0DE\n\n```\n\n```\n$ dawn_end2end_tests --backend\u003dopengles --use-angle\u003ddesktop\n...\nSystem adapters: \n...\n - \"ANGLE (NVIDIA Corporation, Quadro P1000/PCIe/SSE2, OpenGL 4.5.0 NVIDIA 535.183.06)\" - \"OpenGL version OpenGL ES 3.1.0 (ANGLE 2.1.24454 git hash: 0bb109aa3311) [Selected]\"\n   type: Unknown, backend: OpenGLES, compatibilityMode: true\n   vendorId: 0x10DE, deviceId: 0x0000\n   vendorName: nvidia, architecture:\n\n```",
+      "parentUuid": "7d34e3e1_ade48dc2",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "457d0bfc_765988eb",
         "filename": "src/dawn/native/opengl/ContextEGL.h",
         "patchSetId": 10
