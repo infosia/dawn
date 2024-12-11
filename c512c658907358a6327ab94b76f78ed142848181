@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "258ad8db_0a61a2e9",
+        "filename": "src/tint/lang/msl/writer/function_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-11T18:44:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb3593d1_5997070e",
+      "revId": "c512c658907358a6327ab94b76f78ed142848181",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ead0a529_31ba0e85",
@@ -49,6 +67,24 @@
           ]
         }
       ],
+      "revId": "c512c658907358a6327ab94b76f78ed142848181",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44c2f71f_a3b2ed26",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-11T18:44:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead0a529_31ba0e85",
       "revId": "c512c658907358a6327ab94b76f78ed142848181",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
