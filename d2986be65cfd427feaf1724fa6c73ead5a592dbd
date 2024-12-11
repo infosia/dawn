@@ -16,6 +16,24 @@
       "message": "We should probably just push this into the printer. Doesn\u0027t have to be done here though.",
       "revId": "d2986be65cfd427feaf1724fa6c73ead5a592dbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a5048fc_9f110bf9",
+        "filename": "src/tint/lang/hlsl/writer/writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-11T16:33:01Z",
+      "side": 1,
+      "message": "This should just go away, as we\u0027re moving to a single-entry-point world, so there would only be one and we would have been old what it was",
+      "parentUuid": "f8a503f6_f894a714",
+      "revId": "d2986be65cfd427feaf1724fa6c73ead5a592dbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
