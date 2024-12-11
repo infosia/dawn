@@ -847,6 +847,11 @@ MaybeError PhysicalDevice::ResetInternalDeviceForTestingImpl() {
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {
     if (auto* subgroupProperties = info.Get<AdapterPropertiesSubgroups>()) {
         subgroupProperties->subgroupMinSize = mDeviceInfo.waveLaneCountMin;
+
+        if (mToggles.IsEnabled(Toggle::D3D12RelaxMinSubgroupSizeTo8)) {
+            subgroupProperties->subgroupMinSize = std::min(subgroupProperties->subgroupMinSize, 8u);
+        }
+
         // Currently the WaveLaneCountMax queried from D3D12 API is not reliable and the meaning is
         // unclear. Use 128 instead, which is the largest possible size. Reference:
         // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics#:~:text=UINT%20WaveLaneCountMax

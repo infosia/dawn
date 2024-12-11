@@ -374,6 +374,7 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
         GetDefaultLimits(&mLimits.v1, adapter->GetFeatureLevel());
     }
     // Get experimentalSubgroupLimits from physical device
+    // TODO(crbug.com/382520104): Remove this
     mLimits.experimentalSubgroupLimits =
         GetPhysicalDevice()->GetLimits().experimentalSubgroupLimits;
     if (GetPhysicalDevice()->GetBackendType() == wgpu::BackendType::D3D12 &&
