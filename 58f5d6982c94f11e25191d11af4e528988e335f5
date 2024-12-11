@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "457d0bfc_765988eb",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-11T19:24:33Z",
+      "side": 1,
+      "message": "```suggestion\n                                                             bool forceMinVersionAndNoExtensions);\n```",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df720649_1bdc6441",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-11T19:24:33Z",
+      "side": 1,
+      "message": "```suggestion\n                          bool forceMinVersionAndNoExtensions);\n```",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a9720dc3_6a920eb4",
         "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
         "patchSetId": 10
@@ -66,6 +100,24 @@
       "side": 1,
       "message": "\u003e why we need to reinitialize rather than just initializing correctly the first time.\n\nIt seems that how DawnTests work is: before launching any specific tests, it enumerates adapters on the machine. For GL backend, a physical device is already created at this step (at [1]). When the test is actually running, a device is created, picking up the `Toggle::GLForceMinVersionAndNoExtension` we can easily specified to any tests with our current test param framework(e.g. StencilCopyTests). Since the gl mFunctions and extensions cache are already populated at [1] with the default setting (with all extensions avilable), we need to reinitialize gl functions and toggles (decided on extensions availability).\n\nPlease let me know if my understanding above is correct. To me it seems inevitable to re-intialize the gl functions and toggles in dawn tests.\n\nOne alternative approach is, in overriden `SetUp` of some test, explicitly create an adapter, device with special descriptors chained in. But this require we add a overriden SetUp for every test we want to be coverred testing with explicit extension request. (Compared to the current approach we can simply add the config with `OpenGLESBackend({\"gl_force_min_version_and_no_extension\"})`)\n\n\nI will phrase and add some comments (if the current approach makes sense)",
       "parentUuid": "ef20f82c_d35eddfa",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fda8a2b_6995f568",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-11T19:24:33Z",
+      "side": 1,
+      "message": "TBH I\u0027m not fond of this double-initialization.\n\nRather than setting the toggle per-test, I think we should have a bot or config running all end2end tests with enforced min-version and no extensions. Does that obviate the need for double-initialization?",
+      "parentUuid": "e3c0f827_8c74bfdf",
       "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
