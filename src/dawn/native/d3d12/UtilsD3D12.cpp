@@ -70,7 +70,6 @@ uint64_t RequiredCopySizeByD3D12(const uint32_t bytesPerRow,
 
 // This function is used to access whether we need a workaround for D3D12's wrong algorithm
 // of calculating required buffer size for B2T/T2B copy. The workaround is needed only when
-//   - The corresponding toggle is enabled.
 //   - It is a 3D texture (so the format is uncompressed).
 //   - There are multiple depth images to be copied (copySize.depthOrArrayLayers > 1).
 //   - It has rowsPerImage paddings (rowsPerImage > copySize.height).
@@ -79,10 +78,7 @@ bool NeedBufferSizeWorkaroundForBufferTextureCopyOnD3D12(const BufferCopy& buffe
                                                          const TextureCopy& textureCopy,
                                                          const Extent3D& copySize) {
     TextureBase* texture = textureCopy.texture.Get();
-    Device* device = ToBackend(texture->GetDevice());
-
-    if (!device->IsToggleEnabled(Toggle::D3D12SplitBufferTextureCopyForRowsPerImagePaddings) ||
-        texture->GetDimension() != wgpu::TextureDimension::e3D ||
+    if (texture->GetDimension() != wgpu::TextureDimension::e3D ||
         copySize.depthOrArrayLayers <= 1 || bufferCopy.rowsPerImage <= copySize.height) {
         return false;
     }
