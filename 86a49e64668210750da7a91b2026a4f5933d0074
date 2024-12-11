@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb91ffd2_4138024f",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-11T16:26:50Z",
+      "side": 1,
+      "message": "Nit: unneeded UnwrapRef()",
+      "fixSuggestions": [
+        {
+          "fixId": "8efa127d_87793a3b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 538,
+                "startChar": 0,
+                "endLine": 539,
+                "endChar": 0
+              },
+              "replacement": "                        auto* ty \u003d ptr-\u003eStoreType();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "86a49e64668210750da7a91b2026a4f5933d0074",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
