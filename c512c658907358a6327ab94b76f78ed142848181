@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb3593d1_5997070e",
+        "filename": "src/tint/lang/msl/writer/function_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-11T16:41:10Z",
+      "side": 1,
+      "message": "Discussed offline, add a second scalar var to expose the difference in storage size vs the aggregated struct size.",
+      "revId": "c512c658907358a6327ab94b76f78ed142848181",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ead0a529_31ba0e85",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-11T16:41:10Z",
+      "side": 1,
+      "message": "Nit: UnwrapRef unneeded",
+      "fixSuggestions": [
+        {
+          "fixId": "323cebc9_32f0d859",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/msl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 409,
+                "startChar": 0,
+                "endLine": 410,
+                "endChar": 0
+              },
+              "replacement": "                    auto* ty \u003d ptr-\u003eStoreType();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c512c658907358a6327ab94b76f78ed142848181",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
