@@ -120,6 +120,23 @@
       "parentUuid": "e3c0f827_8c74bfdf",
       "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "967af82f_7a6753e5",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-11T19:30:00Z",
+      "side": 1,
+      "message": "Nit: if we do need to do this, could we use mDisplay-\u003eegl.GetProcAddress, as in InitializeImpl()?",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
