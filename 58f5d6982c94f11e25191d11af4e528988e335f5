@@ -50,6 +50,24 @@
       "message": "Comment somewhere, perhaps here, about why we need to reinitialize rather than just initializing correctly the first time. (Because we can\u0027t check IsANGLE until after initializing once? Is it possible to determine that from whether Dawn is configured to use ANGLE, rather than by whether it\u0027s _actually_ ANGLE? For example on an Android device where the system driver is ANGLE, I\u0027m guessing we don\u0027t care if this toggle can be used.)",
       "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3c0f827_8c74bfdf",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-11T19:02:24Z",
+      "side": 1,
+      "message": "\u003e why we need to reinitialize rather than just initializing correctly the first time.\n\nIt seems that how DawnTests work is: before launching any specific tests, it enumerates adapters on the machine. For GL backend, a physical device is already created at this step (at [1]). When the test is actually running, a device is created, picking up the `Toggle::GLForceMinVersionAndNoExtension` we can easily specified to any tests with our current test param framework(e.g. StencilCopyTests). Since the gl mFunctions and extensions cache are already populated at [1] with the default setting (with all extensions avilable), we need to reinitialize gl functions and toggles (decided on extensions availability).\n\nPlease let me know if my understanding above is correct. To me it seems inevitable to re-intialize the gl functions and toggles in dawn tests.\n\nOne alternative approach is, in overriden `SetUp` of some test, explicitly create an adapter, device with special descriptors chained in. But this require we add a overriden SetUp for every test we want to be coverred testing with explicit extension request. (Compared to the current approach we can simply add the config with `OpenGLESBackend({\"gl_force_min_version_and_no_extension\"})`)\n\n\nI will phrase and add some comments (if the current approach makes sense)",
+      "parentUuid": "ef20f82c_d35eddfa",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
