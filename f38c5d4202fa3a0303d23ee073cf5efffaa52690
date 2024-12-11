@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cb3c641_ebd420dd",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-11T20:15:21Z",
+      "side": 1,
+      "message": "I think we already have `has_callback_info` method that could be resued? You could still rename it to `is_callback_method` in `params_kotlin` though to make it consistent with `is_async_method`.",
+      "range": {
+        "startLine": 779,
+        "startChar": 4,
+        "endLine": 780,
+        "endChar": 96
+      },
+      "revId": "f38c5d4202fa3a0303d23ee073cf5efffaa52690",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
