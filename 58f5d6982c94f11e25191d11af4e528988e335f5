@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d34e3e1_ade48dc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-11T19:37:10Z",
+      "side": 1,
+      "message": "Another thought: what if we made this (31 and no extensions) a dawn::native::Feature, similar to ANGLETextureSharing? Then it could be exposed by the PhysicalDevice if IsANGLE(), and set by the tests via GetRequiredFeatures().",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "457d0bfc_765988eb",
