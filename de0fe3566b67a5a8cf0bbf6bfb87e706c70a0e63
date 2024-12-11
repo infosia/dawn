@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "de0fe3566b67a5a8cf0bbf6bfb87e706c70a0e63",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdc97990_3f606b69",
+        "filename": "docs/dawn/features/adapter_options.md",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-11T02:11:26Z",
+      "side": 1,
+      "message": "In addition to the usual behavior that devices created from the adapter will default to the capabilities of this feature level.",
+      "revId": "de0fe3566b67a5a8cf0bbf6bfb87e706c70a0e63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
