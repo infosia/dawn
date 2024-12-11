@@ -1,6 +1,6 @@
 package android.dawn
 
-import android.dawn.CallbackMode.Companion.WaitAnyOnly
+import android.dawn.CallbackMode.Companion.AllowSpontaneous
 import android.dawn.helper.DawnException
 import android.dawn.helper.Util
 import kotlinx.coroutines.delay
@@ -40,7 +40,7 @@ fun dawnTestLauncher(
                     { device, reason, message ->
                         throw DeviceLostException(device, reason, message)
                     },
-                    mode = WaitAnyOnly
+                    mode = AllowSpontaneous
                 ),
                 uncapturedErrorCallbackInfo2 = UncapturedErrorCallbackInfo2 { device, type, message ->
                     throw UncapturedErrorException(device, type, message)
@@ -57,18 +57,7 @@ fun dawnTestLauncher(
         runBlocking {
             eventProcessor.join()
         }
-        var caughtDeviceLostException = false;
-        try {
-            instance.close()
-        } catch (ignored: DeviceLostException) {
-            // For some reason we receive a device lost callback even though the only device has
-            // been closed. b/381416258
-            caughtDeviceLostException = true;
-        }
-        assert(caughtDeviceLostException) {
-            "When this assert stops passing, it indicates that the DeviceLostException we're " +
-                    "catching above is no longer being erroneously thrown, so we can safely " +
-                    "remove the try/catch and treat the DLE as a genuine error."
-        }
+
+        instance.close()
     }
 }
