@@ -78,8 +78,10 @@
 #include "src/tint/lang/core/ir/unused.h"
 #include "src/tint/lang/core/ir/user_call.h"
 #include "src/tint/lang/core/ir/var.h"
+#include "src/tint/lang/core/type/abstract_int.h"
 #include "src/tint/lang/core/type/array.h"
 #include "src/tint/lang/core/type/bool.h"
+#include "src/tint/lang/core/type/f16.h"
 #include "src/tint/lang/core/type/f32.h"
 #include "src/tint/lang/core/type/function.h"
 #include "src/tint/lang/core/type/i32.h"
@@ -2655,6 +2657,122 @@ void Validator::CheckCall(const Call* call) {
 
 void Validator::CheckBitcast(const Bitcast* bitcast) {
     CheckResultsAndOperands(bitcast, Bitcast::kNumResults, Bitcast::kNumOperands);
+
+    const auto* val_type = bitcast->Operand(Bitcast::kValueOperandOffset)->Type();
+    const auto* result_type = bitcast->Result(0)->Type();
+
+    const auto add_error = [&]() {
+        AddError(bitcast) << "bitcast is not defined for " << style::Type(val_type->FriendlyName())
+                          << " -> " << style::Type(result_type->FriendlyName());
+    };
+
+    // S, where S is i32, u32, or f32
+    const auto check_concrete_scalar = [&]() {
+        // Identity and reinterpretation cases
+        if (result_type->IsAnyOf<core::type::U32, core::type::I32, core::type::F32>()) {
+            return;
+        }
+
+        // S -> vec2<f16>
+        if (auto* vec_type = result_type->As<core::type::Vector>()) {
+            auto elements = vec_type->Elements();
+            if (elements.count == 2 && elements.type && elements.type->Is<core::type::F16>()) {
+                return;
+            }
+        }
+
+        add_error();
+    };
+
+    // Check that there exists an overload for the provided types
+    tint::Switch(
+        val_type, [&](const core::type::U32*) { check_concrete_scalar(); },
+        [&](const core::type::I32*) { check_concrete_scalar(); },
+        [&](const core::type::F32*) { check_concrete_scalar(); },
+        [&](const core::type::AbstractInt*) {
+            if (!result_type->Is<core::type::U32>()) {
+                add_error();
+            }
+        },
+        [&](const core::type::Vector* val_vec_type) {
+            auto val_elements = val_vec_type->Elements();
+            if (!val_elements.type) {
+                // Malformed vector
+                add_error();
+                return;
+            }
+
+            if (val_elements.type->IsAnyOf<core::type::U32, core::type::I32, core::type::F32>()) {
+                // vecN<S> where S is i32, u32, or f32
+                if (auto* result_vec_type = result_type->As<core::type::Vector>()) {
+                    auto result_elements = result_vec_type->Elements();
+                    if (!result_elements.type) {
+                        // Not a vector or malformed
+                        add_error();
+                        return;
+                    }
+
+                    if (result_elements.type
+                            ->IsAnyOf<core::type::U32, core::type::I32, core::type::F32>()) {
+                        // Identity and reinterpretation cases
+                        if (val_elements.count == result_elements.count) {
+                            return;
+                        }
+                    } else {
+                        // Vec2<S> -> vec4<f16>
+                        if (val_elements.count == 2) {
+                            if (result_elements.count == 4 &&
+                                result_elements.type->Is<core::type::F16>()) {
+                                return;
+                            }
+                        }
+                    }
+                }
+            } else if (val_elements.type->Is<core::type::F16>()) {
+                // vecN<f16>
+                if (val_elements.count == 2) {
+                    // vec2<f16> -> i32, u32, or f32
+                    if (result_type->IsAnyOf<core::type::U32, core::type::I32, core::type::F32>()) {
+                        return;
+                    }
+                } else if (val_elements.count == 4) {
+                    // vec4<f16> -> vec2<S>, where S is i32, u32, or f32
+                    if (auto* result_vec_type = result_type->As<core::type::Vector>()) {
+                        auto result_elements = result_vec_type->Elements();
+                        if (!result_elements.type) {
+                            // Not a vector or malformed
+                            add_error();
+                            return;
+                        }
+
+                        if (result_elements.type
+                                ->IsAnyOf<core::type::U32, core::type::I32, core::type::F32>()) {
+                            if (result_elements.count == 2) {
+                                return;
+                            }
+                        }
+                    }
+                }
+            } else if (val_elements.type->Is<core::type::AbstractInt>()) {
+                // vecN<AbstractInt> -> vecN<u32>
+                if (auto* result_vec_type = result_type->As<core::type::Vector>()) {
+                    auto result_elements = result_vec_type->Elements();
+                    if (!result_elements.type) {
+                        // Not a vector or malformed
+                        add_error();
+                        return;
+                    }
+
+                    if (result_elements.type->Is<core::type::U32>()) {
+                        if (val_elements.count == result_elements.count) {
+                            return;
+                        }
+                    }
+                }
+                add_error();
+            }
+        },
+        [&](Default) { add_error(); });
 }
 
 void Validator::CheckBuiltinCall(const BuiltinCall* call) {
