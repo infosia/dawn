@@ -66,7 +66,7 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options) {
         return res.Failure();
     }
 
-    auto result = Print(ir);
+    auto result = Print(ir, options);
     if (result != Success) {
         return result.Failure();
     }
