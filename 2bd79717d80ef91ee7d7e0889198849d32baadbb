@@ -16,6 +16,120 @@
       "message": "PTAL, thanks!",
       "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7093332_a5a982be",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-12-12T16:29:21Z",
+      "side": 1,
+      "message": "nit:  I was tempted to say this could be shortened to \n\n     range \u003d SignedIntegerRange{min_bound, max_bound};\n     \nBut then I realized the members of SignedIntegerRange are the wrong way around for this.  :-)",
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92da6d98_eb29cccc",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-12-12T16:29:21Z",
+      "side": 1,
+      "message": "Is this automatically zero-initialized? I forget.\n\nPlease explicitly initialize this. `\u003d {};` or fully explicitly `\u003d {0, 0, 0};`",
+      "range": {
+        "startLine": 65,
+        "startChar": 32,
+        "endLine": 65,
+        "endChar": 47
+      },
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77827743_69917ba6",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-12-12T16:29:21Z",
+      "side": 1,
+      "message": "It\u0027s worth having a comment saying that if workgropu size is not a constant, then the product is zero, and we end up with std::numeric_limits\u003cuint64_t\u003e::max() due to wraparound.",
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d748f675_a8a18f92",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-12-12T16:29:21Z",
+      "side": 1,
+      "message": "This needs to say that the bound is inclusive.\nIn other words, the value x being bound satisfies:   min_bound \u003c\u003d x \u003c\u003d max_bound",
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "458c0cb0_b78ec79e",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-12-12T16:29:21Z",
+      "side": 1,
+      "message": "I find it confusing to have the *max* bound first.\nI\u0027d prefer the other way, so it\u0027s more like interval notation [min_bound,max_bound]",
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21e0441a_e2ba7a9a",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2024-12-12T16:29:21Z",
+      "side": 1,
+      "message": "Also test the case where:\n- 3 signed values are provided\n- only the second dimension is bigger than 1\n- only the third dimensio is bigger than 1\n\n- workgroup size uses an override expression.  Hey @jrprice does that get past validation?",
+      "range": {
+        "startLine": 44,
+        "startChar": 44,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
