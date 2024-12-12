@@ -369,7 +369,13 @@ MaybeError CommandBufferStateTracker::ValidateNoDifferentTextureViewsOnSameTextu
             const TextureViewBase* textureViewBase =
                 bindGroup->GetBindingAsTextureView(bindingIndex);
 
-            textureToViews[textureViewBase->GetTexture()].push_back(textureViewBase);
+            // Note: we skip the check on multiplanar textures. See https://crbug.com/382071071
+            // The reason is that multiplanar textures are only available via an optional feature.
+            // And on those backends that support this feature (e.g. D3D11), texture views are
+            // natively supported. So there is no need to apply the restrictions.
+            if (!textureViewBase->GetTexture()->GetFormat().IsMultiPlanar()) {
+                textureToViews[textureViewBase->GetTexture()].push_back(textureViewBase);
+            }
         }
     }
 
