@@ -173,26 +173,25 @@ TEST_F(WireExtensionTests, UnknownSType) {
 // Test that if both an invalid and valid stype are passed on the chain, only the invalid
 // sType passes through as Invalid.
 TEST_F(WireExtensionTests, ValidAndInvalidSTypeInChain) {
-    WGPUShaderModuleDescriptor shaderModuleDesc = {};
+    wgpu::ShaderModuleDescriptor shaderModuleDesc = {};
 
-    WGPUShaderSourceWGSL clientExt2 = {};
-    clientExt2.chain.sType = WGPUSType(0);
-    clientExt2.chain.next = nullptr;
+    wgpu::ShaderSourceWGSL clientExt2 = {};
+    clientExt2.sType = wgpu::SType(0u);
+    clientExt2.nextInChain = nullptr;
 
-    WGPUShaderSourceWGSL clientExt1 = {};
-    clientExt1.chain.sType = WGPUSType_ShaderSourceWGSL;
-    clientExt1.chain.next = &clientExt2.chain;
+    wgpu::ShaderSourceWGSL clientExt1 = {};
+    clientExt1.nextInChain = &clientExt2;
     clientExt1.code = {"/* comment 1 */", WGPU_STRLEN};
-    shaderModuleDesc.nextInChain = &clientExt1.chain;
+    shaderModuleDesc.nextInChain = &clientExt1;
 
     WGPUShaderModule apiShaderModule = api.GetNewShaderModule();
-    wgpu::ShaderModule shaderModule1 = wgpuDeviceCreateShaderModule(cDevice, &shaderModuleDesc);
+    wgpu::ShaderModule shaderModule1 = device.CreateShaderModule(&shaderModuleDesc);
     EXPECT_CALL(api, DeviceCreateShaderModule(apiDevice, _))
         .WillOnce(
             Invoke([&](Unused, const WGPUShaderModuleDescriptor* serverDesc) -> WGPUShaderModule {
                 const auto* ext =
                     reinterpret_cast<const WGPUShaderSourceWGSL*>(serverDesc->nextInChain);
-                EXPECT_EQ(ext->chain.sType, clientExt1.chain.sType);
+                EXPECT_EQ(ext->chain.sType, WGPUSType_ShaderSourceWGSL);
                 EXPECT_NE(ext->code.length, WGPU_STRLEN) << "The wire should decay WGPU_STRLEN";
                 EXPECT_EQ(0, memcmp(ext->code.data, clientExt1.code.data, ext->code.length));
                 EXPECT_EQ(ext->code.length, strlen(clientExt1.code.data));
@@ -205,11 +204,11 @@ TEST_F(WireExtensionTests, ValidAndInvalidSTypeInChain) {
     FlushClient();
 
     // Swap the order of the chained structs.
-    shaderModuleDesc.nextInChain = &clientExt2.chain;
-    clientExt2.chain.next = &clientExt1.chain;
-    clientExt1.chain.next = nullptr;
+    shaderModuleDesc.nextInChain = &clientExt2;
+    clientExt2.nextInChain = &clientExt1;
+    clientExt1.nextInChain = nullptr;
 
-    wgpu::ShaderModule shaderModule2 = wgpuDeviceCreateShaderModule(cDevice, &shaderModuleDesc);
+    wgpu::ShaderModule shaderModule2 = device.CreateShaderModule(&shaderModuleDesc);
     EXPECT_CALL(api, DeviceCreateShaderModule(apiDevice, _))
         .WillOnce(
             Invoke([&](Unused, const WGPUShaderModuleDescriptor* serverDesc) -> WGPUShaderModule {
@@ -217,7 +216,7 @@ TEST_F(WireExtensionTests, ValidAndInvalidSTypeInChain) {
 
                 const auto* ext =
                     reinterpret_cast<const WGPUShaderSourceWGSL*>(serverDesc->nextInChain->next);
-                EXPECT_EQ(ext->chain.sType, clientExt1.chain.sType);
+                EXPECT_EQ(ext->chain.sType, WGPUSType_ShaderSourceWGSL);
                 EXPECT_NE(ext->code.length, WGPU_STRLEN) << "The wire should decay WGPU_STRLEN";
                 EXPECT_EQ(0, memcmp(ext->code.data, clientExt1.code.data, ext->code.length));
                 EXPECT_EQ(ext->code.length, strlen(clientExt1.code.data));
