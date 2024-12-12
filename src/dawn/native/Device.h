@@ -84,12 +84,10 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
   public:
     struct DeviceLostEvent final : public EventManager::TrackedEvent {
         // TODO(https://crbug.com/dawn/2465): Pass just the DeviceLostCallbackInfo when setters are
-        // deprecated. Creates and sets the device lost event for the given device if applicable. If
-        // the device is nullptr, an event is still created, but the caller owns the last ref of the
-        // event. When passing a device, note that device construction can be successful but fail
-        // later at initialization, and this should only be called with the device if initialization
-        // was successful.
+        // deprecated.
         static Ref<DeviceLostEvent> Create(const DeviceDescriptor* descriptor);
+
+        void SetReady(wgpu::DeviceLostReason reason, std::string_view message);
 
         // Event result fields need to be public so that they can easily be updated prior to
         // completing the event.
