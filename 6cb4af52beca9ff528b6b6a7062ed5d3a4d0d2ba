@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65fa974a_d0e35b8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-12T07:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68363994_06bacb2e",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "6cb4af52beca9ff528b6b6a7062ed5d3a4d0d2ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "850a0e3d_d3880e9e",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-12-12T04:36:08Z",
       "side": 1,
       "message": "nit: chromium prefix not needed\n\n```suggestion\nBug: 42240278\n```",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "6cb4af52beca9ff528b6b6a7062ed5d3a4d0d2ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "250a4d25_2c4563c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-12T07:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "850a0e3d_d3880e9e",
       "range": {
         "startLine": 22,
         "startChar": 5,
@@ -112,6 +160,30 @@
       "writtenOn": "2024-12-12T04:36:08Z",
       "side": 1,
       "message": "IIUC, in the commit message you\u0027re saying that D3D12\u0027s algorithm is _not_ wrong; if so, this comment should be tweaked",
+      "range": {
+        "startLine": 71,
+        "startChar": 76,
+        "endLine": 71,
+        "endChar": 91
+      },
+      "revId": "6cb4af52beca9ff528b6b6a7062ed5d3a4d0d2ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3a9c308_cb5c48a8",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-12T07:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13a9f574_a18a85f7",
       "range": {
         "startLine": 71,
         "startChar": 76,
