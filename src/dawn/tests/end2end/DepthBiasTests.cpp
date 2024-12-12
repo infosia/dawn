@@ -187,6 +187,8 @@ TEST_P(DepthBiasTests, PositiveBiasOnFloatWithClamp) {
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGL());
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGLES());
 
+    DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
+
     // Draw quad flat on z = 0.25 with 0.25 bias clamped at 0.125.
     RunDepthBiasTest(wgpu::TextureFormat::Depth32Float, 0, QuadAngle::Flat,
                      kPointTwoFiveBiasForPointTwoFiveZOnFloat, 0, 0.125);
@@ -224,6 +226,8 @@ TEST_P(DepthBiasTests, NegativeBiasOnFloatWithClamp) {
     // Clamping support in OpenGL is spotty
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGL());
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGLES());
+
+    DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
     // Draw quad flat on z = 0.25 with -0.25 bias clamped at -0.125.
     RunDepthBiasTest(wgpu::TextureFormat::Depth32Float, 0, QuadAngle::Flat,
@@ -343,6 +347,8 @@ TEST_P(DepthBiasTests, PositiveBiasOn24bitWithClamp) {
     // Clamping support in OpenGL is spotty
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGL());
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGLES());
+
+    DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
     // Draw quad flat on z = 0.25 with 0.25 bias clamped at 0.125.
     RunDepthBiasTest(wgpu::TextureFormat::Depth24PlusStencil8, 0.4f, QuadAngle::Flat,
