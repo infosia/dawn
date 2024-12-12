@@ -215,6 +215,12 @@ Ref<DeviceBase::DeviceLostEvent> DeviceBase::DeviceLostEvent::Create(
     return AcquireRef(new DeviceBase::DeviceLostEvent(deviceLostCallbackInfo));
 }
 
+void DeviceBase::DeviceLostEvent::SetReady(wgpu::DeviceLostReason reason,
+                                           std::string_view message) {
+    DAWN_ASSERT(mDevice);
+    mDevice->HandleDeviceLost(reason, message);
+}
+
 void DeviceBase::DeviceLostEvent::Complete(EventCompletionType completionType) {
     if (completionType == EventCompletionType::Shutdown) {
         mReason = wgpu::DeviceLostReason::InstanceDropped;
@@ -502,11 +508,9 @@ void DeviceBase::WillDropLastExternalRef() {
     }
 
     // Flush last remaining callback tasks.
-    if (mCallbackTaskManager) {
-        do {
-            FlushCallbackTaskQueue();
-        } while (!mCallbackTaskManager->IsEmpty());
-    }
+    do {
+        FlushCallbackTaskQueue();
+    } while (!mCallbackTaskManager->IsEmpty());
 
     auto deviceLock(GetScopedLock());
     // Drop the device's reference to the queue. Because the application dropped the last external
