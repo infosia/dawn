@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f555e557_d1dd32fc",
+        "filename": "src/tint/lang/spirv/writer/common/output.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2024-12-12T14:03:28Z",
+      "side": 1,
+      "message": "```suggestion\n#include \u003ccstddef\u003e\n#include \u003ccstdint\u003e\n```",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "4c7db0c4f6ba056a30e3974e96f0a3b1f38519b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
