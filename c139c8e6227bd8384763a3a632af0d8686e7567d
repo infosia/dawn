@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "641a9dfa_d667ff06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-12T19:52:06Z",
+      "side": 1,
+      "message": "LGTM, not sure if I should submit it. (BTW, you should have an option to set Auto-Submit+1. You can use that if you want to indicate to reviewers that they should submit it when ready.)",
+      "revId": "c139c8e6227bd8384763a3a632af0d8686e7567d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
