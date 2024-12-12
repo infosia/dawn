@@ -36,6 +36,7 @@
 #include <algorithm>
 #include <cstring>
 #include <limits>
+#include <unordered_set>
 
 #if defined(__GNUC__) || defined(__clang__)
 // error: 'offsetof' within non-standard-layout type 'wgpu::XXX' is conditionally-supported
@@ -315,9 +316,15 @@
         {% endif %}
 
         {% if record.extensible %}
+            static std::unordered_set<WGPUSType> kAllowedStypes = {
+                {%- for extension in record.extensions -%}
+                    {%- if not loop.first %}, {% endif -%}
+                    {{as_cEnum(types["s type"].name, extension.name)}} 
+                {%- endfor -%}
+            };
             record->nextInChain = nullptr;
             if (transfer->hasNextInChain) {
-                WIRE_TRY(DeserializeChainedStruct(&record->nextInChain, deserializeBuffer, allocator, resolver));
+                WIRE_TRY(DeserializeChainedStruct(&record->nextInChain, deserializeBuffer, allocator, resolver, kAllowedStypes));
             }
         {% endif %}
         {% if record.chained %}
@@ -560,9 +567,19 @@
     WireResult DeserializeChainedStruct({{ChainedStructPtr}}* outChainNext,
                                         DeserializeBuffer* deserializeBuffer,
                                         DeserializeAllocator* allocator,
-                                        const ObjectIdResolver& resolver) {
+                                        const ObjectIdResolver& resolver,
+                                        const std::unordered_set<WGPUSType>& allowedStypes) {
         bool hasNext;
         do {
+            auto SetupNextChain = [&](WGPUSType sType, {{ChainedStruct}}* outChain) {
+                outChain->sType = sType;
+                outChain->next = nullptr;
+
+                *outChainNext = outChain;
+                outChainNext = &outChain->next;
+                return WireResult::Success;
+            };
+
             const volatile WGPUChainedStructTransfer* header;
             WIRE_TRY(deserializeBuffer->Peek(&header));
             WGPUSType sType = header->sType;
@@ -570,17 +587,19 @@
                 {% for sType in sTypes %}
                     {% set CType = as_cType(sType.name) %}
                     case {{as_cEnum(types["s type"].name, sType.name)}}: {
+                        if (!allowedStypes.count(sType)) {
+                            // For invalid STypes for this chain, we cannot deserialize any further
+                            // because we risk deserializing recursively and overflowing the stack
+                            // if the client sent malicious or malformed data.
+                            return WireResult::FatalError;
+                        }
+
                         const volatile {{CType}}Transfer* transfer;
                         WIRE_TRY(deserializeBuffer->Read(&transfer));
 
                         {{CType}}* outStruct;
                         WIRE_TRY(GetSpace(allocator, 1u, &outStruct));
-                        outStruct->chain.sType = sType;
-                        outStruct->chain.next = nullptr;
-
-                        *outChainNext = &outStruct->chain;
-                        outChainNext = &outStruct->chain.next;
-
+                        WIRE_TRY(SetupNextChain(sType, &outStruct->chain));
                         WIRE_TRY({{CType}}Deserialize(outStruct, transfer, deserializeBuffer, allocator
                             {%- if types[sType.name.get()].may_have_dawn_object -%}
                                 , resolver
@@ -588,13 +607,17 @@
                         ));
 
                         hasNext = transfer->chain.hasNext;
-                    } break;
+                        break;
+                    }
                 {% endfor %}
                 default: {
-                    // Invalid enum. Deserialize just the transfer header with Invalid as the sType.
-                    // TODO(crbug.com/dawn/369): Unknown sTypes are silently discarded.
+                    // For explictly Invalid STypes, deserialze just the transfer header with
+                    // Invalid and move on in case there are valid structs after this. For any
+                    // other unknown SType there is no way for the deserializer to recover because
+                    // we can't know how many bytes to read out of the buffer to get to the next
+                    // valid piece of data. As a result, just fail.
                     if (sType != WGPUSType(0)) {
-                        dawn::WarningLog() << "Unknown sType " << sType << " discarded.";
+                        return WireResult::FatalError;
                     }
 
                     const volatile WGPUChainedStructTransfer* transfer;
@@ -602,12 +625,7 @@
 
                     {{ChainedStruct}}* outStruct;
                     WIRE_TRY(GetSpace(allocator, 1u, &outStruct));
-                    outStruct->sType = WGPUSType(0);
-                    outStruct->next = nullptr;
-
-                    // Still move on in case there are valid structs after this.
-                    *outChainNext = outStruct;
-                    outChainNext = &outStruct->next;
+                    WIRE_TRY(SetupNextChain(WGPUSType(0), outStruct));
                     hasNext = transfer->hasNext;
                     break;
                 }
@@ -662,7 +680,8 @@ size_t GetChainedStructExtraRequiredSize(const WGPUChainedStruct* chainedStruct)
 WireResult DeserializeChainedStruct(const WGPUChainedStruct** outChainNext,
                                     DeserializeBuffer* deserializeBuffer,
                                     DeserializeAllocator* allocator,
-                                    const ObjectIdResolver& resolver);
+                                    const ObjectIdResolver& resolver,
+                                    const std::unordered_set<WGPUSType>& allowedStypes);
 
 size_t GetChainedStructExtraRequiredSize(WGPUChainedStructOut* chainedStruct);
 [[nodiscard]] WireResult SerializeChainedStruct(WGPUChainedStructOut* chainedStruct,
@@ -671,7 +690,8 @@ size_t GetChainedStructExtraRequiredSize(WGPUChainedStructOut* chainedStruct);
 WireResult DeserializeChainedStruct(WGPUChainedStructOut** outChainNext,
                                     DeserializeBuffer* deserializeBuffer,
                                     DeserializeAllocator* allocator,
-                                    const ObjectIdResolver& resolver);
+                                    const ObjectIdResolver& resolver,
+                                    const std::unordered_set<WGPUSType>& allowedStypes);
 
 // Manually define serialization and deserialization for WGPUStringView because
 // it has a special encoding where:
