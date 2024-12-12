@@ -636,6 +636,10 @@ TEST_P(QueueWriteTextureTests, VaryingBytesPerRowCube) {
     // TODO(crbug.com/dawn/42241333): diagnose stencil8 failure on Angle Swiftshader
     DAWN_SUPPRESS_TEST_IF(format == wgpu::TextureFormat::Stencil8 && IsANGLESwiftShader());
 
+    // TODO(383765096): D3D11 doesn't allow calling Gather() on R8_UINT
+    DAWN_SUPPRESS_TEST_IF(format == wgpu::TextureFormat::Stencil8 && IsD3D11() &&
+                          IsCompatibilityMode());
+
     constexpr uint32_t kWidth = 257;
     constexpr uint32_t kHeight = 257;
 
