@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e9978101_43c78f8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-12T00:28:15Z",
+      "side": 1,
+      "message": "I\u0027d rather we not change the meaning of --use-angle, since it\u0027s supposed to match its meaning elsewhere (e.g., Chrome).\n\nHow is this different from ANGLETextureSharing? It\u0027s also a Feature that adds EGL creation attributes.",
+      "parentUuid": "7fe7418b_2874daa6",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "457d0bfc_765988eb",
         "filename": "src/dawn/native/opengl/ContextEGL.h",
         "patchSetId": 10
