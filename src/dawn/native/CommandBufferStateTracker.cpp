@@ -368,8 +368,6 @@ MaybeError CommandBufferStateTracker::ValidateNoDifferentTextureViewsOnSameTextu
 
             const TextureViewBase* textureViewBase =
                 bindGroup->GetBindingAsTextureView(bindingIndex);
-
-            textureToViews[textureViewBase->GetTexture()].push_back(textureViewBase);
         }
     }
 
