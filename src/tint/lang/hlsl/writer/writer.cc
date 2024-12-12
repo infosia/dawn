@@ -66,15 +66,20 @@ Result<Output> Generate(core::ir::Module& ir, const Options& options) {
         return res.Failure();
     }
 
-    auto result = Print(ir);
+    auto result = Print(ir, options);
     if (result != Success) {
         return result.Failure();
     }
 
     // Collect the list of entry points in the generated program.
+    // TODO(343757107): Once SingleEntryPoint has been moved into the backend, there will only ever
+    // be one entry point, and the caller will already know what it is.
     for (auto func : ir.functions) {
         if (func->Stage() != core::ir::Function::PipelineStage::kUndefined) {
             auto name = ir.NameOf(func).Name();
+            if (options.remapped_entry_point_name) {
+                name = *options.remapped_entry_point_name;
+            }
             result->entry_points.push_back({name, ir_to_ast_stage(func->Stage())});
         }
     }
