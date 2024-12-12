@@ -16,6 +16,24 @@
       "message": "nit: link to the other bug too so it\u0027ll post a link back to this CL.\n```suggestion\nBug: 381910343, 383824627\n```",
       "revId": "d2a61af76da4d86a3c468fbe76dbb00a0ee95ba1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d91cbb9d_185c8479",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-12T21:13:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "296b8a80_b36860c0",
+      "revId": "d2a61af76da4d86a3c468fbe76dbb00a0ee95ba1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
