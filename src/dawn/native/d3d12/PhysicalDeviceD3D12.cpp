@@ -32,6 +32,7 @@
 #include <utility>
 
 #include "dawn/common/Constants.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Platform.h"
 #include "dawn/common/WindowsUtils.h"
 #include "dawn/native/ChainUtils.h"
@@ -424,8 +425,13 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
 }
 
 MaybeError PhysicalDevice::InitializeDebugLayerFilters() {
+    ComPtr<ID3D12InfoQueue> infoQueue0;
+    if (FAILED(mD3d12Device.As(&infoQueue0))) {
+        return {};
+    }
+
     // If the debug layer is not installed, return immediately.
-    ComPtr<ID3D12InfoQueue> infoQueue;
+    ComPtr<ID3D12InfoQueue1> infoQueue;
     if (FAILED(mD3d12Device.As(&infoQueue))) {
         return {};
     }
@@ -517,6 +523,18 @@ MaybeError PhysicalDevice::InitializeDebugLayerFilters() {
 
     DAWN_TRY(CheckHRESULT(infoQueue->PushRetrievalFilter(&filter),
                           "ID3D12InfoQueue::PushRetrievalFilter"));
+
+    auto debugLayerMessageCallback = [](D3D12_MESSAGE_CATEGORY Category,
+                                        D3D12_MESSAGE_SEVERITY Severity, D3D12_MESSAGE_ID ID,
+                                        LPCSTR pDescription, void* pContext) {
+        dawn::ErrorLog() << pDescription << "(" << ID << ")";
+    };
+    DWORD callbackCookie = 0;
+    DAWN_TRY(CheckHRESULT(infoQueue->RegisterMessageCallback(
+                              reinterpret_cast<D3D12MessageFunc>(&debugLayerMessageCallback),
+                              D3D12_MESSAGE_CALLBACK_FLAG_NONE, nullptr, &callbackCookie),
+                          "ID3D12InfoQueue1::RegisterMessageCallback"));
+    DAWN_INVALID_IF(callbackCookie == 0, "Callback registration failed");
 
     return {};
 }
