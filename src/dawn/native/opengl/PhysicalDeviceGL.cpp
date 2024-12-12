@@ -89,13 +89,17 @@ uint32_t GetDeviceIdFromRender(std::string_view render) {
     return deviceId;
 }
 
-bool IsANGLEDesktopGL(std::string renderer) {
+bool IsANGLE(std::string_view renderer) {
+    return renderer.find("ANGLE") != std::string::npos;
+}
+
+bool IsANGLEDesktopGL(std::string_view renderer) {
     return renderer.find("ANGLE") != std::string::npos &&
            renderer.find("OpenGL") != std::string::npos &&
            renderer.find("OpenGL ES") == std::string::npos;
 }
 
-bool IsSwiftShader(std::string renderer) {
+bool IsSwiftShader(std::string_view renderer) {
     return renderer.find("SwiftShader") != std::string::npos;
 }
 
@@ -112,7 +116,8 @@ ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType back
     // irrespective of the context creation options.
     std::unique_ptr<ContextEGL> context;
     DAWN_TRY_ASSIGN(context, ContextEGL::Create(display, backendType, /*useRobustness*/ false,
-                                                /*useANGLETextureSharing*/ false));
+                                                /*useANGLETextureSharing*/ false,
+                                                /*forceMinVersionAndNoExtensions*/ false));
 
     EGLSurface prevDrawSurface = egl.GetCurrentSurface(EGL_DRAW);
     EGLSurface prevReadSurface = egl.GetCurrentSurface(EGL_READ);
@@ -241,6 +246,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     if (mDisplay->egl.HasExt(EGLExt::DisplayTextureShareGroup)) {
         EnableFeature(dawn::native::Feature::ANGLETextureSharing);
+    }
+
+    if (IsANGLE(mName)) {
+        EnableFeature(dawn::native::Feature::ANGLEForceMinVersionAndNoExtensions);
     }
 
     if (mDisplay->egl.HasExt(EGLExt::ImageNativeBuffer) &&
@@ -438,17 +447,22 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     const TogglesState& deviceToggles,
     Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
     bool useANGLETextureSharing = false;
+    bool forceMinVersionAndNoExtensions = false;
     for (size_t i = 0; i < descriptor->requiredFeatureCount; ++i) {
         if (descriptor->requiredFeatures[i] == wgpu::FeatureName::ANGLETextureSharing) {
             useANGLETextureSharing = true;
+        } else if (descriptor->requiredFeatures[i] ==
+                   wgpu::FeatureName::ANGLEForceMinVersionAndNoExtensions) {
+            forceMinVersionAndNoExtensions = true;
         }
     }
 
     bool useRobustness = !deviceToggles.IsEnabled(Toggle::DisableRobustness);
 
     std::unique_ptr<ContextEGL> context;
-    DAWN_TRY_ASSIGN(context, ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
-                                                useANGLETextureSharing));
+    DAWN_TRY_ASSIGN(context,
+                    ContextEGL::Create(mDisplay, GetBackendType(), useRobustness,
+                                       useANGLETextureSharing, forceMinVersionAndNoExtensions));
 
     return Device::Create(adapter, descriptor, mFunctions, std::move(context), deviceToggles,
                           std::move(lostEvent));
