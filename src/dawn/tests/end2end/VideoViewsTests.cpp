@@ -524,6 +524,7 @@ class VideoViewsTests : public VideoViewsTestsBase {
         DAWN_TEST_UNSUPPORTED_IF(UsesWire());
         DAWN_TEST_UNSUPPORTED_IF(!IsMultiPlanarFormatsSupported());
         DAWN_TEST_UNSUPPORTED_IF(!IsFormatSupported());
+        DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
 
         mBackend = VideoViewsTestBackend::Create();
         mBackend->OnSetUp(device);
