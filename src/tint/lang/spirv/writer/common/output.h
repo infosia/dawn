@@ -28,6 +28,7 @@
 #ifndef SRC_TINT_LANG_SPIRV_WRITER_COMMON_OUTPUT_H_
 #define SRC_TINT_LANG_SPIRV_WRITER_COMMON_OUTPUT_H_
 
+#include <cstddef>
 #include <cstdint>
 #include <vector>
 
