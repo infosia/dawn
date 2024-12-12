@@ -446,8 +446,8 @@ TEST_F(BindGroupValidationTest, ExternalTextureBindingType) {
 
     // Chaining a struct that isn't an external texture binding entry is an error.
     {
-        wgpu::ExternalTextureBindingLayout externalBindingLayout;
-        binding.nextInChain = &externalBindingLayout;
+        wgpu::ChainedStruct chainedDescriptor;
+        binding.nextInChain = &chainedDescriptor;
         ASSERT_DEVICE_ERROR(device.CreateBindGroup(&descriptor));
     }
 }
