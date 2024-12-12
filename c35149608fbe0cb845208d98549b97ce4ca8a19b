@@ -45,6 +45,41 @@
       },
       "revId": "c35149608fbe0cb845208d98549b97ce4ca8a19b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd479580_76ba3c9d",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-12T20:08:07Z",
+      "side": 1,
+      "message": "Rather than introducing `GetConstAdapter()` I\u0027d suggest just having a cast at each of these sites. A little verbose but it\u0027s the same thing and doesn\u0027t require adding a method. I\u0027m not sure which of the following options will work but I\u0027m pretty sure at least the first one will:\n\n```\n... \u003d UnsafeUnkeyedValue(static_cast\u003cconst AdapterBase*\u003e(device-\u003eGetAdapter()));\n... \u003d {static_cast\u003cconst AdapterBase*\u003e(device-\u003eGetAdapter())};\n... \u003d static_const\u003cconst AdapterBase*\u003e(device-\u003eGetAdapter());\n... \u003d {device-\u003eGetAdapter()};\n... \u003d device-\u003eGetAdapter();\n```",
+      "fixSuggestions": [
+        {
+          "fixId": "8019fbbc_69cf0606",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+              "range": {
+                "startLine": 217,
+                "startChar": 0,
+                "endLine": 218,
+                "endChar": 0
+              },
+              "replacement": "    req.hlsl.adapter \u003d UnsafeUnkeyedValue(static_cast\u003cconst d3d::Adapter*\u003e(device-\u003eGetAdapter()));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c35149608fbe0cb845208d98549b97ce4ca8a19b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
