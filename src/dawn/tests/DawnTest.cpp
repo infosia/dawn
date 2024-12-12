@@ -297,6 +297,13 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
             continue;
         }
 
+        constexpr const char kUseAngleArg[] = "--require-features=";
+        argLen = sizeof(kUseAngleArg) - 1;
+        if (strncmp(argv[i], kUseAngleArg, argLen) == 0) {
+            mANGLEBackend = argv[i] + argLen;
+            continue;
+        }
+
         constexpr const char kExclusiveDeviceTypePreferenceArg[] =
             "--exclusive-device-type-preference=";
         argLen = sizeof(kExclusiveDeviceTypePreferenceArg) - 1;

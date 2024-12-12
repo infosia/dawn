@@ -389,7 +389,15 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
      {"Expose the min row alignment in buffer for texel copy operations.",
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
       "dawn_texel_copy_buffer_row_alignment.md",
-      FeatureInfo::FeatureState::Stable}}};
+      FeatureInfo::FeatureState::Stable}},
+    {Feature::ANGLEForceMinVersionAndNoExtensions,
+     {"Force ANGLE to create context with minimum OpenGLES version and no extension required by "
+      "compat "
+      "mode (GLES 3.1 with no extensions).",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
+      "angle_force_min_version_and_no_extensions.md",
+      FeatureInfo::FeatureState::Stable}},
+};
 }  // anonymous namespace
 
 void FeaturesSet::EnableFeature(Feature feature) {
