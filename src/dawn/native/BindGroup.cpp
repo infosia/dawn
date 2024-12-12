@@ -203,7 +203,13 @@ MaybeError ValidateSampledTextureBinding(DeviceBase* device,
                     "Dimension (%s) of %s doesn't match the expected dimension (%s).",
                     entry.textureView->GetDimension(), entry.textureView, layout.viewDimension);
 
-    if (device->IsCompatibilityMode()) {
+    // Note: we skip the check on multiplanar textures. See https://crbug.com/382071071
+    // The reason is that multiplanar textures are only available via an optional feature.
+    // And on those backends that support this feature (e.g. D3D11), texture views are natively
+    // supported. So there is no need to apply the restrictions. Furthermore, on Windows,
+    // a hardware video decoder will use a 2D array texture to store multiple frames, we need to
+    // be able to sample one frame at a time using a 2D view.
+    if (device->IsCompatibilityMode() && !texture->GetFormat().IsMultiPlanar()) {
         DAWN_INVALID_IF(
             view->GetDimension() != texture->GetCompatibilityTextureBindingViewDimension(),
             "Dimension (%s) of %s must match textureBindingViewDimension (%s) of "
