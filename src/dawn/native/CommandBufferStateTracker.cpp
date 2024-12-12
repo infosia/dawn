@@ -369,7 +369,10 @@ MaybeError CommandBufferStateTracker::ValidateNoDifferentTextureViewsOnSameTextu
             const TextureViewBase* textureViewBase =
                 bindGroup->GetBindingAsTextureView(bindingIndex);
 
-            textureToViews[textureViewBase->GetTexture()].push_back(textureViewBase);
+            // Note: we skip the check on multiplanar textures. See https://crbug.com/382071071
+            if (!textureViewBase->GetTexture()->GetFormat().IsMultiPlanar()) {
+                textureToViews[textureViewBase->GetTexture()].push_back(textureViewBase);
+            }
         }
     }
 
