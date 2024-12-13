@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1231dba3_62f8af83",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-13T17:05:09Z",
+      "side": 1,
+      "message": "It could, but one of the other patches needs it for the other branch too so I preemptively put it above.",
+      "parentUuid": "83be9741_59e4f937",
+      "revId": "4f66535dd62f5480ff8c598a042f4e9c7bc47186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90f7702a_69b14039",
         "filename": "src/tint/lang/glsl/writer/var_and_let_test.cc",
         "patchSetId": 8
@@ -55,6 +73,30 @@
           ]
         }
       ],
+      "revId": "4f66535dd62f5480ff8c598a042f4e9c7bc47186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65cec458_71d51fed",
+        "filename": "src/tint/lang/glsl/writer/var_and_let_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-13T17:05:09Z",
+      "side": 1,
+      "message": "GLSL needs the names to match between the vertex and fragment shader. Incorporating the original name would potentially break that, since WGSL does not have the same requirement.",
+      "parentUuid": "90f7702a_69b14039",
+      "range": {
+        "startLine": 152,
+        "startChar": 34,
+        "endLine": 152,
+        "endChar": 60
+      },
       "revId": "4f66535dd62f5480ff8c598a042f4e9c7bc47186",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
