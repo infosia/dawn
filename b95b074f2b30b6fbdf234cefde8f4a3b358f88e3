@@ -22,6 +22,30 @@
       },
       "revId": "b95b074f2b30b6fbdf234cefde8f4a3b358f88e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14f9239b_b198db03",
+        "filename": "src/tint/lang/glsl/ir/combined_texture_sampler_var.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-13T18:54:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf577b06_b2332d7b",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "b95b074f2b30b6fbdf234cefde8f4a3b358f88e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
