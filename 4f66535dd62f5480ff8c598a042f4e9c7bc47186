@@ -1,0 +1,62 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83be9741_59e4f937",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-13T16:23:46Z",
+      "side": 1,
+      "message": "This declaration could be moved into the `else if (attrs.location)` block below.",
+      "revId": "4f66535dd62f5480ff8c598a042f4e9c7bc47186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90f7702a_69b14039",
+        "filename": "src/tint/lang/glsl/writer/var_and_let_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-13T16:23:46Z",
+      "side": 1,
+      "message": "Should we include the original name (e.g. `tint_interstage_location_v1`)? I understand that Dawn didn\u0027t do this, but it\u0027s helpful when comparing source WGSL to generated GLSL.",
+      "range": {
+        "startLine": 152,
+        "startChar": 34,
+        "endLine": 152,
+        "endChar": 60
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "52569bf5_d6416628",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/var_and_let_test.cc",
+              "range": {
+                "startLine": 152,
+                "startChar": 0,
+                "endLine": 153,
+                "endChar": 0
+              },
+              "replacement": "layout(location \u003d 1) flat in uint tint_interstage_location_v1;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4f66535dd62f5480ff8c598a042f4e9c7bc47186",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
