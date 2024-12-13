@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf577b06_b2332d7b",
+        "filename": "src/tint/lang/glsl/ir/combined_texture_sampler_var.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-13T16:38:58Z",
+      "side": 1,
+      "message": "We should be initializng both `binding_point_` in the base, and `sampler_binding_point_` in this class in the constructor initialization list. The former isn\u0027t easily done, as it\u0027s optional in the base, and it\u0027s private there, so calling `SetBindingPoint`is fine. But at least for the latter, we should do:\n\n```\n: Base(id, result), sampler_binding_point_(sample_bp) {\n```\n\nThis would avoid default constructing `sampler_binding_point_` and then assigning to it. `BindingPoint` doesn\u0027t have an explicit constructor at this point, so this won\u0027t have much affect, but it might in the future, so it\u0027s good practice to use the ctor initialization list.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "b95b074f2b30b6fbdf234cefde8f4a3b358f88e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
