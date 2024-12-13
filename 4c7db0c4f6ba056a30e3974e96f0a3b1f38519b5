@@ -22,6 +22,30 @@
       },
       "revId": "4c7db0c4f6ba056a30e3974e96f0a3b1f38519b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a91283b0_6ab6d489",
+        "filename": "src/tint/lang/spirv/writer/common/output.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2024-12-13T03:18:17Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "f555e557_d1dd32fc",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "4c7db0c4f6ba056a30e3974e96f0a3b1f38519b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
