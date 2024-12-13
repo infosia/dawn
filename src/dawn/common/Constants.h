@@ -46,6 +46,12 @@ static constexpr uint32_t kQueryResolveAlignment = 256u;
 static constexpr uint32_t kMaxInterStageShaderVariables = 16u;
 static constexpr uint64_t kAssumedMaxBufferSize =
     0x80000000u;  // Use 2 GB when the limit is unavailable
+static constexpr uint32_t kMaxDynamicStorageBuffersPerPipelineLayout = 4u;
+static constexpr uint32_t kMaxImmediateData32BitCountPerPipeline = 4u;
+
+// Vulkan requires min-max push constant bytes is 128 byte, equals to
+// 32. D3D12 requires 64 DWord limits. Pick 32 here.
+static constexpr uint32_t kMaxPushConstants32BitCountPerPipeline = 32u;
 
 // Per stage maximum limits used to optimized Dawn internals.
 static constexpr uint32_t kMaxSampledTexturesPerShaderStage = 16;
