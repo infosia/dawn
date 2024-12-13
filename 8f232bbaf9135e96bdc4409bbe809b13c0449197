@@ -158,6 +158,30 @@
       },
       "revId": "8f232bbaf9135e96bdc4409bbe809b13c0449197",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bdbfa14_951ec158",
+        "filename": "test/tint/access/ptr.wgsl.expected.glsl",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-13T18:55:52Z",
+      "side": 1,
+      "message": "Ah, thanks!",
+      "parentUuid": "3159fff3_32a26382",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "8f232bbaf9135e96bdc4409bbe809b13c0449197",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
