@@ -51,6 +51,7 @@
 #include "dawn/native/Features.h"
 #include "dawn/native/Format.h"
 #include "dawn/native/Forward.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/Limits.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/ObjectType_autogen.h"
@@ -145,6 +146,10 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     // Get compatible view formats. The returned span contains all compatible formats not equal to
     // `format`.
     std::vector<const Format*> GetCompatibleViewFormats(const Format& format) const;
+
+    // Returns the ImmediateConstant corresponding to the ImmediateConstantType.
+    // The reference returned has the same lifetime as the device.
+    const ImmediateConstant& GetImmediateConstant(ImmediateConstantType type);
 
     virtual ResultOrError<Ref<CommandBufferBase>> CreateCommandBuffer(
         CommandEncoder* encoder,
@@ -583,6 +588,8 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     PerObjectType<ApiObjectList> mObjectLists;
 
     FormatTable mFormatTable;
+
+    ImmediateConstantsTable mImmediateConstantsTable;
 
     TogglesState mToggles;
 

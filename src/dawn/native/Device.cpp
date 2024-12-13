@@ -449,6 +449,8 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
 
     mFormatTable = BuildFormatTable(this);
 
+    mImmediateConstantsTable = BuildImmediateConstantsTable();
+
     if (!descriptor->label.IsUndefined()) {
         mLabel = std::string(descriptor->label);
     }
@@ -465,6 +467,7 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
 DeviceBase::DeviceBase() : mState(State::Alive), mToggles(ToggleStage::Device) {
     GetDefaultLimits(&mLimits.v1, wgpu::FeatureLevel::Core);
     mFormatTable = BuildFormatTable(this);
+    mImmediateConstantsTable = BuildImmediateConstantsTable();
 
     DeviceDescriptor desc = {};
     desc.deviceLostCallbackInfo2 = {nullptr, WGPUCallbackMode_AllowSpontaneous, nullptr, nullptr,
@@ -1043,6 +1046,10 @@ const Format& DeviceBase::GetValidInternalFormat(FormatIndex index) const {
     DAWN_ASSERT(index < mFormatTable.size());
     DAWN_ASSERT(mFormatTable[index].IsSupported());
     return mFormatTable[index];
+}
+
+const ImmediateConstant& DeviceBase::GetImmediateConstant(ImmediateConstantType type) {
+    return mImmediateConstantsTable[type];
 }
 
 std::vector<const Format*> DeviceBase::GetCompatibleViewFormats(const Format& format) const {
