@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f892770_c2cadf31",
+        "filename": "src/tint/lang/glsl/writer/builtin_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-13T18:54:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "73c8f2c4_d3f99a2e",
+      "range": {
+        "startLine": 1627,
+        "startChar": 0,
+        "endLine": 1628,
+        "endChar": 15
+      },
+      "revId": "8f232bbaf9135e96bdc4409bbe809b13c0449197",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7490ed19_a12aa957",
@@ -65,6 +89,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae1bc55b_44cf88d7",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-13T18:54:50Z",
+      "side": 1,
+      "message": "Ah I didn\u0027t know this, thanks! Done.",
+      "parentUuid": "7490ed19_a12aa957",
+      "range": {
+        "startLine": 2261,
+        "startChar": 39,
+        "endLine": 2261,
+        "endChar": 90
+      },
+      "revId": "8f232bbaf9135e96bdc4409bbe809b13c0449197",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e9b25f7_352cb092",
@@ -78,6 +126,30 @@
       "writtenOn": "2024-12-13T16:59:25Z",
       "side": 1,
       "message": "I\u0027m not seeing it, but what was renaming the entry points before your change? I understand that our e2e tests don\u0027t run with renaming enabled, so this makes sense, but am just trying to understand why it was being renamed beforehand.",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "8f232bbaf9135e96bdc4409bbe809b13c0449197",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3159fff3_32a26382",
+        "filename": "test/tint/access/ptr.wgsl.expected.glsl",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-13T18:54:50Z",
+      "side": 1,
+      "message": "We always rename identifiers that clash with keywords, even if renaming isn\u0027t enabled. The original entry point was called `main`, which is reserved in GLSL for the entry point name. So we were renaming it to `tint_symbol` before invoking the backend. Now it doesn\u0027t get renamed until right at the end, so the `inner` function created by ShaderIO derives its name from original entry point name instead of `tint_symbol`.",
+      "parentUuid": "5e9b25f7_352cb092",
       "range": {
         "startLine": 42,
         "startChar": 5,

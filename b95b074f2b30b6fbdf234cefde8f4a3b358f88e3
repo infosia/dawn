@@ -22,6 +22,30 @@
       },
       "revId": "b95b074f2b30b6fbdf234cefde8f4a3b358f88e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bf79785_f4ee0ea1",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-13T18:54:50Z",
+      "side": 0,
+      "message": "Good spot, marked it as fixed since there\u0027s nothing left to do after this CL.",
+      "parentUuid": "0af08ee2_664194dc",
+      "range": {
+        "startLine": 510,
+        "startChar": 24,
+        "endLine": 510,
+        "endChar": 33
+      },
+      "revId": "b95b074f2b30b6fbdf234cefde8f4a3b358f88e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
