@@ -66,7 +66,8 @@ bool DynamicLib::Open(const std::string& filename, std::string* error) {
 #if DAWN_PLATFORM_IS(WINUWP)
     mHandle = LoadPackagedLibrary(UTF8ToWStr(filename.c_str()).c_str(), 0);
 #else
-    mHandle = LoadLibraryA(filename.c_str());
+    mHandle = LoadLibraryExA(filename.c_str(), NULL,
+                             LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
 #endif
     if (mHandle == nullptr && error != nullptr) {
         *error = "Windows Error: " + std::to_string(GetLastError());
