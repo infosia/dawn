@@ -1,0 +1,91 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73c8f2c4_d3f99a2e",
+        "filename": "src/tint/lang/glsl/writer/builtin_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-13T16:59:25Z",
+      "side": 1,
+      "message": "It\u0027s cool to see the required renaming happening at the Tint level.",
+      "range": {
+        "startLine": 1627,
+        "startChar": 0,
+        "endLine": 1628,
+        "endChar": 15
+      },
+      "revId": "8f232bbaf9135e96bdc4409bbe809b13c0449197",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7490ed19_a12aa957",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-13T16:59:25Z",
+      "side": 1,
+      "message": "Should be able to replace with `std::size(kReservedKeywordsGLSL)`. In fact, I tink you can also just do:\n\n```\nstd::binary_search(std::begin(kReservedKeywordsGLSL), std::end(kReservedKeywordsGLSL), ident)\n```\n\n`std::begin` and `std::end` have overloads for C-style arrays ([see #3 for begin here](https://en.cppreference.com/w/cpp/iterator/begin), for example)",
+      "range": {
+        "startLine": 2261,
+        "startChar": 39,
+        "endLine": 2261,
+        "endChar": 90
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "48d494f0_ba9515e3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/glsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 2259,
+                "startChar": 0,
+                "endLine": 2263,
+                "endChar": 0
+              },
+              "replacement": "    return std::binary_search(std::begin(kReservedKeywordsGLSL),\n                              std::end(kReservedKeywordsGLSL),\n                              ident) ||\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8f232bbaf9135e96bdc4409bbe809b13c0449197",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e9b25f7_352cb092",
+        "filename": "test/tint/access/ptr.wgsl.expected.glsl",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-13T16:59:25Z",
+      "side": 1,
+      "message": "I\u0027m not seeing it, but what was renaming the entry points before your change? I understand that our e2e tests don\u0027t run with renaming enabled, so this makes sense, but am just trying to understand why it was being renamed beforehand.",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "8f232bbaf9135e96bdc4409bbe809b13c0449197",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
