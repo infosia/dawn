@@ -72,6 +72,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45359703_2a98eff5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-13T01:46:49Z",
+      "side": 1,
+      "message": "Manage to get rid of the toggle re-initialization by turning the toggle to an adapter stage one. In future patch we can config bot to run cts and end2endtests with \"--enable-toggles\u003dgl_force_min_version_and_no_extensions\".\n\nI made a CL using feature instead of toggle. It still suffers from the re-initialization of toggles issue (we need to pass something at ContextEGL::Create at [1] to avoid that). If you still prefer feature to toggle for a reason, please let me know: https://dawn-review.googlesource.com/c/dawn/+/219334",
+      "parentUuid": "e9978101_43c78f8e",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "457d0bfc_765988eb",
@@ -89,6 +107,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7b693c3_1e0cf599",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-13T01:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457d0bfc_765988eb",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df720649_1bdc6441",
@@ -102,6 +138,24 @@
       "writtenOn": "2024-12-11T19:24:33Z",
       "side": 1,
       "message": "```suggestion\n                          bool forceMinVersionAndNoExtensions);\n```",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa8b8b14_9c6c0dc2",
+        "filename": "src/dawn/native/opengl/ContextEGL.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-13T01:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df720649_1bdc6441",
       "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -136,6 +190,42 @@
       "writtenOn": "2024-12-11T01:16:31Z",
       "side": 1,
       "message": "(if relevant after the other comments)\n\nThis is neat but I think it would be clearer to use a more common pattern, maybe:\n\n```cpp\n    auto default \u003d [\u0026](Toggle toggle, bool enabled) {\n        if (reinitialize) {\n            deviceToggles-\u003eDefaultOverride(toggle, enabled);\n        } else {\n            deviceToggles-\u003eDefault(toggle, enabled);\n        }\n    };\n```\n\nOr perhaps better, add a third argument like:\n```\nvoid TogglesState::Default(Toggle toggle, bool enabled,\n    TogglesState::Condition condition \u003d TogglesState::Condition::IfNotSet);\n```\nand here use:\n```\nauto cond \u003d reinitialize ?\n    TogglesState::Condition::IfNotForced :\n    TogglesState::Condition::IfNotSet;\ndeviceToggles-\u003eDefault(toggle, enabled, cond);\n```",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22d0974f_e6626093",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-13T01:46:49Z",
+      "side": 1,
+      "message": "Doesn\u0027t apply anymore.",
+      "parentUuid": "17a3efcf_30dc9e18",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72969c8a_a046204b",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-13T01:46:49Z",
+      "side": 1,
+      "message": "Doesn\u0027t apply any more.",
+      "parentUuid": "a9720dc3_6a920eb4",
       "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -229,6 +319,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f07749ef_bc2b7399",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-13T01:46:49Z",
+      "side": 1,
+      "message": "Manage to get rid of the toggle re-initialization. Doesn\u0027t apply any more.",
+      "parentUuid": "a214714d_e4d6ebb7",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "967af82f_7a6753e5",
@@ -242,6 +350,24 @@
       "writtenOn": "2024-12-11T19:30:00Z",
       "side": 1,
       "message": "Nit: if we do need to do this, could we use mDisplay-\u003eegl.GetProcAddress, as in InitializeImpl()?",
+      "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c205a70_d7d6f593",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-13T01:46:49Z",
+      "side": 1,
+      "message": "Doesn\u0027t apply any more.",
+      "parentUuid": "967af82f_7a6753e5",
       "revId": "58f5d6982c94f11e25191d11af4e528988e335f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

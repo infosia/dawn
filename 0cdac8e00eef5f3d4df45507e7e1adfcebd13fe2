@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb2bc36a_893e34e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-13T01:46:49Z",
+      "side": 1,
+      "message": "Manage to get rid of the toggle re-initialization. Sorry for the noise before. Please take a second look.",
+      "revId": "0cdac8e00eef5f3d4df45507e7e1adfcebd13fe2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

@@ -51,6 +51,24 @@
       "parentUuid": "260ff401_765eda70",
       "revId": "5be1700fa9e8688103406b5bf070d3b8431888ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aad94b6c_d03a3ca3",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-13T01:46:49Z",
+      "side": 1,
+      "message": "Manage to get rid of the toggle re-initialization by making the toggle to adapter stage and pass in here.",
+      "parentUuid": "93c9fe98_efca7b4d",
+      "revId": "5be1700fa9e8688103406b5bf070d3b8431888ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
