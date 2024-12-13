@@ -77,6 +77,10 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
     const PerStage<ProgrammableStage>& GetAllStages() const;
     bool HasStage(SingleShaderStage stage) const;
     wgpu::ShaderStage GetStageMask() const;
+    const ImmediateConstantMask& GetImmediateConstantMask() const;
+    void SetImmediateConstantMask(ImmediateConstantMask immediateConstantMask) {
+        mImmediateConstantMask = immediateConstantMask;
+    }
 
     ResultOrError<Ref<BindGroupLayoutBase>> GetBindGroupLayout(uint32_t groupIndex);
 
@@ -110,6 +114,7 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
 
     Ref<PipelineLayoutBase> mLayout;
     RequiredBufferSizes mMinBufferSizes;
+    ImmediateConstantMask mImmediateConstantMask = ImmediateConstantMask(0);
 };
 
 }  // namespace dawn::native
