@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce6f4778_f437d958",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-13T19:02:44Z",
+      "side": 1,
+      "message": "Maybe we should add a common base class for IR Instruction and Value.",
+      "range": {
+        "startLine": 170,
+        "startChar": 18,
+        "endLine": 170,
+        "endChar": 30
+      },
+      "revId": "ce5761c65d7ffd59c5a4b3d653915af9115d72d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dda65dad_a7b8ec8a",
+        "filename": "src/tint/lang/msl/writer/writer_fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-13T19:02:44Z",
+      "side": 1,
+      "message": "Maybe we should just use `std::string` for this, instead of `std::option\u003cstd::string\u003e`, and use it\u0027s empty state for enable/disable. Smaller memory footprint, and we wouldn\u0027t require these types of checks.",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 88
+      },
+      "revId": "ce5761c65d7ffd59c5a4b3d653915af9115d72d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
