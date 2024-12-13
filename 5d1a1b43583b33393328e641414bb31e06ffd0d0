@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "141f1e51_bc600bab",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2024-12-13T17:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ba92a5e_82b6f87d",
+      "revId": "5d1a1b43583b33393328e641414bb31e06ffd0d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "829bd7ce_fb1db624",
@@ -85,6 +103,24 @@
       "side": 1,
       "message": "Yes, the idea is to include tests of functions generated in methods.cpp, for example.",
       "parentUuid": "829bd7ce_fb1db624",
+      "revId": "5d1a1b43583b33393328e641414bb31e06ffd0d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "994b928a_5f473bd4",
+        "filename": "tools/android/webgpu/src/androidTest/cpp/webgpu_wrapper_tests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2024-12-13T17:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ba69161_7e94e9d6",
       "revId": "5d1a1b43583b33393328e641414bb31e06ffd0d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

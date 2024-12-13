@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cd94172_8d857bbd",
+        "filename": "tools/android/gradle/wrapper/gradle-wrapper.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2024-12-13T17:14:57Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "f50097fc_894ddeb6",
+      "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2180de2_a6a698ef",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63f383fb_5be4e0e3",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2024-12-13T17:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2180de2_a6a698ef",
+      "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8cae309_6ed97b1b",
@@ -65,6 +101,30 @@
       "writtenOn": "2024-11-11T14:53:43Z",
       "side": 1,
       "message": "I believe that \u0027viewBinding true\u0027 is not required for the tests to work.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e15a1987_7940a8b9",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2024-12-13T17:14:57Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "b8cae309_6ed97b1b",
       "range": {
         "startLine": 57,
         "startChar": 0,
@@ -98,6 +158,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27fb7841_be69a01e",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2024-12-13T17:14:57Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "ba4dff64_82b2cbb3",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22da9773_f063668f",
@@ -111,6 +195,30 @@
       "writtenOn": "2024-11-11T14:53:43Z",
       "side": 1,
       "message": "I believe you only need the dependency `androidx.test....`, not the other two.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 72
+      },
+      "revId": "46a50aebd2269f1535a72c94810100b8f9e71d49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ddf2516_4204e8ad",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2024-12-13T17:14:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22da9773_f063668f",
       "range": {
         "startLine": 94,
         "startChar": 0,
