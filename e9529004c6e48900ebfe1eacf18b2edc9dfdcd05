@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "73adc3d7_095dd7f0",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-12-14T20:36:32Z",
+      "side": 1,
+      "message": "I just feel we should have a consistent behaviors between backends. For example, for multiplanar formats:\n- either we don\u0027t support texture views (as compat mode spec says in general).\n- Or we support texture views for multiplanar textures. Be it different aspects in the same draw call or 2D array slice views. In other words we don\u0027t apply the same compat mode\u0027s restrictions as standard texture formats\u0027 on multiplanar formats.\n\nIf we added `IsMultiPlanarUsingViews` method, it would produce different behavior on different backends.\n\nNevertheless, regarding\n\u003e couldn\u0027t you have a multiplanar texture that doesn\u0027t use texture views, on a backend that doesn\u0027t support texture views\n\nNo I don\u0027t think it\u0027s possible on any backend currently. Multiplanar textures are available (maybe via extension) on Vulkan, D3D, Metal. But all of them support texture views.\n\nThe only backend that doesn\u0027t support texture views is OpenGL. But OpenGL backend doesn\u0027t support multiplanar formats atm. In future if we decide to support video textures in OpenGL backend, they most likely have to have `TextureFormat::External` instead of a concrete format like `TextureFormat::R8BG8Biplanar420Unorm`. Because we can only sample the texture using a special function in GLSL shader [1]. This would possibly require a new Dawn\u0027s extension to implement, different from `DawnMultiPlanarFormats` extension.\n\n[1] https://registry.khronos.org/OpenGL/extensions/EXT/EXT_YUV_target.txt",
+      "parentUuid": "58e9eb25_18ff84b6",
+      "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f0d0015b_89359ea1",
         "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
         "patchSetId": 9
