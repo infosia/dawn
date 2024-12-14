@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d57328db_7dd47081",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-12-14T22:16:45Z",
+      "side": 1,
+      "message": "We need to skip both because on Windows, hardware encoder uses a 2D array texture containing multiple frames. And to view a frame we need to create multiple views that each:\n1. Views a layer in the array texture. i.e. dimension \u003d `TextureViewDimension::e2D`\n2. points to a plane in the layer. i.e. aspect \u003d `TextureAspect::Plane*`.\n\nBoth of the above are disabllowed by 2 compat mode\u0027s checks. So we want to skip both for the multiplanar textures.\n\nIf it\u0027s a bit confusing. Maybe we can add a new toggle `AllowTexureViewsInCompatMode` that basically skips the texture views restrictions altogether from the compat mode. This toggle is only meant for internal chrome\u0027s code to use. So for example, in chrome\u0027s code if we detect that we are on windows, we can turn on this toggle. WDYT?",
+      "parentUuid": "67744286_8e2281db",
+      "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f0d0015b_89359ea1",
         "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
         "patchSetId": 9
@@ -85,6 +103,24 @@
       "side": 1,
       "message": "The problem I have here is that multiplanar textures are opted out of this validation entirely. But shouldn\u0027t we still disallow the user from, e.g., binding the same texture twice?\n\nBut never mind, for the same reason as above.",
       "parentUuid": "f0d0015b_89359ea1",
+      "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53c09576_600b1f3d",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-12-14T22:16:45Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused. IIUC this function only checks whether we bind different views of the same texture or not. It doesn\u0027t check whether we bind the same texture twice.",
+      "parentUuid": "884e830d_851f122b",
       "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
