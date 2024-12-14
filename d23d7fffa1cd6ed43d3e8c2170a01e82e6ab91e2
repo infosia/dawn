@@ -16,6 +16,86 @@
       "message": "PTAL",
       "revId": "d23d7fffa1cd6ed43d3e8c2170a01e82e6ab91e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5164d985_f3e13ee8",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-14T20:11:42Z",
+      "side": 1,
+      "message": "optional nit: would be nice to add the `DAWN_INCREASE_LIMIT_MESSAGE` that Francois just added",
+      "revId": "d23d7fffa1cd6ed43d3e8c2170a01e82e6ab91e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bb98006_8bed585a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-14T20:11:42Z",
+      "side": 1,
+      "message": "Would be useful to note also what happens if the user requests 4 and 5 respectively. IIUC effectively we just always ignore the InFragmentStage requests in core?",
+      "revId": "d23d7fffa1cd6ed43d3e8c2170a01e82e6ab91e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18298108_f27cc49a",
+        "filename": "src/dawn/tests/end2end/FragDepthTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-14T20:11:42Z",
+      "side": 1,
+      "message": "also needs to be renamed",
+      "range": {
+        "startLine": 142,
+        "startChar": 25,
+        "endLine": 142,
+        "endChar": 32
+      },
+      "revId": "d23d7fffa1cd6ed43d3e8c2170a01e82e6ab91e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24ce0a6e_d44219dd",
+        "filename": "src/dawn/tests/end2end/FragDepthTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-14T20:11:42Z",
+      "side": 1,
+      "message": "This BGL is going to be actually the same as the first one, and I think it will get deduped in the backend. Maybe better would be to replace the storage buffer with a texture, instead of another uniform buffer.",
+      "range": {
+        "startLine": 147,
+        "startChar": 53,
+        "endLine": 147,
+        "endChar": 74
+      },
+      "revId": "d23d7fffa1cd6ed43d3e8c2170a01e82e6ab91e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
