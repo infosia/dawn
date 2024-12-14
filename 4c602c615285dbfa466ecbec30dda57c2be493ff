@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a3c9bc6_88bdc44c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2024-12-14T00:03:28Z",
+      "side": 1,
+      "message": "This change fixes DLL dynamic loading when used as Node.js binding.\n\n## Problem\n\nAssume the following is how we expect to load dxil.dll:\n\nnode.exe --\u003e my_app.node --\u003e webgpu_dawn.dll --\u003e dxil.dll\n\nThe last step uses `LoadLibraryA(\"dxil.dll\")`, which only searches the process\u0027s directory (where node.exe is) and will fail to locate dxil.dll.\n\n## Solution\n\nUse `LoadLibraryExA(\"dxil.dll\", NULL, LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_DEFAULT_DIRS)` allows Windows to search for the folder of the DLL who tries to load dxil.dll, in this case, webgpu_dawn.dll.\n\nChromium is doing this approach: https://chromium.googlesource.com/chromium/src/+/HEAD/base/native_library_win.cc#45",
+      "revId": "4c602c615285dbfa466ecbec30dda57c2be493ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
