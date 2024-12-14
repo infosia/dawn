@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e88d6c9_b4463c1e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-14T21:18:21Z",
+      "side": 1,
+      "message": "nit: Footers should be in the \"last paragraph\" of the commit message - that is, after the last blank line. Otherwise they won\u0027t be picked up by tools.\n\nOf course this one doesn\u0027t matter since it doesn\u0027t actually link to a bug, but good to be consistent :)\n```suggestion\n\nBug: None\nChange-Id: Ib5984cea183631c66cb14b05a72fa3f03682dd90\n```",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "5e2276abea14ca51506aab02ec25b290eaffa374",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da3db60a_b79487f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-14T21:18:21Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "5e2276abea14ca51506aab02ec25b290eaffa374",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
