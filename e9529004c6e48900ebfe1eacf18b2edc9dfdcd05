@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58e9eb25_18ff84b6",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-14T19:12:48Z",
+      "side": 1,
+      "message": "This comment explains a long series of logical steps to justify that this is correct, but IIUC it\u0027s pretty simple: if the backend uses texture views for doing multiplanar operations, then of course the backend supports texture views.\n\nI also don\u0027t think the check is quite correct (which is _why_ it requires so much justification) - in principle, couldn\u0027t you have a multiplanar texture that doesn\u0027t use texture views, on a backend that doesn\u0027t support texture views, in which case this check would be incorrect?\n\nIf I\u0027m understanding correctly, I would phrase this like so:\n\n```\n// If the backend uses texture views for multiplanar textures,\n// we should skip this check. See https://crbug.com/382071071\nif (texture-\u003eIsMultiPlanarUsingViews() \u0026\u0026 !device-\u003eIsCompatibilityMode()) {\n```\n\nThis seems a little more complex because it introduces a new method, but I think it\u0027s more correct and self-explanatory.",
+      "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0d0015b_89359ea1",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-14T19:12:48Z",
+      "side": 1,
+      "message": "Same change here.",
+      "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
