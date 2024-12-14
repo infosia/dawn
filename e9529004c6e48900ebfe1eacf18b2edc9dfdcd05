@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "67744286_8e2281db",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-14T21:14:50Z",
+      "side": 1,
+      "message": "That\u0027s a good point, it should be consistent across backends.\n\nFair that it\u0027s unlikely we would actually ever run into the problematic case where the backend doesn\u0027t support texture views but does have multiplanar textures.\n\nAnd that\u0027s probably good enough, I guess it doesn\u0027t really matter since it\u0027s an internal API for now and not standardized. My brain is always in standardization mode. :)\n\n---\n\nThat said I\u0027m just wondering, do both of these checks need to be skipped for multiplanar textures? Or only the second one? If only the second one then it would be nice to move the condition to wrap only that one. Mostly because it\u0027ll be a bit more self-documenting; the first validation check isn\u0027t that important even if it is valid.\n\nBut if that doesn\u0027t make sense then never mind.",
+      "parentUuid": "73adc3d7_095dd7f0",
+      "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f0d0015b_89359ea1",
         "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
         "patchSetId": 9
@@ -49,6 +67,24 @@
       "writtenOn": "2024-12-14T19:12:48Z",
       "side": 1,
       "message": "Same change here.",
+      "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "884e830d_851f122b",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-14T21:14:50Z",
+      "side": 1,
+      "message": "The problem I have here is that multiplanar textures are opted out of this validation entirely. But shouldn\u0027t we still disallow the user from, e.g., binding the same texture twice?\n\nBut never mind, for the same reason as above.",
+      "parentUuid": "f0d0015b_89359ea1",
       "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
