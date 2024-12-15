@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6249413d_7ed23b86",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2024-12-15T01:32:57Z",
+      "side": 1,
+      "message": "Thanks for pointing this out, Kai! Updated the commit message accordingly.",
+      "parentUuid": "5e88d6c9_b4463c1e",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "5e2276abea14ca51506aab02ec25b290eaffa374",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "da3db60a_b79487f4",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
