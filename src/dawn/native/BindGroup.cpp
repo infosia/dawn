@@ -27,16 +27,23 @@
 
 #include "dawn/native/BindGroup.h"
 
+#include <set>
+#include <map>
+#include <variant>
+
 #include "dawn/common/Assert.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/ityp_bitset.h"
 #include "dawn/native/BindGroupLayout.h"
+#include "dawn/native/BindGroupLayoutInternal.h"
+#include "dawn/native/BindingInfo.h"
 #include "dawn/native/Buffer.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ExternalTexture.h"
+#include "dawn/native/IntegerTypes.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/Sampler.h"
@@ -323,6 +330,67 @@ void ForEachUnverifiedBufferBindingIndexImpl(const BindGroupLayoutInternalBase* 
     }
 }
 
+MaybeError ValidateStaticSamplerAndTextureBindings(
+    const BindGroupDescriptor* descriptor,
+    const BindGroupLayoutInternalBase* layout,
+    const std::map<BindingNumber, uint32_t>& bindingToEntryIndexMap) {
+    std::set<uint32_t> ycbcrTextures;
+    for (BindingIndex index{0}; index < layout->GetBindingCount(); ++index) {
+        auto& bindingInfo = layout->GetBindingInfo(index);
+        if (const auto* staticSamplerLayout =
+                std::get_if<StaticSamplerBindingInfo>(&bindingInfo.bindingLayout)) {
+            if (!staticSamplerLayout->isUsedForSingleTextureBinding) {
+                continue;
+            }
+            const SamplerBase* sampler = staticSamplerLayout->sampler.Get();
+
+            uint32_t textureEntryIndex = bindingToEntryIndexMap.at(
+                BindingNumber(staticSamplerLayout->sampledTextureBinding));
+            const TextureViewBase* textureView = descriptor->entries[textureEntryIndex].textureView;
+
+            if (sampler->IsYCbCr()) {
+                DAWN_INVALID_IF(
+                    !textureView->IsYCbCr(),
+                    "YCbCr static sampler at binding [%u] is paired with non-YCbCr texture.",
+                    bindingInfo.binding);
+
+                // Note that `YCbCrVkDescriptor::nextInChain` is set to null when it's stored in
+                // both Sampler and TextureView which makes this comparison possible.
+                DAWN_INVALID_IF(
+                    sampler->GetYCbCrVkDescriptor() != textureView->GetYCbCrVkDescriptor(),
+                    "YCbCr static sampler at binding [%u] and TextureView YCbCrVkDescriptors do "
+                    "not match.",
+                    bindingInfo.binding);
+
+                ycbcrTextures.insert(textureEntryIndex);
+            } else {
+                DAWN_INVALID_IF(
+                    textureView->IsYCbCr(),
+                    "Non-YCbCr static sampler at binding [%u] is paired with YCbCr texture.",
+                    bindingInfo.binding);
+            }
+        }
+    }
+
+    // Validate that all YCbCr texture entries have an associated static sampler.
+    const auto& bindingMap = layout->GetBindingMap();
+    for (uint32_t i = 0; i < descriptor->entryCount; ++i) {
+        const BindGroupEntry& entry = descriptor->entries[i];
+        const BindingInfo& bindingInfo =
+            layout->GetBindingInfo(bindingMap.at(BindingNumber(entry.binding)));
+        if (std::holds_alternative<TextureBindingInfo>(bindingInfo.bindingLayout)) {
+            if (entry.textureView->IsYCbCr()) {
+                DAWN_INVALID_IF(
+                    !ycbcrTextures.count(i),
+                    "YCbCr texture at binding [%u] is not associated with a static sampler.",
+                    entry.binding);
+            }
+        }
+    }
+
+    return {};
+}
+
 }  // anonymous namespace
 
 MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
@@ -349,6 +417,7 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
     const BindGroupLayoutInternalBase::BindingMap& bindingMap = layout->GetBindingMap();
     DAWN_ASSERT(bindingMap.size() <= kMaxBindingsPerPipelineLayout);
 
+    std::map<BindingNumber, uint32_t> bindingToEntryIndexMap;
     ityp::bitset<BindingIndex, kMaxBindingsPerPipelineLayout> bindingsSet;
     for (uint32_t i = 0; i < descriptor->entryCount; ++i) {
         const BindGroupEntry& entry = descriptor->entries[i];
@@ -367,6 +436,7 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
                         entry.binding);
 
         bindingsSet.set(bindingIndex);
+        bindingToEntryIndexMap[BindingNumber(entry.binding)] = i;
 
         // Below this block we validate entries based on the bind group layout, in which
         // external textures have been expanded into their underlying contents. For this reason
@@ -442,6 +512,8 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
     //
     // We don't validate the equality because it wouldn't be possible to cover it with a test.
     DAWN_ASSERT(bindingsSet.count() == expectedBindingsCount);
+
+    DAWN_TRY(ValidateStaticSamplerAndTextureBindings(descriptor, layout, bindingToEntryIndexMap));
 
     return {};
 }
