@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff1f0c48_014c68f3",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-16T12:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7093332_a5a982be",
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92da6d98_eb29cccc",
@@ -48,6 +66,30 @@
       "writtenOn": "2024-12-12T16:29:21Z",
       "side": 1,
       "message": "Is this automatically zero-initialized? I forget.\n\nPlease explicitly initialize this. `\u003d {};` or fully explicitly `\u003d {0, 0, 0};`",
+      "range": {
+        "startLine": 65,
+        "startChar": 32,
+        "endLine": 65,
+        "endChar": 47
+      },
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5679e814_9f233f56",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-16T12:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92da6d98_eb29cccc",
       "range": {
         "startLine": 65,
         "startChar": 32,
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3781672c_b766fdca",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-16T12:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77827743_69917ba6",
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d748f675_a8a18f92",
@@ -88,6 +148,24 @@
       "writtenOn": "2024-12-12T16:29:21Z",
       "side": 1,
       "message": "This needs to say that the bound is inclusive.\nIn other words, the value x being bound satisfies:   min_bound \u003c\u003d x \u003c\u003d max_bound",
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cb91b34_eb2e5159",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-16T12:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d748f675_a8a18f92",
       "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -109,6 +187,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "303607e6_f74c61f7",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-16T12:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "458c0cb0_b78ec79e",
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21e0441a_e2ba7a9a",
@@ -122,6 +218,30 @@
       "writtenOn": "2024-12-12T16:29:21Z",
       "side": 1,
       "message": "Also test the case where:\n- 3 signed values are provided\n- only the second dimension is bigger than 1\n- only the third dimensio is bigger than 1\n\n- workgroup size uses an override expression.  Hey @jrprice does that get past validation?",
+      "range": {
+        "startLine": 44,
+        "startChar": 44,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dbb8d74_532d07fe",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-16T12:31:16Z",
+      "side": 1,
+      "message": "1-3 Done\n\n4: I cannot add such test right now because using override values as workgroup size has not been supported on IR:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc;l\u003d285\n\nSo below WGSL shader will cause crash in tint.exe with \"--format ir\":\n\n```\noverride kworkgroupsize : u32; \n@compute @workgroup_size(kworkgroupsize)\nfn main(@builtin(local_invocation_id) LocalInvocationID : vec3u) {\n    var dst : array\u003cu32, 4\u003e;\n    dst[LocalInvocationID.x] \u003d LocalInvocationID.x;\n}\n```",
+      "parentUuid": "21e0441a_e2ba7a9a",
       "range": {
         "startLine": 44,
         "startChar": 44,
