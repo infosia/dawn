@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8db25696_c9be6486",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T16:56:46Z",
+      "side": 1,
+      "message": "The latter appraoch sounds good. In fact, we\u0027re [in the process](https://github.com/gpuweb/gpuweb/pull/5018) of specifying Features for all of the compatibility limitations. So I think this could be something like \n\n```\nif (!device-\u003eHasFeature(Feature::FlexibleTextureViews)) { ... }\n```\n\nand then the D3D11 backend (and all Core backends) could advertise support for FlexibleTextureViews.\n\nWould that work?",
+      "parentUuid": "d57328db_7dd47081",
+      "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f0d0015b_89359ea1",
         "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
         "patchSetId": 9
