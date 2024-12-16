@@ -157,6 +157,24 @@
       "parentUuid": "f4c7d63d_90ba36b7",
       "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9669f3c8_781450a3",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-16T21:57:28Z",
+      "side": 1,
+      "message": "For toggles, we can have Adapter stage toggle that naturally stays in RequestAdapterOptions and plumb that info through `dawn::native::Instance::EnumerateAdapters` -\u003e ... -\u003e `Backend::DiscoverPhysicalDevices` -\u003e `PhysicalDevice::Create` -\u003e `ContextEGL::Create`. (We already have the `DawnTogglesDescriptor` thing chained in RequestAdapterOptions)\n\nFor features, I\u0027m seeing `GetRequiredFeatures` is a device level call (inside `CreateDeviceImpl`) can we require features at adapter stage? (i.e. chain the required features info in `RequestAdapterOptions`)? If so we can do the same thing to avoid double-init (but we still need to pass that info through `ReqeustAdapterOptions`).\nTo me it seems we need to add a new `DawnFeaturesDescriptor` to `RequestAdapterOptions` to achieve the goal. Meanwhile we alrady have the whole `DawnTogglesDescriptor` setup.",
+      "parentUuid": "816d938b_0a7eb480",
+      "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
