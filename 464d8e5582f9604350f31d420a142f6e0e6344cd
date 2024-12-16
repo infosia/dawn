@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a8e57c5_e6ff3fdc",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-16T13:57:03Z",
+      "side": 1,
+      "message": "FYI I\u0027ve added maxComputeInvocationsPerWorkgroup and maxComputeWorkgroupStorageSize increase limit messages as well in latest patchset.",
+      "revId": "464d8e5582f9604350f31d420a142f6e0e6344cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
