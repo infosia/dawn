@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7ed32ba_35af72e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-16T18:18:01Z",
+      "side": 1,
+      "message": "LGTM, thanks! Feels like you\u0027ve got a really solid pattern for this now.",
+      "revId": "60a1574eb14a852baecf961fdae2fdbd90231505",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
