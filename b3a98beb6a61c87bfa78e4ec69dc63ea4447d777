@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cf3b0b8_e3ed64da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T16:40:18Z",
+      "side": 1,
+      "message": "Much better, thanks!\n\nThe BGRA extensions",
+      "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "442f00a2_a946df6e",
+        "filename": "generator/templates/opengl/OpenGLFunctionsBase.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T16:40:18Z",
+      "side": 1,
+      "message": "Nit: is this still needed?",
+      "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a68fae93_1bb85ad6",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T16:40:18Z",
+      "side": 1,
+      "message": "```suggestion\n      \"Force EGLContext creation with the minimal ES version and no extensions required by the Compat \"\n```",
+      "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7425d494_7bb6d865",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T16:40:18Z",
+      "side": 1,
+      "message": "I\u0027d still prefer this to be a Feature rather than a Toggle, to avoid plumbing through the RequestAdapterOptions here, and to make it symmetrical with ANGLETextureSharing. Is that possible?",
+      "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
