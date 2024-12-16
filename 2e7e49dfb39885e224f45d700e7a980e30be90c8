@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "151f6248_d8f65f05",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-16T18:27:38Z",
+      "side": 1,
+      "message": "It\u0027s not a problem, but out of curiosity: what was the reason behind declaring these variables throughout the CL? Simply to improve readability, or was there some aspect of the update that required it?",
+      "revId": "2e7e49dfb39885e224f45d700e7a980e30be90c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
