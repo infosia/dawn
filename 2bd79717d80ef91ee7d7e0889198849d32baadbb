@@ -250,6 +250,30 @@
       },
       "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12016cdb_d3fd7fca",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-16T22:02:57Z",
+      "side": 1,
+      "message": "Range analysis should never be used with pipeline overrides present (they will be substituted with constants very early in the transform pipeline), so we should make that assumption and `TINT_ASSERT()` as necessary (see comment above).",
+      "parentUuid": "2dbb8d74_532d07fe",
+      "range": {
+        "startLine": 44,
+        "startChar": 44,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "2bd79717d80ef91ee7d7e0889198849d32baadbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbef1484_f1c4d520",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-16T22:02:57Z",
+      "side": 1,
+      "message": "One small refactor requested, but otherwise I like the direction that this is going, thanks for taking this on!",
+      "revId": "b7ca509ddcbc53110e440c854dc967eaaf02852f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2a10702_4a03a63e",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-16T22:02:57Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer it if we computed the ranges on-demand (still cached), rather than precomputing them up front.\n\nI\u0027m assuming that we\u0027re going to add various other objects that we compute ranges for (e.g. `let` declarations, `var` values, etc). We only really want to do the analysis for the values that we need for the transform that\u0027s using them, so it\u0027d be more efficient to do the analysis lazily.\n\nSo I\u0027d recommend making this a `GetOrAdd()` instead, where the lambda does the work to determine the range for the given parameter. LMK if you need more guidance.",
+      "revId": "b7ca509ddcbc53110e440c854dc967eaaf02852f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4784e4e3_6a943b4c",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-16T22:02:57Z",
+      "side": 1,
+      "message": "Nit: You can drop the `has_value()` check and just directly compare the optional to `kLocalInvocationIndex`. The overload of `\u003d\u003d` for `std::optional` takes care of the `has_value()` check for you.",
+      "fixSuggestions": [
+        {
+          "fixId": "e6fce209_a4ad17ba",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+              "range": {
+                "startLine": 67,
+                "startChar": 0,
+                "endLine": 69,
+                "endChar": 0
+              },
+              "replacement": "            if (param-\u003eBuiltin() \u003d\u003d core::BuiltinValue::kLocalInvocationIndex) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b7ca509ddcbc53110e440c854dc967eaaf02852f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90c930b2_fa2e82ef",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-16T22:02:57Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be trying to use range analysis on a module that has non-constant workgroup sizes, since we will always have replaced pipeline overrides with constant values early in the pipeline. So we can just `TINT_ASSERT(func.WorkgroupSizeAsConst().has_value())` and then always take the value here, instead of pre-computing it above.",
+      "revId": "b7ca509ddcbc53110e440c854dc967eaaf02852f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
