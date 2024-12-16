@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cc380a4_029ce5d3",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-16T09:23:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58787915_850de883",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 47
+      },
+      "revId": "c35149608fbe0cb845208d98549b97ce4ca8a19b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "42b1726e_be241145",
@@ -96,6 +120,48 @@
       "side": 1,
       "message": "Made the same comments at the same time :)\nI think the static_cast is slightly clearer than this but actually looking at it this is totally fine too.",
       "parentUuid": "42b1726e_be241145",
+      "range": {
+        "startLine": 217,
+        "startChar": 23,
+        "endLine": 217,
+        "endChar": 69
+      },
+      "revId": "c35149608fbe0cb845208d98549b97ce4ca8a19b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65ec51ae_ed1db871",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-16T09:23:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fd479580_76ba3c9d",
+      "revId": "c35149608fbe0cb845208d98549b97ce4ca8a19b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb8b4bb7_3746188f",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-16T09:23:26Z",
+      "side": 1,
+      "message": "I used `static_cast\u003cconst AdapterBase*\u003e` in latest patchset.",
+      "parentUuid": "ddf9c3ef_1b2b32da",
       "range": {
         "startLine": 217,
         "startChar": 23,
