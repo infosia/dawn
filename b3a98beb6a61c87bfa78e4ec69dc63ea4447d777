@@ -67,6 +67,24 @@
       "message": "I\u0027d still prefer this to be a Feature rather than a Toggle, to avoid plumbing through the RequestAdapterOptions here, and to make it symmetrical with ANGLETextureSharing. Is that possible?",
       "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4c7d63d_90ba36b7",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T16:47:26Z",
+      "side": 1,
+      "message": "Sorry, I just read your earlier comment. It looks like you tried this approach here: https://dawn-review.googlesource.com/c/dawn/+/219334\n\nbut you said it still requires double-initialization. Sorry to be obtuse, but could you explain how it\u0027s different from ANGLETextureSharing?",
+      "parentUuid": "7425d494_7bb6d865",
+      "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
