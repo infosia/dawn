@@ -103,6 +103,24 @@
       "parentUuid": "7425d494_7bb6d865",
       "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "816d938b_0a7eb480",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-16T17:49:38Z",
+      "side": 1,
+      "message": "If we can pass some info here (like RequestAdapterOptions) indicating if we have that features required (or toggle enabled) then we can avoid double-initialization.\n\nDo we have access to what features is required at [`BackendGL::DiscoverPhysicalDevices`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/BackendGL.cpp;l\u003d56;drc\u003d04b384233ff1b695a826d1bc54b6ba4bec02aaca)\n\nIf so we can avoid the double-initialization using the feature approach.\n\nDifferent from ANGLETexgureSharing: I think it\u0027s that extensions availablity and toggles are cached at the the first `ContextEGL::Create`. They are inherited at the second `ContextEGL::Create` when actually creating the device. I don\u0027t really know details about ANGLETextureSharing, but I think that\u0027s the main issue",
+      "parentUuid": "f4c7d63d_90ba36b7",
+      "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
