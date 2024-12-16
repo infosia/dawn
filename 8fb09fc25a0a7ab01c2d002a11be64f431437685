@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "8fb09fc25a0a7ab01c2d002a11be64f431437685",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8711b29_af6032f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2024-12-16T19:13:58Z",
+      "side": 1,
+      "message": "Apparently Dan is OOO for a while, over to amaiorano@",
+      "revId": "8fb09fc25a0a7ab01c2d002a11be64f431437685",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
