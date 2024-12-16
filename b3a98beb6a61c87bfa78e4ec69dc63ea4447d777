@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4153a9e3_72194e12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T16:49:15Z",
+      "side": 1,
+      "message": "(Ignore that last bit about BGRA. I thought we were requiring a BGRA extension, but I see now we dropped that requirement.)",
+      "parentUuid": "2cf3b0b8_e3ed64da",
+      "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "442f00a2_a946df6e",
