@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b35ffd2_f63ede27",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-16T14:50:55Z",
+      "side": 1,
+      "message": "Note that I didn\u0027t add DAWN_INCREASE_LIMIT_MESSAGE on purpose there.",
+      "revId": "09643a587b4d32c7a7be724870d2782db77d9d12",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
