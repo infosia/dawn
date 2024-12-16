@@ -16,6 +16,24 @@
       "message": "It\u0027s not a problem, but out of curiosity: what was the reason behind declaring these variables throughout the CL? Simply to improve readability, or was there some aspect of the update that required it?",
       "revId": "2e7e49dfb39885e224f45d700e7a980e30be90c8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b7f4166_4b84414d",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-16T19:29:46Z",
+      "side": 1,
+      "message": "This is actually required because we use `adapterLimits.limits.limitName` in `DAWN_INCREASE_LIMIT_MESSAGE(adapter, limitName, limitValue)`",
+      "parentUuid": "151f6248_d8f65f05",
+      "revId": "2e7e49dfb39885e224f45d700e7a980e30be90c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
