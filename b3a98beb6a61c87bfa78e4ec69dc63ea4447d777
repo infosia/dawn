@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "732d1250_71b3131f",
+        "filename": "generator/templates/opengl/OpenGLFunctionsBase.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-16T21:31:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "442f00a2_a946df6e",
+      "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a68fae93_1bb85ad6",
@@ -66,6 +84,24 @@
       "writtenOn": "2024-12-16T16:40:18Z",
       "side": 1,
       "message": "```suggestion\n      \"Force EGLContext creation with the minimal ES version and no extensions required by the Compat \"\n```",
+      "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36556942_08cd93b5",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-16T21:31:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a68fae93_1bb85ad6",
       "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
