@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa82b75a_34de2583",
+        "filename": "src/dawn/tests/end2end/DepthBiasTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T17:09:15Z",
+      "side": 1,
+      "message": "As a followup, could you remove the IsOpenGL() and IsOpenGLES() checks? They should be redundant with IsCompatibilityMode().",
+      "revId": "ad54e957a81258f0bec879e1ff6fde0272f70099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5813830a_02a518c7",
+        "filename": "src/dawn/tests/end2end/DepthBiasTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T17:09:15Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "ad54e957a81258f0bec879e1ff6fde0272f70099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8789b43d_7c54fc05",
+        "filename": "src/dawn/tests/end2end/DepthBiasTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T17:09:15Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "ad54e957a81258f0bec879e1ff6fde0272f70099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ddd1e7a_2c4cdcd2",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T17:09:15Z",
+      "side": 1,
+      "message": "Note: this seems to be because D3D11 is exposing the DawnLoadResolveTexture feature, and OpenGL is not (so GL bots are not running this test). Is it correct that D3D11 should expose it?",
+      "revId": "ad54e957a81258f0bec879e1ff6fde0272f70099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54965225_6391ff93",
+        "filename": "src/dawn/tests/end2end/VideoViewsTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T17:09:15Z",
+      "side": 1,
+      "message": "As noted on the other CL, this should probably be changed to \"!SupportsFlexibleTextureViews()\", once we have that.",
+      "revId": "ad54e957a81258f0bec879e1ff6fde0272f70099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cba4c1fa_6d716802",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-16T17:09:15Z",
+      "side": 1,
+      "message": "Also curious about coverage here: why was this passing on GLES? Or was it skipped due to some other reason?",
+      "revId": "ad54e957a81258f0bec879e1ff6fde0272f70099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
