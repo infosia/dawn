@@ -44,7 +44,7 @@
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
 #include "dawn/platform/tracing/TraceEvent.h"
-#include "src/tint/lang/wgsl/ast/transform/vertex_pulling.h"
+#include "src/tint/lang/msl/writer/ast_raise/vertex_pulling.h"
 
 #include <tint/tint.h>
 
@@ -57,7 +57,7 @@ namespace {
 constexpr char kRemappedEntryPointName[] = "dawn_entry_point";
 
 using OptionalVertexPullingTransformConfig =
-    std::optional<tint::ast::transform::VertexPulling::Config>;
+    std::optional<tint::msl::writer::VertexPulling::Config>;
 
 #define MSL_COMPILATION_REQUEST_MEMBERS(X)                                                       \
     X(SingleShaderStage, stage)                                                                  \
@@ -88,116 +88,116 @@ using WorkgroupAllocations = std::vector<uint32_t>;
 DAWN_SERIALIZABLE(struct, MslCompilation, MSL_COMPILATION_MEMBERS){};
 #undef MSL_COMPILATION_MEMBERS
 
-tint::ast::transform::VertexFormat ToTintVertexFormat(wgpu::VertexFormat format) {
+tint::msl::writer::VertexFormat ToTintVertexFormat(wgpu::VertexFormat format) {
     switch (format) {
         case wgpu::VertexFormat::Uint8:
-            return tint::ast::transform::VertexFormat::kUint8;
+            return tint::msl::writer::VertexFormat::kUint8;
         case wgpu::VertexFormat::Uint8x2:
-            return tint::ast::transform::VertexFormat::kUint8x2;
+            return tint::msl::writer::VertexFormat::kUint8x2;
         case wgpu::VertexFormat::Uint8x4:
-            return tint::ast::transform::VertexFormat::kUint8x4;
+            return tint::msl::writer::VertexFormat::kUint8x4;
         case wgpu::VertexFormat::Sint8:
-            return tint::ast::transform::VertexFormat::kSint8;
+            return tint::msl::writer::VertexFormat::kSint8;
         case wgpu::VertexFormat::Sint8x2:
-            return tint::ast::transform::VertexFormat::kSint8x2;
+            return tint::msl::writer::VertexFormat::kSint8x2;
         case wgpu::VertexFormat::Sint8x4:
-            return tint::ast::transform::VertexFormat::kSint8x4;
+            return tint::msl::writer::VertexFormat::kSint8x4;
         case wgpu::VertexFormat::Unorm8:
-            return tint::ast::transform::VertexFormat::kUnorm8;
+            return tint::msl::writer::VertexFormat::kUnorm8;
         case wgpu::VertexFormat::Unorm8x2:
-            return tint::ast::transform::VertexFormat::kUnorm8x2;
+            return tint::msl::writer::VertexFormat::kUnorm8x2;
         case wgpu::VertexFormat::Unorm8x4:
-            return tint::ast::transform::VertexFormat::kUnorm8x4;
+            return tint::msl::writer::VertexFormat::kUnorm8x4;
         case wgpu::VertexFormat::Snorm8:
-            return tint::ast::transform::VertexFormat::kSnorm8;
+            return tint::msl::writer::VertexFormat::kSnorm8;
         case wgpu::VertexFormat::Snorm8x2:
-            return tint::ast::transform::VertexFormat::kSnorm8x2;
+            return tint::msl::writer::VertexFormat::kSnorm8x2;
         case wgpu::VertexFormat::Snorm8x4:
-            return tint::ast::transform::VertexFormat::kSnorm8x4;
+            return tint::msl::writer::VertexFormat::kSnorm8x4;
         case wgpu::VertexFormat::Uint16:
-            return tint::ast::transform::VertexFormat::kUint16;
+            return tint::msl::writer::VertexFormat::kUint16;
         case wgpu::VertexFormat::Uint16x2:
-            return tint::ast::transform::VertexFormat::kUint16x2;
+            return tint::msl::writer::VertexFormat::kUint16x2;
         case wgpu::VertexFormat::Uint16x4:
-            return tint::ast::transform::VertexFormat::kUint16x4;
+            return tint::msl::writer::VertexFormat::kUint16x4;
         case wgpu::VertexFormat::Sint16:
-            return tint::ast::transform::VertexFormat::kSint16;
+            return tint::msl::writer::VertexFormat::kSint16;
         case wgpu::VertexFormat::Sint16x2:
-            return tint::ast::transform::VertexFormat::kSint16x2;
+            return tint::msl::writer::VertexFormat::kSint16x2;
         case wgpu::VertexFormat::Sint16x4:
-            return tint::ast::transform::VertexFormat::kSint16x4;
+            return tint::msl::writer::VertexFormat::kSint16x4;
         case wgpu::VertexFormat::Unorm16:
-            return tint::ast::transform::VertexFormat::kUnorm16;
+            return tint::msl::writer::VertexFormat::kUnorm16;
         case wgpu::VertexFormat::Unorm16x2:
-            return tint::ast::transform::VertexFormat::kUnorm16x2;
+            return tint::msl::writer::VertexFormat::kUnorm16x2;
         case wgpu::VertexFormat::Unorm16x4:
-            return tint::ast::transform::VertexFormat::kUnorm16x4;
+            return tint::msl::writer::VertexFormat::kUnorm16x4;
         case wgpu::VertexFormat::Snorm16:
-            return tint::ast::transform::VertexFormat::kSnorm16;
+            return tint::msl::writer::VertexFormat::kSnorm16;
         case wgpu::VertexFormat::Snorm16x2:
-            return tint::ast::transform::VertexFormat::kSnorm16x2;
+            return tint::msl::writer::VertexFormat::kSnorm16x2;
         case wgpu::VertexFormat::Snorm16x4:
-            return tint::ast::transform::VertexFormat::kSnorm16x4;
+            return tint::msl::writer::VertexFormat::kSnorm16x4;
         case wgpu::VertexFormat::Float16:
-            return tint::ast::transform::VertexFormat::kFloat16;
+            return tint::msl::writer::VertexFormat::kFloat16;
         case wgpu::VertexFormat::Float16x2:
-            return tint::ast::transform::VertexFormat::kFloat16x2;
+            return tint::msl::writer::VertexFormat::kFloat16x2;
         case wgpu::VertexFormat::Float16x4:
-            return tint::ast::transform::VertexFormat::kFloat16x4;
+            return tint::msl::writer::VertexFormat::kFloat16x4;
         case wgpu::VertexFormat::Float32:
-            return tint::ast::transform::VertexFormat::kFloat32;
+            return tint::msl::writer::VertexFormat::kFloat32;
         case wgpu::VertexFormat::Float32x2:
-            return tint::ast::transform::VertexFormat::kFloat32x2;
+            return tint::msl::writer::VertexFormat::kFloat32x2;
         case wgpu::VertexFormat::Float32x3:
-            return tint::ast::transform::VertexFormat::kFloat32x3;
+            return tint::msl::writer::VertexFormat::kFloat32x3;
         case wgpu::VertexFormat::Float32x4:
-            return tint::ast::transform::VertexFormat::kFloat32x4;
+            return tint::msl::writer::VertexFormat::kFloat32x4;
         case wgpu::VertexFormat::Uint32:
-            return tint::ast::transform::VertexFormat::kUint32;
+            return tint::msl::writer::VertexFormat::kUint32;
         case wgpu::VertexFormat::Uint32x2:
-            return tint::ast::transform::VertexFormat::kUint32x2;
+            return tint::msl::writer::VertexFormat::kUint32x2;
         case wgpu::VertexFormat::Uint32x3:
-            return tint::ast::transform::VertexFormat::kUint32x3;
+            return tint::msl::writer::VertexFormat::kUint32x3;
         case wgpu::VertexFormat::Uint32x4:
-            return tint::ast::transform::VertexFormat::kUint32x4;
+            return tint::msl::writer::VertexFormat::kUint32x4;
         case wgpu::VertexFormat::Sint32:
-            return tint::ast::transform::VertexFormat::kSint32;
+            return tint::msl::writer::VertexFormat::kSint32;
         case wgpu::VertexFormat::Sint32x2:
-            return tint::ast::transform::VertexFormat::kSint32x2;
+            return tint::msl::writer::VertexFormat::kSint32x2;
         case wgpu::VertexFormat::Sint32x3:
-            return tint::ast::transform::VertexFormat::kSint32x3;
+            return tint::msl::writer::VertexFormat::kSint32x3;
         case wgpu::VertexFormat::Sint32x4:
-            return tint::ast::transform::VertexFormat::kSint32x4;
+            return tint::msl::writer::VertexFormat::kSint32x4;
         case wgpu::VertexFormat::Unorm10_10_10_2:
-            return tint::ast::transform::VertexFormat::kUnorm10_10_10_2;
+            return tint::msl::writer::VertexFormat::kUnorm10_10_10_2;
         case wgpu::VertexFormat::Unorm8x4BGRA:
-            return tint::ast::transform::VertexFormat::kUnorm8x4BGRA;
+            return tint::msl::writer::VertexFormat::kUnorm8x4BGRA;
     }
     DAWN_UNREACHABLE();
 }
 
-tint::ast::transform::VertexStepMode ToTintVertexStepMode(wgpu::VertexStepMode mode) {
+tint::msl::writer::VertexStepMode ToTintVertexStepMode(wgpu::VertexStepMode mode) {
     switch (mode) {
         case wgpu::VertexStepMode::Vertex:
-            return tint::ast::transform::VertexStepMode::kVertex;
+            return tint::msl::writer::VertexStepMode::kVertex;
         case wgpu::VertexStepMode::Instance:
-            return tint::ast::transform::VertexStepMode::kInstance;
+            return tint::msl::writer::VertexStepMode::kInstance;
         case wgpu::VertexStepMode::Undefined:
             break;
     }
     DAWN_UNREACHABLE();
 }
 
-tint::ast::transform::VertexPulling::Config BuildVertexPullingTransformConfig(
+tint::msl::writer::VertexPulling::Config BuildVertexPullingTransformConfig(
     const RenderPipelineBase& renderPipeline,
     BindGroupIndex pullingBufferBindingSet) {
-    tint::ast::transform::VertexPulling::Config cfg;
+    tint::msl::writer::VertexPulling::Config cfg;
     cfg.pulling_group = static_cast<uint32_t>(pullingBufferBindingSet);
 
     cfg.vertex_state.resize(renderPipeline.GetVertexBufferCount());
     for (VertexBufferSlot slot : IterateBitSet(renderPipeline.GetVertexBuffersUsed())) {
         const VertexBufferInfo& dawnInfo = renderPipeline.GetVertexBuffer(slot);
-        tint::ast::transform::VertexBufferLayoutDescriptor* tintInfo =
+        tint::msl::writer::VertexBufferLayoutDescriptor* tintInfo =
             &cfg.vertex_state[static_cast<uint8_t>(slot)];
 
         tintInfo->array_stride = dawnInfo.arrayStride;
@@ -207,7 +207,7 @@ tint::ast::transform::VertexPulling::Config BuildVertexPullingTransformConfig(
     for (VertexAttributeLocation location :
          IterateBitSet(renderPipeline.GetAttributeLocationsUsed())) {
         const VertexAttributeInfo& dawnInfo = renderPipeline.GetAttribute(location);
-        tint::ast::transform::VertexAttributeDescriptor tintInfo;
+        tint::msl::writer::VertexAttributeDescriptor tintInfo;
         tintInfo.format = ToTintVertexFormat(dawnInfo.format);
         tintInfo.offset = dawnInfo.offset;
         tintInfo.shader_location = static_cast<uint32_t>(static_cast<uint8_t>(location));
@@ -358,7 +358,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     tint::msl::writer::Bindings bindings =
         generateBindingInfo(stage, layout, moduleBindingInfo, arrayLengthFromUniform);
 
-    std::optional<tint::ast::transform::VertexPulling::Config> vertexPullingTransformConfig;
+    std::optional<tint::msl::writer::VertexPulling::Config> vertexPullingTransformConfig;
     if (stage == SingleShaderStage::Vertex &&
         device->IsToggleEnabled(Toggle::MetalEnableVertexPulling)) {
         vertexPullingTransformConfig =
@@ -460,8 +460,8 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
             }
 
             if (r.vertexPullingTransformConfig) {
-                transformManager.Add<tint::ast::transform::VertexPulling>();
-                transformInputs.Add<tint::ast::transform::VertexPulling::Config>(
+                transformManager.Add<tint::msl::writer::VertexPulling>();
+                transformInputs.Add<tint::msl::writer::VertexPulling::Config>(
                     std::move(r.vertexPullingTransformConfig).value());
             }
 

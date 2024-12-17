@@ -51,6 +51,8 @@ tint_add_target(tint_lang_msl_writer_ast_raise lib
   lang/msl/writer/ast_raise/quad_swap.h
   lang/msl/writer/ast_raise/subgroup_ballot.cc
   lang/msl/writer/ast_raise/subgroup_ballot.h
+  lang/msl/writer/ast_raise/vertex_pulling.cc
+  lang/msl/writer/ast_raise/vertex_pulling.h
 )
 
 tint_target_add_dependencies(tint_lang_msl_writer_ast_raise lib
@@ -96,6 +98,7 @@ tint_add_target(tint_lang_msl_writer_ast_raise_test test
   lang/msl/writer/ast_raise/pixel_local_test.cc
   lang/msl/writer/ast_raise/quad_swap_test.cc
   lang/msl/writer/ast_raise/subgroup_ballot_test.cc
+  lang/msl/writer/ast_raise/vertex_pulling_test.cc
 )
 
 tint_target_add_dependencies(tint_lang_msl_writer_ast_raise_test test

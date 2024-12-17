@@ -25,7 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/tint/lang/wgsl/ast/transform/vertex_pulling.h"
+#include "src/tint/lang/msl/writer/ast_raise/vertex_pulling.h"
 
 #include <algorithm>
 #include <utility>
@@ -43,10 +43,10 @@
 #include "src/tint/utils/rtti/switch.h"
 #include "src/tint/utils/text/string_stream.h"
 
-TINT_INSTANTIATE_TYPEINFO(tint::ast::transform::VertexPulling);
-TINT_INSTANTIATE_TYPEINFO(tint::ast::transform::VertexPulling::Config);
+TINT_INSTANTIATE_TYPEINFO(tint::msl::writer::VertexPulling);
+TINT_INSTANTIATE_TYPEINFO(tint::msl::writer::VertexPulling::Config);
 
-namespace tint::ast::transform {
+namespace tint::msl::writer {
 
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
@@ -286,9 +286,9 @@ struct VertexPulling::State {
     /// @returns the new program or SkipTransform if the transform is not required
     ApplyResult Run() {
         // Find entry point
-        const Function* func = nullptr;
+        const ast::Function* func = nullptr;
         for (auto* fn : src.AST().Functions()) {
-            if (fn->PipelineStage() == PipelineStage::kVertex) {
+            if (fn->PipelineStage() == ast::PipelineStage::kVertex) {
                 if (func != nullptr) {
                     b.Diagnostics().AddError(Source{})
                         << "VertexPulling found more than one vertex entry point";
@@ -313,15 +313,15 @@ struct VertexPulling::State {
     /// LocationReplacement describes an Variable replacement for a location input.
     struct LocationReplacement {
         /// The variable to replace in the source Program
-        Variable* from;
+        ast::Variable* from;
         /// The replacement to use in the target ProgramBuilder
-        Variable* to;
+        ast::Variable* to;
     };
 
     /// LocationInfo describes an input location
     struct LocationInfo {
         /// A builder that builds the expression that resolves to the (transformed) input location
-        std::function<const Expression*()> expr;
+        std::function<const ast::Expression*()> expr;
         /// The store type of the location variable
         const core::type::Type* type;
     };
@@ -335,12 +335,12 @@ struct VertexPulling::State {
     /// The clone context
     program::CloneContext ctx = {&b, &src, /* auto_clone_symbols */ true};
     std::unordered_map<uint32_t, LocationInfo> location_info;
-    std::function<const Expression*()> vertex_index_expr = nullptr;
-    std::function<const Expression*()> instance_index_expr = nullptr;
+    std::function<const ast::Expression*()> vertex_index_expr = nullptr;
+    std::function<const ast::Expression*()> instance_index_expr = nullptr;
     Symbol pulling_position_name;
     Symbol struct_buffer_name;
     std::unordered_map<uint32_t, Symbol> vertex_buffer_names;
-    tint::Vector<const Parameter*, 8> new_function_parameters;
+    tint::Vector<const ast::Parameter*, 8> new_function_parameters;
 
     /// Generate the vertex buffer binding name
     /// @param index index to append to buffer name
@@ -376,11 +376,11 @@ struct VertexPulling::State {
     }
 
     /// Creates and returns the assignment to the variables from the buffers
-    const BlockStatement* CreateVertexPullingPreamble() {
+    const ast::BlockStatement* CreateVertexPullingPreamble() {
         // Assign by looking at the vertex descriptor to find attributes with
         // matching location.
 
-        tint::Vector<const Statement*, 8> stmts;
+        tint::Vector<const ast::Statement*, 8> stmts;
 
         for (uint32_t buffer_idx = 0; buffer_idx < cfg.vertex_state.size(); ++buffer_idx) {
             const VertexBufferLayoutDescriptor& buffer_layout = cfg.vertex_state[buffer_idx];
@@ -440,7 +440,7 @@ struct VertexPulling::State {
                 // Convert the fetched scalar/vector if WGSL variable is of `f16` types
                 if (var_dt.base_type == BaseWGSLType::kF16) {
                     // The type of the same element number of base type of target WGSL variable
-                    Type loaded_data_target_type;
+                    ast::Type loaded_data_target_type;
                     if (fmt_dt.width == 1) {
                         loaded_data_target_type = b.ty.f16();
                     } else {
@@ -473,7 +473,7 @@ struct VertexPulling::State {
 
                     // The components of result vector variable, initialized with type-converted
                     // loaded data vector.
-                    tint::Vector<const Expression*, 8> values{fetch};
+                    tint::Vector<const ast::Expression*, 8> values{fetch};
 
                     // Add padding elements. The result must be of vector types of signed/unsigned
                     // integer or float, so use the abstract integer or abstract float value to do
@@ -510,10 +510,10 @@ struct VertexPulling::State {
     /// @param offset the byte offset of the data from `buffer_base`
     /// @param buffer the index of the vertex buffer
     /// @param format the vertex format to read
-    const Expression* Fetch(Symbol array_base,
-                            uint32_t offset,
-                            uint32_t buffer,
-                            VertexFormat format) {
+    const ast::Expression* Fetch(Symbol array_base,
+                                 uint32_t offset,
+                                 uint32_t buffer,
+                                 VertexFormat format) {
         // Returns a u32 loaded from buffer_base + offset.
         auto load_u32 = [&] {
             return LoadPrimitive(array_base, offset, buffer, VertexFormat::kUint32);
@@ -778,11 +778,11 @@ struct VertexPulling::State {
     /// @param buffer the index of the vertex buffer
     /// @param format VertexFormat::kUint32, VertexFormat::kSint32 or
     /// VertexFormat::kFloat32
-    const Expression* LoadPrimitive(Symbol array_base,
-                                    uint32_t offset,
-                                    uint32_t buffer,
-                                    VertexFormat format) {
-        const Expression* u = nullptr;
+    const ast::Expression* LoadPrimitive(Symbol array_base,
+                                         uint32_t offset,
+                                         uint32_t buffer,
+                                         VertexFormat format) {
+        const ast::Expression* u = nullptr;
         if ((offset & 3) == 0) {
             // Aligned load.
 
@@ -831,14 +831,14 @@ struct VertexPulling::State {
     /// @param base_type underlying AST type
     /// @param base_format underlying vertex format
     /// @param count how many elements the vector has
-    const Expression* LoadVec(Symbol array_base,
-                              uint32_t offset,
-                              uint32_t buffer,
-                              uint32_t element_stride,
-                              Type base_type,
-                              VertexFormat base_format,
-                              uint32_t count) {
-        tint::Vector<const Expression*, 8> expr_list;
+    const ast::Expression* LoadVec(Symbol array_base,
+                                   uint32_t offset,
+                                   uint32_t buffer,
+                                   uint32_t element_stride,
+                                   ast::Type base_type,
+                                   VertexFormat base_format,
+                                   uint32_t count) {
+        tint::Vector<const ast::Expression*, 8> expr_list;
         for (uint32_t i = 0; i < count; ++i) {
             // Offset read position by element_stride for each component
             uint32_t primitive_offset = offset + element_stride * i;
@@ -853,8 +853,8 @@ struct VertexPulling::State {
     /// vertex_index and instance_index builtins if present.
     /// @param func the entry point function
     /// @param param the parameter to process
-    void ProcessNonStructParameter(const Function* func, const Parameter* param) {
-        if (HasAttribute<LocationAttribute>(param->attributes)) {
+    void ProcessNonStructParameter(const ast::Function* func, const ast::Parameter* param) {
+        if (ast::HasAttribute<ast::LocationAttribute>(param->attributes)) {
             // Create a function-scope variable to replace the parameter.
             auto func_var_sym = ctx.Clone(param->name->symbol);
             auto func_var_type = ctx.Clone(param->type);
@@ -872,7 +872,7 @@ struct VertexPulling::State {
             }
             location_info[sem->Attributes().location.value()] = info;
         } else {
-            auto* builtin_attr = GetAttribute<BuiltinAttribute>(param->attributes);
+            auto* builtin_attr = ast::GetAttribute<ast::BuiltinAttribute>(param->attributes);
             if (DAWN_UNLIKELY(!builtin_attr)) {
                 TINT_ICE() << "Invalid entry point parameter";
             }
@@ -899,21 +899,21 @@ struct VertexPulling::State {
     /// @param func the entry point function
     /// @param param the parameter to process
     /// @param struct_ty the structure type
-    void ProcessStructParameter(const Function* func,
-                                const Parameter* param,
-                                const Struct* struct_ty) {
+    void ProcessStructParameter(const ast::Function* func,
+                                const ast::Parameter* param,
+                                const ast::Struct* struct_ty) {
         auto param_sym = ctx.Clone(param->name->symbol);
 
         // Process the struct members.
         bool has_locations = false;
-        tint::Vector<const StructMember*, 8> members_to_clone;
+        tint::Vector<const ast::StructMember*, 8> members_to_clone;
         for (auto* member : struct_ty->members) {
             auto member_sym = ctx.Clone(member->name->symbol);
-            std::function<const Expression*()> member_expr = [this, param_sym, member_sym] {
+            std::function<const ast::Expression*()> member_expr = [this, param_sym, member_sym] {
                 return b.MemberAccessor(param_sym, member_sym);
             };
 
-            if (HasAttribute<LocationAttribute>(member->attributes)) {
+            if (ast::HasAttribute<ast::LocationAttribute>(member->attributes)) {
                 // Capture mapping from location to struct member.
                 LocationInfo info;
                 info.expr = member_expr;
@@ -925,7 +925,7 @@ struct VertexPulling::State {
                 location_info[sem->Attributes().location.value()] = info;
                 has_locations = true;
             } else {
-                auto* builtin_attr = GetAttribute<BuiltinAttribute>(member->attributes);
+                auto* builtin_attr = ast::GetAttribute<ast::BuiltinAttribute>(member->attributes);
                 if (DAWN_UNLIKELY(!builtin_attr)) {
                     TINT_ICE() << "Invalid entry point parameter";
                 }
@@ -952,7 +952,7 @@ struct VertexPulling::State {
 
         if (!members_to_clone.IsEmpty()) {
             // Create a new struct without the location attributes.
-            tint::Vector<const StructMember*, 8> new_members;
+            tint::Vector<const ast::StructMember*, 8> new_members;
             for (auto* member : members_to_clone) {
                 auto member_name = ctx.Clone(member->name);
                 auto member_type = ctx.Clone(member->type);
@@ -977,7 +977,7 @@ struct VertexPulling::State {
 
     /// Process an entry point function.
     /// @param func the entry point function
-    void Process(const Function* func) {
+    void Process(const ast::Function* func) {
         if (func->body->Empty()) {
             return;
         }
@@ -1030,8 +1030,8 @@ struct VertexPulling::State {
         auto attrs = ctx.Clone(func->attributes);
         auto ret_attrs = ctx.Clone(func->return_type_attributes);
         auto* new_func =
-            b.create<Function>(func->source, b.Ident(func_sym), new_function_parameters, ret_type,
-                               body, std::move(attrs), std::move(ret_attrs));
+            b.create<ast::Function>(func->source, b.Ident(func_sym), new_function_parameters,
+                                    ret_type, body, std::move(attrs), std::move(ret_attrs));
         ctx.Replace(func, new_func);
     }
 };
@@ -1039,9 +1039,9 @@ struct VertexPulling::State {
 VertexPulling::VertexPulling() = default;
 VertexPulling::~VertexPulling() = default;
 
-Transform::ApplyResult VertexPulling::Apply(const Program& src,
-                                            const DataMap& inputs,
-                                            DataMap&) const {
+ast::transform::Transform::ApplyResult VertexPulling::Apply(const Program& src,
+                                                            const ast::transform::DataMap& inputs,
+                                                            ast::transform::DataMap&) const {
     auto cfg = cfg_;
     if (auto* cfg_data = inputs.Get<Config>()) {
         cfg = *cfg_data;
@@ -1073,4 +1073,4 @@ VertexBufferLayoutDescriptor& VertexBufferLayoutDescriptor::operator=(
 
 VertexBufferLayoutDescriptor::~VertexBufferLayoutDescriptor() = default;
 
-}  // namespace tint::ast::transform
+}  // namespace tint::msl::writer
