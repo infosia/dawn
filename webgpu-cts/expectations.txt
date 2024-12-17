@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2024-12-06 12:42:30PM
+# Last rolled: 2024-12-17 05:06:35AM
 
 # conflicts_allowed: true
 
@@ -215,7 +215,7 @@ crbug.com/42241502 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_31.0.15.460
 crbug.com/dawn/2408 [ nvidia-0x2184 nvidia_ge_31.0.15.4601 win10 ] webgpu:api,operation,command_buffer,image_copy:offsets_and_sizes:initMethod="WriteTexture";checkMethod="PartialCopyT2B";* [ Failure ]
 crbug.com/dawn/2428 [ dawn-backend-validation nvidia-0x2184 nvidia_ge_31.0.15.4601 release-x64 target-cpu-64 webgpu-dxc-enabled webgpu-no-worker win10 ] webgpu:api,operation,rendering,basic:large_draw:* [ Failure ]
 crbug.com/dawn/2428 [ nvidia-0x2184 nvidia_ge_31.0.15.4601 webgpu-dxc-disabled webgpu-no-worker win10 ] webgpu:api,operation,rendering,basic:large_draw:* [ Failure ]
-crbug.com/dawn/2439 [ win10 nvidia-0x2184 nvidia_ge_31.0.15.4601 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:* [ Failure ]
+crbug.com/dawn/2439 [ nvidia-0x2184 nvidia_ge_31.0.15.4601 win10 ] webgpu:web_platform,external_texture,video:importExternalTexture,sampleWithVideoFrameWithVisibleRectParam:* [ Failure ]
 
 # Failures on Android U. These fail on Android T as well, but need to be "immutable"
 # so the roller won't remove the Android U versions of the expectations.
@@ -7314,7 +7314,7 @@ crbug.com/367513506 [ asan win ] webgpu:api,validation,error_scope:current_scope
 
 # Failures on Win NVIDIA experimental driver
 crbug.com/0000 [ angle-d3d11 graphite-enabled nvidia-0x2184 ] webgpu:api,operation,device,all_limits_and_features:everything: [ Failure ]
-crbug.com/0000 [ angle-d3d11 graphite-enabled nvidia-0x2184 dawn-backend-validation webgpu-dxc-disabled ] webgpu:shader,execution,limits:struct_members: [ Failure ]
+crbug.com/0000 [ angle-d3d11 dawn-backend-validation graphite-enabled nvidia-0x2184 webgpu-dxc-disabled ] webgpu:shader,execution,limits:struct_members: [ Failure ]
 crbug.com/0000 [ angle-d3d11 graphite-enabled nvidia-0x2184 webgpu-dxc-enabled ] webgpu:api,operation,adapter,info:subgroup_sizes: [ Failure ]
 crbug.com/0000 [ angle-d3d11 graphite-enabled nvidia-0x2184 webgpu-dxc-enabled ] webgpu:shader,execution,expression,call,builtin,subgroupBroadcast:compute,split:predicate="every_even" [ Failure ]
 crbug.com/0000 [ angle-d3d11 graphite-enabled nvidia-0x2184 webgpu-dxc-enabled ] webgpu:shader,execution,expression,call,builtin,subgroupBroadcast:compute,split:predicate="every_odd" [ Failure ]
