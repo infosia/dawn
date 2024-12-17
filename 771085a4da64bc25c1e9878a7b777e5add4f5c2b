@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39bca192_f1afa9a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-17T15:59:29Z",
+      "side": 1,
+      "message": "LGTM with one suggested change",
+      "revId": "771085a4da64bc25c1e9878a7b777e5add4f5c2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5bae35e_619bc2f8",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-17T15:59:29Z",
+      "side": 1,
+      "message": "Nit: `Hashmap` has a `GetOrAdd()` function that takes care of checking whether there is a value already. You pass it a lambda that produces the value if it wasn\u0027t already in the map.\n\nThis is what I meant when I mentioned `GetOrAdd()` in my previous comment, sorry that I wasn\u0027t clear. I think `GetInfo()` was a good name for the method that you\u0027ve defined, we don\u0027t need to add the `OrAdd` there.",
+      "revId": "771085a4da64bc25c1e9878a7b777e5add4f5c2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
