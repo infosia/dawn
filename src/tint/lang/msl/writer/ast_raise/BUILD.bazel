@@ -44,6 +44,7 @@ cc_library(
     "pixel_local.cc",
     "quad_swap.cc",
     "subgroup_ballot.cc",
+    "vertex_pulling.cc",
   ],
   hdrs = [
     "module_scope_var_to_entry_point_param.h",
@@ -51,6 +52,7 @@ cc_library(
     "pixel_local.h",
     "quad_swap.h",
     "subgroup_ballot.h",
+    "vertex_pulling.h",
   ],
   deps = [
     "//src/tint/api/common",
@@ -90,6 +92,7 @@ cc_library(
     "pixel_local_test.cc",
     "quad_swap_test.cc",
     "subgroup_ballot_test.cc",
+    "vertex_pulling_test.cc",
   ],
   deps = [
     "//src/tint/api/common",

@@ -25,8 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_TINT_LANG_WGSL_AST_TRANSFORM_VERTEX_PULLING_H_
-#define SRC_TINT_LANG_WGSL_AST_TRANSFORM_VERTEX_PULLING_H_
+#ifndef SRC_TINT_LANG_MSL_WRITER_AST_RAISE_VERTEX_PULLING_H_
+#define SRC_TINT_LANG_MSL_WRITER_AST_RAISE_VERTEX_PULLING_H_
 
 #include <memory>
 #include <string>
@@ -36,7 +36,7 @@
 #include "src/tint/lang/wgsl/ast/transform/transform.h"
 #include "src/tint/utils/reflection.h"
 
-namespace tint::ast::transform {
+namespace tint::msl::writer {
 
 /// Describes the format of data in a vertex buffer
 enum class VertexFormat {
@@ -159,10 +159,10 @@ using VertexStateDescriptor = std::vector<VertexBufferLayoutDescriptor>;
 /// shader to use.
 ///
 /// The SingleEntryPoint transform must have run before VertexPulling.
-class VertexPulling final : public Castable<VertexPulling, Transform> {
+class VertexPulling final : public Castable<VertexPulling, ast::transform::Transform> {
   public:
     /// Configuration options for the transform
-    struct Config final : public Castable<Config, Data> {
+    struct Config final : public Castable<Config, ast::transform::Data> {
         /// Constructor
         Config();
 
@@ -195,8 +195,8 @@ class VertexPulling final : public Castable<VertexPulling, Transform> {
 
     /// @copydoc Transform::Apply
     ApplyResult Apply(const Program& program,
-                      const DataMap& inputs,
-                      DataMap& outputs) const override;
+                      const ast::transform::DataMap& inputs,
+                      ast::transform::DataMap& outputs) const override;
 
   private:
     struct State;
@@ -204,16 +204,16 @@ class VertexPulling final : public Castable<VertexPulling, Transform> {
     Config cfg_;
 };
 
-}  // namespace tint::ast::transform
+}  // namespace tint::msl::writer
 
 namespace tint {
 
 /// Reflection for VertexFormat
-TINT_REFLECT_ENUM_RANGE(tint::ast::transform::VertexFormat, kUint8x2, kUnorm10_10_10_2);
+TINT_REFLECT_ENUM_RANGE(tint::msl::writer::VertexFormat, kUint8x2, kUnorm10_10_10_2);
 
 /// Reflection for VertexStepMode
-TINT_REFLECT_ENUM_RANGE(tint::ast::transform::VertexStepMode, kVertex, kInstance);
+TINT_REFLECT_ENUM_RANGE(tint::msl::writer::VertexStepMode, kVertex, kInstance);
 
 }  // namespace tint
 
-#endif  // SRC_TINT_LANG_WGSL_AST_TRANSFORM_VERTEX_PULLING_H_
+#endif  // SRC_TINT_LANG_MSL_WRITER_AST_RAISE_VERTEX_PULLING_H_

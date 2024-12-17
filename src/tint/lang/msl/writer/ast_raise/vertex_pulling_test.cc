@@ -25,13 +25,13 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/tint/lang/wgsl/ast/transform/vertex_pulling.h"
+#include "src/tint/lang/msl/writer/ast_raise/vertex_pulling.h"
 
 #include <utility>
 
 #include "src/tint/lang/wgsl/ast/transform/helper_test.h"
 
-namespace tint::ast::transform {
+namespace tint::msl::writer {
 namespace {
 
 TEST(TintCheckAllFieldsReflected, WgslAstTransformVertexPullingTest) {
@@ -40,14 +40,14 @@ TEST(TintCheckAllFieldsReflected, WgslAstTransformVertexPullingTest) {
     TINT_ASSERT_ALL_FIELDS_REFLECTED(VertexPulling::Config);
 }
 
-using VertexPullingTest = TransformTest;
+using VertexPullingTest = ast::transform::TransformTest;
 
 TEST_F(VertexPullingTest, Error_NoEntryPoint) {
     auto* src = "";
 
     auto* expect = "error: Vertex stage entry point not found";
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>();
     auto got = Run<VertexPulling>(src, data);
 
@@ -70,7 +70,7 @@ fn main2() -> @builtin(position) vec4<f32> {
 
     VertexPulling::Config cfg;
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -87,7 +87,7 @@ fn main() {}
 
     VertexPulling::Config cfg;
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -109,7 +109,7 @@ fn main(@location(0) var_a : f32) -> @builtin(position) vec4<f32> {
     VertexPulling::Config cfg;
     cfg.vertex_state = {{{15, VertexStepMode::kVertex, {{VertexFormat::kFloat32, 0, 0}}}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -137,7 +137,7 @@ fn main() -> @builtin(position) vec4<f32> {
 
     VertexPulling::Config cfg;
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -173,7 +173,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
     VertexPulling::Config cfg;
     cfg.vertex_state = {{{4, VertexStepMode::kVertex, {{VertexFormat::kFloat32, 0, 0}}}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -209,7 +209,7 @@ fn main(@builtin(instance_index) tint_pulling_instance_index : u32) -> @builtin(
     VertexPulling::Config cfg;
     cfg.vertex_state = {{{4, VertexStepMode::kInstance, {{VertexFormat::kFloat32, 0, 0}}}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -246,7 +246,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
     cfg.vertex_state = {{{4, VertexStepMode::kVertex, {{VertexFormat::kFloat32, 0, 0}}}}};
     cfg.pulling_group = 5;
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -291,7 +291,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
     VertexPulling::Config cfg;
     cfg.vertex_state = {{{4, VertexStepMode::kVertex, {{VertexFormat::kFloat32, 0, 0}}}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -348,7 +348,7 @@ fn main(@builtin(vertex_index) custom_vertex_index : u32, @builtin(instance_inde
         },
     }};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -426,7 +426,7 @@ fn main(tint_symbol_1 : tint_symbol) -> @builtin(position) vec4<f32> {
         },
     }};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -504,7 +504,7 @@ struct Inputs {
         },
     }};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -579,7 +579,7 @@ fn main(indices : Indices) -> @builtin(position) vec4<f32> {
         },
     }};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -654,7 +654,7 @@ struct Indices {
         },
     }};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -695,7 +695,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
                           VertexStepMode::kVertex,
                           {{VertexFormat::kFloat32, 0, 0}, {VertexFormat::kFloat32x4, 0, 1}}}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -748,7 +748,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
         {16, VertexStepMode::kVertex, {{VertexFormat::kFloat32x4, 0, 2}}},
     }};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -805,7 +805,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
         {16, VertexStepMode::kVertex, {{VertexFormat::kFloat16x4, 0, 2}}},
     }};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -854,7 +854,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index_1 : u32) -> @builtin(po
                           VertexStepMode::kVertex,
                           {{VertexFormat::kFloat32, 0, 0}, {VertexFormat::kFloat32x4, 0, 1}}}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, std::move(data));
 
@@ -932,7 +932,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
                               {VertexFormat::kSint32x4, 64, 9},
                           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -1010,7 +1010,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
                               {VertexFormat::kUint32x4, 64, 9},
                           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -1123,7 +1123,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
               {VertexFormat::kUnorm8x4BGRA, 64, 20},
           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -1240,7 +1240,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
               {VertexFormat::kUnorm8x4BGRA, 64, 20},
           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -1318,7 +1318,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
                               {VertexFormat::kSint32x4, 63, 9},
                           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -1396,7 +1396,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
                               {VertexFormat::kUint32x4, 63, 9},
                           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -1509,7 +1509,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
               {VertexFormat::kUnorm8x4BGRA, 64, 20},
           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -1626,7 +1626,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
               {VertexFormat::kUnorm8x4BGRA, 64, 20},
           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -1728,7 +1728,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
                               {VertexFormat::kSint32x3, 64, 15},
                           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -1830,7 +1830,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
                               {VertexFormat::kUint32x3, 64, 15},
                           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -1978,7 +1978,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
               {VertexFormat::kFloat32x3, 64, 31},
           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -2130,7 +2130,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
               {VertexFormat::kFloat32x3, 64, 31},
           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -2224,7 +2224,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
                               {VertexFormat::kSint32x4, 64, 13},
                           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -2318,7 +2318,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
                               {VertexFormat::kUint32x4, 64, 13},
                           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -2469,7 +2469,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
               {VertexFormat::kUnorm8x4BGRA, 64, 30},    {VertexFormat::kUnorm8x4BGRA, 64, 31},
           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -2624,7 +2624,7 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
               {VertexFormat::kUnorm8x4BGRA, 64, 30},    {VertexFormat::kUnorm8x4BGRA, 64, 31},
           }}}};
 
-    DataMap data;
+    ast::transform::DataMap data;
     data.Add<VertexPulling::Config>(cfg);
     auto got = Run<VertexPulling>(src, data);
 
@@ -2632,4 +2632,4 @@ fn main(@builtin(vertex_index) tint_pulling_vertex_index : u32) -> @builtin(posi
 }
 
 }  // namespace
-}  // namespace tint::ast::transform
+}  // namespace tint::msl::writer
