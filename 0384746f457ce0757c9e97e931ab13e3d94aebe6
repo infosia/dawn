@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41665aac_a1d701fe",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-17T23:49:14Z",
+      "side": 1,
+      "message": "This could be GetStencil8InternalFormat() (see below).",
+      "revId": "0384746f457ce0757c9e97e931ab13e3d94aebe6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6ef6729_b3e12a54",
+        "filename": "src/dawn/native/opengl/GLFormat.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-17T23:49:14Z",
+      "side": 1,
+      "message": "Could you change this to internalFormatForStencil8, for symmetry with BGRA? The caller could determine the format.",
+      "revId": "0384746f457ce0757c9e97e931ab13e3d94aebe6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
