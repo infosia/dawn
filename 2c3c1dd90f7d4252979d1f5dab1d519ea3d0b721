@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ede43304_ab26c64a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-12-17T18:26:30Z",
+      "side": 1,
+      "message": "Having the feature enabled by default in core would be a valid option. However, I think that would invalidate this WebGPU standard statement [1]\n```\nA device supports the exact set of features determined at creation.\n```\nSo when an user calls `APIGetFeatures`, it would return a list containing `FlexibleTextureViews` feature even though they never request for it.\n\nUnless we decide to make it a special feature such that it\u0027s only visible internally and won\u0027t be returned via `APIGetFeatures` in Core Mode. I think it makes the condition checks cleaner but the internal code would become more complicated due to having two sets of features.\n\n[1] https://www.w3.org/TR/webgpu/#features",
+      "parentUuid": "9cc21864_976b4f13",
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "706127f1_eb949ec5",
         "filename": "docs/dawn/features/flexible_texture_views.md",
         "patchSetId": 14
