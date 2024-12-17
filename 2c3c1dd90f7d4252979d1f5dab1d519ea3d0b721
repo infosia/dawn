@@ -16,6 +16,74 @@
       "message": "PTAL again",
       "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "154fbe14_bcc06844",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-17T15:23:10Z",
+      "side": 1,
+      "message": "Great stuff! LGTM w/nits",
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "706127f1_eb949ec5",
+        "filename": "docs/dawn/features/flexible_texture_views.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-17T15:23:10Z",
+      "side": 1,
+      "message": "```suggestion\n- Cannot create a 2D view of a 2DArray texture.\n```",
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2b3e4f5_7e15e83f",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-17T15:23:10Z",
+      "side": 1,
+      "message": "```suggestion\n     {\"Remove the texture view restrictions in Compat Mode.\",\n```",
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "412edc3e_eb30ba23",
+        "filename": "src/dawn/tests/end2end/TextureViewTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-17T15:23:10Z",
+      "side": 1,
+      "message": "Nit: HasFlexibleTextureViews(), for symmetry with other tests.",
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
