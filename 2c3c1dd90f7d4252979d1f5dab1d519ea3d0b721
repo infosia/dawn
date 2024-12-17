@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e5f0370_446c43fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-17T17:57:12Z",
+      "side": 1,
+      "message": "General question, would it be possible to just use the feature in a lot of the `if` clauses in validation instead of needing both `Compat` + `HasFeature`? I\u0027m just imagining that in `Compat` by default the feature will be disabled, and in core it will be enabled by default? It just makes the conditions a little less cluttered.",
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "706127f1_eb949ec5",
         "filename": "docs/dawn/features/flexible_texture_views.md",
         "patchSetId": 14
