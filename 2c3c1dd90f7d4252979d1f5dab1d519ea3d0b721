@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9cc21864_976b4f13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-17T17:59:10Z",
+      "side": 1,
+      "message": "I guess it boils down to whether this is a Compat specific feature versus just a feature in general?",
+      "parentUuid": "9e5f0370_446c43fe",
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "706127f1_eb949ec5",
         "filename": "docs/dawn/features/flexible_texture_views.md",
         "patchSetId": 14
