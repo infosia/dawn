@@ -71,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a9b83350_838a25bb",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-12-17T07:57:01Z",
+      "side": 1,
+      "message": "Yes, D3D11 exposes it. And it works without any issue in core mode. D3D11 can support Core or Compat mode based on D3D feature level. We could disable the feature in Compat Mode. But it\u0027s still useful for chrome\u0027s renderder because we never use more than 1 render attachments. Hence I added an issue tracker and a TODO here in case we find another solution to make multiple outputs work with DawnLoadResolveTexture in Compat Mode in future.",
+      "parentUuid": "9ddd1e7a_2c4cdcd2",
+      "revId": "ad54e957a81258f0bec879e1ff6fde0272f70099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "54965225_6391ff93",
         "filename": "src/dawn/tests/end2end/VideoViewsTests.cpp",
         "patchSetId": 4
@@ -99,6 +117,24 @@
       "writtenOn": "2024-12-16T17:09:15Z",
       "side": 1,
       "message": "Also curious about coverage here: why was this passing on GLES? Or was it skipped due to some other reason?",
+      "revId": "ad54e957a81258f0bec879e1ff6fde0272f70099",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "919503ee_efdb26e5",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2024-12-17T07:57:01Z",
+      "side": 1,
+      "message": "I\u0027m not working on GLES backend nor android. But looking at the code, its\u0027 probably because we don\u0027t test array textures on android. The layerCount test parameter is only `1`: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/white_box/SharedTextureMemoryTests_android.cpp;drc\u003d24f58f39f1a6085088ad67560da44651e82a1690;l\u003d666",
+      "parentUuid": "cba4c1fa_6d716802",
       "revId": "ad54e957a81258f0bec879e1ff6fde0272f70099",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
