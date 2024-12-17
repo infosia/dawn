@@ -49,6 +49,8 @@ tint_add_target(tint_lang_msl_writer_common lib
   lang/msl/writer/common/output.h
   lang/msl/writer/common/printer_support.cc
   lang/msl/writer/common/printer_support.h
+  lang/msl/writer/common/vertex_pulling_config.cc
+  lang/msl/writer/common/vertex_pulling_config.h
 )
 
 tint_target_add_dependencies(tint_lang_msl_writer_common lib

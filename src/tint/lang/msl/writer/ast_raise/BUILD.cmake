@@ -85,6 +85,12 @@ tint_target_add_external_dependencies(tint_lang_msl_writer_ast_raise lib
   "src_utils"
 )
 
+if(TINT_BUILD_MSL_WRITER)
+  tint_target_add_dependencies(tint_lang_msl_writer_ast_raise lib
+    tint_lang_msl_writer_common
+  )
+endif(TINT_BUILD_MSL_WRITER)
+
 endif(TINT_BUILD_MSL_WRITER)
 if(TINT_BUILD_MSL_WRITER AND TINT_BUILD_WGSL_READER AND TINT_BUILD_WGSL_WRITER)
 ################################################################################
@@ -137,6 +143,7 @@ tint_target_add_external_dependencies(tint_lang_msl_writer_ast_raise_test test
 if(TINT_BUILD_MSL_WRITER)
   tint_target_add_dependencies(tint_lang_msl_writer_ast_raise_test test
     tint_lang_msl_writer_ast_raise
+    tint_lang_msl_writer_common
   )
 endif(TINT_BUILD_MSL_WRITER)
 

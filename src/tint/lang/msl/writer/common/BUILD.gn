@@ -53,6 +53,8 @@ if (tint_build_msl_writer) {
       "output.h",
       "printer_support.cc",
       "printer_support.h",
+      "vertex_pulling_config.cc",
+      "vertex_pulling_config.h",
     ]
     deps = [
       "${dawn_root}/src/utils:utils",
