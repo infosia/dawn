@@ -175,6 +175,24 @@
       "parentUuid": "816d938b_0a7eb480",
       "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78cdd5c8_0bd0e611",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2024-12-17T21:13:06Z",
+      "side": 1,
+      "message": "Resolved as discussed in meeting",
+      "parentUuid": "9669f3c8_781450a3",
+      "revId": "b3a98beb6a61c87bfa78e4ec69dc63ea4447d777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
