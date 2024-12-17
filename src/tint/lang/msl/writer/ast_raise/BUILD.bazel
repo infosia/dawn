@@ -79,7 +79,12 @@ cc_library(
     "//src/tint/utils/symbol",
     "//src/tint/utils/text",
     "//src/utils",
-  ],
+  ] + select({
+    ":tint_build_msl_writer": [
+      "//src/tint/lang/msl/writer/common",
+    ],
+    "//conditions:default": [],
+  }),
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
@@ -125,6 +130,7 @@ cc_library(
   ] + select({
     ":tint_build_msl_writer": [
       "//src/tint/lang/msl/writer/ast_raise",
+      "//src/tint/lang/msl/writer/common",
     ],
     "//conditions:default": [],
   }) + select({

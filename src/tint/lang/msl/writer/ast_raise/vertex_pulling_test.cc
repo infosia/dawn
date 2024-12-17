@@ -34,12 +34,6 @@
 namespace tint::msl::writer {
 namespace {
 
-TEST(TintCheckAllFieldsReflected, WgslAstTransformVertexPullingTest) {
-    TINT_ASSERT_ALL_FIELDS_REFLECTED(VertexAttributeDescriptor);
-    TINT_ASSERT_ALL_FIELDS_REFLECTED(VertexBufferLayoutDescriptor);
-    TINT_ASSERT_ALL_FIELDS_REFLECTED(VertexPulling::Config);
-}
-
 using VertexPullingTest = ast::transform::TransformTest;
 
 TEST_F(VertexPullingTest, Error_NoEntryPoint) {

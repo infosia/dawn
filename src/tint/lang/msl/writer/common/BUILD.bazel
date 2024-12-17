@@ -43,12 +43,14 @@ cc_library(
     "options.cc",
     "output.cc",
     "printer_support.cc",
+    "vertex_pulling_config.cc",
   ],
   hdrs = [
     "option_helpers.h",
     "options.h",
     "output.h",
     "printer_support.h",
+    "vertex_pulling_config.h",
   ],
   deps = [
     "//src/tint/api/common",
