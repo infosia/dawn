@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd8d1a6e_9f037316",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-12-17T13:13:46Z",
+      "side": 1,
+      "message": "It will be tested end-to-end via \n\n```\n./gradlew connectedAndroidTest\n```\n\nonce https://dawn-review.googlesource.com/c/dawn/+/216314 lands, because the integrated tests (ImageTests currently) use the callbacks \n\nAlso you can peruse the generated files at https://paste.googleplex.com/6361388218580992",
+      "parentUuid": "d26cc683_c9e7268d",
+      "revId": "f567c65b87e6b01a5ebb85464b68482b8b2cf858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28bd11ad_652518af",
@@ -72,6 +90,30 @@
           ]
         }
       ],
+      "revId": "f567c65b87e6b01a5ebb85464b68482b8b2cf858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "996ff929_65b87a59",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-12-17T13:13:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28bd11ad_652518af",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 27
+      },
       "revId": "f567c65b87e6b01a5ebb85464b68482b8b2cf858",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

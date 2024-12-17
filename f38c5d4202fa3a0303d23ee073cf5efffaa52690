@@ -22,6 +22,41 @@
       },
       "revId": "f38c5d4202fa3a0303d23ee073cf5efffaa52690",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c176784_8287f0d9",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-12-17T13:13:46Z",
+      "side": 1,
+      "message": "Reverse",
+      "fixSuggestions": [
+        {
+          "fixId": "b21aa4dd_f793900f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/api_kotlin_async_helpers.kt",
+              "range": {
+                "startLine": 87,
+                "startChar": 0,
+                "endLine": 88,
+                "endChar": 0
+              },
+              "replacement": "        public suspend fun {{ obj.name.CamelCase() }}.{{ method.name.camelCase() }}Rev(\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f38c5d4202fa3a0303d23ee073cf5efffaa52690",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
