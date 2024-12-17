@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3688be4_6930cf59",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-17T08:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2a10702_4a03a63e",
+      "revId": "b7ca509ddcbc53110e440c854dc967eaaf02852f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4784e4e3_6a943b4c",
@@ -70,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "426a261c_5b0af62f",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-17T08:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4784e4e3_6a943b4c",
+      "revId": "b7ca509ddcbc53110e440c854dc967eaaf02852f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90c930b2_fa2e82ef",
@@ -83,6 +119,24 @@
       "writtenOn": "2024-12-16T22:02:57Z",
       "side": 1,
       "message": "We shouldn\u0027t be trying to use range analysis on a module that has non-constant workgroup sizes, since we will always have replaced pipeline overrides with constant values early in the pipeline. So we can just `TINT_ASSERT(func.WorkgroupSizeAsConst().has_value())` and then always take the value here, instead of pre-computing it above.",
+      "revId": "b7ca509ddcbc53110e440c854dc967eaaf02852f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d633cb60_13e5e563",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2024-12-17T08:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90c930b2_fa2e82ef",
       "revId": "b7ca509ddcbc53110e440c854dc967eaaf02852f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
