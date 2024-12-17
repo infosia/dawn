@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4693b872_ccd0fcb8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-17T18:31:36Z",
+      "side": 1,
+      "message": "The helper would be perfect then! Thanks for the explanation and alternative!",
+      "parentUuid": "bd0db875_80796dac",
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "706127f1_eb949ec5",
