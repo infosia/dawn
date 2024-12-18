@@ -190,6 +190,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateExpandMultisamplePipeline(
         bglEntry.visibility = wgpu::ShaderStage::Fragment;
         bglEntry.texture.sampleType = kInternalResolveAttachmentSampleType;
         bglEntry.texture.viewDimension = wgpu::TextureViewDimension::e2D;
+        bglEntry.buffer.type = wgpu::BufferBindingType::BindingNotUsed;
     }
     BindGroupLayoutDescriptor bglDesc = {};
     bglDesc.entries = bglEntries.data();
