@@ -274,6 +274,7 @@ BindGroupLayoutEntry CreateSampledTextureBindingForExternalTexture(uint32_t bind
     entry.texture.viewDimension = wgpu::TextureViewDimension::e2D;
     entry.texture.multisampled = false;
     entry.texture.sampleType = wgpu::TextureSampleType::Float;
+    entry.buffer.type = wgpu::BufferBindingType::BindingNotUsed;
     return entry;
 }
 
@@ -459,7 +460,8 @@ BindingInfo CreateBindGroupLayoutInfo(const UnpackedPtr<BindGroupLayoutEntry>& b
     bindingInfo.visibility = binding->visibility;
 
     if (binding->buffer.type != wgpu::BufferBindingType::BindingNotUsed) {
-        bindingInfo.bindingLayout = BufferBindingInfo(binding->buffer);
+        bindingInfo.bindingLayout =
+            BufferBindingInfo(binding->buffer.WithTrivialFrontendDefaults());
     } else if (binding->sampler.type != wgpu::SamplerBindingType::BindingNotUsed) {
         bindingInfo.bindingLayout = SamplerBindingInfo(binding->sampler);
     } else if (binding->texture.sampleType != wgpu::TextureSampleType::BindingNotUsed) {
@@ -826,6 +828,7 @@ bool BindGroupLayoutInternalBase::IsStorageBufferBinding(BindingIndex bindingInd
         case wgpu::BufferBindingType::ReadOnlyStorage:
             return true;
         case wgpu::BufferBindingType::BindingNotUsed:
+        case wgpu::BufferBindingType::Undefined:
             break;
     }
     DAWN_UNREACHABLE();
