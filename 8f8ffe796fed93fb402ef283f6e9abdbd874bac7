@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0336ee75_1df21245",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-18T14:40:49Z",
+      "side": 1,
+      "message": "uNit:\n\n```suggestion\n[Compat GL] Use DEPTH24_STENCIL8 for stencil8 when STENCIL_INDEX8 unsupported\n```",
+      "revId": "8f8ffe796fed93fb402ef283f6e9abdbd874bac7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7af4164_6f5d7f5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-18T14:40:49Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "8f8ffe796fed93fb402ef283f6e9abdbd874bac7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
