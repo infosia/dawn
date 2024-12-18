@@ -166,6 +166,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6889eed1_9ee5b4ee",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-18T06:11:56Z",
+      "side": 1,
+      "message": "Actually maybe it\u0027s not true already in your implementation - it\u0027ll be set on all core PhysicalDevices but we probably need extra logic to have it automatically enabled when `compatibilityMode\u003dfalse` is requested. It would be nice to do that now if it\u0027s not difficult but it is definitely OK to make it a followup CL or followup bug.",
+      "parentUuid": "beebbd7e_b0202a8c",
+      "range": {
+        "startLine": 244,
+        "startChar": 8,
+        "endLine": 244,
+        "endChar": 91
+      },
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c2b3e4f5_7e15e83f",
         "filename": "src/dawn/native/Features.cpp",
         "patchSetId": 14
