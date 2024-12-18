@@ -82,6 +82,7 @@ TEST_P(InternalBindingTypeTests, ErrorUseInternalResolveAttachmentSampleTypeExte
     bglEntry.binding = 0;
     bglEntry.texture.sampleType = native::kInternalResolveAttachmentSampleType;
     bglEntry.visibility = wgpu::ShaderStage::Fragment;
+    bglEntry.buffer.type = wgpu::BufferBindingType::BindingNotUsed;
 
     wgpu::BindGroupLayoutDescriptor bglDesc;
     bglDesc.entryCount = 1;
