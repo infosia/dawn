@@ -16,6 +16,24 @@
       "message": "Note that I didn\u0027t add DAWN_INCREASE_LIMIT_MESSAGE on purpose there.",
       "revId": "09643a587b4d32c7a7be724870d2782db77d9d12",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92ae39ea_7edeeffb",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-18T07:12:19Z",
+      "side": 1,
+      "message": "This error message is weird, there is no limit on the number of external textures, only on the other types of resources that external textures consume. The logic you used for the later limits makes more sense, and I\u0027m pretty certain this is redundant with the `sampledTextureAndExternalTextureCount` check. It seems like this check was probably meant to give better error messages, but with this CL I think `sampledTextureAndExternalTextureCount` will give better error messages and we should just remove this.",
+      "parentUuid": "6b35ffd2_f63ede27",
+      "revId": "09643a587b4d32c7a7be724870d2782db77d9d12",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
