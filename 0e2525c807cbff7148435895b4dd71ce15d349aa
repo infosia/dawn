@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f99f14ef_8490dd78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2024-12-18T19:32:13Z",
+      "side": 1,
+      "message": "I ran dawn_end2end_tests for both D3D11 and D3D12 with IR enabled:\n\n```\n.\\out\\debug\\dawn_end2end_tests.exe --enable-toggles\u003duse_tint_ir --backend\u003dd3d11 --adapter-vendor-id\u003d0x1002 --gtest_filter\u003d*FirstIndexOffsetTests*\n\n\n.\\out\\debug\\dawn_end2end_tests.exe --enable-toggles\u003duse_tint_ir --backend\u003dd3d12 --adapter-vendor-id\u003d0x1002 --gtest_filter\u003d*FirstIndexOffsetTests*\n```\n\nAll tests from both pass.",
+      "revId": "0e2525c807cbff7148435895b4dd71ce15d349aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
