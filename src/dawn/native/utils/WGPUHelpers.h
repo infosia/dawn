@@ -97,6 +97,9 @@ struct BindingLayoutEntryInitializationHelper : BindGroupLayoutEntry {
         wgpu::TextureViewDimension viewDimension = wgpu::TextureViewDimension::e2D);
 
     explicit BindingLayoutEntryInitializationHelper(const BindGroupLayoutEntry& entry);
+
+  private:
+    void SetNotUsedBindingTypes();
 };
 
 ResultOrError<Ref<BindGroupLayoutBase>> MakeBindGroupLayout(
@@ -178,6 +181,9 @@ void FreeApiSeq(T** apiData, size_t* apiSize) {
 
 // Normalize the string, truncating it at the first null-terminator, if any.
 std::string_view NormalizeMessageString(StringView in);
+
+// Create a bind group layout entry with all binding types set to binding not used.
+BindGroupLayoutEntry CreateBindGroupLayoutEntryWithBindingNotUsed();
 
 }  // namespace dawn::native::utils
 
