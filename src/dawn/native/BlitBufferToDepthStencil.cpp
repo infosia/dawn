@@ -40,6 +40,7 @@
 #include "dawn/native/Queue.h"
 #include "dawn/native/RenderPassEncoder.h"
 #include "dawn/native/RenderPipeline.h"
+#include "dawn/native/utils/WGPUHelpers.h"
 
 namespace dawn::native {
 
@@ -379,12 +380,15 @@ MaybeError BlitR8ToStencil(DeviceBase* device,
     // This bgl is the same for all the render pipelines.
     Ref<BindGroupLayoutBase> bgl;
     {
-        std::array<BindGroupLayoutEntry, 2> bglEntries = {};
+        std::array<BindGroupLayoutEntry, 2> bglEntries = {
+            utils::CreateBindGroupLayoutEntryWithBindingNotUsed(),
+            utils::CreateBindGroupLayoutEntryWithBindingNotUsed()};
         // Binding 0: the r8uint texture.
         bglEntries[0].binding = 0;
         bglEntries[0].visibility = wgpu::ShaderStage::Fragment;
         bglEntries[0].texture.sampleType = wgpu::TextureSampleType::Uint;
         bglEntries[0].texture.viewDimension = textureViewDimension;
+
         // Binding 1: the params buffer.
         bglEntries[1].binding = 1;
         bglEntries[1].visibility = wgpu::ShaderStage::Fragment;

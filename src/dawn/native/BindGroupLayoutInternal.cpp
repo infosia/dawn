@@ -48,6 +48,7 @@
 #include "dawn/native/PerStage.h"
 #include "dawn/native/Sampler.h"
 #include "dawn/native/ValidationUtils_autogen.h"
+#include "dawn/native/utils/WGPUHelpers.h"
 
 namespace dawn::native {
 
@@ -268,7 +269,7 @@ MaybeError ValidateStaticSamplersWithTextureBindings(
 
 BindGroupLayoutEntry CreateSampledTextureBindingForExternalTexture(uint32_t binding,
                                                                    wgpu::ShaderStage visibility) {
-    BindGroupLayoutEntry entry;
+    BindGroupLayoutEntry entry = utils::CreateBindGroupLayoutEntryWithBindingNotUsed();
     entry.binding = binding;
     entry.visibility = visibility;
     entry.texture.viewDimension = wgpu::TextureViewDimension::e2D;
@@ -279,7 +280,7 @@ BindGroupLayoutEntry CreateSampledTextureBindingForExternalTexture(uint32_t bind
 
 BindGroupLayoutEntry CreateUniformBindingForExternalTexture(uint32_t binding,
                                                             wgpu::ShaderStage visibility) {
-    BindGroupLayoutEntry entry;
+    BindGroupLayoutEntry entry = utils::CreateBindGroupLayoutEntryWithBindingNotUsed();
     entry.binding = binding;
     entry.visibility = visibility;
     entry.buffer.hasDynamicOffset = false;
@@ -459,9 +460,11 @@ BindingInfo CreateBindGroupLayoutInfo(const UnpackedPtr<BindGroupLayoutEntry>& b
     bindingInfo.visibility = binding->visibility;
 
     if (binding->buffer.type != wgpu::BufferBindingType::BindingNotUsed) {
-        bindingInfo.bindingLayout = BufferBindingInfo(binding->buffer);
+        bindingInfo.bindingLayout =
+            BufferBindingInfo(binding->buffer.WithTrivialFrontendDefaults());
     } else if (binding->sampler.type != wgpu::SamplerBindingType::BindingNotUsed) {
-        bindingInfo.bindingLayout = SamplerBindingInfo(binding->sampler);
+        bindingInfo.bindingLayout =
+            SamplerBindingInfo(binding->sampler.WithTrivialFrontendDefaults());
     } else if (binding->texture.sampleType != wgpu::TextureSampleType::BindingNotUsed) {
         if (binding->texture.viewDimension == kInternalInputAttachmentDim) {
             bindingInfo.bindingLayout = InputAttachmentBindingInfo(binding->texture.sampleType);
@@ -826,6 +829,7 @@ bool BindGroupLayoutInternalBase::IsStorageBufferBinding(BindingIndex bindingInd
         case wgpu::BufferBindingType::ReadOnlyStorage:
             return true;
         case wgpu::BufferBindingType::BindingNotUsed:
+        case wgpu::BufferBindingType::Undefined:
             break;
     }
     DAWN_UNREACHABLE();

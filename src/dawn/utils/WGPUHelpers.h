@@ -218,6 +218,9 @@ ColorSpaceConversionInfo GetNoopRGBColorSpaceConversionInfo();
 
 bool BackendRequiresCompat(wgpu::BackendType backend);
 
+// Create a bind group layout entry with all binding types set to binding not used
+wgpu::BindGroupLayoutEntry CreateBindGroupLayoutEntryWithBindingNotUsed();
+
 }  // namespace dawn::utils
 
 #endif  // SRC_DAWN_UTILS_WGPUHELPERS_H_

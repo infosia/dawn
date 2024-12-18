@@ -46,6 +46,7 @@
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/ShaderModule.h"
+#include "dawn/native/utils/WGPUHelpers.h"
 
 namespace dawn::native {
 
@@ -279,7 +280,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
         [](const ShaderBindingInfo& shaderBinding,
            const ExternalTextureBindingLayout* externalTextureBindingEntry)
         -> BindGroupLayoutEntry {
-        BindGroupLayoutEntry entry = {};
+        BindGroupLayoutEntry entry = utils::CreateBindGroupLayoutEntryWithBindingNotUsed();
 
         MatchVariant(
             shaderBinding.bindingInfo,

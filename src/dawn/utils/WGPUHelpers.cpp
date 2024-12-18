@@ -473,4 +473,11 @@ bool BackendRequiresCompat(wgpu::BackendType backend) {
     }
 }
 
+wgpu::BindGroupLayoutEntry CreateBindGroupLayoutEntryWithBindingNotUsed() {
+    wgpu::BindGroupLayoutEntry entry;
+    entry.buffer.type = wgpu::BufferBindingType::BindingNotUsed;
+    entry.sampler.type = wgpu::SamplerBindingType::BindingNotUsed;
+    return entry;
+}
+
 }  // namespace dawn::utils
