@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ecfc822_1930aa12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2024-12-18T20:52:13Z",
+      "side": 1,
+      "message": "lokokung: PTAL. Let me know if you want for cwallez@ to take a look in the new year before landing, this isn\u0027t time sensitive and I\u0027ll be OOO starting next week anyways.\nblundell: Feel free to review as well.",
+      "revId": "008e3f0677bd7fe5629d3db0e522ca4505df1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
