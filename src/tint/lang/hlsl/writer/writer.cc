@@ -58,8 +58,6 @@ ast::PipelineStage ir_to_ast_stage(core::ir::Function::PipelineStage stage) {
 }  // namespace
 
 Result<Output> Generate(core::ir::Module& ir, const Options& options) {
-    Output output;
-
     // Raise the core-dialect to HLSL-dialect
     auto res = Raise(ir, options);
     if (res != Success) {
