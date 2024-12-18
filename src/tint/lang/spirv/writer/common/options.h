@@ -131,6 +131,27 @@ struct Bindings {
 
 /// Configuration options used for generating SPIR-V.
 struct Options {
+    struct RangeOffsets {
+        /// The offset of the min_depth push constant
+        uint32_t min = 0;
+        /// The offset of the max_depth push constant
+        uint32_t max = 0;
+
+        /// Reflect the fields of this class so that it can be used by tint::ForeachField()
+        TINT_REFLECT(RangeOffsets, min, max);
+    };
+
+    struct NumWorkgroupsOffsets {
+        /// The offset of the num_workgroups_x push constant
+        uint32_t num_workgroups_x = 0;
+
+        /// The offset of the num_workgroups_y push constant
+        uint32_t num_workgroups_y = 0;
+
+        /// The offset of the num_workgroups_z push constant
+        uint32_t num_workgroups_z = 0;
+    };
+
     /// An optional remapped name to use when emitting the entry point.
     std::optional<std::string> remapped_entry_point_name;
 
@@ -187,6 +208,18 @@ struct Options {
     /// Set to `true` if the Vulkan Memory Model should be used
     bool use_vulkan_memory_model = false;
 
+    /// Offsets of the minDepth and maxDepth push constants.
+    std::optional<RangeOffsets> depth_range_offsets;
+
+    /// Offset of the firstVertex push constant.
+    std::optional<uint32_t> first_vertex_offset;
+
+    /// Offset of the firstInstance push constant.
+    std::optional<uint32_t> first_instance_offset;
+
+    /// Offset of the numWorkgroups push constant
+    std::optional<NumWorkgroupsOffsets> num_workgoups_offset;
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(Options,
                  remapped_entry_point_name,
@@ -205,7 +238,9 @@ struct Options {
                  pass_matrix_by_pointer,
                  polyfill_dot_4x8_packed,
                  disable_polyfill_integer_div_mod,
-                 use_vulkan_memory_model);
+                 use_vulkan_memory_model,
+                 first_vertex_offset,
+                 first_instance_offset);
 };
 
 }  // namespace tint::spirv::writer

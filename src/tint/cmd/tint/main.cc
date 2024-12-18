@@ -771,6 +771,30 @@ bool GenerateSpirv([[maybe_unused]] Options& options,
     gen_options.disable_robustness = !options.enable_robustness;
     gen_options.disable_workgroup_init = options.disable_workgroup_init;
     gen_options.use_storage_input_output_16 = options.use_storage_input_output_16;
+
+    auto entry_point = inspector.GetEntryPoint(options.ep_name);
+    uint32_t offset = entry_point.push_constant_size;
+
+    if (entry_point.frag_depth_used) {
+        // Place the RangeOffset push constant member after user-defined push constants (if
+        // any).
+        gen_options.depth_range_offsets = {offset + 0, offset + 4};
+        offset += 8;
+    }
+
+    if (entry_point.instance_index_used) {
+        gen_options.first_instance_offset = offset;
+        offset += 4;
+    }
+
+    if (entry_point.num_workgroups_used) {
+        // Place the NumWorkgropusOffset push constant member after user-defined push constants (if
+        // any). It is compute shader only and shouldn't present with RangeOffset, first_instance
+        // and first_vertex.
+        offset = entry_point.push_constant_size;
+        gen_options.num_workgoups_offset = {offset + 0, offset + 4, offset + 8};
+    }
+
     gen_options.bindings = tint::spirv::writer::GenerateBindings(ir.Get());
 
     // Generate SPIR-V from Tint IR.

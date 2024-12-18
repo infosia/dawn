@@ -1,11 +1,14 @@
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
-; Bound: 26
+; Bound: 29
 ; Schema: 0
                OpCapability Shader
                OpMemoryModel Logical GLSL450
                OpEntryPoint Vertex %main "main" %main_vertex_index_Input %main_instance_index_Input %main_position_Output %main___point_size_Output
+               OpMemberName %tint_push_constant_struct 0 "tint_first_instance"
+               OpName %tint_push_constant_struct "tint_push_constant_struct"
+               OpName %tint_push_constants "tint_push_constants"
                OpName %main_vertex_index_Input "main_vertex_index_Input"
                OpName %main_instance_index_Input "main_instance_index_Input"
                OpName %main_position_Output "main_position_Output"
@@ -15,11 +18,16 @@
                OpName %instance_index "instance_index"
                OpName %foo "foo"
                OpName %main "main"
+               OpMemberDecorate %tint_push_constant_struct 0 Offset 0
+               OpDecorate %tint_push_constant_struct Block
                OpDecorate %main_vertex_index_Input BuiltIn VertexIndex
                OpDecorate %main_instance_index_Input BuiltIn InstanceIndex
                OpDecorate %main_position_Output BuiltIn Position
                OpDecorate %main___point_size_Output BuiltIn PointSize
        %uint = OpTypeInt 32 0
+%tint_push_constant_struct = OpTypeStruct %uint
+%_ptr_PushConstant_tint_push_constant_struct = OpTypePointer PushConstant %tint_push_constant_struct
+%tint_push_constants = OpVariable %_ptr_PushConstant_tint_push_constant_struct PushConstant
 %_ptr_Input_uint = OpTypePointer Input %uint
 %main_vertex_index_Input = OpVariable %_ptr_Input_uint Input
 %main_instance_index_Input = OpVariable %_ptr_Input_uint Input
@@ -29,24 +37,24 @@
 %main_position_Output = OpVariable %_ptr_Output_v4float Output
 %_ptr_Output_float = OpTypePointer Output %float
 %main___point_size_Output = OpVariable %_ptr_Output_float Output
-         %14 = OpTypeFunction %v4float %uint %uint
-         %17 = OpConstantNull %v4float
+         %17 = OpTypeFunction %v4float %uint %uint
+         %20 = OpConstantNull %v4float
        %void = OpTypeVoid
-         %20 = OpTypeFunction %void
+         %23 = OpTypeFunction %void
     %float_1 = OpConstant %float 1
- %main_inner = OpFunction %v4float None %14
+ %main_inner = OpFunction %v4float None %17
 %vertex_index = OpFunctionParameter %uint
 %instance_index = OpFunctionParameter %uint
-         %15 = OpLabel
+         %18 = OpLabel
         %foo = OpIAdd %uint %vertex_index %instance_index
-               OpReturnValue %17
+               OpReturnValue %20
                OpFunctionEnd
-       %main = OpFunction %void None %20
-         %21 = OpLabel
-         %22 = OpLoad %uint %main_vertex_index_Input None
-         %23 = OpLoad %uint %main_instance_index_Input None
-         %24 = OpFunctionCall %v4float %main_inner %22 %23
-               OpStore %main_position_Output %24 None
+       %main = OpFunction %void None %23
+         %24 = OpLabel
+         %25 = OpLoad %uint %main_vertex_index_Input None
+         %26 = OpLoad %uint %main_instance_index_Input None
+         %27 = OpFunctionCall %v4float %main_inner %25 %26
+               OpStore %main_position_Output %27 None
                OpStore %main___point_size_Output %float_1 None
                OpReturn
                OpFunctionEnd

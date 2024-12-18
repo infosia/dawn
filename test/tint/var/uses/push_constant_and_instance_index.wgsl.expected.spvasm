@@ -6,24 +6,27 @@
                OpCapability Shader
                OpMemoryModel Logical GLSL450
                OpEntryPoint Vertex %main "main" %main_instance_index_Input %main_position_Output %main___point_size_Output
-               OpMemberName %a_block 0 "inner"
-               OpName %a_block "a_block"
+               OpMemberName %tint_push_constant_struct 0 "user_constant"
+               OpMemberName %tint_push_constant_struct 1 "tint_first_instance"
+               OpName %tint_push_constant_struct "tint_push_constant_struct"
+               OpName %tint_push_constants "tint_push_constants"
                OpName %main_instance_index_Input "main_instance_index_Input"
                OpName %main_position_Output "main_position_Output"
                OpName %main___point_size_Output "main___point_size_Output"
                OpName %main_inner "main_inner"
                OpName %b "b"
                OpName %main "main"
-               OpMemberDecorate %a_block 0 Offset 0
-               OpDecorate %a_block Block
+               OpMemberDecorate %tint_push_constant_struct 0 Offset 0
+               OpMemberDecorate %tint_push_constant_struct 1 Offset 4
+               OpDecorate %tint_push_constant_struct Block
                OpDecorate %main_instance_index_Input BuiltIn InstanceIndex
                OpDecorate %main_position_Output BuiltIn Position
                OpDecorate %main___point_size_Output BuiltIn PointSize
       %float = OpTypeFloat 32
-    %a_block = OpTypeStruct %float
-%_ptr_PushConstant_a_block = OpTypePointer PushConstant %a_block
-          %1 = OpVariable %_ptr_PushConstant_a_block PushConstant
        %uint = OpTypeInt 32 0
+%tint_push_constant_struct = OpTypeStruct %float %uint
+%_ptr_PushConstant_tint_push_constant_struct = OpTypePointer PushConstant %tint_push_constant_struct
+%tint_push_constants = OpVariable %_ptr_PushConstant_tint_push_constant_struct PushConstant
 %_ptr_Input_uint = OpTypePointer Input %uint
 %main_instance_index_Input = OpVariable %_ptr_Input_uint Input
     %v4float = OpTypeVector %float 4
@@ -40,7 +43,7 @@
  %main_inner = OpFunction %v4float None %15
           %b = OpFunctionParameter %uint
          %16 = OpLabel
-         %17 = OpAccessChain %_ptr_PushConstant_float %1 %uint_0
+         %17 = OpAccessChain %_ptr_PushConstant_float %tint_push_constants %uint_0
          %20 = OpLoad %float %17 None
          %21 = OpConvertUToF %float %b
          %22 = OpFAdd %float %20 %21
