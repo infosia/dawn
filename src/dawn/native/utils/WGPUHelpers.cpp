@@ -104,6 +104,7 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     wgpu::BufferBindingType bufferType,
     bool bufferHasDynamicOffset,
     uint64_t bufferMinBindingSize) {
+    SetNotUsedBindingTypes();
     binding = entryBinding;
     visibility = entryVisibility;
     buffer.type = bufferType;
@@ -115,6 +116,7 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     uint32_t entryBinding,
     wgpu::ShaderStage entryVisibility,
     wgpu::SamplerBindingType samplerType) {
+    SetNotUsedBindingTypes();
     binding = entryBinding;
     visibility = entryVisibility;
     sampler.type = samplerType;
@@ -126,6 +128,7 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     wgpu::TextureSampleType textureSampleType,
     wgpu::TextureViewDimension textureViewDimension,
     bool textureMultisampled) {
+    SetNotUsedBindingTypes();
     binding = entryBinding;
     visibility = entryVisibility;
     texture.sampleType = textureSampleType;
@@ -139,6 +142,7 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     wgpu::StorageTextureAccess storageTextureAccess,
     wgpu::TextureFormat format,
     wgpu::TextureViewDimension textureViewDimension) {
+    SetNotUsedBindingTypes();
     binding = entryBinding;
     visibility = entryVisibility;
     storageTexture.access = storageTextureAccess;
@@ -149,6 +153,13 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
 BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     const BindGroupLayoutEntry& entry)
     : BindGroupLayoutEntry(entry) {}
+
+void BindingLayoutEntryInitializationHelper::SetNotUsedBindingTypes() {
+    buffer.type = wgpu::BufferBindingType::BindingNotUsed;
+    sampler.type = wgpu::SamplerBindingType::BindingNotUsed;
+    texture.sampleType = wgpu::TextureSampleType::BindingNotUsed;
+    storageTexture.access = wgpu::StorageTextureAccess::BindingNotUsed;
+}
 
 BindingInitializationHelper::BindingInitializationHelper(uint32_t binding,
                                                          const Ref<SamplerBase>& sampler)
@@ -233,6 +244,14 @@ std::string_view NormalizeMessageString(StringView in) {
         return {};
     }
     return std::string_view(in.data, strnlen(in.data, in.length));
+}
+
+BindGroupLayoutEntry CreateBindGroupLayoutEntryWithBindingNotUsed() {
+    BindGroupLayoutEntry entry;
+    entry.buffer.type = wgpu::BufferBindingType::BindingNotUsed;
+    entry.sampler.type = wgpu::SamplerBindingType::BindingNotUsed;
+    entry.texture.sampleType = wgpu::TextureSampleType::BindingNotUsed;
+    return entry;
 }
 
 }  // namespace dawn::native::utils
