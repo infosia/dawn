@@ -280,6 +280,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
            const ExternalTextureBindingLayout* externalTextureBindingEntry)
         -> BindGroupLayoutEntry {
         BindGroupLayoutEntry entry = {};
+        entry.buffer = { nullptr, wgpu::BufferBindingType::BindingNotUsed, false, 0 };
 
         MatchVariant(
             shaderBinding.bindingInfo,
