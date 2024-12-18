@@ -61,6 +61,8 @@ if (tint_build_msl_writer) {
       "simd_ballot.h",
       "unary_polyfill.cc",
       "unary_polyfill.h",
+      "vertex_pulling.cc",
+      "vertex_pulling.h",
     ]
     deps = [
       "${dawn_root}/src/utils:utils",
@@ -105,6 +107,7 @@ if (tint_build_unittests) {
         "shader_io_test.cc",
         "simd_ballot_test.cc",
         "unary_polyfill_test.cc",
+        "vertex_pulling_test.cc",
       ]
       deps = [
         "${dawn_root}/src/utils:utils",
@@ -130,7 +133,10 @@ if (tint_build_unittests) {
       ]
 
       if (tint_build_msl_writer) {
-        deps += [ "${tint_src_dir}/lang/msl/writer/raise" ]
+        deps += [
+          "${tint_src_dir}/lang/msl/writer/common",
+          "${tint_src_dir}/lang/msl/writer/raise",
+        ]
       }
     }
   }
