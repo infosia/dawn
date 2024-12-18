@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d8ba68d_ca6fa182",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-12-18T10:57:37Z",
+      "side": 1,
+      "message": "`has_callback_info` seems to have a different role and doesn\u0027t work because of clase `and arg.type.category !\u003d \u0027callback info\u0027`. `has_callbackInfoStruct` does work in this case though.",
+      "parentUuid": "9cb3c641_ebd420dd",
+      "range": {
+        "startLine": 779,
+        "startChar": 4,
+        "endLine": 780,
+        "endChar": 96
+      },
+      "revId": "f38c5d4202fa3a0303d23ee073cf5efffaa52690",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c176784_8287f0d9",
@@ -55,6 +79,24 @@
           ]
         }
       ],
+      "revId": "f38c5d4202fa3a0303d23ee073cf5efffaa52690",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b5bcc1d_2b5ae288",
+        "filename": "generator/templates/art/api_kotlin_async_helpers.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2024-12-18T10:57:37Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5c176784_8287f0d9",
       "revId": "f38c5d4202fa3a0303d23ee073cf5efffaa52690",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
