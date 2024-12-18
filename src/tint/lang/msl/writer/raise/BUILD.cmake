@@ -57,6 +57,8 @@ tint_add_target(tint_lang_msl_writer_raise lib
   lang/msl/writer/raise/simd_ballot.h
   lang/msl/writer/raise/unary_polyfill.cc
   lang/msl/writer/raise/unary_polyfill.h
+  lang/msl/writer/raise/vertex_pulling.cc
+  lang/msl/writer/raise/vertex_pulling.h
 )
 
 tint_target_add_dependencies(tint_lang_msl_writer_raise lib
@@ -110,6 +112,7 @@ tint_add_target(tint_lang_msl_writer_raise_test test
   lang/msl/writer/raise/shader_io_test.cc
   lang/msl/writer/raise/simd_ballot_test.cc
   lang/msl/writer/raise/unary_polyfill_test.cc
+  lang/msl/writer/raise/vertex_pulling_test.cc
 )
 
 tint_target_add_dependencies(tint_lang_msl_writer_raise_test test
@@ -140,6 +143,7 @@ tint_target_add_external_dependencies(tint_lang_msl_writer_raise_test test
 
 if(TINT_BUILD_MSL_WRITER)
   tint_target_add_dependencies(tint_lang_msl_writer_raise_test test
+    tint_lang_msl_writer_common
     tint_lang_msl_writer_raise
   )
 endif(TINT_BUILD_MSL_WRITER)

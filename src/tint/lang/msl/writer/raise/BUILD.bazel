@@ -47,6 +47,7 @@ cc_library(
     "shader_io.cc",
     "simd_ballot.cc",
     "unary_polyfill.cc",
+    "vertex_pulling.cc",
   ],
   hdrs = [
     "binary_polyfill.h",
@@ -57,6 +58,7 @@ cc_library(
     "shader_io.h",
     "simd_ballot.h",
     "unary_polyfill.h",
+    "vertex_pulling.h",
   ],
   deps = [
     "//src/tint/api/common",
@@ -103,6 +105,7 @@ cc_library(
     "shader_io_test.cc",
     "simd_ballot_test.cc",
     "unary_polyfill_test.cc",
+    "vertex_pulling_test.cc",
   ],
   deps = [
     "//src/tint/api/common",
@@ -127,6 +130,7 @@ cc_library(
     "//src/utils",
   ] + select({
     ":tint_build_msl_writer": [
+      "//src/tint/lang/msl/writer/common",
       "//src/tint/lang/msl/writer/raise",
     ],
     "//conditions:default": [],
