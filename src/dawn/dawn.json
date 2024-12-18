@@ -379,16 +379,17 @@
         "category": "enum",
         "values": [
             {"value": 0, "name": "binding not used"},
-            {"value": 1, "name": "uniform"},
-            {"value": 2, "name": "storage"},
-            {"value": 3, "name": "read only storage"}
+            {"value": 1, "name": "undefined", "jsrepr": "undefined", "valid": false},
+            {"value": 2, "name": "uniform"},
+            {"value": 3, "name": "storage"},
+            {"value": 4, "name": "read only storage"}
         ]
     },
     "buffer binding layout": {
         "category": "structure",
         "extensible": "in",
         "members": [
-            {"name": "type", "type": "buffer binding type", "default": "binding not used"},
+            {"name": "type", "type": "buffer binding type", "default": "uniform"},
             {"name": "has dynamic offset", "type": "bool", "default": "false"},
             {"name": "min binding size", "type": "uint64_t", "default": "0"}
         ]

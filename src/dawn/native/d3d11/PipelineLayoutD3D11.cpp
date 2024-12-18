@@ -78,6 +78,7 @@ MaybeError PipelineLayout::Initialize(Device* device) {
                             mIndexInfo[group][bindingIndex] = shaderResourceViewIndex++;
                             break;
                         case wgpu::BufferBindingType::BindingNotUsed:
+                        case wgpu::BufferBindingType::Undefined:
                             DAWN_UNREACHABLE();
                     }
                 },

@@ -97,7 +97,7 @@ MaybeError ValidateBindGroupLayoutEntry(DeviceBase* device,
 
     int bindingMemberCount = 0;
 
-    if (entry->buffer.type != wgpu::BufferBindingType::BindingNotUsed) {
+    if (entry->buffer.type != wgpu::BufferBindingType::Undefined) {
         bindingMemberCount++;
         const BufferBindingLayout& buffer = entry->buffer;
 
@@ -459,7 +459,8 @@ BindingInfo CreateBindGroupLayoutInfo(const UnpackedPtr<BindGroupLayoutEntry>& b
     bindingInfo.visibility = binding->visibility;
 
     if (binding->buffer.type != wgpu::BufferBindingType::BindingNotUsed) {
-        bindingInfo.bindingLayout = BufferBindingInfo(binding->buffer);
+        bindingInfo.bindingLayout =
+            BufferBindingInfo(binding->buffer.WithTrivialFrontendDefaults());
     } else if (binding->sampler.type != wgpu::SamplerBindingType::BindingNotUsed) {
         bindingInfo.bindingLayout = SamplerBindingInfo(binding->sampler);
     } else if (binding->texture.sampleType != wgpu::TextureSampleType::BindingNotUsed) {
@@ -826,6 +827,7 @@ bool BindGroupLayoutInternalBase::IsStorageBufferBinding(BindingIndex bindingInd
         case wgpu::BufferBindingType::ReadOnlyStorage:
             return true;
         case wgpu::BufferBindingType::BindingNotUsed:
+        case wgpu::BufferBindingType::Undefined:
             break;
     }
     DAWN_UNREACHABLE();
