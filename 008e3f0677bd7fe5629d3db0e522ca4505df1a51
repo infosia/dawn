@@ -16,6 +16,29 @@
       "message": "lokokung: PTAL. Let me know if you want for cwallez@ to take a look in the new year before landing, this isn\u0027t time sensitive and I\u0027ll be OOO starting next week anyways.\nblundell: Feel free to review as well.",
       "revId": "008e3f0677bd7fe5629d3db0e522ca4505df1a51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4624de58_68f27b63",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-18T21:41:05Z",
+      "side": 1,
+      "message": "I think both of these should be using the `absl` containers instead, i.e. `absl::flat_hash_set` and `absl::flash_hash_map`.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "008e3f0677bd7fe5629d3db0e522ca4505df1a51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
