@@ -126,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3ed39c6f_da192813",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-18T06:22:36Z",
+      "side": 1,
+      "message": "\u003e So when an user calls APIGetFeatures, it would return a list containing FlexibleTextureViews feature even though they never request for it.\n\nThe spec doesn\u0027t account for compat yet. This is in fact how we\u0027re intending to specify compat: all of these features that core has by default, but compat doesn\u0027t have, will get automatically enabled when creating a core device even if you didn\u0027t request them.\n\nSo I think it would be great to go ahead and make it behave like this (though the current code is not incorrect so it would be fine if this is a followup CL or a followup bug).",
+      "parentUuid": "4693b872_ccd0fcb8",
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "706127f1_eb949ec5",
         "filename": "docs/dawn/features/flexible_texture_views.md",
         "patchSetId": 14
@@ -178,6 +196,30 @@
       "side": 1,
       "message": "Actually maybe it\u0027s not true already in your implementation - it\u0027ll be set on all core PhysicalDevices but we probably need extra logic to have it automatically enabled when `compatibilityMode\u003dfalse` is requested. It would be nice to do that now if it\u0027s not difficult but it is definitely OK to make it a followup CL or followup bug.",
       "parentUuid": "beebbd7e_b0202a8c",
+      "range": {
+        "startLine": 244,
+        "startChar": 8,
+        "endLine": 244,
+        "endChar": 91
+      },
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd254d04_eaea7411",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-18T06:22:36Z",
+      "side": 1,
+      "message": "Sorry I just realized there was a closed thread about this topic already.",
+      "parentUuid": "6889eed1_9ee5b4ee",
       "range": {
         "startLine": 244,
         "startChar": 8,
