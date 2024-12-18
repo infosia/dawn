@@ -34,6 +34,24 @@
       "parentUuid": "6b35ffd2_f63ede27",
       "revId": "09643a587b4d32c7a7be724870d2782db77d9d12",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "223b2aab_105dfeb3",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-18T13:13:36Z",
+      "side": 1,
+      "message": "I removed it.",
+      "parentUuid": "92ae39ea_7edeeffb",
+      "revId": "09643a587b4d32c7a7be724870d2782db77d9d12",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0870af98_af1e8e16",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-18T13:13:36Z",
+      "side": 1,
+      "message": "I\u0027ve done this for all limits used in the loop.",
+      "parentUuid": "826aeb5b_90e8f50e",
+      "revId": "2e7e49dfb39885e224f45d700e7a980e30be90c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "798b39a9_cc14d113",
@@ -102,6 +120,30 @@
       "writtenOn": "2024-12-18T07:12:19Z",
       "side": 1,
       "message": "nit: use the variable here",
+      "range": {
+        "startLine": 177,
+        "startChar": 24,
+        "endLine": 177,
+        "endChar": 74
+      },
+      "revId": "2e7e49dfb39885e224f45d700e7a980e30be90c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14428ced_b8970910",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-18T13:13:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "798b39a9_cc14d113",
       "range": {
         "startLine": 177,
         "startChar": 24,
@@ -135,6 +177,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c8d7ea4_80ba9864",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-18T13:13:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "474dabbe_a4d61923",
+      "range": {
+        "startLine": 185,
+        "startChar": 76,
+        "endLine": 185,
+        "endChar": 80
+      },
+      "revId": "2e7e49dfb39885e224f45d700e7a980e30be90c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dcce155d_2cab1bdb",
@@ -158,6 +224,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d68810bf_aded86d0",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-18T13:13:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcce155d_2cab1bdb",
+      "range": {
+        "startLine": 206,
+        "startChar": 68,
+        "endLine": 206,
+        "endChar": 72
+      },
+      "revId": "2e7e49dfb39885e224f45d700e7a980e30be90c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27cf7363_6b31b4db",
@@ -171,6 +261,30 @@
       "writtenOn": "2024-12-18T07:12:19Z",
       "side": 1,
       "message": "Same for kUniformsPerExternalTexture",
+      "range": {
+        "startLine": 246,
+        "startChar": 75,
+        "endLine": 246,
+        "endChar": 79
+      },
+      "revId": "2e7e49dfb39885e224f45d700e7a980e30be90c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a06e637_e312f833",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-18T13:13:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27cf7363_6b31b4db",
       "range": {
         "startLine": 246,
         "startChar": 75,
