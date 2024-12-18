@@ -1,0 +1,68 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26216853_ab4109dc",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-18T22:57:37Z",
+      "side": 1,
+      "message": "I believe the error you mentioned in https://crbug.com/377820810#comment20 is because now every `BindGroupLayoutEntry` defaults to `{Uniform,BindingNotUsed,BindingNotUsed,BindingNotUsed}` instead of `{BindingNotUsed,BindingNotUsed,BindingNotUsed,BindingNotUsed}`.\n\nThere are some limitations with the generator because it just has one concept of \"default\" but what we want is three different \"defaults\" depending on what you\u0027re asking:\n1. webgpu_cpp.h `BindGroupLayoutEntry::buffer \u003d { nullptr, BindingNotUsed, false, 0 }`\n2. webgpu_cpp.h `BufferBindingLayout::type \u003d Undefined` \n3. wgpu_structs_autogen.cpp `BufferBindingLayout::WithTrivialFrontendDefaults()` should apply defaulting (`Undefined` -\u003e `Uniform`).\n\nHowever the second one, changing the C/C++ defaults to `Undefined` instead of their trivial defaults, is a broader change to the entire C/C++ APIs that we\u0027ll want to deal with separately.\n\nRight now, we should skip that part, and have:\n2. webgpu_cpp.h `BufferBindingLayout.type \u003d Uniform` \n\nas you have done here. The thing that needs to be fixed for it to work correctly is item 1. There may also be some downstream dependencies that are setting `.buffer \u003d {}` instead of leaving it default-initialized, and if so we\u0027ll need to update them.",
+      "range": {
+        "startLine": 392,
+        "startChar": 72,
+        "endLine": 392,
+        "endChar": 79
+      },
+      "revId": "dd47e005996cbd398d40803ba2c5883f7cb78d70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ab5485f_e1ecbb75",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-18T22:57:37Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this still be BindingNotUsed, not Undefined?",
+      "range": {
+        "startLine": 100,
+        "startChar": 55,
+        "endLine": 100,
+        "endChar": 64
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f775b44c_83014246",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/BindGroupLayoutInternal.cpp",
+              "range": {
+                "startLine": 100,
+                "startChar": 0,
+                "endLine": 101,
+                "endChar": 0
+              },
+              "replacement": "    if (entry-\u003ebuffer.type !\u003d wgpu::BufferBindingType::BindingNotUsed) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "dd47e005996cbd398d40803ba2c5883f7cb78d70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
