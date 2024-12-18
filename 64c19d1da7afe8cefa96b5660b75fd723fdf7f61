@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46fb2743_8c0ceb98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3781492
+      },
+      "writtenOn": "2024-12-18T13:10:30Z",
+      "side": 1,
+      "message": "Could we also have a test where the validation passes?",
+      "revId": "64c19d1da7afe8cefa96b5660b75fd723fdf7f61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c33e53a_5acafc6e",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/AsyncHelperTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3781492
+      },
+      "writtenOn": "2024-12-18T13:10:30Z",
+      "side": 1,
+      "message": "Nit: could you split the test into clear arrange-act-assert blocks? Just line breaks are ok.",
+      "revId": "64c19d1da7afe8cefa96b5660b75fd723fdf7f61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
