@@ -31,6 +31,7 @@
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/dawn_platform.h"
+#include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/WGPUHelpers.h"
 
@@ -62,7 +63,8 @@ class InternalStorageBufferBindingTests : public DawnTest {
         )");
 
         // Create binding group layout with internal storage buffer binding type
-        native::BindGroupLayoutEntry bglEntry;
+        native::BindGroupLayoutEntry bglEntry =
+            native::utils::CreateBindGroupLayoutEntryWithBindingNotUsed();
         bglEntry.binding = 0;
         bglEntry.buffer.type = native::kInternalStorageBufferBinding;
         bglEntry.visibility = wgpu::ShaderStage::Compute;

@@ -160,6 +160,9 @@ struct BindingLayoutEntryInitializationHelper : wgpu::BindGroupLayoutEntry {
 
     // NOLINTNEXTLINE(runtime/explicit)
     BindingLayoutEntryInitializationHelper(const wgpu::BindGroupLayoutEntry& entry);
+
+  private:
+    void SetNotUsedBindingTypes();
 };
 
 wgpu::BindGroupLayout MakeBindGroupLayout(
@@ -217,6 +220,9 @@ ColorSpaceConversionInfo GetYUVBT709ToRGBSRGBColorSpaceConversionInfo();
 ColorSpaceConversionInfo GetNoopRGBColorSpaceConversionInfo();
 
 bool BackendRequiresCompat(wgpu::BackendType backend);
+
+// Create a bind group layout entry with all binding types set to binding not used.
+wgpu::BindGroupLayoutEntry CreateBindGroupLayoutEntryWithBindingNotUsed();
 
 }  // namespace dawn::utils
 
