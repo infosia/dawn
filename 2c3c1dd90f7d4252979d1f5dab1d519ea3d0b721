@@ -143,6 +143,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "beebbd7e_b0202a8c",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-18T06:07:15Z",
+      "side": 1,
+      "message": "nit: All core devices should have this feature (this is intended and I believe already true in your implementation), so everywhere you check this I think could be simplified to just `!device-\u003eHasFeature(Feature::FlexibleTextureViews)`.\n\nIf that doesn\u0027t work easily, then it\u0027s not a big deal - it\u0027s correct either way - but maybe we should file a bug to simplify it later.",
+      "range": {
+        "startLine": 244,
+        "startChar": 8,
+        "endLine": 244,
+        "endChar": 91
+      },
+      "revId": "2c3c1dd90f7d4252979d1f5dab1d519ea3d0b721",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c2b3e4f5_7e15e83f",
         "filename": "src/dawn/native/Features.cpp",
         "patchSetId": 14

@@ -108,6 +108,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a4c3754_316f26b4",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-18T06:07:15Z",
+      "side": 1,
+      "message": "I had not thought about the fact that we probably never need to use multiplanar textures on web-standards-compliant devices. If we did, of course this wouldn\u0027t work because it would remove validation we need to be compliant. If we ever use multiplanar texture formats to implement GPUExternalTexture we may need to change this, but that\u0027s fine. Nice improvement!",
+      "parentUuid": "194a886e_839e986a",
+      "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0d0015b_89359ea1",
@@ -157,6 +175,24 @@
       "side": 1,
       "message": "I\u0027m a bit confused. IIUC this function only checks whether we bind different views of the same texture or not. It doesn\u0027t check whether we bind the same texture twice.",
       "parentUuid": "884e830d_851f122b",
+      "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e57c8f1f_2b83ac71",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-18T06:07:15Z",
+      "side": 1,
+      "message": "That\u0027s what I meant, sorry. However I\u0027m pretty sure I was confused and that is not something we would want to validate anyway.",
+      "parentUuid": "53c09576_600b1f3d",
       "revId": "e9529004c6e48900ebfe1eacf18b2edc9dfdcd05",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
