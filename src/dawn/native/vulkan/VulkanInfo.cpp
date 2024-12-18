@@ -135,7 +135,7 @@ ResultOrError<VulkanGlobalInfo> GatherGlobalInfo(const VulkanFunctions& vkFuncti
         }
     }
 
-    return std::move(info);
+    return info;
 }
 
 ResultOrError<std::vector<VkPhysicalDevice>> GatherPhysicalDevices(
@@ -159,7 +159,7 @@ ResultOrError<std::vector<VkPhysicalDevice>> GatherPhysicalDevices(
             "vkEnumeratePhysicalDevices"));
     }
 
-    return std::move(vkPhysicalDevices);
+    return vkPhysicalDevices;
 }
 
 ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
@@ -346,8 +346,7 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
     }
 
     // TODO(cwallez@chromium.org): gather info about formats
-
-    return std::move(info);
+    return info;
 }
 
 ResultOrError<VulkanSurfaceInfo> GatherSurfaceInfo(const PhysicalDevice& device,
@@ -407,7 +406,7 @@ ResultOrError<VulkanSurfaceInfo> GatherSurfaceInfo(const PhysicalDevice& device,
                                 "vkGetPhysicalDeviceSurfacePresentModesKHR"));
     }
 
-    return std::move(info);
+    return info;
 }
 
 }  // namespace dawn::native::vulkan
