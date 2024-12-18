@@ -31,6 +31,7 @@
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/dawn_platform.h"
+#include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
@@ -53,7 +54,9 @@ class InternalResolveAttachmentSampleTypeTests : public DawnTest {
 
     wgpu::PipelineLayout CreatePipelineLayout(bool withSampler) {
         // Create binding group layout with internal resolve attachment sample type.
-        std::vector<native::BindGroupLayoutEntry> bglEntries(2);
+        std::array<native::BindGroupLayoutEntry, 2> bglEntries = {
+            native::utils::CreateBindGroupLayoutEntryWithBindingNotUsed(),
+            native::utils::CreateBindGroupLayoutEntryWithBindingNotUsed()};
         bglEntries[0].binding = 0;
         bglEntries[0].texture.sampleType = native::kInternalResolveAttachmentSampleType;
         bglEntries[0].texture.viewDimension = wgpu::TextureViewDimension::e2D;

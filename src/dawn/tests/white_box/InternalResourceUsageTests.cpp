@@ -28,6 +28,7 @@
 #include "dawn/tests/DawnTest.h"
 
 #include "dawn/native/dawn_platform.h"
+#include "dawn/utils/WGPUHelpers.h"
 
 namespace dawn {
 namespace {
@@ -78,7 +79,7 @@ TEST_P(InternalBindingTypeTests, InternalStorageBufferBindingType) {
 TEST_P(InternalBindingTypeTests, ErrorUseInternalResolveAttachmentSampleTypeExternally) {
     DAWN_TEST_UNSUPPORTED_IF(HasToggleEnabled("skip_validation"));
 
-    wgpu::BindGroupLayoutEntry bglEntry;
+    wgpu::BindGroupLayoutEntry bglEntry = utils::CreateBindGroupLayoutEntryWithBindingNotUsed();
     bglEntry.binding = 0;
     bglEntry.texture.sampleType = native::kInternalResolveAttachmentSampleType;
     bglEntry.visibility = wgpu::ShaderStage::Fragment;

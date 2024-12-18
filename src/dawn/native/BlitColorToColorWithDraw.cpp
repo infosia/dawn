@@ -184,7 +184,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateExpandMultisamplePipeline(
     // Bind group layout.
     absl::InlinedVector<BindGroupLayoutEntry, kMaxColorAttachments> bglEntries;
     for (auto colorIdx : IterateBitSet(pipelineKey.attachmentsToExpandResolve)) {
-        bglEntries.push_back({});
+        bglEntries.push_back(utils::CreateBindGroupLayoutEntryWithBindingNotUsed());
         auto& bglEntry = bglEntries.back();
         bglEntry.binding = static_cast<uint8_t>(colorIdx);
         bglEntry.visibility = wgpu::ShaderStage::Fragment;

@@ -296,6 +296,7 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     wgpu::BufferBindingType bufferType,
     bool bufferHasDynamicOffset,
     uint64_t bufferMinBindingSize) {
+    SetNotUsedBindingTypes();
     binding = entryBinding;
     visibility = entryVisibility;
     buffer.type = bufferType;
@@ -307,6 +308,7 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     uint32_t entryBinding,
     wgpu::ShaderStage entryVisibility,
     wgpu::SamplerBindingType samplerType) {
+    SetNotUsedBindingTypes();
     binding = entryBinding;
     visibility = entryVisibility;
     sampler.type = samplerType;
@@ -318,6 +320,7 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     wgpu::TextureSampleType textureSampleType,
     wgpu::TextureViewDimension textureViewDimension,
     bool textureMultisampled) {
+    SetNotUsedBindingTypes();
     binding = entryBinding;
     visibility = entryVisibility;
     texture.sampleType = textureSampleType;
@@ -401,6 +404,12 @@ wgpu::BindGroupEntry BindingInitializationHelper::GetAsBinding() const {
     return result;
 }
 
+void BindingLayoutEntryInitializationHelper::SetNotUsedBindingTypes() {
+    buffer.type = wgpu::BufferBindingType::BindingNotUsed;
+    sampler.type = wgpu::SamplerBindingType::BindingNotUsed;
+    texture.sampleType = wgpu::TextureSampleType::BindingNotUsed;
+}
+
 wgpu::BindGroup MakeBindGroup(
     const wgpu::Device& device,
     const wgpu::BindGroupLayout& layout,
@@ -471,6 +480,14 @@ bool BackendRequiresCompat(wgpu::BackendType backend) {
         case wgpu::BackendType::Undefined:
             DAWN_UNREACHABLE();
     }
+}
+
+wgpu::BindGroupLayoutEntry CreateBindGroupLayoutEntryWithBindingNotUsed() {
+    wgpu::BindGroupLayoutEntry entry;
+    entry.buffer.type = wgpu::BufferBindingType::BindingNotUsed;
+    entry.sampler.type = wgpu::SamplerBindingType::BindingNotUsed;
+    entry.texture.sampleType = wgpu::TextureSampleType::BindingNotUsed;
+    return entry;
 }
 
 }  // namespace dawn::utils
