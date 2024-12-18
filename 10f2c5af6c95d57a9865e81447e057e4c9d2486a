@@ -33,6 +33,24 @@
       "message": "Since Kai +1\u0027d the previous patch set, and this is a minor change from that, I\u0027m gonna go ahead and +2 this.",
       "revId": "10f2c5af6c95d57a9865e81447e057e4c9d2486a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b034c59_4ac81dcb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2024-12-18T00:23:01Z",
+      "side": 1,
+      "message": "Ignore the above; you still need someone from src/dawn/OWNERS to approve.",
+      "parentUuid": "c3e04d29_de8b46e6",
+      "revId": "10f2c5af6c95d57a9865e81447e057e4c9d2486a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
