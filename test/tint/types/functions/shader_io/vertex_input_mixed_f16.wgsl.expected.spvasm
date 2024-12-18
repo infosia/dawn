@@ -1,7 +1,7 @@
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
-; Bound: 58
+; Bound: 61
 ; Schema: 0
                OpCapability Shader
                OpCapability Float16
@@ -10,6 +10,9 @@
                OpCapability StorageInputOutput16
                OpMemoryModel Logical GLSL450
                OpEntryPoint Vertex %main "main" %main_vertex_index_Input %main_loc0_Input %main_loc1_Input %main_instance_index_Input %main_loc2_Input %main_loc3_Input %main_loc5_Input %main_loc4_Input %main_position_Output %main___point_size_Output
+               OpMemberName %tint_push_constant_struct 0 "tint_first_instance"
+               OpName %tint_push_constant_struct "tint_push_constant_struct"
+               OpName %tint_push_constants "tint_push_constants"
                OpName %main_vertex_index_Input "main_vertex_index_Input"
                OpName %main_loc0_Input "main_loc0_Input"
                OpName %main_loc1_Input "main_loc1_Input"
@@ -41,6 +44,8 @@
                OpName %loc4 "x"
                OpName %y "y"
                OpName %main "main"
+               OpMemberDecorate %tint_push_constant_struct 0 Offset 0
+               OpDecorate %tint_push_constant_struct Block
                OpDecorate %main_vertex_index_Input BuiltIn VertexIndex
                OpDecorate %main_loc0_Input Location 0
                OpDecorate %main_loc1_Input Location 1
@@ -57,6 +62,9 @@
                OpMemberDecorate %VertexInputs1 1 Offset 16
                OpMemberDecorate %VertexInputs1 2 Offset 32
        %uint = OpTypeInt 32 0
+%tint_push_constant_struct = OpTypeStruct %uint
+%_ptr_PushConstant_tint_push_constant_struct = OpTypePointer PushConstant %tint_push_constant_struct
+%tint_push_constants = OpVariable %_ptr_PushConstant_tint_push_constant_struct PushConstant
 %_ptr_Input_uint = OpTypePointer Input %uint
 %main_vertex_index_Input = OpVariable %_ptr_Input_uint Input
         %int = OpTypeInt 32 1
@@ -82,40 +90,40 @@
 %main___point_size_Output = OpVariable %_ptr_Output_float Output
 %VertexInputs0 = OpTypeStruct %uint %int
 %VertexInputs1 = OpTypeStruct %float %v4float %v3half
-         %33 = OpTypeFunction %v4float %VertexInputs0 %uint %uint %VertexInputs1 %half
-         %41 = OpConstantNull %v4float
+         %36 = OpTypeFunction %v4float %VertexInputs0 %uint %uint %VertexInputs1 %half
+         %44 = OpConstantNull %v4float
        %void = OpTypeVoid
-         %44 = OpTypeFunction %void
+         %47 = OpTypeFunction %void
     %float_1 = OpConstant %float 1
- %main_inner = OpFunction %v4float None %33
+ %main_inner = OpFunction %v4float None %36
     %inputs0 = OpFunctionParameter %VertexInputs0
        %loc1 = OpFunctionParameter %uint
 %instance_index = OpFunctionParameter %uint
     %inputs1 = OpFunctionParameter %VertexInputs1
        %loc4 = OpFunctionParameter %half
-         %34 = OpLabel
-         %35 = OpCompositeExtract %uint %inputs0 0
-        %foo = OpIAdd %uint %35 %instance_index
+         %37 = OpLabel
+         %38 = OpCompositeExtract %uint %inputs0 0
+        %foo = OpIAdd %uint %38 %instance_index
           %i = OpCompositeExtract %int %inputs0 1
           %f = OpCompositeExtract %float %inputs1 0
           %v = OpCompositeExtract %v4float %inputs1 1
           %y = OpCompositeExtract %v3half %inputs1 2
-               OpReturnValue %41
+               OpReturnValue %44
                OpFunctionEnd
-       %main = OpFunction %void None %44
-         %45 = OpLabel
-         %46 = OpLoad %uint %main_vertex_index_Input None
-         %47 = OpLoad %int %main_loc0_Input None
-         %48 = OpCompositeConstruct %VertexInputs0 %46 %47
-         %49 = OpLoad %uint %main_loc1_Input None
-         %50 = OpLoad %uint %main_instance_index_Input None
-         %51 = OpLoad %float %main_loc2_Input None
-         %52 = OpLoad %v4float %main_loc3_Input None
-         %53 = OpLoad %v3half %main_loc5_Input None
-         %54 = OpCompositeConstruct %VertexInputs1 %51 %52 %53
-         %55 = OpLoad %half %main_loc4_Input None
-         %56 = OpFunctionCall %v4float %main_inner %48 %49 %50 %54 %55
-               OpStore %main_position_Output %56 None
+       %main = OpFunction %void None %47
+         %48 = OpLabel
+         %49 = OpLoad %uint %main_vertex_index_Input None
+         %50 = OpLoad %int %main_loc0_Input None
+         %51 = OpCompositeConstruct %VertexInputs0 %49 %50
+         %52 = OpLoad %uint %main_loc1_Input None
+         %53 = OpLoad %uint %main_instance_index_Input None
+         %54 = OpLoad %float %main_loc2_Input None
+         %55 = OpLoad %v4float %main_loc3_Input None
+         %56 = OpLoad %v3half %main_loc5_Input None
+         %57 = OpCompositeConstruct %VertexInputs1 %54 %55 %56
+         %58 = OpLoad %half %main_loc4_Input None
+         %59 = OpFunctionCall %v4float %main_inner %51 %52 %53 %57 %58
+               OpStore %main_position_Output %59 None
                OpStore %main___point_size_Output %float_1 None
                OpReturn
                OpFunctionEnd
