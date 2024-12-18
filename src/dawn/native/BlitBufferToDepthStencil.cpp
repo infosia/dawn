@@ -385,6 +385,8 @@ MaybeError BlitR8ToStencil(DeviceBase* device,
         bglEntries[0].visibility = wgpu::ShaderStage::Fragment;
         bglEntries[0].texture.sampleType = wgpu::TextureSampleType::Uint;
         bglEntries[0].texture.viewDimension = textureViewDimension;
+        bglEntries[0].buffer.type = wgpu::BufferBindingType::BindingNotUsed;
+
         // Binding 1: the params buffer.
         bglEntries[1].binding = 1;
         bglEntries[1].visibility = wgpu::ShaderStage::Fragment;

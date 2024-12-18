@@ -297,8 +297,10 @@ class ObjectBase {
     CType mHandle = nullptr;
 };
 
-{% macro render_cpp_default_value(member, is_struct, force_default=False) -%}
-    {%- if member.json_data.get("no_default", false) -%}
+{% macro render_cpp_default_value(member, is_struct, force_default=False, forced_default_value="") -%}
+    {%- if forced_default_value -%}
+        {{" "}}= {{forced_default_value}}
+    {%- elif member.json_data.get("no_default", false) -%}
     {%- elif member.annotation in ["*", "const*"] and member.optional or member.default_value == "nullptr" -%}
         {{" "}}= nullptr
     {%- elif member.type.category == "object" and member.optional and is_struct -%}
@@ -739,7 +741,8 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
             ChainedStruct{{Out}} {{const}} * nextInChain = nullptr;
         {% endif %}
         {% for member in type.members %}
-            {% set member_declaration = as_annotated_cppType(member, type.has_free_members_function) + render_cpp_default_value(member, True, type.has_free_members_function) %}
+            {% set forced_default_value = "{ nullptr, BufferBindingType::BindingNotUsed, false, 0 }" if type.name.get() == "bind group layout entry" and member.type.name.canonical_case() == "buffer binding layout" and member.name.canonical_case() == "buffer" else "" %}
+            {% set member_declaration = as_annotated_cppType(member, type.has_free_members_function) + render_cpp_default_value(member, True, type.has_free_members_function, forced_default_value) %}
             {% if type.chained and loop.first %}
                 //* Align the first member after ChainedStruct to match the C struct layout.
                 //* It has to be aligned both to its natural and ChainedStruct's alignment.

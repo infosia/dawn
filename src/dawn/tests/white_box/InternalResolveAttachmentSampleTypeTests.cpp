@@ -58,6 +58,7 @@ class InternalResolveAttachmentSampleTypeTests : public DawnTest {
         bglEntries[0].texture.sampleType = native::kInternalResolveAttachmentSampleType;
         bglEntries[0].texture.viewDimension = wgpu::TextureViewDimension::e2D;
         bglEntries[0].visibility = wgpu::ShaderStage::Fragment;
+        bglEntries[0].buffer.type = wgpu::BufferBindingType::BindingNotUsed;
 
         native::BindGroupLayoutDescriptor bglDesc;
 
@@ -65,6 +66,7 @@ class InternalResolveAttachmentSampleTypeTests : public DawnTest {
             bglEntries[1].binding = 1;
             bglEntries[1].sampler.type = wgpu::SamplerBindingType::Filtering;
             bglEntries[1].visibility = wgpu::ShaderStage::Fragment;
+            bglEntries[1].buffer.type = wgpu::BufferBindingType::BindingNotUsed;
 
             bglDesc.entryCount = bglEntries.size();
         } else {

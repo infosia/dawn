@@ -118,6 +118,7 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     binding = entryBinding;
     visibility = entryVisibility;
     sampler.type = samplerType;
+    buffer.type = wgpu::BufferBindingType::BindingNotUsed;
 }
 
 BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
@@ -131,6 +132,7 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     texture.sampleType = textureSampleType;
     texture.viewDimension = textureViewDimension;
     texture.multisampled = textureMultisampled;
+    buffer.type = wgpu::BufferBindingType::BindingNotUsed;
 }
 
 BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
@@ -144,6 +146,7 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     storageTexture.access = storageTextureAccess;
     storageTexture.format = format;
     storageTexture.viewDimension = textureViewDimension;
+    buffer.type = wgpu::BufferBindingType::BindingNotUsed;
 }
 
 BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
