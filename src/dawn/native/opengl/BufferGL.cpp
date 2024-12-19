@@ -48,7 +48,7 @@ ResultOrError<Ref<Buffer>> Buffer::CreateInternalBuffer(Device* device,
         DAWN_TRY(buffer->MapAtCreationInternal());
     }
 
-    return std::move(buffer);
+    return buffer;
 }
 
 Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor)

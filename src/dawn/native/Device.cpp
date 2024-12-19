@@ -2097,7 +2097,7 @@ ResultOrError<Ref<BufferBase>> DeviceBase::CreateBuffer(const BufferDescriptor* 
         DAWN_TRY(buffer->MapAtCreation());
     }
 
-    return std::move(buffer);
+    return buffer;
 }
 
 ResultOrError<Ref<ComputePipelineBase>> DeviceBase::CreateComputePipeline(

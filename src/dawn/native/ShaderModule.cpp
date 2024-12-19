@@ -368,7 +368,7 @@ ResultOrError<tint::Program> ParseWGSL(const tint::Source::File* file,
         return DAWN_VALIDATION_ERROR("Error while parsing WGSL: %s\n", program.Diagnostics().Str());
     }
 
-    return std::move(program);
+    return program;
 }
 
 #if TINT_BUILD_SPV_READER
@@ -390,7 +390,7 @@ ResultOrError<tint::Program> ParseSPIRV(const std::vector<uint32_t>& spirv,
                                      program.Diagnostics().Str());
     }
 
-    return std::move(program);
+    return program;
 }
 #endif  // TINT_BUILD_SPV_READER
 
@@ -1085,7 +1085,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
                    });
 
 #undef DelayedInvalidIf
-    return std::move(metadata);
+    return metadata;
 }
 
 MaybeError ReflectShaderUsingTint(const DeviceBase* device,
@@ -1311,7 +1311,7 @@ ResultOrError<tint::Program> RunTransforms(tint::ast::transform::Manager* transf
     if (outputs != nullptr) {
         *outputs = std::move(transform_outputs);
     }
-    return std::move(result);
+    return result;
 }
 
 MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,

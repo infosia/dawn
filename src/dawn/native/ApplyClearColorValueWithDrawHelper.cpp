@@ -325,7 +325,7 @@ ResultOrError<Ref<BufferBase>> CreateUniformBufferWithClearValues(
     buffer->SetLabel("Internal_UniformClearValues");
     encoder->APIWriteBuffer(buffer.Get(), 0, clearValues.data(), offset);
 
-    return std::move(buffer);
+    return buffer;
 }
 
 bool NeedsBigIntClear(const Format& format, const std::array<double, 4>& clearValue) {
