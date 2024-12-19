@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7e24319_1f06c3d0",
+        "filename": "src/dawn/native/RenderPassEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-19T21:27:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02febea1_b99bf323",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 271,
+        "endChar": 87
+      },
+      "revId": "5fad2ef81fd5a0dcdb79b007c9944ca0e5204a5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb91af69_4b48a19d",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6053898_8a283730",
+        "filename": "src/dawn/tests/unittests/validation/DynamicStateCommandValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-19T21:27:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb91af69_4b48a19d",
+      "range": {
+        "startLine": 115,
+        "startChar": 56,
+        "endLine": 115,
+        "endChar": 86
+      },
+      "revId": "5fad2ef81fd5a0dcdb79b007c9944ca0e5204a5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fec42869_abeb337b",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-12-19T02:16:54Z",
       "side": 1,
       "message": "These add up to `x + w \u003d 2*kMaxViewportSize + 1` which I think is 1.999999 past the limit. Should test closer to the boundary.\n\nMaybe clearer if you put the true and false cases right next to each other so we can see for example that just adding a `nextafter` puts it over the edge. (Actually, similar thing could be done in the CTS, and it\u0027s more important to be precise there anyway.)",
+      "range": {
+        "startLine": 124,
+        "startChar": 28,
+        "endLine": 124,
+        "endChar": 79
+      },
+      "revId": "5fad2ef81fd5a0dcdb79b007c9944ca0e5204a5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d28cf5f8_1f3b4304",
+        "filename": "src/dawn/tests/unittests/validation/DynamicStateCommandValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2024-12-19T21:27:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec42869_abeb337b",
       "range": {
         "startLine": 124,
         "startChar": 28,
