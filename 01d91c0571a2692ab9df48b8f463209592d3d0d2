@@ -16,6 +16,24 @@
       "message": "Sorry, I was out yesterday so I didn\u0027t get a chance to comment on this, but for similar future changes: Why was the change from `DAWN_INVALID_IF` to `if (DAWN_UNLIKELY` needed here? `DAWN_INVALID_IF` should already be doing the same thing, if I recall correctly? And since you\u0027re not doing any additional work inside the `if` it doesn\u0027t seem like a necessary change.",
       "revId": "01d91c0571a2692ab9df48b8f463209592d3d0d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba2e9532_6664b733",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-19T15:18:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fa60c647_7636e578",
+      "revId": "01d91c0571a2692ab9df48b8f463209592d3d0d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
