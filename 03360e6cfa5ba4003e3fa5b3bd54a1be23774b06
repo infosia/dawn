@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b53b5baf_bd4c8a7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001961
+      },
+      "writtenOn": "2024-12-19T17:41:14Z",
+      "side": 1,
+      "message": "LGTM but you\u0027ll probably need someone from OWNERS as well.",
+      "revId": "03360e6cfa5ba4003e3fa5b3bd54a1be23774b06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
