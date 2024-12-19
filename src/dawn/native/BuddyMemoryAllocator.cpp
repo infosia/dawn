@@ -59,12 +59,12 @@ ResultOrError<ResourceMemoryAllocation> BuddyMemoryAllocator::Allocate(uint64_t 
     ResourceMemoryAllocation invalidAllocation = ResourceMemoryAllocation{};
 
     if (allocationSize == 0) {
-        return std::move(invalidAllocation);
+        return invalidAllocation;
     }
 
     // Check the unaligned size to avoid overflowing NextPowerOfTwo.
     if (allocationSize > mMemoryBlockSize) {
-        return std::move(invalidAllocation);
+        return invalidAllocation;
     }
 
     // Round allocation size to nearest power-of-two.
@@ -72,13 +72,13 @@ ResultOrError<ResourceMemoryAllocation> BuddyMemoryAllocator::Allocate(uint64_t 
 
     // Allocation cannot exceed the memory size.
     if (allocationSize > mMemoryBlockSize) {
-        return std::move(invalidAllocation);
+        return invalidAllocation;
     }
 
     // Attempt to sub-allocate a block of the requested size.
     const uint64_t blockOffset = mBuddyBlockAllocator.Allocate(allocationSize, alignment);
     if (blockOffset == BuddyAllocator::kInvalidOffset) {
-        return std::move(invalidAllocation);
+        return invalidAllocation;
     }
 
     const uint64_t memoryIndex = GetMemoryIndex(blockOffset);

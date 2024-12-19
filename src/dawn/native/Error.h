@@ -262,7 +262,8 @@ std::string MakeIncreaseLimitMessage(std::string_view limitName, T adapterLimitV
             auto DAWN_LOCAL_VAR(Error) = DAWN_LOCAL_VAR(Result).AcquireError(); \
             {BODY} /* comment to force the formatter to insert a newline */     \
             DAWN_APPEND_ERROR_BACKTRACE(DAWN_LOCAL_VAR(Error));                 \
-            return (RET);                                                       \
+            auto ret = (RET);                                                   \
+            return ret;                                                         \
         }                                                                       \
         VAR = DAWN_LOCAL_VAR(Result).AcquireSuccess();                          \
     }                                                                           \

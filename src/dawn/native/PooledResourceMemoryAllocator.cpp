@@ -64,7 +64,7 @@ PooledResourceMemoryAllocator::AllocateResourceHeap(uint64_t size) {
         DAWN_TRY_ASSIGN(memory, mHeapAllocator->AllocateResourceHeap(size));
     }
 
-    return std::move(memory);
+    return memory;
 }
 
 void PooledResourceMemoryAllocator::DeallocateResourceHeap(

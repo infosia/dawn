@@ -90,7 +90,7 @@ Server::Handle(const lsp::TextDocumentRenameRequest& r) {
 
     lsp::WorkspaceEdit edit;
     edit.changes = std::move(uri_changes);
-    return std::move(edit);
+    return edit;
 }
 
 }  // namespace tint::wgsl::ls
