@@ -121,7 +121,8 @@ TEST_P(MultithreadTests, Device_DroppedOnAnotherThread) {
     DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
 
     // TODO(crbug.com/42240870): Flaky on Linux TSAN Release
-    // TODO(crbug.com/383339997): Failing on Linux/Vulkan.
+    // TODO(crbug.com/383339997): Failing on Linux/Vulkan with VVL. Note that because of the bug
+    //   above also, we drop the validation requirement.
     DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan());
 
     std::vector<wgpu::Device> devices(5);
@@ -158,6 +159,9 @@ TEST_P(MultithreadTests, Device_DroppedInCallback_OnAnotherThread) {
     // TODO(crbug.com/dawn/1779): This test seems to cause flakiness in other sampling tests on
     // NVIDIA.
     DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
+
+    // TODO(crbug.com/383339997): Failing on Linux/Vulkan with VVL.
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsBackendValidationEnabled());
 
     std::vector<wgpu::Device> devices(10);
 
@@ -207,6 +211,9 @@ TEST_P(MultithreadTests, Device_WaitForDroppedInAnotherThread) {
     // TODO(crbug.com/dawn/1779): This test seems to cause flakiness in other sampling tests on
     // NVIDIA.
     DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsNvidia());
+
+    // TODO(crbug.com/383339997): Failing on Linux/Vulkan with VVL.
+    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsBackendValidationEnabled());
 
     enum class Step {
         Begin,
