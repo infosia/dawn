@@ -16780,6 +16780,7 @@ webgpu:api,validation,createBindGroupLayout:storage_texture,formats:format="astc
 webgpu:api,validation,createPipelineLayout:number_of_dynamic_buffers_exceeds_the_maximum_value:
 webgpu:api,validation,createPipelineLayout:number_of_bind_group_layouts_exceeds_the_maximum_value:
 webgpu:api,validation,createPipelineLayout:bind_group_layouts,device_mismatch:
+webgpu:api,validation,createPipelineLayout:bind_group_layouts,null_bind_group_layouts:
 webgpu:api,validation,createSampler:lodMinAndMaxClamp:
 webgpu:api,validation,createSampler:maxAnisotropy:
 webgpu:api,validation,createTexture:zero_size_and_usage:dimension="_undef_";format="rgba8unorm"
