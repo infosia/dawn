@@ -16,6 +16,23 @@
       "message": "Ptal",
       "revId": "9a7f1dac737fe4c3a425eee5772d84882ab1658c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b91adf0_7112d293",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-19T07:13:28Z",
+      "side": 1,
+      "message": "Now that https://chromium-review.googlesource.com/c/chromium/src/+/6107907 has landed, I believe it\u0027s okay to merge this one.",
+      "revId": "9a7f1dac737fe4c3a425eee5772d84882ab1658c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
