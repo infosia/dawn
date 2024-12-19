@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2abe94fa_634daf1b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-19T10:24:42Z",
+      "side": 1,
+      "message": "IIUC, we should update the generator so that `webgpu_cpp.h` has `BufferBindingLayout buffer \u003d { nullptr, BindingNotUsed, false, 0 };` instead of `BufferBindingLayout buffer \u003d {};` in `struct BindGroupLayoutEntry` right?\nIf so, shall we introduce the concept of overriden default value and how?",
+      "parentUuid": "26216853_ab4109dc",
+      "range": {
+        "startLine": 392,
+        "startChar": 72,
+        "endLine": 392,
+        "endChar": 79
+      },
+      "revId": "dd47e005996cbd398d40803ba2c5883f7cb78d70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ab5485f_e1ecbb75",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 2
@@ -61,6 +85,30 @@
           ]
         }
       ],
+      "revId": "dd47e005996cbd398d40803ba2c5883f7cb78d70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63799993_6607f1d3",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-19T10:24:42Z",
+      "side": 1,
+      "message": "It was a left over of me debugging what was going on in this WIP CL.",
+      "parentUuid": "1ab5485f_e1ecbb75",
+      "range": {
+        "startLine": 100,
+        "startChar": 55,
+        "endLine": 100,
+        "endChar": 64
+      },
       "revId": "dd47e005996cbd398d40803ba2c5883f7cb78d70",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
