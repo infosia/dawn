@@ -1,0 +1,270 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "179b90a8_605f85b1",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-20T19:28:37Z",
+      "side": 1,
+      "message": "Nit: 2024",
+      "fixSuggestions": [
+        {
+          "fixId": "31c988da_1df97f8b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/const_param_validator.cc",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 2,
+                "endChar": 0
+              },
+              "replacement": "// Copyright 2024 The Dawn \u0026 Tint Authors\n"
+            }
+          ]
+        }
+      ],
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34deb751_51bb230d",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-20T19:28:37Z",
+      "side": 1,
+      "message": "So why is it here?",
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2b0de06_b58dea07",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-20T19:28:37Z",
+      "side": 1,
+      "message": "übernit: You could make this return the `constant::Value*` instead, and then you don\u0027t need to call `-\u003eValue()` at every callsite.",
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5d44ab0_c382266d",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-20T19:28:37Z",
+      "side": 1,
+      "message": "Nit: compare against `tint::internal_limits::kMaxSubgroupSize`, since you\u0027re using that in the error message.",
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12b648c_4bc0e8e5",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-20T19:28:37Z",
+      "side": 1,
+      "message": "Looks like these two error messages are the wrong way around?",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 72
+      },
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e30217b_60a5213e",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-20T19:28:37Z",
+      "side": 1,
+      "message": "Nit: `UnwrapRef()` is unnecessary.",
+      "fixSuggestions": [
+        {
+          "fixId": "60727511_9602df0d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/const_param_validator.cc",
+              "range": {
+                "startLine": 266,
+                "startChar": 0,
+                "endLine": 267,
+                "endChar": 0
+              },
+              "replacement": "    const auto* elem_type \u003d call-\u003eLHS()-\u003eType()-\u003eDeepestElement();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6974ad8b_9dde44a3",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-20T19:28:37Z",
+      "side": 1,
+      "message": "I suspect we\u0027ll need to do `Access/LVE/SVE` too (for OOB indices on non-constant arrays/vectors/matrices). But we can file an issue to add that as a follow up. Hopefully we\u0027ll have CTS coverage.",
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6001c349_725041fb",
+        "filename": "src/tint/lang/core/ir/const_param_validator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-20T19:28:37Z",
+      "side": 1,
+      "message": "Nit: 2024",
+      "fixSuggestions": [
+        {
+          "fixId": "a723458a_a1220842",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/const_param_validator.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 2,
+                "endChar": 0
+              },
+              "replacement": "// Copyright 2024 The Dawn \u0026 Tint Authors\n"
+            }
+          ]
+        }
+      ],
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea6a1920_c821afcd",
+        "filename": "src/tint/lang/core/ir/const_param_validator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-20T19:28:37Z",
+      "side": 1,
+      "message": "Nit: unneeded",
+      "fixSuggestions": [
+        {
+          "fixId": "cca729c6_1c4c53a3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/const_param_validator.h",
+              "range": {
+                "startLine": 31,
+                "startChar": 0,
+                "endLine": 34,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba005c13_d0689082",
+        "filename": "src/tint/lang/core/ir/const_param_validator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-20T19:28:37Z",
+      "side": 1,
+      "message": "Nit: unneeded",
+      "fixSuggestions": [
+        {
+          "fixId": "52083476_cb01cfdb",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/const_param_validator.h",
+              "range": {
+                "startLine": 33,
+                "startChar": 0,
+                "endLine": 34,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
