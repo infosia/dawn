@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfedde33_df064ea8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2024-12-20T01:59:17Z",
+      "side": 1,
+      "message": "This CL relates to immediate data supports. It uses dirty bits to track immediate constants(customer immediate data and dawn internal push connstants) states.\n\nPTAL, thanks!",
+      "revId": "31589be6de71bafc8ac5e91ff8680cdb56b4968d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
