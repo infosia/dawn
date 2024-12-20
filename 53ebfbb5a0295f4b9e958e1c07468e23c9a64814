@@ -354,6 +354,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adde54b6_60098b76",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-20T20:26:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "929b4ead_01fb83be",
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6001c349_725041fb",
