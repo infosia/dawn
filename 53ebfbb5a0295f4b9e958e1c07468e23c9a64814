@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "60933ddf_4f17ab29",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-20T19:32:20Z",
+      "side": 1,
+      "message": "Because the function call is nodiscard. There are other ways around this. I can use one of those ways.",
+      "parentUuid": "34deb751_51bb230d",
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d2b0de06_b58dea07",
         "filename": "src/tint/lang/core/ir/const_param_validator.cc",
         "patchSetId": 16
@@ -66,6 +84,24 @@
       "writtenOn": "2024-12-20T19:28:37Z",
       "side": 1,
       "message": "übernit: You could make this return the `constant::Value*` instead, and then you don\u0027t need to call `-\u003eValue()` at every callsite.",
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9752588_46d44ba5",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-20T19:32:20Z",
+      "side": 1,
+      "message": "sounds good.",
+      "parentUuid": "d2b0de06_b58dea07",
       "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -89,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "26598dd5_698eb061",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-20T19:32:20Z",
+      "side": 1,
+      "message": "good catch. I copied this from elsewhere so copypasta.",
+      "parentUuid": "c5d44ab0_c382266d",
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f12b648c_4bc0e8e5",
         "filename": "src/tint/lang/core/ir/const_param_validator.cc",
         "patchSetId": 16
@@ -100,6 +154,30 @@
       "writtenOn": "2024-12-20T19:28:37Z",
       "side": 1,
       "message": "Looks like these two error messages are the wrong way around?",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 72
+      },
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfc3739c_d5d9fdd8",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-20T19:32:20Z",
+      "side": 1,
+      "message": "I will have to fix the unit tests as well",
+      "parentUuid": "f12b648c_4bc0e8e5",
       "range": {
         "startLine": 184,
         "startChar": 0,
@@ -158,6 +236,24 @@
       "writtenOn": "2024-12-20T19:28:37Z",
       "side": 1,
       "message": "I suspect we\u0027ll need to do `Access/LVE/SVE` too (for OOB indices on non-constant arrays/vectors/matrices). But we can file an issue to add that as a follow up. Hopefully we\u0027ll have CTS coverage.",
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "929b4ead_01fb83be",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-20T19:32:20Z",
+      "side": 1,
+      "message": "Yes I am not sure that this is yet 100% complete. I started of course with subgroups and then found more and more based on our wgsl spec.",
+      "parentUuid": "6974ad8b_9dde44a3",
       "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
