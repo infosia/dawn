@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "71b4a18f_0d1be058",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-20T08:08:17Z",
+      "side": 1,
+      "message": "yes. In the upstream webgpu-headers C header I used zero-initialization as a shortcut to set everything to BindingNotUsed in WGPUBindGroupLayoutEntry. However in C++ this is [not possible](https://stackoverflow.com/a/61240590) so instead I think the easiest thing is to have a special case in the code generation. Either:\n- Add `wgpu::BindGroupLayoutEntry` to [SpecialStructures](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/templates/api_cpp.h;l\u003d709;drc\u003d9e1b2d56b85a4908388b5614ac66bbcc9bf3b5fa) and manually define it\n- Put some special case in [`render_cpp_default_value`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/generator/templates/api_cpp.h;l\u003d742;drc\u003d9e1b2d56b85a4908388b5614ac66bbcc9bf3b5fa) (or somewhere) so it sets the appropriate defaults for each of these fields.",
+      "parentUuid": "2abe94fa_634daf1b",
+      "range": {
+        "startLine": 392,
+        "startChar": 72,
+        "endLine": 392,
+        "endChar": 79
+      },
+      "revId": "dd47e005996cbd398d40803ba2c5883f7cb78d70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ab5485f_e1ecbb75",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 2
