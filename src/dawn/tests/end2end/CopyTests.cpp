@@ -1957,7 +1957,7 @@ DAWN_INSTANTIATE_TEST_P(CopyTests_T2B_Compat,
 // Test that copying an entire texture with 256-byte aligned dimensions works
 TEST_P(CopyTests_B2T, FullTextureAligned) {
     constexpr uint32_t kWidth = 256;
-    constexpr uint32_t kHeight = 128;
+    constexpr uint32_t kHeight = 256;
 
     TextureSpec textureSpec;
     textureSpec.textureSize = {kWidth, kHeight, 1};
