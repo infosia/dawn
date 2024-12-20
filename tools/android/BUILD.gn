@@ -32,6 +32,7 @@ import("${dawn_root}/generator/dawn_generator.gni")
 dawn_json_generator("jni_gen") {
   target = "jni"
   outputs = [
+    "cpp/JNIClasses.cpp",
     "cpp/methods.cpp",
     "cpp/structures.cpp",
     "cpp/structures.h",

@@ -29,7 +29,14 @@
 
 namespace dawn::kotlin_api {
 
-JNIContext::JNIContext(JNIEnv* env) : env(env) {}
+JNIClasses* JNIContext::classes;
+
+JNIContext::JNIContext(JNIEnv* env) : env(env) {
+    env->GetJavaVM(&jvm);
+    if (!classes) {
+        classes = new JNIClasses(env);
+    }
+}
 
 JNIContext::~JNIContext() {
     for (auto [s, utf] : mStringsToRelease) {
