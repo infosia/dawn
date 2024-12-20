@@ -37,7 +37,7 @@ ResultOrError<Ref<DisplayEGL>> DisplayEGL::CreateFromDynamicLoading(wgpu::Backen
                                                                     const char* libName) {
     Ref<DisplayEGL> display = AcquireRef(new DisplayEGL(backend));
     DAWN_TRY(display->InitializeWithDynamicLoading(libName));
-    return std::move(display);
+    return display;
 }
 
 // static
@@ -46,7 +46,7 @@ ResultOrError<Ref<DisplayEGL>> DisplayEGL::CreateFromProcAndDisplay(wgpu::Backen
                                                                     EGLDisplay eglDisplay) {
     Ref<DisplayEGL> display = AcquireRef(new DisplayEGL(backend));
     DAWN_TRY(display->InitializeWithProcAndDisplay(getProc, eglDisplay));
-    return std::move(display);
+    return display;
 }
 
 DisplayEGL::DisplayEGL(wgpu::BackendType backend) : egl(mFunctions) {

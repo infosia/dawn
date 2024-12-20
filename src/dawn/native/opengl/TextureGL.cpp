@@ -193,7 +193,7 @@ ResultOrError<Ref<Texture>> Texture::Create(Device* device,
         DAWN_TRY(
             texture->ClearTexture(texture->GetAllSubresources(), TextureBase::ClearValue::NonZero));
     }
-    return std::move(texture);
+    return texture;
 }
 
 // static

@@ -145,7 +145,7 @@ ResultOrError<Ref<ExternalTextureBase>> ExternalTextureBase::Create(
     Ref<ExternalTextureBase> externalTexture =
         AcquireRef(new ExternalTextureBase(device, descriptor));
     DAWN_TRY(externalTexture->Initialize(device, descriptor));
-    return std::move(externalTexture);
+    return externalTexture;
 }
 
 ExternalTextureBase::ExternalTextureBase(DeviceBase* device,
