@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c5d7fa9e_e9dd4fb6",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-20T15:06:37Z",
+      "side": 1,
+      "message": "I\u0027ve started updating `render_cpp_default_value` in latest patchsets, and even found out one [location](https://dawn-review.googlesource.com/c/dawn/+/219915/6/src/dawn/native/PipelineLayout.cpp) where `entry.buffer.type` was not properly set. However, I\u0027m now hitting another bump:\n```\nbad_variant_access was thrown in -fno-exceptions modeReceived signal 6\n0   libbase.dylib                       0x0000000110dbc2d0 base::debug::CollectStackTrace(base::span\u003cvoid const*, 18446744073709551615ul, void const**\u003e) + 84\n1   libbase.dylib                       0x0000000110d64d10 base::debug::StackTrace::StackTrace(unsigned long) + 156\n2   libbase.dylib                       0x0000000110d64db8 base::debug::StackTrace::StackTrace(unsigned long) + 36\n3   libbase.dylib                       0x0000000110d64d84 base::debug::StackTrace::StackTrace() + 40\n4   libbase.dylib                       0x0000000110dbc124 base::debug::(anonymous namespace)::StackDumpSignalHandler(int, __siginfo*, void*) + 1352\n5   libsystem_platform.dylib            0x0000000197488184 _sigtramp + 56\n6   libsystem_pthread.dylib             0x0000000197452f70 pthread_kill + 288\n7   libsystem_c.dylib                   0x000000019735f908 abort + 128\n8   libc++_chrome.dylib                 0x0000000113723000 operator_new_impl(unsigned long) + 0\n9   dawn_unittests                      0x000000010466a494 auto\u0026\u0026 std::__Cr::__variant_detail::__access::__variant::__get_alt\u003c1ul, std::__Cr::variant\u003cstd::__Cr::monostate, dawn::native::ResourceMemoryAllocation, std::__Cr::unique_ptr\u003cdawn::native::ErrorData, std::__Cr::default_delete\u003cdawn::native::ErrorData\u003e\u003e\u003e\u0026\u003e(std::__Cr::variant\u003cstd::__Cr::monostate, dawn::native::ResourceMemoryAllocation, std::__Cr::unique_ptr\u003cdawn::native::ErrorData, std::__Cr::default_delete\u003cdawn::native::ErrorData\u003e\u003e\u003e\u0026) + 0\n10  dawn_unittests                      0x0000000105120194 auto\u0026\u0026 std::__Cr::__generic_get\u003c2ul, std::__Cr::variant\u003cdawn::native::BufferBindingInfo, dawn::native::SamplerBindingInfo, dawn::native::TextureBindingInfo, dawn::native::StorageTextureBindingInfo, dawn::native::StaticSamplerBindingInfo, dawn::native::InputAttachmentBindingInfo\u003e const\u0026\u003e(std::__Cr::variant\u003cdawn::native::BufferBindingInfo, dawn::native::SamplerBindingInfo, dawn::native::TextureBindingInfo, dawn::native::StorageTextureBindingInfo, dawn::native::StaticSamplerBindingInfo, dawn::native::InputAttachmentBindingInfo\u003e const\u0026) + 36\n11  dawn_unittests                      0x0000000105120164 std::__Cr::variant_alternative\u003c2ul, std::__Cr::variant\u003cdawn::native::BufferBindingInfo, dawn::native::SamplerBindingInfo, dawn::native::TextureBindingInfo, dawn::native::StorageTextureBindingInfo, dawn::native::StaticSamplerBindingInfo, dawn::native::InputAttachmentBindingInfo\u003e\u003e::type const\u0026 std::__Cr::get\u003c2ul, dawn::native::BufferBindingInfo, dawn::native::SamplerBindingInfo, dawn::native::TextureBindingInfo, dawn::native::StorageTextureBindingInfo, dawn::native::StaticSamplerBindingInfo, dawn::native::InputAttachmentBindingInfo\u003e(std::__Cr::variant\u003cdawn::native::BufferBindingInfo, dawn::native::SamplerBindingInfo, dawn::native::TextureBindingInfo, dawn::native::StorageTextureBindingInfo, dawn::native::StaticSamplerBindingInfo, dawn::native::InputAttachmentBindingInfo\u003e const\u0026) + 24\n12  dawn_unittests                      0x0000000105120140 dawn::native::TextureBindingInfo const\u0026 std::__Cr::get\u003cdawn::native::TextureBindingInfo, dawn::native::BufferBindingInfo, dawn::native::SamplerBindingInfo, dawn::native::TextureBindingInfo, dawn::native::StorageTextureBindingInfo, dawn::native::StaticSamplerBindingInfo, dawn::native::InputAttachmentBindingInfo\u003e(std::__Cr::variant\u003cdawn::native::BufferBindingInfo, dawn::native::SamplerBindingInfo, dawn::native::TextureBindingInfo, dawn::native::StorageTextureBindingInfo, dawn::native::StaticSamplerBindingInfo, dawn::native::InputAttachmentBindingInfo\u003e const\u0026) + 24\n13  dawn_unittests                      0x000000010537d558 dawn::native::ValidateCompatibilityWithPipelineLayout(dawn::native::DeviceBase*, dawn::native::EntryPointMetadata const\u0026, dawn::native::PipelineLayoutBase const*) + 1928\n```\nI\u0027m failing to understand this error properly.\n\n---\nHappy holidays Kai and thank you very much for all your helpful reviews this year!",
+      "parentUuid": "71b4a18f_0d1be058",
+      "range": {
+        "startLine": 392,
+        "startChar": 72,
+        "endLine": 392,
+        "endChar": 79
+      },
+      "revId": "dd47e005996cbd398d40803ba2c5883f7cb78d70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ab5485f_e1ecbb75",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 2
