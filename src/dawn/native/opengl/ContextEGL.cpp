@@ -60,7 +60,7 @@ ResultOrError<std::unique_ptr<ContextEGL>> ContextEGL::Create(Ref<DisplayEGL> di
     auto context = std::make_unique<ContextEGL>(std::move(display));
     DAWN_TRY(context->Initialize(backend, useRobustness, useANGLETextureSharing,
                                  forceES31AndNoExtensionss));
-    return std::move(context);
+    return context;
 }
 
 ContextEGL::ContextEGL(Ref<DisplayEGL> display) : mDisplay(std::move(display)) {}

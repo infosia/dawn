@@ -87,7 +87,7 @@ Server::Handle(const lsp::TextDocumentInlayHintRequest& r) {
         return lsp::Null{};
     }
 
-    return std::move(hints);
+    return hints;
 }
 
 }  // namespace tint::wgsl::ls

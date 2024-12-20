@@ -474,7 +474,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
             cacheKey, newHandle, compilation.Acquire(), hasInputAttachment);
     }
 
-    return std::move(moduleAndSpirv);
+    return moduleAndSpirv;
 #else
     return DAWN_INTERNAL_ERROR("TINT_BUILD_SPV_WRITER is not defined.");
 #endif

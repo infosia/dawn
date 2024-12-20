@@ -437,7 +437,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
         DAWN_TRY(ValidateCompatibilityWithPipelineLayout(device, metadata, result.Get()));
     }
 
-    return std::move(result);
+    return result;
 }
 
 ObjectType PipelineLayoutBase::GetType() const {

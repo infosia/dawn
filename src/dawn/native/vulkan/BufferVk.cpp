@@ -169,7 +169,7 @@ ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
     } else {
         DAWN_TRY(buffer->Initialize(descriptor->mappedAtCreation));
     }
-    return std::move(buffer);
+    return buffer;
 }
 
 MaybeError Buffer::Initialize(bool mappedAtCreation) {

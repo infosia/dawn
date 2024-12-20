@@ -834,7 +834,7 @@ MaybeError Device::CheckDebugLayerAndGenerateErrors() {
 
     AppendDebugLayerMessages(error.get());
 
-    return std::move(error);
+    return error;
 }
 
 void Device::AppendDebugLayerMessages(ErrorData* error) {

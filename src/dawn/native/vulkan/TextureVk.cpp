@@ -1276,7 +1276,7 @@ ResultOrError<Ref<InternalTexture>> InternalTexture::Create(
     VkImageUsageFlags extraUsages) {
     Ref<InternalTexture> texture = AcquireRef(new InternalTexture(device, descriptor));
     DAWN_TRY(texture->Initialize(extraUsages));
-    return std::move(texture);
+    return texture;
 }
 
 MaybeError InternalTexture::Initialize(VkImageUsageFlags extraUsages) {

@@ -377,7 +377,7 @@ const std::vector<VkPhysicalDevice>& VulkanInstance::GetVkPhysicalDevices() cons
 ResultOrError<Ref<VulkanInstance>> VulkanInstance::Create(const InstanceBase* instance, ICD icd) {
     Ref<VulkanInstance> vulkanInstance = AcquireRef(new VulkanInstance());
     DAWN_TRY(vulkanInstance->Initialize(instance, icd));
-    return std::move(vulkanInstance);
+    return vulkanInstance;
 }
 
 MaybeError VulkanInstance::Initialize(const InstanceBase* instance, ICD icd) {
