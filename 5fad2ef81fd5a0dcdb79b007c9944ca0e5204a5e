@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0c86783_e56b9f26",
+        "filename": "src/dawn/native/RenderPassEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-20T08:34:20Z",
+      "side": 1,
+      "message": "It is possible for the maxViewportBounds too, not just the maxViewportSize, although that\u0027s more complicated and most likely much less useful, so current version LGTM.",
+      "parentUuid": "a7e24319_1f06c3d0",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 271,
+        "endChar": 87
+      },
+      "revId": "5fad2ef81fd5a0dcdb79b007c9944ca0e5204a5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb91af69_4b48a19d",
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "fec42869_abeb337b",
+      "range": {
+        "startLine": 124,
+        "startChar": 28,
+        "endLine": 124,
+        "endChar": 79
+      },
+      "revId": "5fad2ef81fd5a0dcdb79b007c9944ca0e5204a5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "feca89d5_1bfcabbc",
+        "filename": "src/dawn/tests/unittests/validation/DynamicStateCommandValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-20T08:34:20Z",
+      "side": 1,
+      "message": "These still add up to `x + w \u003d 2 * kMaxViewportSize + 1`\n(the limit is `\u003c 2 * kMaxViewportSize - 1` right?)\n\nthough not very important because we can just focus on making the CTS precise",
+      "parentUuid": "d28cf5f8_1f3b4304",
       "range": {
         "startLine": 124,
         "startChar": 28,
