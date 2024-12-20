@@ -95,7 +95,8 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     {% endfor %}) {
 
     // * Helper context for the duration of this method call.
-    JNIContext c(env);
+    JNIContext context(env);
+    JNIContext* c = &context;  //* Macros expect a JNIContext pointer named 'c'.
 
     //* Perform the conversion of arguments.
     {{KotlinRecord}} kotlinRecord;
@@ -103,10 +104,10 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
         kotlinRecord.{{ as_varName(arg.name) }} = _{{ as_varName(arg.name) }};
     {% endfor %}
     {{ArgsStruct}} args;
-    ConvertInternal(&c, kotlinRecord, &args);
+    ConvertInternal(c, kotlinRecord, &args);
 
     {% if object %}
-        jclass memberClass = env->FindClass("{{ jni_name(object) }}");
+        jclass memberClass = c->classes->{{ object.name.camelCase() }};
         jmethodID getHandle = env->GetMethodID(memberClass, "getHandle", "()J");
         auto handle =
                 reinterpret_cast<{{ as_cType(object.name) }}>(env->CallLongMethod(obj, getHandle));
@@ -123,7 +124,7 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
             {% endfor %}
         );
         //* Allocate the native container
-        args.{{ as_varName(_kotlin_return.name) }} = c.AllocArray<{{ as_cType(_kotlin_return.type.name) }}>(size);
+        args.{{ as_varName(_kotlin_return.name) }} = c->AllocArray<{{ as_cType(_kotlin_return.type.name) }}>(size);
         if (env->ExceptionCheck()) {  //* Early out if client (Kotlin) callback threw an exception.
             return nullptr;
         }
@@ -185,7 +186,9 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     JNIEXPORT void JNICALL
     Java_{{ kotlin_package.replace('.', '_') }}_{{ obj.name.CamelCase() }}_close(
             JNIEnv *env, jobject obj) {
-        jclass clz = env->FindClass("{{ jni_name(obj) }}");
+        // * Helper context for the duration of this method call.
+        JNIContext c(env);
+        jclass clz = c.classes->{{ obj.name.camelCase() }};
         const {{ as_cType(obj.name) }} handle = reinterpret_cast<{{ as_cType(obj.name) }}>(
                 env->CallLongMethod(obj, env->GetMethodID(clz, "getHandle", "()J")));
         wgpu{{ obj.name.CamelCase() }}Release(handle);

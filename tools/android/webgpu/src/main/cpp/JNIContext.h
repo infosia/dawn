@@ -25,61 +25,48 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef WEBGPU_JNI_JNICONTEXT_H_
-#define WEBGPU_JNI_JNICONTEXT_H_
-
-#include <jni.h>
-#include <type_traits>
-#include <utility>
-#include <vector>
-
-#include "dawn/common/NonMovable.h"
+#include "JNIContext.h"
 
 namespace dawn::kotlin_api {
 
-// A helper context class to use while processing JNI calls.
-//
-//  - Frees memory that's allocated (or referenced) during the processing of the call.
-//
-// TODO(330293719): Consider using a bump allocator for Alloc/AllocArray. Since we require that the
-// types allocated have a default destructor, we could just free a few large allocations instead of
-// small ones. We could also allocate the first bytes on the stack itself.
-class JNIContext : dawn::NonMovable {
-  public:
-    explicit JNIContext(JNIEnv* env);
-    ~JNIContext();
+JNIClasses* JNIContext::classes;
 
-    // Public members for convenience.
-    JNIEnv* const env;
+JNIContext::JNIContext(JNIEnv* env) : env(env) {
+    env->GetJavaVM(&jvm);
+    if (!classes) {
+        classes = new JNIClasses(env);
+    }
+}
 
-    const char* GetStringUTFChars(jstring s);
-    const jint* GetIntArrayElements(jintArray a);
-
-    template <typename T>
-    T* Alloc() {
-        static_assert(std::is_trivially_destructible_v<T>);
-        static_assert(std::is_trivially_constructible_v<T>);
-        T* alloc = new T();
-        mAllocationsToFree.push_back(alloc);
-        return alloc;
+JNIContext::~JNIContext() {
+    for (auto [s, utf] : mStringsToRelease) {
+        env->ReleaseStringUTFChars(s, utf);
     }
 
-    template <typename T>
-    T* AllocArray(size_t count) {
-        static_assert(std::is_trivially_destructible_v<T>);
-        static_assert(std::is_trivially_constructible_v<T>);
-        T* alloc = new T[count]();
-        mArrayAllocationsToFree.push_back(alloc);
-        return alloc;
+    // Free int arrays with JNI_ABORT because we never modify their contents and don't need to copy
+    // modifications back in the JVM's array (if a copy was done in GetIntArrayElements).
+    for (auto [array, ints] : mIntArraysToRelease) {
+        env->ReleaseIntArrayElements(array, ints, JNI_ABORT);
     }
 
-  private:
-    std::vector<std::pair<jstring, const char*>> mStringsToRelease;
-    std::vector<std::pair<jintArray, jint*>> mIntArraysToRelease;
-    std::vector<void*> mAllocationsToFree;
-    std::vector<void*> mArrayAllocationsToFree;
-};
+    for (auto allocation : mAllocationsToFree) {
+        delete allocation;
+    }
+    for (auto allocation : mArrayAllocationsToFree) {
+        delete[] allocation;
+    }
+}
+
+const char* JNIContext::GetStringUTFChars(jstring s) {
+    const char* utf = env->GetStringUTFChars(s, nullptr);
+    mStringsToRelease.emplace_back(s, utf);
+    return utf;
+}
+
+const jint* JNIContext::GetIntArrayElements(jintArray a) {
+    jint* ints = env->GetIntArrayElements(a, nullptr);
+    mIntArraysToRelease.emplace_back(a, ints);
+    return ints;
+}
 
 }  // namespace dawn::kotlin_api
-
-#endif  // WEBGPU_JNI_JNICONTEXT_H_
