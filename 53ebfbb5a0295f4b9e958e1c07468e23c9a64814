@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "50b56207_2d0af5d7",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2024-12-20T20:28:35Z",
+      "side": 1,
+      "message": "If this fails should we just report an internal compiler error. I think so because we are faking a constant. If it fails we have a problem we just dont know what it is yet. So we can check if the diagnositic is empty and if it is then we can add a \"internal compiler error\" in that case.",
+      "parentUuid": "60933ddf_4f17ab29",
+      "revId": "53ebfbb5a0295f4b9e958e1c07468e23c9a64814",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d2b0de06_b58dea07",
         "filename": "src/tint/lang/core/ir/const_param_validator.cc",
         "patchSetId": 16
