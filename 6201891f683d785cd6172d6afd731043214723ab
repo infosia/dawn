@@ -16,6 +16,24 @@
       "message": "nit: clearer to have two DAWN_SUPPRESS_TEST_IF even though one will be dead code.",
       "revId": "6201891f683d785cd6172d6afd731043214723ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58af5e01_fe0a25e7",
+        "filename": "src/dawn/tests/end2end/MultithreadTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-20T06:47:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5df5d45a_467ff725",
+      "revId": "6201891f683d785cd6172d6afd731043214723ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
