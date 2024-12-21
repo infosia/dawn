@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85642545_9e61ff35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-21T08:21:37Z",
+      "side": 1,
+      "message": "Sorry for the delay, lgtm!",
+      "revId": "f273faaf4dd46f22698449f81c3bc0323a919136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cbab18e_2468b326",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-21T08:21:37Z",
+      "side": 1,
+      "message": "Is this the same as the default?",
+      "revId": "f273faaf4dd46f22698449f81c3bc0323a919136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
