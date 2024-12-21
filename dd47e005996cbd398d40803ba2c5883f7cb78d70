@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f63d1e67_0c2eee00",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2024-12-21T07:54:43Z",
+      "side": 1,
+      "message": "I think a debug build should be able to show that error with line numbers, not just symbols, but based on the symbol, I suspect something is going wrong in `MatchVariant` in `GetBindingInfoType`. I can\u0027t spot the bug though.\n\nI also have no idea what ResourceMemoryAllocation has to do with it. Probably just a wrong stack because of release mode optimizations.",
+      "parentUuid": "c5d7fa9e_e9dd4fb6",
+      "range": {
+        "startLine": 392,
+        "startChar": 72,
+        "endLine": 392,
+        "endChar": 79
+      },
+      "revId": "dd47e005996cbd398d40803ba2c5883f7cb78d70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ab5485f_e1ecbb75",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 2
