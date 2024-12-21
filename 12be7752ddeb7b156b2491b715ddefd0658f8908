@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b3ef2cd_19cc1f6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2024-12-21T00:58:40Z",
+      "side": 1,
+      "message": "LGTM.\n\nIt\u0027s a little concerning that this code is causing these problems though, since somebody could put exactly the same code in their WGSL shader. We should probably investigate this further at some point.",
+      "revId": "12be7752ddeb7b156b2491b715ddefd0658f8908",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
