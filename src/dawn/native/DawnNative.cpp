@@ -27,7 +27,10 @@
 
 #include "dawn/native/DawnNative.h"
 
+#include <sstream>
 #include <vector>
+#include <unistd.h>
+#include <iostream>
 
 #include "dawn/common/Log.h"
 #include "dawn/native/BindGroupLayout.h"
@@ -300,6 +303,22 @@ const FeatureInfo* GetFeatureInfo(wgpu::FeatureName feature) {
 void DumpMemoryStatistics(WGPUDevice device, MemoryDump* dump) {
     auto deviceLock(FromAPI(device)->GetScopedLock());
     FromAPI(device)->DumpMemoryStatistics(dump);
+
+    auto pid = getpid();
+    {
+        std::ostringstream ss;
+        ss << "IOAccelMemory -p " << pid << " > /Users/lehoangquyen/chromium/src/graphite-ioaccelmemory-tmp.txt";
+
+        auto cmd = ss.str();
+        int re = system(cmd.c_str());
+        std::cerr << "Calling " << cmd << " returned " << re << std::endl;
+    }
+    {
+        std::ostringstream ss;
+        ss << "nohup vmmap --summary " << pid << " > /Users/lehoangquyen/chromium/src/graphite-vmmap-tmp.txt &";
+
+        system(ss.str().c_str());
+    }
 }
 
 uint64_t ComputeEstimatedMemoryUsage(WGPUDevice device) {
