@@ -16,6 +16,24 @@
       "message": "this will get messy, is it possible to just pass `member` directly into `render_cpp_default_value` so the if-elif-elif block can check it directly? (not sure if this works since there may be other call sites of render_cpp_default_value that can\u0027t do this)",
       "revId": "56e65266cf9f4f4a5a5b16fe3b2316928b419493",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1df7088_fc0ef60b",
+        "filename": "generator/templates/api_cpp.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-23T18:02:44Z",
+      "side": 1,
+      "message": "As suspected, some calls to render_cpp_default_value don\u0027t have access to the `type`. I\u0027ve tried to simplify it in latest patchset.",
+      "parentUuid": "0157ceb0_376e2c5c",
+      "revId": "56e65266cf9f4f4a5a5b16fe3b2316928b419493",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
