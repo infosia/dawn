@@ -345,6 +345,30 @@
       },
       "revId": "31589be6de71bafc8ac5e91ff8680cdb56b4968d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87255e92_451b9dc8",
+        "filename": "src/dawn/tests/unittests/native/ImmediateConstantsTrackerTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2024-12-23T07:14:51Z",
+      "side": 1,
+      "message": "Have to cast them all to `uint32_t` to ensure the tests check bit-wise equality.",
+      "parentUuid": "82097779_f125c3f7",
+      "range": {
+        "startLine": 173,
+        "startChar": 40,
+        "endLine": 173,
+        "endChar": 48
+      },
+      "revId": "31589be6de71bafc8ac5e91ff8680cdb56b4968d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
