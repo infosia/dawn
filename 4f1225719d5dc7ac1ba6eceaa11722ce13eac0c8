@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdc70ad8_b627a576",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2024-12-23T08:53:17Z",
+      "side": 1,
+      "message": "loko@, Sry but I just found that metal uses super large amount of space to store all possible buffer length. Due to metal backend doesn\u0027t have strict \"push constant\" concept, they can use large amount of such space. See https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515846-setvertexbytes\n\nSo I decide to remove bufferLength from CommonImmediateConstants and left each backend to handle this based on their ability. (With seperate dirty bits)\n\nWDYT?",
+      "revId": "4f1225719d5dc7ac1ba6eceaa11722ce13eac0c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
