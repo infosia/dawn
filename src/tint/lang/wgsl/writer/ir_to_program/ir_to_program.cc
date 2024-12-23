@@ -1111,8 +1111,7 @@ class State {
         if (auto* s = ty->As<core::type::Struct>()) {
             // Note: We don't need to check the members of the struct, as builtin structures cannot
             // be nested inside other structures.
-            // TODO(350778507): Consider using a struct flag for builtin structures instead.
-            if (tint::HasPrefix(s->Name().NameView(), "__")) {
+            if (s->IsInternal()) {
                 return true;
             }
         } else if (auto* a = ty->As<core::type::Array>()) {

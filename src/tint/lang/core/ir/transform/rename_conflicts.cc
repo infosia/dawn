@@ -112,7 +112,7 @@ struct State {
         // Declare all the user types
         for (auto* ty : ir.Types()) {
             if (auto* str = ty->As<core::type::Struct>()) {
-                if (!IsBuiltinStruct(str)) {
+                if (!str->IsInternal()) {
                     Declare(const_cast<core::type::Struct*>(str), str->Name());
                 }
             }
@@ -237,7 +237,7 @@ struct State {
                 },
                 [&](const core::type::Struct* s) {
                     auto name = s->Name().NameView();
-                    if (IsBuiltinStruct(s)) {
+                    if (s->IsInternal()) {
                         EnsureResolvesToBuiltin(name);
                     }
                     return nullptr;
@@ -287,11 +287,6 @@ struct State {
             [&](core::type::Struct* str) { str->SetName(new_name); },  //
             TINT_ICE_ON_NO_MATCH);
         return new_name;
-    }
-
-    /// @return true if @p s is a builtin (non-user declared) structure.
-    bool IsBuiltinStruct(const core::type::Struct* s) {
-        return tint::HasPrefix(s->Name().NameView(), "__");
     }
 };
 

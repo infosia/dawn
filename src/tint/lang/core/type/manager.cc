@@ -290,4 +290,39 @@ core::type::Struct* Manager::Struct(Symbol name, VectorRef<StructMemberDesc> md)
                                    tint::RoundUp(max_align, current_size), current_size);
 }
 
+core::type::Struct* Manager::InternalStruct(Symbol name, VectorRef<const StructMember*> members) {
+    if (auto* existing = Find<type::Struct>(name); DAWN_UNLIKELY(existing)) {
+        TINT_ICE() << "attempting to construct two structs named " << name.NameView();
+    }
+
+    uint32_t max_align = 0u;
+    for (const auto& m : members) {
+        max_align = std::max(max_align, m->Align());
+    }
+    uint32_t size = members.Back()->Offset() + members.Back()->Size();
+    return Get<core::type::Struct>(name, std::move(members), max_align,
+                                   tint::RoundUp(max_align, size), size, true);
+}
+
+core::type::Struct* Manager::InternalStruct(Symbol name, VectorRef<StructMemberDesc> md) {
+    if (auto* existing = Find<type::Struct>(name); DAWN_UNLIKELY(existing)) {
+        TINT_ICE() << "attempting to construct two structs named " << name.NameView();
+    }
+
+    tint::Vector<const StructMember*, 4> members;
+    uint32_t current_size = 0u;
+    uint32_t max_align = 0u;
+    for (const auto& m : md) {
+        uint32_t index = static_cast<uint32_t>(members.Length());
+        uint32_t align = std::max<uint32_t>(m.type->Align(), 1u);
+        uint32_t offset = tint::RoundUp(align, current_size);
+        members.Push(Get<core::type::StructMember>(m.name, m.type, index, offset, align,
+                                                   m.type->Size(), std::move(m.attributes)));
+        current_size = offset + m.type->Size();
+        max_align = std::max(max_align, align);
+    }
+    return Get<core::type::Struct>(name, std::move(members), max_align,
+                                   tint::RoundUp(max_align, current_size), current_size, true);
+}
+
 }  // namespace tint::core::type

@@ -618,6 +618,30 @@ class Manager final {
         return Struct(name, tint::Vector<StructMemberDesc, 4>(members));
     }
 
+    /// Create a new internal structure declaration.
+    /// @param name the name of the structure
+    /// @param members the list of structure members
+    /// @note a structure must not already exist with the same name
+    /// @returns the structure type
+    core::type::Struct* InternalStruct(Symbol name, VectorRef<const StructMember*> members);
+
+    /// Create a new internal structure declaration.
+    /// @param name the name of the structure
+    /// @param members the list of structure member descriptors
+    /// @note a structure must not already exist with the same name
+    /// @returns the structure type
+    core::type::Struct* InternalStruct(Symbol name, VectorRef<StructMemberDesc> members);
+
+    /// Create a new internal structure declaration.
+    /// @param name the name of the structure
+    /// @param members the list of structure member descriptors
+    /// @note a structure must not already exist with the same name
+    /// @returns the structure type
+    core::type::Struct* InternalStruct(Symbol name,
+                                       std::initializer_list<StructMemberDesc> members) {
+        return InternalStruct(name, tint::Vector<StructMemberDesc, 4>(members));
+    }
+
     /// @returns the external texture type
     core::type::ExternalTexture* external_texture() { return Get<core::type::ExternalTexture>(); }
 

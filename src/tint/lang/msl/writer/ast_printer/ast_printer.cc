@@ -3354,7 +3354,7 @@ const std::string& ASTPrinter::ArrayType() {
 
 std::string ASTPrinter::StructName(const core::type::Struct* s) {
     auto name = s->Name().Name();
-    if (HasPrefix(name, "__")) {
+    if (s->IsInternal()) {
         name = tint::GetOrAdd(builtin_struct_names_, s,
                               [&] { return UniqueIdentifier(name.substr(2)); });
     }

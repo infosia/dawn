@@ -29,13 +29,10 @@
 #define SRC_TINT_LANG_CORE_TYPE_STRUCT_H_
 
 #include <cstdint>
-#include <optional>
 #include <string>
 #include <utility>
 
 #include "src/tint/lang/core/address_space.h"
-#include "src/tint/lang/core/builtin_value.h"
-#include "src/tint/lang/core/interpolation.h"
 #include "src/tint/lang/core/io_attributes.h"
 #include "src/tint/lang/core/type/node.h"
 #include "src/tint/lang/core/type/type.h"
@@ -86,11 +83,13 @@ class Struct : public Castable<Struct, Type> {
     /// @param size the byte size of the structure
     /// @param size_no_padding size of the members without the end of structure
     /// alignment padding
+    /// @param is_internal marks the struct as an internal created structure
     Struct(Symbol name,
            VectorRef<const StructMember*> members,
            uint32_t align,
            uint32_t size,
-           uint32_t size_no_padding);
+           uint32_t size_no_padding,
+           bool is_internal = false);
 
     /// Destructor
     ~Struct() override;
@@ -101,6 +100,9 @@ class Struct : public Castable<Struct, Type> {
 
     /// @returns the name of the structure
     Symbol Name() const { return name_; }
+
+    /// Returns true if this is an internal structure
+    bool IsInternal() const { return is_internal_; }
 
     /// Renames the structure
     /// @param name the new name for the structure
@@ -202,6 +204,7 @@ class Struct : public Castable<Struct, Type> {
     Hashset<core::AddressSpace, 1> address_space_usage_;
     Hashset<PipelineStageUsage, 1> pipeline_stage_uses_;
     tint::Vector<const Struct*, 2> concrete_types_;
+    bool is_internal_ = false;
 };
 
 /// StructMember holds the type information for structure members.
