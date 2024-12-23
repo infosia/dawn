@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf941176_24835bba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2024-12-23T01:48:38Z",
+      "side": 1,
+      "message": "Tries to do similar things like https://dawn-review.googlesource.com/c/dawn/+/209535/6 in spirv backend.\n\nPTAL, thanks!",
+      "revId": "1241b1353a2db340f6005c8c8eedd6ebc932d3af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
