@@ -123,7 +123,7 @@ class Parser {
 
     /// @param b a SPIR-V BuiltIn
     /// @returns the Tint builtin value for a SPIR-V BuiltIn decoration
-    core::BuiltinValue Builtin(spv::BuiltIn b) {
+    std::optional<core::BuiltinValue> Builtin(spv::BuiltIn b) {
         switch (b) {
             case spv::BuiltIn::FragCoord:
                 return core::BuiltinValue::kPosition;
@@ -155,6 +155,9 @@ class Parser {
                 return core::BuiltinValue::kWorkgroupId;
             case spv::BuiltIn::ClipDistance:
                 return core::BuiltinValue::kClipDistances;
+            case spv::BuiltIn::CullDistance:
+                // Ignore cull distance.
+                return std::nullopt;
             default:
                 TINT_UNIMPLEMENTED() << "unhandled SPIR-V BuiltIn: " << static_cast<uint32_t>(b);
         }

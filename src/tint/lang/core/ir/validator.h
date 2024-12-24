@@ -60,6 +60,8 @@ enum class Capability : uint8_t {
     kAllowVectorElementPointer,
     /// Allows private address space variables in function scopes.
     kAllowPrivateVarsInFunctions,
+    /// Allows module scope struct members to not have an IO annotation
+    kAllowModuleStructMemberWithoutIOAnnotation,
 };
 
 /// Capabilities is a set of Capability

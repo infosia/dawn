@@ -198,6 +198,10 @@ struct State {
             if (auto* str = var_type->As<core::type::Struct>()) {
                 // Add an output for each member of the struct.
                 for (auto* member : str->Members()) {
+                    if (ShouldSkipMember(var, member)) {
+                        continue;
+                    }
+
                     // Use the base variable attributes if not specified directly on the member.
                     auto member_attributes = member->Attributes();
                     if (auto base_loc = var_attributes.location) {
@@ -251,6 +255,66 @@ struct State {
                 b.Return(wrapper, b.Construct(str, std::move(results)));
             });
         }
+    }
+
+    /// Returns true if the struct member should be skiped on emission
+    /// @param var the var which references the structure
+    /// @param member the member to check
+    /// @returns true if the member should be skipped.
+    bool ShouldSkipMember(core::ir::Var* var, const core::type::StructMember* member) {
+        auto var_attributes = var->Attributes();
+        auto member_attributes = member->Attributes();
+
+        // If neither the var, nor the member has attributes, then skip
+        if (!var_attributes.builtin.has_value() && !var_attributes.color.has_value() &&
+            !var_attributes.location.has_value()) {
+            if (!member_attributes.builtin.has_value() && !member_attributes.color.has_value() &&
+                !member_attributes.location.has_value()) {
+                return true;
+            }
+        }
+
+        // The `gl_PerVertex` structure always gets emitted by glslang, but it may only be used by
+        // the `gl_Position` variable. The structure will also contain the `gl_PointSize`,
+        // `gl_ClipDistance` and `gl_CullDistance`. The cull distance is handled above as it has
+        // no equivalent builtin value in WGSL and so the will have no IO Annotation. For the other
+        // two, if they're the annotation, but they member index is never accessed, then we skip
+        // emission as they were never used.
+        if (member_attributes.builtin != core::BuiltinValue::kPointSize &&
+            member_attributes.builtin != core::BuiltinValue::kClipDistances) {
+            return false;
+        }
+
+        return !IsIndexAccessed(var->Result(0), member->Index());
+    }
+
+    /// Returns true if the `idx` member of `val` is accessed. The `val` must the of type
+    /// `Structure` which contains the given member index.
+    /// @param val the value to check
+    /// @param idx the index to look for
+    /// @returns true if `idx` is accessed.
+    bool IsIndexAccessed(core::ir::Value* val, uint32_t idx) {
+        for (auto& usage : val->UsagesUnsorted()) {
+            // Only care about access chains
+            auto* chain = usage->instruction->As<core::ir::Access>();
+            if (!chain) {
+                continue;
+            }
+
+            for (auto* index : chain->Indices()) {
+                // A member access has to be a constant index
+                auto* cnst = index->As<core::ir::Constant>();
+                if (!cnst) {
+                    continue;
+                }
+
+                uint32_t v = cnst->Value()->ValueAs<uint32_t>();
+                if (v == idx) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /// Replace a use of an input pointer value.
@@ -384,7 +448,11 @@ struct State {
 }  // namespace
 
 Result<SuccessType> ShaderIO(core::ir::Module& ir) {
-    auto result = ValidateAndDumpIfNeeded(ir, "spirv.ShaderIO");
+    auto result = ValidateAndDumpIfNeeded(
+        ir, "spirv.ShaderIO",
+        core::ir::Capabilities{
+            core::ir::Capability::kAllowModuleStructMemberWithoutIOAnnotation,
+        });
     if (result != Success) {
         return result.Failure();
     }

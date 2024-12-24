@@ -2578,7 +2578,8 @@ Result<SuccessType, std::string> Validator::ValidateShaderIOAnnotations(
                 }
             }
 
-            if (mem_annotations.Empty()) {
+            if (!capabilities_.Contains(Capability::kAllowModuleStructMemberWithoutIOAnnotation) &&
+                mem_annotations.Empty()) {
                 return target_str +
                        " struct members must have at least one IO annotation, e.g. a binding "
                        "point, a location, etc";
