@@ -54,6 +54,7 @@ class GPUAdapter final : public interop::GPUAdapter {
     interop::Interface<interop::GPUAdapterInfo> getInfo(Napi::Env) override;
     bool getIsFallbackAdapter(Napi::Env) override;
     bool getIsCompatibilityMode(Napi::Env) override;
+    std::string getFeatureLevel(Napi::Env) override;
 
   private:
     // TODO(347047627): Remove nativeAdapter_ once we don't use CreateDevice.

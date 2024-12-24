@@ -144,6 +144,15 @@ bool GPUAdapter::getIsCompatibilityMode(Napi::Env) {
     return adapterInfo.compatibilityMode;
 }
 
+std::string GPUAdapter::getFeatureLevel(Napi::Env) {
+    wgpu::AdapterInfo adapterInfo = {};
+    adapter_.GetInfo(&adapterInfo);
+    if (adapterInfo.compatibilityMode) {
+        return "compatibility";
+    };
+    return "core";
+}
+
 namespace {
 // Returns a string representation of the wgpu::ErrorType
 const char* str(wgpu::ErrorType ty) {
