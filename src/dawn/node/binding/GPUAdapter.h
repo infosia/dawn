@@ -31,6 +31,7 @@
 #include <webgpu/webgpu_cpp.h>
 
 #include <memory>
+#include <string>
 
 #include "dawn/native/DawnNative.h"
 #include "src/dawn/node/binding/AsyncRunner.h"
@@ -54,6 +55,7 @@ class GPUAdapter final : public interop::GPUAdapter {
     interop::Interface<interop::GPUAdapterInfo> getInfo(Napi::Env) override;
     bool getIsFallbackAdapter(Napi::Env) override;
     bool getIsCompatibilityMode(Napi::Env) override;
+    std::string getFeatureLevel(Napi::Env) override;
 
   private:
     // TODO(347047627): Remove nativeAdapter_ once we don't use CreateDevice.
