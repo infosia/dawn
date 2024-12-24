@@ -82,10 +82,10 @@ namespace wgpu::binding {
 // wgpu::bindings::GPUAdapter
 // TODO(crbug.com/dawn/1133): This is a stub implementation. Properly implement.
 ////////////////////////////////////////////////////////////////////////////////
-GPUAdapter::GPUAdapter(dawn::native::Adapter a,
+GPUAdapter::GPUAdapter(wgpu::Adapter adapter,
                        const Flags& flags,
                        std::shared_ptr<AsyncRunner> async)
-    : nativeAdapter_(a), adapter_(a.Get()), flags_(flags), async_(async) {}
+    : adapter_(adapter), flags_(flags), async_(async) {}
 
 interop::Interface<interop::GPUSupportedFeatures> GPUAdapter::getFeatures(Napi::Env env) {
     wgpu::SupportedFeatures features{};
@@ -272,7 +272,12 @@ interop::Promise<interop::Interface<interop::GPUDevice>> GPUAdapter::requestDevi
     DawnTogglesDescriptor deviceTogglesDesc = togglesLoader.GetDescriptor();
     desc.nextInChain = &deviceTogglesDesc;
 
-    auto wgpu_device = nativeAdapter_.CreateDevice(&desc);
+    wgpu::Device wgpu_device;
+    adapter_.RequestDevice(&desc, wgpu::CallbackMode::AllowSpontaneous,
+                           [&](wgpu::RequestDeviceStatus, wgpu::Device device, wgpu::StringView) {
+                               wgpu_device = std::move(device);
+                           });
+
     if (wgpu_device == nullptr) {
         promise.Reject(binding::Errors::OperationError(env, "failed to create device"));
         return promise;
