@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3e84abf_edcf4ff2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-24T12:22:38Z",
+      "side": 1,
+      "message": "Hey Loko,\n\nCan you look at this CL?",
+      "revId": "ada6d691e99fd43216f2f860a3dc319d60d5d564",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
