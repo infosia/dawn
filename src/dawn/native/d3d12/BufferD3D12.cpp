@@ -94,7 +94,14 @@ D3D12_RESOURCE_STATES D3D12BufferUsage(wgpu::BufferUsage usage) {
     return resourceState;
 }
 
-D3D12_HEAP_TYPE D3D12HeapType(wgpu::BufferUsage allowedUsage) {
+D3D12_HEAP_TYPE D3D12HeapType(wgpu::BufferUsage allowedUsage,
+                              bool allowCustomCPUVisibleWriteBackHeap) {
+    // Now we only use D3D12_HEAP_TYPE_CUSTOM to create CPU-visible write-back heaps.
+    if (allowCustomCPUVisibleWriteBackHeap &&
+        (allowedUsage & (wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite))) {
+        return D3D12_HEAP_TYPE_CUSTOM;
+    }
+
     if (allowedUsage & wgpu::BufferUsage::MapRead) {
         return D3D12_HEAP_TYPE_READBACK;
     } else if (allowedUsage & wgpu::BufferUsage::MapWrite) {
@@ -179,7 +186,9 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
     // and robust resource initialization.
     resourceDescriptor.Flags = D3D12ResourceFlags(GetInternalUsage() | wgpu::BufferUsage::CopyDst);
 
-    auto heapType = D3D12HeapType(GetInternalUsage());
+    bool allowCustomCPUVisibleWriteBackHeap =
+        GetDevice()->HasFeature(Feature::BufferMapExtendedUsages);
+    auto heapType = D3D12HeapType(GetInternalUsage(), allowCustomCPUVisibleWriteBackHeap);
     mLastState = D3D12_RESOURCE_STATE_COMMON;
 
     switch (heapType) {
@@ -624,7 +633,7 @@ MaybeError Buffer::ClearBuffer(CommandRecordingContext* commandContext,
 
     // The state of the buffers on UPLOAD heap must always be GENERIC_READ and cannot be
     // changed away, so we can only clear such buffer with buffer mapping.
-    if (D3D12HeapType(GetInternalUsage()) == D3D12_HEAP_TYPE_UPLOAD) {
+    if (D3D12HeapType(GetInternalUsage(), false) == D3D12_HEAP_TYPE_UPLOAD) {
         DAWN_TRY(MapInternal(true, static_cast<size_t>(offset), static_cast<size_t>(size),
                              "D3D12 map at clear buffer"));
         memset(mMappedData, clearValue, size);
