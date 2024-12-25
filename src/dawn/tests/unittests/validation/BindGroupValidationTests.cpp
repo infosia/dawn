@@ -3707,6 +3707,86 @@ TEST_F(PipelineLayoutValidationTest, ShaderMatchesPipelineLayoutWithNullBindGrou
     }
 }
 
+// Test the null or empty bind group layout in a pipeline layout should be ignored when we check the
+// compatibility between the pipeline layout and the corresponding bind group.
+TEST_F(PipelineLayoutValidationTest, BindGroupMatchesPipelineLayoutWithEmptyBindGroupLayout) {
+    std::array<wgpu::BindGroupLayout, 2> nullOrEmptyBindGroupLayouts;
+    nullOrEmptyBindGroupLayouts[0] = nullptr;
+    nullOrEmptyBindGroupLayouts[1] = utils::MakeBindGroupLayout(device, {});
+
+    wgpu::BindGroupLayout nonEmptyBGL = utils::MakeBindGroupLayout(
+        device, {{0, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Storage}});
+    wgpu::BufferDescriptor bufferDescForNonEmptyBGL = {};
+    bufferDescForNonEmptyBGL.size = 4;
+    bufferDescForNonEmptyBGL.usage = wgpu::BufferUsage::Storage;
+    wgpu::Buffer bufferForNonEmptyBGL = device.CreateBuffer(&bufferDescForNonEmptyBGL);
+    wgpu::BindGroup nonEmptyBindGroup =
+        utils::MakeBindGroup(device, nonEmptyBGL, {{0, bufferForNonEmptyBGL}});
+
+    for (uint32_t nullBGLIndex = 0; nullBGLIndex < 4; ++nullBGLIndex) {
+        for (wgpu::BindGroupLayout nullOrEmptyBindGroupLayout : nullOrEmptyBindGroupLayouts) {
+            std::vector<wgpu::BindGroupLayout> bgls(4);
+            std::vector<wgpu::BindGroup> bgs(4);
+
+            // Create compute pipeline with null or empty bind group layout and the bind groups.
+            // Note that the bind groups are all non-empty.
+            for (uint32_t i = 0; i < 4; ++i) {
+                if (i == nullBGLIndex) {
+                    bgls[i] = nullOrEmptyBindGroupLayout;
+                    bgs[i] = nonEmptyBindGroup;
+                } else {
+                    bgls[i] = utils::MakeBindGroupLayout(
+                        device,
+                        {{0, wgpu::ShaderStage::Compute, wgpu::BufferBindingType::Storage}});
+
+                    wgpu::BufferDescriptor bufferDesc = {};
+                    bufferDesc.size = 4;
+                    bufferDesc.usage = wgpu::BufferUsage::Storage;
+                    wgpu::Buffer buffer = device.CreateBuffer(&bufferDesc);
+                    bgs[i] = utils::MakeBindGroup(device, bgls[i], {{0, buffer}});
+                }
+            }
+            wgpu::PipelineLayout pipelineLayout = utils::MakePipelineLayout(device, bgls);
+
+            std::ostringstream stream;
+            for (uint32_t i = 0; i < 4; ++i) {
+                if (i != nullBGLIndex) {
+                    stream << "@group(" << i << ") @binding(0) var<storage, read_write> outputData"
+                           << i << " : u32;\n";
+                }
+            }
+            stream << "@compute @workgroup_size(1, 1) fn main() {\n";
+            for (uint32_t i = 0; i < 4; ++i) {
+                if (i != nullBGLIndex) {
+                    stream << "outputData" << i << " = 1u;\n";
+                }
+            }
+            stream << "};";
+            wgpu::ComputePipelineDescriptor computePipelineDescriptor = {};
+            computePipelineDescriptor.compute.module =
+                utils::CreateShaderModule(device, stream.str());
+            computePipelineDescriptor.layout = pipelineLayout;
+
+            wgpu::ComputePipeline computePipeline =
+                device.CreateComputePipeline(&computePipelineDescriptor);
+
+            // Set pipeline and bind groups. The null or empty bind group layout in the pipeline
+            // layout should be ignored in the check of the compatibility between pipeline layout
+            // and the bind group when encoding `SetBindGroup()`.
+            wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+            wgpu::ComputePassEncoder computePass = encoder.BeginComputePass();
+            for (uint32_t i = 0; i < 4; ++i) {
+                computePass.SetBindGroup(i, bgs[i]);
+            }
+            computePass.SetPipeline(computePipeline);
+            computePass.DispatchWorkgroups(1);
+            computePass.End();
+            wgpu::CommandBuffer cmdbuf = encoder.Finish();
+            device.GetQueue().Submit(1, &cmdbuf);
+        }
+    }
+}
+
 class PipelineLayoutDontAllowUnsafeAPIValidationTest : public ValidationTest {
   protected:
     bool AllowUnsafeAPIs() override { return false; }
