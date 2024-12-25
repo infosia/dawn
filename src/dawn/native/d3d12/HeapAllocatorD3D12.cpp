@@ -33,6 +33,7 @@
 #include "dawn/native/d3d12/DeviceD3D12.h"
 #include "dawn/native/d3d12/HeapD3D12.h"
 #include "dawn/native/d3d12/ResidencyManagerD3D12.h"
+#include "dawn/native/d3d12/UtilsD3D12.h"
 
 namespace dawn::native::d3d12 {
 
@@ -46,11 +47,7 @@ ResultOrError<std::unique_ptr<ResourceHeapBase>> HeapAllocator::AllocateResource
     uint64_t size) {
     D3D12_HEAP_DESC heapDesc;
     heapDesc.SizeInBytes = size;
-    heapDesc.Properties.Type = mHeapType;
-    heapDesc.Properties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-    heapDesc.Properties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-    heapDesc.Properties.CreationNodeMask = 0;
-    heapDesc.Properties.VisibleNodeMask = 0;
+    heapDesc.Properties = GetD3D12HeapPropertiesFromHeapType(mHeapType);
     heapDesc.Alignment = mDevice->IsToggleEnabled(Toggle::D3D12Use64KBAlignedMSAATexture)
                              ? D3D12_SMALL_MSAA_RESOURCE_PLACEMENT_ALIGNMENT
                              : D3D12_DEFAULT_MSAA_RESOURCE_PLACEMENT_ALIGNMENT;
