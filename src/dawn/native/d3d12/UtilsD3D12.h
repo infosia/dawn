@@ -76,6 +76,8 @@ constexpr DXGI_FORMAT GetNullRTVDXGIFormatForD3D12RenderPass() {
     return DXGI_FORMAT_R8G8B8A8_UNORM;
 }
 
+D3D12_HEAP_PROPERTIES GetD3D12HeapPropertiesFromHeapType(D3D12_HEAP_TYPE heapType);
+
 }  // namespace dawn::native::d3d12
 
 #endif  // SRC_DAWN_NATIVE_D3D12_UTILSD3D12_H_

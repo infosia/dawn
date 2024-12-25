@@ -385,4 +385,28 @@ void SetDebugName(Device* device, ID3D12Object* object, const char* prefix, std:
     object->SetPrivateData(WKPDID_D3DDebugObjectName, objectName.length(), objectName.c_str());
 }
 
+D3D12_HEAP_PROPERTIES GetD3D12HeapPropertiesFromHeapType(D3D12_HEAP_TYPE heapType) {
+    D3D12_HEAP_PROPERTIES heapProperties = {};
+
+    heapProperties.Type = heapType;
+
+    // Now we only use D3D12_HEAP_TYPE_CUSTOM on cache coherent UMA architecture, where applications
+    // can more strongly entertain abandoning the attribution of heaps and using the custom heap
+    // equivalent of upload heaps everywhere, and the upload heaps are actually write-back on
+    // CacheCoherentUMA. See "How to use UMA and CacheCoherentUMA" in the D3D12 online document of
+    // D3D12_FEATURE_DATA_ARCHITECTURE structure for more details.
+    if (heapType == D3D12_HEAP_TYPE_CUSTOM) {
+        heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
+        heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+    } else {
+        heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+        heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+    }
+
+    heapProperties.CreationNodeMask = 0;
+    heapProperties.VisibleNodeMask = 0;
+
+    return heapProperties;
+}
+
 }  // namespace dawn::native::d3d12

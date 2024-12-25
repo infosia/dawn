@@ -69,6 +69,9 @@ D3D12_HEAP_TYPE GetD3D12HeapType(ResourceHeapKind resourceHeapKind) {
         case Upload_OnlyBuffers:
         case Upload_AllBuffersAndTextures:
             return D3D12_HEAP_TYPE_UPLOAD;
+        case Custom_WriteBack_AllBuffersAndTextures:
+        case Custom_WriteBack_OnlyBuffers:
+            return D3D12_HEAP_TYPE_CUSTOM;
         case EnumCount:
             DAWN_UNREACHABLE();
     }
@@ -79,10 +82,12 @@ D3D12_HEAP_FLAGS GetD3D12HeapFlags(ResourceHeapKind resourceHeapKind) {
         case Default_AllBuffersAndTextures:
         case Readback_AllBuffersAndTextures:
         case Upload_AllBuffersAndTextures:
+        case Custom_WriteBack_AllBuffersAndTextures:
             return D3D12_HEAP_FLAG_ALLOW_ALL_BUFFERS_AND_TEXTURES;
         case Default_OnlyBuffers:
         case Readback_OnlyBuffers:
         case Upload_OnlyBuffers:
+        case Custom_WriteBack_OnlyBuffers:
             return D3D12_HEAP_FLAG_ALLOW_ONLY_BUFFERS;
         case Default_OnlyNonRenderableOrDepthTextures:
             return D3D12_HEAP_FLAG_ALLOW_ONLY_NON_RT_DS_TEXTURES;
@@ -105,6 +110,8 @@ ResourceHeapKind GetResourceHeapKind(D3D12_RESOURCE_DIMENSION dimension,
                 return Default_AllBuffersAndTextures;
             case D3D12_HEAP_TYPE_READBACK:
                 return Readback_AllBuffersAndTextures;
+            case D3D12_HEAP_TYPE_CUSTOM:
+                return Custom_WriteBack_AllBuffersAndTextures;
             default:
                 DAWN_UNREACHABLE();
         }
@@ -119,6 +126,8 @@ ResourceHeapKind GetResourceHeapKind(D3D12_RESOURCE_DIMENSION dimension,
                     return Default_OnlyBuffers;
                 case D3D12_HEAP_TYPE_READBACK:
                     return Readback_OnlyBuffers;
+                case D3D12_HEAP_TYPE_CUSTOM:
+                    return Custom_WriteBack_OnlyBuffers;
                 default:
                     DAWN_UNREACHABLE();
             }
@@ -583,12 +592,7 @@ ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::CreateCommittedR
     const D3D12_RESOURCE_DESC& resourceDescriptor,
     const D3D12_CLEAR_VALUE* optimizedClearValue,
     D3D12_RESOURCE_STATES initialUsage) {
-    D3D12_HEAP_PROPERTIES heapProperties;
-    heapProperties.Type = heapType;
-    heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-    heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-    heapProperties.CreationNodeMask = 0;
-    heapProperties.VisibleNodeMask = 0;
+    D3D12_HEAP_PROPERTIES heapProperties = GetD3D12HeapPropertiesFromHeapType(heapType);
 
     // If d3d tells us the resource size is invalid, treat the error as OOM.
     // Otherwise, creating the resource could cause a device loss (too large).
