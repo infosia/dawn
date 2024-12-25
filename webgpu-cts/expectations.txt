@@ -86,6 +86,12 @@
 
 # conflicts_allowed: true
 
+# Temporary Failures due to the support of null bind group layouts in the creation of pipeline layout
+crbug.com/377836524 webgpu:api,validation,encoding,programmable,pipeline_bind_group_compat:default_bind_group_layouts_never_match,compute_pass:* [ Failure ]
+crbug.com/377836524 webgpu:api,validation,encoding,programmable,pipeline_bind_group_compat:default_bind_group_layouts_never_match,render_pass:* [ Failure ]
+crbug.com/377836524 webgpu:api,validation,encoding,programmable,pipeline_bind_group_compat:empty_bind_group_layouts_requires_empty_bind_groups,compute_pass:* [ Failure ]
+crbug.com/377836524 webgpu:api,validation,encoding,programmable,pipeline_bind_group_compat:empty_bind_group_layouts_requires_empty_bind_groups,render_pass:* [ Failure ]
+
 # SharedImage interop failures on Linux
 # Skipped instead of just Crash because of the number of failures
 crbug.com/1236130 [ linux ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:* [ Skip ]
