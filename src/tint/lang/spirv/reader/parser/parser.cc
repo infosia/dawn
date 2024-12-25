@@ -422,8 +422,15 @@ class Parser {
     /// Emit the module-scope variables.
     void EmitModuleScopeVariables() {
         for (auto& inst : spirv_context_->module()->types_values()) {
-            if (inst.opcode() == spv::Op::OpVariable) {
-                EmitVar(inst);
+            switch (inst.opcode()) {
+                case spv::Op::OpVariable:
+                    EmitVar(inst);
+                    break;
+                case spv::Op::OpUndef:
+                    AddValue(inst.result_id(), b_.Zero(Type(inst.type_id())));
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -722,7 +729,8 @@ class Parser {
     core::ir::Block* current_block_ = nullptr;
     /// A map from a SPIR-V type declaration to the corresponding Tint type object.
     Hashmap<TypeKey, const core::type::Type*, 16> types_;
-    /// A map from a SPIR-V function definition result ID to the corresponding Tint function object.
+    /// A map from a SPIR-V function definition result ID to the corresponding Tint function
+    /// object.
     Hashmap<uint32_t, core::ir::Function*, 8> functions_;
     /// A map from a SPIR-V result ID to the corresponding Tint value object.
     Hashmap<uint32_t, core::ir::Value*, 8> values_;
