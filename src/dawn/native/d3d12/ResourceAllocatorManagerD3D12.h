@@ -54,12 +54,14 @@ enum ResourceHeapKind {
     Readback_AllBuffersAndTextures,
     Upload_AllBuffersAndTextures,
     Default_AllBuffersAndTextures,
+    Custom_WriteBack_AllBuffersAndTextures,
 
     // Resource heap tier 1
     // Resource heaps only support types from a single resource category.
     Readback_OnlyBuffers,
     Upload_OnlyBuffers,
     Default_OnlyBuffers,
+    Custom_WriteBack_OnlyBuffers,
 
     Default_OnlyNonRenderableOrDepthTextures,
     Default_OnlyRenderableOrDepthTextures,
