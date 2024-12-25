@@ -508,6 +508,10 @@ class Parser {
                 case spv::Op::OpUndef:
                     Emit(b_.Construct(Type(inst.type_id())), inst.result_id());
                     break;
+                case spv::Op::OpCopyObject:
+                    // Make the result Id a pointer to the original copied value.
+                    AddValue(inst.result_id(), Value(inst.GetSingleWordOperand(2)));
+                    break;
                 case spv::Op::OpAccessChain:
                 case spv::Op::OpInBoundsAccessChain:
                     EmitAccess(inst);
