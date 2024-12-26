@@ -32,6 +32,7 @@
 #include <bitset>
 #include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "dawn/native/CachedObject.h"
@@ -56,6 +57,7 @@ ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* devi
 
 WGPUCreatePipelineAsyncStatus CreatePipelineAsyncStatusFromErrorType(InternalErrorType error);
 
+using ImmediateConstantOffsetMap = std::unordered_map<uint32_t, uint32_t>;
 struct ProgrammableStage {
     Ref<ShaderModuleBase> module;
     std::string entryPoint;
@@ -77,6 +79,8 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
     const PerStage<ProgrammableStage>& GetAllStages() const;
     bool HasStage(SingleShaderStage stage) const;
     wgpu::ShaderStage GetStageMask() const;
+    const ImmediateConstantMask& GetImmediateConstantMask() const;
+    const ImmediateConstantOffsetMap& GetImmediateConstantOffsetMap() const;
 
     ResultOrError<Ref<BindGroupLayoutBase>> GetBindGroupLayout(uint32_t groupIndex);
 
@@ -99,6 +103,9 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
                  StringView label,
                  std::vector<StageAndDescriptor> stages);
     PipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
+
+    ImmediateConstantMask mImmediateConstantMask = ImmediateConstantMask(0);
+    ImmediateConstantOffsetMap mImmediateConstantOffsetMap;
 
   private:
     MaybeError ValidateGetBindGroupLayout(BindGroupIndex group);

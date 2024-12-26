@@ -84,7 +84,7 @@ struct ComputeImmediateConstantsBytesLayout : public CommonImmediateConstantsByt
     static constexpr uint32_t NumWorkgroupsZ = offsetof(ComputeImmediateConstants, numWorkgroupsZ);
 };
 
-static uint32_t GetRawBits(ImmediateConstantMask bits) {
+uint32_t GetRawBits(ImmediateConstantMask bits) {
     return static_cast<uint32_t>(bits.to_ulong());
 }
 struct CommonImmediateConstantsBit {

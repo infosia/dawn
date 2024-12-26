@@ -49,7 +49,7 @@ namespace vulkan {
 
 // The entry point name to use when generating SPIR-V.
 constexpr char kRemappedEntryPointName[] = "dawn_entry_point";
-
+using ImmediateConstantOffsetMap = std::unordered_map<ImmediateConstantMask, uint32_t>;
 struct TransformedShaderModuleCacheKey {
     uintptr_t layoutPtr;
     std::string entryPoint;

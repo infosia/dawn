@@ -304,6 +304,14 @@ wgpu::ShaderStage PipelineBase::GetStageMask() const {
     return mStageMask;
 }
 
+const ImmediateConstantMask& PipelineBase::GetImmediateConstantMask() const {
+    return mImmediateConstantMask;
+}
+
+const ImmediateConstantOffsetMap& PipelineBase::GetImmediateConstantOffsetMap() const {
+    return mImmediateConstantOffsetMap;
+}
+
 MaybeError PipelineBase::ValidateGetBindGroupLayout(BindGroupIndex groupIndex) {
     DAWN_TRY(GetDevice()->ValidateIsAlive());
     DAWN_TRY(GetDevice()->ValidateObject(this));
@@ -346,6 +354,8 @@ size_t PipelineBase::ComputeContentHash() {
         recorder.Record(mStages[stage].constants);
     }
 
+    recorder.Record(mImmediateConstantMask);
+
     return recorder.GetContentHash();
 }
 
@@ -369,6 +379,10 @@ bool PipelineBase::EqualForCache(const PipelineBase* a, const PipelineBase* b) {
                         b->mStages[stage].constants.begin())) {
             return false;
         }
+    }
+
+    if (a->mImmediateConstantMask != b->mImmediateConstantMask) {
+        return false;
     }
 
     return true;
