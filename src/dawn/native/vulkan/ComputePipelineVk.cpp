@@ -122,6 +122,17 @@ MaybeError ComputePipeline::InitializeImpl() {
     }
     DAWN_TRY(cache->DidCompilePipeline());
 
+    // Set Immediate Constants states
+    mImmediateConstantMask |=
+        GetImmediateConstantBlockBits(offsetof(ComputeImmediateConstants, userConstants),
+                                      GetLayout()->GetImmediateDataRangeByteSize());
+
+    uint32_t offset = 0;
+    for (auto index : IterateBitSet(mImmediateConstantMask)) {
+        mImmediateConstantOffsets[index] = offset;
+        offset += kImmediateConstantElementByteSize;
+    }
+
     SetLabelImpl();
 
     return {};

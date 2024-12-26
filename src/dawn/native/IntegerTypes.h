@@ -75,6 +75,9 @@ constexpr ImmediateConstantIndex kMaxImmediateConstantIndexTyped =
 using ImmediateConstantMask =
     ityp::bitset<ImmediateConstantIndex, kMaxImmediateConstantsPerPipeline>;
 
+using ImmediateConstantOffsets =
+    ityp::array<ImmediateConstantIndex, uint32_t, kMaxImmediateConstantsPerPipeline>;
+
 // Color attachment indices represent the index in the wgpu::FragmentState::targets array, the
 // wgpu::RenderPassDescriptor::colorAttachments arry and other similar arrays.
 using ColorAttachmentIndex = TypedInteger<struct ColorAttachmentIndexT, uint8_t>;

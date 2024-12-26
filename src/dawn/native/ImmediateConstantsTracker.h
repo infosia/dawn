@@ -72,6 +72,7 @@ template <typename T>
 class UserImmediateConstantsTrackerBase {
   public:
     UserImmediateConstantsTrackerBase() {}
+
     // Setters
     void SetImmediateData(uint32_t immediateDataRangeOffset, uint32_t* values, uint32_t count) {
         uint32_t* destData = mContent.template Get<uint32_t>(offsetof(T, userConstants) +
@@ -86,6 +87,10 @@ class UserImmediateConstantsTrackerBase {
     }
 
     // Getters
+    const ImmediateConstantMask& GetPipelineImmediateConstantMask() const {
+        return mPipelineImmediateConstantMask;
+    }
+
     const ImmediateConstantMask& GetDirtyBits() const { return mDirty; }
 
     const ImmediateDataContent<T>& GetContent() const { return mContent; }
@@ -105,12 +110,14 @@ class UserImmediateConstantsTrackerBase {
 
     ImmediateDataContent<T> mContent;
     ImmediateConstantMask mDirty = ImmediateConstantMask(0);
+    ImmediateConstantMask mPipelineImmediateConstantMask = ImmediateConstantMask(0);
 };
 
 class RenderImmediateConstantsTrackerBase
     : public UserImmediateConstantsTrackerBase<RenderImmediateConstants> {
   public:
     RenderImmediateConstantsTrackerBase();
+    void OnPipelineChange(PipelineBase* pipeline);
     void SetClampFragDepth(float minClampFragDepth, float maxClampFragDepth);
     void SetFirstIndexOffset(uint32_t firstVertex, uint32_t firstInstance);
     void SetFirstVertex(uint32_t firstVertex);
@@ -121,6 +128,7 @@ class ComputeImmediateConstantsTrackerBase
     : public UserImmediateConstantsTrackerBase<ComputeImmediateConstants> {
   public:
     ComputeImmediateConstantsTrackerBase();
+    void OnPipelineChange(PipelineBase* pipeline);
     void SetNumWorkgroups(uint32_t numWorkgroupX, uint32_t numWorkgroupY, uint32_t numWorkgroupZ);
 };
 

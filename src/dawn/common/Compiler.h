@@ -121,4 +121,23 @@
 #define DAWN_ATTRIBUTE_RETURNS_NONNULL
 #endif
 
+// Defining DAWN_ENABLE_STRUCT_PADDING_WARNINGS will enable warnings when members are added to
+// structs to enforce packing. This is helpful for diagnosing unexpected struct sizes when making
+// fast cache variables.
+#if DAWN_COMPILER_IS(CLANG)
+#define DAWN_ENABLE_STRUCT_PADDING_WARNINGS \
+    _Pragma("clang diagnostic push") _Pragma("clang diagnostic error \"-Wpadded\"")
+#define DAWN_DISABLE_STRUCT_PADDING_WARNINGS _Pragma("clang diagnostic pop")
+#elif DAWN_COMPILER_IS(GCC)
+#define DAWN_ENABLE_STRUCT_PADDING_WARNINGS \
+    _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic error \"-Wpadded\"")
+#define DAWN_DISABLE_STRUCT_PADDING_WARNINGS _Pragma("GCC diagnostic pop")
+#elif DAWN_COMPILER_IS(MSVC)
+#define DAWN_ENABLE_STRUCT_PADDING_WARNINGS __pragma(warning(push)) __pragma(warning(error : 4820))
+#define DAWN_DISABLE_STRUCT_PADDING_WARNINGS __pragma(warning(pop))
+#else
+#define DAWN_ENABLE_STRUCT_PADDING_WARNINGS
+#define DAWN_DISABLE_STRUCT_PADDING_WARNINGS
+#endif
+
 #endif  // SRC_DAWN_COMMON_COMPILER_H_
