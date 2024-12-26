@@ -88,7 +88,10 @@ struct VertexBufferInfo {
 class RenderPipelineBase : public PipelineBase,
                            public ContentLessObjectCacheable<RenderPipelineBase> {
   public:
-    RenderPipelineBase(DeviceBase* device, const UnpackedPtr<RenderPipelineDescriptor>& descriptor);
+    RenderPipelineBase(
+        DeviceBase* device,
+        const UnpackedPtr<RenderPipelineDescriptor>& descriptor,
+        std::optional<ImmediateConstantMask> requiredImmediateConstants = std::nullopt);
     ~RenderPipelineBase() override;
 
     static Ref<RenderPipelineBase> MakeError(DeviceBase* device, StringView label);
