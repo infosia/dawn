@@ -31,6 +31,7 @@
 #include <unordered_map>
 
 #include "dawn/common/ityp_bitset.h"
+#include "dawn/native/EnumClassBitmasks.h"
 #include "dawn/native/IntegerTypes.h"
 
 namespace dawn::native {
@@ -89,5 +90,11 @@ struct ImmediateConstant {
 const ImmediateConstant& GetImmediateConstant(ImmediateConstantType type);
 
 }  // namespace dawn::native
+
+// Enable dawn enum bitmask for Immediate constant types.
+template <>
+struct wgpu::IsWGPUBitmask<dawn::native::ImmediateConstantType> {
+    static constexpr bool enable = true;
+};
 
 #endif  // SRC_DAWN_NATIVE_IMMEDIATECONSTANTSLAYOUT_H_
