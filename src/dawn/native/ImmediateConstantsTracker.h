@@ -64,6 +64,14 @@ template <typename T>
 class CommonImmediateConstantsTrackerBase {
   public:
     CommonImmediateConstantsTrackerBase() {}
+
+    // Pipeline change resets all dirty bits.
+    // TODO(crbug.com/366291600): Support immediate data compatible.
+    void OnPipelineChange(PipelineBase* pipeline) {
+        mPipelineImmediateConstantMask = pipeline->GetImmediateConstantMask();
+        mDirty.reset();
+    }
+
     // Setters
     void SetImmediateData(uint32_t rangeOffset,
                           uint32_t* values,
@@ -83,6 +91,10 @@ class CommonImmediateConstantsTrackerBase {
     }
 
     // Getters
+    const ImmediateConstantMask& GetPipelineImmediateConstantMask() const {
+        return mPipelineImmediateConstantMask;
+    }
+
     const ImmediateConstantMask& GetDirtyBits() const { return mDirty; }
 
     const ImmediateDataContent<T>& GetContent() const { return mContent; }
@@ -92,6 +104,7 @@ class CommonImmediateConstantsTrackerBase {
   protected:
     ImmediateDataContent<T> mContent;
     ImmediateConstantMask mDirty = ImmediateConstantMask(0);
+    ImmediateConstantMask mPipelineImmediateConstantMask = ImmediateConstantMask(0);
 };
 
 class RenderImmediateConstantsTrackerBase
