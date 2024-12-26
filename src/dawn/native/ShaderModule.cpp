@@ -680,6 +680,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
 
     metadata->usedInterStageVariables.resize(maxInterStageShaderVariables);
     metadata->interStageVariables.resize(maxInterStageShaderVariables);
+    metadata->immediateDataRangeByteSize = entryPoint.push_constant_size;
 
     // Vertex shader specific reflection.
     if (metadata->stage == SingleShaderStage::Vertex) {
