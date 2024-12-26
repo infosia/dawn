@@ -31,6 +31,7 @@
 #include <unordered_map>
 
 #include "dawn/common/ityp_bitset.h"
+#include "dawn/native/EnumClassBitmasks.h"
 #include "dawn/native/IntegerTypes.h"
 
 namespace dawn::native {
