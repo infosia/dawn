@@ -35,12 +35,14 @@
 #include "dawn/common/BitSetIterator.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/ityp_array.h"
+#include "dawn/common/ityp_bitset.h"
 #include "dawn/common/ityp_span.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/InternalPipelineStore.h"
 #include "dawn/native/ObjectContentHasher.h"
@@ -964,8 +966,10 @@ std::vector<StageAndDescriptor> GetRenderStagesAndSetPlaceholderShader(
 
 // RenderPipelineBase
 
-RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
-                                       const UnpackedPtr<RenderPipelineDescriptor>& descriptor)
+RenderPipelineBase::RenderPipelineBase(
+    DeviceBase* device,
+    const UnpackedPtr<RenderPipelineDescriptor>& descriptor,
+    std::optional<ImmediateConstantMask> requiredImmediateConstants)
     : PipelineBase(device,
                    descriptor->layout,
                    descriptor->label,
@@ -1092,6 +1096,58 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
     if (HasStage(SingleShaderStage::Vertex)) {
         mUsesVertexIndex = GetStage(SingleShaderStage::Vertex).metadata->usesVertexIndex;
         mUsesInstanceIndex = GetStage(SingleShaderStage::Vertex).metadata->usesInstanceIndex;
+    }
+
+    // Set up immediate constant layout.
+    uint32_t offset = 0;
+    uint32_t immediateDataByteSize = GetLayout()->GetImmediateDataRangeByteSize();
+    uint32_t immediateDataCounts = immediateDataByteSize / kImmediateConstantElementByteSize;
+
+    for (uint32_t i = 0; i < immediateDataCounts; i++) {
+        ImmediateConstantMask immediateDataBit;
+        immediateDataBit = 1u << i;
+        mImmediateConstantMask |= immediateDataBit;
+        mImmediateConstantOffsetMap.insert({GetRawBits(immediateDataBit), offset});
+        offset += kImmediateConstantElementByteSize;
+    }
+
+    if (requiredImmediateConstants) {
+        uint32_t requiredBits = GetRawBits(requiredImmediateConstants.value());
+        if (requiredBits & RenderImmediateConstantsBit::MinClampFragDepth) {
+            if (UsesFragDepth()) {
+                mImmediateConstantMask |= RenderImmediateConstantsBit::MinClampFragDepth;
+                mImmediateConstantOffsetMap.insert(
+                    {RenderImmediateConstantsBit::MinClampFragDepth, offset});
+                offset += kImmediateConstantElementByteSize;
+            }
+        }
+
+        if (requiredBits & RenderImmediateConstantsBit::MaxClampFragDepth) {
+            if (UsesFragDepth()) {
+                mImmediateConstantMask |= RenderImmediateConstantsBit::MaxClampFragDepth;
+                mImmediateConstantOffsetMap.insert(
+                    {RenderImmediateConstantsBit::MaxClampFragDepth, offset});
+                offset += kImmediateConstantElementByteSize;
+            }
+        }
+
+        if (requiredBits & RenderImmediateConstantsBit::FirstVertex) {
+            if (UsesVertexIndex()) {
+                mImmediateConstantMask |= RenderImmediateConstantsBit::FirstVertex;
+                mImmediateConstantOffsetMap.insert(
+                    {RenderImmediateConstantsBit::FirstVertex, offset});
+                offset += kImmediateConstantElementByteSize;
+            }
+        }
+
+        if (requiredBits & RenderImmediateConstantsBit::FirstInstance) {
+            if (UsesInstanceIndex()) {
+                mImmediateConstantMask |= RenderImmediateConstantsBit::FirstInstance;
+                mImmediateConstantOffsetMap.insert(
+                    {RenderImmediateConstantsBit::FirstInstance, offset});
+                offset += kImmediateConstantElementByteSize;
+            }
+        }
     }
 
     SetContentHash(ComputeContentHash());
