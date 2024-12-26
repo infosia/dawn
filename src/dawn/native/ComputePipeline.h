@@ -38,8 +38,10 @@ namespace dawn::native {
 class DeviceBase;
 struct EntryPointMetadata;
 
-MaybeError ValidateComputePipelineDescriptor(DeviceBase* device,
-                                             const ComputePipelineDescriptor* descriptor);
+MaybeError ValidateComputePipelineDescriptor(
+    DeviceBase* device,
+    const ComputePipelineDescriptor* descriptor,
+    std::optional<ImmediateConstantMask> requiredImmediateConstants = std::nullopt);
 
 class ComputePipelineBase : public PipelineBase,
                             public ContentLessObjectCacheable<ComputePipelineBase> {
@@ -52,6 +54,8 @@ class ComputePipelineBase : public PipelineBase,
 
     ObjectType GetType() const override;
 
+    bool UsesNumworkgroups() const;
+
     // Functors necessary for the unordered_set<ComputePipelineBase*>-based cache.
     struct EqualityFunc {
         bool operator()(const ComputePipelineBase* a, const ComputePipelineBase* b) const;
@@ -62,6 +66,7 @@ class ComputePipelineBase : public PipelineBase,
 
   private:
     ComputePipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
+    bool mUsesNumworkgroups = false;
 };
 
 }  // namespace dawn::native

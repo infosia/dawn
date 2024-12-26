@@ -53,14 +53,49 @@ MaybeError ValidateComputePipelineDescriptor(DeviceBase* device,
 
 // ComputePipelineBase
 
-ComputePipelineBase::ComputePipelineBase(DeviceBase* device,
-                                         const UnpackedPtr<ComputePipelineDescriptor>& descriptor)
+ComputePipelineBase::ComputePipelineBase(
+    DeviceBase* device,
+    const UnpackedPtr<ComputePipelineDescriptor>& descriptor,
+    std::optional<ImmediateConstantMask> requiredImmediateConstants = std::nullopt)
     : PipelineBase(
           device,
           descriptor->layout,
           descriptor->label,
           {{SingleShaderStage::Compute, descriptor->compute.module, descriptor->compute.entryPoint,
             descriptor->compute.constantCount, descriptor->compute.constants}}) {
+    mUsesNumworkgroups = GetStage(SingleShaderStage::Compute).metadata->usesNumWorkgroups;
+
+    if (requiredImmediateConstants) {
+        uint32_t offset = GetLayout()->GetImmediateDataRangeByteSize();
+        for (auto i : IterateBitSet(requiredImmediateConstants)) {
+            switch (i) {
+                case ComputeImmediateConstantsBit::NumWorkgroupsX:
+                    if (UsesNumworkgroups()) {
+                        mInternalImmediateConstantOffsetMap.insert(
+                            {ComputeImmediateConstantsBit::NumWorkgroupsX, offset});
+                        offset += kImmediateConstantElementByteSize;
+                    }
+                    break;
+                case ComputeImmediateConstantsBit::NumWorkgroupsY:
+                    if (UsesNumworkgroups()) {
+                        mInternalImmediateConstantOffsetMap.insert(
+                            {ComputeImmediateConstantsBit::NumWorkgroupsY, offset});
+                        offset += kImmediateConstantElementByteSize;
+                    }
+                    break;
+                case ComputeImmediateConstantsBit::NumWorkgroupsZ:
+                    if (UsesNumworkgroups()) {
+                        mInternalImmediateConstantOffsetMap.insert(
+                            {ComputeImmediateConstantsBit::NumWorkgroupsZ, offset});
+                        offset += kImmediateConstantElementByteSize;
+                    }
+                    break;
+                default:
+                    DAWN_UNREACHABLE();
+            }
+        }
+    }
+
     SetContentHash(ComputeContentHash());
     GetObjectTrackingList()->Track(this);
 
@@ -97,6 +132,10 @@ Ref<ComputePipelineBase> ComputePipelineBase::MakeError(DeviceBase* device, Stri
 
 ObjectType ComputePipelineBase::GetType() const {
     return ObjectType::ComputePipeline;
+}
+
+bool ComputePipelineBase::ComputePipelineBase::UsesNumworkgroups() const {
+    return mUsesNumworkgroups;
 }
 
 bool ComputePipelineBase::EqualityFunc::operator()(const ComputePipelineBase* a,

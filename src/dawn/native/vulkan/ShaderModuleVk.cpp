@@ -213,7 +213,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const ProgrammableStage& programmableStage,
     const PipelineLayout* layout,
     bool clampFragDepth,
-    bool emitPointSize) {
+    bool emitPointSize const) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
 
     ScopedTintICEHandler scopedICEHandler(GetDevice());

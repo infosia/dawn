@@ -340,13 +340,19 @@ VkStencilOp VulkanStencilOp(wgpu::StencilOperation op) {
     DAWN_UNREACHABLE();
 }
 
+// Possible required internal immediate constants for RenderPipelineVk:
+// - ClampFragDepth
+static constexpr ImmediateConstantMask kRequiredInternalImmediateConstantBits =
+    RenderImmediateConstantsBit::MinClampFragDepth | RenderImmediateConstantsBit::MaxClampFragDepth;
+
 }  // anonymous namespace
 
 // static
 Ref<RenderPipeline> RenderPipeline::CreateUninitialized(
     Device* device,
     const UnpackedPtr<RenderPipelineDescriptor>& descriptor) {
-    return AcquireRef(new RenderPipeline(device, descriptor));
+    return AcquireRef(
+        new RenderPipeline(device, descriptor, kRequiredInternalImmediateConstantBits));
 }
 
 MaybeError RenderPipeline::InitializeImpl() {

@@ -31,6 +31,7 @@
 #include <cmath>
 #include <string>
 
+#include "ImmediateConstantsLayout.h"
 #include "absl/strings/str_format.h"
 #include "dawn/common/BitSetIterator.h"
 #include "dawn/common/Enumerator.h"
@@ -965,7 +966,9 @@ std::vector<StageAndDescriptor> GetRenderStagesAndSetPlaceholderShader(
 // RenderPipelineBase
 
 RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
-                                       const UnpackedPtr<RenderPipelineDescriptor>& descriptor)
+                                       const UnpackedPtr<RenderPipelineDescriptor>& descriptor,
+                                       std::optional < ImmediateConstantMask >>
+                                           requiredImmediateConstants = std::nullopt)
     : PipelineBase(device,
                    descriptor->layout,
                    descriptor->label,
@@ -1092,6 +1095,44 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
     if (HasStage(SingleShaderStage::Vertex)) {
         mUsesVertexIndex = GetStage(SingleShaderStage::Vertex).metadata->usesVertexIndex;
         mUsesInstanceIndex = GetStage(SingleShaderStage::Vertex).metadata->usesInstanceIndex;
+    }
+
+    if (requiredImmediateConstants) {
+        uint32_t offset = GetLayout()->GetImmediateDataRangeByteSize();
+        for (auto i : IterateBitSet(requiredImmediateConstants)) {
+            switch (i) {
+                case RenderImmediateConstantsBit::MinClampFragDepth:
+                    if (UsesFragDepth()) {
+                        mInternalImmediateConstantOffsetMap.insert(
+                            {RenderImmediateConstantsBit::MinClampFragDepth, offset});
+                        offset += kImmediateConstantElementByteSize;
+                    }
+                    break;
+                case RenderImmediateConstantsBit::MaxClampFragDepth:
+                    if (UsesFragDepth()) {
+                        mInternalImmediateConstantOffsetMap.insert(
+                            {RenderImmediateConstantsBit::MaxClampFragDepth, offset});
+                        offset += kImmediateConstantElementByteSize;
+                    }
+                    break;
+                case RenderImmediateConstantsBit::FirstVertex:
+                    if (UsesVertexIndex()) {
+                        mInternalImmediateConstantOffsetMap.insert(
+                            {RenderImmediateConstantsBit::FirstVertex, offset});
+                        offset += kImmediateConstantElementByteSize;
+                    }
+                    break;
+                case RenderImmediateConstantsBit::FirstFirstInstance:
+                    if (UsesInstanceIndex()) {
+                        mInternalImmediateConstantOffsetMap.insert(
+                            {RenderImmediateConstantsBit::FirstInstance, offset});
+                        offset += kImmediateConstantElementByteSize;
+                    }
+                    break;
+                default:
+                    DAWN_UNREACHABLE();
+            }
+        }
     }
 
     SetContentHash(ComputeContentHash());
