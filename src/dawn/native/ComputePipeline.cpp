@@ -27,8 +27,10 @@
 
 #include "dawn/native/ComputePipeline.h"
 
+#include "dawn/common/ityp_bitset.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/ObjectType_autogen.h"
 
@@ -53,14 +55,48 @@ MaybeError ValidateComputePipelineDescriptor(DeviceBase* device,
 
 // ComputePipelineBase
 
-ComputePipelineBase::ComputePipelineBase(DeviceBase* device,
-                                         const UnpackedPtr<ComputePipelineDescriptor>& descriptor)
+ComputePipelineBase::ComputePipelineBase(
+    DeviceBase* device,
+    const UnpackedPtr<ComputePipelineDescriptor>& descriptor,
+    std::optional<ImmediateConstantType> requiredInternalImmediateConstantsType)
     : PipelineBase(
           device,
           descriptor->layout,
           descriptor->label,
           {{SingleShaderStage::Compute, descriptor->compute.module, descriptor->compute.entryPoint,
             descriptor->compute.constantCount, descriptor->compute.constants}}) {
+    mUsesNumworkgroups = GetStage(SingleShaderStage::Compute).metadata->usesNumWorkgroups;
+
+    // Set up immediate constant layout.
+    uint32_t offset = 0;
+    auto AddImmediateConstantLayout = [&offset, this](const ImmediateConstant& immediateConstant) {
+        ImmediateConstantMask immediateConstantBlockBits = immediateConstant.GetConstantBlockBits();
+
+        for (auto index : IterateBitSet(immediateConstantBlockBits)) {
+            mImmediateConstantOffsetMap.insert({static_cast<uint32_t>(index), offset});
+            offset += kImmediateConstantElementByteSize;
+        }
+
+        mImmediateConstantMask |= immediateConstantBlockBits;
+    };
+
+    uint32_t immediateDataByteSize = GetLayout()->GetImmediateDataRangeByteSize();
+    if (immediateDataByteSize) {
+        AddImmediateConstantLayout(
+            device->GetImmediateConstant(ImmediateConstantType::ImmediateData));
+    }
+
+    if (requiredInternalImmediateConstantsType) {
+        ImmediateConstantType requiredType = requiredInternalImmediateConstantsType.value();
+
+        if (requiredType & ImmediateConstantType::NumWorkgroups) {
+            if (UsesNumworkgroups()) {
+                AddImmediateConstantLayout(
+                    device->GetImmediateConstant(ImmediateConstantType::NumWorkgroups));
+            }
+        }
+    }
+
     SetContentHash(ComputeContentHash());
     GetObjectTrackingList()->Track(this);
 
@@ -97,6 +133,10 @@ Ref<ComputePipelineBase> ComputePipelineBase::MakeError(DeviceBase* device, Stri
 
 ObjectType ComputePipelineBase::GetType() const {
     return ObjectType::ComputePipeline;
+}
+
+bool ComputePipelineBase::ComputePipelineBase::UsesNumworkgroups() const {
+    return mUsesNumworkgroups;
 }
 
 bool ComputePipelineBase::EqualityFunc::operator()(const ComputePipelineBase* a,

@@ -38,6 +38,10 @@ uint32_t ImmediateConstant::GetRawStartIndex() const {
     return static_cast<uint32_t>(startIndex);
 }
 
+ImmediateConstantMask ImmediateConstant::GetConstantBlockBits() const {
+    return ImmediateConstantMask(constantBlockBits);
+}
+
 ImmediateConstantsTable BuildImmediateConstantsTable() {
     ImmediateConstantsTable table;
 
