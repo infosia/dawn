@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/PipelineCacheVk.h"
@@ -345,7 +346,12 @@ VkStencilOp VulkanStencilOp(wgpu::StencilOperation op) {
 Ref<RenderPipeline> RenderPipeline::CreateUninitialized(
     Device* device,
     const UnpackedPtr<RenderPipelineDescriptor>& descriptor) {
-    return AcquireRef(new RenderPipeline(device, descriptor));
+    // Possible required internal immediate constants for RenderPipelineVk:
+    // - ClampFragDepth
+    const ImmediateConstantMask requiredInternalConstants = GetImmediateConstantBlockBits(
+        offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
+
+    return AcquireRef(new RenderPipeline(device, descriptor, requiredInternalConstants));
 }
 
 MaybeError RenderPipeline::InitializeImpl() {
@@ -613,6 +619,23 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     DAWN_TRY(cache->DidCompilePipeline());
+
+    // Set immediate constant status
+    mImmediateConstantMask |=
+        GetImmediateConstantBlockBits(offsetof(RenderImmediateConstants, userConstants),
+                                      GetLayout()->GetImmediateDataRangeByteSize());
+
+    // Gather list of internal immediate constants used by this pipeline
+    if (UsesFragDepth() && !HasUnclippedDepth()) {
+        mImmediateConstantMask |= GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
+    }
+
+    uint32_t offset = 0;
+    for (auto index : IterateBitSet(mImmediateConstantMask)) {
+        mImmediateConstantOffsets[index] = offset;
+        offset += kImmediateConstantElementByteSize;
+    }
 
     SetLabelImpl();
 

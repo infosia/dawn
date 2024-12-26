@@ -32,6 +32,7 @@
 #include <bitset>
 #include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "dawn/native/CachedObject.h"
@@ -56,6 +57,7 @@ ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* devi
 
 WGPUCreatePipelineAsyncStatus CreatePipelineAsyncStatusFromErrorType(InternalErrorType error);
 
+using ImmediateConstantOffsetMap = std::unordered_map<uint32_t, uint32_t>;
 struct ProgrammableStage {
     Ref<ShaderModuleBase> module;
     std::string entryPoint;
@@ -65,6 +67,8 @@ struct ProgrammableStage {
 
     PipelineConstantEntries constants;
 };
+
+uint32_t GetRawBits(ImmediateConstantMask bits);
 
 class PipelineBase : public ApiObjectBase, public CachedObject {
   public:
@@ -77,6 +81,8 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
     const PerStage<ProgrammableStage>& GetAllStages() const;
     bool HasStage(SingleShaderStage stage) const;
     wgpu::ShaderStage GetStageMask() const;
+    const ImmediateConstantMask& GetImmediateConstantMask() const;
+    const ImmediateConstantOffsets& GetImmediateConstantOffsets() const;
 
     ResultOrError<Ref<BindGroupLayoutBase>> GetBindGroupLayout(uint32_t groupIndex);
 
@@ -93,12 +99,17 @@ class PipelineBase : public ApiObjectBase, public CachedObject {
     // Initialize() should only be called once by the frontend.
     MaybeError Initialize(std::optional<ScopedUseShaderPrograms> scopedUsePrograms = std::nullopt);
 
+    void SetImmediateConstantMaskForTest(ImmediateConstantMask immediateConstantMask);
+
   protected:
     PipelineBase(DeviceBase* device,
                  PipelineLayoutBase* layout,
                  StringView label,
                  std::vector<StageAndDescriptor> stages);
     PipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
+
+    ImmediateConstantMask mImmediateConstantMask = ImmediateConstantMask(0);
+    ImmediateConstantOffsets mImmediateConstantOffsets = {};
 
   private:
     MaybeError ValidateGetBindGroupLayout(BindGroupIndex group);

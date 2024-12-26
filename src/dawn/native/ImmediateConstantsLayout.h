@@ -30,7 +30,9 @@
 
 #include <unordered_map>
 
+#include "dawn/common/compiler.h"
 #include "dawn/common/ityp_bitset.h"
+#include "dawn/native/EnumClassBitmasks.h"
 #include "dawn/native/IntegerTypes.h"
 
 namespace dawn::native {
@@ -39,17 +41,24 @@ namespace dawn::native {
 // NOTE: 'offsetof' doesn't support non-standard-layout structs. So use
 // aggregate instead of inheritance for RenderImmediateConstants and
 // ComputeImmediateConstants.
+DAWN_ENABLE_STRUCT_PADDING_WARNINGS
 struct UserImmediateConstants {
     uint32_t userImmediateData[kMaxExternalImmediateConstantsPerPipeline];
 };
+DAWN_DISABLE_STRUCT_PADDING_WARNINGS
+static_assert(sizeof(UserImmediateConstants) == 16u);
 
+DAWN_ENABLE_STRUCT_PADDING_WARNINGS
 struct ClampFragDepthArgs {
     float minClampFragDepth;
     float maxClampFragDepth;
 };
+DAWN_DISABLE_STRUCT_PADDING_WARNINGS
+static_assert(sizeof(ClampFragDepthArgs) == 8u);
 
 // Define render pipeline immediate data layout. Append members to
 // expand the layout.
+DAWN_ENABLE_STRUCT_PADDING_WARNINGS
 struct RenderImmediateConstants {
     UserImmediateConstants userConstants;
 
@@ -59,21 +68,27 @@ struct RenderImmediateConstants {
     uint32_t firstVertex;
     uint32_t firstInstance;
 };
+DAWN_DISABLE_STRUCT_PADDING_WARNINGS
 static_assert(sizeof(RenderImmediateConstants) == 32u);
 
+DAWN_ENABLE_STRUCT_PADDING_WARNINGS
 struct NumWorkgroupsDimensions {
     uint32_t numWorkgroupsX;
     uint32_t numWorkgroupsY;
     uint32_t numWorkgroupsZ;
 };
+DAWN_DISABLE_STRUCT_PADDING_WARNINGS
+static_assert(sizeof(NumWorkgroupsDimensions) == 12u);
 
 // Define compute pipeline immediate data layout. Append members to
 // expand the layout.
+DAWN_ENABLE_STRUCT_PADDING_WARNINGS
 struct ComputeImmediateConstants {
     UserImmediateConstants userConstants;
 
     NumWorkgroupsDimensions numWorkgroups;
 };
+DAWN_DISABLE_STRUCT_PADDING_WARNINGS
 static_assert(sizeof(ComputeImmediateConstants) == 28u);
 
 // Convert byte sizes and offsets into immediate constant indices and offsets
