@@ -57,6 +57,11 @@ MaybeError ComputePipeline::InitializeImpl() {
     // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
     StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
 
+    // Set Immediate Constants states
+    mPipelineMask |=
+        GetImmediateConstantBlockBits(offsetof(ComputeImmediateConstants, userConstants),
+                                      GetLayout()->GetImmediateDataRangeByteSize());
+
     // Compute pipeline doesn't have clamp depth feature.
     // TODO(crbug.com/366291600): Setting immediate data size if needed.
     DAWN_TRY(InitializeBase(layout, 0));

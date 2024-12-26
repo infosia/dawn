@@ -27,8 +27,10 @@
 
 #include "dawn/native/ComputePipeline.h"
 
+#include "dawn/common/ityp_bitset.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/ObjectType_autogen.h"
 

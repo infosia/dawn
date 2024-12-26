@@ -296,7 +296,6 @@ source_set("sources") {
     "Format.cpp",
     "Format.h",
     "Forward.h",
-    "ImmediateConstantsLayout.cpp",
     "ImmediateConstantsLayout.h",
     "ImmediateConstantsTracker.cpp",
     "ImmediateConstantsTracker.h",
