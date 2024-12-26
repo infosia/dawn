@@ -44,13 +44,17 @@ MaybeError ValidateComputePipelineDescriptor(DeviceBase* device,
 class ComputePipelineBase : public PipelineBase,
                             public ContentLessObjectCacheable<ComputePipelineBase> {
   public:
-    ComputePipelineBase(DeviceBase* device,
-                        const UnpackedPtr<ComputePipelineDescriptor>& descriptor);
+    ComputePipelineBase(
+        DeviceBase* device,
+        const UnpackedPtr<ComputePipelineDescriptor>& descriptor,
+        std::optional<ImmediateConstantMask> requiredImmediateConstants = std::nullopt);
     ~ComputePipelineBase() override;
 
     static Ref<ComputePipelineBase> MakeError(DeviceBase* device, StringView label);
 
     ObjectType GetType() const override;
+
+    bool UsesNumworkgroups() const;
 
     // Functors necessary for the unordered_set<ComputePipelineBase*>-based cache.
     struct EqualityFunc {
@@ -62,6 +66,7 @@ class ComputePipelineBase : public PipelineBase,
 
   private:
     ComputePipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
+    bool mUsesNumworkgroups = false;
 };
 
 }  // namespace dawn::native
