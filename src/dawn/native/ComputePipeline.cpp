@@ -27,8 +27,10 @@
 
 #include "dawn/native/ComputePipeline.h"
 
+#include "dawn/common/ityp_bitset.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/ObjectType_autogen.h"
 
@@ -54,13 +56,35 @@ MaybeError ValidateComputePipelineDescriptor(DeviceBase* device,
 // ComputePipelineBase
 
 ComputePipelineBase::ComputePipelineBase(DeviceBase* device,
-                                         const UnpackedPtr<ComputePipelineDescriptor>& descriptor)
+                                         const UnpackedPtr<ComputePipelineDescriptor>& descriptor,
+                                         ImmediateConstantMask requiredInternalImmediateConstants)
     : PipelineBase(
           device,
           descriptor->layout,
           descriptor->label,
           {{SingleShaderStage::Compute, descriptor->compute.module, descriptor->compute.entryPoint,
             descriptor->compute.constantCount, descriptor->compute.constants}}) {
+    mUsesNumworkgroups = GetStage(SingleShaderStage::Compute).metadata->usesNumWorkgroups;
+
+    if (GetLayout()->GetImmediateDataRangeByteSize()) {
+        mImmediateConstantMask |= GetImmediateConstantBlockBits(
+            offsetof(ComputeImmediateConstants, userConstants), sizeof(UserImmediateConstants));
+    }
+
+    // Gather list of internal immediate constants used by this pipeline
+    ImmediateConstantMask pipelineInternalConstants;
+    if (UsesNumworkgroups()) {
+        pipelineInternalConstants |= GetImmediateConstantBlockBits(
+            offsetof(ComputeImmediateConstants, numWorkgroups), sizeof(NumWorkgroupsDimensions));
+    }
+
+    uint32_t offset = 0;
+    mImmediateConstantMask |= (pipelineInternalConstants & requiredInternalImmediateConstants);
+    for (auto index : IterateBitSet(mImmediateConstantMask)) {
+        mImmediateConstantOffsetMap.insert({static_cast<uint32_t>(index), offset});
+        offset += kImmediateConstantElementByteSize;
+    }
+
     SetContentHash(ComputeContentHash());
     GetObjectTrackingList()->Track(this);
 
@@ -97,6 +121,10 @@ Ref<ComputePipelineBase> ComputePipelineBase::MakeError(DeviceBase* device, Stri
 
 ObjectType ComputePipelineBase::GetType() const {
     return ObjectType::ComputePipeline;
+}
+
+bool ComputePipelineBase::ComputePipelineBase::UsesNumworkgroups() const {
+    return mUsesNumworkgroups;
 }
 
 bool ComputePipelineBase::EqualityFunc::operator()(const ComputePipelineBase* a,

@@ -31,6 +31,7 @@
 #include <unordered_map>
 
 #include "dawn/common/ityp_bitset.h"
+#include "dawn/native/EnumClassBitmasks.h"
 #include "dawn/native/IntegerTypes.h"
 
 namespace dawn::native {
@@ -42,11 +43,13 @@ namespace dawn::native {
 struct UserImmediateConstants {
     uint32_t userImmediateData[kMaxExternalImmediateConstantsPerPipeline];
 };
+static_assert(sizeof(UserImmediateConstants) == 16u);
 
 struct ClampFragDepthArgs {
     float minClampFragDepth;
     float maxClampFragDepth;
 };
+static_assert(sizeof(ClampFragDepthArgs) == 8u);
 
 // Define render pipeline immediate data layout. Append members to
 // expand the layout.
@@ -66,6 +69,7 @@ struct NumWorkgroupsDimensions {
     uint32_t numWorkgroupsY;
     uint32_t numWorkgroupsZ;
 };
+static_assert(sizeof(NumWorkgroupsDimensions) == 12u);
 
 // Define compute pipeline immediate data layout. Append members to
 // expand the layout.

@@ -31,6 +31,7 @@
 #include "dawn/common/ContentLessObjectCacheable.h"
 #include "dawn/common/NonCopyable.h"
 #include "dawn/native/Forward.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/Pipeline.h"
 
 namespace dawn::native {
@@ -44,13 +45,17 @@ MaybeError ValidateComputePipelineDescriptor(DeviceBase* device,
 class ComputePipelineBase : public PipelineBase,
                             public ContentLessObjectCacheable<ComputePipelineBase> {
   public:
-    ComputePipelineBase(DeviceBase* device,
-                        const UnpackedPtr<ComputePipelineDescriptor>& descriptor);
+    ComputePipelineBase(
+        DeviceBase* device,
+        const UnpackedPtr<ComputePipelineDescriptor>& descriptor,
+        ImmediateConstantMask requiredInternalImmediateConstants = ImmediateConstantMask(0u));
     ~ComputePipelineBase() override;
 
     static Ref<ComputePipelineBase> MakeError(DeviceBase* device, StringView label);
 
     ObjectType GetType() const override;
+
+    bool UsesNumworkgroups() const;
 
     // Functors necessary for the unordered_set<ComputePipelineBase*>-based cache.
     struct EqualityFunc {
@@ -62,6 +67,7 @@ class ComputePipelineBase : public PipelineBase,
 
   private:
     ComputePipelineBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
+    bool mUsesNumworkgroups = false;
 };
 
 }  // namespace dawn::native
