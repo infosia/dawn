@@ -35,12 +35,14 @@
 #include "dawn/common/BitSetIterator.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/ityp_array.h"
+#include "dawn/common/ityp_bitset.h"
 #include "dawn/common/ityp_span.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/InternalPipelineStore.h"
 #include "dawn/native/ObjectContentHasher.h"
@@ -960,7 +962,8 @@ std::vector<StageAndDescriptor> GetRenderStagesAndSetPlaceholderShader(
 // RenderPipelineBase
 
 RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
-                                       const UnpackedPtr<RenderPipelineDescriptor>& descriptor)
+                                       const UnpackedPtr<RenderPipelineDescriptor>& descriptor,
+                                       ImmediateConstantMask requiredInternalImmediateConstants)
     : PipelineBase(device,
                    descriptor->layout,
                    descriptor->label,
@@ -1082,6 +1085,35 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
     if (HasStage(SingleShaderStage::Vertex)) {
         mUsesVertexIndex = GetStage(SingleShaderStage::Vertex).metadata->usesVertexIndex;
         mUsesInstanceIndex = GetStage(SingleShaderStage::Vertex).metadata->usesInstanceIndex;
+    }
+
+    // User immediate data always start at 0.
+    if (GetLayout()->GetImmediateDataRangeByteSize()) {
+        mImmediateConstantMask |= GetImmediateConstantBlockBits(0, sizeof(UserImmediateConstants));
+    }
+
+    // Gather list of internal immediate constants used by this pipeline
+    ImmediateConstantMask pipelineInternalConstants;
+    if (UsesFragDepth() && !HasUnclippedDepth()) {
+        pipelineInternalConstants |= GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
+    }
+
+    if (UsesVertexIndex()) {
+        pipelineInternalConstants |= GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, firstVertex), sizeof(uint32_t));
+    }
+
+    if (UsesInstanceIndex()) {
+        pipelineInternalConstants |= GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, firstInstance), sizeof(uint32_t));
+    }
+
+    uint32_t offset = 0;
+    mImmediateConstantMask |= (pipelineInternalConstants & requiredInternalImmediateConstants);
+    for (auto index : IterateBitSet(mImmediateConstantMask)) {
+        mImmediateConstantOffsetMap.insert({static_cast<uint32_t>(index), offset});
+        offset += kImmediateConstantElementByteSize;
     }
 
     SetContentHash(ComputeContentHash());
