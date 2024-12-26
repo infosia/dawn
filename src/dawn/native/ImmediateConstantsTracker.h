@@ -64,6 +64,21 @@ template <typename T>
 class UserImmediateConstantsTrackerBase {
   public:
     UserImmediateConstantsTrackerBase() {}
+
+    // Render pipeline changes reset all pipeline related dirty bits and
+    // keep frag depth dirty bits which related to viewport.
+    // TODO(crbug.com/366291600): Support immediate data compatible.
+    void OnPipelineChange(RenderPipelineBase* pipeline) {
+        // frag depth args are related to viewport instead of pipeline
+        static ImmediateConstantMask fragDepth = GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
+        mDirty &= fragDepth;
+    }
+
+    // Pipeline changes reset all dirty bits.
+    // TODO(crbug.com/366291600): Support immediate data compatible.
+    void OnPipelineChange(ComputePipelineBase* pipeline) { mDirty.reset(); }
+
     // Setters
     void SetImmediateData(uint32_t immediateDataRangeOffset, uint32_t* values, uint32_t count) {
         // User immediate data block starts from 0.
@@ -90,6 +105,10 @@ class UserImmediateConstantsTrackerBase {
     }
 
     // Getters
+    const ImmediateConstantMask& GetPipelineImmediateConstantMask() const {
+        return mPipelineImmediateConstantMask;
+    }
+
     const ImmediateConstantMask& GetDirtyBits() const { return mDirty; }
 
     const ImmediateDataContent<T>& GetContent() const { return mContent; }
@@ -99,6 +118,7 @@ class UserImmediateConstantsTrackerBase {
   protected:
     ImmediateDataContent<T> mContent;
     ImmediateConstantMask mDirty = ImmediateConstantMask(0);
+    ImmediateConstantMask mPipelineImmediateConstantMask = ImmediateConstantMask(0);
 };
 
 class RenderImmediateConstantsTrackerBase

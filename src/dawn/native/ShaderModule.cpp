@@ -681,6 +681,11 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
     metadata->usedInterStageVariables.resize(maxInterStageShaderVariables);
     metadata->interStageVariables.resize(maxInterStageShaderVariables);
 
+    // Immediate data byte size must be 4-byte aligned.
+    if (entryPoint.push_constant_size) {
+        metadata->immediateDataRangeByteSize = RoundUp(4u, entryPoint.push_constant_size);
+    }
+
     // Vertex shader specific reflection.
     if (metadata->stage == SingleShaderStage::Vertex) {
         // Vertex input reflection.
