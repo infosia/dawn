@@ -722,7 +722,8 @@ void Buffer::TransitionMappableBuffersEagerly(Device* device,
     for (const Ref<Buffer>& buffer : buffers) {
         wgpu::BufferUsage mapUsage = buffer->GetInternalUsage() & kMappableBufferUsages;
         DAWN_ASSERT(mapUsage == wgpu::BufferUsage::MapRead ||
-                    mapUsage == wgpu::BufferUsage::MapWrite);
+                    mapUsage == wgpu::BufferUsage::MapWrite ||
+                    device->HasFeature(Feature::BufferMapExtendedUsages));
 
         buffer->TrackUsageAndGetResourceBarrier(recordingContext, mapUsage,
                                                 wgpu::ShaderStage::None);
