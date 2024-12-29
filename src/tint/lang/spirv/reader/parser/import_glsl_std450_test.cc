@@ -187,7 +187,7 @@ using SpirvParserTest_GlslStd450_Uinting_UintingUinting = SpirvParserTestWithPar
 using SpirvParserTest_GlslStd450_Uinting_UintingUintingUinting =
     SpirvParserTestWithParam<GlslStd450Case>;
 
-TEST_P(SpirvParserTest_GlslStd450_Float_Floating, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Float_Floating, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %float %glsl )" +
                   GetParam().opcode + R"( %f1
@@ -198,14 +198,15 @@ TEST_P(SpirvParserTest_GlslStd450_Float_Floating, DISABLED_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((f1);");
+    %2:f32 = )" + GetParam().wgsl_func +
+                  R"( 50.0f
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Float_Floating, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Float_Floating, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %float %glsl )" +
                   GetParam().opcode + R"( %v2f1
@@ -215,14 +216,15 @@ TEST_P(SpirvParserTest_GlslStd450_Float_Floating, DISABLED_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2f1);
+    %2:f32 = )" + GetParam().wgsl_func +
+                  R"( vec2<f32>(50.0f, 60.0f)
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Float_FloatingFloating, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Float_FloatingFloating, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %float %glsl )" +
                   GetParam().opcode + R"( %f1 %f2
@@ -232,14 +234,15 @@ TEST_P(SpirvParserTest_GlslStd450_Float_FloatingFloating, DISABLED_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((f1, f2);"
+    %2:f32 = )" + GetParam().wgsl_func +
+                  R"( 50.0f, 60.0f
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Float_FloatingFloating, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Float_FloatingFloating, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %float %glsl )" +
                   GetParam().opcode + R"( %v2f1 %v2f2
@@ -249,14 +252,15 @@ TEST_P(SpirvParserTest_GlslStd450_Float_FloatingFloating, DISABLED_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2f1, v2f2);
+    %2:f32 = )" + GetParam().wgsl_func +
+                  R"( vec2<f32>(50.0f, 60.0f), vec2<f32>(60.0f, 50.0f)
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Floating_Floating, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Floating_Floating, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %float %glsl )" +
                   GetParam().opcode + R"( %f1
@@ -266,14 +270,14 @@ TEST_P(SpirvParserTest_GlslStd450_Floating_Floating, DISABLED_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((f1);
+    %2:f32 = )" + GetParam().wgsl_func +
+                  R"( 50.0f
+    ret
   }
-}
-)");
+})");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Floating_Floating, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Floating_Floating, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2float %glsl )" +
                   GetParam().opcode + R"( %v2f1
@@ -283,14 +287,16 @@ TEST_P(SpirvParserTest_GlslStd450_Floating_Floating, DISABLED_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2f1);
+    %2:vec2<f32> = )" +
+                  GetParam().wgsl_func +
+                  R"( vec2<f32>(50.0f, 60.0f)
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloating, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloating, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %float %glsl )" +
                   GetParam().opcode + R"( %f1 %f2
@@ -300,14 +306,15 @@ TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloating, DISABLED_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((f1, f2);
+    %2:f32 = )" + GetParam().wgsl_func +
+                  R"( 50.0f, 60.0f
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloating, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloating, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2float %glsl )" +
                   GetParam().opcode + R"( %v2f1 %v2f2
@@ -317,14 +324,16 @@ TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloating, DISABLED_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2f1, v2f2);
+    %2:vec2<f32> = )" +
+                  GetParam().wgsl_func +
+                  R"( vec2<f32>(50.0f, 60.0f), vec2<f32>(60.0f, 50.0f)
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloatingFloating, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloatingFloating, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %float %glsl )" +
                   GetParam().opcode + R"( %f1 %f2 %f3
@@ -334,14 +343,15 @@ TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloatingFloating, DISABLED_Sc
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((f1, f2, f3);
+    %2:f32 = )" + GetParam().wgsl_func +
+                  R"( 50.0f, 60.0f, 70.0f
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloatingFloating, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloatingFloating, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2float %glsl )" +
                   GetParam().opcode +
@@ -352,14 +362,16 @@ TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingFloatingFloating, DISABLED_Ve
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2f1, v2f2, v2f3);
+    %2:vec2<f32> = )" +
+                  GetParam().wgsl_func +
+                  R"( vec2<f32>(50.0f, 60.0f), vec2<f32>(60.0f, 50.0f), vec2<f32>(70.0f)
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingInting, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingInting, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %float %glsl )" +
                   GetParam().opcode + R"( %f1 %i1
@@ -369,14 +381,15 @@ TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingInting, DISABLED_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((f1, i1);
-}
+    %2:f32 = )" + GetParam().wgsl_func +
+                  R"( 50.0f, 30i
+    ret
+  }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingInting, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingInting, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2float %glsl )" +
                   GetParam().opcode +
@@ -387,14 +400,16 @@ TEST_P(SpirvParserTest_GlslStd450_Floating_FloatingInting, DISABLED_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2f1, v2i1);
+    %2:vec2<f32> = )" +
+                  GetParam().wgsl_func +
+                  R"( vec2<f32>(50.0f, 60.0f), vec2<i32>(30i, 40i)
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Float3_Float3Float3, DISABLED_SpirvParser) {
+TEST_P(SpirvParserTest_GlslStd450_Float3_Float3Float3, SpirvParser) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v3float %glsl )" +
                   GetParam().opcode +
@@ -405,8 +420,10 @@ TEST_P(SpirvParserTest_GlslStd450_Float3_Float3Float3, DISABLED_SpirvParser) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v3f1, v3f2);
+    %2:vec3<f32> = )" +
+                  GetParam().wgsl_func +
+                  R"( vec3<f32>(50.0f, 60.0f, 70.0f), vec3<f32>(60.0f, 70.0f, 50.0f)
+    ret
   }
 }
 )");
@@ -480,7 +497,7 @@ INSTANTIATE_TEST_SUITE_P(SpirvParser,
                              {"FMix", "mix"},
                              {"SmoothStep", "smoothstep"}}));
 
-TEST_P(SpirvParserTest_GlslStd450_Inting_Inting, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Inting_Inting, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %int %glsl )" +
                   GetParam().opcode +
@@ -491,8 +508,9 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_Inting, DISABLED_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((i1);
+    %2:i32 = )" + GetParam().wgsl_func +
+                  R"( 30i
+    ret
   }
 }
 )");
@@ -535,7 +553,7 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_Inting_SignednessCoercing,
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Inting_Inting, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Inting_Inting, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2int %glsl )" +
                   GetParam().opcode +
@@ -546,8 +564,10 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_Inting, DISABLED_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2i1);
+    %2:vec2<i32> = )" +
+                  GetParam().wgsl_func +
+                  R"( vec2<i32>(30i, 40i)
+    ret
   }
 }
 )");
@@ -590,7 +610,7 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_Inting_SignednessCoercing,
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Inting_IntingInting, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Inting_IntingInting, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %int %glsl )" +
                   GetParam().opcode +
@@ -601,14 +621,15 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_IntingInting, DISABLED_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((i1, i2);
+    %2:i32 = )" + GetParam().wgsl_func +
+                  R"( 30i, 35i
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Inting_IntingInting, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Inting_IntingInting, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2int %glsl )" +
                   GetParam().opcode +
@@ -619,14 +640,16 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_IntingInting, DISABLED_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2i1, v2i2);
+    %2:vec2<i32> = )" +
+                  GetParam().wgsl_func +
+                  R"( vec2<i32>(30i, 40i), vec2<i32>(40i, 30i)
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Inting_IntingIntingInting, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Inting_IntingIntingInting, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %int %glsl )" +
                   GetParam().opcode +
@@ -637,14 +660,15 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_IntingIntingInting, DISABLED_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((i1, i2, i3);
+    %2:i32 = )" + GetParam().wgsl_func +
+                  R"( 30i, 35i, 40i
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Inting_IntingIntingInting, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Inting_IntingIntingInting, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2int %glsl )" +
                   GetParam().opcode +
@@ -655,8 +679,10 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_IntingIntingInting, DISABLED_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2i1, v2i2, v2i3);
+    %2:vec2<i32> = )" +
+                  GetParam().wgsl_func +
+                  R"( vec2<i32>(30i, 40i), vec2<i32>(40i, 30i), vec2<i32>(35i)
+    ret
   }
 }
 )");
@@ -682,7 +708,7 @@ INSTANTIATE_TEST_SUITE_P(SpirvParser,
                          SpirvParserTest_GlslStd450_Inting_IntingIntingInting,
                          ::testing::Values(GlslStd450Case{"SClamp", "clamp"}));
 
-TEST_P(SpirvParserTest_GlslStd450_Uinting_Uinting, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Uinting_Uinting, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %uint %glsl )" +
                   GetParam().opcode +
@@ -693,14 +719,15 @@ TEST_P(SpirvParserTest_GlslStd450_Uinting_Uinting, DISABLED_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((u1);
+    %2:u32 = )" + GetParam().wgsl_func +
+                  R"( 10u
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Uinting_Uinting, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Uinting_Uinting, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2uint %glsl )" +
                   GetParam().opcode +
@@ -711,14 +738,16 @@ TEST_P(SpirvParserTest_GlslStd450_Uinting_Uinting, DISABLED_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2u1);
+    %2:vec2<u32> = )" +
+                  GetParam().wgsl_func +
+                  R"( vec2<u32>(10u, 20u)
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUinting, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUinting, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %uint %glsl )" +
                   GetParam().opcode + R"( %u1 %u2
@@ -728,14 +757,15 @@ TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUinting, DISABLED_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((u1, u2);
+    %2:u32 = )" + GetParam().wgsl_func +
+                  R"( 10u, 15u
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUinting, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUinting, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2uint %glsl )" +
                   GetParam().opcode +
@@ -746,14 +776,16 @@ TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUinting, DISABLED_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2u1, v2u2);
+    %2:vec2<u32> = )" +
+                  GetParam().wgsl_func +
+                  R"( vec2<u32>(10u, 20u), vec2<u32>(20u, 10u)
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUintingUinting, DISABLED_Scalar) {
+TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUintingUinting, Scalar) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %uint %glsl )" +
                   GetParam().opcode + R"( %u1 %u2 %u3
@@ -763,14 +795,15 @@ TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUintingUinting, DISABLED_Scalar
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((u1, u2, u3);
+    %2:u32 = )" + GetParam().wgsl_func +
+                  R"( 10u, 15u, 20u
+    ret
   }
 }
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUintingUinting, DISABLED_Vector) {
+TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUintingUinting, Vector) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2uint %glsl )" +
                   GetParam().opcode +
@@ -781,8 +814,10 @@ TEST_P(SpirvParserTest_GlslStd450_Uinting_UintingUintingUinting, DISABLED_Vector
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((v2u1, v2u2, v2u3);
+    %2:vec2<u32> = )" +
+                  GetParam().wgsl_func +
+                  R"( vec2<u32>(10u, 20u), vec2<u32>(20u, 10u), vec2<u32>(15u)
+    ret
   }
 }
 )");
@@ -822,7 +857,7 @@ TEST_F(SpirvParserTest, DISABLED_Normalize_Scalar) {
 )");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Normalize_Vector2) {
+TEST_F(SpirvParserTest, Normalize_Vector2) {
     // Scalar normalize always results in 1.0
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2float %glsl Normalize %v2f1
@@ -832,13 +867,14 @@ TEST_F(SpirvParserTest, DISABLED_Normalize_Vector2) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = normalize(v2f1);
+    %2:vec2<f32> = normalize vec2<f32>(50.0f, 60.0f)
+    ret
   }
 }
 )");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Normalize_Vector3) {
+TEST_F(SpirvParserTest, Normalize_Vector3) {
     // Scalar normalize always results in 1.0
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v3float %glsl Normalize %v3f1
@@ -848,13 +884,14 @@ TEST_F(SpirvParserTest, DISABLED_Normalize_Vector3) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = normalize(v3f1);
+    %2:vec3<f32> = normalize vec3<f32>(50.0f, 60.0f, 70.0f)
+    ret
   }
 }
 )");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Normalize_Vector4) {
+TEST_F(SpirvParserTest, Normalize_Vector4) {
     // Scalar normalize always results in 1.0
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v4float %glsl Normalize %v4f1
@@ -864,7 +901,8 @@ TEST_F(SpirvParserTest, DISABLED_Normalize_Vector4) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = normalize(v4f1);
+    %2:vec4<f32> = normalize vec4<f32>(50.0f)
+    ret
   }
 }
 )");
@@ -1127,7 +1165,7 @@ inline std::ostream& operator<<(std::ostream& out, DataPackingCase c) {
 
 using SpirvParserTest_GlslStd450_DataPacking = SpirvParserTestWithParam<DataPackingCase>;
 
-TEST_P(SpirvParserTest_GlslStd450_DataPacking, DISABLED_Valid) {
+TEST_P(SpirvParserTest_GlslStd450_DataPacking, Valid) {
     auto param = GetParam();
     EXPECT_IR(Preamble() + R"(
   %1 = OpExtInst %uint %glsl )" +
@@ -1138,8 +1176,10 @@ TEST_P(SpirvParserTest_GlslStd450_DataPacking, DISABLED_Valid) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + param.wgsl_func +
-                  "(v" + std::to_string(param.vec_size) + R"(f1);
+    %2:u32 = )" + param.wgsl_func +
+                  " vec" + std::to_string(param.vec_size) + "<f32>(50.0f" +
+                  (param.vec_size == 4 ? "" : ", 60.0f") + R"()
+    ret
   }
 }
 )");
@@ -1156,7 +1196,7 @@ INSTANTIATE_TEST_SUITE_P(SpirvParser,
 
 using SpirvParserTest_GlslStd450_DataUnpacking = SpirvParserTestWithParam<DataPackingCase>;
 
-TEST_P(SpirvParserTest_GlslStd450_DataUnpacking, DISABLED_Valid) {
+TEST_P(SpirvParserTest_GlslStd450_DataUnpacking, Valid) {
     auto param = GetParam();
     EXPECT_IR(Preamble() + R"(
   %1 = OpExtInst )" +
@@ -1168,8 +1208,10 @@ TEST_P(SpirvParserTest_GlslStd450_DataUnpacking, DISABLED_Valid) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + param.wgsl_func +
-                  R"((u1);
+    %2:vec)" + std::to_string(param.vec_size) +
+                  R"(<f32> = )" + param.wgsl_func +
+                  R"( 10u
+    ret
   }
 }
 )");
@@ -1233,9 +1275,8 @@ TEST_F(SpirvParserTest, DISABLED_GlslStd450_FaceForward_Scalar) {
 )");
 }
 
-TEST_F(SpirvParserTest, DISABLED_GlslStd450_FaceForward_Vector) {
+TEST_F(SpirvParserTest, GlslStd450_FaceForward_Vector) {
     EXPECT_IR(Preamble() + R"(
-     %99 = OpFAdd %v2float %v2f1 %v2f1
      %1 = OpExtInst %v2float %glsl FaceForward %v2f1 %v2f2 %v2f3
      OpReturn
      OpFunctionEnd
@@ -1243,7 +1284,8 @@ TEST_F(SpirvParserTest, DISABLED_GlslStd450_FaceForward_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = faceForward(v2f1, v2f2, v2f3);
+    %2:vec2<f32> = faceForward vec2<f32>(50.0f, 60.0f), vec2<f32>(60.0f, 50.0f), vec2<f32>(70.0f)
+    ret
   }
 }
 )");
@@ -1260,13 +1302,13 @@ TEST_F(SpirvParserTest, DISABLED_GlslStd450_Reflect_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = (x_98 - (2.0f * (x_99 * (x_99 * x_98))));
+    %2:f32 = (x_98 - (2.0f * (x_99 * (x_99 * x_98))));
   }
 }
 )");
 }
 
-TEST_F(SpirvParserTest, DISABLED_GlslStd450_Reflect_Vector) {
+TEST_F(SpirvParserTest, GlslStd450_Reflect_Vector) {
     EXPECT_IR(Preamble() + R"(
      %98 = OpFAdd %v2float %v2f1 %v2f1
      %99 = OpFAdd %v2float %v2f2 %v2f2
@@ -1277,9 +1319,10 @@ TEST_F(SpirvParserTest, DISABLED_GlslStd450_Reflect_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_98 = (v2f1 + v2f1);
-    let x_99 = (v2f2 + v2f2);
-    let x_1 = reflect(x_98, x_99);
+    %2:vec2<f32> = add vec2<f32>(50.0f, 60.0f), vec2<f32>(50.0f, 60.0f)
+    %3:vec2<f32> = add vec2<f32>(60.0f, 50.0f), vec2<f32>(60.0f, 50.0f)
+    %4:vec2<f32> = reflect %2, %3
+    ret
   }
 }
 )");
@@ -1316,27 +1359,44 @@ TEST_F(SpirvParserTest, DISABLED_GlslStd450_Ldexp_Vector_Floatvec_Uintvec) {
 )");
 }
 
-using SpirvParserTest_GlslStd450_Determinant = SpirvParserTestWithParam<std::string>;
+struct DeterminantData {
+    std::string in;
+    std::string out;
+};
 
-TEST_P(SpirvParserTest_GlslStd450_Determinant, DISABLED_Test) {
+inline std::ostream& operator<<(std::ostream& out, DeterminantData c) {
+    out << "Determinant(" << c.in << ")";
+    return out;
+}
+
+using SpirvParserTest_GlslStd450_Determinant = SpirvParserTestWithParam<DeterminantData>;
+
+TEST_P(SpirvParserTest_GlslStd450_Determinant, Test) {
+    auto param = GetParam();
+
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %float %glsl Determinant %)" +
-                  GetParam() + R"(
+                  param.in + R"(
      OpReturn
      OpFunctionEnd
   )",
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = determinant(" + GetParam() + ");
+    %2:f32 = determinant )" +
+                  param.out + R"(
+    ret
   }
 }
 )");
 }
 
-INSTANTIATE_TEST_SUITE_P(SpirvParser,
-                         SpirvParserTest_GlslStd450_Determinant,
-                         ::testing::Values("m2x2f1", "m3x3f1", "m4x4f1"));
+INSTANTIATE_TEST_SUITE_P(
+    SpirvParser,
+    SpirvParserTest_GlslStd450_Determinant,
+    ::testing::Values(DeterminantData{"m2x2f1", "mat2x2<f32>(vec2<f32>(50.0f, 60.0f))"},
+                      DeterminantData{"m3x3f1", "mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f))"},
+                      DeterminantData{"m4x4f1", "mat4x4<f32>(vec4<f32>(50.0f))"}));
 
 TEST_F(SpirvParserTest, DISABLED_GlslStd450_MatrixInverse_mat2x2) {
     EXPECT_IR(Preamble() + R"(
