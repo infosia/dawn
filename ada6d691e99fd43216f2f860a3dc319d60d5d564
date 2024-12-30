@@ -39,6 +39,30 @@
       },
       "revId": "ada6d691e99fd43216f2f860a3dc319d60d5d564",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd790786_e49f7f97",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2024-12-30T19:34:10Z",
+      "side": 1,
+      "message": "Out of curiosity, what is the reasoning? Other tasks use allowProcessEvents",
+      "parentUuid": "d8a04a75_7fc2bde4",
+      "range": {
+        "startLine": 279,
+        "startChar": 35,
+        "endLine": 279,
+        "endChar": 53
+      },
+      "revId": "ada6d691e99fd43216f2f860a3dc319d60d5d564",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
