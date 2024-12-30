@@ -16,6 +16,29 @@
       "message": "Hey Loko,\n\nCan you look at this CL?",
       "revId": "ada6d691e99fd43216f2f860a3dc319d60d5d564",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8a04a75_7fc2bde4",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-30T17:06:39Z",
+      "side": 1,
+      "message": "Should probably use `AllowSpontaneous` here instead",
+      "range": {
+        "startLine": 279,
+        "startChar": 35,
+        "endLine": 279,
+        "endChar": 53
+      },
+      "revId": "ada6d691e99fd43216f2f860a3dc319d60d5d564",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
