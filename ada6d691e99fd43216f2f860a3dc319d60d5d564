@@ -63,6 +63,30 @@
       },
       "revId": "ada6d691e99fd43216f2f860a3dc319d60d5d564",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3c6dd53_c340b43e",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2024-12-30T19:47:02Z",
+      "side": 1,
+      "message": "In this particular case it\u0027s to match the behavior of the initial code. Before we were using `CreateDevice` which is a synchronous operation. In native, currently, if you specify `AllowSpontaneous` for `RequestAdapter` and `RequestDevice`, the callback will happen synchronously, however, if you use `AllowProcessEvents` you need to explicitly call `Instance::ProcessEvents` somewhere in order to make the callback happen.",
+      "parentUuid": "dd790786_e49f7f97",
+      "range": {
+        "startLine": 279,
+        "startChar": 35,
+        "endLine": 279,
+        "endChar": 53
+      },
+      "revId": "ada6d691e99fd43216f2f860a3dc319d60d5d564",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
