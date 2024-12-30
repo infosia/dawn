@@ -516,7 +516,7 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_Inting, Scalar) {
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Inting_Inting_SignednessCoercing, DISABLED_Scalar_UnsignedArg) {
+TEST_P(SpirvParserTest_GlslStd450_Inting_Inting_SignednessCoercing, Scalar_UnsignedArg) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %int %glsl )" +
                   GetParam().opcode +
@@ -527,8 +527,10 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_Inting_SignednessCoercing, DISABLED_Sca
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((bitcast<i32>(u1));
+    %2:i32 = bitcast 10u
+    %3:i32 = )" + GetParam().wgsl_func +
+                  R"( %2
+    ret
   }
 }
 )");
@@ -573,7 +575,7 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_Inting, Vector) {
 )");
 }
 
-TEST_P(SpirvParserTest_GlslStd450_Inting_Inting_SignednessCoercing, DISABLED_Vector_UnsignedArg) {
+TEST_P(SpirvParserTest_GlslStd450_Inting_Inting_SignednessCoercing, Vector_UnsignedArg) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2int %glsl )" +
                   GetParam().opcode +
@@ -584,8 +586,11 @@ TEST_P(SpirvParserTest_GlslStd450_Inting_Inting_SignednessCoercing, DISABLED_Vec
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = )" + GetParam().wgsl_func +
-                  R"((bitcast<vec2i>(v2u1));
+    %2:vec2<i32> = bitcast vec2<u32>(10u, 20u)
+    %3:vec2<i32> = )" +
+                  GetParam().wgsl_func +
+                  R"( %2
+    ret
   }
 }
 )");

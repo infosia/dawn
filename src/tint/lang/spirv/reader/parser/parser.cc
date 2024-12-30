@@ -773,6 +773,30 @@ class Parser {
         return core::BuiltinFn::kNone;
     }
 
+    // Returns true if the extended instruction requires the signedness of the
+    // result to match the signedness of the first operand to the operation.
+    // @param extended_opcode GLSL.std.450 opcode
+    // @returns true if the result type must match the first operand type.
+    bool AssumesResultSignednessMatchesFirstOperand(uint32_t extended_opcode) {
+        switch (extended_opcode) {
+            case GLSLstd450SAbs:
+            case GLSLstd450SSign:
+            case GLSLstd450SMin:
+            case GLSLstd450SMax:
+            case GLSLstd450SClamp:
+            case GLSLstd450UMin:
+            case GLSLstd450UMax:
+            case GLSLstd450UClamp:
+            case GLSLstd450FindILsb:
+            case GLSLstd450FindSMsb:
+            case GLSLstd450FindUMsb:
+                return true;
+            default:
+                break;
+        }
+        return false;
+    }
+
     /// @param inst the SPIR-V instruction for OpAccessChain
     void EmitGlslStd450ExtInst(const spvtools::opt::Instruction& inst) {
         const auto ext_opcode = inst.GetSingleWordInOperand(1);
@@ -787,6 +811,15 @@ class Parser {
         // All parameters to GLSL.std.450 extended instructions are IDs.
         for (uint32_t idx = 2; idx < inst.NumInOperands(); ++idx) {
             operands.Push(Value(inst.GetSingleWordInOperand(idx)));
+        }
+
+        // Some WGSL methods have differing requirements, in some cases the first operand type
+        // needs to match the result type, so insert a bitcast if needed.
+        if (AssumesResultSignednessMatchesFirstOperand(ext_opcode) &&
+            operands[0]->Type() != result_ty) {
+            auto* bc = b_.Bitcast(result_ty, operands[0]);
+            Emit(bc);
+            operands[0] = bc->Result(0);
         }
         Emit(b_.Call(result_ty, fn, operands));
     }
