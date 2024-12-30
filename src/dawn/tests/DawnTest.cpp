@@ -922,6 +922,19 @@ bool DawnTestBase::IsIntelGen12() const {
                                     mParam.adapterProperties.deviceID);
 }
 
+bool DawnTestBase::IsIntelGen12OrLater() const {
+    return gpu_info::IsIntelGen12LP(mParam.adapterProperties.vendorID,
+                                    mParam.adapterProperties.deviceID) ||
+           gpu_info::IsIntelGen12HP(mParam.adapterProperties.vendorID,
+                                    mParam.adapterProperties.deviceID) ||
+           gpu_info::IsIntelXeLP(mParam.adapterProperties.vendorID,
+                                 mParam.adapterProperties.deviceID) ||
+           gpu_info::IsIntelXe2LP(mParam.adapterProperties.vendorID,
+                                  mParam.adapterProperties.deviceID) ||
+           gpu_info::IsIntelXe2HP(mParam.adapterProperties.vendorID,
+                                  mParam.adapterProperties.deviceID);
+}
+
 bool DawnTestBase::IsWindows() const {
 #if DAWN_PLATFORM_IS(WINDOWS)
     return true;
