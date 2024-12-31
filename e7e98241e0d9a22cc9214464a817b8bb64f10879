@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea6008cd_7bda1491",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2024-12-31T10:20:46Z",
+      "side": 1,
+      "message": "Reviewers@, Sry but I think I\u0027ve finished the refactor of this CL. No big change anymore from my side.\n\nPTAL again if you have time, thanks!",
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
