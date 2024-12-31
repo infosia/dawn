@@ -16,6 +16,24 @@
       "message": "Still LGTM",
       "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "648ebf22_fa84a1b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2024-12-31T08:33:45Z",
+      "side": 1,
+      "message": "Sry, I should mark this as WIP. Especially when I realized another way to achieve this. A big refactory happens with the CL stack to try whether it works. I\u0027ll ping explicit for another review, thanks!",
+      "parentUuid": "ee8b684a_89b63558",
+      "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
