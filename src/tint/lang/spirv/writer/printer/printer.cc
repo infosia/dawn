@@ -1366,6 +1366,11 @@ class Printer {
             case spirv::BuiltinFn::kMatrixTimesVector:
                 op = spv::Op::OpMatrixTimesVector;
                 break;
+            case spirv::BuiltinFn::kNormalize:
+                op = spv::Op::OpExtInst;
+                operands.push_back(ImportGlslStd450());
+                operands.push_back(U32Operand(GLSLstd450Normalize));
+                break;
             case spirv::BuiltinFn::kSampledImage:
                 op = spv::Op::OpSampledImage;
                 break;

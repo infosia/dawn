@@ -116,6 +116,8 @@ const char* str(BuiltinFn i) {
             return "sign_u_i";
         case BuiltinFn::kSignIU:
             return "sign_i_u";
+        case BuiltinFn::kNormalize:
+            return "normalize";
         case BuiltinFn::kSdot:
             return "sdot";
         case BuiltinFn::kUdot:
@@ -173,6 +175,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kSignI:
         case BuiltinFn::kSignIU:
         case BuiltinFn::kSignUI:
+        case BuiltinFn::kNormalize:
             break;
     }
     return core::ir::Instruction::Accesses{};

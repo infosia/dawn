@@ -329,6 +329,9 @@ implicit(N: num) fn sign_u(vec<N, u32>) -> vec<N, u32>
 implicit(N: num) fn sign_u_i(vec<N, u32>) -> vec<N, i32>
 implicit(N: num) fn sign_i_u(vec<N, i32>) -> vec<N, u32>
 
+implicit(T: f32_f16) fn normalize(T) -> T
+implicit(N: num, T: f32_f16) fn normalize(vec<N, T>) -> vec<N, T>
+
 ////////////////////////////////////////////////////////////////////////////////
 // SPV_KHR_integer_dot_product instructions
 ////////////////////////////////////////////////////////////////////////////////

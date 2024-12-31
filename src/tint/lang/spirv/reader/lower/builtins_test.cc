@@ -36,9 +36,9 @@ namespace {
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
 
-using SpirvReader_BuiltinsTest = core::ir::transform::TransformTest;
+using SpirvParser_BuiltinsTest = core::ir::transform::TransformTest;
 
-TEST_F(SpirvReader_BuiltinsTest, Scalar_UnsignedArg) {
+TEST_F(SpirvParser_BuiltinsTest, Scalar_UnsignedArg) {
     auto* ep = b.ComputeFunction("foo");
 
     b.Append(ep->Block(), [&] {  //
@@ -69,7 +69,7 @@ TEST_F(SpirvReader_BuiltinsTest, Scalar_UnsignedArg) {
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvReader_BuiltinsTest, Scalar_UnsignedResult) {
+TEST_F(SpirvParser_BuiltinsTest, Scalar_UnsignedResult) {
     auto* ep = b.ComputeFunction("foo");
 
     b.Append(ep->Block(), [&] {  //
@@ -100,7 +100,7 @@ TEST_F(SpirvReader_BuiltinsTest, Scalar_UnsignedResult) {
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvReader_BuiltinsTest, Scalar_UnsignedArgAndResult) {
+TEST_F(SpirvParser_BuiltinsTest, Scalar_UnsignedArgAndResult) {
     auto* ep = b.ComputeFunction("foo");
 
     b.Append(ep->Block(), [&] {  //
@@ -132,7 +132,7 @@ TEST_F(SpirvReader_BuiltinsTest, Scalar_UnsignedArgAndResult) {
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvReader_BuiltinsTest, Scalar_SignedArgAndResult) {
+TEST_F(SpirvParser_BuiltinsTest, Scalar_SignedArgAndResult) {
     auto* ep = b.ComputeFunction("foo");
 
     b.Append(ep->Block(), [&] {  //
@@ -162,7 +162,7 @@ TEST_F(SpirvReader_BuiltinsTest, Scalar_SignedArgAndResult) {
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvReader_BuiltinsTest, Vector_UnsignedArg) {
+TEST_F(SpirvParser_BuiltinsTest, Vector_UnsignedArg) {
     auto* ep = b.ComputeFunction("foo");
 
     b.Append(ep->Block(), [&] {  //
@@ -194,7 +194,7 @@ TEST_F(SpirvReader_BuiltinsTest, Vector_UnsignedArg) {
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvReader_BuiltinsTest, Vector_UnsignedResult) {
+TEST_F(SpirvParser_BuiltinsTest, Vector_UnsignedResult) {
     auto* ep = b.ComputeFunction("foo");
 
     b.Append(ep->Block(), [&] {  //
@@ -226,7 +226,7 @@ TEST_F(SpirvReader_BuiltinsTest, Vector_UnsignedResult) {
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvReader_BuiltinsTest, Vector_UnsignedArgAndResult) {
+TEST_F(SpirvParser_BuiltinsTest, Vector_UnsignedArgAndResult) {
     auto* ep = b.ComputeFunction("foo");
 
     b.Append(ep->Block(), [&] {  //
@@ -259,7 +259,7 @@ TEST_F(SpirvReader_BuiltinsTest, Vector_UnsignedArgAndResult) {
     EXPECT_EQ(expect, str());
 }
 
-TEST_F(SpirvReader_BuiltinsTest, Vector_SignedArgAndResult) {
+TEST_F(SpirvParser_BuiltinsTest, Vector_SignedArgAndResult) {
     auto* ep = b.ComputeFunction("foo");
 
     b.Append(ep->Block(), [&] {  //
@@ -289,5 +289,67 @@ TEST_F(SpirvReader_BuiltinsTest, Vector_SignedArgAndResult) {
 )";
     EXPECT_EQ(expect, str());
 }
+
+TEST_F(SpirvParser_BuiltinsTest, Normalize_Scalar) {
+    auto* ep = b.ComputeFunction("foo");
+
+    b.Append(ep->Block(), [&] {  //
+        b.Call<spirv::ir::BuiltinCall>(ty.f32(), spirv::BuiltinFn::kNormalize, 10_f);
+        b.Return(ep);
+    });
+
+    auto* src = R"(
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:f32 = spirv.normalize 10.0f
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+    Run(Builtins);
+
+    auto* expect = R"(
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:f32 = sign 10.0f
+    ret
+  }
+}
+)";
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(SpirvParser_BuiltinsTest, Normalize_Vector) {
+    auto* ep = b.ComputeFunction("foo");
+
+    b.Append(ep->Block(), [&] {  //
+        b.Call<spirv::ir::BuiltinCall>(ty.vec2<f32>(), spirv::BuiltinFn::kNormalize,
+                                       b.Splat(ty.vec2<f32>(), 10_f));
+        b.Return(ep);
+    });
+
+    auto* src = R"(
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:vec2<f32> = spirv.normalize vec2<f32>(10.0f)
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+    Run(Builtins);
+
+    auto* expect = R"(
+%foo = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:vec2<f32> = normalize vec2<f32>(10.0f)
+    ret
+  }
+}
+)";
+    EXPECT_EQ(expect, str());
+}
+
 }  // namespace
 }  // namespace tint::spirv::reader::lower

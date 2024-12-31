@@ -761,6 +761,8 @@ class Parser {
                     TINT_UNREACHABLE();
                 }
             }
+            case GLSLstd450Normalize:
+                return spirv::BuiltinFn::kNormalize;
             default:
                 break;
         }

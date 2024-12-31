@@ -843,7 +843,7 @@ INSTANTIATE_TEST_SUITE_P(SpirvParser,
 // So we have to test it separately, as it does not fit the patterns tested
 // above.
 
-TEST_F(SpirvParserTest, DISABLED_Normalize_Scalar) {
+TEST_F(SpirvParserTest, Normalize_Scalar) {
     // Scalar normalize maps to sign.
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %float %glsl Normalize %f1
@@ -853,14 +853,14 @@ TEST_F(SpirvParserTest, DISABLED_Normalize_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let x_1 = sign(f1);
+    %2:f32 = sign 50.0f
+    ret
   }
 }
 )");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Normalize_Vector2) {
-    // Scalar normalize always results in 1.0
+TEST_F(SpirvParserTest, Normalize_Vector2) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v2float %glsl Normalize %v2f1
      OpReturn
@@ -876,8 +876,7 @@ TEST_F(SpirvParserTest, DISABLED_Normalize_Vector2) {
 )");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Normalize_Vector3) {
-    // Scalar normalize always results in 1.0
+TEST_F(SpirvParserTest, Normalize_Vector3) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v3float %glsl Normalize %v3f1
      OpReturn
@@ -893,8 +892,7 @@ TEST_F(SpirvParserTest, DISABLED_Normalize_Vector3) {
 )");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Normalize_Vector4) {
-    // Scalar normalize always results in 1.0
+TEST_F(SpirvParserTest, Normalize_Vector4) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %v4float %glsl Normalize %v4f1
      OpReturn

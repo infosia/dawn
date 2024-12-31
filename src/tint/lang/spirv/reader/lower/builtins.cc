@@ -67,8 +67,11 @@ struct State {
                 case spirv::BuiltinFn::kSignUI:
                     Sign(builtin);
                     break;
+                case spirv::BuiltinFn::kNormalize:
+                    Normalize(builtin);
+                    break;
                 default:
-                    TINT_UNREACHABLE();
+                    TINT_UNREACHABLE() << "unknown spirv builtin: " << builtin->Func();
             }
         }
     }
@@ -94,6 +97,19 @@ struct State {
                 replacement = b.Bitcast(result_ty, replacement)->Result(0);
             }
             call->Result(0)->ReplaceAllUsesWith(replacement);
+        });
+        call->Destroy();
+    }
+
+    void Normalize(spirv::ir::BuiltinCall* call) {
+        auto* arg = call->Args()[0];
+
+        b.InsertBefore(call, [&] {
+            core::BuiltinFn fn = core::BuiltinFn::kNormalize;
+            if (arg->Type()->IsScalar()) {
+                fn = core::BuiltinFn::kSign;
+            }
+            b.CallWithResult(call->DetachResult(), fn, Vector<core::ir::Value*, 1>{arg});
         });
         call->Destroy();
     }
