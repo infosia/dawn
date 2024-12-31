@@ -97,7 +97,7 @@ TEST_F(SpirvParserTest, FragmentShader) {
 }
 
 TEST_F(SpirvParserTest, FragmentShader_DepthReplacing) {
-    EXPECT_IR(R"(
+    EXPECT_SPIRV_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
                OpEntryPoint Fragment %main "main" %depth
@@ -116,7 +116,7 @@ TEST_F(SpirvParserTest, FragmentShader_DepthReplacing) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(
+                    R"(
 $B1: {  # root
   %1:ptr<__out, f32, read_write> = var @builtin(frag_depth)
 }
