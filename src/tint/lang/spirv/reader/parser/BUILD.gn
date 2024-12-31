@@ -106,6 +106,12 @@ if (tint_build_unittests) {
         "${tint_src_dir}/lang/core/constant",
         "${tint_src_dir}/lang/core/ir",
         "${tint_src_dir}/lang/core/type",
+        "${tint_src_dir}/lang/wgsl",
+        "${tint_src_dir}/lang/wgsl/ast",
+        "${tint_src_dir}/lang/wgsl/common",
+        "${tint_src_dir}/lang/wgsl/features",
+        "${tint_src_dir}/lang/wgsl/program",
+        "${tint_src_dir}/lang/wgsl/sem",
         "${tint_src_dir}/utils",
         "${tint_src_dir}/utils/containers",
         "${tint_src_dir}/utils/diagnostic",
@@ -121,6 +127,8 @@ if (tint_build_unittests) {
 
       if (tint_build_spv_reader) {
         deps += [
+          "${tint_src_dir}/lang/spirv/reader",
+          "${tint_src_dir}/lang/spirv/reader/common",
           "${tint_src_dir}/lang/spirv/reader/common:unittests",
           "${tint_src_dir}/lang/spirv/reader/parser",
         ]

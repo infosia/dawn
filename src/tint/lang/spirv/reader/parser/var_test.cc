@@ -348,14 +348,14 @@ using BuiltinInputTest = SpirvParserTestWithParam<BuiltinCase>;
 
 TEST_P(BuiltinInputTest, Enum) {
     auto params = GetParam();
-    EXPECT_IR(R"(
+    EXPECT_SPIRV_IR(R"(
                OpCapability Shader
                OpCapability SampleRateShading
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %main "main"
                OpExecutionMode %main LocalSize 1 1 1
                OpDecorate %var BuiltIn )" +
-                  params.spirv_builtin + R"(
+                        params.spirv_builtin + R"(
        %void = OpTypeVoid
        %bool = OpTypeBool
         %u32 = OpTypeInt 32 0
@@ -367,7 +367,7 @@ TEST_P(BuiltinInputTest, Enum) {
     %fn_type = OpTypeFunction %void
 
  %_ptr_Input = OpTypePointer Input %)" +
-                  params.spirv_type + R"(
+                        params.spirv_type + R"(
         %var = OpVariable %_ptr_Input Input
 
        %main = OpFunction %void None %fn_type
@@ -375,7 +375,7 @@ TEST_P(BuiltinInputTest, Enum) {
                OpReturn
                OpFunctionEnd
 )",
-              params.ir);
+                    params.ir);
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -524,14 +524,14 @@ using LocationVarTest = SpirvParserTestWithParam<LocationCase>;
 
 TEST_P(LocationVarTest, Input) {
     auto params = GetParam();
-    EXPECT_IR(R"(
+    EXPECT_SPIRV_IR(R"(
                OpCapability Shader
                OpCapability SampleRateShading
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %main "main"
                OpExecutionMode %main LocalSize 1 1 1
           )" + params.spirv_decorations +
-                  R"(
+                        R"(
        %void = OpTypeVoid
         %f32 = OpTypeFloat 32
       %vec4f = OpTypeVector %f32 4
@@ -545,7 +545,7 @@ TEST_P(LocationVarTest, Input) {
                OpReturn
                OpFunctionEnd
 )",
-              "%1:ptr<__in, vec4<f32>, read> = " + params.ir);
+                    "%1:ptr<__in, vec4<f32>, read> = " + params.ir);
 }
 
 TEST_P(LocationVarTest, Output) {

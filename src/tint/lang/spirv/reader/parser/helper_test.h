@@ -39,6 +39,7 @@
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/spirv/reader/common/helper_test.h"
 #include "src/tint/lang/spirv/reader/parser/parser.h"
+#include "src/tint/lang/spirv/reader/reader.h"
 
 namespace tint::spirv::reader {
 
@@ -52,6 +53,14 @@ namespace tint::spirv::reader {
         ASSERT_THAT(got, testing::HasSubstr(ir)) << "GOT:\n" << got << "EXPECTED:\n" << ir; \
     } while (false)
 
+#define EXPECT_SPIRV_IR(asm, ir)                                                            \
+    do {                                                                                    \
+        auto result = RunToSpirvIR(asm);                                                    \
+        ASSERT_EQ(result, Success) << result.Failure().reason.Str();                        \
+        auto got = "\n" + result.Get();                                                     \
+        ASSERT_THAT(got, testing::HasSubstr(ir)) << "GOT:\n" << got << "EXPECTED:\n" << ir; \
+    } while (false)
+
 /// Base helper class for testing the SPIR-V parser implementation.
 template <typename BASE>
 class SpirvParserTestHelperBase : public BASE {
@@ -60,6 +69,32 @@ class SpirvParserTestHelperBase : public BASE {
     /// @param spirv_asm the SPIR-V assembly to parse
     /// @returns the disassembled Tint IR or an error
     Result<std::string> Run(std::string spirv_asm) {
+        // Assemble the SPIR-V input.
+        auto binary = Assemble(spirv_asm);
+        if (binary != Success) {
+            return binary.Failure();
+        }
+
+        // Parse the SPIR-V to produce an IR module.
+        auto parsed = ReadIR(binary.Get());
+        if (parsed != Success) {
+            return parsed.Failure();
+        }
+
+        // Validate the IR module against the capabilities supported by the core dialect.
+        auto validated = core::ir::Validate(parsed.Get(), core::ir::Capabilities{});
+        if (validated != Success) {
+            return validated.Failure();
+        }
+
+        // Return the disassembled IR module.
+        return core::ir::Disassembler(parsed.Get()).Plain();
+    }
+
+    /// Run the parser on a SPIR-V module and return the Tint IR or an error string.
+    /// @param spirv_asm the SPIR-V assembly to parse
+    /// @returns the disassembled Tint IR or an error
+    Result<std::string> RunToSpirvIR(std::string spirv_asm) {
         // Assemble the SPIR-V input.
         auto binary = Assemble(spirv_asm);
         if (binary != Success) {

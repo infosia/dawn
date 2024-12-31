@@ -86,7 +86,7 @@ TEST_F(SpirvParserTest, Load_Vector) {
 }
 
 TEST_F(SpirvParserTest, Load_VectorComponent) {
-    EXPECT_IR(R"(
+    EXPECT_SPIRV_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %main "main"
@@ -106,7 +106,7 @@ TEST_F(SpirvParserTest, Load_VectorComponent) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(
+                    R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
     %2:ptr<function, vec4<u32>, read_write> = var
@@ -371,7 +371,7 @@ TEST_F(SpirvParserTest, Store_Vector) {
 }
 
 TEST_F(SpirvParserTest, Store_VectorComponent) {
-    EXPECT_IR(R"(
+    EXPECT_SPIRV_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %main "main"
@@ -392,7 +392,7 @@ TEST_F(SpirvParserTest, Store_VectorComponent) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(
+                    R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
     %2:ptr<function, vec4<u32>, read_write> = var
