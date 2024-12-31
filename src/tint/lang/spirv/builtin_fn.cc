@@ -108,6 +108,14 @@ const char* str(BuiltinFn i) {
             return "vector_times_matrix";
         case BuiltinFn::kVectorTimesScalar:
             return "vector_times_scalar";
+        case BuiltinFn::kSignI:
+            return "sign_i";
+        case BuiltinFn::kSignU:
+            return "sign_u";
+        case BuiltinFn::kSignUI:
+            return "sign_u_i";
+        case BuiltinFn::kSignIU:
+            return "sign_i_u";
         case BuiltinFn::kSdot:
             return "sdot";
         case BuiltinFn::kUdot:
@@ -161,6 +169,10 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kSdot:
         case BuiltinFn::kUdot:
         case BuiltinFn::kNone:
+        case BuiltinFn::kSignU:
+        case BuiltinFn::kSignI:
+        case BuiltinFn::kSignIU:
+        case BuiltinFn::kSignUI:
             break;
     }
     return core::ir::Instruction::Accesses{};

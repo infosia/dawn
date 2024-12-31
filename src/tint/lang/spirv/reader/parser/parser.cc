@@ -33,6 +33,7 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+#include "src/tint/lang/spirv/builtin_fn.h"
 
 TINT_BEGIN_DISABLE_WARNING(NEWLINE_EOF);
 TINT_BEGIN_DISABLE_WARNING(OLD_STYLE_CAST);
@@ -46,6 +47,7 @@ TINT_END_DISABLE_WARNING(NEWLINE_EOF);
 
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/module.h"
+#include "src/tint/lang/spirv/ir/builtin_call.h"
 #include "src/tint/lang/spirv/validate/validate.h"
 
 using namespace tint::core::fluent_types;  // NOLINT
@@ -621,7 +623,7 @@ class Parser {
     // Returns the WGSL standard library function for the given GLSL.std.450 extended instruction
     // operation code. This handles GLSL functions which directly translate to the WGSL equivalent.
     // Any non-direct translation is returned as `kNone`.
-    core::BuiltinFn GetGlslStd450FuncName(uint32_t ext_opcode) {
+    core::BuiltinFn GetGlslStd450WgslEquivalentFuncName(uint32_t ext_opcode) {
         switch (ext_opcode) {
             case GLSLstd450Acos:
                 return core::BuiltinFn::kAcos;
@@ -651,7 +653,6 @@ class Parser {
             case GLSLstd450SAbs:
                 return core::BuiltinFn::kAbs;
             case GLSLstd450FSign:
-            case GLSLstd450SSign:
                 return core::BuiltinFn::kSign;
             case GLSLstd450FindILsb:
                 return core::BuiltinFn::kFirstTrailingBit;
@@ -741,22 +742,55 @@ class Parser {
         return core::BuiltinFn::kNone;
     }
 
+    spirv::BuiltinFn GetGlslStd450SpirvEquivalentFuncName(uint32_t ext_opcode,
+                                                          const core::type::Type* result_ty,
+                                                          VectorRef<core::ir::Value*> operands) {
+        switch (ext_opcode) {
+            case GLSLstd450SSign: {
+                auto* arg_deepest = operands[0]->Type()->DeepestElement();
+                auto* res_deepest = result_ty->DeepestElement();
+                if (arg_deepest == ty_.i32() && res_deepest == ty_.i32()) {
+                    return spirv::BuiltinFn::kSignI;
+                } else if (arg_deepest == ty_.u32() && res_deepest == ty_.u32()) {
+                    return spirv::BuiltinFn::kSignU;
+                } else if (arg_deepest == ty_.u32() && res_deepest == ty_.i32()) {
+                    return spirv::BuiltinFn::kSignUI;
+                } else if (arg_deepest == ty_.i32() && res_deepest == ty_.u32()) {
+                    return spirv::BuiltinFn::kSignIU;
+                } else {
+                    TINT_UNREACHABLE();
+                }
+            }
+            default:
+                break;
+        }
+        return spirv::BuiltinFn::kNone;
+    }
+
     /// @param inst the SPIR-V instruction for OpAccessChain
     void EmitGlslStd450ExtInst(const spvtools::opt::Instruction& inst) {
         const auto ext_opcode = inst.GetSingleWordInOperand(1);
         auto* result_ty = Type(inst.type_id());
-
-        const auto fn = GetGlslStd450FuncName(ext_opcode);
-        if (fn == core::BuiltinFn::kNone) {
-            TINT_UNIMPLEMENTED() << "unhandled GLSL.std.450 instruction " << ext_opcode;
-        }
 
         Vector<core::ir::Value*, 4> operands;
         // All parameters to GLSL.std.450 extended instructions are IDs.
         for (uint32_t idx = 2; idx < inst.NumInOperands(); ++idx) {
             operands.Push(Value(inst.GetSingleWordInOperand(idx)));
         }
-        Emit(b_.Call(result_ty, fn, operands));
+
+        const auto wgsl_fn = GetGlslStd450WgslEquivalentFuncName(ext_opcode);
+        if (wgsl_fn != core::BuiltinFn::kNone) {
+            Emit(b_.Call(result_ty, wgsl_fn, operands));
+            return;
+        }
+
+        const auto spv_fn = GetGlslStd450SpirvEquivalentFuncName(ext_opcode, result_ty, operands);
+        if (spv_fn != spirv::BuiltinFn::kNone) {
+            Emit(b_.Call<spirv::ir::BuiltinCall>(result_ty, spv_fn, operands));
+            return;
+        }
+
+        TINT_UNIMPLEMENTED() << "unhandled GLSL.std.450 instruction " << ext_opcode;
     }
 
     /// @param inst the SPIR-V instruction for OpAccessChain
