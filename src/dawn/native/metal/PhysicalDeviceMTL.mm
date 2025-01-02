@@ -782,6 +782,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 #endif
 }
 
+bool IsGPUFamilyMetal3Supported(id<MTLDevice> device) API_AVAILABLE(macos(13.0), ios(16.0)) {
+    return ([device supportsFamily:MTLGPUFamilyMetal3]);
+}
+
 void PhysicalDevice::InitializeVendorArchitectureImpl() {
     if (@available(macOS 10.15, iOS 13.0, *)) {
         // According to Apple's documentation:
@@ -793,7 +797,11 @@ void PhysicalDevice::InitializeVendorArchitectureImpl() {
         // So we'll use the highest supported common family as the reported "architecture" on
         // devices where a deviceID isn't available.
         if (mDeviceId == 0) {
-            if ([*mDevice supportsFamily:MTLGPUFamilyCommon3]) {
+            if (@available(macOS 13.0, iOS 16.0, *)) {
+                if (IsGPUFamilyMetal3Supported(*mDevice)) {
+                    mArchitectureName = "metal-3";
+                }
+            } else if ([*mDevice supportsFamily:MTLGPUFamilyCommon3]) {
                 mArchitectureName = "common-3";
             } else if ([*mDevice supportsFamily:MTLGPUFamilyCommon2]) {
                 mArchitectureName = "common-2";
