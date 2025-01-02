@@ -763,6 +763,8 @@ class Parser {
             }
             case GLSLstd450Normalize:
                 return spirv::BuiltinFn::kNormalize;
+            case GLSLstd450MatrixInverse:
+                return spirv::BuiltinFn::kInverse;
             default:
                 break;
         }

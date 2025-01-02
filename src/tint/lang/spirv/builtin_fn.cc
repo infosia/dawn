@@ -118,6 +118,8 @@ const char* str(BuiltinFn i) {
             return "sign_i_u";
         case BuiltinFn::kNormalize:
             return "normalize";
+        case BuiltinFn::kInverse:
+            return "inverse";
         case BuiltinFn::kSdot:
             return "sdot";
         case BuiltinFn::kUdot:
