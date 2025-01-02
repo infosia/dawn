@@ -87,6 +87,30 @@
       },
       "revId": "ada6d691e99fd43216f2f860a3dc319d60d5d564",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c075217_16df7618",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-01-02T06:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3c6dd53_c340b43e",
+      "range": {
+        "startLine": 279,
+        "startChar": 35,
+        "endLine": 279,
+        "endChar": 53
+      },
+      "revId": "ada6d691e99fd43216f2f860a3dc319d60d5d564",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
