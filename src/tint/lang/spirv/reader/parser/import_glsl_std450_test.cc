@@ -1398,7 +1398,7 @@ INSTANTIATE_TEST_SUITE_P(
                       DeterminantData{"m3x3f1", "mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f))"},
                       DeterminantData{"m4x4f1", "mat4x4<f32>(vec4<f32>(50.0f))"}));
 
-TEST_F(SpirvParserTest, DISABLED_GlslStd450_MatrixInverse_mat2x2) {
+TEST_F(SpirvParserTest, GlslStd450_MatrixInverse_mat2x2) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %mat2v2float %glsl MatrixInverse %m2x2f1
      OpReturn
@@ -1407,17 +1407,27 @@ TEST_F(SpirvParserTest, DISABLED_GlslStd450_MatrixInverse_mat2x2) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let s = (1.0f / determinant(m2x2f1));
-    let x_1 = mat2x2f(vec2f((s * m2x2f1[1u][1u]),
-                        (-(s) * m2x2f1[0u][1u])),
-                        vec2f((-(s) * m2x2f1[1u][0u]),
-                        (s * m2x2f1[0u][0u])));
+    %2:f32 = determinant mat2x2<f32>(vec2<f32>(50.0f, 60.0f))
+    %3:f32 = div 1.0f, %2
+    %4:f32 = negation %3
+    %5:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 0u, 0u
+    %6:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 0u, 1u
+    %7:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 1u, 0u
+    %8:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 1u, 1u
+    %9:f32 = mul %3, %8
+    %10:f32 = mul %4, %6
+    %11:f32 = mul %4, %7
+    %12:f32 = mul %3, %5
+    %13:vec2<f32> = construct %9, %10
+    %14:vec2<f32> = construct %11, %12
+    %15:mat2x2<f32> = construct %13, %14
+    ret
   }
 }
 )");
 }
 
-TEST_F(SpirvParserTest, DISABLED_GlslStd450_MatrixInverse_mat3x3) {
+TEST_F(SpirvParserTest, GlslStd450_MatrixInverse_mat3x3) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %mat3v3float %glsl MatrixInverse %m3x3f1
      OpReturn
@@ -1426,23 +1436,56 @@ TEST_F(SpirvParserTest, DISABLED_GlslStd450_MatrixInverse_mat3x3) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let s = (1.0f / determinant(m3x3f1));
-    let x_1 = (s * mat3x3f(vec3f(((m3x3f1[1u][1u] * m3x3f1[2u][2u]) -
-    (m3x3f1[1u][2u] * m3x3f1[2u][1u])), ((m3x3f1[0u][2u] * m3x3f1[2u][1u]) - (m3x3f1[0u][1u]
-    * m3x3f1[2u][2u])), ((m3x3f1[0u][1u] * m3x3f1[1u][2u]) - (m3x3f1[0u][2u] *
-    m3x3f1[1u][1u]))), vec3f(((m3x3f1[1u][2u] * m3x3f1[2u][0u]) - (m3x3f1[1u][0u] *
-    m3x3f1[2u][2u])), ((m3x3f1[0u][0u] * m3x3f1[2u][2u]) - (m3x3f1[0u][2u] *
-    m3x3f1[2u][0u])), ((m3x3f1[0u][2u] * m3x3f1[1u][0u]) - (m3x3f1[0u][0u] *
-    m3x3f1[1u][2u]))), vec3f(((m3x3f1[1u][0u] * m3x3f1[2u][1u]) - (m3x3f1[1u][1u] *
-    m3x3f1[2u][0u])), ((m3x3f1[0u][1u] * m3x3f1[2u][0u]) - (m3x3f1[0u][0u] *
-    m3x3f1[2u][1u])), ((m3x3f1[0u][0u] * m3x3f1[1u][1u]) - (m3x3f1[0u][1u] *
-    m3x3f1[1u][0u])))));
+    %2:f32 = determinant mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f))
+    %3:f32 = div 1.0f, %2
+    %4:f32 = access mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f)), 0u, 0u
+    %5:f32 = access mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f)), 0u, 1u
+    %6:f32 = access mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f)), 0u, 2u
+    %7:f32 = access mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f)), 1u, 0u
+    %8:f32 = access mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f)), 1u, 1u
+    %9:f32 = access mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f)), 1u, 2u
+    %10:f32 = access mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f)), 2u, 0u
+    %11:f32 = access mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f)), 2u, 1u
+    %12:f32 = access mat3x3<f32>(vec3<f32>(50.0f, 60.0f, 70.0f)), 2u, 2u
+    %13:f32 = mul %8, %12
+    %14:f32 = mul %9, %11
+    %15:f32 = sub %13, %14
+    %16:f32 = mul %6, %11
+    %17:f32 = mul %5, %12
+    %18:f32 = sub %16, %17
+    %19:f32 = mul %5, %9
+    %20:f32 = mul %6, %8
+    %21:f32 = sub %19, %20
+    %22:f32 = mul %9, %10
+    %23:f32 = mul %7, %12
+    %24:f32 = sub %22, %23
+    %25:f32 = mul %4, %12
+    %26:f32 = mul %6, %10
+    %27:f32 = sub %25, %26
+    %28:f32 = mul %6, %7
+    %29:f32 = mul %4, %9
+    %30:f32 = sub %28, %29
+    %31:f32 = mul %7, %11
+    %32:f32 = mul %8, %10
+    %33:f32 = sub %31, %32
+    %34:f32 = mul %5, %10
+    %35:f32 = mul %4, %11
+    %36:f32 = sub %34, %35
+    %37:f32 = mul %4, %8
+    %38:f32 = mul %5, %7
+    %39:f32 = sub %37, %38
+    %40:vec3<f32> = construct %15, %18, %21
+    %41:vec3<f32> = construct %24, %27, %30
+    %42:vec3<f32> = construct %33, %36, %39
+    %43:mat3x3<f32> = construct %40, %41, %42
+    %44:mat3x3<f32> = mul %3, %43
+    ret
   }
 }
 )");
 }
 
-TEST_F(SpirvParserTest, DISABLED_GlslStd450_MatrixInverse_mat4x4) {
+TEST_F(SpirvParserTest, GlslStd450_MatrixInverse_mat4x4) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %mat4v4float %glsl MatrixInverse %m4x4f1
      OpReturn
@@ -1451,74 +1494,174 @@ TEST_F(SpirvParserTest, DISABLED_GlslStd450_MatrixInverse_mat4x4) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let s = (1.0f / determinant(m4x4f1));
-    let x_1 = (s * mat4x4f(vec4f((((m4x4f1[1u][1u] * ((m4x4f1[2u][2u] *
-    m4x4f1[3u][3u]) - (m4x4f1[2u][3u] * m4x4f1[3u][2u]))) - (m4x4f1[1u][2u] *
-    ((m4x4f1[2u][1u] * m4x4f1[3u][3u]) - (m4x4f1[2u][3u] * m4x4f1[3u][1u])))) +
-    (m4x4f1[1u][3u] * ((m4x4f1[2u][1u] * m4x4f1[3u][2u]) - (m4x4f1[2u][2u] *
-    m4x4f1[3u][1u])))), (((-(m4x4f1[0u][1u]) * ((m4x4f1[2u][2u] * m4x4f1[3u][3u]) -
-    (m4x4f1[2u][3u] * m4x4f1[3u][2u]))) + (m4x4f1[0u][2u] * ((m4x4f1[2u][1u] *
-    m4x4f1[3u][3u]) - (m4x4f1[2u][3u] * m4x4f1[3u][1u])))) - (m4x4f1[0u][3u] *
-    ((m4x4f1[2u][1u] * m4x4f1[3u][2u]) - (m4x4f1[2u][2u] * m4x4f1[3u][1u])))),
-    (((m4x4f1[0u][1u] * ((m4x4f1[1u][2u] * m4x4f1[3u][3u]) - (m4x4f1[1u][3u] *
-    m4x4f1[3u][2u]))) - (m4x4f1[0u][2u] * ((m4x4f1[1u][1u] * m4x4f1[3u][3u]) -
-    (m4x4f1[1u][3u] * m4x4f1[3u][1u])))) + (m4x4f1[0u][3u] * ((m4x4f1[1u][1u] *
-    m4x4f1[3u][2u]) - (m4x4f1[1u][2u] * m4x4f1[3u][1u])))), (((-(m4x4f1[0u][1u]) *
-    ((m4x4f1[1u][2u] * m4x4f1[2u][3u]) - (m4x4f1[1u][3u] * m4x4f1[2u][2u]))) +
-    (m4x4f1[0u][2u] * ((m4x4f1[1u][1u] * m4x4f1[2u][3u]) - (m4x4f1[1u][3u] *
-    m4x4f1[2u][1u])))) - (m4x4f1[0u][3u] * ((m4x4f1[1u][1u] * m4x4f1[2u][2u]) -
-    (m4x4f1[1u][2u] * m4x4f1[2u][1u]))))), vec4f((((-(m4x4f1[1u][0u]) * ((m4x4f1[2u][2u]
-    * m4x4f1[3u][3u]) - (m4x4f1[2u][3u] * m4x4f1[3u][2u]))) + (m4x4f1[1u][2u] *
-    ((m4x4f1[2u][0u] * m4x4f1[3u][3u]) - (m4x4f1[2u][3u] * m4x4f1[3u][0u])))) -
-    (m4x4f1[1u][3u] * ((m4x4f1[2u][0u] * m4x4f1[3u][2u]) - (m4x4f1[2u][2u] *
-    m4x4f1[3u][0u])))), (((m4x4f1[0u][0u] * ((m4x4f1[2u][2u] * m4x4f1[3u][3u]) -
-    (m4x4f1[2u][3u] * m4x4f1[3u][2u]))) - (m4x4f1[0u][2u] * ((m4x4f1[2u][0u] *
-    m4x4f1[3u][3u]) - (m4x4f1[2u][3u] * m4x4f1[3u][0u])))) + (m4x4f1[0u][3u] *
-    ((m4x4f1[2u][0u] * m4x4f1[3u][2u]) - (m4x4f1[2u][2u] * m4x4f1[3u][0u])))),
-    (((-(m4x4f1[0u][0u]) * ((m4x4f1[1u][2u] * m4x4f1[3u][3u]) - (m4x4f1[1u][3u] *
-    m4x4f1[3u][2u]))) + (m4x4f1[0u][2u] * ((m4x4f1[1u][0u] * m4x4f1[3u][3u]) -
-    (m4x4f1[1u][3u] * m4x4f1[3u][0u])))) - (m4x4f1[0u][3u] * ((m4x4f1[1u][0u] *
-    m4x4f1[3u][2u]) - (m4x4f1[1u][2u] * m4x4f1[3u][0u])))), (((m4x4f1[0u][0u] *
-    ((m4x4f1[1u][2u] * m4x4f1[2u][3u]) - (m4x4f1[1u][3u] * m4x4f1[2u][2u]))) -
-    (m4x4f1[0u][2u] * ((m4x4f1[1u][0u] * m4x4f1[2u][3u]) - (m4x4f1[1u][3u] *
-    m4x4f1[2u][0u])))) + (m4x4f1[0u][3u] * ((m4x4f1[1u][0u] * m4x4f1[2u][2u]) -
-    (m4x4f1[1u][2u] * m4x4f1[2u][0u]))))), vec4f((((m4x4f1[1u][0u] * ((m4x4f1[2u][1u] *
-    m4x4f1[3u][3u]) - (m4x4f1[2u][3u] * m4x4f1[3u][1u]))) - (m4x4f1[1u][1u] *
-    ((m4x4f1[2u][0u] * m4x4f1[3u][3u]) - (m4x4f1[2u][3u] * m4x4f1[3u][0u])))) +
-    (m4x4f1[1u][3u] * ((m4x4f1[2u][0u] * m4x4f1[3u][1u]) - (m4x4f1[2u][1u] *
-    m4x4f1[3u][0u])))), (((-(m4x4f1[0u][0u]) * ((m4x4f1[2u][1u] * m4x4f1[3u][3u]) -
-    (m4x4f1[2u][3u] * m4x4f1[3u][1u]))) + (m4x4f1[0u][1u] * ((m4x4f1[2u][0u] *
-    m4x4f1[3u][3u]) - (m4x4f1[2u][3u] * m4x4f1[3u][0u])))) - (m4x4f1[0u][3u] *
-    ((m4x4f1[2u][0u] * m4x4f1[3u][1u]) - (m4x4f1[2u][1u] * m4x4f1[3u][0u])))),
-    (((m4x4f1[0u][0u] * ((m4x4f1[1u][1u] * m4x4f1[3u][3u]) - (m4x4f1[1u][3u] *
-    m4x4f1[3u][1u]))) - (m4x4f1[0u][1u] * ((m4x4f1[1u][0u] * m4x4f1[3u][3u]) -
-    (m4x4f1[1u][3u] * m4x4f1[3u][0u])))) + (m4x4f1[0u][3u] * ((m4x4f1[1u][0u] *
-    m4x4f1[3u][1u]) - (m4x4f1[1u][1u] * m4x4f1[3u][0u])))), (((-(m4x4f1[0u][0u]) *
-    ((m4x4f1[1u][1u] * m4x4f1[2u][3u]) - (m4x4f1[1u][3u] * m4x4f1[2u][1u]))) +
-    (m4x4f1[0u][1u] * ((m4x4f1[1u][0u] * m4x4f1[2u][3u]) - (m4x4f1[1u][3u] *
-    m4x4f1[2u][0u])))) - (m4x4f1[0u][3u] * ((m4x4f1[1u][0u] * m4x4f1[2u][1u]) -
-    (m4x4f1[1u][1u] * m4x4f1[2u][0u]))))), vec4f((((-(m4x4f1[1u][0u]) * ((m4x4f1[2u][1u]
-    * m4x4f1[3u][2u]) - (m4x4f1[2u][2u] * m4x4f1[3u][1u]))) + (m4x4f1[1u][1u] *
-    ((m4x4f1[2u][0u] * m4x4f1[3u][2u]) - (m4x4f1[2u][2u] * m4x4f1[3u][0u])))) -
-    (m4x4f1[1u][2u] * ((m4x4f1[2u][0u] * m4x4f1[3u][1u]) - (m4x4f1[2u][1u] *
-    m4x4f1[3u][0u])))), (((m4x4f1[0u][0u] * ((m4x4f1[2u][1u] * m4x4f1[3u][2u]) -
-    (m4x4f1[2u][2u] * m4x4f1[3u][1u]))) - (m4x4f1[0u][1u] * ((m4x4f1[2u][0u] *
-    m4x4f1[3u][2u]) - (m4x4f1[2u][2u] * m4x4f1[3u][0u])))) + (m4x4f1[0u][2u] *
-    ((m4x4f1[2u][0u] * m4x4f1[3u][1u]) - (m4x4f1[2u][1u] * m4x4f1[3u][0u])))),
-    (((-(m4x4f1[0u][0u]) * ((m4x4f1[1u][1u] * m4x4f1[3u][2u]) - (m4x4f1[1u][2u] *
-    m4x4f1[3u][1u]))) + (m4x4f1[0u][1u] * ((m4x4f1[1u][0u] * m4x4f1[3u][2u]) -
-    (m4x4f1[1u][2u] * m4x4f1[3u][0u])))) - (m4x4f1[0u][2u] * ((m4x4f1[1u][0u] *
-    m4x4f1[3u][1u]) - (m4x4f1[1u][1u] * m4x4f1[3u][0u])))), (((m4x4f1[0u][0u] *
-    ((m4x4f1[1u][1u] * m4x4f1[2u][2u]) - (m4x4f1[1u][2u] * m4x4f1[2u][1u]))) -
-    (m4x4f1[0u][1u] * ((m4x4f1[1u][0u] * m4x4f1[2u][2u]) - (m4x4f1[1u][2u] *
-    m4x4f1[2u][0u])))) + (m4x4f1[0u][2u] * ((m4x4f1[1u][0u] * m4x4f1[2u][1u]) -
-    (m4x4f1[1u][1u] * m4x4f1[2u][0u])))))));
+    %2:f32 = determinant mat4x4<f32>(vec4<f32>(50.0f))
+    %3:f32 = div 1.0f, %2
+    %4:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 0u, 0u
+    %5:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 0u, 1u
+    %6:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 0u, 2u
+    %7:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 0u, 3u
+    %8:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 1u, 0u
+    %9:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 1u, 1u
+    %10:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 1u, 2u
+    %11:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 1u, 3u
+    %12:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 2u, 0u
+    %13:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 2u, 1u
+    %14:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 2u, 2u
+    %15:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 2u, 3u
+    %16:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 3u, 0u
+    %17:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 3u, 1u
+    %18:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 3u, 2u
+    %19:f32 = access mat4x4<f32>(vec4<f32>(50.0f)), 3u, 3u
+    %20:f32 = mul %14, %19
+    %21:f32 = mul %15, %18
+    %22:f32 = sub %20, %21
+    %23:f32 = mul %13, %19
+    %24:f32 = mul %15, %17
+    %25:f32 = sub %23, %24
+    %26:f32 = mul %13, %18
+    %27:f32 = mul %14, %17
+    %28:f32 = sub %26, %27
+    %29:f32 = mul %10, %19
+    %30:f32 = mul %11, %18
+    %31:f32 = sub %29, %30
+    %32:f32 = mul %9, %19
+    %33:f32 = mul %11, %17
+    %34:f32 = sub %32, %33
+    %35:f32 = mul %9, %18
+    %36:f32 = mul %10, %17
+    %37:f32 = sub %35, %36
+    %38:f32 = mul %10, %15
+    %39:f32 = mul %11, %14
+    %40:f32 = sub %38, %39
+    %41:f32 = mul %9, %15
+    %42:f32 = mul %11, %13
+    %43:f32 = sub %41, %42
+    %44:f32 = mul %9, %14
+    %45:f32 = mul %10, %13
+    %46:f32 = sub %44, %45
+    %47:f32 = mul %12, %19
+    %48:f32 = mul %15, %16
+    %49:f32 = sub %47, %48
+    %50:f32 = mul %12, %18
+    %51:f32 = mul %14, %16
+    %52:f32 = sub %50, %51
+    %53:f32 = mul %8, %19
+    %54:f32 = mul %11, %16
+    %55:f32 = sub %53, %54
+    %56:f32 = mul %8, %18
+    %57:f32 = mul %10, %16
+    %58:f32 = sub %56, %57
+    %59:f32 = mul %8, %15
+    %60:f32 = mul %11, %12
+    %61:f32 = sub %59, %60
+    %62:f32 = mul %8, %14
+    %63:f32 = mul %10, %12
+    %64:f32 = sub %62, %63
+    %65:f32 = mul %12, %17
+    %66:f32 = mul %13, %16
+    %67:f32 = sub %65, %66
+    %68:f32 = mul %8, %17
+    %69:f32 = mul %9, %16
+    %70:f32 = sub %68, %69
+    %71:f32 = mul %8, %13
+    %72:f32 = mul %9, %12
+    %73:f32 = sub %71, %72
+    %74:f32 = negation %5
+    %75:f32 = mul %9, %22
+    %76:f32 = mul %10, %25
+    %77:f32 = mul %11, %28
+    %78:f32 = sub %75, %76
+    %79:f32 = add %78, %77
+    %80:f32 = mul %74, %22
+    %81:f32 = mul %6, %25
+    %82:f32 = mul %7, %28
+    %83:f32 = add %80, %81
+    %84:f32 = sub %83, %82
+    %85:f32 = mul %5, %31
+    %86:f32 = mul %6, %34
+    %87:f32 = mul %7, %37
+    %88:f32 = sub %85, %86
+    %89:f32 = add %88, %87
+    %90:f32 = mul %74, %40
+    %91:f32 = mul %6, %43
+    %92:f32 = mul %7, %46
+    %93:f32 = add %90, %91
+    %94:f32 = sub %93, %92
+    %95:f32 = negation %8
+    %96:f32 = negation %4
+    %97:f32 = mul %95, %22
+    %98:f32 = mul %10, %49
+    %99:f32 = mul %11, %52
+    %100:f32 = add %97, %98
+    %101:f32 = sub %100, %99
+    %102:f32 = mul %4, %22
+    %103:f32 = mul %6, %49
+    %104:f32 = mul %7, %52
+    %105:f32 = sub %102, %103
+    %106:f32 = add %105, %104
+    %107:f32 = mul %96, %31
+    %108:f32 = mul %6, %55
+    %109:f32 = mul %7, %58
+    %110:f32 = add %107, %108
+    %111:f32 = sub %110, %109
+    %112:f32 = mul %4, %40
+    %113:f32 = mul %6, %61
+    %114:f32 = mul %7, %64
+    %115:f32 = sub %112, %113
+    %116:f32 = add %115, %114
+    %117:f32 = mul %8, %25
+    %118:f32 = mul %9, %49
+    %119:f32 = mul %11, %67
+    %120:f32 = sub %117, %118
+    %121:f32 = add %120, %119
+    %122:f32 = mul %96, %25
+    %123:f32 = mul %5, %49
+    %124:f32 = mul %7, %67
+    %125:f32 = add %122, %123
+    %126:f32 = sub %125, %124
+    %127:f32 = mul %4, %34
+    %128:f32 = mul %5, %55
+    %129:f32 = mul %7, %70
+    %130:f32 = sub %127, %128
+    %131:f32 = add %130, %129
+    %132:f32 = mul %96, %43
+    %133:f32 = mul %5, %61
+    %134:f32 = mul %7, %73
+    %135:f32 = add %132, %133
+    %136:f32 = sub %135, %134
+    %137:f32 = mul %95, %28
+    %138:f32 = mul %9, %52
+    %139:f32 = mul %10, %67
+    %140:f32 = add %137, %138
+    %141:f32 = sub %140, %139
+    %142:f32 = mul %4, %28
+    %143:f32 = mul %5, %52
+    %144:f32 = mul %6, %67
+    %145:f32 = sub %142, %143
+    %146:f32 = add %145, %144
+    %147:f32 = mul %96, %37
+    %148:f32 = mul %5, %58
+    %149:f32 = mul %6, %70
+    %150:f32 = add %147, %148
+    %151:f32 = sub %150, %149
+    %152:f32 = mul %4, %46
+    %153:f32 = mul %5, %64
+    %154:f32 = mul %6, %73
+    %155:f32 = sub %152, %153
+    %156:f32 = add %155, %154
+    %157:vec3<f32> = construct %79, %84, %89, %94
+    %158:vec3<f32> = construct %101, %106, %111, %116
+    %159:vec3<f32> = construct %121, %126, %131, %136
+    %160:vec3<f32> = construct %141, %146, %151, %156
+    %161:mat4x4<f32> = construct %157, %158, %159, %160
+    %162:mat4x4<f32> = mul %3, %161
+    ret
   }
 }
 )");
 }
 
-TEST_F(SpirvParserTest, DISABLED_GlslStd450_MatrixInverse_MultipleInScope) {
+TEST_F(SpirvParserTest, GlslStd450_MatrixInverse_MultipleInScope) {
     EXPECT_IR(Preamble() + R"(
      %1 = OpExtInst %mat2v2float %glsl MatrixInverse %m2x2f1
      %2 = OpExtInst %mat2v2float %glsl MatrixInverse %m2x2f1
@@ -1528,12 +1671,35 @@ TEST_F(SpirvParserTest, DISABLED_GlslStd450_MatrixInverse_MultipleInScope) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    let s = (1.0f / determinant(m2x2f1));
-    let x_1 = mat2x2f(vec2f((s * m2x2f1[1u][1u]), (-(s) *
-    m2x2f1[0u][1u])), vec2f((-(s) * m2x2f1[1u][0u]), (s * m2x2f1[0u][0u])));
-    let s_1 = (1.0f / determinant(m2x2f1));
-    let x_2 = mat2x2f(vec2f((s_1 * m2x2f1[1u][1u]), (-(s_1) *
-    m2x2f1[0u][1u])), vec2f((-(s_1) * m2x2f1[1u][0u]), (s_1 * m2x2f1[0u][0u])));
+    %2:f32 = determinant mat2x2<f32>(vec2<f32>(50.0f, 60.0f))
+    %3:f32 = div 1.0f, %2
+    %4:f32 = negation %3
+    %5:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 0u, 0u
+    %6:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 0u, 1u
+    %7:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 1u, 0u
+    %8:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 1u, 1u
+    %9:f32 = mul %3, %8
+    %10:f32 = mul %4, %6
+    %11:f32 = mul %4, %7
+    %12:f32 = mul %3, %5
+    %13:vec2<f32> = construct %9, %10
+    %14:vec2<f32> = construct %11, %12
+    %15:mat2x2<f32> = construct %13, %14
+    %16:f32 = determinant mat2x2<f32>(vec2<f32>(50.0f, 60.0f))
+    %17:f32 = div 1.0f, %16
+    %18:f32 = negation %17
+    %19:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 0u, 0u
+    %20:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 0u, 1u
+    %21:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 1u, 0u
+    %22:f32 = access mat2x2<f32>(vec2<f32>(50.0f, 60.0f)), 1u, 1u
+    %23:f32 = mul %17, %22
+    %24:f32 = mul %18, %20
+    %25:f32 = mul %18, %21
+    %26:f32 = mul %17, %19
+    %27:vec2<f32> = construct %23, %24
+    %28:vec2<f32> = construct %25, %26
+    %29:mat2x2<f32> = construct %27, %28
+    ret
   }
 }
 )");
