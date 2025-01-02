@@ -463,7 +463,21 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
         }
     }
 
-    (*compileOptions).fastMathEnabled = !GetStrictMath().value_or(false);
+    if (@available(macOS 15.0, iOS 18.0, *)) {
+        printf("a\n");
+        if (GetStrictMath().value_or(false)) {
+            (*compileOptions).mathMode = MTLMathModeSafe;
+            (*compileOptions).mathFloatingPointFunctions = MTLMathFloatingPointFunctionsPrecise;
+        } else {
+            (*compileOptions).mathMode = MTLMathModeFast;
+            (*compileOptions).mathFloatingPointFunctions = MTLMathFloatingPointFunctionsFast;
+        }
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        (*compileOptions).fastMathEnabled = !GetStrictMath().value_or(false);
+#pragma clang diagnostic pop
+    }
 
     auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
     NSError* error = nullptr;

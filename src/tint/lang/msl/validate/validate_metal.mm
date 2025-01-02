@@ -48,7 +48,15 @@ Result ValidateUsingMetal(const std::string& src, MslVersion version) {
     NSString* source = [NSString stringWithCString:src.c_str() encoding:NSUTF8StringEncoding];
 
     MTLCompileOptions* compileOptions = [MTLCompileOptions new];
-    compileOptions.fastMathEnabled = true;
+    if (@available(macOS 15.0, iOS 18.0, *)) {
+        compileOptions.mathMode = MTLMathModeFast;
+        compileOptions.mathFloatingPointFunctions = MTLMathFloatingPointFunctionsFast;
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        compileOptions.fastMathEnabled = true;
+#pragma clang diagnostic pop
+    }
     switch (version) {
         case MslVersion::kMsl_2_2:
             compileOptions.languageVersion = MTLLanguageVersion2_2;
