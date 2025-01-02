@@ -793,7 +793,11 @@ void PhysicalDevice::InitializeVendorArchitectureImpl() {
         // So we'll use the highest supported common family as the reported "architecture" on
         // devices where a deviceID isn't available.
         if (mDeviceId == 0) {
-            if ([*mDevice supportsFamily:MTLGPUFamilyCommon3]) {
+            if (@available(macOS 13.0, iOS 16.0, *)) {
+                if ([*mDevice supportsFamily:MTLGPUFamilyMetal3]) {
+                    mArchitectureName = "metal-3";
+                }
+            } else if ([*mDevice supportsFamily:MTLGPUFamilyCommon3]) {
                 mArchitectureName = "common-3";
             } else if ([*mDevice supportsFamily:MTLGPUFamilyCommon2]) {
                 mArchitectureName = "common-2";
