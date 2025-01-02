@@ -58,6 +58,7 @@ type flags struct {
 	unrollConstEvalLoops bool
 	genCoverage          bool
 	compatibilityMode    bool
+	debugCTS             bool
 	skipVSCodeInfo       bool
 	dawn                 node.Flags
 }
@@ -108,6 +109,7 @@ func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, e
 	flag.BoolVar(&c.flags.genCoverage, "coverage", false, "displays coverage data")
 	flag.StringVar(&c.flags.coverageFile, "export-coverage", "", "write coverage data to the given path")
 	flag.BoolVar(&c.flags.compatibilityMode, "compat", false, "run tests in compatibility mode")
+	flag.BoolVar(&c.flags.debugCTS, "debug-cts", false, "enable CTS debugging option")
 	flag.BoolVar(&c.flags.skipVSCodeInfo, "skip-vs-code-info", false, "skips emitting VS Code information")
 
 	return []string{"[query]"}, nil
