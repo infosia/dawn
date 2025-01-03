@@ -129,6 +129,30 @@
       },
       "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "088c36a0_587dd52d",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T08:08:05Z",
+      "side": 1,
+      "message": "Uploaded a static table patchset, with a little bit concern about lifecycle.",
+      "parentUuid": "e92b4b64_175e0612",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 2
+      },
+      "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

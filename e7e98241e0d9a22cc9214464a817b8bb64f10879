@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "69f5e666_6ba51347",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T08:08:05Z",
+      "side": 1,
+      "message": "Using ExternalImmediateData instead of CommonImmediateConstantsPerPipeline.(In case there\u0027re new common immediate data in future)",
+      "parentUuid": "9d5b8c81_afeb456e",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 76
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b8192dc1_1ace3a3b",
         "filename": "src/dawn/native/Device.h",
         "patchSetId": 29
@@ -135,6 +159,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "776fdee6_76b6ae14",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T08:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33a11a01_ab35b859",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5305a1af_a80bd5d1",
@@ -158,6 +206,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98ee0454_b8b6cef1",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T08:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5305a1af_a80bd5d1",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 100
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78c3c554_13a856e0",
@@ -171,6 +243,30 @@
       "writtenOn": "2025-01-03T00:21:02Z",
       "side": 1,
       "message": "From what I can tell, I think we could just have a static version of the default built map, and a getter or something to get a const reference of it? IIRC, I think that would be enough to leverage the copy ctor for `unordered_map`?",
+      "range": {
+        "startLine": 92,
+        "startChar": 24,
+        "endLine": 92,
+        "endChar": 52
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db33e9d3_b94f0fa2",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T08:08:05Z",
+      "side": 1,
+      "message": "I uploaded a static table version, with a little bit concern about the lifecycle.",
+      "parentUuid": "78c3c554_13a856e0",
       "range": {
         "startLine": 92,
         "startChar": 24,
@@ -217,6 +313,30 @@
       "writtenOn": "2025-01-03T00:21:02Z",
       "side": 1,
       "message": "nit. Given that these can be set separately, I feel like they should just have their own `ImmediateConstantType` each (i.e. X, Y, Z), and the helpers can just handle them accordingly? That should also allow us to get rid of `GetRawStartBit`.",
+      "range": {
+        "startLine": 76,
+        "startChar": 43,
+        "endLine": 76,
+        "endChar": 60
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64ba03d1_e7dbaa38",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T08:08:05Z",
+      "side": 1,
+      "message": "After checking how backend use them (d3d12: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/CommandBufferD3D12.cpp;drc\u003d66bf64e67071911fffd159a4e3d556d055e76d85;l\u003d342), I think I could remove all \"setX/Y/Z alone\" API and cases 😊",
+      "parentUuid": "418a1cef_fc0f3c4e",
       "range": {
         "startLine": 76,
         "startChar": 43,
