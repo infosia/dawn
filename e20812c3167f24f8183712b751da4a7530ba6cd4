@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "e20812c3167f24f8183712b751da4a7530ba6cd4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98646ad7_3d430534",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-03T03:15:02Z",
+      "side": 1,
+      "message": "LGTM, fingers crossed we won\u0027t find some dependent code that was leaving `stepMode` zero-initialized while also putting unused data in `attributes` :)",
+      "revId": "e20812c3167f24f8183712b751da4a7530ba6cd4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
