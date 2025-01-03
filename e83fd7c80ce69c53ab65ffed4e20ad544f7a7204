@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54de81d8_6b1cbef1",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-03T23:01:38Z",
+      "side": 1,
+      "message": "Isn\u0027t this the default? Why do we need a helper for it? (If our tests need a helper, then users might need one too, but we don\u0027t want that.)",
+      "revId": "e83fd7c80ce69c53ab65ffed4e20ad544f7a7204",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "784cac24_6af8014e",
+        "filename": "src/dawn/native/utils/WGPUHelpers.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-03T23:01:38Z",
+      "side": 1,
+      "message": "The constructor runs after members are initialized so I believe they should already all be set to BindingNotUsed and this helper method shouldn\u0027t be needed.",
+      "revId": "e83fd7c80ce69c53ab65ffed4e20ad544f7a7204",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
