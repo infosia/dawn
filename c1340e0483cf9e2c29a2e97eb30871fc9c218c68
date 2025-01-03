@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bd201f1_76beae2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-01-03T18:50:41Z",
+      "side": 1,
+      "message": "LGTM! Thanks for fixing the enum issue.",
+      "revId": "c1340e0483cf9e2c29a2e97eb30871fc9c218c68",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
