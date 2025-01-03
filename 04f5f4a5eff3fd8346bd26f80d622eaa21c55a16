@@ -34,6 +34,29 @@
       "parentUuid": "ee8b684a_89b63558",
       "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2e78bdb_cf2e0a09",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-03T00:21:02Z",
+      "side": 1,
+      "message": "I kind of liked the `Layout` structs with the offsets more actually... It was a little more intuitive to read, especially in the tests where we have a bunch of offset computations now which makes it a bit harder to verify. Was there a reason this change removed them? (Same for the `ConstantsBit` idea).",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 2
+      },
+      "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

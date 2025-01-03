@@ -16,6 +16,190 @@
       "message": "Reviewers@, Sry but I think I\u0027ve finished the refactor of this CL. No big change anymore from my side.\n\nPTAL again if you have time, thanks!",
       "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d5b8c81_afeb456e",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-03T00:21:02Z",
+      "side": 1,
+      "message": "Ah, sorry, these names are still fairly confusing, and I read through it a couple of times before I understood... I\u0027m wondering whether the `32Bit` parts can be dropped entirely in the names and just mention in a comment above them that each `ImmediateConstant` is always 32 bits. (Which is kinda documented below as well via `kImmediateConstantElementByteSize`.\n\nFor naming I think maybe... `kMaxCommonImmediateConstantsPerPipeline` and `kMaxImmediateConstantsPerPipeline`.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 76
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8192dc1_1ace3a3b",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-03T00:21:02Z",
+      "side": 1,
+      "message": "Are these expected to change depending on device? Or are they static? From this CL, it seems like the table is pretty much always static?\n\nIf they are gonna be static, I\u0027m thinking maybe we don\u0027t even need them as a member of the device, and we could just have a static lookup table that we go to get the constants\u0027 information.",
+      "range": {
+        "startLine": 592,
+        "startChar": 4,
+        "endLine": 592,
+        "endChar": 53
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f75c9b9f_357edbf9",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-03T00:21:02Z",
+      "side": 1,
+      "message": "nit. I guess it\u0027s time to use 2025 😄 (for this file and all the newly added ones)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5305a1af_a80bd5d1",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-03T00:21:02Z",
+      "side": 1,
+      "message": "nit. I think it\u0027s a bit easier to read if these follow their respective blocks above. Otherwise, I feel like I need to go back and forth to verify what\u0027s what.",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 100
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78c3c554_13a856e0",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-03T00:21:02Z",
+      "side": 1,
+      "message": "From what I can tell, I think we could just have a static version of the default built map, and a getter or something to get a const reference of it? IIRC, I think that would be enough to leverage the copy ctor for `unordered_map`?",
+      "range": {
+        "startLine": 92,
+        "startChar": 24,
+        "endLine": 92,
+        "endChar": 52
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca7ec865_c9832206",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-03T00:21:02Z",
+      "side": 1,
+      "message": "I think that for all these setters, wouldn\u0027t it be more optimal to check if the new value actually changes from the previous value before marking the dirty bit?",
+      "range": {
+        "startLine": 34,
+        "startChar": 42,
+        "endLine": 34,
+        "endChar": 59
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "418a1cef_fc0f3c4e",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-03T00:21:02Z",
+      "side": 1,
+      "message": "nit. Given that these can be set separately, I feel like they should just have their own `ImmediateConstantType` each (i.e. X, Y, Z), and the helpers can just handle them accordingly? That should also allow us to get rid of `GetRawStartBit`.",
+      "range": {
+        "startLine": 76,
+        "startChar": 43,
+        "endLine": 76,
+        "endChar": 60
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c512e26_2acba20b",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-03T00:21:02Z",
+      "side": 1,
+      "message": "nit. I\u0027m not too familiar with common usages of this... but is it necessary to have both a range (input) and data (output) offset? I\u0027m thinking that (at least since this is in C++), the `rangeOffset` could just be passed in via `values + rangeOffset` to begin with? \n\nMain reason I\u0027m asking is because having both offsets makes it a bit confusing to use and users could easily mistake one offset for the other leading to unintended behavior?",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 43
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
