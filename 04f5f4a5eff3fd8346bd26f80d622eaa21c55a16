@@ -105,6 +105,30 @@
       },
       "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e92b4b64_175e0612",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T05:43:33Z",
+      "side": 1,
+      "message": "(Using this place for more details about the idea how to use these bits and table)\n\n- In pipeline creation phase, pipeline needs to know the required constant bits, and that\u0027s that part in stacked CL. Works like this:\nBackend pipeline --Pass required internal constants type---\u003e RenderPipeline/ComputePipeline --Get element from table and set constant block bits ---\u003e PipelineBase --- Hash the pipeline constant mask---\u003e finished.\n\n- In command buffer phase, which constants needs to be set and update, we do things like:\n```\n// Using tracker to set immediate constants.\ntracker-\u003eOnSetPipeline(...)\n...\ntracker-\u003eSetImmediateData(...);\ntracker-\u003eSetClampFragDepth(min, max);\n...\n// Before draw or dispatch call, using tracker-\u003euploadConstants()\nauto requiredUploadedBit \u003d pipeline-\u003erequiredBits \u0026 mDirtyBits \u0026 excludeExternalBits\nfor (auto i : IterateBitSet(requiredUploadedBit)) {\n   mUploadedVector.push_back(tracker-\u003eGetContent().Get\u003cuint32_t\u003e(i * elementSize));\n}\n// Upload user external immediate data\n// Call backend push constant related graphics API to do real update.\n```",
+      "parentUuid": "757f0c95_783f5473",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 2
+      },
+      "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
