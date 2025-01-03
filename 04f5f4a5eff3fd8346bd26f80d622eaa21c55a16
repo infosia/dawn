@@ -81,6 +81,30 @@
       },
       "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "757f0c95_783f5473",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T05:31:09Z",
+      "side": 1,
+      "message": "BTW, the link issue could be resolved by replacing all struct to namespace. But that\u0027s not ideal(I think).\n\nAnd in the stacked CL(https://dawn-review.googlesource.com/c/dawn/+/220594/9), compared patch set 9 and patch set 4, it seems the table format code logic is more clear than explicit bits and offsets (I think).",
+      "parentUuid": "615799a5_6f538e0e",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 2
+      },
+      "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
