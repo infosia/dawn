@@ -57,6 +57,30 @@
       },
       "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "615799a5_6f538e0e",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T02:35:49Z",
+      "side": 1,
+      "message": "The main reason is about the stacked CL failed on clang builds. It reports some link errors when using such static struct::members.\n\nAnd adding a new constants in multiple structs seems a bit complex?\n\nMaybe I can hold these helper structs in .cpp file for reading since you mentioned these blocks are not that easy to follow in the .cpp file.",
+      "parentUuid": "c2e78bdb_cf2e0a09",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 2
+      },
+      "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

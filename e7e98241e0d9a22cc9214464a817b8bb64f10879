@@ -66,6 +66,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5fd8529_13a6fc15",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T02:35:49Z",
+      "side": 1,
+      "message": "One exception is array_length_from_uniform(using constants to hold buffer length, varies between d3d12 and metal backend).",
+      "parentUuid": "b8192dc1_1ace3a3b",
+      "range": {
+        "startLine": 592,
+        "startChar": 4,
+        "endLine": 592,
+        "endChar": 53
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f75c9b9f_357edbf9",
         "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
         "patchSetId": 29
@@ -77,6 +101,30 @@
       "writtenOn": "2025-01-03T00:21:02Z",
       "side": 1,
       "message": "nit. I guess it\u0027s time to use 2025 😄 (for this file and all the newly added ones)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33a11a01_ab35b859",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T02:35:49Z",
+      "side": 1,
+      "message": "Yes, Happy New Year!",
+      "parentUuid": "f75c9b9f_357edbf9",
       "range": {
         "startLine": 1,
         "startChar": 13,
@@ -192,6 +240,30 @@
       "writtenOn": "2025-01-03T00:21:02Z",
       "side": 1,
       "message": "nit. I\u0027m not too familiar with common usages of this... but is it necessary to have both a range (input) and data (output) offset? I\u0027m thinking that (at least since this is in C++), the `rangeOffset` could just be passed in via `values + rangeOffset` to begin with? \n\nMain reason I\u0027m asking is because having both offsets makes it a bit confusing to use and users could easily mistake one offset for the other leading to unintended behavior?",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 43
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e60177b_4d3175e6",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-03T02:35:49Z",
+      "side": 1,
+      "message": "This mainly follow the design as writeBuffer(https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/modules/webgpu/gpu_queue.h;drc\u003dcb42e4f0ee1bfd52d1b5c183d3919ff23e4cc5ef;l\u003d45) and also the js side api(https://github.com/gpuweb/gpuweb/blob/main/proposals/push-constants.md#gpucommandencoder). It has a offset for buffer range and another offset for data.",
+      "parentUuid": "6c512e26_2acba20b",
       "range": {
         "startLine": 68,
         "startChar": 4,
