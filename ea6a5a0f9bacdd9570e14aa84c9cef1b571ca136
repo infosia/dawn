@@ -16,6 +16,29 @@
       "message": "PTAL, thanks!",
       "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f718345e_93b2fd79",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3715,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-04T00:32:51Z",
+      "side": 1,
+      "message": "nit. Can this not be done inline via an initializer list?",
+      "range": {
+        "startLine": 3713,
+        "startChar": 4,
+        "endLine": 3715,
+        "endChar": 76
+      },
+      "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
