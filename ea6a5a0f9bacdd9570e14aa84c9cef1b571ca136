@@ -20,6 +20,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "92c4032a_e024f971",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2634,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-04T04:12:10Z",
+      "side": 1,
+      "message": "If we don\u0027t already have it, we should also have a case where unset and empty bind groups are intermixed (e.g. 0 is unset, 1 is set)",
+      "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d68f351_6d044894",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3712,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-04T04:12:10Z",
+      "side": 1,
+      "message": "nit: it\u0027s not that the BindGroup matches the layout, it\u0027s that its compatibility is not validated. I think this name works:\n\n```suggestion\nTEST_F(PipelineLayoutValidationTest, BindGroupSlotWithEmptyLayoutIsNotValidated) {\n```",
+      "range": {
+        "startLine": 3712,
+        "startChar": 37,
+        "endLine": 3712,
+        "endChar": 67
+      },
+      "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f718345e_93b2fd79",
         "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
         "patchSetId": 6
@@ -37,6 +77,40 @@
         "endLine": 3715,
         "endChar": 76
       },
+      "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18f208f7_13073265",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-04T04:12:10Z",
+      "side": 1,
+      "message": "Unless these failures are very slow, the expectations should be Failure, not Skip, otherwise we will stop running the tests and the Unexpected Pass Finder tool won\u0027t notice when they start passing again.",
+      "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d073e89_b59a8d13",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-04T04:12:10Z",
+      "side": 1,
+      "message": "same",
       "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
