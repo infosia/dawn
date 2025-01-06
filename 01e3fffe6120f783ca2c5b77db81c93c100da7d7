@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "054288c8_387c47af",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T21:35:26Z",
+      "side": 0,
+      "message": "This change looks unrelated?",
+      "revId": "01e3fffe6120f783ca2c5b77db81c93c100da7d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

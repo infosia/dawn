@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69a5ff3e_f3c6daef",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T21:35:26Z",
+      "side": 1,
+      "message": "We should start rounding these up to the required alignment of the type. At the moment if there\u0027s a user-declared push constant of type `f16`, I think the depth range offsets would be mis-aligned. We should add an E2E test that covers this.",
+      "revId": "d4414515343e7d79da93141651b878c2f5cb0616",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29ae92a1_cb5db315",
+        "filename": "src/tint/lang/spirv/writer/raise/raise.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T21:35:26Z",
+      "side": 1,
+      "message": "Nit: u32 not needed here?",
+      "fixSuggestions": [
+        {
+          "fixId": "5fc87e56_c023b73d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/raise/raise.cc",
+              "range": {
+                "startLine": 52,
+                "startChar": 0,
+                "endLine": 53,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "d4414515343e7d79da93141651b878c2f5cb0616",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
