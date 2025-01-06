@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb18fa28_3a8f5b67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T17:31:28Z",
+      "side": 1,
+      "message": "For `PointSize` we should also be checking that it is only assigned `1.0`, otherwise we will not capturing the shader\u0027s semantics properly. The `ShaderIO` transform is probably the best place to do that (we can probably just ICE).",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d12f9bb8_4a2b1c55",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T17:31:28Z",
+      "side": 1,
+      "message": "Is it guaranteed that all the members we skip are at the end of the structure? Otherwise it\u0027ll mess up the indices used in `access` instructions. We should `TINT_ASSERT` to make sure, or fixup the indices if that\u0027s not the case.",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c57422e4_f2e92d28",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T17:31:28Z",
+      "side": 1,
+      "message": "Can the whole structure be assigned in SPIR-V, without needing to access individual components?",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91d5fc44_6d064880",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T17:31:28Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer it we just added a `__cull_distance` builtin value so that the IR reflects what is in the SPIR-V. This should simplify the logic for skipping it in the ShaderIO transform, and removes the need for the validation capability.",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
