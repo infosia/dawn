@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08abcab9_0522d245",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T18:53:05Z",
+      "side": 1,
+      "message": "I believe you need to pass `inst.result_id()` as well otherwise the value will not be registered.\n\nProbably worth changing the unit tests to return the result from the function to make sure this is done properly.",
+      "revId": "73dc9310e320ca003e6dee0d355a9f801959a2a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
