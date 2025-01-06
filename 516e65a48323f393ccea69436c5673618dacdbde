@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "516e65a48323f393ccea69436c5673618dacdbde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b57fccc_44850d3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-06T18:11:43Z",
+      "side": 1,
+      "message": "Switching reviewers since the previous one will be OOO for a while.",
+      "revId": "516e65a48323f393ccea69436c5673618dacdbde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
