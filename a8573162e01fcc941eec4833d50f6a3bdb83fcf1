@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a504f01b_11be975d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T19:31:03Z",
+      "side": 1,
+      "message": "LGTM with the comment update that David requested and one redundant test.",
+      "revId": "a8573162e01fcc941eec4833d50f6a3bdb83fcf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7184c194_bfbf8cf9",
@@ -48,6 +65,23 @@
       "writtenOn": "2025-01-06T18:37:28Z",
       "side": 1,
       "message": "The \u0027index\u0027 parameter was confusing.  The comment should explain that it\u0027s the vector component index when the parameter is a vector type.  And if the parameter is a scalar, then the index must be zero.",
+      "revId": "a8573162e01fcc941eec4833d50f6a3bdb83fcf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f03b1157_88deb241",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T19:31:03Z",
+      "side": 1,
+      "message": "LocationInvocationId must be `i32`. This looks like a duplicate of the above test?",
       "revId": "a8573162e01fcc941eec4833d50f6a3bdb83fcf1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
