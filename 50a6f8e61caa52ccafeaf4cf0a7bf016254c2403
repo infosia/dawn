@@ -16,6 +16,40 @@
       "message": "PTAL",
       "revId": "50a6f8e61caa52ccafeaf4cf0a7bf016254c2403",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63402879_c364de78",
+        "filename": "src/tint/lang/spirv/reader/parser/misc_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T17:46:43Z",
+      "side": 1,
+      "message": "Again, would be good to have the test show the instructions.",
+      "revId": "50a6f8e61caa52ccafeaf4cf0a7bf016254c2403",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de77e816_ede2eafd",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T17:46:43Z",
+      "side": 1,
+      "message": "?",
+      "revId": "50a6f8e61caa52ccafeaf4cf0a7bf016254c2403",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
