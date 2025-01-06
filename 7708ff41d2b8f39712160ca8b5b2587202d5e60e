@@ -16,6 +16,41 @@
       "message": "PTAL.",
       "revId": "7708ff41d2b8f39712160ca8b5b2587202d5e60e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae47a38e_b767ae3e",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T18:12:13Z",
+      "side": 1,
+      "message": "Can you just `auto name \u003d import.GetInOperand(0).AsString();`?",
+      "fixSuggestions": [
+        {
+          "fixId": "e41c791e_9dc07e7a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 92,
+                "startChar": 0,
+                "endLine": 93,
+                "endChar": 0
+              },
+              "replacement": "            auto name \u003d import.GetInOperand(0).AsString();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7708ff41d2b8f39712160ca8b5b2587202d5e60e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
