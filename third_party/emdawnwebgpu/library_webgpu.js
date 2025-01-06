@@ -405,10 +405,10 @@ var LibraryWebGPU = {
 
       function makeVertexBuffer(vbPtr) {
         if (!vbPtr) return undefined;
-        var stepModeInt = {{{ gpu.makeGetU32('vbPtr', C_STRUCTS.WGPUVertexBufferLayout.stepMode) }}};
-        return stepModeInt === {{{ gpu.VertexStepMode.VertexBufferNotUsed }}} ? null : {
+        return {
           "arrayStride": {{{ gpu.makeGetU64('vbPtr', C_STRUCTS.WGPUVertexBufferLayout.arrayStride) }}},
-          "stepMode": WebGPU.VertexStepMode[stepModeInt],
+          "stepMode": WebGPU.VertexStepMode[
+            {{{ gpu.makeGetU32('vbPtr', C_STRUCTS.WGPUVertexBufferLayout.stepMode) }}}],
           "attributes": makeVertexAttributes(
             {{{ gpu.makeGetU32('vbPtr', C_STRUCTS.WGPUVertexBufferLayout.attributeCount) }}},
             {{{ makeGetValue('vbPtr', C_STRUCTS.WGPUVertexBufferLayout.attributes, '*') }}}),
