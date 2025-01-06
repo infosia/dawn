@@ -255,6 +255,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "740acc0d_98dbf382",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-06T02:22:49Z",
+      "side": 1,
+      "message": "Oops... I think it is done right now. Thanks!",
+      "parentUuid": "5fa4dffc_f070796b",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5305a1af_a80bd5d1",
@@ -504,6 +528,30 @@
       "side": 1,
       "message": "Ah... I suspect that we have that like that there in those JS APIs is to help with implementation for Emscripten... But if you look in native, i.e. https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Queue.h;l\u003d79;bpv\u003d0 we drop the data offset.",
       "parentUuid": "0e60177b_4d3175e6",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 43
+      },
+      "revId": "e7e98241e0d9a22cc9214464a817b8bb64f10879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72bf01ef_40f0c593",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-06T02:22:49Z",
+      "side": 1,
+      "message": "Ah, thanks! Addressed this comments and rename rangeOffset-\u003eImmedaiteDataRangeOffset.",
+      "parentUuid": "6783fcc0_215f9ead",
       "range": {
         "startLine": 68,
         "startChar": 4,
