@@ -16,6 +16,41 @@
       "message": "PTAL.",
       "revId": "cf22667ea5f59d3dc064a22e8e4cd621a1f4930a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81c163d2_71a08059",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T18:40:16Z",
+      "side": 1,
+      "message": "Nit: comment",
+      "fixSuggestions": [
+        {
+          "fixId": "9ff7e9bf_efa89f14",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 605,
+                "startChar": 0,
+                "endLine": 606,
+                "endChar": 0
+              },
+              "replacement": "    /// @param inst the SPIR-V instruction for OpExtInst\n"
+            }
+          ]
+        }
+      ],
+      "revId": "cf22667ea5f59d3dc064a22e8e4cd621a1f4930a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
