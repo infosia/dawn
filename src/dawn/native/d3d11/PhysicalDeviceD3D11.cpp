@@ -213,7 +213,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
                                     ? D3D11_1_UAV_SLOT_COUNT
                                     : D3D11_PS_CS_UAV_REGISTER_COUNT;
     mUAVSlotCount = maxUAVsAllStages;
-    uint32_t maxUAVsPerStage = maxUAVsAllStages / 2;
+    uint32_t maxUAVsPerStage = maxUAVsAllStages;
 
     // Reserve one slot for builtin constants.
     constexpr uint32_t kReservedCBVSlots = 1;
