@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84bd771f_13f52ead",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2634,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-06T06:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92c4032a_e024f971",
+      "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d68f351_6d044894",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-01-04T04:12:10Z",
       "side": 1,
       "message": "nit: it\u0027s not that the BindGroup matches the layout, it\u0027s that its compatibility is not validated. I think this name works:\n\n```suggestion\nTEST_F(PipelineLayoutValidationTest, BindGroupSlotWithEmptyLayoutIsNotValidated) {\n```",
+      "range": {
+        "startLine": 3712,
+        "startChar": 37,
+        "endLine": 3712,
+        "endChar": 67
+      },
+      "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a8ea3d7_47ea98d9",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3712,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-06T06:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d68f351_6d044894",
       "range": {
         "startLine": 3712,
         "startChar": 37,
@@ -81,6 +123,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8f29588_f27b6719",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3715,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-06T06:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f718345e_93b2fd79",
+      "range": {
+        "startLine": 3713,
+        "startChar": 4,
+        "endLine": 3715,
+        "endChar": 76
+      },
+      "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18f208f7_13073265",
@@ -98,6 +164,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b84f718_294df88f",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-06T06:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18f208f7_13073265",
+      "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d073e89_b59a8d13",
@@ -111,6 +195,24 @@
       "writtenOn": "2025-01-04T04:12:10Z",
       "side": 1,
       "message": "same",
+      "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03569cf6_0880317b",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-06T06:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d073e89_b59a8d13",
       "revId": "ea6a5a0f9bacdd9570e14aa84c9cef1b571ca136",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
