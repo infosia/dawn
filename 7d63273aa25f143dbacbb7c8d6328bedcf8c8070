@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "738c38cf_59e24d29",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2025-01-06T15:38:38Z",
+      "side": 1,
+      "message": "Why was this pulled out to a method from a lambda?",
+      "revId": "7d63273aa25f143dbacbb7c8d6328bedcf8c8070",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1370ed37_6f86558f",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2025-01-06T15:38:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nPlease remove the trailing whitespace.",
+      "range": {
+        "startLine": 76,
+        "startChar": 69,
+        "endLine": 76,
+        "endChar": 70
+      },
+      "revId": "7d63273aa25f143dbacbb7c8d6328bedcf8c8070",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f66ff3f5_492162d9",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2025-01-06T15:38:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nPlease remove the trailing whitespace.",
+      "range": {
+        "startLine": 77,
+        "startChar": 76,
+        "endLine": 77,
+        "endChar": 77
+      },
+      "revId": "7d63273aa25f143dbacbb7c8d6328bedcf8c8070",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "156aa5f5_9d7ef4b8",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2025-01-06T15:38:38Z",
+      "side": 1,
+      "message": "Please remove",
+      "revId": "7d63273aa25f143dbacbb7c8d6328bedcf8c8070",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5a0df3d_69f90316",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2025-01-06T15:38:38Z",
+      "side": 0,
+      "message": "These shouldn\u0027t be `dawn`, they should point at the `webgpu` version. Is it possible there are include paths  which are incorrect when building?",
+      "revId": "db55f595741106be83b823a02ebdc58efbe997f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
