@@ -213,7 +213,16 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
                                     ? D3D11_1_UAV_SLOT_COUNT
                                     : D3D11_PS_CS_UAV_REGISTER_COUNT;
     mUAVSlotCount = maxUAVsAllStages;
-    uint32_t maxUAVsPerStage = maxUAVsAllStages / 2;
+    uint32_t maxUAVsPerStage;
+    uint32_t maxUAVsPerVertexStage;
+
+    if (mFeatureLevel == D3D_FEATURE_LEVEL_11_1) {
+       maxUAVsPerStage = maxUAVsAllStages / 2;
+       maxUAVsPerVertexStage = maxUAVsPerStage;
+    } else {
+       maxUAVsPerStage = maxUAVsAllStages;
+       maxUAVsPerVertexStage = 0;
+    }
 
     // Reserve one slot for builtin constants.
     constexpr uint32_t kReservedCBVSlots = 1;
@@ -225,8 +234,8 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
     limits->v1.maxStorageBuffersPerShaderStage = maxUAVsPerStage / 2;
     limits->v1.maxStorageTexturesInFragmentStage = limits->v1.maxStorageTexturesPerShaderStage;
     limits->v1.maxStorageBuffersInFragmentStage = limits->v1.maxStorageBuffersPerShaderStage;
-    limits->v1.maxStorageTexturesInVertexStage = limits->v1.maxStorageTexturesPerShaderStage;
-    limits->v1.maxStorageBuffersInVertexStage = limits->v1.maxStorageBuffersPerShaderStage;
+    limits->v1.maxStorageTexturesInVertexStage = maxUAVsPerVertexStage / 2;
+    limits->v1.maxStorageBuffersInVertexStage = maxUAVsPerVertexStage / 2;
     limits->v1.maxSampledTexturesPerShaderStage = D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT;
     limits->v1.maxSamplersPerShaderStage = D3D11_COMMONSHADER_SAMPLER_SLOT_COUNT;
     limits->v1.maxColorAttachments = D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT;
