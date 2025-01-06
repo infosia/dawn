@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "2b3cf6411a5d57f2ddb2833470f9a8baafaf63de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6868de14_757b6261",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T18:56:03Z",
+      "side": 1,
+      "message": "The parser only goes as far as SPIR-V dialect.\nThe reader is combination of parser+lower, and goes to core dialect.\n\nWe already have `reader_test.cc` which does the full parse+lower flow, so tests that need to go to core should go there instead.",
+      "revId": "2b3cf6411a5d57f2ddb2833470f9a8baafaf63de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
