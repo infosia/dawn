@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "b9babe7c7e1aba55256cd9b04325ec2d49afeb94",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb069995_e34bc4ec",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-06T17:33:22Z",
+      "side": 1,
+      "message": "Why `zero` instead of `nullptr`, which is our equivalent for `Undef`?",
+      "revId": "b9babe7c7e1aba55256cd9b04325ec2d49afeb94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
