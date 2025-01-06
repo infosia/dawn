@@ -46,11 +46,14 @@ DawnJSONGenerator(
     OUTPUT_SOURCES WEBGPU_JNI_SOURCES
     OUTPUT_HEADERS WEBGPU_JNI_HEADERS
 )
+message(WEBGPU_JNI_SOURCES="${WEBGPU_JNI_SOURCES}")
+message(WEBGPU_JNI_HEADERS="${WEBGPU_JNI_HEADERS}")
+message(CMAKE_CURRENT_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 add_library(webgpu_c_bundled SHARED)
 target_sources(webgpu_c_bundled PRIVATE
-    ${WEBGPU_JNI_SOURCES}
     ${WEBGPU_JNI_HEADERS}
+    ${WEBGPU_JNI_SOURCES}
     JNIContext.cpp
     JNIContext.h
     Util.cpp

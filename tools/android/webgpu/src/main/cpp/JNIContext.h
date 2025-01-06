@@ -34,12 +34,15 @@
 #include <vector>
 
 #include "dawn/common/NonMovable.h"
+#include "JNIClasses.h"
 
 namespace dawn::kotlin_api {
 
 // A helper context class to use while processing JNI calls.
 //
 //  - Frees memory that's allocated (or referenced) during the processing of the call.
+//  - Pre-caches class lookups so that callback threads can be added to the JNI, and to reduce the
+//    runtime overhead of calls.
 //
 // TODO(330293719): Consider using a bump allocator for Alloc/AllocArray. Since we require that the
 // types allocated have a default destructor, we could just free a few large allocations instead of
@@ -51,6 +54,8 @@ class JNIContext : dawn::NonMovable {
 
     // Public members for convenience.
     JNIEnv* const env;
+    JavaVM* jvm;
+    static JNIClasses* classes;
 
     const char* GetStringUTFChars(jstring s);
     const jint* GetIntArrayElements(jintArray a);

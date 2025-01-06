@@ -25,11 +25,19 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include "JNIClasses.h"
 #include "JNIContext.h"
 
 namespace dawn::kotlin_api {
 
-JNIContext::JNIContext(JNIEnv* env) : env(env) {}
+JNIClasses* JNIContext::classes;
+
+JNIContext::JNIContext(JNIEnv* env) : env(env) {
+    env->GetJavaVM(&jvm);
+    if (!classes) {
+        classes = new JNIClasses(env);
+    }
+}
 
 JNIContext::~JNIContext() {
     for (auto [s, utf] : mStringsToRelease) {

@@ -82,7 +82,7 @@
                         out = array;
 
                         {% if member.type.category in ['bitmask', 'enum'] %}
-                            jclass memberClass = env->FindClass("{{ jni_name(member.type) }}");
+                            jclass memberClass = c->classes->{{ member.type.name.camelCase() }};
                             jmethodID getValue = env->GetMethodID(memberClass, "getValue", "()I");
                             for (int idx = 0; idx != outLength; idx++) {
                                 jobject element = env->GetObjectArrayElement(in, idx);
@@ -90,7 +90,7 @@
                                         env->CallIntMethod(element, getValue));
                             }
                         {% elif member.type.category == 'object' %}
-                            jclass memberClass = env->FindClass("{{ jni_name(member.type) }}");
+                            jclass memberClass = c->classes->{{ member.type.name.camelCase() }};
                             jmethodID getHandle = env->GetMethodID(memberClass, "getHandle", "()J");
                             for (int idx = 0; idx != outLength; idx++) {
                                 jobject element = env->GetObjectArrayElement(in, idx);
@@ -108,7 +108,7 @@
                 //* From here members are single values.
                 {% elif member.type.category == 'object' %}
                     if (in != nullptr) {
-                        jclass memberClass = env->FindClass("{{ jni_name(member.type) }}");
+                        jclass memberClass = c->classes->{{ member.type.name.camelCase() }};
                         jmethodID getHandle = env->GetMethodID(memberClass, "getHandle", "()J");
                         out = reinterpret_cast<{{as_cType(member.type.name)}}>(
                                 env->CallLongMethod(in, getHandle));
@@ -146,7 +146,8 @@
                         //* User data is used to carry the JNI context (env) for use by the
                         //* callback.
                         UserData* userData1 = static_cast<UserData *>({{ userdata }});
-                        JNIEnv *env = userData1->env;
+                        JNIContext* c = userData1->context;
+                        JNIEnv *env = c->env;
                         if (env->ExceptionCheck()) {
                             return;
                         }
@@ -160,7 +161,7 @@
 
                         //* Get the client (Kotlin) callback so we can call it.
                         jmethodID callbackMethod = env->GetMethodID(
-                                env->FindClass("{{ jni_name(member.type) }}"), "callback", "(
+                                c->classes->{{ member.type.name.camelCase() }}, "callback", "(
                             {%- for callbackArg in kotlin_record_members(member.type.arguments) -%}
                                 {{- jni_signature(callbackArg) -}}
                             {%- endfor %})V");
@@ -173,7 +174,7 @@
                     };
                     //* TODO(b/330293719): free associated resources.
                     outStruct->{{ userdata }} = new UserData(
-                            {.env = env, .callback = env->NewGlobalRef(in)});
+                            {.context = c, .callback = env->NewGlobalRef(in)});
 
                 {% else %}
                     {{ unreachable_code() }}
