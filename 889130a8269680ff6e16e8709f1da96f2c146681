@@ -16,6 +16,24 @@
       "message": "Not sure I understand the issue. Can we not use explicit template parameters as done for bitcast?\ni.e. does `implicit(T: iu32) fn sign\u003cR: iu32\u003e(T) -\u003e R` not work for all the scalar cases?",
       "revId": "889130a8269680ff6e16e8709f1da96f2c146681",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d37bf3c_e35a44b4",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-06T19:11:19Z",
+      "side": 1,
+      "message": "I tried a bunch of things and couldn\u0027t get it to match. Maybe I wasn\u0027t providing the explicit template correctly? It would randomly select the return type when doing the matches so sometimes it would match i32 sometimes u32 and randomly error out.",
+      "parentUuid": "6cc5894f_a22c6dfb",
+      "revId": "889130a8269680ff6e16e8709f1da96f2c146681",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
