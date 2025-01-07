@@ -291,8 +291,8 @@ wgpu::ShaderStage PipelineBase::GetStageMask() const {
     return mStageMask;
 }
 
-const ImmediateConstantMask& PipelineBase::GetPipelineMask() const {
-    return mPipelineMask;
+const ImmediateConstantMask& PipelineBase::GetImmediateMask() const {
+    return mImmediateMask;
 }
 
 MaybeError PipelineBase::ValidateGetBindGroupLayout(BindGroupIndex groupIndex) {
@@ -387,8 +387,8 @@ MaybeError PipelineBase::Initialize(std::optional<ScopedUseShaderPrograms> scope
     return {};
 }
 
-void PipelineBase::SetPipelineMaskForTesting(ImmediateConstantMask immediateConstantMask) {
-    mPipelineMask = immediateConstantMask;
+void PipelineBase::SetImmediateMaskForTesting(ImmediateConstantMask immediateConstantMask) {
+    mImmediateMask = immediateConstantMask;
 }
 
 }  // namespace dawn::native

@@ -59,7 +59,7 @@ MaybeError ComputePipeline::InitializeImpl() {
     StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
 
     // Set Immediate Constants states
-    mPipelineMask |=
+    mImmediateMask |=
         GetImmediateConstantBlockBits(offsetof(ComputeImmediateConstants, userConstants),
                                       GetLayout()->GetImmediateDataRangeByteSize());
 
@@ -86,8 +86,7 @@ MaybeError ComputePipeline::InitializeImpl() {
     ShaderModule::ModuleAndSpirv moduleAndSpirv;
     DAWN_TRY_ASSIGN(moduleAndSpirv,
                     module->GetHandleAndSpirv(SingleShaderStage::Compute, computeStage, layout,
-                                              /*clampFragDepth*/ false,
-                                              /*emitPointSize*/ false));
+                                              /*emitPointSize*/ false, GetImmediateMask()));
 
     createInfo.stage.module = moduleAndSpirv.module;
     createInfo.stage.pName = kRemappedEntryPointName;
