@@ -32,6 +32,7 @@
 #include <mutex>
 #include <optional>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -85,8 +86,9 @@ class ShaderModule final : public ShaderModuleBase {
     ResultOrError<ModuleAndSpirv> GetHandleAndSpirv(SingleShaderStage stage,
                                                     const ProgrammableStage& programmableStage,
                                                     const PipelineLayout* layout,
-                                                    bool clampFragDepth,
-                                                    bool emitPointSize);
+                                                    bool emitPointSize,
+                                                    bool usesFragDepth,
+                                                    const ImmediateConstantMask& pipelineMask);
 
   private:
     ShaderModule(Device* device,
