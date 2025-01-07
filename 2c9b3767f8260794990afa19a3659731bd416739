@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5e4176da_63c790c1",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-07T22:08:52Z",
+      "side": 1,
+      "message": "From what I can tell, `startIndex` is always equal to `startByteOffset / kImmediateConstantElementByteSize` and `constantElementSize` is always equal to `kImmediateConstantElementByteSize`. Maybe we could drop those to make this a bit more precise?",
+      "range": {
+        "startLine": 90,
+        "startChar": 41,
+        "endLine": 93,
+        "endChar": 72
+      },
+      "revId": "2c9b3767f8260794990afa19a3659731bd416739",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9d6a4d5e_987a2e0b",
         "filename": "src/dawn/native/ImmediateConstantsLayout.h",
         "patchSetId": 33
@@ -65,6 +88,99 @@
         "startChar": 0,
         "endLine": 78,
         "endChar": 2
+      },
+      "revId": "2c9b3767f8260794990afa19a3659731bd416739",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69d7863a_ea2f11c7",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-07T22:08:52Z",
+      "side": 1,
+      "message": "This is a good point that maybe we don\u0027t actually need the full concept of the `struct ImmediateConstant` below.",
+      "parentUuid": "1c384a35_c82d1565",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 2
+      },
+      "revId": "2c9b3767f8260794990afa19a3659731bd416739",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d87937f_4c5850d7",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-07T22:08:52Z",
+      "side": 1,
+      "message": "nit. This is no longer true now that it\u0027s a static.",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 62
+      },
+      "revId": "2c9b3767f8260794990afa19a3659731bd416739",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab2dfe55_c9d24ed1",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-07T22:08:52Z",
+      "side": 1,
+      "message": "nit. Does the following work?:\n\n```\nif (memcmp(mContent.Get\u003cfloat\u003e(clampFragDepthConstant.startByteOffset),\n           \u0026minClampFragDepth, sizeof(float)) !\u003d 0)\n```",
+      "range": {
+        "startLine": 43,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 81
+      },
+      "revId": "2c9b3767f8260794990afa19a3659731bd416739",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bae2339_f2902f79",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-07T22:08:52Z",
+      "side": 1,
+      "message": "Maybe we can have a `Set` function as well on this which sets the data and returns `true` iff we overrode something? Then in the the `Set*` functions we could just call with the offset from `*ByteLayouts`?\n\ni.e.\n\n```\ntemplate \u003ctypename In\u003e\nbool Set(uint32_t offset, In in) {\n    DAWN_ASSERT(sizeof(In) + offset \u003c\u003d sizeof(T));\n    if (memcmp(Get\u003cIn\u003e(offset), \u0026in), sizeof(In)) !\u003d 0) {\n        *reinterpret_cast\u003cIn*\u003e(\u0026mData[offset]) \u003d in;\n        return true;\n    }\n    return false;\n}\n```\n\nThen in something like `SetNumWorkgroups`, we could have:\n\n```\nSetNumWorkgroups(uint32_t numWorkgroupX,\n                 uint32_t numWorkgroupY,\n                 uint32_t numWorkgroupZ) {\n    bool constantBlockDirty \u003d false;\n\n    constantBlockDirty |\u003d\n        mContent.Set(\n            ComputeImmediateConstantsBytesLayout::NumWorkgroupsX,\n            numWorkgroupX\n        );\n    constantBlockDirty |\u003d\n        mContent.Set(\n            ComputeImmediateConstantsBytesLayout::NumWorkgroupsY,\n            numWorkgroupY\n        );\n    constantBlockDirty |\u003d\n        mContent.Set(\n            ComputeImmediateConstantsBytesLayout::NumWorkgroupsZ,\n            numWorkgroupZ\n        );\n    ...\n}\n```",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 5
       },
       "revId": "2c9b3767f8260794990afa19a3659731bd416739",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
