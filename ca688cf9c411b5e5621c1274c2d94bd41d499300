@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "ca688cf9c411b5e5621c1274c2d94bd41d499300",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c51e43ff_20b5a082",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-07T20:52:57Z",
+      "side": 1,
+      "message": "Confirmed this fixes the issue with the fuzzers",
+      "revId": "ca688cf9c411b5e5621c1274c2d94bd41d499300",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
