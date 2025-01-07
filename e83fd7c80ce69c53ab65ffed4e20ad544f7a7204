@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8aae817d_f40026ee",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-01-07T09:44:08Z",
+      "side": 1,
+      "message": "Ooooh! That\u0027s why! Thanks!",
+      "parentUuid": "a85ab5c1_31d204a3",
+      "revId": "e83fd7c80ce69c53ab65ffed4e20ad544f7a7204",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "784cac24_6af8014e",
@@ -67,6 +85,24 @@
       "writtenOn": "2025-01-03T23:01:38Z",
       "side": 1,
       "message": "The constructor runs after members are initialized so I believe they should already all be set to BindingNotUsed and this helper method shouldn\u0027t be needed.",
+      "revId": "e83fd7c80ce69c53ab65ffed4e20ad544f7a7204",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d334d019_eea09d26",
+        "filename": "src/dawn/native/utils/WGPUHelpers.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-01-07T09:44:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "784cac24_6af8014e",
       "revId": "e83fd7c80ce69c53ab65ffed4e20ad544f7a7204",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
