@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82d2bc42_f0db0848",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-07T22:27:14Z",
+      "side": 1,
+      "message": "The code LGTM! I\u0027m a bit hesistant to +2 though because I am not as familiar with the heap types and D3D12 specific details... I will +1 for now, if no one +2 in a reasonable time, feel free to ping me and we can land it as is first! (Sorry!)",
+      "revId": "b149c7f1afc10f61249e2d5140e14fd1924e3b82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
