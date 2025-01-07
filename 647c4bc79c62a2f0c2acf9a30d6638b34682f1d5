@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78ff9313_5a7e4c65",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2681,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-07T20:53:43Z",
+      "side": 1,
+      "message": "Seeing this is another good reason to add explicit template types to the IR call and removing the bitcast instruction. This all then turns into an intrinsic check (if it\u0027s here at all and not handled by the call intrinsic check above)",
+      "revId": "647c4bc79c62a2f0c2acf9a30d6638b34682f1d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aacfb5e_eef6835d",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2691,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-07T20:53:43Z",
+      "side": 1,
+      "message": "I believe the following should work ( `Is` comes from tint/utils/rtti/castable.h.\n\n\n```suggestion\n            if (elements.count \u003d\u003d 2 \u0026\u0026 Is\u003ccore::type::F16\u003e(elements.type)) {\n```",
+      "range": {
+        "startLine": 2691,
+        "startChar": 39,
+        "endLine": 2691,
+        "endChar": 92
+      },
+      "revId": "647c4bc79c62a2f0c2acf9a30d6638b34682f1d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74efacb3_fcdd4e23",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2700,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-07T20:53:43Z",
+      "side": 1,
+      "message": "The abstracts aren\u0027t neeed, but they\u0027ll get cleaned up when we do the task to validate no abstracts in the IR.",
+      "revId": "647c4bc79c62a2f0c2acf9a30d6638b34682f1d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
