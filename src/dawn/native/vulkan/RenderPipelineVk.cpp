@@ -361,6 +361,23 @@ MaybeError RenderPipeline::InitializeImpl() {
     // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
     StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
 
+    // Set immediate constant status
+    mImmediateConstantMask |=
+        GetImmediateConstantBlockBits(offsetof(RenderImmediateConstants, userConstants),
+                                      GetLayout()->GetImmediateDataRangeByteSize());
+
+    // Gather list of internal immediate constants used by this pipeline
+    if (UsesFragDepth() && !HasUnclippedDepth()) {
+        mImmediateConstantMask |= GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
+    }
+
+    uint32_t offset = 0;
+    for (auto index : IterateBitSet(mImmediateConstantMask)) {
+        mImmediateConstantOffsets[index] = offset;
+        offset += kImmediateConstantElementByteSize;
+    }
+
     // There are at most 2 shader stages in render pipeline, i.e. vertex and fragment
     std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages;
     std::array<std::string, 2> shaderStageEntryPoints;
@@ -370,9 +387,10 @@ MaybeError RenderPipeline::InitializeImpl() {
                               bool clampFragDepth, bool emitPointSize) -> MaybeError {
         const ProgrammableStage& programmableStage = GetStage(stage);
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
-        DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
-                                            ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                clampFragDepth, emitPointSize));
+        DAWN_TRY_ASSIGN(moduleAndSpirv,
+                        ToBackend(programmableStage.module)
+                            ->GetHandleAndSpirv(stage, programmableStage, layout, emitPointSize,
+                                                clampFragDepth, GetImmediateConstantOffsets()));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         // Record cache key for each shader since it will become inaccessible later on.
         StreamIn(&mCacheKey, stream::Iterable(moduleAndSpirv.spirv, moduleAndSpirv.wordCount));
@@ -391,16 +409,19 @@ MaybeError RenderPipeline::InitializeImpl() {
         return {};
     };
 
+    bool usesClampFragDepth = UsesFragDepth() && !HasUnclippedDepth();
+
     // Add the vertex stage that's always present.
+    // Pass usesClampFragDepth here to ensure vertex and fragment
+    // have same immediate constant layout.
     DAWN_TRY(AddShaderStage(SingleShaderStage::Vertex, VK_SHADER_STAGE_VERTEX_BIT,
-                            /*clampFragDepth*/ false,
+                            usesClampFragDepth,
                             GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList));
 
     // Add the fragment stage if present.
     if (GetStageMask() & wgpu::ShaderStage::Fragment) {
-        bool clampFragDepth = UsesFragDepth() && !HasUnclippedDepth();
         DAWN_TRY(AddShaderStage(SingleShaderStage::Fragment, VK_SHADER_STAGE_FRAGMENT_BIT,
-                                clampFragDepth, /*emitPointSize*/ false));
+                                usesClampFragDepth, /*emitPointSize*/ false));
     }
 
     PipelineVertexInputStateCreateInfoTemporaryAllocations tempAllocations;
@@ -619,23 +640,6 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     DAWN_TRY(cache->DidCompilePipeline());
-
-    // Set immediate constant status
-    mImmediateConstantMask |=
-        GetImmediateConstantBlockBits(offsetof(RenderImmediateConstants, userConstants),
-                                      GetLayout()->GetImmediateDataRangeByteSize());
-
-    // Gather list of internal immediate constants used by this pipeline
-    if (UsesFragDepth() && !HasUnclippedDepth()) {
-        mImmediateConstantMask |= GetImmediateConstantBlockBits(
-            offsetof(RenderImmediateConstants, clampFragDepth), sizeof(ClampFragDepthArgs));
-    }
-
-    uint32_t offset = 0;
-    for (auto index : IterateBitSet(mImmediateConstantMask)) {
-        mImmediateConstantOffsets[index] = offset;
-        offset += kImmediateConstantElementByteSize;
-    }
 
     SetLabelImpl();
 

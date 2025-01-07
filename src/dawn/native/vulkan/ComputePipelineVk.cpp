@@ -57,6 +57,17 @@ MaybeError ComputePipeline::InitializeImpl() {
     // Vulkan devices need cache UUID field to be serialized into pipeline cache keys.
     StreamIn(&mCacheKey, device->GetDeviceInfo().properties.pipelineCacheUUID);
 
+    // Set Immediate Constants states
+    mImmediateConstantMask |=
+        GetImmediateConstantBlockBits(offsetof(ComputeImmediateConstants, userConstants),
+                                      GetLayout()->GetImmediateDataRangeByteSize());
+
+    uint32_t offset = 0;
+    for (auto index : IterateBitSet(mImmediateConstantMask)) {
+        mImmediateConstantOffsets[index] = offset;
+        offset += kImmediateConstantElementByteSize;
+    }
+
     // Compute pipeline doesn't have clamp depth feature.
     // TODO(crbug.com/366291600): Setting immediate data size if needed.
     DAWN_TRY(InitializeBase(layout, 0));
@@ -78,10 +89,10 @@ MaybeError ComputePipeline::InitializeImpl() {
     ShaderModule* module = ToBackend(computeStage.module.Get());
 
     ShaderModule::ModuleAndSpirv moduleAndSpirv;
-    DAWN_TRY_ASSIGN(moduleAndSpirv,
-                    module->GetHandleAndSpirv(SingleShaderStage::Compute, computeStage, layout,
-                                              /*clampFragDepth*/ false,
-                                              /*emitPointSize*/ false));
+    DAWN_TRY_ASSIGN(moduleAndSpirv, module->GetHandleAndSpirv(
+                                        SingleShaderStage::Compute, computeStage, layout,
+                                        /*emitPointSize*/ false,
+                                        /*clampFragDepth*/ false, GetImmediateConstantOffsets()));
 
     createInfo.stage.module = moduleAndSpirv.module;
     createInfo.stage.pName = kRemappedEntryPointName;
@@ -121,17 +132,6 @@ MaybeError ComputePipeline::InitializeImpl() {
         cacheTimer.RecordMicroseconds("Vulkan.CreateComputePipelines.CacheMiss");
     }
     DAWN_TRY(cache->DidCompilePipeline());
-
-    // Set Immediate Constants states
-    mImmediateConstantMask |=
-        GetImmediateConstantBlockBits(offsetof(ComputeImmediateConstants, userConstants),
-                                      GetLayout()->GetImmediateDataRangeByteSize());
-
-    uint32_t offset = 0;
-    for (auto index : IterateBitSet(mImmediateConstantMask)) {
-        mImmediateConstantOffsets[index] = offset;
-        offset += kImmediateConstantElementByteSize;
-    }
 
     SetLabelImpl();
 
