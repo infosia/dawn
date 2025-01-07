@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3b96a82_8bf1625d",
+        "filename": "tools/src/cmd/gen/templates/templates.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-07T21:42:06Z",
+      "side": 1,
+      "message": "A number of templates end up complaining about arg mismatches with changes like this in place. The first one that comes up is:\n\n```\nwhile processing \u0027/usr/local/google/code/clankium/src/third_party/dawn/src/tint/cmd/fuzz/wgsl/dictionary.txt.tmpl\u0027: template: /usr/local/google/code/clankium/src/third_party/dawn/src/tint/cmd/fuzz/wgsl/dictionary.txt.tmpl:124:12: executing \"/usr/local/google/code/clankium/src/third_party/dawn/src/tint/cmd/fuzz/wgsl/dictionary.txt.tmpl\" at \u003c$W.Sem.Builtins\u003e: wrong number of args for Sem: want 1 got 0\nexit status 1\n```\n\nReverting the changes so that `Sem`, etc. don\u0027t take arguments lets the tool continue before hitting a similar-looking for another template:\n\n```\nwhile processing \u0027/usr/local/google/code/clankium/src/third_party/dawn/src/tint/lang/core/access.cc.tmpl\u0027: template: /usr/local/google/code/clankium/src/third_party/dawn/src/tint/lang/core/access.cc.tmpl:15:4: executing \"/usr/local/google/code/clankium/src/third_party/dawn/src/tint/lang/core/access.cc.tmpl\" at \u003cImport\u003e: wrong number of args for Import: want 2 got 1\nexit status 1\n```\n\nIs this approach fundamentally incompatible with this generation code, or does something else just need to get updated?",
+      "range": {
+        "startLine": 191,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 110
+      },
+      "revId": "d1b577fa2f6cf6d21a91dc8d12fa33b60b557544",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
