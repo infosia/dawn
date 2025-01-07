@@ -16,6 +16,24 @@
       "message": "This change looks unrelated?",
       "revId": "01e3fffe6120f783ca2c5b77db81c93c100da7d7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75368aba_0c558456",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-07T03:11:56Z",
+      "side": 0,
+      "message": "oops... sry.",
+      "parentUuid": "054288c8_387c47af",
+      "revId": "01e3fffe6120f783ca2c5b77db81c93c100da7d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

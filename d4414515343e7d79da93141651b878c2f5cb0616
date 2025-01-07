@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "24b19306_cc54f00c",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-07T03:11:56Z",
+      "side": 1,
+      "message": "Agree. But I\u0027m not quite sure where and how to add the E2E test in THIS CL. My thoughts about the test would be:\n- After dawn side using immedaite constant system for vulkan backend, api side would assign offset for all push constant elements.\n- Switch clampFragDepth to use prepared_push_constant_block\n- Adding end2end test with `f16` customer push constants and using `clamp_frag_depth` in fragment shader to test whether it work correctly.\n\nDo you have any suggestions (Or examples, thanks)?",
+      "parentUuid": "69a5ff3e_f3c6daef",
+      "revId": "d4414515343e7d79da93141651b878c2f5cb0616",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29ae92a1_cb5db315",
         "filename": "src/tint/lang/spirv/writer/raise/raise.cc",
         "patchSetId": 5
@@ -49,6 +67,24 @@
           ]
         }
       ],
+      "revId": "d4414515343e7d79da93141651b878c2f5cb0616",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50a8040f_5d94076c",
+        "filename": "src/tint/lang/spirv/writer/raise/raise.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-07T03:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29ae92a1_cb5db315",
       "revId": "d4414515343e7d79da93141651b878c2f5cb0616",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
