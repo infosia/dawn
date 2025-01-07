@@ -85,6 +85,29 @@ constexpr ImmediateConstantMask GetImmediateConstantBlockBits(size_t byteOffset,
     return ((1u << constantCount) - 1u) << firstIndex;
 }
 
+template <typename Object, typename Member>
+uint32_t GetImmediateByteOffsetInPipeline(Member Object::*ptr,
+                                          const ImmediateConstantMask& pipelineImmediateMask) {
+    Object obj = {};
+    ptrdiff_t offset = reinterpret_cast<char*>(&(obj.*ptr)) - reinterpret_cast<char*>(&obj);
+
+    const ImmediateConstantMask prefixBits =
+        (1u << (offset / kImmediateConstantElementByteSize)) - 1u;
+
+    return (prefixBits & pipelineImmediateMask).count() * kImmediateConstantElementByteSize;
+}
+
+template <typename Object, typename Member>
+bool HasImmediateConstants(Member Object::*ptr,
+                           const ImmediateConstantMask& pipelineImmediateMask) {
+    Object obj = {};
+    ptrdiff_t offset = reinterpret_cast<char*>(&(obj.*ptr)) - reinterpret_cast<char*>(&obj);
+    size_t size = sizeof(Member);
+
+    return pipelineImmediateMask.to_ulong() &
+           GetImmediateConstantBlockBits(offset, size).to_ulong();
+}
+
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_IMMEDIATECONSTANTSLAYOUT_H_

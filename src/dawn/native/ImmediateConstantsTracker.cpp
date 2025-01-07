@@ -36,7 +36,7 @@ RenderImmediateConstantsTrackerBase::RenderImmediateConstantsTrackerBase()
 // keep frag depth dirty bits which related to viewport.
 // TODO(crbug.com/366291600): Support immediate data compatible.
 void RenderImmediateConstantsTrackerBase::OnPipelineChange(PipelineBase* pipeline) {
-    mPipelineMask = pipeline->GetPipelineMask();
+    mPipelineMask = pipeline->GetImmediateMask();
 
     // frag depth args are related to viewport instead of pipeline
     static constexpr ImmediateConstantMask fragDepth = GetImmediateConstantBlockBits(
@@ -74,7 +74,7 @@ ComputeImmediateConstantsTrackerBase::ComputeImmediateConstantsTrackerBase()
 // Pipeline changes reset all dirty bits.
 // TODO(crbug.com/366291600): Support immediate data compatible.
 void ComputeImmediateConstantsTrackerBase::OnPipelineChange(PipelineBase* pipeline) {
-    mPipelineMask = pipeline->GetPipelineMask();
+    mPipelineMask = pipeline->GetImmediateMask();
     mDirty.reset();
 }
 
