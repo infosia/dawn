@@ -370,9 +370,10 @@ MaybeError RenderPipeline::InitializeImpl() {
                               bool clampFragDepth, bool emitPointSize) -> MaybeError {
         const ProgrammableStage& programmableStage = GetStage(stage);
         ShaderModule::ModuleAndSpirv moduleAndSpirv;
-        DAWN_TRY_ASSIGN(moduleAndSpirv, ToBackend(programmableStage.module)
-                                            ->GetHandleAndSpirv(stage, programmableStage, layout,
-                                                                clampFragDepth, emitPointSize));
+        DAWN_TRY_ASSIGN(moduleAndSpirv,
+                        ToBackend(programmableStage.module)
+                            ->GetHandleAndSpirv(stage, programmableStage, layout, emitPointSize,
+                                                clampFragDepth, GetImmediateConstantOffsetMap()));
         mHasInputAttachment = mHasInputAttachment || moduleAndSpirv.hasInputAttachment;
         // Record cache key for each shader since it will become inaccessible later on.
         StreamIn(&mCacheKey, stream::Iterable(moduleAndSpirv.spirv, moduleAndSpirv.wordCount));
@@ -391,16 +392,19 @@ MaybeError RenderPipeline::InitializeImpl() {
         return {};
     };
 
+    bool usesClampFragDepth = UsesFragDepth() && !HasUnclippedDepth();
+
     // Add the vertex stage that's always present.
+    // Pass usesClampFragDepth here to ensure vertex and fragment
+    // have same immediate constant layout.
     DAWN_TRY(AddShaderStage(SingleShaderStage::Vertex, VK_SHADER_STAGE_VERTEX_BIT,
-                            /*clampFragDepth*/ false,
+                            usesClampFragDepth,
                             GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList));
 
     // Add the fragment stage if present.
     if (GetStageMask() & wgpu::ShaderStage::Fragment) {
-        bool clampFragDepth = UsesFragDepth() && !HasUnclippedDepth();
         DAWN_TRY(AddShaderStage(SingleShaderStage::Fragment, VK_SHADER_STAGE_FRAGMENT_BIT,
-                                clampFragDepth, /*emitPointSize*/ false));
+                                usesClampFragDepth, /*emitPointSize*/ false));
     }
 
     PipelineVertexInputStateCreateInfoTemporaryAllocations tempAllocations;
