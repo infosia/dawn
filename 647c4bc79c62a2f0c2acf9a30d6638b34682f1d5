@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2011760_e2743863",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2681,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-07T21:10:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "78ff9313_5a7e4c65",
+      "revId": "647c4bc79c62a2f0c2acf9a30d6638b34682f1d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1aacfb5e_eef6835d",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cfdc61f_2470a8b6",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2691,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-07T21:10:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aacfb5e_eef6835d",
+      "range": {
+        "startLine": 2691,
+        "startChar": 39,
+        "endLine": 2691,
+        "endChar": 92
+      },
+      "revId": "647c4bc79c62a2f0c2acf9a30d6638b34682f1d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74efacb3_fcdd4e23",
@@ -54,6 +96,24 @@
       "writtenOn": "2025-01-07T20:53:43Z",
       "side": 1,
       "message": "The abstracts aren\u0027t neeed, but they\u0027ll get cleaned up when we do the task to validate no abstracts in the IR.",
+      "revId": "647c4bc79c62a2f0c2acf9a30d6638b34682f1d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5cb17f8_f8da605b",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2700,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-07T21:10:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "74efacb3_fcdd4e23",
       "revId": "647c4bc79c62a2f0c2acf9a30d6638b34682f1d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
