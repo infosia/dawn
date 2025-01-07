@@ -85,6 +85,34 @@ constexpr ImmediateConstantMask GetImmediateConstantBlockBits(size_t byteOffset,
     return ((1u << constantCount) - 1u) << firstIndex;
 }
 
+// Return the packed immediate constants offset in pipeline. Pipeline has tighten immediate
+// constants layout compared to overall immediate constants layout. For example, the pipeline mask
+// 11001111, representing "userConstants: 4 | trivial_constants: 0 (2 at most)|clamp_frag:2", maps
+// to pipeline immediate constant layout: "userConstants:4 | clamp_frag:2". To set clamp_frag depth
+// offset correctly in shader, it should skip the trivial constants to calculate offset.
+template <typename Object, typename Member>
+uint32_t GetImmediateByteOffsetInPipeline(Member Object::*ptr,
+                                          const ImmediateConstantMask& pipelineImmediateMask) {
+    Object obj = {};
+    ptrdiff_t offset = reinterpret_cast<char*>(&(obj.*ptr)) - reinterpret_cast<char*>(&obj);
+
+    const ImmediateConstantMask prefixBits =
+        (1u << (offset / kImmediateConstantElementByteSize)) - 1u;
+
+    return (prefixBits & pipelineImmediateMask).count() * kImmediateConstantElementByteSize;
+}
+
+template <typename Object, typename Member>
+bool HasImmediateConstants(Member Object::*ptr,
+                           const ImmediateConstantMask& pipelineImmediateMask) {
+    Object obj = {};
+    ptrdiff_t offset = reinterpret_cast<char*>(&(obj.*ptr)) - reinterpret_cast<char*>(&obj);
+    size_t size = sizeof(Member);
+
+    return pipelineImmediateMask.to_ulong() &
+           GetImmediateConstantBlockBits(offset, size).to_ulong();
+}
+
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_IMMEDIATECONSTANTSLAYOUT_H_
