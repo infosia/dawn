@@ -87,6 +87,30 @@
       },
       "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65ff62e2_4672dc25",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-07T02:57:49Z",
+      "side": 1,
+      "message": "In this CL we enable the feature on Vulkan so the test can be run on Vulkan, then we will hit the assert.\n\nWithout this CL these tests won\u0027t be executed on Vulkan as the feature is not enabled on Vulkan.",
+      "parentUuid": "4607f0e5_e9322bcb",
+      "range": {
+        "startLine": 726,
+        "startChar": 20,
+        "endLine": 726,
+        "endChar": 72
+      },
+      "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
