@@ -32,6 +32,7 @@
 #include <mutex>
 #include <optional>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -65,6 +66,7 @@ struct TransformedShaderModuleCacheKeyHashFunc {
 
 class Device;
 class PipelineLayout;
+using ImmediateConstantOffsetMap = std::unordered_map<uint32_t, uint32_t>;
 
 class ShaderModule final : public ShaderModuleBase {
   public:
@@ -82,11 +84,13 @@ class ShaderModule final : public ShaderModuleBase {
         ShaderModuleParseResult* parseResult,
         OwnedCompilationMessages* compilationMessages);
 
-    ResultOrError<ModuleAndSpirv> GetHandleAndSpirv(SingleShaderStage stage,
-                                                    const ProgrammableStage& programmableStage,
-                                                    const PipelineLayout* layout,
-                                                    bool clampFragDepth,
-                                                    bool emitPointSize);
+    ResultOrError<ModuleAndSpirv> GetHandleAndSpirv(
+        SingleShaderStage stage,
+        const ProgrammableStage& programmableStage,
+        const PipelineLayout* layout,
+        bool emitPointSize,
+        bool usesFragDepth,
+        const ImmediateConstantOffsetMap& immediateDataConstantOffset);
 
   private:
     ShaderModule(Device* device,

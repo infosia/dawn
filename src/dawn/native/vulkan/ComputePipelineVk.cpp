@@ -78,10 +78,10 @@ MaybeError ComputePipeline::InitializeImpl() {
     ShaderModule* module = ToBackend(computeStage.module.Get());
 
     ShaderModule::ModuleAndSpirv moduleAndSpirv;
-    DAWN_TRY_ASSIGN(moduleAndSpirv,
-                    module->GetHandleAndSpirv(SingleShaderStage::Compute, computeStage, layout,
-                                              /*clampFragDepth*/ false,
-                                              /*emitPointSize*/ false));
+    DAWN_TRY_ASSIGN(moduleAndSpirv, module->GetHandleAndSpirv(
+                                        SingleShaderStage::Compute, computeStage, layout,
+                                        /*emitPointSize*/ false,
+                                        /*clampFragDepth*/ false, GetImmediateConstantOffsetMap()));
 
     createInfo.stage.module = moduleAndSpirv.module;
     createInfo.stage.pName = kRemappedEntryPointName;
