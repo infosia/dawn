@@ -63,6 +63,30 @@
       },
       "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4607f0e5_e9322bcb",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-07T02:20:04Z",
+      "side": 1,
+      "message": "Huh... but we didn\u0027t change the tests in this CL? How come we are suddenly hitting this in this change where it seems like the only thing we did is add the feature detection for this in Vulkan?",
+      "parentUuid": "021af3f5_bc32ff94",
+      "range": {
+        "startLine": 726,
+        "startChar": 20,
+        "endLine": 726,
+        "endChar": 72
+      },
+      "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
