@@ -353,10 +353,13 @@ deps = {
     'condition': 'host_os != "win"',
   },
 
+<<<<<<< PATCH SET (22bba4 Revert "Add dep on third_party/webgpu-headers")
+=======
   'third_party/webgpu-headers': {
     'url': '{chromium_git}/external/github.com/webgpu-native/webgpu-headers@8049c324dc7b3c09dc96ea04cb02860f272c8686',
   },
 
+>>>>>>> BASE      (318311 Roll ANGLE from ed3deea81ec1 to b01e9b58e390 (10 revisions))
   'third_party/khronos/OpenGL-Registry': {
     'url': '{chromium_git}/external/github.com/KhronosGroup/OpenGL-Registry@5bae8738b23d06968e7c3a41308568120943ae77',
   },
