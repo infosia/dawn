@@ -1212,16 +1212,21 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
     // also additional tests that the dirtying logic here is correct so with a Toggle we can test it
     // on our infra).
     ClampFragDepthArgs clampFragDepthArgs = {0.0f, 1.0f};
-    bool clampFragDepthArgsDirty = true;
     auto ApplyClampFragDepthArgs = [&] {
-        if (!clampFragDepthArgsDirty || lastPipeline == nullptr) {
+        if (lastPipeline == nullptr || !lastPipeline->UsesFragDepth()) {
             return;
         }
+
+        const ImmediateConstant& clampFragDepth =
+            GetImmediateConstant(ImmediateConstantType::ClampFragDepth);
+
+        auto clampFragDepthOffset =
+            lastPipeline->GetImmediateConstantOffsetMap().at(clampFragDepth.GetRawStartIndex());
+
         device->fn.CmdPushConstants(
             commands, lastPipeline->GetVkLayout(),
             ToBackend(lastPipeline->GetLayout())->GetImmediateDataRangeStage(),
-            kClampFragDepthArgsOffset, kClampFragDepthArgsSize, &clampFragDepthArgs);
-        clampFragDepthArgsDirty = false;
+            clampFragDepthOffset, clampFragDepth.GetConstantBlockSize(), &clampFragDepthArgs);
     };
 
     auto EncodeRenderBundleCommand = [&](CommandIterator* iter, Command type) {
@@ -1481,7 +1486,6 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 // Try applying the push constants that contain min/maxDepth immediately. This can
                 // be deferred if no pipeline is currently bound.
                 clampFragDepthArgs = {viewport.minDepth, viewport.maxDepth};
-                clampFragDepthArgsDirty = true;
                 ApplyClampFragDepthArgs();
                 break;
             }

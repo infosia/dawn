@@ -163,7 +163,7 @@ uint32_t ImmediateConstant::GetRawConstantBlockBits() const {
     return static_cast<uint32_t>(constantBlockBits.to_ulong());
 }
 
-uint32_t ImmediateConstant::GetConstantBlockSize() {
+uint32_t ImmediateConstant::GetConstantBlockSize() const {
     return constantBlockElementsCount * constantElementSize;
 }
 
@@ -171,6 +171,10 @@ const ImmediateConstant& GetImmediateConstant(ImmediateConstantType type) {
     // Only initialize once.
     static ImmediateConstantsTable kImmediateConstantsTable = BuildImmediateConstantsTable();
     return kImmediateConstantsTable[type];
+}
+
+uint32_t GetImmediateConstantRawStartIndex(ImmediateConstantType type) {
+    return GetImmediateConstant(type).GetRawStartIndex();
 }
 
 }  // namespace dawn::native

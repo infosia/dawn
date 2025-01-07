@@ -89,12 +89,16 @@ struct ImmediateConstant {
     uint32_t GetRawStartBit() const;
     uint32_t GetRawStartIndex() const;
     uint32_t GetRawConstantBlockBits() const;
-    uint32_t GetConstantBlockSize();
+    uint32_t GetConstantBlockSize() const;
 };
 
 // Returns the ImmediateConstant corresponding to the ImmediateConstantType.
 // The reference returned has the same lifetime as the device.
 const ImmediateConstant& GetImmediateConstant(ImmediateConstantType type);
+
+// Returns the start index of ImmediateConstant corresponding to the
+// ImmediateConstantType.
+uint32_t GetImmediateConstantRawStartIndex(ImmediateConstantType type);
 
 }  // namespace dawn::native
 
