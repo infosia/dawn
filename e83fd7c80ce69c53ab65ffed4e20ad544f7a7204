@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a85ab5c1_31d204a3",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-07T01:43:59Z",
+      "side": 1,
+      "message": "Ahhh, I see, it\u0027s because `BindGroupLayoutEntry` here is `dawn::native::BindGroupLayoutEntry` from `wgpu_structs_autogen.h` (from `templates/dawn/native/api_structs.h`), not `wgpu::BindGroupLayoutEntry` from `webgpu_cpp.h`. It\u0027s confusing that the defaults are different.\n\nI think we need to update `wgpu_structs_autogen.h` too, since it already most of the same defaulting.",
+      "parentUuid": "c57fa7d7_0b3df682",
+      "revId": "e83fd7c80ce69c53ab65ffed4e20ad544f7a7204",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "784cac24_6af8014e",
         "filename": "src/dawn/native/utils/WGPUHelpers.cpp",
         "patchSetId": 17
