@@ -39,6 +39,30 @@
       },
       "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "021af3f5_bc32ff94",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-07T00:48:05Z",
+      "side": 1,
+      "message": "Oh it is because in the dawn_end2end_tests (https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/BufferTests.cpp;l\u003d1686) we are testing the creation of the buffer with (wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite), we need this change to avoid the assertion failure.",
+      "parentUuid": "529b2361_ac56ae51",
+      "range": {
+        "startLine": 726,
+        "startChar": 20,
+        "endLine": 726,
+        "endChar": 72
+      },
+      "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
