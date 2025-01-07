@@ -212,8 +212,9 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     SingleShaderStage stage,
     const ProgrammableStage& programmableStage,
     const PipelineLayout* layout,
-    bool clampFragDepth,
-    bool emitPointSize) {
+    bool emitPointSize,
+    bool usesFragDepth,
+    const ImmediateConstantOffsetMap& immediateDataConstantOffset) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
 
     ScopedTintICEHandler scopedICEHandler(GetDevice());
@@ -346,7 +347,6 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
 
     req.tintOptions.statically_paired_texture_binding_points =
         std::move(statically_paired_texture_binding_points);
-    req.tintOptions.clamp_frag_depth = clampFragDepth;
     req.tintOptions.disable_robustness = !GetDevice()->IsRobustnessEnabled();
     req.tintOptions.emit_vertex_point_size = emitPointSize;
 
@@ -377,6 +377,17 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     // See crbug.com/tint/2045.
     if (ToBackend(GetDevice()->GetPhysicalDevice())->IsAndroidQualcomm()) {
         req.tintOptions.pass_matrix_by_pointer = true;
+    }
+
+    // Set internal immediate constant offsets
+    if (usesFragDepth) {
+        uint32_t clampFragDepthStartIndex =
+            offsetof(RenderImmediateConstants, clampFragDepth) / kImmediateConstantElementByteSize;
+        DAWN_ASSERT(immediateDataConstantOffset.count(clampFragDepthStartIndex) &&
+                    immediateDataConstantOffset.count(clampFragDepthStartIndex + 1));
+        req.tintOptions.depth_range_offsets = {
+            immediateDataConstantOffset.at(clampFragDepthStartIndex),
+            immediateDataConstantOffset.at(clampFragDepthStartIndex + 1)};
     }
 
     const CombinedLimits& limits = GetDevice()->GetLimits();
