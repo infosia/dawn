@@ -1217,10 +1217,27 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         if (!clampFragDepthArgsDirty || lastPipeline == nullptr) {
             return;
         }
+
+        const ImmediateConstant& clampFragDepthConstant =
+            GetImmediateConstant(ImmediateConstantType::ClampFragDepth);
+
+        // ClampFragDepth is not required by last pipeline.
+        if ((lastPipeline->GetImmediateConstantMask() & clampFragDepthConstant.constantBlockBits)
+                .none()) {
+            return;
+        }
+
+        uint32_t clampFragDepthStartIndex =
+            clampFragDepthConstant.startByteOffset / kImmediateConstantElementByteSize;
+        auto clampFragDepthOffset =
+            lastPipeline->GetImmediateConstantOffsetMap().at(clampFragDepthStartIndex);
+
+        uint32_t clampFragDepthConstantBlockSize =
+            clampFragDepthConstant.constantBlockElementsCount * kImmediateConstantElementByteSize;
         device->fn.CmdPushConstants(
             commands, lastPipeline->GetVkLayout(),
             ToBackend(lastPipeline->GetLayout())->GetImmediateDataRangeStage(),
-            kClampFragDepthArgsOffset, kClampFragDepthArgsSize, &clampFragDepthArgs);
+            clampFragDepthOffset, clampFragDepthConstantBlockSize, &clampFragDepthArgs);
         clampFragDepthArgsDirty = false;
     };
 
