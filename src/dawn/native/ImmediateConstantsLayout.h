@@ -30,6 +30,7 @@
 
 #include <unordered_map>
 
+#include "absl/numeric/bits.h"
 #include "dawn/common/compiler.h"
 #include "dawn/common/ityp_bitset.h"
 #include "dawn/native/EnumClassBitmasks.h"
@@ -85,6 +86,19 @@ constexpr ImmediateConstantMask GetImmediateConstantBlockBits(size_t byteOffset,
     size_t constantCount = byteSize / kImmediateConstantElementByteSize;
 
     return ((1u << constantCount) - 1u) << firstIndex;
+}
+
+template <typename Object, typename Member>
+uint32_t GetImmediateConstantOffsetBytes(Member Object::*ptr,
+                                         const ImmediateConstantMask& pipelineMask) {
+    Object obj = {};
+    ptrdiff_t offset = reinterpret_cast<char*>(&(obj.*ptr)) - reinterpret_cast<char*>(&obj);
+
+    static const ImmediateConstantMask prefixBits =
+        (1u << (offset / kImmediateConstantElementByteSize)) - 1u;
+
+    return absl::popcount((prefixBits & pipelineMask).to_ulong()) *
+           kImmediateConstantElementByteSize;
 }
 
 }  // namespace dawn::native
