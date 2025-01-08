@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d791933_794b792b",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-08T22:54:28Z",
+      "side": 1,
+      "message": "Assuming that `val` is always the struct then I think you should only check the first index here. Otherwise you may incorrectly match an index that is indexing into a nested element of a different member (e.g. `access %pervertex, 0, 2` only indexes the first member, but you\u0027d also match the third).",
+      "revId": "7bdb7f4ce00e7cafd3fce39b64b4c33fc6596154",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

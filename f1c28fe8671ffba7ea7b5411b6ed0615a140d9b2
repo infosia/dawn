@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4ef783f_b1535462",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-08T22:54:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7ef9dce7_13293831",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c57422e4_f2e92d28",
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "From GLSLang, I don\u0027t think so? From my reading of teh docs, I believ `gl_PerVertex` is special, it isn\u0027t really a struct in GLSL, as you access the members directly `gl_Position`, etc. So, gl_PerVertex is just, like, a holder? of things that get accessed in other ways.\n\n\u003e gl_PerVertex defines an interface block for outputs. The block is defined without an instance name, so that prefixing the names is not required.\n\u003e \n\u003e https://www.khronos.org/opengl/wiki/Built-in_Variable_(GLSL)",
       "parentUuid": "c57422e4_f2e92d28",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3544c035_25d4dd67",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-08T22:54:28Z",
+      "side": 1,
+      "message": "I see that the old SPIR-V reader does not support this and asserts if it happens. We should probably do the same, otherwise users might be surprised (since this is not a SPIR-V restriction, some non-glslang tools might do it).\n\nAlso, the `PointSize` member *will* be accessed (to assign 1.0), so this isn\u0027t really the right logic anyway. We should instead just always skip both `CullDistance` and `PointSize`. We can assert that `CullDistance` is not accessed using `IsIndexAccessed()`, but I don\u0027t think we should make decisions using it.",
+      "parentUuid": "3bbc3a5f_9131ffa7",
       "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
