@@ -33,6 +33,24 @@
       "message": "Would be good if we could have the test actually produce some instructions that show the copy is working.\n\nRelatedly, we could actually map `OpCopyObject` to `let`. I think they have the same semantics, and it gives us a place to put the name if the `OpCopyObject` result has an `OpName` decoration.",
       "revId": "4da9f367baa1da8b8deab9319d5041c3104ebf4b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb4081f6_40c2fbd9",
+        "filename": "src/tint/lang/spirv/reader/parser/misc_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-08T22:08:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "548b21bb_d55c1ece",
+      "revId": "4da9f367baa1da8b8deab9319d5041c3104ebf4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
