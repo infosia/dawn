@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e5511b41_728f341b",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-08T02:22:36Z",
+      "side": 1,
+      "message": "I agree. The design here is a bit over by considering some elements like `f16` or `uint64_t`. Since they don\u0027t happens right now, we could add them when it really happens.",
+      "parentUuid": "5e4176da_63c790c1",
+      "range": {
+        "startLine": 90,
+        "startChar": 41,
+        "endLine": 93,
+        "endChar": 72
+      },
+      "revId": "2c9b3767f8260794990afa19a3659731bd416739",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9d6a4d5e_987a2e0b",
         "filename": "src/dawn/native/ImmediateConstantsLayout.h",
         "patchSetId": 33
@@ -119,6 +143,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5c0a53c1_b146599d",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-08T02:22:36Z",
+      "side": 1,
+      "message": "One reason we track this is that pipeline also needs to know the layout info so that it can record required internal constant during the constructor (not initialize) phase. We have to do this because the cache dawn used for pipeline (cache: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/RenderPipeline.cpp;drc\u003d44eb9f0dd0854e826da5e03b358c872cfdc5b0e9;l\u003d1087) See this CL https://dawn-review.googlesource.com/c/dawn/+/220594/14 file src/dawn/native/RenderPipeline.cpp and file src/dawn/native/vulkan/RenderPipelineVk.cpp.\n\nPipeline needs a bit set so that in the final step, which ImmediateConstantTracker::UploadImmediateConstants(implemented in each native backend with different parameter list due to different graphics APIs) is called. we could have things like:\n```\nauto needsToUpload \u003d dirtyBits \u0026 pipelineRequiredBits\nfor (auto i : IterateBitSet(needsToUpload)) {\n  // move from immediateTracker to intermediate array so that we can call\n  // call a real uploading graphics API.\n}\n```\nThe table helps to save we calculate layout in both place(I think?).",
+      "parentUuid": "69d7863a_ea2f11c7",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 2
+      },
+      "revId": "2c9b3767f8260794990afa19a3659731bd416739",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1d87937f_4c5850d7",
         "filename": "src/dawn/native/ImmediateConstantsLayout.h",
         "patchSetId": 33
@@ -165,6 +213,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a3668ba6_0465d803",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-08T02:22:36Z",
+      "side": 1,
+      "message": "I think it works. The previous concern is about float size is not fixed in some cases, and we upload contents in 4-bytes always. The test might caught some error in such situation.\n\nBut I think that\u0027s a over worried. Let me update.",
+      "parentUuid": "ab2dfe55_c9d24ed1",
+      "range": {
+        "startLine": 43,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 81
+      },
+      "revId": "2c9b3767f8260794990afa19a3659731bd416739",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9bae2339_f2902f79",
         "filename": "src/dawn/native/ImmediateConstantsTracker.h",
         "patchSetId": 33
@@ -176,6 +248,30 @@
       "writtenOn": "2025-01-07T22:08:52Z",
       "side": 1,
       "message": "Maybe we can have a `Set` function as well on this which sets the data and returns `true` iff we overrode something? Then in the the `Set*` functions we could just call with the offset from `*ByteLayouts`?\n\ni.e.\n\n```\ntemplate \u003ctypename In\u003e\nbool Set(uint32_t offset, In in) {\n    DAWN_ASSERT(sizeof(In) + offset \u003c\u003d sizeof(T));\n    if (memcmp(Get\u003cIn\u003e(offset), \u0026in), sizeof(In)) !\u003d 0) {\n        *reinterpret_cast\u003cIn*\u003e(\u0026mData[offset]) \u003d in;\n        return true;\n    }\n    return false;\n}\n```\n\nThen in something like `SetNumWorkgroups`, we could have:\n\n```\nSetNumWorkgroups(uint32_t numWorkgroupX,\n                 uint32_t numWorkgroupY,\n                 uint32_t numWorkgroupZ) {\n    bool constantBlockDirty \u003d false;\n\n    constantBlockDirty |\u003d\n        mContent.Set(\n            ComputeImmediateConstantsBytesLayout::NumWorkgroupsX,\n            numWorkgroupX\n        );\n    constantBlockDirty |\u003d\n        mContent.Set(\n            ComputeImmediateConstantsBytesLayout::NumWorkgroupsY,\n            numWorkgroupY\n        );\n    constantBlockDirty |\u003d\n        mContent.Set(\n            ComputeImmediateConstantsBytesLayout::NumWorkgroupsZ,\n            numWorkgroupZ\n        );\n    ...\n}\n```",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 5
+      },
+      "revId": "2c9b3767f8260794990afa19a3659731bd416739",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fba9e87f_c56b98c8",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-08T02:22:36Z",
+      "side": 1,
+      "message": "Hmmm... This should be good. But I really love the way to use operator -\u003e() to update contents. In that way we don\u0027t worry about offsets and could ensure we place the data in the right place(I think ?) which avoid some potential size issue (like float).\n\nAnd in the final uploading phase, we need to call real graphics APIs which upload a range. I think maybe including non-dirty data to ensure uploading range is as large as possible to reduce the graphics API call could be more optimal.(So, that\u0027s the reason why a make all block dirty if any of them is diry) WDYT?",
+      "parentUuid": "9bae2339_f2902f79",
       "range": {
         "startLine": 53,
         "startChar": 4,
