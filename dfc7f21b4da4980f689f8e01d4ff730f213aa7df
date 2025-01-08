@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08c8643f_57684b7c",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-08T18:46:10Z",
+      "side": 1,
+      "message": "I don\u0027t /think/ you need these additional checks because we will visit the `StoreType()` when we walk through nested types in the loop below, so I would have thought that the one check above is all you need.",
+      "range": {
+        "startLine": 1777,
+        "startChar": 0,
+        "endLine": 1780,
+        "endChar": 17
+      },
+      "revId": "dfc7f21b4da4980f689f8e01d4ff730f213aa7df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
