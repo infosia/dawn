@@ -1454,6 +1454,11 @@ crbug.com/372055513 [ amd mac ] webgpu:shader,execution,expression,call,builtin,
 crbug.com/372055515 [ amd mac ] webgpu:api,operation,resource_init,texture_zero:uninitialized_texture_is_zero:dimension="2d";readMethod="DepthTest";format=* [ RetryOnFailure ]
 crbug.com/372055515 [ amd mac ] webgpu:api,operation,resource_init,texture_zero:uninitialized_texture_is_zero:dimension="2d";readMethod="StencilTest";format=* [ RetryOnFailure ]
 
+# temp suppressions for 0 storage buffers / storage textures in vertex and fragment shaders
+crbug.com/381214210 webgpu:api,validation,capability_checks,limits,maxDynamicStorageBuffersPerPipelineLayout:* [ Skip ]
+crbug.com/381214210 webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:* [ Skip ]
+crbug.com/381214210 webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:* [ Skip ]
+
 ################################################################################
 # Assorted failures that are missing bug associations (NEEDS TRIAGE)
 ################################################################################
