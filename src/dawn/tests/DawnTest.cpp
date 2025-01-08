@@ -723,6 +723,11 @@ DawnTestBase::DawnTestBase(const AdapterTestParam& param) : mParam(param) {
     gCurrentTest = this;
     mLastWarningCount = GetDeprecationWarningCountForTesting();
 
+    // TEMP TESTING !!!
+    if (IsANGLESwiftShader()) {
+        mParam.forceEnabledWorkarounds.push_back("gl_force_es_31_and_no_extensions");
+    }
+
     DawnProcTable procs = native::GetProcs();
     // Override procs to provide harness-specific behavior to always select the adapter required in
     // testing parameter, and to allow fixture-specific overriding of the test device with
