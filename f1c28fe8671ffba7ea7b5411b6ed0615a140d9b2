@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6230da6_5ca6ff50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-08T21:05:49Z",
+      "side": 1,
+      "message": "I filed https://crbug.com/388562672 to handle this as it seems slightly out of scope for this CL.",
+      "parentUuid": "eb18fa28_3a8f5b67",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d12f9bb8_4a2b1c55",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-01-06T17:31:28Z",
       "side": 1,
       "message": "Is it guaranteed that all the members we skip are at the end of the structure? Otherwise it\u0027ll mess up the indices used in `access` instructions. We should `TINT_ASSERT` to make sure, or fixup the indices if that\u0027s not the case.",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ef9dce7_13293831",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-08T21:05:49Z",
+      "side": 1,
+      "message": "I renamed this to `ShouldSkipMemberEmission`. We still create the struct, with all the same members, so assignments still work. This just then takes the internal struct and re-assigns things into our output struct.\n\nSpecifically, in the example below this is the part that does `return v.tint_symbol;` as we only have a single return value.\n\n```\nstruct tint_symbol_4 {\n  tint_symbol : vec4\u003cf32\u003e,\n  tint_symbol_1 : f32,\n  tint_symbol_2 : array\u003cf32, 1u\u003e,\n  tint_symbol_3 : array\u003cf32, 1u\u003e,\n}\n\nvar\u003cprivate\u003e v : tint_symbol_4;\n\nfn main_inner() {\n  v.tint_symbol \u003d vec4\u003cf32\u003e();\n}\n\n@vertex\nfn main() -\u003e @builtin(position) vec4\u003cf32\u003e {\n  main_inner();\n  return v.tint_symbol;\n}\n```\n\nAs an example (and this won\u0027t be emitted as we won\u0027t emit __cull_distance) but if there were two things in the emission struct you\u0027d see something like the below `  return tint_symbol_5(v.tint_symbol, v.tint_symbol_3);`:\n\n```\nstruct tint_symbol_4 {\n  tint_symbol : vec4\u003cf32\u003e,\n  tint_symbol_1 : f32,\n  tint_symbol_2 : array\u003cf32, 1u\u003e,\n  tint_symbol_3 : array\u003cf32, 1u\u003e,\n}\n\nvar\u003cprivate\u003e v : tint_symbol_4;\n\nfn main_inner() {\n  v.tint_symbol \u003d vec4\u003cf32\u003e();\n}\n\nstruct tint_symbol_5 {\n  @builtin(position)\n  tint_symbol : vec4\u003cf32\u003e,\n  @builtin(__cull_distance)\n  tint_symbol_3 : array\u003cf32, 1u\u003e,\n}\n\n@vertex\nfn main() -\u003e tint_symbol_5 {\n  main_inner();\n  return tint_symbol_5(v.tint_symbol, v.tint_symbol_3);\n}\n```\n\nSo, this check is what is causing the `tint_symbol_3` to not get emitted at the end of `main` in the first example. The inner struct still exists, and has the same members, so all access chains will have the same indices.",
+      "parentUuid": "d12f9bb8_4a2b1c55",
       "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3bbc3a5f_9131ffa7",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-08T21:05:49Z",
+      "side": 1,
+      "message": "From GLSLang, I don\u0027t think so? From my reading of teh docs, I believ `gl_PerVertex` is special, it isn\u0027t really a struct in GLSL, as you access the members directly `gl_Position`, etc. So, gl_PerVertex is just, like, a holder? of things that get accessed in other ways.\n\n\u003e gl_PerVertex defines an interface block for outputs. The block is defined without an instance name, so that prefixing the names is not required.\n\u003e \n\u003e https://www.khronos.org/opengl/wiki/Built-in_Variable_(GLSL)",
+      "parentUuid": "c57422e4_f2e92d28",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "91d5fc44_6d064880",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 2
@@ -65,6 +119,24 @@
       "writtenOn": "2025-01-06T17:31:28Z",
       "side": 1,
       "message": "I think I\u0027d prefer it we just added a `__cull_distance` builtin value so that the IR reflects what is in the SPIR-V. This should simplify the logic for skipping it in the ShaderIO transform, and removes the need for the validation capability.",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8db44b0_e06734ff",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-08T21:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91d5fc44_6d064880",
       "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
