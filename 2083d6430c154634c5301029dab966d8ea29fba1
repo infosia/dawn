@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2d1075c_702ff49a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-08T06:21:39Z",
+      "side": 1,
+      "message": "This CL tries to do similar things like https://dawn-review.googlesource.com/c/dawn/+/209835/5 in spirv.\n\nPTAL, thanks!",
+      "revId": "2083d6430c154634c5301029dab966d8ea29fba1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
