@@ -239,6 +239,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "71a84604_70d255c7",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-01-08T16:51:28Z",
+      "side": 1,
+      "message": "The changes in RenderPipelineVk.cpp look like they only need to know about the index and count of the immediate constants used which can still be calculated with a `offsetof` and `sizeof` from the `RenderImmediateConstants` structs. ex:\n\n`RenderPipelineBase::RenderPipelineBase` would look like:\n\n```\nRenderPipelineBase::RenderPipelineBase(\n    DeviceBase* device,\n    const UnpackedPtr\u003cRenderPipelineDescriptor\u003e\u0026 descriptor,\n    ImmediateConstantMask requiredInternalImmediateConstants)\n```\n\nwhich would eliminate some of the enumeration of the constants and make them more generic.\n\nAt some point, the pipeline needs to know if it needs the immediate constant or not. Something like this in `\nRenderPipelineBase::RenderPipelineBase`:\n```\n// Gather list of immediate constants used by this pipeline\nImmediateConstantMask pipelineConstants;\nif (GetLayout()-\u003eGetImmediateDataRangeByteSize()) {\n    // Also add these bits to the required bits?\n    pipelineConstants |\u003d GetImmediateConstantBits(offsetof(RenderPipeline, userConstants), sizeof(UserImmediateConstants));\n}\nif (UsesFragDepth() \u0026\u0026 !HasUnclippedDepth()) {\n    pipelineConstants |\u003d GetImmediateConstantBits(offsetof(RenderPipeline, clampFragDepth), sizeof(ClampFragDepthConstants));\n}\nif (UsesVertexIndex()) {\n    pipelineConstants |\u003d GetImmediateConstantBits(offsetof(RenderPipeline, firstVertex), sizeof(uint32_t));\n    pipelineConstants |\u003d GetImmediateConstantBits(offsetof(RenderPipeline, firstInstance), sizeof(uint32_t));\n}\n\nuint32_t offset \u003d 0;\nfor (auto index : IterateBitSet(pipelineConstants \u0026 requiredInternalImmediateConstants)) {\n    mImmediateConstantOffsetMap.insert({static_cast\u003cuint32_t\u003e(index), offset});\n    offset +\u003d kImmediateConstantElementByteSize;\n}\n\nmImmediateConstantMask |\u003d immediateConstantBlockBits;\n```\n\nwhere `GetImmediateConstantBits` just looks like\n```\n// Convert byte sizes and offests into immediate constant indicies and offsets\n// (dividing everything by kImmediateConstantElementByteSize)\nImmediateConstantMask GetImmediateConstantBits(size_t byteOffset, size_t byteSize) {\n    size_t firstIndex \u003d byteOffset / kImmediateConstantElementByteSize;\n    size_t constantCount \u003d byteSize / kImmediateConstantElementByteSize;\n\n    ImmediateConstantMask bits;\n    for (size_t bit \u003d firstIndex; bit \u003c firstIndex + constantCount; bit++) {\n        // This could be done with bit logic only...\n        bits.set(bit);\n    }\n    return bits;\n}\n```\n\nPlease push back if this looks like it wont work. I think avoiding having all this metadata about the constants is a nice win though.",
+      "parentUuid": "5c0a53c1_b146599d",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 2
+      },
+      "revId": "2c9b3767f8260794990afa19a3659731bd416739",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1d87937f_4c5850d7",
         "filename": "src/dawn/native/ImmediateConstantsLayout.h",
         "patchSetId": 33
