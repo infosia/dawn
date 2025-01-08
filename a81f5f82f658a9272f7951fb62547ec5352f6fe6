@@ -16,6 +16,23 @@
       "message": "Hi Austin, this is a recreation of the automated CL bumping this go module (https://dawn-review.googlesource.com/c/dawn/+/189692) which failed to merge due to conflict.",
       "revId": "a81f5f82f658a9272f7951fb62547ec5352f6fe6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eb02268_ba9ef391",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002726
+      },
+      "writtenOn": "2025-01-08T22:44:44Z",
+      "side": 1,
+      "message": "Thank you!",
+      "revId": "a81f5f82f658a9272f7951fb62547ec5352f6fe6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
