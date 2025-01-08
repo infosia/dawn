@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0b6f2e3_86137454",
+        "filename": "src/tint/lang/spirv/reader/parser/misc_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-08T21:55:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "998a02b1_cce37c32",
+      "revId": "b9babe7c7e1aba55256cd9b04325ec2d49afeb94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb069995_e34bc4ec",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-01-06T17:33:22Z",
       "side": 1,
       "message": "Why `zero` instead of `nullptr`, which is our equivalent for `Undef`?",
+      "revId": "b9babe7c7e1aba55256cd9b04325ec2d49afeb94",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b65891f1_36936195",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-08T21:55:01Z",
+      "side": 1,
+      "message": "Because `zero` is cool and `nullptr` is bleh, heh. So, when I added the new return into the test, in the cast of `nullptr` the return has no value. In the case of setting it to `zero` it gets the zero value. So, zero seems to work better?\n\nThey should be essentially equivalent, the undef in spirv is the same as our zero values.",
+      "parentUuid": "bb069995_e34bc4ec",
       "revId": "b9babe7c7e1aba55256cd9b04325ec2d49afeb94",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
