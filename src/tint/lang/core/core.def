@@ -65,6 +65,7 @@ enum builtin_value {
   subgroup_invocation_id
   subgroup_size
   __point_size
+  __cull_distance
 }
 
 // https://www.w3.org/TR/WGSL/#interpolation
