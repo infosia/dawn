@@ -144,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "583f99b9_0f07a6f7",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T21:38:27Z",
+      "side": 1,
+      "message": "I\u0027m confused. What is the issue that you\u0027d like me to assert on? If the `gl_PerVertex` struct is copied?\n\nThe `PointSize` will already work if it is assigned, there will be an index access so we\u0027d emit the assignment to the struct. Otherwise, we\u0027ll need ot find that access and delete it and any usages? The AST reader recorded the point size member index. It didnt\u0027 record for clip or cull distances.\n\nI\u0027ve re-written the code slightly, asserting for CullDistance if used, but if there is something else you\u0027d like changed, please let me know as I\u0027m not sure what else is desired here at the moment.",
+      "parentUuid": "3544c035_25d4dd67",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "91d5fc44_6d064880",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 2

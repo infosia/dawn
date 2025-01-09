@@ -16,6 +16,24 @@
       "message": "Assuming that `val` is always the struct then I think you should only check the first index here. Otherwise you may incorrectly match an index that is indexing into a nested element of a different member (e.g. `access %pervertex, 0, 2` only indexes the first member, but you\u0027d also match the third).",
       "revId": "7bdb7f4ce00e7cafd3fce39b64b4c33fc6596154",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bba9b1a_02e550db",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T21:38:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d791933_794b792b",
+      "revId": "7bdb7f4ce00e7cafd3fce39b64b4c33fc6596154",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
