@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad5ba2aa_382a05e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-01-09T18:20:35Z",
+      "side": 1,
+      "message": "note: the suppressions for maxStorageXXXPerShaderStage and maxDyanmic... are actually bugs in the CTS. (1) they aren\u0027t passing now (fixed in: https://github.com/gpuweb/cts/pull/4136)  (2) they won\u0027t pass after this CL because this CL enforces a new limit and the tests, updated in https://github.com/gpuweb/cts/pull/4122, didn\u0027t take that new enforcement into account and so are actually wrong. So for now, supress them.",
+      "revId": "8d1b728147c5f5298f29f338e80da4be89548e69",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
