@@ -263,6 +263,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a316956f_530150f1",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-09T01:40:38Z",
+      "side": 1,
+      "message": "I think it could work! Thanks for the suggestion. Let me try this approach to see whether we can get rid of these metadatas.",
+      "parentUuid": "71a84604_70d255c7",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 2
+      },
+      "revId": "2c9b3767f8260794990afa19a3659731bd416739",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1d87937f_4c5850d7",
         "filename": "src/dawn/native/ImmediateConstantsLayout.h",
         "patchSetId": 33
