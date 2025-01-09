@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ee8bd6b_7fd11a97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-09T22:54:43Z",
+      "side": 1,
+      "message": "I\u0027m not particularly attached to any of the interface names if you have better suggestions.",
+      "revId": "005dfd0db7afcc9b5774911e9488efbdb2aaafb0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
