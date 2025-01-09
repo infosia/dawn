@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21a922ea_c24b5f55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T20:25:23Z",
+      "side": 1,
+      "message": "Welcome to the future ....",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9440be08_7bf4a64a",
+        "filename": "src/tint/lang/core/ir/validator_access_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T20:25:23Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b66b2a2_1fc2bff2",
+        "filename": "src/tint/lang/core/ir/validator_builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T20:25:23Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93c891fc_1e1444ad",
+        "filename": "src/tint/lang/core/ir/validator_call_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T20:25:23Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33685aa0_8a1cc23b",
+        "filename": "src/tint/lang/core/ir/validator_flow_control_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T20:25:23Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2ee201a_9df0fdbf",
+        "filename": "src/tint/lang/core/ir/validator_function_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T20:25:23Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55372bc3_1420bce0",
+        "filename": "src/tint/lang/core/ir/validator_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T20:25:23Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "326aa602_893893df",
+        "filename": "src/tint/lang/core/ir/validator_type_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T20:25:23Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d871c931_b5fe9aef",
+        "filename": "src/tint/lang/core/ir/validator_value_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T20:25:23Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
