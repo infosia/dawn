@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3214b50f_749577de",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T21:17:44Z",
+      "side": 1,
+      "message": "suffix used for indicating it is a Tint IR binary formatted file. Some of the tooling, like the assembler/disasembler use/emit it, but it isn\u0027t required. I have added a line mentioning this.",
+      "parentUuid": "df0e5c5e_78d120a4",
+      "revId": "71c6b0cc4494b9e6419b2bde83e87643e0443270",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "325569be_cc9034a2",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-01-09T20:32:06Z",
       "side": 1,
       "message": "```suggestion\nFor generating binary test cases a rudimentary assembler,\n```",
+      "revId": "71c6b0cc4494b9e6419b2bde83e87643e0443270",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "271f0299_61766dd5",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T21:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "325569be_cc9034a2",
       "revId": "71c6b0cc4494b9e6419b2bde83e87643e0443270",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
