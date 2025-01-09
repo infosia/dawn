@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "000c0c90_5cde54ba",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-09T07:01:04Z",
+      "side": 1,
+      "message": "Done. Is there any potential alignment issue or padding issue if we construct struct like this?",
+      "parentUuid": "52247cab_1540752e",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "5631e1d15ac3b66404127cc38d071171a323f70e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a79233bb_d2a60d20",
         "filename": "src/dawn/native/ImmediateConstantsLayout.h",
         "patchSetId": 36
@@ -37,6 +61,30 @@
       "writtenOn": "2025-01-08T16:51:28Z",
       "side": 1,
       "message": "Same grouping for these.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 28
+      },
+      "revId": "5631e1d15ac3b66404127cc38d071171a323f70e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73a5e519_a66c89a2",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-09T07:01:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79233bb_d2a60d20",
       "range": {
         "startLine": 66,
         "startChar": 0,
