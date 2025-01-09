@@ -34,6 +34,24 @@
       "parentUuid": "188a5d73_e432c544",
       "revId": "7cd32a1dc50e5cede0f92bf8a5060ea9cf4bc06a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e3e1b8e_6b8a6e38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T15:54:35Z",
+      "side": 1,
+      "message": "So non-obviously this is actually a WGSL fuzzer issue, since it runs the IR fuzzers via a wrapper (i.e. WGSL-\u003eIR-\u003eIR fuzzer)\n\nThe general discussion of the fuzzers can be found here (https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/docs/tint/fuzzers.md), though those instructions detail using the fuzzing tool wrapper script which I don\u0027t normally use.\n\n(I am ignoring the wrapper script for the instructions below)\n\nYou probably can get away building using GN in a Dawn checkout (There are CMake flags for the fuzzers that you can use also, but that isn\u0027t actually what ClusterFuzz uses).\n\nYou will need a args.gn that includes the following lines:\n```\n...\nuse_libfuzzer \u003d true\n\ntint_build_ir_binary \u003d true\ntint_build_ir_fuzzer \u003d true\n...\n```\n\nand then need to build `tint_wgsl_fuzzer`\n\nYou can then run the fuzzer using that command and passing in the test case via a filepath on the command line. You should be able to download the test case file from the original CF issue.\n\nWithout your change it should hit an issue when running and generate a big backtrace, and with the fix the output should be short just saying it ran one test case and didn\u0027t find anything.\n\n(I have checked, and confirmed that the original issue reproduces in a Dawn standalone build, but for other issues, sometimes they don\u0027t, so you need to build in a full Chromium checkout using the args.gn at the bottom of the CF issue)",
+      "parentUuid": "30056e47_6d68a07d",
+      "revId": "7cd32a1dc50e5cede0f92bf8a5060ea9cf4bc06a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
