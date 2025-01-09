@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd0e5398_fd3f071a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-01-09T17:39:29Z",
+      "side": 1,
+      "message": "This CL suppress tests prior to chromium/tools/build/ CL adding gl_force_es_31_and_no_extensions toggle to bot;\n\nPlease reference Check result of Patchset 2, which forcefully turn on gl_force_es_31_and_no_extensions in code to test bots and it\u0027s green.",
+      "revId": "f97469000ff6b85853363a524c7b06f12b82f6bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
