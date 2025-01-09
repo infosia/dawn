@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df0e5c5e_78d120a4",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T20:32:06Z",
+      "side": 1,
+      "message": "`tirb` ?",
+      "revId": "71c6b0cc4494b9e6419b2bde83e87643e0443270",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "325569be_cc9034a2",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-09T20:32:06Z",
+      "side": 1,
+      "message": "```suggestion\nFor generating binary test cases a rudimentary assembler,\n```",
+      "revId": "71c6b0cc4494b9e6419b2bde83e87643e0443270",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
