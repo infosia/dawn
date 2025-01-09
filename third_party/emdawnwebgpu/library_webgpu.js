@@ -91,13 +91,12 @@ var LibraryWebGPU = {
       // the jsObject table simple.
       bufferOnUnmaps: [],
 
-      // Future to promise management, and temporary list allocated up-front for
-      // WaitAny implementation on the promises. Note that all FutureIDs
-      // (uint64_t) are passed either as a low and high value or by pointer
-      // because they need to be passed back and forth between JS and C++, and JS
-      // is currently unable to pass a value to a C++ function as a uint64_t.
-      // This might be possible with -sWASM_BIGINT, but I was unable to get that
-      // to work properly at the time of writing.
+      // Future to promise management. Note that all FutureIDs (uint64_t) are
+      // passed either as a low and high value or by pointer  because they need
+      // to be passed back and forth between JS and C++, and JS is currently
+      // unable to pass a value to a C++ function as a uint64_t. This might be
+      // possible with -sWASM_BIGINT, but I was unable to get that to work
+      // properly at the time of writing.
       futures: [],
       futureInsert: (futureId, promise) => {
 #if ASYNCIFY
@@ -587,7 +586,7 @@ var LibraryWebGPU = {
   emwgpuWaitAny__sig: 'jppp',
 #if ASYNCIFY
   emwgpuWaitAny__async: true,
-  emwgpuWaitAny: async (futurePtr, futureCount, timeoutNSPtr) => {
+  emwgpuWaitAny: (futurePtr, futureCount, timeoutNSPtr) => {
     var promises = [];
     if (timeoutNSPtr) {
       var timeoutMS = {{{ gpu.makeGetU64('timeoutNSPtr', 0) }}} / 1000000;
@@ -606,7 +605,9 @@ var LibraryWebGPU = {
       promises[i] = WebGPU.Internals.futures[futureId];
     }
 
-    var firstResolvedFuture = await Promise.race(promises);
+    var firstResolvedFuture = Asyncify.handleAsync(async () => {
+      return await Promise.race(promises);
+    });
     delete WebGPU.Internals.futures[firstResolvedFuture];
     return firstResolvedFuture;
   },
