@@ -153,6 +153,30 @@
       },
       "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dd484e5_4e7aba4e",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-09T07:24:24Z",
+      "side": 1,
+      "message": "Done. No table anymore!",
+      "parentUuid": "088c36a0_587dd52d",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 2
+      },
+      "revId": "04f5f4a5eff3fd8346bd26f80d622eaa21c55a16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
