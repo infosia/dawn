@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "594a0a1c_faa719df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T20:59:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f60e071b_d5e60d7c",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9440be08_7bf4a64a",
@@ -67,6 +85,24 @@
       "writtenOn": "2025-01-09T20:25:23Z",
       "side": 1,
       "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6526ba77_dd81519b",
+        "filename": "src/tint/lang/core/ir/validator_access_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T20:59:15Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "9440be08_7bf4a64a",
       "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -88,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81ac3664_33deff00",
+        "filename": "src/tint/lang/core/ir/validator_builtin_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T20:59:15Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "0b66b2a2_1fc2bff2",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93c891fc_1e1444ad",
@@ -101,6 +155,24 @@
       "writtenOn": "2025-01-09T20:25:23Z",
       "side": 1,
       "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70f30d00_18aa607b",
+        "filename": "src/tint/lang/core/ir/validator_call_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T20:59:15Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "93c891fc_1e1444ad",
       "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -122,6 +194,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ee2c96f_bb1c047c",
+        "filename": "src/tint/lang/core/ir/validator_flow_control_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T20:59:15Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "33685aa0_8a1cc23b",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2ee201a_9df0fdbf",
@@ -135,6 +225,24 @@
       "writtenOn": "2025-01-09T20:25:23Z",
       "side": 1,
       "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a76c2bc_a8e79c5f",
+        "filename": "src/tint/lang/core/ir/validator_function_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T20:59:15Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "f2ee201a_9df0fdbf",
       "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -156,6 +264,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "701ef55a_2f50e44b",
+        "filename": "src/tint/lang/core/ir/validator_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T20:59:15Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "55372bc3_1420bce0",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "326aa602_893893df",
@@ -173,6 +299,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc238e57_4932479d",
+        "filename": "src/tint/lang/core/ir/validator_type_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T20:59:15Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "326aa602_893893df",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d871c931_b5fe9aef",
@@ -186,6 +330,24 @@
       "writtenOn": "2025-01-09T20:25:23Z",
       "side": 1,
       "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc6a5c96_43ec1e04",
+        "filename": "src/tint/lang/core/ir/validator_value_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-09T20:59:15Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "d871c931_b5fe9aef",
       "revId": "2e230d99f17ed8ee3a9b99fe5e17bff77ef4dd7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
