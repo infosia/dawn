@@ -52,6 +52,23 @@
       "parentUuid": "30056e47_6d68a07d",
       "revId": "7cd32a1dc50e5cede0f92bf8a5060ea9cf4bc06a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c85b7047_63bd8953",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-09T16:10:41Z",
+      "side": 1,
+      "message": "Change itself LGTM. The failures on the CMake bots are unrelated to this CL and will be fixed by:\nhttps://dawn-review.googlesource.com/c/dawn/+/221614",
+      "revId": "7cd32a1dc50e5cede0f92bf8a5060ea9cf4bc06a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
