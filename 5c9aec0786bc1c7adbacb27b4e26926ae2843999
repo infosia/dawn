@@ -1,0 +1,97 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "028d95f8_9af4b987",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3781492
+      },
+      "writtenOn": "2025-01-09T11:19:36Z",
+      "side": 1,
+      "message": "Can we add a test exercising an issue this change fixes?",
+      "revId": "5c9aec0786bc1c7adbacb27b4e26926ae2843999",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e67c3c35_c69c368a",
+        "filename": "generator/templates/art/JNIClasses.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3781492
+      },
+      "writtenOn": "2025-01-09T11:19:36Z",
+      "side": 1,
+      "message": "Also 2025?",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2fa4b7df_3ce6c6da",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/JNIClasses.cpp",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 2,
+                "endChar": 0
+              },
+              "replacement": "//* Copyright 2025 The Dawn \u0026 Tint Authors\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5c9aec0786bc1c7adbacb27b4e26926ae2843999",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c882efa_cbaa9838",
+        "filename": "generator/templates/art/JNIClasses.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3781492
+      },
+      "writtenOn": "2025-01-09T11:19:36Z",
+      "side": 1,
+      "message": "Nit: 2025?",
+      "fixSuggestions": [
+        {
+          "fixId": "b42d0f77_3862f85a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/JNIClasses.h",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 2,
+                "endChar": 0
+              },
+              "replacement": "// Copyright 2025 The Dawn \u0026 Tint Authors\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5c9aec0786bc1c7adbacb27b4e26926ae2843999",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
