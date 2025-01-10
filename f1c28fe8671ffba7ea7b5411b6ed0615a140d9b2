@@ -162,6 +162,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94203b8a_3e99a5a9",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-10T18:45:44Z",
+      "side": 1,
+      "message": "\u003e What is the issue that you\u0027d like me to assert on? If the gl_PerVertex struct is copied?\n\nI think we could probably just reject if any of the uses are not `access`?\n\n\n\u003e The PointSize will already work if it is assigned, there will be an index access so we\u0027d emit the assignment to the struct.\n\nThe issue is that if `PointSize` is accessed then you still emit a `@builtin(__point_size)` member (tested this locally with handwritten SPIR-V, but a unit test should show it too). So we need to always skip it, and just check that it was assigned instead.",
+      "parentUuid": "583f99b9_0f07a6f7",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "91d5fc44_6d064880",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 2
