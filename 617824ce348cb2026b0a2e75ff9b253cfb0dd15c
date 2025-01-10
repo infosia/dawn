@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c74778b_0b7100e2",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-10T05:31:52Z",
+      "side": 1,
+      "message": "nit:\n```suggestion\n      // passed either as a low and high value or by pointer because they need\n```",
+      "revId": "617824ce348cb2026b0a2e75ff9b253cfb0dd15c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1ea2746_a5f2ab8f",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-10T05:31:52Z",
+      "side": 1,
+      "message": "I figured out what went wrong here and will have another CL to fix it correctly.",
+      "revId": "617824ce348cb2026b0a2e75ff9b253cfb0dd15c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccb6b62e_8ca8267a",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-10T05:31:52Z",
+      "side": 1,
+      "message": "Important to link to crbug in case this comment ends up in upstream Emscripten.\n```suggestion\n    // TODO(crbug.com/388914937): We can probably remove this once users are updated.\n```",
+      "revId": "617824ce348cb2026b0a2e75ff9b253cfb0dd15c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5738d18_2570d72e",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-10T05:31:52Z",
+      "side": 1,
+      "message": "`warnOnce()` in this case since we\u0027re ignoring whatever was requested of us",
+      "revId": "617824ce348cb2026b0a2e75ff9b253cfb0dd15c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
