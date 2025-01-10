@@ -16,6 +16,23 @@
       "message": "PTAL, finally made this work with the other thing I was doing (running the test again from rAF instead of main), so I\u0027m pretty confident in it.\nPlease test this out locally on mldrift if you can though.",
       "revId": "7b4767027fd738d72931890d34b491c8056cae18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e21c9a77_1ac0fb1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-10T08:28:58Z",
+      "side": 1,
+      "message": "Tested it locally and seems to work fine for MLDrift!",
+      "revId": "7b4767027fd738d72931890d34b491c8056cae18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
