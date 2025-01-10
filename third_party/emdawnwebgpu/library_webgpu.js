@@ -587,28 +587,30 @@ var LibraryWebGPU = {
   emwgpuWaitAny__sig: 'jppp',
 #if ASYNCIFY
   emwgpuWaitAny__async: true,
-  emwgpuWaitAny: async (futurePtr, futureCount, timeoutNSPtr) => {
-    var promises = [];
-    if (timeoutNSPtr) {
-      var timeoutMS = {{{ gpu.makeGetU64('timeoutNSPtr', 0) }}} / 1000000;
-      promises.length = futureCount + 1;
-      promises[futureCount] = new Promise((resolve) => setTimeout(resolve, timeoutMS, 0));
-    } else {
-      promises.length = futureCount;
-    }
-
-    for (var i = 0; i < futureCount; ++i) {
-      // If any of the FutureIDs are not tracked, it means it must be done.
-      var futureId = {{{ gpu.makeGetU64('(futurePtr + i * 8)', 0) }}};
-      if (!(futureId in WebGPU.Internals.futures)) {
-        return futureId;
+  emwgpuWaitAny: (futurePtr, futureCount, timeoutNSPtr) => {
+    return Asyncify.handleAsync(async () => {
+      var promises = [];
+      if (timeoutNSPtr) {
+        var timeoutMS = {{{ gpu.makeGetU64('timeoutNSPtr', 0) }}} / 1000000;
+        promises.length = futureCount + 1;
+        promises[futureCount] = new Promise((resolve) => setTimeout(resolve, timeoutMS, 0));
+      } else {
+        promises.length = futureCount;
       }
-      promises[i] = WebGPU.Internals.futures[futureId];
-    }
 
-    var firstResolvedFuture = await Promise.race(promises);
-    delete WebGPU.Internals.futures[firstResolvedFuture];
-    return firstResolvedFuture;
+      for (var i = 0; i < futureCount; ++i) {
+        // If any of the FutureIDs are not tracked, it means it must be done.
+        var futureId = {{{ gpu.makeGetU64('(futurePtr + i * 8)', 0) }}};
+        if (!(futureId in WebGPU.Internals.futures)) {
+          return futureId;
+        }
+        promises[i] = WebGPU.Internals.futures[futureId];
+      }
+
+      const firstResolvedFuture = await Promise.race(promises);
+      delete WebGPU.Internals.futures[firstResolvedFuture];
+      return firstResolvedFuture;
+    });
   },
 #else
   emwgpuWaitAny: () => {
