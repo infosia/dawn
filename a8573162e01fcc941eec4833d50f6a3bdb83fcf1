@@ -69,6 +69,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf5b64a8_30367034",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-10T08:26:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7184c194_bfbf8cf9",
+      "revId": "a8573162e01fcc941eec4833d50f6a3bdb83fcf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f03b1157_88deb241",
@@ -82,6 +100,24 @@
       "writtenOn": "2025-01-06T19:31:03Z",
       "side": 1,
       "message": "LocationInvocationId must be `i32`. This looks like a duplicate of the above test?",
+      "revId": "a8573162e01fcc941eec4833d50f6a3bdb83fcf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bff6ef5_2cdbb9f1",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-10T08:26:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f03b1157_88deb241",
       "revId": "a8573162e01fcc941eec4833d50f6a3bdb83fcf1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
