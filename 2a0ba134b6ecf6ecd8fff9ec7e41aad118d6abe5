@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ce217f9_4fd2b725",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-10T08:50:55Z",
+      "side": 0,
+      "message": "IIRC validating this in core wastes a few cycles because it\u0027ll never fail, since it was already validated with PerShaderStage?\nMaybe in core we could have asserts instead of validation.\n\nThat might be kind of fragile though since it depends on the validation order, so up to you.",
+      "revId": "2a0ba134b6ecf6ecd8fff9ec7e41aad118d6abe5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
