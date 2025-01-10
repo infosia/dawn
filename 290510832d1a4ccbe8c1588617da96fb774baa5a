@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0bb32ba_65276842",
+        "filename": "src/dawn/tests/unittests/native/ImmediateConstantsTrackerTests.cpp",
+        "patchSetId": 38
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-10T21:29:15Z",
+      "side": 1,
+      "message": "I think these should use `GetImmediateConstantBlockBits` now.",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "290510832d1a4ccbe8c1588617da96fb774baa5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
