@@ -16,6 +16,24 @@
       "message": "I believe you need to pass `inst.result_id()` as well otherwise the value will not be registered.\n\nProbably worth changing the unit tests to return the result from the function to make sure this is done properly.",
       "revId": "73dc9310e320ca003e6dee0d355a9f801959a2a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2234d406_197e9c7b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-12T02:28:51Z",
+      "side": 1,
+      "message": "Change done, I\u0027ve left the tests for now as that\u0027s a huge kettle of fish given it\u0027s a a whole pile of template instantiated tests....",
+      "parentUuid": "08abcab9_0522d245",
+      "revId": "73dc9310e320ca003e6dee0d355a9f801959a2a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
