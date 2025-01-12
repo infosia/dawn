@@ -318,6 +318,17 @@ implicit(N: num, T: scalar) fn select(vec<N, bool>, vec<N, T>, vec<N, T>) -> vec
 implicit(T: f32_f16, N: num, M: num) fn vector_times_matrix(vec<N, T>, mat<M, N, T>) -> vec<M, T>
 implicit(T: f32_f16, N: num) fn vector_times_scalar(vec<N, T>, T) -> vec<N, T>
 
+// The matching algorithm doesn't take the return value into consideration, so if we try to handle these
+// with a single result, we seem to randomly get either the incorrect match.
+fn sign_i(i32) -> i32
+fn sign_u(u32) -> u32
+fn sign_u_i(u32) -> i32
+fn sign_i_u(i32) -> u32
+implicit(N: num) fn sign_i(vec<N, i32>) -> vec<N, i32>
+implicit(N: num) fn sign_u(vec<N, u32>) -> vec<N, u32>
+implicit(N: num) fn sign_u_i(vec<N, u32>) -> vec<N, i32>
+implicit(N: num) fn sign_i_u(vec<N, i32>) -> vec<N, u32>
+
 ////////////////////////////////////////////////////////////////////////////////
 // SPV_KHR_integer_dot_product instructions
 ////////////////////////////////////////////////////////////////////////////////

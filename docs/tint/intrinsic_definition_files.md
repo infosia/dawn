@@ -41,16 +41,20 @@ enum diagnostic_severity {
 }
 ```
 
-These enum declarations can be used by templates to generate an equivalent C++ enum, along with a parser and printer helper method, using the helper template [`src/tint/utils/templates/enums.tmpl.inc`](../../src/tint/utils/templates/enums.tmpl.inc). \
+These enum declarations can be used by templates to generate an equivalent C++ enum, along with a
+parser and printer helper method, using the helper template
+[`src/tint/utils/templates/enums.tmpl.inc`](../../src/tint/utils/templates/enums.tmpl.inc). \
 See [`src/tint/lang/wgsl/extension.h.tmpl`](../../src/tint/lang/wgsl/extension.h.tmpl) as an example.
 
-Enum declarations can also be used as constraints on type template parameters and overload template parameters.
+Enum declarations can also be used as constraints on type template parameters and overload template
+parameters.
 
 ## Types
 
 Syntax: `type` _**name**_ _**[**_ `<` _**type-or-number-templates**_ `>` _**]**_
 
-Type declarations form the basic primitives are used to match intrinsic overloads. A type can be referenced by type matchers and by builtin overloads.
+Type declarations form the basic primitives are used to match intrinsic overloads. A type can be
+referenced by type matchers and by builtin overloads.
 
 The simplest type declaration has the form: `type name`
 
@@ -66,7 +70,10 @@ Examples:
 
 ### Annotations
 
-Types may be annotated with `@precedence(N)` to prioritize which type will be picked when multiple types of a matcher match. This is typically used to ensure that abstract numerical types materialize to the concrete type with the lowest conversion rank. Types with higher precedence values will be matched first.
+Types may be annotated with `@precedence(N)` to prioritize which type will be picked when multiple
+types of a matcher match. This is typically used to ensure that abstract numerical types materialize
+to the concrete type with the lowest conversion rank. Types with higher precedence values will be
+matched first.
 
 Example:
 
@@ -79,7 +86,8 @@ Example:
 @precedence(0) type f16
 ```
 
-Types may also be annotated with `@display("`_string_`")` to customize how the type is printed in diagnostic message. The string may contain curly-brace references to the templated types.
+Types may also be annotated with `@display("`_string_`")` to customize how the type is printed in
+diagnostic message. The string may contain curly-brace references to the templated types.
 
 Example:
 
@@ -104,14 +112,16 @@ An overload declaration can declare a simple static-type declarations, as well a
 declarations that can match a number of different argument types via the use of template types,
 template numbers and type matchers.
 
-All overload declarations share the same declaration patterns, but the kind of declaration has a different prefix.
+All overload declarations share the same declaration patterns, but the kind of declaration has a
+different prefix.
 
 * [Builtin Functions](#builtin-functions) have a `fn` prefix
 * [Value constructors](#value-constructors) have a `ctor` prefix
 * [Value conversions](#value-conversions) have a `conv` prefix
 * [Operators](#operators) have a `op` prefix
 
-For example: `fn isInf(f32) -> bool` declares an overload of the function `isInf` that accepts a single parameter of type `f32` and returns a `bool`.
+For example: `fn isInf(f32) -> bool` declares an overload of the function `isInf` that accepts a
+single parameter of type `f32` and returns a `bool`.
 
 ### Parameters
 
@@ -127,21 +137,25 @@ Named parameters have a name and constraint, separated with a colon. Example `fn
 | `fn F(i32)`        | function `F` has a single unnamed parameter, of type or matcher `i32`       |
 | `fn F(count: i32)` | function `F` has a single parameter named `count`, of type or matcher `i32` |
 
-Note: Parameters may use a type-matcher directly, but for `wgsl.def` it is encouraged to use an implicit template parameter. This helps the readability of the diagnostics produced. For example, instead of `fn F(scalar)`, prefer: `fn F[S: scalar](S)`.
+Note: Parameters may use a type-matcher directly, but for `wgsl.def` it is encouraged to use an
+implicit template parameter. This helps the readability of the diagnostics produced. For example,
+instead of `fn F(scalar)`, prefer: `fn F[S: scalar](S)`.
 
 ### Templates
 
 Builtin function overload declarations can support **explicit** and **implicit** template parameters.
 
 Each template parameter has the syntax: _**name**_ _**[**_ `:` _**constraint ]**_
-Where the optional _**constrant**_ can be a [type](#types), [type matcher](#type-matchers), or `: num` for a number template.
+Where the optional _**constrant**_ can be a [type](#types), [type matcher](#type-matchers), or
+`: num` for a number template.
 
 **Explicit template parameters:**
 
 * Are optional in the overload declaration.
 * Have the syntax: `<` _**template_parameter_list**_ `>`
 * Must be declared before implicit template parameters (if declared) and parameter list.
-* Must be provided by the call of the function, with exactly one template argument provided for each template parameter.
+* Must be provided by the call of the function, with exactly one template argument provided for each
+  template parameter.
 * May reference implicit template parameters.
 * Can only be declared on [Builtin Functions](#builtin-functions).
 * Do not support number templates.
@@ -227,8 +241,8 @@ The process for resolving this overload is as follows:
 
 1. The overload resolver begins by attempting to match the parameter types from left to right.
    The first argument type is compared against the parameter type `T`.
-   As the implicit template type `T` has not been defined yet, `T` is defined as the type of the first argument.
-   There's no verification that the `T` type is a scalar at this stage.
+   As the implicit template type `T` has not been defined yet, `T` is defined as the type of the
+   first argument. There's no verification that the `T` type is a scalar at this stage.
 2. The second argument is then compared against the second parameter.
    As the template type `T` is now defined as the first argument type, the second argument type is
    compared against the type of `T`. Depending on the comparison of the argument type to the
@@ -258,9 +272,11 @@ If the candidate list is empty, then the call fails to resolve and an error diag
 
 ### Common attributes
 
-Intrinsics that can be used in constant evaluation expressions are annotated with `@const` or `@const(` _**name**_ `)`.
+Intrinsics that can be used in constant evaluation expressions are annotated with `@const` or
+`@const(` _**name**_ `)`.
 
-The templates use this attribute to associate the overload with a function in [`src/tint/lang/core/constant/eval.h`](../../src/tint/lang/core/constant/eval.h).
+The templates use this attribute to associate the overload with a function in
+[`src/tint/lang/core/constant/eval.h`](../../src/tint/lang/core/constant/eval.h).
 
 ## Builtin functions
 
@@ -268,7 +284,8 @@ Syntax: `fn` _**name [**_ `<` _**explicit-template-parameters**_ `>` _**] [**_ `
 
 Builtin function overloads support both implicit and explicit template parameters.
 
-Builtin functions may be annotated with `@must_use` to prevent the function being used as a call-statement in WGSL.
+Builtin functions may be annotated with `@must_use` to prevent the function being used as a
+call-statement in WGSL.
 
 ### Examples
 
@@ -279,7 +296,7 @@ Builtin functions may be annotated with `@must_use` to prevent the function bein
 | `fn F(f32, i32)`             | Two fixed-type, anonymous parameters                                               |
 | `fn F(U : f32)`              | Single parameter with name `U`                                                     |
 | `fn F[T](T)`                 | Single parameter of unconstrained implicit template type `T` (any type)            |
-| `fn F[T: scalar](T)`         | Single parameter of constrained implict template type `T` (must match `scalar`)    |
+| `fn F[T: scalar](T)`         | Single parameter of constrained implicit template type `T` (must match `scalar`)    |
 | `fn F[T: fiu32](T) -> T`     | Single parameter of constrained implicit template type T (must match `fiu32`)<br>Return type is of the parameter type |
 | `fn F[T, N: num](vec<N, T>)` | Single parameter of `vec` type with template number `N` and element template type `T` |
 | `fn F[A: access](texture_storage_1d<f32_texel_format, A>)` | Single parameter of type `texture_storage_1d` type with implicit template number  `A` constrained to the enum `access`, and a texel format that that must match `f32_texel_format` |
