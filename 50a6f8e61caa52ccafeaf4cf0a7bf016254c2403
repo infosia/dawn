@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae943b27_7e5a2503",
+        "filename": "src/tint/lang/spirv/reader/parser/misc_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-12T01:54:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63402879_c364de78",
+      "revId": "50a6f8e61caa52ccafeaf4cf0a7bf016254c2403",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de77e816_ede2eafd",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-01-06T17:46:43Z",
       "side": 1,
       "message": "?",
+      "revId": "50a6f8e61caa52ccafeaf4cf0a7bf016254c2403",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b330cece_a6f2c581",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-12T01:54:47Z",
+      "side": 1,
+      "message": "The fun outcome of having a formatting error which shifted the indent to the right by 4, then auto-formatting kicking in and wrapping the line. Then fixing the error, which fixes the indenting, but doesn\u0027t fix the auto-wrapping.\n\nAll that to say, fixed.",
+      "parentUuid": "de77e816_ede2eafd",
       "revId": "50a6f8e61caa52ccafeaf4cf0a7bf016254c2403",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
