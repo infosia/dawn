@@ -33,6 +33,24 @@
       "message": "Nit: Maybe rename `VectorScalarCase` since it does all these other combinations too.",
       "revId": "d3bc79e145a7b82d15ef853e0836bb99799ed37e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67fadd24_888a7b40",
+        "filename": "src/tint/lang/spirv/reader/parser/binary_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-12T02:10:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4332b45c_ddb57e31",
+      "revId": "d3bc79e145a7b82d15ef853e0836bb99799ed37e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
