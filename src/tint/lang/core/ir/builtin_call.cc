@@ -43,6 +43,17 @@ BuiltinCall::BuiltinCall(Id id, InstructionResult* result, VectorRef<Value*> arg
     AddResult(result);
 }
 
+BuiltinCall::BuiltinCall(Id id,
+                         InstructionResult* result,
+                         VectorRef<const core::type::Type*> explicit_params,
+                         VectorRef<Value*> args)
+    : Base(id) {
+    flags_.Add(Flag::kSequenced);
+    SetExplicitTemplateParams(explicit_params);
+    AddOperands(BuiltinCall::kArgsOperandOffset, std::move(args));
+    AddResult(result);
+}
+
 BuiltinCall::~BuiltinCall() = default;
 
 }  // namespace tint::core::ir

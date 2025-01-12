@@ -107,8 +107,9 @@ struct State {
         auto* result_ty = binary->Result(0)->Type();
         if (result_ty->IsFloatVector() && binary->Op() == core::BinaryOp::kMultiply) {
             // Use OpVectorTimesScalar for floating point multiply.
-            auto* vts = b.CallWithResult<spirv::ir::BuiltinCall>(
-                binary->DetachResult(), spirv::BuiltinFn::kVectorTimesScalar);
+            auto* vts = b.CallExplicitWithResult<spirv::ir::BuiltinCall>(
+                binary->DetachResult(), spirv::BuiltinFn::kVectorTimesScalar,
+                Vector<const core::type::Type*, 0>{});
             if (binary->LHS()->Type()->Is<core::type::Scalar>()) {
                 vts->AppendArg(binary->RHS());
                 vts->AppendArg(binary->LHS());

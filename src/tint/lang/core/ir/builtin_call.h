@@ -50,6 +50,16 @@ class BuiltinCall : public Castable<BuiltinCall, Call> {
     /// @param args the conversion arguments
     BuiltinCall(Id id, InstructionResult* result, VectorRef<Value*> args = tint::Empty);
 
+    /// Constructor
+    /// @param id the instruction id
+    /// @param result the result value
+    /// @param explicit_params explicit parameters
+    /// @param args the conversion arguments
+    BuiltinCall(Id id,
+                InstructionResult* result,
+                VectorRef<const core::type::Type*> explicit_params,
+                VectorRef<Value*> args = tint::Empty);
+
     ~BuiltinCall() override;
 
     /// @returns the identifier for the function
