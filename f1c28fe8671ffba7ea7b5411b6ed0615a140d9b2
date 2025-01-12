@@ -180,6 +180,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "11cf6ef8_0ad7f8cd",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-12T01:30:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we shoudl reject if any use is not an access. We don\u0027t actually know this is `gl_PerVertex` we just see a struct with stuff in it. We can skip emitting that suff if we don\u0027t understand it, but I don\u0027t think we should necessarily drop the struct for other uses?\n\nI\u0027ve skipped emission of PointSize and left a TODO for adding a check that the only usage of that member is an assignment.",
+      "parentUuid": "94203b8a_3e99a5a9",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "91d5fc44_6d064880",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 2
