@@ -51,6 +51,24 @@
       ],
       "revId": "7708ff41d2b8f39712160ca8b5b2587202d5e60e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9205e444_8e7ff9e6",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-12T02:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae47a38e_b767ae3e",
+      "revId": "7708ff41d2b8f39712160ca8b5b2587202d5e60e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
