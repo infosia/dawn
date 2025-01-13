@@ -283,6 +283,12 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::Norm16TextureFormats);
     }
 
+    // RG11B10UfloatRenderable
+    if (mFunctions.GetVersion().IsDesktop() || mFunctions.IsAtLeastGLES(3, 2) ||
+        mFunctions.IsGLExtensionSupported("GL_EXT_color_buffer_float")) {
+        EnableFeature(Feature::RG11B10UfloatRenderable);
+    }
+
     // Float32Blendable
     if (mFunctions.IsGLExtensionSupported("GL_EXT_float_blend")) {
         EnableFeature(Feature::Float32Blendable);

@@ -296,9 +296,12 @@ class CopyTests_T2B : public CopyTests, public DawnTestWithParams<CopyTextureFor
                                   format == wgpu::TextureFormat::R32Float ||
                                   format == wgpu::TextureFormat::RG32Float ||
                                   format == wgpu::TextureFormat::RGBA32Float);
-            // TODO(crbug.com/388318201): GL_R11F_G11F_B10F: Framebuffer incomplete.
-            DAWN_SUPPRESS_TEST_IF(format == wgpu::TextureFormat::RG11B10Ufloat);
         }
+
+        // TODO(crbug.com/388318201): GL_R11F_G11F_B10F: Framebuffer incomplete.
+        DAWN_TEST_UNSUPPORTED_IF(GetParam().mTextureFormat == wgpu::TextureFormat::RG11B10Ufloat &&
+                                 IsCompatibilityMode() &&
+                                 !SupportsFeatures({wgpu::FeatureName::RG11B10UfloatRenderable}));
 
         // TODO(dawn:2129): Fail for Win ANGLE D3D11
         DAWN_SUPPRESS_TEST_IF((GetParam().mTextureFormat == wgpu::TextureFormat::RGB9E5Ufloat) &&
