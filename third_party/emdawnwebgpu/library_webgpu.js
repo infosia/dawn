@@ -697,6 +697,7 @@ var LibraryWebGPU = {
     {{{ makeSetValue('info', C_STRUCTS.WGPUAdapterInfo.adapterType, 'adapterType', 'i32') }}};
     {{{ makeSetValue('info', C_STRUCTS.WGPUAdapterInfo.vendorID, '0', 'i32') }}};
     {{{ makeSetValue('info', C_STRUCTS.WGPUAdapterInfo.deviceID, '0', 'i32') }}};
+    return 1;
   },
 
   wgpuAdapterGetLimits: (adapterPtr, limitsOutPtr) => {
