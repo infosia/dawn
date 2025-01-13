@@ -569,7 +569,8 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
 MaybeError QueueBase::ValidateOnSubmittedWorkDone(wgpu::QueueWorkDoneStatus* status) const {
     DAWN_TRY(GetDevice()->ValidateIsAlive());
 
-    *status = wgpu::QueueWorkDoneStatus::Error;
+    // Set the status to an unknown value since this is a failure.
+    *status = static_cast<wgpu::QueueWorkDoneStatus>(0);
     DAWN_TRY(GetDevice()->ValidateObject(this));
 
     return {};
