@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "698d4384_a648b4f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-01-13T19:42:51Z",
+      "side": 1,
+      "message": "I guess `-Wdangling-pointer\u003d` might have found this",
+      "revId": "fb6ed53cec8c4340e5cdf215d55611ca6ba7ea11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
