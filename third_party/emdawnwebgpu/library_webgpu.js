@@ -16,10 +16,19 @@
     throw new Error("To use Dawn's library_webgpu.js, disable -sUSE_WEBGPU and first include Dawn's library_webgpu_struct_info.js and library_webgpu_enum_tables.js (before library_webgpu.js)");
   }
 
+  if (MEMORY64) {
+    throw new Error("The current implementation of Dawn's library_webgpu.js does not support MEMORY64 yet");
+  }
+
   // Helper functions for code generation
   globalThis.gpu = {
-    convertSentinelToUndefined: function(name) {
-      return `if (${name} == -1) ${name} = undefined;`;
+    convertSentinelToUndefined: function(name, isPtr) {
+      // When `CAN_ADDRESS_2GB` is true, value `-1` is normalized to `0xFFFFFFFF` for pointer.
+      if (CAN_ADDRESS_2GB && isPtr) {
+        return `if (${name} == 0xFFFFFFFF) ${name} = undefined;`;
+      } else {
+        return `if (${name} == -1) ${name} = undefined;`;
+      }
     },
 
     makeGetBool: function(struct, offset) {
@@ -879,7 +888,7 @@ var LibraryWebGPU = {
 
     if (size === 0) warnOnce('getMappedRange size=0 no longer means WGPU_WHOLE_MAP_SIZE');
 
-    {{{ gpu.convertSentinelToUndefined('size') }}}
+    {{{ gpu.convertSentinelToUndefined('size', true) }}}
 
     var mapped;
     try {
@@ -906,7 +915,7 @@ var LibraryWebGPU = {
 
     if (size === 0) warnOnce('getMappedRange size=0 no longer means WGPU_WHOLE_MAP_SIZE');
 
-    {{{ gpu.convertSentinelToUndefined('size') }}}
+    {{{ gpu.convertSentinelToUndefined('size', true) }}}
 
     var mapped;
     try {
@@ -947,7 +956,7 @@ var LibraryWebGPU = {
     var buffer = WebGPU.getJsObject(bufferPtr);
     WebGPU.Internals.bufferOnUnmaps[bufferPtr] = [];
 
-    {{{ gpu.convertSentinelToUndefined('size') }}}
+    {{{ gpu.convertSentinelToUndefined('size', true) }}}
 
     {{{ runtimeKeepalivePush() }}}
     WebGPU.Internals.futureInsert(futureId, buffer.mapAsync(mode, offset, size).then(() => {
@@ -1142,7 +1151,7 @@ var LibraryWebGPU = {
 
   wgpuCommandEncoderClearBuffer: (encoderPtr, bufferPtr, offset, size) => {
     var commandEncoder = WebGPU.getJsObject(encoderPtr);
-    {{{ gpu.convertSentinelToUndefined('size') }}}
+    {{{ gpu.convertSentinelToUndefined('size', true) }}}
 
     var buffer = WebGPU.getJsObject(bufferPtr);
     commandEncoder.clearBuffer(buffer, offset, size);
@@ -2102,7 +2111,7 @@ var LibraryWebGPU = {
   wgpuRenderBundleEncoderSetIndexBuffer: (passPtr, bufferPtr, format, offset, size) => {
     var pass = WebGPU.getJsObject(passPtr);
     var buffer = WebGPU.getJsObject(bufferPtr);
-    {{{ gpu.convertSentinelToUndefined('size') }}}
+    {{{ gpu.convertSentinelToUndefined('size', true) }}}
     pass.setIndexBuffer(buffer, WebGPU.IndexFormat[format], offset, size);
   },
 
@@ -2115,7 +2124,7 @@ var LibraryWebGPU = {
   wgpuRenderBundleEncoderSetVertexBuffer: (passPtr, slot, bufferPtr, offset, size) => {
     var pass = WebGPU.getJsObject(passPtr);
     var buffer = WebGPU.getJsObject(bufferPtr);
-    {{{ gpu.convertSentinelToUndefined('size') }}}
+    {{{ gpu.convertSentinelToUndefined('size', true) }}}
     pass.setVertexBuffer(slot, buffer, offset, size);
   },
 
@@ -2210,7 +2219,7 @@ var LibraryWebGPU = {
   wgpuRenderPassEncoderSetIndexBuffer: (passPtr, bufferPtr, format, offset, size) => {
     var pass = WebGPU.getJsObject(passPtr);
     var buffer = WebGPU.getJsObject(bufferPtr);
-    {{{ gpu.convertSentinelToUndefined('size') }}}
+    {{{ gpu.convertSentinelToUndefined('size', true) }}}
     pass.setIndexBuffer(buffer, WebGPU.IndexFormat[format], offset, size);
   },
 
@@ -2233,7 +2242,7 @@ var LibraryWebGPU = {
   wgpuRenderPassEncoderSetVertexBuffer: (passPtr, slot, bufferPtr, offset, size) => {
     var pass = WebGPU.getJsObject(passPtr);
     var buffer = WebGPU.getJsObject(bufferPtr);
-    {{{ gpu.convertSentinelToUndefined('size') }}}
+    {{{ gpu.convertSentinelToUndefined('size', true) }}}
     pass.setVertexBuffer(slot, buffer, offset, size);
   },
 
