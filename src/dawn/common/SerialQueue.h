@@ -60,6 +60,8 @@ class SerialQueue : public SerialStorage<SerialQueue<Serial, Value>> {
     void Enqueue(Value&& value, Serial serial);
     void Enqueue(const std::vector<Value>& values, Serial serial);
     void Enqueue(std::vector<Value>&& values, Serial serial);
+
+    std::vector<Value>& LastValues();
 };
 
 // SerialQueue
@@ -96,6 +98,12 @@ void SerialQueue<Serial, Value>::Enqueue(std::vector<Value>&& values, Serial ser
     DAWN_ASSERT(values.size() > 0);
     DAWN_ASSERT(this->Empty() || this->mStorage.back().first <= serial);
     this->mStorage.emplace_back(serial, std::move(values));
+}
+
+template <typename Serial, typename Value>
+std::vector<Value>& SerialQueue<Serial, Value>::LastValues() {
+    DAWN_ASSERT(!this->Empty());
+    return this->mStorage.back().second;
 }
 
 }  // namespace dawn

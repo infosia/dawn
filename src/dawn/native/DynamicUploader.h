@@ -62,6 +62,9 @@ class DynamicUploader {
 
     bool ShouldFlush() const;
 
+    bool ShouldFlushAndReleaseStagingMemory() const;
+    void TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize);
+
   private:
     static constexpr uint64_t kRingBufferSize = 4 * 1024 * 1024;
     uint64_t GetTotalAllocatedSize() const;
@@ -80,6 +83,7 @@ class DynamicUploader {
     std::vector<std::unique_ptr<RingBuffer>> mRingBuffers;
     SerialQueue<ExecutionSerial, Ref<BufferBase>> mReleasedStagingBuffers;
     raw_ptr<DeviceBase> mDevice;
+    SerialQueue<ExecutionSerial, uint64_t> mReleasedStagingMemorySizes;
 };
 }  // namespace dawn::native
 

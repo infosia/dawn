@@ -306,6 +306,8 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
                                         const TextureDataLayout& src,
                                         const TextureCopy& dst,
                                         const Extent3D& copySizePixels);
+    MaybeError CopyAndReleaseWholeStagingBuffer(Ref<BufferBase> sourceStagingBuffer,
+                                                BufferBase* destination);
 
     DynamicUploader* GetDynamicUploader() const;
 

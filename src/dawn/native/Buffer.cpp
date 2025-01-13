@@ -615,10 +615,7 @@ uint64_t BufferBase::APIGetSize() const {
 MaybeError BufferBase::CopyFromStagingBuffer() {
     DAWN_ASSERT(mStagingBuffer != nullptr && mSize != 0);
 
-    DAWN_TRY(
-        GetDevice()->CopyFromStagingToBuffer(mStagingBuffer.Get(), 0, this, 0, GetAllocatedSize()));
-
-    mStagingBuffer = nullptr;
+    DAWN_TRY(GetDevice()->CopyAndReleaseWholeStagingBuffer(std::move(mStagingBuffer), this));
 
     return {};
 }

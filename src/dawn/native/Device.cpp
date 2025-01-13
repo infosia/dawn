@@ -2364,6 +2364,22 @@ MaybeError DeviceBase::CopyFromStagingToBuffer(BufferBase* source,
     return {};
 }
 
+MaybeError DeviceBase::CopyAndReleaseWholeStagingBuffer(Ref<BufferBase> sourceStagingBuffer,
+                                                        BufferBase* destination) {
+    uint64_t stagingMemoryToRelease = sourceStagingBuffer->GetAllocatedSize();
+    DAWN_TRY(CopyFromStagingToBufferImpl(sourceStagingBuffer.Get(), 0, destination, 0,
+                                         stagingMemoryToRelease));
+
+    GetDynamicUploader()->TrackStagingMemorySizeToRelease(stagingMemoryToRelease);
+    if (GetDynamicUploader()->ShouldFlushAndReleaseStagingMemory()) {
+        mQueue->ForceEventualFlushOfCommands();
+    }
+
+    sourceStagingBuffer->Destroy();
+
+    return {};
+}
+
 MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
                                                 const TextureDataLayout& src,
                                                 const TextureCopy& dst,
