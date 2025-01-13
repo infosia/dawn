@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e81e5733_f02729f1",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-13T14:43:54Z",
+      "side": 1,
+      "message": "Nit: We don\u0027t support empty access instructions any more, so we can just assume/assert it always has at least one.",
+      "revId": "0b9f6e29770ab6c0efab205bd9c87d9b265e085f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

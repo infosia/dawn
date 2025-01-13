@@ -198,6 +198,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a1a009f9_8c2bcb64",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-13T14:43:54Z",
+      "side": 1,
+      "message": "So I think the logic should be:\n\"if any of the members were skipped, then reject if any uses of the var are not `access`\"\n\nBecause if there are any skipped members, we can only support direct member access on the other members. Any whole-struct uses will not be handled correctly.",
+      "parentUuid": "11cf6ef8_0ad7f8cd",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "91d5fc44_6d064880",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 2
