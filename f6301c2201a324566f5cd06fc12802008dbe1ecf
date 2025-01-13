@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "377b0592_b9a5c9cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-01-13T21:51:23Z",
+      "side": 1,
+      "message": "when WASM32 and heap size \u003e 2GB, emscripten will insert the following line for pointer-type function parameters:\n```\nparam \u003e\u003e\u003e\u003d 0;\n```\n\nThis will rewrite value `-1` into `0xFFFFFFFF`, so implementation of `convertSentinelToUndefined()` should be updated correspondingly.",
+      "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
