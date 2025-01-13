@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4f51ffa_4292d7e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3351543
+      },
+      "writtenOn": "2025-01-13T20:40:31Z",
+      "side": 1,
+      "message": "Interesting.  Is one behavior or the other \"correct\", or are they both acceptable?",
+      "parentUuid": "13b680e2_39a9f46b",
+      "revId": "d26ee47da2fb968736b61ffef9cf6c8db2745fdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "376aedc9_16c8dd17",
