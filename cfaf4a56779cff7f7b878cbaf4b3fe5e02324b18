@@ -253,6 +253,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "47ebe77f_16559a26",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-13T15:23:18Z",
+      "side": 1,
+      "message": "It is a bit weird to check for `iOS` here while inside `DAWN_PLATFORM_IS(MACOS)`. Maybe we could remove the `iOS` check inside the `#if`.",
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e0743269_5174ec0d",
         "filename": "src/dawn/native/metal/TextureMTL.mm",
         "patchSetId": 12

@@ -22,6 +22,30 @@
       },
       "revId": "6e9d613462900632b68a8e8ea203d08de2ea68e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b954c2ee_2a120230",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-13T15:23:18Z",
+      "side": 1,
+      "message": "Yeah we could remove it.",
+      "parentUuid": "0ca8e195_2786fa46",
+      "range": {
+        "startLine": 286,
+        "startChar": 4,
+        "endLine": 286,
+        "endChar": 35
+      },
+      "revId": "6e9d613462900632b68a8e8ea203d08de2ea68e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
