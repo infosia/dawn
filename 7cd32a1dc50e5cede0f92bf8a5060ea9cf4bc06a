@@ -87,6 +87,24 @@
       "parentUuid": "9e3e1b8e_6b8a6e38",
       "revId": "7cd32a1dc50e5cede0f92bf8a5060ea9cf4bc06a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "887b48fd_f8bbc91f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-13T15:24:23Z",
+      "side": 1,
+      "message": "You are correct, that confirms your fix works 👍",
+      "parentUuid": "02aa2ead_8454fd95",
+      "revId": "7cd32a1dc50e5cede0f92bf8a5060ea9cf4bc06a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
