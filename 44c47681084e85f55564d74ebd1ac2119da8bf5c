@@ -16,6 +16,24 @@
       "message": "Are you planning to do the polyfill to use spirv.normalize/sign on the writer side too?",
       "revId": "44c47681084e85f55564d74ebd1ac2119da8bf5c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7894ce6e_a883e5ea",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-13T18:01:22Z",
+      "side": 1,
+      "message": "I have no plans in that direction at the moment. I put the entry in here because otherwise the switch gives warnings about coverage, and adding it is trivial.",
+      "parentUuid": "e104350a_27454cc4",
+      "revId": "44c47681084e85f55564d74ebd1ac2119da8bf5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
