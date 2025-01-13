@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8535f5d9_1c3b161f",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-13T20:55:24Z",
+      "side": 1,
+      "message": "Nit: `mat_ty-\u003eType()` avoids the loop in `DeepestElement()`.",
+      "fixSuggestions": [
+        {
+          "fixId": "3bb7abc9_b70a4ae5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/builtins.cc",
+              "range": {
+                "startLine": 95,
+                "startChar": 0,
+                "endLine": 96,
+                "endChar": 0
+              },
+              "replacement": "        auto* elem_ty \u003d mat_ty-\u003eType();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "66e298d3d4df816ae264c03979ec0a741119e001",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
