@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f727c95_e61e86fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 40
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-01-13T14:54:17Z",
+      "side": 1,
+      "message": "Looks great! Just a couple small refactor suggestions to reduce the lines of code!",
+      "revId": "3f24fca4a7577086ce69838f0aa33893d349d7e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "625ce5e0_aacceb5c",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-01-13T14:54:17Z",
+      "side": 1,
+      "message": "Consider adding a generic helper to RenderImmediateConstantsTrackerBase for setting these values. Something like:\n\n```\ntemplate \u003ctypename U\u003e\nvoid UpdateImmediateConstants(size_t dataOffset, const U\u0026 data) {\n    constexpr dataSize \u003d sizeof(U);\n    T* destData \u003d mContent.Get(dataOffset);\n    if (memcmp(destData, \u0026data) !\u003d 0) {\n        memcpy(destData, \u0026data, dataSize);\n        mDirty |\u003d GetImmediateConstantBlockBits(dataOffset, dataSize);\n    }\n}\n```\n\nThis function and the ones below could be reduced to:\n```\n// Put the data in the right layout to match the RenderImmediateConstants struct\nClampFragDepthArgs fragDepthArgs;\nfragDepthArgs.minClampFragDepth \u003d minClampFragDepth;\nfragDepthArgs.maxClampFragDepth \u003d maxClampFragDepth;\n\nUpdateImmediateConstants(offsetof(RenderImmediateConstants, clampFragDepth), fragDepthArgs);\n```\n\nPossibly the `UserImmediateConstantsTrackerBase::SetImmediateData` could use the helper too.",
+      "revId": "3f24fca4a7577086ce69838f0aa33893d349d7e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d14e8606_666b6aac",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-01-13T14:54:17Z",
+      "side": 1,
+      "message": "You could remove this assumption because the type is visible here, `offsetof(T, userImmediateData)` should work.",
+      "range": {
+        "startLine": 88,
+        "startChar": 52,
+        "endLine": 88,
+        "endChar": 54
+      },
+      "revId": "3f24fca4a7577086ce69838f0aa33893d349d7e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

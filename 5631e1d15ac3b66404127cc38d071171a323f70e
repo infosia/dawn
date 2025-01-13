@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f9ce9d8e_1d952eac",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-01-13T14:54:17Z",
+      "side": 1,
+      "message": "I like to add a `static_assert(sizeof(RenderImmediateConstants) \u003d\u003d expectedSize)` just to be sure, it also make sure developers are aware if they accidentally change the size.",
+      "parentUuid": "000c0c90_5cde54ba",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "5631e1d15ac3b66404127cc38d071171a323f70e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a79233bb_d2a60d20",
         "filename": "src/dawn/native/ImmediateConstantsLayout.h",
         "patchSetId": 36
