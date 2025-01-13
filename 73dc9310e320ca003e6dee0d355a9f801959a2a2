@@ -52,6 +52,24 @@
       "parentUuid": "2234d406_197e9c7b",
       "revId": "73dc9310e320ca003e6dee0d355a9f801959a2a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25c40ea1_a421bb89",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-13T18:30:15Z",
+      "side": 1,
+      "message": "Done for all of the ones which are enabled in this CL. Will do the others as they\u0027re enabled. (Easier when I can see the actual output)",
+      "parentUuid": "4d09c04a_e47872fd",
+      "revId": "73dc9310e320ca003e6dee0d355a9f801959a2a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
