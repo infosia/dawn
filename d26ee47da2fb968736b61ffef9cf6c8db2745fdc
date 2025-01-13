@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13b680e2_39a9f46b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-13T15:47:42Z",
+      "side": 1,
+      "message": "Note that while this will work in Kotlin using dawn::native directly, it will give different results when using dawn::wire. For example in dawn::native to pipelines created from the same descriptor will always be the same handle, while in dawn::wire they will always be different handles.",
+      "revId": "d26ee47da2fb968736b61ffef9cf6c8db2745fdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "376aedc9_16c8dd17",
