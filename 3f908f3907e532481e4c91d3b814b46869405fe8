@@ -22,6 +22,30 @@
       },
       "revId": "3f908f3907e532481e4c91d3b814b46869405fe8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dbf3d76_e7f131b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-13T22:59:16Z",
+      "side": 1,
+      "message": "That sounds good to me.",
+      "parentUuid": "159ebef2_f0e74c75",
+      "range": {
+        "startLine": 12,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 75
+      },
+      "revId": "3f908f3907e532481e4c91d3b814b46869405fe8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
