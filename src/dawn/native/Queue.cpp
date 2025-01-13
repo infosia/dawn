@@ -283,10 +283,10 @@ Future QueueBase::APIOnSubmittedWorkDone(const WGPUQueueWorkDoneCallbackInfo& ca
         // re-entrancy.
         auto deviceLock(GetDevice()->GetScopedLock());
 
-        wgpu::QueueWorkDoneStatus validationEarlyStatus = wgpu::QueueWorkDoneStatus::Success;
-        if (GetDevice()->ConsumedError(ValidateOnSubmittedWorkDone(&validationEarlyStatus))) {
+        if (GetDevice()->ConsumedError(ValidateOnSubmittedWorkDone())) {
             // Note: if the callback is spontaneous, it'll get called in here.
-            event = AcquireRef(new WorkDoneEvent(callbackInfo, this, validationEarlyStatus));
+            event =
+                AcquireRef(new WorkDoneEvent(callbackInfo, this, wgpu::QueueWorkDoneStatus::Error));
         } else {
             event = AcquireRef(new WorkDoneEvent(callbackInfo, this, GetScheduledWorkDoneSerial()));
         }
@@ -566,12 +566,9 @@ MaybeError QueueBase::ValidateSubmit(uint32_t commandCount,
     return {};
 }
 
-MaybeError QueueBase::ValidateOnSubmittedWorkDone(wgpu::QueueWorkDoneStatus* status) const {
+MaybeError QueueBase::ValidateOnSubmittedWorkDone() const {
     DAWN_TRY(GetDevice()->ValidateIsAlive());
-
-    *status = wgpu::QueueWorkDoneStatus::Error;
     DAWN_TRY(GetDevice()->ValidateObject(this));
-
     return {};
 }
 
