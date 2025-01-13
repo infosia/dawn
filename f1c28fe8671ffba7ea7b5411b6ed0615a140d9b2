@@ -216,6 +216,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2397fc97_81eb92db",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2025-01-13T14:51:18Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer to do this as a followup at this point, if that\u0027s acceptable.",
+      "parentUuid": "a1a009f9_8c2bcb64",
+      "revId": "f1c28fe8671ffba7ea7b5411b6ed0615a140d9b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "91d5fc44_6d064880",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 2
