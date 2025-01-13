@@ -93,7 +93,6 @@ interop::Promise<void> GPUBuffer::mapAsync(Napi::Env env,
                     async_->Reject(ctx->env, ctx->promise, Errors::AbortError(ctx->env));
                     break;
                 case wgpu::MapAsyncStatus::Error:
-                case wgpu::MapAsyncStatus::Unknown:
                 default:
                     async_->Reject(ctx->env, ctx->promise, Errors::OperationError(ctx->env));
                     break;
