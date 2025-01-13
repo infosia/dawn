@@ -34,6 +34,24 @@
       "parentUuid": "08abcab9_0522d245",
       "revId": "73dc9310e320ca003e6dee0d355a9f801959a2a2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d09c04a_e47872fd",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-13T15:12:45Z",
+      "side": 1,
+      "message": "Yeah `return` is awkward. Maybe using `OpCopyObject` on the result might be straightforward though?",
+      "parentUuid": "2234d406_197e9c7b",
+      "revId": "73dc9310e320ca003e6dee0d355a9f801959a2a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
