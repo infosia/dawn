@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b3a963c_de447425",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-13T15:16:27Z",
+      "side": 1,
+      "message": "Nit: `EmitWithoutResult`? `Register` is a bit vague.\n\nAlso, we could now add a `TINT_ASSERT(inst-\u003eResults().IsEmpty());` so that we catch cases where we\u0027ve called this function incorrectly.",
+      "revId": "46f537b83d107fd9e65fc48c279e4375f2e3f55b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
