@@ -34,6 +34,24 @@
       ],
       "revId": "66e298d3d4df816ae264c03979ec0a741119e001",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6c4e855_94bbb59e",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-13T23:36:51Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "8535f5d9_1c3b161f",
+      "revId": "66e298d3d4df816ae264c03979ec0a741119e001",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
