@@ -16,6 +16,23 @@
       "message": "+dsinclair for general review\n+ynovikov to confirm this is what you wanted the CTS roller to output\n\nGerrit does not like the large files, so viewing the expectation changes by clicking on the revision next to the patchset dropdown is probably better.",
       "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7162acab_249e6753",
+        "filename": "tools/src/cts/expectations/tags_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-14T15:21:43Z",
+      "side": 1,
+      "message": "Is it always the case that tags come in sorted in priority order? If not, maybe add the same last test but with `{\"gpu_c\", \"gpu_a\", \"os_c\", \"os_b\"}` to make sure it works in the other priority order as well?",
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
