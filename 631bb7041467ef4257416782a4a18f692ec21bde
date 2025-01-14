@@ -70,6 +70,30 @@
       },
       "revId": "631bb7041467ef4257416782a4a18f692ec21bde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d07a2af8_97acf695",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-14T16:53:19Z",
+      "side": 1,
+      "message": "This change is waiting for greg to give approval. Some skia bots might still be on macOS 10",
+      "parentUuid": "bb3e7880_7e7ebe65",
+      "range": {
+        "startLine": 307,
+        "startChar": 32,
+        "endLine": 307,
+        "endChar": 55
+      },
+      "revId": "631bb7041467ef4257416782a4a18f692ec21bde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
