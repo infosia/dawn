@@ -57,13 +57,9 @@ namespace {
 // The name to use when remapping entry points.
 constexpr char kRemappedEntryPointName[] = "dawn_entry_point";
 
-using OptionalVertexPullingTransformConfig =
-    std::optional<tint::msl::writer::VertexPulling::Config>;
-
 #define MSL_COMPILATION_REQUEST_MEMBERS(X)                                                       \
     X(SingleShaderStage, stage)                                                                  \
     X(const tint::Program*, inputProgram)                                                        \
-    X(OptionalVertexPullingTransformConfig, vertexPullingTransformConfig)                        \
     X(std::optional<tint::ast::transform::SubstituteOverride::Config>, substituteOverrideConfig) \
     X(LimitsForCompilationRequest, limits)                                                       \
     X(CacheKey::UnsafeUnkeyedValue<const AdapterBase*>, adapter)                                 \
@@ -189,10 +185,10 @@ tint::msl::writer::VertexStepMode ToTintVertexStepMode(wgpu::VertexStepMode mode
     DAWN_UNREACHABLE();
 }
 
-tint::msl::writer::VertexPulling::Config BuildVertexPullingTransformConfig(
+tint::msl::writer::VertexPullingConfig BuildVertexPullingTransformConfig(
     const RenderPipelineBase& renderPipeline,
     BindGroupIndex pullingBufferBindingSet) {
-    tint::msl::writer::VertexPulling::Config cfg;
+    tint::msl::writer::VertexPullingConfig cfg;
     cfg.pulling_group = static_cast<uint32_t>(pullingBufferBindingSet);
 
     cfg.vertex_state.resize(renderPipeline.GetVertexBufferCount());
@@ -359,7 +355,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     tint::msl::writer::Bindings bindings =
         generateBindingInfo(stage, layout, moduleBindingInfo, arrayLengthFromUniform);
 
-    std::optional<tint::msl::writer::VertexPulling::Config> vertexPullingTransformConfig;
+    tint::msl::writer::VertexPullingConfig vertexPullingTransformConfig;
     if (stage == SingleShaderStage::Vertex &&
         device->IsToggleEnabled(Toggle::MetalEnableVertexPulling)) {
         vertexPullingTransformConfig =
@@ -406,7 +402,6 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.stage = stage;
     auto tintProgram = programmableStage.module->GetTintProgram();
     req.inputProgram = &(tintProgram->program);
-    req.vertexPullingTransformConfig = std::move(vertexPullingTransformConfig);
     req.substituteOverrideConfig = std::move(substituteOverrideConfig);
     req.entryPointName = programmableStage.entryPoint.c_str();
     req.disableSymbolRenaming = device->IsToggleEnabled(Toggle::DisableSymbolRenaming);
@@ -431,6 +426,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.tintOptions.bindings = std::move(bindings);
     req.tintOptions.disable_polyfill_integer_div_mod =
         device->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
+    req.tintOptions.vertex_pulling_config = vertexPullingTransformConfig;
 
     const CombinedLimits& limits = device->GetLimits();
     req.limits = LimitsForCompilationRequest::Create(limits.v1);
@@ -458,12 +454,6 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
                     r.disableSymbolRenaming ? tint::ast::transform::Renamer::Target::kMslKeywords
                                             : tint::ast::transform::Renamer::Target::kAll,
                     std::move(requestedNames));
-
-                if (r.vertexPullingTransformConfig) {
-                    transformManager.Add<tint::msl::writer::VertexPulling>();
-                    transformInputs.Add<tint::msl::writer::VertexPulling::Config>(
-                        std::move(r.vertexPullingTransformConfig).value());
-                }
             }
 
             if (r.substituteOverrideConfig) {
@@ -493,18 +483,6 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
                 DAWN_INVALID_IF(ir != tint::Success,
                                 "An error occurred while generating Tint IR\n%s",
                                 ir.Failure().reason.Str());
-
-                // TODO(380044409): Move this into the backend.
-                if (r.vertexPullingTransformConfig) {
-                    tint::msl::writer::VertexPullingConfig pulling_config;
-                    pulling_config.pulling_group = r.vertexPullingTransformConfig->pulling_group;
-                    pulling_config.vertex_state = r.vertexPullingTransformConfig->vertex_state;
-                    auto vertex_pulling_result =
-                        tint::msl::writer::raise::VertexPulling(ir.Get(), pulling_config);
-                    DAWN_INVALID_IF(vertex_pulling_result != tint::Success,
-                                    "An error occurred while running vertex pulling:\n%s",
-                                    vertex_pulling_result.Failure().reason.Str());
-                }
 
                 result = tint::msl::writer::Generate(ir.Get(), r.tintOptions);
 

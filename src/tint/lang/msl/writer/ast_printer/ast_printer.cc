@@ -59,6 +59,7 @@
 #include "src/tint/lang/msl/writer/ast_raise/pixel_local.h"
 #include "src/tint/lang/msl/writer/ast_raise/quad_swap.h"
 #include "src/tint/lang/msl/writer/ast_raise/subgroup_ballot.h"
+#include "src/tint/lang/msl/writer/ast_raise/vertex_pulling.h"
 #include "src/tint/lang/msl/writer/common/option_helpers.h"
 #include "src/tint/lang/msl/writer/common/printer_support.h"
 #include "src/tint/lang/wgsl/ast/alias.h"
@@ -161,6 +162,15 @@ SanitizedResult Sanitize(const Program& in, const Options& options) {
     manager.Add<ast::transform::Unshadow>();
 
     manager.Add<ast::transform::PromoteSideEffectsToDecl>();
+
+    // VertexPulling must come before Robustness.
+    if (!options.vertex_pulling_config.vertex_state.empty()) {
+        VertexPulling::Config config;
+        config.pulling_group = options.vertex_pulling_config.pulling_group;
+        config.vertex_state = options.vertex_pulling_config.vertex_state;
+        manager.Add<VertexPulling>();
+        data.Add<VertexPulling::Config>(std::move(config));
+    }
 
     if (!options.disable_robustness) {
         // Robustness must come after PromoteSideEffectsToDecl
