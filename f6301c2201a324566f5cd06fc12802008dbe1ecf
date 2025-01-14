@@ -33,6 +33,29 @@
       "message": "Kai@, PTAL, thanks!",
       "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e643d69_975f12c1",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-14T19:51:49Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused about this. I don\u0027t think `size` is supposed to be a pointer here? (Or any of the below ones?)",
+      "range": {
+        "startLine": 891,
+        "startChar": 4,
+        "endLine": 891,
+        "endChar": 56
+      },
+      "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
