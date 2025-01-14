@@ -33,6 +33,24 @@
       "message": "```suggestion\n    return WGPUStatus_Success;\n```\nRef: https://source.chromium.org/chromium/chromium/src/+/main:out/ios-Debug/gen/third_party/dawn/include/dawn/webgpu.h;drc\u003da378a42c1a419c060aeff740773cf384af7771f7;l\u003d762",
       "revId": "996d8fbb7805582b890b7d56ebf8718b8e989a84",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6e3b2b4_819203cc",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-14T07:21:46Z",
+      "side": 1,
+      "message": "Might need to use `{{{ gpu.Status.Success }}}`.",
+      "parentUuid": "dc1dfc24_f086d80a",
+      "revId": "996d8fbb7805582b890b7d56ebf8718b8e989a84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
