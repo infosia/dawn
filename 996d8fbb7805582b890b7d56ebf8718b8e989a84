@@ -51,6 +51,24 @@
       "parentUuid": "dc1dfc24_f086d80a",
       "revId": "996d8fbb7805582b890b7d56ebf8718b8e989a84",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c454f71b_64c744c2",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-01-14T09:39:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6e3b2b4_819203cc",
+      "revId": "996d8fbb7805582b890b7d56ebf8718b8e989a84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
