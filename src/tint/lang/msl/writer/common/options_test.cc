@@ -34,6 +34,9 @@ namespace {
 
 TEST(TintCheckAllFieldsReflected, MslWriterCommonOptionsTest) {
     TINT_ASSERT_ALL_FIELDS_REFLECTED(ArrayLengthFromUniformOptions);
+    TINT_ASSERT_ALL_FIELDS_REFLECTED(VertexAttributeDescriptor);
+    TINT_ASSERT_ALL_FIELDS_REFLECTED(VertexBufferLayoutDescriptor);
+    TINT_ASSERT_ALL_FIELDS_REFLECTED(VertexPullingConfig);
     TINT_ASSERT_ALL_FIELDS_REFLECTED(binding::BindingInfo);
     TINT_ASSERT_ALL_FIELDS_REFLECTED(binding::ExternalTexture);
     TINT_ASSERT_ALL_FIELDS_REFLECTED(Bindings);
