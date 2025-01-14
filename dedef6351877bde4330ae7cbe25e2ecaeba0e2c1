@@ -33,6 +33,24 @@
       "message": "I\u0027m confused. levelSize.depthOrArrayLayers is computed here, but not used below. The TexImage3D() call uses size.depthOrArrayLayers instead.",
       "revId": "dedef6351877bde4330ae7cbe25e2ecaeba0e2c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "674bc681_6015bab2",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-01-14T16:00:33Z",
+      "side": 1,
+      "message": "Ah, yup. It was supposed to be used for the TexImage3D call. Fixed.",
+      "parentUuid": "a1433b12_bbdef50c",
+      "revId": "dedef6351877bde4330ae7cbe25e2ecaeba0e2c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
