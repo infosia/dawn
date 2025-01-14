@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27918639_0e6a2048",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-14T09:39:53Z",
+      "side": 1,
+      "message": "Technically the dawn::wire one is more correct because it matches what happens for JS where new, different objects are handed out every time. That\u0027s why I think we should compare the Kotlin wrapper object for equality instead of the underlying handle, to match JS. But that\u0027s nitpicky.",
+      "parentUuid": "d4f51ffa_4292d7e5",
+      "revId": "d26ee47da2fb968736b61ffef9cf6c8db2745fdc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "376aedc9_16c8dd17",
