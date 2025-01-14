@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e4f516d_8477a48a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-14T22:23:05Z",
+      "side": 1,
+      "message": "wow, (1) it\u0027s embarassing that we still hadn\u0027t gotten this right, and (2) if `p`\u0027s sign depends on `CAN_ADDRESS_2GB` that explains a _lot_ about why I was confused about the behavior.",
+      "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e643d69_975f12c1",
@@ -48,6 +65,30 @@
       "writtenOn": "2025-01-14T19:51:49Z",
       "side": 1,
       "message": "I\u0027m a bit confused about this. I don\u0027t think `size` is supposed to be a pointer here? (Or any of the below ones?)",
+      "range": {
+        "startLine": 891,
+        "startChar": 4,
+        "endLine": 891,
+        "endChar": 56
+      },
+      "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c33273c_5ecebc17",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-14T22:23:05Z",
+      "side": 1,
+      "message": "I think it\u0027s because of the calling convention in `__sig` above where we specify that it\u0027s a `p` (\"pointer\") because it\u0027s a `size_t` which is pointer-sized. That probably affects whether we receive it as signed or unsigned.\n\nMaybe instead of `isPtr\u003dtrue` we could have `isSignedType\u003dfalse`",
+      "parentUuid": "5e643d69_975f12c1",
       "range": {
         "startLine": 891,
         "startChar": 4,
