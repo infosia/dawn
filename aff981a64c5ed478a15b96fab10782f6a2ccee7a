@@ -111,6 +111,47 @@
       },
       "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8fef6e1_14f595c2",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-14T13:17:58Z",
+      "side": 1,
+      "message": "That eager mapping is done to avoid to force a submit in `MapAsyncImpl` https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;drc\u003dc0883e36f0f65273f002c2ca8b7e9474256e00e4;l\u003d517 in a bunch of good cases. However for extended mappable buffers, this will force a (read usages -\u003e map write) barrier in all submits. It seems fine but we should check that Skia indeed wants to update the buffers most of the time as that barrier could have a cost. (I\u0027ll check a few drivers later if it turns out Skia doesn\u0027t always update the buffers).\n\nOverall we should remove this assert since now the code path with more than just `kMappableBufferUsages` is covered by tests.",
+      "parentUuid": "65ff62e2_4672dc25",
+      "range": {
+        "startLine": 726,
+        "startChar": 20,
+        "endLine": 726,
+        "endChar": 72
+      },
+      "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41d0b610_8f405fc6",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-14T13:17:58Z",
+      "side": 1,
+      "message": "Are the mappable extended buffers always allocated in that memory heap? We should double check that as there could be a mappable but not coherent / cached / host visible heap as well.",
+      "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
