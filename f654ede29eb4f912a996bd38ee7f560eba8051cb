@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99c3772e_4d463b34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-01-14T10:52:58Z",
+      "side": 1,
+      "message": "Update commit message",
+      "revId": "f654ede29eb4f912a996bd38ee7f560eba8051cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fabb73a_8987d38e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-01-14T10:52:58Z",
+      "side": 1,
+      "message": "Thanks for fixing those issues!",
+      "revId": "f654ede29eb4f912a996bd38ee7f560eba8051cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39b08a37_f8593e09",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-01-14T10:52:58Z",
+      "side": 1,
+      "message": "One `return {{{ gpu.Status.Success }}};` would also be needed there.",
+      "revId": "f654ede29eb4f912a996bd38ee7f560eba8051cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
