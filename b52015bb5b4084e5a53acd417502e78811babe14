@@ -16,6 +16,40 @@
       "message": "+cwallez for +2",
       "revId": "b52015bb5b4084e5a53acd417502e78811babe14",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4524587c_014f0cc6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-14T10:55:22Z",
+      "side": 1,
+      "message": "LGTM too",
+      "revId": "b52015bb5b4084e5a53acd417502e78811babe14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2505ebb4_82345e8b",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-14T10:55:22Z",
+      "side": 1,
+      "message": "This function should be some of the hottest in all of Dawn. BindGroup creation is the most expensive things that can happen ~ O(draws) in some cases. Could we move the \"expensive\" computations behind a boolean so they are skipped in the vast majority of cases?\n\nSomething like `BindGroupLayoutInternal::NeedsCrossBindingValidation()` for example.\n\nAlternatively (though imho less preferred) we could make this cheaper by storing in stack vector indexed with the (dense) `BindingIndex` instead of the (sparse) `BindingNumber`.",
+      "revId": "b52015bb5b4084e5a53acd417502e78811babe14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
