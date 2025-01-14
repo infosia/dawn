@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ae04c6d_1a5c3a02",
+        "filename": "tools/src/cts/expectations/tags_test.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-14T21:56:02Z",
+      "side": 1,
+      "message": "Done, although the conversion to a set should remove any ordering.",
+      "parentUuid": "7162acab_249e6753",
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4bea5b3_20b64af2",
@@ -65,6 +83,30 @@
       "writtenOn": "2025-01-14T17:42:00Z",
       "side": 1,
       "message": "These 2 are missing from knownOsTags below, so I think they\u0027ll fail `remoteTags.Contains(chosenOsTag)` check.\nBut maybe we don\u0027t need these at all per my next comment.",
+      "range": {
+        "startLine": 194,
+        "startChar": 41,
+        "endLine": 194,
+        "endChar": 62
+      },
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5bf8897_61dcdd4d",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-14T21:56:02Z",
+      "side": 1,
+      "message": "No, this works correctly and is tested by the unittests. `knownOsTags` does not need to include all supported OSes. It just needs to include at least one OS tag that\u0027s in the OS tag set so that we can find the correct set.",
+      "parentUuid": "e4bea5b3_20b64af2",
       "range": {
         "startLine": 194,
         "startChar": 41,
@@ -98,6 +140,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "690528ee_0808c9fa",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-14T21:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c48202f_27d43977",
+      "range": {
+        "startLine": 213,
+        "startChar": 2,
+        "endLine": 214,
+        "endChar": 21
+      },
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a12dfdf_def52925",
@@ -111,6 +177,30 @@
       "writtenOn": "2025-01-14T17:42:00Z",
       "side": 1,
       "message": "Could these be in some JSON config, which we can easily find and modify when adding a new bot for a new platform?",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 0
+      },
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aceb56f0_4fedaa51",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-14T21:56:02Z",
+      "side": 1,
+      "message": "Yes, although I would like to avoid adding extra dependencies on stuff on disk until I can get the dependency injection CLs landed so that things can be properly tested. I\u0027ve added a TODO to move these to a JSON config file.",
+      "parentUuid": "0a12dfdf_def52925",
       "range": {
         "startLine": 250,
         "startChar": 0,
