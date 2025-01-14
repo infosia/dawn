@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "513c55a2_bb5cc9e2",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-14T07:14:29Z",
+      "side": 1,
+      "message": "Hi Corentin and Loko, I\u0027ve chosen another way to compute the threshold of the staging memory to submit. PTAL, thanks!",
+      "parentUuid": "f489bbca_ee1df89a",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e80955ca_99d81e46",
         "filename": "src/dawn/native/DynamicUploader.cpp",
         "patchSetId": 5
@@ -138,6 +156,24 @@
       "writtenOn": "2024-11-13T02:26:34Z",
       "side": 1,
       "message": "[1]",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3064ac6_75a28907",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-14T07:14:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e80955ca_99d81e46",
       "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -173,6 +209,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "e407a06f_b2c5a0fe",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10313d4a_bd71a44d",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-14T07:14:29Z",
+      "side": 1,
+      "message": "Hi Corentin, I\u0027ve changed the logic here. PTAL, thanks!",
+      "parentUuid": "08c1a010_0fd9f09b",
       "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
