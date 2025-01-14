@@ -305,6 +305,7 @@ class StructureType(Record, Type):
         self.out = json_data.get('out', False)
         self.chained = json_data.get('chained', None)
         self.extensible = json_data.get('extensible', None)
+        self.free_members = json_data.get('free_members', False)
         if self.chained:
             assert self.chained == 'in' or self.chained == 'out'
             assert 'chain roots' in json_data
@@ -341,13 +342,7 @@ class StructureType(Record, Type):
 
     @property
     def has_free_members_function(self):
-        if not self.output:
-            return False
-        for m in self.members:
-            if m.annotation != 'value' \
-                or m.type.name.canonical_case() == 'string view':
-                return True
-        return False
+        return self.free_members
 
     @property
     def any_member_requires_struct_defaulting(self):

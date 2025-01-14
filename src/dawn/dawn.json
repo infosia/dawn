@@ -173,6 +173,7 @@
     "adapter info": {
         "category": "structure",
         "extensible": "out",
+        "free_members": true,
         "members": [
             {"name": "vendor", "type": "string view"},
             {"name": "architecture", "type": "string view"},
@@ -407,6 +408,7 @@
     "surface capabilities": {
         "category": "structure",
         "extensible": "out",
+        "free_members": true,
         "members": [
             {"name": "usages", "type": "texture usage"},
             {"name": "format count", "type": "size_t"},
@@ -1602,7 +1604,7 @@
     },
     "supported features": {
         "category": "structure",
-        "out": true,
+        "free_members": true,
         "members": [
             {"name": "feature count", "type": "size_t"},
             {"name": "features", "type": "feature name", "annotation": "const*", "length": "feature count"}
@@ -1891,6 +1893,7 @@
     "shared buffer memory end access state": {
         "category": "structure",
         "extensible": "out",
+        "free_members": true,
         "tags": ["dawn", "native"],
         "members": [
             {"name": "initialized", "type": "bool"},
@@ -2009,6 +2012,7 @@
     "shared texture memory end access state": {
         "category": "structure",
         "extensible": "out",
+        "free_members": true,
         "tags": ["dawn", "native"],
         "members": [
             {"name": "initialized", "type": "bool"},
@@ -2290,6 +2294,7 @@
       "tags": ["dawn"],
       "chained": "out",
       "chain roots": ["dawn format capabilities"],
+      "free_members": true,
       "members": [
           {"name": "properties count", "type": "size_t"},
           {"name": "properties", "type": "dawn drm format properties", "annotation": "const*", "length": "properties count"}
@@ -4256,6 +4261,7 @@
         "category": "structure",
         "chained": "out",
         "chain roots": ["adapter info"],
+        "free_members": true,
         "tags": ["dawn"],
         "members": [
             {"name": "heap count", "type": "size_t"},
