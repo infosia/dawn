@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3ce0bbb_d6ec35fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-14T10:37:42Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "a5cfdf323e1692666b80acc4baf9abc53554c88b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb8b2982_1313773d",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-14T10:37:42Z",
+      "side": 1,
+      "message": "```suggestion\n          \"Xe 2 LP\": [\"0x6400\"],\n          \"Xe 2 HP\": [\"0xE200\"],\n          \"Xe 3 LP\": [\"0xB000\"]\n```\n\nFor consistency with `Gen 11` and friends? It would make the adapterinfo architecture be `\"xe-2-lp\"` but I think that\u0027s ok.",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 30
+      },
+      "revId": "a5cfdf323e1692666b80acc4baf9abc53554c88b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
