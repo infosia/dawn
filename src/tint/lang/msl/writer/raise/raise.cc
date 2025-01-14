@@ -54,6 +54,7 @@
 #include "src/tint/lang/msl/writer/raise/shader_io.h"
 #include "src/tint/lang/msl/writer/raise/simd_ballot.h"
 #include "src/tint/lang/msl/writer/raise/unary_polyfill.h"
+#include "src/tint/lang/msl/writer/raise/vertex_pulling.h"
 
 namespace tint::msl::writer {
 
@@ -67,6 +68,11 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
     } while (false)
 
     RaiseResult raise_result;
+
+    // VertexPulling must come before BindingRemapper and Robustness.
+    if (!options.vertex_pulling_config.vertex_state.empty()) {
+        RUN_TRANSFORM(raise::VertexPulling, module, options.vertex_pulling_config);
+    }
 
     tint::transform::multiplanar::BindingsMap multiplanar_map{};
     RemapperData remapper_data{};
