@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65f22229_fc0f1e82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-01-14T17:42:00Z",
+      "side": 1,
+      "message": "This looks great to me, thanks a lot!\nMaybe possible to simplify it even further so that we don\u0027t have double OS in `[ android android-pixel-6 ]`.\n\nUnfortunately, impossible to check the changes to expectation files.\nWould have been easier if there was 1 CL that removed the extra tags, another to remove duplicate lines, and 3rd that changes the order.\nHopefully bots passing is enough.",
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7162acab_249e6753",
@@ -31,6 +48,75 @@
       "writtenOn": "2025-01-14T15:21:43Z",
       "side": 1,
       "message": "Is it always the case that tags come in sorted in priority order? If not, maybe add the same last test but with `{\"gpu_c\", \"gpu_a\", \"os_c\", \"os_b\"}` to make sure it works in the other priority order as well?",
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4bea5b3_20b64af2",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-01-14T17:42:00Z",
+      "side": 1,
+      "message": "These 2 are missing from knownOsTags below, so I think they\u0027ll fail `remoteTags.Contains(chosenOsTag)` check.\nBut maybe we don\u0027t need these at all per my next comment.",
+      "range": {
+        "startLine": 194,
+        "startChar": 41,
+        "endLine": 194,
+        "endChar": 62
+      },
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c48202f_27d43977",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-01-14T17:42:00Z",
+      "side": 1,
+      "message": "I think that we can just use `deviceTagSet` if it\u0027s not empty.\nThere is even no need to have an OS tag in such case.\nMy logic is that a \"known device\" would have known (\"os\", \"gpu\") values.",
+      "range": {
+        "startLine": 213,
+        "startChar": 2,
+        "endLine": 214,
+        "endChar": 21
+      },
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a12dfdf_def52925",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-01-14T17:42:00Z",
+      "side": 1,
+      "message": "Could these be in some JSON config, which we can easily find and modify when adding a new bot for a new platform?",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 0
+      },
       "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
