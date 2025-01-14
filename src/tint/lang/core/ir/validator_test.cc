@@ -627,6 +627,36 @@ note: # Disassembly
 )");
 }
 
+// TODO: Add type mismatch construct tests
+
+TEST_F(IR_ValidatorTest, Convert_Scalars) {
+    auto* f = b.Function("f", ty.void_());
+    auto* p = b.FunctionParam("p", ty.f32());
+    f->AppendParam(p);
+    b.Append(f->Block(), [&] {
+        b.Convert(ty.i32(), p);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_EQ(res, Success);
+}
+
+TEST_F(IR_ValidatorTest, Convert_Vectors) {
+    auto* f = b.Function("f", ty.void_());
+    auto* p = b.FunctionParam("p", ty.vec2<u32>());
+    f->AppendParam(p);
+    b.Append(f->Block(), [&] {
+        b.Convert(ty.vec2<f32>(), p);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_EQ(res, Success);
+}
+
+
+
 TEST_F(IR_ValidatorTest, Block_NoTerminator) {
     b.Function("my_func", ty.void_());
 
