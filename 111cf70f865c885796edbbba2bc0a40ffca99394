@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64a2159f_12cb6320",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-14T18:45:10Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure if I should use BindingIndex here? I can change this if it\u0027s desired.",
+      "range": {
+        "startLine": 361,
+        "startChar": 17,
+        "endLine": 361,
+        "endChar": 25
+      },
+      "revId": "111cf70f865c885796edbbba2bc0a40ffca99394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

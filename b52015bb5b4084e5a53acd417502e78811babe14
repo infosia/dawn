@@ -50,6 +50,24 @@
       "message": "This function should be some of the hottest in all of Dawn. BindGroup creation is the most expensive things that can happen ~ O(draws) in some cases. Could we move the \"expensive\" computations behind a boolean so they are skipped in the vast majority of cases?\n\nSomething like `BindGroupLayoutInternal::NeedsCrossBindingValidation()` for example.\n\nAlternatively (though imho less preferred) we could make this cheaper by storing in stack vector indexed with the (dense) `BindingIndex` instead of the (sparse) `BindingNumber`.",
       "revId": "b52015bb5b4084e5a53acd417502e78811babe14",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5bc9536_9a6a9a3d",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-14T18:45:10Z",
+      "side": 1,
+      "message": "Sure. I moved all the added validation behind a check so it\u0027s only done if there are either static samplers bound to a specific texture or there are ycbcr textures. This requires one extra iteration (compared to last approach) through BindGroup entries but it seems like a good tradeoff for not doing any extra work in the common case.",
+      "parentUuid": "2505ebb4_82345e8b",
+      "revId": "b52015bb5b4084e5a53acd417502e78811babe14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
