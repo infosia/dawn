@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "178e13b2_510e9f20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T12:56:01Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "111cf70f865c885796edbbba2bc0a40ffca99394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "64a2159f_12cb6320",
         "filename": "src/dawn/native/BindGroup.cpp",
         "patchSetId": 13
@@ -20,6 +37,40 @@
         "endLine": 361,
         "endChar": 25
       },
+      "revId": "111cf70f865c885796edbbba2bc0a40ffca99394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cba5b37_0cc6f289",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T12:56:01Z",
+      "side": 1,
+      "message": "At this point we know that entry.textureView is a valida texture view so we don\u0027t need to check that it is non-null.\n```suggestion\n                if (entry.textureView-\u003eIsYCbCr()) {\n```",
+      "revId": "111cf70f865c885796edbbba2bc0a40ffca99394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00347dc1_1ca0f158",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T12:56:01Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this also be set if there\u0027s any YCbCr texture? Ah except that we don\u0027t know because it\u0027s not a specific TextureSampleType :/ I guess we can revisit later when optimizing BG validation.",
       "revId": "111cf70f865c885796edbbba2bc0a40ffca99394",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
