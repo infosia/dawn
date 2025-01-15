@@ -152,6 +152,24 @@
       "message": "Are the mappable extended buffers always allocated in that memory heap? We should double check that as there could be a mappable but not coherent / cached / host visible heap as well.",
       "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e17086f5_45d32398",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-15T08:05:59Z",
+      "side": 1,
+      "message": "No. Only readable mapping needs `VK_MEMORY_PROPERTY_HOST_CACHED_BIT` for the maximum performance of the memory read on CPU side. Now if the mapping is not readable we won\u0027t allocate memory on that memory heap.",
+      "parentUuid": "41d0b610_8f405fc6",
+      "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
