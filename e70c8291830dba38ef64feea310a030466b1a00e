@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afd28eb0_20d27fbd",
+        "filename": "test/tint/bug/tint/365570202.wgsl.expected.glsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:21:42Z",
+      "side": 1,
+      "message": "I\u0027ve scoped the check to ES which matches the ICE in the printer, so this and some of the other skips went away.",
+      "parentUuid": "6ab4a0fc_6f8549e4",
+      "revId": "e70c8291830dba38ef64feea310a030466b1a00e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8ff7634_84a60434",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-01-15T21:23:28Z",
       "side": 1,
       "message": "So, are these a case of, we _could_ translate it to GLSL, but if you tried to use it you couldn\u0027t as the bind group on the Dawn side would be rejected?",
+      "revId": "e70c8291830dba38ef64feea310a030466b1a00e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c342fddc_566084a9",
+        "filename": "test/tint/builtins/gen/literal/textureDimensions/18160d.wgsl.expected.glsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:21:42Z",
+      "side": 1,
+      "message": "Yeah, I guess if it\u0027s not actually accessed we can generate GLSL for it. But Dawn would reject it as you say. Doesn\u0027t seem worth checking for whether the texture is accessed just so that we can test/fuzz shaders that Dawn would never allow anyway.",
+      "parentUuid": "a8ff7634_84a60434",
       "revId": "e70c8291830dba38ef64feea310a030466b1a00e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
