@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "053fa75e_dccb0536",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69511be0_376c98c3",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7699efe_cd56cbf8",
@@ -58,6 +76,48 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3e41700_043d6d40",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40431481_5dad37bb",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "482bcd8c_1260fee0",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "Yeah, one offset is words and one is bytes. Renamed to clarify.",
+      "parentUuid": "c7699efe_cd56cbf8",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 29
+      },
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c79836df_e839f20c",
@@ -71,6 +131,24 @@
       "writtenOn": "2025-01-15T21:09:59Z",
       "side": 1,
       "message": "Maybe a comment, I think this is `byte index into the \u0027buffer\u0027 for the start of this value`?",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08cddd13_c7bb9603",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c79836df_e839f20c",
       "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -98,6 +176,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "85fc3017_117e1010",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "968a18e2_efd4de5f",
+      "range": {
+        "startLine": 145,
+        "startChar": 16,
+        "endLine": 177,
+        "endChar": 17
+      },
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "493115f5_eb3251af",
@@ -111,6 +213,24 @@
       "writtenOn": "2025-01-15T21:09:59Z",
       "side": 1,
       "message": "Should we ASSERT that array_stride is divisible by 4?",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdea83d4_181dcc4b",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "493115f5_eb3251af",
       "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -132,6 +252,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "810b1a82_c3eb4428",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65403ad5_c7fafb05",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ad33eff_250914c7",
@@ -145,6 +283,24 @@
       "writtenOn": "2025-01-15T21:09:59Z",
       "side": 1,
       "message": "Maybe add a comment here as this was a bit of thinking.\n\n```\nWhen the attribute offset is not on a 4 byte boundary, then we need to shift the result value by the remainder multipied by 8 to get the true u32 value.\n```\n\nor something?",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0394b64_55c0a4fb",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ad33eff_250914c7",
       "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -166,6 +322,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "40d0b9ed_e53c7dca",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "Asserted below so we can be more specific.",
+      "parentUuid": "26a3a77f_f7800315",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6fe5d4b_d37ce1e6",
@@ -179,6 +353,24 @@
       "writtenOn": "2025-01-15T21:09:59Z",
       "side": 1,
       "message": "I don\u0027t understand what these comments mean? Can you add a comment about what this method is doing?\n\nMaybe something like:\n\n```\nFor bits \u003d\u003d 16, we read the `xxxx\u0027yyyy` u32 value. we then left shift so we have\n`(yyyy\u00270000, xxxx\u0027yyyy)`. Finally, we right shift to produce\n`(0000\u0027yyyy, 0000\u0027xxxx)`\n````",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "641606c4_09367336",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6fe5d4b_d37ce1e6",
       "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -200,6 +392,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da142f16_58053675",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "shift-right of a signed integer is mapped to `OpShiftRightArithmetic`.",
+      "parentUuid": "80d6cea3_ece58f09",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36c89ae7_8c372887",
@@ -213,6 +423,24 @@
       "writtenOn": "2025-01-15T21:09:59Z",
       "side": 1,
       "message": "Is this right, the result is always f32, never f16?",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "530bab6f_880f02ae",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:29Z",
+      "side": 1,
+      "message": "It can be `f16` in the shader, in which case we convert to `f16` later. Same for all of the normalized formats.\n\nThe only format where it felt worth directly handling `f16` in this function are the `Float16` formats, since the data is already in the right format.",
+      "parentUuid": "36c89ae7_8c372887",
       "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
