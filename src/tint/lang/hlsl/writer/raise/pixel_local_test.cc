@@ -860,20 +860,23 @@ $B1: {  # root
     store %25, %27
     %28:vec4<f32> = construct 1.0f, 0.0f, 0.0f, 1.0f
     %29:ptr<private, u32, read_write> = access %pl, 0u
-    %30:f32 = convert %29
-    %31:vec4<f32> = swizzle %30, xxxx
-    %32:hlsl.rasterizer_ordered_texture_2d<r32float> = load %pixel_local_a
-    %33:void = hlsl.textureStore %32, %9, %31
-    %34:ptr<private, i32, read_write> = access %pl, 1u
-    %35:u32 = convert %34
-    %36:vec4<u32> = swizzle %35, xxxx
-    %37:hlsl.rasterizer_ordered_texture_2d<r32uint> = load %pixel_local_b
-    %38:void = hlsl.textureStore %37, %9, %36
-    %39:ptr<private, f32, read_write> = access %pl, 2u
-    %40:i32 = convert %39
-    %41:vec4<i32> = swizzle %40, xxxx
-    %42:hlsl.rasterizer_ordered_texture_2d<r32sint> = load %pixel_local_c
-    %43:void = hlsl.textureStore %42, %9, %41
+    %30:u32 = load %29
+    %31:f32 = convert %30
+    %32:vec4<f32> = swizzle %31, xxxx
+    %33:hlsl.rasterizer_ordered_texture_2d<r32float> = load %pixel_local_a
+    %34:void = hlsl.textureStore %33, %9, %32
+    %35:ptr<private, i32, read_write> = access %pl, 1u
+    %36:i32 = load %35
+    %37:u32 = convert %36
+    %38:vec4<u32> = swizzle %37, xxxx
+    %39:hlsl.rasterizer_ordered_texture_2d<r32uint> = load %pixel_local_b
+    %40:void = hlsl.textureStore %39, %9, %38
+    %41:ptr<private, f32, read_write> = access %pl, 2u
+    %42:f32 = load %41
+    %43:i32 = convert %42
+    %44:vec4<i32> = swizzle %43, xxxx
+    %45:hlsl.rasterizer_ordered_texture_2d<r32sint> = load %pixel_local_c
+    %46:void = hlsl.textureStore %45, %9, %44
     ret %28
   }
 }

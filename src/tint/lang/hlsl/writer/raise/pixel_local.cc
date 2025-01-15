@@ -179,6 +179,7 @@ struct State {
                     b.Access(ty.ptr<private_>(mem_ty), pixel_local_var, u32(mem->Index()));
                 if (mem_ty != rov.subtype) {
                     // ROV and struct member types don't match
+                    from = b.Load(from);
                     from = b.Convert(rov.subtype, from);
                 }
                 // Store requires a vec4
