@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "077c9c49_e599c36d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-01-15T20:11:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d7b5967_669fc859",
+      "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "377b0592_b9a5c9cc",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -157,6 +175,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bbdf0b8_879adb83",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-01-15T20:11:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33a4e5c6_4c9c4cc9",
+      "range": {
+        "startLine": 891,
+        "startChar": 4,
+        "endLine": 891,
+        "endChar": 56
+      },
+      "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2889f08b_03962b8c",
@@ -170,6 +212,24 @@
       "writtenOn": "2025-01-15T00:35:42Z",
       "side": 1,
       "message": "This and all the following ones are actually i64, not size_t. The sentinel value is always `-1` (regardless of CAN_ADDRESS_2GB or MEMORY64).\n\nI looked through all of the usages of size_t in `webgpu.h` and verified the only ones that use sentinels are MapAsync/GetMappedRange/GetConstMappedRange (`WGPU_WHOLE_MAP_SIZE`).",
+      "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a19da75_f9d4878e",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-01-15T20:11:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2889f08b_03962b8c",
       "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
