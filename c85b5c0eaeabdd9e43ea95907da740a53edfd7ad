@@ -16,6 +16,23 @@
       "message": "Update code following comments.",
       "revId": "c85b5c0eaeabdd9e43ea95907da740a53edfd7ad",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18da14cb_c78d22bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-15T20:24:01Z",
+      "side": 1,
+      "message": "Thank you! (let me check if Loko wants to rereview before I land)",
+      "revId": "c85b5c0eaeabdd9e43ea95907da740a53edfd7ad",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
