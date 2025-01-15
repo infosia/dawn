@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69511be0_376c98c3",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "```suggestion\n    /// A map from location to a descriptor that holds the format, buffer, and offsets for the attribute and base value.\n```",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7699efe_cd56cbf8",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "From reading below, is this `attr_offset_in_words` ? (I thought it was bytes before but I see you `/ 4`)",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 29
+      },
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40431481_5dad37bb",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "Maybe add a comment here? I think this means `the offset into the struct as provided by the caller. When combined with \u0027base_offset\u0027 provides the element location`?",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c79836df_e839f20c",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "Maybe a comment, I think this is `byte index into the \u0027buffer\u0027 for the start of this value`?",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "968a18e2_efd4de5f",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "Why not `else if`?\n\n```suggestion\n                } else if (auto loc \u003d param-\u003eAttributes().location) {\n                    // Load the vertex attribute and replace uses of the parameter with it.\n                    auto* input \u003d Load(*loc, param-\u003eType());\n                    param-\u003eReplaceAllUsesWith(input);\n                    param-\u003eDestroy();\n                 } else {\n                    // Other parameters should be builtins, which can only be the vertex and\n                    // instance indices. Replace any indices we created with the user-declared\n                    // ones.\n                    auto builtin \u003d param-\u003eBuiltin();\n                    TINT_ASSERT(builtin);\n                    switch (*builtin) {\n                        case core::BuiltinValue::kVertexIndex:\n                            if (vertex_index_) {\n                                vertex_index_-\u003eReplaceAllUsesWith(param);\n                                vertex_index_-\u003eDestroy();\n                                vertex_index_ \u003d nullptr;\n                            }\n                            break;\n                        case core::BuiltinValue::kInstanceIndex:\n                            if (instance_index_) {\n                                instance_index_-\u003eReplaceAllUsesWith(param);\n                                instance_index_-\u003eDestroy();\n                                instance_index_ \u003d nullptr;\n                            }\n                            break;\n                        default:\n                            TINT_UNREACHABLE();\n                    }\n                    new_params.Push(param);\n                }\n```",
+      "range": {
+        "startLine": 145,
+        "startChar": 16,
+        "endLine": 177,
+        "endChar": 17
+      },
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "493115f5_eb3251af",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "Should we ASSERT that array_stride is divisible by 4?",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65403ad5_c7fafb05",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "```suggestion\n                // indices. Use the separate parameters that we created for these indices.\n                // Because there are no duplicates, this doesn\u0027t conflict with the param handling above.\n```",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ad33eff_250914c7",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "Maybe add a comment here as this was a bit of thinking.\n\n```\nWhen the attribute offset is not on a 4 byte boundary, then we need to shift the result value by the remainder multipied by 8 to get the true u32 value.\n```\n\nor something?",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26a3a77f_f7800315",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "Maybe `TINT_ASSERT(bits \u003d\u003d 8 || bits \u003d\u003d 16)`  so we don\u0027t send in something like `32`.",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6fe5d4b_d37ce1e6",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "I don\u0027t understand what these comments mean? Can you add a comment about what this method is doing?\n\nMaybe something like:\n\n```\nFor bits \u003d\u003d 16, we read the `xxxx\u0027yyyy` u32 value. we then left shift so we have\n`(yyyy\u00270000, xxxx\u0027yyyy)`. Finally, we right shift to produce\n`(0000\u0027yyyy, 0000\u0027xxxx)`\n````",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80d6cea3_ece58f09",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "Does this do what we want? If we shift right the i32, don\u0027t we lose the sign bit as spirv will OpShiftRightLogical which treats the value as u32?",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36c89ae7_8c372887",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:09:59Z",
+      "side": 1,
+      "message": "Is this right, the result is always f32, never f16?",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
