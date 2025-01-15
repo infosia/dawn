@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e644fd2_4d3d76cc",
+        "filename": "tools/android/webgpu/src/androidTest/cpp/webgpu_wrapper_tests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2025-01-15T17:06:10Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "d89a7217_9bab7804",
+      "revId": "a400b40bae253b29bbeb29a9d7f11f0c3617808d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ada78f73_b2799681",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-01-15T15:41:17Z",
       "side": 1,
       "message": "This bit of boilerplate feels unnecessary to check in",
+      "revId": "a400b40bae253b29bbeb29a9d7f11f0c3617808d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3c336ff_74e45b2b",
+        "filename": "tools/android/webgpu/src/androidTest/cpp/webgpu_wrapper_tests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2025-01-15T17:06:10Z",
+      "side": 1,
+      "message": "removed the sample test",
+      "parentUuid": "ada78f73_b2799681",
       "revId": "a400b40bae253b29bbeb29a9d7f11f0c3617808d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a98f27e9_d48f88ec",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/NativeTests.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2025-01-15T17:06:10Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "85ffc74e_89f2e2a7",
+      "revId": "a400b40bae253b29bbeb29a9d7f11f0c3617808d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "464673a4_ebb9ef5b",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-01-15T15:41:17Z",
       "side": 1,
       "message": "Could you add a note about how to run these tests, please?",
+      "revId": "a400b40bae253b29bbeb29a9d7f11f0c3617808d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2c80504_5cf71961",
+        "filename": "tools/android/webgpu/src/main/cpp/CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2025-01-15T17:06:10Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "464673a4_ebb9ef5b",
       "revId": "a400b40bae253b29bbeb29a9d7f11f0c3617808d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
