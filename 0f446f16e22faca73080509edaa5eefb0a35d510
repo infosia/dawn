@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d0fa8dd_1f6d62d3",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T13:37:29Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need the boolean if we do something like:\n\n```\nif (IsSubset(MapRead | CopyDst, usage)) {READBACK}\nelse if (IsSubset(MapWrite | CopySrc, usage)) {UPLOAD}\nelse if (usage \u0026 (MapRead | MapWrite)) {CUSTOM}\nelse {DEFAULT}\n```\n\nThis way we keep the pure readback or pure upload buffers on the corresponding D3D12 heap as well!",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "125defd5_c23b5657",
+        "filename": "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T13:37:29Z",
+      "side": 1,
+      "message": "What about ReBAR that will be UMA Coherent but on the device?",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a033d3f4_9b2e0b71",
+        "filename": "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T13:37:29Z",
+      "side": 1,
+      "message": "We should never use this one as WriteBack should contain only buffers when Dawn uses D3D12.",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5df70ddc_6c66fc0f",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T13:37:29Z",
+      "side": 1,
+      "message": "Can we have a link? https://learn.microsoft.com/en-us/windows/win32/api/d3d12/ns-d3d12-d3d12_feature_data_architecture",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a108880f_13367c25",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T13:37:29Z",
+      "side": 1,
+      "message": "Instead of hardcoding that CUSTOM is UMA, can we pass around Dawn\u0027s `ResourceHeapKind`? We could store that in `HeapAllocator` instead or along the `D3D12_HEAP_TYPE`. It would mean exposing some helpers to convert the enums between each other etc more publicly but would make the code more clear. Likewise we could have a conversion to get the CPU page properties and memory pool preference.\n\n... and we also need to convert from HeapType to `ResourceHeapKind` ... that\u0027s all a mess. IMHO we should revisit the various ResourceAllocator / Heap / w/e mess of classes in D3D12 and have:\n\n```\nclass ResourceAllocator {\n    ResultOrError\u003cResourceAllocation\u003e AllocateBuffer(Default/Readback/Upload/UMA, desc, initialUsage);\n    ResultOrError\u003cResourceAllocation\u003e AllocateTexture(desc, bytesPerTexel, initialUsage, forceCommitted);\n}\n\nclass ResourceAllocation ...\n```\n\nAnd now that gets into the frontend classes that are used just by Vulkan and D3D12 and how it\u0027s not split correctly. Nevermind. Could you create an issue to sort this all out eventually?",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
