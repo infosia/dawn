@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52142a47_372adf1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-15T17:46:51Z",
+      "side": 1,
+      "message": "I am unable to reproduce the failure that I am seeing either in a Linux ninja or cmake build, both as standalone in the chromium tree.\nThe specific failure is:\n\n```\n RUN      ] HlslWriterTest.BuiltinUnpack4xU8\n/opt/s/w/ir/cache/uncached/dawn/src/tint/lang/hlsl/writer/builtin_test.cc:2185: Failure\nValue of: Generate()\n  Actual: false\nExpected: true\n:5:31 error: hlsl.convert: call result type does not match builtin return type\n    %4:hlsl.uint8_t4_packed \u003d hlsl.convert %3\n                              ^^^^^^^^^^^^\n\n:2:3 note: in block\n  $B1: {\n  ^^^\n\nnote: # Disassembly\n%foo \u003d @fragment func():void {\n  $B1: {\n    %u:ptr\u003cfunction, u32, read_write\u003e \u003d var, 2u\n    %3:u32 \u003d load %u\n    %4:hlsl.uint8_t4_packed \u003d hlsl.convert %3\n    %5:vec4\u003cu32\u003e \u003d hlsl.unpack_u8u32 %4\n    %a:vec4\u003cu32\u003e \u003d let %5\n    ret\n  }\n}\n```\n\nSo my understanding is that is doesn\u0027t think there is a defined `hlsl.convert` for `u32 -\u003e hlsl.uint8_t4_packed`.\nWhich is really weird to me, because you can see above in the log the equalavent test for `hlsl.iint8_t4_packed` works fine, and the `-\u003e u32` versions work fine. Looking at the code, there isn\u0027t an obvious typo/missing case.\n\nIt is only this 1 of the 4 overrides that is failing.\nAdditionally ts isn\u0027t on all bot configuration. Like `cmake-linux-clang` is fine, but `linux-clang` is not.\n\nI am going to continue investigating on my mac and see if I can reproduce there. But any pointers/thoughts would be helpful?\n\n(This smells like something being treated as though it is ordered when it is actually unordered and different envs have slightly different orderings)",
+      "revId": "865e72fc243c65fd86cac65ec38744241a1ae911",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
