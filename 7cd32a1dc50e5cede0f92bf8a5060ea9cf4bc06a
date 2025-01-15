@@ -105,6 +105,24 @@
       "parentUuid": "02aa2ead_8454fd95",
       "revId": "7cd32a1dc50e5cede0f92bf8a5060ea9cf4bc06a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2096047d_15922209",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-15T07:11:51Z",
+      "side": 1,
+      "message": "Done. Also verified https://issues.chromium.org/issues/388592304",
+      "parentUuid": "887b48fd_f8bbc91f",
+      "revId": "7cd32a1dc50e5cede0f92bf8a5060ea9cf4bc06a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
