@@ -69,6 +69,24 @@
       "parentUuid": "c09914f0_993a9f87",
       "revId": "bb299958f5c2f26770e593183106b1b9d21951d9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d7e89d2_c0c3709b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003216
+      },
+      "writtenOn": "2025-01-15T17:45:59Z",
+      "side": 1,
+      "message": "Oh, if it\u0027s available in the SDK, then, yea that would work well. I thought it woudl involve copying over the .h file.",
+      "parentUuid": "4106380d_04da1ecb",
+      "revId": "bb299958f5c2f26770e593183106b1b9d21951d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
