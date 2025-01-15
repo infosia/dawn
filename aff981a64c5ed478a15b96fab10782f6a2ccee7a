@@ -194,6 +194,41 @@
       "parentUuid": "41d0b610_8f405fc6",
       "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c686d97d_94d575c3",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T13:10:40Z",
+      "side": 1,
+      "message": "We need the `CACHED` bit on `MapWrite` memory as well as much as we can IIRC, or use non-temporal write assambly instructions (which applications won\u0027t). I can\u0027t find the link again, but otherwise we might need to do loads all the way from memory to combine them with the write in some cases. Causing huge slowdowns.",
+      "parentUuid": "e17086f5_45d32398",
+      "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d8b5f07_77a0e08d",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T13:10:40Z",
+      "side": 1,
+      "message": "This memory heap is not necessarily used right now. We need to update https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;drc\u003dff2449f5f5baaf56a34babaec640e9519a530623;l\u003d237 and https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp;drc\u003d21fb99445f32855d3f3f213f2bcd1fa1baca1f59;l\u003d273 as well because buffers are no longer just \"HostLinear\", \"LinearReadMappable\", \"LinearWriteMappable\" but also \"HostMappable\" and \"LinearMappable\". So we could use a general refactor of that enum, to maybe be a bitset (MapRead|MapWrite|Host|LazilyAllocated|Opaque/Linear).",
+      "revId": "aff981a64c5ed478a15b96fab10782f6a2ccee7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
