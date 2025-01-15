@@ -286,6 +286,9 @@ class Impl {
                     // `sem` does not hold information on override workgroup sizes so we'll have to
                     // pull this from elsewhere.
                     auto wg_size = sem->WorkgroupSize();
+                    // We have to check to see the override/expression. Walk the AST and construct a
+                    // value/expression in IR. Then put the completed IR in here.  Put the overrides
+                    // as values in here instead.
                     ir_func->SetWorkgroupSize(builder_.Constant(u32(wg_size[0].value())),
                                               builder_.Constant(u32(wg_size[1].value_or(1))),
                                               builder_.Constant(u32(wg_size[2].value_or(1))));

@@ -52,6 +52,8 @@
 #include "dawn/platform/metrics/HistogramMacros.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "src/tint/lang/core/ir/transform/substitute_overrides.h"
+#include "src/tint/lang/wgsl/helpers/apply_substitute_overrides.h"
 #include "tint/tint.h"
 
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
@@ -394,15 +396,16 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
             transformManager.append(std::make_unique<tint::ast::transform::SingleEntryPoint>());
             transformInputs.Add<tint::ast::transform::SingleEntryPoint::Config>(
                 std::string(r.entryPointName));
-
-            if (r.substituteOverrideConfig) {
+            printf(" Line %d \n ", __LINE__);
+            if ((false) && r.substituteOverrideConfig) {
+                printf(" doing override %d \n ", __LINE__);
                 // This needs to run after SingleEntryPoint transform which removes unused overrides
                 // for current entry point.
                 transformManager.Add<tint::ast::transform::SubstituteOverride>();
                 transformInputs.Add<tint::ast::transform::SubstituteOverride::Config>(
                     std::move(r.substituteOverrideConfig).value());
             }
-
+            printf(" Line %d \n ", __LINE__);
             tint::Program program;
             tint::ast::transform::DataMap transformOutputs;
             {
@@ -411,13 +414,27 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                                 RunTransforms(&transformManager, r.inputProgram, transformInputs,
                                               &transformOutputs, nullptr));
             }
-
+            printf(" Line %d \n ", __LINE__);
             TRACE_EVENT0(r.platform.UnsafeGetValue(), General, "tint::spirv::writer::Generate()");
-
+            printf(" Line %d \n ", __LINE__);
             // Convert the AST program to an IR module.
             auto ir = tint::wgsl::reader::ProgramToLoweredIR(program);
             DAWN_INVALID_IF(ir != tint::Success, "An error occurred while generating Tint IR\n%s",
                             ir.Failure().reason.Str());
+
+            printf(" Line %d \n ", __LINE__);
+            printf(" test !!! %d \n ", __LINE__);
+            if ((true) && r.substituteOverrideConfig) {
+                // This needs to run after SingleEntryPoint transform which removes unused overrides
+                // for the current entry point.
+                tint::core::ir::transform::SubstituteOverridesConfig cfg;
+                cfg.map = r.substituteOverrideConfig->map;
+                auto substituteOverridesResult =
+                    tint::core::ir::transform::SubstituteOverrides(ir.Get(), cfg);
+                DAWN_INVALID_IF(substituteOverridesResult != tint::Success,
+                                "Pipeline override substitution failed:\n%s",
+                                substituteOverridesResult.Failure().reason.Str());
+            }
 
             // Generate SPIR-V from Tint IR.
             auto tintResult = tint::spirv::writer::Generate(ir.Get(), r.tintOptions);
