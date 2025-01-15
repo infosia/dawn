@@ -119,6 +119,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f25d10ec_ba5688ef",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-01-15T12:36:36Z",
+      "side": 1,
+      "message": "Hmm, indeed `TestReduceTagsToBroadGroups_Success` checks that, e.g. for `chromeos-board-volteer`.\nI still can\u0027t figure out how this works, could you enlighten me?\nI think I\u0027m confused by Results tags sets vs Content tags sets (what are these?).\nI\u0027ve just noticed that `getBroadTagSets()` doesn\u0027t receive `results` as an argument, so now I\u0027m confused about what it operates on and what it returns.\nThe way I thought about it previously is that it filters just known OS, GPU and Device tags from a Result, so it goes something like this:\n\nWe are starting with `Tags:   result.NewTags(\"chromeos\", \"intel\", \"intel-0x3e92\", \"chromeos-board-volteer\", \"unused\"),`\nFrom how I read the code, because none of these tags are in `knownOsTags`, this will never happen:\n```\n\t\tif tagSet.Tags.ContainsAny(knownOsTags) {\n\t\t\tosTagSet \u003d tagSet.Tags\n```\nSo, we should reach this line becase `osTagSet \u003d\u003d nil`:\n```\n\tif osTagSet \u003d\u003d nil || gpuTagSet \u003d\u003d nil || deviceTagSet \u003d\u003d nil {\n\t\treturn nil, nil, nil, fmt.Errorf(\"Did not find expected tag sets. Known tags may be out of date. osTagSet: %v, gpuTagSet: %v, deviceTagSet: %v\",\n\t\t\tosTagSet, gpuTagSet, deviceTagSet)\n\t}\n```\nAnd then here we would return in\n```\n\tosTagSet, gpuTagSet, deviceTagSet, err :\u003d c.getBroadTagSets()\n\tif err !\u003d nil {\n\t\treturn err\n\t}\n```",
+      "parentUuid": "e5bf8897_61dcdd4d",
+      "range": {
+        "startLine": 194,
+        "startChar": 41,
+        "endLine": 194,
+        "endChar": 62
+      },
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c48202f_27d43977",
         "filename": "tools/src/cts/expectations/update.go",
         "patchSetId": 3

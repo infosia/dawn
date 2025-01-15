@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3699cbb_db164ed5",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-01-15T12:36:36Z",
+      "side": 1,
+      "message": "I actually thought that checking something like `chosenDeviceTag !\u003d nil` would work better (since we don\u0027t need double knowledge of which platforms are remote, as long as the tags contain some device, this can be inferred).",
+      "range": {
+        "startLine": 216,
+        "startChar": 5,
+        "endLine": 216,
+        "endChar": 37
+      },
+      "revId": "f3b3714629ddc410f65f7b9a1c0b70caa2a44b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6781ac4_cc263e4d",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-01-15T12:36:36Z",
+      "side": 1,
+      "message": "You probably don\u0027t want to keep this comment?",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 0
+      },
+      "revId": "f3b3714629ddc410f65f7b9a1c0b70caa2a44b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e71819be_0040d955",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-01-15T12:36:36Z",
+      "side": 1,
+      "message": "Actually, I don\u0027t understand why don\u0027t we hit this for non-remote platforms.",
+      "range": {
+        "startLine": 287,
+        "startChar": 43,
+        "endLine": 287,
+        "endChar": 62
+      },
+      "revId": "f3b3714629ddc410f65f7b9a1c0b70caa2a44b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
