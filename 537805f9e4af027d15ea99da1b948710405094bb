@@ -16,6 +16,24 @@
       "message": "nit: -4 indent",
       "revId": "537805f9e4af027d15ea99da1b948710405094bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b37e05d_2717f854",
+        "filename": "tools/android/webgpu/build.gradle",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1004771
+      },
+      "writtenOn": "2025-01-15T11:21:43Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "6b8d1316_fd342ab3",
+      "revId": "537805f9e4af027d15ea99da1b948710405094bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
