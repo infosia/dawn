@@ -16,6 +16,23 @@
       "message": "jrprice@, seems I cannot submit to cq with latest patchset. Would you mind to do a review again? Thanks!",
       "revId": "35bd068d857c844f5c3d3c23c5c268c4dcc948de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0034b31d_24890c94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T12:58:22Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "35bd068d857c844f5c3d3c23c5c268c4dcc948de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
