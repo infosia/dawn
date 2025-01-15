@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5ada63b_b4b82fe9",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T14:19:39Z",
+      "side": 1,
+      "message": "Shouldn\u0027t `ShouldFlush` become this function?\n\nAlso instead of iterating everything each time we ask if we should flush, we could keep a rolling count of bytes pending flushing. When the flush happens, then we reset it to 0. The previous version of this function logic seems suboptimial and instead of doing a new path just for buffers, we should fix the previous logic.",
+      "range": {
+        "startLine": 162,
+        "startChar": 22,
+        "endLine": 162,
+        "endChar": 56
+      },
+      "revId": "d289c68e323dfac3e4da0a0f6082514c15783c40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
