@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13d45d3c_9c8873fa",
+        "filename": "src/tint/api/common/vertex_pulling_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T15:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8a0eb50_7f75fbe5",
+      "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb4a925d_a14d1506",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-01-15T14:51:48Z",
       "side": 1,
       "message": "```suggestion\n    /// @param in_array_stride the array stride in bytes of the in buffer\n```\n\nThis is bytes, yea?",
+      "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3869312b_a68c40d6",
+        "filename": "src/tint/api/common/vertex_pulling_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T15:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb4a925d_a14d1506",
       "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8118c4bd_39904668",
+        "filename": "src/tint/api/common/vertex_pulling_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T15:32:40Z",
+      "side": 1,
+      "message": "Remove copy constructor, copy assignment operator, and destructor, as I think the implicitly declared ones are sufficient.",
+      "parentUuid": "a4be5883_f468f770",
+      "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa9de5f4_8b5615de",
@@ -69,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60d39763_971e85c8",
+        "filename": "src/tint/api/common/vertex_pulling_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T15:32:40Z",
+      "side": 1,
+      "message": "I just copied everything over as it was before. Removed this now.",
+      "parentUuid": "aa9de5f4_8b5615de",
+      "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbd9dd4c_2ca2c27f",
@@ -82,6 +154,24 @@
       "writtenOn": "2025-01-15T14:51:48Z",
       "side": 1,
       "message": "This is the same namespace we just closed?",
+      "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "954ac1a2_b13cafc0",
+        "filename": "src/tint/api/common/vertex_pulling_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T15:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd9dd4c_2ca2c27f",
       "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
