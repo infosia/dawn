@@ -33,6 +33,24 @@
       "message": "Can we used some of the macros here to make this work.\nhttps://gist.github.com/corona10/e6a51162c2d68c081d317b881b890f2c",
       "revId": "bb299958f5c2f26770e593183106b1b9d21951d9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c09914f0_993a9f87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T17:30:07Z",
+      "side": 1,
+      "message": "Possibly, yea, but I don\u0027t know how the licences interact.",
+      "parentUuid": "39aef207_2479f737",
+      "revId": "bb299958f5c2f26770e593183106b1b9d21951d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
