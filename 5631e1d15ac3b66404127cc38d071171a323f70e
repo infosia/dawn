@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bccddbf7_2bbbd176",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-15T07:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9ce9d8e_1d952eac",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "5631e1d15ac3b66404127cc38d071171a323f70e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a79233bb_d2a60d20",

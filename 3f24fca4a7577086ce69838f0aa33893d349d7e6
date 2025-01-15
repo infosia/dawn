@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef87d3f9_a8452b88",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-15T07:09:11Z",
+      "side": 1,
+      "message": "Done. SetImmediateData cannot directly use it (to save a memcpy which construct the struct requires) but adopt a similar code logic.",
+      "parentUuid": "625ce5e0_aacceb5c",
+      "revId": "3f24fca4a7577086ce69838f0aa33893d349d7e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d14e8606_666b6aac",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-01-13T14:54:17Z",
       "side": 1,
       "message": "You could remove this assumption because the type is visible here, `offsetof(T, userImmediateData)` should work.",
+      "range": {
+        "startLine": 88,
+        "startChar": 52,
+        "endLine": 88,
+        "endChar": 54
+      },
+      "revId": "3f24fca4a7577086ce69838f0aa33893d349d7e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36e89d56_db63d00c",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-15T07:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d14e8606_666b6aac",
       "range": {
         "startLine": 88,
         "startChar": 52,
