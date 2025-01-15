@@ -29,7 +29,11 @@
 
 #include <limits>
 
+#include "src/tint/lang/core/constant/scalar.h"
+#include "src/tint/lang/core/ir/loop.h"
 #include "src/tint/lang/core/ir/traverse.h"
+#include "src/tint/lang/core/ir/var.h"
+#include "src/tint/lang/core/type/pointer.h"
 
 namespace tint::core::ir::analysis {
 
@@ -44,7 +48,10 @@ IntegerRangeInfo::IntegerRangeInfo(uint64_t min_bound, uint64_t max_bound) {
 }
 
 struct IntegerRangeAnalysisImpl {
-    explicit IntegerRangeAnalysisImpl(Function* func) : function_(func) {}
+    explicit IntegerRangeAnalysisImpl(Function* func) : function_(func) {
+        // Analyze all of the loops in the function.
+        Traverse(func->Block(), [&](Loop* l) { AnalyzeLoop(l); });
+    }
 
     const IntegerRangeInfo* GetInfo(const FunctionParam* param, uint32_t index) {
         if (!param->Type()->IsIntegerScalarOrVector()) {
@@ -93,10 +100,79 @@ struct IntegerRangeAnalysisImpl {
         return &info[index];
     }
 
+    const IntegerRangeInfo* GetInfo(const Var* var) {
+        return integer_var_range_info_map_.Get(var).value;
+    }
+
+    /// Analyze a loop to compute the range of the loop control variable if possible.
+    void AnalyzeLoop(Loop* loop) {
+        if (auto* init_block = loop->Initializer()) {
+            // Look for variables that could be used as iteration indices.
+            for (auto* inst : *init_block) {
+                auto* var = inst->As<Var>();
+                if (!var) {
+                    continue;
+                }
+
+                const auto* pty = var->Result(0)->Type()->As<core::type::Pointer>();
+                if (!pty->StoreType()->IsIntegerScalar()) {
+                    break;
+                }
+
+                std::variant<std::monostate, int64_t, uint64_t> bound0 =
+                    GetBoundFromInitializer(var);
+                if (std::holds_alternative<std::monostate>(bound0)) {
+                    break;
+                }
+
+                // This is incorrect because bound0 may not always be the lower bound. We can only
+                // get the correct range after getting another bound from the loop exit condition.
+                // TODO(348701956): Compute another bound from the loop exit condition.
+                if (std::holds_alternative<uint64_t>(bound0)) {
+                    uint64_t uintBound0 = std::get<uint64_t>(bound0);
+                    uint64_t uintBound1 = std::numeric_limits<uint64_t>::max();
+                    integer_var_range_info_map_.Add(var, IntegerRangeInfo(uintBound0, uintBound1));
+                } else {
+                    int64_t intBound0 = std::get<int64_t>(bound0);
+                    int64_t intBound1 = std::numeric_limits<int64_t>::max();
+                    integer_var_range_info_map_.Add(var, IntegerRangeInfo(intBound0, intBound1));
+                }
+                return;
+            }
+        }
+    }
+
+    std::variant<std::monostate, int64_t, uint64_t> GetBoundFromInitializer(Var* var) {
+        const auto* initializer = var->Initializer();
+        if (!initializer) {
+            return {};
+        }
+
+        const auto* constInitializer = initializer->As<Constant>();
+        if (!constInitializer) {
+            return {};
+        }
+
+        return GetValueFromConstantVal(constInitializer);
+    }
+
+    std::variant<std::monostate, int64_t, uint64_t> GetValueFromConstantVal(const Constant* value) {
+        if (value->Type()->IsSignedIntegerScalar()) {
+            const auto* i32Initializer = value->Value()->As<core::constant::Scalar<i32>>();
+            TINT_ASSERT(i32Initializer);
+            return static_cast<int64_t>(i32Initializer->ValueAs<int32_t>());
+        } else {
+            const auto* u32Initializer = value->Value()->As<core::constant::Scalar<u32>>();
+            TINT_ASSERT(u32Initializer);
+            return static_cast<uint64_t>(u32Initializer->ValueAs<uint32_t>());
+        }
+    }
+
   private:
     Function* function_;
     Hashmap<const FunctionParam*, Vector<IntegerRangeInfo, 3>, 4>
         integer_function_param_range_info_map_;
+    Hashmap<const Var*, IntegerRangeInfo, 8> integer_var_range_info_map_;
 };
 
 IntegerRangeAnalysis::IntegerRangeAnalysis(Function* func)
@@ -106,4 +182,9 @@ IntegerRangeAnalysis::~IntegerRangeAnalysis() = default;
 const IntegerRangeInfo* IntegerRangeAnalysis::GetInfo(const FunctionParam* param, uint32_t index) {
     return impl_->GetInfo(param, index);
 }
+
+const IntegerRangeInfo* IntegerRangeAnalysis::GetInfo(const Var* var) {
+    return impl_->GetInfo(var);
+}
+
 }  // namespace tint::core::ir::analysis

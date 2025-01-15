@@ -329,5 +329,200 @@ TEST_F(IR_IntegerRangeAnalysisTest, LocalInvocationID_u32_1_1_Z) {
     }
 }
 
+TEST_F(IR_IntegerRangeAnalysisTest, Finite_IndexLessThanConstant_IncByOne) {
+    Var* idx = nullptr;
+    Loop* loop = nullptr;
+    auto* func = b.Function("func", ty.void_());
+    b.Append(func->Block(), [&] {
+        loop = b.Loop();
+        b.Append(loop->Initializer(), [&] {  //
+            idx = b.Var("idx", 0_u);
+            b.NextIteration(loop);
+        });
+        b.Append(loop->Body(), [&] {
+            auto* ifelse = b.If(b.LessThan<bool>(b.Load(idx), 10_u));
+            b.Append(ifelse->True(), [&] {  //
+                b.ExitLoop(loop);
+            });
+            b.Continue(loop);
+        });
+        b.Append(loop->Continuing(), [&] {  //
+            b.Store(idx, b.Add<u32>(b.Load(idx), 1_u));
+            b.NextIteration(loop);
+        });
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%func = func():void {
+  $B1: {
+    loop [i: $B2, b: $B3, c: $B4] {  # loop_1
+      $B2: {  # initializer
+        %idx:ptr<function, u32, read_write> = var, 0u
+        next_iteration  # -> $B3
+      }
+      $B3: {  # body
+        %3:u32 = load %idx
+        %4:bool = lt %3, 10u
+        if %4 [t: $B5] {  # if_1
+          $B5: {  # true
+            exit_loop  # loop_1
+          }
+        }
+        continue  # -> $B4
+      }
+      $B4: {  # continuing
+        %5:u32 = load %idx
+        %6:u32 = add %5, 1u
+        store %idx, %6
+        next_iteration  # -> $B3
+      }
+    }
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+    EXPECT_EQ(Validate(mod), Success);
+
+    IntegerRangeAnalysis analysis(func);
+    auto* info = analysis.GetInfo(idx);
+    ASSERT_NE(info, nullptr);
+    ASSERT_TRUE(std::holds_alternative<IntegerRangeInfo::UnsignedIntegerRange>(info->range));
+
+    const auto& range = std::get<IntegerRangeInfo::UnsignedIntegerRange>(info->range);
+    EXPECT_EQ(0u, range.min_bound);
+}
+
+TEST_F(IR_IntegerRangeAnalysisTest, Finite_NonZeroInit_U32) {
+    Var* idx = nullptr;
+    Loop* loop = nullptr;
+    auto* func = b.Function("func", ty.void_());
+    b.Append(func->Block(), [&] {
+        loop = b.Loop();
+        b.Append(loop->Initializer(), [&] {  //
+            idx = b.Var("idx", 5_u);
+            b.NextIteration(loop);
+        });
+        b.Append(loop->Body(), [&] {
+            auto* ifelse = b.If(b.LessThan<bool>(b.Load(idx), 10_u));
+            b.Append(ifelse->True(), [&] {  //
+                b.ExitLoop(loop);
+            });
+            b.Continue(loop);
+        });
+        b.Append(loop->Continuing(), [&] {  //
+            b.Store(idx, b.Add<u32>(b.Load(idx), 1_u));
+            b.NextIteration(loop);
+        });
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%func = func():void {
+  $B1: {
+    loop [i: $B2, b: $B3, c: $B4] {  # loop_1
+      $B2: {  # initializer
+        %idx:ptr<function, u32, read_write> = var, 5u
+        next_iteration  # -> $B3
+      }
+      $B3: {  # body
+        %3:u32 = load %idx
+        %4:bool = lt %3, 10u
+        if %4 [t: $B5] {  # if_1
+          $B5: {  # true
+            exit_loop  # loop_1
+          }
+        }
+        continue  # -> $B4
+      }
+      $B4: {  # continuing
+        %5:u32 = load %idx
+        %6:u32 = add %5, 1u
+        store %idx, %6
+        next_iteration  # -> $B3
+      }
+    }
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+    EXPECT_EQ(Validate(mod), Success);
+
+    IntegerRangeAnalysis analysis(func);
+    auto* info = analysis.GetInfo(idx);
+    ASSERT_NE(info, nullptr);
+    ASSERT_TRUE(std::holds_alternative<IntegerRangeInfo::UnsignedIntegerRange>(info->range));
+
+    const auto& range = std::get<IntegerRangeInfo::UnsignedIntegerRange>(info->range);
+    EXPECT_EQ(5u, range.min_bound);
+}
+
+TEST_F(IR_IntegerRangeAnalysisTest, Finite_NonZeroInit_I32) {
+    Var* idx = nullptr;
+    Loop* loop = nullptr;
+    auto* func = b.Function("func", ty.void_());
+    b.Append(func->Block(), [&] {
+        loop = b.Loop();
+        b.Append(loop->Initializer(), [&] {  //
+            idx = b.Var("idx", 5_i);
+            b.NextIteration(loop);
+        });
+        b.Append(loop->Body(), [&] {
+            auto* ifelse = b.If(b.LessThan<bool>(b.Load(idx), 10_i));
+            b.Append(ifelse->True(), [&] {  //
+                b.ExitLoop(loop);
+            });
+            b.Continue(loop);
+        });
+        b.Append(loop->Continuing(), [&] {  //
+            b.Store(idx, b.Add<i32>(b.Load(idx), 1_i));
+            b.NextIteration(loop);
+        });
+        b.Return(func);
+    });
+
+    auto* src = R"(
+%func = func():void {
+  $B1: {
+    loop [i: $B2, b: $B3, c: $B4] {  # loop_1
+      $B2: {  # initializer
+        %idx:ptr<function, i32, read_write> = var, 5i
+        next_iteration  # -> $B3
+      }
+      $B3: {  # body
+        %3:i32 = load %idx
+        %4:bool = lt %3, 10i
+        if %4 [t: $B5] {  # if_1
+          $B5: {  # true
+            exit_loop  # loop_1
+          }
+        }
+        continue  # -> $B4
+      }
+      $B4: {  # continuing
+        %5:i32 = load %idx
+        %6:i32 = add %5, 1i
+        store %idx, %6
+        next_iteration  # -> $B3
+      }
+    }
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+    EXPECT_EQ(Validate(mod), Success);
+
+    IntegerRangeAnalysis analysis(func);
+    auto* info = analysis.GetInfo(idx);
+    ASSERT_NE(info, nullptr);
+    ASSERT_TRUE(std::holds_alternative<IntegerRangeInfo::SignedIntegerRange>(info->range));
+
+    const auto& range = std::get<IntegerRangeInfo::SignedIntegerRange>(info->range);
+    EXPECT_EQ(5, range.min_bound);
+}
+
 }  // namespace
 }  // namespace tint::core::ir::analysis
