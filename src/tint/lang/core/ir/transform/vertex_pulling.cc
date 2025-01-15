@@ -341,8 +341,6 @@ struct State {
     /// @returns the loaded attribute data
     core::ir::Value* LoadFromBuffer(const LocationInfo& info, const core::type::Type* shader_type) {
         // Helper for loading a single word from the buffer at an offset.
-        // If the offset is not 4-byte aligned, shift the word so that the requested data starts at
-        // the first byte.
         auto load_u32 = [&](uint32_t offset) {
             auto offset_value = info.base_offset;
             offset += (info.attr_byte_offset / 4u);
@@ -351,6 +349,9 @@ struct State {
             }
             auto* word =
                 b.Load(b.Access<ptr<storage, u32, read>>(info.buffer, offset_value))->Result(0);
+            // If the offset is not 4-byte aligned, shift the word so that the requested data starts
+            // at the first byte. The shift amount is the offset of the byte within a word
+            // multiplied by 8 to get the bit offset.
             if (info.attr_byte_offset & 3) {
                 word = b.ShiftRight<u32>(word, u32((info.attr_byte_offset & 3) * 8))->Result(0);
             }
@@ -364,15 +365,18 @@ struct State {
             return b.Bitcast<f32>(load_u32(offset))->Result(0);
         };
         auto load_ivec = [&](uint32_t offset, uint32_t bits, const core::type::Vector* vec) {
+            // For a vec2<u32>, we read the `xxxx'yyyy` u32 word. We then splat to a vec2 and left
+            // shift so we have `(xxxx'yyyy, yyyy'xxxx)`. Finally, we right shift to produce
+            // `(0000'xxxx, 0000'yyyy)`
             auto* uvec = ty.MatchWidth(ty.u32(), vec);
-            // ****yyxx
+            // yyyyxxxx
             auto* word = load_u32(offset);
             if (vec->Type()->Is<core::type::I32>()) {
                 word = b.Bitcast<i32>(word)->Result(0);
             }
-            // ****yyxx, ****yyxx
+            // yyyyxxxx, yyyyxxxx
             auto* splat = b.Construct(vec, word);
-            // xx000000, yy000000
+            // xxxxyyyy, yyyyxxxx
             core::ir::Instruction* shift_left = nullptr;
             switch (vec->Width()) {
                 case 2:
@@ -391,7 +395,7 @@ struct State {
                 default:
                     TINT_UNREACHABLE();
             }
-            // 000000xx, 000000yy
+            // 0000xxxx, 0000yyyy
             return b.ShiftRight(vec, shift_left, b.Splat(uvec, u32(32 - bits)))->Result(0);
         };
 
