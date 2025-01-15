@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff4e719e_d65befd1",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T21:00:38Z",
+      "side": 1,
+      "message": "Hmm, our intent for `convert` was that it would only do conversions, and constructors would be left to `construct`. In the WGSL frontend there is no real distinction between the two (they are both just special types of function calls), but in IR we try to be explicit.\n\nSo really this test should be failing. You can check the flags on the overload that `Lookup` returns to see if they contain `kIsConverter`, which would restrict the accepted overloads to the ones marked as `conv` in the def file.",
+      "revId": "689529ed608dacb9eb84b48eb21f107c67721f1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
