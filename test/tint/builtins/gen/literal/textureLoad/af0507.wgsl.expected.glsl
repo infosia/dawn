@@ -1,3 +1,5 @@
+SKIP: INVALID
+
 //
 // fragment_main
 //
