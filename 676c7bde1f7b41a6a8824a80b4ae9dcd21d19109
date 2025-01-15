@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d3ce2b6_4446d793",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T21:12:33Z",
+      "side": 1,
+      "message": "What about CMakeLists.txt?",
+      "revId": "676c7bde1f7b41a6a8824a80b4ae9dcd21d19109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
