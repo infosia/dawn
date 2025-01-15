@@ -32,6 +32,7 @@
 
 #include "src/tint/lang/core/ir/function.h"
 #include "src/tint/lang/core/ir/loop.h"
+#include "src/tint/lang/core/ir/value.h"
 #include "src/tint/lang/core/ir/var.h"
 
 namespace tint::core::ir::analysis {
@@ -45,6 +46,9 @@ struct LoopInfo {
 };
 
 struct LoopAnalysisImpl;
+
+Value* UnwrapBitcast(Value* val);
+bool IsIncrementOrDecrementOfVar(const Var& var, Value* val);
 
 /// LoopAnalysis is a helper used to analyze loops.
 /// It caches loop analyses for a function.

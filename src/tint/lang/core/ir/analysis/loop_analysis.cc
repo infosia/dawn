@@ -38,7 +38,6 @@
 #include "src/tint/lang/core/ir/multi_in_block.h"
 #include "src/tint/lang/core/ir/store.h"
 #include "src/tint/lang/core/ir/traverse.h"
-#include "src/tint/lang/core/ir/value.h"
 #include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/i32.h"
 #include "src/tint/lang/core/type/pointer.h"
@@ -60,14 +59,6 @@ InstClass* As(Value* val) {
     return nullptr;
 }
 
-/// Returns the value, after unwrapping all bitcasts.
-Value* UnwrapBitcast(Value* val) {
-    while (auto* bitcast = As<Bitcast>(val)) {
-        val = bitcast->Val();
-    }
-    return val;
-}
-
 /// Returns true if v is the integer constant 1.
 bool IsOne(Value* v) {
     if (auto* cv = v->As<Constant>()) {
@@ -78,6 +69,16 @@ bool IsOne(Value* v) {
             [&](const Default) -> bool { return false; });
     }
     return false;
+}
+
+}  // anonymous namespace
+
+/// Returns the value, after unwrapping all bitcasts.
+Value* UnwrapBitcast(Value* val) {
+    while (auto* bitcast = As<Bitcast>(val)) {
+        val = bitcast->Val();
+    }
+    return val;
 }
 
 /// Returns `true` if `val` is definitely `var +/- 1`.
@@ -101,8 +102,6 @@ bool IsIncrementOrDecrementOfVar(const Var& var, Value* val) {
     }
     return false;
 }
-
-}  // anonymous namespace
 
 /// PIMPL class that performs the analysis and holds the analysis cache.
 struct LoopAnalysisImpl {

@@ -76,6 +76,8 @@ class IntegerRangeAnalysis {
     /// @returns the integer range info
     const IntegerRangeInfo* GetInfo(const FunctionParam* param, uint32_t index = 0);
 
+    const IntegerRangeInfo* GetInfo(const Var* var);
+
   private:
     IntegerRangeAnalysis(const IntegerRangeAnalysis&) = delete;
     IntegerRangeAnalysis(IntegerRangeAnalysis&&) = delete;
