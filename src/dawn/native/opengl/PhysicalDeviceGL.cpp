@@ -301,6 +301,11 @@ GLint GetIndexed(const OpenGLFunctions& gl, GLenum pname, GLuint index) {
     gl.GetIntegeri_v(pname, index, &value);
     return value;
 }
+
+GLint min3(GLint a, GLint b, GLint c) {
+    return std::min(a, std::min(b, c));
+}
+
 }  // namespace
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
@@ -321,13 +326,26 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
         std::min(Get(gl, GL_MAX_TEXTURE_IMAGE_UNITS), Get(gl, GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS));
     limits->v1.maxSamplersPerShaderStage = Get(gl, GL_MAX_TEXTURE_IMAGE_UNITS);
     limits->v1.maxStorageBuffersPerShaderStage = Get(gl, GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS);
-    // TODO(crbug.com/dawn/1834): Note that OpenGLES allows an implementation to have zero vertex
-    // image uniforms, so this isn't technically correct for vertex shaders.
     limits->v1.maxStorageTexturesPerShaderStage = Get(gl, GL_MAX_COMPUTE_IMAGE_UNIFORMS);
-    limits->v1.maxStorageTexturesInFragmentStage = Get(gl, GL_MAX_FRAGMENT_IMAGE_UNIFORMS);
-    limits->v1.maxStorageBuffersInFragmentStage = Get(gl, GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS);
-    limits->v1.maxStorageTexturesInVertexStage = Get(gl, GL_MAX_VERTEX_IMAGE_UNIFORMS);
-    limits->v1.maxStorageBuffersInVertexStage = Get(gl, GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS);
+    // Note: Many drivers appear to report this incorrectly. It's supposed to be
+    // storage buffers + storage textures + color attachments but many drivers report it
+    // as just storage buffers + storage textures.
+    const GLint glMaxCombinedShaderOutputResources =
+        Get(gl, GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES);
+    const GLint glMaxCombinedShaderStorageBlocks = Get(gl, GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS);
+    const GLint glMaxCombinedImageUniforms = Get(gl, GL_MAX_COMBINED_IMAGE_UNIFORMS);
+
+    limits->v1.maxStorageTexturesInFragmentStage =
+        min3(Get(gl, GL_MAX_FRAGMENT_IMAGE_UNIFORMS), glMaxCombinedShaderOutputResources / 2,
+             glMaxCombinedImageUniforms / 2);
+    limits->v1.maxStorageBuffersInFragmentStage =
+        min3(Get(gl, GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS), glMaxCombinedShaderOutputResources / 2,
+             glMaxCombinedShaderStorageBlocks / 2);
+
+    limits->v1.maxStorageTexturesInVertexStage =
+        std::min(Get(gl, GL_MAX_VERTEX_IMAGE_UNIFORMS), glMaxCombinedImageUniforms / 2);
+    limits->v1.maxStorageBuffersInVertexStage = std::min(
+        Get(gl, GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS), glMaxCombinedShaderStorageBlocks / 2);
 
     limits->v1.maxUniformBuffersPerShaderStage = Get(gl, GL_MAX_UNIFORM_BUFFER_BINDINGS);
     limits->v1.maxUniformBufferBindingSize = Get(gl, GL_MAX_UNIFORM_BLOCK_SIZE);
