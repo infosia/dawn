@@ -16,6 +16,24 @@
       "message": "What about CMakeLists.txt?",
       "revId": "676c7bde1f7b41a6a8824a80b4ae9dcd21d19109",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f693848_959cf749",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:44:39Z",
+      "side": 1,
+      "message": "The CMake build appears to just link against `libtint` which contains everything. In any case, this dep is only temporary and is removed in the next CL.",
+      "parentUuid": "2d3ce2b6_4446d793",
+      "revId": "676c7bde1f7b41a6a8824a80b4ae9dcd21d19109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
