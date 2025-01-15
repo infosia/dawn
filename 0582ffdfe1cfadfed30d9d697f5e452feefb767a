@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ec8d051_9a270a48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-15T22:42:56Z",
+      "side": 1,
+      "message": "Rubberstamp based on Kai\u0027s review.",
+      "revId": "0582ffdfe1cfadfed30d9d697f5e452feefb767a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
