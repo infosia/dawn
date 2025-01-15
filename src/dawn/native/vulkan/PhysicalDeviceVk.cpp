@@ -189,7 +189,10 @@ MaybeError PhysicalDevice::InitializeImpl() {
 
     // Needed for the respective WebGPU features.
     if (!mDeviceInfo.features.depthBiasClamp) {
-        return DAWN_INTERNAL_ERROR("Vulkan depthBiasClamp feature required.");
+        mSupportsCoreFeatureLevel = false;
+        // TODO: If FeatureLevel::Core adapter was requested we'll fail create an adapter later when
+        // SupportsFeatureLevel() gets called. That does the right thing but it breaks error
+        // reporting.
     }
     if (!mDeviceInfo.features.fragmentStoresAndAtomics) {
         return DAWN_INTERNAL_ERROR("Vulkan fragmentStoresAndAtomics feature required.");
@@ -471,7 +474,23 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
-    GetDefaultLimitsForSupportedFeatureLevel(&limits->v1);
+    if (mSupportsCoreFeatureLevel) {
+        MaybeError result = InitializeSupportedLimitsInternal(wgpu::FeatureLevel::Core, limits);
+        if (result.IsSuccess()) {
+            return result;
+        }
+
+        IgnoreErrors(std::move(result));
+        mSupportsCoreFeatureLevel = false;
+    }
+
+    return InitializeSupportedLimitsInternal(wgpu::FeatureLevel::Compatibility, limits);
+}
+
+MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel featureLevel,
+                                                             CombinedLimits* limits) {
+    GetDefaultLimits(&limits->v1, featureLevel);
+
     CombinedLimits baseLimits = *limits;
 
     const VkPhysicalDeviceLimits& vkLimits = mDeviceInfo.properties.limits;
@@ -660,8 +679,8 @@ bool PhysicalDevice::SupportsExternalImages() const {
                                                      mVulkanInstance->GetFunctions());
 }
 
-bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel) const {
-    return true;
+bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel) const {
+    return mSupportsCoreFeatureLevel || featureLevel == wgpu::FeatureLevel::Compatibility;
 }
 
 void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platform,

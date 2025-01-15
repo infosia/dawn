@@ -110,7 +110,8 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         VkPhysicalDevice vkPhysicalDevice = ToBackend(GetPhysicalDevice())->GetVkPhysicalDevice();
 
         VulkanDeviceKnobs usedDeviceKnobs = {};
-        DAWN_TRY_ASSIGN(usedDeviceKnobs, CreateDevice(vkPhysicalDevice));
+        DAWN_TRY_ASSIGN(usedDeviceKnobs,
+                        CreateDevice(GetAdapter()->GetFeatureLevel(), vkPhysicalDevice));
         *static_cast<VulkanDeviceKnobs*>(&mDeviceInfo) = usedDeviceKnobs;
 
         DAWN_TRY(functions->LoadDeviceProcs(mVkDevice, mDeviceInfo));
@@ -388,7 +389,8 @@ void Device::EnqueueDeferredDeallocation(DescriptorSetAllocator* allocator) {
                                                       GetQueue()->GetPendingCommandSerial());
 }
 
-ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysicalDevice) {
+ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(wgpu::FeatureLevel featureLevel,
+                                                      VkPhysicalDevice vkPhysicalDevice) {
     VulkanDeviceKnobs usedKnobs = {};
 
     // Default to asking for all available known extensions.
@@ -416,6 +418,7 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
     PNextChainBuilder featuresChain(&features2);
 
     // Required for core WebGPU features.
+    // TODO: This could be set false for compat mode but I don't see anything that checks the value.
     usedKnobs.features.depthBiasClamp = VK_TRUE;
     usedKnobs.features.fragmentStoresAndAtomics = VK_TRUE;
     usedKnobs.features.fullDrawIndexUint32 = VK_TRUE;

@@ -654,7 +654,8 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
             for (VkPhysicalDevice vkPhysicalDevice : vkPhysicalDevices) {
                 Ref<PhysicalDevice> physicalDevice =
                     AcquireRef(new PhysicalDevice(mVulkanInstances[icd].Get(), vkPhysicalDevice));
-                if (instance->ConsumedErrorAndWarnOnce(physicalDevice->Initialize())) {
+                if (instance->ConsumedErrorAndWarnOnce(physicalDevice->Initialize()) ||
+                    !physicalDevice->SupportsFeatureLevel(options->featureLevel)) {
                     continue;
                 }
                 mPhysicalDevices[icd].push_back(std::move(physicalDevice));
