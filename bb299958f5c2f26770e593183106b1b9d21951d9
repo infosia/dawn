@@ -51,6 +51,24 @@
       "parentUuid": "39aef207_2479f737",
       "revId": "bb299958f5c2f26770e593183106b1b9d21951d9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4106380d_04da1ecb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-15T17:31:34Z",
+      "side": 1,
+      "message": "I think this is just a copy of a apple header. I dont see why there is a licence question.",
+      "parentUuid": "c09914f0_993a9f87",
+      "revId": "bb299958f5c2f26770e593183106b1b9d21951d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
