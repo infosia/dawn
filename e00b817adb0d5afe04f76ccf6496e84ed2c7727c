@@ -16,6 +16,24 @@
       "message": "I think this needs to be outside the `if`, as the `swizzle` below also requires the loaded value.",
       "revId": "e00b817adb0d5afe04f76ccf6496e84ed2c7727c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27d4bb5f_48ab326d",
+        "filename": "src/tint/lang/hlsl/writer/raise/pixel_local.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-15T20:26:25Z",
+      "side": 1,
+      "message": "I agree, filed https://issues.chromium.org/issues/390201793 for the validator not catching this.",
+      "parentUuid": "aa0a9e26_ca207d1b",
+      "revId": "e00b817adb0d5afe04f76ccf6496e84ed2c7727c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
