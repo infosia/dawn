@@ -69,6 +69,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c6daa91_914c6ed1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-15T00:36:44Z",
+      "side": 1,
+      "message": "(and thank you so much for the fix! I\u0027ll re-review and land after you make revisions)",
+      "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e643d69_975f12c1",
