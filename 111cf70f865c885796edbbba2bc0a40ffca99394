@@ -58,6 +58,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00e3a800_b1b69abb",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-15T14:22:29Z",
+      "side": 1,
+      "message": "Ah right, since ExternalTextureBindingEntry has the continue above. Done.",
+      "parentUuid": "7cba5b37_0cc6f289",
+      "revId": "111cf70f865c885796edbbba2bc0a40ffca99394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00347dc1_1ca0f158",
@@ -71,6 +89,24 @@
       "writtenOn": "2025-01-15T12:56:01Z",
       "side": 1,
       "message": "Shouldn\u0027t this also be set if there\u0027s any YCbCr texture? Ah except that we don\u0027t know because it\u0027s not a specific TextureSampleType :/ I guess we can revisit later when optimizing BG validation.",
+      "revId": "111cf70f865c885796edbbba2bc0a40ffca99394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eae94faa_268d1f47",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-15T14:22:29Z",
+      "side": 1,
+      "message": "Yep, that logic has to go in BindGroup validation.",
+      "parentUuid": "00347dc1_1ca0f158",
       "revId": "111cf70f865c885796edbbba2bc0a40ffca99394",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
