@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e42a3ace_eb7173a4",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-15T19:01:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3699cbb_db164ed5",
+      "range": {
+        "startLine": 216,
+        "startChar": 5,
+        "endLine": 216,
+        "endChar": 37
+      },
+      "revId": "f3b3714629ddc410f65f7b9a1c0b70caa2a44b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6781ac4_cc263e4d",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "419c8e44_5efa2933",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-15T19:01:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6781ac4_cc263e4d",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 0
+      },
+      "revId": "f3b3714629ddc410f65f7b9a1c0b70caa2a44b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e71819be_0040d955",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-01-15T12:36:36Z",
       "side": 1,
       "message": "Actually, I don\u0027t understand why don\u0027t we hit this for non-remote platforms.",
+      "range": {
+        "startLine": 287,
+        "startChar": 43,
+        "endLine": 287,
+        "endChar": 62
+      },
+      "revId": "f3b3714629ddc410f65f7b9a1c0b70caa2a44b61",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be66cfbf_4782f28a",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-15T19:01:38Z",
+      "side": 1,
+      "message": "See explanation in the other comment chain.",
+      "parentUuid": "e71819be_0040d955",
       "range": {
         "startLine": 287,
         "startChar": 43,

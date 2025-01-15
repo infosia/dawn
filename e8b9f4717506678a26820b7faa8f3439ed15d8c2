@@ -143,6 +143,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "693a9dbd_053d745b",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-15T19:01:38Z",
+      "side": 1,
+      "message": "This is definitely not helped by the fact that this code tends to have two identically named things in two different packages. A refactor is probably in order at some point.\n\n`result.Tags` is just an alias for a set of strings. `Content.Tags` is:\n\n```\n// Tags holds the tag information parsed in the comments between the\n// \u0027BEGIN TAG HEADER\u0027 and \u0027END TAG HEADER\u0027 markers.\n// Tags are grouped in tag-sets.\ntype Tags struct {\n\t// Map of tag-set name to tags\n\tSets []TagSet\n\t// Map of tag name to tag-set and priority\n\tByName map[string]TagSetAndPriority\n}\n\n// TagSet is a named collection of tags, parsed from the \u0027TAG HEADER\u0027\ntype TagSet struct {\n\tName string      // Name of the tag-set\n\tTags result.Tags // Tags belonging to the tag-set\n}\n```\n\nSo, `c.Tags.Sets` refers to the known tag sets that are defined at the top of the expectation file. `getBroadTagSets` is how we determine which of those known tag sets from the expectation file header correspond to OS, GPU, and device tags by looking for tag sets which overlap with at least one of the known tags for that tag set.\n\nTechnically, the Go code has these tag sets labeled via `TagSet.Name`. However, these are just from scraping the comments from the header, e.g.\n\n```\n# OS\n# tags: [ android linux win10 ]\n```\n\nwould result in\n\n```\nTagSet{\n  Name: \"OS\",\n  Tags: result.NewTags(\"android\", \"linux\", \"win10\"),\n}\n```\n\nHowever, since those comments were always meant for humans and thus don\u0027t necessarily have standardized values, I don\u0027t want to rely on them for automation.",
+      "parentUuid": "f25d10ec_ba5688ef",
+      "range": {
+        "startLine": 194,
+        "startChar": 41,
+        "endLine": 194,
+        "endChar": 62
+      },
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c48202f_27d43977",
         "filename": "tools/src/cts/expectations/update.go",
         "patchSetId": 3
