@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d7b5967_669fc859",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-15T00:35:42Z",
+      "side": 1,
+      "message": "I filed a bug for this! https://crbug.com/389977397\nPlease link it here.\n\nAlso, because this file is untested, we can disable the tests.\n\n```suggestion\nBug: 389977397\nNo-Try: true\nChange-Id: I93232b66fe401716cce031ae1b858c12bc001ae5\n```",
+      "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "377b0592_b9a5c9cc",
@@ -95,6 +112,47 @@
         "endLine": 891,
         "endChar": 56
       },
+      "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33a4e5c6_4c9c4cc9",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-15T00:35:42Z",
+      "side": 1,
+      "message": "Doc for CAN_ADDRESS_2GB:\nhttps://github.com/emscripten-core/emscripten/blob/7aa70aed1703f6f4c9c28a73c4ed73ed51dbf7b8/src/settings_internal.js#L172-L178\nWasm-JS calling convention only has a signed integer (`i`).\nWhen addressing \u003c2GB, pointers can\u0027t be too large so they don\u0027t bother casting them from signed to unsigned. I saw something somewhere that said this was because it increases code size (to add the cast, makes sense).\nWhen addressing \u003e\u003d2GB, they have to do the cast so that pointers will be valid indicies into the HEAPs.\n\n---\n\nAlso never mind my last suggestion, I realized isSignedType would be confusing because you have to understand how this works to know you\u0027re supposed to pass `CAN_ADDRESS_2GB` into this helper. How about we just rename `isPtr` to `argIsPassedAsPointerType`?\n\nBTW, I verified empirically that this code works in MEMORY64 too: in that case we get -1, and, as documented, doesn\u0027t set `CAN_ADDRESS_2GB` (it uses a bigint-\u003ef64 cast instead of an i32-\u003eu32 cast). Of course other stuff is broken in MEMORY64, but we should fix that.",
+      "parentUuid": "7c33273c_5ecebc17",
+      "range": {
+        "startLine": 891,
+        "startChar": 4,
+        "endLine": 891,
+        "endChar": 56
+      },
+      "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2889f08b_03962b8c",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-15T00:35:42Z",
+      "side": 1,
+      "message": "This and all the following ones are actually i64, not size_t. The sentinel value is always `-1` (regardless of CAN_ADDRESS_2GB or MEMORY64).\n\nI looked through all of the usages of size_t in `webgpu.h` and verified the only ones that use sentinels are MapAsync/GetMappedRange/GetConstMappedRange (`WGPU_WHOLE_MAP_SIZE`).",
       "revId": "f6301c2201a324566f5cd06fc12802008dbe1ecf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
