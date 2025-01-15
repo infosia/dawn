@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8a0eb50_7f75fbe5",
+        "filename": "src/tint/api/common/vertex_pulling_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T14:51:48Z",
+      "side": 1,
+      "message": "```suggestion\n/// Describes if a vertex attribute increments with vertex index or instance index.\n```",
+      "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb4a925d_a14d1506",
+        "filename": "src/tint/api/common/vertex_pulling_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T14:51:48Z",
+      "side": 1,
+      "message": "```suggestion\n    /// @param in_array_stride the array stride in bytes of the in buffer\n```\n\nThis is bytes, yea?",
+      "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4be5883_f468f770",
+        "filename": "src/tint/api/common/vertex_pulling_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T14:51:48Z",
+      "side": 1,
+      "message": "No move construct/assign?",
+      "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa9de5f4_8b5615de",
+        "filename": "src/tint/api/common/vertex_pulling_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T14:51:48Z",
+      "side": 1,
+      "message": "Is this really useful? Seems like it\u0027s hiding the type for not much benefit? Why is this one `using`\u0027d but not `std::vector\u003cVertexAttributeDescriptor\u003e` ?",
+      "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbd9dd4c_2ca2c27f",
+        "filename": "src/tint/api/common/vertex_pulling_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-15T14:51:48Z",
+      "side": 1,
+      "message": "This is the same namespace we just closed?",
+      "revId": "ad76ca7a089f6839b83d3a8336e51db0dc71e4ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
