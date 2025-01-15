@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "943d1aa2_39232d45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-15T07:10:43Z",
+      "side": 1,
+      "message": "jrprice@, seems I cannot submit to cq with latest patchset. Would you mind to do a review again? Thanks!",
+      "revId": "35bd068d857c844f5c3d3c23c5c268c4dcc948de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
