@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7cd46c7_dc7b9266",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-15T13:58:52Z",
+      "side": 1,
+      "message": "FYI there are bit twiddling ways to do this in constant time, something like (didn\u0027t test) if we believe that this code will be very hot in the future.",
+      "revId": "3f24fca4a7577086ce69838f0aa33893d349d7e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "625ce5e0_aacceb5c",
