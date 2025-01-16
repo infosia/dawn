@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "43767a03997740de3307864e978bc0dfb3ecd4c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7d98200_7a53b762",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-16T03:25:07Z",
+      "side": 1,
+      "message": "Can you say a little bit about what you are planning to do for this?\n\nAs it currently stands, the bounds below that use `::max()` for the upper limit are not always correct. Take for example a loop with the form:\n```\nfor (var i \u003d 5i; i \u003e 0i; i--) {\n}\n```\nFor this loop variable you\u0027d assign the bounds `[5, INT64_MAX]`, but the actual bounds are `[1, 5]` since it decrements instead of increments.\n\nIs the plan to do all of the same checks that we do in `LoopAnalysis` to check for the simple inc/dec by `1` pattern, and fail to produce any bounds if it doesn\u0027t match that exact pattern?",
+      "revId": "43767a03997740de3307864e978bc0dfb3ecd4c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
