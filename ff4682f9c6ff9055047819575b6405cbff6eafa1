@@ -16,6 +16,24 @@
       "message": "So, just so I understand, the PRESUBMIT.py version will be run by the presubmit bot? (Not everyone uses git cl presubmit so it wont\u0027 necessarily be checked on upload). \n\nThe spellchecker, which bot runs that now? I\u0027m not sure what AyeAye is.",
       "revId": "ff4682f9c6ff9055047819575b6405cbff6eafa1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e258e364_514bf762",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002571
+      },
+      "writtenOn": "2025-01-16T16:51:44Z",
+      "side": 1,
+      "message": "\u003e So, just so I understand, the PRESUBMIT.py version will be run by the presubmit bot? (Not everyone uses git cl presubmit so it wont\u0027 necessarily be checked on upload).\n\n`git cl upload` should implicitly invoke all the on upload checks defined in PRESUBMIT.py. Even if users are able to bypass the checks, the same check will be run as part of presubmit builder once user CQ their changes.\n\n\u003e The spellchecker, which bot runs that now? I\u0027m not sure what AyeAye is.\n\ngo/ayeaye is the intro. It\u0027s not run by a bot in LUCI. In short, it\u0027s a service in google3 that watches for new Gerrit CL upload and runs a varity of analyzers as configured. The chips (Check Contents, Watchlists Analyzer) you saw in dawn CLs are all AyeAye analyzer.",
+      "parentUuid": "674315b5_40863f46",
+      "revId": "ff4682f9c6ff9055047819575b6405cbff6eafa1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
