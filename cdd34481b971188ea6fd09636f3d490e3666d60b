@@ -20,6 +20,121 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a24da690_670d3cde",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be the size of the user immediates?  We don\u0027t need the `if` in this case because we can set 0 bits.",
+      "range": {
+        "startLine": 71,
+        "startChar": 64,
+        "endLine": 71,
+        "endChar": 94
+      },
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddd2da42_9d08e919",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "The backends should decide if we need immediates for numWorkgroups, some of them support it by default and don\u0027t need the injection of immediates.",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9e659a2_0edd5f30",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "```suggestion\n    mImmediateConstantMask |\u003d (pipelineInternalConstants | requiredInternalImmediateConstants);\n```",
+      "range": {
+        "startLine": 82,
+        "startChar": 57,
+        "endLine": 82,
+        "endChar": 58
+      },
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0d9ac2d_6e98236e",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "If possible it would be nice to remove this map. Bit twiddling should always be faster than a flat map lookup, but could be slower than a lookup in ityp::array\u003c...\u003e, not sure.",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4000673_fd08e21f",
+        "filename": "src/dawn/native/ComputePipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "nit: We should have a TODO to make this required, or remove it and have the backends do `mImmediateConstantMask |\u003d` whatever they need.",
+      "fixSuggestions": [
+        {
+          "fixId": "0480c0d6_a9373007",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/ComputePipeline.h",
+              "range": {
+                "startLine": 48,
+                "startChar": 0,
+                "endLine": 48,
+                "endChar": 0
+              },
+              "replacement": "    // TODO(dawn): Make requiredInternalImmediateConstants required.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "58a8d2fb_f4585fbc",
         "filename": "src/dawn/native/ImmediateConstantsLayout.h",
         "patchSetId": 24
@@ -31,6 +146,131 @@
       "writtenOn": "2025-01-16T14:59:44Z",
       "side": 1,
       "message": "I had forgotten but ANGLE has a macro that emits warnings when structs are padded unexpectedly.\n\nTake a look at https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/src/common/debug.h;l\u003d103-121;drc\u003dc3a1cae44e3571844e22932cfbf62fe96e4d2a22 . We could copy it to a utility header and wrap all these structs in `DAWN_ENABLE_STRUCT_PADDING_WARNINGS` and `DAWN_DISABLE_STRUCT_PADDING_WARNINGS`",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81c22488_b07b91ed",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "nit: we should use constexpr to make sure that it\u0027s initialized at compile time. Here it could technically be initialized the first time that we use a function, which would involve a mutex etc. We really want to avoid it ^^\n\nHere don\u0027t we want to just invalidate the immediates that are not in the common prefix to both pipelines? Again we could do that in constant time with some use of popcount etc. It would require adding the \"previousPipeline\" as an argument.\n\nSame thing for compute, so we could have a helper for the bit twiddling stuff.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c6fd7ed_059ba126",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "Is that needed? It should be derived from the layout so it\u0027s already included above.",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c28a2dc0_9a502bec",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f8c34e0_eb8283ed",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "```suggestion\n    void SetImmediateConstantMaskForTesting(ImmediateConstantMask immediateConstantMask);\n```",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa20e8a4_b56f0504",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "We could avoid a map using bit twiddling and `popcount` aka `ScanForward` in our `Math.h`.",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71a67480_eac50a37",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "We could ask the backends to initialize `mImmediateConstantMask` during `InitializeImpl`.",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d518794a_44312aec",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "Same comments as for the compute pipeline.",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -72,6 +312,23 @@
           ]
         }
       ],
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7389eeda_7ff29a9a",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-16T16:51:36Z",
+      "side": 1,
+      "message": "We could replace this with a template magic like (didn\u0027t test):\n\n```\ntemplate\u003ctypename Object, typename Member\u003e\nconstexpr ImmediateConstantMask GetImmediateConstantBlockBits(Member Object::* ptr) {\n    Object obj \u003d {};\n    ptrdiff_t offset \u003d reinterpret_cast\u003cchar*\u003e(\u0026(obj.*ptr)) - reintepret_cast\u003cchar*\u003e(\u0026obj);\n    size_t size \u003d sizeof(Member);\n    // Use these two for the bit twiddling.\n}\n\nconstexpr auto requiredInternalConstants \u003d GetImmediateConstantBlockBits(RenderImmediateConstants::clampFragDepth);\n```\n\nMagic! But the nice thing is that we don\u0027t need to specify things multiple times, and can have everything constexpr.",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
