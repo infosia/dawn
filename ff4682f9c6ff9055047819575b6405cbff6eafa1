@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "674315b5_40863f46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-16T14:57:09Z",
+      "side": 1,
+      "message": "So, just so I understand, the PRESUBMIT.py version will be run by the presubmit bot? (Not everyone uses git cl presubmit so it wont\u0027 necessarily be checked on upload). \n\nThe spellchecker, which bot runs that now? I\u0027m not sure what AyeAye is.",
+      "revId": "ff4682f9c6ff9055047819575b6405cbff6eafa1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
