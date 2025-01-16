@@ -331,6 +331,24 @@
       "message": "We could replace this with a template magic like (didn\u0027t test):\n\n```\ntemplate\u003ctypename Object, typename Member\u003e\nconstexpr ImmediateConstantMask GetImmediateConstantBlockBits(Member Object::* ptr) {\n    Object obj \u003d {};\n    ptrdiff_t offset \u003d reinterpret_cast\u003cchar*\u003e(\u0026(obj.*ptr)) - reintepret_cast\u003cchar*\u003e(\u0026obj);\n    size_t size \u003d sizeof(Member);\n    // Use these two for the bit twiddling.\n}\n\nconstexpr auto requiredInternalConstants \u003d GetImmediateConstantBlockBits(RenderImmediateConstants::clampFragDepth);\n```\n\nMagic! But the nice thing is that we don\u0027t need to specify things multiple times, and can have everything constexpr.",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5bf6d51_d806153b",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-01-16T17:01:01Z",
+      "side": 1,
+      "message": "I tried to make this work myself using the pointer to member stuff. It was very frustrating that offsetof doesn\u0027t work with them.\n\nIf the cost of a stack object is acceptable with old-style offsetof then we\u0027re good! Hopefuly it\u0027s actually constexpr.",
+      "parentUuid": "7389eeda_7ff29a9a",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
