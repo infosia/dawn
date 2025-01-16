@@ -497,6 +497,24 @@
       "parentUuid": "1f41c8f0_af937acc",
       "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c1f7f6c_cc37415d",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-16T20:51:20Z",
+      "side": 1,
+      "message": "Ahh, that\u0027s a lot clearer, thank you.",
+      "parentUuid": "638e2652_69633ca1",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
