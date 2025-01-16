@@ -28,9 +28,13 @@
 #ifndef INCLUDE_WEBGPU_WEBGPU_GLFW_H_
 #define INCLUDE_WEBGPU_WEBGPU_GLFW_H_
 
+#ifdef __cplusplus
 #include <memory>
 
 #include "webgpu/webgpu_cpp.h"
+#else
+#include "webgpu/webgpu.h"
+#endif
 
 #if defined(WGPU_GLFW_SHARED_LIBRARY)
 #if defined(_WIN32)
@@ -52,6 +56,16 @@
 
 struct GLFWwindow;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+WGPU_GLFW_EXPORT WGPUSurface wgpuGlfwCreateSurfaceForWindow(const WGPUInstance instance,
+                                                            struct GLFWwindow* window);
+
+#ifdef __cplusplus
+}
+
 namespace wgpu::glfw {
 
 // Does the necessary setup on the GLFWwindow to allow creating a wgpu::Surface with it and
@@ -67,5 +81,7 @@ WGPU_GLFW_EXPORT std::unique_ptr<wgpu::ChainedStruct, void (*)(wgpu::ChainedStru
 SetupWindowAndGetSurfaceDescriptor(GLFWwindow* window);
 
 }  // namespace wgpu::glfw
+
+#endif
 
 #endif  // INCLUDE_WEBGPU_WEBGPU_GLFW_H_
