@@ -46,6 +46,30 @@
       },
       "revId": "6e9d613462900632b68a8e8ea203d08de2ea68e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "168a6aa9_70d7384b",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b954c2ee_2a120230",
+      "range": {
+        "startLine": 286,
+        "startChar": 4,
+        "endLine": 286,
+        "endChar": 35
+      },
+      "revId": "6e9d613462900632b68a8e8ea203d08de2ea68e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

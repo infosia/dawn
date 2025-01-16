@@ -52,6 +52,60 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "85e8ad2f_d43a3ac9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4769b4eb_cde03300",
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c49c409e_d5835536",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2d239f08_ef651fbe",
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fa66fed_07da58d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65d8231e_e108b9d4",
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3416099_608c0798",
@@ -123,6 +177,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ec24d28_8f953dab",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "74ac8e6f_bbf17777",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 8
+      },
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cee33a9_74a6d98a",
@@ -170,6 +248,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6854a002_69e31e61",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b94ec47_c13c322d",
+      "range": {
+        "startLine": 445,
+        "startChar": 35,
+        "endLine": 445,
+        "endChar": 56
+      },
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8eb0630a_976ce0d5",
@@ -183,6 +285,30 @@
       "writtenOn": "2024-12-03T16:07:15Z",
       "side": 1,
       "message": "Incorrect indentation?",
+      "range": {
+        "startLine": 495,
+        "startChar": 4,
+        "endLine": 495,
+        "endChar": 8
+      },
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67583e1d_81cb23a3",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8eb0630a_976ce0d5",
       "range": {
         "startLine": 495,
         "startChar": 4,
@@ -228,6 +354,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c08e1c78_1271457b",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3273a91e_afbc13c0",
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e097b58c_b8debf17",
@@ -241,6 +385,30 @@
       "writtenOn": "2024-12-03T14:57:22Z",
       "side": 1,
       "message": "These also are features that likely do not need the toggle anymore",
+      "range": {
+        "startLine": 656,
+        "startChar": 27,
+        "endLine": 656,
+        "endChar": 43
+      },
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cad784b_675fcd8e",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e097b58c_b8debf17",
       "range": {
         "startLine": 656,
         "startChar": 27,
@@ -270,6 +438,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8a4c25f4_c92274d3",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "I would prefer to do this in a different CL. I dont understand what this code is doing but this falls outside of the metal 2.3 versions",
+      "parentUuid": "47ebe77f_16559a26",
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e0743269_5174ec0d",
         "filename": "src/dawn/native/metal/TextureMTL.mm",
         "patchSetId": 12
@@ -281,6 +467,30 @@
       "writtenOn": "2024-12-03T16:07:15Z",
       "side": 1,
       "message": "Indendation?",
+      "range": {
+        "startLine": 252,
+        "startChar": 4,
+        "endLine": 252,
+        "endChar": 9
+      },
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fa1e7e7_336d78cc",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e0743269_5174ec0d",
       "range": {
         "startLine": 252,
         "startChar": 4,
@@ -314,6 +524,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e87df82d_f3bd4a7f",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "253cb86d_66161c3f",
+      "range": {
+        "startLine": 413,
+        "startChar": 0,
+        "endLine": 413,
+        "endChar": 5
+      },
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11e443f7_bc9f232c",
@@ -337,6 +571,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c96c1ca_3c4affb7",
+        "filename": "src/dawn/native/metal/UtilsMetal.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "11e443f7_bc9f232c",
+      "range": {
+        "startLine": 314,
+        "startChar": 8,
+        "endLine": 314,
+        "endChar": 13
+      },
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c3b75db_75a4b0d3",
@@ -350,6 +608,30 @@
       "writtenOn": "2024-12-03T16:07:15Z",
       "side": 1,
       "message": "Indentation?",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f57ce7e0_886f81c3",
+        "filename": "src/dawn/tests/white_box/GPUTimestampCalibrationTests_Metal.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T19:10:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0c3b75db_75a4b0d3",
       "range": {
         "startLine": 43,
         "startChar": 4,
