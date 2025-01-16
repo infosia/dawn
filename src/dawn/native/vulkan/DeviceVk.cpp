@@ -98,6 +98,10 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     // Copy the adapter's device info to the device so that we can change the "knobs"
     mDeviceInfo = ToBackend(GetPhysicalDevice())->GetDeviceInfo();
 
+    if (IsRobustnessEnabled() && !mDeviceInfo.features.robustBufferAccess) {
+        return DAWN_INTERNAL_ERROR("Vulkan robustBufferAccess feature required.");
+    }
+
     // Initialize the "instance" procs of our local function table.
     VulkanFunctions* functions = GetMutableFunctions();
     *functions = ToBackend(GetPhysicalDevice())->GetVulkanInstance()->GetFunctions();
