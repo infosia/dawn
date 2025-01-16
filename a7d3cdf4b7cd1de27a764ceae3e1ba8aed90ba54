@@ -410,6 +410,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dde0c931_b8245cd1",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-16T15:07:59Z",
+      "side": 1,
+      "message": "Ah, and it\u0027s safe in MSL because c++14 removed the UB.\n\n(Also, doesn\u0027t do what I mentally thought it did\n\n```\nThe result of E1 \u003c\u003c E2 is E1 left-shifted E2 bit positions; vacated bits are filled with zeros. If E1 has an unsigned type, the value of the result is E1 × 2^E2, reduced modulo one more than the maximum value representable in the result type\n```",
+      "parentUuid": "da142f16_58053675",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36c89ae7_8c372887",
@@ -441,6 +459,24 @@
       "side": 1,
       "message": "It can be `f16` in the shader, in which case we convert to `f16` later. Same for all of the normalized formats.\n\nThe only format where it felt worth directly handling `f16` in this function are the `Float16` formats, since the data is already in the right format.",
       "parentUuid": "36c89ae7_8c372887",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f41c8f0_af937acc",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-16T15:07:59Z",
+      "side": 1,
+      "message": "I think my confusion is, what does `later` mean in this sentence, like we have another transform which does it? I don\u0027t see a cast to `f16` below.",
+      "parentUuid": "530bab6f_880f02ae",
       "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
