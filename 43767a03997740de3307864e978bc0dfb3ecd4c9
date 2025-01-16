@@ -33,6 +33,24 @@
       "message": "Can you say a little bit about what you are planning to do for this?\n\nAs it currently stands, the bounds below that use `::max()` for the upper limit are not always correct. Take for example a loop with the form:\n```\nfor (var i \u003d 5i; i \u003e 0i; i--) {\n}\n```\nFor this loop variable you\u0027d assign the bounds `[5, INT64_MAX]`, but the actual bounds are `[1, 5]` since it decrements instead of increments.\n\nIs the plan to do all of the same checks that we do in `LoopAnalysis` to check for the simple inc/dec by `1` pattern, and fail to produce any bounds if it doesn\u0027t match that exact pattern?",
       "revId": "43767a03997740de3307864e978bc0dfb3ecd4c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d1d4146_5c1ade35",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-16T05:36:05Z",
+      "side": 1,
+      "message": "\u003e As it currently stands, the bounds below that use ::max() for the upper limit are not always correct.\n\nYes you are right. \n\nThe whole bound should come from two parts:\n1. The initializer (in this CL, a bit easier)\n2. The loop exit condition\n\nThe second one is far more complicated than the first one after I complete a prototype so I decide to implement it in another CL. For example it may depend on the binary operator: \"LessThan\" means the bound got from the loop exit condition is the upper bound, while \"GreaterThan\" means it is the lower bound, and even we can find out the loop body won\u0027t be executed (e.g. `for (var i \u003d 5i; i \u003e 10i; i--) {...}`).\n\nIn this CL I just want to test the bound from the loop initializer so I just save the bound like (bound0, ::max()). This will be fixed after we can get the second bound from the loop exit condition.",
+      "parentUuid": "c7d98200_7a53b762",
+      "revId": "43767a03997740de3307864e978bc0dfb3ecd4c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
