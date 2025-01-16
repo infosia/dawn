@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "b2a2efad_d920a715",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T21:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3239a69c_99825c92",
+      "revId": "87c9a452b2c9f1da57e6de1aeddc23f831d5729b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c355a14f_632890de",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 18
@@ -48,6 +66,24 @@
       "writtenOn": "2025-01-16T20:27:33Z",
       "side": 1,
       "message": "Nit: This comment should go.",
+      "revId": "87c9a452b2c9f1da57e6de1aeddc23f831d5729b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d58968fe_7dbe296a",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T21:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a45ab2b8_ea94294d",
       "revId": "87c9a452b2c9f1da57e6de1aeddc23f831d5729b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
