@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "028c24e5_44856d68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-01-16T22:49:51Z",
+      "side": 1,
+      "message": "LGTM w/nit",
+      "revId": "d6cab845a2bb7fc39e2ec9f6ae679f6171356900",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ee59f0b_5d6ea003",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-01-16T22:49:51Z",
+      "side": 1,
+      "message": "Nit: could you split these out into \"isFloat16Renderable\" and \"isFloat32Renderable\" locals? You could define isFloat32Renderable first, then isFloat16Renderable in terms of that, to avoid duplicating the extension string.",
+      "revId": "d6cab845a2bb7fc39e2ec9f6ae679f6171356900",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
