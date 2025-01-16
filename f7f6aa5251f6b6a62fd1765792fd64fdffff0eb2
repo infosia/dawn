@@ -16,6 +16,23 @@
       "message": "PTAL\n\nThis is to fix this error\n\nhttps://ci.chromium.org/ui/p/chromium/builders/try/linux-dawn-rel/b8725721142200658513/test-results?q\u003dExactID%3Aninja%3A%2F%2Fchrome%2Ftest%3Atelemetry_gpu_integration_test%2Fgpu_tests.webgpu_compat_cts_integration_test.WebGpuCompatCtsIntegrationTest.webgpu%3Aapi%2Cvalidation%2Ccapability_checks%2Climits%2CmaxStorageBuffersPerShaderStage%3AcreatePipeline%2Cat_over%3AlimitTest%3D%22atMaximum%22%3BtestValueName%3D%22atLimit%22%3Basync%3Dfalse%3BbindingCombination%3D%22vertexAndFragmentWithPossibleFragmentStageOverflow%22+VHash%3A46de33b5d3e9b7b6\u0026clean\u003d\u0026sortby\u003d\u0026groupby\u003d",
       "revId": "f7f6aa5251f6b6a62fd1765792fd64fdffff0eb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aedb07f1_4747e9ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-01-16T17:26:49Z",
+      "side": 1,
+      "message": "```\nGL_MAX_COMBINED_IMAGE_UNIFORMS vs\n    GL_MAX_FRAGMENT_IMAGE_UNIFORMS\n  GL_MAX_VERTEX_IMAGE_UNIFORMS\ntotal valid entries: 3365\nnum entries where GL_MAX_FRAGMENT_IMAGE_UNIFORMS+\n                  GL_MAX_VERTEX_IMAGE_UNIFORMS \u003e COMBINED: 399\n\n\nCombos where COMBINED \u003c GL_MAX_FRAGMENT_IMAGE_UNIFORMS +\n                        GL_MAX_VERTEX_IMAGE_UNIFORMS\nMAX      MAX      total  MAX      count\nFRAGMENT VERTEX   of     COMBINED of\nIMAGE    IMAGE    limits IMAGE    opengles.gpuinfo.org\nUNIFORMS UNIFORMS \u003c---   UNIFORMS entries\n-------  -------  -----  -------  -------------------\n8        8        16     8        368\n96       96       192    96       18\n24       24       48     24       6\n60       60       120    60       4\n32       32       64     32       2\n8192     2048     10240  8192     1\n```\n\n```\nGL_MAX_COMBINED_SHADER_STORAGE_BLOCKS vs\n    GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS\n  GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS\ntotal valid entries: 3365\nnum entries where GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS+\n                  GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS \u003e COMBINED: 403\n\n\nCombos where COMBINED \u003c GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS +\n                        GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS\nMAX      MAX     total  MAX      count\nFRAGMENT VERTEX  of     COMBINED of\nSHADER   SHADER  limits SHADER   opengles.gpuinfo.org\nSTORAGE  STORAGE \u003c---   STORAGE  entries\nBLOCKS   BLOCKS         BLOCKS\n-------  ------  -----  -------  -------------------\n8        8       16     8        359\n64       64      128    64       21\n35       35      70     35       15\n60       60      120    60       4\n32       32      64     32       2\n16       16      32     16       1\n8192     2048    10240  8192     1\n```\n\n```\ntotal valid entries: 3365\nnum entries where GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS+\n                  GL_MAX_COMBINED_IMAGE_UNIFORMS+\n                  GL_MAX_COLOR_ATTACHMENTS \u003e COMBINED: 812\n\n\nCombos where COMBINED \u003c GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS +\n                        GL_MAX_COMBINED_IMAGE_UNIFORMS +\n                        GL_MAX_COLOR_ATTACHMENTS\nMAX      MAX      MAX         total  MAX       count\nCOMBINED COMBINED COLOR       of     COMBINED  of\nSHADER   IMAGE    ATTACHMENTS limits SHADER    opengles.gpuinfo.org\nSTORAGE  UNIFORMS             \u003c---   OUTPUT    entries\nBLOCKS                               RESOURCES\n-------  -------  ----------  -----  --------  -------------------\n8        8        8           24     8         359\n35       8        4           47     43        292\n10       8        4           22     18        60\n72       192      8           272    200       38\n96       48       8           152    16        37\n80       40       8           128    16        7\n60       60       8           128    60        4\n8        16       8           32     8         3\n0        0        8           8      0         3\n64       64       8           136    72        3\n8        8        8           24     20        2\n16       192      8           216    40        1\n8192     8192     8           16392  8192      1\n0        0        4           4      0         1\n32       16       4           52     48        1\n```",
+      "revId": "f7f6aa5251f6b6a62fd1765792fd64fdffff0eb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
