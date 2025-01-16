@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48fc7d35_c249e00e",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-16T01:36:33Z",
+      "side": 1,
+      "message": "cwallez@ Welcome back! But let me address this optimal way.",
+      "parentUuid": "f288686f_818a82db",
+      "revId": "3f24fca4a7577086ce69838f0aa33893d349d7e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "625ce5e0_aacceb5c",
