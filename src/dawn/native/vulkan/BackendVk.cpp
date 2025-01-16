@@ -654,6 +654,9 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
             for (VkPhysicalDevice vkPhysicalDevice : vkPhysicalDevices) {
                 Ref<PhysicalDevice> physicalDevice =
                     AcquireRef(new PhysicalDevice(mVulkanInstances[icd].Get(), vkPhysicalDevice));
+                if (options->featureLevel == wgpu::FeatureLevel::Compatibility) {
+                    physicalDevice->SetUseCompatibilityMode();
+                }
                 if (instance->ConsumedErrorAndWarnOnce(physicalDevice->Initialize())) {
                     continue;
                 }

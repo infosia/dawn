@@ -70,10 +70,15 @@ class PhysicalDevice : public PhysicalDeviceBase {
         const Surface* surface) const override;
     const AHBFunctions* GetOrLoadAHBFunctions();
 
+    void SetUseCompatibilityMode();
+
   private:
     MaybeError InitializeImpl() override;
     void InitializeSupportedFeaturesImpl() override;
     MaybeError InitializeSupportedLimitsImpl(CombinedLimits* limits) override;
+
+    MaybeError InitializeSupportedLimitsInternal(wgpu::FeatureLevel featureLevel,
+                                                 CombinedLimits* limits);
 
     FeatureValidationResult ValidateFeatureSupportedWithTogglesImpl(
         wgpu::FeatureName feature,
@@ -103,6 +108,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
     VulkanDeviceInfo mDeviceInfo = {};
 
     uint32_t mDefaultComputeSubgroupSize = 0;
+    bool mSupportsCoreFeatureLevel = true;
 
 #if DAWN_PLATFORM_IS(ANDROID)
     std::unique_ptr<AHBFunctions> mAHBFunctions;

@@ -188,7 +188,7 @@ MaybeError PhysicalDevice::InitializeImpl() {
     }
 
     // Needed for the respective WebGPU features.
-    if (!mDeviceInfo.features.depthBiasClamp) {
+    if (mSupportsCoreFeatureLevel && !mDeviceInfo.features.depthBiasClamp) {
         return DAWN_INTERNAL_ERROR("Vulkan depthBiasClamp feature required.");
     }
     if (!mDeviceInfo.features.fragmentStoresAndAtomics) {
@@ -197,10 +197,10 @@ MaybeError PhysicalDevice::InitializeImpl() {
     if (!mDeviceInfo.features.fullDrawIndexUint32) {
         return DAWN_INTERNAL_ERROR("Vulkan fullDrawIndexUint32 feature required.");
     }
-    if (!mDeviceInfo.features.imageCubeArray) {
+    if (mSupportsCoreFeatureLevel && !mDeviceInfo.features.imageCubeArray) {
         return DAWN_INTERNAL_ERROR("Vulkan imageCubeArray feature required.");
     }
-    if (!mDeviceInfo.features.independentBlend) {
+    if (mSupportsCoreFeatureLevel && !mDeviceInfo.features.independentBlend) {
         return DAWN_INTERNAL_ERROR("Vulkan independentBlend feature required.");
     }
     if (!mDeviceInfo.features.sampleRateShading) {
@@ -660,12 +660,16 @@ bool PhysicalDevice::SupportsExternalImages() const {
                                                      mVulkanInstance->GetFunctions());
 }
 
-bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel) const {
-    return true;
+bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel) const {
+    return mSupportsCoreFeatureLevel || featureLevel == wgpu::FeatureLevel::Compatibility;
 }
 
 void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platform,
                                                 TogglesState* adapterToggles) const {}
+
+void PhysicalDevice::SetUseCompatibilityMode() {
+    mSupportsCoreFeatureLevel = false;
+}
 
 void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platform,
                                                TogglesState* deviceToggles) const {
