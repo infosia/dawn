@@ -16,6 +16,64 @@
       "message": "PTAL, thanks!",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58a8d2fb_f4585fbc",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-01-16T14:59:44Z",
+      "side": 1,
+      "message": "I had forgotten but ANGLE has a macro that emits warnings when structs are padded unexpectedly.\n\nTake a look at https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/src/common/debug.h;l\u003d103-121;drc\u003dc3a1cae44e3571844e22932cfbf62fe96e4d2a22 . We could copy it to a utility header and wrap all these structs in `DAWN_ENABLE_STRUCT_PADDING_WARNINGS` and `DAWN_DISABLE_STRUCT_PADDING_WARNINGS`",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e80c6866_173eb39a",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-01-16T14:59:44Z",
+      "side": 1,
+      "message": "I think the arguments here are flipped.",
+      "range": {
+        "startLine": 686,
+        "startChar": 55,
+        "endLine": 686,
+        "endChar": 88
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "98058c55_39ed8a07",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/ShaderModule.cpp",
+              "range": {
+                "startLine": 686,
+                "startChar": 0,
+                "endLine": 687,
+                "endChar": 0
+              },
+              "replacement": "        metadata-\u003eimmediateDataRangeByteSize \u003d RoundUp(entryPoint.push_constant_size, 4u);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
