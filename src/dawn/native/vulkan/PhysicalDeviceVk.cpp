@@ -174,10 +174,6 @@ MaybeError PhysicalDevice::InitializeImpl() {
         return DAWN_INTERNAL_ERROR("Vulkan 1.1 or Vulkan 1.0 with KHR_Maintenance2 required.");
     }
 
-    // Needed for security
-    if (!mDeviceInfo.features.robustBufferAccess) {
-        return DAWN_INTERNAL_ERROR("Vulkan robustBufferAccess feature required.");
-    }
 
     if (!mDeviceInfo.features.textureCompressionBC &&
         !(mDeviceInfo.features.textureCompressionETC2 &&
