@@ -67,6 +67,24 @@
       "message": "Can\u0027t this go now?",
       "revId": "87c9a452b2c9f1da57e6de1aeddc23f831d5729b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0042a45c_127a5a36",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-16T20:29:35Z",
+      "side": 1,
+      "message": "I intentionally added this back as a failsafe to give us a nice error in case we get a bug for unsupported device.",
+      "parentUuid": "f0286d5e_0caf6de1",
+      "revId": "87c9a452b2c9f1da57e6de1aeddc23f831d5729b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
