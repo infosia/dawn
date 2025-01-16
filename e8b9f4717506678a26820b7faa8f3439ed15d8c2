@@ -189,6 +189,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc42b296_7580c64a",
+        "filename": "tools/src/cts/expectations/update.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-16T18:31:08Z",
+      "side": 1,
+      "message": "Correct.",
+      "parentUuid": "09320604_b069f12d",
+      "range": {
+        "startLine": 194,
+        "startChar": 41,
+        "endLine": 194,
+        "endChar": 62
+      },
+      "revId": "e8b9f4717506678a26820b7faa8f3439ed15d8c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c48202f_27d43977",
