@@ -34,6 +34,24 @@
       "parentUuid": "ff4e719e_d65befd1",
       "revId": "689529ed608dacb9eb84b48eb21f107c67721f1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84c0607d_f7bf5cbd",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-16T15:54:21Z",
+      "side": 1,
+      "message": "Discussed out of band. This should be failing, but causes 100+ test failures.\n\nPoR is to land this CL without the `kIsConverter` check, and have a follow up CL that adds the check in with a bunch of code/test fixups to resolve all of the then disallowed identiy converts.",
+      "parentUuid": "5f91bc15_ec20f9d9",
+      "revId": "689529ed608dacb9eb84b48eb21f107c67721f1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
