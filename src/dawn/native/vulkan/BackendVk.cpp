@@ -657,11 +657,22 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
                 if (instance->ConsumedErrorAndWarnOnce(physicalDevice->Initialize())) {
                     continue;
                 }
+                if (!physicalDevice->SupportsFeatureLevel(wgpu::FeatureLevel::Core)) {
+                    // If the physical device doesn't support core then record warning about why
+                    // that was.
+                    instance->ConsumedErrorAndWarnOnce(physicalDevice->TakeCoreErrorData());
+                }
+                if (!physicalDevice->SupportsFeatureLevel(options->featureLevel)) {
+                    continue;
+                }
                 mPhysicalDevices[icd].push_back(std::move(physicalDevice));
             }
         }
-        physicalDevices.insert(physicalDevices.end(), mPhysicalDevices[icd].begin(),
-                               mPhysicalDevices[icd].end());
+        for (auto& physicalDevice : mPhysicalDevices[icd]) {
+            if (physicalDevice->SupportsFeatureLevel(options->featureLevel)) {
+                physicalDevices.push_back(physicalDevice);
+            }
+        }
     }
     return physicalDevices;
 }

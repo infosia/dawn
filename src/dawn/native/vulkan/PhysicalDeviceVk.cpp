@@ -188,8 +188,9 @@ MaybeError PhysicalDevice::InitializeImpl() {
     }
 
     // Needed for the respective WebGPU features.
-    if (!mDeviceInfo.features.depthBiasClamp) {
-        return DAWN_INTERNAL_ERROR("Vulkan depthBiasClamp feature required.");
+    if (mSupportsCoreFeatureLevel && !mDeviceInfo.features.depthBiasClamp) {
+        mSupportsCoreFeatureLevel = false;
+        mCoreErrorData = DAWN_INTERNAL_ERROR("Vulkan depthBiasClamp feature required.");
     }
     if (!mDeviceInfo.features.fragmentStoresAndAtomics) {
         return DAWN_INTERNAL_ERROR("Vulkan fragmentStoresAndAtomics feature required.");
@@ -197,11 +198,13 @@ MaybeError PhysicalDevice::InitializeImpl() {
     if (!mDeviceInfo.features.fullDrawIndexUint32) {
         return DAWN_INTERNAL_ERROR("Vulkan fullDrawIndexUint32 feature required.");
     }
-    if (!mDeviceInfo.features.imageCubeArray) {
-        return DAWN_INTERNAL_ERROR("Vulkan imageCubeArray feature required.");
+    if (mSupportsCoreFeatureLevel && !mDeviceInfo.features.imageCubeArray) {
+        mSupportsCoreFeatureLevel = false;
+        mCoreErrorData = DAWN_INTERNAL_ERROR("Vulkan imageCubeArray feature required.");
     }
-    if (!mDeviceInfo.features.independentBlend) {
-        return DAWN_INTERNAL_ERROR("Vulkan independentBlend feature required.");
+    if (mSupportsCoreFeatureLevel && !mDeviceInfo.features.independentBlend) {
+        mSupportsCoreFeatureLevel = false;
+        mCoreErrorData = DAWN_INTERNAL_ERROR("Vulkan independentBlend feature required.");
     }
     if (!mDeviceInfo.features.sampleRateShading) {
         return DAWN_INTERNAL_ERROR("Vulkan sampleRateShading feature required.");
@@ -471,7 +474,22 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
-    GetDefaultLimitsForSupportedFeatureLevel(&limits->v1);
+    if (mSupportsCoreFeatureLevel) {
+        MaybeError result = InitializeSupportedLimitsInternal(wgpu::FeatureLevel::Core, limits);
+        if (result.IsSuccess()) {
+            return result;
+        }
+
+        mSupportsCoreFeatureLevel = false;
+        mCoreErrorData = result.AcquireError();
+    }
+
+    return InitializeSupportedLimitsInternal(wgpu::FeatureLevel::Compatibility, limits);
+}
+
+MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel featureLevel,
+                                                             CombinedLimits* limits) {
+    GetDefaultLimits(&limits->v1, featureLevel);
     CombinedLimits baseLimits = *limits;
 
     const VkPhysicalDeviceLimits& vkLimits = mDeviceInfo.properties.limits;
@@ -660,8 +678,8 @@ bool PhysicalDevice::SupportsExternalImages() const {
                                                      mVulkanInstance->GetFunctions());
 }
 
-bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel) const {
-    return true;
+bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel) const {
+    return mSupportsCoreFeatureLevel || featureLevel == wgpu::FeatureLevel::Compatibility;
 }
 
 void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platform,
@@ -1078,6 +1096,11 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) c
     if (auto* vkProperties = info.Get<AdapterPropertiesVk>()) {
         vkProperties->driverVersion = mDeviceInfo.properties.driverVersion;
     }
+}
+
+std::unique_ptr<ErrorData> PhysicalDevice::TakeCoreErrorData() {
+    DAWN_ASSERT(mCoreErrorData);
+    return std::move(mCoreErrorData);
 }
 
 void PhysicalDevice::PopulateBackendFormatCapabilities(
