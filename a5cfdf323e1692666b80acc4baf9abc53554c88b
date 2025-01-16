@@ -39,6 +39,30 @@
       },
       "revId": "a5cfdf323e1692666b80acc4baf9abc53554c88b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5abf0604_1f142803",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000030
+      },
+      "writtenOn": "2025-01-16T09:56:23Z",
+      "side": 1,
+      "message": "Done. Also updated the LP/HP to LPG(low power graphics)/HPG(high performance graphics) for Xe architectures. For Tigerlake/Alderlake/Raptorlake, their architectures are Xe-LP, which also called Gen12LP, Meteorlake and Arrowlake use a different architecture called Xe-LPG, see https://dgpu-docs.intel.com/devices/hardware-table.html.",
+      "parentUuid": "eb8b2982_1313773d",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 30
+      },
+      "revId": "a5cfdf323e1692666b80acc4baf9abc53554c88b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
