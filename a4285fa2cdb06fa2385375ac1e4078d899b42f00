@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcca4879_4049287d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-16T14:59:31Z",
+      "side": 1,
+      "message": "My random sampling of the expectations changes were all marked `INVALID`, so I think this works.",
+      "revId": "a4285fa2cdb06fa2385375ac1e4078d899b42f00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
