@@ -345,15 +345,21 @@ struct State {
         call->Destroy();
     }
 
-    // GLSL `bitCount` always returns an `i32` so we need to convert it. Convert to a `bitCount`
+    // GLSL `bitCount` always returns an `i32` so may need to converted. Convert to a `bitCount`
     // call to make it clear this isn't `countOneBits`.
     void CountOneBits(core::ir::Call* call) {
-        auto* result_ty = call->Result(0)->Type();
+        auto* call_ty = call->Result(0)->Type();
+        auto* bitcount_ty = ty.MatchWidth(ty.i32(), call_ty);
 
         b.InsertBefore(call, [&] {
-            auto* c = b.Call<glsl::ir::BuiltinCall>(ty.MatchWidth(ty.i32(), result_ty),
-                                                    glsl::BuiltinFn::kBitCount, call->Args()[0]);
-            b.ConvertWithResult(call->DetachResult(), c);
+            if (!call_ty->Equals(*bitcount_ty)) {
+                auto* c = b.Call<glsl::ir::BuiltinCall>(bitcount_ty, glsl::BuiltinFn::kBitCount,
+                                                        call->Args()[0]);
+                b.ConvertWithResult(call->DetachResult(), c);
+            } else {
+                b.CallWithResult<glsl::ir::BuiltinCall>(
+                    call->DetachResult(), glsl::BuiltinFn::kBitCount, call->Args()[0]);
+            }
         });
         call->Destroy();
     }
