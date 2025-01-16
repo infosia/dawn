@@ -69,6 +69,24 @@
       "parentUuid": "a8ff7634_84a60434",
       "revId": "e70c8291830dba38ef64feea310a030466b1a00e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f000d5ce_db444600",
+        "filename": "test/tint/builtins/gen/literal/textureDimensions/18160d.wgsl.expected.glsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-16T15:34:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c342fddc_566084a9",
+      "revId": "e70c8291830dba38ef64feea310a030466b1a00e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
