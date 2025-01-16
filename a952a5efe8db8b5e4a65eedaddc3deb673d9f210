@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32dc4979_358e5107",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-16T15:51:40Z",
+      "side": 1,
+      "message": "Thoughts? I could spilt to a header, but was annoyed that the naming would be the opposite of the webgpu.h/webgpu_cpp.h.",
+      "revId": "a952a5efe8db8b5e4a65eedaddc3deb673d9f210",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
