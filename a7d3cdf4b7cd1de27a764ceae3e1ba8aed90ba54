@@ -479,6 +479,24 @@
       "parentUuid": "530bab6f_880f02ae",
       "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "638e2652_69633ca1",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-16T20:48:54Z",
+      "side": 1,
+      "message": "`later` meant in the `Load()` function, which is the one that calls this function. \n\nI\u0027ve moved that conversion into this function now to make everything more consistent, and updated the comment to reflect that. Hopefully makes more sense now.",
+      "parentUuid": "1f41c8f0_af937acc",
+      "revId": "a7d3cdf4b7cd1de27a764ceae3e1ba8aed90ba54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
