@@ -243,9 +243,9 @@ struct State {
             auto* original_value = b.Var(ty.ptr(function, type));
             original_value->SetInitializer(b.Zero(type));
 
-            b.MemberCall<hlsl::ir::MemberBuiltinCall>(ty.void_(), fn, var,
-                                                      b.Convert(type, OffsetToValue(offset)),
-                                                      args[1], original_value);
+            b.MemberCall<hlsl::ir::MemberBuiltinCall>(
+                ty.void_(), fn, var, b.AddConvertIfNeeded(type, OffsetToValue(offset)), args[1],
+                original_value);
             b.LoadWithResult(call->DetachResult(), original_value);
         });
         call->Destroy();

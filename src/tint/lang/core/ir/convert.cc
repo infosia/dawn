@@ -39,6 +39,12 @@ namespace tint::core::ir {
 Convert::Convert(Id id) : Base(id) {}
 
 Convert::Convert(Id id, InstructionResult* result, Value* value) : Base(id) {
+    if (result && value && value->Type()->Equals(*result->Type())) {
+        fprintf(stderr, "RHARRISON: convert '{%s}' -> '{%s}'\n",
+                value->Type()->FriendlyName().c_str(), result->Type()->FriendlyName().c_str());
+        fflush(stderr);
+        TINT_UNREACHABLE();
+    }
     AddOperand(Convert::kValueOperandOffset, value);
     AddResult(result);
 }
