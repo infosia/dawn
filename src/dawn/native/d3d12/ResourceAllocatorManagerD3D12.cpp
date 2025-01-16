@@ -41,11 +41,12 @@
 
 namespace dawn::native::d3d12 {
 namespace {
-MemorySegment GetMemorySegment(Device* device, D3D12_HEAP_TYPE heapType) {
+MemorySegment GetMemorySegment(Device* device, ResourceHeapKind resourceHeapKind) {
     if (device->GetDeviceInfo().isUMA) {
         return MemorySegment::Local;
     }
 
+    D3D12_HEAP_TYPE heapType = GetD3D12HeapType(resourceHeapKind);
     D3D12_HEAP_PROPERTIES heapProperties =
         device->GetD3D12Device()->GetCustomHeapProperties(0, heapType);
 
@@ -54,24 +55,6 @@ MemorySegment GetMemorySegment(Device* device, D3D12_HEAP_TYPE heapType) {
     }
 
     return MemorySegment::NonLocal;
-}
-
-D3D12_HEAP_TYPE GetD3D12HeapType(ResourceHeapKind resourceHeapKind) {
-    switch (resourceHeapKind) {
-        case Readback_OnlyBuffers:
-        case Readback_AllBuffersAndTextures:
-            return D3D12_HEAP_TYPE_READBACK;
-        case Default_AllBuffersAndTextures:
-        case Default_OnlyBuffers:
-        case Default_OnlyNonRenderableOrDepthTextures:
-        case Default_OnlyRenderableOrDepthTextures:
-            return D3D12_HEAP_TYPE_DEFAULT;
-        case Upload_OnlyBuffers:
-        case Upload_AllBuffersAndTextures:
-            return D3D12_HEAP_TYPE_UPLOAD;
-        case EnumCount:
-            DAWN_UNREACHABLE();
-    }
 }
 
 D3D12_HEAP_FLAGS GetD3D12HeapFlags(ResourceHeapKind resourceHeapKind) {
@@ -357,10 +340,6 @@ D3D12_HEAP_FLAGS GetHeapFlagsForCommittedResource(Device* device,
 }  // namespace
 
 ResourceAllocatorManager::ResourceAllocatorManager(Device* device) : mDevice(device) {
-    mResourceHeapTier = (mDevice->IsToggleEnabled(Toggle::UseD3D12ResourceHeapTier2))
-                            ? mDevice->GetDeviceInfo().resourceHeapTier
-                            : 1;
-
     D3D12_HEAP_FLAGS createNotZeroedHeapFlag =
         mDevice->IsToggleEnabled(Toggle::D3D12CreateNotZeroedHeap)
             ? D3D12_HEAP_FLAG_CREATE_NOT_ZEROED
@@ -370,8 +349,7 @@ ResourceAllocatorManager::ResourceAllocatorManager(Device* device) : mDevice(dev
         const ResourceHeapKind resourceHeapKind = static_cast<ResourceHeapKind>(i);
         D3D12_HEAP_FLAGS heapFlags = GetD3D12HeapFlags(resourceHeapKind) | createNotZeroedHeapFlag;
         mHeapAllocators[i] = std::make_unique<HeapAllocator>(
-            mDevice, GetD3D12HeapType(resourceHeapKind), heapFlags,
-            GetMemorySegment(device, GetD3D12HeapType(resourceHeapKind)));
+            mDevice, resourceHeapKind, heapFlags, GetMemorySegment(mDevice, resourceHeapKind));
         mPooledHeapAllocators[i] =
             std::make_unique<PooledResourceMemoryAllocator>(mHeapAllocators[i].get());
         mSubAllocatedResourceAllocators[i] = std::make_unique<BuddyMemoryAllocator>(
@@ -395,7 +373,7 @@ ResourceAllocatorManager::~ResourceAllocatorManager() {
 }
 
 ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::AllocateMemory(
-    D3D12_HEAP_TYPE heapType,
+    ResourceHeapKind resourceHeapKind,
     const D3D12_RESOURCE_DESC& resourceDescriptor,
     D3D12_RESOURCE_STATES initialUsage,
     uint32_t colorFormatBytesPerBlock,
@@ -434,7 +412,7 @@ ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::AllocateMemory(
     // Attempt to satisfy the request using sub-allocation (placed resource in a heap).
     if (!ShouldAllocateAsCommittedResource(mDevice, forceAllocateAsCommittedResource)) {
         ResourceHeapAllocation subAllocation;
-        DAWN_TRY_ASSIGN(subAllocation, CreatePlacedResource(heapType, revisedDescriptor,
+        DAWN_TRY_ASSIGN(subAllocation, CreatePlacedResource(resourceHeapKind, revisedDescriptor,
                                                             optimizedClearValue, initialUsage));
         if (subAllocation.GetInfo().mMethod != AllocationMethod::kInvalid) {
             return std::move(subAllocation);
@@ -443,7 +421,7 @@ ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::AllocateMemory(
 
     // If sub-allocation fails, fall-back to direct allocation (committed resource).
     ResourceHeapAllocation directAllocation;
-    DAWN_TRY_ASSIGN(directAllocation, CreateCommittedResource(heapType, revisedDescriptor,
+    DAWN_TRY_ASSIGN(directAllocation, CreateCommittedResource(resourceHeapKind, revisedDescriptor,
                                                               optimizedClearValue, initialUsage));
     if (directAllocation.GetInfo().mMethod != AllocationMethod::kInvalid) {
         return std::move(directAllocation);
@@ -495,21 +473,18 @@ void ResourceAllocatorManager::FreeMemory(ResourceHeapAllocation& allocation) {
 
     const D3D12_RESOURCE_DESC resourceDescriptor = allocation.GetD3D12Resource()->GetDesc();
 
-    const size_t resourceHeapKindIndex = GetResourceHeapKind(
-        resourceDescriptor.Dimension, heapProp.Type, resourceDescriptor.Flags, mResourceHeapTier);
+    const size_t resourceHeapKindIndex =
+        GetResourceHeapKind(resourceDescriptor.Dimension, heapProp.Type, resourceDescriptor.Flags,
+                            mDevice->GetResourceHeapTier());
 
     mSubAllocatedResourceAllocators[resourceHeapKindIndex]->Deallocate(allocation);
 }
 
 ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::CreatePlacedResource(
-    D3D12_HEAP_TYPE heapType,
+    ResourceHeapKind resourceHeapKind,
     const D3D12_RESOURCE_DESC& requestedResourceDescriptor,
     const D3D12_CLEAR_VALUE* optimizedClearValue,
     D3D12_RESOURCE_STATES initialUsage) {
-    const ResourceHeapKind resourceHeapKind =
-        GetResourceHeapKind(requestedResourceDescriptor.Dimension, heapType,
-                            requestedResourceDescriptor.Flags, mResourceHeapTier);
-
     D3D12_RESOURCE_DESC resourceDescriptor = requestedResourceDescriptor;
     resourceDescriptor.Alignment =
         GetInitialResourcePlacementAlignment(requestedResourceDescriptor, mDevice);
@@ -579,16 +554,11 @@ ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::CreatePlacedReso
 }
 
 ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::CreateCommittedResource(
-    D3D12_HEAP_TYPE heapType,
+    ResourceHeapKind resourceHeapKind,
     const D3D12_RESOURCE_DESC& resourceDescriptor,
     const D3D12_CLEAR_VALUE* optimizedClearValue,
     D3D12_RESOURCE_STATES initialUsage) {
-    D3D12_HEAP_PROPERTIES heapProperties;
-    heapProperties.Type = heapType;
-    heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-    heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-    heapProperties.CreationNodeMask = 0;
-    heapProperties.VisibleNodeMask = 0;
+    D3D12_HEAP_PROPERTIES heapProperties = GetD3D12HeapProperties(resourceHeapKind);
 
     // If d3d tells us the resource size is invalid, treat the error as OOM.
     // Otherwise, creating the resource could cause a device loss (too large).
@@ -610,7 +580,7 @@ ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::CreateCommittedR
     // ensure enough free memory exists before allocating to avoid an out-of-memory error when
     // overcommitted.
     DAWN_TRY(mDevice->GetResidencyManager()->EnsureCanAllocate(
-        resourceInfo.SizeInBytes, GetMemorySegment(mDevice, heapType)));
+        resourceInfo.SizeInBytes, GetMemorySegment(mDevice, resourceHeapKind)));
 
     // Note: Heap flags are inferred by the resource descriptor and do not need to be explicitly
     // provided to CreateCommittedResource.
@@ -634,8 +604,8 @@ ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::CreateCommittedR
     // heap granularity, every directly allocated ResourceHeapAllocation also stores a Heap
     // object. This object is created manually, and must be deleted manually upon deallocation
     // of the committed resource.
-    Heap* heap =
-        new Heap(committedResource, GetMemorySegment(mDevice, heapType), resourceInfo.SizeInBytes);
+    Heap* heap = new Heap(committedResource, GetMemorySegment(mDevice, resourceHeapKind),
+                          resourceInfo.SizeInBytes);
 
     // Calling CreateCommittedResource implicitly calls MakeResident on the resource. We must
     // track this to avoid calling MakeResident a second time.

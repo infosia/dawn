@@ -116,6 +116,26 @@ size_t D3D12BufferSizeAlignment(wgpu::BufferUsage usage) {
     }
     return 1;
 }
+
+ResourceHeapKind GetResourceHeapKind(wgpu::BufferUsage bufferUsage, uint32_t resourceHeapTier) {
+    if (resourceHeapTier >= 2) {
+        if (bufferUsage & wgpu::BufferUsage::MapWrite) {
+            return ResourceHeapKind::Upload_AllBuffersAndTextures;
+        }
+        if (bufferUsage & wgpu::BufferUsage::MapRead) {
+            return ResourceHeapKind::Readback_AllBuffersAndTextures;
+        }
+        return ResourceHeapKind::Default_AllBuffersAndTextures;
+    }
+
+    if (bufferUsage & wgpu::BufferUsage::MapWrite) {
+        return ResourceHeapKind::Upload_OnlyBuffers;
+    }
+    if (bufferUsage & wgpu::BufferUsage::MapRead) {
+        return ResourceHeapKind::Readback_OnlyBuffers;
+    }
+    return ResourceHeapKind::Default_OnlyBuffers;
+}
 }  // namespace
 
 // static
@@ -179,33 +199,37 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
     // and robust resource initialization.
     resourceDescriptor.Flags = D3D12ResourceFlags(GetInternalUsage() | wgpu::BufferUsage::CopyDst);
 
-    auto heapType = D3D12HeapType(GetInternalUsage());
+    ResourceHeapKind resourceHeapKind =
+        GetResourceHeapKind(GetInternalUsage(), ToBackend(GetDevice())->GetResourceHeapTier());
     mLastState = D3D12_RESOURCE_STATE_COMMON;
 
-    switch (heapType) {
-        // D3D12 requires buffers on the READBACK heap to have the D3D12_RESOURCE_STATE_COPY_DEST
-        // state
-        case D3D12_HEAP_TYPE_READBACK: {
+    switch (resourceHeapKind) {
+            // D3D12 requires buffers on the READBACK heap to have the
+            // D3D12_RESOURCE_STATE_COPY_DEST state
+        case ResourceHeapKind::Readback_AllBuffersAndTextures:
+        case ResourceHeapKind::Readback_OnlyBuffers: {
             mLastState |= D3D12_RESOURCE_STATE_COPY_DEST;
             mFixedResourceState = true;
             break;
         }
-        // D3D12 requires buffers on the UPLOAD heap to have the D3D12_RESOURCE_STATE_GENERIC_READ
-        // state
-        case D3D12_HEAP_TYPE_UPLOAD: {
+            // D3D12 requires buffers on the UPLOAD heap to have the
+            // D3D12_RESOURCE_STATE_GENERIC_READ state
+        case ResourceHeapKind::Upload_AllBuffersAndTextures:
+        case ResourceHeapKind::Upload_OnlyBuffers: {
             mLastState |= D3D12_RESOURCE_STATE_GENERIC_READ;
             mFixedResourceState = true;
             break;
         }
-        case D3D12_HEAP_TYPE_DEFAULT:
-        case D3D12_HEAP_TYPE_CUSTOM:
-        default:
+        case ResourceHeapKind::Default_AllBuffersAndTextures:
+        case ResourceHeapKind::Default_OnlyBuffers:
             break;
+        default:
+            DAWN_UNREACHABLE();
     }
 
-    DAWN_TRY_ASSIGN(
-        mResourceAllocation,
-        ToBackend(GetDevice())->AllocateMemory(heapType, resourceDescriptor, mLastState, 0));
+    DAWN_TRY_ASSIGN(mResourceAllocation,
+                    ToBackend(GetDevice())
+                        ->AllocateMemory(resourceHeapKind, resourceDescriptor, mLastState, 0));
 
     SetLabelImpl();
 
