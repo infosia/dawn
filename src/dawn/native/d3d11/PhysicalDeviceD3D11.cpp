@@ -131,6 +131,9 @@ MaybeError PhysicalDevice::InitializeImpl() {
     mFeatureLevel = mD3D11Device->GetFeatureLevel();
     DAWN_TRY_ASSIGN(mDeviceInfo, GatherDeviceInfo(GetHardwareAdapter(), mD3D11Device));
 
+    DAWN_INVALID_IF(!mDeviceInfo.supportsMonitoredFence && !mDeviceInfo.supportsNonMonitoredFence,
+                    "Either Monitored Fences or Non-monitored Fences must be supported.");
+
     // Base::InitializeImpl() cannot distinguish between discrete and integrated GPUs, so we need to
     // overwrite it.
     if (mAdapterType == wgpu::AdapterType::DiscreteGPU && mDeviceInfo.isUMA) {
