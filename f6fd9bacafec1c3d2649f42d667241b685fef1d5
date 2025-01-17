@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "867d884f_5dd488fa",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-01-17T08:22:18Z",
+      "side": 1,
+      "message": "I believe you can remove `enableTimestampQuery` and `enableTimestampQueryInsidePasses` variables.\n```suggestion\n        EnableFeature(Feature::TimestampQuery);\n\n        if (SupportCounterSamplingAtCommandBoundary(*mDevice)) {\n            EnableFeature(Feature::ChromiumExperimentalTimestampQueryInsidePasses);\n        }\n```",
+      "range": {
+        "startLine": 608,
+        "startChar": 0,
+        "endLine": 619,
+        "endChar": 9
+      },
+      "revId": "f6fd9bacafec1c3d2649f42d667241b685fef1d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
