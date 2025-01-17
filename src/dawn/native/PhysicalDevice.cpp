@@ -48,8 +48,8 @@ PhysicalDeviceBase::PhysicalDeviceBase(wgpu::BackendType backend) : mBackend(bac
 
 PhysicalDeviceBase::~PhysicalDeviceBase() = default;
 
-MaybeError PhysicalDeviceBase::Initialize() {
-    DAWN_TRY_CONTEXT(InitializeImpl(), "initializing adapter (backend=%s)", mBackend);
+MaybeError PhysicalDeviceBase::Initialize(InstanceBase* instance) {
+    DAWN_TRY_CONTEXT(InitializeImpl(instance), "initializing adapter (backend=%s)", mBackend);
     InitializeVendorArchitectureImpl();
 
     EnableFeature(Feature::DawnNative);
@@ -59,7 +59,7 @@ MaybeError PhysicalDeviceBase::Initialize() {
     InitializeSupportedFeaturesImpl();
 
     DAWN_TRY_CONTEXT(
-        InitializeSupportedLimitsImpl(&mLimits),
+        InitializeSupportedLimitsImpl(instance, &mLimits),
         "gathering supported limits for \"%s\" - \"%s\" (vendorId=%#06x deviceId=%#06x "
         "backend=%s type=%s)",
         mName, mDriverDescription, mVendorId, mDeviceId, mBackend, mAdapterType);

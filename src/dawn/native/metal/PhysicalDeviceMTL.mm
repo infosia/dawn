@@ -573,7 +573,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
 #endif
 }
 
-MaybeError PhysicalDevice::InitializeImpl() {
+MaybeError PhysicalDevice::InitializeImpl(InstanceBase* instance) {
     return {};
 }
 
@@ -816,7 +816,8 @@ void PhysicalDevice::InitializeVendorArchitectureImpl() {
     }
 }
 
-MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
+MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                                         CombinedLimits* limits) {
     struct MTLDeviceLimits {
         uint32_t maxVertexAttribsPerDescriptor;
         uint32_t maxBufferArgumentEntriesPerFunc;

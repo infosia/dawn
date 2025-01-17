@@ -84,7 +84,7 @@ ResultOrError<PhysicalDeviceSurfaceCapabilities> PhysicalDevice::GetSurfaceCapab
     return capabilities;
 }
 
-MaybeError PhysicalDevice::InitializeImpl() {
+MaybeError PhysicalDevice::InitializeImpl(InstanceBase* instance) {
     DXGI_ADAPTER_DESC1 adapterDesc;
     GetHardwareAdapter()->GetDesc1(&adapterDesc);
 

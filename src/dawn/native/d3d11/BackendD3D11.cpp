@@ -137,7 +137,7 @@ ResultOrError<Ref<PhysicalDeviceBase>> Backend::CreatePhysicalDevice(
 
     Ref<PhysicalDevice> physicalDevice =
         AcquireRef(new PhysicalDevice(this, std::move(dxgiAdapter4), std::move(d3d11Device)));
-    DAWN_TRY(physicalDevice->Initialize());
+    DAWN_TRY(physicalDevice->Initialize(GetInstance()));
 
     return {std::move(physicalDevice)};
 }

@@ -183,7 +183,7 @@ class Device final : public DeviceBase {
 
 class PhysicalDevice : public PhysicalDeviceBase {
   public:
-    PhysicalDevice();
+    explicit PhysicalDevice(InstanceBase* instance);
     ~PhysicalDevice() override;
 
     // PhysicalDeviceBase Implementation
@@ -199,9 +199,10 @@ class PhysicalDevice : public PhysicalDeviceBase {
     using PhysicalDeviceBase::SetSupportedFeaturesForTesting;
 
   private:
-    MaybeError InitializeImpl() override;
+    MaybeError InitializeImpl(InstanceBase* instance) override;
     void InitializeSupportedFeaturesImpl() override;
-    MaybeError InitializeSupportedLimitsImpl(CombinedLimits* limits) override;
+    MaybeError InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                             CombinedLimits* limits) override;
 
     FeatureValidationResult ValidateFeatureSupportedWithTogglesImpl(
         wgpu::FeatureName feature,

@@ -102,7 +102,8 @@ bool IsSwiftShader(std::string_view renderer) {
 }  // anonymous namespace
 
 // static
-ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType backendType,
+ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(InstanceBase* instance,
+                                                          wgpu::BackendType backendType,
                                                           Ref<DisplayEGL> display,
                                                           bool forceES31AndNoExtensions) {
     const EGLFunctions& egl = display->egl;
@@ -125,7 +126,7 @@ ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType back
 
     Ref<PhysicalDevice> physicalDevice =
         AcquireRef(new PhysicalDevice(backendType, std::move(display)));
-    DAWN_TRY_WITH_CLEANUP(physicalDevice->Initialize(), {
+    DAWN_TRY_WITH_CLEANUP(physicalDevice->Initialize(instance), {
         egl.MakeCurrent(eglDisplay, prevDrawSurface, prevReadSurface, prevContext);
     });
 
@@ -146,7 +147,7 @@ bool PhysicalDevice::SupportsExternalImages() const {
     return GetBackendType() == wgpu::BackendType::OpenGLES;
 }
 
-MaybeError PhysicalDevice::InitializeImpl() {
+MaybeError PhysicalDevice::InitializeImpl(InstanceBase* instance) {
     DAWN_TRY(mFunctions.Initialize(mDisplay->egl.GetProcAddress));
 
     // In some cases (like like of EGL_KHR_create_context) we don't know before this point that we
@@ -303,7 +304,8 @@ GLint GetIndexed(const OpenGLFunctions& gl, GLenum pname, GLuint index) {
 }
 }  // namespace
 
-MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
+MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                                         CombinedLimits* limits) {
     const OpenGLFunctions& gl = mFunctions;
     GetDefaultLimitsForSupportedFeatureLevel(&limits->v1);
 
