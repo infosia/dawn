@@ -684,6 +684,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "20be8353_245cdf19",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:53:55Z",
+      "side": 1,
+      "message": "One assumption is `f16` related elements. It doens\u0027t support now but maybe in future.",
+      "parentUuid": "240f7e49_52f952d3",
+      "range": {
+        "startLine": 686,
+        "startChar": 55,
+        "endLine": 686,
+        "endChar": 88
+      },
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7389eeda_7ff29a9a",
         "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
         "patchSetId": 24
