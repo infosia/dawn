@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8dd4cc4d_ec31e4d9",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-17T07:33:59Z",
+      "side": 1,
+      "message": "Oh we can\u0027t because (MapWrite | CopySrc | Storage) should also be allocated on the WriteBack heap.",
+      "parentUuid": "7d0fa8dd_1f6d62d3",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "125defd5_c23b5657",
         "filename": "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.cpp",
         "patchSetId": 4
@@ -31,6 +49,24 @@
       "writtenOn": "2025-01-15T13:37:29Z",
       "side": 1,
       "message": "What about ReBAR that will be UMA Coherent but on the device?",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "138103a1_0f9ddcac",
+        "filename": "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-17T07:33:59Z",
+      "side": 1,
+      "message": "To support such dGPUs we may need to use D3D12_HEAP_TYPE_GPU_UPLOAD and carefully consider the memory budget of such heap. \n\nI plan to support it later. What do you think?",
+      "parentUuid": "125defd5_c23b5657",
       "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2b1e935_d2c2ca1d",
+        "filename": "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-17T07:33:59Z",
+      "side": 1,
+      "message": "Done\n\nNow we only have Custom_WriteBack_OnlyBuffers.",
+      "parentUuid": "a033d3f4_9b2e0b71",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5df70ddc_6c66fc0f",
@@ -69,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f7e1379_c9a2cff4",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-17T07:33:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5df70ddc_6c66fc0f",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a108880f_13367c25",
@@ -82,6 +154,24 @@
       "writtenOn": "2025-01-15T13:37:29Z",
       "side": 1,
       "message": "Instead of hardcoding that CUSTOM is UMA, can we pass around Dawn\u0027s `ResourceHeapKind`? We could store that in `HeapAllocator` instead or along the `D3D12_HEAP_TYPE`. It would mean exposing some helpers to convert the enums between each other etc more publicly but would make the code more clear. Likewise we could have a conversion to get the CPU page properties and memory pool preference.\n\n... and we also need to convert from HeapType to `ResourceHeapKind` ... that\u0027s all a mess. IMHO we should revisit the various ResourceAllocator / Heap / w/e mess of classes in D3D12 and have:\n\n```\nclass ResourceAllocator {\n    ResultOrError\u003cResourceAllocation\u003e AllocateBuffer(Default/Readback/Upload/UMA, desc, initialUsage);\n    ResultOrError\u003cResourceAllocation\u003e AllocateTexture(desc, bytesPerTexel, initialUsage, forceCommitted);\n}\n\nclass ResourceAllocation ...\n```\n\nAnd now that gets into the frontend classes that are used just by Vulkan and D3D12 and how it\u0027s not split correctly. Nevermind. Could you create an issue to sort this all out eventually?",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13f4a17f_736ce9f1",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-17T07:33:59Z",
+      "side": 1,
+      "message": "I\u0027ve done the refactor in https://dawn-review.googlesource.com/c/dawn/+/222195. PTAL, thanks!",
+      "parentUuid": "a108880f_13367c25",
       "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
