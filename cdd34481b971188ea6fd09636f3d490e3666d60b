@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94462f71_cb9d3097",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:51:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a24da690_670d3cde",
+      "range": {
+        "startLine": 71,
+        "startChar": 64,
+        "endLine": 71,
+        "endChar": 94
+      },
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddd2da42_9d08e919",
@@ -76,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "762f9db0_896c682b",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:51:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd0be2d_2223f95b",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9e659a2_0edd5f30",
@@ -89,6 +131,30 @@
       "writtenOn": "2025-01-16T16:51:36Z",
       "side": 1,
       "message": "```suggestion\n    mImmediateConstantMask |\u003d (pipelineInternalConstants | requiredInternalImmediateConstants);\n```",
+      "range": {
+        "startLine": 82,
+        "startChar": 57,
+        "endLine": 82,
+        "endChar": 58
+      },
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7af69c4_bbea08c5",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:51:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9e659a2_0edd5f30",
       "range": {
         "startLine": 82,
         "startChar": 57,
@@ -205,6 +271,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd4a4ce8_1963867d",
+        "filename": "src/dawn/native/ComputePipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:51:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49c36537_d0a0cdf6",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58a8d2fb_f4585fbc",
@@ -218,6 +302,24 @@
       "writtenOn": "2025-01-16T14:59:44Z",
       "side": 1,
       "message": "I had forgotten but ANGLE has a macro that emits warnings when structs are padded unexpectedly.\n\nTake a look at https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/src/common/debug.h;l\u003d103-121;drc\u003dc3a1cae44e3571844e22932cfbf62fe96e4d2a22 . We could copy it to a utility header and wrap all these structs in `DAWN_ENABLE_STRUCT_PADDING_WARNINGS` and `DAWN_DISABLE_STRUCT_PADDING_WARNINGS`",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a22505ad_0006f13f",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:51:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a8d2fb_f4585fbc",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -304,6 +406,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39afdc6c_327233ca",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:51:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6831bf4_a607ed49",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c28a2dc0_9a502bec",
@@ -317,6 +437,24 @@
       "writtenOn": "2025-01-16T16:51:36Z",
       "side": 1,
       "message": "ditto",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3c9ca38_7e5161d8",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:51:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c28a2dc0_9a502bec",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -375,6 +513,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "026c458e_064be314",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:51:50Z",
+      "side": 1,
+      "message": "Yes, Iterating on that.",
+      "parentUuid": "eb2f3bae_211c3806",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "71a67480_eac50a37",
         "filename": "src/dawn/native/Pipeline.h",
         "patchSetId": 24
@@ -408,6 +564,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d397dc0_76f85e7b",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:51:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36e80f11_f4426a16",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d518794a_44312aec",
@@ -421,6 +595,24 @@
       "writtenOn": "2025-01-16T16:51:36Z",
       "side": 1,
       "message": "Same comments as for the compute pipeline.",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da101ae8_62bbad16",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:51:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d518794a_44312aec",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

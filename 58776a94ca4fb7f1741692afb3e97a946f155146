@@ -112,6 +112,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0b3dd600_29090c2c",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:51:50Z",
+      "side": 1,
+      "message": "If we\u0027re using bit twiddling, maybe we don\u0027t need to store these offsets.",
+      "parentUuid": "4ed12000_29daa1b1",
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "92be90fc_d1860632",
         "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
         "patchSetId": 25
