@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60596ad6_57c27c0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-17T04:01:21Z",
+      "side": 1,
+      "message": "PTAL. I still need to test this on device, but I can\u0027t do that until Tuesday. Wanted to get the ball rolling on the review, as I believe this should fix the issue. Will hold off submitting until the fix can be tested on Tuesday.",
+      "revId": "6772bf2107a8c97412d1cbd57bec0e6d5569ddaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
