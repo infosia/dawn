@@ -424,6 +424,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // For OpenGL ES, use compute shader blit to emulate rgb9e5ufloat texture to buffer copies.
     deviceToggles->Default(Toggle::UseBlitForRGB9E5UfloatTextureCopy, gl.GetVersion().IsES());
 
+    // Use compute shader blit to emulate rg11b10ufloat texture to buffer copies if not color
+    // renderable.
+    deviceToggles->Default(Toggle::UseBlitForRG11B10UfloatTextureCopy,
+                           !(gl.GetVersion().IsDesktop() || gl.IsAtLeastGLES(3, 2) ||
+                             gl.IsGLExtensionSupported("GL_EXT_color_buffer_float")));
+
     // Use compute shader blit to emulate float16 texture to buffer copies if not color renderable.
     deviceToggles->Default(Toggle::UseBlitForFloat16TextureCopy,
                            !(gl.GetVersion().IsDesktop() || gl.IsAtLeastGLES(3, 2) ||
