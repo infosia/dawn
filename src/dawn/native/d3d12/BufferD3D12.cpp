@@ -108,23 +108,30 @@ size_t D3D12BufferSizeAlignment(wgpu::BufferUsage usage) {
 }
 
 ResourceHeapKind GetResourceHeapKind(wgpu::BufferUsage bufferUsage, uint32_t resourceHeapTier) {
-    if (resourceHeapTier >= 2) {
-        if (bufferUsage & wgpu::BufferUsage::MapWrite) {
+    if (bufferUsage == (wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc)) {
+        if (resourceHeapTier >= 2) {
             return ResourceHeapKind::Upload_AllBuffersAndTextures;
+        } else {
+            return ResourceHeapKind::Upload_OnlyBuffers;
         }
-        if (bufferUsage & wgpu::BufferUsage::MapRead) {
+    }
+    if (bufferUsage == (wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead)) {
+        if (resourceHeapTier >= 2) {
             return ResourceHeapKind::Readback_AllBuffersAndTextures;
+        } else {
+            return ResourceHeapKind::Readback_OnlyBuffers;
         }
-        return ResourceHeapKind::Default_AllBuffersAndTextures;
     }
 
-    if (bufferUsage & wgpu::BufferUsage::MapWrite) {
-        return ResourceHeapKind::Upload_OnlyBuffers;
+    if (bufferUsage & (wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite)) {
+        return ResourceHeapKind::Custom_WriteBack_OnlyBuffers;
     }
-    if (bufferUsage & wgpu::BufferUsage::MapRead) {
-        return ResourceHeapKind::Readback_OnlyBuffers;
+
+    if (resourceHeapTier >= 2) {
+        return ResourceHeapKind::Default_AllBuffersAndTextures;
+    } else {
+        return ResourceHeapKind::Default_OnlyBuffers;
     }
-    return ResourceHeapKind::Default_OnlyBuffers;
 }
 }  // namespace
 
@@ -212,6 +219,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
         }
         case ResourceHeapKind::Default_AllBuffersAndTextures:
         case ResourceHeapKind::Default_OnlyBuffers:
+        case ResourceHeapKind::Custom_WriteBack_OnlyBuffers:
             break;
         default:
             DAWN_UNREACHABLE();
