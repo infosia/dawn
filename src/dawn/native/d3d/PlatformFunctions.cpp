@@ -62,6 +62,7 @@ PlatformFunctions::~PlatformFunctions() = default;
 MaybeError PlatformFunctions::LoadFunctions() {
     DAWN_TRY(LoadDXGI());
     DAWN_TRY(LoadFXCompiler());
+    DAWN_TRY(LoadKernelBase());
     InitWindowsVersion();
     return {};
 }
@@ -99,6 +100,19 @@ MaybeError PlatformFunctions::LoadFXCompiler() {
         !mFXCompilerLib.GetProc(&d3dCompile, "D3DCompile", &error) ||
         !mFXCompilerLib.GetProc(&d3dDisassemble, "D3DDisassemble", &error)) {
         return DAWN_INTERNAL_ERROR(error.c_str());
+    }
+#endif
+    return {};
+}
+
+MaybeError PlatformFunctions::LoadKernelBase() {
+#if DAWN_PLATFORM_IS(WINUWP)
+    compareObjectHandles = &CompareObjectHandles;
+#else
+    std::string error;
+    // CompareObjectHandles not existing is not an error.
+    if (mKernelBaseLib.Open("kernelbase.dll", &error)) {
+        mKernelBaseLib.GetProc(&compareObjectHandles, "CompareObjectHandles", &error);
     }
 #endif
     return {};
