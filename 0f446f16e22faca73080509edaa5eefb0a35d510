@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81739174_590fe319",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T14:49:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8dd4cc4d_ec31e4d9",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "125defd5_c23b5657",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "To support such dGPUs we may need to use D3D12_HEAP_TYPE_GPU_UPLOAD and carefully consider the memory budget of such heap. \n\nI plan to support it later. What do you think?",
       "parentUuid": "125defd5_c23b5657",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97a1b128_89bd9499",
+        "filename": "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T14:49:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "138103a1_0f9ddcac",
       "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "383b1ee5_1ff07d61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T14:49:17Z",
+      "side": 1,
+      "message": "Looks much better, thank you!",
+      "revId": "8036f07113e42faf667d3a3d9ce3649eb4096527",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fee8c953_8f13bc0e",
+        "filename": "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T14:49:17Z",
+      "side": 1,
+      "message": "Can we also have a TODO to never have to convert back from the resource to the ResourceHeapKind like that? Dawn should already have this information and not need to convert, but the structure of the code with the BuddyAllocator kind of forces this for now.",
+      "fixSuggestions": [
+        {
+          "fixId": "bc192d37_ba6642d8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.cpp",
+              "range": {
+                "startLine": 94,
+                "startChar": 0,
+                "endLine": 94,
+                "endChar": 0
+              },
+              "replacement": "    // TODO(crbug.com/dawn/849): Dawn should already have this information and not need to convert\n    // back from the resource to the ResourceHeapKind like that.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8036f07113e42faf667d3a3d9ce3649eb4096527",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
