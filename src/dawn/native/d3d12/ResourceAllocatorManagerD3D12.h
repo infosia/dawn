@@ -64,6 +64,9 @@ enum ResourceHeapKind {
     Default_OnlyNonRenderableOrDepthTextures,
     Default_OnlyRenderableOrDepthTextures,
 
+    // Allows custom resource heaps to contain the buffers that support write-back CPU property.
+    Custom_WriteBack_OnlyBuffers,
+
     EnumCount,
     InvalidEnum = EnumCount,
 };
