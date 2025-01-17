@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c19cced1_47256d72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-17T18:13:31Z",
+      "side": 1,
+      "message": "LGTM assuming other Corentin\u0027s comment is OK to be addressed as a follow-up.",
+      "revId": "13ae3b675b9295aeb8bb44d3de05b40112390ed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

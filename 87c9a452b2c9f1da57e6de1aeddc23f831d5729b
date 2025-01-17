@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d9d6000_a8e8345a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-17T18:13:31Z",
+      "side": 1,
+      "message": "Nit: Require 11 and 14, not 10 and 13",
+      "parentUuid": "b2a2efad_d920a715",
+      "revId": "87c9a452b2c9f1da57e6de1aeddc23f831d5729b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c355a14f_632890de",
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "I intentionally added this back as a failsafe to give us a nice error in case we get a bug for unsupported device.",
       "parentUuid": "f0286d5e_0caf6de1",
+      "revId": "87c9a452b2c9f1da57e6de1aeddc23f831d5729b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e612837d_6e889265",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-17T18:13:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0042a45c_127a5a36",
       "revId": "87c9a452b2c9f1da57e6de1aeddc23f831d5729b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
