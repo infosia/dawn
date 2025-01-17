@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a488b815_33e22818",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 11499,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-17T20:49:46Z",
+      "side": 1,
+      "message": "@shaoboyan@microsoft.com FYI, AVIF failures on linux/android",
+      "range": {
+        "startLine": 11492,
+        "startChar": 0,
+        "endLine": 11499,
+        "endChar": 165
+      },
+      "revId": "778fb742d803a1aef5daeaf29a489c6ac957c2c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
