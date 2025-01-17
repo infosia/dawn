@@ -136,6 +136,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b58e5c00_e7cad4ec",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T02:17:37Z",
+      "side": 1,
+      "message": "(To be more clear)\nI mean in my mind, we have three layout:\n- Full immediate constants layout, represent all possible immediate constants, holding by tracker.\n- Real Pipeline required layout, represents the pipeline immediate constants layout(should map to wgsl push constant block layout). the layout use the index to represent the immediate constant info and offset to record the real layout offset in wgsl.\n- In runtime, part of the real pipeline immediate constants are dirty, and we need to identify them with (trackerDirtyBits \u0026 pipelineRequiredBits), using the index to find the pipeline real layout offset, and upload them.\n\nSo maybe a container to store the one-time initialized pipeline required layout is better than do bit twiddling everytime?",
+      "parentUuid": "06b5c661_b7c6b738",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c4000673_fd08e21f",
         "filename": "src/dawn/native/ComputePipeline.h",
         "patchSetId": 24
