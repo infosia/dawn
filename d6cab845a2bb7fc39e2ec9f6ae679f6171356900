@@ -33,6 +33,24 @@
       "message": "Nit: could you split these out into \"isFloat16Renderable\" and \"isFloat32Renderable\" locals? You could define isFloat32Renderable first, then isFloat16Renderable in terms of that, to avoid duplicating the extension string.",
       "revId": "d6cab845a2bb7fc39e2ec9f6ae679f6171356900",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28ae79c1_860316ef",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-01-17T02:33:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee59f0b_5d6ea003",
+      "revId": "d6cab845a2bb7fc39e2ec9f6ae679f6171356900",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
