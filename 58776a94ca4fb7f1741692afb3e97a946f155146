@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "226e4f5a_46d9c1ca",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T14:30:45Z",
+      "side": 1,
+      "message": "```suggestion\n// DAWN_ENABLE_STRUCT_PADDING_WARNINGS\n//\n// Tells the compiler to emit a warning if the structure has any padding. This is helpful to avoid uninitialized bits in cache keys or other similar structures.\n```",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 24
+      },
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55e55a0e_26409f36",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T14:30:45Z",
+      "side": 1,
+      "message": "I think that thanks to the macro we can remove the static asserts. Also optionally we can have a single use of enable/disable instead of doing it for every struct.",
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ce51d0b_b3b57b6a",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T14:30:45Z",
+      "side": 1,
+      "message": "optional nit: the fact it is a immediate mask is obvious from both the type and the context. `mPipelineMask`?",
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2886cc2_f3c34485",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T14:30:45Z",
+      "side": 1,
+      "message": "This is no longer used.",
+      "fixSuggestions": [
+        {
+          "fixId": "5991a48a_5635d022",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Pipeline.h",
+              "range": {
+                "startLine": 60,
+                "startChar": 0,
+                "endLine": 61,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ed12000_29daa1b1",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T14:30:45Z",
+      "side": 1,
+      "message": "This could be computed in `PipelineBase::Initialize` after calling `InitializeImpl`. So that it\u0027s done automatically for all backends and pipeline types. (but also might not be needed)",
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92be90fc_d1860632",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T14:30:45Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
