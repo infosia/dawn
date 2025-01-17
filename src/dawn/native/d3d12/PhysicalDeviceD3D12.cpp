@@ -192,6 +192,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     EnableFeature(Feature::SharedTextureMemoryDXGISharedHandle);
     EnableFeature(Feature::SharedFenceDXGISharedHandle);
+
+    if (GetDeviceInfo().isUMA && GetDeviceInfo().isCacheCoherentUMA) {
+        EnableFeature(Feature::BufferMapExtendedUsages);
+    }
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
