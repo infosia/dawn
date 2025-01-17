@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84c9f122_032d2922",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-17T20:47:57Z",
+      "side": 1,
+      "message": "May conflict with https://dawn-review.googlesource.com/c/dawn/+/222294, but also maybe that roll will help this pass?",
+      "revId": "f86f945f24c0317be0835a3e101863a9bbec30b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
