@@ -16,6 +16,58 @@
       "message": "PTAL, thanks!",
       "revId": "902c22ef6d329144ac479794b6728716e55668f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c41f040_16f876b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T11:06:18Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "902c22ef6d329144ac479794b6728716e55668f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0b108df_86b4efbd",
+        "filename": "src/dawn/native/DynamicUploader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T11:06:18Z",
+      "side": 1,
+      "message": "Maybe this one could be turned into a Ref?",
+      "fixSuggestions": [
+        {
+          "fixId": "c504e2ab_d95a9a12",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/DynamicUploader.h",
+              "range": {
+                "startLine": 51,
+                "startChar": 0,
+                "endLine": 52,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "902c22ef6d329144ac479794b6728716e55668f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
