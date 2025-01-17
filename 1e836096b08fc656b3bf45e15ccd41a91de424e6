@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "683b29a1_0ed8e95d",
+        "filename": "src/dawn/node/binding/IteratorHelper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-01-17T20:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b7b00f4_6060ecc3",
+      "revId": "1e836096b08fc656b3bf45e15ccd41a91de424e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2462a12c_cb8d6bd8",
@@ -83,6 +101,30 @@
       "writtenOn": "2025-01-17T09:58:32Z",
       "side": 1,
       "message": "Shouldn\u0027t the parent be the object containing the C++ collection itself? Otherwise it could get GC\u0027d from under us. Or better if we could put it on a symbol of the iterator object so we don\u0027t use `Persistent` which could lead to some objects graphs kept alive forever. ([I have asked about private symbols for napi but conversations derailed](https://github.com/nodejs/node/issues/45758))",
+      "range": {
+        "startLine": 65,
+        "startChar": 50,
+        "endLine": 65,
+        "endChar": 80
+      },
+      "revId": "1e836096b08fc656b3bf45e15ccd41a91de424e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2016c3fe_f228a93a",
+        "filename": "src/dawn/node/binding/IteratorHelper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-01-17T20:27:46Z",
+      "side": 1,
+      "message": "The parent is containing the C++ collection. The iterator is keeping a reference to the parent until it itself gets GCed. `Persistent` according to the docs just means \"start with a reference count of 1\". The code in the destructor puts back to 0 by calling Unref. There should be no objects kept alive forever.\n\nI updated [my test](https://gist.github.com/greggman/b2ecc05affb560dc88e0c81263112ee6). I checked that I create device in an inner scope(2), create an iterator for `device.features`. destroy the device, and pass out the iterator, and `WeakRef` for the device and the features\n\nIn the middle scope I wait for the WeakRef for the device to say the device and been garbage collected. Then I use the iterator. It works (Before I added the ref it crashed here). I then pass a WeakRef to the iterator out and the WeakRef to the feature.\n\nI then use the WeakRef for the iterator to see it gets collected. It does. And then I watch the WeakRef for the features to see it gets collected. It does.\n\nIt seems to work as expected. The iterator is holding a reference to the features and released when it gets GCed which allows the features to be GCed.",
+      "parentUuid": "2462a12c_cb8d6bd8",
       "range": {
         "startLine": 65,
         "startChar": 50,
