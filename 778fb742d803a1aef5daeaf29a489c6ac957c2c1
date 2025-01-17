@@ -22,6 +22,30 @@
       },
       "revId": "778fb742d803a1aef5daeaf29a489c6ac957c2c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75477ad8_1f50a7b2",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 11499,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-01-17T23:27:11Z",
+      "side": 1,
+      "message": "Kai, can you re +2 this or no?",
+      "parentUuid": "a488b815_33e22818",
+      "range": {
+        "startLine": 11492,
+        "startChar": 0,
+        "endLine": 11499,
+        "endChar": 165
+      },
+      "revId": "778fb742d803a1aef5daeaf29a489c6ac957c2c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
