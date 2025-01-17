@@ -86,6 +86,7 @@
 #include "src/tint/lang/wgsl/ast/var.h"
 #include "src/tint/lang/wgsl/ast/variable_decl_statement.h"
 #include "src/tint/lang/wgsl/ast/while_statement.h"
+#include "src/tint/lang/wgsl/ast/workgroup_attribute.h"
 #include "src/tint/lang/wgsl/ir/builtin_call.h"
 #include "src/tint/lang/wgsl/program/program.h"
 #include "src/tint/lang/wgsl/sem/array_count.h"
@@ -286,9 +287,36 @@ class Impl {
                     // `sem` does not hold information on override workgroup sizes so we'll have to
                     // pull this from elsewhere.
                     auto wg_size = sem->WorkgroupSize();
-                    ir_func->SetWorkgroupSize(builder_.Constant(u32(wg_size[0].value())),
-                                              builder_.Constant(u32(wg_size[1].value_or(1))),
-                                              builder_.Constant(u32(wg_size[2].value_or(1))));
+                    // We have to check to see the override/expression. Walk the AST and construct a
+                    // value/expression in IR. Then put the completed IR in here.  Put the overrides
+                    // as values in here instead.
+                    if (wg_size.size() != 0 && wg_size[0].value()) {
+                        ir_func->SetWorkgroupSize(builder_.Constant(u32(wg_size[0].value())),
+                                                  builder_.Constant(u32(wg_size[1].value_or(1))),
+                                                  builder_.Constant(u32(wg_size[2].value_or(1))));
+                    } else {
+                        bool found = false;
+                        for (auto* attribute : ast_func->attributes) {
+                            found = Switch(
+                                attribute,
+                                [&](const ast::WorkgroupAttribute* attr) {
+                                    // func->SetWorkgroupSize(value.Get());
+
+                                    // These will be values not constants
+                                    ir_func->SetWorkgroupSize(EmitValueExpression(attr->x),
+                                                              EmitValueExpression(attr->y),
+                                                              EmitValueExpression(attr->z));
+                                    return true;
+                                },
+                                [&](Default) { return false; });
+                            if (found) {
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            TINT_ICE() << "Missing workgroup attribute for compute entry point.";
+                        }
+                    }
                     break;
                 }
                 default: {
