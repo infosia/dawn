@@ -60,6 +60,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6fd0be2d_2223f95b",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T02:08:07Z",
+      "side": 1,
+      "message": "The backend decide whether we need numWorkgropus supporting by immediate constants and the code here ensure numWorkgroups is really appear in shaders. So I\u0027m a bit confuse about the suggestion edit below, I think it still should be `\u0026` instead of `|`",
+      "parentUuid": "ddd2da42_9d08e919",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a9e659a2_0edd5f30",
         "filename": "src/dawn/native/ComputePipeline.cpp",
         "patchSetId": 24
@@ -100,6 +118,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "06b5c661_b7c6b738",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T02:08:07Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll pick the ityp::array\u003c\u003e to try. I\u0027m not sure bit twiddling could work, pls ref to https://dawn-review.googlesource.com/c/dawn/+/221974/3 that this map being used.",
+      "parentUuid": "f0d9ac2d_6e98236e",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c4000673_fd08e21f",
         "filename": "src/dawn/native/ComputePipeline.h",
         "patchSetId": 24
@@ -129,6 +165,24 @@
           ]
         }
       ],
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49c36537_d0a0cdf6",
+        "filename": "src/dawn/native/ComputePipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T02:08:07Z",
+      "side": 1,
+      "message": "[1]\nmaybe we can use `mImmediateConstantMask |\u003d` in backend and them reset them if required immediates doesn\u0027t appear in shaders?\n\nAnyway, I\u0027ll make requiredInternalImmediateConstants to be required first.",
+      "parentUuid": "c4000673_fd08e21f",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -175,6 +229,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5a2b343_6b2f101d",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T02:08:07Z",
+      "side": 1,
+      "message": "\u003eHere don\u0027t we want to just invalidate the immediates that are not in the common prefix to both pipelines? Again we could do that in constant time with some use of popcount etc. It would require adding the \"previousPipeline\" as an argument.\n\nI think you mean \"compatible\". Yes we can but I\u0027d like to be a bit tighten for the rule for now. I\u0027m not sure bring pipeline related infos to next pipeline is a good idea (mainly for customer immediate data considering we don\u0027t define compatible in spec). Anyway, we can relax the rule as you said easily and already left a TODO for it.\n\nWDYT?",
+      "parentUuid": "81c22488_b07b91ed",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c6fd7ed_059ba126",
         "filename": "src/dawn/native/Pipeline.cpp",
         "patchSetId": 24
@@ -186,6 +264,24 @@
       "writtenOn": "2025-01-16T16:51:36Z",
       "side": 1,
       "message": "Is that needed? It should be derived from the layout so it\u0027s already included above.",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6831bf4_a607ed49",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T02:08:07Z",
+      "side": 1,
+      "message": "Ok, I just noticed that shaderModule hash has been included and has wgsl source code which should reflect the internal immediate constant requirement. That\u0027s great! We can move `mImmediateConstantMask` setting to backend initialization instead of common construction!",
+      "parentUuid": "5c6fd7ed_059ba126",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -254,6 +350,24 @@
       "writtenOn": "2025-01-16T16:51:36Z",
       "side": 1,
       "message": "We could ask the backends to initialize `mImmediateConstantMask` during `InitializeImpl`.",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36e80f11_f4426a16",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T02:08:07Z",
+      "side": 1,
+      "message": "We do this in constructor mainly because that we needs pipeline cache has these mask info https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/RenderPipeline.cpp;drc\u003de2325772f0ff19bbd1b607587bd610900a82b4fa;l\u003d1075. Initilaize is too late for caching.",
+      "parentUuid": "71a67480_eac50a37",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
