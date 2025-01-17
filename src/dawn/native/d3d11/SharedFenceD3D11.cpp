@@ -31,8 +31,39 @@
 
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
+#include "dawn/native/d3d11/QueueD3D11.h"
 
 namespace dawn::native::d3d11 {
+
+namespace {
+bool IsSameHandle(HANDLE handle, HANDLE other) {
+    if (handle == other) {
+        return true;
+    }
+
+    using PFNCOMPAREOBJECTHANDLES =
+        BOOL(WINAPI*)(HANDLE hFirstObjectHandle, HANDLE hSecondObjectHandle);
+    static PFNCOMPAREOBJECTHANDLES compareObjectHandlesFn = []() -> PFNCOMPAREOBJECTHANDLES {
+        HMODULE kernelbaseModule = ::GetModuleHandle(L"kernelbase.dll");
+        if (!kernelbaseModule) {
+            kernelbaseModule = ::LoadLibrary(L"kernelbase.dll");
+        }
+        if (!kernelbaseModule) {
+            return nullptr;
+        }
+        PFNCOMPAREOBJECTHANDLES fn = reinterpret_cast<PFNCOMPAREOBJECTHANDLES>(
+            ::GetProcAddress(kernelbaseModule, "CompareObjectHandles"));
+        return fn;
+    }();
+
+    if (compareObjectHandlesFn) {
+        return compareObjectHandlesFn(handle, other);
+    }
+    // In case CompareObjectHandles is not available, just return false and recreate SharedFence
+    // everytime.
+    return false;
+}
+}  // namespace
 
 // static
 ResultOrError<Ref<SharedFence>> SharedFence::Create(
@@ -40,6 +71,11 @@ ResultOrError<Ref<SharedFence>> SharedFence::Create(
     StringView label,
     const SharedFenceDXGISharedHandleDescriptor* descriptor) {
     DAWN_INVALID_IF(descriptor->handle == nullptr, "shared HANDLE is missing.");
+
+    const auto& queueFence = ToBackend(device->GetQueue())->GetSharedFence();
+    if (queueFence && IsSameHandle(queueFence->GetSystemHandle().Get(), descriptor->handle)) {
+        return queueFence;
+    }
 
     SystemHandle ownedHandle;
     DAWN_TRY_ASSIGN(ownedHandle, SystemHandle::Duplicate(descriptor->handle));
