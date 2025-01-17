@@ -16,6 +16,46 @@
       "message": "PTAL. I still need to test this on device, but I can\u0027t do that until Tuesday. Wanted to get the ball rolling on the review, as I believe this should fix the issue. Will hold off submitting until the fix can be tested on Tuesday.",
       "revId": "6772bf2107a8c97412d1cbd57bec0e6d5569ddaa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82785104_72bc62ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T10:00:40Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "6772bf2107a8c97412d1cbd57bec0e6d5569ddaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed0660bb_1de94ab9",
+        "filename": "src/dawn/tests/end2end/PackUnpack4x8NormTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T10:00:40Z",
+      "side": 1,
+      "message": "```suggestion\n        @group(0) @binding(0) var\u003cstorage, read_write\u003e buf : array\u003cu32\u003e;\n        @group(0) @binding(1) var\u003cstorage, read\u003e inputBuf : array\u003cvec4f\u003e;\n\n```\n\nDitto in other tests.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "6772bf2107a8c97412d1cbd57bec0e6d5569ddaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
