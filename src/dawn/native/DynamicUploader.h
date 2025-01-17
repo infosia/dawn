@@ -48,6 +48,7 @@ struct UploadHandle {
     raw_ptr<uint8_t> mappedBuffer = nullptr;
     uint64_t startOffset = 0;
     raw_ptr<BufferBase> stagingBuffer = nullptr;
+    Ref<BufferBase> stagingBufferRef;
 };
 
 class DynamicUploader {
@@ -75,10 +76,7 @@ class DynamicUploader {
                                                  ExecutionSerial serial,
                                                  uint64_t offsetAlignment);
 
-    void ReleaseStagingBuffer(Ref<BufferBase> stagingBuffer);
-
     std::vector<std::unique_ptr<RingBuffer>> mRingBuffers;
-    SerialQueue<ExecutionSerial, Ref<BufferBase>> mReleasedStagingBuffers;
     raw_ptr<DeviceBase> mDevice;
 };
 }  // namespace dawn::native

@@ -38,11 +38,6 @@ namespace dawn::native {
 
 DynamicUploader::DynamicUploader(DeviceBase* device) : mDevice(device) {}
 
-void DynamicUploader::ReleaseStagingBuffer(Ref<BufferBase> stagingBuffer) {
-    mReleasedStagingBuffers.Enqueue(std::move(stagingBuffer),
-                                    mDevice->GetQueue()->GetPendingCommandSerial());
-}
-
 ResultOrError<UploadHandle> DynamicUploader::AllocateInternal(uint64_t allocationSize,
                                                               ExecutionSerial serial,
                                                               uint64_t offsetAlignment) {
@@ -62,7 +57,7 @@ ResultOrError<UploadHandle> DynamicUploader::AllocateInternal(uint64_t allocatio
         uploadHandle.mappedBuffer = static_cast<uint8_t*>(stagingBuffer->GetMappedPointer());
         uploadHandle.stagingBuffer = stagingBuffer.Get();
 
-        ReleaseStagingBuffer(std::move(stagingBuffer));
+        uploadHandle.stagingBufferRef = std::move(stagingBuffer);
         return uploadHandle;
     }
 
@@ -140,7 +135,6 @@ void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeA
             i++;
         }
     }
-    mReleasedStagingBuffers.ClearUpTo(lastCompletedSerial);
 }
 
 ResultOrError<UploadHandle> DynamicUploader::Allocate(uint64_t allocationSize,
@@ -159,9 +153,6 @@ bool DynamicUploader::ShouldFlush() const {
 
 uint64_t DynamicUploader::GetTotalAllocatedSize() const {
     uint64_t size = 0;
-    for (const auto& buffer : mReleasedStagingBuffers.IterateAll()) {
-        size += buffer->GetSize();
-    }
     for (const auto& buffer : mRingBuffers) {
         if (buffer->mStagingBuffer != nullptr) {
             size += buffer->mStagingBuffer->GetSize();
