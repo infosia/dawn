@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be818131_53c96498",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-17T14:46:28Z",
+      "side": 1,
+      "message": "nit: 2, in case there is a tier 3 at some point?",
+      "range": {
+        "startLine": 551,
+        "startChar": 64,
+        "endLine": 551,
+        "endChar": 96
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "37ff8294_e9330496",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+              "range": {
+                "startLine": 551,
+                "startChar": 0,
+                "endLine": 553,
+                "endChar": 0
+              },
+              "replacement": "    return IsToggleEnabled(Toggle::UseD3D12ResourceHeapTier2) ? 2u : 1u;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b89c210a0176c9868c5c8a7ca19fd8e2d0607619",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
