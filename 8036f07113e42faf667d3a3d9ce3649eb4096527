@@ -51,6 +51,24 @@
       ],
       "revId": "8036f07113e42faf667d3a3d9ce3649eb4096527",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25d2a661_95f27da4",
+        "filename": "src/dawn/native/d3d12/ResourceAllocatorManagerD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-17T16:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fee8c953_8f13bc0e",
+      "revId": "8036f07113e42faf667d3a3d9ce3649eb4096527",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
