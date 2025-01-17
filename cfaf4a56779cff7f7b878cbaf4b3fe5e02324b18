@@ -454,6 +454,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeae9238_fc428864",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-17T18:16:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8a4c25f4_c92274d3",
+      "revId": "cfaf4a56779cff7f7b878cbaf4b3fe5e02324b18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0743269_5174ec0d",
