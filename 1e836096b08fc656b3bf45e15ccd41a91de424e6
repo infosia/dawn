@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b88bde0_274b661b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-01-17T04:52:41Z",
+      "side": 1,
+      "message": "ptal\n\nnote: I tested the GC with this code",
+      "revId": "1e836096b08fc656b3bf45e15ccd41a91de424e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
