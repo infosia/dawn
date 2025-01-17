@@ -74,7 +74,7 @@ class AdapterBase : public RefCounted, public WeakRefSupport<AdapterBase> {
                              const WGPURequestDeviceCallbackInfo2& callbackInfo);
     DeviceBase* APICreateDevice(const DeviceDescriptor* descriptor = nullptr);
     wgpu::Status APIGetFormatCapabilities(wgpu::TextureFormat format,
-                                          FormatCapabilities* capabilities);
+                                          DawnFormatCapabilities* capabilities);
 
     void SetUseTieredLimits(bool useTieredLimits);
 

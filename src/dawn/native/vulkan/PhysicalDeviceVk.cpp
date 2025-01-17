@@ -466,7 +466,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ImageDrmFormatModifier)) {
-        EnableFeature(Feature::DrmFormatCapabilities);
+        EnableFeature(Feature::DawnDrmFormatCapabilities);
     }
 }
 
@@ -1082,8 +1082,8 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) c
 
 void PhysicalDevice::PopulateBackendFormatCapabilities(
     wgpu::TextureFormat format,
-    UnpackedPtr<FormatCapabilities>& capabilities) const {
-    if (auto* drmCapabilities = capabilities.Get<DrmFormatCapabilities>()) {
+    UnpackedPtr<DawnFormatCapabilities>& capabilities) const {
+    if (auto* drmCapabilities = capabilities.Get<DawnDrmFormatCapabilities>()) {
         auto vk_format = ColorVulkanImageFormat(format);
         if (vk_format == VK_FORMAT_UNDEFINED) {
             drmCapabilities->properties = nullptr;
