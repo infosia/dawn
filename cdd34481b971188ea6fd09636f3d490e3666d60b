@@ -531,6 +531,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6b580731_cfb4d2d8",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-17T14:59:22Z",
+      "side": 1,
+      "message": "(Need to verify bit twiddling in the CL on the top stack)",
+      "parentUuid": "026c458e_064be314",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "71a67480_eac50a37",
         "filename": "src/dawn/native/Pipeline.h",
         "patchSetId": 24
