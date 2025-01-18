@@ -88,6 +88,8 @@ uint32_t FormatWidth(VertexFormat format) {
         case VertexFormat::kUnorm8x4BGRA:
             return 4;
     }
+    TINT_UNREACHABLE();
+    return 0;
 }
 
 /// PIMPL state for the transform.
