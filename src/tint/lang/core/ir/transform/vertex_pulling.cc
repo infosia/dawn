@@ -88,6 +88,8 @@ uint32_t FormatWidth(VertexFormat format) {
         case VertexFormat::kUnorm8x4BGRA:
             return 4;
     }
+    DAWN_UNREACHABLE();
+    //return 0;
 }
 
 /// PIMPL state for the transform.
@@ -291,7 +293,16 @@ struct State {
         if (auto* vec = shader_type->As<core::type::Vector>()) {
             dst_width = vec->Width();
         }
+//#if defined(_MSC_VER)
+//#pragma warning(push)
+//// Disable spurious MSVC warning
+//// > warning C4701: potentially uninitialized local variable 'src_width' used
+//#pragma warning(disable : 4701)
+//#endif
         if (dst_width < src_width) {
+//#if defined(_MSC_VER)
+//#pragma warning(pop)
+//#endif
             // The type declared in the shader is narrower than the vertex attribute format, so
             // truncate the value with a swizzle.
             switch (dst_width) {
