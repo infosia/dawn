@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c1f27aec_7d330718",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-18T00:04:35Z",
+      "side": 1,
+      "message": "No idea why my CR+2 and CQ+2 got reset when I added the second comment, must have been a UI glitch",
+      "revId": "778fb742d803a1aef5daeaf29a489c6ac957c2c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a488b815_33e22818",
         "filename": "webgpu-cts/expectations.txt",
         "patchSetId": 3
