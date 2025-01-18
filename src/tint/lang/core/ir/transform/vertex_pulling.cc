@@ -88,6 +88,9 @@ uint32_t FormatWidth(VertexFormat format) {
         case VertexFormat::kUnorm8x4BGRA:
             return 4;
     }
+    // Workaround for spurious MSVC warning:
+    // > warning C4701: potentially uninitialized local variable 'src_width' used
+    TINT_UNREACHABLE();
 }
 
 /// PIMPL state for the transform.

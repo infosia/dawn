@@ -68,6 +68,11 @@ if (is_clang || !is_win) {
   dawn_partition_alloc_dir = "//third_party/partition_alloc/"
 }
 
+if (!is_clang && is_win) {
+  # See also https://anglebug.com/376074941
+  assert(!use_custom_libcxx, "libc++ cannot (currently) build with MSVC")
+}
+
 # Optional path to a one-liner version file. Default is empty path indicating
 # that git should be used to figure out the version.
 dawn_version_file = ""
