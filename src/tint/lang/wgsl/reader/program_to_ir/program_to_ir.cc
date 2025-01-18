@@ -86,6 +86,7 @@
 #include "src/tint/lang/wgsl/ast/var.h"
 #include "src/tint/lang/wgsl/ast/variable_decl_statement.h"
 #include "src/tint/lang/wgsl/ast/while_statement.h"
+#include "src/tint/lang/wgsl/ast/workgroup_attribute.h"
 #include "src/tint/lang/wgsl/ir/builtin_call.h"
 #include "src/tint/lang/wgsl/program/program.h"
 #include "src/tint/lang/wgsl/sem/array_count.h"
@@ -281,14 +282,49 @@ class Impl {
                     break;
                 case ast::PipelineStage::kCompute: {
                     ir_func->SetStage(core::ir::Function::PipelineStage::kCompute);
-
+                    printf(" program to ir %d \n ", __LINE__);
                     // TODO(dsinclair): When overrides are supported, this will have to change. The
                     // `sem` does not hold information on override workgroup sizes so we'll have to
                     // pull this from elsewhere.
                     auto wg_size = sem->WorkgroupSize();
-                    ir_func->SetWorkgroupSize(builder_.Constant(u32(wg_size[0].value())),
-                                              builder_.Constant(u32(wg_size[1].value_or(1))),
-                                              builder_.Constant(u32(wg_size[2].value_or(1))));
+                    // We have to check to see the override/expression. Walk the AST and construct a
+                    // value/expression in IR. Then put the completed IR in here.  Put the overrides
+                    // as values in here instead.
+                    if (wg_size.size() != 0 && wg_size[0].has_value()) {
+                        printf(" program to ir %d \n ", __LINE__);
+                        ir_func->SetWorkgroupSize(builder_.Constant(u32(wg_size[0].value())),
+                                                  builder_.Constant(u32(wg_size[1].value_or(1))),
+                                                  builder_.Constant(u32(wg_size[2].value_or(1))));
+                    } else {
+                        printf(" program to ir %d \n ", __LINE__);
+                        bool found = false;
+                        for (auto* attribute : ast_func->attributes) {
+                            found = Switch(
+                                attribute,
+                                [&](const ast::WorkgroupAttribute* attr) {
+                                    // func->SetWorkgroupSize(value.Get());
+                                    printf(" x attr exp = %s \n", attr->x->TypeInfo().name);
+                                    // These will be values not constants
+                                    ir_func->SetWorkgroupSize(EmitValueExpression(attr->x),
+                                                              attr->y ? EmitValueExpression(attr->y)
+                                                                      : builder_.Constant(u32(1)),
+                                                              attr->z ? EmitValueExpression(attr->z)
+                                                                      : builder_.Constant(u32(1)));
+
+                                    //  ir_func->SetWorkgroupSize(builder_.Constant(u32(8)),
+                                    // builder_.Constant(u32(8)),
+                                    //    builder_.Constant(u32(1)) );
+                                    return true;
+                                },
+                                [&](Default) { return false; });
+                            if (found) {
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            TINT_ICE() << "Missing workgroup attribute for compute entry point.";
+                        }
+                    }
                     break;
                 }
                 default: {

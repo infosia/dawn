@@ -30,6 +30,7 @@
 #include <functional>
 
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/const_param_validator.h"
 #include "src/tint/lang/core/ir/evaluator.h"
 #include "src/tint/lang/core/ir/type/array_count.h"
 #include "src/tint/lang/core/ir/validator.h"
@@ -240,6 +241,7 @@ struct State {
                     continue;
                 }
 
+                printf(" propagate need %s \n", usage.instruction->FriendlyName().c_str());
                 if (!NeedsEval(usage.instruction)) {
                     continue;
                 }
@@ -301,7 +303,11 @@ Result<SuccessType> SubstituteOverrides(Module& ir, const SubstituteOverridesCon
     if (result != Success) {
         return result;
     }
-    return State{ir, cfg}.Process();
+    auto ret = State{ir, cfg}.Process();
+    if (ret == Success) {
+        ret = tint::core::ir::ValidateConstParam(ir);
+    }
+    return ret;
 }
 
 }  // namespace tint::core::ir::transform

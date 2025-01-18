@@ -105,6 +105,9 @@ const constant::Value* GetConstArg(const CoreBuiltinCall* call, uint32_t param_i
     if (call->Args()[param_index] == nullptr) {
         return nullptr;
     }
+    if (call->Args()[param_index]->As<ir::Constant>() == nullptr) {
+        return nullptr;
+    }
     return call->Args()[param_index]->As<ir::Constant>()->Value();
 }
 
@@ -247,7 +250,7 @@ void ConstParamValidator::CheckBinaryDivModCall(const CoreBinary* call) {
     // constant-evaluated.
     if (call->RHS()->Type()->IsIntegerScalarOrVector()) {
         auto rhs_constant = call->RHS()->As<ir::Constant>();
-        if (rhs_constant->Value()->AnyZero()) {
+        if (rhs_constant && rhs_constant->Value()->AnyZero()) {
             AddError(*call) << "integer division by zero is invalid";
         }
     }
