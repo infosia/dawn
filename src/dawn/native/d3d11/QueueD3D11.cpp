@@ -207,9 +207,12 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
     {
         auto commandContext =
             GetScopedSwapStatePendingCommandContext(QueueBase::SubmitMode::Normal);
+        
+        commandContext.GetD3DUserDefinedAnnotation()->BeginEvent(L"Queue::Submit");
         for (uint32_t i = 0; i < commandCount; ++i) {
             DAWN_TRY(ToBackend(commands[i])->Execute(&commandContext));
         }
+        commandContext.GetD3DUserDefinedAnnotation()->EndEvent();
     }
     DAWN_TRY(SubmitPendingCommands());
     TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferD3D11::Execute");
@@ -299,6 +302,7 @@ MaybeError MonitoredQueue::NextSerial() {
     IncrementLastSubmittedCommandSerial();
     TRACE_EVENT1(GetDevice()->GetPlatform(), General, "D3D11Device::SignalFence", "serial",
                  uint64_t(GetLastSubmittedCommandSerial()));
+    commandContext.GetD3DUserDefinedAnnotation()->SetMarker(L"Signal Fence");
     DAWN_TRY(
         CheckHRESULT(commandContext.Signal(mFence.Get(), uint64_t(GetLastSubmittedCommandSerial())),
                      "D3D11 command queue signal fence"));

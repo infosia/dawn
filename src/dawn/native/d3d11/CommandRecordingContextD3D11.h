@@ -130,6 +130,8 @@ class ScopedCommandRecordingContext : public CommandRecordingContext::Guard {
 
     Device* GetDevice() const;
 
+    ID3DUserDefinedAnnotation* GetD3DUserDefinedAnnotation() const;
+
     // Wrapper method which don't depend on context state.
     void UpdateSubresource1(ID3D11Resource* pDstResource,
                             UINT DstSubresource,

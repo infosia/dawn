@@ -158,6 +158,11 @@ MaybeError ScopedCommandRecordingContext::FlushBuffersForSyncingWithCPU() const 
     return {};
 }
 
+ID3DUserDefinedAnnotation* ScopedCommandRecordingContext::GetD3DUserDefinedAnnotation()
+    const {
+    return Get()->mD3DUserDefinedAnnotation.Get();
+}
+
 ScopedSwapStateCommandRecordingContext::ScopedSwapStateCommandRecordingContext(
     CommandRecordingContextGuard&& guard)
     : ScopedCommandRecordingContext(std::move(guard)),
