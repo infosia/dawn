@@ -30,6 +30,9 @@
 #include <limits>
 #include <utility>
 
+#include "src/tint/lang/core/ir/module.h"
+#include "src/tint/lang/core/ir/transform/substitute_overrides.h"
+#include "src/tint/lang/wgsl/helpers/apply_substitute_overrides.h"
 #include "src/tint/lang/wgsl/reader/lower/lower.h"
 #include "src/tint/lang/wgsl/reader/parser/parser.h"
 #include "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.h"
@@ -66,6 +69,16 @@ tint::Result<core::ir::Module> ProgramToLoweredIR(const Program& program) {
         return res.Failure();
     }
     return ir;
+}
+bool SubstituteOverrides(core::ir::Module& module) {
+    tint::core::ir::transform::SubstituteOverridesConfig cfg;
+    // cfg.map = r.substituteOverrideConfig->map;
+    auto substituteOverridesResult = tint::core::ir::transform::SubstituteOverrides(module, cfg);
+    //  DAWN_INVALID_IF(substituteOverridesResult != tint::Success,
+    //               "Pipeline override substitution failed:\n%s",
+    //                 substituteOverridesResult.Failure().reason.Str());
+
+    return true;
 }
 
 bool IsUnsupportedByIR(const ast::Enable* enable) {
