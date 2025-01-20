@@ -3518,11 +3518,6 @@
             {"name": "window", "type": "void *"}
         ]
     },
-    "surface descriptor from canvas HTML selector": {
-        "category": "typedef",
-        "type": "emscripten surface source canvas HTML selector",
-        "tags": ["emscripten"]
-    },
     "emscripten surface source canvas HTML selector": {
         "category": "structure",
         "chained": "in",
