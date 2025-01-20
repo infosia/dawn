@@ -134,6 +134,9 @@ class EnumType(Type):
             if 'emscripten' in tags:
                 assert prefix == 0
                 prefix = 0x0004_0000
+                assert value_name.startswith('emscripten')
+            else:
+                assert not value_name.startswith('emscripten')
 
             if 'dawn' in tags:
                 assert prefix == 0
@@ -295,6 +298,13 @@ class Record:
 
 class StructureType(Record, Type):
     def __init__(self, is_enabled, name, json_data):
+        tags = json_data.get('tags', [])
+        if 'emscripten' in tags:
+            if name != 'INTERNAL_HAVE_EMDAWNWEBGPU_HEADER':
+                assert name.startswith('emscripten')
+        else:
+            assert not name.startswith('emscripten')
+
         Record.__init__(self, name)
         json_data_override = {}
         if 'members' in json_data:
