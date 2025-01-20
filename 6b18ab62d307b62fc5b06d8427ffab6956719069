@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a829603_228f5b2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-20T18:25:53Z",
+      "side": 1,
+      "message": "PTAL. I only changed cmake, I don\u0027t see where we set flags on the GN side like we do the CMake side?",
+      "revId": "6b18ab62d307b62fc5b06d8427ffab6956719069",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
