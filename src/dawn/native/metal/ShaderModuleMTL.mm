@@ -45,6 +45,7 @@
 #include "dawn/platform/metrics/HistogramMacros.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 
+#include <AvailabilityMacros.h>
 #include <tint/tint.h>
 
 #include <sstream>
@@ -454,7 +455,18 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
         (*compileOptions).preserveInvariance = true;
     }
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_VERSION_15_0
     (*compileOptions).fastMathEnabled = !GetStrictMath().value_or(false);
+#else
+    printf("a\n");
+    if (GetStrictMath().value_or(false)) {
+        (*compileOptions).mathMode = MTLMathModeSafe;
+        (*compileOptions).mathFloatingPointFunctions = MTLMathFloatingPointFunctionsPrecise;
+    } else {
+        (*compileOptions).mathMode = MTLMathModeFast;
+        (*compileOptions).mathFloatingPointFunctions = MTLMathFloatingPointFunctionsFast;
+    }
+#endif
 
     auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
     NSError* error = nullptr;
