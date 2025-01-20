@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2237a4c9_f9b8f36d",
+        "filename": "src/dawn/common/Compiler.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-20T08:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "226e4f5a_46d9c1ca",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 24
+      },
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55e55a0e_26409f36",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28562c66_6522faa7",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-20T08:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55e55a0e_26409f36",
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ce51d0b_b3b57b6a",
@@ -54,6 +96,24 @@
       "writtenOn": "2025-01-17T14:30:45Z",
       "side": 1,
       "message": "optional nit: the fact it is a immediate mask is obvious from both the type and the context. `mPipelineMask`?",
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc27b3b3_c8813eb1",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-20T08:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ce51d0b_b3b57b6a",
       "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -93,6 +153,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eab9ab2_d01964c3",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-20T08:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2886cc2_f3c34485",
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ed12000_29daa1b1",
@@ -128,6 +206,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f774ba5d_eafb9656",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-20T08:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3dd600_29090c2c",
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92be90fc_d1860632",
@@ -141,6 +237,24 @@
       "writtenOn": "2025-01-17T14:30:45Z",
       "side": 1,
       "message": "ditto",
+      "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0c866b0_4a155896",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-20T08:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92be90fc_d1860632",
       "revId": "58776a94ca4fb7f1741692afb3e97a946f155146",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

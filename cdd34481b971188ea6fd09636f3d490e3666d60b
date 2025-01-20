@@ -218,6 +218,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51574890_88ba2c2d",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-20T08:31:57Z",
+      "side": 1,
+      "message": "Using bit twiddling, outdated comments.",
+      "parentUuid": "b58e5c00_e7cad4ec",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4000673_fd08e21f",
@@ -476,6 +494,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "257f3196_9bef822a",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-20T08:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f8c34e0_eb8283ed",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa20e8a4_b56f0504",
@@ -543,6 +579,24 @@
       "side": 1,
       "message": "(Need to verify bit twiddling in the CL on the top stack)",
       "parentUuid": "026c458e_064be314",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9f08596_7ba65f46",
+        "filename": "src/dawn/native/Pipeline.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-20T08:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b580731_cfb4d2d8",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -748,6 +802,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "072773f9_c03341dd",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-20T08:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2907fd_a4d0a237",
+      "range": {
+        "startLine": 686,
+        "startChar": 55,
+        "endLine": 686,
+        "endChar": 88
+      },
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7389eeda_7ff29a9a",
@@ -797,6 +875,24 @@
       "side": 1,
       "message": "If the value resulting from the call is declared constexpr then the compiler has no choice but to evaluate it at compile time AFAIK.",
       "parentUuid": "f5bf6d51_d806153b",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca593e7d_eac868b5",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-20T08:31:57Z",
+      "side": 1,
+      "message": "Sry. Would you mind me to address this comments in another CL?\n- I try to make the constexpr version worked but been blocked by compiler several times (e.g. reinterpret_cast is not allowed for constexpr). I think I still need some time to read this  https://gist.github.com/graphitemaster/494f21190bb2c63c5516 to know how to do it. Geoff@, would you mind to share your way to make pointer to member work?\n- I think this is an optimization for the helper function and not quite related to the CL main focus area. So maybe using another CL to seperate the change is good?",
+      "parentUuid": "6813157b_0863cb85",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
