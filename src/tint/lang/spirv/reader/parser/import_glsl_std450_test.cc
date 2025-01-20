@@ -335,5 +335,93 @@ TEST_F(SpirvParserTest, SMax_MixedToSigned) {
 )");
 }
 
+TEST_F(SpirvParserTest, SMin_UnsignedToUnsigned) {
+    EXPECT_IR(Preamble() + R"(
+     %1 = OpExtInst %uint %glsl SMin %uint_10 %uint_10
+     %2 = OpExtInst %v2uint %glsl SMin %v2uint_10_20 %v2uint_20_10
+     %3 = OpCopyObject %uint %1
+     %4 = OpCopyObject %v2uint %2
+     OpReturn
+     OpFunctionEnd
+  )",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:u32 = spirv.min<u32> 10u, 10u
+    %3:vec2<u32> = spirv.min<u32> vec2<u32>(10u, 20u), vec2<u32>(20u, 10u)
+    %4:u32 = let %2
+    %5:vec2<u32> = let %3
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, SMin_SignedToSigned) {
+    EXPECT_IR(Preamble() + R"(
+     %1 = OpExtInst %int %glsl SMin %int_10 %int_10
+     %2 = OpExtInst %v2int %glsl SMin %v2int_10_20 %v2int_20_10
+     %3 = OpCopyObject %int %1
+     %4 = OpCopyObject %v2int %2
+     OpReturn
+     OpFunctionEnd
+  )",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:i32 = spirv.min<i32> 10i, 10i
+    %3:vec2<i32> = spirv.min<i32> vec2<i32>(10i, 20i), vec2<i32>(20i, 10i)
+    %4:i32 = let %2
+    %5:vec2<i32> = let %3
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, SMin_MixedToUnsigned) {
+    EXPECT_IR(Preamble() + R"(
+     %1 = OpExtInst %uint %glsl SMin %int_10 %uint_10
+     %2 = OpExtInst %v2uint %glsl SMin %v2int_10_20 %v2uint_20_10
+     %3 = OpCopyObject %uint %1
+     %4 = OpCopyObject %v2uint %2
+     OpReturn
+     OpFunctionEnd
+  )",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:u32 = spirv.min<u32> 10i, 10u
+    %3:vec2<u32> = spirv.min<u32> vec2<i32>(10i, 20i), vec2<u32>(20u, 10u)
+    %4:u32 = let %2
+    %5:vec2<u32> = let %3
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, SMin_MixedToSigned) {
+    EXPECT_IR(Preamble() + R"(
+     %1 = OpExtInst %int %glsl SMin %uint_10 %int_10
+     %2 = OpExtInst %v2int %glsl SMin %v2uint_10_20 %v2int_20_10
+     %3 = OpCopyObject %int %1
+     %4 = OpCopyObject %v2int %2
+     OpReturn
+     OpFunctionEnd
+  )",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:i32 = spirv.min<i32> 10u, 10i
+    %3:vec2<i32> = spirv.min<i32> vec2<u32>(10u, 20u), vec2<i32>(20i, 10i)
+    %4:i32 = let %2
+    %5:vec2<i32> = let %3
+    ret
+  }
+}
+)");
+}
+
 }  // namespace
 }  // namespace tint::spirv::reader
