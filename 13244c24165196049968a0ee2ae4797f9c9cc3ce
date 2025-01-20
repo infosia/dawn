@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0f9a1d3_bb7615b9",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-20T23:12:15Z",
+      "side": 1,
+      "message": "This has no effect on non-Vulkan devices. We should make that clear in the description (and/or the name?) to avoid future confusion.",
+      "revId": "13244c24165196049968a0ee2ae4797f9c9cc3ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
