@@ -210,6 +210,24 @@
       "parentUuid": "a108880f_13367c25",
       "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f7471f9_25c89c21",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-20T01:25:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13f4a17f_736ce9f1",
+      "revId": "0f446f16e22faca73080509edaa5eefb0a35d510",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
