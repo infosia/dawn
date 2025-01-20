@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a35fa8ed_c0e7a087",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-20T05:37:54Z",
+      "side": 1,
+      "message": "Hi Loko,\n\nI have addressed all the comments from Corentin. Could you take a look at this CL?",
+      "revId": "eae49c000b263c074a426d3487a3017bba60f6ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
