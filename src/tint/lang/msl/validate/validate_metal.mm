@@ -48,7 +48,13 @@ Result ValidateUsingMetal(const std::string& src, MslVersion version) {
     NSString* source = [NSString stringWithCString:src.c_str() encoding:NSUTF8StringEncoding];
 
     MTLCompileOptions* compileOptions = [MTLCompileOptions new];
+#if MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_VERSION_15_0
     compileOptions.fastMathEnabled = true;
+#else
+    compileOptions.mathMode = MTLMathModeFast;
+    compileOptions.mathFloatingPointFunctions = MTLMathFloatingPointFunctionsFast;
+#endif
+
     switch (version) {
         case MslVersion::kMsl_2_2:
             compileOptions.languageVersion = MTLLanguageVersion2_2;
