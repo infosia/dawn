@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db8c31ef_2c19d119",
+        "filename": "src/tint/CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-20T18:43:13Z",
+      "side": 0,
+      "message": "unit: was this intentional?",
+      "revId": "50824d5923fa5c51c28f5625495bcf852a2d3e01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
