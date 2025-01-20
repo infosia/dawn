@@ -88,6 +88,9 @@ struct State {
                 case spirv::BuiltinFn::kUmin:
                     UMin(builtin);
                     break;
+                case spirv::BuiltinFn::kUclamp:
+                    UClamp(builtin);
+                    break;
                 default:
                     TINT_UNREACHABLE() << "unknown spirv builtin: " << builtin->Func();
             }
@@ -156,6 +159,7 @@ struct State {
 
     void UMax(spirv::ir::BuiltinCall* call) { ConvertUnsigned(call, core::BuiltinFn::kMax); }
     void UMin(spirv::ir::BuiltinCall* call) { ConvertUnsigned(call, core::BuiltinFn::kMin); }
+    void UClamp(spirv::ir::BuiltinCall* call) { ConvertUnsigned(call, core::BuiltinFn::kClamp); }
 
     void Normalize(spirv::ir::BuiltinCall* call) {
         auto* arg = call->Args()[0];

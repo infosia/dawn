@@ -770,6 +770,8 @@ class Parser {
                 return spirv::BuiltinFn::kUmax;
             case GLSLstd450UMin:
                 return spirv::BuiltinFn::kUmin;
+            case GLSLstd450UClamp:
+                return spirv::BuiltinFn::kUclamp;
             default:
                 break;
         }
@@ -781,7 +783,7 @@ class Parser {
         if (ext_opcode == GLSLstd450SSign || ext_opcode == GLSLstd450SAbs ||
             ext_opcode == GLSLstd450SMax || ext_opcode == GLSLstd450SMin ||
             ext_opcode == GLSLstd450SClamp || ext_opcode == GLSLstd450UMax ||
-            ext_opcode == GLSLstd450UMin) {
+            ext_opcode == GLSLstd450UMin || ext_opcode == GLSLstd450UClamp) {
             return {result_ty->DeepestElement()};
         }
         return {};
