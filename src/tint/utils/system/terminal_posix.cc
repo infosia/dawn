@@ -92,7 +92,11 @@ std::optional<bool> TerminalIsDarkImpl(FILE* out) {
         TINT_BEGIN_DISABLE_WARNING(RESERVED_IDENTIFIER);
         fd_set rfds{};
         FD_ZERO(&rfds);
+
+        TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
         FD_SET(STDIN_FILENO, &rfds);
+        TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
+
         timeval tv{};
         tv.tv_sec = 0;
         tv.tv_usec = 100'000;
