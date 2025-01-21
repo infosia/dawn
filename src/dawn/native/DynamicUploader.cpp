@@ -75,7 +75,7 @@ ResultOrError<std::unique_ptr<UploadHandle>> DynamicUploader::AllocateInternal(
     uint64_t offsetAlignment) {
     // Disable further sub-allocation should the request be too large.
     if (allocationSize > kRingBufferSize) {
-        return AllocateDynamicBuffer(allocationSize);
+        return AllocateDynamicBuffer(allocationSize, "Dawn_DynamicUploaderStaging");
     }
 
     if (mRingBuffers.empty()) {
@@ -131,16 +131,23 @@ ResultOrError<std::unique_ptr<UploadHandle>> DynamicUploader::AllocateInternal(
 }
 
 ResultOrError<std::unique_ptr<UploadHandle>> DynamicUploader::AllocateDynamicBuffer(
-    uint64_t allocationSize) {
+    uint64_t allocationSize,
+    const char* label,
+    bool ignoreLazyClear) {
     BufferDescriptor bufferDesc = {};
     bufferDesc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
     bufferDesc.size = Align(allocationSize, 4);
     bufferDesc.mappedAtCreation = true;
-    bufferDesc.label = "Dawn_DynamicUploaderStaging";
+    bufferDesc.label = label;
 
-    IgnoreLazyClearCountScope scope(mDevice);
     Ref<BufferBase> stagingBuffer;
-    DAWN_TRY_ASSIGN(stagingBuffer, mDevice->CreateBuffer(&bufferDesc));
+
+    if (ignoreLazyClear) {
+        IgnoreLazyClearCountScope scope(mDevice);
+        DAWN_TRY_ASSIGN(stagingBuffer, mDevice->CreateBuffer(&bufferDesc));
+    } else {
+        DAWN_TRY_ASSIGN(stagingBuffer, mDevice->CreateBuffer(&bufferDesc));
+    }
 
     return std::make_unique<UploadHandle>(this, 0, std::move(stagingBuffer), false);
 }
