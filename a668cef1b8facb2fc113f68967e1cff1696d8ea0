@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "269293fc_0213c00b",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-21T20:21:51Z",
+      "side": 1,
+      "message": "Better?",
+      "parentUuid": "13fd9c4b_63074570",
+      "revId": "a668cef1b8facb2fc113f68967e1cff1696d8ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c88f1355_c29c3d3e",
         "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
         "patchSetId": 1
@@ -65,6 +83,30 @@
       "writtenOn": "2025-01-21T19:51:03Z",
       "side": 1,
       "message": "This is not right.\n\nShould be\n```\n/// If the call originally returned an unsigned result, then replace the inner\n/// result with the corresponding signed type, and wrap the whole call with a bitcast\n/// back to the original unsigned type.\n```",
+      "range": {
+        "startLine": 102,
+        "startChar": 51,
+        "endLine": 102,
+        "endChar": 79
+      },
+      "revId": "a668cef1b8facb2fc113f68967e1cff1696d8ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e33344b_8599b3c9",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-21T20:21:51Z",
+      "side": 1,
+      "message": "I think this is covered by the method comment, so just removing.",
+      "parentUuid": "c88f1355_c29c3d3e",
       "range": {
         "startLine": 102,
         "startChar": 51,
