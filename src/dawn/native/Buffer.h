@@ -46,6 +46,7 @@
 
 namespace dawn::native {
 
+class UploadHandle;
 struct CopyTextureToBufferCmd;
 
 enum class MapType : uint32_t;
@@ -166,13 +167,9 @@ class BufferBase : public SharedResource {
     BufferState mState;
     bool mIsDataInitialized = false;
 
-    // mStagingBuffer is used to implement mappedAtCreation for
-    // buffers with non-mappable usage. It is transiently allocated
-    // and released when the mappedAtCreation-buffer is unmapped.
-    // Because `mStagingBuffer` itself is directly mappable, it will
-    // not create another staging buffer.
-    // i.e. buffer->mStagingBuffer->mStagingBuffer... is not possible.
-    Ref<BufferBase> mStagingBuffer;
+    // mUploadHandleForMappedAtCreation is used to implement mappedAtCreation for
+    // buffers with non-mappable usage.
+    std::unique_ptr<UploadHandle> mUploadHandleForMappedAtCreation;
 
     wgpu::MapMode mMapMode = wgpu::MapMode::None;
     size_t mMapOffset = 0;
