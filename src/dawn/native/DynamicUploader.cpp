@@ -60,7 +60,15 @@ UploadHandle& UploadHandle::operator=(UploadHandle&& other) {
 }
 
 UploadHandle::~UploadHandle() {
-    if (!mIsSubAllocation && mStagingBuffer.Get() != nullptr) {
+    Release();
+}
+
+bool UploadHandle::IsEmpty() const {
+    return mStagingBuffer == nullptr;
+}
+
+void UploadHandle::Release() {
+    if (!IsEmpty() && !mIsSubAllocation) {
         DAWN_ASSERT(mDynamicUploader);
         uint64_t stagingMemory = mStagingBuffer->GetAllocatedSize();
         mStagingBuffer = nullptr;
@@ -69,14 +77,17 @@ UploadHandle::~UploadHandle() {
 }
 
 uint64_t UploadHandle::GetStartOffset() const {
+    DAWN_ASSERT(!IsEmpty());
     return mStartOffset;
 }
 
 BufferBase* UploadHandle::GetStagingBuffer() const {
+    DAWN_ASSERT(!IsEmpty());
     return mStagingBuffer.Get();
 }
 
 uint8_t* UploadHandle::GetMappedPointer() const {
+    DAWN_ASSERT(!IsEmpty());
     return static_cast<uint8_t*>(mStagingBuffer->GetMappedPointer()) + mStartOffset;
 }
 
@@ -87,7 +98,7 @@ ResultOrError<UploadHandle> DynamicUploader::AllocateInternal(uint64_t allocatio
                                                               uint64_t offsetAlignment) {
     // Disable further sub-allocation should the request be too large.
     if (allocationSize > kRingBufferSize) {
-        return AllocateDynamicBuffer(allocationSize);
+        return AllocateDynamicBuffer(allocationSize, "Dawn_DynamicUploaderStaging");
     }
 
     if (mRingBuffers.empty()) {
@@ -142,16 +153,23 @@ ResultOrError<UploadHandle> DynamicUploader::AllocateInternal(uint64_t allocatio
     return UploadHandle(this, startOffset, targetRingBuffer->mStagingBuffer, true);
 }
 
-ResultOrError<UploadHandle> DynamicUploader::AllocateDynamicBuffer(uint64_t allocationSize) {
+ResultOrError<UploadHandle> DynamicUploader::AllocateDynamicBuffer(uint64_t allocationSize,
+                                                                   const char* label,
+                                                                   bool ignoreLazyClear) {
     BufferDescriptor bufferDesc = {};
     bufferDesc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
     bufferDesc.size = Align(allocationSize, 4);
     bufferDesc.mappedAtCreation = true;
-    bufferDesc.label = "Dawn_DynamicUploaderStaging";
+    bufferDesc.label = label;
 
-    IgnoreLazyClearCountScope scope(mDevice);
     Ref<BufferBase> stagingBuffer;
-    DAWN_TRY_ASSIGN(stagingBuffer, mDevice->CreateBuffer(&bufferDesc));
+
+    if (ignoreLazyClear) {
+        IgnoreLazyClearCountScope scope(mDevice);
+        DAWN_TRY_ASSIGN(stagingBuffer, mDevice->CreateBuffer(&bufferDesc));
+    } else {
+        DAWN_TRY_ASSIGN(stagingBuffer, mDevice->CreateBuffer(&bufferDesc));
+    }
 
     return UploadHandle(this, 0, std::move(stagingBuffer), false);
 }

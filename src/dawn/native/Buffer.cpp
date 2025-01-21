@@ -43,7 +43,6 @@
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
-#include "dawn/native/DynamicUploader.h"
 #include "dawn/native/ErrorData.h"
 #include "dawn/native/EventManager.h"
 #include "dawn/native/Instance.h"
@@ -374,8 +373,8 @@ void BufferBase::DestroyImpl() {
         UnmapInternal(WGPUMapAsyncStatus_Aborted,
                       "Buffer was destroyed before mapping was resolved.");
     } else if (mState == BufferState::MappedAtCreation) {
-        if (mStagingBuffer != nullptr) {
-            mStagingBuffer = nullptr;
+        if (!mUploadHandleForMappedAtCreation.IsEmpty()) {
+            mUploadHandleForMappedAtCreation.Release();
         } else if (mSize != 0) {
             UnmapInternal(WGPUMapAsyncStatus_Aborted,
                           "Buffer was destroyed before mapping was resolved.");
@@ -444,11 +443,12 @@ MaybeError BufferBase::MapAtCreation() {
     size_t size;
     if (mSize == 0) {
         return {};
-    } else if (mStagingBuffer != nullptr) {
+    } else if (!mUploadHandleForMappedAtCreation.IsEmpty()) {
         // If there is a staging buffer for initialization, clear its contents directly.
         // It should be exactly as large as the buffer allocation.
-        ptr = mStagingBuffer->GetMappedPointer();
-        size = mStagingBuffer->GetSize();
+        DAWN_ASSERT(mUploadHandleForMappedAtCreation.GetStartOffset() == 0);
+        ptr = mUploadHandleForMappedAtCreation.GetMappedPointer();
+        size = mUploadHandleForMappedAtCreation.GetStagingBuffer()->GetSize();
         DAWN_ASSERT(size == GetAllocatedSize());
     } else {
         // Otherwise, the buffer is directly mappable on the CPU.
@@ -461,8 +461,9 @@ MaybeError BufferBase::MapAtCreation() {
         !device->IsToggleEnabled(Toggle::DisableLazyClearForMappedAtCreationBuffer)) {
         // The staging buffer is created with `MappedAtCreation == true` so we don't need to clear
         // it again.
-        if (mStagingBuffer != nullptr) {
-            DAWN_ASSERT(!mStagingBuffer->NeedsInitialization());
+        if (!mUploadHandleForMappedAtCreation.IsEmpty()) {
+            DAWN_ASSERT(
+                !mUploadHandleForMappedAtCreation.GetStagingBuffer()->NeedsInitialization());
         } else {
             memset(ptr, uint8_t(0u), size);
             device->IncrementLazyClearCountForTesting();
@@ -491,17 +492,16 @@ MaybeError BufferBase::MapAtCreationInternal() {
             DAWN_TRY(MapAtCreationImpl());
         } else {
             // If any of these fail, the buffer will be deleted and replaced with an error
-            // buffer. The staging buffer is used to return mappable data to initialize the
+            // buffer. The upload handle is used to return mappable data to initialize the
             // buffer contents. Allocate one as large as the real buffer size so that every byte
             // is initialized.
             // TODO(crbug.com/dawn/828): Suballocate and reuse memory from a larger staging
             // buffer so we don't create many small buffers.
-            BufferDescriptor stagingBufferDesc = {};
-            stagingBufferDesc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
-            stagingBufferDesc.size = Align(GetAllocatedSize(), 4);
-            stagingBufferDesc.mappedAtCreation = true;
-            stagingBufferDesc.label = "Dawn_MappedAtCreationStaging";
-            DAWN_TRY_ASSIGN(mStagingBuffer, GetDevice()->CreateBuffer(&stagingBufferDesc));
+            uint64_t allocationSize = Align(GetAllocatedSize(), 4);
+            constexpr bool kIgnoreLazyClear = false;
+            DAWN_TRY_ASSIGN(mUploadHandleForMappedAtCreation,
+                            GetDevice()->GetDynamicUploader()->AllocateDynamicBuffer(
+                                allocationSize, "Dawn_MappedAtCreationStaging", kIgnoreLazyClear));
         }
     }
 
@@ -597,8 +597,8 @@ void* BufferBase::GetMappedRange(size_t offset, size_t size, bool writable) {
         return nullptr;
     }
 
-    if (mStagingBuffer != nullptr) {
-        return static_cast<uint8_t*>(mStagingBuffer->GetMappedPointer()) + offset;
+    if (!mUploadHandleForMappedAtCreation.IsEmpty()) {
+        return static_cast<uint8_t*>(mUploadHandleForMappedAtCreation.GetMappedPointer()) + offset;
     }
     if (mSize == 0) {
         return &sZeroSizedMappingData;
@@ -616,12 +616,12 @@ uint64_t BufferBase::APIGetSize() const {
 }
 
 MaybeError BufferBase::CopyFromStagingBuffer() {
-    DAWN_ASSERT(mStagingBuffer != nullptr && mSize != 0);
+    DAWN_ASSERT(!mUploadHandleForMappedAtCreation.IsEmpty() && mSize != 0);
 
-    DAWN_TRY(
-        GetDevice()->CopyFromStagingToBuffer(mStagingBuffer.Get(), 0, this, 0, GetAllocatedSize()));
+    DAWN_TRY(GetDevice()->CopyFromStagingToBuffer(
+        mUploadHandleForMappedAtCreation.GetStagingBuffer(), 0, this, 0, GetAllocatedSize()));
 
-    mStagingBuffer = nullptr;
+    mUploadHandleForMappedAtCreation.Release();
 
     return {};
 }
@@ -640,7 +640,7 @@ MaybeError BufferBase::Unmap() {
     }
 
     // Make sure writes are now visible to the GPU if we used a staging buffer.
-    if (mState == BufferState::MappedAtCreation && mStagingBuffer != nullptr) {
+    if (mState == BufferState::MappedAtCreation && !mUploadHandleForMappedAtCreation.IsEmpty()) {
         DAWN_TRY(CopyFromStagingBuffer());
     }
     UnmapInternal(WGPUMapAsyncStatus_Aborted, "Buffer was unmapped before mapping was resolved.");

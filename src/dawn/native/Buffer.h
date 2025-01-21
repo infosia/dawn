@@ -35,6 +35,7 @@
 #include "dawn/common/NonCopyable.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
+#include "dawn/native/DynamicUploader.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
 #include "dawn/native/IntegerTypes.h"
@@ -166,13 +167,9 @@ class BufferBase : public SharedResource {
     BufferState mState;
     bool mIsDataInitialized = false;
 
-    // mStagingBuffer is used to implement mappedAtCreation for
-    // buffers with non-mappable usage. It is transiently allocated
-    // and released when the mappedAtCreation-buffer is unmapped.
-    // Because `mStagingBuffer` itself is directly mappable, it will
-    // not create another staging buffer.
-    // i.e. buffer->mStagingBuffer->mStagingBuffer... is not possible.
-    Ref<BufferBase> mStagingBuffer;
+    // mUploadHandleForMappedAtCreation is used to implement mappedAtCreation for
+    // buffers with non-mappable usage.
+    UploadHandle mUploadHandleForMappedAtCreation;
 
     wgpu::MapMode mMapMode = wgpu::MapMode::None;
     size_t mMapOffset = 0;

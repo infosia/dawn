@@ -30,6 +30,7 @@
 
 #include <cstdint>
 #include <utility>
+#include <vector>
 
 #include "dawn/common/Assert.h"
 #include "partition_alloc/pointers/raw_ptr.h"
