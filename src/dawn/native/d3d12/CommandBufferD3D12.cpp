@@ -28,6 +28,7 @@
 #include "dawn/native/d3d12/CommandBufferD3D12.h"
 
 #include <algorithm>
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -1183,13 +1184,12 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 Buffer* dstBuffer = ToBackend(write->buffer.Get());
                 uint8_t* data = mCommands.NextData<uint8_t>(size);
 
-                UploadHandle uploadHandle;
+                std::unique_ptr<UploadHandle> uploadHandle;
                 DAWN_TRY_ASSIGN(uploadHandle,
                                 device->GetDynamicUploader()->Allocate(
                                     size, device->GetQueue()->GetPendingCommandSerial(),
                                     kCopyBufferToBufferOffsetAlignment));
-                DAWN_ASSERT(uploadHandle.mappedBuffer != nullptr);
-                memcpy(uploadHandle.mappedBuffer, data, size);
+                memcpy(uploadHandle->GetMappedPointer(), data, size);
 
                 [[maybe_unused]] bool cleared;
                 DAWN_TRY_ASSIGN(cleared, dstBuffer->EnsureDataInitializedAsDestination(
@@ -1198,8 +1198,8 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 dstBuffer->TrackUsageAndTransitionNow(commandContext, wgpu::BufferUsage::CopyDst);
                 commandList->CopyBufferRegion(
                     dstBuffer->GetD3D12Resource(), offset,
-                    ToBackend(uploadHandle.stagingBuffer)->GetD3D12Resource(),
-                    uploadHandle.startOffset, size);
+                    ToBackend(uploadHandle->GetStagingBuffer())->GetD3D12Resource(),
+                    uploadHandle->GetStartOffset(), size);
                 break;
             }
 

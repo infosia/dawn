@@ -99,7 +99,7 @@ void CopyTextureData(uint8_t* dstPointer,
     }
 }
 
-ResultOrError<UploadHandle> UploadTextureDataAligningBytesPerRowAndOffset(
+ResultOrError<std::unique_ptr<UploadHandle>> UploadTextureDataAligningBytesPerRowAndOffset(
     DeviceBase* device,
     const void* data,
     uint32_t alignedBytesPerRow,
@@ -128,14 +128,13 @@ ResultOrError<UploadHandle> UploadTextureDataAligningBytesPerRowAndOffset(
             std::max(offsetAlignment, device->GetBufferCopyOffsetAlignmentForDepthStencil());
     }
 
-    UploadHandle uploadHandle;
+    std::unique_ptr<UploadHandle> uploadHandle;
     DAWN_TRY_ASSIGN(
         uploadHandle,
         device->GetDynamicUploader()->Allocate(
             newDataSizeBytes, device->GetQueue()->GetPendingCommandSerial(), offsetAlignment));
-    DAWN_ASSERT(uploadHandle.mappedBuffer != nullptr);
 
-    uint8_t* dstPointer = static_cast<uint8_t*>(uploadHandle.mappedBuffer);
+    uint8_t* dstPointer = uploadHandle->GetMappedPointer();
     const uint8_t* srcPointer = static_cast<const uint8_t*>(data);
     srcPointer += dataLayout.offset;
 
@@ -152,7 +151,7 @@ ResultOrError<UploadHandle> UploadTextureDataAligningBytesPerRowAndOffset(
                     imageAdditionalStride, alignedBytesPerRow, optimallyAlignedBytesPerRow,
                     dataLayout.bytesPerRow);
 
-    return uploadHandle;
+    return std::move(uploadHandle);
 }
 
 class ErrorQueue : public QueueBase {
@@ -436,14 +435,14 @@ MaybeError QueueBase::WriteTextureImpl(const ImageCopyTexture& destination,
     uint32_t optimalBytesPerRowAlignment = GetDevice()->GetOptimalBytesPerRowAlignment();
     uint32_t optimallyAlignedBytesPerRow = Align(alignedBytesPerRow, optimalBytesPerRowAlignment);
 
-    UploadHandle uploadHandle;
+    std::unique_ptr<UploadHandle> uploadHandle;
     DAWN_TRY_ASSIGN(uploadHandle, UploadTextureDataAligningBytesPerRowAndOffset(
                                       GetDevice(), data, alignedBytesPerRow,
                                       optimallyAlignedBytesPerRow, alignedRowsPerImage, dataLayout,
                                       format.HasDepthOrStencil(), blockInfo, writeSizePixel));
 
     TextureDataLayout passDataLayout = dataLayout;
-    passDataLayout.offset = uploadHandle.startOffset;
+    passDataLayout.offset = uploadHandle->GetStartOffset();
     passDataLayout.bytesPerRow = optimallyAlignedBytesPerRow;
     passDataLayout.rowsPerImage = alignedRowsPerImage;
 
@@ -455,7 +454,7 @@ MaybeError QueueBase::WriteTextureImpl(const ImageCopyTexture& destination,
 
     DeviceBase* device = GetDevice();
 
-    return device->CopyFromStagingToTexture(uploadHandle.stagingBuffer.Get(), passDataLayout,
+    return device->CopyFromStagingToTexture(uploadHandle->GetStagingBuffer(), passDataLayout,
                                             textureCopy, writeSizePixel);
 }
 

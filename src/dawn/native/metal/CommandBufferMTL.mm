@@ -1278,20 +1278,19 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                 uint8_t* data = mCommands.NextData<uint8_t>(size);
                 Device* device = ToBackend(GetDevice());
 
-                UploadHandle uploadHandle;
+                std::unique_ptr<UploadHandle> uploadHandle;
                 DAWN_TRY_ASSIGN(uploadHandle,
                                 device->GetDynamicUploader()->Allocate(
                                     size, device->GetQueue()->GetPendingCommandSerial(),
                                     kCopyBufferToBufferOffsetAlignment));
-                DAWN_ASSERT(uploadHandle.mappedBuffer != nullptr);
-                memcpy(uploadHandle.mappedBuffer, data, size);
+                memcpy(uploadHandle->GetMappedPointer(), data, size);
 
                 dstBuffer->EnsureDataInitializedAsDestination(commandContext, offset, size);
 
                 dstBuffer->TrackUsage();
                 [commandContext->EnsureBlit()
-                       copyFromBuffer:ToBackend(uploadHandle.stagingBuffer)->GetMTLBuffer()
-                         sourceOffset:uploadHandle.startOffset
+                       copyFromBuffer:ToBackend(uploadHandle->GetStagingBuffer())->GetMTLBuffer()
+                         sourceOffset:uploadHandle->GetStartOffset()
                              toBuffer:dstBuffer->GetMTLBuffer()
                     destinationOffset:offset
                                  size:size];

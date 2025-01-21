@@ -655,15 +655,15 @@ MaybeError Buffer::ClearBuffer(CommandRecordingContext* commandContext,
         // TODO(crbug.com/dawn/852): use ClearUnorderedAccessView*() when the buffer usage
         // includes STORAGE.
         DynamicUploader* uploader = device->GetDynamicUploader();
-        UploadHandle uploadHandle;
+        std::unique_ptr<UploadHandle> uploadHandle;
         DAWN_TRY_ASSIGN(uploadHandle,
                         uploader->Allocate(size, device->GetQueue()->GetPendingCommandSerial(),
                                            kCopyBufferToBufferOffsetAlignment));
 
-        memset(uploadHandle.mappedBuffer, clearValue, size);
+        memset(uploadHandle->GetMappedPointer(), clearValue, size);
 
-        device->CopyFromStagingToBufferHelper(commandContext, uploadHandle.stagingBuffer.Get(),
-                                              uploadHandle.startOffset, this, offset, size);
+        device->CopyFromStagingToBufferHelper(commandContext, uploadHandle->GetStagingBuffer(),
+                                              uploadHandle->GetStartOffset(), this, offset, size);
     }
 
     return {};
