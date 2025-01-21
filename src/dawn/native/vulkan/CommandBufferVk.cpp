@@ -28,6 +28,7 @@
 #include "dawn/native/vulkan/CommandBufferVk.h"
 
 #include <algorithm>
+#include <memory>
 #include <vector>
 
 #include "dawn/native/BindGroupTracker.h"
@@ -969,25 +970,24 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 Buffer* dstBuffer = ToBackend(write->buffer.Get());
                 uint8_t* data = mCommands.NextData<uint8_t>(size);
 
-                UploadHandle uploadHandle;
+                std::unique_ptr<UploadHandle> uploadHandle;
                 DAWN_TRY_ASSIGN(uploadHandle,
                                 device->GetDynamicUploader()->Allocate(
                                     size, device->GetQueue()->GetPendingCommandSerial(),
                                     kCopyBufferToBufferOffsetAlignment));
-                DAWN_ASSERT(uploadHandle.mappedBuffer != nullptr);
-                memcpy(uploadHandle.mappedBuffer, data, size);
+                memcpy(uploadHandle->GetMappedPointer(), data, size);
 
                 dstBuffer->EnsureDataInitializedAsDestination(recordingContext, offset, size);
 
                 dstBuffer->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
 
                 VkBufferCopy copy;
-                copy.srcOffset = uploadHandle.startOffset;
+                copy.srcOffset = uploadHandle->GetStartOffset();
                 copy.dstOffset = offset;
                 copy.size = size;
 
                 device->fn.CmdCopyBuffer(commands,
-                                         ToBackend(uploadHandle.stagingBuffer)->GetHandle(),
+                                         ToBackend(uploadHandle->GetStagingBuffer())->GetHandle(),
                                          dstBuffer->GetHandle(), 1, &copy);
                 break;
             }
