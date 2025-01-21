@@ -846,7 +846,10 @@ TEST_P(BufferZeroInitTest, MappedAtCreation) {
         constexpr wgpu::BufferUsage kBufferUsage = wgpu::BufferUsage::CopySrc;
 
         wgpu::Buffer buffer;
-        EXPECT_LAZY_CLEAR(1u, buffer = CreateBuffer(kBufferSize, kBufferUsage, true));
+        size_t lazyClearsBefore1 = native::GetLazyClearCountForTesting(device.Get());
+        buffer = CreateBuffer(kBufferSize, kBufferUsage, true);
+        size_t lazyClearsAfter1 = native::GetLazyClearCountForTesting(device.Get());
+        EXPECT_EQ(1u, lazyClearsAfter1 - lazyClearsBefore1);
 
         const uint8_t* mappedData = static_cast<const uint8_t*>(buffer.GetConstMappedRange());
         EXPECT_EQ(0, memcmp(mappedData, kExpectedData.data(), kBufferSize));
