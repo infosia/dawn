@@ -30,6 +30,7 @@
 
 #include <memory>
 
+#include "dawn/native/Instance.h"
 #include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/OpenGLFunctions.h"
@@ -40,7 +41,8 @@ class DisplayEGL;
 
 class PhysicalDevice : public PhysicalDeviceBase {
   public:
-    static ResultOrError<Ref<PhysicalDevice>> Create(wgpu::BackendType backendType,
+    static ResultOrError<Ref<PhysicalDevice>> Create(InstanceBase* instance,
+                                                     wgpu::BackendType backendType,
                                                      Ref<DisplayEGL> display,
                                                      bool forceES31AndNoExtensions);
 
@@ -58,9 +60,10 @@ class PhysicalDevice : public PhysicalDeviceBase {
   private:
     PhysicalDevice(wgpu::BackendType backendType, Ref<DisplayEGL> display);
 
-    MaybeError InitializeImpl() override;
+    MaybeError InitializeImpl(InstanceBase* instance) override;
     void InitializeSupportedFeaturesImpl() override;
-    MaybeError InitializeSupportedLimitsImpl(CombinedLimits* limits) override;
+    MaybeError InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                             CombinedLimits* limits) override;
 
     FeatureValidationResult ValidateFeatureSupportedWithTogglesImpl(
         wgpu::FeatureName feature,

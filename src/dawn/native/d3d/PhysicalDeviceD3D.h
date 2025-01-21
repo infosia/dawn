@@ -52,7 +52,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
         const Surface* surface) const override;
 
   protected:
-    MaybeError InitializeImpl() override;
+    MaybeError InitializeImpl(InstanceBase* instance) override;
 
   private:
     ComPtr<IDXGIAdapter4> mHardwareAdapter;
