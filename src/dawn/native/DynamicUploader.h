@@ -59,6 +59,9 @@ class UploadHandle : public NonCopyable {
 
     ~UploadHandle();
 
+    bool IsEmpty() const;
+    void Release();
+
     uint64_t GetStartOffset() const;
     BufferBase* GetStagingBuffer() const;
     uint8_t* GetMappedPointer() const;
@@ -78,6 +81,9 @@ class DynamicUploader {
     ResultOrError<UploadHandle> Allocate(uint64_t allocationSize,
                                          ExecutionSerial serial,
                                          uint64_t offsetAlignment);
+    ResultOrError<UploadHandle> AllocateDynamicBuffer(uint64_t allocationSize,
+                                                      const char* label,
+                                                      bool ignoreLazyClear = true);
     void Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll = false);
 
     void TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize);
@@ -94,7 +100,6 @@ class DynamicUploader {
     ResultOrError<UploadHandle> AllocateInternal(uint64_t allocationSize,
                                                  ExecutionSerial serial,
                                                  uint64_t offsetAlignment);
-    ResultOrError<UploadHandle> AllocateDynamicBuffer(uint64_t allocationSize);
 
     std::vector<std::unique_ptr<RingBuffer>> mRingBuffers;
     raw_ptr<DeviceBase> mDevice;
