@@ -681,14 +681,15 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
             }
 
             DynamicUploader* uploader = device->GetDynamicUploader();
-            UploadHandle uploadHandle;
+            std::unique_ptr<UploadHandle> uploadHandle;
             DAWN_TRY_ASSIGN(
                 uploadHandle,
                 uploader->Allocate(bufferSize, device->GetQueue()->GetPendingCommandSerial(),
                                    blockInfo.byteSize));
-            memset(uploadHandle.mappedBuffer, clearColor, bufferSize);
+            memset(uploadHandle->GetMappedPointer(), clearColor, bufferSize);
 
-            id<MTLBuffer> uploadBuffer = ToBackend(uploadHandle.stagingBuffer)->GetMTLBuffer();
+            id<MTLBuffer> uploadBuffer =
+                ToBackend(uploadHandle->GetStagingBuffer())->GetMTLBuffer();
 
             for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
                  ++level) {
@@ -706,7 +707,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                     MTLBlitOption blitOption = ComputeMTLBlitOption(aspect);
                     [commandContext->EnsureBlit()
                              copyFromBuffer:uploadBuffer
-                               sourceOffset:uploadHandle.startOffset
+                               sourceOffset:uploadHandle->GetStartOffset()
                           sourceBytesPerRow:largestMipBytesPerRow
                         sourceBytesPerImage:largestMipBytesPerImage
                                  sourceSize:MTLSizeMake(virtualSize.width, virtualSize.height,

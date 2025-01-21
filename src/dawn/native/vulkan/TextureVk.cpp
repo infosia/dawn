@@ -1184,11 +1184,11 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
         uint64_t bufferSize = bytesPerRow * (largestMipSize.height / blockInfo.height) *
                               largestMipSize.depthOrArrayLayers;
         DynamicUploader* uploader = device->GetDynamicUploader();
-        UploadHandle uploadHandle;
+        std::unique_ptr<UploadHandle> uploadHandle;
         DAWN_TRY_ASSIGN(uploadHandle, uploader->Allocate(
                                           bufferSize, device->GetQueue()->GetPendingCommandSerial(),
                                           blockInfo.byteSize));
-        memset(uploadHandle.mappedBuffer, uClearColor, bufferSize);
+        memset(uploadHandle->GetMappedPointer(), uClearColor, bufferSize);
 
         std::vector<VkBufferImageCopy> regions;
         for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
@@ -1205,7 +1205,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                 }
 
                 TextureDataLayout dataLayout;
-                dataLayout.offset = uploadHandle.startOffset;
+                dataLayout.offset = uploadHandle->GetStartOffset();
                 dataLayout.rowsPerImage = copySize.height / blockInfo.height;
                 dataLayout.bytesPerRow = bytesPerRow;
                 TextureCopy textureCopy;
@@ -1217,9 +1217,10 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                 regions.push_back(ComputeBufferImageCopyRegion(dataLayout, textureCopy, copySize));
             }
         }
-        device->fn.CmdCopyBufferToImage(
-            recordingContext->commandBuffer, ToBackend(uploadHandle.stagingBuffer)->GetHandle(),
-            GetHandle(), VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, regions.size(), regions.data());
+        device->fn.CmdCopyBufferToImage(recordingContext->commandBuffer,
+                                        ToBackend(uploadHandle->GetStagingBuffer())->GetHandle(),
+                                        GetHandle(), VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+                                        regions.size(), regions.data());
     }
 
     if (clearValue == TextureBase::ClearValue::Zero) {

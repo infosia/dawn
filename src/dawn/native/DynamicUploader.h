@@ -43,11 +43,25 @@
 namespace dawn::native {
 
 class BufferBase;
+class DynamicUploader;
 
-struct UploadHandle {
-    raw_ptr<uint8_t> mappedBuffer = nullptr;
-    uint64_t startOffset = 0;
-    Ref<BufferBase> stagingBuffer;
+class UploadHandle {
+  public:
+    UploadHandle(DynamicUploader* dynamicUploader,
+                 uint64_t startOffset,
+                 Ref<BufferBase> stagingBuffer,
+                 bool isSubAllocation);
+    ~UploadHandle();
+
+    uint64_t GetStartOffset() const;
+    BufferBase* GetStagingBuffer() const;
+    uint8_t* GetMappedPointer() const;
+
+  private:
+    raw_ptr<DynamicUploader> mDynamicUploader = nullptr;
+    uint64_t mStartOffset = 0;
+    Ref<BufferBase> mStagingBuffer;
+    bool mIsSubAllocation = true;
 };
 
 class DynamicUploader {
@@ -55,28 +69,29 @@ class DynamicUploader {
     explicit DynamicUploader(DeviceBase* device);
     ~DynamicUploader() = default;
 
-    ResultOrError<UploadHandle> Allocate(uint64_t allocationSize,
-                                         ExecutionSerial serial,
-                                         uint64_t offsetAlignment);
+    ResultOrError<std::unique_ptr<UploadHandle>> Allocate(uint64_t allocationSize,
+                                                          ExecutionSerial serial,
+                                                          uint64_t offsetAlignment);
     void Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll = false);
-
-    bool ShouldFlush() const;
+    void TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize);
 
   private:
     static constexpr uint64_t kRingBufferSize = 4 * 1024 * 1024;
-    uint64_t GetTotalAllocatedSize() const;
 
     struct RingBuffer {
         Ref<BufferBase> mStagingBuffer;
         RingBufferAllocator mAllocator;
     };
 
-    ResultOrError<UploadHandle> AllocateInternal(uint64_t allocationSize,
-                                                 ExecutionSerial serial,
-                                                 uint64_t offsetAlignment);
+    ResultOrError<std::unique_ptr<UploadHandle>> AllocateInternal(uint64_t allocationSize,
+                                                                  ExecutionSerial serial,
+                                                                  uint64_t offsetAlignment);
+    ResultOrError<std::unique_ptr<UploadHandle>> AllocateDynamicBuffer(uint64_t allocationSize);
+    void FlushIfNecessary();
 
     std::vector<std::unique_ptr<RingBuffer>> mRingBuffers;
     raw_ptr<DeviceBase> mDevice;
+    SerialQueue<ExecutionSerial, uint64_t> mReleasedStagingMemorySizes;
 };
 }  // namespace dawn::native
 
