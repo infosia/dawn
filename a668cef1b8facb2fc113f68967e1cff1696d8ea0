@@ -16,6 +16,63 @@
       "message": "PTAL.",
       "revId": "a668cef1b8facb2fc113f68967e1cff1696d8ea0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e5767c9_1a260c2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-01-21T19:51:03Z",
+      "side": 1,
+      "message": "needs better comments",
+      "revId": "a668cef1b8facb2fc113f68967e1cff1696d8ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13fd9c4b_63074570",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-01-21T19:51:03Z",
+      "side": 1,
+      "message": "This needs a method comment.  Coming in, I don\u0027t know which is the \"from\" and which is the \"to\".\n\n```\n/// Converts a call with integer arguments and result type into a call\n/// using signed arguemnts and a signed result.  Bitcasts are inserted\n/// as needed to convert unsigned args to signed, and the signed result\n/// to unsigned.\n```\n\nAlso suggest a rename to ConvertUnsignedCallArgsAndResultToSignedCall",
+      "revId": "a668cef1b8facb2fc113f68967e1cff1696d8ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c88f1355_c29c3d3e",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-01-21T19:51:03Z",
+      "side": 1,
+      "message": "This is not right.\n\nShould be\n```\n/// If the call originally returned an unsigned result, then replace the inner\n/// result with the corresponding signed type, and wrap the whole call with a bitcast\n/// back to the original unsigned type.\n```",
+      "range": {
+        "startLine": 102,
+        "startChar": 51,
+        "endLine": 102,
+        "endChar": 79
+      },
+      "revId": "a668cef1b8facb2fc113f68967e1cff1696d8ea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
