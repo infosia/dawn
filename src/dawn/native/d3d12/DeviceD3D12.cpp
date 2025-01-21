@@ -70,7 +70,7 @@ namespace {
 static constexpr uint16_t kShaderVisibleDescriptorHeapSize = 1024;
 static constexpr uint8_t kAttachmentDescriptorHeapSize = 64;
 
-// Value may change in the future to better accomodate large clears.
+// Value may change in the future to better accommodate large clears.
 static constexpr uint64_t kZeroBufferSize = 1024 * 1024 * 4;  // 4 Mb
 
 static constexpr uint64_t kMaxDebugMessagesToPrint = 5;
@@ -300,15 +300,16 @@ MaybeError Device::CreateZeroBuffer() {
         ToBackend(GetQueue())->GetPendingCommandContext(QueueBase::SubmitMode::Passive);
 
     DynamicUploader* uploader = GetDynamicUploader();
-    UploadHandle uploadHandle;
+    std::unique_ptr<UploadHandle> uploadHandle;
     DAWN_TRY_ASSIGN(uploadHandle,
                     uploader->Allocate(kZeroBufferSize, GetQueue()->GetPendingCommandSerial(),
                                        kCopyBufferToBufferOffsetAlignment));
 
-    memset(uploadHandle.mappedBuffer, 0u, kZeroBufferSize);
+    memset(uploadHandle->GetMappedPointer(), 0u, kZeroBufferSize);
 
-    CopyFromStagingToBufferHelper(commandContext, uploadHandle.stagingBuffer.Get(),
-                                  uploadHandle.startOffset, mZeroBuffer.Get(), 0, kZeroBufferSize);
+    CopyFromStagingToBufferHelper(commandContext, uploadHandle->GetStagingBuffer(),
+                                  uploadHandle->GetStartOffset(), mZeroBuffer.Get(), 0,
+                                  kZeroBufferSize);
 
     mZeroBuffer->SetInitialized(true);
     return {};

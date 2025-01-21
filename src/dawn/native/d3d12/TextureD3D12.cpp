@@ -29,6 +29,7 @@
 
 #include <algorithm>
 #include <iterator>
+#include <memory>
 #include <utility>
 
 #include "absl/numeric/bits.h"
@@ -530,7 +531,7 @@ void Texture::TransitionSubresourceRange(std::vector<D3D12_RESOURCE_BARRIER>* ba
                 mD3D12ResourceFlags & D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS) {
                 // Implicit texture state decays can only occur when the texture was implicitly
                 // transitioned to a read-only state. isValidToDecay is needed to differentiate
-                // between resources that were implictly or explicitly transitioned to a
+                // between resources that were implicitly or explicitly transitioned to a
                 // read-only state.
                 state->isValidToDecay = true;
                 state->lastDecaySerial = pendingCommandSerial;
@@ -851,12 +852,12 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
             uint64_t bufferSize = bytesPerRow * (largestMipSize.height / blockInfo.height) *
                                   largestMipSize.depthOrArrayLayers;
             DynamicUploader* uploader = device->GetDynamicUploader();
-            UploadHandle uploadHandle;
+            std::unique_ptr<UploadHandle> uploadHandle;
             DAWN_TRY_ASSIGN(
                 uploadHandle,
                 uploader->Allocate(bufferSize, device->GetQueue()->GetPendingCommandSerial(),
                                    blockInfo.byteSize));
-            memset(uploadHandle.mappedBuffer, clearColor, bufferSize);
+            memset(uploadHandle->GetMappedPointer(), clearColor, bufferSize);
 
             for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
                  ++level) {
@@ -879,9 +880,9 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                     textureCopy.aspect = aspect;
                     RecordBufferTextureCopyWithBufferHandle(
                         BufferTextureCopyDirection::B2T, commandList,
-                        ToBackend(uploadHandle.stagingBuffer)->GetD3D12Resource(),
-                        uploadHandle.startOffset, bytesPerRow, largestMipSize.height, textureCopy,
-                        copySize);
+                        ToBackend(uploadHandle->GetStagingBuffer())->GetD3D12Resource(),
+                        uploadHandle->GetStartOffset(), bytesPerRow, largestMipSize.height,
+                        textureCopy, copySize);
                 }
             }
         }
