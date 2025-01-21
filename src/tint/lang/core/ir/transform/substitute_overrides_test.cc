@@ -329,6 +329,92 @@ $B1: {  # root
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_SubstituteOverridesTest, OverrideWithSubgroupShuffle) {
+    core::ir::Override* o = nullptr;
+    b.Append(mod.root_block, [&] {
+        auto* x = b.Override("x", ty.u32());
+        x->SetOverrideId({2});
+        auto* add = b.Add(ty.u32(), x, 4_u);
+        o = b.Override(Source{{1, 2}}, "a", ty.u32());
+        o->SetOverrideId({1});
+        o->SetInitializer(add->Result(0));
+    });
+
+    auto* func = b.Function("foo", ty.u32());
+    b.Append(func->Block(), [&] {
+        auto* shuffle_func = b.Call(ty.u32(), core::BuiltinFn::kSubgroupShuffle, 1_u, -129_i);
+        b.Return(func, shuffle_func->Result(0));
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %x:u32 = override @id(2)
+  %2:u32 = add %x, 4u
+  %a:u32 = override, %2 @id(1)
+}
+
+%foo = func():u32 {
+  $B2: {
+    %5:u32 = subgroupShuffle 1u, -129i
+    ret %5
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    SubstituteOverridesConfig cfg{};
+    cfg.map[OverrideId{2}] = static_cast<double>(std::numeric_limits<float>::max());
+    auto result = RunWithFailure(SubstituteOverrides, cfg);
+    ASSERT_NE(result, Success);
+    EXPECT_EQ(
+        result.Failure().reason.Str(),
+        R"(error: The sourceLaneIndex argument of subgroupShuffle must be greater than or equal to zero)");
+}
+
+TEST_F(IR_SubstituteOverridesTest, OverrideWithQuantizeF16) {
+    core::ir::Override* o = nullptr;
+    b.Append(mod.root_block, [&] {
+        auto* x = b.Override("x", ty.u32());
+        x->SetOverrideId({2});
+
+        auto* add = b.Add(ty.u32(), x, 4_u);
+
+        o = b.Override(Source{{1, 2}}, "a", ty.u32());
+        o->SetOverrideId({1});
+        o->SetInitializer(add->Result(0));
+    });
+
+    auto* func = b.Function("foo", ty.f32());
+    b.Append(func->Block(), [&] {
+        auto* shuffle_func = b.Call(ty.f32(), core::BuiltinFn::kQuantizeToF16, -65505_f);
+        b.Return(func, shuffle_func->Result(0));
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %x:u32 = override @id(2)
+  %2:u32 = add %x, 4u
+  %a:u32 = override, %2 @id(1)
+}
+
+%foo = func():f32 {
+  $B2: {
+    %5:f32 = quantizeToF16 -65505.0f
+    ret %5
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    SubstituteOverridesConfig cfg{};
+    cfg.map[OverrideId{2}] = static_cast<double>(std::numeric_limits<float>::max());
+    auto result = RunWithFailure(SubstituteOverrides, cfg);
+    ASSERT_NE(result, Success);
+    EXPECT_EQ(result.Failure().reason.Str(),
+              R"(error: value -65505.0 cannot be represented as 'f16')");
+}
+
 TEST_F(IR_SubstituteOverridesTest, OverrideWithComplexGenError) {
     core::ir::Override* o = nullptr;
     b.Append(mod.root_block, [&] {
@@ -921,6 +1007,106 @@ $B1: {  # root
     Run(SubstituteOverrides, cfg);
 
     EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_SubstituteOverridesTest, OverrideCondLogicalAndSuccess) {
+    core::ir::Override* o = nullptr;
+    b.Append(mod.root_block, [&] {
+        auto* cond = b.Override("cond", ty.bool_());
+        cond->SetOverrideId({0});
+        auto* one_f32 = b.Override("one_f32", 1_f);
+        one_f32->SetOverrideId({2});
+        auto* three = b.Divide(ty.f32(), one_f32, 0.0_f);
+        auto* four = b.Equal(ty.bool_(), three, 0.0_f);
+        auto* five = b.LogicalAnd(ty.bool_(), cond, four);
+        o = b.Override(Source{{1, 2}}, "foo", ty.bool_());
+        o->SetOverrideId({1});
+        o->SetInitializer(five->Result(0));
+    });
+
+    auto* func = b.Function("foo2", ty.bool_());
+    b.Append(func->Block(), [&] { b.Return(func, o->Result(0)); });
+
+    auto* src = R"(
+$B1: {  # root
+  %cond:bool = override @id(0)
+  %one_f32:f32 = override, 1.0f @id(2)
+  %3:f32 = div %one_f32, 0.0f
+  %4:bool = eq %3, 0.0f
+  %5:bool = logical-and %cond, %4
+  %foo:bool = override, %5 @id(1)
+}
+
+%foo2 = func():bool {
+  $B2: {
+    ret %foo
+  }
+}
+)";
+
+    auto* expect = R"(
+%foo2 = func():bool {
+  $B1: {
+    ret false
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    SubstituteOverridesConfig cfg{};
+    cfg.map[OverrideId{0}] = 0;
+    Run(SubstituteOverrides, cfg);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_SubstituteOverridesTest, OverrideCondLogicalAndFailure) {
+    core::ir::Override* o = nullptr;
+    b.Append(mod.root_block, [&] {
+        auto* cond = b.Override("cond", ty.bool_());
+        cond->SetOverrideId({0});
+        auto* one_f32 = b.Override("one_f32", 1_f);
+        one_f32->SetOverrideId({2});
+        auto* three = b.Divide(ty.f32(), one_f32, 0.0_f);
+        auto* four = b.Equal(ty.bool_(), three, 0.0_f);
+        auto* five = b.LogicalAnd(ty.bool_(), cond, four);
+        o = b.Override(Source{{1, 2}}, "foo", ty.bool_());
+        o->SetOverrideId({1});
+        o->SetInitializer(five->Result(0));
+    });
+
+    auto* func = b.Function("foo2", ty.bool_());
+    b.Append(func->Block(), [&] { b.Return(func, o->Result(0)); });
+
+    auto* src = R"(
+$B1: {  # root
+  %cond:bool = override @id(0)
+  %one_f32:f32 = override, 1.0f @id(2)
+  %3:f32 = div %one_f32, 0.0f
+  %4:bool = eq %3, 0.0f
+  %5:bool = logical-and %cond, %4
+  %foo:bool = override, %5 @id(1)
+}
+
+%foo2 = func():bool {
+  $B2: {
+    ret %foo
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    SubstituteOverridesConfig cfg{};
+    cfg.map[OverrideId{0}] = 1;
+
+    auto result = RunWithFailure(SubstituteOverrides, cfg);
+    ASSERT_NE(result, Success);
+    EXPECT_EQ(result.Failure().reason.Str(),
+              R"(error: '1.0 / 0.0' cannot be represented as 'f32')");
+
+    //    EXPECT_EQ(expect, str());
 }
 
 }  // namespace
