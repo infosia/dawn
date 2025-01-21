@@ -71,9 +71,10 @@ class PhysicalDevice : public d3d::PhysicalDevice {
 
     MaybeError ResetInternalDeviceForTestingImpl() override;
 
-    MaybeError InitializeImpl() override;
+    MaybeError InitializeImpl(InstanceBase* instance) override;
     void InitializeSupportedFeaturesImpl() override;
-    MaybeError InitializeSupportedLimitsImpl(CombinedLimits* limits) override;
+    MaybeError InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                             CombinedLimits* limits) override;
 
     FeatureValidationResult ValidateFeatureSupportedWithTogglesImpl(
         wgpu::FeatureName feature,

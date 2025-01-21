@@ -654,14 +654,19 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
             for (VkPhysicalDevice vkPhysicalDevice : vkPhysicalDevices) {
                 Ref<PhysicalDevice> physicalDevice =
                     AcquireRef(new PhysicalDevice(mVulkanInstances[icd].Get(), vkPhysicalDevice));
-                if (instance->ConsumedErrorAndWarnOnce(physicalDevice->Initialize())) {
+                if (instance->ConsumedErrorAndWarnOnce(physicalDevice->Initialize(instance))) {
                     continue;
                 }
+                // This loop can't filter adapters based on SupportsFeatureLevel() since the results
+                // are cached to subsequent calls that might have a different feature level.
                 mPhysicalDevices[icd].push_back(std::move(physicalDevice));
             }
         }
-        physicalDevices.insert(physicalDevices.end(), mPhysicalDevices[icd].begin(),
-                               mPhysicalDevices[icd].end());
+        for (auto& physicalDevice : mPhysicalDevices[icd]) {
+            if (physicalDevice->SupportsFeatureLevel(options->featureLevel)) {
+                physicalDevices.push_back(physicalDevice);
+            }
+        }
     }
     return physicalDevices;
 }

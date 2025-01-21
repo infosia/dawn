@@ -51,7 +51,7 @@ PhysicalDevice::PhysicalDevice() : PhysicalDeviceBase(wgpu::BackendType::Null) {
     mDeviceId = 0;
     mName = "Null backend";
     mAdapterType = wgpu::AdapterType::CPU;
-    MaybeError err = Initialize();
+    MaybeError err = Initialize(nullptr);
     DAWN_ASSERT(err.IsSuccess());
 }
 
@@ -76,7 +76,7 @@ ResultOrError<PhysicalDeviceSurfaceCapabilities> PhysicalDevice::GetSurfaceCapab
     return capabilities;
 }
 
-MaybeError PhysicalDevice::InitializeImpl() {
+MaybeError PhysicalDevice::InitializeImpl(InstanceBase* instance) {
     return {};
 }
 
@@ -87,7 +87,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 }
 
-MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
+MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                                         CombinedLimits* limits) {
     GetDefaultLimitsForSupportedFeatureLevel(&limits->v1);
     // Set the subgroups limit, as DeviceNull should support subgroups feature.
     limits->experimentalSubgroupLimits.minSubgroupSize = 4;

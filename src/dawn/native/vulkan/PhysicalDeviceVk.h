@@ -71,9 +71,13 @@ class PhysicalDevice : public PhysicalDeviceBase {
     const AHBFunctions* GetOrLoadAHBFunctions();
 
   private:
-    MaybeError InitializeImpl() override;
+    MaybeError InitializeImpl(InstanceBase* instance) override;
     void InitializeSupportedFeaturesImpl() override;
-    MaybeError InitializeSupportedLimitsImpl(CombinedLimits* limits) override;
+    MaybeError InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                             CombinedLimits* limits) override;
+
+    MaybeError InitializeSupportedLimitsInternal(wgpu::FeatureLevel featureLevel,
+                                                 CombinedLimits* limits);
 
     FeatureValidationResult ValidateFeatureSupportedWithTogglesImpl(
         wgpu::FeatureName feature,
@@ -98,11 +102,17 @@ class PhysicalDevice : public PhysicalDeviceBase {
         wgpu::TextureFormat format,
         UnpackedPtr<DawnFormatCapabilities>& capabilities) const override;
 
+    // Sets core feature level as not being supported. If `instance` is
+    // non-null, this logs `error` as a warning on it to explain why the device
+    // can't support core.
+    void SetCoreNotSupported(InstanceBase* instance, std::unique_ptr<ErrorData> error);
+
     VkPhysicalDevice mVkPhysicalDevice;
     Ref<VulkanInstance> mVulkanInstance;
     VulkanDeviceInfo mDeviceInfo = {};
 
     uint32_t mDefaultComputeSubgroupSize = 0;
+    bool mSupportsCoreFeatureLevel = true;
 
 #if DAWN_PLATFORM_IS(ANDROID)
     std::unique_ptr<AHBFunctions> mAHBFunctions;

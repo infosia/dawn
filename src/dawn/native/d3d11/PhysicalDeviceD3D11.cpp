@@ -119,8 +119,8 @@ ResultOrError<ComPtr<ID3D11Device>> PhysicalDevice::CreateD3D11Device(bool enabl
     return d3d11Device;
 }
 
-MaybeError PhysicalDevice::InitializeImpl() {
-    DAWN_TRY(Base::InitializeImpl());
+MaybeError PhysicalDevice::InitializeImpl(InstanceBase* instance) {
+    DAWN_TRY(Base::InitializeImpl(instance));
     // D3D11 cannot check for feature support without a device.
     // Create the device to populate the adapter properties then reuse it when needed for actual
     // rendering.
@@ -197,7 +197,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::FlexibleTextureViews);
 }
 
-MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
+MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                                         CombinedLimits* limits) {
     GetDefaultLimitsForSupportedFeatureLevel(&limits->v1);
 
     // // https://docs.microsoft.com/en-us/windows/win32/direct3d12/hardware-feature-levels
@@ -352,7 +353,7 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
 MaybeError PhysicalDevice::ResetInternalDeviceForTestingImpl() {
     [[maybe_unused]] auto refCount = mD3D11Device.Reset();
     DAWN_ASSERT(refCount == 0);
-    DAWN_TRY(Initialize());
+    DAWN_TRY(Initialize(nullptr));
 
     return {};
 }
