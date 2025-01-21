@@ -81,7 +81,8 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
         for (id<MTLDevice> device in MTLCopyAllDevices()) {
             Ref<PhysicalDevice> physicalDevice = AcquireRef(
                 new PhysicalDevice(GetInstance(), AcquireNSPRef(device), metalValidationEnabled));
-            if (!GetInstance()->ConsumedErrorAndWarnOnce(physicalDevice->Initialize())) {
+            if (!GetInstance()->ConsumedErrorAndWarnOnce(
+                    physicalDevice->Initialize(GetInstance()))) {
                 mPhysicalDevices.push_back(std::move(physicalDevice));
             }
         }
@@ -91,7 +92,7 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
 #if DAWN_PLATFORM_IS(IOS)
         Ref<PhysicalDevice> physicalDevice = AcquireRef(new PhysicalDevice(
             GetInstance(), AcquireNSPRef(MTLCreateSystemDefaultDevice()), metalValidationEnabled));
-        if (!GetInstance()->ConsumedErrorAndWarnOnce(physicalDevice->Initialize())) {
+        if (!GetInstance()->ConsumedErrorAndWarnOnce(physicalDevice->Initialize(GetInstance()))) {
             mPhysicalDevices.push_back(std::move(physicalDevice));
         }
 #endif

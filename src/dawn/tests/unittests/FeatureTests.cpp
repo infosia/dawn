@@ -42,8 +42,8 @@ class FeatureTests : public testing::Test {
     FeatureTests()
         : testing::Test(),
           mInstanceBase(native::APICreateInstance(nullptr)),
-          mPhysicalDevice(),
-          mUnsafePhysicalDevice(),
+          mPhysicalDevice(mInstanceBase.Get()),
+          mUnsafePhysicalDevice(mInstanceBase.Get()),
           mAdapterBase(mInstanceBase.Get(),
                        &mPhysicalDevice,
                        wgpu::FeatureLevel::Core,

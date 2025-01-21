@@ -46,12 +46,13 @@ namespace dawn::native::null {
 // Implementation of pre-Device objects: the null physical device, null backend connection and
 // Connect()
 
-PhysicalDevice::PhysicalDevice() : PhysicalDeviceBase(wgpu::BackendType::Null) {
+PhysicalDevice::PhysicalDevice(InstanceBase* instance)
+    : PhysicalDeviceBase(wgpu::BackendType::Null) {
     mVendorId = 0;
     mDeviceId = 0;
     mName = "Null backend";
     mAdapterType = wgpu::AdapterType::CPU;
-    MaybeError err = Initialize();
+    MaybeError err = Initialize(instance);
     DAWN_ASSERT(err.IsSuccess());
 }
 
@@ -76,7 +77,7 @@ ResultOrError<PhysicalDeviceSurfaceCapabilities> PhysicalDevice::GetSurfaceCapab
     return capabilities;
 }
 
-MaybeError PhysicalDevice::InitializeImpl() {
+MaybeError PhysicalDevice::InitializeImpl(InstanceBase* instance) {
     return {};
 }
 
@@ -87,7 +88,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 }
 
-MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
+MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                                         CombinedLimits* limits) {
     GetDefaultLimitsForSupportedFeatureLevel(&limits->v1);
     // Set the subgroups limit, as DeviceNull should support subgroups feature.
     limits->experimentalSubgroupLimits.minSubgroupSize = 4;
@@ -148,7 +150,7 @@ class Backend : public BackendConnection {
         // There is always a single Null physical device because it is purely CPU based
         // and doesn't depend on the system.
         if (mPhysicalDevice == nullptr) {
-            mPhysicalDevice = AcquireRef(new PhysicalDevice());
+            mPhysicalDevice = AcquireRef(new PhysicalDevice(GetInstance()));
         }
         return {mPhysicalDevice};
     }

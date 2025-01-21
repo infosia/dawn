@@ -63,11 +63,12 @@ class PhysicalDevice : public PhysicalDeviceBase {
     void SetupBackendDeviceToggles(dawn::platform::Platform* platform,
                                    TogglesState* deviceToggles) const override;
 
-    MaybeError InitializeImpl() override;
+    MaybeError InitializeImpl(InstanceBase* instance) override;
 
     void InitializeSupportedFeaturesImpl() override;
     void InitializeVendorArchitectureImpl() override;
-    MaybeError InitializeSupportedLimitsImpl(CombinedLimits* limits) override;
+    MaybeError InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                             CombinedLimits* limits) override;
 
     FeatureValidationResult ValidateFeatureSupportedWithTogglesImpl(
         wgpu::FeatureName feature,
