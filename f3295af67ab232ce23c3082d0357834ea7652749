@@ -16,6 +16,92 @@
       "message": "PTAL Loko. Also who is a good second reviewer for this CL since cwallez is out?",
       "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16c6cd4b_4b000b50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-21T21:21:13Z",
+      "side": 1,
+      "message": "Hmm, sorry to backtrack on this again, but looking at this more, I\u0027m not fully convinced that plumbing the `Instance` through this way was the best way...\n\nIIUC, this implementation will always log stuff even if we ask for for compat, and it will only log one of the reasons that core isn\u0027t supported. I\u0027m now thinking that maybe caching a `bool` and the `ErrorData` for unable to support Core in the `PhysicalDevice` and only logging that out when we ask for Core might be a bit better? I am imagining only logging when we call `SupportsFeatureLevel(Core)` and it would only happen the first time since that would consume the error, but the `bool` can continue to return correctly.\n\nThat way, we can actually append all the reasons why Core isn\u0027t supported on the `PhysicalDevice`, and we don\u0027t get the confusing error message when we actually only ask for Compat.\n\nI think this solution would still need to plumb the `Instance` through, but it would be through `SupportsFeatureLevel` instead? Or alternatively, we could make `SupportsFeatureLevel` return a `ResultOrError\u003cbool\u003e` where if we have a cached error, we return that instead of the simply false, and in that case we wouldn\u0027t even need to plumb the `Instance` through anymore, and just handle that appropriately in `BackendVk.cpp`?",
+      "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d47ca65_a8db639b",
+        "filename": "src/dawn/native/PhysicalDevice.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-21T21:21:13Z",
+      "side": 1,
+      "message": "nit. Might not need these because we are already including `Forward.h`.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 19
+      },
+      "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7787d806_a6534630",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-21T21:21:13Z",
+      "side": 1,
+      "message": "I think either just using `native/Forward.h` or forward declaring `InstanceBase` from `native` should suffice here.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35c2637e_28633c9d",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-21T21:21:13Z",
+      "side": 1,
+      "message": "nit. This assert is probably better off removed because this function could be called multiple times if there\u0027s more than one reason that we can\u0027t support Core.",
+      "range": {
+        "startLine": 1130,
+        "startChar": 4,
+        "endLine": 1130,
+        "endChar": 43
+      },
+      "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
