@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "799511f40658ee040836b95931ebc19980e18125",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dab82677_c2b41f16",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2055,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-01-21T20:06:37Z",
+      "side": 1,
+      "message": "nit.  This is extraneous",
+      "revId": "799511f40658ee040836b95931ebc19980e18125",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
