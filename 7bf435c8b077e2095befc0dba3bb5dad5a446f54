@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "750a6acc_5a32c154",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-21T21:34:10Z",
+      "side": 1,
+      "message": "nit. Is this needed?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "7bf435c8b077e2095befc0dba3bb5dad5a446f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da2d5578_e9d598ed",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-21T21:34:10Z",
+      "side": 1,
+      "message": "nit. Is this needed?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "7bf435c8b077e2095befc0dba3bb5dad5a446f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c3011c4_e857d008",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-21T21:34:10Z",
+      "side": 1,
+      "message": "nit. `Compiler.h`?",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "7bf435c8b077e2095befc0dba3bb5dad5a446f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bbe748b_dcffc23a",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-21T21:34:10Z",
+      "side": 1,
+      "message": "nit. No longer needed",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 36
+      },
+      "revId": "7bf435c8b077e2095befc0dba3bb5dad5a446f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f149dd2_e1cdd8bb",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-21T21:34:10Z",
+      "side": 1,
+      "message": "nit. No longer needed",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "7bf435c8b077e2095befc0dba3bb5dad5a446f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
