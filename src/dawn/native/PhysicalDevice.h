@@ -48,6 +48,7 @@
 namespace dawn::native {
 
 class DeviceBase;
+class InstanceBase;
 
 // Structure that holds surface capabilities for a (Surface, PhysicalDevice) pair.
 struct PhysicalDeviceSurfaceCapabilities {
@@ -72,7 +73,8 @@ class PhysicalDeviceBase : public RefCounted {
     explicit PhysicalDeviceBase(wgpu::BackendType backend);
     ~PhysicalDeviceBase() override;
 
-    MaybeError Initialize();
+    // `instance` is optionally provided to log warnings and can be null.
+    MaybeError Initialize(InstanceBase* instance);
 
     ResultOrError<Ref<DeviceBase>> CreateDevice(AdapterBase* adapter,
                                                 const UnpackedPtr<DeviceDescriptor>& descriptor,
@@ -156,13 +158,14 @@ class PhysicalDeviceBase : public RefCounted {
         const TogglesState& deviceToggles,
         Ref<DeviceBase::DeviceLostEvent>&& lostEvent) = 0;
 
-    virtual MaybeError InitializeImpl() = 0;
+    virtual MaybeError InitializeImpl(InstanceBase* instance) = 0;
 
     // Check base WebGPU features and discover supported features.
     virtual void InitializeSupportedFeaturesImpl() = 0;
 
     // Check base WebGPU limits and populate supported limits.
-    virtual MaybeError InitializeSupportedLimitsImpl(CombinedLimits* limits) = 0;
+    virtual MaybeError InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                                     CombinedLimits* limits) = 0;
 
     virtual void InitializeVendorArchitectureImpl();
 

@@ -268,7 +268,7 @@ ResultOrError<Ref<PhysicalDeviceBase>> Backend::CreatePhysicalDeviceFromIDXGIAda
     DAWN_TRY(CheckHRESULT(dxgiAdapter.As(&dxgiAdapter4), "DXGIAdapter retrieval"));
     Ref<PhysicalDevice> physicalDevice =
         AcquireRef(new PhysicalDevice(this, std::move(dxgiAdapter4)));
-    DAWN_TRY(physicalDevice->Initialize());
+    DAWN_TRY(physicalDevice->Initialize(GetInstance()));
 
     return {std::move(physicalDevice)};
 }

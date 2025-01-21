@@ -33,6 +33,7 @@
 
 #include "dawn/common/GPUInfo.h"
 #include "dawn/native/ChainUtils.h"
+#include "dawn/native/Error.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/Limits.h"
 #include "dawn/native/vulkan/BackendVk.h"
@@ -110,7 +111,7 @@ bool PhysicalDevice::IsDepthStencilFormatSupported(VkFormat format) const {
     return properties.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT;
 }
 
-MaybeError PhysicalDevice::InitializeImpl() {
+MaybeError PhysicalDevice::InitializeImpl(InstanceBase* instance) {
     DAWN_TRY_ASSIGN(mDeviceInfo, GatherDeviceInfo(*this));
 
     mDriverVersion = DecodeVulkanDriverVersion(mDeviceInfo.properties.vendorID,
@@ -188,8 +189,9 @@ MaybeError PhysicalDevice::InitializeImpl() {
     }
 
     // Needed for the respective WebGPU features.
-    if (!mDeviceInfo.features.depthBiasClamp) {
-        return DAWN_INTERNAL_ERROR("Vulkan depthBiasClamp feature required.");
+    if (mSupportsCoreFeatureLevel && !mDeviceInfo.features.depthBiasClamp) {
+        SetCoreNotSupported(instance,
+                            DAWN_INTERNAL_ERROR("Vulkan depthBiasClamp feature required."));
     }
     if (!mDeviceInfo.features.fragmentStoresAndAtomics) {
         return DAWN_INTERNAL_ERROR("Vulkan fragmentStoresAndAtomics feature required.");
@@ -197,11 +199,13 @@ MaybeError PhysicalDevice::InitializeImpl() {
     if (!mDeviceInfo.features.fullDrawIndexUint32) {
         return DAWN_INTERNAL_ERROR("Vulkan fullDrawIndexUint32 feature required.");
     }
-    if (!mDeviceInfo.features.imageCubeArray) {
-        return DAWN_INTERNAL_ERROR("Vulkan imageCubeArray feature required.");
+    if (mSupportsCoreFeatureLevel && !mDeviceInfo.features.imageCubeArray) {
+        SetCoreNotSupported(instance,
+                            DAWN_INTERNAL_ERROR("Vulkan imageCubeArray feature required."));
     }
-    if (!mDeviceInfo.features.independentBlend) {
-        return DAWN_INTERNAL_ERROR("Vulkan independentBlend feature required.");
+    if (mSupportsCoreFeatureLevel && !mDeviceInfo.features.independentBlend) {
+        SetCoreNotSupported(instance,
+                            DAWN_INTERNAL_ERROR("Vulkan independentBlend feature required."));
     }
     if (!mDeviceInfo.features.sampleRateShading) {
         return DAWN_INTERNAL_ERROR("Vulkan sampleRateShading feature required.");
@@ -470,8 +474,24 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
 }
 
-MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
-    GetDefaultLimitsForSupportedFeatureLevel(&limits->v1);
+MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                                         CombinedLimits* limits) {
+    if (mSupportsCoreFeatureLevel) {
+        MaybeError result = InitializeSupportedLimitsInternal(wgpu::FeatureLevel::Core, limits);
+        if (result.IsSuccess()) {
+            return result;
+        }
+
+        // Log a warning why core isn't supported and retry checking lower compat limits.
+        SetCoreNotSupported(instance, result.AcquireError());
+    }
+
+    return InitializeSupportedLimitsInternal(wgpu::FeatureLevel::Compatibility, limits);
+}
+
+MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel featureLevel,
+                                                             CombinedLimits* limits) {
+    GetDefaultLimits(&limits->v1, featureLevel);
     CombinedLimits baseLimits = *limits;
 
     const VkPhysicalDeviceLimits& vkLimits = mDeviceInfo.properties.limits;
@@ -660,8 +680,8 @@ bool PhysicalDevice::SupportsExternalImages() const {
                                                      mVulkanInstance->GetFunctions());
 }
 
-bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel) const {
-    return true;
+bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel) const {
+    return mSupportsCoreFeatureLevel || featureLevel == wgpu::FeatureLevel::Compatibility;
 }
 
 void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platform,
@@ -1103,6 +1123,18 @@ void PhysicalDevice::PopulateBackendFormatCapabilities(
                     drmFormatModifiers[i].drmFormatModifierPlaneCount;
             }
         }
+    }
+}
+
+void PhysicalDevice::SetCoreNotSupported(InstanceBase* instance, std::unique_ptr<ErrorData> error) {
+    DAWN_ASSERT(mSupportsCoreFeatureLevel);
+    mSupportsCoreFeatureLevel = false;
+
+    DAWN_ASSERT(error);
+    if (instance) {
+        error->AppendContext(
+            absl::StrFormat("checking core feature level support on \"%s\"", GetName()));
+        instance->ConsumedErrorAndWarnOnce(std::move(error));
     }
 }
 

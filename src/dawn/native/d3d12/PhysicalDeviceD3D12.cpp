@@ -82,8 +82,8 @@ ComPtr<ID3D12Device> PhysicalDevice::GetDevice() const {
     return mD3d12Device;
 }
 
-MaybeError PhysicalDevice::InitializeImpl() {
-    DAWN_TRY(Base::InitializeImpl());
+MaybeError PhysicalDevice::InitializeImpl(InstanceBase* instance) {
+    DAWN_TRY(Base::InitializeImpl(instance));
     // D3D12 cannot check for feature support without a device.
     // Create the device to populate the adapter properties then reuse it when needed for actual
     // rendering.
@@ -194,7 +194,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::SharedFenceDXGISharedHandle);
 }
 
-MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
+MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                                         CombinedLimits* limits) {
     D3D12_FEATURE_DATA_D3D12_OPTIONS featureData = {};
 
     DAWN_TRY(CheckHRESULT(mD3d12Device->CheckFeatureSupport(D3D12_FEATURE_D3D12_OPTIONS,
@@ -836,7 +837,7 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
 MaybeError PhysicalDevice::ResetInternalDeviceForTestingImpl() {
     [[maybe_unused]] auto refCount = mD3d12Device.Reset();
     DAWN_ASSERT(refCount == 0);
-    DAWN_TRY(Initialize());
+    DAWN_TRY(Initialize(nullptr));
 
     return {};
 }
