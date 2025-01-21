@@ -73,9 +73,10 @@ class PhysicalDevice : public d3d::PhysicalDevice {
 
     bool AreTimestampQueriesSupported() const;
 
-    MaybeError InitializeImpl() override;
+    MaybeError InitializeImpl(InstanceBase* instance) override;
     void InitializeSupportedFeaturesImpl() override;
-    MaybeError InitializeSupportedLimitsImpl(CombinedLimits* limits) override;
+    MaybeError InitializeSupportedLimitsImpl(InstanceBase* instance,
+                                             CombinedLimits* limits) override;
 
     FeatureValidationResult ValidateFeatureSupportedWithTogglesImpl(
         wgpu::FeatureName feature,
