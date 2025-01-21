@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6f2275d_75225dd5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-21T19:54:17Z",
+      "side": 1,
+      "message": "PTAL Loko. Also who is a good second reviewer for this CL since cwallez is out?",
+      "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

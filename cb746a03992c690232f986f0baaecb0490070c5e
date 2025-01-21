@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3202644_5024eb4c",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-21T19:54:17Z",
+      "side": 1,
+      "message": "Discusssed offline but we probably don\u0027t want to have Instance::EnumerateAdapters() to fail without any indication for why if the only adapter(s) support compact but core was requested.",
+      "parentUuid": "9811dc14_ea259342",
+      "revId": "cb746a03992c690232f986f0baaecb0490070c5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "836315f5_9dfb3a0c",
@@ -49,6 +67,24 @@
       "writtenOn": "2025-01-17T15:11:16Z",
       "side": 1,
       "message": "nit: devices are only added in the loop above if they support the feature level so the filtering here isn\u0027t needed.",
+      "revId": "cb746a03992c690232f986f0baaecb0490070c5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "660be9cd_10f8c72e",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-21T19:54:17Z",
+      "side": 1,
+      "message": "Ah, the filtering in the loop above was supposed to be removed (it is now). We can\u0027t filter in the loop above since we cache the results of that loop and reuse them in future calls.",
+      "parentUuid": "836315f5_9dfb3a0c",
       "revId": "cb746a03992c690232f986f0baaecb0490070c5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -70,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a12d8dc_45bec970",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-21T19:54:17Z",
+      "side": 1,
+      "message": "Talked offline and we probably do want to surface some error message for why core isn\u0027t supported.",
+      "parentUuid": "82c6cbd5_ffa5cbdd",
+      "revId": "cb746a03992c690232f986f0baaecb0490070c5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ff6a3aa_ec4a1a26",
@@ -83,6 +137,24 @@
       "writtenOn": "2025-01-17T15:11:16Z",
       "side": 1,
       "message": "We could check against the compat limits as the minimum we require now, and in SupportsFeatureLevel check if the limits are enough for the request feature level. WDYT?",
+      "revId": "cb746a03992c690232f986f0baaecb0490070c5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cdda817_64101d2a",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-21T19:54:17Z",
+      "side": 1,
+      "message": "Checking core limits later in SupportFeatureLevel() won\u0027t work with idea discussed offline of passing the InstanceBase into initialization code to allow easier logging.",
+      "parentUuid": "0ff6a3aa_ec4a1a26",
       "revId": "cb746a03992c690232f986f0baaecb0490070c5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
