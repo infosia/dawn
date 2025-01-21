@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2be6884f_8830dbf8",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-01-21T20:56:39Z",
+      "side": 1,
+      "message": "This is a good name!",
+      "range": {
+        "startLine": 92,
+        "startChar": 9,
+        "endLine": 92,
+        "endChar": 31
+      },
+      "revId": "14e4bfc52976c0724f8e11d3d981d5f02c1e4415",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
