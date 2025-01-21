@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c5131aa1_1631634f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-21T21:41:01Z",
+      "side": 1,
+      "message": "\u003e IIUC, this implementation will always log stuff even if we ask for for compat, and it will only log one of the reasons that core isn\u0027t supported. \n\nYes that is correct.\n\n\u003e I\u0027m now thinking that maybe caching a bool and the ErrorData for unable to support Core in the PhysicalDevice and only logging that out when we ask for Core might be a bit better? I am imagining only logging when we call SupportsFeatureLevel(Core) and it would only happen the first time since that would consume the error, but the bool can continue to return correctly.\n\nI\u0027m kinda torn on this, it would be a better debug experience if the warnings were logged the first time that compat was requested instead but I\u0027m not sure it\u0027s worth the extra complexity? I think graphite is the only one paying attention to these warnings. Graphite also only ever requests core first and then compat later so it\u0027s not important there. I\u0027ll update the CL to make that change since it saves passing around instance quite so many places.\n\n\u003e I think this solution would still need to plumb the Instance through, but it would be through SupportsFeatureLevel instead? Or alternatively, we could make SupportsFeatureLevel return a ResultOrError\u003cbool\u003e where if we have a cached error, we return that instead of the simply false, and in that case we wouldn\u0027t even need to plumb the Instance through anymore, and just handle that appropriately in BackendVk.cpp?\n\nWe can plumb in instance to SupportsFeatureLevel() everywhere except [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PhysicalDevice.cpp;l\u003d128;drc\u003d27d34700b83f381c62e3a348de2e6dfdc08364b8) due to reference cycle problem. I guess it could be `bool bool SupportsFeatureLevel(wgpu::FeatureLevel featureLevel, InstanceBase* instance)` and that callsite will just pass null. The error won\u0027t be consumed if there is no instance passed in.",
+      "parentUuid": "16c6cd4b_4b000b50",
+      "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d47ca65_a8db639b",
         "filename": "src/dawn/native/PhysicalDevice.h",
         "patchSetId": 12
