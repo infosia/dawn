@@ -72,6 +72,9 @@ class DynamicUploader {
     ResultOrError<std::unique_ptr<UploadHandle>> Allocate(uint64_t allocationSize,
                                                           ExecutionSerial serial,
                                                           uint64_t offsetAlignment);
+    ResultOrError<std::unique_ptr<UploadHandle>> AllocateDynamicBuffer(uint64_t allocationSize,
+                                                                       const char* label,
+                                                                       bool ignoreLazyClear = true);
     void Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll = false);
     void TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize);
 
@@ -86,7 +89,6 @@ class DynamicUploader {
     ResultOrError<std::unique_ptr<UploadHandle>> AllocateInternal(uint64_t allocationSize,
                                                                   ExecutionSerial serial,
                                                                   uint64_t offsetAlignment);
-    ResultOrError<std::unique_ptr<UploadHandle>> AllocateDynamicBuffer(uint64_t allocationSize);
     void FlushIfNecessary();
 
     std::vector<std::unique_ptr<RingBuffer>> mRingBuffers;
