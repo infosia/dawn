@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "815188d3_59ec48e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-22T22:44:41Z",
+      "side": 1,
+      "message": "Do you have any suggestions for second reviewer with cwallez OOO?",
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "05baf0a3_d72aea6d",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.h",
         "patchSetId": 15
@@ -14,6 +31,30 @@
       "writtenOn": "2025-01-22T20:22:09Z",
       "side": 1,
       "message": "[1] I think it would be better if this just took a string and then used something like `AppendContext` on the errors so that we get a full list of reasons why Core is not supported instead of only the first reason.",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 63
+      },
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "278cb451_1f451b4f",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-22T22:44:41Z",
+      "side": 1,
+      "message": "That is kinda tricky to make work with limits. `InitializeSupportedLimitsInternal()` returns on the first error with MaybeError currently. Changing that would be non-trivial but doable.\n\nIt\u0027s easier to do this for the other feature checks. However, I added a DumpWithoutCrashing() in chrome to see if those features are ever missing when we initialize Vulkan for Ganesh. I\u0027ve yet to see any crash reports so AFAIK they are never missing from real devices. I don\u0027t think this will actually produce useful warnings.\n\nLet me know if you want me to implement either of these and I can but I don\u0027t think it\u0027s worth it.",
+      "parentUuid": "05baf0a3_d72aea6d",
       "range": {
         "startLine": 107,
         "startChar": 4,
