@@ -116,6 +116,29 @@ wgpu::WGSLFeatureName ToWGPUFeature(tint::wgsl::LanguageFeature f) {
     DAWN_UNREACHABLE();
 }
 
+static constexpr WGPULoggingCallbackInfo kEmptyLoggingCallbackInfo = {nullptr, nullptr, nullptr,
+                                                                      nullptr};
+static constexpr WGPULoggingCallbackInfo kDefaultLoggingCallbackInfo = {
+    nullptr,
+    [](WGPULoggingType type, WGPUStringView message, void*, void*) {
+        std::string_view view = {message.data, message.length};
+        switch (static_cast<wgpu::LoggingType>(type)) {
+            case wgpu::LoggingType::Verbose:
+                dawn::DebugLog() << view;
+                break;
+            case wgpu::LoggingType::Info:
+                dawn::InfoLog() << view;
+                break;
+            case wgpu::LoggingType::Warning:
+                dawn::WarningLog() << view;
+                break;
+            case wgpu::LoggingType::Error:
+                dawn::ErrorLog() << view;
+                break;
+        }
+    },
+    nullptr, nullptr};
+
 }  // anonymous namespace
 
 wgpu::Status APIGetInstanceFeatures(InstanceFeatures* features) {
@@ -169,7 +192,9 @@ ResultOrError<Ref<InstanceBase>> InstanceBase::Create(const InstanceDescriptor* 
 }
 
 InstanceBase::InstanceBase(const TogglesState& instanceToggles)
-    : mToggles(instanceToggles), mDeprecationWarnings(std::make_unique<DeprecationWarnings>()) {}
+    : mToggles(instanceToggles),
+      mEventManager(this),
+      mDeprecationWarnings(std::make_unique<DeprecationWarnings>()) {}
 
 InstanceBase::~InstanceBase() = default;
 
@@ -202,8 +227,7 @@ void InstanceBase::DisconnectDawnPlatform() {
 void InstanceBase::WillDropLastExternalRef() {
     // Stop tracking events. See comment on ShutDown.
     mEventManager.ShutDown();
-    mLoggingCallback = nullptr;
-    mLoggingCallbackUserdata = nullptr;
+    mLoggingCallbackInfo = kEmptyLoggingCallbackInfo;
 }
 
 // TODO(crbug.com/dawn/832): make the platform an initialization parameter of the instance.
@@ -222,29 +246,10 @@ MaybeError InstanceBase::Initialize(const UnpackedPtr<InstanceDescriptor>& descr
         mBackendValidationLevel = dawnDesc->backendValidationLevel;
         mBeginCaptureOnStartup = dawnDesc->beginCaptureOnStartup;
 
-        mLoggingCallback = dawnDesc->loggingCallback;
-        mLoggingCallbackUserdata = dawnDesc->loggingCallbackUserdata;
+        mLoggingCallbackInfo = dawnDesc->loggingCallbackInfo;
     }
-
-    if (!mLoggingCallback) {
-        mLoggingCallback = [](WGPULoggingType type, WGPUStringView message, void*) {
-            std::string_view view = {message.data, message.length};
-            switch (static_cast<wgpu::LoggingType>(type)) {
-                case wgpu::LoggingType::Verbose:
-                    dawn::DebugLog() << view;
-                    break;
-                case wgpu::LoggingType::Info:
-                    dawn::InfoLog() << view;
-                    break;
-                case wgpu::LoggingType::Warning:
-                    dawn::WarningLog() << view;
-                    break;
-                case wgpu::LoggingType::Error:
-                    dawn::ErrorLog() << view;
-                    break;
-            }
-        };
-        mLoggingCallbackUserdata = nullptr;
+    if (!mLoggingCallbackInfo.callback) {
+        mLoggingCallbackInfo = kDefaultLoggingCallbackInfo;
     }
 
     // Default paths to search are next to the shared library, next to the executable, and
@@ -471,14 +476,21 @@ std::vector<Ref<PhysicalDeviceBase>> InstanceBase::EnumeratePhysicalDevices(
     return discoveredPhysicalDevices;
 }
 
+void InstanceBase::EmitLog(WGPULoggingType type, const std::string_view message) const {
+    if (mLoggingCallbackInfo.callback) {
+        mLoggingCallbackInfo.callback(type, ToOutputStringView(message),
+                                      mLoggingCallbackInfo.userdata1,
+                                      mLoggingCallbackInfo.userdata2);
+    }
+}
+
 bool InstanceBase::ConsumedErrorAndWarnOnce(MaybeError maybeErr) {
     if (!maybeErr.IsError()) {
         return false;
     }
     std::string message = maybeErr.AcquireError()->GetFormattedMessage();
-    if (mWarningMessages.insert(message).second && mLoggingCallback) {
-        mLoggingCallback(WGPULoggingType_Warning, ToOutputStringView(message),
-                         mLoggingCallbackUserdata);
+    if (mWarningMessages.insert(message).second) {
+        EmitLog(WGPULoggingType_Warning, message);
     }
     return true;
 }
@@ -583,11 +595,7 @@ void InstanceBase::ConsumeError(std::unique_ptr<ErrorData> error,
     // Note: `additionalAllowedErrors` is ignored. The instance considers every type of error to be
     // an error that is logged.
     DAWN_ASSERT(error != nullptr);
-    if (mLoggingCallback) {
-        std::string messageStr = error->GetFormattedMessage();
-        mLoggingCallback(WGPULoggingType_Error, ToOutputStringView(messageStr),
-                         mLoggingCallbackUserdata);
-    }
+    EmitLog(WGPULoggingType_Error, error->GetFormattedMessage());
 }
 
 const X11Functions* InstanceBase::GetOrLoadX11Functions() {
