@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7795b3b_ed3a56a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-22T05:27:40Z",
+      "side": 1,
+      "message": "I\u0027ve put all the fixes about typos in one CL.\n\nPTAL, thanks!",
+      "revId": "ee82e249f3620f0695a3a8712403a7f53d47e238",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
