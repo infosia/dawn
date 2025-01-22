@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1b3f4a71_3c67ac93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-22T22:54:02Z",
+      "side": 1,
+      "message": "You could try @kainino@chromium.org or @shrekshao@google.com, but there\u0027s a decent chance that we might want to wait for @cwallez@chromium.org (he should be back next week) since he\u0027s the Vulkan expert.",
+      "parentUuid": "815188d3_59ec48e2",
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "05baf0a3_d72aea6d",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.h",
         "patchSetId": 15
@@ -55,6 +73,30 @@
       "side": 1,
       "message": "That is kinda tricky to make work with limits. `InitializeSupportedLimitsInternal()` returns on the first error with MaybeError currently. Changing that would be non-trivial but doable.\n\nIt\u0027s easier to do this for the other feature checks. However, I added a DumpWithoutCrashing() in chrome to see if those features are ever missing when we initialize Vulkan for Ganesh. I\u0027ve yet to see any crash reports so AFAIK they are never missing from real devices. I don\u0027t think this will actually produce useful warnings.\n\nLet me know if you want me to implement either of these and I can but I don\u0027t think it\u0027s worth it.",
       "parentUuid": "05baf0a3_d72aea6d",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 63
+      },
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25509fcd_da77f668",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-22T22:54:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "278cb451_1f451b4f",
       "range": {
         "startLine": 107,
         "startChar": 4,
