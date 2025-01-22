@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "b9f11baa6887679ab32968110ce23e8f1cdc8f92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cca0eefe_55b985c1",
+        "filename": "tools/src/oswrapper/memmaposwrapper.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-22T18:57:07Z",
+      "side": 1,
+      "message": "```suggestion\n\t// Create a random string and substitute it as defined in the os package\n```",
+      "range": {
+        "startLine": 146,
+        "startChar": 42,
+        "endLine": 146,
+        "endChar": 44
+      },
+      "revId": "b9f11baa6887679ab32968110ce23e8f1cdc8f92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
