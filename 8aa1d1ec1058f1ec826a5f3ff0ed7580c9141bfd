@@ -52,6 +52,24 @@
       "parentUuid": "97a9d1c5_dc541317",
       "revId": "8aa1d1ec1058f1ec826a5f3ff0ed7580c9141bfd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63e62994_535fa1c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-22T22:41:04Z",
+      "side": 1,
+      "message": "Sounds like updating the bots\u0027 GN args is the right approach then, at least for now. Since these bots are standalone Dawn builders, updating the GN args is going to be trickier.\n\nI\u0027m not very familiar with how those are set up, but at a glance, it looks like args are specified per-builder [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/infra/config/global/main.star;l\u003d813), and those are passed in directly to the recipe as properties.\n\nThe recipe has a [hard-coded list](https://source.chromium.org/chromium/infra/infra_superproject/+/main:build/recipes/recipes/dawn/gn.py;l\u003d29) of known properties which then get fed into [RunSteps](https://source.chromium.org/chromium/infra/infra_superproject/+/main:build/recipes/recipes/dawn/gn.py;l\u003d186)\n\nIt\u0027s possible you could do the overriding solely in the recipe since it knows whether it\u0027s using clang or not.",
+      "parentUuid": "b1fe0701_7259e641",
+      "revId": "8aa1d1ec1058f1ec826a5f3ff0ed7580c9141bfd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
