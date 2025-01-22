@@ -16,6 +16,24 @@
       "message": "This LGTM, but do you know the reason it was like this before? I\u0027m wondering if we made it a deferred cleanup for performance reasons or something?",
       "revId": "4555520e78de4386c1b3fb86c1ab459926df9287",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f57155c7_7ca986f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-22T05:26:39Z",
+      "side": 1,
+      "message": "I don\u0027t know... I just find that these staging buffers can be released just after doing the uploading because their underlying native resources or memory won\u0027t be released until the current execution of command list is completed.",
+      "parentUuid": "b907f51f_0400b7d4",
+      "revId": "4555520e78de4386c1b3fb86c1ab459926df9287",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
