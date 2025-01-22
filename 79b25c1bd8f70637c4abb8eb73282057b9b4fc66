@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "914980d8_68c3a8e9",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-22T21:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c8ea516_cf364d00",
+      "revId": "79b25c1bd8f70637c4abb8eb73282057b9b4fc66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fef536b3_c3f30813",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-01-22T20:33:46Z",
       "side": 1,
       "message": "ditto",
+      "revId": "79b25c1bd8f70637c4abb8eb73282057b9b4fc66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07d385f4_f7e2153a",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-22T21:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fef536b3_c3f30813",
       "revId": "79b25c1bd8f70637c4abb8eb73282057b9b4fc66",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2f7821c_977179e7",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2868,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-22T21:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97cda0a3_f457346b",
+      "revId": "79b25c1bd8f70637c4abb8eb73282057b9b4fc66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e00cb62_fcd9fcf0",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-01-22T20:33:46Z",
       "side": 1,
       "message": "```suggestion\n            err() \u003c\u003c \"index type \" \u003c\u003c NameOf(index-\u003eType()) \u003c\u003c \" must be an integer\";\n```",
+      "revId": "79b25c1bd8f70637c4abb8eb73282057b9b4fc66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ba6df78_6854f1c4",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-22T21:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e00cb62_fcd9fcf0",
       "revId": "79b25c1bd8f70637c4abb8eb73282057b9b4fc66",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
