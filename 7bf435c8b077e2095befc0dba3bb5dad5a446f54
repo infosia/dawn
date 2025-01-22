@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e255ab3_8dee661f",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-22T06:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "750a6acc_5a32c154",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "7bf435c8b077e2095befc0dba3bb5dad5a446f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da2d5578_e9d598ed",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-01-21T21:34:10Z",
       "side": 1,
       "message": "nit. Is this needed?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "7bf435c8b077e2095befc0dba3bb5dad5a446f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6f9d43a_703cb35d",
+        "filename": "src/dawn/native/ComputePipeline.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-22T06:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da2d5578_e9d598ed",
       "range": {
         "startLine": 33,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19613f52_5bdedc1f",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-22T06:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c3011c4_e857d008",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "7bf435c8b077e2095befc0dba3bb5dad5a446f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bbe748b_dcffc23a",
@@ -93,6 +165,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d92f1b71_4858d9dd",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-22T06:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbe748b_dcffc23a",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 36
+      },
+      "revId": "7bf435c8b077e2095befc0dba3bb5dad5a446f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f149dd2_e1cdd8bb",
@@ -106,6 +202,30 @@
       "writtenOn": "2025-01-21T21:34:10Z",
       "side": 1,
       "message": "nit. No longer needed",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "7bf435c8b077e2095befc0dba3bb5dad5a446f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78f32aeb_b0298707",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-22T06:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f149dd2_e1cdd8bb",
       "range": {
         "startLine": 45,
         "startChar": 0,
