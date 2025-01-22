@@ -210,6 +210,30 @@
       },
       "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d19b26c_3873a16a",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-22T20:22:09Z",
+      "side": 1,
+      "message": "See [1], but I agree that right now only the first reason is logged for other places, but given that we already have this cached error, I think we could do better and just log all the reasons, and therefore remove the assert.",
+      "parentUuid": "1d2db7d8_bc5cc47c",
+      "range": {
+        "startLine": 1130,
+        "startChar": 4,
+        "endLine": 1130,
+        "endChar": 43
+      },
+      "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
