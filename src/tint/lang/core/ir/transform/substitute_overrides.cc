@@ -30,6 +30,8 @@
 #include <functional>
 
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/const_param_validator.h"
+#include "src/tint/lang/core/ir/construct.h"
 #include "src/tint/lang/core/ir/evaluator.h"
 #include "src/tint/lang/core/ir/type/array_count.h"
 #include "src/tint/lang/core/ir/validator.h"
@@ -61,7 +63,7 @@ struct State {
 
     /// Process the module.
     Result<SuccessType> Process() {
-        Vector<Instruction*, 8> to_remove;
+        Vector<Instruction*, 32> to_remove;
         Vector<Constant*, 8> values_to_propagate;
         Vector<core::ir::Var*, 4> vars_with_value_array_count;
 
@@ -190,16 +192,18 @@ struct State {
             }
         }
 
-        // Remove any non-var instruction in the root block
-        for (auto* inst : to_remove) {
-            inst->Destroy();
-        }
-
         {
             // Propagate any replaced override instructions up their instruction chains
             auto res = Propagate(values_to_propagate);
             if (res != Success) {
                 return res;
+            }
+        }
+
+        // Remove any non-var instruction in the root block
+        for (auto* inst : to_remove) {
+            if (inst->Alive()) {
+                inst->Destroy();
             }
         }
 
@@ -301,7 +305,12 @@ Result<SuccessType> SubstituteOverrides(Module& ir, const SubstituteOverridesCon
     if (result != Success) {
         return result;
     }
-    return State{ir, cfg}.Process();
+
+    auto ret = State{ir, cfg}.Process();
+    if (ret == Success) {
+        ret = tint::core::ir::ValidateConstParam(ir);
+    }
+    return ret;
 }
 
 }  // namespace tint::core::ir::transform
