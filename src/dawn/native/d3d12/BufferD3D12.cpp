@@ -169,7 +169,7 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
     uint64_t size = std::max(GetSize(), uint64_t(4u));
     size_t alignment = D3D12BufferSizeAlignment(GetInternalUsage());
     if (size > std::numeric_limits<uint64_t>::max() - alignment) {
-        // Alignment would overlow.
+        // Alignment would overflow.
         return DAWN_OUT_OF_MEMORY_ERROR("Buffer allocation is too large");
     }
     mAllocatedSize = Align(size, alignment);
@@ -372,7 +372,7 @@ bool Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* commandCon
     mLastState = newState;
 
     // The COMMON state represents a state where no write operations can be pending, which makes
-    // it possible to transition to and from some states without synchronizaton (i.e. without an
+    // it possible to transition to and from some states without synchronization (i.e. without an
     // explicit ResourceBarrier call). A buffer can be implicitly promoted to 1) a single write
     // state, or 2) multiple read states. A buffer that is accessed within a command list will
     // always implicitly decay to the COMMON state after the call to ExecuteCommandLists
