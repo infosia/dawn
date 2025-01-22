@@ -34,6 +34,24 @@
       "parentUuid": "58dc65cd_f8d85985",
       "revId": "8aa1d1ec1058f1ec826a5f3ff0ed7580c9141bfd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1fe0701_7259e641",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-22T22:28:51Z",
+      "side": 1,
+      "message": "Sorry, I forgot to explain more because it was late.\n\nMSVC handled via `is_clang`, but `treat_warnings_as_errors` and `use_custom_libcxx` are defined in build/ which is a different repository. Setting them in `build_overrides/dawn.gni` doesn\u0027t work:\n\n```\nThis import contains \"treat_warnings_as_errors\"\nSee //build_overrides/dawn.gni:71:30: defined here.\n  treat_warnings_as_errors \u003d false\n                             ^----\nWhich would clobber the one in your current scope\nSee //build/config/compiler/compiler.gni:46:30: defined here.\n  treat_warnings_as_errors \u003d true\n```\n\nWhich makes sense. There\u0027s also no logic in their definitions that would let me override those with variables.\n\nSo seems like we either need to set args on the bots, or modify /build.\n(At least for the use_custom_libcxx one. The treat_warnings_as_errors one I think is doable in our build files by disabling the specific warning that\u0027s a problem.)",
+      "parentUuid": "97a9d1c5_dc541317",
+      "revId": "8aa1d1ec1058f1ec826a5f3ff0ed7580c9141bfd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
