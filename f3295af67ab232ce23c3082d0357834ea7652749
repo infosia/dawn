@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fec1d8f_12dd4b19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-22T19:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5131aa1_1631634f",
+      "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d47ca65_a8db639b",
@@ -66,6 +84,30 @@
       "writtenOn": "2025-01-21T21:21:13Z",
       "side": 1,
       "message": "nit. Might not need these because we are already including `Forward.h`.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 19
+      },
+      "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43468bd7_79a840d7",
+        "filename": "src/dawn/native/PhysicalDevice.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-22T19:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d47ca65_a8db639b",
       "range": {
         "startLine": 50,
         "startChar": 0,
@@ -99,6 +141,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "62061fe8_16d70a5f",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-22T19:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7787d806_a6534630",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35c2637e_28633c9d",
@@ -112,6 +178,30 @@
       "writtenOn": "2025-01-21T21:21:13Z",
       "side": 1,
       "message": "nit. This assert is probably better off removed because this function could be called multiple times if there\u0027s more than one reason that we can\u0027t support Core.",
+      "range": {
+        "startLine": 1130,
+        "startChar": 4,
+        "endLine": 1130,
+        "endChar": 43
+      },
+      "revId": "f3295af67ab232ce23c3082d0357834ea7652749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d2db7d8_bc5cc47c",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-22T19:35:58Z",
+      "side": 1,
+      "message": "Right now this will only be called once to ensure that we log the first reason that core isn\u0027t suppored. That seems consistent with logging the first reason why compat wasn\u0027t supported and initializaton failed? Let me know if you think that should be changed to log the last reason why core wasn\u0027t supported instead (or I guess we could merge the errors but that seems kinda unnecessary).",
+      "parentUuid": "35c2637e_28633c9d",
       "range": {
         "startLine": 1130,
         "startChar": 4,
