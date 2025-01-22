@@ -16,6 +16,24 @@
       "message": "I think there\u0027s one last thing I need to do to get this working, which is replicate this workaround from ANGLE:\nhttps://chromium-review.googlesource.com/c/angle/angle/+/5973072\nadding `treat_warnings_as_errors\u003dfalse use_custom_libcxx\u003dfalse`\n\n@bsheedy@google.com do I need to do this in infra/ ? Can instead do something like \"if msvc, force those gn args\"?",
       "revId": "8aa1d1ec1058f1ec826a5f3ff0ed7580c9141bfd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97a9d1c5_dc541317",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-22T18:08:09Z",
+      "side": 1,
+      "message": "Assuming the choice to use msvc is handled via a GN arg itself, you should be able to specify that those two args are set to false anytime the msvc arg is true.",
+      "parentUuid": "58dc65cd_f8d85985",
+      "revId": "8aa1d1ec1058f1ec826a5f3ff0ed7580c9141bfd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
