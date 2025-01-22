@@ -54,7 +54,11 @@ class PopErrorScopeEvent final : public TrackedEvent {
 
     EventType GetType() override { return kType; }
 
-    WireResult ReadyHook(FutureID futureID, WGPUErrorType errorType, WGPUStringView message) {
+    WireResult ReadyHook(FutureID futureID,
+                         WGPUPopErrorScopeStatus status,
+                         WGPUErrorType errorType,
+                         WGPUStringView message) {
+        mStatus = status;
         mType = errorType;
         mMessage = ToString(message);
         return WireResult::Success;
@@ -76,8 +80,8 @@ class PopErrorScopeEvent final : public TrackedEvent {
     raw_ptr<void> mUserdata1;
     raw_ptr<void> mUserdata2;
 
-    WGPUPopErrorScopeStatus mStatus = WGPUPopErrorScopeStatus_Success;
-    WGPUErrorType mType = WGPUErrorType_Unknown;
+    WGPUPopErrorScopeStatus mStatus;
+    WGPUErrorType mType = WGPUErrorType_NoError;
     std::string mMessage;
 };
 
@@ -153,6 +157,8 @@ using CreateRenderPipelineEvent =
 
 static constexpr WGPUUncapturedErrorCallbackInfo kEmptyUncapturedErrorCallbackInfo = {
     nullptr, nullptr, nullptr, nullptr};
+static constexpr WGPULoggingCallbackInfo kEmptyLoggingCallbackInfo = {nullptr, nullptr, nullptr,
+                                                                      nullptr};
 
 }  // namespace
 
@@ -190,6 +196,7 @@ class Device::DeviceLostEvent : public TrackedEvent {
         // uncaptured error callback, so reset the uncaptured error callback before calling the
         // device lost callback.
         mDevice->mUncapturedErrorCallbackInfo = kEmptyUncapturedErrorCallbackInfo;
+        mDevice->mLoggingCallbackInfo = kEmptyLoggingCallbackInfo;
 
         void* userdata1 = mUserdata1.ExtractAsDangling();
         void* userdata2 = mUserdata2.ExtractAsDangling();
@@ -312,9 +319,9 @@ void Device::HandleError(WGPUErrorType errorType, WGPUStringView message) {
 }
 
 void Device::HandleLogging(WGPULoggingType loggingType, WGPUStringView message) {
-    if (mLoggingCallback) {
-        // Since client always run in single thread, calling the callback directly is safe.
-        mLoggingCallback(loggingType, message, mLoggingUserdata);
+    if (mLoggingCallbackInfo.callback) {
+        mLoggingCallbackInfo.callback(loggingType, message, mLoggingCallbackInfo.userdata1,
+                                      mLoggingCallbackInfo.userdata2);
     }
 }
 
@@ -335,9 +342,10 @@ WGPUFuture Device::GetLostFuture() {
     return {mDeviceLostInfo.futureID};
 }
 
-void Device::SetLoggingCallback(WGPULoggingCallback callback, void* userdata) {
-    mLoggingCallback = callback;
-    mLoggingUserdata = userdata;
+void Device::SetLoggingCallback(const WGPULoggingCallbackInfo& callbackInfo) {
+    if (mIsAlive) {
+        mLoggingCallbackInfo = callbackInfo;
+    }
 }
 
 WireResult Client::DoDeviceLostCallback(ObjectHandle eventManager,
@@ -366,10 +374,11 @@ WGPUFuture Device::PopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbackIn
 
 WireResult Client::DoDevicePopErrorScopeCallback(ObjectHandle eventManager,
                                                  WGPUFuture future,
+                                                 WGPUPopErrorScopeStatus status,
                                                  WGPUErrorType errorType,
                                                  WGPUStringView message) {
     return GetEventManager(eventManager)
-        .SetFutureReady<PopErrorScopeEvent>(future.id, errorType, message);
+        .SetFutureReady<PopErrorScopeEvent>(future.id, status, errorType, message);
 }
 
 void Device::InjectError(WGPUErrorType type, WGPUStringView message) {

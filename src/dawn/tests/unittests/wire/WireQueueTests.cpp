@@ -37,7 +37,10 @@ namespace {
 
 using testing::_;
 using testing::InvokeWithoutArgs;
+using testing::Ne;
 using testing::Return;
+
+static constexpr WGPUQueueWorkDoneStatus kError = static_cast<WGPUQueueWorkDoneStatus>(0);
 
 using WireQueueTestBase = WireFutureTest<wgpu::QueueWorkDoneCallback<void>*>;
 class WireQueueTests : public WireQueueTestBase {
@@ -72,13 +75,13 @@ TEST_P(WireQueueTests, OnSubmittedWorkDoneError) {
     OnSubmittedWorkDone();
 
     EXPECT_CALL(api, OnQueueOnSubmittedWorkDone(apiQueue, _)).WillOnce(InvokeWithoutArgs([&] {
-        api.CallQueueOnSubmittedWorkDoneCallback(apiQueue, WGPUQueueWorkDoneStatus_Error);
+        api.CallQueueOnSubmittedWorkDoneCallback(apiQueue, kError);
     }));
     FlushClient();
     FlushFutures();
 
     ExpectWireCallbacksWhen([&](auto& mockCb) {
-        EXPECT_CALL(mockCb, Call(wgpu::QueueWorkDoneStatus::Error)).Times(1);
+        EXPECT_CALL(mockCb, Call(Ne(wgpu::QueueWorkDoneStatus::Success))).Times(1);
 
         FlushCallbacks();
     });
@@ -94,7 +97,7 @@ TEST_P(WireQueueTests, OnSubmittedWorkDoneBeforeDisconnectAfterReply) {
     OnSubmittedWorkDone();
 
     EXPECT_CALL(api, OnQueueOnSubmittedWorkDone(apiQueue, _)).WillOnce(InvokeWithoutArgs([&] {
-        api.CallQueueOnSubmittedWorkDoneCallback(apiQueue, WGPUQueueWorkDoneStatus_Error);
+        api.CallQueueOnSubmittedWorkDoneCallback(apiQueue, kError);
     }));
     FlushClient();
     FlushFutures();
@@ -113,7 +116,7 @@ TEST_P(WireQueueTests, OnSubmittedWorkDoneBeforeDisconnectBeforeReply) {
     OnSubmittedWorkDone();
 
     EXPECT_CALL(api, OnQueueOnSubmittedWorkDone(apiQueue, _)).WillOnce(InvokeWithoutArgs([&] {
-        api.CallQueueOnSubmittedWorkDoneCallback(apiQueue, WGPUQueueWorkDoneStatus_Error);
+        api.CallQueueOnSubmittedWorkDoneCallback(apiQueue, kError);
     }));
     FlushClient();
 
@@ -142,7 +145,7 @@ TEST_P(WireQueueTests, OnSubmittedWorkDoneInsideCallbackBeforeDisconnect) {
     OnSubmittedWorkDone();
 
     EXPECT_CALL(api, OnQueueOnSubmittedWorkDone(apiQueue, _)).WillOnce(InvokeWithoutArgs([&] {
-        api.CallQueueOnSubmittedWorkDoneCallback(apiQueue, WGPUQueueWorkDoneStatus_Error);
+        api.CallQueueOnSubmittedWorkDoneCallback(apiQueue, kError);
     }));
     FlushClient();
 
@@ -177,7 +180,7 @@ TEST_F(WireQueueTests, DefaultQueueThenDeviceReleased) {
     EXPECT_CALL(api, QueueRelease(apiQueue));
     EXPECT_CALL(api, DeviceRelease(apiDevice));
     // These set X callback methods are called before the device is released.
-    EXPECT_CALL(api, OnDeviceSetLoggingCallback(apiDevice, nullptr, nullptr)).Times(1);
+    EXPECT_CALL(api, OnDeviceSetLoggingCallback(apiDevice, _)).Times(1);
     FlushClient();
 
     // Indicate to the fixture that the device was already released.
@@ -197,7 +200,7 @@ TEST_F(WireQueueTests, DeviceThenDefaultQueueReleased) {
 
     EXPECT_CALL(api, DeviceRelease(apiDevice));
     // These set X callback methods are called before the device is released.
-    EXPECT_CALL(api, OnDeviceSetLoggingCallback(apiDevice, nullptr, nullptr)).Times(1);
+    EXPECT_CALL(api, OnDeviceSetLoggingCallback(apiDevice, _)).Times(1);
     FlushClient();
 
     // Release the external queue reference. The queue should be released.

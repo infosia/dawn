@@ -238,11 +238,11 @@ int SampleBase::Run(unsigned int delay) {
                 case wgpu::ErrorType::OutOfMemory:
                     errorTypeName = "Out of memory";
                     break;
+                case wgpu::ErrorType::Internal:
+                    errorTypeName = "Internal";
+                    break;
                 case wgpu::ErrorType::Unknown:
                     errorTypeName = "Unknown";
-                    break;
-                case wgpu::ErrorType::DeviceLost:
-                    errorTypeName = "Device lost";
                     break;
                 default:
                     DAWN_UNREACHABLE();
