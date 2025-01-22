@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8b08c82_90be931d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-22T20:33:46Z",
+      "side": 1,
+      "message": "lgtm w/ nits",
+      "revId": "79b25c1bd8f70637c4abb8eb73282057b9b4fc66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c8ea516_cf364d00",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-22T20:33:46Z",
+      "side": 1,
+      "message": "This feels like it should be something like:\n```suggestion\n                    diag() \u003c\u003c \"vector elements, \" \u003c\u003c NameOf(type) \u003c\u003c \", must be scalars\";\n```\n\nAs written, it\u0027s hard to tell what that type attaches too.",
+      "revId": "79b25c1bd8f70637c4abb8eb73282057b9b4fc66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fef536b3_c3f30813",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-22T20:33:46Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "79b25c1bd8f70637c4abb8eb73282057b9b4fc66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97cda0a3_f457346b",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2868,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-22T20:33:46Z",
+      "side": 1,
+      "message": "```suggestion\n                    \u003c\u003c \"type \" \u003c\u003c NameOf(args[i]-\u003eType()) \u003c\u003c \" of argument \" \u003c\u003c i\n```",
+      "revId": "79b25c1bd8f70637c4abb8eb73282057b9b4fc66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e00cb62_fcd9fcf0",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2998,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-22T20:33:46Z",
+      "side": 1,
+      "message": "```suggestion\n            err() \u003c\u003c \"index type \" \u003c\u003c NameOf(index-\u003eType()) \u003c\u003c \" must be an integer\";\n```",
+      "revId": "79b25c1bd8f70637c4abb8eb73282057b9b4fc66",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
