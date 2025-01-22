@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7409fa43_e3ef72a0",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-22T16:11:27Z",
+      "side": 1,
+      "message": "Renamed this InsertConvertIfNeeded as discussed offline.",
+      "parentUuid": "81d02ddc_d8190877",
+      "revId": "b38743fc1cb97cc77258d98266f34b766e4bdfc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a38381f9_331d04f2",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5d53166_ad85a74a",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-22T16:11:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a38381f9_331d04f2",
+      "revId": "b38743fc1cb97cc77258d98266f34b766e4bdfc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "184fac67_aea09a38",
@@ -48,6 +84,30 @@
       "writtenOn": "2025-01-21T21:28:55Z",
       "side": 1,
       "message": "```suggestion\n            auto* c \u003d b.Call\u003cglsl::ir::BuiltinCall\u003e(bitcount_ty, glsl::BuiltinFn::kBitCount,\n                                                        call-\u003eArgs()[0])-\u003eResult(0);\n            if (!call_ty-\u003eEquals(*bitcount_ty)) {\n                \n                c \u003d b.Convert(call_ty, c)-\u003eResult(0);\n            }\n            call-\u003eResult(0)-\u003eReplaceAllUseWith(c);\n```",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 362,
+        "endChar": 13
+      },
+      "revId": "b38743fc1cb97cc77258d98266f34b766e4bdfc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b878f9af_2f93b6f9",
+        "filename": "src/tint/lang/glsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-22T16:11:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "184fac67_aea09a38",
       "range": {
         "startLine": 355,
         "startChar": 0,
@@ -93,6 +153,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d53fa807_e834fd0f",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-22T16:11:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feaf9b04_9f99be56",
+      "revId": "b38743fc1cb97cc77258d98266f34b766e4bdfc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8ef7755_7229096d",
@@ -124,6 +202,24 @@
           ]
         }
       ],
+      "revId": "b38743fc1cb97cc77258d98266f34b766e4bdfc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c49f3fcb_040f530d",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-22T16:11:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8ef7755_7229096d",
       "revId": "b38743fc1cb97cc77258d98266f34b766e4bdfc7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -169,6 +265,24 @@
           ]
         }
       ],
+      "revId": "b38743fc1cb97cc77258d98266f34b766e4bdfc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "370cf4a8_a48df982",
+        "filename": "src/tint/lang/hlsl/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-22T16:11:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01156e10_7e7aa8ba",
       "revId": "b38743fc1cb97cc77258d98266f34b766e4bdfc7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
