@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c0cbc0e0_3616d047",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-23T19:14:44Z",
+      "side": 1,
+      "message": "I meant VK_FALSE above (not VK_FAST).",
+      "parentUuid": "e10c78ea_9caf4422",
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "05baf0a3_d72aea6d",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.h",
         "patchSetId": 15
