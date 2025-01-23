@@ -31,6 +31,7 @@
 #include <memory>
 #include <vector>
 
+#include "dawn/common/NonCopyable.h"
 #include "dawn/common/Ref.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
@@ -44,10 +45,23 @@ namespace dawn::native {
 
 class BufferBase;
 
-struct UploadHandle {
-    raw_ptr<uint8_t> mappedBuffer = nullptr;
-    uint64_t startOffset = 0;
-    Ref<BufferBase> stagingBuffer;
+class UploadHandle : public NonCopyable {
+  public:
+    UploadHandle() = default;
+    UploadHandle(uint64_t startOffset, Ref<BufferBase> stagingBuffer);
+
+    UploadHandle(UploadHandle&& other) = default;
+    UploadHandle& operator=(UploadHandle&& other);
+
+    ~UploadHandle() = default;
+
+    uint64_t GetStartOffset() const;
+    BufferBase* GetStagingBuffer() const;
+    uint8_t* GetMappedPointer() const;
+
+  private:
+    uint64_t mStartOffset = 0;
+    Ref<BufferBase> mStagingBuffer;
 };
 
 class DynamicUploader {
@@ -60,20 +74,18 @@ class DynamicUploader {
                                          uint64_t offsetAlignment);
     void Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll = false);
 
-    bool ShouldFlush() const;
-
   private:
     static constexpr uint64_t kRingBufferSize = 4 * 1024 * 1024;
-    uint64_t GetTotalAllocatedSize() const;
 
     struct RingBuffer {
         Ref<BufferBase> mStagingBuffer;
         RingBufferAllocator mAllocator;
     };
 
-    ResultOrError<UploadHandle> AllocateInternal(uint64_t allocationSize,
-                                                 ExecutionSerial serial,
-                                                 uint64_t offsetAlignment);
+    ResultOrError<UploadHandle> AllocateTransient(uint64_t allocationSize,
+                                                  ExecutionSerial serial,
+                                                  uint64_t offsetAlignment);
+    ResultOrError<UploadHandle> AllocatePersistent(uint64_t allocationSize);
 
     std::vector<std::unique_ptr<RingBuffer>> mRingBuffers;
     raw_ptr<DeviceBase> mDevice;
