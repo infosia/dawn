@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7f82de7c_675b88f4",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-23T16:15:09Z",
+      "side": 1,
+      "message": "Just want to be sure I understand, if maxStorageBuffersInFragmentStage and maxStorageBuffersInFragmentStage are both zero (which implies we\u0027re in compat mode since that\u0027s not allowed in core) then we can leave this feature disabled since there will be no storage buffer/textures used in the fragment stage?\n\nDoes maxStorageBuffersInFragmentStage and maxStorageBuffersInFragmentStage apply only for writeable buffers? It seems like non-writeable buffers are still allowed in the fragment stage.\n\n\u003e fragmentStoresAndAtomics specifies whether storage buffers and images support stores and atomic operations in the fragment shader stage. If this feature is not enabled, all storage image, storage texel buffer, and storage buffer variables used by the fragment stage in shader modules must be decorated with the NonWritable decoration (or the readonly memory qualifier in GLSL).\n\nI\u0027ll file a bug though since this is more subtle.",
+      "parentUuid": "1f101dc8_a73cfa95",
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "87ed708b_a501e0ef",
         "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
         "patchSetId": 15
@@ -66,6 +84,24 @@
       "writtenOn": "2025-01-23T03:22:32Z",
       "side": 1,
       "message": "I\u0027m not sure but I think this one is also optional. We did restrict sample_index:\nhttps://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md#7-disallow-sample_mask-and-sample_index-builtins-in-wgsl\nand interpolation modes:\nhttps://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md#11-disallow-linear-and-sample-interpolation-options\nso when fragmentStoresAndAtomics\u003dfalse we might not need this either.",
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e10c78ea_9caf4422",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-23T16:15:09Z",
+      "side": 1,
+      "message": "That makes sense, `VkPipelineMultisampleStateCreateInfo::sampleShadingEnable` is awlays set to VK_FAST and we don\u0027t use the `SampleRateShading` except with those restricted shader modes. Why is there a dependency on fragmentStoresAndAtomics\u003dfalse for this though?",
+      "parentUuid": "87ed708b_a501e0ef",
       "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
