@@ -803,12 +803,10 @@ MaybeError BufferBase::UploadData(uint64_t bufferOffset, const void* data, size_
     DAWN_TRY_ASSIGN(uploadHandle, device->GetDynamicUploader()->Allocate(
                                       size, device->GetQueue()->GetPendingCommandSerial(),
                                       kCopyBufferToBufferOffsetAlignment));
-    DAWN_ASSERT(uploadHandle.mappedBuffer != nullptr);
+    memcpy(uploadHandle.GetMappedPointer(), data, size);
 
-    memcpy(uploadHandle.mappedBuffer, data, size);
-
-    return device->CopyFromStagingToBuffer(uploadHandle.stagingBuffer.Get(),
-                                           uploadHandle.startOffset, this, bufferOffset, size);
+    return device->CopyFromStagingToBuffer(uploadHandle.GetStagingBuffer(),
+                                           uploadHandle.GetStartOffset(), this, bufferOffset, size);
 }
 
 ExecutionSerial BufferBase::OnEndAccess() {
