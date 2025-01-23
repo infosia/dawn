@@ -974,20 +974,19 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                                 device->GetDynamicUploader()->Allocate(
                                     size, device->GetQueue()->GetPendingCommandSerial(),
                                     kCopyBufferToBufferOffsetAlignment));
-                DAWN_ASSERT(uploadHandle.mappedBuffer != nullptr);
-                memcpy(uploadHandle.mappedBuffer, data, size);
+                memcpy(uploadHandle.GetMappedPointer(), data, size);
 
                 dstBuffer->EnsureDataInitializedAsDestination(recordingContext, offset, size);
 
                 dstBuffer->TransitionUsageNow(recordingContext, wgpu::BufferUsage::CopyDst);
 
                 VkBufferCopy copy;
-                copy.srcOffset = uploadHandle.startOffset;
+                copy.srcOffset = uploadHandle.GetStartOffset();
                 copy.dstOffset = offset;
                 copy.size = size;
 
                 device->fn.CmdCopyBuffer(commands,
-                                         ToBackend(uploadHandle.stagingBuffer)->GetHandle(),
+                                         ToBackend(uploadHandle.GetStagingBuffer())->GetHandle(),
                                          dstBuffer->GetHandle(), 1, &copy);
                 break;
             }

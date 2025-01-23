@@ -858,7 +858,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                 uploadHandle,
                 uploader->Allocate(bufferSize, device->GetQueue()->GetPendingCommandSerial(),
                                    blockInfo.byteSize));
-            memset(uploadHandle.mappedBuffer, clearColor, bufferSize);
+            memset(uploadHandle.GetMappedPointer(), clearColor, bufferSize);
 
             for (uint32_t level = range.baseMipLevel; level < range.baseMipLevel + range.levelCount;
                  ++level) {
@@ -881,9 +881,9 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                     textureCopy.aspect = aspect;
                     RecordBufferTextureCopyWithBufferHandle(
                         BufferTextureCopyDirection::B2T, commandList,
-                        ToBackend(uploadHandle.stagingBuffer)->GetD3D12Resource(),
-                        uploadHandle.startOffset, bytesPerRow, largestMipSize.height, textureCopy,
-                        copySize);
+                        ToBackend(uploadHandle.GetStagingBuffer())->GetD3D12Resource(),
+                        uploadHandle.GetStartOffset(), bytesPerRow, largestMipSize.height,
+                        textureCopy, copySize);
                 }
             }
         }
