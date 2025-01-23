@@ -146,6 +146,15 @@ MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
         if (egl.HasExt(EGLExt::ANGLECreateContextExtensionsEnabled)) {
             AddAttrib(EGL_EXTENSIONS_ENABLED_ANGLE, EGL_FALSE);
         }
+
+        // test
+        using tmpl = void (*)(const char* ext);
+        auto glRequestExtension = (tmpl)egl.GetProcAddress("glRequestExtensionANGLE");
+
+        glRequestExtension("GL_EXT_texture_format_BGRA8888");
+        glRequestExtension("GL_APPLE_texture_format_BGRA8888");
+        glRequestExtension("GL_EXT_color_buffer_float");
+        glRequestExtension("GL_EXT_color_buffer_half_float");
     }
 
     // The attrib list is finished with an EGL_NONE tag.
