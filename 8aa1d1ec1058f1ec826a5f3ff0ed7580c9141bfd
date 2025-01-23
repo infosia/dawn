@@ -70,6 +70,24 @@
       "parentUuid": "b1fe0701_7259e641",
       "revId": "8aa1d1ec1058f1ec826a5f3ff0ed7580c9141bfd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b761cfcd_2a6017cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-23T00:51:03Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/tools/build/+/6192201 should hopefully fix things. I\u0027ll try running an build of `win-msvc-dbg-x64` with the recipe change and this CL applied via LED.",
+      "parentUuid": "63e62994_535fa1c4",
+      "revId": "8aa1d1ec1058f1ec826a5f3ff0ed7580c9141bfd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
