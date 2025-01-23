@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "f7d532835cf3a7f6b9798d32f0b0053e01a0ae5d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78114acc_10253075",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-01-23T18:21:08Z",
+      "side": 1,
+      "message": "You can save a multiply if you use bit twiddling.\nFor the 32 bit case:\n\nbitcast\u003cf32\u003e( bitcast\u003cu32\u003e(N) xor \n              ((bitcast\u003cu32\u003e(Nref) xor bitcast\u003cu32\u003e(I) xor u32(-1)) \u0026 (1 \u003c\u003c 31))\n              \n              \nBut that\u0027s way less readable.   I don\u0027t think it\u0027s worth saving the multiply.  The depth of the pipeline is probably more important.",
+      "revId": "f7d532835cf3a7f6b9798d32f0b0053e01a0ae5d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
