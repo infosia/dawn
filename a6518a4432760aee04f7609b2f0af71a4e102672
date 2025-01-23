@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a2bb93a_cdf86594",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-23T23:28:58Z",
+      "side": 0,
+      "message": "nit. We could probably still have this assert right? We would just do it via the function `GetMappedPointer()`?\n\nEdit: Though I see that some places have this assert and some places don\u0027t... We could maybe add the assert into `GetMappedPointer()` such that it ensures it never returns `nullptr`?",
+      "range": {
+        "startLine": 806,
+        "startChar": 4,
+        "endLine": 806,
+        "endChar": 54
+      },
+      "revId": "a6518a4432760aee04f7609b2f0af71a4e102672",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
