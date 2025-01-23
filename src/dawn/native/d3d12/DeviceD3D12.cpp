@@ -305,10 +305,11 @@ MaybeError Device::CreateZeroBuffer() {
                     uploader->Allocate(kZeroBufferSize, GetQueue()->GetPendingCommandSerial(),
                                        kCopyBufferToBufferOffsetAlignment));
 
-    memset(uploadHandle.mappedBuffer, 0u, kZeroBufferSize);
+    memset(uploadHandle.GetMappedPointer(), 0u, kZeroBufferSize);
 
-    CopyFromStagingToBufferHelper(commandContext, uploadHandle.stagingBuffer.Get(),
-                                  uploadHandle.startOffset, mZeroBuffer.Get(), 0, kZeroBufferSize);
+    CopyFromStagingToBufferHelper(commandContext, uploadHandle.GetStagingBuffer(),
+                                  uploadHandle.GetStartOffset(), mZeroBuffer.Get(), 0,
+                                  kZeroBufferSize);
 
     mZeroBuffer->SetInitialized(true);
     return {};

@@ -1188,8 +1188,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                                 device->GetDynamicUploader()->Allocate(
                                     size, device->GetQueue()->GetPendingCommandSerial(),
                                     kCopyBufferToBufferOffsetAlignment));
-                DAWN_ASSERT(uploadHandle.mappedBuffer != nullptr);
-                memcpy(uploadHandle.mappedBuffer, data, size);
+                memcpy(uploadHandle.GetMappedPointer(), data, size);
 
                 [[maybe_unused]] bool cleared;
                 DAWN_TRY_ASSIGN(cleared, dstBuffer->EnsureDataInitializedAsDestination(
@@ -1198,8 +1197,8 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* commandContext
                 dstBuffer->TrackUsageAndTransitionNow(commandContext, wgpu::BufferUsage::CopyDst);
                 commandList->CopyBufferRegion(
                     dstBuffer->GetD3D12Resource(), offset,
-                    ToBackend(uploadHandle.stagingBuffer)->GetD3D12Resource(),
-                    uploadHandle.startOffset, size);
+                    ToBackend(uploadHandle.GetStagingBuffer())->GetD3D12Resource(),
+                    uploadHandle.GetStartOffset(), size);
                 break;
             }
 
