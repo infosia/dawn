@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5edbd41a_bb5e54e9",
+        "filename": "src/dawn/common/SerialQueue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-23T07:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c8228ac_8bef3800",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "3c8fa3d917fa6d230f4726d171cde90c32b31508",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a96ffea5_acb4462b",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-01-22T20:11:14Z",
       "side": 1,
       "message": "nit. I think that if you write a move/copy constructor or assignment operator for these, we won\u0027t need to use a `unique_ptr` when this is used as a stack variable everywhere.",
+      "range": {
+        "startLine": 802,
+        "startChar": 4,
+        "endLine": 802,
+        "endChar": 47
+      },
+      "revId": "3c8fa3d917fa6d230f4726d171cde90c32b31508",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "150d3d5f_4b7d4f7f",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-01-23T07:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a96ffea5_acb4462b",
       "range": {
         "startLine": 802,
         "startChar": 4,
