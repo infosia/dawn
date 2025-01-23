@@ -36,6 +36,27 @@
 
 namespace dawn::native {
 
+UploadHandle::UploadHandle(uint64_t startOffset, Ref<BufferBase> stagingBuffer)
+    : mStartOffset(startOffset), mStagingBuffer(std::move(stagingBuffer)) {}
+
+UploadHandle& UploadHandle::operator=(UploadHandle&& other) {
+    mStartOffset = other.mStartOffset;
+    mStagingBuffer = std::move(other.mStagingBuffer);
+    return *this;
+}
+
+uint64_t UploadHandle::GetStartOffset() const {
+    return mStartOffset;
+}
+
+BufferBase* UploadHandle::GetStagingBuffer() const {
+    return mStagingBuffer.Get();
+}
+
+uint8_t* UploadHandle::GetMappedPointer() const {
+    return static_cast<uint8_t*>(mStagingBuffer->GetMappedPointer()) + mStartOffset;
+}
+
 DynamicUploader::DynamicUploader(DeviceBase* device) : mDevice(device) {}
 
 ResultOrError<UploadHandle> DynamicUploader::AllocateInternal(uint64_t allocationSize,
@@ -43,20 +64,7 @@ ResultOrError<UploadHandle> DynamicUploader::AllocateInternal(uint64_t allocatio
                                                               uint64_t offsetAlignment) {
     // Disable further sub-allocation should the request be too large.
     if (allocationSize > kRingBufferSize) {
-        BufferDescriptor bufferDesc = {};
-        bufferDesc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
-        bufferDesc.size = Align(allocationSize, 4);
-        bufferDesc.mappedAtCreation = true;
-        bufferDesc.label = "Dawn_DynamicUploaderStaging";
-
-        IgnoreLazyClearCountScope scope(mDevice);
-        Ref<BufferBase> stagingBuffer;
-        DAWN_TRY_ASSIGN(stagingBuffer, mDevice->CreateBuffer(&bufferDesc));
-
-        UploadHandle uploadHandle;
-        uploadHandle.mappedBuffer = static_cast<uint8_t*>(stagingBuffer->GetMappedPointer());
-        uploadHandle.stagingBuffer = std::move(stagingBuffer);
-        return uploadHandle;
+        return AllocateDynamicBuffer(allocationSize);
     }
 
     if (mRingBuffers.empty()) {
@@ -108,13 +116,21 @@ ResultOrError<UploadHandle> DynamicUploader::AllocateInternal(uint64_t allocatio
 
     DAWN_ASSERT(targetRingBuffer->mStagingBuffer != nullptr);
 
-    UploadHandle uploadHandle;
-    uploadHandle.stagingBuffer = targetRingBuffer->mStagingBuffer;
-    uploadHandle.mappedBuffer =
-        static_cast<uint8_t*>(uploadHandle.stagingBuffer->GetMappedPointer()) + startOffset;
-    uploadHandle.startOffset = startOffset;
+    return UploadHandle(startOffset, targetRingBuffer->mStagingBuffer);
+}
 
-    return uploadHandle;
+ResultOrError<UploadHandle> DynamicUploader::AllocateDynamicBuffer(uint64_t allocationSize) {
+    BufferDescriptor bufferDesc = {};
+    bufferDesc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
+    bufferDesc.size = Align(allocationSize, 4);
+    bufferDesc.mappedAtCreation = true;
+    bufferDesc.label = "Dawn_DynamicUploaderStaging";
+
+    IgnoreLazyClearCountScope scope(mDevice);
+    Ref<BufferBase> stagingBuffer;
+    DAWN_TRY_ASSIGN(stagingBuffer, mDevice->CreateBuffer(&bufferDesc));
+
+    return UploadHandle(0, std::move(stagingBuffer));
 }
 
 void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll) {
@@ -133,6 +149,8 @@ void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeA
             i++;
         }
     }
+
+    mReleasedStagingMemorySizes.ClearUpTo(lastCompletedSerial);
 }
 
 ResultOrError<UploadHandle> DynamicUploader::Allocate(uint64_t allocationSize,
@@ -142,21 +160,29 @@ ResultOrError<UploadHandle> DynamicUploader::Allocate(uint64_t allocationSize,
     return AllocateInternal(allocationSize, serial, offsetAlignment);
 }
 
-bool DynamicUploader::ShouldFlush() const {
-    uint64_t kTotalAllocatedSizeThreshold = 64 * 1024 * 1024;
-    // We use total allocated size instead of pending-upload size to prevent Dawn from allocating
-    // too much GPU memory so that the risk of OOM can be minimized.
-    return GetTotalAllocatedSize() > kTotalAllocatedSizeThreshold;
+void DynamicUploader::FlushIfNecessary() const {
+    constexpr uint64_t kStagingMemoryToReleaseThreshold = 16 * 1024 * 1024;
+
+    uint64_t totalSize = 0;
+    for (uint64_t stagingMemorySize : mReleasedStagingMemorySizes.IterateAll()) {
+        totalSize += stagingMemorySize;
+    }
+    if (totalSize >= kStagingMemoryToReleaseThreshold) {
+        mDevice->GetQueue()->ForceEventualFlushOfCommands();
+    }
 }
 
-uint64_t DynamicUploader::GetTotalAllocatedSize() const {
-    uint64_t size = 0;
-    for (const auto& buffer : mRingBuffers) {
-        if (buffer->mStagingBuffer != nullptr) {
-            size += buffer->mStagingBuffer->GetSize();
-        }
+void DynamicUploader::TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize) {
+    ExecutionSerial pendingSerial = mDevice->GetQueue()->GetPendingCommandSerial();
+
+    if (mReleasedStagingMemorySizes.Empty() ||
+        mReleasedStagingMemorySizes.LastSerial() < pendingSerial) {
+        mReleasedStagingMemorySizes.Enqueue(stagingMemorySize, pendingSerial);
+    } else {
+        DAWN_ASSERT(mReleasedStagingMemorySizes.LastSerial() == pendingSerial &&
+                    mReleasedStagingMemorySizes.LastValue().size() == 1);
+        mReleasedStagingMemorySizes.LastValue()[0] += stagingMemorySize;
     }
-    return size;
 }
 
 }  // namespace dawn::native
