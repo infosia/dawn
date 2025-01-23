@@ -731,13 +731,11 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
 {% set SpecialStructures = ["device descriptor", "string view"] %}
 
 {% for type in by_category["structure"] if type.name.get() not in SpecialStructures %}
-    {% set Out = "Out" if type.output else "" %}
-    {% set const = "const" if not type.output else "" %}
     {% if type.chained %}
         {% for root in type.chain_roots %}
             // Can be chained in {{as_cppType(root.name)}}
         {% endfor %}
-        struct {{as_cppType(type.name)}} : ChainedStruct{{Out}} {
+        struct {{as_cppType(type.name)}} : ChainedStruct {
             inline {{as_cppType(type.name)}}();
 
             struct Init;
@@ -758,7 +756,7 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
         inline operator const {{as_cType(type.name)}}&() const noexcept;
 
         {% if type.extensible %}
-            ChainedStruct{{Out}} {{const}} * nextInChain = nullptr;
+            ChainedStruct * nextInChain = nullptr;
         {% endif %}
         {% for member in type.members %}
             {% if type.name.get() == "bind group layout entry" %}
@@ -776,7 +774,7 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
             {% if type.chained and loop.first %}
                 //* Align the first member after ChainedStruct to match the C struct layout.
                 //* It has to be aligned both to its natural and ChainedStruct's alignment.
-                static constexpr size_t kFirstMemberAlignment = detail::ConstexprMax(alignof(ChainedStruct{{out}}), alignof({{decorate("", as_cppType(member.type.name), member)}}));
+                static constexpr size_t kFirstMemberAlignment = detail::ConstexprMax(alignof(ChainedStruct), alignof({{decorate("", as_cppType(member.type.name), member)}}));
                 alignas(kFirstMemberAlignment) {{member_declaration}};
             {% else %}
                 {{member_declaration}};
@@ -800,7 +798,7 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
 {% set CppType = as_cppType(type.name) %}
 namespace detail {
 struct {{CppType}} {
-    ChainedStruct const * nextInChain = nullptr;
+    ChainedStruct * nextInChain = nullptr;
     {% for member in type.members %}
         {% if member.type.category != "callback info" %}
             {{as_annotated_cppType(member, type.has_free_members_function) + render_cpp_default_value(member, True, type.has_free_members_function)}};
@@ -854,19 +852,17 @@ struct {{CppType}} : protected detail::{{CppType}} {
     {% set CType = as_cType(type.name) %}
     // {{CppType}} implementation
     {% if type.chained %}
-        {% set Out = "Out" if type.output else "" %}
-        {% set const = "const" if not type.output else "" %}
         {{CppType}}::{{CppType}}()
-          : ChainedStruct{{Out}} { nullptr, SType::{{type.name.CamelCase()}} } {}
+          : ChainedStruct { nullptr, SType::{{type.name.CamelCase()}} } {}
         struct {{CppType}}::Init {
-            ChainedStruct{{Out}} * {{const}} nextInChain;
+            ChainedStruct * nextInChain;
             {% for member in type.members %}
                 {% set member_declaration = as_annotated_cppType(member, type.has_free_members_function) + render_cpp_default_value(member, True, type.has_free_members_function) %}
                 {{member_declaration}};
             {% endfor %}
         };
         {{CppType}}::{{CppType}}({{CppType}}::Init&& init)
-          : ChainedStruct{{Out}} { init.nextInChain, SType::{{type.name.CamelCase()}} }
+          : ChainedStruct { init.nextInChain, SType::{{type.name.CamelCase()}} }
             {%- for member in type.members -%},{{" "}}
                 {{as_varName(member.name)}}(std::move(init.{{as_varName(member.name)}}))
             {%- endfor -%}
@@ -963,7 +959,7 @@ struct {{CppType}} : protected detail::{{CppType}} {
 }
 
 struct {{CppType}}::Init {
-    ChainedStruct const * nextInChain;
+    ChainedStruct * nextInChain;
     {% for member in type.members if member.type.category != "callback info" %}
         {% set member_declaration = as_annotated_cppType(member, type.has_free_members_function) + render_cpp_default_value(member, True, type.has_free_members_function) %}
         {{member_declaration}};

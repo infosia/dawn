@@ -38,16 +38,15 @@
 namespace dawn {
 namespace {
 
-wgpu::Texture Create2DTexture(
-    wgpu::Device device,
-    uint32_t width,
-    uint32_t height,
-    uint32_t mipLevelCount,
-    uint32_t arrayLayerCount,
-    wgpu::TextureFormat format,
-    wgpu::TextureUsage usage,
-    uint32_t sampleCount = 1,
-    const wgpu::DawnTextureInternalUsageDescriptor* internalDesc = nullptr) {
+wgpu::Texture Create2DTexture(wgpu::Device device,
+                              uint32_t width,
+                              uint32_t height,
+                              uint32_t mipLevelCount,
+                              uint32_t arrayLayerCount,
+                              wgpu::TextureFormat format,
+                              wgpu::TextureUsage usage,
+                              uint32_t sampleCount = 1,
+                              wgpu::DawnTextureInternalUsageDescriptor* internalDesc = nullptr) {
     wgpu::TextureDescriptor descriptor;
     descriptor.nextInChain = internalDesc;
     descriptor.dimension = wgpu::TextureDimension::e2D;

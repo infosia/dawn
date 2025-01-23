@@ -68,7 +68,6 @@ namespace {{native_namespace}} {
 {%- endmacro %}
 
     using {{namespace}}::ChainedStruct;
-    using {{namespace}}::ChainedStructOut;
 
     //* Special structures that are manually written.
     {% set SpecialStructures = ["string view"] %}
@@ -100,8 +99,7 @@ namespace {{native_namespace}} {
     {% for type in by_category["structure"] if type.name.get() not in SpecialStructures %}
         {% set CppType = as_cppType(type.name) %}
         {% if type.chained %}
-            {% set chainedStructType = "ChainedStructOut" if type.chained == "out" else "ChainedStruct" %}
-            struct {{CppType}} : {{chainedStructType}} {
+            struct {{CppType}} : ChainedStruct {
                 {{CppType}}() {
                     sType = {{namespace}}::SType::{{type.name.CamelCase()}};
                 }
@@ -120,8 +118,7 @@ namespace {{native_namespace}} {
 
             {% endif %}
             {% if type.extensible %}
-                {% set chainedStructType = "ChainedStructOut" if type.output else "ChainedStruct const" %}
-                {{chainedStructType}} * nextInChain = nullptr;
+                ChainedStruct * nextInChain = nullptr;
             {% endif %}
             {% for member in type.members %}
                 {% if type.name.get() == "bind group layout entry" %}

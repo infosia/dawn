@@ -485,7 +485,7 @@ TEST_P(SharedTextureMemoryTests, SharedFenceExportInfoInvalidChainedStruct) {
     ::CloseHandle(fenceSharedHandle);
 
     // Test an invalid chained struct.
-    wgpu::ChainedStructOut otherStruct;
+    wgpu::ChainedStruct otherStruct;
     wgpu::SharedFenceExportInfo exportInfo;
     exportInfo.nextInChain = &otherStruct;
 

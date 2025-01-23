@@ -271,7 +271,7 @@ TEST_P(SharedTextureMemoryTests, SharedFenceExportInfoInvalidChainedStruct) {
 
     wgpu::SharedFence fence = device.ImportSharedFence(&fenceDesc);
 
-    wgpu::ChainedStructOut otherStruct;
+    wgpu::ChainedStruct otherStruct;
     wgpu::SharedFenceExportInfo exportInfo;
     exportInfo.nextInChain = &otherStruct;
 

@@ -105,27 +105,13 @@ namespace detail {
 template <typename Root>
 struct UnpackedPtrTypeFor;
 
-// Template for extensible structures typing.
-enum class Extensibility { In, Out };
+// Template for extensible structures checking.
 template <typename T>
-inline Extensibility ExtensibilityFor;
+inline bool IsExtensible;
 
 {% for type in by_category["structure"] %}
     {% set T = as_cppType(type.name) %}
-    {% if type.extensible == "in" %}
-        template <>
-        struct UnpackedPtrTypeFor<{{T}}> {
-            using Type = UnpackedPtrChain<
-                AdditionalExtensions<{{T}}>::List
-                {% for extension in type.extensions %}
-                    , const {{as_cppType(extension.name)}}*
-                {% endfor %}
-            >::Type;
-        };
-        template <>
-        constexpr inline Extensibility ExtensibilityFor<{{T}}> = Extensibility::In;
-
-    {% elif type.extensible == "out" %}
+    {% if type.extensible == "in" or type.extensible == "out" %}
         template <>
         struct UnpackedPtrTypeFor<{{T}}> {
             using Type = UnpackedPtrChain<
@@ -136,7 +122,7 @@ inline Extensibility ExtensibilityFor;
             >::Type;
         };
         template <>
-        constexpr inline Extensibility ExtensibilityFor<{{T}}> = Extensibility::Out;
+        constexpr inline bool IsExtensible<{{T}}> = true;
 
     {% endif %}
 {% endfor %}

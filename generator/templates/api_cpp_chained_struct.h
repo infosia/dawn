@@ -38,7 +38,7 @@
 #include <cstddef>
 #include <cstdint>
 
-// This header file declares the ChainedStruct structures separately from the {{metadata.api}}
+// This header file declares the ChainedStruct structure separately from the {{metadata.api}}
 // headers so that dependencies can directly extend structures without including the larger header
 // which exposes capabilities that may require correctly set proc tables.
 namespace {{metadata.namespace}} {
@@ -46,12 +46,7 @@ namespace {{metadata.namespace}} {
     enum class SType : uint32_t;
 
     struct ChainedStruct {
-        ChainedStruct const * nextInChain = nullptr;
-        SType sType = SType(0u);
-    };
-
-    struct ChainedStructOut {
-        ChainedStructOut * nextInChain = nullptr;
+        ChainedStruct * nextInChain = nullptr;
         SType sType = SType(0u);
     };
 

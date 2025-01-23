@@ -200,7 +200,7 @@ class WritableTextureBindingAliasingValidationTests : public ValidationTest {
 
             std::vector<wgpu::BindGroupEntry> entries;
             entries.reserve(bindings.size());
-            for (const auto& binding : bindings) {
+            for (auto& binding : bindings) {
                 entries.push_back(binding.GetAsBinding());
             }
 

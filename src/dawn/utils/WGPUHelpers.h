@@ -189,7 +189,7 @@ struct BindingInitializationHelper {
     BindingInitializationHelper(const BindingInitializationHelper&);
     ~BindingInitializationHelper();
 
-    wgpu::BindGroupEntry GetAsBinding() const;
+    wgpu::BindGroupEntry GetAsBinding();
 
     uint32_t binding;
     wgpu::Sampler sampler;

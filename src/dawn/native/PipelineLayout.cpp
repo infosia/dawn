@@ -280,8 +280,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
     // Does the trivial conversions from a ShaderBindingInfo to a BindGroupLayoutEntry
     auto ConvertMetadataToEntry =
         [](const ShaderBindingInfo& shaderBinding,
-           const ExternalTextureBindingLayout* externalTextureBindingEntry)
-        -> BindGroupLayoutEntry {
+           ExternalTextureBindingLayout* externalTextureBindingEntry) -> BindGroupLayoutEntry {
         BindGroupLayoutEntry entry = {};
 
         MatchVariant(

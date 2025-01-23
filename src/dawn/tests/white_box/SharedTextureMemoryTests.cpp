@@ -1022,7 +1022,7 @@ TEST_P(SharedTextureMemoryTests, GetPropertiesInvalidChain) {
     wgpu::SharedTextureMemory memory =
         GetParam().mBackend->CreateSharedTextureMemory(device, GetParam().mLayerCount);
 
-    wgpu::ChainedStructOut otherStruct;
+    wgpu::ChainedStruct otherStruct;
     wgpu::SharedTextureMemoryProperties properties1;
     properties1.nextInChain = &otherStruct;
     ASSERT_DEVICE_ERROR(memory.GetProperties(&properties1));

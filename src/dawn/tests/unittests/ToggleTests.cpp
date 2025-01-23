@@ -53,7 +53,7 @@ class ToggleTest : public testing::Test {
   public:
     // Helper function for getting the null adapter with given toggles.
     native::Adapter CreateNullAdapter(native::Instance* instance,
-                                      const wgpu::DawnTogglesDescriptor* toggles) {
+                                      wgpu::DawnTogglesDescriptor* toggles) {
         wgpu::RequestAdapterOptions options;
         options.backendType = wgpu::BackendType::Null;
         options.nextInChain = toggles;
@@ -349,7 +349,7 @@ class DeviceToggleTest : public ToggleTest {
     // toggles state.
     void CreateDeviceAndValidateToggles(
         native::AdapterBase* adapter,
-        const wgpu::DawnTogglesDescriptor* requiredDeviceToggles,
+        wgpu::DawnTogglesDescriptor* requiredDeviceToggles,
         std::initializer_list<const char*> expectedEnabledToggles,
         std::initializer_list<const char*> expectedDisabledToggles) {
         native::DeviceDescriptor desc{};

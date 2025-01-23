@@ -172,7 +172,7 @@ BindingInitializationHelper::BindingInitializationHelper(uint32_t binding,
 
 BindingInitializationHelper::~BindingInitializationHelper() = default;
 
-BindGroupEntry BindingInitializationHelper::GetAsBinding() const {
+BindGroupEntry BindingInitializationHelper::GetAsBinding() {
     BindGroupEntry result;
 
     result.binding = binding;
@@ -195,7 +195,7 @@ ResultOrError<Ref<BindGroupBase>> MakeBindGroup(
     std::initializer_list<BindingInitializationHelper> entriesInitializer,
     UsageValidationMode mode) {
     std::vector<BindGroupEntry> entries;
-    for (const BindingInitializationHelper& helper : entriesInitializer) {
+    for (BindingInitializationHelper& helper : entriesInitializer) {
         entries.push_back(helper.GetAsBinding());
     }
 

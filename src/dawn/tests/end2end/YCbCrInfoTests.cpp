@@ -101,8 +101,7 @@ wgpu::TextureViewDescriptor CreateDefaultViewDescriptor(
     return descriptor;
 }
 
-wgpu::TextureView Create2DTextureView(wgpu::Texture texture,
-                                      const wgpu::YCbCrVkDescriptor* yCbCrDesc) {
+wgpu::TextureView Create2DTextureView(wgpu::Texture texture, wgpu::YCbCrVkDescriptor* yCbCrDesc) {
     wgpu::TextureViewDescriptor textureDesc =
         CreateDefaultViewDescriptor(wgpu::TextureViewDimension::e2D);
     textureDesc.arrayLayerCount = 1;
@@ -111,7 +110,7 @@ wgpu::TextureView Create2DTextureView(wgpu::Texture texture,
     return texture.CreateView(&textureDesc);
 }
 
-wgpu::Sampler CreateYCbCrSampler(wgpu::Device device, const wgpu::YCbCrVkDescriptor* yCbCrDesc) {
+wgpu::Sampler CreateYCbCrSampler(wgpu::Device device, wgpu::YCbCrVkDescriptor* yCbCrDesc) {
     wgpu::SamplerDescriptor samplerDesc = {};
     samplerDesc.nextInChain = yCbCrDesc;
     return device.CreateSampler(&samplerDesc);

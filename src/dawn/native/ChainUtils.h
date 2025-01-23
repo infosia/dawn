@@ -39,48 +39,20 @@
 #include "dawn/native/Error.h"
 
 namespace dawn::native {
-namespace detail {
-// Gets the chain type for an extensible type.
-template <typename T>
-struct ChainTypeFor {
-    using Type = typename std::conditional_t<ExtensibilityFor<T> == Extensibility::In,
-                                             const wgpu::ChainedStruct*,
-                                             wgpu::ChainedStructOut*>;
-};
-}  // namespace detail
 
 template <typename T>
 class UnpackedPtr;
-
-namespace detail {
-// Converts to the expected pointer types depending on the extensibility of the structure.
-template <typename UnpackedPtrT, typename U>
-struct PtrTypeFor;
-template <typename T, typename U>
-struct PtrTypeFor<UnpackedPtr<T>, U> {
-    using Type =
-        typename std::conditional_t<ExtensibilityFor<T> == Extensibility::In, const U*, U*>;
-};
-}  // namespace detail
 
 // Unpacks chained structures in a best effort manner (skipping unknown chains) without applying
 // validation. If the same structure is duplicated in the chain, it is unspecified which one the
 // result of Get will be. These are the effective constructors for the wrapper types. Note that
 // these are implemented in the generated ChainUtils_autogen.cpp file.
-template <typename T,
-          typename = std::enable_if_t<detail::ExtensibilityFor<T> == detail::Extensibility::In>>
+template <typename T, typename = std::enable_if_t<detail::IsExtensible<T>>>
 UnpackedPtr<T> Unpack(const T* chain);
-template <typename T,
-          typename = std::enable_if_t<detail::ExtensibilityFor<T> == detail::Extensibility::Out>>
-UnpackedPtr<T> Unpack(T* chain);
 
 // Unpacks chained structures into UnpackedPtr<T> while applying validation.
-template <typename T,
-          typename = std::enable_if_t<detail::ExtensibilityFor<T> == detail::Extensibility::In>>
+template <typename T, typename = std::enable_if_t<detail::IsExtensible<T>>>
 ResultOrError<UnpackedPtr<T>> ValidateAndUnpack(const T* chain);
-template <typename T,
-          typename = std::enable_if_t<detail::ExtensibilityFor<T> == detail::Extensibility::Out>>
-ResultOrError<UnpackedPtr<T>> ValidateAndUnpack(T* chain);
 
 //
 // Wrapper class for unpacked pointers. The classes essentially acts like a const T* or T* with
@@ -89,26 +61,24 @@ ResultOrError<UnpackedPtr<T>> ValidateAndUnpack(T* chain);
 template <typename T>
 class UnpackedPtr {
   public:
-    using ChainType =
-        typename std::conditional_t<detail::ExtensibilityFor<T> == detail::Extensibility::In,
-                                    const wgpu::ChainedStruct*,
-                                    wgpu::ChainedStructOut*>;
-    using PtrType = typename detail::PtrTypeFor<UnpackedPtr<T>, T>::Type;
+    using ChainType = wgpu::ChainedStruct*;
     using TupleType = typename detail::UnpackedPtrTypeFor<T>::Type;
     using BitsetType = typename std::bitset<std::tuple_size_v<TupleType>>;
 
     UnpackedPtr() : mStruct(nullptr) {}
 
     explicit operator bool() const { return mStruct != nullptr; }
-    PtrType operator->() const { return mStruct; }
-    PtrType operator*() const { return mStruct; }
+    const T* operator->() const { return mStruct; }
+    const T* operator*() const { return mStruct; }
+    T* operator->() { return mStruct; }
+    T* operator*() { return mStruct; }
 
     // Returns true iff every allowed chain in this unpacked type is nullptr.
     bool Empty() const;
     // Returns a string of the non-nullptr STypes from an unpacked chain.
     std::string ToString() const;
 
-    template <typename In>
+    template <typename Ext>
     auto Get() const;
 
     // Validation functions. See implementations of these below for usage, details, and examples.
@@ -118,12 +88,12 @@ class UnpackedPtr {
     MaybeError ValidateSubset() const;
 
   private:
-    friend UnpackedPtr<T> Unpack<T>(PtrType chain);
-    friend ResultOrError<UnpackedPtr<T>> ValidateAndUnpack<T>(PtrType chain);
+    friend UnpackedPtr<T> Unpack<T>(const T* chain);
+    friend ResultOrError<UnpackedPtr<T>> ValidateAndUnpack<T>(const T* chain);
 
-    explicit UnpackedPtr(PtrType packed) : mStruct(packed) {}
+    explicit UnpackedPtr(T* packed) : mStruct(packed) {}
 
-    PtrType mStruct = nullptr;
+    T* mStruct = nullptr;
     TupleType mUnpacked;
     BitsetType mBitset;
 };
@@ -152,7 +122,7 @@ inline size_t UnpackedPtrIndexOf;
 template <typename T, typename Ext>
 constexpr inline size_t UnpackedPtrIndexOf<UnpackedPtr<T>, Ext> =
     UnpackedPtrTupleIndexOf<typename UnpackedPtr<T>::TupleType,
-                            typename PtrTypeFor<UnpackedPtr<T>, std::remove_pointer_t<Ext>>::Type>;
+                            typename std::remove_pointer_t<Ext>*>;
 
 // Currently using an internal 64-bit unsigned int for internal representation. This is necessary
 // because std::bitset::operator| is not constexpr until C++23.
@@ -174,10 +144,7 @@ struct OneBranchValidator<UnpackedPtrT, Branch<R, Exts...>> {
         // Only check the full bitset when the main branch matches.
         if (unpacked.template Get<R>() != nullptr) {
             // Allowed set of extensions includes the branch root as well.
-            constexpr auto allowed =
-                UnpackedPtrBitsetForExts<UnpackedPtrT,
-                                         typename detail::PtrTypeFor<UnpackedPtrT, R>::Type,
-                                         typename detail::PtrTypeFor<UnpackedPtrT, Exts>::Type...>;
+            constexpr auto allowed = UnpackedPtrBitsetForExts<UnpackedPtrT, R*, Exts*...>;
 
             // The configuration is allowed if the actual available chains are a subset.
             if (IsSubset(actual, allowed)) {
@@ -222,8 +189,7 @@ struct SubsetValidator {
 
     static MaybeError Validate(const UnpackedPtrT& unpacked, const BitsetType& bitset) {
         // Allowed set of extensions includes the branch root as well.
-        constexpr auto allowed = detail::UnpackedPtrBitsetForExts<
-            UnpackedPtrT, typename detail::PtrTypeFor<UnpackedPtrT, Allowed>::Type...>;
+        constexpr auto allowed = detail::UnpackedPtrBitsetForExts<UnpackedPtrT, Allowed*...>;
         if (!IsSubset(bitset, allowed)) {
             if constexpr (sizeof...(Allowed)) {
                 return DAWN_VALIDATION_ERROR(
@@ -241,9 +207,9 @@ struct SubsetValidator {
 }  // namespace detail
 
 template <typename T>
-template <typename In>
+template <typename Ext>
 auto UnpackedPtr<T>::Get() const {
-    return std::get<typename detail::PtrTypeFor<UnpackedPtr<T>, In>::Type>(mUnpacked);
+    return std::get<Ext*>(mUnpacked);
 }
 
 template <typename T>

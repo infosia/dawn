@@ -84,7 +84,7 @@ struct AdditionalExtensionUnpacker<Root, UnpackedPtrT, detail::AdditionalExtensi
     {% set T = as_cppType(type.name) %}
     {% set UnpackedPtrT = "UnpackedPtr<" + T + ">" %}
     template <>
-    {{UnpackedPtrT}} Unpack<{{T}}>(typename {{UnpackedPtrT}}::PtrType chain) {
+    {{UnpackedPtrT}} Unpack<{{T}}>(const {{T}}* chain) {
         {{UnpackedPtrT}} result(chain);
         for (typename {{UnpackedPtrT}}::ChainType next = chain->nextInChain;
              next != nullptr;
@@ -93,12 +93,9 @@ struct AdditionalExtensionUnpacker<Root, UnpackedPtrT, detail::AdditionalExtensi
                 {% for extension in type.extensions %}
                     {% set Ext = as_cppType(extension.name) %}
                     case STypeFor<{{Ext}}>: {
-                        using ExtPtrType =
-                            typename detail::PtrTypeFor<{{UnpackedPtrT}}, {{Ext}}>::Type;
-                        std::get<ExtPtrType>(result.mUnpacked) =
-                            static_cast<ExtPtrType>(next);
+                        std::get<{{Ext}}*>(result.mUnpacked) = static_cast<{{Ext}}*>(next);
                         result.mBitset.set(
-                            detail::UnpackedPtrIndexOf<{{UnpackedPtrT}}, ExtPtrType>
+                            detail::UnpackedPtrIndexOf<{{UnpackedPtrT}}, {{Ext}}*>
                         );
                         break;
                     }
@@ -118,7 +115,7 @@ struct AdditionalExtensionUnpacker<Root, UnpackedPtrT, detail::AdditionalExtensi
     }
     template <>
     ResultOrError<{{UnpackedPtrT}}> ValidateAndUnpack<{{T}}>(
-        typename {{UnpackedPtrT}}::PtrType chain) {
+        const {{T}}* chain) {
         {{UnpackedPtrT}} result(chain);
         for (typename {{UnpackedPtrT}}::ChainType next = chain->nextInChain;
              next != nullptr;
@@ -128,15 +125,13 @@ struct AdditionalExtensionUnpacker<Root, UnpackedPtrT, detail::AdditionalExtensi
                 {% for extension in type.extensions %}
                     {% set Ext = as_cppType(extension.name) %}
                     case STypeFor<{{Ext}}>: {
-                        using ExtPtrType =
-                            typename detail::PtrTypeFor<{{UnpackedPtrT}}, {{Ext}}>::Type;
-                        auto& member = std::get<ExtPtrType>(result.mUnpacked);
+                        auto& member = std::get<{{Ext}}*>(result.mUnpacked);
                         if (member != nullptr) {
                             duplicate = true;
                         } else {
-                            member = static_cast<ExtPtrType>(next);
+                            member = static_cast<{{Ext}}*>(next);
                             result.mBitset.set(
-                                detail::UnpackedPtrIndexOf<{{UnpackedPtrT}}, ExtPtrType>
+                                detail::UnpackedPtrIndexOf<{{UnpackedPtrT}}, {{Ext}}*>
                             );
                         }
                         break;

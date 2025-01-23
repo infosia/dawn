@@ -383,7 +383,7 @@ BindingInitializationHelper::BindingInitializationHelper(const BindingInitializa
 
 BindingInitializationHelper::~BindingInitializationHelper() = default;
 
-wgpu::BindGroupEntry BindingInitializationHelper::GetAsBinding() const {
+wgpu::BindGroupEntry BindingInitializationHelper::GetAsBinding() {
     wgpu::BindGroupEntry result;
 
     result.binding = binding;

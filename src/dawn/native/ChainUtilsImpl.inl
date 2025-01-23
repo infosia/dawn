@@ -61,7 +61,7 @@ constexpr inline wgpu::SType STypeForImpl<DawnInstanceDescriptor> =
 
 template <>
 struct AdditionalExtensions<InstanceDescriptor> {
-    using List = AdditionalExtensionsList<const DawnInstanceDescriptor*>;
+    using List = AdditionalExtensionsList<DawnInstanceDescriptor*>;
 };
 
 template <>
@@ -78,9 +78,9 @@ constexpr inline wgpu::SType STypeForImpl<opengl::RequestAdapterOptionsGetGLProc
 
 template <>
 struct AdditionalExtensions<RequestAdapterOptions> {
-    using List = AdditionalExtensionsList<const d3d::RequestAdapterOptionsLUID*,
-                                          const d3d11::RequestAdapterOptionsD3D11Device*,
-                                          const opengl::RequestAdapterOptionsGetGLProc*>;
+    using List = AdditionalExtensionsList<d3d::RequestAdapterOptionsLUID*,
+                                          d3d11::RequestAdapterOptionsD3D11Device*,
+                                          opengl::RequestAdapterOptionsGetGLProc*>;
 };
 
 template <>
@@ -90,7 +90,7 @@ constexpr inline wgpu::SType STypeForImpl<d3d11::SharedTextureMemoryD3D11Texture
 template <>
 struct AdditionalExtensions<SharedTextureMemoryDescriptor> {
     using List =
-        AdditionalExtensionsList<const d3d11::SharedTextureMemoryD3D11Texture2DDescriptor*>;
+        AdditionalExtensionsList<d3d11::SharedTextureMemoryD3D11Texture2DDescriptor*>;
 };
 
 template <>
@@ -100,7 +100,7 @@ constexpr inline wgpu::SType STypeForImpl<d3d12::SharedBufferMemoryD3D12Resource
 template <>
 struct AdditionalExtensions<SharedBufferMemoryDescriptor> {
     using List =
-        AdditionalExtensionsList<const d3d12::SharedBufferMemoryD3D12ResourceDescriptor*>;
+        AdditionalExtensionsList<d3d12::SharedBufferMemoryD3D12ResourceDescriptor*>;
 };
 
 }  // namespace detail

@@ -469,8 +469,8 @@
 {%- endmacro -%}
 
 {%- macro make_chained_struct_serialization_helpers(out=None) %}
-    {% set ChainedStructPtr = "WGPUChainedStructOut*" if out else "const WGPUChainedStruct*" %}
-    {% set ChainedStruct = "WGPUChainedStructOut" if out else "WGPUChainedStruct" %}
+    {% set ChainedStructPtr = "WGPUChainedStruct*" %}
+    {% set ChainedStruct = "WGPUChainedStruct" %}
     //* Generate the list of sTypes that we need to handle.
     {% set sTypes = [] %}
     {% for sType in types["s type"].values %}
@@ -655,20 +655,11 @@ struct WGPUChainedStructTransfer {
     bool hasNext;
 };
 
-size_t GetChainedStructExtraRequiredSize(const WGPUChainedStruct* chainedStruct);
-[[nodiscard]] WireResult SerializeChainedStruct(const WGPUChainedStruct* chainedStruct,
-                                                  SerializeBuffer* buffer,
-                                                  const ObjectIdProvider& provider);
-WireResult DeserializeChainedStruct(const WGPUChainedStruct** outChainNext,
-                                    DeserializeBuffer* deserializeBuffer,
-                                    DeserializeAllocator* allocator,
-                                    const ObjectIdResolver& resolver);
-
-size_t GetChainedStructExtraRequiredSize(WGPUChainedStructOut* chainedStruct);
-[[nodiscard]] WireResult SerializeChainedStruct(WGPUChainedStructOut* chainedStruct,
-                                                  SerializeBuffer* buffer,
-                                                  const ObjectIdProvider& provider);
-WireResult DeserializeChainedStruct(WGPUChainedStructOut** outChainNext,
+size_t GetChainedStructExtraRequiredSize(WGPUChainedStruct* chainedStruct);
+[[nodiscard]] WireResult SerializeChainedStruct(WGPUChainedStruct* chainedStruct,
+                                                SerializeBuffer* buffer,
+                                                const ObjectIdProvider& provider);
+WireResult DeserializeChainedStruct(WGPUChainedStruct** outChainNext,
                                     DeserializeBuffer* deserializeBuffer,
                                     DeserializeAllocator* allocator,
                                     const ObjectIdResolver& resolver);
@@ -767,7 +758,6 @@ WireResult WGPUStringViewDeserialize(
 {% endfor %}
 
 {{make_chained_struct_serialization_helpers(out=False)}}
-{{make_chained_struct_serialization_helpers(out=True)}}
 
 //* Output [de]serialization helpers for commands
 {% for command in cmd_records["command"] %}

@@ -124,7 +124,7 @@ struct BindingInitializationHelper {
                                 uint64_t size = wgpu::kWholeSize);
     ~BindingInitializationHelper();
 
-    BindGroupEntry GetAsBinding() const;
+    BindGroupEntry GetAsBinding();
 
     uint32_t binding;
     Ref<SamplerBase> sampler;
