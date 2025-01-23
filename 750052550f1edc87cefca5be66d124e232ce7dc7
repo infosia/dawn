@@ -38,6 +38,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1f101dc8_a73cfa95",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-23T03:22:32Z",
+      "side": 1,
+      "message": "It\u0027s expected (but not certain) that this will be optional in Compat as well. Not sure what Dawn\u0027s implementation status of that restriction is though.\nThe restriction is exposed via a limit:\nhttps://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md#19-introduce-new-maxstoragebuffersinfragmentstage-and-maxstoragetexturesinfragmentstage-limits\n\nNot a huge deal; the only problem is that some vulkan devices could be considered unsupported when they should actually be supported. Could just file a bug for it and add a TODO maybe.",
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87ed708b_a501e0ef",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-23T03:22:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure but I think this one is also optional. We did restrict sample_index:\nhttps://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md#7-disallow-sample_mask-and-sample_index-builtins-in-wgsl\nand interpolation modes:\nhttps://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md#11-disallow-linear-and-sample-interpolation-options\nso when fragmentStoresAndAtomics\u003dfalse we might not need this either.",
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "05baf0a3_d72aea6d",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.h",
         "patchSetId": 15
