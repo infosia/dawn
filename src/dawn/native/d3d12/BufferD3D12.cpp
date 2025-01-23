@@ -661,10 +661,10 @@ MaybeError Buffer::ClearBuffer(CommandRecordingContext* commandContext,
                         uploader->Allocate(size, device->GetQueue()->GetPendingCommandSerial(),
                                            kCopyBufferToBufferOffsetAlignment));
 
-        memset(uploadHandle.mappedBuffer, clearValue, size);
+        memset(uploadHandle.GetMappedPointer(), clearValue, size);
 
-        device->CopyFromStagingToBufferHelper(commandContext, uploadHandle.stagingBuffer.Get(),
-                                              uploadHandle.startOffset, this, offset, size);
+        device->CopyFromStagingToBufferHelper(commandContext, uploadHandle.GetStagingBuffer(),
+                                              uploadHandle.GetStartOffset(), this, offset, size);
     }
 
     return {};
