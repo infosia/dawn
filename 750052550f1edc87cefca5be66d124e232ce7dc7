@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "486176ee_7344dd94",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-23T22:08:56Z",
+      "side": 1,
+      "message": "\u003e Does maxStorageBuffersInFragmentStage and maxStorageBuffersInFragmentStage apply only for writeable buffers? It seems like non-writeable buffers are still allowed in the fragment stage.\n\nNo, it applies to readonly buffers as well. These limits come from GLES primarily, which doesn\u0027t make a distinction between readonly and writable.",
+      "parentUuid": "7f82de7c_675b88f4",
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87ed708b_a501e0ef",
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "I meant VK_FALSE above (not VK_FAST).",
       "parentUuid": "e10c78ea_9caf4422",
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f45b018_5ac0bd3b",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-23T22:08:56Z",
+      "side": 1,
+      "message": "I was thinking that writing to a storage buffer from a fragment shader forced sample-rate shading. That was wrong, IIUC from revisiting https://github.com/gpuweb/gpuweb/issues/4696",
+      "parentUuid": "c0cbc0e0_3616d047",
       "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
