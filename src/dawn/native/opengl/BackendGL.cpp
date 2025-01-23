@@ -63,7 +63,8 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
         return {};
     }
 
-    bool forceES31AndNoExtensions = false;
+    // bool forceES31AndNoExtensions = false;
+    bool forceES31AndNoExtensions = true;
     if (auto* togglesDesc = options.Get<DawnTogglesDescriptor>()) {
         TogglesState toggles =
             TogglesState::CreateFromTogglesDescriptor(togglesDesc, ToggleStage::Adapter);
