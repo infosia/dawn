@@ -335,9 +335,6 @@ TEST_P(SharedBufferMemoryTests, EnsureNoDuplicateBeginAccessCalls) {
 // Ensure the BeginAccessDescriptor initialized parameter preserves or clears the buffer as
 // necessary.
 TEST_P(SharedBufferMemoryTests, BeginAccessInitialization) {
-    // TODO(dawn:2382): Investigate why this test fails on Windows Intel bots.
-    DAWN_SUPPRESS_TEST_IF(IsIntel() && IsD3D12());
-
     // Create a buffer with initialized data.
     wgpu::SharedBufferMemory memory =
         GetParam().mBackend->CreateSharedBufferMemory(device, kMapWriteUsages, kBufferSize);
@@ -369,6 +366,8 @@ TEST_P(SharedBufferMemoryTests, BeginAccessInitialization) {
     beginAccessDesc.fences = sharedFences.data();
     beginAccessDesc.signaledValues = endState.signaledValues;
 
+    ASSERT_EQ(sharedFences.size(), 1u);
+
     // Create a second buffer from the SharedBuffer memory, which will be marked as initialized in
     // the BeginAccessDescriptor. This buffer should preserve the data from the previous copy.
     wgpu::Buffer buffer2 = memory.CreateBuffer();
@@ -388,6 +387,8 @@ TEST_P(SharedBufferMemoryTests, BeginAccessInitialization) {
     beginAccessDesc.fences = sharedFences2.data();
     beginAccessDesc.signaledValues = endState.signaledValues;
 
+    ASSERT_EQ(endState.fenceCount, 1u);
+
     // Create another buffer from the SharedBufferMemory, but mark it uninitialized in the
     // BeginAccessDescriptor.
     wgpu::Buffer buffer3 = memory.CreateBuffer();
@@ -397,6 +398,8 @@ TEST_P(SharedBufferMemoryTests, BeginAccessInitialization) {
     // uninitialized.
     EXPECT_BUFFER_U32_EQ(0, buffer3, 0);
     memory.EndAccess(buffer3, &endState);
+
+    ASSERT_EQ(endState.fenceCount, 1u);
 }
 
 // Tests that an unininitialized buffer that is not read or writt
