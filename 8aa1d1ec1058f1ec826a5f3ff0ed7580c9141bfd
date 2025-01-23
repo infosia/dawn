@@ -88,6 +88,24 @@
       "parentUuid": "63e62994_535fa1c4",
       "revId": "8aa1d1ec1058f1ec826a5f3ff0ed7580c9141bfd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "205ec457_e07466aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-23T00:58:49Z",
+      "side": 1,
+      "message": "Looks like the build is happy, or at least a lot happier https://ci.chromium.org/ui/p/dawn/builders/try.shadow/win-msvc-dbg-x64/b8724994780594989617/infra",
+      "parentUuid": "b761cfcd_2a6017cb",
+      "revId": "8aa1d1ec1058f1ec826a5f3ff0ed7580c9141bfd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
