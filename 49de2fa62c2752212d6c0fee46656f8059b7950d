@@ -22,6 +22,30 @@
       },
       "revId": "49de2fa62c2752212d6c0fee46656f8059b7950d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55a5ce1c_47f6617b",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-23T23:03:55Z",
+      "side": 1,
+      "message": "I added `return 0` just to be sure, and removed the comment. There\u0027s still some extra code generated here, but I think it should be negligible.",
+      "parentUuid": "9a3437ca_d29f2632",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 81
+      },
+      "revId": "49de2fa62c2752212d6c0fee46656f8059b7950d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
