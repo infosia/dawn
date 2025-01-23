@@ -2322,9 +2322,6 @@ MaybeError DeviceBase::CopyFromStagingToBuffer(BufferBase* source,
                                                uint64_t size) {
     DAWN_TRY(
         CopyFromStagingToBufferImpl(source, sourceOffset, destination, destinationOffset, size));
-    if (GetDynamicUploader()->ShouldFlush()) {
-        mQueue->ForceEventualFlushOfCommands();
-    }
     return {};
 }
 
@@ -2347,9 +2344,6 @@ MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
         DAWN_TRY(CopyFromStagingToTextureImpl(source, src, dst, copySizePixels));
     }
 
-    if (GetDynamicUploader()->ShouldFlush()) {
-        mQueue->ForceEventualFlushOfCommands();
-    }
     return {};
 }
 
