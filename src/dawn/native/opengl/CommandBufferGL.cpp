@@ -32,6 +32,7 @@
 #include <utility>
 #include <vector>
 
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Range.h"
 #include "dawn/native/BindGroup.h"
@@ -174,6 +175,22 @@ bool VertexFormatIsInt(wgpu::VertexFormat format) {
             return true;
         default:
             return false;
+    }
+}
+
+const size_t kNumTextureBindingTypes = 4;
+size_t glBindingTypeToIndex(GLenum bindingType) {
+    switch (bindingType) {
+        case GL_TEXTURE_1D:
+            return 0;
+        case GL_TEXTURE_2D:
+            return 1;
+        case GL_TEXTURE_2D_ARRAY:
+            return 2;
+        case GL_TEXTURE_3D:
+            return 3;
+        default:
+            return kNumTextureBindingTypes;
     }
 }
 
@@ -360,6 +377,10 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                     GLuint viewIndex = indices[bindingIndex];
 
                     for (auto unit : mPipeline->GetTextureUnitsForTextureView(viewIndex)) {
+                        if (unit == 0) {
+                            int32_t index = glBindingTypeToIndex(target);
+                            mTextureUnit0Bindings[index] = {true, handle};
+                        }
                         gl.ActiveTexture(GL_TEXTURE0 + unit);
                         gl.BindTexture(target, handle);
                         if (ToBackend(view->GetTexture())->GetGLFormat().format ==
@@ -429,6 +450,92 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                     gl.BindImageTexture(imageIndex, handle, view->GetBaseMipLevel(), isLayered,
                                         view->GetBaseArrayLayer(), access,
                                         texture->GetGLFormat().internalFormat);
+
+                    // Reset this texture's BASE and MAX mip level.
+                    // Some drivers need this for writeable storage textures.
+                    if (access != GL_READ_ONLY) {
+                        uint32_t numMipLevels = texture->GetNumMipLevels();
+                        // 64 mip levels would be a texture 2^64 in size. What were really checking
+                        // for here is that numMipLevels is set (like it's not 0xFFFFFFFFF) or some
+                        // other sentinel. numMipLevels should always be valid, between 1 and
+                        // whatever the actual numMipLevels of the texture is but we get an error
+                        // when setting TEXTURE_MAX_LEVEL below which means that assumption is
+                        // wrong. It's possible the texture is external or a SharedImage and
+                        // numMipLevels is not valid? GetNumMipLevels should probably be named if
+                        // it's not always correct.
+                        if (numMipLevels > 0 && numMipLevels < 64) {
+                            bool genError = false;
+                            GLenum target = view->GetGLTarget();
+                            {
+                                GLenum err = gl.GetError();
+                                if (err) {
+                                    DAWN_DEBUG() << "glError: " << err << " before\n";
+                                    genError = true;
+                                }
+                            }
+                            gl.ActiveTexture(GL_TEXTURE0);
+                            {
+                                GLenum err = gl.GetError();
+                                if (err) {
+                                    DAWN_DEBUG() << "glError: " << err << " activeTexture\n";
+                                    DAWN_CHECK(false);
+                                    genError = true;
+                                }
+                            }
+                            gl.BindTexture(target, handle);
+                            {
+                                GLenum err = gl.GetError();
+                                if (err) {
+                                    DAWN_DEBUG()
+                                        << "glError: " << err << " glBindTarget: for reset "
+                                        << " target: " << target << " handle: " << handle << "\n";
+                                    genError = true;
+                                }
+                            }
+                            gl.TexParameteri(target, GL_TEXTURE_BASE_LEVEL, 0);
+                            {
+                                GLenum err = gl.GetError();
+                                if (err) {
+                                    DAWN_DEBUG()
+                                        << "glError: " << err << " glTexParameteri: BASE_LEVEL 0\n"
+                                        << " target: " << target << " handle: " << handle << "\n";
+                                    genError = true;
+                                }
+                            }
+                            gl.TexParameteri(target, GL_TEXTURE_MAX_LEVEL,
+                                             texture->GetNumMipLevels() - 1);
+                            {
+                                GLenum err = gl.GetError();
+                                if (err) {
+                                    DAWN_DEBUG()
+                                        << "glError: " << err << " glTexParameteri: MAX_LEVEL "
+                                        << (texture->GetNumMipLevels() - 1) << "\n"
+                                        << " target: " << target << " handle: " << handle << "\n";
+                                    genError = true;
+                                }
+                            }
+                            auto index = glBindingTypeToIndex(target);
+                            auto [isSet, oldHandle] = mTextureUnit0Bindings[index];
+                            if (isSet) {
+                                gl.BindTexture(target, oldHandle);
+                                {
+                                    GLenum err = gl.GetError();
+                                    if (err) {
+                                        DAWN_DEBUG()
+                                            << "glError: " << err << " glBindTarget: for restore "
+                                            << " target: " << target << " handle: " << oldHandle
+                                            << "\n";
+                                        genError = true;
+                                    }
+                                }
+                            }
+
+                            if (genError) {
+                                // Generate a GL error so the next step fails.
+                                gl.ActiveTexture(1);
+                            }
+                        }
+                    }
                 },
                 [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
         }
@@ -507,6 +614,13 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
     // Tracking dirty byte range of the mInternalUniformBufferData that needs to call bufferSubData
     // to update to the internal uniform buffer of mPipeline. Range it represents: [first, second)
     std::pair<size_t, size_t> mDirtyRange;
+
+    // Setting GL_TEXTURE_BASE_LEVEL and GL_TEXTURE_MAX_LEVEL affect reading the same
+    // texture as a storage texture in some drivers. To set those values on a texture requires
+    // that we bind the texture to a texture unit. But, something else might already be bound.
+    // So, we track only what is bound to texture unit 0. Then we can restore the binding after
+    // we've using texture unit 0 to reset GL_TEXTURE_BASE_LEVEL and GL_TEXTURE_MAX_LEVEL.
+    std::array<std::pair<bool, GLuint>, kNumTextureBindingTypes + 1> mTextureUnit0Bindings = {};
 };
 
 void ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
