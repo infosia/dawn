@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72c94f5f_301fdcbe",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-24T23:38:07Z",
+      "side": 1,
+      "message": "nit: remove and inline these variables\n\nCould actually inline the whole macro, since we only call it once now.",
+      "revId": "9e17b930a507cf5d2fe39f9c053aecc7432584ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
