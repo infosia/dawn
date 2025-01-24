@@ -178,6 +178,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afc3e50c_2a4a8e10",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-01-24T17:49:22Z",
+      "side": 1,
+      "message": "Perfect, I\u0027ll send out a CL to also make this not required then.",
+      "parentUuid": "6f45b018_5ac0bd3b",
+      "revId": "750052550f1edc87cefca5be66d124e232ce7dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05baf0a3_d72aea6d",
