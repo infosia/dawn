@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6128103_dcc988b8",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-24T23:13:10Z",
+      "side": 1,
+      "message": "Since we realized on the bug that fragmentStoresAndAtomics is essentially always available, I think we can remove the TODO now.\n\n\n```suggestion\n    // This feature isn\u0027t strictly needed in compat mode since the number of\n    // storage buffers/textures in fragment stage can be restricted to zero,\n    // however there don\u0027t seem to be a significant number of Vulkan devices\n    // that don\u0027t support it, so we just require it anyway.\n```",
+      "range": {
+        "startLine": 429,
+        "startChar": 0,
+        "endLine": 430,
+        "endChar": 79
+      },
+      "revId": "78dff74ce78d2fb5908274c96a7424b3b953219f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
