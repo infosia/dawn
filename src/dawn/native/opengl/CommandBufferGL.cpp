@@ -426,6 +426,44 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                         DAWN_UNREACHABLE();
                     }
 
+                    GLenum target = view->GetGLTarget();
+                    GLenum binding;
+                    switch (target) {
+                        case GL_TEXTURE_1D:
+                            binding = GL_TEXTURE_BINDING_1D;
+                            break;
+                        case GL_TEXTURE_2D:
+                            binding = GL_TEXTURE_BINDING_2D;
+                            break;
+                        case GL_TEXTURE_2D_ARRAY:
+                            binding = GL_TEXTURE_BINDING_2D_ARRAY;
+                            break;
+                        case GL_TEXTURE_3D:
+                            binding = GL_TEXTURE_BINDING_3D;
+                            break;
+                        default:
+                            DAWN_UNREACHABLE();
+                    }
+
+                    // Deal with issue where if GL_TEXTURE_BASE_LEVEL and GL_TEXTURE_MAX_LEVEL
+                    // are set to something other than the full texture from this being used as
+                    // a TEXTURE_BINDING then the GL driver does the wrong thing.
+                    //
+                    // We only do this when writing since if we are writing we can not be used
+                    // as a TEXTURE_BINDING. If we are reading the driver issue doesn't happen.
+                    if (access == GL_WRITE_ONLY || access == GL_READ_WRITE) {
+                        GLint currentTexture;
+                        // Get currently bound texture
+                        gl.GetIntegerv(binding, &currentTexture);
+                        // Bind the storage texture and apply level
+                        gl.BindTexture(target, handle);
+                        gl.TexParameteri(target, GL_TEXTURE_BASE_LEVEL, 0);
+                        gl.TexParameteri(target, GL_TEXTURE_MAX_LEVEL,
+                                         texture->GetNumMipLevels() - 1);
+                        // Store the previously bound texture.
+                        gl.BindTexture(target, currentTexture);
+                    }
+
                     gl.BindImageTexture(imageIndex, handle, view->GetBaseMipLevel(), isLayered,
                                         view->GetBaseArrayLayer(), access,
                                         texture->GetGLFormat().internalFormat);
