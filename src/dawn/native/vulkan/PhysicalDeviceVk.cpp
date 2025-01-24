@@ -205,8 +205,8 @@ MaybeError PhysicalDevice::InitializeImpl() {
     if (mSupportsCoreFeatureLevel && !mDeviceInfo.features.independentBlend) {
         SetCoreNotSupported(DAWN_INTERNAL_ERROR("Vulkan independentBlend feature required."));
     }
-    if (!mDeviceInfo.features.sampleRateShading) {
-        return DAWN_INTERNAL_ERROR("Vulkan sampleRateShading feature required.");
+    if (mSupportsCoreFeatureLevel && !mDeviceInfo.features.sampleRateShading) {
+        SetCoreNotSupported(DAWN_INTERNAL_ERROR("Vulkan sampleRateShading feature required."));
     }
 
     return {};
