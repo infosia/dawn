@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8712e07e_ef3cf406",
+        "filename": "third_party/gn/abseil-cpp/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-01-24T16:01:21Z",
+      "side": 1,
+      "message": "looked at the history of this. It seems ... not fun!",
+      "revId": "bb74996f74d1e246d5e4ecd69a31643047d1e15a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
