@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0961204_5a3cfdc2",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-25T01:23:07Z",
+      "side": 1,
+      "message": "```suggestion\n                absl::StrFormat(\"Number of futures to wait on (%d) exceeds maximum (%d).\", count,\n```",
+      "range": {
+        "startLine": 468,
+        "startChar": 75,
+        "endLine": 468,
+        "endChar": 83
+      },
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "575028e9_7abd5843",
+        "filename": "src/dawn/native/Queue.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-25T01:23:07Z",
+      "side": 1,
+      "message": "Should explain: this is the status we\u0027ll return if the Queue object is invalid. This is impossible with just one queue that\u0027s created with the device, but will become possible with multi-queue, at which point we will need to add a new status value to the enum.",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d94fa5f_a32a3373",
+        "filename": "src/dawn/node/binding/GPUBuffer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-25T01:23:07Z",
+      "side": 1,
+      "message": "aside: I think we can assert this doesn\u0027t happen",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "534f3a0c_825da3ee",
+        "filename": "src/dawn/node/binding/GPUBuffer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-25T01:23:07Z",
+      "side": 1,
+      "message": "nit: remove this default if possible so we\u0027ll get warnings on the switch",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb88263c_1d83f1db",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-25T01:23:07Z",
+      "side": 1,
+      "message": "assert: wonder if we can assert this doesn\u0027t happen? I\u0027m not sure what can cause it.",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f76d7383_a914c903",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-25T01:23:07Z",
+      "side": 1,
+      "message": "nit: avoid default here too",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be82b5ce_fc91a1ae",
+        "filename": "src/dawn/wire/client/Device.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-25T01:23:07Z",
+      "side": 1,
+      "message": "nit: I never remember if this can leave the member uninitialized, but would prefer to initialize it just in case. (Zero or `{}` seems fine since I assume the initial value is supposed to be unused?)",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4455206a_f419ad85",
+        "filename": "src/dawn/wire/server/ServerAdapter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-25T01:23:07Z",
+      "side": 1,
+      "message": "This is probably fine for now but I think the appropriate response would be for the wire connection to be terminated, and the client to handle that by returning Success with an already-lost device. I don\u0027t know how to do that though.\n\nSame for the other 3 FillReservation checks.",
+      "range": {
+        "startLine": 144,
+        "startChar": 21,
+        "endLine": 144,
+        "endChar": 60
+      },
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67815beb_a6b4dc0c",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-25T01:23:07Z",
+      "side": 1,
+      "message": "I guess we should crash (abort) if this happens, at least in ASSERTIONS builds. That way it doesn\u0027t look like a legit return value.",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db5ec8d3_a89d7a96",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 2360,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-25T01:23:07Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
