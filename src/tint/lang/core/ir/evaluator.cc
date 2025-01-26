@@ -26,7 +26,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "src/tint/lang/core/ir/evaluator.h"
+#include "src/tint/lang/core/binary_op.h"
 #include "src/tint/lang/core/ir/constant.h"
+#include "src/tint/lang/core/ir/function_param.h"
+#include "src/tint/lang/core/type/bool.h"
 #include "src/tint/lang/core/type/matrix.h"
 #include "src/tint/utils/rtti/switch.h"
 
@@ -72,22 +75,58 @@ Source Evaluator::SourceOf(core::ir::Instruction* val) {
 }
 
 Evaluator::EvalResult Evaluator::EvalValue(core::ir::Value* val) {
+    // printf(" value = %s \n", val->TypeInfo().name);
+    if (val->Is<core::ir::FunctionParam>()) {
+        //  printf(" fucntion return type friendly name %s\n",
+        //  obj->Function()->ReturnType()->FriendlyName().c_str());
+        return nullptr;
+    }
     return tint::Switch(
         val,  //
         [&](core::ir::Constant* c) { return c->Value(); },
+        [&](core::ir::FunctionParam*) { return nullptr; },
         [&](core::ir::InstructionResult* r) {
             return tint::Switch(
                 r->Instruction(),  //
-                [&](core::ir::Bitcast* bc) { return EvalBitcast(bc); },
-                [&](core::ir::Access* a) { return EvalAccess(a); },
-                [&](core::ir::Construct* c) { return EvalConstruct(c); },
-                [&](core::ir::Convert* c) { return EvalConvert(c); },
-                [&](core::ir::CoreBinary* cb) { return EvalBinary(cb); },
-                [&](core::ir::CoreBuiltinCall* c) { return EvalCoreBuiltinCall(c); },
-                [&](core::ir::CoreUnary* u) { return EvalUnary(u); },
-                [&](core::ir::Swizzle* s) { return EvalSwizzle(s); },  //
+                [&](core::ir::Bitcast* bc) {
+                    //  printf(" type at line %d \n", __LINE__);
+                    return EvalBitcast(bc);
+                },
+                [&](core::ir::Access* a) {
+                    //  printf(" type at line %d \n", __LINE__);
+                    //  printf(" instruction name %s \n ",
+                    // r->Instruction()->FriendlyName().c_str());
+                    return EvalAccess(a);
+                },
+                [&](core::ir::Construct* c) {
+                    // printf(" type at line %d \n", __LINE__);
+                    return EvalConstruct(c);
+                },
+                [&](core::ir::Convert* c) {
+                    // printf(" type at line %d \n", __LINE__);
+                    return EvalConvert(c);
+                },
+                [&](core::ir::CoreBinary* cb) {
+                    // printf(" type at line %d \n", __LINE__);
+                    return EvalBinary(cb);
+                },
+                [&](core::ir::CoreBuiltinCall* c) {
+                    //   printf(" type at line %d \n", __LINE__);
+                    return EvalCoreBuiltinCall(c);
+                },
+                [&](core::ir::CoreUnary* u) {
+                    //  printf(" type at line %d \n", __LINE__);
+                    return EvalUnary(u);
+                },
+                [&](core::ir::Swizzle* s) {
+                    // printf(" type at line %d \n", __LINE__);
+                    return EvalSwizzle(s);
+                },  //
                 [&](Default) {
-                    // Treat any unknown instruction as a termination point for trying to eval.
+                    //  printf( " instruction name %s \n "
+                    //  ,r->Instruction()->FriendlyName().c_str());
+                    // Treat any unknown instruction as
+                    // a termination point for trying to eval.
                     return nullptr;
                 });
         },
@@ -114,10 +153,12 @@ Evaluator::EvalResult Evaluator::EvalBitcast(core::ir::Bitcast* bc) {
 Evaluator::EvalResult Evaluator::EvalAccess(core::ir::Access* a) {
     auto obj_res = EvalValue(a->Object());
     if (obj_res != Success) {
+        // printf(" Here %d \n" , __LINE__);
         return obj_res;
     }
     // Check if the object could be evaluated
     if (!obj_res.Get()) {
+        // printf(" Here %d \n" , __LINE__);
         return nullptr;
     }
     auto* obj = obj_res.Get();
@@ -125,21 +166,24 @@ Evaluator::EvalResult Evaluator::EvalAccess(core::ir::Access* a) {
     for (auto* idx : a->Indices()) {
         auto val = EvalValue(idx);
         if (val != Success) {
+            //  printf(" Here %d \n" , __LINE__);
             return val;
         }
         // Check if the value could be evaluated
         if (!val.Get()) {
+            //  printf(" Here %d \n" , __LINE__);
             return nullptr;
         }
         TINT_ASSERT(val.Get()->Is<core::constant::Value>());
 
         auto res = const_eval_.Index(obj, a->Result(0)->Type(), val.Get(), SourceOf(a));
         if (res != Success) {
+            // printf(" Here %d \n" , __LINE__);
             return Failure();
         }
         obj = res.Get();
     }
-
+    // printf(" Here %d \n" , __LINE__);
     return obj;
 }
 
@@ -312,6 +356,17 @@ Evaluator::EvalResult Evaluator::EvalBinary(core::ir::CoreBinary* cb) {
         return nullptr;
     }
 
+    // Special cases for short circuiting
+    if (cb->Op() == tint::core::BinaryOp::kLogicalAnd ||
+        cb->Op() == tint::core::BinaryOp::kLogicalOr) {
+        bool lhs_short_condition = cb->Op() == tint::core::BinaryOp::kLogicalOr;
+        if (lhs.Get()->Type()->IsBoolScalarOrVector()) {
+            if (lhs.Get()->ValueAs<bool>() == lhs_short_condition) {
+                return lhs;
+            }
+        }
+    }
+
     auto rhs = EvalValue(cb->RHS());
     if (rhs != Success) {
         return rhs;
@@ -330,6 +385,7 @@ Evaluator::EvalResult Evaluator::EvalBinary(core::ir::CoreBinary* cb) {
 }
 
 Evaluator::EvalResult Evaluator::EvalCoreBuiltinCall(core::ir::CoreBuiltinCall* c) {
+    // printf(" value = %s \n", c->TypeInfo().name);
     intrinsic::Context context{c->TableData(), b_.ir.Types(), b_.ir.symbols};
 
     Vector<const core::type::Type*, 0> arg_types;
