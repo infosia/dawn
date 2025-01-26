@@ -29,6 +29,7 @@
 
 #include <algorithm>
 
+#include "instruction.h"
 #include "src/tint/lang/core/ir/constant.h"
 #include "src/tint/lang/core/ir/instruction.h"
 #include "src/tint/utils/ice/ice.h"
@@ -58,6 +59,19 @@ void Value::ForEachUseSorted(std::function<void(Usage use)> func) const {
     for (auto& use : uses) {
         func(use);
     }
+}
+
+void Value::RemoveInstructionUsage(Instruction* i) {
+    bool removed = false;
+    do {
+        removed = false;
+        for (auto use_iter = uses_.begin(); use_iter != uses_.end(); ++use_iter) {
+            if (use_iter->instruction == i) {
+                uses_.Remove(*use_iter);
+                removed = true;
+            }
+        }
+    } while (removed);
 }
 
 void Value::ReplaceAllUsesWith(std::function<Value*(Usage use)> replacer) {
