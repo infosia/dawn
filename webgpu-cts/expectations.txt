@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-01-20 08:13:50AM
+# Last rolled: 2025-01-26 05:06:52AM
 
 # conflicts_allowed: true
 
@@ -5565,7 +5565,7 @@ crbug.com/373670513 [ android-pixel-6 ] webgpu:shader,execution,zero_init:comput
 crbug.com/373485785 [ intel win10 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
 crbug.com/373485785 [ target-cpu-32 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
 
-crbug.com/391917953 [ webgpu-service-worker linux release ] webgpu:idl,javascript:obj,Object_keys:type="adapter.limits" [ Failure ]
+crbug.com/391917953 [ linux release webgpu-service-worker ] webgpu:idl,javascript:obj,Object_keys:type="adapter.limits" [ Failure ]
 
 ################################################################################
 # New flakes. Please triage.
