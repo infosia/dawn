@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cd8c1bb_a426c00b",
+        "filename": "src/tint/lang/core/ir/validator_access_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-27T17:16:30Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "cfc349a4_6f587f50",
+      "revId": "32fd0f399d0666b8f87db9eeac66eccd80dbebf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11fbb223_840a19d6",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-01-27T15:54:53Z",
       "side": 0,
       "message": "This no longer shows the error in the from entry when checking results",
+      "revId": "32fd0f399d0666b8f87db9eeac66eccd80dbebf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13dd96e0_896d6eb5",
+        "filename": "src/tint/lang/core/ir/validator_access_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-27T17:16:30Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "11fbb223_840a19d6",
       "revId": "32fd0f399d0666b8f87db9eeac66eccd80dbebf6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c034325_bf071b64",
+        "filename": "src/tint/lang/core/ir/validator_flow_control_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-27T17:16:30Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e208186e_586bd730",
+      "revId": "32fd0f399d0666b8f87db9eeac66eccd80dbebf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d1d0cd4_7d6ae970",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-01-27T15:54:53Z",
       "side": 0,
       "message": "ditto",
+      "revId": "32fd0f399d0666b8f87db9eeac66eccd80dbebf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4c8cb1d_0528dfd2",
+        "filename": "src/tint/lang/core/ir/validator_flow_control_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-27T17:16:30Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "8d1d0cd4_7d6ae970",
       "revId": "32fd0f399d0666b8f87db9eeac66eccd80dbebf6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

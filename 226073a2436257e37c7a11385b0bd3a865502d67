@@ -33,6 +33,24 @@
       "message": "Seems ok. I wonder if it would be better to just suppress the disassembly in unit tests but still show hte notes? Some of the removed notes seem like they have useful relevant context and we could now lose them in a refactor and not notice.",
       "revId": "226073a2436257e37c7a11385b0bd3a865502d67",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07bdde97_5949a413",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-27T17:16:30Z",
+      "side": 1,
+      "message": "tl;dr: There are possible ways to do this, e.g. have the unittests run on logs without the disassembly, but they are non-trivial to implement. If we are going to go down this route I would prefer to implement it in a follow on CL.\n\nI took a look at what would be needed to do something like this, i.e. no disassembly in the log being checked.\n\nIt is baked into `Run()` within the validator to include the disassembly if there are errors. So I would have to add something like `ValidatorWithoutDisassembly` and plumb that through, which is doable.\n\nMy concern is then in the case that a unittest starts failing and we as devs need to debug, we wouldn\u0027t be getting the dissembly in the log. Accessing the Disassembly directly isn\u0027t supported via the Validator API, so I would need to plumb another API call to get that info.\n\nWith these two new API calls I would need to either migrate the existing production code to use this new API (i.e. validate and get dissembly as seperate calls) or have the unittests technically running on a different API, which feels like it might lead to changes being made in one path but not the other.\n\n(I could also go super low road and have the unit test knock off the last diagnostic message in the list before converting to a string, since we would know that is the disassembly, but that feels real brittle).",
+      "parentUuid": "49d453ad_b70e8fa8",
+      "revId": "226073a2436257e37c7a11385b0bd3a865502d67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
