@@ -62,6 +62,8 @@ Result<core::ir::Module> WgslToIR(const Source::File* file, const Options& optio
 /// concrete types.
 tint::Result<core::ir::Module> ProgramToLoweredIR(const Program& program);
 
+bool SubstituteOverrides(core::ir::Module& module);
+
 /// Allows for checking if an extension is currently supported/unsupported by IR
 /// before trying to convert to it.
 bool IsUnsupportedByIR(const ast::Enable* enable);
