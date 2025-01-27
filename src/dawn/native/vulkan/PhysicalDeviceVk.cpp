@@ -863,8 +863,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     if (!GetDeviceInfo().vulkan12Features.vulkanMemoryModel) {
         deviceToggles->ForceSet(Toggle::UseVulkanMemoryModel, false);
     }
-    // TODO(392606604): Take the default value from the Blink/Dawn feature query.
-    deviceToggles->Default(Toggle::UseVulkanMemoryModel, false);
+    // TODO(392606604): Temporary for testing on CQ.
+    deviceToggles->Default(Toggle::UseVulkanMemoryModel, true);
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
