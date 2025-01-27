@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bfed925_b78ef14a",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-27T10:05:40Z",
+      "side": 1,
+      "message": "These APIs are specific to dawn::wire, please put them in [`WireClient.h`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/include/dawn/wire/WireClient.h) instead, ideally as a member function of the `Client`. It would also be ideal if it could return a struct instead of two unnamed ints but if that doesn\u0027t work well with Mojo let\u0027s not bother.\n\nFinally we should add a minimal test in a https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/unittests/wire/WireAdapterTests.cpp or a new WireDeviceTests.cpp that checks that both the newly added function and https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/include/dawn/wire/WireServer.h;drc\u003dce03dcdfa82d6a14862190138415d7a74d797a5e;l\u003d69 work correctly together.",
+      "revId": "8f5f09fd10ce38ffc100f533a1be3ae6fd4f8b36",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
