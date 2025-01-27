@@ -863,9 +863,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     if (!GetDeviceInfo().vulkan12Features.vulkanMemoryModel) {
         deviceToggles->ForceSet(Toggle::UseVulkanMemoryModel, false);
     }
-    deviceToggles->Default(
-        Toggle::UseVulkanMemoryModel,
-        platform->IsFeatureEnabled(platform::Features::kWebGPUUseVulkanMemoryModel));
+    // TODO(392606604): Temporary for testing on CQ.
+    deviceToggles->Default(Toggle::UseVulkanMemoryModel, true);
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
