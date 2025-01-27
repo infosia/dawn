@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8a677be_a06e6f37",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0961204_5a3cfdc2",
+      "range": {
+        "startLine": 468,
+        "startChar": 75,
+        "endLine": 468,
+        "endChar": 83
+      },
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "575028e9_7abd5843",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-01-25T01:23:07Z",
       "side": 1,
       "message": "Should explain: this is the status we\u0027ll return if the Queue object is invalid. This is impossible with just one queue that\u0027s created with the device, but will become possible with multi-queue, at which point we will need to add a new status value to the enum.",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "231bc0aa_6d43c6b4",
+        "filename": "src/dawn/native/Queue.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "575028e9_7abd5843",
       "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aec7bf8a_c46290e5",
+        "filename": "src/dawn/node/binding/GPUBuffer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d94fa5f_a32a3373",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "534f3a0c_825da3ee",
@@ -71,6 +131,24 @@
       "writtenOn": "2025-01-25T01:23:07Z",
       "side": 1,
       "message": "nit: remove this default if possible so we\u0027ll get warnings on the switch",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01ad19ff_46122377",
+        "filename": "src/dawn/node/binding/GPUBuffer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "534f3a0c_825da3ee",
       "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4ad54eb_7c7e9466",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:22:36Z",
+      "side": 1,
+      "message": "Not sure, but keeping it as is for now to minimize churn.",
+      "parentUuid": "fb88263c_1d83f1db",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f76d7383_a914c903",
@@ -109,6 +205,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78aa73ac_c6a64ec2",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f76d7383_a914c903",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be82b5ce_fc91a1ae",
@@ -122,6 +236,24 @@
       "writtenOn": "2025-01-25T01:23:07Z",
       "side": 1,
       "message": "nit: I never remember if this can leave the member uninitialized, but would prefer to initialize it just in case. (Zero or `{}` seems fine since I assume the initial value is supposed to be unused?)",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c2badfb_6e3c6efe",
+        "filename": "src/dawn/wire/client/Device.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:22:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be82b5ce_fc91a1ae",
       "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -149,6 +281,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d54d9143_4f45a75f",
+        "filename": "src/dawn/wire/server/ServerAdapter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:22:36Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4455206a_f419ad85",
+      "range": {
+        "startLine": 144,
+        "startChar": 21,
+        "endLine": 144,
+        "endChar": 60
+      },
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67815beb_a6b4dc0c",
@@ -166,6 +322,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54e4c011_57104cd0",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:22:36Z",
+      "side": 1,
+      "message": "Good point. I just made it abort, and I think not even returning is better so I removed the call for both sites.",
+      "parentUuid": "67815beb_a6b4dc0c",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db5ec8d3_a89d7a96",
@@ -179,6 +353,24 @@
       "writtenOn": "2025-01-25T01:23:07Z",
       "side": 1,
       "message": "Same here",
+      "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a401db3_7a32c83c",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 2360,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:22:36Z",
+      "side": 1,
+      "message": "See comment above.",
+      "parentUuid": "db5ec8d3_a89d7a96",
       "revId": "cb59abf8919a852d3c15aff781dd3dbd3c138b44",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
