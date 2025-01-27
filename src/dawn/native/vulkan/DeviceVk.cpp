@@ -469,6 +469,12 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(wgpu::FeatureLevel feature
         usedKnobs.features.samplerAnisotropy = VK_TRUE;
     }
 
+    if (IsToggleEnabled(Toggle::UseVulkanMemoryModel)) {
+        usedKnobs.vulkan12Features.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES;
+        usedKnobs.vulkan12Features.vulkanMemoryModel = VK_TRUE;
+        featuresChain.Add(&usedKnobs.vulkan12Features);
+    }
+
     if (HasFeature(Feature::TextureCompressionBC)) {
         DAWN_ASSERT(mDeviceInfo.features.textureCompressionBC == VK_TRUE);
         usedKnobs.features.textureCompressionBC = VK_TRUE;
