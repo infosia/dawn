@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5687f398_1a434244",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-27T11:39:15Z",
+      "side": 1,
+      "message": "otional nit: this could enable the features unconditionnally if the device supports them by assigning from mDeviceInfo directly (or like [1])",
+      "revId": "78dff74ce78d2fb5908274c96a7424b3b953219f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6128103_dcc988b8",
         "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
         "patchSetId": 2
@@ -20,6 +37,23 @@
         "endLine": 430,
         "endChar": 79
       },
+      "revId": "78dff74ce78d2fb5908274c96a7424b3b953219f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d095f450_c226ee93",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-27T11:39:15Z",
+      "side": 1,
+      "message": "[1]",
       "revId": "78dff74ce78d2fb5908274c96a7424b3b953219f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
