@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfc349a4_6f587f50",
+        "filename": "src/tint/lang/core/ir/validator_access_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-27T15:54:53Z",
+      "side": 0,
+      "message": "This part of the note seems like usefull to see in the unit tests?",
+      "revId": "32fd0f399d0666b8f87db9eeac66eccd80dbebf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11fbb223_840a19d6",
+        "filename": "src/tint/lang/core/ir/validator_access_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-27T15:54:53Z",
+      "side": 0,
+      "message": "This no longer shows the error in the from entry when checking results",
+      "revId": "32fd0f399d0666b8f87db9eeac66eccd80dbebf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e208186e_586bd730",
+        "filename": "src/tint/lang/core/ir/validator_flow_control_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-27T15:54:53Z",
+      "side": 0,
+      "message": "This note seems relevant to the test",
+      "revId": "32fd0f399d0666b8f87db9eeac66eccd80dbebf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d1d0cd4_7d6ae970",
+        "filename": "src/tint/lang/core/ir/validator_flow_control_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-27T15:54:53Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "32fd0f399d0666b8f87db9eeac66eccd80dbebf6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

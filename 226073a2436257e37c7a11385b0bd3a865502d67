@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "226073a2436257e37c7a11385b0bd3a865502d67",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49d453ad_b70e8fa8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-27T15:54:53Z",
+      "side": 1,
+      "message": "Seems ok. I wonder if it would be better to just suppress the disassembly in unit tests but still show hte notes? Some of the removed notes seem like they have useful relevant context and we could now lose them in a refactor and not notice.",
+      "revId": "226073a2436257e37c7a11385b0bd3a865502d67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
