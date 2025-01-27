@@ -247,6 +247,13 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
         features2.pNext = nullptr;
         PNextChainBuilder featuresChain(&features2);
 
+        if (globalInfo.apiVersion >= VK_API_VERSION_1_2) {
+            featuresChain.Add(&info.vulkan12Features,
+                              VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_1_2_FEATURES);
+        } else {
+            info.vulkan12Features = {};
+        }
+
         VkPhysicalDeviceProperties2 properties2 = {};
         properties2.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2;
 
