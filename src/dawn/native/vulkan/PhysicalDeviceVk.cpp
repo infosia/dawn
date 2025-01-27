@@ -857,6 +857,15 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         GetDeviceInfo().shaderIntegerDotProductFeatures.shaderIntegerDotProduct == VK_FALSE) {
         deviceToggles->ForceSet(Toggle::PolyFillPacked4x8DotProduct, true);
     }
+
+    // The environment can only request to use the Vulkan Memory Model when the capabilities are
+    // available. Override the decision if they are not supported.
+    if (!GetDeviceInfo().vulkan12Features.vulkanMemoryModel ||
+        !GetDeviceInfo().vulkan12Features.vulkanMemoryModelDeviceScope) {
+        deviceToggles->ForceSet(Toggle::UseVulkanMemoryModel, false);
+    }
+    // TODO(392606604): Take the default value from the Blink/Dawn feature query.
+    deviceToggles->Default(Toggle::UseVulkanMemoryModel, false);
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
