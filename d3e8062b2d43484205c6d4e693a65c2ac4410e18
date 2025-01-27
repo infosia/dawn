@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3b957a9_81e16c28",
+        "filename": "src/dawn/node/binding/GPUBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:41:33Z",
+      "side": 1,
+      "message": "Used `// fallthrough` to match the other fallthroughs in the node directories.",
+      "parentUuid": "b0fdfd91_67a23ed0",
+      "revId": "d3e8062b2d43484205c6d4e693a65c2ac4410e18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3006de5a_aef8b07c",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54d776be_683ad019",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:41:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3006de5a_aef8b07c",
+      "revId": "d3e8062b2d43484205c6d4e693a65c2ac4410e18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc313c79_bfbbec48",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-01-27T21:30:05Z",
       "side": 1,
       "message": "same",
+      "revId": "d3e8062b2d43484205c6d4e693a65c2ac4410e18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d4af65f_c40460ea",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 2360,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-01-27T21:41:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc313c79_bfbbec48",
       "revId": "d3e8062b2d43484205c6d4e693a65c2ac4410e18",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
