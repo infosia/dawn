@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06f610dc_c00bd326",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-27T19:46:18Z",
+      "side": 1,
+      "message": "PTAL.  Adding a test for the duplicate binding test. Running it locally I get the right failure, as it\u0027s failing the test is marked DISABLED for now:\n\n```\n    Function call: Call(@0x16f96a460 8-byte object \u003c00-00 B1-00 24-01 00-00\u003e, ErrorType::Validation, Duplicate binding in default pipeline layout initialization not compatible with previous declaration\n```",
+      "revId": "c4ce1b507c5d21a23f85caf04dd3faf51a296920",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
