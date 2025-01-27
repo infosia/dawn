@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfb8f1bd_feb1fd02",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-27T14:57:51Z",
+      "side": 1,
+      "message": "The logic still seems super weird to me. It seems that we\u0027d want to flush when there is more than X bytes of allocations waiting for a flush so that they can eventually be freed. But what the code does is check if there are more than X bytes of data allocated without suballocations, irrespective of whether it will be deallocated eventually. What\u0027s the reason for that?",
+      "revId": "b6a9d8613158901b73bcf6c69bb046162b27371b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
