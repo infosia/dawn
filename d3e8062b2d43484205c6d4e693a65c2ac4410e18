@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0fdfd91_67a23ed0",
+        "filename": "src/dawn/node/binding/GPUBuffer.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-27T21:30:05Z",
+      "side": 1,
+      "message": "This should have `[[fallthrough]];`\n\nI\u0027m surprised we don\u0027t have some warning that requires it. Maybe we don\u0027t have it enabled in dawn-node",
+      "revId": "d3e8062b2d43484205c6d4e693a65c2ac4410e18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3006de5a_aef8b07c",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-27T21:30:05Z",
+      "side": 1,
+      "message": "nit: \"unexpectedly failed\" or \"unexpected failure\"",
+      "revId": "d3e8062b2d43484205c6d4e693a65c2ac4410e18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc313c79_bfbbec48",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 2360,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-27T21:30:05Z",
+      "side": 1,
+      "message": "same",
+      "revId": "d3e8062b2d43484205c6d4e693a65c2ac4410e18",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
