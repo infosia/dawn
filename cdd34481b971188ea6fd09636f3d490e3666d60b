@@ -389,6 +389,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fc02c7c_d78e0711",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-27T13:00:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b5a2b343_6b2f101d",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c6fd7ed_059ba126",
@@ -893,6 +917,24 @@
       "side": 1,
       "message": "Sry. Would you mind me to address this comments in another CL?\n- I try to make the constexpr version worked but been blocked by compiler several times (e.g. reinterpret_cast is not allowed for constexpr). I think I still need some time to read this  https://gist.github.com/graphitemaster/494f21190bb2c63c5516 to know how to do it. Geoff@, would you mind to share your way to make pointer to member work?\n- I think this is an optimization for the helper function and not quite related to the CL main focus area. So maybe using another CL to seperate the change is good?",
       "parentUuid": "6813157b_0863cb85",
+      "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35251dd2_326ee8c6",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-27T13:00:42Z",
+      "side": 1,
+      "message": "Uuuh looking at the thread it seems that C++ really doesn\u0027t want us to do that. Let\u0027s drop this idea.",
+      "parentUuid": "ca593e7d_eac868b5",
       "revId": "cdd34481b971188ea6fd09636f3d490e3666d60b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
