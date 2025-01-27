@@ -1,0 +1,85 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f885ddb1_76d74627",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-27T15:18:04Z",
+      "side": 1,
+      "message": "App",
+      "revId": "369406a80e40997a00b8ab9e6deea24e4da7cade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65da6dfd_bf509cc0",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-27T15:18:04Z",
+      "side": 1,
+      "message": "`mCreationMapping`? The current version is a mouthful.",
+      "range": {
+        "startLine": 172,
+        "startChar": 17,
+        "endLine": 172,
+        "endChar": 49
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c8f6443f_05733ee3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Buffer.h",
+              "range": {
+                "startLine": 170,
+                "startChar": 0,
+                "endLine": 173,
+                "endChar": 0
+              },
+              "replacement": "    // mCreationMapping is used to implement mappedAtCreation for buffers with\n    // non-mappable usage.\n    UploadHandle mCreationMapping;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "369406a80e40997a00b8ab9e6deea24e4da7cade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76655e60_5c9acc43",
+        "filename": "src/dawn/native/DynamicUploader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-27T15:18:04Z",
+      "side": 1,
+      "message": "Can we have comments on what the difference is? \"Dynamic\" is not very explicit, `AllocateTransient` vs `AllocatePersistent`?",
+      "range": {
+        "startLine": 81,
+        "startChar": 32,
+        "endLine": 81,
+        "endChar": 40
+      },
+      "revId": "369406a80e40997a00b8ab9e6deea24e4da7cade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

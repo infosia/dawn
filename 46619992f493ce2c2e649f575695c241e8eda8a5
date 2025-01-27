@@ -145,6 +145,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d4ba91a9_974bc2cc",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-27T15:18:04Z",
+      "side": 1,
+      "message": "The new version seems marginally better. It hides the reentrancy of Buffer a bit but I think that\u0027s ok. We need to make it more clear how the pointer to the DynamicUploader is still valid any time we use it though. TBH given this having a notification to the DynamicUploader seems like it was better? Loko WDYT?",
+      "parentUuid": "513c55a2_bb5cc9e2",
+      "revId": "46619992f493ce2c2e649f575695c241e8eda8a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e80955ca_99d81e46",
         "filename": "src/dawn/native/DynamicUploader.cpp",
         "patchSetId": 5
