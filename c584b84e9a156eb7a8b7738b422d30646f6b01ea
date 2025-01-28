@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "997f5779_91e911c7",
+        "filename": "tools/src/cmd/cts/common/results.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-28T18:20:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "387d888b_34f3b034",
+      "revId": "c584b84e9a156eb7a8b7738b422d30646f6b01ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0df12d7_5d0618b9",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-01-28T15:44:31Z",
       "side": 1,
       "message": "```suggestion\n// returned results should be unique for each combination of test name and type\n```",
+      "revId": "c584b84e9a156eb7a8b7738b422d30646f6b01ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66253695_e6260393",
+        "filename": "tools/src/cmd/cts/common/results.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-28T18:20:20Z",
+      "side": 1,
+      "message": "This is actually correct, as it\u0027s referring to typ (Test Your Program), which is where the expectation file format originates from https://source.chromium.org/chromium/chromium/src/+/main:third_party/catapult/third_party/typ/",
+      "parentUuid": "b0df12d7_5d0618b9",
       "revId": "c584b84e9a156eb7a8b7738b422d30646f6b01ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
