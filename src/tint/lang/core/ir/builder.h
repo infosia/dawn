@@ -631,6 +631,27 @@ class Builder {
         return And(type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
     }
 
+    /// Creates an Logical And operation
+    /// @param type the result type of the expression
+    /// @param lhs the lhs of the add
+    /// @param rhs the rhs of the add
+    /// @returns the operation
+    template <typename LHS, typename RHS>
+    ir::CoreBinary* LogicalAnd(const core::type::Type* type, LHS&& lhs, RHS&& rhs) {
+        return Binary(BinaryOp::kLogicalAnd, type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
+    }
+
+    /// Creates an Logical And operation
+    /// @tparam TYPE the result type of the expression
+    /// @param lhs the lhs of the add
+    /// @param rhs the rhs of the add
+    /// @returns the operation
+    template <typename TYPE, typename LHS, typename RHS>
+    ir::CoreBinary* LogicalAnd(LHS&& lhs, RHS&& rhs) {
+        auto* type = ir.Types().Get<TYPE>();
+        return LogicalAnd(type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
+    }
+
     /// Creates an Or operation
     /// @param type the result type of the expression
     /// @param lhs the lhs of the add
@@ -650,6 +671,26 @@ class Builder {
     ir::CoreBinary* Or(LHS&& lhs, RHS&& rhs) {
         auto* type = ir.Types().Get<TYPE>();
         return Or(type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
+    }
+    /// Creates an Logical Or operation
+    /// @param type the result type of the expression
+    /// @param lhs the lhs of the add
+    /// @param rhs the rhs of the add
+    /// @returns the operation
+    template <typename LHS, typename RHS>
+    ir::CoreBinary* LogicalOr(const core::type::Type* type, LHS&& lhs, RHS&& rhs) {
+        return Binary(BinaryOp::kLogicalOr, type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
+    }
+
+    /// Creates an Logical Or operation
+    /// @tparam TYPE the result type of the expression
+    /// @param lhs the lhs of the add
+    /// @param rhs the rhs of the add
+    /// @returns the operation
+    template <typename TYPE, typename LHS, typename RHS>
+    ir::CoreBinary* LogicalOr(LHS&& lhs, RHS&& rhs) {
+        auto* type = ir.Types().Get<TYPE>();
+        return LogicalOr(type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
     }
 
     /// Creates an Xor operation
