@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77e114da_a55ccd63",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3250,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-28T21:25:55Z",
+      "side": 1,
+      "message": "`UnwrapPtrOrRef` shouldn\u0027t be here - IR requires explicit loads so you can never swizzle a ptr/ref directly.",
+      "revId": "1988cd1e18d50791de466d0502fe9f659cbcaef3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcf29ce0_a6795ec4",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3277,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-28T21:25:55Z",
+      "side": 1,
+      "message": "Nit: Could do `type_mgr_.MatchWidth(elem_ty, indices.Length())`",
+      "fixSuggestions": [
+        {
+          "fixId": "ced65b0a_f1a3f553",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 3277,
+                "startChar": 0,
+                "endLine": 3278,
+                "endChar": 0
+              },
+              "replacement": "    auto* expected_ty \u003d type_mgr_.MatchWidth(elem_ty, indices.Length());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1988cd1e18d50791de466d0502fe9f659cbcaef3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c63faf06_f03048dd",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-28T21:25:55Z",
+      "side": 1,
+      "message": "The value passed to `StoreVectorElement` is always a scalar, so we don\u0027t need to do this check.",
+      "revId": "1988cd1e18d50791de466d0502fe9f659cbcaef3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25231029_f805168a",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-28T21:25:55Z",
+      "side": 1,
+      "message": "Likewise, the index is always a scalar, so we don\u0027t need this check.",
+      "revId": "1988cd1e18d50791de466d0502fe9f659cbcaef3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
