@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd061ce4_6a10828d",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-28T15:16:34Z",
+      "side": 1,
+      "message": "I think some words got jumbled here. I\u0027m not entirely sure how this is supposed to read.",
+      "range": {
+        "startLine": 298,
+        "startChar": 17,
+        "endLine": 298,
+        "endChar": 74
+      },
+      "revId": "6b0e72154ab173dd8c8885a8e2569b9ba615b45a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
