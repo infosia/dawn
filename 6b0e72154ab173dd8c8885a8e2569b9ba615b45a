@@ -46,6 +46,30 @@
       },
       "revId": "6b0e72154ab173dd8c8885a8e2569b9ba615b45a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77b3232b_19e0aa5e",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-28T15:21:47Z",
+      "side": 1,
+      "message": "s/golobal/global/ but otherwise yes, LGTM",
+      "parentUuid": "f8f5af48_17faed20",
+      "range": {
+        "startLine": 298,
+        "startChar": 17,
+        "endLine": 298,
+        "endChar": 74
+      },
+      "revId": "6b0e72154ab173dd8c8885a8e2569b9ba615b45a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
