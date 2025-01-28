@@ -1513,12 +1513,6 @@ bool Converter::Convert(wgpu::FeatureName& out, interop::GPUFeatureName in) {
         case interop::GPUFeatureName::kFloat32Blendable:
             out = wgpu::FeatureName::Float32Blendable;
             return true;
-        case interop::GPUFeatureName::kSubgroups:
-            out = wgpu::FeatureName::Subgroups;
-            return true;
-        case interop::GPUFeatureName::kSubgroupsF16:
-            out = wgpu::FeatureName::SubgroupsF16;
-            return true;
         case interop::GPUFeatureName::kMultiDrawIndirect:
             out = wgpu::FeatureName::MultiDrawIndirect;
             return true;
