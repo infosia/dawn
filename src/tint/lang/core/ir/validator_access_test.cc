@@ -1087,4 +1087,97 @@ TEST_F(IR_ValidatorTest, Swizzle_InvalidIndices) {
 )")) << res.Failure().reason.Str();
 }
 
+TEST_F(IR_ValidatorTest, Swizzle_NotVector) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* var = b.Var(ty.ptr(function, ty.f32()));
+        b.Swizzle(ty.vec4<f32>(), var, {3, 2, 1, 0});
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason.Str(),
+        testing::HasSubstr(
+            R"(:4:20 error: swizzle: object of swizzle, %2, is not a vector, 'ptr<function, f32, read_write>'
+    %3:vec4<f32> = swizzle %2, wzyx
+                   ^^^^^^^
+)")) << res.Failure().reason.Str();
+}
+
+TEST_F(IR_ValidatorTest, Swizzle_TooSmallResult) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* var = b.Var(ty.ptr(function, ty.vec4<f32>()));
+        b.Swizzle(ty.vec2<f32>(), var, {3, 2, 1, 0});
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason.Str(),
+        testing::HasSubstr(
+            R"(:4:20 error: swizzle: result type 'vec2<f32>' does not match expected type, 'vec4<f32>'
+    %3:vec2<f32> = swizzle %2, wzyx
+                   ^^^^^^^
+)")) << res.Failure().reason.Str();
+}
+
+TEST_F(IR_ValidatorTest, Swizzle_TooLargeResult) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* var = b.Var(ty.ptr(function, ty.vec4<f32>()));
+        b.Swizzle(ty.vec4<f32>(), var, {3, 2});
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason.Str(),
+        testing::HasSubstr(
+            R"(4:20 error: swizzle: result type 'vec4<f32>' does not match expected type, 'vec2<f32>'
+    %3:vec4<f32> = swizzle %2, wz
+                   ^^^^^^^
+)")) << res.Failure().reason.Str();
+}
+
+TEST_F(IR_ValidatorTest, Swizzle_WrongTypeResult) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* var = b.Var(ty.ptr(function, ty.vec4<f32>()));
+        b.Swizzle(ty.vec2<u32>(), var, {3, 2});
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason.Str(),
+        testing::HasSubstr(
+            R"(4:20 error: swizzle: result type 'vec2<u32>' does not match expected type, 'vec2<f32>'
+    %3:vec2<u32> = swizzle %2, wz
+                   ^^^^^^^
+)")) << res.Failure().reason.Str();
+}
+
+TEST_F(IR_ValidatorTest, Swizzle_OOBIndex) {
+    auto* f = b.Function("my_func", ty.void_());
+    b.Append(f->Block(), [&] {
+        auto* var = b.Var(ty.ptr(function, ty.vec2<f32>()));
+        b.Swizzle(ty.vec4<f32>(), var, {3, 1, 1, 0});
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason.Str(),
+                testing::HasSubstr(R"(:4:20 error: swizzle: invalid index value
+    %3:vec4<f32> = swizzle %2, wyyx
+                   ^^^^^^^
+)")) << res.Failure().reason.Str();
+}
+
 }  // namespace tint::core::ir

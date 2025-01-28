@@ -204,9 +204,21 @@ struct State {
             }
 
             auto* false_val = b.Load(vec_param);
-            auto* true_val = b.Swizzle(vec_ty, value_param, swizzle_indices);
 
-            auto* lhs = b.Swizzle(vec_ty, index_param, swizzle_indices);
+            core::ir::Instruction* true_val;
+            if (value_param->Type()->UnwrapPtrOrRef()->Is<core::type::Vector>()) {
+                true_val = b.Swizzle(vec_ty, value_param, swizzle_indices);
+            } else {
+                true_val = b.Construct(vec_ty, value_param);
+            }
+
+            core::ir::Instruction* lhs;
+            if (index_param->Type()->UnwrapPtrOrRef()->Is<core::type::Vector>()) {
+                lhs = b.Swizzle(vec_ty, index_param, swizzle_indices);
+            } else {
+                lhs = b.Construct(vec_ty, index_param);
+            }
+
             auto* rhs = b.Construct(vec_ty, select_indices);
             auto* cond = b.Equal(ty.MatchWidth(ty.bool_(), vec_ty), lhs, rhs);
 
