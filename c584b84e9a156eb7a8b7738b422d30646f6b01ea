@@ -16,6 +16,40 @@
       "message": "PTAL\n\nRather large, but the majority of the additions are for test coverage.",
       "revId": "c584b84e9a156eb7a8b7738b422d30646f6b01ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "387d888b_34f3b034",
+        "filename": "tools/src/cmd/cts/common/results.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-28T15:44:31Z",
+      "side": 1,
+      "message": "```suggestion\n// which were affected by an expectation, without applying CleanResults(). The\n```",
+      "revId": "c584b84e9a156eb7a8b7738b422d30646f6b01ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0df12d7_5d0618b9",
+        "filename": "tools/src/cmd/cts/common/results.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-28T15:44:31Z",
+      "side": 1,
+      "message": "```suggestion\n// returned results should be unique for each combination of test name and type\n```",
+      "revId": "c584b84e9a156eb7a8b7738b422d30646f6b01ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
