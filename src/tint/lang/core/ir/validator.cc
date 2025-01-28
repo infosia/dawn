@@ -3247,19 +3247,41 @@ void Validator::CheckSwizzle(const Swizzle* s) {
         return;
     }
 
+    auto* src_vec = s->Object()->Type()->UnwrapPtrOrRef()->As<core::type::Vector>();
+    if (!src_vec) {
+        AddError(s) << "object of swizzle, " << NameOf(s->Object()) << ", is not a vector, "
+                    << NameOf(s->Object()->Type());
+        return;
+    }
+
     auto indices = s->Indices();
     if (indices.Length() < Swizzle::kMinNumIndices) {
         AddError(s) << "expected at least " << Swizzle::kMinNumIndices << " indices";
+        return;
     }
 
     if (indices.Length() > Swizzle::kMaxNumIndices) {
         AddError(s) << "expected at most " << Swizzle::kMaxNumIndices << " indices";
+        return;
     }
 
+    auto elem_count = src_vec->Elements().count;
     for (auto& idx : indices) {
-        if (idx > Swizzle::kMaxIndexValue) {
+        if (idx > Swizzle::kMaxIndexValue || idx >= elem_count) {
             AddError(s) << "invalid index value";
+            return;
         }
+    }
+
+    auto* elem_ty = src_vec->Elements().type;
+    auto* expected_ty = indices.Length() == 1
+                            ? elem_ty
+                            : type_mgr_.vec(elem_ty, static_cast<uint32_t>(indices.Length()));
+    auto* result_ty = s->Result(0)->Type();
+    if (result_ty != expected_ty) {
+        AddError(s) << "result type " << NameOf(result_ty) << " does not match expected type, "
+                    << NameOf(expected_ty);
+        return;
     }
 }
 
