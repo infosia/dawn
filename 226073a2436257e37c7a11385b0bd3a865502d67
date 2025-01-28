@@ -69,6 +69,24 @@
       "parentUuid": "07bdde97_5949a413",
       "revId": "226073a2436257e37c7a11385b0bd3a865502d67",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9da89859_9a674b08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-28T16:11:01Z",
+      "side": 1,
+      "message": "I have filed https://issues.chromium.org/issues/392542005. It looks like I already have another outstanding issue to revisit how errors are logged in the validator, so I will probably address both of these items on my next pass of code hygiene work (~2 weeks from now)",
+      "parentUuid": "ef009899_ff7fa0b4",
+      "revId": "226073a2436257e37c7a11385b0bd3a865502d67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
