@@ -707,7 +707,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::ResolveMultipleAttachmentInSeparatePasses, true);
     }
 
-    if (IsAndroidSamsung() || IsAndroidQualcomm()) {
+    if (IsAndroidSamsung() || IsAndroidQualcomm() || IsAndroidHuawei()) {
         deviceToggles->Default(Toggle::IgnoreImportedAHardwareBufferVulkanImageSize, true);
     }
 
@@ -857,6 +857,14 @@ bool PhysicalDevice::IsAndroidARM() const {
 bool PhysicalDevice::IsAndroidSamsung() const {
 #if DAWN_PLATFORM_IS(ANDROID)
     return gpu_info::IsSamsung(GetVendorId());
+#else
+    return false;
+#endif
+}
+
+bool PhysicalDevice::IsAndroidHuawei() const {
+#if DAWN_PLATFORM_IS(ANDROID)
+    return gpu_info::IsHuawei(GetVendorId());
 #else
     return false;
 #endif
