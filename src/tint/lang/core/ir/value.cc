@@ -60,6 +60,19 @@ void Value::ForEachUseSorted(std::function<void(Usage use)> func) const {
     }
 }
 
+void Value::RemoveInstructionUsage(Instruction* i) {
+    bool removed = false;
+    do {
+        removed = false;
+        for (auto use_iter = uses_.begin(); use_iter != uses_.end(); ++use_iter) {
+            if (use_iter->instruction == i) {
+                uses_.Remove(*use_iter);
+                removed = true;
+            }
+        }
+    } while (removed);
+}
+
 void Value::ReplaceAllUsesWith(std::function<Value*(Usage use)> replacer) {
     while (!uses_.IsEmpty()) {
         auto& use = *uses_.begin();

@@ -28,9 +28,16 @@
 #include "src/tint/lang/core/ir/transform/substitute_overrides.h"
 
 #include <functional>
+#include <utility>
 
+#include "src/tint/lang/core/binary_op.h"
+#include "src/tint/lang/core/ir/binary.h"
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/const_param_validator.h"
+#include "src/tint/lang/core/ir/construct.h"
 #include "src/tint/lang/core/ir/evaluator.h"
+#include "src/tint/lang/core/ir/instruction.h"
+#include "src/tint/lang/core/ir/instruction_result.h"
 #include "src/tint/lang/core/ir/type/array_count.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/ir/value.h"
@@ -61,7 +68,7 @@ struct State {
 
     /// Process the module.
     Result<SuccessType> Process() {
-        Vector<Instruction*, 8> to_remove;
+        Vector<Instruction*, 32> to_remove;
         Vector<Constant*, 8> values_to_propagate;
         Vector<core::ir::Var*, 4> vars_with_value_array_count;
 
@@ -190,16 +197,77 @@ struct State {
             }
         }
 
-        // Remove any non-var instruction in the root block
-        for (auto* inst : to_remove) {
-            inst->Destroy();
+        Vector<core::ir::Instruction*, 32> inst_check;
+        for (auto inst : ir.Instructions()) {
+            if (auto* bin = inst->As<core::ir::Binary>()) {
+                if (bin->Op() == BinaryOp::kLogicalAnd || bin->Op() == BinaryOp::kLogicalOr) {
+                    inst_check.Push(bin);
+                }
+            }
         }
 
-        {
+        while (!inst_check.IsEmpty()) {
+            auto* inst = inst_check.Pop();
+            if (inst->Alive()) {
+                if (auto* bin = inst->As<core::ir::Binary>()) {
+                    if (bin->Op() == BinaryOp::kLogicalAnd || bin->Op() == BinaryOp::kLogicalOr) {
+                        auto r = eval::Eval(b, bin->LHS());
+                        if (r == Success) {
+                            bool expect_circuit = bin->Op() == BinaryOp::kLogicalOr;
+                            if (r.Get()->Value()->ValueAs<bool>() == expect_circuit) {
+                                auto res = DeepRemoveUsage(bin->RHS(), bin);
+                                if (res != Success) {
+                                    return res;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if ((true)) {
             // Propagate any replaced override instructions up their instruction chains
             auto res = Propagate(values_to_propagate);
             if (res != Success) {
                 return res;
+            }
+        }
+
+        if ((true)) {
+            // Remove any non-var instruction in the root block
+            for (auto* inst : to_remove) {
+                if (inst->Alive()) {
+                    inst->Destroy();
+                }
+            }
+        }
+
+        return Success;
+    }
+
+    Result<SuccessType> DeepRemoveUsage(core::ir::Value* val, core::ir::Instruction* inst) {
+        Vector<std::pair<core::ir::Value*, core::ir::Instruction*>, 32> propagate_deref;
+        propagate_deref.Push(std::make_pair(val, inst));
+        while (!propagate_deref.IsEmpty()) {
+            auto deref = propagate_deref.Pop();
+            // printf("Pop \n");
+            deref.first->RemoveInstructionUsage(deref.second);
+
+            // This instruction is dead if it has no usages.
+            if (deref.first->NumUsages() == 0) {
+                // Remove this reference as well
+                //   printf(" Usages zero now destroy = %s \n", deref.first->TypeInfo().name);
+
+                if (auto as_inst = deref.first->As<core::ir::InstructionResult>()) {
+                    for (auto op_val : as_inst->Instruction()->Operands()) {
+                        // printf(" triggering on op inst = %s \n", op_val->TypeInfo().name);
+                        propagate_deref.Push(std::make_pair(op_val, as_inst->Instruction()));
+                    }
+                    // printf("  Destorying inst = %s \n",
+                    // as_inst->Instruction()->FriendlyName().c_str());
+                    as_inst->Instruction()->Destroy();
+                }
             }
         }
 
@@ -301,7 +369,20 @@ Result<SuccessType> SubstituteOverrides(Module& ir, const SubstituteOverridesCon
     if (result != Success) {
         return result;
     }
-    return State{ir, cfg}.Process();
+
+    auto ret = State{ir, cfg}.Process();
+
+    if (ret == Success) {
+        ret = tint::core::ir::ValidateConstParam(ir);
+    }
+
+    result = ValidateAndDumpIfNeeded(ir, "After core.SubstituteOverrides",
+                                     kSubstituteOverridesCapabilities);
+    if (result != Success) {
+        return result;
+    }
+
+    return ret;
 }
 
 }  // namespace tint::core::ir::transform
