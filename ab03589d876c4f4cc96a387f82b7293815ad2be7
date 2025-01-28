@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02a8626d_39009cee",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-28T12:22:32Z",
+      "side": 1,
+      "message": "```suggestion\n    textureDesc.size \u003d {2, 1};\n```",
+      "range": {
+        "startLine": 1476,
+        "startChar": 0,
+        "endLine": 1477,
+        "endChar": 56
+      },
+      "revId": "ab03589d876c4f4cc96a387f82b7293815ad2be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6064537_cb7dd434",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-28T12:22:32Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ab03589d876c4f4cc96a387f82b7293815ad2be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
