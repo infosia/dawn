@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17e0d2d7_dfa95ac0",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-28T02:36:28Z",
+      "side": 1,
+      "message": "```suggestion\n    var featuresPtr \u003d _malloc(navigator[\"gpu\"][\"wgslLanguageFeatures\"].size * 4);\n```",
+      "revId": "7a19ab9f325cd877a7281b91109ccf7027110614",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
