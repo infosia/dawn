@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6a95333_f2e0ce3a",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-01-28T17:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02a8626d_39009cee",
+      "range": {
+        "startLine": 1476,
+        "startChar": 0,
+        "endLine": 1477,
+        "endChar": 56
+      },
+      "revId": "ab03589d876c4f4cc96a387f82b7293815ad2be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6064537_cb7dd434",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-01-28T12:22:32Z",
       "side": 1,
       "message": "ditto",
+      "revId": "ab03589d876c4f4cc96a387f82b7293815ad2be7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5691f3f_6353a9b2",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-01-28T17:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6064537_cb7dd434",
       "revId": "ab03589d876c4f4cc96a387f82b7293815ad2be7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
