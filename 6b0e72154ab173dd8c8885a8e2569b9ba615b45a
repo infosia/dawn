@@ -70,6 +70,30 @@
       },
       "revId": "6b0e72154ab173dd8c8885a8e2569b9ba615b45a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f45032d7_6883b535",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-28T15:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77b3232b_19e0aa5e",
+      "range": {
+        "startLine": 298,
+        "startChar": 17,
+        "endLine": 298,
+        "endChar": 74
+      },
+      "revId": "6b0e72154ab173dd8c8885a8e2569b9ba615b45a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

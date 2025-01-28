@@ -127,6 +127,30 @@
       },
       "revId": "aba3cd5e7196bb8f159755e25f8fd08117665fc1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f59820d9_c2663da4",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-01-28T15:22:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55af34da_b0d6400b",
+      "range": {
+        "startLine": 296,
+        "startChar": 55,
+        "endLine": 296,
+        "endChar": 56
+      },
+      "revId": "aba3cd5e7196bb8f159755e25f8fd08117665fc1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
