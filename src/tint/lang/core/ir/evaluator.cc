@@ -26,7 +26,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "src/tint/lang/core/ir/evaluator.h"
+#include "src/tint/lang/core/binary_op.h"
 #include "src/tint/lang/core/ir/constant.h"
+#include "src/tint/lang/core/ir/function_param.h"
+#include "src/tint/lang/core/type/bool.h"
 #include "src/tint/lang/core/type/matrix.h"
 #include "src/tint/utils/rtti/switch.h"
 
@@ -75,6 +78,7 @@ Evaluator::EvalResult Evaluator::EvalValue(core::ir::Value* val) {
     return tint::Switch(
         val,  //
         [&](core::ir::Constant* c) { return c->Value(); },
+        [&](core::ir::FunctionParam*) { return nullptr; },
         [&](core::ir::InstructionResult* r) {
             return tint::Switch(
                 r->Instruction(),  //
@@ -116,10 +120,7 @@ Evaluator::EvalResult Evaluator::EvalAccess(core::ir::Access* a) {
     if (obj_res != Success) {
         return obj_res;
     }
-    // Check if the object could be evaluated
-    if (!obj_res.Get()) {
-        return nullptr;
-    }
+
     auto* obj = obj_res.Get();
 
     for (auto* idx : a->Indices()) {
@@ -139,7 +140,6 @@ Evaluator::EvalResult Evaluator::EvalAccess(core::ir::Access* a) {
         }
         obj = res.Get();
     }
-
     return obj;
 }
 
@@ -312,6 +312,17 @@ Evaluator::EvalResult Evaluator::EvalBinary(core::ir::CoreBinary* cb) {
         return nullptr;
     }
 
+    // Special cases for short circuiting
+    if (cb->Op() == tint::core::BinaryOp::kLogicalAnd ||
+        cb->Op() == tint::core::BinaryOp::kLogicalOr) {
+        bool lhs_short_condition = cb->Op() == tint::core::BinaryOp::kLogicalOr;
+        if (lhs.Get()->Type()->IsBoolScalarOrVector()) {
+            if (lhs.Get()->ValueAs<bool>() == lhs_short_condition) {
+                return lhs;
+            }
+        }
+    }
+
     auto rhs = EvalValue(cb->RHS());
     if (rhs != Success) {
         return rhs;
@@ -330,6 +341,7 @@ Evaluator::EvalResult Evaluator::EvalBinary(core::ir::CoreBinary* cb) {
 }
 
 Evaluator::EvalResult Evaluator::EvalCoreBuiltinCall(core::ir::CoreBuiltinCall* c) {
+    // printf(" value = %s \n", c->TypeInfo().name);
     intrinsic::Context context{c->TableData(), b_.ir.Types(), b_.ir.symbols};
 
     Vector<const core::type::Type*, 0> arg_types;
