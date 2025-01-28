@@ -324,32 +324,15 @@ class ObjectBase {
 //* This rendering macro should ONLY be used for callback info type functions.
 {% macro render_cpp_callback_info_template_method_declaration(type, method, dfn=False) %}
     {% set CppType = as_cppType(type.name) %}
-    {% set OriginalMethodName = method.name.CamelCase() %}
-    {% set MethodName = OriginalMethodName[:-1] if method.name.chunks[-1] == "2" else OriginalMethodName %}
+    {% set MethodName = method.name.CamelCase() %}
     {% set MethodName = CppType + "::" + MethodName if dfn else MethodName %}
-    //* Stripping the 2 at the end of the callback functions for now until we can deprecate old ones.
-    //* TODO: crbug.com/dawn/2509 - Remove name handling once old APIs are deprecated.
     {% set CallbackInfoType = (method.arguments|last).type %}
     {% set CallbackType = find_by_name(CallbackInfoType.members, "callback").type %}
-    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<F, Cb*> || std::is_convertible_v<F, CbChar*>>" if not dfn else "" %}
+    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<F, Cb*>>" if not dfn else "" %}
     template <typename F, typename T,
               typename Cb
                 {%- if not dfn -%}
                     {{" "}}= {{as_cppType(CallbackType.name)}}<T>
-                {%- endif -%},
-              //* The Callback fnptr with const char* instead of StringView.
-              //* TODO(42241188): Remove once all clients use StringView versions of the callbacks
-              typename CbChar
-                {%- if not dfn -%}
-                    {{" "}}= void (
-                        {%- for arg in CallbackType.arguments -%}
-                            {%- if arg.type.name.canonical_case() == "string view" -%}
-                                const char* {{as_varName(arg.name)}}{{", "}}
-                            {%- else -%}
-                                {{as_annotated_cppType(arg)}}{{", "}}
-                            {%- endif -%}
-                        {%- endfor -%}
-                    T userdata)
                 {%- endif -%},
               typename{{SfinaeArg}}>
     {{as_cppType(method.return_type.name)}} {{MethodName}}(
@@ -361,7 +344,7 @@ class ObjectBase {
             {%- endif -%}
         {%- endfor -%}
         {%- if find_by_name(CallbackInfoType.members, "mode") -%}
-            {{as_cppType(types["callback mode"].name)}} callbackMode,
+            {{as_cppType(types["callback mode"].name)}} callbackMode{{ ", "}}
         {%- endif -%}
     F callback, T userdata) const
 {%- endmacro %}
@@ -369,33 +352,15 @@ class ObjectBase {
 //* This rendering macro should ONLY be used for callback info type functions.
 {% macro render_cpp_callback_info_lambda_method_declaration(type, method, dfn=False) %}
     {% set CppType = as_cppType(type.name) %}
-    {% set OriginalMethodName = method.name.CamelCase() %}
-    {% set MethodName = OriginalMethodName[:-1] if method.name.chunks[-1] == "2" else OriginalMethodName %}
+    {% set MethodName = method.name.CamelCase() %}
     {% set MethodName = CppType + "::" + MethodName if dfn else MethodName %}
-    //* Stripping the 2 at the end of the callback functions for now until we can deprecate old ones.
-    //* TODO: crbug.com/dawn/2509 - Remove name handling once old APIs are deprecated.
     {% set CallbackInfoType = (method.arguments|last).type %}
     {% set CallbackType = find_by_name(CallbackInfoType.members, "callback").type %}
-    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<L, Cb> || std::is_convertible_v<L, CbChar>>" if not dfn else "" %}
+    {% set SfinaeArg = " = std::enable_if_t<std::is_convertible_v<L, Cb>>" if not dfn else "" %}
     template <typename L,
               typename Cb
                 {%- if not dfn -%}
                     {{" "}}= {{as_cppType(CallbackType.name)}}<>
-                {%- endif -%},
-              //* The Callback fnptr with const char* instead of StringView.
-              //* TODO(42241188): Remove once all clients use StringView versions of the callbacks
-              typename CbChar
-                {%- if not dfn -%}
-                    {{" "}}= std::function<void(
-                        {%- for arg in CallbackType.arguments -%}
-                            {%- if not loop.first %}, {% endif -%}
-                            {%- if arg.type.name.canonical_case() == "string view" -%}
-                                const char* {{as_varName(arg.name)}}
-                            {%- else -%}
-                                {{as_annotated_cppType(arg)}}
-                            {%- endif -%}
-                        {%- endfor -%}
-                    )>
                 {%- endif -%},
               typename{{SfinaeArg}}>
     {{as_cppType(method.return_type.name)}} {{MethodName}}(
@@ -407,7 +372,7 @@ class ObjectBase {
             {%- endif -%}
         {%- endfor -%}
     {%- if find_by_name(CallbackInfoType.members, "mode") -%}
-            {{as_cppType(types["callback mode"].name)}} callbackMode,
+            {{as_cppType(types["callback mode"].name)}} callbackMode{{ ", "}}
         {%- endif -%}
     L callback) const
 {%- endmacro %}
@@ -415,8 +380,7 @@ class ObjectBase {
 //* This rendering macro should NOT be used for callback info type functions.
 {% macro render_cpp_method_declaration(type, method, dfn=False) %}
     {% set CppType = as_cppType(type.name) %}
-    {% set OriginalMethodName = method.name.CamelCase() %}
-    {% set MethodName = OriginalMethodName[:-1] if method.name.chunks[-1] == "f" or method.name.chunks[-1] == "2" else OriginalMethodName %}
+    {% set MethodName = method.name.CamelCase() %}
     {% set MethodName = CppType + "::" + MethodName if dfn else MethodName %}
     {{"ConvertibleStatus" if method.return_type.name.get() == "status" else as_cppType(method.return_type.name)}} {{MethodName}}(
         {%- for arg in method.arguments -%}
@@ -554,40 +518,18 @@ using UncapturedErrorCallback = typename detail::CallbackTypeBase<std::tuple<con
         {% if find_by_name(CallbackInfoType.members, "mode") %}
             callbackInfo.mode = static_cast<{{as_cType(types["callback mode"].name)}}>(callbackMode);
         {% endif %}
-        if constexpr (std::is_convertible_v<F, Cb*>) {
-            callbackInfo.callback = [](
+        callbackInfo.callback = [](
+            {%- for arg in CallbackType.arguments -%}
+                {{as_annotated_cType(arg)}}{{", "}}
+            {%- endfor -%}
+        void* callback_param, void* userdata_param) {
+            auto cb = reinterpret_cast<Cb*>(callback_param);
+            (*cb)(
                 {%- for arg in CallbackType.arguments -%}
-                    {{as_annotated_cType(arg)}}{{", "}}
+                    {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}{{", "}}
                 {%- endfor -%}
-            void* callback_param, void* userdata_param) {
-                auto cb = reinterpret_cast<Cb*>(callback_param);
-                (*cb)(
-                    {%- for arg in CallbackType.arguments -%}
-                        {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}{{", "}}
-                    {%- endfor -%}
-                static_cast<T>(userdata_param));
-            };
-        } else {
-            //* Handle functors that take in const char* instead of StringView.
-            //* TODO(42241188): Remove once all clients use StringView versions of the callbacks
-            //* and also remove CbChar at the same time.
-            callbackInfo.callback = [](
-                {%- for arg in CallbackType.arguments -%}
-                    {{as_annotated_cType(arg)}}{{", "}}
-                {%- endfor -%}
-            void* callback_param, void* userdata_param) {
-                auto cb = reinterpret_cast<CbChar*>(callback_param);
-                (*cb)(
-                    {%- for arg in CallbackType.arguments -%}
-                        {%- if arg.type.name.canonical_case() == "string view" -%}
-                            {detail::StringViewAdapter({{as_varName(arg.name)}})}{{", "}}
-                        {%- else -%}
-                            {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}{{", "}}
-                        {%- endif -%}
-                    {%- endfor -%}
-                static_cast<T>(userdata_param));
-            };
-        }
+            static_cast<T>(userdata_param));
+        };
         callbackInfo.userdata1 = reinterpret_cast<void*>(+callback);
         callbackInfo.userdata2 = reinterpret_cast<void*>(userdata);
         {% if method.return_type.name.get() == "future" %}
@@ -643,14 +585,7 @@ using UncapturedErrorCallback = typename detail::CallbackTypeBase<std::tuple<con
                 (*the_lambda)(
                     {%- for arg in CallbackType.arguments -%}
                         {%- if not loop.first %}, {% endif -%}
-                        //* Handle functors that take in const char* instead of StringView.
-                        //* TODO(42241188): Remove once all clients use StringView versions of the callbacks
-                        //* and also remove CbChar at the same time.
-                        {%- if arg.type.name.canonical_case() == "string view" -%}
-                            {detail::StringViewAdapter({{as_varName(arg.name)}})}
-                        {%- else -%}
-                            {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}
-                        {%- endif -%}
+                        {{convert_cType_to_cppType(arg.type, arg.annotation, as_varName(arg.name))}}
                     {%- endfor -%});
             };
             callbackInfo.userdata1 = reinterpret_cast<void*>(lambda);
