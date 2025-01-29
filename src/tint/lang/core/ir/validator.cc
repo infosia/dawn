@@ -2635,9 +2635,15 @@ void Validator::CheckLet(const Let* l) {
         return;
     }
 
-    if (l->Result(0)->Type()->Is<core::type::Void>()) {
-        AddError(l) << "result type cannot be void";
-        return;
+    auto* result_ty = l->Result(0)->Type();
+
+    if (!capabilities_.Contains(Capability::kAllowAnyLetType)) {
+        if (!(result_ty->IsConstructible() && !result_ty->IsAbstract()) &&
+            !result_ty->Is<core::type::Pointer>()) {
+            AddError(l) << "result type, " << NameOf(result_ty)
+                        << ", must be concrete constructible type or a pointer type";
+            return;
+        }
     }
 
     if (l->Value()->Type()->Is<core::type::Void>()) {
