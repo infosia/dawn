@@ -593,8 +593,10 @@ TEST_F(IR_ValidatorTest, Let_VoidResult) {
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
-    EXPECT_THAT(res.Failure().reason.Str(),
-                testing::HasSubstr(R"(:3:15 error: let: result type cannot be void
+    EXPECT_THAT(
+        res.Failure().reason.Str(),
+        testing::HasSubstr(
+            R"(:3:15 error: let: result type, 'void', must be concrete constructible type or a pointer type
     %2:void = let 1i
               ^^^
 )")) << res.Failure().reason.Str();
@@ -618,6 +620,64 @@ TEST_F(IR_ValidatorTest, Let_VoidValue) {
     %4:i32 = let %3
              ^^^
 )")) << res.Failure().reason.Str();
+}
+
+TEST_F(IR_ValidatorTest, Let_NotConstructible) {
+    auto* f = b.Function("my_func", ty.void_());
+    auto* p = b.FunctionParam("p", ty.sampler());
+    f->AppendParam(p);
+    b.Append(f->Block(), [&] {
+        b.Let(p);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason.Str(),
+        testing::HasSubstr(
+            R"(:3:18 error: let: result type, 'sampler', must be concrete constructible type or a pointer type
+    %3:sampler = let %p
+                 ^^^
+)")) << res.Failure().reason.Str();
+}
+
+TEST_F(IR_ValidatorTest, Let_Abstract) {
+    auto* f = b.Function("my_func", ty.void_());
+    auto* p = b.FunctionParam("p", ty.AFloat());
+    f->AppendParam(p);
+    b.Append(f->Block(), [&] {
+        b.Let(p);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    // Note: This will also cause an error about using the AFloat as a param type.
+    EXPECT_THAT(
+        res.Failure().reason.Str(),
+        testing::HasSubstr(
+            R"(:3:25 error: let: result type, 'abstract-float', must be concrete constructible type or a pointer type
+    %3:abstract-float = let %p
+                        ^^^
+)")) << res.Failure().reason.Str();
+}
+
+TEST_F(IR_ValidatorTest, Let_CapabilityBypass) {
+    auto* f = b.Function("my_func", ty.void_());
+    auto* p = b.FunctionParam("p", ty.sampler());
+    f->AppendParam(p);
+
+    // Note: There is no test for abstracts here, because the IR type/validator
+    // system intentionally makes it difficult to create abstracts that don't
+    // cause additional failures.
+    b.Append(f->Block(), [&] {
+        b.Let(p);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod, Capabilities{ir::Capability::kAllowAnyLetType});
+    ASSERT_EQ(res, Success) << res.Failure().reason.Str();
 }
 
 TEST_F(IR_ValidatorTest, Phony_NullValue) {
