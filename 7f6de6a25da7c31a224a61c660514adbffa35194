@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "799f02af_cc408522",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3444340
+      },
+      "writtenOn": "2025-01-29T13:53:16Z",
+      "side": 1,
+      "message": "Thanks for the gpu info suggestion. Is something in this direction acceptable ?",
+      "revId": "7f6de6a25da7c31a224a61c660514adbffa35194",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
