@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b300faa9_d37d5005",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3250,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-29T18:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e114da_a55ccd63",
+      "revId": "1988cd1e18d50791de466d0502fe9f659cbcaef3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bcf29ce0_a6795ec4",
@@ -53,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "417dfc0b_4533d43a",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3277,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-29T18:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcf29ce0_a6795ec4",
+      "revId": "1988cd1e18d50791de466d0502fe9f659cbcaef3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c63faf06_f03048dd",
@@ -70,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0749d3b_bc6e43d4",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-29T18:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c63faf06_f03048dd",
+      "revId": "1988cd1e18d50791de466d0502fe9f659cbcaef3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25231029_f805168a",
@@ -83,6 +137,24 @@
       "writtenOn": "2025-01-28T21:25:55Z",
       "side": 1,
       "message": "Likewise, the index is always a scalar, so we don\u0027t need this check.",
+      "revId": "1988cd1e18d50791de466d0502fe9f659cbcaef3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43c42111_6ab1472f",
+        "filename": "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-29T18:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25231029_f805168a",
       "revId": "1988cd1e18d50791de466d0502fe9f659cbcaef3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

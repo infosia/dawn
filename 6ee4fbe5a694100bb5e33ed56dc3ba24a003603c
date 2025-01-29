@@ -16,6 +16,24 @@
       "message": "```suggestion\nAdded checking that the thing being swizzle\u0027d is a vector, checking that\n```",
       "revId": "6ee4fbe5a694100bb5e33ed56dc3ba24a003603c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "433d2fce_304c3f7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-01-29T18:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d26c3467_496f974b",
+      "revId": "6ee4fbe5a694100bb5e33ed56dc3ba24a003603c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
