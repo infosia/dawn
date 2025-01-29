@@ -102,6 +102,10 @@ class Value : public Castable<Value> {
     /// @param u the usage
     void RemoveUsage(Usage u) { uses_.Remove(u); }
 
+    /// Remove a usage of this instruction.
+    /// @param i the instruction
+    void RemoveInstructionUsage(Instruction* i);
+
     /// @returns the set of usages of this value. An instruction may appear multiple times if it
     /// uses the value for multiple different operands.
     const Hashset<Usage, 4>& UsagesUnsorted() { return uses_; }
