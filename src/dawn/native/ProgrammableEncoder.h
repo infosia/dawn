@@ -68,6 +68,11 @@ class ProgrammableEncoder : public ApiObjectBase {
                             uint32_t dynamicOffsetCount,
                             const uint32_t* dynamicOffsets) const;
 
+    void RecordSetImmediateData(CommandAllocator* allocator,
+                                uint32_t immediateDataRangeOffset,
+                                uint32_t immediateDataCount,
+                                const uint32_t* data);
+
     // Construct an "error" programmable pass encoder.
     ProgrammableEncoder(DeviceBase* device,
                         EncodingContext* encodingContext,

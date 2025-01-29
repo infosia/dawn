@@ -71,6 +71,10 @@ class ComputePassEncoder final : public ProgrammableEncoder {
 
     void APIWriteTimestamp(QuerySetBase* querySet, uint32_t queryIndex);
 
+    void APISetImmediateData(uint32_t immediateDataRangeOffset,
+                             uint32_t immediateDataCount,
+                             const uint32_t* data);
+
     CommandBufferStateTracker* GetCommandBufferStateTrackerForTesting();
     void RestoreCommandBufferStateForTesting(CommandBufferStateTracker state) {
         RestoreCommandBufferState(std::move(state));

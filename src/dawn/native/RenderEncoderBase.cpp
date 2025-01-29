@@ -723,4 +723,23 @@ void RenderEncoderBase::APISetBindGroup(uint32_t groupIndexIn,
         dynamicOffsetCount);
 }
 
+void RenderEncoderBase::APISetImmediateData(uint32_t immediateDataRangeOffset,
+                                            uint32_t immediateDataCount,
+                                            const uint32_t* data) {
+    mEncodingContext->TryEncode(
+        this,
+        [&](CommandAllocator* allocator) -> MaybeError {
+            if (IsValidationEnabled()) {
+                DAWN_TRY(mCommandBufferState.ValidateSetImmediateData(immediateDataRangeOffset,
+                                                                      immediateDataCount, data));
+            }
+
+            RecordSetImmediateData(allocator, immediateDataRangeOffset, immediateDataCount, data);
+
+            return {};
+        },
+        "encoding %s.SetImmediateData(%u, %u, ...).", this, immediateDataRangeOffset,
+        immediateDataCount);
+}
+
 }  // namespace dawn::native

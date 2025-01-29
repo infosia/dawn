@@ -1022,6 +1022,14 @@
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
+            },
+            {
+                "name": "set immediate data",
+                "args": [
+                    {"name": "immediate data range offset", "type": "uint32_t"},
+                    {"name": "immediate data count", "type": "size_t"},
+                    {"name": "data", "type": "uint32_t", "annotation": "const*", "length": "immediate data count"}
+                ]
             }
         ]
     },
@@ -2886,6 +2894,14 @@
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
+            },
+            {
+                "name": "set immediate data",
+                "args": [
+                    {"name": "immediate data range offset", "type": "uint32_t"},
+                    {"name": "immediate data count", "type": "size_t"},
+                    {"name": "data", "type": "uint32_t", "annotation": "const*", "length": "immediate data count"}
+                ]
             }
         ]
     },
@@ -3183,6 +3199,14 @@
                 "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
+                ]
+            },
+            {
+                "name": "set immediate data",
+                "args": [
+                    {"name": "immediate data range offset", "type": "uint32_t"},
+                    {"name": "immediate data count", "type": "size_t"},
+                    {"name": "data", "type": "uint32_t", "annotation": "const*", "length": "immediate data count"}
                 ]
             }
         ]

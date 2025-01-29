@@ -499,6 +499,25 @@ void ComputePassEncoder::APIWriteTimestamp(QuerySetBase* querySet, uint32_t quer
         "encoding %s.WriteTimestamp(%s, %u).", this, querySet, queryIndex);
 }
 
+void ComputePassEncoder::APISetImmediateData(uint32_t immediateDataRangeOffset,
+                                             uint32_t immediateDataCount,
+                                             const uint32_t* data) {
+    mEncodingContext->TryEncode(
+        this,
+        [&](CommandAllocator* allocator) -> MaybeError {
+            if (IsValidationEnabled()) {
+                DAWN_TRY(mCommandBufferState.ValidateSetImmediateData(immediateDataRangeOffset,
+                                                                      immediateDataCount, data));
+            }
+
+            RecordSetImmediateData(allocator, immediateDataRangeOffset, immediateDataCount, data);
+
+            return {};
+        },
+        "encoding %s.SetImmediateData(%u, %u, ...).", this, immediateDataRangeOffset,
+        immediateDataCount);
+}
+
 void ComputePassEncoder::AddDispatchSyncScope(SyncScopeUsageTracker scope) {
     PipelineLayoutBase* layout = mCommandBufferState.GetPipelineLayout();
     for (BindGroupIndex i : IterateBitSet(layout->GetBindGroupLayoutsMask())) {

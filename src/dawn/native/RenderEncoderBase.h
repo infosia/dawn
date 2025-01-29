@@ -84,6 +84,10 @@ class RenderEncoderBase : public ProgrammableEncoder {
                          uint32_t dynamicOffsetCount = 0,
                          const uint32_t* dynamicOffsets = nullptr);
 
+    void APISetImmediateData(uint32_t immediateDataRangeOffset,
+                             uint32_t immediateDataCount,
+                             const uint32_t* data);
+
     const AttachmentState* GetAttachmentState() const;
     bool IsDepthReadOnly() const;
     bool IsStencilReadOnly() const;

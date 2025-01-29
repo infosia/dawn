@@ -213,4 +213,18 @@ void ProgrammableEncoder::RecordSetBindGroup(CommandAllocator* allocator,
     }
 }
 
+void ProgrammableEncoder::RecordSetImmediateData(CommandAllocator* allocator,
+                                                 uint32_t immediateDataRangeOffset,
+                                                 uint32_t immediateDataCount,
+                                                 const uint32_t* data) {
+    SetImmediateDataCmd* cmd = allocator->Allocate<SetImmediateDataCmd>(Command::SetImmediateData);
+    cmd->immediateDataRangeOffset = immediateDataRangeOffset;
+    cmd->immediateDataCount = immediateDataCount;
+
+    if (immediateDataCount > 0) {
+        uint32_t* immediateDatas = allocator->AllocateData<uint32_t>(cmd->immediateDataCount);
+        memcpy(immediateDatas, data, immediateDataCount * sizeof(uint32_t));
+    }
+}
+
 }  // namespace dawn::native
