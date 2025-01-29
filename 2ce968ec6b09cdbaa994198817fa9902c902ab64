@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d34d799b_a696e4c7",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-29T00:43:57Z",
+      "side": 1,
+      "message": "remove TODO?",
+      "revId": "2ce968ec6b09cdbaa994198817fa9902c902ab64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
