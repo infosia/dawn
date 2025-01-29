@@ -16,6 +16,24 @@
       "message": "Missing MacOS version number?",
       "revId": "7dddc4ad4876a08a430d7bfc05e65b0bcdf07f9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88f9eb3d_af0264e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-29T22:00:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb11a168_01fad5ba",
+      "revId": "7dddc4ad4876a08a430d7bfc05e65b0bcdf07f9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
