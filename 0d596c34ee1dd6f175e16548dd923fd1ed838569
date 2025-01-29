@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c27506d4_a1f3c131",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-29T21:46:39Z",
+      "side": 1,
+      "message": "nit: these are redundant, descriptor-\u003etimestampWrites already contains the querySet",
+      "range": {
+        "startLine": 796,
+        "startChar": 61,
+        "endLine": 796,
+        "endChar": 98
+      },
+      "revId": "0d596c34ee1dd6f175e16548dd923fd1ed838569",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
