@@ -593,8 +593,10 @@ TEST_F(IR_ValidatorTest, Let_VoidResult) {
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
-    EXPECT_THAT(res.Failure().reason.Str(),
-                testing::HasSubstr(R"(:3:15 error: let: result type cannot be void
+    EXPECT_THAT(
+        res.Failure().reason.Str(),
+        testing::HasSubstr(
+            R"(:3:15 error: let: result type, 'void', must be concrete constructible type or a pointer type
     %2:void = let 1i
               ^^^
 )")) << res.Failure().reason.Str();
@@ -611,13 +613,47 @@ TEST_F(IR_ValidatorTest, Let_VoidValue) {
         b.Return(f);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, Capabilities{ir::Capability::kAllowPhonyInstructions});
     ASSERT_NE(res, Success);
     EXPECT_THAT(res.Failure().reason.Str(),
                 testing::HasSubstr(R"(:9:14 error: let: value type cannot be void
     %4:i32 = let %3
              ^^^
 )")) << res.Failure().reason.Str();
+}
+
+TEST_F(IR_ValidatorTest, Let_NotConstructible) {
+    auto* f = b.Function("my_func", ty.void_());
+    auto* p = b.FunctionParam("p", ty.sampler());
+    f->AppendParam(p);
+    b.Append(f->Block(), [&] {
+        b.Let(p);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason.Str(),
+        testing::HasSubstr(
+            R"(:3:18 error: let: result type, 'sampler', must be concrete constructible type or a pointer type
+    %3:sampler = let %p
+                 ^^^
+)")) << res.Failure().reason.Str();
+}
+
+TEST_F(IR_ValidatorTest, Let_CapabilityBypass) {
+    auto* f = b.Function("my_func", ty.void_());
+    auto* p = b.FunctionParam("p", ty.sampler());
+    f->AppendParam(p);
+
+    b.Append(f->Block(), [&] {
+        b.Let(p);
+        b.Return(f);
+    });
+
+    auto res = ir::Validate(mod, Capabilities{ir::Capability::kAllowAnyLetType});
+    ASSERT_EQ(res, Success) << res.Failure().reason.Str();
 }
 
 TEST_F(IR_ValidatorTest, Phony_NullValue) {

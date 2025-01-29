@@ -129,6 +129,7 @@ class Printer : public tint::TextGenerator {
                 core::ir::Capability::kAllow8BitIntegers,
                 core::ir::Capability::kAllowPointersAndHandlesInStructures,
                 core::ir::Capability::kAllowPrivateVarsInFunctions,
+                core::ir::Capability::kAllowAnyLetType,
             });
         if (valid != Success) {
             return std::move(valid.Failure());

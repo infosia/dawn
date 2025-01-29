@@ -47,6 +47,7 @@ const core::ir::Capabilities kValueToLetCapabilities{
     core::ir::Capability::kAllowHandleVarsWithoutBindings,
     core::ir::Capability::kAllowClipDistancesOnF32,
     core::ir::Capability::kAllowPrivateVarsInFunctions,
+    core::ir::Capability::kAllowAnyLetType,
 };
 
 /// Configuration for ValueToLet transform.
