@@ -33,6 +33,24 @@
       "message": "Can we add a TODO to add device IDs in the future when they are available?",
       "revId": "7f6de6a25da7c31a224a61c660514adbffa35194",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "035ed232_29f0eb4a",
+        "filename": "src/dawn/gpu_info.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 3444340
+      },
+      "writtenOn": "2025-01-29T16:05:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0f09da2_b83dbfb7",
+      "revId": "7f6de6a25da7c31a224a61c660514adbffa35194",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
