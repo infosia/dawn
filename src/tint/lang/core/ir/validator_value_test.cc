@@ -593,8 +593,10 @@ TEST_F(IR_ValidatorTest, Let_VoidResult) {
 
     auto res = ir::Validate(mod);
     ASSERT_NE(res, Success);
-    EXPECT_THAT(res.Failure().reason.Str(),
-                testing::HasSubstr(R"(:3:15 error: let: result type cannot be void
+    EXPECT_THAT(
+        res.Failure().reason.Str(),
+        testing::HasSubstr(
+            R"(:3:15 error: let: result type, 'void', must be concrete constructible type or a pointer type
     %2:void = let 1i
               ^^^
 )")) << res.Failure().reason.Str();

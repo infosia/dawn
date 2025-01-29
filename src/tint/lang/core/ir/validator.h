@@ -60,6 +60,8 @@ enum class Capability : uint8_t {
     kAllowVectorElementPointer,
     /// Allows private address space variables in function scopes.
     kAllowPrivateVarsInFunctions,
+    /// Allows lets related to phony assignments to have any type
+    kAllowPhonyLets,
 };
 
 /// Capabilities is a set of Capability
