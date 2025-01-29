@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b27eae07_99285c9d",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-29T00:38:31Z",
+      "side": 1,
+      "message": "Only one is validated. Check mTimedWaitAnyMaxCount instead?",
+      "range": {
+        "startLine": 296,
+        "startChar": 12,
+        "endLine": 296,
+        "endChar": 57
+      },
+      "revId": "2beeded1a3fa02f88ee96b9552f62b520dd32dac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
