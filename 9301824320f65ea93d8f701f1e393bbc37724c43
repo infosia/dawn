@@ -16,6 +16,196 @@
       "message": "PTAL, Thanks!",
       "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddf8008e_9dcb00cd",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-29T16:42:22Z",
+      "side": 1,
+      "message": "Could you check that this target is added to both the GN and CMake build files?",
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ea389d4_89e56c1f",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-29T16:42:22Z",
+      "side": 1,
+      "message": "The name confused me for a second. `GetImmediateByteOffsetInPipeline`?",
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b224b2c8_c5aff43e",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-29T16:42:22Z",
+      "side": 1,
+      "message": "I don\u0027t think the `static` does anything here.",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 10
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a7a14e5c_d7c0d3ec",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/ImmediateConstantsLayout.h",
+              "range": {
+                "startLine": 95,
+                "startChar": 0,
+                "endLine": 96,
+                "endChar": 0
+              },
+              "replacement": "    const ImmediateConstantMask prefixBits \u003d\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60a25604_507986a3",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-29T16:42:22Z",
+      "side": 1,
+      "message": "While this work at the moment because they are the only push constants used, it won\u0027t scale when we add more immediates. We\u0027ll have to keep the current values in a stack variable as well as a dirty mask, then apply them lazily on draw / dispatch.\n\nWe can do that later but in that case please add a TODO.",
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62447451_fc8f4131",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-29T16:42:22Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71d03077_8aee8864",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-29T16:42:22Z",
+      "side": 1,
+      "message": "We might not need to pass that boolean since the info is already encoded in the mask at [1].",
+      "range": {
+        "startLine": 387,
+        "startChar": 47,
+        "endLine": 387,
+        "endChar": 63
+      },
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05fe9017_4c31fc1b",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-29T16:42:22Z",
+      "side": 1,
+      "message": "nit: `GetImmediateMask`? Right now it is like we are asking `pipeline-\u003eGetMask()`. What mask?",
+      "range": {
+        "startLine": 387,
+        "startChar": 64,
+        "endLine": 387,
+        "endChar": 79
+      },
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ace8fc6d_3c04d223",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-29T16:42:22Z",
+      "side": 1,
+      "message": "This is unused.",
+      "fixSuggestions": [
+        {
+          "fixId": "6423273b_5d0aa5c7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/vulkan/ShaderModuleVk.h",
+              "range": {
+                "startLine": 35,
+                "startChar": 0,
+                "endLine": 36,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
