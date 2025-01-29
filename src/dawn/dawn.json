@@ -1033,10 +1033,6 @@
             {"value": 4, "name": "inherit"}
         ]
     },
-    "compute pass timestamp writes": {
-        "category": "typedef",
-        "type": "pass timestamp writes"
-    },
     "compute pipeline": {
         "category": "object",
         "methods": [
@@ -3167,10 +3163,6 @@
                 ]
             }
         ]
-    },
-    "render pass timestamp writes": {
-        "category": "typedef",
-        "type": "pass timestamp writes"
     },
     "render pipeline": {
         "category": "object",
