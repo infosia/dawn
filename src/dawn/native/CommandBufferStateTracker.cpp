@@ -515,6 +515,25 @@ MaybeError CommandBufferStateTracker::ValidateOperation(ValidationAspects requir
     return {};
 }
 
+MaybeError CommandBufferStateTracker::ValidateSetImmediateData(uint32_t immediateDataRangeOffset,
+                                                               uint32_t immediateDataCount,
+                                                               const uint32_t* data) {
+    DAWN_INVALID_IF(!HasPipeline(),
+                    "SetImmediateData() does not allow setting without pipeline set");
+
+    DAWN_INVALID_IF(immediateDataCount > 0 && data == nullptr,
+                    "SetImmediateData() data is nullptr but immediate data count is not zero");
+
+    DAWN_INVALID_IF(
+        (immediateDataRangeOffset + immediateDataCount) * kImmediateConstantElementByteSize >
+            mLastPipelineLayout->GetImmediateDataRangeByteSize(),
+        "Set ImmediateData Range (immediateDataRangeOffset: %u, count: %u) does not fit in "
+        "immediate data range byte size (%u)",
+        immediateDataRangeOffset, immediateDataCount,
+        mLastPipelineLayout->GetImmediateDataRangeByteSize());
+    return {};
+}
+
 void CommandBufferStateTracker::RecomputeLazyAspects(ValidationAspects aspects) {
     DAWN_ASSERT(mAspects[VALIDATION_ASPECT_PIPELINE]);
     DAWN_ASSERT((aspects & ~kLazyAspects).none());
