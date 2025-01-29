@@ -28,9 +28,16 @@
 #include "src/tint/lang/core/ir/transform/substitute_overrides.h"
 
 #include <functional>
+#include <utility>
 
+#include "src/tint/lang/core/binary_op.h"
+#include "src/tint/lang/core/ir/binary.h"
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/const_param_validator.h"
+#include "src/tint/lang/core/ir/construct.h"
 #include "src/tint/lang/core/ir/evaluator.h"
+#include "src/tint/lang/core/ir/instruction.h"
+#include "src/tint/lang/core/ir/instruction_result.h"
 #include "src/tint/lang/core/ir/type/array_count.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/ir/value.h"
@@ -61,7 +68,7 @@ struct State {
 
     /// Process the module.
     Result<SuccessType> Process() {
-        Vector<Instruction*, 8> to_remove;
+        Vector<Instruction*, 32> to_remove;
         Vector<Constant*, 8> values_to_propagate;
         Vector<core::ir::Var*, 4> vars_with_value_array_count;
 
@@ -190,16 +197,106 @@ struct State {
             }
         }
 
-        // Remove any non-var instruction in the root block
-        for (auto* inst : to_remove) {
-            inst->Destroy();
+        {
+            auto res = DestroyShortCurcuitedInstructions(values_to_propagate);
+            if (res != Success) {
+                return res;
+            }
         }
 
-        {
+        if ((true)) {
             // Propagate any replaced override instructions up their instruction chains
             auto res = Propagate(values_to_propagate);
             if (res != Success) {
                 return res;
+            }
+        }
+
+        if ((true)) {
+            // Remove any non-var instruction in the root block
+            for (auto* inst : to_remove) {
+                // Some instructions can be destroyed by 'propagate'. This is normal.
+                if (inst->Alive()) {
+                    inst->Destroy();
+                }
+            }
+        }
+
+        return Success;
+    }
+
+    Result<SuccessType> DestroyShortCurcuitedInstructions(
+        Vector<Constant*, 8>& values_to_propagate) {
+        // Find all short circuiting instructions (logical and/or) that require conditional
+        // const evaluation.
+        Vector<core::ir::Instruction*, 32> ordered_logical_inst_check;
+        for (auto inst : ir.Instructions()) {
+            if (auto* bin = inst->As<core::ir::Binary>()) {
+                if (bin->Op() == BinaryOp::kLogicalAnd || bin->Op() == BinaryOp::kLogicalOr) {
+                    ordered_logical_inst_check.Push(bin);
+                }
+            }
+        }
+
+        while (!ordered_logical_inst_check.IsEmpty()) {
+            // The pop is from the back which means these instructions are processed in reverse
+            // dependency order. This is very important as, due to short circuiting, some
+            // instructions are never suppose to be const evaluated. Here we will destroy all
+            // instructions that are no longer used due to the evaluation of const with short
+            // circuiting.
+            auto* inst = ordered_logical_inst_check.Pop();
+            if (inst->Alive()) {
+                if (auto* bin = inst->As<core::ir::Binary>()) {
+                    if (bin->Op() == BinaryOp::kLogicalAnd || bin->Op() == BinaryOp::kLogicalOr) {
+                        auto res = eval::Eval(b, bin->LHS());
+                        if (res == Success) {
+                            bool expect_circuit = bin->Op() == BinaryOp::kLogicalOr;
+                            if (res.Get() &&
+                                res.Get()->Value()->ValueAs<bool>() == expect_circuit) {
+                                // The RHS is not used by this instruction. Remove its usage which
+                                // can cause the destruction of any instructions that contributed to
+                                // the RHS result.
+                                Vector<Value*, 32> unuse_to_propagate;
+                                for (auto op : bin->Operands()) {
+                                    unuse_to_propagate.Push(op);
+                                }
+                                // Replace the logical instruction with a constant.
+                                auto* replacement = res.Get();
+                                inst->Result(0)->ReplaceAllUsesWith(replacement);
+                                values_to_propagate.Push(replacement);
+                                inst->Destroy();
+
+                                auto removal_res = DeepRemoveUsage(unuse_to_propagate);
+                                if (removal_res != Success) {
+                                    return removal_res;
+                                }
+                            }
+                        } else {
+                            return res.Failure();
+                        }
+                    }
+                }
+            }
+        }
+        return Success;
+    }
+
+    Result<SuccessType> DeepRemoveUsage(Vector<Value*, 32>& unuse_to_propagate) {
+        while (!unuse_to_propagate.IsEmpty()) {
+            auto deref = unuse_to_propagate.Pop();
+            if (deref->NumUsages() == 0) {
+                // This value is completely unused. Destroy it and trigger more unuse of other
+                // instructions.
+                if (auto as_inst = deref->As<core::ir::InstructionResult>()) {
+                    // Ops might point to the same instruction meaning that we might have already
+                    // destroyed this instruction.
+                    if (as_inst->Instruction()) {
+                        for (auto op_val : as_inst->Instruction()->Operands()) {
+                            unuse_to_propagate.Push(op_val);
+                        }
+                        as_inst->Instruction()->Destroy();
+                    }
+                }
             }
         }
 
@@ -301,7 +398,21 @@ Result<SuccessType> SubstituteOverrides(Module& ir, const SubstituteOverridesCon
     if (result != Success) {
         return result;
     }
-    return State{ir, cfg}.Process();
+
+    result = State{ir, cfg}.Process();
+    if (result != Success) {
+        return result;
+    }
+
+    result = tint::core::ir::ValidateConstParam(ir);
+    if (result != Success) {
+        return result;
+    }
+
+    result = ValidateAndDumpIfNeeded(ir, "Post core.SubstituteOverrides",
+                                     kSubstituteOverridesCapabilities);
+
+    return result;
 }
 
 }  // namespace tint::core::ir::transform
