@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <algorithm>
 #include <vector>
 
 #include "dawn/common/Assert.h"
@@ -1463,6 +1464,290 @@ TEST_P(CompressedTextureWriteTextureTest,
 }
 
 DAWN_INSTANTIATE_TEST_P(CompressedTextureWriteTextureTest,
+                        {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
+                         OpenGLESBackend(), VulkanBackend()},
+                        std::vector<wgpu::TextureFormat>(utils::kCompressedFormats.begin(),
+                                                         utils::kCompressedFormats.end()));
+
+namespace {
+
+uint32_t hashU32(const std::vector<uint32_t>& values) {
+    uint64_t n = 0x3504f333;
+    for (uint32_t v : values) {
+        n = v + (n << 7) + (n >> 1);
+        n = (n * 0x29493);
+    }
+    n ^= n >> 8;
+    n += n << 15;
+    n = n & 0xffffffff;
+    if (n & 0x8000000) {
+        n = ~n * 2 + 1;
+    }
+
+    return n;
+}
+
+template <typename T>
+std::vector<T> concatVecs(const std::vector<T>& a, const std::vector<T>& b) {
+    std::vector<T> c;
+    c.reserve(a.size() + b.size());
+    std::ranges::copy(a, std::back_inserter(c));
+    std::ranges::copy(b, std::back_inserter(c));
+    return c;
+}
+
+}  // anonymous namespace
+
+// Note: This test is ported from the CTS textureSample test setup.
+class CompressedTextureReadBackTest : public CompressedTextureFormatTest {
+  protected:
+    void SetUp() override {
+        CompressedTextureFormatTest::SetUp();
+        DAWN_TEST_UNSUPPORTED_IF(!IsFormatSupported());
+    }
+
+    bool isCompressedFloatFormat(wgpu::TextureFormat format) {
+        switch (format) {
+            case wgpu::TextureFormat::BC6HRGBUfloat:
+            case wgpu::TextureFormat::BC6HRGBFloat:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    static void AstcBlockFiller(uint8_t* data,
+                                size_t offset,
+                                const std::vector<uint32_t>& hashBase) {
+        // set the block to be a void-extent block
+        data[offset + 0] = 0b11111100;
+        data[offset + 1] = 0b11111101;
+        data[offset + 2] = 0b11111111;
+        data[offset + 3] = 0b11111111;
+        data[offset + 4] = 0b11111111;
+        data[offset + 5] = 0b11111111;
+        data[offset + 6] = 0b11111111;
+        data[offset + 7] = 0b11111111;
+        // fill the rest of the block with random data
+        const size_t bytesPerBlock = 16;  // all astc blocks are 16 bytes
+        const uint32_t end = offset + bytesPerBlock;
+        for (uint32_t i = offset + 8; i < end; ++i) {
+            data[i] = hashU32(concatVecs(hashBase, {i}));
+        }
+    }
+
+    std::function<void(uint8_t* data, size_t offset, const std::vector<uint32_t>& hashBase)>
+    MakeRandomBytesBlockFiller(wgpu::TextureFormat format) {
+        uint32_t bytesPerBlock = utils::GetTexelBlockSizeInBytes(format);
+        return
+            [bytesPerBlock](uint8_t* data, size_t offset, const std::vector<uint32_t>& hashBase) {
+                const uint32_t end = offset + bytesPerBlock;
+                for (uint32_t i = offset; i < end; ++i) {
+                    data[i] = hashU32(concatVecs(hashBase, {i}));
+                }
+            };
+    }
+
+    wgpu::Extent3D GetVirtualSizeAtLevel(wgpu::Texture texture, uint32_t mipLevel) {
+        uint32_t width = texture.GetWidth();
+        uint32_t height = texture.GetHeight();
+        uint32_t depthOrArrayLayers = texture.GetDepthOrArrayLayers();
+
+        return {std::max(1u, width >> mipLevel), std::max(1u, height >> mipLevel),
+                depthOrArrayLayers};
+    }
+
+    wgpu::Extent3D GetPhysicalSizeAtLevel(wgpu::Texture texture, uint32_t mipLevel) {
+        wgpu::TextureFormat format = texture.GetFormat();
+        uint32_t blockWidth = utils::GetTextureFormatBlockWidth(format);
+        uint32_t blockHeight = utils::GetTextureFormatBlockHeight(format);
+
+        wgpu::Extent3D sizeAtLevel = GetVirtualSizeAtLevel(texture, mipLevel);
+        sizeAtLevel.width = (sizeAtLevel.width + blockWidth - 1) / blockWidth * blockWidth;
+        sizeAtLevel.height = (sizeAtLevel.height + blockHeight - 1) / blockHeight * blockHeight;
+        return sizeAtLevel;
+    }
+
+    void FillCompressedTextureWithRandomData(wgpu::Texture texture) {
+        wgpu::TextureFormat format = texture.GetFormat();
+        wgpu::TextureDimension dimension = texture.GetDimension();
+        uint32_t width = texture.GetWidth();
+        uint32_t height = texture.GetHeight();
+        uint32_t depthOrArrayLayers = texture.GetDepthOrArrayLayers();
+        uint32_t mipLevelCount = texture.GetMipLevelCount();
+        std::vector<uint32_t> hashBase{static_cast<uint32_t>(format),
+                                       static_cast<uint32_t>(dimension),
+                                       width,
+                                       height,
+                                       depthOrArrayLayers,
+                                       mipLevelCount};
+
+        std::function<void(uint8_t * data, size_t offset, const std::vector<uint32_t>& hashBase)>
+            filler = utils::IsASTCTextureFormat(format) ? AstcBlockFiller
+                                                        : MakeRandomBytesBlockFiller(format);
+
+        uint32_t bytesPerBlock = utils::GetTexelBlockSizeInBytes(format);
+        uint32_t blockWidth = utils::GetTextureFormatBlockWidth(format);
+        uint32_t blockHeight = utils::GetTextureFormatBlockHeight(format);
+        for (uint32_t mipLevel = 0; mipLevel < mipLevelCount; ++mipLevel) {
+            const auto size = GetPhysicalSizeAtLevel(texture, mipLevel);
+            uint32_t blocksAcross = (size.width + blockWidth - 1) / blockWidth;
+            uint32_t blocksDown = (size.height + blockHeight - 1) / blockHeight;
+            uint32_t bytesPerRow = blocksAcross * bytesPerBlock;
+            uint32_t bytesNeeded = bytesPerRow * blocksDown * size.depthOrArrayLayers;
+            std::vector<uint8_t> data(bytesNeeded);
+            for (uint32_t offset = 0; offset < bytesNeeded; offset += bytesPerBlock) {
+                filler(data.data(), offset, hashBase);
+            }
+
+            wgpu::ImageCopyTexture imageCopyTexture =
+                utils::CreateImageCopyTexture(texture, mipLevel);
+            wgpu::TextureDataLayout textureDataLayout =
+                utils::CreateTextureDataLayout(0, bytesPerRow, blocksDown);
+
+            device.GetQueue().WriteTexture(&imageCopyTexture, data.data(), data.size(),
+                                           &textureDataLayout, &size);
+        }
+    }
+
+    std::vector<std::vector<float>> ReadTextureToTexelViews(wgpu::Texture texture) {
+        wgpu::ComputePipelineDescriptor pipelineDescriptor;
+        pipelineDescriptor.compute.module = utils::CreateShaderModule(device, R"(
+            struct Uniforms {
+              sampleCount: u32,
+            };
+
+            @group(0) @binding(0) var<uniform> uni: Uniforms;
+            @group(0) @binding(1) var tex: texture_2d<f32>;
+            @group(0) @binding(2) var<storage, read_write> data: array<vec4f>;
+
+            @compute @workgroup_size(1) fn cs(
+              @builtin(global_invocation_id) global_invocation_id : vec3<u32>) {
+              let size = textureDimensions(tex, 0);
+              let ndx = global_invocation_id.z * size.x * size.y * uni.sampleCount +
+                        global_invocation_id.y * size.x * uni.sampleCount +
+                        global_invocation_id.x;
+              let coord = vec3u(global_invocation_id.x / uni.sampleCount, global_invocation_id.yz);
+              let sampleIndex = global_invocation_id.x % uni.sampleCount;
+              data[ndx] = textureLoad(tex, coord.xy, 0);
+            }
+        )");
+        wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&pipelineDescriptor);
+        uint32_t mipLevelCount = texture.GetMipLevelCount();
+        uint32_t sampleCount = texture.GetSampleCount();
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+
+        std::vector<wgpu::Buffer> storageBuffers;
+        std::vector<wgpu::Buffer> readBuffers;
+        for (uint32_t mipLevel = 0; mipLevel < mipLevelCount; ++mipLevel) {
+            const auto size = GetVirtualSizeAtLevel(texture, mipLevel);
+            std::array<uint32_t, 1> uniformValues{sampleCount};
+            wgpu::Buffer uniformBuffer = utils::CreateBufferFromData(
+                device, uniformValues.data(), uniformValues.size() * 4, wgpu::BufferUsage::Uniform);
+
+            wgpu::BufferDescriptor bufferDesc;
+            bufferDesc.size =
+                size.width * size.height * size.depthOrArrayLayers * 4 * 4 * sampleCount;
+            bufferDesc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage;
+            wgpu::Buffer storageBuffer = device.CreateBuffer(&bufferDesc);
+            storageBuffers.push_back(storageBuffer);
+
+            bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
+            wgpu::Buffer readBuffer = device.CreateBuffer(&bufferDesc);
+            readBuffers.push_back(readBuffer);
+
+            wgpu::TextureViewDescriptor viewDesc;
+            viewDesc.baseMipLevel = mipLevel;
+            viewDesc.mipLevelCount = 1;
+            wgpu::BindGroup bindGroup = utils::MakeBindGroup(
+                device, pipeline.GetBindGroupLayout(0),
+                {{0, uniformBuffer}, {1, texture.CreateView(&viewDesc)}, {2, storageBuffer}});
+
+            wgpu::ComputePassEncoder computeEncoder = encoder.BeginComputePass();
+
+            computeEncoder.SetPipeline(pipeline);
+            computeEncoder.SetBindGroup(0, bindGroup);
+            computeEncoder.DispatchWorkgroups(size.width * sampleCount, size.height,
+                                              size.depthOrArrayLayers);
+
+            computeEncoder.End();
+
+            encoder.CopyBufferToBuffer(storageBuffer, 0, readBuffer, 0, bufferDesc.size);
+        }
+
+        wgpu::CommandBuffer commandBuffer = encoder.Finish();
+        device.GetQueue().Submit(1, &commandBuffer);
+
+        std::vector<std::vector<float>> levels;
+        for (auto readBuffer : readBuffers) {
+            uint64_t size = readBuffer.GetSize();
+            MapAsyncAndWait(readBuffer, wgpu::MapMode::Read, 0, size);
+            std::vector<float> level(size / 4);
+            std::memcpy(level.data(), readBuffer.GetConstMappedRange(), size);
+            levels.push_back(level);
+        }
+
+        for (auto buffer : readBuffers) {
+            buffer.Destroy();
+        }
+        for (auto buffer : storageBuffers) {
+            buffer.Destroy();
+        }
+
+        return levels;
+    }
+};
+
+// Test that we can fill a compressed texture with random data and read it back via a compute
+// shader. No 4 consecutive values (r, g, b, a) should be 0 because the hash32 function should never
+// return enough 0s for that situation to happen.
+TEST_P(CompressedTextureReadBackTest, ASTCReadbackTests) {
+    // crbug.com/376389024
+    // crbug.com/380246466
+    // crbug.com/383595386
+    // crbug.com/364917742
+    DAWN_SUPPRESS_TEST_IF(IsVulkan());
+    DAWN_SUPPRESS_TEST_IF(IsCompatibilityMode());
+    DAWN_SUPPRESS_TEST_IF(IsSwiftshader());
+
+    wgpu::TextureFormat format = GetParam().mTextureFormat;
+    DAWN_TEST_UNSUPPORTED_IF(isCompressedFloatFormat(format));
+
+    uint32_t blockWidth = utils::GetTextureFormatBlockWidth(format);
+    uint32_t blockHeight = utils::GetTextureFormatBlockHeight(format);
+
+    wgpu::TextureDescriptor textureDesc;
+    textureDesc.format = format;
+    textureDesc.size = {blockWidth * 4, blockHeight * 4};
+    textureDesc.mipLevelCount = 3;
+    textureDesc.usage = wgpu::TextureUsage::CopyDst | wgpu::TextureUsage::TextureBinding;
+
+    wgpu::Texture texture = device.CreateTexture(&textureDesc);
+    FillCompressedTextureWithRandomData(texture);
+    auto levels = ReadTextureToTexelViews(texture);
+
+    for (uint32_t mipLevel = 0; mipLevel < levels.size(); ++mipLevel) {
+        const auto& level = levels[mipLevel];
+        const auto size = GetVirtualSizeAtLevel(texture, mipLevel);
+
+        uint32_t numZero = 0;
+        for (size_t i = 0; i < level.size(); i += 4) {
+            bool allZero = level[i] == 0.0f && level[i + 1] == 0.0f && level[i + 2] == 0.0 &&
+                           level[i + 3] == 0.0;
+            numZero += allZero ? 1 : 0;
+        }
+
+        size_t numTexels = level.size() / 4;
+        size_t maxNonZero = std::max(size_t(1), numTexels * 34u / 100u);  // 34%
+        EXPECT_LE(numZero, maxNonZero)
+            << "mipLevel: " << mipLevel << " size: " << size.width << "," << size.height << ","
+            << size.depthOrArrayLayers << " had " << numZero << " of " << (level.size() / 4)
+            << " texels be 0,0,0,0 (" << (numZero * 100 / numTexels) << "%)";
+    }
+}
+
+DAWN_INSTANTIATE_TEST_P(CompressedTextureReadBackTest,
                         {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
                          OpenGLESBackend(), VulkanBackend()},
                         std::vector<wgpu::TextureFormat>(utils::kCompressedFormats.begin(),
