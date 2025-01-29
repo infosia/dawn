@@ -59,6 +59,9 @@ class CommandBufferStateTracker {
     MaybeError ValidateBufferInRangeForInstanceBuffer(uint32_t instanceCount,
                                                       uint32_t firstInstance);
     MaybeError ValidateIndexBufferInRange(uint32_t indexCount, uint32_t firstIndex);
+    MaybeError ValidateSetImmediateData(uint32_t immediateDataRangeOffset,
+                                        uint32_t immediateDataCount,
+                                        const uint32_t* data);
 
     // State-modifying methods
     void SetComputePipeline(ComputePipelineBase* pipeline);

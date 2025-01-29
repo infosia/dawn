@@ -116,6 +116,51 @@ void ProgrammableEncoder::APIPushDebugGroup(StringView groupLabelIn) {
         "encoding %s.PushDebugGroup(%s).", this, groupLabel);
 }
 
+void ProgrammableEncoder::APISetImmediateData(uint32_t immediateDataRangeOffsetBytes,
+                                              const void* data,
+                                              size_t size) {
+    mEncodingContext->TryEncode(
+        this,
+        [&](CommandAllocator* allocator) -> MaybeError {
+            DAWN_INVALID_IF(!GetDevice()->HasFeature(Feature::ChromiumExperimentalImmediateData),
+                            "SetImmediateData() called without "
+                            "Feature::ChromiumExperimentalImmediateData supported.");
+
+            if (IsValidationEnabled()) {
+                uint32_t maxImmediateDataRangeByteSize =
+                    GetDevice()
+                        ->GetLimits()
+                        .experimentalImmediateDataLimits.maxImmediateDataRangeByteSize;
+                // Validate offset and size are aligned to 4 bytes.
+                DAWN_INVALID_IF(immediateDataRangeOffsetBytes % 4 != 0 || size % 4 != 0,
+                                "SetImmediateData(), immediateDataRangeOffsetBytes: %u or size: %u "
+                                "is not aligned to 4 bytes.",
+                                immediateDataRangeOffsetBytes, size);
+                // Validate OOB
+                DAWN_INVALID_IF(
+                    immediateDataRangeOffsetBytes > maxImmediateDataRangeByteSize ||
+                        size > maxImmediateDataRangeByteSize ||
+                        size > maxImmediateDataRangeByteSize - immediateDataRangeOffsetBytes,
+                    "SetImmediateData(), immediateDataRangeOffsetBytes: %u + size: %u is large "
+                    "than maxImmediateDataRangeByteSize %u",
+                    immediateDataRangeOffsetBytes, size, maxImmediateDataRangeByteSize);
+            }
+
+            SetImmediateDataCmd* cmd =
+                allocator->Allocate<SetImmediateDataCmd>(Command::SetImmediateData);
+            cmd->immediateDataRangeOffsetBytes = immediateDataRangeOffsetBytes;
+            cmd->size = size;
+
+            if (size > 0) {
+                uint8_t* immediateDatas = allocator->AllocateData<uint8_t>(cmd->size);
+                memcpy(immediateDatas, data, size);
+            }
+
+            return {};
+        },
+        "encoding %s.SetImmediateData(%u, %u, ...).", this, immediateDataRangeOffsetBytes, size);
+}
+
 MaybeError ProgrammableEncoder::ValidateSetBindGroup(BindGroupIndex index,
                                                      BindGroupBase* group,
                                                      uint32_t dynamicOffsetCountIn,
