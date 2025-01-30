@@ -16043,6 +16043,13 @@ crbug.com/dawn/2168 [ android arm ] webgpu:api,validation,error_scope:current_sc
 
 ### This section represents tests which may require CTS changes.
 
+# Remove once CTS is rolled (github.com/gpuweb/cts/pull/4167)
+crbug.com/381214487 webgpu:api,operation,resource_init,texture_zero:uninitialized_texture_is_zero:dimension="2d";readMethod="Sample";format="r32float" [ Failure ]
+crbug.com/381214487 webgpu:api,operation,resource_init,texture_zero:uninitialized_texture_is_zero:dimension="2d";readMethod="Sample";format="rgba16float" [ Failure ]
+crbug.com/381214487 webgpu:api,validation,resource_usages,texture,in_pass_encoder:bindings_in_bundle:type0="multisampled-texture";type1="multisampled-texture" [ Failure ]
+crbug.com/381214487 webgpu:api,validation,resource_usages,texture,in_pass_encoder:bindings_in_bundle:type0="multisampled-texture";type1="render-target" [ Failure ]
+crbug.com/381214487 webgpu:api,validation,resource_usages,texture,in_pass_encoder:bindings_in_bundle:type0="render-target";type1="multisampled-texture" [ Failure ]
+
 ### This section represents things that will require Compat validation
 ### These tests will never pass, but should be skipped in CTS once Compat
 ### validation has been added
