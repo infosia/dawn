@@ -51,6 +51,24 @@
       "parentUuid": "90a903a9_cdb73a7b",
       "revId": "31b3671739c824e4e018ebf1ed20944ac373013c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bf27901_d36743f2",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-01-30T20:26:02Z",
+      "side": 1,
+      "message": "Actually, the browser also throws a TypeError that there is only a setter but it doesn\u0027t throw when in the devtools console ¯\\_(ツ)_/¯ \n\nIn anycase, this CL is good.",
+      "parentUuid": "55ae48b1_cbac93b3",
+      "revId": "31b3671739c824e4e018ebf1ed20944ac373013c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
