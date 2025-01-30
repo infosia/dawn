@@ -223,6 +223,11 @@ bool IsLimitUndefined<uint64_t>(uint64_t value) {
     return value == wgpu::kLimitU64Undefined;
 }
 
+template <typename T>
+inline T Max3(T a, T b, T c) {
+    return std::max(std::max(a, b), c);
+}
+
 }  // namespace
 
 void GetDefaultLimits(Limits* limits, wgpu::FeatureLevel featureLevel) {
@@ -264,26 +269,8 @@ MaybeError ValidateLimits(wgpu::FeatureLevel featureLevel,
     LIMITS(X)
 #undef X
 
-#define PERSTAGE_DEPENDENT_LIMITS(X)                                       \
-    X(maxStorageBuffersInFragmentStage, maxStorageBuffersPerShaderStage)   \
-    X(maxStorageBuffersInVertexStage, maxStorageBuffersPerShaderStage)     \
-    X(maxStorageTexturesInFragmentStage, maxStorageTexturesPerShaderStage) \
-    X(maxStorageTexturesInVertexStage, maxStorageTexturesPerShaderStage)
-
     Limits defaultLimits;
     GetDefaultLimits(&defaultLimits, featureLevel);
-
-#define X(limitName, upperLimitName)                                                   \
-    if (!IsLimitUndefined(requiredLimits.limitName)) {                                 \
-        uint32_t upperLimit = IsLimitUndefined(requiredLimits.upperLimitName)          \
-                                  ? defaultLimits.upperLimitName                       \
-                                  : requiredLimits.upperLimitName;                     \
-        DAWN_INVALID_IF(requiredLimits.limitName > upperLimit,                         \
-                        #limitName " must be less then or equal to " #upperLimitName); \
-    }
-
-    PERSTAGE_DEPENDENT_LIMITS(X)
-#undef X
 
     return {};
 }
@@ -390,6 +377,39 @@ void NormalizeLimits(Limits* limits) {
         std::min(limits->maxStorageBufferBindingSize, limits->maxBufferSize);
     limits->maxUniformBufferBindingSize =
         std::min(limits->maxUniformBufferBindingSize, limits->maxBufferSize);
+}
+
+void FixupDeviceLimits(Limits* limits, wgpu::FeatureLevel featureLevel) {
+    // In all feature levels, maxXXXPerStage is raised to maxXXXInStage
+    // The reason for this is in compatibility mode, maxXXXPerStage defaults to = 4.
+    // That means if you if the adapter has 8 maxXXXInStage and 8 maxXXXPerStage
+    // and you request maxXXXInStage = 3 things work but, if you request
+    // maxXXXInStage = 5 they'd fail because suddenly you're you'd also be required
+    // to request maxXXXPerStage to 5. So, we auto-uprade the perStage limits.
+    limits->maxStorageBuffersPerShaderStage =
+        Max3(limits->maxStorageBuffersPerShaderStage, limits->maxStorageBuffersInVertexStage,
+             limits->maxStorageBuffersInFragmentStage);
+    limits->maxStorageTexturesPerShaderStage =
+        Max3(limits->maxStorageTexturesPerShaderStage, limits->maxStorageTexturesInVertexStage,
+             limits->maxStorageTexturesInFragmentStage);
+
+    if (featureLevel != wgpu::FeatureLevel::Compatibility) {
+        // In core mode the maxStorageXXXInYYYStage are always set to maxStorageXXXPerShaderStage
+        // In compat they can vary but validation:
+        //   In compat, user requests 3 and 5 respectively so result:
+        //     device.limits.maxStorageBuffersInFragmentStage = 3;
+        //     device.limits.maxStorageBuffersPerShaderStage = 5;
+        //     It's ok to use 3 storage buffers in fragment stage but fails if 4 used.
+        //   In core, user requests 3 and 5 respectively so result:
+        //     device.limits.maxStorageBuffersInFragmentStage = 5;
+        //     device.limits.maxStorageBuffersPerShaderStage = 5;
+        //     It's ok to use 5 storage buffers in fragment stage because in core
+        //     we originally only had maxStorageBuffersPerShaderStage
+        limits->maxStorageBuffersInFragmentStage = limits->maxStorageBuffersPerShaderStage;
+        limits->maxStorageTexturesInFragmentStage = limits->maxStorageTexturesPerShaderStage;
+        limits->maxStorageBuffersInVertexStage = limits->maxStorageBuffersPerShaderStage;
+        limits->maxStorageTexturesInVertexStage = limits->maxStorageTexturesPerShaderStage;
+    }
 }
 
 }  // namespace dawn::native
