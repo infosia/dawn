@@ -26,7 +26,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "src/tint/lang/core/ir/evaluator.h"
+#include "src/tint/lang/core/binary_op.h"
 #include "src/tint/lang/core/ir/constant.h"
+#include "src/tint/lang/core/ir/function_param.h"
+#include "src/tint/lang/core/type/bool.h"
 #include "src/tint/lang/core/type/matrix.h"
 #include "src/tint/utils/rtti/switch.h"
 
@@ -75,6 +78,7 @@ Evaluator::EvalResult Evaluator::EvalValue(core::ir::Value* val) {
     return tint::Switch(
         val,  //
         [&](core::ir::Constant* c) { return c->Value(); },
+        [&](core::ir::FunctionParam*) { return nullptr; },
         [&](core::ir::InstructionResult* r) {
             return tint::Switch(
                 r->Instruction(),  //
@@ -116,10 +120,7 @@ Evaluator::EvalResult Evaluator::EvalAccess(core::ir::Access* a) {
     if (obj_res != Success) {
         return obj_res;
     }
-    // Check if the object could be evaluated
-    if (!obj_res.Get()) {
-        return nullptr;
-    }
+
     auto* obj = obj_res.Get();
 
     for (auto* idx : a->Indices()) {
@@ -139,7 +140,6 @@ Evaluator::EvalResult Evaluator::EvalAccess(core::ir::Access* a) {
         }
         obj = res.Get();
     }
-
     return obj;
 }
 
@@ -310,6 +310,17 @@ Evaluator::EvalResult Evaluator::EvalBinary(core::ir::CoreBinary* cb) {
     // Check LHS could be evaluated
     if (!lhs.Get()) {
         return nullptr;
+    }
+
+    // Special cases for short circuiting to avoid evaluating RHS.
+    if (cb->Op() == tint::core::BinaryOp::kLogicalAnd ||
+        cb->Op() == tint::core::BinaryOp::kLogicalOr) {
+        bool lhs_short_condition = cb->Op() == tint::core::BinaryOp::kLogicalOr;
+        if (lhs.Get()->Type()->IsBoolScalarOrVector()) {
+            if (lhs.Get()->ValueAs<bool>() == lhs_short_condition) {
+                return lhs;
+            }
+        }
     }
 
     auto rhs = EvalValue(cb->RHS());
