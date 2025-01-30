@@ -16,6 +16,41 @@
       "message": "nullptr isn\u0027t in C until C11, but upstream we test on C99. I think C99 is a reasonable target because it should have robust FFI support in most languages that will be binding webgpu via webgpu.h.",
       "revId": "2e27a6a1732c87c365a76f7d3042eea3bf1eaaf2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68117a61_c2255d3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-30T22:03:35Z",
+      "side": 1,
+      "message": "Oh wait sorry",
+      "revId": "2e27a6a1732c87c365a76f7d3042eea3bf1eaaf2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f331633_417ea490",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-01-30T22:03:35Z",
+      "side": 1,
+      "message": "Oh wait sorry for some reason I flipped which side was which of the diff, because I was reading the inline diff in the email. NVM, LGTM",
+      "parentUuid": "324636b7_e59bd894",
+      "revId": "2e27a6a1732c87c365a76f7d3042eea3bf1eaaf2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
