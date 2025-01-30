@@ -183,6 +183,32 @@ MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
     return {};
 }
 
+void ContextEGL::RequestExtensions() {
+    const EGLFunctions& egl = mDisplay->egl;
+    using tmpl = void (*)(const char* ext);
+    auto glRequestExtension = (tmpl)egl.GetProcAddress("glRequestExtensionANGLE");
+
+    glRequestExtension("GL_EXT_texture_format_BGRA8888");
+    glRequestExtension("GL_APPLE_texture_format_BGRA8888");
+
+    glRequestExtension("GL_OES_texture_stencil8");
+
+    glRequestExtension("GL_EXT_color_buffer_float");
+    glRequestExtension("GL_EXT_color_buffer_half_float");
+
+    glRequestExtension("GL_ANGLE_texture_compression_dxt3");
+    glRequestExtension("GL_ANGLE_texture_compression_dxt5");
+    glRequestExtension("GL_ARB_texture_compression_bptc");
+    glRequestExtension("GL_EXT_texture_compression_bptc");
+    glRequestExtension("GL_EXT_texture_compression_dxt1");
+    glRequestExtension("GL_EXT_texture_compression_rgtc");
+    glRequestExtension("GL_EXT_texture_compression_s3tc");
+    glRequestExtension("GL_EXT_texture_compression_s3tc_srgb");
+    glRequestExtension("GL_EXT_texture_sRGB");
+    glRequestExtension("GL_KHR_texture_compression_astc_ldr");
+    glRequestExtension("GL_NV_sRGB_formats");
+}
+
 void ContextEGL::MakeCurrent() {
     EGLBoolean success = mDisplay->egl.MakeCurrent(mDisplay->GetDisplay(), mCurrentSurface,
                                                    mCurrentSurface, mContext);
