@@ -16,6 +16,23 @@
       "message": "Hey there. I\u0027m not sure this is the right direction. Maybe you have some thoughts? The code in there now with all of `gl.GetError` is solely to find out why this code is generating an GL error.\n\nAll of that would be removed and it would just restore the current binding and settings but it was causing a GL error.\n\nThe particular error happens on gpu_tests.webgpu_compat_cts_integration_test.WebGpuCompatCtsIntegrationTest.webgpu:web_platform,canvas,getCurrentTexture:single_frames:canvasType\u003d\"onscreen\" on pixel-6\n\nWithout all the GL error code the error happens in\n\nlibchrome.so!gpu::EGLImageBacking::GenEGLImageSiblings(base::span\u003cunsigned char const, 18446744073709551615ul, unsigned char const*\u003e) [egl_image_backing.cc : 531 + 0x4]\n\nwhich asserting there is no GL error\n\nThe code that\u0027s causing the error is in this CL is the code that binds the texture to reset the texture paramters.\n\n    gl.BindTexture(target, handle)\n\nThe handle is 1. The target is TEXTURE_2D_ARRAY\n\nIf the texture is a 2D array (and it must because because target is from the webgpu texture object, I don\u0027t know why it would get an error here.\n\nIn any case, if you have another solution please suggest.",
       "revId": "7ffbd7cffd9bc19338bfd7d02fbb814c2a5129a5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18785150_26d86e48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-01-30T20:32:42Z",
+      "side": 1,
+      "message": "ptal",
+      "revId": "7ffbd7cffd9bc19338bfd7d02fbb814c2a5129a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
