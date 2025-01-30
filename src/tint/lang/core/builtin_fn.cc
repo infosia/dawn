@@ -474,6 +474,9 @@ BuiltinFn ParseBuiltinFn(std::string_view name) {
     if (name == "quadSwapDiagonal") {
         return BuiltinFn::kQuadSwapDiagonal;
     }
+    if (name == "subgroupMatrixLoad") {
+        return BuiltinFn::kSubgroupMatrixLoad;
+    }
     return BuiltinFn::kNone;
 }
 
@@ -771,6 +774,8 @@ const char* str(BuiltinFn i) {
             return "quadSwapY";
         case BuiltinFn::kQuadSwapDiagonal:
             return "quadSwapDiagonal";
+        case BuiltinFn::kSubgroupMatrixLoad:
+            return "subgroupMatrixLoad";
     }
     return "<unknown>";
 }
