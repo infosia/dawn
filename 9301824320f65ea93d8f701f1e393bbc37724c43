@@ -110,6 +110,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "059dfd5c_ffd4a2f2",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-30T13:46:31Z",
+      "side": 1,
+      "message": "Agree. And the stacked CL https://dawn-review.googlesource.com/c/dawn/+/221974/10 did this. Maybe we don;t need to seperate them as two CL. I\u0027ll merge that stacked CL into this one.",
+      "parentUuid": "60a25604_507986a3",
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "62447451_fc8f4131",
