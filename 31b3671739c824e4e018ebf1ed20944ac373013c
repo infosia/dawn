@@ -33,6 +33,24 @@
       "message": "Won\u0027t this let readonly properties get written?",
       "revId": "31b3671739c824e4e018ebf1ed20944ac373013c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55ae48b1_cbac93b3",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-01-30T17:28:52Z",
+      "side": 1,
+      "message": "no\n\n```\nconst b1 \u003d device.createBuffer({size: 16, usage: GPUBufferUsage.STORAGE});\nconsole.log(b1.size);\nb1.size \u003d 123;\nconsole.log(b1.size);\n```\n\nproduces\n\n```\n16\nb1.size \u003d 123;\n        ^\n\nTypeError: Cannot set property size of #\u003cGPUBuffer\u003e which has only a getter\n```\n\nbut that points out yet another difference I\u0027ll need to add a test for because in the browser this same code produces\n\n```\n16\n16\n```\n\nwell, one thing at a time. This CL fixes one small issue.",
+      "parentUuid": "90a903a9_cdb73a7b",
+      "revId": "31b3671739c824e4e018ebf1ed20944ac373013c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
