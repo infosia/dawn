@@ -54,6 +54,8 @@ vars = {
   'reclient_package': 'infra/rbe/client/',
   # reclient CIPD package version
   'reclient_version': 're_client_version:0.143.0.518e369-gomaip',
+  # siso CIPD package version.
+  'siso_version': 'git_revision:0b6159c39573013a79a47f8544200df07a6a74fc',
 
   # 'magic' text to tell depot_tools that git submodules should be accepted
   # but parity with DEPS file is expected.
@@ -404,6 +406,16 @@ deps = {
         'version': Var('dawn_ninja_version'),
       }
     ],
+    'dep_type': 'cipd',
+  },
+  'third_party/siso/cipd': {
+    'packages': [
+      {
+        'package': 'infra/build/siso/${{platform}}',
+        'version': Var('siso_version'),
+      }
+    ],
+    'condition': 'dawn_standalone and non_git_source',
     'dep_type': 'cipd',
   },
 
