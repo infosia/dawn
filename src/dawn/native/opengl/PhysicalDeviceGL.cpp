@@ -122,6 +122,8 @@ ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType back
     EGLContext prevContext = egl.GetCurrentContext();
 
     context->MakeCurrent();
+    // Needed to request extensions here to initialize supported gl extensions set
+    context->RequestRequiredExtensionsExplicitly();
 
     Ref<PhysicalDevice> physicalDevice =
         AcquireRef(new PhysicalDevice(backendType, std::move(display)));
