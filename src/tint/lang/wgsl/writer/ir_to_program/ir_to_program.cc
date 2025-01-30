@@ -691,6 +691,7 @@ class State {
                 }
 
                 auto* expr = b.Call(c->Func(), std::move(args));
+
                 if (call->Results().IsEmpty() || !call->Result(0)->IsUsed()) {
                     Append(b.CallStmt(expr));
                     return;
