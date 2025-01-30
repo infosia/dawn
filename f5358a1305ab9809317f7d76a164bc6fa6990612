@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f31ff8a4_946afdc5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-01-30T13:40:39Z",
+      "side": 1,
+      "message": "The new patchset to fix cmake issue seems removes the +2. cwallez@, would you mind to help to +2 again?",
+      "revId": "f5358a1305ab9809317f7d76a164bc6fa6990612",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
