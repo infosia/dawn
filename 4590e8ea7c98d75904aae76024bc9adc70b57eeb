@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "203d3b26_eafe4ada",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-30T15:58:35Z",
+      "side": 1,
+      "message": "Yes this was a bug.",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 48
+      },
+      "revId": "4590e8ea7c98d75904aae76024bc9adc70b57eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb18c6e2_d7f88c33",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-30T15:58:35Z",
+      "side": 1,
+      "message": "This destroy can cause a more destroys via propagation of (un) use",
+      "range": {
+        "startLine": 264,
+        "startChar": 32,
+        "endLine": 264,
+        "endChar": 48
+      },
+      "revId": "4590e8ea7c98d75904aae76024bc9adc70b57eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "277c6580_74205583",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-30T15:58:35Z",
+      "side": 1,
+      "message": "Dan suggested that this validation check appear right here as the validation is not actually a transform.",
+      "range": {
+        "startLine": 407,
+        "startChar": 13,
+        "endLine": 407,
+        "endChar": 52
+      },
+      "revId": "4590e8ea7c98d75904aae76024bc9adc70b57eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac812809_470a774f",
+        "filename": "src/tint/lang/wgsl/ast/builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-30T15:58:35Z",
+      "side": 1,
+      "message": "This dramatically reduces the number of tests changed",
+      "range": {
+        "startLine": 102,
+        "startChar": 20,
+        "endLine": 102,
+        "endChar": 49
+      },
+      "revId": "4590e8ea7c98d75904aae76024bc9adc70b57eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b6d240a_eebaa188",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-30T15:58:35Z",
+      "side": 1,
+      "message": "If you look 4 lines above you will see that this new value is the correct value.",
+      "range": {
+        "startLine": 79,
+        "startChar": 49,
+        "endLine": 79,
+        "endChar": 61
+      },
+      "revId": "4590e8ea7c98d75904aae76024bc9adc70b57eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e730f0d2_f95a368e",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-30T15:58:35Z",
+      "side": 1,
+      "message": "Maybe add a comment explaining overrides and why this might not be const.",
+      "range": {
+        "startLine": 287,
+        "startChar": 20,
+        "endLine": 287,
+        "endChar": 21
+      },
+      "revId": "4590e8ea7c98d75904aae76024bc9adc70b57eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
