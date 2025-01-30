@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaf94426_4b3bb2f2",
+        "filename": "include/tint/tint.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-01-30T16:49:38Z",
+      "side": 1,
+      "message": "This is similar to the ast version below but I wonder if we want a wrapper.",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 65
+      },
+      "revId": "2b062c2e6023ddc5d885e5ff0286b927e5004d6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
