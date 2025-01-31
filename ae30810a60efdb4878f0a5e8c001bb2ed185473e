@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "891893a3_ab563613",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-01-31T21:33:26Z",
+      "side": 1,
+      "message": "PTAL\n\nWill need to be rebased on top of https://dawn-review.googlesource.com/c/dawn/+/223855 before submission.",
+      "revId": "ae30810a60efdb4878f0a5e8c001bb2ed185473e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
