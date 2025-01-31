@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "309a8357_cab3b184",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-31T22:05:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "203d3b26_eafe4ada",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 48
+      },
+      "revId": "4590e8ea7c98d75904aae76024bc9adc70b57eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb18c6e2_d7f88c33",
@@ -70,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9806641a_9e8943d5",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-31T22:05:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "277c6580_74205583",
+      "range": {
+        "startLine": 407,
+        "startChar": 13,
+        "endLine": 407,
+        "endChar": 52
+      },
+      "revId": "4590e8ea7c98d75904aae76024bc9adc70b57eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac812809_470a774f",
@@ -93,6 +141,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6982cda_c0a893ec",
+        "filename": "src/tint/lang/wgsl/ast/builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-31T22:05:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ac812809_470a774f",
+      "range": {
+        "startLine": 102,
+        "startChar": 20,
+        "endLine": 102,
+        "endChar": 49
+      },
+      "revId": "4590e8ea7c98d75904aae76024bc9adc70b57eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b6d240a_eebaa188",
@@ -106,6 +178,30 @@
       "writtenOn": "2025-01-30T15:58:35Z",
       "side": 1,
       "message": "If you look 4 lines above you will see that this new value is the correct value.",
+      "range": {
+        "startLine": 79,
+        "startChar": 49,
+        "endLine": 79,
+        "endChar": 61
+      },
+      "revId": "4590e8ea7c98d75904aae76024bc9adc70b57eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09307531_33d89d79",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-31T22:05:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0b6d240a_eebaa188",
       "range": {
         "startLine": 79,
         "startChar": 49,

@@ -22,6 +22,30 @@
       },
       "revId": "2b062c2e6023ddc5d885e5ff0286b927e5004d6f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3be2b1c0_168ff820",
+        "filename": "include/tint/tint.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-31T22:05:03Z",
+      "side": 1,
+      "message": "I think this is fine temporarily, since we\u0027ll be moving `SubstituteOverrides` into the backends eventually.",
+      "parentUuid": "aaf94426_4b3bb2f2",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 65
+      },
+      "revId": "2b062c2e6023ddc5d885e5ff0286b927e5004d6f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

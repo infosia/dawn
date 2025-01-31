@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e39f8f73_9077d81a",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-31T22:05:03Z",
+      "side": 1,
+      "message": "Nit: Use `Is`, or save the result of the `As` and use it for both the check and the return statement below.",
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "926afbd0_aaa29f6b",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-31T22:05:03Z",
+      "side": 1,
+      "message": "Nit: This check seems redundant, since the LHS of a short-circuiting op can only be a scalar `bool`?",
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4da86a3a_d9a59391",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-31T22:05:03Z",
+      "side": 1,
+      "message": "There\u0027s no actual guarantee that instruction will appear in the allocator in dependency order. Instructions can be created and added to the module in any order. Also transforms add and remove instructions which changes this order.\n\nThis might work today due to how the AST-\u003eIR conversion process works and the fact that we don\u0027t run many heavy transforms before this point, but I\u0027m a little nervous about how fragile this is.\n\nFWIW using `if` instead of logical binary instructions would avoid this issue, as the instructions that need to be skipped would all be encapsulated inside the if blocks, which makes it easy to destroy the instructions that would be short-circuited.",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 45
+      },
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22cc22ab_79a04073",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-31T22:05:03Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t need `CoreBuiltinCall` if we have `BuiltinCall`.",
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84168872_8e62bca0",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-31T22:05:03Z",
+      "side": 1,
+      "message": "You can use `ast::GetAttribute\u003cast::WorkgroupAttribute\u003e(ast_func-\u003eattributes)` instead of the loop+Switch.",
+      "range": {
+        "startLine": 288,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 74
+      },
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21f15dd3_0b448e0c",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-01-31T22:05:03Z",
+      "side": 1,
+      "message": "Short-circuiting override expressions inside functions also need to be handled. As it currently stands this CL does not apply validation correctly in those cases.\n\nYou could either check the LHS to see if it is an override, or just always emit these as logical operators and then replace the non-override cases with if-else instructions later.\n\nThat said, I do wonder whether it would be better/cleaner to just use `if` always. It\u0027s some extra work in the validator to allow it at module-scope under the right conditions, but I think it makes some of the `SubstituteOverride` transform simpler.",
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
