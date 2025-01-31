@@ -35,6 +35,7 @@
 #include "src/tint/lang/core/type/abstract_numeric.h"
 #include "src/tint/lang/core/type/array.h"
 #include "src/tint/lang/core/type/atomic.h"
+#include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/bool.h"
 #include "src/tint/lang/core/type/builtin_structs.h"
 #include "src/tint/lang/core/type/depth_multisampled_texture.h"
@@ -369,6 +370,31 @@ inline const type::Array* BuildRuntimeArray(intrinsic::MatchState& state,
                                         /* size */ 0u,
                                         /* stride */ 0u,
                                         /* stride_implicit */ 0u);
+}
+
+inline const type::BindingArray* BuildBindingArray(intrinsic::MatchState& state,
+                                                   const type::Type*,
+                                                   const type::Type* el,
+                                                   intrinsic::Number N) {
+    return state.types.Get<type::BindingArray>(el, N.Value());
+}
+
+inline bool MatchBindingArray(intrinsic::MatchState&,
+                              const type::Type* ty,
+                              const type::Type*& T,
+                              intrinsic::Number& N) {
+    if (ty->Is<intrinsic::Any>()) {
+        N = intrinsic::Number::any;
+        T = ty;
+        return true;
+    }
+
+    if (auto* a = ty->As<type::BindingArray>()) {
+        N = a->Count();
+        T = a->ElemType();
+        return true;
+    }
+    return false;
 }
 
 inline bool MatchPtr(intrinsic::MatchState&,
