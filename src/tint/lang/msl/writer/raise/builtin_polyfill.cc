@@ -108,6 +108,7 @@ struct State {
                     case core::BuiltinFn::kQuadSwapY:
                     case core::BuiltinFn::kQuantizeToF16:
                     case core::BuiltinFn::kSign:
+                    case core::BuiltinFn::kSubgroupMatrixStore:
                     case core::BuiltinFn::kTextureDimensions:
                     case core::BuiltinFn::kTextureGather:
                     case core::BuiltinFn::kTextureGatherCompare:
@@ -267,6 +268,11 @@ struct State {
                     break;
                 case core::BuiltinFn::kUnpack2X16Float:
                     Unpack2x16Float(builtin);
+                    break;
+
+                // Subgroup matrix builtins.
+                case core::BuiltinFn::kSubgroupMatrixStore:
+                    SubgroupMatrixStore(builtin);
                     break;
 
                 default:
@@ -925,6 +931,33 @@ struct State {
         b.InsertBefore(builtin, [&] {
             auto* bitcast = b.Bitcast<vec2<f16>>(builtin->Args()[0]);
             b.ConvertWithResult(builtin->DetachResult(), bitcast);
+        });
+        builtin->Destroy();
+    }
+
+    /// Replace a subgroupMatrixStore builtin.
+    /// @param builtin the builtin call instruction
+    void SubgroupMatrixStore(core::ir::CoreBuiltinCall* builtin) {
+        b.InsertBefore(builtin, [&] {
+            auto* p = builtin->Args()[0];
+            auto* offset = builtin->Args()[1];
+            auto* value = builtin->Args()[2];
+            auto* col_major = builtin->Args()[3];
+            auto* stride = builtin->Args()[4];
+
+            auto* ptr = p->Type()->As<core::type::Pointer>();
+            auto* arr = ptr->StoreType()->As<core::type::Array>();
+
+            // Make a pointer to the first element of the array that we will write to.
+            auto* elem_ptr = ty.ptr(ptr->AddressSpace(), arr->ElemType(), ptr->Access());
+            auto* dst = b.Access(elem_ptr, p, offset);
+
+            // The origin is always (0, 0), as we use `offset` to set the start of the data.
+            auto* matrix_origin = b.Call<msl::ir::BuiltinCall>(
+                ty.vec2<u32>(), msl::BuiltinFn::kUlong2, b.Zero<vec2<u32>>());
+
+            b.Call<msl::ir::BuiltinCall>(ty.void_(), msl::BuiltinFn::kSimdgroupStore, value, dst,
+                                         stride, matrix_origin, col_major);
         });
         builtin->Destroy();
     }
