@@ -35,14 +35,17 @@
 #define DAWN_COMPILER_IS_CLANG 1
 #define DAWN_COMPILER_IS_GCC 0
 #define DAWN_COMPILER_IS_MSVC 0
+#define DAWN_ASAN_ENABLED __has_feature(address_sanitizer)
 #elif defined(__GNUC__)
 #define DAWN_COMPILER_IS_CLANG 0
 #define DAWN_COMPILER_IS_GCC 1
 #define DAWN_COMPILER_IS_MSVC 0
+#define DAWN_ASAN_ENABLED defined(__SANITIZE_ADDRESS__)
 #elif defined(_MSC_VER)
 #define DAWN_COMPILER_IS_CLANG 0
 #define DAWN_COMPILER_IS_GCC 0
 #define DAWN_COMPILER_IS_MSVC 1
+#define DAWN_ASAN_ENABLED defined(__SANITIZE_ADDRESS__)
 #else
 #error "Unsupported compiler"
 #endif
