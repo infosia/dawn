@@ -114,6 +114,8 @@ const char* str(BuiltinFn i) {
             return "convert";
         case BuiltinFn::kUlong2:
             return "ulong2";
+        case BuiltinFn::kSimdgroupLoad:
+            return "simdgroup_load";
         case BuiltinFn::kSimdgroupStore:
             return "simdgroup_store";
     }
@@ -145,6 +147,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kRead:
         case BuiltinFn::kSample:
         case BuiltinFn::kSampleCompare:
+        case BuiltinFn::kSimdgroupLoad:
             return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kLoad};
 
         case BuiltinFn::kWrite:
