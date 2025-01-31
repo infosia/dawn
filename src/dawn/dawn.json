@@ -482,6 +482,7 @@
         "members": [
             {"name": "binding", "type": "uint32_t"},
             {"name": "visibility", "type": "shader stage"},
+            {"name": "array size", "type": "uint32_t", "default": 0},
             {"name": "buffer", "type": "buffer binding layout"},
             {"name": "sampler", "type": "sampler binding layout"},
             {"name": "texture", "type": "texture binding layout"},
