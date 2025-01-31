@@ -318,6 +318,9 @@ PhysicalDevice::PhysicalDevice(InstanceBase* instance,
 
     NSString* osVersion = [[NSProcessInfo processInfo] operatingSystemVersionString];
     mDriverDescription = "Metal driver on " + std::string(systemName) + [osVersion UTF8String];
+
+    mSubgroupMinSize = 4;
+    mSubgroupMaxSize = 64;
 }
 
 bool PhysicalDevice::IsMetalValidationEnabled() const {

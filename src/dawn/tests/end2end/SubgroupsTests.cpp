@@ -55,10 +55,10 @@ std::ostream& operator<<(std::ostream& o, const RequestSubgroups& r) {
     return o;
 }
 
-DAWN_TEST_PARAM_STRUCT(SubgroupsPropertiesTestsParams, RequestSubgroups);
+DAWN_TEST_PARAM_STRUCT(SubgroupsAdapterInfoParams, RequestSubgroups);
 
 template <class Params>
-class SubgroupsPropertiesTestBase : public DawnTestWithParams<Params> {
+class SubgroupsAdapterInfoTestBase : public DawnTestWithParams<Params> {
   public:
     using DawnTestWithParams<Params>::GetParam;
     using DawnTestWithParams<Params>::SupportsFeatures;
@@ -85,7 +85,7 @@ class SubgroupsPropertiesTestBase : public DawnTestWithParams<Params> {
     }
 };
 
-using SubgroupsPropertiesTests = SubgroupsPropertiesTestBase<SubgroupsPropertiesTestsParams>;
+using SubgroupsPropertiesTests = SubgroupsAdapterInfoTestBase<SubgroupsAdapterInfoParams>;
 
 TEST_P(SubgroupsPropertiesTests, FromAdapter) {
     wgpu::AdapterPropertiesSubgroups subgroup_properties;
@@ -134,6 +134,38 @@ TEST_P(SubgroupsPropertiesTests, DeviceAndAdapterAgree) {
 }
 
 DAWN_INSTANTIATE_TEST_P(SubgroupsPropertiesTests,
+                        {D3D12Backend(), D3D12Backend({}, {"use_dxc"}), MetalBackend(),
+                         VulkanBackend()},
+                        {RequestSubgroups::WhenAvailable, RequestSubgroups::Never});
+
+using SubgroupsAdapterInfoTests = SubgroupsAdapterInfoTestBase<SubgroupsAdapterInfoParams>;
+
+TEST_P(SubgroupsAdapterInfoTests, FromAdapter) {
+    wgpu::AdapterInfo info;
+    adapter.GetInfo(&info);
+
+    CheckValidSizes(info.subgroupMinSize, info.subgroupMaxSize);
+}
+
+TEST_P(SubgroupsAdapterInfoTests, FromDevice) {
+    wgpu::AdapterInfo info;
+    device.GetAdapterInfo(&info);
+
+    CheckValidSizes(info.subgroupMinSize, info.subgroupMaxSize);
+}
+
+TEST_P(SubgroupsAdapterInfoTests, DeviceAndAdapterAgree) {
+    wgpu::AdapterInfo adapter_info;
+    adapter.GetInfo(&adapter_info);
+
+    wgpu::AdapterInfo device_info;
+    device.GetAdapterInfo(&device_info);
+
+    EXPECT_EQ(device_info.subgroupMinSize, adapter_info.subgroupMinSize);
+    EXPECT_EQ(device_info.subgroupMaxSize, adapter_info.subgroupMaxSize);
+}
+
+DAWN_INSTANTIATE_TEST_P(SubgroupsAdapterInfoTests,
                         {D3D12Backend(), D3D12Backend({}, {"use_dxc"}), MetalBackend(),
                          VulkanBackend()},
                         {RequestSubgroups::WhenAvailable, RequestSubgroups::Never});
