@@ -14239,9 +14239,6 @@ crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,buil
 crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-8x5-unorm";* [ Failure ]
 crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-8x5-unorm-srgb";* [ Failure ]
 
-# Causes lots of build output
-crbug.com/dawn/0000 [ android-pixel-6 ] webgpu:api,validation,render_pass,attachment_compatibility:render_pass_and_bundle,color_sparse:* [ Skip ]
-
 crbug.com/0000 [ intel ] webgpu:api,validation,queue,destroyed,query_set:resolveQuerySet:* [ Skip ]
 crbug.com/0000 [ intel ] webgpu:shader,execution,expression,call,builtin,textureSampleCompareLevel:3d_coords:* [ Skip ]
 crbug.com/0000 [ intel-0x4680 linux ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_2d_coords:* [ Skip ]
