@@ -69,6 +69,24 @@
       "parentUuid": "55ae48b1_cbac93b3",
       "revId": "31b3671739c824e4e018ebf1ed20944ac373013c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f688fa6a_0b31752d",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-31T08:15:28Z",
+      "side": 1,
+      "message": "Thank you for checking! Still LGTM (oh sorry I forgot to add it earlier, I meant to)",
+      "parentUuid": "2bf27901_d36743f2",
+      "revId": "31b3671739c824e4e018ebf1ed20944ac373013c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
