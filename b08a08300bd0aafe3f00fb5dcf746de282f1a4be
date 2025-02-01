@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a9608a9_9d40384f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-01T07:49:31Z",
+      "side": 1,
+      "message": "PTAL. I\u0027ll be out, but feel free to CQ+2, or take over this with a new CL if needed. Sorry I wasn\u0027t able to make progress on actually using it on CI, though I realized that just supporting siso is great because people can use it locally even though reclient is broken.",
+      "revId": "b08a08300bd0aafe3f00fb5dcf746de282f1a4be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
