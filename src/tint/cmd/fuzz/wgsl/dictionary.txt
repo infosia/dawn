@@ -376,6 +376,7 @@
 "sin"
 "sinh"
 "size"
+"sized_binding_array"
 "smoothstep"
 "sqrt"
 "step"
