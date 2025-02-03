@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bbbf6847_b1db0e06",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-03T09:15:23Z",
+      "side": 1,
+      "message": "From https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/PhysicalDeviceMTL.mm;l\u003d880;drc\u003d855d17b08abdf02f9142bf5a8f14d0ea088810a4",
+      "parentUuid": "8aa3b6c1_cb51f5f1",
+      "revId": "d0f707dfd2f8ad9e7453a291173fe60f850e9ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d03a3642_07e3ba15",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 2
