@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "87dcc911_90a48505",
+        "filename": "src/tint/lang/msl/msl.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-03T22:38:50Z",
+      "side": 1,
+      "message": "We don\u0027t have a u64 in Tint, so yes it was intentional. It didn\u0027t feel worth adding 64-bit types just so that we can validate this one function, but if you feel like that\u0027s too hacky I can work on getting that added before landing this.",
+      "parentUuid": "9e3a1045_1b67db0d",
+      "revId": "a1b5a8559e64dc1df4ac4d480b19580904b681de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4bb3ef1d_f9f0e486",
         "filename": "src/tint/lang/msl/msl.def",
         "patchSetId": 4
