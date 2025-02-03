@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3a4a8ad_0143cb8c",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-03T21:13:25Z",
+      "side": 1,
+      "message": "nit. Maybe match the ternary above:\n`device-\u003eIsCompatibilityMode() ? Cap::None : Cap::Multisample;`",
+      "range": {
+        "startLine": 515,
+        "startChar": 4,
+        "endLine": 515,
+        "endChar": 100
+      },
+      "revId": "de62b5aca10b74374f5c81b01b1ac03b632a0c3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0476f05_ae3141b7",
+        "filename": "src/dawn/utils/TextureUtils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-03T21:13:25Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m fine with this for now, but technically this `bool` is gettable from `wgpu::Device::GetAdapterInfo`. It\u0027s not as nice to get it via that because that comes with a bunch of string allocations... which begs the question of whether we should have something like `GetFeatureLevel` on `wgpu::Device`...",
+      "range": {
+        "startLine": 304,
+        "startChar": 40,
+        "endLine": 304,
+        "endChar": 66
+      },
+      "revId": "de62b5aca10b74374f5c81b01b1ac03b632a0c3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
