@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3934551_47afb4e4",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 24303,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-02-03T19:45:31Z",
+      "side": 0,
+      "message": "These actually fail:\nhttps://ci.chromium.org/ui/p/chromium/builders/ci/Dawn%20Android%20arm64%20Experimental%20Release%20(Pixel%206)/6792/overview\n\nWhy do you do this manually instead of relying on https://ci.chromium.org/ui/p/chrome/builders/ci/WebGPU%20Unexpected%20Pass%20Finder (and opening a bug to get it fixed, lass successful run 2024-10-26).\nIt should be impossible for a human to process all the data UPF has access to.",
+      "range": {
+        "startLine": 24301,
+        "startChar": 0,
+        "endLine": 24303,
+        "endChar": 128
+      },
+      "revId": "4f6f7e6563491d41c4a33aa7c643c9b9a448b5cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
