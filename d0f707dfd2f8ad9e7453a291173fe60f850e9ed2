@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c4126794_4fdb5bd0",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-02-03T18:20:55Z",
+      "side": 1,
+      "message": "In MSL, a ballot is a uint64, so the max subgroup size is 64. The 4 comes from the minimum derivative group.",
+      "parentUuid": "a77912d4_5c491e40",
+      "revId": "d0f707dfd2f8ad9e7453a291173fe60f850e9ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d03a3642_07e3ba15",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 2
