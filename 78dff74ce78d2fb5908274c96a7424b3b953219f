@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8421a008_bf6fa2fb",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-02-03T17:13:36Z",
+      "side": 1,
+      "message": "Do we want to enable the features in compat mode? I thought in compat mode the Vulkan backend shouldn\u0027t use these features because the dawn client can\u0027t use specific WGSL/dawn features that would require them.\n\nIs there any benefit to enabling the Vulkan features if they\u0027re available in compat mode now? Or alternatively is something where the Vulkan backend would need to check if the feature is available in VulkanDeviceInfo before using it?\n\nConversely, is there any cost to enabling features that are never used?",
+      "parentUuid": "5687f398_1a434244",
+      "revId": "78dff74ce78d2fb5908274c96a7424b3b953219f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6128103_dcc988b8",
         "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
         "patchSetId": 2
@@ -31,6 +49,30 @@
       "writtenOn": "2025-01-24T23:13:10Z",
       "side": 1,
       "message": "Since we realized on the bug that fragmentStoresAndAtomics is essentially always available, I think we can remove the TODO now.\n\n\n```suggestion\n    // This feature isn\u0027t strictly needed in compat mode since the number of\n    // storage buffers/textures in fragment stage can be restricted to zero,\n    // however there don\u0027t seem to be a significant number of Vulkan devices\n    // that don\u0027t support it, so we just require it anyway.\n```",
+      "range": {
+        "startLine": 429,
+        "startChar": 0,
+        "endLine": 430,
+        "endChar": 79
+      },
+      "revId": "78dff74ce78d2fb5908274c96a7424b3b953219f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5e74051_e0ff4e8b",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-02-03T17:13:36Z",
+      "side": 1,
+      "message": "Removed the TODO and I added a little explanation in PhysicalDeviceVk.",
+      "parentUuid": "d6128103_dcc988b8",
       "range": {
         "startLine": 429,
         "startChar": 0,
