@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e0ec4b4_2f61a6e3",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 5
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T21:07:40Z",
+      "side": 1,
+      "message": "Maybe wrap this to multiple lines?\n```suggestion\n@must_use @stage(\"compute\") implicit(S: subgroup_matrix_elements, C: num, R: num, K: num) fn subgroupMatrixMultiply(\n  subgroup_matrix\u003csubgroup_matrix_kind_left, S, K, R\u003e, \n  subgroup_matrix\u003csubgroup_matrix_kind_right, S, C, K\u003e) -\u003e \n  subgroup_matrix\u003csubgroup_matrix_kind_result, S, C, R\u003e\n```",
+      "revId": "b693cb335613b150a4343e4b0f1a4df076e08e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8338d224_f4cb8d43",
+        "filename": "src/tint/lang/wgsl/resolver/subgroup_matrix_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T21:07:40Z",
+      "side": 1,
+      "message": "Is this the error generated from intrinsics? Would be nice if we could get more information like for this one `types are wrong` or or the one below the right vs let or the one above about sizes not matching.",
+      "revId": "b693cb335613b150a4343e4b0f1a4df076e08e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01132ebf_573aa7a6",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 5
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T21:07:40Z",
+      "side": 1,
+      "message": "ditto wrapping",
+      "revId": "b693cb335613b150a4343e4b0f1a4df076e08e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d85a711_e3a49199",
+        "filename": "test/tint/builtins/gen/literal/subgroupMatrixMultiply/077fe6.wgsl.expected.ir.msl",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T21:07:40Z",
+      "side": 1,
+      "message": "INVALID?",
+      "revId": "b693cb335613b150a4343e4b0f1a4df076e08e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
