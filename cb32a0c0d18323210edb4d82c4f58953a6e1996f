@@ -180,6 +180,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0269c0eb_6fcbb640",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T19:47:46Z",
+      "side": 1,
+      "message": "Chatted with James, we think the right way to go is to create a `consteval-if` instruction which is an `if` instruction subclass. It would require a capability to be used. It would be removed by the substitute overrides transform. It would get created for any logical-and or logical-or with the LHS as an override-expression.",
+      "parentUuid": "5c2e0c77_f94be7e8",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 45
+      },
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "22cc22ab_79a04073",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 6
