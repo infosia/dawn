@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a77912d4_5c491e40",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-03T10:12:59Z",
+      "side": 1,
+      "message": "Here\u0027s the doc: https://developer.apple.com/documentation/metal/creating-threads-and-threadgroups?language\u003dobjc\nAnd wgpu used 4/64 as well: https://github.com/gfx-rs/wgpu/commit/ea77d5674dfa1e274256169377a76f3fe12c9e07\nNot sure if it helps though...",
+      "parentUuid": "5959445e_b36f90a1",
+      "revId": "d0f707dfd2f8ad9e7453a291173fe60f850e9ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d03a3642_07e3ba15",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 2
