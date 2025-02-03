@@ -16,6 +16,108 @@
       "message": "PTAL",
       "revId": "d0f707dfd2f8ad9e7453a291173fe60f850e9ed2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8aa3b6c1_cb51f5f1",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-03T08:41:54Z",
+      "side": 1,
+      "message": "Where do these constants come from?",
+      "revId": "d0f707dfd2f8ad9e7453a291173fe60f850e9ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d03a3642_07e3ba15",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-03T08:41:54Z",
+      "side": 1,
+      "message": "nit: please add a small comment describing what each test does before the test.",
+      "fixSuggestions": [
+        {
+          "fixId": "32a1de41_49193a40",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+              "range": {
+                "startLine": 90,
+                "startChar": 0,
+                "endLine": 90,
+                "endChar": 0
+              },
+              "replacement": "// Test that subgroupMinSize and subgroupMaxSize in wgpu::AdapterPropertiesSubgroups are valid.\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+              "range": {
+                "startLine": 109,
+                "startChar": 0,
+                "endLine": 109,
+                "endChar": 0
+              },
+              "replacement": "// Test that subgroupMinSize and subgroupMaxSize in wgpu::AdapterPropertiesSubgroups are valid.\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+              "range": {
+                "startLine": 119,
+                "startChar": 0,
+                "endLine": 119,
+                "endChar": 0
+              },
+              "replacement": "// Test that subgroupMinSize and subgroupMaxSize in wgpu::AdapterPropertiesSubgroups are the same\n// between adapter and device.\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+              "range": {
+                "startLine": 143,
+                "startChar": 0,
+                "endLine": 143,
+                "endChar": 0
+              },
+              "replacement": "// Test that subgroupMinSize and subgroupMaxSize in wgpu::AdapterInfo are valid.\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+              "range": {
+                "startLine": 150,
+                "startChar": 0,
+                "endLine": 150,
+                "endChar": 0
+              },
+              "replacement": "// Test that subgroupMinSize and subgroupMaxSize in wgpu::AdapterInfo are valid.\n"
+            },
+            {
+              "path": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+              "range": {
+                "startLine": 157,
+                "startChar": 0,
+                "endLine": 157,
+                "endChar": 0
+              },
+              "replacement": "// Test that subgroupMinSize and subgroupMaxSize in wgpu::AdapterInfo are the same between adapter\n// and device.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d0f707dfd2f8ad9e7453a291173fe60f850e9ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
