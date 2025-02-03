@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3f5e3014_4b9dee8e",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-03T14:38:11Z",
+      "side": 1,
+      "message": "I could traverse in control order. But your right I have to do this elaborate dead code elimination when I use these logical ops.\n\nThe challenge with the \u0027if\u0027 is that you would need to do two things.\n1. Flag the \u0027if\u0027 with a bool indicating is it compile time\n2. Guard all nested compile time \u0027if\u0027s and not evaluate them unless the parent if has been evaluated.\n\nBecause short circuiting logic is very limited #2 is likely quite doable.",
+      "parentUuid": "4da86a3a_d9a59391",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 45
+      },
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "22cc22ab_79a04073",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 6
@@ -98,6 +122,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b225ede6_39409a90",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-03T14:38:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84168872_8e62bca0",
+      "range": {
+        "startLine": 288,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 74
+      },
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21f15dd3_0b448e0c",
@@ -111,6 +159,24 @@
       "writtenOn": "2025-01-31T22:05:03Z",
       "side": 1,
       "message": "Short-circuiting override expressions inside functions also need to be handled. As it currently stands this CL does not apply validation correctly in those cases.\n\nYou could either check the LHS to see if it is an override, or just always emit these as logical operators and then replace the non-override cases with if-else instructions later.\n\nThat said, I do wonder whether it would be better/cleaner to just use `if` always. It\u0027s some extra work in the validator to allow it at module-scope under the right conditions, but I think it makes some of the `SubstituteOverride` transform simpler.",
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c8c861e_74c1a20a",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-03T14:38:11Z",
+      "side": 1,
+      "message": "Yes there appears to be a gap in CTS.\nhttps://github.com/gpuweb/cts/pull/4170",
+      "parentUuid": "21f15dd3_0b448e0c",
       "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
