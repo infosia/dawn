@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d88c89be_8cd5007e",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-03T09:45:21Z",
+      "side": 1,
+      "message": "We should have a comment explaining more, and why we don\u0027t have something more precise.",
+      "parentUuid": "bbbf6847_b1db0e06",
+      "revId": "d0f707dfd2f8ad9e7453a291173fe60f850e9ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d03a3642_07e3ba15",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 2
