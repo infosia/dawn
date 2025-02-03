@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b656c41_031779bc",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 6
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T20:59:07Z",
+      "side": 1,
+      "message": "Can this be shortened by creating a `T: f32_f16_iu32` ?\n\n```suggestion\n@stage(\"compute\") implicit(K: subgroup_matrix_kind, T: f32_f16_iu32, C: num, R: num, AC: num) fn subgroupMatrixStore(ptr\u003cworkgroup_or_storage, array\u003cT, AC\u003e, writable\u003e, u32, subgroup_matrix\u003cK, T, C, R\u003e, bool, u32)\n```",
+      "range": {
+        "startLine": 773,
+        "startChar": 0,
+        "endLine": 776,
+        "endChar": 199
+      },
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02cfa077_74b7b93b",
+        "filename": "src/tint/lang/core/intrinsic/type_matchers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T20:59:07Z",
+      "side": 1,
+      "message": "Are these 0\u0027s correct? We know the element type, and the count as this isn\u0027t a runtime array. So, don\u0027t we know the `align`, `size`, `stride` and `stride_implicit` sizes?",
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5c90085_adcf68c3",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T20:59:07Z",
+      "side": 1,
+      "message": "Same question about using a `T: f32_f16_iu32`",
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ff53e3a_7a7046b1",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T20:59:07Z",
+      "side": 1,
+      "message": "What happened to 145?",
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f263256a_7aa127ef",
+        "filename": "test/tint/builtins/gen/literal/subgroupMatrixStore/09c565.wgsl",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T20:59:07Z",
+      "side": 1,
+      "message": "Any idea why this didn\u0027t put a newline before the `;var ...` ?",
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bfe6fdd_c00af32a",
+        "filename": "test/tint/builtins/gen/literal/subgroupMatrixStore/09c565.wgsl.expected.glsl",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T20:59:07Z",
+      "side": 1,
+      "message": "Should these be marked as `INVALID` for now as they don\u0027t have backend support so the test is not valid? (That was how i treated other extensions which didn\u0027t exist for certain backends)",
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
