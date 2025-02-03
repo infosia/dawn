@@ -221,6 +221,7 @@
 "first"
 "firstLeadingBit"
 "firstTrailingBit"
+"fixed_size_binding_array"
 "flat"
 "floor"
 "fma"

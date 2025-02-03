@@ -57,6 +57,9 @@ LanguageFeature ParseLanguageFeature(std::string_view str) {
     if (str == "chromium_testing_unsafe_experimental") {
         return LanguageFeature::kChromiumTestingUnsafeExperimental;
     }
+    if (str == "fixed_size_binding_array") {
+        return LanguageFeature::kFixedSizeBindingArray;
+    }
     if (str == "packed_4x8_integer_dot_product") {
         return LanguageFeature::kPacked4X8IntegerDotProduct;
     }
@@ -86,6 +89,8 @@ std::string_view ToString(LanguageFeature value) {
             return "chromium_testing_unimplemented";
         case LanguageFeature::kChromiumTestingUnsafeExperimental:
             return "chromium_testing_unsafe_experimental";
+        case LanguageFeature::kFixedSizeBindingArray:
+            return "fixed_size_binding_array";
         case LanguageFeature::kPacked4X8IntegerDotProduct:
             return "packed_4x8_integer_dot_product";
         case LanguageFeature::kPointerCompositeAccess:
