@@ -108,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ba57675e_8cc18fc5",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T19:02:09Z",
+      "side": 1,
+      "message": "The `if` solution still feels ... wrong. The logicals are closer to what\u0027s in the original AST, and they only exist up to this transform. We can (have?) add a capabiltiy that allows the logicals.\n\nAdding `if` handling into the const evaluation is a larger task which we don\u0027t have support for at this point.",
+      "parentUuid": "e4c01516_90674c6a",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 45
+      },
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "22cc22ab_79a04073",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 6
