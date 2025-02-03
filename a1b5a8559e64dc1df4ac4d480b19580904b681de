@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e3a1045_1b67db0d",
+        "filename": "src/tint/lang/msl/msl.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T21:14:43Z",
+      "side": 1,
+      "message": "Is this intentionally a `vec2\u003cu32\u003e`? Like, `ulong2` is 16 bytes a `uint2` is 8 bytes. So, this is a `vec2\u003cu64\u003e`?",
+      "revId": "a1b5a8559e64dc1df4ac4d480b19580904b681de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bb3ef1d_f9f0e486",
+        "filename": "src/tint/lang/msl/msl.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T21:14:43Z",
+      "side": 1,
+      "message": "these shoud be `u64` and `vec2\u003cu64\u003e` ?",
+      "range": {
+        "startLine": 367,
+        "startChar": 168,
+        "endLine": 367,
+        "endChar": 182
+      },
+      "revId": "a1b5a8559e64dc1df4ac4d480b19580904b681de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10393df4_eb4e74d4",
+        "filename": "test/tint/builtins/gen/var/subgroupMatrixStore/2e04bd.wgsl.expected.ir.msl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T21:14:43Z",
+      "side": 1,
+      "message": "Will these ever be supported, or should they be INVALID?",
+      "revId": "a1b5a8559e64dc1df4ac4d480b19580904b681de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
