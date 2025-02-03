@@ -156,6 +156,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5c2e0c77_f94be7e8",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-03T19:22:52Z",
+      "side": 1,
+      "message": "I can buy the feels wrong for traveling backwards reasoning. I do wonder if this means we need an `override-if` instruction in order to pick them out of the function bodies for replacement. They\u0027d, essentially, be the same as an `if` but would have to be removed during const-eval.",
+      "parentUuid": "ee7895c5_0bfd0573",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 45
+      },
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "22cc22ab_79a04073",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 6
