@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e4c01516_90674c6a",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-03T15:20:23Z",
+      "side": 1,
+      "message": "I think #2 is straightforward if you traverse in control order (i.e. use `ir::Traverse()`), since you\u0027ll naturally evaluate the `if` statements from parent to child.",
+      "parentUuid": "3f5e3014_4b9dee8e",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 45
+      },
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "22cc22ab_79a04073",
         "filename": "src/tint/lang/core/ir/validator.cc",
         "patchSetId": 6
