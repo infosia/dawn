@@ -374,14 +374,6 @@ void NormalizeLimits(Limits* limits) {
         std::min(limits->maxStorageBuffersPerShaderStage, kMaxStorageBuffersPerShaderStage);
     limits->maxStorageTexturesPerShaderStage =
         std::min(limits->maxStorageTexturesPerShaderStage, kMaxStorageTexturesPerShaderStage);
-    limits->maxStorageBuffersInVertexStage =
-        std::min(limits->maxStorageBuffersInVertexStage, kMaxStorageBuffersPerShaderStage);
-    limits->maxStorageTexturesInVertexStage =
-        std::min(limits->maxStorageTexturesInVertexStage, kMaxStorageTexturesPerShaderStage);
-    limits->maxStorageBuffersInFragmentStage =
-        std::min(limits->maxStorageBuffersInFragmentStage, kMaxStorageBuffersPerShaderStage);
-    limits->maxStorageTexturesInFragmentStage =
-        std::min(limits->maxStorageTexturesInFragmentStage, kMaxStorageTexturesPerShaderStage);
     limits->maxUniformBuffersPerShaderStage =
         std::min(limits->maxUniformBuffersPerShaderStage, kMaxUniformBuffersPerShaderStage);
 
@@ -390,6 +382,15 @@ void NormalizeLimits(Limits* limits) {
         std::min(limits->maxStorageBufferBindingSize, limits->maxBufferSize);
     limits->maxUniformBufferBindingSize =
         std::min(limits->maxUniformBufferBindingSize, limits->maxBufferSize);
+
+    limits->maxStorageBuffersInVertexStage =
+        std::min(limits->maxStorageBuffersInVertexStage, limits->maxStorageBuffersPerShaderStage);
+    limits->maxStorageBuffersInFragmentStage =
+        std::min(limits->maxStorageBuffersInFragmentStage, limits->maxStorageBuffersPerShaderStage);
+    limits->maxStorageTexturesInVertexStage =
+        std::min(limits->maxStorageTexturesInVertexStage, limits->maxStorageTexturesPerShaderStage);
+    limits->maxStorageTexturesInFragmentStage =
+        std::min(limits->maxStorageTexturesInFragmentStage, limits->maxStorageTexturesPerShaderStage);
 }
 
 }  // namespace dawn::native
