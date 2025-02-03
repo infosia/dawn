@@ -16,6 +16,23 @@
       "message": "Loko: added for owner of Format.cpp",
       "revId": "5464904a74ec7ce7d95309233874bbf2f3f09951",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eb9b6ff_2a7776a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-02-03T20:56:36Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "5464904a74ec7ce7d95309233874bbf2f3f09951",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
