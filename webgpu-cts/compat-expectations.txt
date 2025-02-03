@@ -93,6 +93,12 @@
 # This is for things like tests that will never be supported on a particular
 # platform/configuration.
 
+# Unsupported test under minimal ES31 context
+# crbug.com/388318201 Add tag min-es31 once infra change is landed
+webgpu:api,operation,sampling,anisotropy:anisotropic_filter_mipmap_color:maxAnisotropy=4 [ Skip ]
+webgpu:api,validation,capability_checks,features,texture_formats:check_capability_guarantees:* [ Skip ]
+
+
 ################################################################################
 # Temporary Skip Expectations
 ################################################################################
