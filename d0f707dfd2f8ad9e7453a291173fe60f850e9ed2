@@ -136,6 +136,24 @@
       ],
       "revId": "d0f707dfd2f8ad9e7453a291173fe60f850e9ed2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59055ab8_9bd285ed",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-03T09:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d03a3642_07e3ba15",
+      "revId": "d0f707dfd2f8ad9e7453a291173fe60f850e9ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
