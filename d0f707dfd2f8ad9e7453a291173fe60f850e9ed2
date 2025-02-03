@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5959445e_b36f90a1",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-03T10:02:29Z",
+      "side": 1,
+      "message": "@dneto@google.com may know. FYI This was added in https://dawn-review.googlesource.com/c/dawn/+/151282",
+      "parentUuid": "d88c89be_8cd5007e",
+      "revId": "d0f707dfd2f8ad9e7453a291173fe60f850e9ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d03a3642_07e3ba15",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 2
