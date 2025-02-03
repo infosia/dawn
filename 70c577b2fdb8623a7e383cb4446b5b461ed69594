@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92ea342d_cfc442c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-02-03T16:18:40Z",
+      "side": 1,
+      "message": "I\u0027ll go with Kai\u0027s https://dawn-review.googlesource.com/c/dawn/+/223900, since it has the necessary `dawn_standalone` condition.\nIt doesn\u0027t have the BUILD.gn change, though.\nCould you leave only it in this CL?\nWe\u0027ll need some Dawn OWNER to approve it (I\u0027m not).\nPlease also use\nBug: 393606976",
+      "revId": "70c577b2fdb8623a7e383cb4446b5b461ed69594",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
