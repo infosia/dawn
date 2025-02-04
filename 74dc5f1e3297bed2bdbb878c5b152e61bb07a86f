@@ -54,6 +54,24 @@
       ],
       "revId": "74dc5f1e3297bed2bdbb878c5b152e61bb07a86f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d854cc7a_37969f9b",
+        "filename": "src/tint/lang/core/type/type.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T23:00:07Z",
+      "side": 1,
+      "message": "Updated all the helpers with the missing types.",
+      "parentUuid": "c979801c_0004a63c",
+      "revId": "74dc5f1e3297bed2bdbb878c5b152e61bb07a86f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
