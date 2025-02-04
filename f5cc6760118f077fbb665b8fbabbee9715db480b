@@ -16,6 +16,24 @@
       "message": "lgtm!\n\nI\u0027d find it easier to follow the code if it was spelled out somehere where limits functions are called. The code is hard to follow.\n\nApparently `NormalizeLimits` is call by/for an Adapter after the PhysicalDevice has provided the hardware\u0027s physical limits. `NormalizeLimi`t is a chance to enforce Dawn/WebGPU limits, over and above the hardware\u0027s limits.\n\nThere are so many places limits get affected\n\ndefault limits\nharware/drive limits\nadapter limits\nrequired limits\ndevice limits\n\nLike one idea would be rename NormalizeLimits to NormalizeAdapterLimitsAfterGettingPhysicsalLimits. It might seem silly but it would spell out where in those 5 steps above this function is used, without having to go find where it happens to be documented.\n\nhttps://dawn-review.googlesource.com/c/dawn/+/223860 adds `FixupDeviceLimits` (though maybe your review would suggest this should go somewhere else). It\u0027s point is to fix up the limits for the device AFTER the required limits have been validated. Maybe I should rename it to `FixupDeviceLimitsAfterRequiredLimitsHaveBeenValidated`",
       "revId": "f5cc6760118f077fbb665b8fbabbee9715db480b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "320124ef_8cab8a84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-04T12:56:07Z",
+      "side": 1,
+      "message": "TBH I find it confusing as well. What about \"EnforceSpecAndDawnInvariants\"? I think it makes it clear that it is that the backends can return whatever and that we will fix them.",
+      "parentUuid": "fa54d293_078a5619",
+      "revId": "f5cc6760118f077fbb665b8fbabbee9715db480b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
