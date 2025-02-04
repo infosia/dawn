@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d64cf70_e461aba9",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-02-04T14:58:01Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ll leave these disabled for now since that will provide some extra validation the Vulkan backend isn\u0027t using the features in compat mode.",
+      "parentUuid": "7cca6fe1_d6ad8364",
+      "revId": "78dff74ce78d2fb5908274c96a7424b3b953219f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6128103_dcc988b8",
