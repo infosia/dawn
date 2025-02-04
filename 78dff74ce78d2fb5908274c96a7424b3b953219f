@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7cca6fe1_d6ad8364",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-04T10:56:36Z",
+      "side": 1,
+      "message": "For most Vulkan features there shouldn\u0027t be a cost to enabling them. It\u0027s just that the spec says there might be a cost. But for these, either the HW supports the thing or it doesn\u0027t imho. (again, this is optional)",
+      "parentUuid": "8421a008_bf6fa2fb",
+      "revId": "78dff74ce78d2fb5908274c96a7424b3b953219f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6128103_dcc988b8",
         "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
         "patchSetId": 2
