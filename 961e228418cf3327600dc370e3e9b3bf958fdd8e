@@ -16,6 +16,118 @@
       "message": "PTAL and let me know if a different reviewer is preferred.",
       "revId": "961e228418cf3327600dc370e3e9b3bf958fdd8e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cba4ecc4_3929b7b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-04T10:40:18Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "961e228418cf3327600dc370e3e9b3bf958fdd8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e40b049a_af9d4a71",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-04T10:40:18Z",
+      "side": 1,
+      "message": "```suggestion\n        DAWN_ASSERT(mLastSharedBufferUsageSerial !\u003d kBeginningOfGPUTime);\n```\n\nSince it is used and updated only in that case.\n\nBut also in the case where the fences were never acquired, maybe we should directly return them instead of doing an immediate unnecessary wait + signal.",
+      "range": {
+        "startLine": 629,
+        "startChar": 20,
+        "endLine": 629,
+        "endChar": 36
+      },
+      "revId": "961e228418cf3327600dc370e3e9b3bf958fdd8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9059afc4_5c12c9d0",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-04T10:40:18Z",
+      "side": 1,
+      "message": "Could we have tests that cover the `WriteBuffer` and `MapAsync` cases if not present already?",
+      "revId": "961e228418cf3327600dc370e3e9b3bf958fdd8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4f78e57_8be2844f",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-04T10:40:18Z",
+      "side": 1,
+      "message": "Other backends might return more than one fence, so we could make tests accept that as well.",
+      "fixSuggestions": [
+        {
+          "fixId": "e860c23c_7e0000cd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/white_box/SharedBufferMemoryTests.cpp",
+              "range": {
+                "startLine": 358,
+                "startChar": 0,
+                "endLine": 359,
+                "endChar": 0
+              },
+              "replacement": "    ASSERT_GE(endState.fenceCount, 1u);\n"
+            },
+            {
+              "path": "src/dawn/tests/white_box/SharedBufferMemoryTests.cpp",
+              "range": {
+                "startLine": 379,
+                "startChar": 0,
+                "endLine": 380,
+                "endChar": 0
+              },
+              "replacement": "    ASSERT_GE(endState.fenceCount, 1u);\n"
+            },
+            {
+              "path": "src/dawn/tests/white_box/SharedBufferMemoryTests.cpp",
+              "range": {
+                "startLine": 401,
+                "startChar": 0,
+                "endLine": 402,
+                "endChar": 0
+              },
+              "replacement": "    ASSERT_GE(endState.fenceCount, 1u);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "961e228418cf3327600dc370e3e9b3bf958fdd8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
