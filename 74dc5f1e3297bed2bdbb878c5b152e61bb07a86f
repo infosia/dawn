@@ -1,0 +1,59 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c979801c_0004a63c",
+        "filename": "src/tint/lang/core/type/type.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-04T19:52:30Z",
+      "side": 1,
+      "message": "Are U64 and U8 both missing from here?",
+      "fixSuggestions": [
+        {
+          "fixId": "bb01fda7_a10114ab",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/type/type.cc",
+              "range": {
+                "startLine": 127,
+                "startChar": 0,
+                "endLine": 128,
+                "endChar": 0
+              },
+              "replacement": "    return IsAnyOf\u003cU32, U64, U8\u003e();\n"
+            },
+            {
+              "path": "src/tint/lang/core/type/type.cc",
+              "range": {
+                "startLine": 135,
+                "startChar": 0,
+                "endLine": 136,
+                "endChar": 0
+              },
+              "replacement": "    return Is([](const Vector* v) { return v-\u003eType()-\u003eIsAnyOf\u003cU32, U64, U8\u003e(); });\n"
+            },
+            {
+              "path": "src/tint/lang/core/type/type.cc",
+              "range": {
+                "startLine": 139,
+                "startChar": 0,
+                "endLine": 140,
+                "endChar": 0
+              },
+              "replacement": "    return IsAnyOf\u003cU32, U64, U8\u003e() || IsUnsignedIntegerVector();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "74dc5f1e3297bed2bdbb878c5b152e61bb07a86f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
