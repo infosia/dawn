@@ -40,9 +40,11 @@ cc_library(
   name = "spirv",
   srcs = [
     "builtin_fn.cc",
+    "builtin_type.cc",
   ],
   hdrs = [
     "builtin_fn.h",
+    "builtin_type.h",
   ],
   deps = [
     "//src/tint/lang/core/ir",

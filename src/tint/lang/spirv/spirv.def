@@ -39,6 +39,10 @@ import "src/tint/lang/core/address_space.def"
 import "src/tint/lang/core/access.def"
 import "src/tint/lang/core/texel_format.def"
 
+enum builtin_type {
+  __spirv_frexp_result
+}
+
 type bool
 type f32
 type f16
@@ -82,6 +86,11 @@ type input_attachment<T>
 
 type struct_with_runtime_array
 type sampled_image<T>
+
+@display("__spirv_frexp_result_{T}_i32")        type __spirv_frexp_result_i32<T>
+@display("__spirv_frexp_result_{T}_u32")        type __spirv_frexp_result_u32<T>
+@display("__spirv_frexp_result_vec{N}_{T}_i32") type __spirv_frexp_result_vec_i32<N: num, T>
+@display("__spirv_frexp_result_vec{N}_{T}_u32") type __spirv_frexp_result_vec_u32<N: num, T>
 
 match f32_f16: f32 | f16
 match iu32: i32 | u32
@@ -372,6 +381,10 @@ implicit(N: num, T: f32_f16, U: iu32) fn ldexp(vec<N, T>, vec<N, U>) -> vec<N, T
 implicit(T: f32_f16, S: function_private_workgroup_storage) fn modf(x: T, i: ptr<S, T, writable>) -> T
 implicit(T: f32_f16, N: num, S: function_private_workgroup_storage) fn modf(x: vec<N, T>,
                                                                             i: ptr<S, vec<N, T>, writable>) -> vec<N, T>
+implicit(T: f32_f16) fn frexpStruct<S: i32>(T) -> __spirv_frexp_result_i32<T>
+implicit(T: f32_f16) fn frexpStruct<S: u32>(T) -> __spirv_frexp_result_u32<T>
+implicit(N: num, T: f32_f16) fn frexpStruct<S: i32>(vec<N, T>) -> __spirv_frexp_result_vec_i32<N, T>
+implicit(N: num, T: f32_f16) fn frexpStruct<S: u32>(vec<N, T>) -> __spirv_frexp_result_vec_u32<N, T>
 
 ////////////////////////////////////////////////////////////////////////////////
 // SPV_KHR_integer_dot_product instructions

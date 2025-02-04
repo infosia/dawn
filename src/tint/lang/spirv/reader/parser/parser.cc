@@ -51,6 +51,7 @@ TINT_END_DISABLE_WARNING(NEWLINE_EOF);
 #include "src/tint/lang/core/type/builtin_structs.h"
 #include "src/tint/lang/spirv/builtin_fn.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
+#include "src/tint/lang/spirv/type/builtin_structs.h"
 #include "src/tint/lang/spirv/validate/validate.h"
 
 using namespace tint::core::fluent_types;  // NOLINT
@@ -791,6 +792,8 @@ class Parser {
                 return spirv::BuiltinFn::kLdexp;
             case GLSLstd450Modf:
                 return spirv::BuiltinFn::kModf;
+            case GLSLstd450FrexpStruct:
+                return spirv::BuiltinFn::kFrexpStruct;
             default:
                 break;
         }
@@ -806,6 +809,10 @@ class Parser {
             ext_opcode == GLSLstd450FindILsb || ext_opcode == GLSLstd450FindSMsb ||
             ext_opcode == GLSLstd450FindUMsb) {
             return {result_ty->DeepestElement()};
+        }
+        if (ext_opcode == GLSLstd450FrexpStruct) {
+            // For FrexpStruct we need to set the type of the exponent as the explict param.
+            return {result_ty->As<core::type::Struct>()->Members()[1]->Type()->DeepestElement()};
         }
         return {};
     }
@@ -836,6 +843,14 @@ class Parser {
         const auto spv_fn = GetGlslStd450SpirvEquivalentFuncName(ext_opcode);
         if (spv_fn != spirv::BuiltinFn::kNone) {
             auto explicit_params = GlslStd450ExplicitParams(ext_opcode, result_ty);
+
+            // For frexpStruct we need to switch the result type from the SPIR-V struct to the
+            // builtin internal struct for spirv.frexpStruct
+            if (spv_fn == spirv::BuiltinFn::kFrexpStruct) {
+                result_ty = spirv::type::BuildFrexpStruct(
+                    ty_, ir_.symbols, operands[0]->Type(),
+                    ty_.MatchWidth(explicit_params[0], operands[0]->Type()));
+            }
             Emit(b_.CallExplicit<spirv::ir::BuiltinCall>(result_ty, spv_fn, explicit_params,
                                                          operands),
                  inst.result_id());

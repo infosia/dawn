@@ -90,6 +90,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kReflect:
         case BuiltinFn::kFaceForward:
         case BuiltinFn::kLdexp:
+        case BuiltinFn::kFrexpStruct:
             break;
     }
     return core::ir::Instruction::Accesses{};

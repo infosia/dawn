@@ -39,9 +39,11 @@ load("@bazel_skylib//lib:selects.bzl", "selects")
 cc_library(
   name = "type",
   srcs = [
+    "builtin_structs.cc",
     "sampled_image.cc",
   ],
   hdrs = [
+    "builtin_structs.h",
     "sampled_image.h",
   ],
   deps = [
@@ -49,6 +51,7 @@ cc_library(
     "//src/tint/lang/core/constant",
     "//src/tint/lang/core/ir",
     "//src/tint/lang/core/type",
+    "//src/tint/lang/spirv",
     "//src/tint/utils",
     "//src/tint/utils/containers",
     "//src/tint/utils/diagnostic",

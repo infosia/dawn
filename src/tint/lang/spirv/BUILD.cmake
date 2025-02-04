@@ -48,6 +48,8 @@ include(lang/spirv/writer/BUILD.cmake)
 tint_add_target(tint_lang_spirv lib
   lang/spirv/builtin_fn.cc
   lang/spirv/builtin_fn.h
+  lang/spirv/builtin_type.cc
+  lang/spirv/builtin_type.h
 )
 
 tint_target_add_dependencies(tint_lang_spirv lib

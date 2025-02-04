@@ -43,6 +43,8 @@ libtint_source_set("spirv") {
   sources = [
     "builtin_fn.cc",
     "builtin_fn.h",
+    "builtin_type.cc",
+    "builtin_type.h",
   ]
   deps = [
     "${dawn_root}/src/utils:utils",

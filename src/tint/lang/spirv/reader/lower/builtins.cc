@@ -116,6 +116,9 @@ struct State {
                 case spirv::BuiltinFn::kModf:
                     Modf(builtin);
                     break;
+                case spirv::BuiltinFn::kFrexpStruct:
+                    FrexpStruct(builtin);
+                    break;
                 default:
                     TINT_UNREACHABLE() << "unknown spirv builtin: " << builtin->Func();
             }
@@ -329,6 +332,30 @@ struct State {
 
             auto* fract = b.Access(result_ty, c, 0_u);
             call->Result(0)->ReplaceAllUsesWith(fract->Result(0));
+        });
+        call->Destroy();
+    }
+
+    void FrexpStruct(spirv::ir::BuiltinCall* call) {
+        auto* arg = call->Args()[0];
+        auto* result_ty = call->Result(0)->Type()->As<core::type::Struct>();
+        auto* frexp_ty = result_ty->Members()[0]->Type();
+        auto* exp_ty = result_ty->Members()[1]->Type();
+
+        auto* frexp_result_ty = core::type::CreateFrexpResult(ty, ir.symbols, frexp_ty);
+        b.InsertBefore(call, [&] {
+            auto* c = b.Call(frexp_result_ty, core::BuiltinFn::kFrexp, arg);
+
+            if (exp_ty->DeepestElement() != ty.i32()) {
+                auto* fract = b.Access(frexp_ty, c, 0_u);
+                auto* exp = b.Access(ty.MatchWidth(ty.i32(), exp_ty), c, 1_u);
+
+                auto* cast = b.Bitcast(ty.MatchWidth(ty.u32(), exp_ty), exp);
+                auto* res = b.Construct(result_ty, fract, cast);
+                call->Result(0)->ReplaceAllUsesWith(res->Result(0));
+            } else {
+                call->Result(0)->ReplaceAllUsesWith(c->Result(0));
+            }
         });
         call->Destroy();
     }

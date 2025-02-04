@@ -144,6 +144,8 @@ const char* str(BuiltinFn i) {
             return "ldexp";
         case BuiltinFn::kModf:
             return "modf";
+        case BuiltinFn::kFrexpStruct:
+            return "frexpStruct";
         case BuiltinFn::kSdot:
             return "sdot";
         case BuiltinFn::kUdot:
@@ -215,6 +217,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kReflect:
         case BuiltinFn::kFaceForward:
         case BuiltinFn::kLdexp:
+        case BuiltinFn::kFrexpStruct:
             break;
     }
     return core::ir::Instruction::Accesses{};

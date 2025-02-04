@@ -57,6 +57,11 @@ std::string Preamble() {
   %ptr_function_float = OpTypePointer Function %float
   %ptr_function_v2float = OpTypePointer Function %v2float
 
+  %frexp_result_type_unsigned = OpTypeStruct %float %uint
+  %frexp_result_type_signed = OpTypeStruct %float %int
+  %frexp_v2_result_type_unsigned = OpTypeStruct %v2float %v2uint
+  %frexp_v2_result_type_signed = OpTypeStruct %v2float %v2int
+
   %int_10 = OpConstant %int 10
   %int_20 = OpConstant %int 20
 
@@ -729,6 +734,126 @@ TEST_F(SpirvParserTest, Modf_Vector) {
   $B1: {
     %2:ptr<function, vec2<f32>, read_write> = var
     %3:vec2<f32> = spirv.modf vec2<f32>(50.0f, 60.0f), %2
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, FrexpStruct_ScalarUnsigned) {
+    EXPECT_IR(Preamble() + R"(
+     %1 = OpExtInst %frexp_result_type_unsigned %glsl FrexpStruct %float_50
+     %2 = OpCompositeExtract %float %1 0
+     %3 = OpCompositeExtract %uint %1 1
+     OpReturn
+     OpFunctionEnd
+  )",
+              R"(
+tint_symbol_2 = struct @align(4) {
+  tint_symbol:f32 @offset(0)
+  tint_symbol_1:u32 @offset(4)
+}
+
+__spirv_frexp_result_f32_u32 = struct @align(4) {
+  fract:f32 @offset(0)
+  exp:u32 @offset(4)
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:__spirv_frexp_result_f32_u32 = spirv.frexpStruct<u32> 50.0f
+    %3:f32 = access %2, 0u
+    %4:u32 = access %2, 1u
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, FrexpStruct_ScalarSigned) {
+    EXPECT_IR(Preamble() + R"(
+     %1 = OpExtInst %frexp_result_type_signed %glsl FrexpStruct %float_50
+     %2 = OpCompositeExtract %float %1 0
+     %3 = OpCompositeExtract %int %1 1
+     OpReturn
+     OpFunctionEnd
+  )",
+              R"(
+tint_symbol_2 = struct @align(4) {
+  tint_symbol:f32 @offset(0)
+  tint_symbol_1:i32 @offset(4)
+}
+
+__spirv_frexp_result_f32_i32 = struct @align(4) {
+  fract:f32 @offset(0)
+  exp:i32 @offset(4)
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:__spirv_frexp_result_f32_i32 = spirv.frexpStruct<i32> 50.0f
+    %3:f32 = access %2, 0u
+    %4:i32 = access %2, 1u
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, FrexpStruct_VectorUnsigned) {
+    EXPECT_IR(Preamble() + R"(
+     %1 = OpExtInst %frexp_v2_result_type_unsigned %glsl FrexpStruct %v2float_50_60
+     %2 = OpCompositeExtract %v2float %1 0
+     %3 = OpCompositeExtract %v2uint %1 1
+     OpReturn
+     OpFunctionEnd
+  )",
+              R"(
+tint_symbol_2 = struct @align(8) {
+  tint_symbol:vec2<f32> @offset(0)
+  tint_symbol_1:vec2<u32> @offset(8)
+}
+
+__spirv_frexp_result_vec2_f32_vec2_u32 = struct @align(8) {
+  fract:vec2<f32> @offset(0)
+  exp:vec2<u32> @offset(8)
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:__spirv_frexp_result_vec2_f32_vec2_u32 = spirv.frexpStruct<u32> vec2<f32>(50.0f, 60.0f)
+    %3:vec2<f32> = access %2, 0u
+    %4:vec2<u32> = access %2, 1u
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, FrexpStruct_VectorSigned) {
+    EXPECT_IR(Preamble() + R"(
+     %1 = OpExtInst %frexp_v2_result_type_signed %glsl FrexpStruct %v2float_50_60
+     %2 = OpCompositeExtract %v2float %1 0
+     %3 = OpCompositeExtract %v2int %1 1
+     OpReturn
+     OpFunctionEnd
+  )",
+              R"(
+tint_symbol_2 = struct @align(8) {
+  tint_symbol:vec2<f32> @offset(0)
+  tint_symbol_1:vec2<i32> @offset(8)
+}
+
+__spirv_frexp_result_vec2_f32_vec2_i32 = struct @align(8) {
+  fract:vec2<f32> @offset(0)
+  exp:vec2<i32> @offset(8)
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:__spirv_frexp_result_vec2_f32_vec2_i32 = spirv.frexpStruct<i32> vec2<f32>(50.0f, 60.0f)
+    %3:vec2<f32> = access %2, 0u
+    %4:vec2<i32> = access %2, 1u
     ret
   }
 }
