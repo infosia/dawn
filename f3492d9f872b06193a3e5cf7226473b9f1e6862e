@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38ff4408_e80c6eea",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1769,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-04T21:35:04Z",
+      "side": 1,
+      "message": "```suggestion\n        return Append(ir.CreateInstruction\u003cir::Phony\u003e(InstructionResult(val-\u003eType()), val));\n```",
+      "range": {
+        "startLine": 1768,
+        "startChar": 0,
+        "endLine": 1769,
+        "endChar": 21
+      },
+      "revId": "f3492d9f872b06193a3e5cf7226473b9f1e6862e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1eca1e52_dc67bf97",
+        "filename": "src/tint/lang/core/ir/phony.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-04T21:35:04Z",
+      "side": 1,
+      "message": "```suggestion\n    /// The fixed number of operands accepted by phony instructions\n```",
+      "revId": "f3492d9f872b06193a3e5cf7226473b9f1e6862e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fe4838b_6c9896dc",
+        "filename": "src/tint/lang/core/ir/phony.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-04T21:35:04Z",
+      "side": 1,
+      "message": "```suggestion\n    /// The fixed number of results returned by phony instructions\n```",
+      "revId": "f3492d9f872b06193a3e5cf7226473b9f1e6862e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
