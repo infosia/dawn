@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed5c76c0_48f368e4",
+        "filename": "src/tint/lang/msl/writer/constant_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-04T19:57:35Z",
+      "side": 1,
+      "message": "Does metal have a suffix for this? From the spec:\n\n```\n• the u or U suffix for unsigned integer literals.\n• the l or L suffix for signed long integer literals.\n```\n\nBut it doesn\u0027t mention if you can do `ul` for unsigned long integer literals?",
+      "revId": "edf837866bd6e909ade946c3f739dbe028758d24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
