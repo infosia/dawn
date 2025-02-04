@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c34141b1_2225dacd",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T18:06:17Z",
+      "side": 1,
+      "message": "Nit: Could use `AccessWithResult(call-\u003eDetachResult(), ...)`",
+      "revId": "6746b8006c37ef861e8670e4f9afe820586c6f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
