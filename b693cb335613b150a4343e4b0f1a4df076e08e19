@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc049d04_8dd9708c",
+        "filename": "src/tint/lang/wgsl/resolver/subgroup_matrix_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-04T19:37:06Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ebb19518_228ecbd3",
+      "revId": "b693cb335613b150a4343e4b0f1a4df076e08e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01132ebf_573aa7a6",
