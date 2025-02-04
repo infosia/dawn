@@ -42,6 +42,7 @@
 #include "src/tint/lang/core/type/struct.h"
 #include "src/tint/lang/core/type/texture.h"
 #include "src/tint/lang/core/type/u32.h"
+#include "src/tint/lang/core/type/u64.h"
 #include "src/tint/lang/core/type/u8.h"
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/utils/rtti/switch.h"
@@ -111,7 +112,7 @@ bool Type::IsFloatScalarOrVector() const {
 }
 
 bool Type::IsIntegerScalar() const {
-    return IsAnyOf<U32, I32, U8, I8>();
+    return IsAnyOf<U32, I32, U64, U8, I8>();
 }
 
 bool Type::IsIntegerVector() const {
