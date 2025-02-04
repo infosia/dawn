@@ -125,6 +125,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d870c7a1_671db775",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-04T07:56:56Z",
+      "side": 1,
+      "message": "I\u0027ve added those details as comments. Thanks!",
+      "parentUuid": "c4126794_4fdb5bd0",
+      "revId": "d0f707dfd2f8ad9e7453a291173fe60f850e9ed2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d03a3642_07e3ba15",
