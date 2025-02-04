@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b213acae_d643e5b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-02-04T22:28:23Z",
+      "side": 1,
+      "message": "Can we please turn this off until it stops breaking sites?\n\nI get it\u0027s experimental and I get that you opt into it but, it\u0027s also common to ask for all features and it would be common for devs to turn on the flags. We wouldn\u0027t allow this kind of breakage for anyting else in Canary. I don\u0027t think we should be allowing it here.\n\nI also don\u0027t think this would have been enabled if the CTS had found this issue before it landed. So, let\u0027s go back to the momemt before it was landed, assume the CTS failed, and now it needs to be fixed. I\u0027ll add a CTS test. Then I\u0027ll take a glance and see if I can fix it.",
+      "revId": "90878951bdbbd23a467bb409361f0dd42c3f2ab3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
