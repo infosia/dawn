@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ec87a5a_bc67a596",
+        "filename": "src/tint/lang/msl/msl.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T19:49:08Z",
+      "side": 1,
+      "message": "Added u64.",
+      "parentUuid": "87dcc911_90a48505",
+      "revId": "a1b5a8559e64dc1df4ac4d480b19580904b681de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4bb3ef1d_f9f0e486",
@@ -59,6 +77,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e7b1a68_d61c6474",
+        "filename": "src/tint/lang/msl/msl.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T19:49:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bb3ef1d_f9f0e486",
+      "range": {
+        "startLine": 367,
+        "startChar": 168,
+        "endLine": 367,
+        "endChar": 182
+      },
+      "revId": "a1b5a8559e64dc1df4ac4d480b19580904b681de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10393df4_eb4e74d4",
@@ -72,6 +114,24 @@
       "writtenOn": "2025-02-03T21:14:43Z",
       "side": 1,
       "message": "Will these ever be supported, or should they be INVALID?",
+      "revId": "a1b5a8559e64dc1df4ac4d480b19580904b681de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74e20efc_1012bd7e",
+        "filename": "test/tint/builtins/gen/var/subgroupMatrixStore/2e04bd.wgsl.expected.ir.msl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T19:49:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10393df4_eb4e74d4",
       "revId": "a1b5a8559e64dc1df4ac4d480b19580904b681de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
