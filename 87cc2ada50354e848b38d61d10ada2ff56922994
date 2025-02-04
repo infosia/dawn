@@ -16,6 +16,24 @@
       "message": "I suspect this else branch can go away due to this change. I will follow up this CL with an investigation and possible removal.",
       "revId": "87cc2ada50354e848b38d61d10ada2ff56922994",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaee4e80_36c6d56b",
+        "filename": "src/tint/lang/wgsl/writer/ir_to_program/ir_to_program.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-04T21:28:19Z",
+      "side": 1,
+      "message": "https://issues.chromium.org/issues/394353302",
+      "parentUuid": "1cc1481f_297a1820",
+      "revId": "87cc2ada50354e848b38d61d10ada2ff56922994",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
