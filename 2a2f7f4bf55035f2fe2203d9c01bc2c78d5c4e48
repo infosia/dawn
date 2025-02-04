@@ -16,6 +16,23 @@
       "message": "lgtm w/ nits",
       "revId": "2a2f7f4bf55035f2fe2203d9c01bc2c78d5c4e48",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97ed5ff7_aa3ac26e",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T21:45:22Z",
+      "side": 1,
+      "message": "A phony should never be used by another instruction, so I don\u0027t think we should be adding an instruction result.",
+      "revId": "2a2f7f4bf55035f2fe2203d9c01bc2c78d5c4e48",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
