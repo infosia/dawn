@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "578c9671_95e4033b",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 5
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T19:35:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e0ec4b4_2f61a6e3",
+      "revId": "b693cb335613b150a4343e4b0f1a4df076e08e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8338d224_f4cb8d43",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-03T21:07:40Z",
       "side": 1,
       "message": "Is this the error generated from intrinsics? Would be nice if we could get more information like for this one `types are wrong` or or the one below the right vs let or the one above about sizes not matching.",
+      "revId": "b693cb335613b150a4343e4b0f1a4df076e08e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebb19518_228ecbd3",
+        "filename": "src/tint/lang/wgsl/resolver/subgroup_matrix_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T19:35:46Z",
+      "side": 1,
+      "message": "Yes, I only matched the substring to keep the test shorter and less prone to small changes, but the full messages that the user gets are like:\n```\nerror: no matching call to subgroupMatrixMultiply(subgroup_matrix_left\u003cf32, 8, 8\u003e, subgroup_matrix_left\u003cf32, 8, 8\u003e)\n\n1 candidate function:\n • subgroupMatrixMultiply(subgroup_matrix\u003cleft, S, K, R\u003e  ✓ , subgroup_matrix\u003cright, S, C, K\u003e  ✗ ) -\u003e subgroup_matrix\u003cresult, S, C, R\u003e where:\n      ✓  S is f32, f16, u32 or i32\n\n  let result \u003d subgroupMatrixMultiply(lhs, lhs);\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n```",
+      "parentUuid": "8338d224_f4cb8d43",
       "revId": "b693cb335613b150a4343e4b0f1a4df076e08e19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa45e3ae_8c5182e1",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 5
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T19:35:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01132ebf_573aa7a6",
+      "revId": "b693cb335613b150a4343e4b0f1a4df076e08e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d85a711_e3a49199",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-02-03T21:07:40Z",
       "side": 1,
       "message": "INVALID?",
+      "revId": "b693cb335613b150a4343e4b0f1a4df076e08e19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc02ac2e_c9ef5712",
+        "filename": "test/tint/builtins/gen/literal/subgroupMatrixMultiply/077fe6.wgsl.expected.ir.msl",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T19:35:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d85a711_e3a49199",
       "revId": "b693cb335613b150a4343e4b0f1a4df076e08e19",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
