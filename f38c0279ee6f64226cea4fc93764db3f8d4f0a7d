@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7027fab_e1565064",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 6
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T01:54:57Z",
+      "side": 1,
+      "message": "Yeah that works. Didn\u0027t do it originally as for `u8` and `i8` as they don\u0027t match the array element type, but I can add those as separate entries later.",
+      "parentUuid": "5b656c41_031779bc",
+      "range": {
+        "startLine": 773,
+        "startChar": 0,
+        "endLine": 776,
+        "endChar": 199
+      },
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02cfa077_74b7b93b",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-02-03T20:59:07Z",
       "side": 1,
       "message": "Are these 0\u0027s correct? We know the element type, and the count as this isn\u0027t a runtime array. So, don\u0027t we know the `align`, `size`, `stride` and `stride_implicit` sizes?",
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39d9280d_ef3a64f6",
+        "filename": "src/tint/lang/core/intrinsic/type_matchers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T01:54:57Z",
+      "side": 1,
+      "message": "Filled them in.",
+      "parentUuid": "02cfa077_74b7b93b",
       "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f51a244_97e960b9",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T01:54:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c90085_adcf68c3",
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ff53e3a_7a7046b1",
@@ -71,6 +131,24 @@
       "writtenOn": "2025-02-03T20:59:07Z",
       "side": 1,
       "message": "What happened to 145?",
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83ff0a2d_bcd814a6",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T01:54:57Z",
+      "side": 1,
+      "message": "It\u0027s coming for `subgroup_matrix_load`, just added them in a different order to make tests work.",
+      "parentUuid": "7ff53e3a_7a7046b1",
       "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0efdfcde_732f40b6",
+        "filename": "test/tint/builtins/gen/literal/subgroupMatrixStore/09c565.wgsl",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T01:54:57Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "f263256a_7aa127ef",
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bfe6fdd_c00af32a",
@@ -105,6 +201,24 @@
       "writtenOn": "2025-02-03T20:59:07Z",
       "side": 1,
       "message": "Should these be marked as `INVALID` for now as they don\u0027t have backend support so the test is not valid? (That was how i treated other extensions which didn\u0027t exist for certain backends)",
+      "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ce7df35_3181ef15",
+        "filename": "test/tint/builtins/gen/literal/subgroupMatrixStore/09c565.wgsl.expected.glsl",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-04T01:54:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bfe6fdd_c00af32a",
       "revId": "f38c0279ee6f64226cea4fc93764db3f8d4f0a7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
