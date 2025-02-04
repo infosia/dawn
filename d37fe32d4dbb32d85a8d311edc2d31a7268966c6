@@ -16,6 +16,24 @@
       "message": "We don\u0027t do this type of comparison in other tests (like array or vector). Instead we do something like:\n\n```suggestion\n    EXPECT_TRUE(s-\u003eElemType()-\u003eIs\u003cF32\u003e());\n```\n\nWhen cloning, the types will be different because they come from different type managers.",
       "revId": "d37fe32d4dbb32d85a8d311edc2d31a7268966c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5780729a_734aae37",
+        "filename": "src/tint/lang/core/type/binding_array_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-04T14:13:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d1e88b1_144d72f4",
+      "revId": "d37fe32d4dbb32d85a8d311edc2d31a7268966c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
