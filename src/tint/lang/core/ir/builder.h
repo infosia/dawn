@@ -60,6 +60,7 @@
 #include "src/tint/lang/core/ir/multi_in_block.h"
 #include "src/tint/lang/core/ir/next_iteration.h"
 #include "src/tint/lang/core/ir/override.h"
+#include "src/tint/lang/core/ir/phony.h"
 #include "src/tint/lang/core/ir/return.h"
 #include "src/tint/lang/core/ir/store.h"
 #include "src/tint/lang/core/ir/store_vector_element.h"
@@ -1753,6 +1754,20 @@ class Builder {
     /// Creates an unused instruction
     /// @returns the instruction
     ir::Unused* Unused();
+
+    /// Creates a new phony assignment declaration
+    /// @param value the assigment value
+    /// @returns the instruction
+    template <typename VALUE>
+    ir::Phony* Phony(VALUE&& value) {
+        auto* val = Value(std::forward<VALUE>(value));
+        if (DAWN_UNLIKELY(!val)) {
+            TINT_ASSERT(val);
+            return nullptr;
+        }
+        auto* phony = Append(ir.CreateInstruction<ir::Phony>(InstructionResult(val->Type()), val));
+        return phony;
+    }
 
     /// Creates a new runtime value
     /// @param type the return type
