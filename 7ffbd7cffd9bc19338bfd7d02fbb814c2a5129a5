@@ -33,6 +33,41 @@
       "message": "ptal",
       "revId": "7ffbd7cffd9bc19338bfd7d02fbb814c2a5129a5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06066a29_bd6480f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-04T13:37:00Z",
+      "side": 1,
+      "message": "Does turning on backend validation help find what the driver might be complaining about? Are we using ANGLE or the native driver in that failure? I really don\u0027t see how that call can fail as long as we have a valid handle or use the same texture target. +CC Geoff",
+      "parentUuid": "aeb9aa23_7fd7def4",
+      "revId": "7ffbd7cffd9bc19338bfd7d02fbb814c2a5129a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da80894d_dd3faae5",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-04T13:37:00Z",
+      "side": 1,
+      "message": "The mip levels should always be valid values. The defaulting of values is done in the frontend and never a worry after the texture/view constructors.",
+      "revId": "7ffbd7cffd9bc19338bfd7d02fbb814c2a5129a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
