@@ -36,8 +36,12 @@
 
 namespace dawn::native {
 
-UploadHandle::UploadHandle(uint64_t startOffset, Ref<BufferBase> stagingBuffer)
-    : mStartOffset(startOffset), mStagingBuffer(std::move(stagingBuffer)) {}
+UploadHandle::UploadHandle(uint64_t startOffset,
+                           Ref<BufferBase> stagingBuffer,
+                           bool isSubAllocation)
+    : mStartOffset(startOffset),
+      mStagingBuffer(std::move(stagingBuffer)),
+      mIsSubAllocation(isSubAllocation) {}
 
 UploadHandle& UploadHandle::operator=(UploadHandle&& other) {
     mStartOffset = other.mStartOffset;
@@ -54,7 +58,12 @@ bool UploadHandle::IsEmpty() const {
 }
 
 void UploadHandle::Release() {
-    mStagingBuffer = nullptr;
+    if (!mIsSubAllocation && mStagingBuffer.Get() != nullptr) {
+        DynamicUploader* dynamicUploader = mStagingBuffer->GetDevice()->GetDynamicUploader();
+        uint64_t stagingMemory = mStagingBuffer->GetAllocatedSize();
+        mStagingBuffer = nullptr;
+        dynamicUploader->TrackStagingMemorySizeToRelease(stagingMemory);
+    }
 }
 
 uint64_t UploadHandle::GetStartOffset() const {
@@ -126,7 +135,7 @@ ResultOrError<UploadHandle> DynamicUploader::AllocatePersistent(uint64_t allocat
 
     DAWN_ASSERT(targetRingBuffer->mStagingBuffer != nullptr);
 
-    return UploadHandle(startOffset, targetRingBuffer->mStagingBuffer);
+    return UploadHandle(startOffset, targetRingBuffer->mStagingBuffer, /*isSubAllcoation=*/true);
 }
 
 ResultOrError<UploadHandle> DynamicUploader::AllocateTransient(uint64_t allocationSize,
@@ -146,7 +155,7 @@ ResultOrError<UploadHandle> DynamicUploader::AllocateTransient(uint64_t allocati
         DAWN_TRY_ASSIGN(stagingBuffer, mDevice->CreateBuffer(&bufferDesc));
     }
 
-    return UploadHandle(0, std::move(stagingBuffer));
+    return UploadHandle(0, std::move(stagingBuffer), /*isSubAllcoation=*/false);
 }
 
 void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll) {
@@ -165,6 +174,8 @@ void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeA
             i++;
         }
     }
+
+    mReleasedStagingMemorySizes.ClearUpTo(lastCompletedSerial);
 }
 
 ResultOrError<UploadHandle> DynamicUploader::Allocate(uint64_t allocationSize,
@@ -178,6 +189,31 @@ ResultOrError<UploadHandle> DynamicUploader::Allocate(uint64_t allocationSize,
     }
 
     return AllocatePersistent(allocationSize, serial, offsetAlignment);
+}
+
+void DynamicUploader::FlushIfNecessary() const {
+    constexpr uint64_t kStagingMemoryToReleaseThreshold = 16 * 1024 * 1024;
+
+    uint64_t totalSize = 0;
+    for (uint64_t stagingMemorySize : mReleasedStagingMemorySizes.IterateAll()) {
+        totalSize += stagingMemorySize;
+    }
+    if (totalSize >= kStagingMemoryToReleaseThreshold) {
+        mDevice->GetQueue()->ForceEventualFlushOfCommands();
+    }
+}
+
+void DynamicUploader::TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize) {
+    ExecutionSerial pendingSerial = mDevice->GetQueue()->GetPendingCommandSerial();
+
+    if (mReleasedStagingMemorySizes.Empty() ||
+        mReleasedStagingMemorySizes.LastSerial() < pendingSerial) {
+        mReleasedStagingMemorySizes.Enqueue(stagingMemorySize, pendingSerial);
+    } else {
+        DAWN_ASSERT(mReleasedStagingMemorySizes.LastSerial() == pendingSerial &&
+                    mReleasedStagingMemorySizes.LastValue().size() == 1);
+        mReleasedStagingMemorySizes.LastValue()[0] += stagingMemorySize;
+    }
 }
 
 }  // namespace dawn::native
