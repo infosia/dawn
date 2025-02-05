@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-02-03 08:22:49AM
+# Last rolled: 2025-02-05 06:04:10PM
 
 # conflicts_allowed: true
 
@@ -12771,9 +12771,6 @@ crbug.com/0000 [ linux nvidia ] webgpu:idl,javascript:limits:type="adapter" [ Fa
 crbug.com/0000 [ apple mac ] webgpu:idl,javascript:limits:type="device" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:idl,javascript:limits:type="device" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:idl,javascript:obj,Object_keys:type="adapter" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:idl,javascript:setlike,requiredFeatures:type="adapter" [ Failure ]
-crbug.com/0000 [ android-pixel-6 ] webgpu:idl,javascript:setlike,requiredFeatures:type="device" [ Failure ]
-crbug.com/0000 [ linux nvidia ] webgpu:idl,javascript:setlike,requiredFeatures:type="device" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:print_environment:info: [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:shader,execution,expression,access,array,index:matrix:inputSource="const";elementType="f32" [ Failure ]
 crbug.com/0000 [ intel win ] webgpu:shader,execution,expression,binary,ai_arithmetic:remainder_vector_scalar:inputSource="const";vectorize_lhs=4 [ Failure ]

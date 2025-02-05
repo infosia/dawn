@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-02-03 08:22:49AM
+# Last rolled: 2025-02-05 06:04:10PM
 
 # conflicts_allowed: true
 
@@ -97,7 +97,6 @@
 # crbug.com/388318201 Add tag min-es31 once infra change is landed
 webgpu:api,operation,sampling,anisotropy:anisotropic_filter_mipmap_color:maxAnisotropy=4 [ Skip ]
 webgpu:api,validation,capability_checks,features,texture_formats:check_capability_guarantees:* [ Skip ]
-
 
 ################################################################################
 # Temporary Skip Expectations
