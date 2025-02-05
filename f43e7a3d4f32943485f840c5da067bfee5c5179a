@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49e591f2_aa338c6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-05T13:34:16Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "f43e7a3d4f32943485f840c5da067bfee5c5179a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fefaae3a_17c5b30a",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-05T13:34:16Z",
+      "side": 1,
+      "message": "The words Persistent and Transient are swapped: persistent means that it can live a long time, so it should be used for mappedAtCreation, while transient means that it will live only a known, small amount of time.",
+      "range": {
+        "startLine": 118,
+        "startChar": 45,
+        "endLine": 118,
+        "endChar": 62
+      },
+      "revId": "f43e7a3d4f32943485f840c5da067bfee5c5179a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
