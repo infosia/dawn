@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1773a46e_8e4de3fa",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-05T07:16:17Z",
+      "side": 1,
+      "message": "Replace absl::popcount with ityp::bitset.count(). Done.",
+      "parentUuid": "ddf8008e_9dcb00cd",
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ea389d4_89e56c1f",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-01-29T16:42:22Z",
       "side": 1,
       "message": "The name confused me for a second. `GetImmediateByteOffsetInPipeline`?",
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f36bf8c3_d5f3daae",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-05T07:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea389d4_89e56c1f",
       "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -93,6 +129,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb0e7c5d_a96962b0",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-05T07:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b224b2c8_c5aff43e",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 10
+      },
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60a25604_507986a3",
@@ -124,6 +184,24 @@
       "side": 1,
       "message": "Agree. And the stacked CL https://dawn-review.googlesource.com/c/dawn/+/221974/10 did this. Maybe we don;t need to seperate them as two CL. I\u0027ll merge that stacked CL into this one.",
       "parentUuid": "60a25604_507986a3",
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "439e33dc_f6b089c4",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-05T07:16:17Z",
+      "side": 1,
+      "message": "Stacked CL merged. Mark this comment as Done. And PTAL for this part.",
+      "parentUuid": "059dfd5c_ffd4a2f2",
       "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -191,6 +269,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5b3509e_92b6df7a",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-05T07:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05fe9017_4c31fc1b",
+      "range": {
+        "startLine": 387,
+        "startChar": 64,
+        "endLine": 387,
+        "endChar": 79
+      },
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6ed4662_2919c202",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-05T07:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71d03077_8aee8864",
+      "range": {
+        "startLine": 387,
+        "startChar": 47,
+        "endLine": 387,
+        "endChar": 63
+      },
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ace8fc6d_3c04d223",
@@ -222,6 +348,24 @@
           ]
         }
       ],
+      "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf6820c2_3e5e4002",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-05T07:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ace8fc6d_3c04d223",
       "revId": "9301824320f65ea93d8f701f1e393bbc37724c43",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
