@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef4d9b3d_8dcb18da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-05T17:43:25Z",
+      "side": 1,
+      "message": "I was able to reproduce the `./tools/run fuzz --check` failure locally, and was actively investigating it.\n\nAs part of that I wanted to see what `main` was doing with the shader to see what was different. Initially, before pulling from upstream, I was able to get a failure for the specific shader, but it was a different error.\n\nAfter pulling and syncing, the failure appears to have disappeared entirely, both from `main` and my CL. So I think the failure was for something outside of my CL. \n\nUploading a new version of the CL doesn\u0027t appear to have changed anything, other than rebasing. I am going to send it to the commit queue again.",
+      "revId": "a5413c831b08a6fe6099b5122259ee867f68283b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
