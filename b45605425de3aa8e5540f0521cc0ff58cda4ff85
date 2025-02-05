@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f841da5_2bbcb134",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-05T20:58:41Z",
+      "side": 1,
+      "message": "LGTM modulo Dan\u0027s comments.",
+      "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "34190bee_6dbe1320",
