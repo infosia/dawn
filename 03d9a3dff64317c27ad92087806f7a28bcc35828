@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e5f5aa3_f08410ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-05T20:42:22Z",
+      "side": 1,
+      "message": "Needed changes in new files, so review bits got clearer",
+      "revId": "03d9a3dff64317c27ad92087806f7a28bcc35828",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
