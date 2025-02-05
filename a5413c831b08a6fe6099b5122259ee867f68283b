@@ -34,6 +34,24 @@
       "parentUuid": "ef4d9b3d_8dcb18da",
       "revId": "a5413c831b08a6fe6099b5122259ee867f68283b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdb247b0_a695c3a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-05T19:54:16Z",
+      "side": 1,
+      "message": "I have figured out why my reproduction was flakey, one of the build commands I was using was for `tint` only, not `all`, so I wasn\u0027t always rebuilding the fuzzer.\n\nThis doesn\u0027t repro on HEAD, but does on my CL. Will continue to investigate.",
+      "parentUuid": "92c06383_8e375bb4",
+      "revId": "a5413c831b08a6fe6099b5122259ee867f68283b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
