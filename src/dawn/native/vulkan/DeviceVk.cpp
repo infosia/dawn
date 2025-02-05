@@ -95,6 +95,14 @@ Device::Device(AdapterBase* adapter,
       mDebugPrefix(GetNextDeviceDebugPrefix()) {}
 
 MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
+    if (GetInstance()->IsBackendValidationEnabled() &&
+        !IsToggleEnabled(Toggle::UseUserDefinedLabelsInBackend)) {
+        return DAWN_VALIDATION_ERROR(
+            "Backend object labels are required to map VVL errors to a wgpu::Device. Please enable "
+            "\"%s\".",
+            ToggleEnumToName(Toggle::UseUserDefinedLabelsInBackend));
+    }
+
     // Copy the adapter's device info to the device so that we can change the "knobs"
     mDeviceInfo = ToBackend(GetPhysicalDevice())->GetDeviceInfo();
 
