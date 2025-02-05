@@ -173,6 +173,8 @@ enum builtin_type {
   subgroup_matrix_left
   subgroup_matrix_right
   subgroup_matrix_result
+  // sized_binding_array
+  binding_array
 
   // Internal types.
   __atomic_compare_exchange_result_i32
