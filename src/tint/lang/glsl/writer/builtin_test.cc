@@ -1292,9 +1292,9 @@ TEST_F(GlslWriterTest, BuiltinTextureLoad_Storage2D) {
 precision highp float;
 precision highp int;
 
-layout(binding = 0, rg32f) uniform highp readonly image2D v;
+layout(binding = 0, rg32f) uniform highp readonly image2D f_v;
 void main() {
-  vec4 x = imageLoad(v, ivec2(1, 2));
+  vec4 x = imageLoad(f_v, ivec2(1, 2));
 }
 )");
 }
@@ -1323,9 +1323,9 @@ TEST_F(GlslWriterTest, BuiltinTextureStore1D) {
 precision highp float;
 precision highp int;
 
-layout(binding = 0, r32f) uniform highp writeonly image2D v;
+layout(binding = 0, r32f) uniform highp writeonly image2D f_v;
 void main() {
-  imageStore(v, ivec2(1, 0), vec4(0.5f, 0.0f, 0.0f, 1.0f));
+  imageStore(f_v, ivec2(1, 0), vec4(0.5f, 0.0f, 0.0f, 1.0f));
 }
 )");
 }
@@ -1351,9 +1351,9 @@ TEST_F(GlslWriterTest, BuiltinTextureStore3D) {
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
 
-layout(binding = 0, r32f) uniform highp writeonly image3D v;
+layout(binding = 0, r32f) uniform highp writeonly image3D f_v;
 void main() {
-  imageStore(v, ivec3(1, 2, 3), vec4(0.5f, 0.0f, 0.0f, 1.0f));
+  imageStore(f_v, ivec3(1, 2, 3), vec4(0.5f, 0.0f, 0.0f, 1.0f));
 }
 )");
 }
@@ -1379,9 +1379,9 @@ TEST_F(GlslWriterTest, BuiltinTextureStoreArray) {
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
 
-layout(binding = 0, rgba32f) uniform highp writeonly image2DArray v;
+layout(binding = 0, rgba32f) uniform highp writeonly image2DArray f_v;
 void main() {
-  imageStore(v, ivec3(ivec2(1, 2), int(3u)), vec4(0.5f, 0.40000000596046447754f, 0.30000001192092895508f, 1.0f));
+  imageStore(f_v, ivec3(ivec2(1, 2), int(3u)), vec4(0.5f, 0.40000000596046447754f, 0.30000001192092895508f, 1.0f));
 }
 )");
 }

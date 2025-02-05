@@ -15,11 +15,11 @@ struct FragmentOutputs {
 };
 
 layout(location = 0) uniform tint_push_constant_struct tint_push_constants;
-FragmentOutputs main_inner() {
+FragmentOutputs tint_symbol_inner() {
   return FragmentOutputs(1.0f, 1u);
 }
 void main() {
-  FragmentOutputs v = main_inner();
+  FragmentOutputs v = tint_symbol_inner();
   gl_FragDepth = clamp(v.frag_depth, tint_push_constants.tint_frag_depth_min, tint_push_constants.tint_frag_depth_max);
   gl_SampleMask[0u] = int(v.sample_mask);
 }

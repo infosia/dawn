@@ -7,11 +7,12 @@ precision highp float;
 precision highp int;
 
 layout(binding = 0, std430)
-buffer f_prevent_dce_block_ssbo {
+buffer prevent_dce_block_1_ssbo {
   f16vec4 inner;
 } v;
 f16vec4 tint_bitcast_to_f16(uvec2 src) {
-  return f16vec4(unpackFloat2x16(src.x), unpackFloat2x16(src.y));
+  uvec2 v_1 = uvec2(src);
+  return f16vec4(unpackFloat2x16(v_1.x), unpackFloat2x16(v_1.y));
 }
 f16vec4 bitcast_bc3994() {
   uvec2 arg_0 = uvec2(1u);
@@ -32,7 +33,8 @@ buffer prevent_dce_block_1_ssbo {
   f16vec4 inner;
 } v;
 f16vec4 tint_bitcast_to_f16(uvec2 src) {
-  return f16vec4(unpackFloat2x16(src.x), unpackFloat2x16(src.y));
+  uvec2 v_1 = uvec2(src);
+  return f16vec4(unpackFloat2x16(v_1.x), unpackFloat2x16(v_1.y));
 }
 f16vec4 bitcast_bc3994() {
   uvec2 arg_0 = uvec2(1u);
@@ -55,9 +57,10 @@ struct VertexOutput {
   f16vec4 prevent_dce;
 };
 
-layout(location = 0) flat out f16vec4 tint_interstage_location0;
+layout(location = 0) flat out f16vec4 vertex_main_loc0_Output;
 f16vec4 tint_bitcast_to_f16(uvec2 src) {
-  return f16vec4(unpackFloat2x16(src.x), unpackFloat2x16(src.y));
+  uvec2 v = uvec2(src);
+  return f16vec4(unpackFloat2x16(v.x), unpackFloat2x16(v.y));
 }
 f16vec4 bitcast_bc3994() {
   uvec2 arg_0 = uvec2(1u);
@@ -65,14 +68,16 @@ f16vec4 bitcast_bc3994() {
   return res;
 }
 VertexOutput vertex_main_inner() {
-  VertexOutput v = VertexOutput(vec4(0.0f), f16vec4(0.0hf));
-  v.pos = vec4(0.0f);
-  v.prevent_dce = bitcast_bc3994();
-  return v;
+  VertexOutput tint_symbol = VertexOutput(vec4(0.0f), f16vec4(0.0hf));
+  tint_symbol.pos = vec4(0.0f);
+  tint_symbol.prevent_dce = bitcast_bc3994();
+  return tint_symbol;
 }
 void main() {
   VertexOutput v_1 = vertex_main_inner();
-  gl_Position = vec4(v_1.pos.x, -(v_1.pos.y), ((2.0f * v_1.pos.z) - v_1.pos.w), v_1.pos.w);
-  tint_interstage_location0 = v_1.prevent_dce;
+  gl_Position = v_1.pos;
+  gl_Position.y = -(gl_Position.y);
+  gl_Position.z = ((2.0f * gl_Position.z) - gl_Position.w);
+  vertex_main_loc0_Output = v_1.prevent_dce;
   gl_PointSize = 1.0f;
 }

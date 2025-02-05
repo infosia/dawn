@@ -16,7 +16,7 @@ struct x_B4_BuildInformation {
 };
 
 layout(binding = 2, std430)
-buffer f_sspp962805860buildInformation_block_ssbo {
+buffer sspp962805860buildInformation_block_1_ssbo {
   x_B4_BuildInformation inner;
 } v;
 void main_1() {

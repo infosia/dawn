@@ -11,7 +11,7 @@ struct SB_RW_atomic {
 };
 
 layout(binding = 0, std430)
-buffer f_sb_rw_block_ssbo {
+buffer sb_rw_block_1_ssbo {
   SB_RW_atomic inner;
 } v;
 void atomicExchange_d59712() {

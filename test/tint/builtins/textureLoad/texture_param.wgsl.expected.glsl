@@ -9,7 +9,7 @@ struct TintTextureUniformData {
 };
 
 layout(binding = 0, std140)
-uniform v_tint_symbol_ubo {
+uniform tint_symbol_1_1_ubo {
   TintTextureUniformData inner;
 } v;
 uniform highp isampler2D arg_0;
@@ -27,8 +27,9 @@ vec4 vertex_main_inner() {
   return vec4(0.0f);
 }
 void main() {
-  vec4 v_4 = vertex_main_inner();
-  gl_Position = vec4(v_4.x, -(v_4.y), ((2.0f * v_4.z) - v_4.w), v_4.w);
+  gl_Position = vertex_main_inner();
+  gl_Position.y = -(gl_Position.y);
+  gl_Position.z = ((2.0f * gl_Position.z) - gl_Position.w);
   gl_PointSize = 1.0f;
 }
 //
@@ -44,7 +45,7 @@ struct TintTextureUniformData {
 };
 
 layout(binding = 0, std140)
-uniform f_tint_symbol_ubo {
+uniform tint_symbol_1_1_ubo {
   TintTextureUniformData inner;
 } v;
 uniform highp isampler2D arg_0;
@@ -71,7 +72,7 @@ struct TintTextureUniformData {
 };
 
 layout(binding = 0, std140)
-uniform tint_symbol_1_ubo {
+uniform tint_symbol_1_1_ubo {
   TintTextureUniformData inner;
 } v;
 uniform highp isampler2D arg_0;

@@ -8,8 +8,8 @@ precision highp int;
 
 
 struct frexp_result_f16 {
-  float16_t member_0;
-  int member_1;
+  float16_t fract;
+  int exp;
 };
 
 void frexp_5257dd() {
@@ -26,8 +26,8 @@ void main() {
 
 
 struct frexp_result_f16 {
-  float16_t member_0;
-  int member_1;
+  float16_t fract;
+  int exp;
 };
 
 void frexp_5257dd() {
@@ -45,8 +45,8 @@ void main() {
 
 
 struct frexp_result_f16 {
-  float16_t member_0;
-  int member_1;
+  float16_t fract;
+  int exp;
 };
 
 struct VertexOutput {
@@ -57,13 +57,14 @@ void frexp_5257dd() {
   frexp_result_f16 res = frexp_result_f16(0.5hf, 1);
 }
 VertexOutput vertex_main_inner() {
-  VertexOutput v = VertexOutput(vec4(0.0f));
-  v.pos = vec4(0.0f);
+  VertexOutput tint_symbol = VertexOutput(vec4(0.0f));
+  tint_symbol.pos = vec4(0.0f);
   frexp_5257dd();
-  return v;
+  return tint_symbol;
 }
 void main() {
-  vec4 v_1 = vertex_main_inner().pos;
-  gl_Position = vec4(v_1.x, -(v_1.y), ((2.0f * v_1.z) - v_1.w), v_1.w);
+  gl_Position = vertex_main_inner().pos;
+  gl_Position.y = -(gl_Position.y);
+  gl_Position.z = ((2.0f * gl_Position.z) - gl_Position.w);
   gl_PointSize = 1.0f;
 }

@@ -1002,7 +1002,7 @@ uint v996 = 0u;
 uint v997 = 0u;
 uint v998 = 0u;
 uint v999 = 0u;
-layout(location = 0) out uint main_loc0_Output;
+layout(location = 0) out uint tint_symbol_loc0_Output;
 uint foo() {
   uint x = 0u;
   x = (x + v0);
@@ -2007,9 +2007,9 @@ uint foo() {
   x = (x + v999);
   return x;
 }
-uint main_inner() {
+uint tint_symbol_inner() {
   return foo();
 }
 void main() {
-  main_loc0_Output = main_inner();
+  tint_symbol_loc0_Output = tint_symbol_inner();
 }

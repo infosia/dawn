@@ -2,10 +2,10 @@
 precision highp float;
 precision highp int;
 
-float v(int v_1) {
-  return float(v_1);
+float tint_symbol_2(int tint_symbol_3) {
+  return float(tint_symbol_3);
 }
 void main() {
-  int v_2 = 0;
-  float v_3 = v(v_2);
+  int tint_symbol_5 = 0;
+  float tint_symbol_6 = tint_symbol_2(tint_symbol_5);
 }

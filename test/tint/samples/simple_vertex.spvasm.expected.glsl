@@ -2,19 +2,20 @@
 
 
 struct main_out {
-  vec4 member_0;
+  vec4 tint_symbol;
 };
 
-vec4 v = vec4(0.0f);
+vec4 tint_symbol = vec4(0.0f);
 void main_1() {
-  v = vec4(0.0f);
+  tint_symbol = vec4(0.0f);
 }
-main_out main_inner() {
+main_out tint_symbol_1_inner() {
   main_1();
-  return main_out(v);
+  return main_out(tint_symbol);
 }
 void main() {
-  vec4 v_1 = main_inner().member_0;
-  gl_Position = vec4(v_1.x, -(v_1.y), ((2.0f * v_1.z) - v_1.w), v_1.w);
+  gl_Position = tint_symbol_1_inner().tint_symbol;
+  gl_Position.y = -(gl_Position.y);
+  gl_Position.z = ((2.0f * gl_Position.z) - gl_Position.w);
   gl_PointSize = 1.0f;
 }

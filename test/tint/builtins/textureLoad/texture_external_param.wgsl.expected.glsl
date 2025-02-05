@@ -61,7 +61,7 @@ struct tint_ExternalTextureParams {
 };
 
 layout(binding = 2, std140)
-uniform v_arg_0_params_block_std140_ubo {
+uniform arg_0_params_block_std140_1_ubo {
   tint_ExternalTextureParams_std140 inner;
 } v_1;
 uniform highp sampler2D arg_0_plane0;
@@ -96,8 +96,8 @@ vec4 tint_TextureLoadExternal(tint_ExternalTextureParams params, uvec2 coords) {
   }
   return vec4(v_13, v_6);
 }
-vec4 textureLoad2d(tint_ExternalTextureParams texture_params, ivec2 coords) {
-  return tint_TextureLoadExternal(texture_params, min(uvec2(coords), ((texture_params.apparentSize + uvec2(1u)) - uvec2(1u))));
+vec4 textureLoad2d(tint_ExternalTextureParams tint_symbol_params, ivec2 coords) {
+  return tint_TextureLoadExternal(tint_symbol_params, min(uvec2(coords), ((tint_symbol_params.apparentSize + uvec2(1u)) - uvec2(1u))));
 }
 tint_ExternalTextureParams tint_convert_tint_ExternalTextureParams(tint_ExternalTextureParams_std140 tint_input) {
   mat3 v_14 = mat3(tint_input.gamutConversionMatrix_col0, tint_input.gamutConversionMatrix_col1, tint_input.gamutConversionMatrix_col2);
@@ -112,8 +112,9 @@ vec4 vertex_main_inner() {
   return vec4(0.0f);
 }
 void main() {
-  vec4 v_16 = vertex_main_inner();
-  gl_Position = vec4(v_16.x, -(v_16.y), ((2.0f * v_16.z) - v_16.w), v_16.w);
+  gl_Position = vertex_main_inner();
+  gl_Position.y = -(gl_Position.y);
+  gl_Position.z = ((2.0f * gl_Position.z) - gl_Position.w);
   gl_PointSize = 1.0f;
 }
 //
@@ -181,7 +182,7 @@ struct tint_ExternalTextureParams {
 };
 
 layout(binding = 2, std140)
-uniform f_arg_0_params_block_std140_ubo {
+uniform arg_0_params_block_std140_1_ubo {
   tint_ExternalTextureParams_std140 inner;
 } v_1;
 uniform highp sampler2D arg_0_plane0;
@@ -216,8 +217,8 @@ vec4 tint_TextureLoadExternal(tint_ExternalTextureParams params, uvec2 coords) {
   }
   return vec4(v_13, v_6);
 }
-vec4 textureLoad2d(tint_ExternalTextureParams texture_params, ivec2 coords) {
-  return tint_TextureLoadExternal(texture_params, min(uvec2(coords), ((texture_params.apparentSize + uvec2(1u)) - uvec2(1u))));
+vec4 textureLoad2d(tint_ExternalTextureParams tint_symbol_params, ivec2 coords) {
+  return tint_TextureLoadExternal(tint_symbol_params, min(uvec2(coords), ((tint_symbol_params.apparentSize + uvec2(1u)) - uvec2(1u))));
 }
 tint_ExternalTextureParams tint_convert_tint_ExternalTextureParams(tint_ExternalTextureParams_std140 tint_input) {
   mat3 v_14 = mat3(tint_input.gamutConversionMatrix_col0, tint_input.gamutConversionMatrix_col1, tint_input.gamutConversionMatrix_col2);
@@ -328,8 +329,8 @@ vec4 tint_TextureLoadExternal(tint_ExternalTextureParams params, uvec2 coords) {
   }
   return vec4(v_13, v_6);
 }
-vec4 textureLoad2d(tint_ExternalTextureParams texture_params, ivec2 coords) {
-  return tint_TextureLoadExternal(texture_params, min(uvec2(coords), ((texture_params.apparentSize + uvec2(1u)) - uvec2(1u))));
+vec4 textureLoad2d(tint_ExternalTextureParams tint_symbol_params, ivec2 coords) {
+  return tint_TextureLoadExternal(tint_symbol_params, min(uvec2(coords), ((tint_symbol_params.apparentSize + uvec2(1u)) - uvec2(1u))));
 }
 tint_ExternalTextureParams tint_convert_tint_ExternalTextureParams(tint_ExternalTextureParams_std140 tint_input) {
   mat3 v_14 = mat3(tint_input.gamutConversionMatrix_col0, tint_input.gamutConversionMatrix_col1, tint_input.gamutConversionMatrix_col2);

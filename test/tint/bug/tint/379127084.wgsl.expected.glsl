@@ -28,15 +28,15 @@ struct FSOut {
 };
 
 layout(binding = 2, std430)
-buffer f_FSUniforms_ssbo {
+buffer FSUniforms_1_ssbo {
   FSUniformData fsUniformData[];
 } _storage1;
 uint shadingSsboIndex = 0u;
 uniform highp sampler2D permutationsSampler_1_Texture_permutationsSampler_1_Sampler;
 uniform highp sampler2D noiseSampler_1_Texture_noiseSampler_1_Sampler;
-layout(location = 0) flat in uvec2 tint_interstage_location0;
-layout(location = 1) in vec2 tint_interstage_location1;
-layout(location = 0) out vec4 main_loc0_Output;
+layout(location = 0) flat in uvec2 tint_symbol_loc0_Input;
+layout(location = 1) in vec2 tint_symbol_loc1_Input;
+layout(location = 0) out vec4 tint_symbol_loc0_Output;
 void _skslMain(FSIn _stageIn, inout FSOut _stageOut) {
   shadingSsboIndex = _stageIn.ssboIndicesVar.y;
   uint v = shadingSsboIndex;
@@ -227,11 +227,11 @@ void _skslMain(FSIn _stageIn, inout FSOut _stageOut) {
   vec4 outColor_0 = _94_f;
   _stageOut.sk_FragColor = outColor_0;
 }
-FSOut main_inner(FSIn _stageIn) {
+FSOut tint_symbol_inner(FSIn _stageIn) {
   FSOut _stageOut = FSOut(vec4(0.0f));
   _skslMain(_stageIn, _stageOut);
   return _stageOut;
 }
 void main() {
-  main_loc0_Output = main_inner(FSIn(tint_interstage_location0, tint_interstage_location1)).sk_FragColor;
+  tint_symbol_loc0_Output = tint_symbol_inner(FSIn(tint_symbol_loc0_Input, tint_symbol_loc1_Input)).sk_FragColor;
 }

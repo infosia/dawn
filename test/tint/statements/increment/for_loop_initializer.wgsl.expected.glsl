@@ -4,7 +4,7 @@ layout(binding = 0, std430)
 buffer i_block_1_ssbo {
   uint inner;
 } v;
-void v_1() {
+void tint_symbol() {
   {
     uvec2 tint_loop_idx = uvec2(0u);
     v.inner = (v.inner + 1u);

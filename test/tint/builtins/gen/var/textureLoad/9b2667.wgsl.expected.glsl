@@ -11,11 +11,11 @@ struct TintTextureUniformData {
 };
 
 layout(binding = 0, std430)
-buffer f_prevent_dce_block_ssbo {
+buffer prevent_dce_block_1_ssbo {
   float inner;
 } v;
 layout(binding = 0, std140)
-uniform f_tint_symbol_ubo {
+uniform tint_symbol_1_ubo {
   TintTextureUniformData inner;
 } v_1;
 uniform highp sampler2DArray arg_0;
@@ -95,11 +95,11 @@ struct VertexOutput {
 };
 
 layout(binding = 0, std140)
-uniform v_tint_symbol_ubo {
+uniform tint_symbol_1_1_ubo {
   TintTextureUniformData inner;
 } v;
 uniform highp sampler2DArray arg_0;
-layout(location = 0) flat out float tint_interstage_location0;
+layout(location = 0) flat out float vertex_main_loc0_Output;
 float textureLoad_9b2667() {
   ivec2 arg_1 = ivec2(1);
   int arg_2 = 1;
@@ -118,14 +118,16 @@ float textureLoad_9b2667() {
   return res;
 }
 VertexOutput vertex_main_inner() {
-  VertexOutput v_11 = VertexOutput(vec4(0.0f), 0.0f);
-  v_11.pos = vec4(0.0f);
-  v_11.prevent_dce = textureLoad_9b2667();
-  return v_11;
+  VertexOutput tint_symbol = VertexOutput(vec4(0.0f), 0.0f);
+  tint_symbol.pos = vec4(0.0f);
+  tint_symbol.prevent_dce = textureLoad_9b2667();
+  return tint_symbol;
 }
 void main() {
-  VertexOutput v_12 = vertex_main_inner();
-  gl_Position = vec4(v_12.pos.x, -(v_12.pos.y), ((2.0f * v_12.pos.z) - v_12.pos.w), v_12.pos.w);
-  tint_interstage_location0 = v_12.prevent_dce;
+  VertexOutput v_11 = vertex_main_inner();
+  gl_Position = v_11.pos;
+  gl_Position.y = -(gl_Position.y);
+  gl_Position.z = ((2.0f * gl_Position.z) - gl_Position.w);
+  vertex_main_loc0_Output = v_11.prevent_dce;
   gl_PointSize = 1.0f;
 }

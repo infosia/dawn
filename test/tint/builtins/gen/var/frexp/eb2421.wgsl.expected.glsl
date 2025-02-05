@@ -7,14 +7,14 @@ precision highp int;
 
 
 struct frexp_result_vec2_f32 {
-  vec2 member_0;
-  ivec2 member_1;
+  vec2 fract;
+  ivec2 exp;
 };
 
 void frexp_eb2421() {
   vec2 arg_0 = vec2(1.0f);
   frexp_result_vec2_f32 v = frexp_result_vec2_f32(vec2(0.0f), ivec2(0));
-  v.member_0 = frexp(arg_0, v.member_1);
+  v.fract = frexp(arg_0, v.exp);
   frexp_result_vec2_f32 res = v;
 }
 void main() {
@@ -27,14 +27,14 @@ void main() {
 
 
 struct frexp_result_vec2_f32 {
-  vec2 member_0;
-  ivec2 member_1;
+  vec2 fract;
+  ivec2 exp;
 };
 
 void frexp_eb2421() {
   vec2 arg_0 = vec2(1.0f);
   frexp_result_vec2_f32 v = frexp_result_vec2_f32(vec2(0.0f), ivec2(0));
-  v.member_0 = frexp(arg_0, v.member_1);
+  v.fract = frexp(arg_0, v.exp);
   frexp_result_vec2_f32 res = v;
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
@@ -48,8 +48,8 @@ void main() {
 
 
 struct frexp_result_vec2_f32 {
-  vec2 member_0;
-  ivec2 member_1;
+  vec2 fract;
+  ivec2 exp;
 };
 
 struct VertexOutput {
@@ -59,17 +59,18 @@ struct VertexOutput {
 void frexp_eb2421() {
   vec2 arg_0 = vec2(1.0f);
   frexp_result_vec2_f32 v = frexp_result_vec2_f32(vec2(0.0f), ivec2(0));
-  v.member_0 = frexp(arg_0, v.member_1);
+  v.fract = frexp(arg_0, v.exp);
   frexp_result_vec2_f32 res = v;
 }
 VertexOutput vertex_main_inner() {
-  VertexOutput v_1 = VertexOutput(vec4(0.0f));
-  v_1.pos = vec4(0.0f);
+  VertexOutput tint_symbol = VertexOutput(vec4(0.0f));
+  tint_symbol.pos = vec4(0.0f);
   frexp_eb2421();
-  return v_1;
+  return tint_symbol;
 }
 void main() {
-  vec4 v_2 = vertex_main_inner().pos;
-  gl_Position = vec4(v_2.x, -(v_2.y), ((2.0f * v_2.z) - v_2.w), v_2.w);
+  gl_Position = vertex_main_inner().pos;
+  gl_Position.y = -(gl_Position.y);
+  gl_Position.z = ((2.0f * gl_Position.z) - gl_Position.w);
   gl_PointSize = 1.0f;
 }

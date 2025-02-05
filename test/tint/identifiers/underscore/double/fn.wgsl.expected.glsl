@@ -2,16 +2,16 @@
 
 void a() {
 }
-void v() {
+void tint_symbol() {
 }
 void b() {
   a();
 }
-void v_1() {
-  v();
+void tint_symbol_1() {
+  tint_symbol();
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   b();
-  v_1();
+  tint_symbol_1();
 }

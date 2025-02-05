@@ -6,7 +6,7 @@ precision highp float;
 precision highp int;
 
 layout(binding = 0, std430)
-buffer f_prevent_dce_block_ssbo {
+buffer prevent_dce_block_1_ssbo {
   ivec3 inner;
 } v;
 ivec3 firstLeadingBit_35053e() {
@@ -48,7 +48,7 @@ struct VertexOutput {
   ivec3 prevent_dce;
 };
 
-layout(location = 0) flat out ivec3 tint_interstage_location0;
+layout(location = 0) flat out ivec3 vertex_main_loc0_Output;
 ivec3 firstLeadingBit_35053e() {
   ivec3 arg_0 = ivec3(1);
   uvec3 v = uvec3(arg_0);
@@ -56,14 +56,16 @@ ivec3 firstLeadingBit_35053e() {
   return res;
 }
 VertexOutput vertex_main_inner() {
-  VertexOutput v_1 = VertexOutput(vec4(0.0f), ivec3(0));
-  v_1.pos = vec4(0.0f);
-  v_1.prevent_dce = firstLeadingBit_35053e();
-  return v_1;
+  VertexOutput tint_symbol = VertexOutput(vec4(0.0f), ivec3(0));
+  tint_symbol.pos = vec4(0.0f);
+  tint_symbol.prevent_dce = firstLeadingBit_35053e();
+  return tint_symbol;
 }
 void main() {
-  VertexOutput v_2 = vertex_main_inner();
-  gl_Position = vec4(v_2.pos.x, -(v_2.pos.y), ((2.0f * v_2.pos.z) - v_2.pos.w), v_2.pos.w);
-  tint_interstage_location0 = v_2.prevent_dce;
+  VertexOutput v_1 = vertex_main_inner();
+  gl_Position = v_1.pos;
+  gl_Position.y = -(gl_Position.y);
+  gl_Position.z = ((2.0f * gl_Position.z) - gl_Position.w);
+  vertex_main_loc0_Output = v_1.prevent_dce;
   gl_PointSize = 1.0f;
 }

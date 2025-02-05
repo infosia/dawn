@@ -1,19 +1,20 @@
 #version 310 es
 
-int v() {
+int tint_symbol() {
   return 0;
 }
-float v_1(int v_2) {
-  return float(v_2);
+float tint_symbol_1(int tint_symbol_2) {
+  return float(tint_symbol_2);
 }
-bool v_3(float v_4) {
-  return bool(v_4);
+bool tint_symbol_3(float tint_symbol_4) {
+  return bool(tint_symbol_4);
 }
-vec4 v_5(uint v_6) {
-  return mix(vec4(0.0f), vec4(1.0f), bvec4(v_3(v_1(v()))));
+vec4 tint_symbol_5_inner(uint tint_symbol_6) {
+  return mix(vec4(0.0f), vec4(1.0f), bvec4(tint_symbol_3(tint_symbol_1(tint_symbol()))));
 }
 void main() {
-  vec4 v_7 = v_5(uint(gl_VertexID));
-  gl_Position = vec4(v_7.x, -(v_7.y), ((2.0f * v_7.z) - v_7.w), v_7.w);
+  gl_Position = tint_symbol_5_inner(uint(gl_VertexID));
+  gl_Position.y = -(gl_Position.y);
+  gl_Position.z = ((2.0f * gl_Position.z) - gl_Position.w);
   gl_PointSize = 1.0f;
 }
