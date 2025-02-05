@@ -69,6 +69,30 @@
       },
       "revId": "de62b5aca10b74374f5c81b01b1ac03b632a0c3a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ef6a3cd_ac429094",
+        "filename": "src/dawn/utils/TextureUtils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-05T19:44:58Z",
+      "side": 1,
+      "message": "(Let me mark this as resolved to unblock submit)",
+      "parentUuid": "c0476f05_ae3141b7",
+      "range": {
+        "startLine": 304,
+        "startChar": 40,
+        "endLine": 304,
+        "endChar": 66
+      },
+      "revId": "de62b5aca10b74374f5c81b01b1ac03b632a0c3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
