@@ -16,6 +16,24 @@
       "message": "Nit: Could use `AccessWithResult(call-\u003eDetachResult(), ...)`",
       "revId": "6746b8006c37ef861e8670e4f9afe820586c6f54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbc6aa70_58e5535f",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-05T16:14:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c34141b1_2225dacd",
+      "revId": "6746b8006c37ef861e8670e4f9afe820586c6f54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
