@@ -30,6 +30,7 @@
 
 #include <cstdint>
 #include <utility>
+#include <vector>
 
 #include "dawn/common/Assert.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -127,6 +128,7 @@ class SerialStorage {
 
     Serial FirstSerial() const;
     Serial LastSerial() const;
+    std::vector<Value>& LastValue();
 
   protected:
     // Returns the first StorageIterator that a serial bigger than serial.
@@ -183,6 +185,12 @@ template <typename Derived>
 typename SerialStorage<Derived>::Serial SerialStorage<Derived>::LastSerial() const {
     DAWN_ASSERT(!Empty());
     return mStorage.back().first;
+}
+
+template <typename Derived>
+std::vector<typename SerialStorage<Derived>::Value>& SerialStorage<Derived>::LastValue() {
+    DAWN_ASSERT(!Empty());
+    return mStorage.back().second;
 }
 
 template <typename Derived>
