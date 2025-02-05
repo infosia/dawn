@@ -59,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c233db3_a37281bc",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-05T08:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65da6dfd_bf509cc0",
+      "range": {
+        "startLine": 172,
+        "startChar": 17,
+        "endLine": 172,
+        "endChar": 49
+      },
+      "revId": "369406a80e40997a00b8ab9e6deea24e4da7cade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76655e60_5c9acc43",
@@ -72,6 +96,30 @@
       "writtenOn": "2025-01-27T15:18:04Z",
       "side": 1,
       "message": "Can we have comments on what the difference is? \"Dynamic\" is not very explicit, `AllocateTransient` vs `AllocatePersistent`?",
+      "range": {
+        "startLine": 81,
+        "startChar": 32,
+        "endLine": 81,
+        "endChar": 40
+      },
+      "revId": "369406a80e40997a00b8ab9e6deea24e4da7cade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dfdd648_6962e163",
+        "filename": "src/dawn/native/DynamicUploader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-05T08:00:36Z",
+      "side": 1,
+      "message": "Done in another CL.",
+      "parentUuid": "76655e60_5c9acc43",
       "range": {
         "startLine": 81,
         "startChar": 32,
