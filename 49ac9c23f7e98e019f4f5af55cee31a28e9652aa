@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74444932_c87b7c21",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-05T11:11:55Z",
+      "side": 1,
+      "message": "In a follow up (in parallel of the rest) can we try to make a utility so we can write something like:\n\n```\nfor (auto [offset, size] : IterateBitRanges(dirty)) {\n   pipelineOffset \u003d ... (offset)\n   // CmdPushConstants pipelineOffset, size\n}\n```\n\nIt should be possible to make each iteration constant time with bit twiddling.\n\n```\nif (empty) { return end() }\nshift \u003d ScanForward(mMask)\nmOffset +\u003d shift\nmMask \u003e\u003e\u003d shift\nsubMask \u003d mask \u0026 ~(mask + 1)\nmMask \u0026\u003d !subMask\nreturn {mOffset, subMask.count()}\n```\n\nNot sure if it is faster in practice than a loop.",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a903c9a4_f301fafb",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-05T11:11:55Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be stored on the stack at all times. Also it is always a vector of consecutive numbers so we can just store the start / end.",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d28ce81_849c1651",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-05T11:11:55Z",
+      "side": 1,
+      "message": "[a]: here with a minor comment?",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc24f0be_cc6e9f8e",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-05T11:11:55Z",
+      "side": 1,
+      "message": "Can we set this at the start of the render pass instead? at [a]",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a447080e_aa60f499",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-05T11:11:55Z",
+      "side": 1,
+      "message": "In a follow-up maybe we can move this to PipelineBase::Initialize before calling InitializeImpl so that it is done automatically everywhere. (not sure if it came up before, maybe there was a good reason not to do that).",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "011620b5_291bb6b1",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-05T11:11:55Z",
+      "side": 1,
+      "message": "nit: stale comment",
+      "fixSuggestions": [
+        {
+          "fixId": "c3065c73_1def5839",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+              "range": {
+                "startLine": 402,
+                "startChar": 0,
+                "endLine": 404,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "419f1e69_c8546801",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-05T11:11:55Z",
+      "side": 1,
+      "message": "simplification opportunity now that we see more of the implementation: In a follow-up we could make this just take the mask, making it do .count() internally and pass the whole size of push constants. Then the addition [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/PipelineLayoutVk.cpp;drc\u003d3deaac799dc39f0ba14200463fd31bba49eb72a6;l\u003d79) is not needed and can just be an ASSERT.",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
