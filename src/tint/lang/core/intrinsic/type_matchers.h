@@ -376,7 +376,8 @@ inline const type::BindingArray* BuildBindingArray(intrinsic::MatchState& state,
                                                    const type::Type*,
                                                    const type::Type* el,
                                                    intrinsic::Number N) {
-    return state.types.Get<type::BindingArray>(el, N.Value());
+    return state.types.Get<type::BindingArray>(
+        el, state.types.Get<type::ConstantArrayCount>(N.Value()));
 }
 
 inline bool MatchBindingArray(intrinsic::MatchState&,
@@ -390,9 +391,11 @@ inline bool MatchBindingArray(intrinsic::MatchState&,
     }
 
     if (auto* a = ty->As<type::BindingArray>()) {
-        N = a->Count();
-        T = a->ElemType();
-        return true;
+        if (auto count = a->Count()->As<type::ConstantArrayCount>()) {
+            N = intrinsic::Number(count->value);
+            T = a->ElemType();
+            return true;
+        }
     }
     return false;
 }
