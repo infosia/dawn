@@ -319,7 +319,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
 #if DAWN_PLATFORM_IS(MACOS)
             haveStoreAndMSAAResolve =
                 [*mDevice supportsFeatureSet:MTLFeatureSet_macOS_GPUFamily1_v2];
-#elif DAWN_PLATFORM_IS(IOS)
+#elif DAWN_PLATFORM_IS(IOS) && !DAWN_PLATFORM_IS(TVOS)
 #if !defined(__IPHONE_16_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_16_0
             haveStoreAndMSAAResolve = [*mDevice supportsFeatureSet:MTLFeatureSet_iOS_GPUFamily3_v2];
 #else
@@ -331,7 +331,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
             deviceToggles->Default(Toggle::EmulateStoreAndMSAAResolve, !haveStoreAndMSAAResolve);
 
             bool haveSamplerCompare = true;
-#if DAWN_PLATFORM_IS(IOS) && \
+#if DAWN_PLATFORM_IS(IOS) && !DAWN_PLATFORM_IS(TVOS) && \
     (!defined(__IPHONE_16_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_16_0)
             haveSamplerCompare = [*mDevice supportsFeatureSet:MTLFeatureSet_iOS_GPUFamily3_v1];
 #endif
@@ -339,7 +339,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
             deviceToggles->Default(Toggle::MetalDisableSamplerCompare, !haveSamplerCompare);
 
             bool haveBaseVertexBaseInstance = true;
-#if DAWN_PLATFORM_IS(IOS) && \
+#if DAWN_PLATFORM_IS(IOS) && !DAWN_PLATFORM_IS(TVOS) && \
     (!defined(__IPHONE_16_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_16_0)
             haveBaseVertexBaseInstance =
                 [*mDevice supportsFeatureSet:MTLFeatureSet_iOS_GPUFamily3_v1];
@@ -489,7 +489,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
         }
 #endif
 
-#if DAWN_PLATFORM_IS(IOS) && \
+#if DAWN_PLATFORM_IS(IOS) && !DAWN_PLATFORM_IS(TVOS) && \
     (!defined(__IPHONE_16_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_16_0)
         if ([*mDevice supportsFeatureSet:MTLFeatureSet_iOS_GPUFamily1_v1]) {
             EnableFeature(Feature::TextureCompressionETC2);
@@ -736,7 +736,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
         if ([*mDevice supportsFeatureSet:MTLFeatureSet_macOS_GPUFamily1_v1]) {
             return MTLGPUFamily::Mac1;
         }
-#elif DAWN_PLATFORM_IS(IOS) && \
+#elif DAWN_PLATFORM_IS(IOS) && !DAWN_PLATFORM_IS(TVOS) && \
     (!defined(__IPHONE_16_0) || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_16_0)
         if (@available(iOS 10.11, *)) {
             if ([*mDevice supportsFeatureSet:MTLFeatureSet_iOS_GPUFamily4_v1]) {
