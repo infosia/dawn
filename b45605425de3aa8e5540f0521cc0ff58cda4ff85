@@ -121,6 +121,24 @@
       "parentUuid": "cf5f0493_4e116ca2",
       "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83524061_b6887c7d",
+        "filename": "src/tint/lang/core/ir/validator_value_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-05T21:23:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this have changed?",
+      "parentUuid": "0ef4379b_5823b53c",
+      "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
