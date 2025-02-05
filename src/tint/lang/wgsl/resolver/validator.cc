@@ -37,6 +37,7 @@
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/type/abstract_numeric.h"
 #include "src/tint/lang/core/type/atomic.h"
+#include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/depth_multisampled_texture.h"
 #include "src/tint/lang/core/type/depth_texture.h"
 #include "src/tint/lang/core/type/input_attachment.h"
@@ -498,6 +499,20 @@ bool Validator::InputAttachmentIndexAttribute(const ast::InputAttachmentIndexAtt
         AddNote(attr->source) << style::Attribute("@input_attachment_index")
                               << " must only be applied to declarations of "
                               << style::Type("input_attachment") << " type";
+        return false;
+    }
+
+    return true;
+}
+
+bool Validator::BindingArray(const core::type::BindingArray* t, const Source& source) const {
+    if (allowed_features_.features.count(wgsl::LanguageFeature::kSizedBindingArray) == 0) {
+        AddError(source) << "use of " << style::Type("binding_array*") << " requires "
+                         << style::Code("sized_binding_array") << " enabled";
+        return false;
+    }
+    if (!t->ElemType()->Is<core::type::SampledTexture>()) {
+        AddError(source) << "binding_array element type must be a sampled texture type";
         return false;
     }
 
