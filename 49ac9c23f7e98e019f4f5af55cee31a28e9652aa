@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4419509d_b36fa719",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-05T15:44:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure I fully understand what this function is doing. The only place it\u0027s called right now is `ShaderModuleVk.cpp` and only if `HasImmediateConstants` already passed so I think that you can assume the `pipelineImmediateMask` already has the bits set for this constant.\n\nAt that point doesn\u0027t this function just need to return `offset`?",
+      "range": {
+        "startLine": 89,
+        "startChar": 9,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40ba4916_7e93ac51",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-05T15:44:31Z",
+      "side": 1,
+      "message": "This could be done in the `OnSetPipleine` function.",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 54
+      },
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "74444932_c87b7c21",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 19
@@ -14,6 +60,24 @@
       "writtenOn": "2025-02-05T11:11:55Z",
       "side": 1,
       "message": "In a follow up (in parallel of the rest) can we try to make a utility so we can write something like:\n\n```\nfor (auto [offset, size] : IterateBitRanges(dirty)) {\n   pipelineOffset \u003d ... (offset)\n   // CmdPushConstants pipelineOffset, size\n}\n```\n\nIt should be possible to make each iteration constant time with bit twiddling.\n\n```\nif (empty) { return end() }\nshift \u003d ScanForward(mMask)\nmOffset +\u003d shift\nmMask \u003e\u003e\u003d shift\nsubMask \u003d mask \u0026 ~(mask + 1)\nmMask \u0026\u003d !subMask\nreturn {mOffset, subMask.count()}\n```\n\nNot sure if it is faster in practice than a loop.",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "465b2122_accc964d",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-05T15:44:31Z",
+      "side": 1,
+      "message": "+1 on iterating over the ranges. This function is very stateful with the `mUploadList.empty()` checks. With the range iteration we could build the whole list of uploads and do them at the end.",
+      "parentUuid": "74444932_c87b7c21",
       "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
