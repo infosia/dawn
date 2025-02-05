@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8d281a8_d1eaae8a",
+        "filename": "src/tint/lang/msl/msl.def",
+        "patchSetId": 7
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-05T15:27:48Z",
+      "side": 1,
+      "message": "```suggestion\n@stage(\"compute\") implicit(K: subgroup_matrix_kind, S: f32_f16, C: num, R: num) fn simdgroup_store(subgroup_matrix\u003cK, S, C, R\u003e, ptr\u003cworkgroup_or_storage, S, writable\u003e, u64, vec2\u003cu64\u003e, bool)\n```",
+      "range": {
+        "startLine": 366,
+        "startChar": 168,
+        "endLine": 366,
+        "endChar": 171
+      },
+      "revId": "317d2a484307b63a1c69e9cc3a3a6b6bea430110",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
