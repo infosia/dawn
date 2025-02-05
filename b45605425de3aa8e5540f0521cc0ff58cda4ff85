@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34190bee_6dbe1320",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2641,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-05T20:56:19Z",
+      "side": 1,
+      "message": "There are no abstract types in the IR, so do we need the `IsAbstract` part of this?",
+      "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a488ca1a_9bf0a847",
+        "filename": "src/tint/lang/core/ir/validator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-05T20:56:19Z",
+      "side": 1,
+      "message": "for ... ?",
+      "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf5f0493_4e116ca2",
+        "filename": "src/tint/lang/core/ir/validator_value_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-05T20:56:19Z",
+      "side": 1,
+      "message": "Can we construct a test that still gets the old void error, or is that code effectvely dead and can be removed from the validator?",
+      "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
