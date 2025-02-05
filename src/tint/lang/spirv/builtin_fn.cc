@@ -144,6 +144,8 @@ const char* str(BuiltinFn i) {
             return "ldexp";
         case BuiltinFn::kModf:
             return "modf";
+        case BuiltinFn::kFrexp:
+            return "frexp";
         case BuiltinFn::kSdot:
             return "sdot";
         case BuiltinFn::kUdot:
