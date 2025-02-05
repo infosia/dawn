@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3e349a3_895c0434",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2641,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-05T21:18:57Z",
+      "side": 1,
+      "message": "Probably not, I will remove it.",
+      "parentUuid": "34190bee_6dbe1320",
+      "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a488ca1a_9bf0a847",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e401cae3_68e112ff",
+        "filename": "src/tint/lang/core/ir/validator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-05T21:18:57Z",
+      "side": 1,
+      "message": "Huh, weird, must have gotten chopped off when resolving conflicts or something. Fixed.",
+      "parentUuid": "a488ca1a_9bf0a847",
+      "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf5f0493_4e116ca2",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-02-05T20:56:19Z",
       "side": 1,
       "message": "Can we construct a test that still gets the old void error, or is that code effectvely dead and can be removed from the validator?",
+      "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ef4379b_5823b53c",
+        "filename": "src/tint/lang/core/ir/validator_value_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-05T21:18:57Z",
+      "side": 1,
+      "message": "It can still be reached with the capability enabled. I will modify this test to have that and check the old string.",
+      "parentUuid": "cf5f0493_4e116ca2",
       "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
