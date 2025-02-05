@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "ccce290965ce6976f8733ef3e5e291aee1fd1ad2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bb57b4d_6845ffc0",
+        "filename": "src/dawn/tests/unittests/validation/GetBindGroupLayoutValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-05T10:42:36Z",
+      "side": 1,
+      "message": "Can we check that going \u003e\u003d 4 produces an error (or is that tested somwhere else?)",
+      "revId": "ccce290965ce6976f8733ef3e5e291aee1fd1ad2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
