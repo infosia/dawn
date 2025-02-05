@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3940e578_8856041f",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-05T10:15:54Z",
+      "side": 1,
+      "message": "nit: when we use argument buffers?",
+      "revId": "e5e978bd41b330862f355b8d382e93c324b6b8b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
