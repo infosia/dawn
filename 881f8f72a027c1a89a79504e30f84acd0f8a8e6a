@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12cf92f7_fc910c14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-06T18:38:38Z",
+      "side": 1,
+      "message": "```suggestion\nMap to OpCooperativeMatrixMulAddKHR, inserting a zero-valued matrix for\n```",
+      "revId": "881f8f72a027c1a89a79504e30f84acd0f8a8e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e30084c0_c1f8a48f",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-06T18:38:38Z",
+      "side": 1,
+      "message": "Why not `S: fiu32_f16` like the others?",
+      "revId": "881f8f72a027c1a89a79504e30f84acd0f8a8e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
