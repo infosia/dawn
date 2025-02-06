@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0fe2f364_80f5bf09",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:32:54Z",
+      "side": 1,
+      "message": "For now we can dirty the whole pipeline mask and then do `TODO(crbug.com/366291600): Support immediate data compatible.`",
+      "parentUuid": "c4832573_22bfb203",
+      "revId": "9c74348f40340ebc89384b8b94db454d006cf295",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e5ba17bd_df11c4f5",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 22
