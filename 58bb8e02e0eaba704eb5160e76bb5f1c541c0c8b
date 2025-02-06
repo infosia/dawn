@@ -16,6 +16,40 @@
       "message": "I have taken a good long look at our CRC32 implementation and I am very confident that it is safe/I don\u0027t want/need to muck around with it.\n\nSpecifically the unsafe buffer warnings are a combination of false-positives (the value is guaranteed to be in bounds) or just intrinsic to C-style code.\n\nI want to leave a note on this usage of TINT_BEGIN_DISABLE_WARNING to make it clear in the future that this was thoughtfully left in, but it is a bit more complex than the \u0027anytime you touch argv this will fire` situation.\n\nI have written a bunch of prose delve into this in detail, and it is about the same length of the actual code, so probably could be trimmed down.",
       "revId": "58bb8e02e0eaba704eb5160e76bb5f1c541c0c8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92f87582_38186007",
+        "filename": "src/tint/utils/math/crc32.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-06T21:15:18Z",
+      "side": 1,
+      "message": "```suggestion\n// This implementation of CRC32 uses C idioms that trigger \u0027-Wunsafe-buffer-usage\u0027, but by\n```",
+      "revId": "58bb8e02e0eaba704eb5160e76bb5f1c541c0c8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "470f0c67_c8eae00b",
+        "filename": "src/tint/utils/math/crc32.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-06T21:15:18Z",
+      "side": 1,
+      "message": "```suggestion\n// This second issue could be mitigated via a combination of API changes, so only containers that\n```",
+      "revId": "58bb8e02e0eaba704eb5160e76bb5f1c541c0c8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
