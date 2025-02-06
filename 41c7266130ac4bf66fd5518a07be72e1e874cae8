@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94724e7b_f36aa45a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T15:09:44Z",
+      "side": 1,
+      "message": "WDYT of `EnforceLimitSpecInvariants`? It doesn\u0027t matter for the function in `Limits.h` when we do it, but what it does.",
+      "fixSuggestions": [
+        {
+          "fixId": "081c7d12_9bd75f0f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Device.cpp",
+              "range": {
+                "startLine": 442,
+                "startChar": 0,
+                "endLine": 443,
+                "endChar": 0
+              },
+              "replacement": "    EnforceLimitSpecInvariants(\u0026mLimits.v1, mAdapter-\u003eGetFeatureLevel());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "41c7266130ac4bf66fd5518a07be72e1e874cae8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a75fe50_088f82f6",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T15:09:44Z",
+      "side": 1,
+      "message": "Maybe put this in Math.h?",
+      "revId": "41c7266130ac4bf66fd5518a07be72e1e874cae8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
