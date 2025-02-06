@@ -51,6 +51,24 @@
       "parentUuid": "f1b3b316_96f5277a",
       "revId": "ec5fbbbecf9027ece9c239151b5521fca0d1b63b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9174413b_9bb67f92",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-06T18:41:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "acee820d_322cd4af",
+      "revId": "ec5fbbbecf9027ece9c239151b5521fca0d1b63b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
