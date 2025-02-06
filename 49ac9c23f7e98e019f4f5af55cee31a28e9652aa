@@ -71,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "edb03448_34e27486",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T07:39:41Z",
+      "side": 1,
+      "message": "Remove the vector.",
+      "parentUuid": "40ba4916_7e93ac51",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 54
+      },
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74444932_c87b7c21",
@@ -108,6 +132,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8bef9fcc_006dc6c2",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T07:39:41Z",
+      "side": 1,
+      "message": "Agree and add a TODO for this. Will address this in a seperate CL.",
+      "parentUuid": "465b2122_accc964d",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a903c9a4_f301fafb",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 19
@@ -119,6 +161,24 @@
       "writtenOn": "2025-02-05T11:11:55Z",
       "side": 1,
       "message": "This doesn\u0027t need to be stored on the stack at all times. Also it is always a vector of consecutive numbers so we can just store the start / end.",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2db5a5c7_0d9c4dea",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T07:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a903c9a4_f301fafb",
       "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -157,6 +217,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc6efbac_40fbbc8a",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T07:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc24f0be_cc6e9f8e",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a447080e_aa60f499",
@@ -170,6 +248,24 @@
       "writtenOn": "2025-02-05T11:11:55Z",
       "side": 1,
       "message": "In a follow-up maybe we can move this to PipelineBase::Initialize before calling InitializeImpl so that it is done automatically everywhere. (not sure if it came up before, maybe there was a good reason not to do that).",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3189d51_3bb64bc4",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T07:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a447080e_aa60f499",
       "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -209,6 +305,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "245555a9_7f85fa90",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T07:39:41Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "011620b5_291bb6b1",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "419f1e69_c8546801",
@@ -222,6 +336,24 @@
       "writtenOn": "2025-02-05T11:11:55Z",
       "side": 1,
       "message": "simplification opportunity now that we see more of the implementation: In a follow-up we could make this just take the mask, making it do .count() internally and pass the whole size of push constants. Then the addition [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/PipelineLayoutVk.cpp;drc\u003d3deaac799dc39f0ba14200463fd31bba49eb72a6;l\u003d79) is not needed and can just be an ASSERT.",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "582c1860_5a14ecbf",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T07:39:41Z",
+      "side": 1,
+      "message": "Add a TODO for this and will use another CL to address this.",
+      "parentUuid": "419f1e69_c8546801",
       "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
