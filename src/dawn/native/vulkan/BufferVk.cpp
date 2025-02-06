@@ -521,11 +521,28 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
         TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite);
     }
 
+    // For non-coherent memory we need to explicitly invalidate the memory range to make available
+    // GPU writes visible.
+    if (!mHostCoherent) {
+        VkMappedMemoryRange mappedMemoryRange = GetMappedMemoryRange();
+        ToBackend(GetDevice())
+            ->fn.InvalidateMappedMemoryRanges(ToBackend(GetDevice())->GetVkDevice(), 1,
+                                              &mappedMemoryRange);
+    }
+
     return {};
 }
 
 void Buffer::UnmapImpl() {
-    // No need to do anything, we keep CPU-visible memory mapped at all time.
+    // We keep CPU-visible memory mapped at all time. No need to do anything for host coherent
+    // memory. For non-coherent memory we need to explicitly flush the memory range to make the host
+    // write visible.
+    if (!mHostCoherent) {
+        VkMappedMemoryRange mappedMemoryRange = GetMappedMemoryRange();
+        ToBackend(GetDevice())
+            ->fn.FlushMappedMemoryRanges(ToBackend(GetDevice())->GetVkDevice(), 1,
+                                         &mappedMemoryRange);
+    }
 }
 
 void* Buffer::GetMappedPointer() {
@@ -578,11 +595,7 @@ MaybeError Buffer::UploadData(uint64_t bufferOffset, const void* data, size_t si
             memory = mMemoryAllocation.GetMappedPointer();
         }
 
-        VkMappedMemoryRange mappedMemoryRange = {};
-        mappedMemoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
-        mappedMemoryRange.memory = deviceMemory;
-        mappedMemoryRange.offset = mMemoryAllocation.GetOffset();
-        mappedMemoryRange.size = mAllocatedSize;
+        VkMappedMemoryRange mappedMemoryRange = GetMappedMemoryRange();
         if (!mHostCoherent) {
             // For non-coherent memory we need to explicitly invalidate the memory range to make
             // available GPU writes visible.
@@ -710,6 +723,18 @@ bool Buffer::EnsureDataInitializedAsDestination(CommandRecordingContext* recordi
 
     InitializeToZero(recordingContext);
     return true;
+}
+
+VkMappedMemoryRange Buffer::GetMappedMemoryRange() const {
+    VkDeviceMemory deviceMemory = ToBackend(mMemoryAllocation.GetResourceHeap())->GetMemory();
+
+    VkMappedMemoryRange mappedMemoryRange = {};
+    mappedMemoryRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
+    mappedMemoryRange.memory = deviceMemory;
+    mappedMemoryRange.offset = mMemoryAllocation.GetOffset();
+    mappedMemoryRange.size = mAllocatedSize;
+
+    return mappedMemoryRange;
 }
 
 // static

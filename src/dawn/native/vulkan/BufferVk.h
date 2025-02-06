@@ -94,6 +94,8 @@ class Buffer final : public BufferBase {
     void* GetMappedPointer() override;
     MaybeError UploadData(uint64_t bufferOffset, const void* data, size_t size) override;
 
+    VkMappedMemoryRange GetMappedMemoryRange() const;
+
     VkBuffer mHandle = VK_NULL_HANDLE;
     ResourceMemoryAllocation mMemoryAllocation;
 
