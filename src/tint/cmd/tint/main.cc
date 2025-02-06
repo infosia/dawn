@@ -33,6 +33,7 @@
 #include <unordered_map>
 #include <vector>
 #include "src/tint/lang/wgsl/sem/variable.h"
+#include "src/tint/utils/command/args.h"
 #include "src/tint/utils/text/color_mode.h"
 
 #if TINT_BUILD_SPV_READER || TINT_BUILD_SPV_WRITER
@@ -97,8 +98,6 @@
 #if TINT_BUILD_GLSL_VALIDATOR
 #include "src/tint/lang/glsl/validate/validate.h"
 #endif  // TINT_BUILD_GLSL_VALIDATOR
-
-TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
 namespace {
 
@@ -1283,14 +1282,7 @@ bool DumpIR([[maybe_unused]] const tint::Program& program,
 }  // namespace
 
 int main(int argc, const char** argv) {
-    tint::Vector<std::string_view, 8> arguments;
-    for (int i = 1; i < argc; i++) {
-        std::string_view arg(argv[i]);
-        if (!arg.empty()) {
-            arguments.Push(argv[i]);
-        }
-    }
-
+    tint::Vector<std::string_view, 8> arguments = tint::args::Vectorize(argc, argv);
     Options options;
 
     tint::Initialize();
@@ -1427,5 +1419,3 @@ int main(int argc, const char** argv) {
     }
     return success ? 0 : 1;
 }
-
-TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
