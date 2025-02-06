@@ -177,6 +177,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "44ec2700_8101e776",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T09:19:22Z",
+      "side": 1,
+      "message": "Yes! Thanks for pointing this out.",
+      "parentUuid": "c6cdb05f_36c4730e",
+      "revId": "7af52cb86ede9c180142ad10977d64a947bd4ec5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b6b2f2fa_be412d86",
         "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
         "patchSetId": 1
