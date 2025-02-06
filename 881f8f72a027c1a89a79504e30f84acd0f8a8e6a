@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "845c7439_62c599a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-06T18:45:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12cf92f7_fc910c14",
+      "revId": "881f8f72a027c1a89a79504e30f84acd0f8a8e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e30084c0_c1f8a48f",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-06T18:38:38Z",
       "side": 1,
       "message": "Why not `S: fiu32_f16` like the others?",
+      "revId": "881f8f72a027c1a89a79504e30f84acd0f8a8e6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "110abf5a_12f935e7",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-06T18:45:48Z",
+      "side": 1,
+      "message": "Because at some point we\u0027ll add `u8` and `i8` to the list of subgroup matrix elements, and this will pick up that change.\n\nWe can\u0027t use `subgroup_matrix_elements` for load/store because for u8/i8 the matrix element type does not match the array element type.",
+      "parentUuid": "e30084c0_c1f8a48f",
       "revId": "881f8f72a027c1a89a79504e30f84acd0f8a8e6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
