@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aafd0831_8ac6106e",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-06T19:59:32Z",
+      "side": 1,
+      "message": "Thanks for the explaination. It wasn\u0027t clear to me that this was calculating a sort of \"packed\" offset. Could you add some comments to make it more understandable, the example you gave is good and worth including as a comment.",
+      "parentUuid": "c84a355a_9c8312d2",
+      "range": {
+        "startLine": 89,
+        "startChar": 9,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "40ba4916_7e93ac51",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 19
