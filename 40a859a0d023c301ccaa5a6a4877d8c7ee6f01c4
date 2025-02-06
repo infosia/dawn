@@ -16,6 +16,23 @@
       "message": "Per WG discussion GL_EXT_color_buffer_float is decided to be required by compat. Enable the feature.",
       "revId": "40a859a0d023c301ccaa5a6a4877d8c7ee6f01c4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd3ef4bf_43c7581f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-06T23:49:01Z",
+      "side": 1,
+      "message": "Per WG discussion GL_EXT_color_buffer_float is decided to be required by compat. Enable the feature when support",
+      "revId": "40a859a0d023c301ccaa5a6a4877d8c7ee6f01c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
