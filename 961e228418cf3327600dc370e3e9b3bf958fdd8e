@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "72db12fa_31660056",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:43:32Z",
+      "side": 1,
+      "message": "\u003e When adding SharedBufferMemory previously, I did not find a reason to track a secondary serial for shared buffers, so mLastSharedBufferUsageSerial doesn\u0027t exist. I think mLastUsageSerial is correct to use here.\n\nMy bad, I thought it was a new member but it is preexisting.\n\n\u003e I added code to optimize out the flush when EndAccess was called and Dawn did no work, which is what I think you meant here.\n\nWhile this works, now the fences returned in [1] won\u0027t necessarily have waited on whatever fences were passed in on BeginAccess if the buffer is never used. I don\u0027t remember exactly how STM handles that (or if it does), we should match it (even if it involves rolling back the patchset) for consistency.",
+      "parentUuid": "f127145d_9d1641c7",
+      "range": {
+        "startLine": 629,
+        "startChar": 20,
+        "endLine": 629,
+        "endChar": 36
+      },
+      "revId": "961e228418cf3327600dc370e3e9b3bf958fdd8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9059afc4_5c12c9d0",
         "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests.cpp",
         "patchSetId": 4
