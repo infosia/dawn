@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4964e4c0_294fd6c9",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:24:53Z",
+      "side": 1,
+      "message": "It\u0027s not a noop, it sets state that will be used by a future call to draw or dispatch.\n\nIt\u0027s like we have a persistent array of a few immediates and the shaders use whatever was last put in them.",
+      "parentUuid": "241d1859_8c917d84",
+      "revId": "7af52cb86ede9c180142ad10977d64a947bd4ec5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af307425_79a43f0c",
         "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
         "patchSetId": 1
