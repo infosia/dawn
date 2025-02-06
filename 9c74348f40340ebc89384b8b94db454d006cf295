@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c4832573_22bfb203",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T09:28:57Z",
+      "side": 1,
+      "message": "Oh, you\u0027re right. This is trying to handle the case like https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/FragDepthTests.cpp;drc\u003dddf744c3326de9291039d88f207981f205c7704a;l\u003d77:\n```\npass.setViewport();\npass.setPipeline(); // And this will invalidate the viewport we set previously and fails some dawn tests\n```\nSo we invalidate all things when setPipeline will fail this case.\n\nIt seems we need to find a better time to invalidate all of them.",
+      "parentUuid": "891d0ea6_e24e8a8f",
+      "revId": "9c74348f40340ebc89384b8b94db454d006cf295",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e5ba17bd_df11c4f5",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 22
