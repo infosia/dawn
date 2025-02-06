@@ -188,6 +188,30 @@
       },
       "revId": "5fad2ef81fd5a0dcdb79b007c9944ca0e5204a5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "640de1f0_b731820e",
+        "filename": "src/dawn/tests/unittests/validation/DynamicStateCommandValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-02-06T00:05:43Z",
+      "side": 1,
+      "message": "Done. Apologies for the delay, was just waiting for the spec change to land before spending any further time on this.",
+      "parentUuid": "feca89d5_1bfcabbc",
+      "range": {
+        "startLine": 124,
+        "startChar": 28,
+        "endLine": 124,
+        "endChar": 79
+      },
+      "revId": "5fad2ef81fd5a0dcdb79b007c9944ca0e5204a5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
