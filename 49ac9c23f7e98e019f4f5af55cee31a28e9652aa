@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c84a355a_9c8312d2",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T02:32:09Z",
+      "side": 1,
+      "message": "This function tries to calculate the \"real offset\" for immediate constants layout. For example, we might have \"userConstants: 4 | trivial_constants: 0 (2 at most)|clamp_frag:2\".\nIn mask, it represents by 11001111, and to set clamp_frag depth offset correctly in shader, we need to calculate the real offset, which is `4 * kImmediateConstantElementByteSize` instead of `6 * kImmediateConstantElementByteSize`.",
+      "parentUuid": "4419509d_b36fa719",
+      "range": {
+        "startLine": 89,
+        "startChar": 9,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "40ba4916_7e93ac51",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 19
