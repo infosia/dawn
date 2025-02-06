@@ -16,6 +16,41 @@
       "message": "PTAL.",
       "revId": "e143bd9a2f933c08dada5de9d129bbe01808eaf4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96a836a4_4dc731de",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-06T16:24:20Z",
+      "side": 1,
+      "message": "Nit: `discard` maps to `OpDemoteToHelperInvocation`",
+      "fixSuggestions": [
+        {
+          "fixId": "d4e9d4d1_985fe083",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 631,
+                "startChar": 0,
+                "endLine": 632,
+                "endChar": 0
+              },
+              "replacement": "    /// we have is `discard` which maps to `OpDemoteToHelperInvocation` in SPIR-V.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e143bd9a2f933c08dada5de9d129bbe01808eaf4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
