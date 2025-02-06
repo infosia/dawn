@@ -16,6 +16,213 @@
       "message": "This CL adds SetImmediateData() API. PTAL, thanks!",
       "revId": "7af52cb86ede9c180142ad10977d64a947bd4ec5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73ab9383_97adbf3e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:12:52Z",
+      "side": 1,
+      "message": "note: the name doesn\u0027t match the JS spec but I think that\u0027s ok and that we should remove \"range\" from the name in JS.",
+      "revId": "7af52cb86ede9c180142ad10977d64a947bd4ec5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "583f2b80_77ebf834",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:12:52Z",
+      "side": 1,
+      "message": "That validation isn\u0027t needed. Which means that we don\u0027t need to have the validation in the `CommandBufferStateTracker` which means that all of the code for this can be in the `ProgrammableEncoder` and not the child classes.",
+      "fixSuggestions": [
+        {
+          "fixId": "1e6168b7_f8101f2a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/CommandBufferStateTracker.cpp",
+              "range": {
+                "startLine": 521,
+                "startChar": 0,
+                "endLine": 524,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "7af52cb86ede9c180142ad10977d64a947bd4ec5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af307425_79a43f0c",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:12:52Z",
+      "side": 1,
+      "message": "In Dawn we don\u0027t validate that pointers are valid, that\u0027s the application\u0027s responsibility.",
+      "fixSuggestions": [
+        {
+          "fixId": "0550cf7a_23bbe737",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/CommandBufferStateTracker.cpp",
+              "range": {
+                "startLine": 524,
+                "startChar": 0,
+                "endLine": 527,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "7af52cb86ede9c180142ad10977d64a947bd4ec5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db811d59_ef35a411",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:12:52Z",
+      "side": 1,
+      "message": "Likewise we can set constants irrespective of what pipeline is currently bound. The values are resolved as needed. What we need to check though:\n\n - Offset \u003c kImmediateConstantElementByteSize * maxImmediates\n - Size \u003c kImmediateConstantElementByteSize * maxImmediates\n - Size + offset \u003c kImmediateConstantElementByteSize * maxImmediates\n - offset % 4 \u003d\u003d 0\n - size % 4 \u003d\u003d 0",
+      "revId": "7af52cb86ede9c180142ad10977d64a947bd4ec5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6cdb05f_36c4730e",
+        "filename": "src/dawn/native/ComputePassEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:12:52Z",
+      "side": 1,
+      "message": "We need to gate these on the experimental feature otherwise a compromised renderer could attack wip code.",
+      "fixSuggestions": [
+        {
+          "fixId": "efbda222_612f2948",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/ComputePassEncoder.cpp",
+              "range": {
+                "startLine": 509,
+                "startChar": 0,
+                "endLine": 511,
+                "endChar": 0
+              },
+              "replacement": "                DAWN_TRY(ValidateSetImmediateData(\n                    GetDevice(), immediateDataRangeOffset, immediateDataCount, data,\n                    Feature::ChromiumExperimentalImmediateDataInsidePasses));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7af52cb86ede9c180142ad10977d64a947bd4ec5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6b2f2fa_be412d86",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:12:52Z",
+      "side": 1,
+      "message": "nit: Here and other places",
+      "range": {
+        "startLine": 556,
+        "startChar": 49,
+        "endLine": 556,
+        "endChar": 65
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a7bf31ec_0dd06bbe",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+              "range": {
+                "startLine": 556,
+                "startChar": 0,
+                "endLine": 557,
+                "endChar": 0
+              },
+              "replacement": "                return DAWN_UNIMPLEMENTED_ERROR(\"SetImmediateData unimplemented\");\n"
+            },
+            {
+              "path": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+              "range": {
+                "startLine": 923,
+                "startChar": 0,
+                "endLine": 924,
+                "endChar": 0
+              },
+              "replacement": "                return DAWN_UNIMPLEMENTED_ERROR(\"SetImmediateData unimplemented\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7af52cb86ede9c180142ad10977d64a947bd4ec5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27dcd8b0_373d4405",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:12:52Z",
+      "side": 1,
+      "message": "We don\u0027t actually need pipelines for this test!",
+      "revId": "7af52cb86ede9c180142ad10977d64a947bd4ec5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
