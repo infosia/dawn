@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dc4b11e_da99fa5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-06T19:38:33Z",
+      "side": 1,
+      "message": "Just a minor fix since I noticed that remote_compile/main.cc was originally skipping the first arg (the program name) and I accidently had index 0\u0027d instead of 1\u0027d when updating the code.",
+      "revId": "4eb7193a8db779d698e5db46c9ada3d3dcf2a6b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
