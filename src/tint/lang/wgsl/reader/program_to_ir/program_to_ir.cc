@@ -32,6 +32,7 @@
 
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/constant.h"
 #include "src/tint/lang/core/ir/exit_if.h"
 #include "src/tint/lang/core/ir/exit_loop.h"
 #include "src/tint/lang/core/ir/exit_switch.h"
@@ -86,6 +87,7 @@
 #include "src/tint/lang/wgsl/ast/var.h"
 #include "src/tint/lang/wgsl/ast/variable_decl_statement.h"
 #include "src/tint/lang/wgsl/ast/while_statement.h"
+#include "src/tint/lang/wgsl/ast/workgroup_attribute.h"
 #include "src/tint/lang/wgsl/ir/builtin_call.h"
 #include "src/tint/lang/wgsl/program/program.h"
 #include "src/tint/lang/wgsl/sem/array_count.h"
@@ -282,13 +284,35 @@ class Impl {
                 case ast::PipelineStage::kCompute: {
                     ir_func->SetStage(core::ir::Function::PipelineStage::kCompute);
 
-                    // TODO(dsinclair): When overrides are supported, this will have to change. The
-                    // `sem` does not hold information on override workgroup sizes so we'll have to
-                    // pull this from elsewhere.
-                    auto wg_size = sem->WorkgroupSize();
-                    ir_func->SetWorkgroupSize(builder_.Constant(u32(wg_size[0].value())),
-                                              builder_.Constant(u32(wg_size[1].value_or(1))),
-                                              builder_.Constant(u32(wg_size[2].value_or(1))));
+                    {
+                        bool found = false;
+                        for (auto* attribute : ast_func->attributes) {
+                            found = Switch(
+                                attribute,
+                                [&](const ast::WorkgroupAttribute* attr) {
+                                    // The x size is always required (y, z are optional).
+                                    auto value_x = EmitValueExpression(attr->x);
+                                    bool is_unsigned = value_x->Type()->IsUnsignedIntegerScalar();
+
+                                    ir_func->SetWorkgroupSize(
+                                        value_x,
+                                        attr->y ? EmitValueExpression(attr->y)
+                                                : (is_unsigned ? builder_.Constant(u32(1))
+                                                               : builder_.Constant(i32(1))),
+                                        attr->z ? EmitValueExpression(attr->z)
+                                                : (is_unsigned ? builder_.Constant(u32(1))
+                                                               : builder_.Constant(i32(1))));
+                                    return true;
+                                },
+                                [&](Default) { return false; });
+                            if (found) {
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            TINT_ICE() << "Missing workgroup attribute for compute entry point.";
+                        }
+                    }
                     break;
                 }
                 default: {
@@ -1080,8 +1104,28 @@ class Impl {
                     return;
                 }
 
+                const auto* sem = impl.program_.Sem().GetVal(expr->lhs);
+                bool is_const_eval = false;
+                switch (sem->Stage()) {
+                    case core::EvaluationStage::kConstant:
+                        break;
+                    case core::EvaluationStage::kOverride:
+                        is_const_eval = true;
+                        break;
+                    case core::EvaluationStage::kNotEvaluated:
+                    case core::EvaluationStage::kRuntime:
+                        // Don't emit.
+                        break;
+                }
+
                 auto& b = impl.builder_;
-                auto* if_inst = b.If(lhs);
+                core::ir::If* if_inst = nullptr;
+                if (is_const_eval) {
+                    if_inst = b.ConstExprIf(lhs);
+                } else {
+                    if_inst = b.If(lhs);
+                }
+
                 impl.current_block_->Append(if_inst);
 
                 auto* result = b.InstructionResult(b.ir.Types().bool_());
@@ -1121,8 +1165,8 @@ class Impl {
                 tint::Switch(
                     expr,  //
                     [&](const ast::BinaryExpression* e) {
-                        if (e->op == core::BinaryOp::kLogicalAnd ||
-                            e->op == core::BinaryOp::kLogicalOr) {
+                        if ((e->op == core::BinaryOp::kLogicalAnd ||
+                             e->op == core::BinaryOp::kLogicalOr)) {
                             tasks.Push([this, e] { EndShortCircuit(e); });
                             tasks.Push([this, e] { Process(e->rhs); });
                             tasks.Push([this, e] { BeginShortCircuit(e); });
@@ -1322,8 +1366,9 @@ class Impl {
             case core::BinaryOp::kModulo:
                 return builder_.Modulo(ty, lhs, rhs);
             case core::BinaryOp::kLogicalAnd:
+                return builder_.LogicalAnd(ty, lhs, rhs);
             case core::BinaryOp::kLogicalOr:
-                TINT_ICE() << "short circuit op should have already been handled";
+                return builder_.LogicalOr(ty, lhs, rhs);
         }
         TINT_UNREACHABLE();
     }

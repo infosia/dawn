@@ -41,6 +41,7 @@
 #include "src/tint/lang/core/ir/block_param.h"
 #include "src/tint/lang/core/ir/break_if.h"
 #include "src/tint/lang/core/ir/builtin_call.h"
+#include "src/tint/lang/core/ir/constexpr_if.h"
 #include "src/tint/lang/core/ir/continue.h"
 #include "src/tint/lang/core/ir/discard.h"
 #include "src/tint/lang/core/ir/exit_if.h"
@@ -689,7 +690,12 @@ void Disassembler::EmitIf(const If* if_) {
         }
         out_ << " = ";
     }
-    out_ << StyleInstruction("if") << " ";
+
+    if (if_->Is<core::ir::ConstExprIf>()) {
+        out_ << StyleInstruction("constexpr_if") << " ";
+    } else {
+        out_ << StyleInstruction("if") << " ";
+    }
     EmitOperand(if_, If::kConditionOperandOffset);
 
     bool has_false = if_->False() != nullptr && !if_->False()->IsEmpty();
@@ -1063,7 +1069,10 @@ StyledText Disassembler::NameOf(const If* inst) {
         return StyledText{} << StyleError("undef");
     }
 
-    auto name = if_names_.GetOrAdd(inst, [&] { return "if_" + std::to_string(if_names_.Count()); });
+    std::string inst_name = inst->Is<ConstExprIf>() ? "constexpr_if_" : "if_";
+
+    auto name =
+        if_names_.GetOrAdd(inst, [&] { return inst_name + std::to_string(if_names_.Count()); });
     return StyledText{} << StyleInstruction(name);
 }
 
