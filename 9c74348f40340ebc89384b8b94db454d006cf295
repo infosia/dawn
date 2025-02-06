@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a9dcfc76_d06dcfe5",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:33:50Z",
+      "side": 1,
+      "message": "As in a correct fix is to do\n\n`mDirty \u003d mPipelineMask;` here, just that it isn\u0027t necessarily the most efficient.",
+      "parentUuid": "0fe2f364_80f5bf09",
+      "revId": "9c74348f40340ebc89384b8b94db454d006cf295",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e5ba17bd_df11c4f5",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 22
