@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91035200_727bc1ae",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 5394,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-06T02:40:06Z",
+      "side": 0,
+      "message": "Looks like this one is needed on mac.",
+      "revId": "30fd48098c1e7bec4f5636374ed0011ebaf01398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
