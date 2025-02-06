@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "241d1859_8c917d84",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T09:18:20Z",
+      "side": 1,
+      "message": "Ok. So no pipeline `SetImmediateData()` should be a noop?",
+      "parentUuid": "583f2b80_77ebf834",
+      "revId": "7af52cb86ede9c180142ad10977d64a947bd4ec5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af307425_79a43f0c",
         "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
         "patchSetId": 1
