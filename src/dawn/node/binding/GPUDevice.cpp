@@ -181,7 +181,7 @@ interop::Interface<interop::GPUSupportedFeatures> GPUDevice::getFeatures(Napi::E
 }
 
 interop::Interface<interop::GPUSupportedLimits> GPUDevice::getLimits(Napi::Env env) {
-    wgpu::SupportedLimits limits{};
+    wgpu::Limits limits{};
     wgpu::DawnExperimentalSubgroupLimits subgroupLimits{};
     wgpu::DawnExperimentalImmediateDataLimits immediateDataLimits{};
 

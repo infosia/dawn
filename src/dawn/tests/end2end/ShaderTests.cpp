@@ -38,15 +38,13 @@ namespace {
 
 class ShaderTests : public DawnTest {
   protected:
-    wgpu::RequiredLimits GetRequiredLimits(const wgpu::SupportedLimits& supported) override {
+    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
         // Just copy all the limits, though all we really care about is
         // maxStorageBuffersInFragmentStage
         // maxStorageTexturesInFragmentStage
         // maxStorageBuffersInVertexStage
         // maxStorageTexturesInVertexStage
-        wgpu::RequiredLimits required = {};
-        required.limits = supported.limits;
-        return required;
+        return supported;
     }
 
   public:
@@ -1844,8 +1842,8 @@ TEST_P(ShaderTests, Robustness_Uniform_Mat4x3) {
 TEST_P(ShaderTests, StorageAcrossStages) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInFragmentStage < 4);
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInVertexStage < 3);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 4);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInVertexStage < 3);
 
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @group(2) @binding(2) var<storage> u0_2: f32;
@@ -1886,8 +1884,8 @@ TEST_P(ShaderTests, StorageAcrossStages) {
 TEST_P(ShaderTests, StorageAcrossStagesStruct) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInFragmentStage < 2);
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInVertexStage < 1);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 2);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInVertexStage < 1);
 
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         struct block {
@@ -1923,8 +1921,8 @@ TEST_P(ShaderTests, StorageAcrossStagesStruct) {
 TEST_P(ShaderTests, StorageAcrossStagesSeparateModules) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInFragmentStage < 4);
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInVertexStage < 3);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 4);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInVertexStage < 3);
 
     wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, R"(
         @group(2) @binding(2) var<storage> u0_2: f32;
@@ -1964,8 +1962,8 @@ TEST_P(ShaderTests, StorageAcrossStagesSeparateModules) {
 TEST_P(ShaderTests, StorageAcrossStagesSeparateModuleMismatch) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInFragmentStage < 1);
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInVertexStage < 2);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInVertexStage < 2);
 
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @group(0) @binding(0) var<storage> tint_symbol_ubo_0: f32;
@@ -1994,8 +1992,8 @@ TEST_P(ShaderTests, StorageAcrossStagesSeparateModuleMismatch) {
 TEST_P(ShaderTests, StorageAcrossStagesSameBindingPointCollide) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInFragmentStage < 1);
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInVertexStage < 1);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInVertexStage < 1);
 
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         struct X { x : vec4f }
@@ -2027,8 +2025,8 @@ TEST_P(ShaderTests, StorageAcrossStagesSameBindingPointCollide) {
 TEST_P(ShaderTests, StorageAcrossStagesSameBindingPointCollideMixedStructDef) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInFragmentStage < 1);
-    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().limits.maxStorageBuffersInVertexStage < 1);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+    DAWN_SUPPRESS_TEST_IF(GetSupportedLimits().maxStorageBuffersInVertexStage < 1);
 
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         struct X { x : vec4f }
