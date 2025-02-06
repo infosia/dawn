@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "237fa8f0_593dcac2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-02-06T12:18:26Z",
+      "side": 1,
+      "message": "UPF thinks these are still needed https://dawn-review.googlesource.com/c/dawn/+/224974",
+      "revId": "575fa2bb031b68ead0e511c117bbf348975479b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
