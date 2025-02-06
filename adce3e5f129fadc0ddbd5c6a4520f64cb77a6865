@@ -16,6 +16,24 @@
       "message": "Hi Reviewers,\n\nI think the fix should be that but I don\u0027t have a device with non-coherent mappable memory.\n\nPTAL, thanks!",
       "revId": "adce3e5f129fadc0ddbd5c6a4520f64cb77a6865",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9252ffb6_048deecc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T09:45:23Z",
+      "side": 1,
+      "message": "That\u0027s the thing, Dawn should never use non-coherent memory at the moment (see the discussion on the issue) so what we can do is remove all calls to invalidate/flush. Sorry for the confusion.",
+      "parentUuid": "2246fb9b_9bef8de4",
+      "revId": "adce3e5f129fadc0ddbd5c6a4520f64cb77a6865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
