@@ -33,6 +33,24 @@
       "message": "Is the assumption that since we\u0027ve created the matrix somehwere else we\u0027ll have pushed any needed capabilities already?",
       "revId": "ec5fbbbecf9027ece9c239151b5521fca0d1b63b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acee820d_322cd4af",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-06T18:36:32Z",
+      "side": 1,
+      "message": "Yes, the capabilities are part of the type emission and that must have been done in order to use any of the builtin functions.",
+      "parentUuid": "f1b3b316_96f5277a",
+      "revId": "ec5fbbbecf9027ece9c239151b5521fca0d1b63b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
