@@ -148,6 +148,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "561e3ebd_f6d533fd",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T08:53:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8bef9fcc_006dc6c2",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a903c9a4_f301fafb",
@@ -354,6 +372,24 @@
       "side": 1,
       "message": "Add a TODO for this and will use another CL to address this.",
       "parentUuid": "419f1e69_c8546801",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e27b709_7e75815a",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-06T08:53:58Z",
+      "side": 1,
+      "message": "Ah yes, when I say follow up I mean a different CL that follows this one!",
+      "parentUuid": "582c1860_5a14ecbf",
       "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
