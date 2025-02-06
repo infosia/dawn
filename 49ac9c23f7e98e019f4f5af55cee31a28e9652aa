@@ -392,6 +392,24 @@
       "parentUuid": "582c1860_5a14ecbf",
       "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f68905a_9af84c36",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-06T09:02:18Z",
+      "side": 1,
+      "message": "Ah, thanks!",
+      "parentUuid": "6e27b709_7e75815a",
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
