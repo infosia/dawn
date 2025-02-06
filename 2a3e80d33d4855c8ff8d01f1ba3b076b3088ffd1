@@ -16,6 +16,24 @@
       "message": "The Vulkan 1.0 spec requires that this feature always be available. Did you see devices without it? Failing inside device creation is also not ideal because the adapter looks like it should work and then doesn\u0027t.",
       "revId": "2a3e80d33d4855c8ff8d01f1ba3b076b3088ffd1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9390323c_7f0b2280",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-02-06T13:59:24Z",
+      "side": 0,
+      "message": "I didn\u0027t realize it was required in 1.0. This isn\u0027t necessary then.",
+      "parentUuid": "116de0bf_f7acd090",
+      "revId": "2a3e80d33d4855c8ff8d01f1ba3b076b3088ffd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
