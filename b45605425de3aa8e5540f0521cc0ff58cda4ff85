@@ -139,6 +139,24 @@
       "parentUuid": "0ef4379b_5823b53c",
       "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d8889c4_15b81ec4",
+        "filename": "src/tint/lang/core/ir/validator_value_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-06T05:15:49Z",
+      "side": 1,
+      "message": "Ugh, I got myself a bit turned around due to how the code was laid out. I have rewritten it a bit to be more obvious and updated the tests.",
+      "parentUuid": "83524061_b6887c7d",
+      "revId": "b45605425de3aa8e5540f0521cc0ff58cda4ff85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
