@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00fdf62b_f4b81a9c",
+        "filename": "src/tint/utils/math/crc32.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-06T21:25:17Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "92f87582_38186007",
+      "revId": "58bb8e02e0eaba704eb5160e76bb5f1c541c0c8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "470f0c67_c8eae00b",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-02-06T21:15:18Z",
       "side": 1,
       "message": "```suggestion\n// This second issue could be mitigated via a combination of API changes, so only containers that\n```",
+      "revId": "58bb8e02e0eaba704eb5160e76bb5f1c541c0c8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fed5dcd_049d4b66",
+        "filename": "src/tint/utils/math/crc32.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-06T21:25:17Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "470f0c67_c8eae00b",
       "revId": "58bb8e02e0eaba704eb5160e76bb5f1c541c0c8b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
