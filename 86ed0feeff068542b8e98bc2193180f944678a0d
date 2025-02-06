@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40d32d51_01b6d129",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-02-06T15:41:08Z",
+      "side": 1,
+      "message": "git cl decided it wants to modify .gitmodules when I rebased, so this needs another +2.\nNot ready to land yet, I need to test if it works on the standalone builders first.",
+      "revId": "86ed0feeff068542b8e98bc2193180f944678a0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
