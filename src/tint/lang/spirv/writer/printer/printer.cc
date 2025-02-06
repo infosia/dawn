@@ -501,9 +501,7 @@ class Printer {
                 [&](const core::type::U32*) {
                     module_.PushType(spv::Op::OpTypeInt, {id, 32u, 0u});
                 },
-                [&](const core::type::F32*) {
-                    module_.PushType(spv::Op::OpTypeFloat, {id, 32u});
-                },
+                [&](const core::type::F32*) { module_.PushType(spv::Op::OpTypeFloat, {id, 32u}); },
                 [&](const core::type::F16*) {
                     module_.PushCapability(SpvCapabilityFloat16);
                     module_.PushCapability(SpvCapabilityUniformAndStorageBuffer16BitAccess);
@@ -1493,6 +1491,9 @@ class Printer {
                 break;
             case spirv::BuiltinFn::kCooperativeMatrixStore:
                 op = spv::Op::OpCooperativeMatrixStoreKHR;
+                break;
+            case spirv::BuiltinFn::kCooperativeMatrixMulAdd:
+                op = spv::Op::OpCooperativeMatrixMulAddKHR;
                 break;
             case spirv::BuiltinFn::kNone:
                 TINT_ICE() << "undefined spirv ir function";
