@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "398a4d69_b95977a0",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-07T19:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf310a11_aba5dd0e",
+      "revId": "8e9b6d2506667fef5c2c8bd0de4e7e7db8193238",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4ee65b1_c1a8b83c",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "40ec3fd4_854abafc",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-07T19:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ee65b1_c1a8b83c",
+      "revId": "8e9b6d2506667fef5c2c8bd0de4e7e7db8193238",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c95f9175_0d7642e7",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-02-07T16:11:18Z",
       "side": 1,
       "message": "Nit: Tint uses `snake_case`",
+      "revId": "8e9b6d2506667fef5c2c8bd0de4e7e7db8193238",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac9a6fc5_f9a0c93f",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-07T19:03:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c95f9175_0d7642e7",
       "revId": "8e9b6d2506667fef5c2c8bd0de4e7e7db8193238",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
