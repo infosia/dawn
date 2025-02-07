@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de1b75ed_9ad923af",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e39f8f73_9077d81a",
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "926afbd0_aaa29f6b",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-01-31T22:05:03Z",
       "side": 1,
       "message": "Nit: This check seems redundant, since the LHS of a short-circuiting op can only be a scalar `bool`?",
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed8b838b_994768ee",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "you can never be too sure.",
+      "parentUuid": "926afbd0_aaa29f6b",
       "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -202,6 +238,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5867acf9_c6a6914e",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "Yes it is probably cleaner this way",
+      "parentUuid": "0269c0eb_6fcbb640",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 45
+      },
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22cc22ab_79a04073",
@@ -215,6 +275,24 @@
       "writtenOn": "2025-01-31T22:05:03Z",
       "side": 1,
       "message": "Nit: Don\u0027t need `CoreBuiltinCall` if we have `BuiltinCall`.",
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9373f53d_1582f095",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1940,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22cc22ab_79a04073",
       "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -297,6 +375,24 @@
       "side": 1,
       "message": "Yes there appears to be a gap in CTS.\nhttps://github.com/gpuweb/cts/pull/4170",
       "parentUuid": "21f15dd3_0b448e0c",
+      "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47c8b02f_539f66a2",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c8c861e_74c1a20a",
       "revId": "cb32a0c0d18323210edb4d82c4f58953a6e1996f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

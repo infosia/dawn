@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbcbb805_3886b00e",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "Is this tested?",
+      "range": {
+        "startLine": 256,
+        "startChar": 33,
+        "endLine": 256,
+        "endChar": 48
+      },
+      "revId": "3b5c03981bb1cee36499927d93526d7edd5fcfa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f70e023d_5de01f87",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "forgot to hit save. delete this",
+      "range": {
+        "startLine": 369,
+        "startChar": 0,
+        "endLine": 375,
+        "endChar": 0
+      },
+      "revId": "3b5c03981bb1cee36499927d93526d7edd5fcfa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82580708_939a2d6d",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "this test should fail.",
+      "range": {
+        "startLine": 1077,
+        "startChar": 35,
+        "endLine": 1077,
+        "endChar": 63
+      },
+      "revId": "3b5c03981bb1cee36499927d93526d7edd5fcfa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e258fc71_124e5608",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1349,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "remove this test completely and replace with that failure",
+      "range": {
+        "startLine": 1349,
+        "startChar": 23,
+        "endLine": 1349,
+        "endChar": 33
+      },
+      "revId": "3b5c03981bb1cee36499927d93526d7edd5fcfa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "315d8199_3877779c",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "Did I wipe out the getattribute change? strange. Check this",
+      "range": {
+        "startLine": 289,
+        "startChar": 57,
+        "endLine": 289,
+        "endChar": 67
+      },
+      "revId": "3b5c03981bb1cee36499927d93526d7edd5fcfa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e1d4e17_ca08a066",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1120,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "cleanup and commment",
+      "range": {
+        "startLine": 1106,
+        "startChar": 0,
+        "endLine": 1120,
+        "endChar": 0
+      },
+      "revId": "3b5c03981bb1cee36499927d93526d7edd5fcfa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e013fe6_b25438a4",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "we should revert this change. We can leave the evals in",
+      "range": {
+        "startLine": 1366,
+        "startChar": 36,
+        "endLine": 1374,
+        "endChar": 5
+      },
+      "revId": "3b5c03981bb1cee36499927d93526d7edd5fcfa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb29611a_ab5ebb43",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "reenabled",
+      "range": {
+        "startLine": 1316,
+        "startChar": 0,
+        "endLine": 1316,
+        "endChar": 5
+      },
+      "revId": "3b5c03981bb1cee36499927d93526d7edd5fcfa4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

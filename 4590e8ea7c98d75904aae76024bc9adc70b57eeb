@@ -71,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a2786e0_4765639f",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-07T20:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb18c6e2_d7f88c33",
+      "range": {
+        "startLine": 264,
+        "startChar": 32,
+        "endLine": 264,
+        "endChar": 48
+      },
+      "revId": "4590e8ea7c98d75904aae76024bc9adc70b57eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "277c6580_74205583",
