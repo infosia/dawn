@@ -37,6 +37,7 @@
 #include "src/tint/lang/core/ir/block_param.h"
 #include "src/tint/lang/core/ir/break_if.h"
 #include "src/tint/lang/core/ir/constant.h"
+#include "src/tint/lang/core/ir/constexpr_if.h"
 #include "src/tint/lang/core/ir/construct.h"
 #include "src/tint/lang/core/ir/continue.h"
 #include "src/tint/lang/core/ir/convert.h"
@@ -312,6 +313,15 @@ class Builder {
     ir::If* If(T&& condition) {
         auto* cond_val = Value(std::forward<T>(condition));
         return Append(ir.CreateInstruction<ir::If>(cond_val, Block(), Block()));
+    }
+
+    /// Creates an if instruction
+    /// @param condition the if condition
+    /// @returns the instruction
+    template <typename T>
+    ir::ConstExprIf* ConstExprIf(T&& condition) {
+        auto* cond_val = Value(std::forward<T>(condition));
+        return Append(ir.CreateInstruction<ir::ConstExprIf>(cond_val, Block(), Block()));
     }
 
     /// Creates a loop instruction
@@ -631,6 +641,27 @@ class Builder {
         return And(type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
     }
 
+    /// Creates an Logical And operation
+    /// @param type the result type of the expression
+    /// @param lhs the lhs of the add
+    /// @param rhs the rhs of the add
+    /// @returns the operation
+    template <typename LHS, typename RHS>
+    ir::CoreBinary* LogicalAnd(const core::type::Type* type, LHS&& lhs, RHS&& rhs) {
+        return Binary(BinaryOp::kLogicalAnd, type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
+    }
+
+    /// Creates an Logical And operation
+    /// @tparam TYPE the result type of the expression
+    /// @param lhs the lhs of the add
+    /// @param rhs the rhs of the add
+    /// @returns the operation
+    template <typename TYPE, typename LHS, typename RHS>
+    ir::CoreBinary* LogicalAnd(LHS&& lhs, RHS&& rhs) {
+        auto* type = ir.Types().Get<TYPE>();
+        return LogicalAnd(type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
+    }
+
     /// Creates an Or operation
     /// @param type the result type of the expression
     /// @param lhs the lhs of the add
@@ -650,6 +681,27 @@ class Builder {
     ir::CoreBinary* Or(LHS&& lhs, RHS&& rhs) {
         auto* type = ir.Types().Get<TYPE>();
         return Or(type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
+    }
+
+    /// Creates an Logical Or operation
+    /// @param type the result type of the expression
+    /// @param lhs the lhs of the add
+    /// @param rhs the rhs of the add
+    /// @returns the operation
+    template <typename LHS, typename RHS>
+    ir::CoreBinary* LogicalOr(const core::type::Type* type, LHS&& lhs, RHS&& rhs) {
+        return Binary(BinaryOp::kLogicalOr, type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
+    }
+
+    /// Creates an Logical Or operation
+    /// @tparam TYPE the result type of the expression
+    /// @param lhs the lhs of the add
+    /// @param rhs the rhs of the add
+    /// @returns the operation
+    template <typename TYPE, typename LHS, typename RHS>
+    ir::CoreBinary* LogicalOr(LHS&& lhs, RHS&& rhs) {
+        auto* type = ir.Types().Get<TYPE>();
+        return LogicalOr(type, std::forward<LHS>(lhs), std::forward<RHS>(rhs));
     }
 
     /// Creates an Xor operation
