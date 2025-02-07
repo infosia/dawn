@@ -242,11 +242,23 @@ TEST_P(WireInstanceTests, RequestAdapterPassesChainedProperties) {
     fakeSubgroupsProperties.subgroupMinSize = 4;
     fakeSubgroupsProperties.subgroupMaxSize = 128;
 
+    WGPUSubgroupMatrixConfig fakeMatrixConfigs[3] = {
+        {WGPUSubgroupMatrixComponentType_F32, WGPUSubgroupMatrixComponentType_F32, 8, 4, 2},
+        {WGPUSubgroupMatrixComponentType_U32, WGPUSubgroupMatrixComponentType_I32, 4, 8, 16},
+        {WGPUSubgroupMatrixComponentType_F16, WGPUSubgroupMatrixComponentType_F32, 2, 16, 4},
+    };
+
+    WGPUAdapterPropertiesSubgroupMatrixConfigs fakeSubgroupMatrixConfigs = {};
+    fakeSubgroupMatrixConfigs.chain.sType = WGPUSType_AdapterPropertiesSubgroupMatrixConfigs;
+    fakeSubgroupMatrixConfigs.configCount = 3;
+    fakeSubgroupMatrixConfigs.configs = fakeMatrixConfigs;
+
     std::initializer_list<WGPUFeatureName> fakeFeaturesList = {
         WGPUFeatureName_AdapterPropertiesMemoryHeaps,
         WGPUFeatureName_AdapterPropertiesD3D,
         WGPUFeatureName_AdapterPropertiesVk,
         WGPUFeatureName_Subgroups,
+        WGPUFeatureName_ChromiumExperimentalSubgroupMatrix,
     };
 
     // Expect the server to receive the message. Then, mock a fake reply.
@@ -280,6 +292,10 @@ TEST_P(WireInstanceTests, RequestAdapterPassesChainedProperties) {
                             case WGPUSType_AdapterPropertiesSubgroups:
                                 *reinterpret_cast<WGPUAdapterPropertiesSubgroups*>(chain) =
                                     fakeSubgroupsProperties;
+                                break;
+                            case WGPUSType_AdapterPropertiesSubgroupMatrixConfigs:
+                                *reinterpret_cast<WGPUAdapterPropertiesSubgroupMatrixConfigs*>(
+                                    chain) = fakeSubgroupMatrixConfigs;
                                 break;
                             default:
                                 ADD_FAILURE() << "Unexpected chain";
@@ -352,6 +368,28 @@ TEST_P(WireInstanceTests, RequestAdapterPassesChainedProperties) {
                           fakeSubgroupsProperties.subgroupMinSize);
                 EXPECT_EQ(subgroupsProperties.subgroupMaxSize,
                           fakeSubgroupsProperties.subgroupMaxSize);
+
+                // Get the subgroup matrix properties.
+                WGPUAdapterPropertiesSubgroupMatrixConfigs subgroupMatrixConfigs = {};
+                subgroupMatrixConfigs.chain.sType =
+                    WGPUSType_AdapterPropertiesSubgroupMatrixConfigs;
+                info.nextInChain = &subgroupMatrixConfigs.chain;
+                adapter.GetInfo(reinterpret_cast<wgpu::AdapterInfo*>(&info));
+
+                // Expect everything matches the fake properties returned by the server.
+                EXPECT_EQ(subgroupMatrixConfigs.configCount, fakeSubgroupMatrixConfigs.configCount);
+                for (size_t i = 0; i < fakeSubgroupMatrixConfigs.configCount; ++i) {
+                    EXPECT_EQ(subgroupMatrixConfigs.configs[i].componentType,
+                              fakeSubgroupMatrixConfigs.configs[i].componentType);
+                    EXPECT_EQ(subgroupMatrixConfigs.configs[i].resultComponentType,
+                              fakeSubgroupMatrixConfigs.configs[i].resultComponentType);
+                    EXPECT_EQ(subgroupMatrixConfigs.configs[i].M,
+                              fakeSubgroupMatrixConfigs.configs[i].M);
+                    EXPECT_EQ(subgroupMatrixConfigs.configs[i].N,
+                              fakeSubgroupMatrixConfigs.configs[i].N);
+                    EXPECT_EQ(subgroupMatrixConfigs.configs[i].K,
+                              fakeSubgroupMatrixConfigs.configs[i].K);
+                }
             })));
 
         FlushCallbacks();

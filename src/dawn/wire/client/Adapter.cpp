@@ -189,6 +189,15 @@ void Adapter::SetInfo(const WGPUAdapterInfo* info) {
                 mSubgroupsProperties.subgroupMaxSize = subgroupsProperties->subgroupMaxSize;
                 break;
             }
+            case WGPUSType_AdapterPropertiesSubgroupMatrixConfigs: {
+                // Make a copy of the heap info in `mSubgroupMatrixConfigs`.
+                const auto* subgroupMatrixConfigs =
+                    reinterpret_cast<const WGPUAdapterPropertiesSubgroupMatrixConfigs*>(chain);
+                mSubgroupMatrixConfigs = {
+                    subgroupMatrixConfigs->configs,
+                    subgroupMatrixConfigs->configs + subgroupMatrixConfigs->configCount};
+                break;
+            }
             default:
                 DAWN_UNREACHABLE();
                 break;
@@ -229,6 +238,19 @@ WGPUStatus Adapter::GetInfo(WGPUAdapterInfo* info) const {
                     reinterpret_cast<WGPUAdapterPropertiesSubgroups*>(chain);
                 subgroupsProperties->subgroupMinSize = mSubgroupsProperties.subgroupMinSize;
                 subgroupsProperties->subgroupMaxSize = mSubgroupsProperties.subgroupMaxSize;
+                break;
+            }
+            case WGPUSType_AdapterPropertiesSubgroupMatrixConfigs: {
+                // Copy `mSubgroupMatrixConfigs` into a new allocation.
+                auto* memoryHeapProperties =
+                    reinterpret_cast<WGPUAdapterPropertiesSubgroupMatrixConfigs*>(chain);
+                size_t configCount = mSubgroupMatrixConfigs.size();
+                auto* configs = new WGPUSubgroupMatrixConfig[configCount];
+                memcpy(configs, mSubgroupMatrixConfigs.data(),
+                       sizeof(WGPUSubgroupMatrixConfig) * configCount);
+                // Write out the pointer and count to the subgroup matrix configs out-struct.
+                memoryHeapProperties->configCount = configCount;
+                memoryHeapProperties->configs = configs;
                 break;
             }
             default:
@@ -339,4 +361,9 @@ DAWN_WIRE_EXPORT void wgpuDawnWireClientDawnDrmFormatCapabilitiesFreeMembers(
 DAWN_WIRE_EXPORT void wgpuDawnWireClientSupportedFeaturesFreeMembers(
     WGPUSupportedFeatures supportedFeatures) {
     delete[] supportedFeatures.features;
+}
+
+DAWN_WIRE_EXPORT void wgpuDawnWireClientAdapterPropertiesSubgroupMatrixConfigsFreeMembers(
+    WGPUAdapterPropertiesSubgroupMatrixConfigs subgroupMatrixConfigs) {
+    delete[] subgroupMatrixConfigs.configs;
 }
