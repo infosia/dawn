@@ -383,7 +383,7 @@ def get_common_properties(os, clang, rbe_project, remote_jobs):
             "metrics_project": "chromium-reclient-metrics",
             "scandeps_server": True,
         }
-        properties["$build/reclient"] = rbe_project
+        properties["$build/reclient"] = reclient_props
         properties["$build/siso"]["remote_jobs"] = remote_jobs
         properties["$build/siso"]["metrics_project"] = "chromium-reclient-metrics"
 
@@ -409,6 +409,13 @@ def add_ci_builder(name, os, properties):
         siso.remote_jobs.HIGH_JOBS_FOR_CI,
     )
     properties_ci.update(properties)
+    shadow_properties_ci = get_common_properties(
+        os,
+        clang,
+        siso.project.DEFAULT_UNTRUSTED,
+        siso.remote_jobs.HIGH_JOBS_FOR_CI,
+    )
+    shadow_properties_ci.update(properties)
     schedule_ci = None
     if fuzzer:
         schedule_ci = "0 0 0 * * * *"
@@ -427,6 +434,7 @@ def add_ci_builder(name, os, properties):
         notifies = ["gardener-notifier"],
         service_account = "dawn-ci-builder@chops-service-accounts.iam.gserviceaccount.com",
         shadow_service_account = "dawn-try-builder@chops-service-accounts.iam.gserviceaccount.com",
+        shadow_properties = shadow_properties_ci,
     )
 
 def add_try_builder(name, os, properties):
