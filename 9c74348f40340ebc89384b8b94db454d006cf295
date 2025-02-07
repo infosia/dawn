@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e2c019a1_06a30a13",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-07T03:02:08Z",
+      "side": 1,
+      "message": "OK, I think now I understand the whole idea.\nWhat you proposed is a thing like \"uniform buffer lives in encoder instead of pipeline\" and pipeline pick data from that encoder based on their immediate data range definition.",
+      "parentUuid": "e5ba17bd_df11c4f5",
+      "revId": "9c74348f40340ebc89384b8b94db454d006cf295",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e87f3ae0_5033f48a",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 22
