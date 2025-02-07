@@ -34,6 +34,24 @@
       "parentUuid": "2246fb9b_9bef8de4",
       "revId": "adce3e5f129fadc0ddbd5c6a4520f64cb77a6865",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9335936_d21b3616",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-07T06:16:11Z",
+      "side": 1,
+      "message": "I see that in Dawn the mappable buffers won\u0027t be allocated on non-coherent memory (https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp;l\u003d289).\n\nHowever in (https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d556) it is checking if the buffer is still allocated on a type of memory with `HOST_VISIBLE` but no `HOST_COHERENT` when it is not created with `BufferMap` usages. For example it is possible that a buffer is not created with `wgpu::BufferUsage::MapRead` or `wgpu::BufferUsage::MapWrite`, while the chosen memory type is `DEVICE_LOCAL|HOST_VISIBLE` without `HOST_COHERENT`, and if we still want to directly upload data to such buffer through CPU we need to call `Flush()` and `Invalidate`. So it seems we cannot remove those `invalidate` or `flush` calls there.",
+      "parentUuid": "9252ffb6_048deecc",
+      "revId": "adce3e5f129fadc0ddbd5c6a4520f64cb77a6865",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
