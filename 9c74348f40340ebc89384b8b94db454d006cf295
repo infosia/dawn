@@ -72,6 +72,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d4dc9d9_fe25b342",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-07T07:18:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9dcfc76_d06dcfe5",
+      "revId": "9c74348f40340ebc89384b8b94db454d006cf295",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5ba17bd_df11c4f5",
@@ -109,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b4b0b3bf_a785fcc3",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-07T07:18:44Z",
+      "side": 1,
+      "message": "\u003eWe should make sure that the push constants are all dirty when we start so we know to call vkCmdPushConstant.\n\nI think we might not need to set all dirty bits considering `OnSetPipeline` will overwrite the dirty bits. All we need to do is to ensure content init values are all zero.\n\n\u003eAlso double check that immediates are all defaulted to 0 at the start.\n\nMark constructors to `\u003ddefault` to ensure the behaviour here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ImmediateConstantsTracker.h;drc\u003dbd4da62dd5bf7f9138c030efeee44c375d536ffb;l\u003d68 not been overwrite .\n\nBTW, I invalidate all dirty bits at [b] to ensure no duplicate uploading.",
+      "parentUuid": "e2c019a1_06a30a13",
+      "revId": "9c74348f40340ebc89384b8b94db454d006cf295",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e87f3ae0_5033f48a",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 22
@@ -120,6 +156,24 @@
       "writtenOn": "2025-02-06T09:22:25Z",
       "side": 1,
       "message": "That early out logic seems like it will be handled in `RenderImmediateConstantsTrackerBase::OnPipelineChange`",
+      "revId": "9c74348f40340ebc89384b8b94db454d006cf295",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a447fe7_bd88fa92",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-07T07:18:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e87f3ae0_5033f48a",
       "revId": "9c74348f40340ebc89384b8b94db454d006cf295",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

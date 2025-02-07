@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75d65ee2_baed52b0",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-07T07:18:44Z",
+      "side": 1,
+      "message": "[b]",
+      "revId": "20779c5894fd532f1570b33b1abe2b8f34f6690e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

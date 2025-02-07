@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b413cf8b_f1e2178c",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-07T07:18:44Z",
+      "side": 1,
+      "message": "Thanks for pointing out! Update the comment.",
+      "parentUuid": "aafd0831_8ac6106e",
+      "range": {
+        "startLine": 89,
+        "startChar": 9,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "49ac9c23f7e98e019f4f5af55cee31a28e9652aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "40ba4916_7e93ac51",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 19
