@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf310a11_aba5dd0e",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-07T16:11:18Z",
+      "side": 1,
+      "message": "Nit: Tint uses `snake_case`",
+      "revId": "8e9b6d2506667fef5c2c8bd0de4e7e7db8193238",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4ee65b1_c1a8b83c",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-07T16:11:18Z",
+      "side": 1,
+      "message": "Putting this logic behind the `ShouldRename()` condition means that it won\u0027t happen when symbol renaming is disabled. Maybe that\u0027s acceptable since symbol renaming is always used in production, but it might trip up developers who often disable symbol renaming while debugging.\n\nFor example, I added this Dawn E2E to your CL and it failed:\n```\nTEST_P(ShaderTests, CollisionHandle_DifferentModules) {\n    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().limits.maxStorageTexturesInVertexStage \u003c \\\n2); \n    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().limits.maxStorageTexturesInFragmentStage \\\n\u003c 1);\n\n    // TODO(crbug.com/394915257): ANGLE D3D11 bug \n    DAWN_SUPPRESS_TEST_IF(IsANGLED3D11());\n\n    wgpu::ShaderModule vmodule \u003d utils::CreateShaderModule(device, R\"( \n@group(0) @binding(1) var v1: texture_storage_2d\u003cr32float, read\u003e; \n@group(0) @binding(0) var v0: texture_storage_2d\u003cr32float, read\u003e; \n \n@vertex fn vs() -\u003e @builtin(position) vec4f { \n    _ \u003d textureLoad(v0, vec2u(0)); \n    _ \u003d textureLoad(v1, vec2u(0)); \n    return vec4f(0); \n} \n)\");\n\n    wgpu::ShaderModule fmodule \u003d utils::CreateShaderModule(device, R\"( \n@group(0) @binding(1) var v1: texture_storage_2d\u003cr32float, read\u003e; \n \n@fragment fn fs() -\u003e @location(0) vec4f { \n    _ \u003d textureLoad(v1, vec2u(0)); \n    return vec4f(0); \n} \n)\");\n\n    utils::ComboRenderPipelineDescriptor desc;\n    desc.vertex.module \u003d vmodule;\n    desc.cFragment.module \u003d fmodule;\n\n    device.CreateRenderPipeline(\u0026desc);\n}\n\n```\n\nSo maybe it\u0027s worth moving the stage prefix logic out so that it always applies.",
+      "revId": "8e9b6d2506667fef5c2c8bd0de4e7e7db8193238",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c95f9175_0d7642e7",
+        "filename": "src/tint/lang/glsl/writer/printer/printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-07T16:11:18Z",
+      "side": 1,
+      "message": "Nit: Tint uses `snake_case`",
+      "revId": "8e9b6d2506667fef5c2c8bd0de4e7e7db8193238",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
