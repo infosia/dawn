@@ -133,9 +133,12 @@ MaybeError Queue::SubmitPendingCommands() {
     DAWN_TRY(mPendingCommands.ExecuteCommandList(device, mCommandQueue.Get()));
     RecycleLastCommandListAfter(GetPendingCommandSerial());
 
+    mStagingMemorySizeToRelease = 0;
+
     // Immediately reopen the command recording context so it is always available.
     DAWN_TRY(NextSerial());
     DAWN_TRY(RecycleUnusedCommandLists());
+
     return OpenPendingCommands();
 }
 
@@ -278,6 +281,21 @@ MaybeError Queue::RecycleUnusedCommandLists() {
         mFreeAllocators.set(index);
     }
     mInFlightCommandAllocators.ClearUpTo(completedSerial);
+
+    return {};
+}
+
+MaybeError Queue::TrackStagingMemorySizeToRelease(uint64_t stagingMemorySizeToRelease) {
+    constexpr uint64_t kStagingMemoryToReleaseThreshold = 16 * 1024 * 1024;
+
+    mStagingMemorySizeToRelease += stagingMemorySizeToRelease;
+    if (mStagingMemorySizeToRelease >= kStagingMemoryToReleaseThreshold) {
+        ForceEventualFlushOfCommands();
+
+        // `mStagingMemorySizeToRelease` will be reset to 0 in `SubmitPendingCommands()` when the
+        // pending commands are successfully submitted to the queue.
+        return SubmitPendingCommands();
+    }
 
     return {};
 }

@@ -56,6 +56,8 @@ class Queue final : public QueueBase {
     Ref<SystemEvent> CreateWorkDoneSystemEvent(ExecutionSerial serial);
     ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
 
+    MaybeError TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize) override;
+
   private:
     Queue(Device* device, const QueueDescriptor* descriptor);
     ~Queue() override;
@@ -95,6 +97,11 @@ class Queue final : public QueueBase {
     NSPRef<id> mMtlSharedEvent;
     // The shared event wrapped as a SharedFence object.
     Ref<SharedFence> mSharedFence;
+
+    // Track the total pending staging memory that can be released after pending commands are
+    // submitted. When there is too much such kind of memory the pending commands will be executed
+    // at once to release it as soon as possible.
+    uint64_t mStagingMemorySizeToRelease = 0;
 };
 
 }  // namespace dawn::native::metal

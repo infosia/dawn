@@ -404,6 +404,8 @@ MaybeError Queue::SubmitPendingCommands() {
         });
     TRACE_EVENT_END0(device->GetPlatform(), Recording, "vkQueueSubmit");
 
+    mStagingMemorySizeToRelease = 0;
+
     // Enqueue the semaphores before incrementing the serial, so that they can be deleted as
     // soon as the current submission is finished.
     for (VkSemaphore semaphore : mRecordingContext.waitSemaphores) {
@@ -569,6 +571,21 @@ ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanosecond
         DAWN_TRY(CheckVkSuccess(::VkResult(waitResult), "vkWaitForFences"));
         return true;
     }
+}
+
+MaybeError Queue::TrackStagingMemorySizeToRelease(uint64_t stagingMemorySizeToRelease) {
+    constexpr uint64_t kStagingMemoryToReleaseThreshold = 16 * 1024 * 1024;
+
+    mStagingMemorySizeToRelease += stagingMemorySizeToRelease;
+    if (mStagingMemorySizeToRelease >= kStagingMemoryToReleaseThreshold) {
+        ForceEventualFlushOfCommands();
+
+        // `mStagingMemorySizeToRelease` will be reset to 0 in `SubmitPendingCommands()` when the
+        // pending commands are successfully submitted to the queue.
+        return SubmitPendingCommands();
+    }
+
+    return {};
 }
 
 }  // namespace dawn::native::vulkan

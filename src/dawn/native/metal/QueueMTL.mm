@@ -190,6 +190,8 @@ MaybeError Queue::SubmitPendingCommandBuffer() {
 
     [*pendingCommands commit];
 
+    mStagingMemorySizeToRelease = 0;
+
     return mCommandContext.PrepareNextCommandBuffer(*mCommandQueue);
 }
 
@@ -279,6 +281,21 @@ ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanosecond
     std::array<std::pair<const dawn::native::SystemEventReceiver&, bool*>, 1> events{
         {{event->GetOrCreateSystemEventReceiver(), &ready}}};
     return WaitAnySystemEvent(events.begin(), events.end(), timeout);
+}
+
+MaybeError Queue::TrackStagingMemorySizeToRelease(uint64_t stagingMemorySizeToRelease) {
+    constexpr uint64_t kStagingMemoryToReleaseThreshold = 16 * 1024 * 1024;
+
+    mStagingMemorySizeToRelease += stagingMemorySizeToRelease;
+    if (mStagingMemorySizeToRelease >= kStagingMemoryToReleaseThreshold) {
+        ForceEventualFlushOfCommands();
+
+        // `mStagingMemorySizeToRelease` will be reset to 0 in `SubmitPendingCommands()` when the
+        // pending commands are successfully submitted to the queue.
+        return SubmitPendingCommands();
+    }
+
+    return {};
 }
 
 }  // namespace dawn::native::metal

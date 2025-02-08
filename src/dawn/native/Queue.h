@@ -108,6 +108,8 @@ class QueueBase : public ApiObjectBase, public ExecutionQueueBase {
     void Tick(ExecutionSerial finishedSerial);
     void HandleDeviceLoss();
 
+    virtual MaybeError TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize);
+
   protected:
     QueueBase(DeviceBase* device, const QueueDescriptor* descriptor);
     QueueBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
