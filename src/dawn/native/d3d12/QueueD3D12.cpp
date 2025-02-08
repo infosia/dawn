@@ -133,6 +133,8 @@ MaybeError Queue::SubmitPendingCommands() {
     DAWN_TRY(mPendingCommands.ExecuteCommandList(device, mCommandQueue.Get()));
     RecycleLastCommandListAfter(GetPendingCommandSerial());
 
+    mStagingMemorySizeToRelease = 0;
+
     // Immediately reopen the command recording context so it is always available.
     DAWN_TRY(NextSerial());
     DAWN_TRY(RecycleUnusedCommandLists());
@@ -280,6 +282,16 @@ MaybeError Queue::RecycleUnusedCommandLists() {
     mInFlightCommandAllocators.ClearUpTo(completedSerial);
 
     return {};
+}
+
+void Queue::TrackStagingMemorySizeToRelease(uint64_t stagingMemorySizeToRelease) {
+    constexpr uint64_t kStagingMemoryToReleaseThreshold = 16 * 1024 * 1024;
+
+    mStagingMemorySizeToRelease += stagingMemorySizeToRelease;
+    if (mStagingMemorySizeToRelease >= kStagingMemoryToReleaseThreshold) {
+        ForceEventualFlushOfCommands();
+        mStagingMemorySizeToRelease = 0;
+    }
 }
 
 }  // namespace dawn::native::d3d12
