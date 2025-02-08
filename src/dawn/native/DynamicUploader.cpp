@@ -36,12 +36,17 @@
 
 namespace dawn::native {
 
-UploadHandle::UploadHandle(uint64_t startOffset, Ref<BufferBase> stagingBuffer)
-    : mStartOffset(startOffset), mStagingBuffer(std::move(stagingBuffer)) {}
+UploadHandle::UploadHandle(uint64_t startOffset,
+                           Ref<BufferBase> stagingBuffer,
+                           bool isSubAllocation)
+    : mStartOffset(startOffset),
+      mStagingBuffer(std::move(stagingBuffer)),
+      mIsSubAllocation(isSubAllocation) {}
 
 UploadHandle& UploadHandle::operator=(UploadHandle&& other) {
     mStartOffset = other.mStartOffset;
     mStagingBuffer = std::move(other.mStagingBuffer);
+    mIsSubAllocation = other.mIsSubAllocation;
     return *this;
 }
 
@@ -54,7 +59,15 @@ bool UploadHandle::IsEmpty() const {
 }
 
 void UploadHandle::Release() {
-    mStagingBuffer = nullptr;
+    if (!mIsSubAllocation && !IsEmpty()) {
+        DeviceBase* device = mStagingBuffer->GetDevice();
+        uint64_t stagingMemory = mStagingBuffer->GetAllocatedSize();
+        mStagingBuffer = nullptr;
+        MaybeError maybeError = device->GetQueue()->TrackStagingMemorySizeToRelease(stagingMemory);
+        [[maybe_unused]] bool hadError = device->ConsumedError(std::move(maybeError));
+    } else {
+        mStagingBuffer = nullptr;
+    }
 }
 
 uint64_t UploadHandle::GetStartOffset() const {
@@ -127,7 +140,7 @@ ResultOrError<UploadHandle> DynamicUploader::AllocateTransient(uint64_t allocati
 
     DAWN_ASSERT(targetRingBuffer->mStagingBuffer != nullptr);
 
-    return UploadHandle(startOffset, targetRingBuffer->mStagingBuffer);
+    return UploadHandle(startOffset, targetRingBuffer->mStagingBuffer, /*isSubAllocation=*/true);
 }
 
 ResultOrError<UploadHandle> DynamicUploader::AllocatePersistent(uint64_t allocationSize,
@@ -147,7 +160,7 @@ ResultOrError<UploadHandle> DynamicUploader::AllocatePersistent(uint64_t allocat
         DAWN_TRY_ASSIGN(stagingBuffer, mDevice->CreateBuffer(&bufferDesc));
     }
 
-    return UploadHandle(0, std::move(stagingBuffer));
+    return UploadHandle(0, std::move(stagingBuffer), /*isSubAllocation=*/false);
 }
 
 void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll) {

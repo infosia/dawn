@@ -190,6 +190,8 @@ MaybeError Queue::SubmitPendingCommandBuffer() {
 
     [*pendingCommands commit];
 
+    mStagingMemorySizeToRelease = 0;
+
     return mCommandContext.PrepareNextCommandBuffer(*mCommandQueue);
 }
 
@@ -211,9 +213,11 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
         CommandRecordingContext* commandContext = GetPendingCommandContext();
 
         TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferMTL::FillCommands");
+        mRecodingCommandsInQueueSubmit = true;
         for (uint32_t i = 0; i < commandCount; ++i) {
             DAWN_TRY(ToBackend(commands[i])->FillCommands(commandContext));
         }
+        mRecodingCommandsInQueueSubmit = false;
         TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferMTL::FillCommands");
 
         DAWN_TRY(SubmitPendingCommandBuffer());
@@ -279,6 +283,25 @@ ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanosecond
     std::array<std::pair<const dawn::native::SystemEventReceiver&, bool*>, 1> events{
         {{event->GetOrCreateSystemEventReceiver(), &ready}}};
     return WaitAnySystemEvent(events.begin(), events.end(), timeout);
+}
+
+MaybeError Queue::TrackStagingMemorySizeToRelease(uint64_t stagingMemorySizeToRelease) {
+    if (mRecodingCommandsInQueueSubmit) {
+        return {};
+    }
+
+    constexpr uint64_t kStagingMemoryToReleaseThreshold = 16 * 1024 * 1024;
+
+    mStagingMemorySizeToRelease += stagingMemorySizeToRelease;
+    if (mStagingMemorySizeToRelease >= kStagingMemoryToReleaseThreshold) {
+        ForceEventualFlushOfCommands();
+
+        // `mStagingMemorySizeToRelease` will be reset to 0 in `SubmitPendingCommands()` when the
+        // pending commands are successfully submitted to the queue.
+        return SubmitPendingCommands();
+    }
+
+    return {};
 }
 
 }  // namespace dawn::native::metal

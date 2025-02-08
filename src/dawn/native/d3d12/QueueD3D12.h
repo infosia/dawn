@@ -55,6 +55,7 @@ class Queue final : public d3d::Queue {
     ResultOrError<Ref<d3d::SharedFence>> GetOrCreateSharedFence() override;
     ID3D12SharingContract* GetSharingContract() const;
     MaybeError SubmitPendingCommands() override;
+    MaybeError TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize) override;
 
   private:
     using d3d::Queue::Queue;
@@ -100,6 +101,13 @@ class Queue final : public d3d::Queue {
     std::bitset<kMaxCommandAllocators> mFreeAllocators;
     uint32_t mLastAllocatorUsed = kNoCommandAllocator;
     SerialQueue<ExecutionSerial, uint32_t> mInFlightCommandAllocators;
+
+    // Track the total pending staging memory that can be released after pending commands are
+    // submitted. When there is too much such kind of memory the pending commands will be executed
+    // at once to release it as soon as possible. Note that such eager submit shouldn't be executed
+    // in Queue::Submit() as it will break the recoding of the remaining commands.
+    uint64_t mStagingMemorySizeToRelease = 0;
+    bool mRecodingCommandsInQueueSubmit = false;
 };
 
 }  // namespace dawn::native::d3d12

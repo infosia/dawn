@@ -113,9 +113,11 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
 
     TRACE_EVENT_BEGIN1(GetDevice()->GetPlatform(), Recording, "CommandBufferD3D12::RecordCommands",
                        "serial", uint64_t(pendingSerial));
+    mRecodingCommandsInQueueSubmit = true;
     for (uint32_t i = 0; i < commandCount; ++i) {
         DAWN_TRY(ToBackend(commands[i])->RecordCommands(commandContext));
     }
+    mRecodingCommandsInQueueSubmit = false;
     TRACE_EVENT_END1(GetDevice()->GetPlatform(), Recording, "CommandBufferD3D12::RecordCommands",
                      "serial", uint64_t(pendingSerial));
 
@@ -133,9 +135,12 @@ MaybeError Queue::SubmitPendingCommands() {
     DAWN_TRY(mPendingCommands.ExecuteCommandList(device, mCommandQueue.Get()));
     RecycleLastCommandListAfter(GetPendingCommandSerial());
 
+    mStagingMemorySizeToRelease = 0;
+
     // Immediately reopen the command recording context so it is always available.
     DAWN_TRY(NextSerial());
     DAWN_TRY(RecycleUnusedCommandLists());
+
     return OpenPendingCommands();
 }
 
@@ -278,6 +283,25 @@ MaybeError Queue::RecycleUnusedCommandLists() {
         mFreeAllocators.set(index);
     }
     mInFlightCommandAllocators.ClearUpTo(completedSerial);
+
+    return {};
+}
+
+MaybeError Queue::TrackStagingMemorySizeToRelease(uint64_t stagingMemorySizeToRelease) {
+    if (mRecodingCommandsInQueueSubmit) {
+        return {};
+    }
+
+    constexpr uint64_t kStagingMemoryToReleaseThreshold = 16 * 1024 * 1024;
+
+    mStagingMemorySizeToRelease += stagingMemorySizeToRelease;
+    if (mStagingMemorySizeToRelease >= kStagingMemoryToReleaseThreshold) {
+        ForceEventualFlushOfCommands();
+
+        // `mStagingMemorySizeToRelease` will be reset to 0 in `SubmitPendingCommands()` when the
+        // pending commands are successfully submitted to the queue.
+        return SubmitPendingCommands();
+    }
 
     return {};
 }
