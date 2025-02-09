@@ -56,7 +56,7 @@ Set up the build directory using emcmake
 mkdir out/cmake-wasm
 cd out/cmake-wasm
 
-# Make sure the path is to the source checkout of Emscripten, not emsdk's release.
+# If using Emscripten v4.0.2 or lower, make sure the path is to the source checkout of Emscripten, not emsdk's release.
 emcmake cmake -GNinja -DDAWN_EMSCRIPTEN_TOOLCHAIN="path/to/emscripten" ../..
 
 ninja
