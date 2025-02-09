@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee7e13f4_398c096d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-09T03:50:22Z",
+      "side": 1,
+      "message": "Emscripten 4.0.3 moved the file `gen_struct_info.py` from folder `tools/maint/` to `tools/`:\n\nhttps://github.com/emscripten-core/emscripten/pull/23551\n\nThis change checks `tools/` first, if failed to find the file then checks `tools/maint/`. So the behavior is compatible with Emscripten 4.0.2 or older.\n\nTODO: BUILD.gn should also be updated but I have zero knowledge about GN at all so I don\u0027t modify it in this change.",
+      "revId": "2bd861aca6e920e09a5917460ac6ff9764790491",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
