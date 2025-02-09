@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66ed4fee_9f32d66d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-02-09T13:38:46Z",
+      "side": 1,
+      "message": "Skipping to avoid timeouts like\nhttps://ci.chromium.org/ui/p/chromium/builders/ci/Dawn%20Android%20arm64%20Experimental%20Release%20(Pixel%206)/6841/overview",
+      "revId": "ff75debb9c913c888b639c35148295ceaa1462e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
